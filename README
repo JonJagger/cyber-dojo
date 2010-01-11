@@ -8,7 +8,7 @@ Rails
 
 Installation
 ============
-downloading the zip file, unzip it, cd into the cyber_dojo directory. Then
+download the zip file, unzip it, cd into the cyber_dojo directory. Then
   $ rake rails:update
   $ script/server -d
   $ open http://localhost:3000
@@ -98,11 +98,8 @@ Some Notes
    c files then gcc has to be installed. If kata.sh runs javac to compile java
    files then javac has to be installed. 
 
-5. You can choose to make any file visible or hidden. In the example above to have a visible
+6. You can choose to make any file visible or hidden. In the example above to have a visible
    makefile you would simply need to move makefile into the :visible_files section.
-
-6. The :max_run_tests_duration parameter should really be associated with a specific kata and 
-   not with the exercise. Perhaps the value associated with the exercise can be a default.
 
 7. The :language parameter is used as the name of the language (when starting the editArea 
    tabbed editor) in order to select appropriate syntax highlighting.
@@ -111,10 +108,8 @@ Some Notes
    to regexp parse the run tests output to determine if the increment is a pass or fail. 
    For example if :language is 'c' and :unit_test_framework is 'tequila' then a ruby function
    called parse_c_tequila is assumed to exist and is called to parse the output of run-tests>
+   If you use a new unit test framework you will need to add a new regexp'ing function.
 
-9. The exercises/java/demo exercise works but is slow because it copies junit jar files 
-   on every increment. This needs reworking. Perhaps have a :shared_files section in the
-   exercise_manifest.rb file that all the increments share.
 
 
 
