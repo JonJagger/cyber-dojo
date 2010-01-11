@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  start: 2009 Sep 18 14:18:21
+  finish: 2009 Sep 18 14:18:32
+  game_id: 345
+  country: India
+  inc: 1
+
+two:
+  start: 2009 Sep 18 14:19:21
+  finish: 2009 Sep 18 14:20:29
+  game_id: 345
+  country: India
+  inc: 1
+
+three:
+  start: 2009 Sep 18 14:22:21
+  finish: 2009 Sep 18 14:23:49
+  game_id: 345
+  country: India
+  inc: 2
+
+four:
+  start: 2009 Sep 18 17:10:21
+  finish:
+  game_id: 345
+  country: Greece
+  inc: 3

@@ -1,0 +1,6 @@
+
+{
+  :language => 'ruby',
+  :exercise => 'roman'
+}
+

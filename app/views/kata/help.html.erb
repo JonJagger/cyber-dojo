@@ -1,0 +1,120 @@
+
+<%= render :partial => 'javascript' -%>
+
+<script language="javascript" type="text/javascript">
+editAreaLoader.execCommand('tabbed_files', 'set_editable', false); 
+</script>
+
+<table>
+  <tr>
+    <td>
+      
+      <h1 class="title">
+        <a href="/dojo/index" class="title">Cyber Dojo</a> : Kata 99
+      </h1>
+
+    </td>
+  </tr>
+</table>
+
+<ul>
+<li>The words "Cyber Dojo" are a hyperlink taking you back to the Dojo start page.</li>
+<li>The words "Kata 99" are a hyperlink taking you to a page showing the status of all 
+increments of all players in the current kata.</li> 
+</ul>
+
+<hr/>
+
+<h3>The Increments</h3>
+
+<table>
+  <tr>
+    <td><%= avatar_image('Lions') {|f| f} %></td>
+
+    <td><input type="button" value="run-tests>"></td>
+ 
+    <td>
+      <table cellpadding="2px">
+        <tr>
+          <td><span class="passed increment-box" title="11">1</span></td>
+          <td><span class="error  increment-box" title="stopped">2</span></td>
+          <td><span class="failed increment-box" title="1" >3</span></td>
+          <td><span class="failed increment-box" title="1" >4</span></td>
+          <td><span class="passed increment-box" title="12">5</span></td>
+        </tr>
+      </table>
+    </td>
+
+  </tr>
+</table>
+
+
+<p>
+<ul>
+<li>The Lion indicates you are a lion currently working on the Lions codebase.</li>
+<li>The run-tests> button runs the tests on the Cyber Dojo server
+    and creates a new increment.</li>
+<li>The previous increments are colour-coded;
+    <ul>
+      <li>green if all the tests passed, 
+         <span class="passed increment-box" title="11">1</span>
+         <span class="passed increment-box" title="12">5</span>
+      </li>
+      <li>red if a test failed, 
+         <span class="failed increment-box" title="1" >3</span>
+         <span class="failed increment-box" title="1" >4</span>
+      </li>
+      <li>grey if the tests could not be run. 
+         <span class="error  increment-box" title="stopped">2</span>
+      </li>
+    </ul>
+    A tool-tip for each increment reveals the number of 
+    tests passed or failed, or the reason the tests could not be run.
+    <br/>
+    Each increment is also a hyperlink to a view of the files submitted
+    for that increment.</li>
+</ul>
+</p>
+
+<hr/>
+
+<h3>The Editor</h3>
+
+<table cellpadding="7" 
+       id="tabbed_files_border"
+       class="passed">
+  <tr>
+    <td>
+      <textarea id="tabbed_files" 
+                name="tabbed_files"
+                cols="100" 
+                rows="15" 
+                name="dummy"></textarea>
+    </td>
+  </tr>
+</table>
+
+<p>
+<ul>
+  <li>Surrounding the tabbed editor is a thin border reflecting the colour of the most recent increment.</li>
+  <li>Control-H toggles syntax highlighting</li>
+  <li><%= image_tag("search.gif") -%> find and replace (Control F/Control R)</li>
+  <li><%= image_tag("go_to_line.gif") -%> goto line number (Control G)</li>
+  <li><%= image_tag("undo.gif") -%> undo (Control Z)</li>
+  <li><%= image_tag("redo.gif") -%> redo (Control Y)</li>
+  <li>change font size</li>
+  <li><%= image_tag("reset_highlight.gif") -%> resets syntax highlighting</li>
+  <li><%= image_tag("help.gif") -%> help (Control E)</li>
+  <li><%= image_tag("statusbar_resize.gif") -%> resize (bottom right)</li>
+</ul>
+</p>
+
+<div class="hidden">
+  <% @visible_files.each do |filename,file| -%>
+    <div id="<%=filename-%>_div">
+      <textarea id="<%=filename-%>" 
+                name="<%=filename-%>"><%= h file[:content] -%></textarea>
+    </div>
+  <% end -%>
+</div>
+

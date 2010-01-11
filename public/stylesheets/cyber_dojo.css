@@ -1,0 +1,92 @@
+
+/* body style */
+.cyber_dojo_page
+{
+  margin: 0em 5em 0em 5em;
+  padding: 0em 1em 1em 0em;
+  border-style: none;
+  background-color: #FFE4C4; /*bisque*/
+  color: green;
+}
+
+/* hide hyperlinks */
+a:link, a:visited, a:active { text-decoration: none; }
+
+/* remove space from bottom of title to save vertical pixels */
+.title 
+{ 
+  margin-bottom: 0em; 
+  color: green;
+}
+
+.panel
+{    
+  border: 1px dotted #B0B0B0; /* medium-gray */
+  margin: 0.5em 0.5em 0.5em 0em;
+  padding: 1em;
+  background-color: #FFE4C4; /*bisque*/
+}
+
+/* run-test> increment outcomes */
+.increment-box 
+{ 
+  border: 1px solid #D8D8D8; /* light-gray */
+  padding: 0.15em; 
+  text-align: center; 
+}
+
+.passed
+{ 
+  background-color: #99FF99; /* light-green */
+  color: green;
+}
+
+.failed 
+{ 
+  background-color: #FF3333; /* red */
+  color: #99FF99; /* light-green */
+}
+
+.error
+{ 
+  background-color: lightgrey; /* indicates no resulting information */
+  color: green;
+}
+
+
+/* line around edge of avatar image */
+.avatar { border: 1px solid #D8D8D8; } /* light-gray */
+
+
+/* editArea uses javascript to move contents of each tabbed */
+/* file into hidden textarea before submitting to server    */
+.hidden 
+{ 
+  visibility:hidden; 
+  display:none; 
+}
+
+/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+/* used in help pages */
+h3, .h3 
+{ 
+  font-size: 150%; 
+  font-weight: bold; 
+  color: green; 
+}
+
+.practice_words
+{
+  font-style: italic;
+  font-weight: bold;
+}
+
+blockquote
+{
+  border: 1px solid #D8D8D8; /* light-gray */
+  padding: 1em;
+  background-color: #FFE4C4; /*bisque*/
+}
+
+

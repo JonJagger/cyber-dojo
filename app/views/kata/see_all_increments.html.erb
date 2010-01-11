@@ -1,0 +1,22 @@
+
+<%= render :partial => 'title_panel' -%>
+
+<table class="panel">
+<tr><td>
+<table cellpadding="3px">
+  <% @avatars.each do |avatar_name,avatar_increments| -%>
+   <tr>
+     <td>
+       <%= avatar_image(avatar_name) {|i| i} -%>
+     </td>
+     <td nowrap>
+       <% avatar_increments.each do |increment| -%>        
+         <span class="<%= increment[:outcome].to_s -%> increment-box" 
+               title="<%=increment[:info]-%>"-%>
+           <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= increment[:number]-%>"><%=increment[:number]-%></a></span>
+       <% end -%>
+     </td>
+   </tr>
+  <% end -%>
+</table>
+

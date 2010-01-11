@@ -1,0 +1,71 @@
+
+<script language="javascript" type="text/javascript">
+
+editAreaLoader.init(
+  {
+     id: "tabbed_files"	
+    ,allow_toggle: false
+    ,is_editable: <%=@editable-%>
+    ,language: "en"
+    ,start_highlight: true
+    ,syntax: "<%=@kata_language-%>"	
+    ,toolbar: "search, go_to_line, undo, redo, select_font, reset_highlight, help"
+    ,is_multi_files: true
+    ,EA_load_callback: "editAreaLoaded"
+    ,EA_file_close_callback: "editAreaFileClose"
+    ,show_line_colors: true
+    ,font_size: 14
+    ,replace_tab_by_spaces: 4
+    }
+);
+
+function editAreaLoaded(id)
+{
+  <% @visible_files.each_key do |filename| -%>
+    editAreaTabbedLoad("<%=filename-%>");
+  <% end -%>
+}
+
+var closeable = false;
+
+function editAreaFileClose(closing)
+{
+  // Prevent an editor tabs from being accidentally closed
+  return closeable;
+}
+
+function editAreaTabbedLoad(name)
+{
+  editAreaLoader.openFile(
+    'tabbed_files',
+    { id: name, text: $(name).value, title: name });
+}
+
+function preRunTests()
+{
+   Element.show('run_tests_spinner');
+
+   // Move contents of tabbed editArea into hidden textareas.
+   // Necessary because only individual textareas have unique
+   // id's which rails can retrieve via params[id]
+   <% @visible_files.each_key do |filename| -%>
+     $("<%=filename-%>").value 
+       = editAreaLoader.getFile('tabbed_files', "<%=filename-%>").text;
+   <% end -%>
+}
+
+function postRunTests()
+{
+   // Replacing the contents of the run_tests_outcome tab in-place
+   // would work but closing and then reopening makes sure
+   // that the run_tests_output tab becomes the topmost editor tab.
+
+   closeable = true;
+   editAreaLoader.closeFile('tabbed_files', 'run_tests_output');
+   closeable = false;
+   editAreaTabbedLoad('run_tests_output');
+   Element.hide('run_tests_spinner');
+}
+
+</script>
+

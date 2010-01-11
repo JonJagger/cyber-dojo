@@ -1,0 +1,59 @@
+# Logfile created on Sun Jan 10 22:34:50 +0000 2010
+
+Processing DojoController#index (for 127.0.0.1 at 2010-01-10 22:34:51) [GET]
+Rendering template within layouts/application
+Rendering dojo/index
+Completed in 24ms (View: 22, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing KataController#start (for 127.0.0.1 at 2010-01-10 22:34:59) [POST]
+  Parameters: {"authenticity_token"=>"L6nTHYjuvkqYQkCXDeFCnvpxrALPFH2Xm1p/0+QeW8g=", "avatar"=>"Frogs", "start"=>"start", "kata_id"=>"99", "avatar_name"=>"Frogs"}
+Rendering template within layouts/application
+Rendering kata/start
+Completed in 187ms (View: 162, DB: 0) | 200 OK [http://localhost/kata/start]
+
+
+Processing DojoController#index (for 127.0.0.1 at 2010-01-10 22:35:13) [GET]
+Rendering template within layouts/application
+Rendering dojo/index
+Completed in 4ms (View: 4, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing KataController#start (for 127.0.0.1 at 2010-01-10 22:35:21) [POST]
+  Parameters: {"authenticity_token"=>"L6nTHYjuvkqYQkCXDeFCnvpxrALPFH2Xm1p/0+QeW8g=", "avatar"=>"Frogs", "start"=>"start", "kata_id"=>"99", "avatar_name"=>"Frogs"}
+Rendering template within layouts/application
+Rendering kata/start
+Completed in 9ms (View: 7, DB: 0) | 200 OK [http://localhost/kata/start]
+
+
+Processing KataController#run_tests (for 127.0.0.1 at 2010-01-10 22:35:26) [POST]
+  Parameters: {"commit"=>"run-tests>", "authenticity_token"=>"L6nTHYjuvkqYQkCXDeFCnvpxrALPFH2Xm1p/0+QeW8g=", "tabbed_files"=>"#include \"unsplice.h\"\n\nvoid unsplice(char * line)\n{\n  /* comment */\n}\n\n", "unsplice.h"=>"#ifndef UNSPLICE_INCLUDED\n#define UNSPLICE_INCLUDED\n\nvoid unsplice(char * line);\n\n#endif\n\n", "avatar"=>"Frogs", "notes.txt"=>"Welcome to the game. \n\nPlease remember \n  o) we are not, repeat not, producing software to sell!\n  o) the sole aim of the game is to practice\n\nPracticing means\n  o) doing something just beyond your current ability\n  o) going slow, not rushing\n  o) analyzing your performance during the practice\n  o) analysing your performance after the practice\n  o) repeating the practice\n\nDuring the game please write notes in this file only.\n\n", "kata_id"=>"99", "instructions"=>"Your task is to write a function to remove all occurences \nof the two characters \\ (backslash) and \\n (newline) when \nthey occur consecutively in an array of chars.\n\nSome examples:\n\nBefore  \"abc\\\\ndef\"\nAfter   \"abcdef\"\nThe unsplice operation has removed one occurence of the \nbackslash newline pair.\n\nBefore   \"abc\\d\\nef\"\nAfter    \"abc\\d\\nef\"\nThe unspliced version is unchanged because the backslash \nand newline characters are not consecutive.\n\nBefore   \"abc\\n\\def\"\nAfter    \"abc\\n\\def\"\nThe unspliced version is unchanged because the backslash \nand newline characters are in the wrong order.\n\nBefore  \"abc\\\\nde\\\\nfg\"\nAfter   \"abcdefg\"\nThe unsplice operation has removed two occurences of the \nbackslash newline pair.\n\nBefore   \"abc\\\\\\n\\ndef\"\nAfter    \"abc\\\\ndef\"\nThe unspliced operation has removed one occurence of the \nbackslash newline pair. Note that another occurence of the \nbackslash newline pair remains. The unsplice operation is \n'one-pass only'.\n\n", "unsplice.tests.c"=>"#include \"unsplice.h\"\n#include \"tequila.h\"\n#include <stdio.h>\n#include <string.h>\n\nvoid unsplice_tests(void)\n{\n    typedef const char * string;        \n    TEST(\"that line with no splices is unchanged\")\n    {\n        const char * expected = \"abc\";\n        char actual[] = \"abc\";\n        unsplice(actual);\n        ARE_EQUAL(string, actual, expected);\n    }\n}\n\nconst tequila_test_function slammers[] =\n{\n    TEQUILA(unsplice_tests),\n};\n\n#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))\n\nint main()\n{\n    tequila_test_suite suite;\n    tequila_test_count count;\n\n    tequila_init(&suite);\n    tequila_add(&suite, ARRAY_SIZE(slammers), slammers);\n    count = tequila_run(&suite);\n    tequila_report(&count);\n    \n    return tequila_outcome(&count);\n}\n\n//------------------------------------------------------------\n\nbool tequila_equal_string(const char * lhs, const char * rhs)\n{\n    return (lhs == NULL && rhs == NULL) ||\n           (lhs != NULL && rhs != NULL && strcmp(lhs, rhs) == 0);\n}\n\n#define STR(s) \"[\" #s \"]\"\n\n//TODO: make this the only function the user needs to supply.\nvoid tequila_print_string(FILE * out, const char * s)\n{\n    if (s == NULL)\n        fprintf(out, \"NULL\");\n    else if (strlen(s) == 0)\n        fprintf(out, \"\\\"\\\"\");\n    else\n        for (size_t at = 0; at != strlen(s); at++)\n        {\n            char c = s[at];\n            // TODO: refactor to table driven\n            switch (c)\n            {\n                case '\\\\': fprintf(out, STR('\\\\')); break;\n                case '\\a': fprintf(out, STR('\\a')); break;\n                case '\\b': fprintf(out, STR('\\b')); break;\n                case '\\f': fprintf(out, STR('\\f')); break;\n                case '\\n': fprintf(out, STR('\\n')); break;\n                case '\\r': fprintf(out, STR('\\r')); break;\n                case '\\t': fprintf(out, STR('\\t')); break;\n                case '\\v': fprintf(out, STR('\\v')); break;\n                // TODO: check if isprint(c) if not print int value\n                default  : fprintf(out, \"['%c' ]\", c); break;\n            }       \n        }\n}\n\n// TODO: push this inside the framework\nvoid tequila_diff_print_string(\n        const char * s_type,\n        const char * expected, const char * actual,\n        const char * e_str, const char * a_str)\n{\n    FILE * out = stderr;\n\n    tequila_test_block * test_block = tequila_get_test_block();\n\n    const char * tab = \"    \";\n    fprintf(out, \"%s:%zd: %s() TEST(%s)\\n\", \n        test_block->filename, test_block->line_number, \n        test_block->function->name, test_block->name);\n\n    fprintf(out, \"%sARE_EQUAL(%s, %s, %s);\\n\",\n        tab, s_type, e_str, a_str);\n\n    fprintf(out, \"%s%s\\n\", tab, e_str);\n    fprintf(out, \"%s%s== \", tab, tab);\n    tequila_print_string(out, expected);\n    fprintf(out, \"\\n\");\n\n    fprintf(out, \"%s%s\\n\", tab, a_str);\n    fprintf(out, \"%s%s== \", tab, tab);\n    tequila_print_string(out, actual);\n    fprintf(out, \"\\n\");\n    fprintf(out, \"\\n\");\n}\n       \n        \n", "run_tests_output"=>"gcc -Wall -Werror -std=c99 *.c -o run.tests.exe\n./run.tests.exe\nTEQUILA PASSED: 1 passed, 0 failed, 0 unknown, ignored(0+0+0)\n", "unsplice.c"=>"#include \"unsplice.h\"\n\nvoid unsplice(char * line)\n{\n  /* comment */\n}\n\n"}
+Rendering kata/run_tests
+Completed in 1261ms (View: 3, DB: 0) | 200 OK [http://localhost/kata/run_tests?avatar=Frogs&kata_id=99]
+
+
+Processing KataController#see_all_increments (for 127.0.0.1 at 2010-01-10 22:35:29) [GET]
+  Parameters: {"id"=>"99"}
+Rendering template within layouts/application
+Rendering kata/see_all_increments
+Completed in 23ms (View: 5, DB: 0) | 200 OK [http://localhost/kata/see_all_increments/99]
+
+
+Processing KataController#see_one_increment (for 127.0.0.1 at 2010-01-10 22:35:33) [GET]
+  Parameters: {"increment"=>"19", "id"=>"99", "avatar"=>"Frogs"}
+Rendering template within layouts/application
+Rendering kata/see_one_increment
+Completed in 16ms (View: 7, DB: 0) | 200 OK [http://localhost/kata/see_one_increment/99?avatar=Frogs&increment=19]
+
+
+Processing KataController#help (for 127.0.0.1 at 2010-01-10 22:35:41) [GET]
+Rendering template within layouts/application
+Rendering kata/help
+Completed in 7ms (View: 6, DB: 0) | 200 OK [http://localhost/kata/help]
+
+
+Processing DojoController#index (for 127.0.0.1 at 2010-01-10 22:35:48) [GET]
+  Parameters: {"id"=>"99"}
+Rendering template within layouts/application
+Rendering dojo/index
+Completed in 4ms (View: 4, DB: 0) | 200 OK [http://localhost/dojo/index/99]

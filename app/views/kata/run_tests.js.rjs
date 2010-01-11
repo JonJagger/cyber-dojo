@@ -1,0 +1,10 @@
+
+# show extra increment
+page.replace_html 'increments', :partial => 'increments';
+
+# save run_tests_output to hidden textarea which javascript loads into editArea
+page.replace_html 'run_tests_output_div', "<textarea id='run_tests_output'>#{h @run_tests_output}</textarea>"
+
+# reflect passed/failed/error in editor border
+page['tabbed_files_border'].set_attribute('class', @outcome);
+

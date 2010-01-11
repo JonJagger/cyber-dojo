@@ -1,0 +1,7 @@
+
+{
+  :language => 'c',
+  :exercise => 'unsplice'
+}
+
+

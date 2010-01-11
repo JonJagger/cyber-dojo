@@ -1,0 +1,6 @@
+
+{
+  :language => 'java',
+  :exercise => 'demo'
+}
+

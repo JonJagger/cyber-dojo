@@ -1,0 +1,22 @@
+
+<table cellpadding="2px">
+  <tr>
+
+    <% @increments.each do |increment| -%>
+      <td>
+        <span class="<%= increment[:outcome].to_s -%> increment-box" 
+              title="<%=increment[:info]-%>"-%>
+          <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>" target="_blank">
+            <%= increment[:number] -%>
+          </a>
+        </span>
+      </td>
+    <% end -%>
+
+    <td id="run_tests_spinner" style="display:none;">
+      <%= image_tag "spinner.gif" -%>
+    </td> 
+
+  </tr>
+</table>
+

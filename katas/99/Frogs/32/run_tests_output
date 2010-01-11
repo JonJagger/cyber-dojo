@@ -1,0 +1,19 @@
+gcc -Wall -Werror -std=c99 *.c -o run.tests.exe
+unsplice.tests.c: In function ‘unsplice_tests’:
+unsplice.tests.c:6: error: expected declaration specifiers before ‘s’
+unsplice.tests.c:18: error: parameter ‘slammers’ is initialised
+cc1: warnings being treated as errors
+unsplice.tests.c:20: error: curly brackets around scalar initialiser
+unsplice.tests.c:20: error: (near initialisation for ‘slammers’)
+unsplice.tests.c:20: error: initialisation from incompatible pointer type
+unsplice.tests.c:20: error: excess elements in scalar initialiser
+unsplice.tests.c:20: error: (near initialisation for ‘slammers’)
+unsplice.tests.c:20: error: excess elements in scalar initialiser
+unsplice.tests.c:20: error: (near initialisation for ‘slammers’)
+unsplice.tests.c:26: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+unsplice.tests.c:41: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+unsplice.tests.c:50: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+unsplice.tests.c:81: error: expected ‘=’, ‘,’, ‘;’, ‘asm’ or ‘__attribute__’ before ‘{’ token
+unsplice.tests.c:106: error: old-style parameter declarations in prototyped function definition
+unsplice.tests.c:104: error: expected ‘{’ at end of input
+make: *** [run.tests.exe] Error 1

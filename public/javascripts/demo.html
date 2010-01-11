@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>EditArea Test</title>
+<script language="javascript" type="text/javascript" src="/editarea/edit_area/edit_area_full.js"></script>
+<script language="javascript" type="text/javascript">
+editAreaLoader.init({
+	id : "textarea_1"		// textarea id
+	,syntax: "css"			// syntax to be uses for highgliting
+	,start_highlight: true		// to display with highlight mode on start-up
+});
+</script>
+</head>
+<body>
+<form method="post">
+	<textarea id="textarea_1" name="content" cols="80" rows="15">
+/*This is some css that will be editable with EditArea.*/
+body, html{
+	margin: 0; 
+	padding: 0;
+	height: 100%;
+	border: none;
+	overflow: hidden;
+}</textarea>
+
+</form>
+</body>
+</html>
+

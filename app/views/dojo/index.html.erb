@@ -1,0 +1,76 @@
+
+<table>
+  <tr>
+    <td>
+      <h1 class="title">Cyber Dojo</h1> 
+    </td>
+    <td>
+      <a href="/dojo/help" target="_blank">Help</a>
+    </td>
+  </tr>
+</table>
+
+<% form_tag('/kata/start') do -%>
+
+<noscript>
+ &nbsp;
+ <h2><b>Enable JavaScript.</b></h2>
+ &nbsp;
+</noscript>
+
+<table>
+
+  <tr>
+    <td class="panel">
+      <% chunks = chunk_array(@avatars.sort, 4) -%>
+      <table cellpadding="3">
+      <% chunks.each do |chunk| -%>
+        <tr>
+        <% chunk.each do |avatar| -%>
+           <td>
+             <input id="avatar_<%=avatar.downcase-%>" 
+                    name="avatar" 
+                    type="radio" 
+                    value="<%=avatar-%>" 
+                    onClick='document.getElementById("avatar_name").value="<%=avatar-%>";' />
+             <img alt="<%=avatar-%>" 
+                  class="avatar" 
+                  src="/images/avatars/<%=avatar.downcase-%>.jpg"
+                  title="<%=avatar-%>"
+                  onClick='document.getElementById("avatar_<%=avatar.downcase-%>").checked = true;document.getElementById("avatar_name").value="<%=avatar-%>";' />
+           </td>
+        <% end -%>
+        </tr>
+      <% end -%>
+      </table>    
+    </td>
+  </tr>
+
+  <tr>
+    <td class="panel">
+      Select your animal avatar
+      <input readonly 
+             name="avatar_name" 
+             id="avatar_name" 
+             type="text" 
+             size="15" 
+             value="">
+    </td>
+  </tr>
+
+  <tr>  
+    <td class="panel">
+      Enter the <i>kata-id</i>
+      <input name="kata_id" 
+             id="kata_id" 
+             type="text" 
+             size="10" 
+             value="<%=@kata_id-%>">
+      and click <%= submit_tag 'start', :name => 'start' -%>
+    </td>  
+  </tr>
+</table>
+
+<% end -%> 
+
+

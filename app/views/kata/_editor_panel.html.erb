@@ -1,0 +1,37 @@
+
+
+<!-- This tabbed_files_border id used by run_tests.js.rjs to colour -->
+<!-- the tabbed_files editArea border red or green as appropriate.  -->
+<table cellpadding="7" 
+       id="tabbed_files_border" 
+       class="<%=@outcome-%>">
+  <tr>
+    <td>
+      <!-- EditArea turns this textarea into a tabbed edtitor. Each -->
+      <!-- visible file has a tab in this editor. Javascript copies -->
+      <!-- the contents of each individual hidden textarea (below)  -->
+      <!-- into this tabbed editor. -->
+      <textarea id="tabbed_files" 
+                name="tabbed_files" 
+                cols="135" 
+                rows="50">
+      </textarea>
+    </td>
+  </tr>
+</table>
+
+
+<div class="hidden">
+  <!-- When run-tests is clicked the javascript preRunTests() function copies  -->
+  <!-- the contents of each editArea tab back to its hidden textarea (below)   -->
+  <!-- before submitting the form. On the server rails grabs the file contents -->
+  <!-- from these hidden textareas and not from the tabbed_files editArea.     -->
+  <% @visible_files.each do |filename,file| -%>
+    <!-- This outer div is needed for run_tests_outcome from run_tests.js.rjs -->
+    <div id="<%=filename-%>_div">
+      <textarea id="<%=filename-%>" 
+                name="<%=filename-%>"><%= h file[:content] -%></textarea>
+    </div>
+  <% end -%>
+</div>
+

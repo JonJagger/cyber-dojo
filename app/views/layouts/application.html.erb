@@ -1,0 +1,20 @@
+<!DOCTYPE 
+  html PUBLIC 
+  "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+  <head>  
+    <meta http-equiv="content-type"  content="text/html;charset=UTF-8" />  
+    <title><%=@title-%></title>  
+    <link rel="shortcut icon" href="http://www.jaggersoft.com/favicon.ico">
+    <link rel="icon"          href="http://www.jaggersoft.com/animated_favicon.gif"  type="image/gif" />
+    <%= stylesheet_link_tag 'cyber_dojo' -%> 
+    <%= javascript_include_tag :defaults -%>
+    <%= javascript_include_tag 'edit_area/edit_area_full.js' -%>
+  </head>
+
+  <body class="cyber_dojo_page">
+    <%= yield -%>
+  </body>
+</html>
+
+
