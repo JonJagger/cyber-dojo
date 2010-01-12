@@ -13,11 +13,6 @@ class KataModel
     ExerciseModel.new(self)
   end
 
-  #TODO: iterations needs return an IterationsModel object?
-  def iterations
-    eval locked_read(folder + '/' + 'iterations_manifest.rb')
-  end
-
   def avatar(name)
     AvatarModel.new(self, name)
   end
