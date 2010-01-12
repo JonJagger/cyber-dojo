@@ -38,7 +38,7 @@ class AvatarModel
     my_increments
   end
 
-  def read_increment(visible_files, number)
+  def read_increment(visible_files, number) # TODO: used any more?
     increment_folder = folder + '/' + number.to_s
     visible_files.each do |filename,file|
       # no need to lock when reading these files. They are write-once-only
@@ -63,28 +63,29 @@ private
     else # restart
       my_increments = increments
       current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
+      manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
       visible_files.each do |filename,file|
         # no need to lock when reading these files. They are write-once-only
-        file[:content] = IO.read(current_increment_folder  + '/' + filename)
+        file[:content] = manifest[:visible_files][filename][:content]
+               #IO.read(current_increment_folder  + '/' + filename)
       end
       my_increments
     end
   end
 
-  def locked_save(visible_files, test_info, manifest)
+  def locked_save(visible_files, test_info, manifest)    
     my_increments = increments
 
     dst_folder = folder + '/' + my_increments.length.to_s
     make_dir(dst_folder)
-    visible_files.each do |filename,file|
+    #visible_files.each do |filename,file|
       #save_file(dst_folder, filename, file)
-      manifest[:visible_files][filename][:content] = file[:content]
-    end
+      #manifest[:visible_files][filename][:content] = file[:content]
+    #end
     path = dst_folder + '/manifest.rb'
     File.open(path, 'w') do |fd|
       fd.write(manifest.inspect)
     end
-
  
     now = Time.now
     test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]

@@ -110,7 +110,7 @@ increments of all players in the current kata.</li>
 </p>
 
 <div class="hidden">
-  <% @visible_files.each do |filename,file| -%>
+  <% @manifest[:visible_files].each do |filename,file| -%>
     <div id="<%=filename-%>_div">
       <textarea id="<%=filename-%>" 
                 name="<%=filename-%>"><%= h file[:content] -%></textarea>

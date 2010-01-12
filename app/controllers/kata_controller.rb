@@ -3,12 +3,14 @@ class KataController < ApplicationController
 
   def help
     @title = "Cyber Dojo : Kata Help"
-    @kata_language = "c"
-    @visible_files = 
-    {
-      #TODO: make more realistic
-      'unsplice.h' => { :content => 'void unsplice(char line[]);' },
-      'unsplice.c' => { :content => '#include "unsplice.h"' },
+    @manifest = 
+    { 
+      :visible_files =>  #TODO: make more realistic
+      {        
+        'unsplice.h' => { :content => 'void unsplice(char * line);' },
+        'unsplice.c' => { :content => '#include "unsplice.h"' },
+      },
+      :language => 'c',
     }
     @editable = true
   end
@@ -24,9 +26,10 @@ class KataController < ApplicationController
     @manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
 
     exercise = kata.exercise
-    @kata_language = exercise.language
+
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
     @visible_files = exercise.initial_files
+    @manifest[:visible_files] = @visible_files
     @editable = true
     run_tests_output = @visible_files['run_tests_output'][:content]
     test_log = parse_run_test_output(exercise, run_tests_output.to_s)
@@ -41,26 +44,25 @@ class KataController < ApplicationController
     kata = KataModel.new(@kata_id)
 
     @manifest = eval params['manifest.rb_div'] # load from web page
+    @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
     exercise = kata.exercise 
     avatar = kata.avatar(@avatar)
-    @visible_files, hidden_files, src_folder = exercise.filenames
-    @editable = true
-    @visible_files.each { |filename,file| file[:content] = params[filename] } # load from web page
 
     @run_tests_output = 
       do_run_tests(
         avatar.folder,
-        @visible_files, 
-        src_folder, 
-        hidden_files, 
+        @manifest[:visible_files], 
+        exercise.folder, 
+        @manifest[:hidden_files], 
         exercise.max_run_tests_duration)
 
-    @visible_files['run_tests_output'][:content] = @run_tests_output
+    @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
     test_info = parse_run_test_output(exercise, @run_tests_output.to_s)
     @outcome = test_info[:outcome].to_s
-    increments = avatar.save(@visible_files, test_info, @manifest)
+    increments = avatar.save({}, test_info, @manifest)
     @increments = limited(increments)
+    @editable = true
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -85,12 +87,10 @@ class KataController < ApplicationController
 
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
-    @kata_language = @manifest[:language]
-    @visible_files = @manifest[:visible_files]
-    @editable = false
     all_increments = avatar.increments
     @increments = [ all_increments[increment_number.to_i] ]
     @outcome = @increments.last[:outcome].to_s
+    @editable = false
   end
 
 private

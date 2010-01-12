@@ -25,16 +25,14 @@ class ExerciseModel
     @exercise[:visible_files]
   end
 
-  def filenames
-    [@exercise[:visible_files], @exercise[:hidden_files], folder]
-  end
+  #def filenames
+  #  [@exercise[:visible_files], @exercise[:hidden_files], folder]
+  #end
 
   def max_run_tests_duration
     @exercise[:max_run_tests_duration]
   end
-  
-private
- 
+   
   def folder
     'kata_catalogue' + '/' + @manifest[:language] + '/' + @manifest[:exercise]
   end

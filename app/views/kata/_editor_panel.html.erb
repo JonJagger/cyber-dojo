@@ -32,11 +32,12 @@
   <!-- the contents of each editArea tab back to its hidden textarea (below)   -->
   <!-- before submitting the form. On the server rails grabs the file contents -->
   <!-- from these hidden textareas and not from the tabbed_files editArea.     -->
-  <% @visible_files.each do |filename,file| -%>
+  <% @manifest[:visible_files].each do |filename,file| -%>
     <!-- This outer div is needed for run_tests_outcome from run_tests.js.rjs -->
     <div id="<%=filename-%>_div">
       <textarea id="<%=filename-%>" 
-                name="<%=filename-%>"><%= h file[:content] -%></textarea>
+                name="<%=filename-%>"><%= h file[:content] -%></textarea> 
+                <!-- when I load from the manifest I can drop the content here. -->
     </div>
   <% end -%>
 
