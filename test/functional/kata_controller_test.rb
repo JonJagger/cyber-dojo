@@ -2,15 +2,11 @@ require 'test_helper'
 
 class KataControllerTest < ActionController::TestCase
 
-  class MockExercise
-    def language; 'c'; end
-    def unit_test_framework; 'tequila'; end
-  end
-
   def test_parse_run_tests_stopped_output
     output = "run-tests stopped "
     expected = { :outcome => :error, :info => 'run-tests stopped' }
-    actual = parse_run_test_output(MockExercise.new, output)
+    manifest = { :language => 'c', :unit_test_framework => 'tequila' }
+    actual = parse_run_test_output(manifest, output)
     assert_equal expected, actual
   end
 
