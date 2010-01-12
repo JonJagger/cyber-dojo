@@ -36,7 +36,7 @@ class ExerciseModel
 private
  
   def folder
-    'exercises' + '/' + @manifest[:language] + '/' + @manifest[:exercise]
+    'kata_catalogue' + '/' + @manifest[:language] + '/' + @manifest[:exercise]
   end
 
 end
