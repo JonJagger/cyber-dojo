@@ -8,9 +8,15 @@
   <tr valign="top">
     <td>
 
-      <%= avatar_image(@avatar) {|f| f} -%>
-      <%= avatar_image(@avatar) {|f| f} -%>
+      <div id="shown_increment_number">
+        <span class="increment-box" title="current increment"-%>
+           <%= @shown_increment_number -%>
+        </span>
+      </div>
 
+      <%= avatar_image(@avatar) {|f| f} -%>
+      <%= avatar_image(@avatar) {|f| f} -%>
+    
       <table>       
 		<% @manifest[:visible_files].each do |filename,file| -%>
 		  <tr>

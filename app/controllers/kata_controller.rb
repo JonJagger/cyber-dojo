@@ -38,6 +38,7 @@ class KataController < ApplicationController
     end
 
     @increments = limited(all_increments)
+    @shown_increment_number = @increments.last[:number] + 1
     @outcome = @increments.last[:outcome].to_s
     @editable = true
   end
@@ -64,6 +65,7 @@ class KataController < ApplicationController
     end
 
     @increments = limited(all_increments)
+    @shown_increment_number = @increments.last[:number] + 1
     @editable = true
     respond_to do |format|
       format.js if request.xhr?
@@ -90,8 +92,9 @@ class KataController < ApplicationController
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
     all_increments = avatar.increments
-    @increments = [ all_increments[increment_number.to_i] ]
-    @outcome = @increments.last[:outcome].to_s
+    one_increment = all_increments[increment_number.to_i]
+    @shown_increment_number = one_increment[:number]
+    @outcome = one_increment[:outcome].to_s
     @editable = false
   end
 
