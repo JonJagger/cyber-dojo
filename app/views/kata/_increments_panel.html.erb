@@ -3,16 +3,6 @@
   <tr>
 
     <td>
-      <%= avatar_image(@avatar) {|f| f} -%>
-    </td>
-
-    <% if run_tests -%>
-      <td>
-        <%= submit_tag 'run-tests>' -%>
-      </td>
-    <% end -%>
-
-    <td>
       <div id="increments">
         <%= render :partial => 'increments' -%>
       </div>

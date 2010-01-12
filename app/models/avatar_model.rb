@@ -18,29 +18,11 @@ class AvatarModel
     eval locked_read(increments_filename)
   end
 
-  def read_most_recent(manifest, test_log)
-    my_increments = []
-    File.open(@kata.folder, 'r') do |f|
-      flock(f) { |lock| my_increments = locked_read_most_recent(manifest, test_log) }
-    end
-    my_increments
-  end
-
-  def save(manifest, test_info)
-    my_increments = []
-    File.open(folder, 'r') do |f|
-      flock(f) { |lock| my_increments = locked_save(manifest, test_info) }
-    end
-    my_increments
-  end
-
   def folder
 	@kata.folder + '/' + name
   end
 
-private
-
-  def locked_read_most_recent(manifest, test_log)
+  def read_most_recent(manifest, test_log)
     if !File.exists?(folder) # start
       make_dir(folder)
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
@@ -55,7 +37,7 @@ private
     end
   end
 
-  def locked_save(manifest, test_info)    
+  def save(manifest, test_info)    
     my_increments = increments
 
     dst_folder = folder + '/' + my_increments.length.to_s

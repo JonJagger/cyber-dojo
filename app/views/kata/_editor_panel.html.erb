@@ -5,7 +5,7 @@
 <table cellpadding="7" 
        id="tabbed_files_border" 
        class="<%=@outcome-%>">
-  <tr>
+  <tr valign="top">
     <td>
       <!-- EditArea turns this textarea into a tabbed edtitor. Each -->
       <!-- visible file has a tab in this editor. Javascript copies -->
@@ -16,6 +16,29 @@
                 cols="135" 
                 rows="50">
       </textarea>
+    </td>
+    <td>
+
+      <%= avatar_image(@avatar) {|f| f} -%>
+      <% if (run_tests) -%>
+        <%= submit_tag 'run-tests' -%>
+      <% end -%>
+
+      <ul>
+		<% @manifest[:visible_files].each do |filename,file| -%>
+		  <li onclick='editAreaTabbedLoad("<%=filename-%>")'>
+			<%= filename -%>
+		  </li>
+		<% end -%>
+	  </ul>
+
+	  <ul>
+		<% @manifest[:hidden_files].each do |filename,file| -%>
+		  <li>
+			<%= filename -%>
+		  </li>
+		<% end -%>
+	  </ul>
     </td>
   </tr>
 </table>

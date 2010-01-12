@@ -26,12 +26,18 @@ function editAreaLoaded(id)
   <% end -%>
 }
 
-var closeable = false;
+var closing_old_run_tests_output = false
 
 function editAreaFileClose(closing)
 {
-  // Prevent an editor tabs from being accidentally closed
-  return closeable;
+  var id = closing['id']
+  if (!closing_old_run_tests_output)
+  {
+    $(id).value = editAreaLoader.getFile('tabbed_files', id).text;
+  }
+  return false; 
+  //BUG. should be true, but then close a file, and click run-tests
+  //     and you get a rails respond_to failure
 }
 
 function editAreaTabbedLoad(name)
@@ -60,9 +66,9 @@ function postRunTests()
    // would work but closing and then reopening makes sure
    // that the run_tests_output tab becomes the topmost editor tab.
 
-   closeable = true;
+   closing_old_run_tests_output = true;
    editAreaLoader.closeFile('tabbed_files', 'run_tests_output');
-   closeable = false;
+   closing_old_run_tests_output = false;
    editAreaTabbedLoad('run_tests_output');
    Element.hide('run_tests_spinner');
 }

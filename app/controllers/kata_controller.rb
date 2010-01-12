@@ -29,7 +29,14 @@ class KataController < ApplicationController
     test_log = parse_run_test_output(@manifest, run_tests_output.to_s)
 
     avatar = kata.avatar(@avatar)
-    all_increments = avatar.read_most_recent(@manifest, test_log)
+
+    all_increments = []
+    File.open(kata.folder, 'r') do |f|
+      flock(f) do |lock|
+        all_increments = avatar.read_most_recent(@manifest, test_log)
+      end
+    end
+
     @increments = limited(all_increments)
     @outcome = @increments.last[:outcome].to_s
     @editable = true
@@ -44,13 +51,19 @@ class KataController < ApplicationController
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
     avatar = kata.avatar(@avatar)
-    @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
-    @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
-    test_info = parse_run_test_output(@manifest, @run_tests_output.to_s)
-    @outcome = test_info[:outcome].to_s
 
-    increments = avatar.save(@manifest, test_info)
-    @increments = limited(increments)
+    all_increments = []
+    File.open(kata.folder, 'r') do |f|
+      flock(f) do |lock|
+        @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
+        @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
+        test_info = parse_run_test_output(@manifest, @run_tests_output.to_s)
+        @outcome = test_info[:outcome].to_s
+        all_increments = avatar.save(@manifest, test_info)
+      end
+    end
+
+    @increments = limited(all_increments)
     @editable = true
     respond_to do |format|
       format.js if request.xhr?
@@ -85,7 +98,7 @@ class KataController < ApplicationController
 private
 
   def limited(increments)
-    max_increments_displayed = 20
+    max_increments_displayed = 30
     len = [increments.length, max_increments_displayed].min
     increments[-len,len]
   end
