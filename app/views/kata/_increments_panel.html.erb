@@ -1,13 +1,16 @@
 
 <table>
   <tr>
-
+    <td>
+      <% if (run_tests) -%>
+        <%= submit_tag 'run-tests>' -%>
+      <% end -%>
+    </td>
     <td>
       <div id="increments">
         <%= render :partial => 'increments' -%>
       </div>
     </td>
-
   </tr>
 </table>
 

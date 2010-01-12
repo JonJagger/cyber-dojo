@@ -7,38 +7,46 @@
        class="<%=@outcome-%>">
   <tr valign="top">
     <td>
+
+      <%= avatar_image(@avatar) {|f| f} -%>
+      <%= avatar_image(@avatar) {|f| f} -%>
+
+      <table>       
+		<% @manifest[:visible_files].each do |filename,file| -%>
+		  <tr>
+            <td>
+			  <div class="buttonista"
+                    onclick='editAreaTabbedLoad("<%=filename-%>")'>
+                &nbsp;<%= filename -%>&nbsp;
+              </div>
+		    </td>
+          </tr>
+		<% end -%>
+
+        <tr><td>&nbsp;</td></tr>
+
+		<% @manifest[:hidden_files].each do |filename,file| -%>
+		  <tr>
+            <td>
+			  <div class="buttonista"
+                    onclick='editAreaTabbedLoad("<%=filename-%>")'>
+  			    &nbsp;<%= filename -%>&nbsp;
+              </div>
+		    </td>
+          </tr>
+		<% end -%>
+	  </table>
+    </td>
+    <td>
       <!-- EditArea turns this textarea into a tabbed edtitor. Each -->
       <!-- visible file has a tab in this editor. Javascript copies -->
       <!-- the contents of each individual hidden textarea (below)  -->
       <!-- into this tabbed editor. -->
       <textarea id="tabbed_files" 
                 name="tabbed_files" 
-                cols="135" 
+                cols="125" 
                 rows="50">
       </textarea>
-    </td>
-    <td>
-
-      <%= avatar_image(@avatar) {|f| f} -%>
-      <% if (run_tests) -%>
-        <%= submit_tag 'run-tests' -%>
-      <% end -%>
-
-      <ul>
-		<% @manifest[:visible_files].each do |filename,file| -%>
-		  <li onclick='editAreaTabbedLoad("<%=filename-%>")'>
-			<%= filename -%>
-		  </li>
-		<% end -%>
-	  </ul>
-
-	  <ul>
-		<% @manifest[:hidden_files].each do |filename,file| -%>
-		  <li>
-			<%= filename -%>
-		  </li>
-		<% end -%>
-	  </ul>
     </td>
   </tr>
 </table>

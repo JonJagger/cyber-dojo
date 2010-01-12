@@ -2,8 +2,8 @@
 /* body style */
 .cyber_dojo_page
 {
-  margin: 0em 5em 0em 5em;
-  padding: 0em 1em 1em 0em;
+  margin-top: -1em;
+  margin-left:1em;
   border-style: none;
   background-color: #FFE4C4; /*bisque*/
   color: green;
@@ -57,6 +57,15 @@ a:link, a:visited, a:active { text-decoration: none; }
 /* line around edge of avatar image */
 .avatar { border: 1px solid #D8D8D8; } /* light-gray */
 
+.buttonista
+{
+  background-color: white;
+  color: black;
+  border-left: 1px solid #D8D8D8; /* light-gray */
+  border-top:  1px solid #D8D8D8; /* light-gray */
+  border-right:  2px solid #B0B0B0; /* medium-gray */
+  border-bottom: 2px solid #B0B0B0; /* medium-gray */
+}
 
 /* editArea uses javascript to move contents of each tabbed */
 /* file into hidden textarea before submitting to server    */
