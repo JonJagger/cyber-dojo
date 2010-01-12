@@ -18,24 +18,21 @@ class KataController < ApplicationController
   def start
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
+    @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
     kata = KataModel.new(@kata_id)
-    avatar = kata.avatar(@avatar)
 
     catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
     manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
     @manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
+    @manifest[:visible_files] = kata.exercise.visible_files
+    run_tests_output = @manifest[:visible_files]['run_tests_output'][:content]
+    test_log = parse_run_test_output(@manifest, run_tests_output.to_s)
 
-    exercise = kata.exercise
-
-    @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
-    @visible_files = exercise.initial_files
-    @manifest[:visible_files] = @visible_files
-    @editable = true
-    run_tests_output = @visible_files['run_tests_output'][:content]
-    test_log = parse_run_test_output(exercise, run_tests_output.to_s)
-    all_increments = avatar.read_most_recent_files(@visible_files, test_log, @manifest)
+    avatar = kata.avatar(@avatar)
+    all_increments = avatar.read_most_recent(@manifest, test_log)
     @increments = limited(all_increments)
     @outcome = @increments.last[:outcome].to_s
+    @editable = true
   end
 
   def run_tests
@@ -46,21 +43,13 @@ class KataController < ApplicationController
     @manifest = eval params['manifest.rb_div'] # load from web page
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
-    exercise = kata.exercise 
     avatar = kata.avatar(@avatar)
-
-    @run_tests_output = 
-      do_run_tests(
-        avatar.folder,
-        @manifest[:visible_files], 
-        exercise.folder, 
-        @manifest[:hidden_files], 
-        exercise.max_run_tests_duration)
-
+    @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
     @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
-    test_info = parse_run_test_output(exercise, @run_tests_output.to_s)
+    test_info = parse_run_test_output(@manifest, @run_tests_output.to_s)
     @outcome = test_info[:outcome].to_s
-    increments = avatar.save({}, test_info, @manifest)
+
+    increments = avatar.save(@manifest, test_info)
     @increments = limited(increments)
     @editable = true
     respond_to do |format|
@@ -105,13 +94,13 @@ end
 
 #=========================================================================
 
-def do_run_tests(dst_folder, visible_files, src_folder, hidden_files, max_seconds)
+def do_run_tests(dst_folder, src_folder, manifest)
   # Save current files to sandbox
   sandbox = dst_folder + '/' + 'sandbox'
   system("rm -r #{sandbox}")
   make_dir(sandbox)
-  visible_files.each { |filename,file| save_file(sandbox, filename, file) }
-  hidden_files.each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
+  manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
+  manifest[:hidden_files].each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
   # Run tests in sandbox in dedicated thread
   run_tests_output = []
   sandbox_thread = Thread.new do
@@ -120,7 +109,8 @@ def do_run_tests(dst_folder, visible_files, src_folder, hidden_files, max_second
    # TODO: run as a user with only execute rights; maybe using sudo -u
     run_tests_output = IO.popen("cd #{sandbox}; ./kata.sh 2>&1").readlines
   end
-  # Build and run tests has max_seconds to complete
+  # Build and run tests has limited time to complete
+  max_seconds = manifest[:max_run_tests_duration]
   max_seconds.times do 
     sleep(1) 
     break if sandbox_thread.status == false 
@@ -134,8 +124,46 @@ def do_run_tests(dst_folder, visible_files, src_folder, hidden_files, max_second
   run_tests_output
 end
 
-def parse_run_test_output(exercise, output)
-  inc = eval "parse_#{exercise.language}_#{exercise.unit_test_framework}(output)"
+def save_file(foldername, filename, file)
+  path = foldername + '/' + filename
+  # no need to lock when writing these files. They are write-once-only
+  File.open(path, 'w') do |fd|
+    filtered = makefile_filter(filename, file[:content])
+    fd.write(filtered)
+  end
+  # .sh files (for example) need execute permissions
+  File.chmod(file[:permissions], path) if file[:permissions]
+end
+
+# When editArea is used in the is_multi_files:true
+# mode then the setting replace_tab_by_spaces: applies
+# to ALL tabs (if set) or NONE of them (if not set).
+# If it is not set then the default tab-width of the
+# operating system seems to apply, which in Ubuntu
+# is 8 spaces. There appears to be no way to alter the 
+# tab-width in Ubuntu or in Firefox. Hence if you
+# want tabs to expand to 4 spaces, as I do, you have to
+# use replace_tab_by_spaces:=4 setting. This creates
+# a problem for makefiles since they are tab sensitive.
+# Hence this special filter, just for makefiles to 
+# convert 4 leading spaces to a tab character.
+def makefile_filter(name, content)
+  if name.downcase == 'makefile'
+    lines = []
+    newline = Regexp.new('[\r]?[\n]')
+    content.split(newline).each do |line|
+      line = "\t" + line[4 .. line.length-1] if line[0..3] == "    "
+      lines.push(line)
+    end
+    content = lines.join("\r\n")
+  end
+  content
+end
+
+#=========================================================================
+
+def parse_run_test_output(manifest, output)
+  inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(output)"
   if Regexp.new("run-tests stopped").match(output)
     inc[:info] = "run-tests stopped"
   end

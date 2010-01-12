@@ -28,26 +28,5 @@ class KataModel
 
 end
 
-#===============================================================
-
-def locked_read(path)
-  result = []
-  File.open(path, 'r') do |f|
-    flock(f) { |lock| result = IO.read(path) }
-  end
-  result
-end
-
-def flock(file)
-  success = file.flock(File::LOCK_EX)
-  if success
-    begin
-      yield file
-    ensure
-      file.flock(File::LOCK_UN)
-    end
-  end
-  return success
-end
 
 
