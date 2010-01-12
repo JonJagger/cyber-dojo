@@ -1,0 +1,71 @@
+
+Non-identification
+==================
+o) Players should be able to do a kata without identifying themselves.
+   There is scope for allowing them to identify themself if they want to but
+   it should not be compulsory. 
+
+Main page
+=========
+o) I'd like the main page to show
+   i) a kata-catalogue describing all the katas you can choose from
+      Ultimately it would be nice if each kata had some kind of ranking
+      to measure how difficult it was. One possibility is simply the mean
+      time previous players took to do it.
+   i) a link to a list of past katas
+   i) a link to a list of katas currently in progress
+
+Set up an existing kata
+=======================
+o) If you select a kata from the kata-catalogue you will then
+   be asked for a short description of the session.
+   Confirming the description makes that description appear in
+   the list of katas currently in progress. This should be all
+   a sensei needs to do to set up an existing kata. And the 
+   description should act (on the surface) as the identifier for
+   the kata.
+
+Starting a kata
+===============
+o) In the list of katas currently in progress you
+   click on the description and are taken to the 
+   dojo door. At the dojo door you select your simply select 
+   your animal avatar and you have started.
+
+Stopping a kata
+===============
+o) You should be able to explicitly say you want to stop the kata,
+   possibly indicating whether you have or haven't met the requirements.
+
+Enhanced file-support
+=====================
+o) players should be able to
+   i) add a new file
+   i) drop an existing file
+   i) rename an existing file
+   i) move a file from visible <--> hidden
+
+Creating a new kata
+===================
+o) Once the enhanced file-support above is in place we are nearly at
+   the stage of being able to create a new kata simply by 
+     i) naming it
+     i) describing the requirements (optional!)
+     i) specifying the language (eg python)
+   The kata then starts with just kata.sh and run_tests_output and players
+   add files as necessary and write kata.sh as they wish. For this to
+   work the manifest needs to be per increment not per kata so it can 
+   change from increment to increment.
+
+   This is where I want to get to. It makes it very very fast for a group
+   of developers to start working on a problem together.
+
+   However, one thing makes this somewhat tricky - the unit-test support.
+   The chosen unit test framework (not the language) determines which
+   regexp patterns work on the run_tests_output to identify a 
+   red/green/grey outcome. Therefore, when specifying the language
+   you should also get the default unit-test-framework selected for that
+   language. If you want to choose an alternative unit-test framework you
+   should be able to but only once regexp support is provided for it.
+
+

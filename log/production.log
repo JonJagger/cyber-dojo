@@ -57,3 +57,9 @@ Processing DojoController#index (for 127.0.0.1 at 2010-01-10 22:35:48) [GET]
 Rendering template within layouts/application
 Rendering dojo/index
 Completed in 4ms (View: 4, DB: 0) | 200 OK [http://localhost/dojo/index/99]
+
+
+Processing DojoController#index (for 127.0.0.1 at 2010-01-12 10:21:59) [GET]
+Rendering template within layouts/application
+Rendering dojo/index
+Completed in 36ms (View: 34, DB: 0) | 200 OK [http://localhost/]
