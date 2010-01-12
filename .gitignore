@@ -1,6 +1,5 @@
 *~
-log/production.log
-log/server.log
+log/*
 tmp/**/*
 katas/99/Wolves
 katas/99/Frogs

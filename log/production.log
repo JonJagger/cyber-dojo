@@ -549,3 +549,17 @@ Processing KataController#see_one_increment (for 127.0.0.1 at 2010-01-12 13:25:0
 Rendering template within layouts/application
 Rendering kata/see_one_increment
 Completed in 5ms (View: 5, DB: 0) | 200 OK [http://localhost/kata/see_one_increment/99?avatar=Wolves&increment=2]
+
+
+Processing DojoController#index (for 127.0.0.1 at 2010-01-12 13:29:02) [GET]
+  Parameters: {"id"=>"99"}
+Rendering template within layouts/application
+Rendering dojo/index
+Completed in 7ms (View: 6, DB: 0) | 200 OK [http://localhost/dojo/index/99]
+
+
+Processing KataController#start (for 127.0.0.1 at 2010-01-12 13:29:06) [POST]
+  Parameters: {"authenticity_token"=>"L6nTHYjuvkqYQkCXDeFCnvpxrALPFH2Xm1p/0+QeW8g=", "avatar"=>"Wolves", "start"=>"start", "kata_id"=>"99", "avatar_name"=>"Wolves"}
+Rendering template within layouts/application
+Rendering kata/start
+Completed in 10ms (View: 8, DB: 0) | 200 OK [http://localhost/kata/start]
