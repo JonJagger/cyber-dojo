@@ -21,7 +21,7 @@
 <table>
 
   <tr>
-    <td class="panel">
+    <td class="passed panel">
       <% chunks = chunk_array(@avatars.sort, 4) -%>
       <table cellpadding="3">
       <% chunks.each do |chunk| -%>
@@ -47,7 +47,7 @@
   </tr>
 
   <tr>
-    <td class="panel">
+    <td class="passed panel">
       Select your animal avatar
       <input readonly 
              name="avatar_name" 
@@ -59,7 +59,7 @@
   </tr>
 
   <tr>  
-    <td class="panel">
+    <td class="passed panel">
       Enter the <i>kata-id</i>
       <input name="kata_id" 
              id="kata_id" 
