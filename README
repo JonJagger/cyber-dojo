@@ -9,7 +9,6 @@ Rails
 Installation
 ============
 download the zip file, unzip it, cd into the cyber_dojo directory. Then
-  $ rake rails:update
   $ script/server -d
   $ open http://localhost:3000
 And your cyber-dojo should be running.
