@@ -18,21 +18,21 @@ class AvatarModel
     eval locked_read(increments_filename)
   end
 
-  def read_most_recent_files(visible_files, test_log)
+  def read_most_recent_files(visible_files, test_log, manifest)
     my_increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock| 
-        my_increments = locked_read_most_recent_files(visible_files, test_log) 
+        my_increments = locked_read_most_recent_files(visible_files, test_log, manifest) 
       end
     end
     my_increments
   end
 
-  def save(visible_files, test_info)
+  def save(visible_files, test_info, manifest)
     my_increments = []
     File.open(folder, 'r') do |f|
       flock(f) do |lock| 
-        my_increments = locked_save(visible_files, test_info)
+        my_increments = locked_save(visible_files, test_info, manifest)
       end
     end
     my_increments
@@ -53,13 +53,13 @@ class AvatarModel
 
 private
 
-  def locked_read_most_recent_files(visible_files, test_log)
+  def locked_read_most_recent_files(visible_files, test_log, manifest)
     if !File.exists?(folder) # start
       make_dir(folder)
       File.open(increments_filename, 'w') do |file|
         file.write([].inspect)
       end
-      save(visible_files, test_log)
+      save(visible_files, test_log, manifest)
     else # restart
       my_increments = increments
       current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
@@ -71,14 +71,20 @@ private
     end
   end
 
-  def locked_save(visible_files, test_info)
+  def locked_save(visible_files, test_info, manifest)
     my_increments = increments
 
     dst_folder = folder + '/' + my_increments.length.to_s
     make_dir(dst_folder)
     visible_files.each do |filename,file|
-      save_file(dst_folder, filename, file)
+      #save_file(dst_folder, filename, file)
+      manifest[:visible_files][filename][:content] = file[:content]
     end
+    path = dst_folder + '/manifest.rb'
+    File.open(path, 'w') do |fd|
+      fd.write(manifest.inspect)
+    end
+
  
     now = Time.now
     test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]

@@ -18,6 +18,11 @@ class KataController < ApplicationController
     @avatar = params[:avatar]
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
+
+    catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
+    manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
+    @manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
+
     exercise = kata.exercise
     @kata_language = exercise.language
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
@@ -25,7 +30,7 @@ class KataController < ApplicationController
     @editable = true
     run_tests_output = @visible_files['run_tests_output'][:content]
     test_log = parse_run_test_output(exercise, run_tests_output.to_s)
-    all_increments = avatar.read_most_recent_files(@visible_files, test_log)
+    all_increments = avatar.read_most_recent_files(@visible_files, test_log, @manifest)
     @increments = limited(all_increments)
     @outcome = @increments.last[:outcome].to_s
   end
@@ -34,6 +39,9 @@ class KataController < ApplicationController
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     kata = KataModel.new(@kata_id)
+
+    @manifest = eval params['manifest.rb_div'] # load from web page
+
     exercise = kata.exercise 
     avatar = kata.avatar(@avatar)
     @visible_files, hidden_files, src_folder = exercise.filenames
@@ -51,7 +59,7 @@ class KataController < ApplicationController
     @visible_files['run_tests_output'][:content] = @run_tests_output
     test_info = parse_run_test_output(exercise, @run_tests_output.to_s)
     @outcome = test_info[:outcome].to_s
-    increments = avatar.save(@visible_files, test_info)
+    increments = avatar.save(@visible_files, test_info, @manifest)
     @increments = limited(increments)
     respond_to do |format|
       format.js if request.xhr?
@@ -71,21 +79,18 @@ class KataController < ApplicationController
     @avatar = params[:avatar]
     increment_number = params[:increment]
     @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
+
+    path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
+    @manifest = eval IO.read(path)
+
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
-    exercise = kata.exercise
-    @kata_language = exercise.language
-    @visible_files = exercise.initial_files
+    @kata_language = @manifest[:language]
+    @visible_files = @manifest[:visible_files]
     @editable = false
-    all_increments = avatar.read_increment(@visible_files, increment_number)
+    all_increments = avatar.increments
     @increments = [ all_increments[increment_number.to_i] ]
     @outcome = @increments.last[:outcome].to_s
-
-    # TODO:? have Previous and Next buttons that load the previous
-    # and next increment (using form_remote_tag) which reload the
-    # file contents into tabbed editor (like run-tests) does for
-    # just the run_tests_output file. Will also need to set the
-    # colour on the editor border.
   end
 
 private

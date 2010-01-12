@@ -1,8 +1,0 @@
-gcc -Wall -Werror -std=c99 *.c -o run.tests.exe
-unsplice.c:3: error: conflicting types for 'unsplice'
-unsplice.h:4: error: previous declaration of 'unsplice' was here
-cc1: warnings being treated as errors
-unsplice.c: In function 'unsplice':
-unsplice.c:5: error: initialization from incompatible pointer type
-unsplice.c:6: error: initialization from incompatible pointer type
-make: *** [run.tests.exe] Error 1
