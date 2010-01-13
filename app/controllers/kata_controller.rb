@@ -72,6 +72,7 @@ class KataController < ApplicationController
     end
   end
 
+  #TODO: rename this is really a view of the dojo
   def see_all_increments
     @kata_id = params[:id]
     @title = "Cyber Dojo : Kata " + @kata_id + ", all increments"
@@ -80,6 +81,7 @@ class KataController < ApplicationController
     kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
   end
 
+  #TODO: this is really spying on another animal-group
   def see_one_increment
     @kata_id = params[:id]
     @avatar = params[:avatar]
@@ -92,6 +94,7 @@ class KataController < ApplicationController
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
     all_increments = avatar.increments
+    @increments = limited(all_increments)
     one_increment = all_increments[increment_number.to_i]
     @shown_increment_number = one_increment[:number]
     @outcome = one_increment[:outcome].to_s

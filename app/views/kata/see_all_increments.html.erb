@@ -7,8 +7,12 @@
   <% @avatars.each do |avatar_name,avatar_increments| -%>
    <tr>
      <td>
-       <%= avatar_image(avatar_name) {|i| i} -%>
-       <%= avatar_image(avatar_name) {|i| i} -%>
+       <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= avatar_increments.last[:number]-%>">
+         <%= avatar_image(avatar_name) {|i| i} -%>
+       </a>
+       <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= avatar_increments.last[:number]-%>">
+         <%= avatar_image(avatar_name) {|i| i} -%>
+       </a>
      </td>
      <td nowrap>
        <% avatar_increments.each do |increment| -%>        
