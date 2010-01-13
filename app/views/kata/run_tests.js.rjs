@@ -2,7 +2,7 @@
 # show extra increment
 page.replace_html 'increments', :partial => 'increments';
 
-page.replace_html 'shown_increment_number', "#{@shown_increment_number}"
+page.replace_html 'shown_increment_number', "<span class='increment-box' title='current increment'>#{@shown_increment_number}</span>"
 
 # save run_tests_output to hidden textarea which javascript loads into editArea
 page.replace_html 'run_tests_output_div', "<textarea id='run_tests_output'>#{h @run_tests_output}</textarea>"

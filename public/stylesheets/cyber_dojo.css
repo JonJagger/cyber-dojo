@@ -24,7 +24,16 @@ a:link, a:visited, a:active { text-decoration: none; }
   border: 1px dotted #B0B0B0; /* medium-gray */
   margin: 0.5em 0.5em 0.5em 0em;
   padding: 1em;
-  background-color: #FFE4C4; /*bisque*/
+}
+
+.file-manager
+{
+  background-color: #FEF5CA; /* sand-box */
+}
+
+.dojo
+{
+  background-color: #FEF5CA; /* sand-box */
 }
 
 /* run-test> increment outcomes */

@@ -4,29 +4,31 @@ of the two characters \ (backslash) and \n (newline) when
 they occur consecutively in an array of chars.
 
 Some examples:
+#define BS = "\\"
+#define NL = "\n"
 
-Before  "abc\\ndef"
+Before  "abc" BS NL "def"
 After   "abcdef"
 The unsplice operation has removed one occurence of the 
 backslash newline pair.
 
-Before   "abc\d\nef"
-After    "abc\d\nef"
+Before   "abc" BS "d" NL "ef"
+After    "abc" BS "d" NL "ef"
 The unspliced version is unchanged because the backslash 
 and newline characters are not consecutive.
 
-Before   "abc\n\def"
-After    "abc\n\def"
+Before   "abc" NL BS "def"
+After    "abc" NL BS "def"
 The unspliced version is unchanged because the backslash 
 and newline characters are in the wrong order.
 
-Before  "abc\\nde\\nfg"
+Before  "abc" BS NL "de" BS NL "fg"
 After   "abcdefg"
 The unsplice operation has removed two occurences of the 
 backslash newline pair.
 
-Before   "abc\\\n\ndef"
-After    "abc\\ndef"
+Before   "abc" BS BS NL NL "def"
+After    "abc" BS NL "def"
 The unspliced operation has removed one occurence of the 
 backslash newline pair. Note that another occurence of the 
 backslash newline pair remains. The unsplice operation is 
