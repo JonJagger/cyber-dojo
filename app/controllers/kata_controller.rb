@@ -200,20 +200,25 @@ def parse_ruby_test_unit(output)
 end
 
 def parse_java_junit(output)
-  junit_pass_pattern = Regexp.new('^OK \((\d*) test')
-  if match = junit_pass_pattern.match(output)
-    if match[1] != "0" 
-      inc = { :outcome => :passed, :info => match[1] }
-    else
-      # treat zero passes as a fail
-      inc = { :outcome => :failed, :info => '0' }
-    end
+  junit_error_pattern = Regexp.new('Could not find class:')
+  if match = junit_error_pattern.match(output)
+    inc = { :outcome => :error, :info => "syntax error" }
   else
-    junit_fail_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
-    if match = junit_fail_pattern.match(output)
-      inc = { :outcome => :failed, :info => match[2] }
+    junit_pass_pattern = Regexp.new('^OK \((\d*) test')
+    if match = junit_pass_pattern.match(output)
+      if match[1] != "0" 
+        inc = { :outcome => :passed, :info => match[1] }
+      else
+        # treat zero passes as a fail
+        inc = { :outcome => :failed, :info => '0' }
+      end
     else
-      inc = { :outcome => :error, :info => "syntax error" }
+      junit_fail_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
+      if match = junit_fail_pattern.match(output)
+        inc = { :outcome => :failed, :info => match[2] }
+      else
+        inc = { :outcome => :error, :info => "syntax error" }
+      end
     end
   end
 end

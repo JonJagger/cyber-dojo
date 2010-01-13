@@ -6,12 +6,12 @@
     'test_roman.rb' => {},
     'notes.txt' => {},
     'run_tests_output' => {},
-    'instructions' => {},
+    'instructions' => { :preloaded => true },
+    'kata.sh' => { :permissions => 0755 },
   },
 
   :hidden_files =>
   {
-    'kata.sh' => { :permissions => 0755 },
   },
 
   :language => 'ruby',
