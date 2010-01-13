@@ -98,7 +98,7 @@ class KataController < ApplicationController
     one_increment = all_increments[increment_number.to_i]
     @shown_increment_number = one_increment[:number]
     @outcome = one_increment[:outcome].to_s
-    @editable = false
+    @editable = true # they can't run-tests anyway
   end
 
 private

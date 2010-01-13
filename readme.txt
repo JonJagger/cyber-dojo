@@ -158,8 +158,13 @@ o) I've promised to run a browser-based dojo at the accu 2010 conference
    which starts April 14th. It would be great if a publically accesible dojo-server 
    was running by then.
 o) A VirtualBox image of the server would also be nice.
-o) It might be better if the dojo-server assigned a player an animal-identifier instead
-   of the player having to select one manually. Not sure about this though. There
-   is probably merit in both approaches.
+o) It might appear to be better if the dojo-server assigned a player an animal-identifier 
+   instead of the player having to select one manually. However, if the server selects 
+   the avatar and you wish to stay as the same avatar on all increments then the server 
+   would need to record the identity of the playing computer. I also think it makes sense
+   to explicitly choose the avatar so it is less "unexpected" as you start.
+   However, suppose you schedule a kata and start it as a Koala, what is to stop 
+   another player on a different computer also choosing to start as a koala. This
+   will become an issue when players are not co-located.
 
 
