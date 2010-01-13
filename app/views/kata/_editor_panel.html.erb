@@ -8,39 +8,39 @@
   <tr valign="top">
     <td>
 
-      <div id="shown_increment_number">
-        <span class="increment-box" title="current increment"-%>
-           <%= @shown_increment_number -%>
-        </span>
-      </div>
+      <table>
+        <tr>
+          <td>
+           <div id="shown_increment_number">
+             <span class="increment-box" title="current increment"-%>
+               <%= @shown_increment_number -%>
+             </span>
+           </div>
+          </td>
+          <td>
+            <% if (run_tests) -%>
+              <%= submit_tag 'run-tests' -%>
+            <% end -%>
+          </td>
+        </tr>
+      </table>
 
       <%= avatar_image(@avatar) {|f| f} -%>
       <%= avatar_image(@avatar) {|f| f} -%>
     
       <table>       
-		<% @manifest[:visible_files].each do |filename,file| -%>
+		<% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
             <td>
 			  <div class="buttonista"
-                    onclick='editAreaTabbedLoad("<%=filename-%>")'>
+                   onclick='editAreaTabbedLoad("<%=filename-%>")'
+                   title="load <%= filename -%>">
                 &nbsp;<%= filename -%>&nbsp;
               </div>
 		    </td>
           </tr>
 		<% end -%>
 
-        <tr><td>&nbsp;</td></tr>
-
-		<% @manifest[:hidden_files].each do |filename,file| -%>
-		  <tr>
-            <td>
-			  <div class="buttonista"
-                    onclick='editAreaTabbedLoad("<%=filename-%>")'>
-  			    &nbsp;<%= filename -%>&nbsp;
-              </div>
-		    </td>
-          </tr>
-		<% end -%>
 	  </table>
     </td>
     <td>

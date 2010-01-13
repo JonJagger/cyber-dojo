@@ -53,6 +53,11 @@ a:link, a:visited, a:active { text-decoration: none; }
   color: green;
 }
 
+.temp
+{
+  background-color: white;
+  color: black;
+}
 
 /* line around edge of avatar image */
 .avatar { border: 1px solid #D8D8D8; } /* light-gray */

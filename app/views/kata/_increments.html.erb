@@ -1,7 +1,6 @@
 
 <table cellpadding="2px">
   <tr>
-
     <% @increments.each do |increment| -%>
       <td>
         <span class="<%= increment[:outcome].to_s -%> increment-box" 
@@ -13,8 +12,10 @@
       </td>
     <% end -%>
 
-    <td id="run_tests_spinner" style="display:none;">
-      <%= image_tag "spinner.gif" -%>
+    <td id="run_tests_spinner" style="display:none;"> 
+      <span class="temp increment-box">
+        <%= image_tag "spinner.gif" -%>
+      </span>
     </td> 
 
   </tr>

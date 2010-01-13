@@ -101,7 +101,7 @@ class KataController < ApplicationController
 private
 
   def limited(increments)
-    max_increments_displayed = 29
+    max_increments_displayed = 35
     len = [increments.length, max_increments_displayed].min
     increments[-len,len]
   end
