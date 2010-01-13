@@ -128,7 +128,7 @@ def do_run_tests(dst_folder, src_folder, manifest)
   # Build and run tests has limited time to complete
   max_seconds = manifest[:max_run_tests_duration]
   max_seconds.times do 
-    sleep(1) 
+    sleep(1)
     break if sandbox_thread.status == false 
   end
   # If tests haven't finished after max_seconds assume 

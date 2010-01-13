@@ -7,7 +7,7 @@
     'unsplice.h' => {},
     'notes.txt' => {},
     'run_tests_output' => {},
-    'instructions' => {},
+    'instructions' => { :preloaded => true },
     'makefile' => {},
     'tequila.h' => {},
     'tequila.c' => {},

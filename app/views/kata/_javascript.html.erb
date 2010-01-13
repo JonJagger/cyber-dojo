@@ -21,8 +21,10 @@ editAreaLoader.init(
 
 function editAreaLoaded(id)
 {
-  <% @manifest[:visible_files].each_key do |filename| -%>
-    editAreaTabbedLoad("<%=filename-%>");
+  <% @manifest[:visible_files].each do |filename,info| -%>
+     <% if info.include? :preloaded and info[:preloaded] -%>
+       editAreaTabbedLoad("<%=filename-%>");
+     <%- end -%>
   <% end -%>
 }
 
@@ -35,9 +37,7 @@ function editAreaFileClose(closing)
   {
     $(id).value = editAreaLoader.getFile('tabbed_files', id).text;
   }
-  return false; 
-  //BUG. should be true, but then close a file, and click run-tests
-  //     and you get a rails respond_to failure
+  return true; 
 }
 
 function editAreaTabbedLoad(name)
@@ -51,13 +51,15 @@ function preRunTests()
 {
    Element.show('run_tests_spinner');
 
-   // Move contents of tabbed editArea into hidden textareas.
+   // Move contents of editArea tabs still open into hidden textareas.
    // Necessary because only individual textareas have unique
    // id's which rails can retrieve via params[id]
-   <% @manifest[:visible_files].each_key do |filename| -%>
-     $("<%=filename-%>").value 
-       = editAreaLoader.getFile('tabbed_files', "<%=filename-%>").text;
-   <% end -%>
+   var names = editAreaLoader.getAllFiles('tabbed_files');
+   for(var name in names)
+   { 
+     var text = editAreaLoader.getFile('tabbed_files', name).text;      
+     $(name).value = text
+   }; 
 }
 
 function postRunTests()
