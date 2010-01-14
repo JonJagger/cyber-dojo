@@ -48,15 +48,13 @@ class KataController < ApplicationController
     @manifest = eval params['manifest.rb'] # load from web page
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
-    @debug_msg = params['visible_filenames_container']  # This works
-
-    #1. How about if I append the names of the newly created files to
-    #   a hidden div. Separated by commas say. 
-    #2. Then need to have button and javascript to retrieve named file and
-    #   put new tab into editArea, and append as 1
-    #   The javascript also has to append a node to the dom for the given name.
-    #3. Then Rails can retrieve new filenames, parse them, use those as
-    #   id's into dom to retrieve new content.
+    new_filenames = params['visible_filenames_container'].split(';')
+    @debug_msg = new_filenames.inspect
+    new_filenames.each do |new_filename|
+      new_filename.strip!
+      @manifest[:visible_files][new_filename] = {}
+      @manifest[:visible_files][new_filename][:content] = params[new_filename]
+    end
 
     all_increments = []
     File.open(kata.folder, 'r') do |f|

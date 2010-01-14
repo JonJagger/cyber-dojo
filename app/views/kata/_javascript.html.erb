@@ -51,8 +51,6 @@ function preRunTests()
 {
    Element.show('run_tests_spinner');
 
-   $('visible_filenames_container').value = "";
-   var filenames = ""
    var names = editAreaLoader.getAllFiles('tabbed_files');
    for(var name in names)
    { 
@@ -61,12 +59,7 @@ function preRunTests()
      // id's which rails can retrieve via params[id]
      var text = editAreaLoader.getFile('tabbed_files', name).text;      
      $(name).value = text
-
-     filenames += name
-     filenames += ";" 
    }; 
-   // Put filenames into a dom element so they too can be retrieved
-   $('visible_filenames_container').value = filenames;
 }
 
 function postRunTests()
@@ -85,6 +78,7 @@ function postRunTests()
 function newFile()
 {
   var filename = $('new-filename').value;
+  filename = filename.split(' ').join('');
   if (filename=="") return;
 
   // We're about to put a new tab into editArea for the given filename.
@@ -95,6 +89,7 @@ function newFile()
   ta.setAttribute('id', filename);
   ta.setAttribute('name', filename);
   $('visible_files_container').appendChild(ta);
+
   // Make the new filename visible in the file-manager list
   var mle = document.createElement("div");
   mle.setAttribute('id', filename + "-button");
@@ -102,12 +97,20 @@ function newFile()
   mle.onclick = new Function("editAreaTabbedLoad('" + filename + "')");
   mle.appendChild(document.createTextNode(filename));
   $('filename-button-list').appendChild(mle);
+
+  // make its name available to rails
+  var current = $('visible_filenames_container').value;
+  current += filename;
+  current += ";";
+  $('visible_filenames_container').value = current;
+
   // Blank out the new-filename text input
   $('new-filename').value = '';
+
   // Now add the tab to editArea
   editAreaLoader.openFile(
     'tabbed_files',
-    { id: filename, text: filename.toString(), title: filename });
+    { id: filename, text: "", title: filename });
 }
 </script>
 
