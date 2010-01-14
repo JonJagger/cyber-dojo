@@ -68,6 +68,7 @@ class KataController < ApplicationController
 
     @increments = limited(all_increments)
     @shown_increment_number = @increments.last[:number] + 1
+    @shown_increment_outcome = ""
     @editable = true
     respond_to do |format|
       format.js if request.xhr?
@@ -98,8 +99,9 @@ class KataController < ApplicationController
     all_increments = avatar.increments
     @increments = limited(all_increments)
     one_increment = all_increments[increment_number.to_i]
-    @shown_increment_number = one_increment[:number]
     @outcome = one_increment[:outcome].to_s
+    @shown_increment_number = one_increment[:number]
+    @shown_increment_outcome = one_increment[:outcome]
     @editable = true # enables editArea toolbar - they can't run-tests anyway
   end
 
@@ -117,7 +119,7 @@ private
   end
 
   def limited(increments)
-    max_increments_displayed = 35
+    max_increments_displayed = 25
     len = [increments.length, max_increments_displayed].min
     increments[-len,len]
   end
