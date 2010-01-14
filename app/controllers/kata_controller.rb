@@ -45,12 +45,11 @@ class KataController < ApplicationController
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
 
-    @manifest = eval params['manifest.rb_div'] # load from web page
+    @manifest = eval params['manifest.rb'] # load from web page
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
-    #@debug = params['notes.txt_div']  This fails
-    @debug = params['notes.txt']  # This works
-    #So it seems params can only get text and cannot get a dom
+    @debug_msg = params['visible_filenames_container']  # This works
+
     #1. How about if I append the names of the newly created files to
     #   a hidden div. Separated by commas say. 
     #2. Then need to have button and javascript to retrieve named file and

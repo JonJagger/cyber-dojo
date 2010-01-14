@@ -51,15 +51,22 @@ function preRunTests()
 {
    Element.show('run_tests_spinner');
 
-   // Move contents of editArea tabs still open into hidden textareas.
-   // Necessary because only individual textareas have unique
-   // id's which rails can retrieve via params[id]
+   $('visible_filenames_container').value = "";
+   var filenames = ""
    var names = editAreaLoader.getAllFiles('tabbed_files');
    for(var name in names)
    { 
+     // Move contents of editArea tabs still open into hidden textareas.
+     // Necessary because only individual textareas have unique
+     // id's which rails can retrieve via params[id]
      var text = editAreaLoader.getFile('tabbed_files', name).text;      
      $(name).value = text
+
+     filenames += name
+     filenames += ";" 
    }; 
+   // Put filenames into a dom element so they too can be retrieved
+   $('visible_filenames_container').value = filenames;
 }
 
 function postRunTests()
@@ -78,6 +85,7 @@ function postRunTests()
 function newFile()
 {
   var filename = $('new-filename').value;
+  if (filename=="") return;
 
   // We're about to put a new tab into editArea for the given filename.
   // This new tab will be referenced by editAreaFileClose() and
@@ -100,8 +108,6 @@ function newFile()
   editAreaLoader.openFile(
     'tabbed_files',
     { id: filename, text: filename.toString(), title: filename });
-
-  alert(filename);
 }
 </script>
 

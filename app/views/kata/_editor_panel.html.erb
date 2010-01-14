@@ -80,14 +80,20 @@
     <% end -%>
   </div>
 
-  <div id="manifest.rb_div">
-      <textarea id="manifest.rb_div" 
-                name="manifest.rb_div"><%= h @manifest.inspect -%></textarea>
-  </div>
-</div>
+  <textarea id="visible_filenames_container"
+            name="visible_filenames_container">
+  </textarea>
 
+   <textarea id="manifest.rb" 
+             name="manifest.rb">
+     <%= h @manifest.inspect -%>
+   </textarea>
+
+</div>
 
 <div id="debug_div">
-  <textarea id="debug">Debug</textarea>
+ <textarea id="debug">
+ </textarea>
 </div>
+
 
