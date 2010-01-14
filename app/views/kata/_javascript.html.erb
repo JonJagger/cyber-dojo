@@ -75,5 +75,33 @@ function postRunTests()
    Element.hide('run_tests_spinner');
 }
 
+function newFile()
+{
+  var filename = $('new-filename').value;
+
+  // We're about to put a new tab into editArea for the given filename.
+  // This new tab will be referenced by editAreaFileClose() and
+  // preRunTests() which both assume there will be dom element of the given 
+  // filename. So first, add the dom element for the filename.
+  var ta = document.createElement("textarea");
+  ta.setAttribute('id', filename);
+  ta.setAttribute('name', filename);
+  $('visible_files_container').appendChild(ta);
+  // Make the new filename visible in the file-manager list
+  var mle = document.createElement("div");
+  mle.setAttribute('id', filename + "-button");
+  mle.setAttribute('class', 'fake-button');
+  mle.onclick = new Function("editAreaTabbedLoad('" + filename + "')");
+  mle.appendChild(document.createTextNode(filename));
+  $('filename-button-list').appendChild(mle);
+  // Blank out the new-filename text input
+  $('new-filename').value = '';
+  // Now add the tab to editArea
+  editAreaLoader.openFile(
+    'tabbed_files',
+    { id: filename, text: filename.toString(), title: filename });
+
+  alert(filename);
+}
 </script>
 

@@ -27,16 +27,24 @@
       <table>       
 		<% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
-            <td>
-			  <div class="buttonista"
+            <td id="filename-button-list">
+			  <div id="<%=filename-%>-button"
+                   class="fake-button"
                    onclick='editAreaTabbedLoad("<%=filename-%>")'
                    title="load <%= filename -%>">
-                &nbsp;<%= filename -%>&nbsp;
+                   <%= filename -%>
               </div>
 		    </td>
           </tr>
 		<% end -%>
 	  </table>
+
+      <br/>
+      <br/>
+      <br/>
+      <input type="button" name="new-file" value="new file" onclick="newFile()"/>
+      <br/>
+      <input type="text" id="new-filename" size="8" value=""/>
     </td>
 
     <td>
@@ -76,6 +84,10 @@
       <textarea id="manifest.rb_div" 
                 name="manifest.rb_div"><%= h @manifest.inspect -%></textarea>
   </div>
+</div>
 
+
+<div id="debug_div">
+  <textarea id="debug">Debug</textarea>
 </div>
 

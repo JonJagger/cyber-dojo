@@ -10,3 +10,4 @@ page.replace_html 'run_tests_output_div', "<textarea id='run_tests_output'>#{h @
 # reflect passed/failed/error in editor border
 page['tabbed_files_border'].set_attribute('class', @outcome);
 
+page.replace_html 'debug_div', "<textarea id='debug'>#{h @debug}</textarea>"

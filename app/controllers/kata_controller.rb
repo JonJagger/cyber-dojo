@@ -48,6 +48,17 @@ class KataController < ApplicationController
     @manifest = eval params['manifest.rb_div'] # load from web page
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
+    #@debug = params['notes.txt_div']  This fails
+    @debug = params['notes.txt']  # This works
+    #So it seems params can only get text and cannot get a dom
+    #1. How about if I append the names of the newly created files to
+    #   a hidden div. Separated by commas say. 
+    #2. Then need to have button and javascript to retrieve named file and
+    #   put new tab into editArea, and append as 1
+    #   The javascript also has to append a node to the dom for the given name.
+    #3. Then Rails can retrieve new filenames, parse them, use those as
+    #   id's into dom to retrieve new content.
+
     all_increments = []
     File.open(kata.folder, 'r') do |f|
       flock(f) do |lock|
@@ -104,8 +115,8 @@ private
     manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
     manifest[:visible_files] = kata.exercise.visible_files    
 	#TODO: control both from page and save back to manifest in each increment
-    manifest[:font_size] = (manifest.include? :font_size) ? manifest[:font_size] : 14;
-    manifest[:tab_size]  = (manifest.include? :tab_size ) ? manifest[:tab_size ] : 4;
+    manifest[:font_size] = manifest[:font_size] || 14;
+    manifest[:tab_size]  = manifest[:tab_size ] ||  4;
     manifest
   end
 

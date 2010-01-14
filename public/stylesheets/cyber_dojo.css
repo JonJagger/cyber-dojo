@@ -71,7 +71,7 @@ a:link, a:visited, a:active { text-decoration: none; }
 /* line around edge of avatar image */
 .avatar { border: 1px solid #D8D8D8; } /* light-gray */
 
-.buttonista
+.fake-button
 {
   background-color: white;
   color: black;
