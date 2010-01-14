@@ -48,6 +48,10 @@ loaded and eval'd in the ruby code). For example:
   :unit_test_framework => 'tequila',
 
   :max_run_tests_duration => 10,
+
+  :font_size => 14,
+
+  :tab_size => 8,
 }
 
 
@@ -76,6 +80,12 @@ Explanation of these parameters
   This is the maximum number of seconds the dojo-server allows an increment to run in
   (the time starts after all the increments files have been copied to the sandbox folder).
 
+6:font_size
+  This can be set to values not listed in the editArea font-size drop-down list.
+  Optional. The default is 14.
+
+7:tab_size
+  Optional. The default is 4.
 
 
 Some Notes
