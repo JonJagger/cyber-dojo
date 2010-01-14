@@ -8,8 +8,8 @@ o) Players should be able to do a kata without identifying themselves.
 Main page
 =========
 o) I'd like the main page to show
-   i) a kata-catalogue describing all the katas you can choose from
-      Ultimately it would be nice if each kata had some kind of ranking
+   i) a kata-catalogue describing all the kata-names you can choose from
+      Ultimately it would be nice if each kata-name had some kind of ranking
       to measure how difficult it was. One possibility is simply the mean
       time previous players took to do it.
    i) a link to a list of past katas
@@ -17,8 +17,8 @@ o) I'd like the main page to show
 
 Set up an existing kata
 =======================
-o) If you select a kata from the kata-catalogue you will then
-   be asked for a short description of the session.
+o) If you select a kata-name from the kata-catalogue you will then
+   be asked for a short description to identify the session.
    Confirming the description makes that description appear in
    the list of katas currently in progress. This should be all
    a sensei needs to do to set up an existing kata. And the 
@@ -29,8 +29,9 @@ Starting a kata
 ===============
 o) In the list of katas currently in progress you
    click on the description and are taken to the 
-   dojo door. At the dojo door you select your simply select 
-   your animal avatar and you have started.
+   dojo door. At the dojo door you simply select 
+   your animal avatar and you have started (no 
+   need to click start?)
 
 Stopping a kata
 ===============
@@ -40,10 +41,9 @@ o) You should be able to explicitly say you want to stop the kata,
 Enhanced file-support
 =====================
 o) players should be able to
-   i) add a new file
+   i) add a new file (if it's a shell file it will to be given execute permission)
    i) drop an existing file
    i) rename an existing file
-   i) move a file from visible <--> hidden
 
 Creating a new kata
 ===================
@@ -68,4 +68,27 @@ o) Once the enhanced file-support above is in place we are nearly at
    language. If you want to choose an alternative unit-test framework you
    should be able to but only once regexp support is provided for it.
 
+   Thinking about this further, there is another approach.: the kata.sh file
+   has a requirement that its final line of output is specified. For example
+   the final line could be "PASSED" "FAILED" or "ERROR". The shell file has
+   to do what it needs to determine the correct line. This removes all need
+   for regexp parsing inside Rails. It also means support for a new 
+   unit-test framework can be developed using Cyber Dojo itself. It might
+   also be more practical since kata.sh will have access to the return codes
+   of the commands it issues (such as gcc, javac) which should make it 
+   easier for it to determine a pass,fail or error.
+   This implies a player should never be able to remove kata.sh from their
+   file set.
+
+Kata description
+================
+o) These should written in such a way to be reusable across any language.
+   This means that once support is in place for unit-test-framework you
+   can choose 
+      i) the kata-name
+      i) language
+      i) the unit-test framework
+   and as long as their is a default set of initial files for that language
+   and unit-test framework you are ready to go.
+   as
 
