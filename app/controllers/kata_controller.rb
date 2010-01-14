@@ -133,6 +133,7 @@ def do_run_tests(dst_folder, src_folder, manifest)
   make_dir(sandbox)
   manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
   manifest[:hidden_files].each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
+
   # Run tests in sandbox in dedicated thread
   run_tests_output = []
   sandbox_thread = Thread.new do
@@ -220,25 +221,19 @@ def parse_ruby_test_unit(output)
 end
 
 def parse_java_junit(output)
-  junit_error_pattern = Regexp.new('Could not find class:')
-  if match = junit_error_pattern.match(output)
-    inc = { :outcome => :error, :info => "syntax error" }
+  junit_pass_pattern = Regexp.new('^OK \((\d*) test')
+  if match = junit_pass_pattern.match(output)
+    if match[1] != "0" 
+      inc = { :outcome => :passed, :info => match[1] }
+    else # treat zero passes as a fail
+      inc = { :outcome => :failed, :info => '0' }
+    end
   else
-    junit_pass_pattern = Regexp.new('^OK \((\d*) test')
-    if match = junit_pass_pattern.match(output)
-      if match[1] != "0" 
-        inc = { :outcome => :passed, :info => match[1] }
-      else
-        # treat zero passes as a fail
-        inc = { :outcome => :failed, :info => '0' }
-      end
+    junit_fail_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
+    if match = junit_fail_pattern.match(output)
+      inc = { :outcome => :failed, :info => match[2] }
     else
-      junit_fail_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
-      if match = junit_fail_pattern.match(output)
-        inc = { :outcome => :failed, :info => match[2] }
-      else
-        inc = { :outcome => :error, :info => "syntax error" }
-      end
+      inc = { :outcome => :error, :info => "syntax error" }
     end
   end
 end
