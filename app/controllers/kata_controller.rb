@@ -48,8 +48,7 @@ class KataController < ApplicationController
     @manifest = eval params['manifest.rb'] # load from web page
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
-    new_filenames = params['visible_filenames_container'].split(';')
-    @debug_msg = new_filenames.inspect
+    new_filenames = params['visible_filenames_container'].strip.split(';')
     new_filenames.each do |new_filename|
       new_filename.strip!
       @manifest[:visible_files][new_filename] = {}
