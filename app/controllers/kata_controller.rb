@@ -12,18 +12,7 @@ class KataController < ApplicationController
       },
       :language => 'c',
     }
-    @editable = true
-  end
-
-  def load_starting_manifest(kata) # TODO: make private
-    catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
-    manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
-    manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
-    manifest[:visible_files] = kata.exercise.visible_files    
-	#TODO: control both from page and save back to manifest in each increment
-    manifest[:font_size] = (manifest.include? :font_size) ? manifest[:font_size] : 14;
-    manifest[:tab_size]  = (manifest.include? :tab_size ) ? manifest[:tab_size ] : 4;
-    manifest
+    @editable = true # needed to display toolbar in editArea
   end
 
   def start
@@ -32,23 +21,18 @@ class KataController < ApplicationController
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
     kata = KataModel.new(@kata_id)
 
-    #catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
-    #manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
     @manifest = load_starting_manifest(kata)
-    #@manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
-    #@manifest[:visible_files] = kata.exercise.visible_files
     run_tests_output = @manifest[:visible_files]['run_tests_output'][:content]
     test_log = parse_run_test_output(@manifest, run_tests_output.to_s)
 
     avatar = kata.avatar(@avatar)
-
     all_increments = []
     File.open(kata.folder, 'r') do |f|
       flock(f) do |lock|
         all_increments = avatar.read_most_recent(@manifest, test_log)
       end
     end
-
+    
     @increments = limited(all_increments)
     @shown_increment_number = @increments.last[:number] + 1
     @outcome = @increments.last[:outcome].to_s
@@ -59,11 +43,10 @@ class KataController < ApplicationController
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     kata = KataModel.new(@kata_id)
+    avatar = kata.avatar(@avatar)
 
     @manifest = eval params['manifest.rb_div'] # load from web page
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
-
-    avatar = kata.avatar(@avatar)
 
     all_increments = []
     File.open(kata.folder, 'r') do |f|
@@ -110,10 +93,21 @@ class KataController < ApplicationController
     one_increment = all_increments[increment_number.to_i]
     @shown_increment_number = one_increment[:number]
     @outcome = one_increment[:outcome].to_s
-    @editable = true # they can't run-tests anyway
+    @editable = true # enables editArea toolbar - they can't run-tests anyway
   end
 
 private
+
+  def load_starting_manifest(kata)
+    catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
+    manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
+    manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
+    manifest[:visible_files] = kata.exercise.visible_files    
+	#TODO: control both from page and save back to manifest in each increment
+    manifest[:font_size] = (manifest.include? :font_size) ? manifest[:font_size] : 14;
+    manifest[:tab_size]  = (manifest.include? :tab_size ) ? manifest[:tab_size ] : 4;
+    manifest
+  end
 
   def limited(increments)
     max_increments_displayed = 35
