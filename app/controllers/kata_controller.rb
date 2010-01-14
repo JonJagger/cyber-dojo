@@ -15,16 +15,28 @@ class KataController < ApplicationController
     @editable = true
   end
 
+  def load_starting_manifest(kata) # TODO: make private
+    catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
+    manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
+    manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
+    manifest[:visible_files] = kata.exercise.visible_files    
+	#TODO: control both from page and save back to manifest in each increment
+    manifest[:font_size] = (manifest.include? :font_size) ? manifest[:font_size] : 14;
+    manifest[:tab_size]  = (manifest.include? :tab_size ) ? manifest[:tab_size ] : 4;
+    manifest
+  end
+
   def start
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
     kata = KataModel.new(@kata_id)
 
-    catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
-    manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
-    @manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
-    @manifest[:visible_files] = kata.exercise.visible_files
+    #catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
+    #manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
+    @manifest = load_starting_manifest(kata)
+    #@manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
+    #@manifest[:visible_files] = kata.exercise.visible_files
     run_tests_output = @manifest[:visible_files]['run_tests_output'][:content]
     test_log = parse_run_test_output(@manifest, run_tests_output.to_s)
 
@@ -165,7 +177,11 @@ end
 # use replace_tab_by_spaces:=4 setting. This creates
 # a problem for makefiles since they are tab sensitive.
 # Hence this special filter, just for makefiles to 
-# convert 4 leading spaces to a tab character.
+# convert 4 leading spaces to a tab character. I don't
+# use the manifest[:tab_size] setting for tab expansation
+# since the makefile is only created in the sandbox; its
+# not an individual file in the increment since its inside
+# the manifest.
 def makefile_filter(name, content)
   if name.downcase == 'makefile'
     lines = []

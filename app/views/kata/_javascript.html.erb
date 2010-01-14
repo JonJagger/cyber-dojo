@@ -14,8 +14,8 @@ editAreaLoader.init(
     ,EA_load_callback: "editAreaLoaded"
     ,EA_file_close_callback: "editAreaFileClose"
     ,show_line_colors: true
-    ,font_size: 14
-    ,replace_tab_by_spaces: 4
+    ,font_size: <%=@manifest[:font_size]-%>
+    ,replace_tab_by_spaces: <%=@manifest[:tab_size]-%>
     }
 );
 

@@ -23,5 +23,9 @@
   :unit_test_framework => 'tequila',
 
   :max_run_tests_duration => 10,
+
+  :tab_size => 14,
+
+  :font_size => 4,
 }
 
