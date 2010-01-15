@@ -21,8 +21,6 @@ a:link, a:visited, a:active { text-decoration: none; }
 
 .panel
 {    
-  /*border: 1px solid #D8D8D8; /* light-gray */
-  /*-moz-border-radius: 10px; */
   margin: 0.5em 0.5em 0.5em 0em;
   padding: 1em;
 }

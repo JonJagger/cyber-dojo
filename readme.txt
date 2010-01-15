@@ -52,6 +52,8 @@ loaded and eval'd in the ruby code). For example:
   :font_size => 14,
 
   :tab_size => 8,
+
+  :font_family => 'verdana'
 }
 
 
@@ -86,6 +88,9 @@ Explanation of these parameters
 
 7:tab_size
   Optional. The default is 4.
+
+8.font_family
+  Optional. The default is monospace. 
 
 
 Some Notes

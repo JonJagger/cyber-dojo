@@ -97,12 +97,12 @@ class KataController < ApplicationController
     kata = KataModel.new(@kata_id)
     avatar = kata.avatar(@avatar)
     all_increments = avatar.increments
-    @increments = limited(all_increments)
     one_increment = all_increments[increment_number.to_i]
+    @increments = limited(all_increments)
     @outcome = one_increment[:outcome].to_s
     @shown_increment_number = one_increment[:number]
     @shown_increment_outcome = one_increment[:outcome]
-    @editable = true # enables editArea toolbar - they can't run-tests anyway
+    @editable = true # enables editArea toolbar - can't run-tests anyway
   end
 
 private
@@ -114,7 +114,8 @@ private
     manifest[:visible_files] = kata.exercise.visible_files    
 	#TODO: control both from page and save back to manifest in each increment
     manifest[:font_size] = manifest[:font_size] || 14;
-    manifest[:tab_size]  = manifest[:tab_size ] ||  4;
+    manifest[:tab_size] = manifest[:tab_size ] ||  4;
+    manifest[:font_family] = manifest[:font_family] || 'monospace';
     manifest
   end
 
