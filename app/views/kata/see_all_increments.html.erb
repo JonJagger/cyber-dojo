@@ -16,7 +16,7 @@
      </td>
      <td nowrap>
        <% avatar_increments.each do |increment| -%>        
-         <span class="<%= increment[:outcome].to_s -%> increment-box" 
+         <span class="<%= increment[:outcome].to_s -%> increment box" 
                title="<%=increment[:info]-%>"-%>
            <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= increment[:number]-%>"><%=increment[:number]-%></a></span>
        <% end -%>
