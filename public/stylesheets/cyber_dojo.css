@@ -1,6 +1,6 @@
 
 /* body style */
-.cyber_dojo_page
+.cyber-dojo-page
 {
   margin-top: -1em;
   margin-left:1em;
@@ -21,8 +21,8 @@ a:link, a:visited, a:active { text-decoration: none; }
 
 .panel
 {    
-  border: 1px solid #D8D8D8; /* light-gray */
-  -moz-border-radius: 10px;
+  /*border: 1px solid #D8D8D8; /* light-gray */
+  /*-moz-border-radius: 10px; */
   margin: 0.5em 0.5em 0.5em 0em;
   padding: 1em;
 }
@@ -32,7 +32,7 @@ a:link, a:visited, a:active { text-decoration: none; }
   background-color: #FEF5CA; /* sand-box */
 }
 
-.dojo
+.dojo /* TODO: poor name */
 {
   background-color: #FEF5CA; /* sand-box */
 }
@@ -43,7 +43,7 @@ a:link, a:visited, a:active { text-decoration: none; }
   border-top:    1px solid #D8D8D8; /* light-gray */
   border-right:  2px solid #B0B0B0; /* medium-gray */
   border-bottom: 2px solid #B0B0B0; /* medium-gray */
-  -moz-border-radius: 5px;
+  -moz-border-radius: 4px;
 }
 
 /* run-test> increment outcomes */
@@ -71,7 +71,7 @@ a:link, a:visited, a:active { text-decoration: none; }
   color: green;
 }
 
-.temp /* for spinner */
+.spinner
 {
   background-color: white;
   color: black;

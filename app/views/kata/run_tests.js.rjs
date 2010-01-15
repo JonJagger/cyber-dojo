@@ -1,7 +1,7 @@
 
 page.replace_html 'increments', :partial => 'increments';
 
-page.replace_html 'shown_increment_number', "<span class='#{@shown_increment_outcome} increment-box' title='current increment'>#{@shown_increment_number}</span>"
+page.replace_html 'shown_increment_number', "<span class='#{@shown_increment_outcome} increment box' title='current increment'>#{@shown_increment_number}</span>"
 
 page.replace_html 'run_tests_output_div', "<textarea id='run_tests_output'>#{h @run_tests_output}</textarea>"
 
