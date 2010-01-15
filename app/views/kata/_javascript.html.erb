@@ -94,7 +94,7 @@ function newFile()
   // Make the new filename visible in the file-manager list
   var mle = document.createElement("div");
   mle.setAttribute('id', filename + "-button");
-  mle.setAttribute('class', 'fake-button');
+  mle.setAttribute('class', 'fake-button box');
   mle.onclick = new Function("editAreaTabbedLoad('" + filename + "')");
   mle.appendChild(document.createTextNode(filename));
   $('filename-button-list').appendChild(mle);

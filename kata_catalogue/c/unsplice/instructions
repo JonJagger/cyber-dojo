@@ -1,4 +1,4 @@
-
+Welcome to the dojo.
 Your task is to write a function to remove all occurences 
 of the two characters \ (backslash) and \n (newline) when 
 they occur consecutively in an array of chars.

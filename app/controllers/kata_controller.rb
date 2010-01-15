@@ -7,12 +7,15 @@ class KataController < ApplicationController
     { 
       :visible_files =>  #TODO: make more realistic
       {        
-        'unsplice.h' => { :content => 'void unsplice(char * line);' },
-        'unsplice.c' => { :content => '#include "unsplice.h"' },
+        'unsplice.h' => { :preloaded => true, :content => 'void unsplice(char * line);' },
+        'unsplice.c' => { :preloaded => true, :content => '#include "unsplice.h"' },
       },
       :language => 'c',
+      :font_family => 'monospace',
+      :font_size => 14,
+      :tab_size => 4,
     }
-    @editable = true # needed to display toolbar in editArea
+    @editable = true # needed to display toolbar in editArea    
   end
 
   def start
