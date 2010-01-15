@@ -21,7 +21,8 @@ a:link, a:visited, a:active { text-decoration: none; }
 
 .panel
 {    
-  border: 1px dotted #B0B0B0; /* medium-gray */
+  border: 1px solid #D8D8D8; /* light-gray */
+  -moz-border-radius: 10px;
   margin: 0.5em 0.5em 0.5em 0em;
   padding: 1em;
 }
@@ -45,6 +46,7 @@ a:link, a:visited, a:active { text-decoration: none; }
   border-bottom: 2px solid #B0B0B0; /* medium-gray */
   padding: 0.15em; 
   text-align: center; 
+  -moz-border-radius: 5px;
 }
 
 .passed
@@ -65,23 +67,38 @@ a:link, a:visited, a:active { text-decoration: none; }
   color: green;
 }
 
-.temp
+.temp /* for spinner */
 {
   background-color: white;
   color: black;
 }
 
 /* line around edge of avatar image */
-.avatar { border: 1px solid #D8D8D8; } /* light-gray */
+.avatar 
+{ 
+  border: 2px solid #D8D8D8;  /* light-gray */
+  -moz-border-radius: 5px;
+  border-left: 1px solid #D8D8D8; /* light-gray */
+  border-top:  1px solid #D8D8D8; /* light-gray */
+  border-right:  2px solid #B0B0B0; /* medium-gray */
+  border-bottom: 2px solid #B0B0B0; /* medium-gray */
+}
 
 .fake-button
 {
   background-color: white;
   color: black;
+  -moz-border-radius: 5px;
   border-left: 1px solid #D8D8D8; /* light-gray */
   border-top:  1px solid #D8D8D8; /* light-gray */
   border-right:  2px solid #B0B0B0; /* medium-gray */
   border-bottom: 2px solid #B0B0B0; /* medium-gray */
+  white-space: nowrap;
+}
+.fake-button:before, .fake-button:after
+{
+  content: " ";
+  white-space: pre;
 }
 
 /* editArea uses javascript to move contents of each tabbed */

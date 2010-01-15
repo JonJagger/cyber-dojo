@@ -21,8 +21,12 @@
         </tr>
       </table>
 
-      <%= avatar_image(@avatar) {|f| f} -%>
-      <%= avatar_image(@avatar) {|f| f} -%>
+        <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
+          <%= avatar_image(@avatar) {|f| f} -%>
+        </a>
+        <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
+          <%= avatar_image(@avatar) {|f| f} -%>
+        </a>
     
       <table>       
 		<% @manifest[:visible_files].sort.each do |filename,file| -%>
@@ -42,7 +46,7 @@
       <br/>
       <br/>
       <br/>
-      <input type="button" name="new-file" value="new file" onclick="newFile()"/>
+      <input type="button" name="new-file" value="new-file" onclick="newFile()"/>
       <br/>
       <input type="text" id="new-filename" size="8" value=""/>
     </td>
