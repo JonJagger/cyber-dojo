@@ -1,5 +1,5 @@
 
-class AvatarModel
+class Avatar
 
   NAMES = %w( Alligators Badgers Bears Beavers Buffalos Camels Cheetahs Deer
               Elephants Frogs Giraffes Gophers Gorillas Hippos Kangaroos Koalas 

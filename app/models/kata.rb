@@ -1,5 +1,5 @@
 
-class KataModel
+class Kata
 
   def initialize(id)
     @id = id
@@ -10,16 +10,16 @@ class KataModel
   end
 
   def exercise
-    ExerciseModel.new(self)
+    Exercise.new(self)
   end
 
   def avatar(name)
-    AvatarModel.new(self, name)
+    Avatar.new(self, name)
   end
 
   def avatars
     result = []
-    AvatarModel::NAMES.each do |avatar_name|
+    Avatar::NAMES.each do |avatar_name|
       path = folder + '/' + avatar_name
       result << avatar(avatar_name) if File.exists?(path)
     end

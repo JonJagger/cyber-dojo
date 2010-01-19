@@ -1,5 +1,5 @@
 
-class ExerciseModel
+class Exercise
 
   def initialize(kata)
     @manifest = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')

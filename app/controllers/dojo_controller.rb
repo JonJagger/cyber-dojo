@@ -10,7 +10,7 @@ class DojoController < ApplicationController
     else
       @kata_id = ""
     end
-    @avatars = AvatarModel::NAMES
+    @avatars = Avatar::NAMES
     @title = "Cyber Dojo"
   end
 

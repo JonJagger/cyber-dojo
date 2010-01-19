@@ -22,7 +22,7 @@ class KataController < ApplicationController
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
-    kata = KataModel.new(@kata_id)
+    kata = Kata.new(@kata_id)
 
     @manifest = load_starting_manifest(kata)
     run_tests_output = @manifest[:visible_files]['run_tests_output'][:content]
@@ -45,7 +45,7 @@ class KataController < ApplicationController
   def run_tests
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
-    kata = KataModel.new(@kata_id)
+    kata = Kata.new(@kata_id)
     avatar = kata.avatar(@avatar)
 
     @manifest = eval params['manifest.rb'] # load from web page
@@ -83,7 +83,7 @@ class KataController < ApplicationController
     @kata_id = params[:id]
     @title = "Cyber Dojo : Kata " + @kata_id + ", all increments"
     @avatars = {}
-    kata = KataModel.new(@kata_id)
+    kata = Kata.new(@kata_id)
     kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
   end
 
@@ -97,7 +97,7 @@ class KataController < ApplicationController
     path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
     @manifest = eval IO.read(path)
 
-    kata = KataModel.new(@kata_id)
+    kata = Kata.new(@kata_id)
     avatar = kata.avatar(@avatar)
     all_increments = avatar.increments
     one_increment = all_increments[increment_number.to_i]
