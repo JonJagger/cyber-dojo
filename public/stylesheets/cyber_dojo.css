@@ -59,13 +59,13 @@ a:link, a:visited, a:active { text-decoration: none; }
 
 .failed 
 { 
-  background-color: #FF3333; /* red */
+  background-color: yellow;
   color: #99FF99; /* light-green */
 }
 
 .error
 { 
-  background-color: lightgrey; /* indicates no resulting information */
+  background-color: #FF3333; /* red */
   color: green;
 }
 
