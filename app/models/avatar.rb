@@ -1,15 +1,20 @@
 
 class Avatar
 
-  NAMES = %w( Alligators Badgers Bears Beavers Buffalos Camels Cheetahs Deer
-              Elephants Frogs Giraffes Gophers Gorillas Hippos Kangaroos Koalas 
-              Lemurs Lions Pandas Raccoons Snakes Squirrels Wolves Zebras )
 
   def initialize(kata, name)
     #TODO: check name is in NAMES
     @kata, @name = kata, name
   end
 
+  def self.names
+    %w( Alligators Badgers Bears Beavers Buffalos Camels Cheetahs Deer
+              Elephants Frogs Giraffes Gophers Gorillas Hippos Kangaroos Koalas 
+              Lemurs Lions Pandas Raccoons Snakes Squirrels Wolves Zebras )
+    #avatars_dir = File.join(Rails.root,'public/images/avatars/*.jpg')
+    #Dir[avatars_dir].collect{|name| name.basename.split('.').first.humanize }
+  end
+  
   def name
     @name
   end

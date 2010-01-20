@@ -19,7 +19,7 @@ class Kata
 
   def avatars
     result = []
-    Avatar::NAMES.each do |avatar_name|
+    Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
       result << avatar(avatar_name) if File.exists?(path)
     end
