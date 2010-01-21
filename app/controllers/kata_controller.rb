@@ -209,6 +209,7 @@ def parse_run_test_output(manifest, output)
   inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(output)"
   if Regexp.new("run-tests stopped").match(output)
     inc[:info] = "run-tests stopped"
+    inc[:outcome] = :timeout
   end
   inc
 end

@@ -69,6 +69,12 @@ a:link, a:visited, a:active { text-decoration: none; }
   color: green;
 }
 
+.timeout
+{
+  background-color: blue;
+  color: yellow;
+}
+
 .spinner
 {
   background-color: white;
