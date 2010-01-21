@@ -10,7 +10,7 @@ editAreaLoader.init(
     ,start_highlight: true
     ,syntax: "<%=@manifest[:language]-%>"	
     ,toolbar: "search, go_to_line, undo, redo, select_font, reset_highlight, help"
-    ,is_multi_files: true
+    ,is_multi_files: false
     ,EA_load_callback: "editAreaLoaded"
     ,EA_file_close_callback: "editAreaFileClose"
     ,show_line_colors: true
@@ -30,6 +30,7 @@ function editAreaLoaded(id)
 }
 
 var closing_old_run_tests_output = false
+var current_file_name = false
 
 function editAreaFileClose(closing)
 {
@@ -38,14 +39,19 @@ function editAreaFileClose(closing)
   {
     $(id).value = editAreaLoader.getFile('tabbed_files', id).text;
   }
+  current_file_name = false;
   return true; 
 }
 
 function editAreaTabbedLoad(name)
 {
+  if (current_file_name) {
+      editAreaLoader.closeFile('tabbed_files', current_file_name);
+  }
   editAreaLoader.openFile(
     'tabbed_files',
     { id: name, text: $(name).value, title: name });
+  current_file_name = name;
 }
 
 function preRunTests()
