@@ -1,4 +1,19 @@
 
+<script language="JavaScript"><!--
+function select_avatar(name)
+{
+  document.getElementById("avatar").value = name;
+  document.images['avatar_1'].src = '/images/avatars/' + name + '.jpg';
+  document.images['avatar_2'].src = '/images/avatars/' + name + '.jpg';
+}
+
+function flip(name,src) 
+{
+    if (document.images)
+        document.images[name].src = src;
+}
+//--></script>
+
 <table>
   <tr>
     <td>
@@ -23,21 +38,16 @@
   <tr>
     <td class="dojo panel box">
       <% chunks = chunk_array(@avatars.sort, 4) -%>
-      <table cellpadding="3">
+      <table cellpadding="7">
       <% chunks.each do |chunk| -%>
         <tr>
         <% chunk.each do |avatar| -%>
            <td>
-             <input id="avatar_<%=avatar.downcase-%>" 
-                    name="avatar" 
-                    type="radio" 
-                    value="<%=avatar-%>" 
-                    onClick='document.getElementById("avatar_name").value="<%=avatar-%>";' />
              <img alt="<%=avatar-%>" 
                   class="avatar box" 
                   src="/images/avatars/<%=avatar.downcase-%>.jpg"
                   title="<%=avatar-%>"
-                  onClick='document.getElementById("avatar_<%=avatar.downcase-%>").checked = true;document.getElementById("avatar_name").value="<%=avatar-%>";' />
+                  onClick='select_avatar("<%=avatar.downcase-%>");' />
            </td>
         <% end -%>
         </tr>
@@ -48,27 +58,42 @@
 
   <tr>
     <td class="dojo panel box">
-      Click on your animal avatar
+      1. Click your avatar
       <input readonly 
-             name="avatar_name" 
-             id="avatar_name" 
+             type="hidden"
+             name="avatar" 
+             id="avatar" 
              type="text" 
              size="15" 
              value="">
+      <img alt="" 
+           name="avatar_1"
+           src=""
+           title="" />
+      <img alt="" 
+           name="avatar_2"
+           src=""
+           title="" />
     </td>
   </tr>
 
   <tr>  
     <td class="dojo panel box">
-      Enter the <i>kata-id</i>
+      2. Enter the <i>kata-id</i>
       <input name="kata_id" 
              id="kata_id" 
              type="text" 
              size="10" 
              value="<%=@kata_id-%>">
-      and click <%= submit_tag 'start kata', :name => 'start' -%>
     </td>  
   </tr>
+
+  <tr>  
+    <td class="dojo panel box">
+      3. Click <%= submit_tag 'start kata', :name => 'start' -%>
+    </td>  
+  </tr>
+
 </table>
 
 <% end -%> 
