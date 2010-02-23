@@ -255,6 +255,18 @@ def parse_cpp_tequila(output)
   parse_c_tequila(output)
 end
 
+def parse_c_assert(output)
+  failed_pattern = Regexp.new('Assertion .* failed.')
+  error_pattern = Regexp.new(':\d*: error')
+  if failed_pattern.match(output)
+      inc = { :outcome => :failed }
+  elsif error_pattern.match(output)
+      inc = { :outcome => :error }
+  else
+      inc = { :outcome => :passed }
+  end
+end
+
 def parse_c_tequila(output)
   tequila_parse_pattern = Regexp.new('^TEQUILA ([A-Z]*): (\d*) passed, (\d*) failed')
   if match = tequila_parse_pattern.match(output) 
