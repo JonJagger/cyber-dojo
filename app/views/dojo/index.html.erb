@@ -6,12 +6,6 @@ function select_avatar(name)
   document.images['avatar_1'].src = '/images/avatars/' + name + '.jpg';
   document.images['avatar_2'].src = '/images/avatars/' + name + '.jpg';
 }
-
-function flip(name,src) 
-{
-    if (document.images)
-        document.images[name].src = src;
-}
 //--></script>
 
 <table>
@@ -46,7 +40,7 @@ function flip(name,src)
              <img alt="<%=avatar-%>" 
                   class="avatar box" 
                   src="/images/avatars/<%=avatar.downcase-%>.jpg"
-                  title="<%=avatar-%>"
+                  title="<%=avatar.humanize-%>"
                   onClick='select_avatar("<%=avatar.downcase-%>");' />
            </td>
         <% end -%>

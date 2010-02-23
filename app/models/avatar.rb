@@ -8,9 +8,9 @@ class Avatar
   end
 
   def self.names
-    %w( Alligators Badgers Bears Beavers Buffalos Camels Cheetahs Deer
-              Elephants Frogs Giraffes Gophers Gorillas Hippos Kangaroos Koalas 
-              Lemurs Lions Pandas Raccoons Snakes Squirrels Wolves Zebras )
+    %w( alligators badgers bears beavers buffalos camels cheetahs deer
+              elephants frogs giraffes gophers gorillas hippos kangaroos koalas 
+              lemurs lions pandas raccoons snakes squirrels wolves zebras )
     #avatars_dir = File.join(Rails.root,'public/images/avatars/*.jpg')
     #Dir[avatars_dir].collect{|name| name.basename.split('.').first.humanize }
   end

@@ -26,7 +26,7 @@ class KataController < ApplicationController
 
     @manifest = load_starting_manifest(kata)
     run_tests_output = @manifest[:visible_files]['run_tests_output'][:content]
-    test_log = parse_run_test_output(@manifest, run_tests_output.to_s)
+    test_log = parse_run_tests_output(@manifest, run_tests_output.to_s)
 
     avatar = kata.avatar(@avatar)
     all_increments = []
@@ -63,7 +63,7 @@ class KataController < ApplicationController
       flock(f) do |lock|
         @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
         @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
-        test_info = parse_run_test_output(@manifest, @run_tests_output.to_s)
+        test_info = parse_run_tests_output(@manifest, @run_tests_output)
         @outcome = test_info[:outcome].to_s
         all_increments = avatar.save(@manifest, test_info)
       end
@@ -143,10 +143,12 @@ def do_run_tests(dst_folder, src_folder, manifest)
   # Run tests in sandbox in dedicated thread
   run_tests_output = []
   sandbox_thread = Thread.new do
-    # Run make, capturing stdout _and_ stderr    
-    # popen runs its command as a subprocess
-   # TODO: run as a user with only execute rights; maybe using sudo -u
-    run_tests_output = IO.popen("cd #{sandbox}; ./kata.sh 2>&1").readlines
+    # o) run make, capturing stdout _and_ stderr    
+    # o) popen runs its command as a subprocess
+    # o) splitting and joining on "\n" should remove any operating 
+    #    system differences regarding new-line conventions
+    # TODO: run as a user with only execute rights; maybe using sudo -u, or qemu
+    run_tests_output = IO.popen("cd #{sandbox}; ./kata.sh 2>&1").read.split("\n").join("\n")
   end
   # Build and run tests has limited time to complete
   max_seconds = manifest[:max_run_tests_duration]
@@ -198,18 +200,22 @@ def makefile_filter(name, content)
       line = "\t" + line[4 .. line.length-1] if line[0..3] == "    "
       lines.push(line)
     end
-    content = lines.join("\r\n")
+    content = lines.join("\n")
   end
   content
 end
 
 #=========================================================================
 
-def parse_run_test_output(manifest, output)
-  inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(output)"
-  if Regexp.new("run-tests stopped").match(output)
-    inc[:info] = "run-tests stopped"
+def parse_run_tests_output(manifest, output)
+  so = output.to_s
+  inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(so)"
+  if Regexp.new("run-tests stopped").match(so)
+    inc[:info] = so
     inc[:outcome] = :timeout
+  else
+    # put newlines into form that works in tool-tip
+    inc[:info] = output.split("\n").join("<br/>")
   end
   inc
 end
@@ -218,12 +224,12 @@ def parse_ruby_test_unit(output)
   ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
   if match = ruby_pattern.match(output)
     if match[3] == "0" 
-      inc = { :outcome => :passed, :info => match[2] }
+      inc = { :outcome => :passed }
     else
-      inc = { :outcome => :failed, :info => match[3] }
+      inc = { :outcome => :failed }
     end
   else
-    inc = { :outcome => :error, :info => "syntax error" }
+    inc = { :outcome => :error }
   end
 end
 
@@ -231,16 +237,16 @@ def parse_java_junit(output)
   junit_pass_pattern = Regexp.new('^OK \((\d*) test')
   if match = junit_pass_pattern.match(output)
     if match[1] != "0" 
-      inc = { :outcome => :passed, :info => match[1] }
+      inc = { :outcome => :passed }
     else # treat zero passes as a fail
-      inc = { :outcome => :failed, :info => '0' }
+      inc = { :outcome => :failed }
     end
   else
     junit_fail_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
     if match = junit_fail_pattern.match(output)
-      inc = { :outcome => :failed, :info => match[2] }
+      inc = { :outcome => :failed }
     else
-      inc = { :outcome => :error, :info => "syntax error" }
+      inc = { :outcome => :error }
     end
   end
 end
@@ -254,16 +260,16 @@ def parse_c_tequila(output)
   if match = tequila_parse_pattern.match(output) 
     case match[1]
     when 'FAILED'
-      inc = { :outcome => :failed, :info => match[3] }
+      inc = { :outcome => :failed }
     when 'PASSED'
-      inc = { :outcome => :passed, :info => match[2] }
+      inc = { :outcome => :passed }
     else
       #TODO: Error - tequila has changed its output format 
       # inc = { :outcome => :exception, :info => 'tequila format change' } ???
-      inc = { :outcome => :error, :info => 'tequila format change' }
+      inc = { :outcome => :error }
     end
   else
-    inc = { :outcome => :error, :info => "syntax error" }
+    inc = { :outcome => :error }
   end
 end
 

@@ -3,16 +3,16 @@
   <tr>
     <% @increments.each do |increment| -%>
       <td>
-        <span class="<%= increment[:outcome].to_s -%> increment box" 
-              title="<%=increment[:info]-%>"-%>
           <% if @editable -%> 
-            <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>" target="_blank">
+            <a class="<%= increment[:outcome].to_s -%> increment box" 
+               href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>" target="_blank" >
           <% else -%>
-            <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>">
+            <a class="<%= increment[:outcome].to_s -%> increment box" 
+               href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>" >
           <% end -%>
             <%= increment[:number] -%>
+            <span><%= increment[:info] -%></span>
           </a>
-        </span>
       </td>
     <% end -%>
 
