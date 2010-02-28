@@ -4,7 +4,6 @@
   {
     'Demo.java' => {},
     'DemoTest.java' => {},
-    'notes.txt' => {},
     'run_tests_output' => {},
     'instructions' => { :preloaded => true },
     'kata.sh' => { :permissions => 0755 },

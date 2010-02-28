@@ -5,7 +5,6 @@
     'unsplice.tests.c' => {},
     'unsplice.c' => {},
     'unsplice.h' => {},
-    'notes.txt' => {},
     'run_tests_output' => {},
     'instructions' => { :preloaded => true },
     'makefile' => {},
