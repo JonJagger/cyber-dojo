@@ -31,13 +31,15 @@ class Avatar
     if !File.exists?(folder) # start
       make_dir(folder)
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
-      save(manifest, test_log)
+      [] #save(manifest, test_log)
     else # restart
       my_increments = increments
-      current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
-      restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
-      #need to do whole thing...
-      manifest[:visible_files] = restart_manifest[:visible_files]
+      if my_increments.length != 0
+        current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
+        restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
+        #need to do whole thing...
+        manifest[:visible_files] = restart_manifest[:visible_files]
+      end
       my_increments
     end
   end

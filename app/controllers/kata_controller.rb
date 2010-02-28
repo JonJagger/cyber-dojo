@@ -25,7 +25,7 @@ class KataController < ApplicationController
 
     @manifest = load_starting_manifest(kata)
     run_tests_output = ""
-    test_log = parse_run_tests_output(@manifest, run_tests_output.to_s)
+    test_log = ""#parse_run_tests_output(@manifest, run_tests_output.to_s)
 
     avatar = kata.avatar(@avatar)
     all_increments = []
@@ -36,8 +36,12 @@ class KataController < ApplicationController
     end
     
     @increments = limited(all_increments)
-    @shown_increment_number = @increments.last[:number] + 1
-    @outcome = @increments.last[:outcome].to_s
+    if @increments.length == 0
+      @shown_increment_number = 0
+    else
+      @shown_increment_number = @increments.last[:number] + 1
+      #@outcome = @increments.last[:outcome].to_s
+    end
     @editable = true
   end
 
