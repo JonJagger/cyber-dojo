@@ -82,6 +82,11 @@ function postRunTests()
    Element.hide('run_tests_spinner');
 }
 
+function predict(prediction)
+{
+   $('run_tests_prediction').value = prediction;
+}
+
 function newFile()
 {
   var filename = $('new-filename').value;

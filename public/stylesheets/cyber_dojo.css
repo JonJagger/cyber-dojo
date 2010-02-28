@@ -9,7 +9,7 @@
   color: green;
 }
 
-/* hide hyperlinks 
+/* hide hyperlinks
 a:link, a:visited, a:active { text-decoration: none; }  */
 
 /* Instead of title="tool-tip" I use a hidden nested span
@@ -56,10 +56,9 @@ a.increment:hover span /*the span will display just on :hover state*/
   padding: 1em;
 }
 
-.file-manager
-{
-  background-color: #FEF5CA; /* sand-box */
-}
+.increments { background-color: #FEF5CA; /* sand-box */ padding: 0.5em; }
+.file-manager { background-color: #FEF5CA; /* sand-box */ }
+
 
 .dojo /* TODO: poor name */
 {
@@ -79,8 +78,13 @@ a.increment:hover span /*the span will display just on :hover state*/
 .increment 
 { 
   padding: 0.15em; 
-  text-align: center; 
+  text-align: center;
 }
+
+.passed_prediction { border-top: 6px solid #99FF99; /* light-green */ }
+.failed_prediction { border-top: 6px solid #FF3333; /* red */ }
+.error_prediction  { border-top: 6px solid yellow; }
+
 
 .passed
 { 

@@ -1,7 +1,9 @@
 
 page.replace_html 'increments', :partial => 'increments';
 
-page['run-tests'].set_attribute('value', "#{@shown_increment_number}")
+page['run-tests-passed'].set_attribute('value', "#{@shown_increment_number}")
+page['run-tests-failed'].set_attribute('value', "#{@shown_increment_number}")
+page['run-tests-error' ].set_attribute('value', "#{@shown_increment_number}")
 
 
 page.replace_html 'run_tests_output_div', "<textarea id='run_tests_output'>#{h @run_tests_output}</textarea>"

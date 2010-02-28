@@ -46,7 +46,6 @@ class KataController < ApplicationController
     @avatar = params[:avatar]
     kata = Kata.new(@kata_id)
     avatar = kata.avatar(@avatar)
-
     @manifest = eval params['manifest.rb'] # load from web page
     # but reload max_run_tests_duration on each increment so it can be
     # altered by the sensei during the kata if necessary
@@ -66,6 +65,7 @@ class KataController < ApplicationController
         @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
         @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
         test_info = parse_run_tests_output(@manifest, @run_tests_output)
+        test_info[:prediction] = params['run_tests_prediction']
         @outcome = test_info[:outcome].to_s
         all_increments = avatar.save(@manifest, test_info)
       end
