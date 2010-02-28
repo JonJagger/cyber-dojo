@@ -40,7 +40,9 @@
         <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
           <%= avatar_image(@avatar) {|f| f} -%>
         </a>
-    
+        <br/>
+        <br/>
+
       <table>       
 		<% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
@@ -66,16 +68,16 @@
 
     <td>
       <!-- EditArea turns this textarea into a tabbed edtitor. See _javascript.html.erb -->
-      <table cellpadding="7" 
-             id="tabbed_files_border" 
-             class="<%=@outcome-%> box">
-       <tr><td>
-        <textarea id="tabbed_files" 
-                  name="tabbed_files" 
-                  cols="105" 
-                  rows="35">
-        </textarea>
-       </td></tr>
+      <table cellpadding="0">
+        <tr>
+          <td>
+            <textarea id="tabbed_files" 
+                      name="tabbed_files" 
+                      cols="105" 
+                      rows="35">
+            </textarea>
+          </td>
+        </tr>
       </table>
     </td>
   </tr>
