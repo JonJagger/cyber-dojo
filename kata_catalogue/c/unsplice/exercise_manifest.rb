@@ -18,7 +18,7 @@
 
   :font_size => 14,
   
-  :font_family => 'verdana',
+  :font_family => 'monospace',
 
   :tab_size => 4,
 }

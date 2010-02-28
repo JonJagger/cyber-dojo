@@ -1,6 +1,4 @@
 
-<%= render :partial => 'title_panel' -%>
-
 <table class="dojo panel box">
 <tr><td>
 <table cellpadding="3px">
@@ -15,12 +13,19 @@
        </a>
      </td>
      <td nowrap>
-       <% avatar_increments.each do |increment| -%>        
-         <a class="<%= increment[:outcome].to_s -%> increment box" 
-              href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= increment[:number]-%>"><%=increment[:number]-%>
-         </a>
-       <% end -%>
+       <table cellpadding="1px">
+         <tr>
+           <% avatar_increments.each do |increment| -%>
+           <td>
+             <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
+                href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= increment[:number]-%>"><%=increment[:number]-%>
+             </a>
+           <td>
+           <% end -%>
+         </tr>
+       </table>
      </td>
+
    </tr>
   <% end -%>
 </table>
