@@ -6,16 +6,11 @@
       <table>
         <tr>
           <td>
-           <div id="shown_increment_number">
-             <span class="<%=@shown_increment_outcome-%> increment box" 
-                   title="current increment"-%>
-               <%= @shown_increment_number -%>
-             </span>
-           </div>
-          </td>
-          <td>
             <% if (run_tests) -%>
-              <%= submit_tag 'run-tests' -%>
+              <input type="submit" 
+                     id="run-tests" 
+                     name="run-tests" 
+                     value="<%=@shown_increment_number-%>"/>
             <% end -%>
           </td>
         </tr>
@@ -59,7 +54,7 @@
        <tr><td>
         <textarea id="tabbed_files" 
                   name="tabbed_files" 
-                  cols="85" 
+                  cols="105" 
                   rows="35">
         </textarea>
        </td></tr>
