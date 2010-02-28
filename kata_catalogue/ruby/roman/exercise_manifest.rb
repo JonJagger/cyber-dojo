@@ -4,7 +4,6 @@
   {
     'roman.rb' => {},
     'test_roman.rb' => {},
-    'run_tests_output' => {},
     'instructions' => { :preloaded => true },
     'kata.sh' => { :permissions => 0755 },
   },

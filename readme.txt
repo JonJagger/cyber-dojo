@@ -32,8 +32,7 @@ loaded and eval'd in the ruby code). For example:
     'unsplice.c' => {},
     'unsplice.h' => {},
     'notes.txt' => {},
-    'run_tests_output' => {},
-    'instructions' => { :preloaded => true },
+    'instructions' => {},
     'makefile' => {},
     'kata.sh' => { :permissions => 0755 },
   },
@@ -61,12 +60,11 @@ Explanation of these parameters
   above the file called kata.sh has a permission of 755 (executable) because it is a shell 
   file - some ruby app code checks if a filename has an associated :permission and if so 
   chmod's the file. 
-  Any visible file with :preloaded => true will be pre-loaded into the tabbed editor
-  when the browser page first opens.
 
 2:hidden_files
-  These are the names of necessary and supporting files that are NOT visible in the editor
-  in the browser (if any). Again, each file can have associated information. 
+  These are the names of necessary and supporting files (if there are any) that are NOT 
+  visible in the editor in the browser (but are required to run-tests on each increment). 
+  Again, each file can have associated information. 
   
 3:unit_test_framework
   This defines the name of the unit test framework used in the exercise. 
@@ -90,22 +88,15 @@ Some Notes
    of the shell file assumed by the ruby app code in the dojo server to be the start point 
    for running an increment.
 
-2. The filename run_tests_output must also be present as a visible file as this is the
-   file containing the run-tests> output.
-
-3. The output of executing the kata.sh file must also be saved to the file
-   called run_tests_output (in the exercise folder). This is because when a player first 
-   starts the exercise kata.sh is NOT run.
-
-4. As well as containing the file exercise_manifest.rb the exercise folder must also contain
+2. As well as containing the file exercise_manifest.rb the exercise folder must also contain
    all the files named in both the hidden_files section and the visible_files section.
 
-5. You can write any actions in the kata.sh file but clearly any programs it
+3. You can write any actions in the kata.sh file but clearly any programs it
    tries to run must be installed on the dojo-server. For example, if kata.sh runs gcc to compile
    c files then gcc has to be installed. If kata.sh runs javac to compile java
    files then javac has to be installed.
 
-6. You can choose to make any file visible or hidden. In the example above to have a visible
+4. You can choose to make any file visible or hidden. In the example above to have a visible
    makefile you would simply need to move makefile into the :visible_files section.
 
 

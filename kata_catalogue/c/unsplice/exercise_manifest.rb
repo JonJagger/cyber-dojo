@@ -5,7 +5,6 @@
     'unsplice.tests.c' => {},
     'unsplice.c' => {},
     'unsplice.h' => {},
-    'run_tests_output' => {},
     'instructions' => { :preloaded => true },
     'makefile' => {},
     'kata.sh' => { :permissions => 0755 },

@@ -1,5 +1,0 @@
-g++ -Wall -Werror *.c -o run.tests.exe
-./run.tests.exe
-run.tests.exe: unsplice.tests.c:14: void unsplice_tests(): Assertion `0 && (strcmp(actual, expected) == 0)' failed.
-make: *** [run.tests] Aborted
-

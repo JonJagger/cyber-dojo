@@ -1,4 +1,0 @@
-gcc -Wall -Werror -std=c99 *.c -o run.tests.exe
-./run.tests.exe
-run.tests.exe: unsplice.tests.c:14: line_with_no_splices_is_unchanged: Assertion `0 && (strcmp(actual, expected) == 0)' failed.
-make: *** [run.tests] Aborted

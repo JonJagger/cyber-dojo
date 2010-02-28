@@ -24,7 +24,7 @@ class KataController < ApplicationController
     kata = Kata.new(@kata_id)
 
     @manifest = load_starting_manifest(kata)
-    run_tests_output = @manifest[:visible_files]['run_tests_output'][:content]
+    run_tests_output = ""
     test_log = parse_run_tests_output(@manifest, run_tests_output.to_s)
 
     avatar = kata.avatar(@avatar)
@@ -63,7 +63,6 @@ class KataController < ApplicationController
     File.open(kata.folder, 'r') do |f|
       flock(f) do |lock|
         @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
-        @manifest[:visible_files]['run_tests_output'][:content] = @run_tests_output
         test_info = parse_run_tests_output(@manifest, @run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
         @outcome = test_info[:outcome].to_s
@@ -73,7 +72,6 @@ class KataController < ApplicationController
 
     @increments = limited(all_increments)
     @shown_increment_number = @increments.last[:number] + 1
-    @shown_increment_outcome = ""
     @editable = true
     respond_to do |format|
       format.js if request.xhr?
