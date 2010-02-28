@@ -1,37 +1,17 @@
 
 class KataController < ApplicationController
 
-  def help
-    @title = "Cyber Dojo : Kata Help"
-    @manifest = 
-    { 
-      :visible_files =>  #TODO: make more realistic
-      {        
-        'unsplice.h' => { :preloaded => true, :content => 'void unsplice(char * line);' },
-        'unsplice.c' => { :preloaded => true, :content => '#include "unsplice.h"' },
-      },
-      :font_family => 'monospace',
-      :font_size => 14,
-      :tab_size => 4,
-    }
-    @editable = true # needed to display toolbar in editArea    
-  end
-
   def start
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
     kata = Kata.new(@kata_id)
-
     @manifest = load_starting_manifest(kata)
-    run_tests_output = ""
-    test_log = ""#parse_run_tests_output(@manifest, run_tests_output.to_s)
-
     avatar = kata.avatar(@avatar)
     all_increments = []
     File.open(kata.folder, 'r') do |f|
       flock(f) do |lock|
-        all_increments = avatar.read_most_recent(@manifest, test_log)
+        all_increments = avatar.read_most_recent(@manifest)
       end
     end
     
@@ -40,7 +20,6 @@ class KataController < ApplicationController
       @shown_increment_number = 0
     else
       @shown_increment_number = @increments.last[:number] + 1
-      #@outcome = @increments.last[:outcome].to_s
     end
     @editable = true
   end
@@ -271,37 +250,4 @@ def parse_c_assert(output)
       inc = { :outcome => :passed }
   end
 end
-
-def diff_time_to_s(past, now)
-  days,hours,mins,secs = *dhms((now - past).to_i)
-  return dhms_display(days,hours,mins,secs)
-end
-
-SECONDS_PER_MINUTE = 60
-MINUTES_PER_HOUR = 60
-HOURS_PER_DAY = 24
-
-def dhms(value)
-  seconds,value = mod_div(value, SECONDS_PER_MINUTE)
-  minutes,value = mod_div(value, MINUTES_PER_HOUR)
-    hours,days  = mod_div(value, HOURS_PER_DAY)
-  [days, hours, minutes, seconds]
-end
-
-def mod_div(val, n)
-  [val % n, val / n]
-end
-
-SEP = ":"
-
-def dhms_display(days, hours, mins, secs)
-  return  mins.to_s + SEP + lead_zero(secs)  if days == 0 and hours == 0
-  return hours.to_s + SEP + lead_zero(mins)  + SEP + lead_zero(secs) if days == 0
-  return  days.to_s + SEP + lead_zero(hours) + SEP + lead_zero(mins) + SEP + lead_zero(secs) 
-end
-
-def lead_zero(value)
-  (value < 10 ? '0' : '') + value.to_s    
-end
-
 
