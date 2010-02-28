@@ -8,7 +8,6 @@
                              :before   => "preRunTests();",
                              :complete => "postRunTests();" do -%> 
 
-<%= render :partial => 'title_panel' -%>
 <%= render :partial => 'increments_panel' -%>
 <%= render :partial => 'editor_panel', :locals => { :run_tests => true }  -%>
 
