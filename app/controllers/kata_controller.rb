@@ -251,37 +251,19 @@ def parse_java_junit(output)
   end
 end
 
-def parse_cpp_tequila(output)
-  parse_c_tequila(output)
+def parse_cpp_assert(output)
+  parse_c_assert(output)
 end
 
 def parse_c_assert(output)
-  failed_pattern = Regexp.new('Assertion .* failed.')
-  error_pattern = Regexp.new(':\d*: error')
+  failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
+  error_pattern = Regexp.new(':(\d*): error')
   if failed_pattern.match(output)
       inc = { :outcome => :failed }
   elsif error_pattern.match(output)
       inc = { :outcome => :error }
   else
       inc = { :outcome => :passed }
-  end
-end
-
-def parse_c_tequila(output)
-  tequila_parse_pattern = Regexp.new('^TEQUILA ([A-Z]*): (\d*) passed, (\d*) failed')
-  if match = tequila_parse_pattern.match(output) 
-    case match[1]
-    when 'FAILED'
-      inc = { :outcome => :failed }
-    when 'PASSED'
-      inc = { :outcome => :passed }
-    else
-      #TODO: Error - tequila has changed its output format 
-      # inc = { :outcome => :exception, :info => 'tequila format change' } ???
-      inc = { :outcome => :error }
-    end
-  else
-    inc = { :outcome => :error }
   end
 end
 

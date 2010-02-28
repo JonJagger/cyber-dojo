@@ -9,8 +9,6 @@
     'run_tests_output' => {},
     'instructions' => { :preloaded => true },
     'makefile' => {},
-    'tequila.h' => {},
-    'tequila.c' => {},
     'kata.sh' => { :permissions => 0755 },
   },
 
@@ -20,7 +18,7 @@
   
   :language => 'cpp',
 
-  :unit_test_framework => 'tequila',
+  :unit_test_framework => 'assert',
 
   :max_run_tests_duration => 10,
 }

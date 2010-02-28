@@ -2,9 +2,9 @@
 #include <assert.h>
 #include <string.h>
 
-#define FAIL_TEST(x) assert(0 && (x))
+#define   FAIL_TEST(x) assert(0 && (x))
 #define ASSERT_TEST(x) assert(x)
-#define IGNORE_TEST(x) do { } while(0 && (x))
+#define IGNORE_TEST(x) assert(1 || (x))
 
 void line_with_no_splices_is_unchanged(void)
 {

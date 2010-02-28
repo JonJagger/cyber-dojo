@@ -90,13 +90,13 @@ a.increment:hover span /*the span will display just on :hover state*/
 
 .failed 
 { 
-  background-color: yellow;
+  background-color: #FF3333; /* red */
   color: black; 
 }
 
 .error
 { 
-  background-color: #FF3333; /* red */
+  background-color: yellow;
   color: green;
 }
 
