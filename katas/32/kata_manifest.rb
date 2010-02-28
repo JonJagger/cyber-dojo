@@ -1,6 +1,7 @@
 
 {
   :language => 'java',
-  :exercise => 'demo'
+  :exercise => 'demo',
+  :max_run_tests_duration => 10,
 }
 

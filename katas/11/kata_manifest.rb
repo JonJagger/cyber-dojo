@@ -1,6 +1,7 @@
 
 {
   :language => 'ruby',
-  :exercise => 'roman'
+  :exercise => 'roman',
+  :max_run_tests_duration => 10,
 }
 

@@ -10,7 +10,6 @@ class KataController < ApplicationController
         'unsplice.h' => { :preloaded => true, :content => 'void unsplice(char * line);' },
         'unsplice.c' => { :preloaded => true, :content => '#include "unsplice.h"' },
       },
-      :language => 'c',
       :font_family => 'monospace',
       :font_size => 14,
       :tab_size => 4,
@@ -49,6 +48,9 @@ class KataController < ApplicationController
     avatar = kata.avatar(@avatar)
 
     @manifest = eval params['manifest.rb'] # load from web page
+    # but reload max_run_tests_duration on each increment so it can be
+    # altered by the sensei during the kata if necessary
+    @manifest[:max_run_tests_duration] = kata.max_run_tests_duration
     @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
 
     new_filenames = params['visible_filenames_container'].strip.split(';')
@@ -87,7 +89,7 @@ class KataController < ApplicationController
     kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
   end
 
-  #TODO: this is really spying on another animal-group
+  #TODO: this is really spying on another avatar-group
   def see_one_increment
     @kata_id = params[:id]
     @avatar = params[:avatar]
@@ -114,6 +116,7 @@ private
     catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
     manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
     manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
+    manifest[:language] = catalogue[:language]
     manifest[:visible_files] = kata.exercise.visible_files    
 	#TODO: control both from page and save back to manifest in each increment
     manifest[:font_size] = manifest[:font_size] || 14;
@@ -214,7 +217,7 @@ def parse_run_tests_output(manifest, output)
     inc[:info] = so
     inc[:outcome] = :timeout
   else
-    # put newlines into form that works in tool-tip
+    # put newlines into form that works in faked tool-tip
     inc[:info] = output.split("\n").join("<br/>")
   end
   inc

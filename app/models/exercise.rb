@@ -2,7 +2,7 @@
 class Exercise
 
   def initialize(kata)
-    @manifest = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
+    @kata = kata  # ADD
   end
 
   def visible_files
@@ -14,7 +14,7 @@ class Exercise
   end
 
   def folder
-    'kata_catalogue' + '/' + @manifest[:language] + '/' + @manifest[:exercise]
+    'kata_catalogue' + '/' + @kata.language + '/' + @kata.exercise_name
   end
    
 end

@@ -16,11 +16,8 @@
   {
   },
   
-  :language => 'cpp',
-
   :unit_test_framework => 'assert',
 
-  :max_run_tests_duration => 10,
 }
 
 

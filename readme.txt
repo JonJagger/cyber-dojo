@@ -19,7 +19,8 @@ Setting up a new exercise
 =========================
 Make a folder for the name of the exercise. For example if the exercise is called
 unsplice and is a c exercise then create a folder called unsplice in a folder called
-c in the exercises folder. Then place the files required for the exercise in this folder as 
+c in the exercises folder; 'exercises/c/unsplice/'
+Then place the files required for the exercise in this folder as 
 follows. First, the folder must contain a file called exercise_manifest.rb
 This file contains an inspected ruby object defining the exercise parameters (it is
 loaded and eval'd in the ruby code). For example:
@@ -33,21 +34,15 @@ loaded and eval'd in the ruby code). For example:
     'notes.txt' => {},
     'run_tests_output' => {},
     'instructions' => { :preloaded => true },
+    'makefile' => {},
+    'kata.sh' => { :permissions => 0755 },
   },
 
   :hidden_files =>
   {
-    'makefile' => {},
-    'tequila.h' => {},
-    'tequila.c' => {},
-    'kata.sh' => { :permissions => 0755 },
   },
 
-  :language => 'c',
-
   :unit_test_framework => 'tequila',
-
-  :max_run_tests_duration => 10,
 
   :font_size => 14,
 
@@ -61,35 +56,31 @@ loaded and eval'd in the ruby code). For example:
 Explanation of these parameters
 -------------------------------
 1:visible_files
-  These are the names of the files that are visible in the tabbed editor in the browser.
-  Each file can have associated information if necessary.
+  These are the names of the files that are visible in the editor in the browser.
+  Each file can have associated information if necessary. In the example
+  above the file called kata.sh has a permission of 755 (executable) because it is a shell 
+  file - some ruby app code checks if a filename has an associated :permission and if so 
+  chmod's the file. 
   Any visible file with :preloaded => true will be pre-loaded into the tabbed editor
   when the browser page first opens.
 
 2:hidden_files
-  These are the names of necessary and supporting files that are NOT visible in the tabbed editor
-  in the browser. Again, each file can have associated information. In the example
-  above the file called kata.sh has a permission of 755 (executable) because it is a shell file.
-  Some ruby app code checks if a filename has an associated :permission and if so chmod's the file.
+  These are the names of necessary and supporting files that are NOT visible in the editor
+  in the browser (if any). Again, each file can have associated information. 
   
-3:language
-  This defines the name of the programming language the exercise uses. 
-
-4:unit_test_framework
+3:unit_test_framework
   This defines the name of the unit test framework used in the exercise. 
+  This name partially determines the name of the ruby function used to
+  parse the run-tests output (to see if the increment is red or green).
 
-5:max_run_tests_duration
-  This is the maximum number of seconds the dojo-server allows an increment to run in
-  (the time starts after all the increments files have been copied to the sandbox folder).
-
-6:font_size
+4:font_size
   This can be set to values not listed in the editArea font-size drop-down list.
   Optional. The default is 14.
 
-7:tab_size
+5:tab_size
   Optional. The default is 4.
 
-8.font_family
+6.font_family
   Optional. The default is monospace. 
 
 
@@ -100,7 +91,7 @@ Some Notes
    for running an increment.
 
 2. The filename run_tests_output must also be present as a visible file as this is the
-   name of the tab for showing the run-tests> output.
+   file containing the run-tests> output.
 
 3. The output of executing the kata.sh file must also be saved to the file
    called run_tests_output (in the exercise folder). This is because when a player first 
@@ -112,19 +103,10 @@ Some Notes
 5. You can write any actions in the kata.sh file but clearly any programs it
    tries to run must be installed on the dojo-server. For example, if kata.sh runs gcc to compile
    c files then gcc has to be installed. If kata.sh runs javac to compile java
-   files then javac has to be installed. 
+   files then javac has to be installed.
 
 6. You can choose to make any file visible or hidden. In the example above to have a visible
    makefile you would simply need to move makefile into the :visible_files section.
-
-7. The :language parameter is used as the name of the language (when starting the editArea 
-   tabbed editor) in order to select appropriate syntax highlighting.
-
-8. The :language and :unit_test_framework parameters are used to select the ruby function 
-   to regexp parse the run tests output to determine if the increment is a pass or fail. 
-   For example if :language is 'c' and :unit_test_framework is 'tequila' then a ruby function
-   called parse_c_tequila is assumed to exist and is called to parse the output of run-tests>
-   If you use a new unit test framework you will need to add a new regexp'ing function.
 
 
 
@@ -142,10 +124,31 @@ This currently has to be done manually.
 
 {
   :language => 'c',
-  :exercise => 'unsplice'
+  :exercise => 'unsplice',
+  :max_run_tests_duration => 10,
 }
 
+Explanation of these parameters
+-------------------------------
 
+1:language
+2:exercise
+ These two parameters define the name of the language and the name of the exercise.
+ Together these parameters determine the exercise-folder, eg 'exercises/c/unsplice'
+ The :language parameter might also be used in the web editor to select appropriate 
+ syntax highlighting.
+ The :language parameters and :unit_test_framework parameters (from the exercise manifest)
+ are used to select the ruby function to regexp parse the run tests output to determine 
+ if the increment is a pass or fail. 
+ For example if :language is 'c' and :unit_test_framework is 'assert' then a ruby function
+ called parse_c_assert is assumed to exist and is called to parse the output of run-tests>
+ If you use a new unit test framework you will need to add a new regexp'ing ruby function.
+
+3:max_run_tests_duration
+  This is the maximum number of seconds the dojo-server allows an increment to run in
+  (the time starts after all the increments files have been copied to the sandbox folder).
+  This is reloaded on each increment to allow the sensei to vary it's value during the
+  kata if necessary.
 
 
 Notes
@@ -162,7 +165,7 @@ o) When I started this (not so long ago) I didn't know any ruby, any rails,
    to be non-idiomatic. Caveat emptor!
 o) Players should be able to do a kata without identifying themselves.
    There is scope for allowing them to identify themself if they want to but
-   it should not be compulsory. This is one of my design guidelines.
+   it should not be compulsory. This is one of my future design guidelines.
 o) Kudos to Christophe Dolivet who wrote editArea which provides the javascript
    tabbed editor. Note however that there appears to be an occasional display bug in editArea 
    when it is trying to do syntax highlighting. You can turn editArea syntax highlighting off   

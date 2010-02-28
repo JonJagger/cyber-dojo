@@ -15,10 +15,7 @@
     'junit-4.7.jar' => {},
   },
 
-  :language => 'java',
-
   :unit_test_framework => 'junit',
 
-  :max_run_tests_duration => 10,
 }
 

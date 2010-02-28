@@ -14,10 +14,7 @@
   {
   },
 
-  :language => 'ruby',
-
   :unit_test_framework => 'test_unit',
 
-  :max_run_tests_duration => 10,
 }
 

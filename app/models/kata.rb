@@ -3,6 +3,19 @@ class Kata
 
   def initialize(id)
     @id = id
+    @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
+  end
+
+  def language
+    @manifest[:language].to_s
+  end
+
+  def exercise_name
+    @manifest[:exercise].to_s
+  end
+
+  def max_run_tests_duration
+    @manifest[:max_run_tests_duration]
   end
 
   def folder

@@ -16,11 +16,7 @@
   {
   },
 
-  :language => 'c',
-
   :unit_test_framework => 'assert',
-
-  :max_run_tests_duration => 10,
 
   :font_size => 14,
   
