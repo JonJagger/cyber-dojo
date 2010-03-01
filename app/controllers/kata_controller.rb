@@ -33,7 +33,9 @@ class KataController < ApplicationController
     # but reload max_run_tests_duration on each increment so it can be
     # altered by the sensei during the kata if necessary
     @manifest[:max_run_tests_duration] = kata.max_run_tests_duration
-    @manifest[:visible_files].each { |filename,file| file[:content] = params[filename] } 
+    @manifest[:visible_files].each do |filename,file| 
+      file[:content] = params[filename].split("\r\n").join("\n") 
+    end
 
     new_filenames = params['visible_filenames_container'].strip.split(';')
     new_filenames.each do |new_filename|
