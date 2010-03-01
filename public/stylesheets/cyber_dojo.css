@@ -44,9 +44,11 @@ a.increment span
 
 a.increment:hover span /*the span will display just on :hover state*/
 {
+    font-family: monospace;
+    font-size: 9pt;
     display: block;
     position: absolute;
-    top: 2em; left: 2em; width: 100em;
+    top: 2em; left: 2em; width: 80em;
     border:1px solid #0cf;
     background-color: #cff; 
     color: #000;
@@ -87,7 +89,6 @@ a.increment:hover span /*the span will display just on :hover state*/
 /* #99FF99=light-green,#FF3333=red */
 .passed_prediction { border-top: 6px solid #99FF99; }
 .failed_prediction { border-top: 6px solid #FF3333; }
-.error_prediction  { border-top: 6px solid yellow;  }
 
 .passed  { background-color: #99FF99; color: green;  }
 .failed  { background-color: #FF3333; color: black;  }

@@ -12,23 +12,17 @@
                      name="run_tests_prediction" 
                      value="">
               <input type="submit" 
-                     id="run-tests-passed"
-                     name="run-tests-passed" 
-                     class="passed increment box" 
-                     value="<%=@shown_increment_number-%>"
-                     onclick="predict('passed');"/>
-              <input type="submit" 
                      id="run-tests-failed"
                      name="run-tests-failed" 
                      class="failed increment box" 
                      value="<%=@shown_increment_number-%>"
                      onclick="predict('failed');"/>
               <input type="submit" 
-                     id="run-tests-error"
-                     name="run-tests-error" 
-                     class="error increment box" 
+                     id="run-tests-passed"
+                     name="run-tests-passed" 
+                     class="passed increment box" 
                      value="<%=@shown_increment_number-%>"
-                     onclick="predict('error');"/>
+                     onclick="predict('passed');"/>
             <% end -%>
           </td>
         </tr>
