@@ -14,8 +14,10 @@
 {
   font-family: monospace;
   font-size: 12pt;
-  background-color: black;
+  font-weight: bold;
   color: white;
+
+  background-color: #686868;
   overflow: scroll;
 }
 
@@ -98,21 +100,8 @@ a.increment:hover span /*the span will display just on :hover state*/
   color: black;
 }
 
-.fake-button
-{
-  background-color: white;
-  color: black;
-  white-space: nowrap;
-}
 
-.fake-button:before, .fake-button:after
-{
-  content: " ";
-  white-space: pre;
-}
-
-/* editArea uses javascript to move contents of each tabbed */
-/* file into hidden textarea before submitting to server    */
+/* each file has a hidden textarea */
 .hidden 
 { 
   visibility:hidden; 

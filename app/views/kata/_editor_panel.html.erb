@@ -47,11 +47,15 @@
 		<% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
             <td id="filename-button-list">
+              
 			  <div id="<%=filename-%>-button"
-                   class="fake-button box"
                    onclick='loadFile("<%=filename-%>")'
                    title="edit <%= filename -%>">
-                   <%= filename -%>
+                <input id="radio_<%=filename-%>" 
+                       name="radio_filename"
+                       type="radio"
+                       value="">
+                  <%= filename -%>
               </div>
 		    </td>
           </tr>

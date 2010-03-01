@@ -24,6 +24,7 @@ function loadFile(name)
   saveCurrentFile();
   $('editor').value = $(name).value;
   current_file_name = name;
+  document.getElementById('radio_' + name).checked = true;
 }
 
 function preRunTests()
