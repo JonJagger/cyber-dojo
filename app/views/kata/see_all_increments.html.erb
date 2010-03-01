@@ -4,7 +4,7 @@
 <table cellpadding="3px">
   <% @avatars.each do |avatar_name,avatar_increments| -%>
    <tr>
-     <td>
+     <td nowrap>
          <%= avatar_image(avatar_name) {|i| i} -%>
          <%= avatar_image(avatar_name) {|i| i} -%>
      </td>
@@ -14,7 +14,8 @@
            <% avatar_increments.each do |increment| -%>
            <td>
              <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
-                href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= increment[:number]-%>"><%=increment[:number]-%>
+                href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>&increment=<%= increment[:number]-%>">
+               <span><%= increment[:number] -%></span>
              </a>
            <td>
            <% end -%>
