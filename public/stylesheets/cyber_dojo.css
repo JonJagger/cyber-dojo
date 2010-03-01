@@ -14,7 +14,7 @@
 {
   font-family: monospace;
   font-size: 12pt;
-  font-weight: bold;
+  font-weight: normal;
   color: white;
 
   background-color: #686868;
@@ -90,10 +90,10 @@ a.increment:hover span /*the span will display just on :hover state*/
 .passed_prediction { border-top: 6px solid #99FF99; }
 .failed_prediction { border-top: 6px solid #FF3333; }
 
-.passed  { background-color: #99FF99; color: green;  }
-.failed  { background-color: #FF3333; color: black;  }
-.error   { background-color: yellow;  color: green;  }
-.timeout { background-color: blue;    color: yellow; }
+.passed  { background-color: #99FF99; }
+.failed  { background-color: #FF3333; }
+.error   { background-color: yellow;  }
+.timeout { background-color: deepskyblue; }
 
 .spinner
 {

@@ -5,7 +5,7 @@
     <td class="file-manager panel box">
       <table>
         <tr>
-          <td>
+          <td nowrap>
             <% if (run_tests) -%>
               <input type="hidden" 
                      id="run_tests_prediction" 
@@ -28,14 +28,18 @@
         </tr>
       </table>
 
-        <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
-          <%= avatar_image(@avatar) {|f| f} -%>
-        </a>
-        <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
-          <%= avatar_image(@avatar) {|f| f} -%>
-        </a>
-        <br/>
-        <br/>
+      <table>
+        <tr>
+          <td nowrap>
+            <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
+              <%= avatar_image(@avatar) {|f| f} -%>
+            </a>
+            <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
+              <%= avatar_image(@avatar) {|f| f} -%>
+            </a>
+          <td/>
+        <tr/>
+      </table>
 
       <table>       
 		<% @manifest[:visible_files].sort.each do |filename,file| -%>
