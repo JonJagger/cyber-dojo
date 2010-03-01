@@ -9,10 +9,18 @@
   color: green;
 }
 
-/* hide hyperlinks
-a:link, a:visited, a:active { text-decoration: none; }  */
 
-/* Instead of title="tool-tip" I use a hidden nested span
+#editor
+{
+  font-family: monospace;
+  font-size: 12pt;
+  background-color: black;
+  color: white;
+  overflow: scroll;
+}
+
+/* FAKE TOOL TIPS
+ * Instead of title="tool-tip" I use a hidden nested span
  * as this allows me to insert newlines.
  */
 a.increment 
@@ -42,13 +50,7 @@ a.increment:hover span /*the span will display just on :hover state*/
     color: #000;
     text-align: left;
 }
-
-/* remove space from bottom of title to save vertical pixels */
-.title 
-{ 
-  margin-bottom: 0em; 
-  color: green;
-}
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 .panel
 {    
@@ -74,7 +76,6 @@ a.increment:hover span /*the span will display just on :hover state*/
   -moz-border-radius: 4px;
 }
 
-/* run-test> increment outcomes */
 .increment 
 { 
   padding: 0.15em; 
@@ -85,7 +86,6 @@ a.increment:hover span /*the span will display just on :hover state*/
 .passed_prediction { border-top: 6px solid #99FF99; }
 .failed_prediction { border-top: 6px solid #FF3333; }
 .error_prediction  { border-top: 6px solid yellow;  }
-
 
 .passed  { background-color: #99FF99; color: green;  }
 .failed  { background-color: #FF3333; color: black;  }
@@ -98,17 +98,13 @@ a.increment:hover span /*the span will display just on :hover state*/
   color: black;
 }
 
-/* line around edge of avatar image */
-.avatar 
-{ 
-}
-
 .fake-button
 {
   background-color: white;
   color: black;
   white-space: nowrap;
 }
+
 .fake-button:before, .fake-button:after
 {
   content: " ";
@@ -121,29 +117,6 @@ a.increment:hover span /*the span will display just on :hover state*/
 { 
   visibility:hidden; 
   display:none; 
-}
-
-/*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-/* used in help pages */
-h3, .h3 
-{ 
-  font-size: 150%; 
-  font-weight: bold; 
-  color: green; 
-}
-
-.practice_words
-{
-  font-style: italic;
-  font-weight: bold;
-}
-
-blockquote
-{
-  border: 1px solid #D8D8D8;
-  padding: 1em;
-  background-color: #FFE4C4; /*bisque*/
 }
 
 

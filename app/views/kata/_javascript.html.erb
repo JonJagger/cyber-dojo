@@ -1,25 +1,6 @@
 
 <script language="javascript" type="text/javascript">
 
-editAreaLoader.init(
-  {
-     id: "tabbed_files"	
-    ,allow_toggle: false
-    ,is_editable: <%=@editable-%>
-    ,language: "en"
-    ,start_highlight: true
-    ,syntax: "<%=@manifest[:language]-%>"	
-    ,toolbar: "search, go_to_line, undo, redo, select_font, reset_highlight, help"
-    ,is_multi_files: false
-    ,EA_load_callback: "editAreaLoaded"
-    ,EA_file_close_callback: "editAreaFileClose"
-    ,show_line_colors: true
-    ,font_size: <%=@manifest[:font_size]-%>
-    ,font_family: "<%=@manifest[:font_family]-%>"
-    ,replace_tab_by_spaces: <%=@manifest[:tab_size]-%>
-    }
-);
-
 function editAreaLoaded(id)
 {
   <% @manifest[:visible_files].each do |filename,info| -%>
@@ -29,44 +10,26 @@ function editAreaLoaded(id)
   <% end -%>
 }
 
-var closing_old_run_tests_output = false
 var current_file_name = false
 
-function editAreaFileClose(closing)
-{
-  var id = closing['id']
-  if (!closing_old_run_tests_output)
-  {
-    $(id).value = editAreaLoader.getFile('tabbed_files', id).text;
-  }
-  current_file_name = false;
-  return true; 
-}
-
-function editAreaTabbedLoad(name)
+function saveCurrentFile()
 {
   if (current_file_name) {
-      editAreaLoader.closeFile('tabbed_files', current_file_name);
+    $(current_file_name).value = $('editor').value;
   }
-  editAreaLoader.openFile(
-    'tabbed_files',
-    { id: name, text: $(name).value, title: name });
+}
+
+function loadFile(name)
+{
+  saveCurrentFile();
+  $('editor').value = $(name).value;
   current_file_name = name;
 }
 
 function preRunTests()
 {
-   Element.show('run_tests_spinner');
-
-   var names = editAreaLoader.getAllFiles('tabbed_files');
-   for(var name in names)
-   { 
-     // Move contents of editArea tabs still open into hidden textareas.
-     // Necessary because only individual textareas have unique
-     // id's which rails can retrieve via params[id]
-     var text = editAreaLoader.getFile('tabbed_files', name).text;      
-     $(name).value = text
-   }; 
+  saveCurrentFile();
+  Element.show('run_tests_spinner');
 }
 
 function postRunTests()
@@ -85,10 +48,7 @@ function newFile()
   filename = filename.split(' ').join('');
   if (filename=="") return;
 
-  // We're about to put a new tab into editArea for the given filename.
-  // This new tab will be referenced by editAreaFileClose() and
-  // preRunTests() which both assume there will be dom element of the given 
-  // filename. So first, add the dom element for the filename.
+  // Create new hidden textarea to save to before submitting.
   var ta = document.createElement("textarea");
   ta.setAttribute('id', filename);
   ta.setAttribute('name', filename);
@@ -98,7 +58,7 @@ function newFile()
   var mle = document.createElement("div");
   mle.setAttribute('id', filename + "-button");
   mle.setAttribute('class', 'fake-button box');
-  mle.onclick = new Function("editAreaTabbedLoad('" + filename + "')");
+  mle.onclick = new Function("loadFile('" + filename + "')");
   mle.appendChild(document.createTextNode(filename));
   $('filename-button-list').appendChild(mle);
 
@@ -111,10 +71,7 @@ function newFile()
   // Blank out the new-filename text input
   $('new-filename').value = '';
 
-  // Now add the tab to editArea
-  editAreaLoader.openFile(
-    'tabbed_files',
-    { id: filename, text: "", title: filename });
+  loadFile(filename);
 }
 </script>
 

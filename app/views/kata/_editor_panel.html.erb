@@ -49,7 +49,7 @@
             <td id="filename-button-list">
 			  <div id="<%=filename-%>-button"
                    class="fake-button box"
-                   onclick='editAreaTabbedLoad("<%=filename-%>")'
+                   onclick='loadFile("<%=filename-%>")'
                    title="edit <%= filename -%>">
                    <%= filename -%>
               </div>
@@ -71,10 +71,10 @@
       <table cellpadding="0">
         <tr>
           <td>
-            <textarea id="tabbed_files" 
-                      name="tabbed_files" 
-                      cols="105" 
-                      rows="35">
+            <textarea id="editor" 
+                      name="editor" 
+                      cols="80" 
+                      rows="30">
             </textarea>
           </td>
         </tr>
@@ -85,17 +85,13 @@
 
 <div class="hidden">
   <!-- When run-tests is clicked the javascript preRunTests() function copies  -->
-  <!-- the contents of each editArea tab back to its hidden textarea (below)   -->
+  <!-- the contents of currently edited file back to its hidden textarea (below)   -->
   <!-- before submitting the form. On the server rails grabs the file contents -->
-  <!-- from these hidden textareas and not from the tabbed_files editArea.     -->
+  <!-- from these hidden textareas and not from the main textarea editor.     -->
   <div id="visible_files_container">
     <% @manifest[:visible_files].each do |filename,file| -%>
-      <!-- This outer div is needed for run_tests_outcome from run_tests.js.rjs -->
-      <div id="<%=filename-%>_div">
-        <textarea id="<%=filename-%>" 
-                  name="<%=filename-%>"><%= h file[:content] -%></textarea> 
-        <% file.delete :content -%>
-      </div>
+      <textarea id="<%=filename-%>" 
+                name="<%=filename-%>"><%= h file[:content] -%></textarea> 
     <% end -%>
   </div>
 
