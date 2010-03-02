@@ -41,13 +41,13 @@ loaded and eval'd in the ruby code). For example:
   {
   },
 
-  :unit_test_framework => 'tequila',
+  :unit_test_framework => 'assert',
 
   :font_size => 14,
 
   :tab_size => 8,
 
-  :font_family => 'verdana'
+  :font_family => 'monospace'
 }
 
 

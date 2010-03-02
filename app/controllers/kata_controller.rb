@@ -41,7 +41,7 @@ class KataController < ApplicationController
     new_filenames.each do |new_filename|
       new_filename.strip!
       @manifest[:visible_files][new_filename] = {}
-      @manifest[:visible_files][new_filename][:content] = params[new_filename]
+      @manifest[:visible_files][new_filename][:content] = params[new_filename].split("\r\n").join("\n")
     end
 
     all_increments = []
@@ -101,10 +101,12 @@ private
     manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
     manifest[:language] = catalogue[:language]
     manifest[:visible_files] = kata.exercise.visible_files    
-	#TODO: control both from page and save back to manifest in each increment
+	#TODO: put directly into the editors style attribute
     manifest[:font_size] = manifest[:font_size] || 14;
     manifest[:tab_size] = manifest[:tab_size ] ||  4;
     manifest[:font_family] = manifest[:font_family] || 'monospace';
+    #TODO: add background-colour
+    #TODO: add ink colour
     manifest
   end
 
