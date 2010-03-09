@@ -2,21 +2,19 @@
 #include <assert.h>
 #include <string.h>
 
-#define   FAIL_TEST(x) assert(0 && (x))
-#define ASSERT_TEST(x) assert(x)
-#define IGNORE_TEST(x) assert(1 || (x))
+#define   FAIL(x) assert(0 && (x))
+#define ASSERT(x) assert(x)
+#define IGNORE(x) assert(1 || (x))
 
-void line_with_no_splices_is_unchanged(void)
+static void line_with_no_splices_is_unchanged(void)
 {
     const char * expected = "abc";
     char actual[] = "abc";
     unsplice(actual);
-    FAIL_TEST(strcmp(actual, expected) == 0);
+    FAIL(strcmp(actual, expected) == 0);
 }
 
-typedef void (*test_function)(void);
-
-const test_function test_functions[] =
+static void (*test_functions[])(void) =
 {
     line_with_no_splices_is_unchanged,
     0

@@ -48,8 +48,6 @@ loaded and eval'd in the ruby code). For example:
   :font_weight => 'normal',
   :color => 'white',
   :background_color => '#686868',
-
-  :tab_size => 8,
 }
 
 
@@ -85,9 +83,6 @@ Explanation of these parameters
   Optional (css value), default is 'white'
 4.5:background_color
   Optional (css value), default is '#686868'
-
-5:tab_size
-  Optional, default is 4
 
 
 
@@ -135,13 +130,11 @@ Explanation of these parameters
 2:exercise
  These two parameters define the name of the language and the name of the exercise.
  Together these parameters determine the exercise-folder, eg 'exercises/c/unsplice'
- The :language parameter might also be used in the web editor to select appropriate 
- syntax highlighting.
- The :language parameters and :unit_test_framework parameters (from the exercise manifest)
+ The :language parameter and :unit_test_framework parameter (from the exercise manifest)
  are used to select the ruby function to regexp parse the run tests output to determine 
  if the increment is a pass or fail. 
  For example if :language is 'c' and :unit_test_framework is 'assert' then a ruby function
- called parse_c_assert is assumed to exist and is called to parse the output of run-tests>
+ called parse_c_assert is assumed to exist and is called to parse the output of running the tests.
  If you use a new unit test framework you will need to add a new regexp'ing ruby function.
 
 3:max_run_tests_duration
@@ -166,11 +159,6 @@ o) When I started this (not so long ago) I didn't know any ruby, any rails,
 o) Players should be able to do a kata without identifying themselves.
    There is scope for allowing them to identify themself if they want to but
    it should not be compulsory. This is one of my future design guidelines.
-o) Kudos to Christophe Dolivet who wrote editArea which provides the javascript
-   tabbed editor. Note however that there appears to be an occasional display bug in editArea 
-   when it is trying to do syntax highlighting. You can turn editArea syntax highlighting off   
-   by pressing Control-H which refreshes the display. Control-H is a toggle so
-   hit it again to turn syntax-highlighting back on.
 o) I'd like to thank Olve Maudal of Tandberg for his encouragement.
 o) I've promised to run a browser-based dojo at the accu 2010 conference
    which starts April 14th. It would be great if a publically accesible dojo-server 

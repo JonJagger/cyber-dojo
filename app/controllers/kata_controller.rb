@@ -163,28 +163,17 @@ def save_file(foldername, filename, file)
   File.chmod(file[:permissions], path) if file[:permissions]
 end
 
-# When editArea is used in the is_multi_files:true
-# mode then the setting replace_tab_by_spaces: applies
-# to ALL tabs (if set) or NONE of them (if not set).
-# If it is not set then the default tab-width of the
-# operating system seems to apply, which in Ubuntu
-# is 8 spaces. There appears to be no way to alter the 
-# tab-width in Ubuntu or in Firefox. Hence if you
-# want tabs to expand to 4 spaces, as I do, you have to
-# use replace_tab_by_spaces:=4 setting. This creates
-# a problem for makefiles since they are tab sensitive.
-# Hence this special filter, just for makefiles to 
-# convert 4 leading spaces to a tab character. I don't
-# use the manifest[:tab_size] setting for tab expansation
-# since the makefile is only created in the sandbox; its
-# not an individual file in the increment since its inside
-# the manifest.
+# Tabs are a problem for makefiles since they are tab sensitive.
+# You can't enter a tab in a plain textarea hence this special filter, 
+# just for makefiles to convert leading spaces to a tab character. 
 def makefile_filter(name, content)
   if name.downcase == 'makefile'
     lines = []
     newline = Regexp.new('[\r]?[\n]')
     content.split(newline).each do |line|
-      line = "\t" + line[4 .. line.length-1] if line[0..3] == "    "
+      if (stripped = line.lstrip!)
+        line = "\t" + stripped
+      end
       lines.push(line)
     end
     content = lines.join("\n")
@@ -244,10 +233,13 @@ end
 
 def parse_c_assert(output)
   failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
-  error_pattern = Regexp.new(':(\d*): error')
+  syntax_error_pattern = Regexp.new(':(\d*): error')
+  make_error_pattern = Regexp.new('^make:')
   if failed_pattern.match(output)
       inc = { :outcome => :failed }
-  elsif error_pattern.match(output)
+  elsif make_error_pattern.match(output)
+      inc = { :outcome => :error }
+  elsif syntax_error_pattern.match(output)
       inc = { :outcome => :error }
   else
       inc = { :outcome => :passed }
