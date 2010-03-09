@@ -1,14 +1,15 @@
 
 <script language="javascript" type="text/javascript">
 
-function editAreaLoaded(id)
+function atLoad()
 {
   <% @manifest[:visible_files].each do |filename,info| -%>
-     <% if info.include? :preloaded and info[:preloaded] -%>
-       editAreaTabbedLoad("<%=filename-%>");
-     <%- end -%>
-  <% end -%>
+    <% if info.include? :preloaded and info[:preloaded] -%>
+      loadFile("<%=filename-%>");
+    <%- end -%>
+  <%- end -%>
 }
+window.onload = atLoad;
 
 var current_file_name = false
 
@@ -63,14 +64,14 @@ function newFile()
   mle.appendChild(document.createTextNode(filename));
   $('filename-button-list').appendChild(mle);
 
+  // Blank out the new-filename text input
+  $('new-filename').value = '';
+
   // make its name available to rails
   var current = $('visible_filenames_container').value;
   current += filename;
   current += ";";
   $('visible_filenames_container').value = current;
-
-  // Blank out the new-filename text input
-  $('new-filename').value = '';
 
   loadFile(filename);
 }

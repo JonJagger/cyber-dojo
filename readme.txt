@@ -28,7 +28,7 @@ loaded and eval'd in the ruby code). For example:
 {
   :visible_files =>
   {
-    'unsplice.tests.c' => {},
+    'unsplice.tests.c' => { :preloaded => true },
     'unsplice.c' => {},
     'unsplice.h' => {},
     'notes.txt' => {},
@@ -60,6 +60,8 @@ Explanation of these parameters
   above the file called kata.sh has a permission of 755 (executable) because it is a shell 
   file - some ruby app code checks if a filename has an associated :permission and if so 
   chmod's the file. 
+  Any visible file with :preloaded => true will be pre-loaded into the editor
+  when the browser page first opens.
 
 2:hidden_files
   These are the names of necessary and supporting files (if there are any) that are NOT 
