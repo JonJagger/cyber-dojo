@@ -50,7 +50,6 @@ class KataController < ApplicationController
         @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
         test_info = parse_run_tests_output(@manifest, @run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
-        @outcome = test_info[:outcome].to_s
         all_increments = avatar.save(@manifest, test_info)
       end
     end
@@ -87,7 +86,6 @@ class KataController < ApplicationController
     all_increments = avatar.increments
     one_increment = all_increments[increment_number.to_i]
     @increments = limited(all_increments)
-    @outcome = one_increment[:outcome].to_s
     @shown_increment_number = one_increment[:number]
     @shown_increment_outcome = one_increment[:outcome]
     @editable = true # enables editArea toolbar - can't run-tests anyway
@@ -101,12 +99,13 @@ private
     manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
     manifest[:language] = catalogue[:language]
     manifest[:visible_files] = kata.exercise.visible_files    
-	#TODO: put directly into the editors style attribute
-    manifest[:font_size] = manifest[:font_size] || 14;
     manifest[:tab_size] = manifest[:tab_size ] ||  4;
+	# load editor setting or defaults
+    manifest[:font_size] = manifest[:font_size] || 14;
     manifest[:font_family] = manifest[:font_family] || 'monospace';
-    #TODO: add background-colour
-    #TODO: add ink colour
+    manifest[:font_weight] = manifest[:font_weight] || 'normal';
+    manifest[:color] = manifest[:color] || 'white';
+    manifest[:background_color] = manifest[:background_color] || '#686868';
     manifest
   end
 

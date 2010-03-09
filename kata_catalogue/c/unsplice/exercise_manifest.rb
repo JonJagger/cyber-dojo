@@ -16,9 +16,11 @@
 
   :unit_test_framework => 'assert',
 
-  :font_size => 14,
-  
-  :font_family => 'monospace',
+  :font_size => 12,  
+  :font_family => 'verdana',
+  :font_weight => 'normal',
+  :color => 'white',
+  :background_color => '#686868',
 
   :tab_size => 4,
 }

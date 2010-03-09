@@ -44,10 +44,12 @@ loaded and eval'd in the ruby code). For example:
   :unit_test_framework => 'assert',
 
   :font_size => 14,
+  :font_family => 'monospace'
+  :font_weight => 'normal',
+  :color => 'white',
+  :background_color => '#686868',
 
   :tab_size => 8,
-
-  :font_family => 'monospace'
 }
 
 
@@ -73,15 +75,20 @@ Explanation of these parameters
   This name partially determines the name of the ruby function used to
   parse the run-tests output (to see if the increment is red or green).
 
-4:font_size
-  This can be set to values not listed in the editArea font-size drop-down list.
-  Optional. The default is 14.
+4.1:font_size
+  Optional (css pt size value), default is '14'
+4.2:font_family
+  Optional (css value), default is 'monospace' 
+4.3:font_weight
+  Optional (css value), default is 'normal'
+4.4:color
+  Optional (css value), default is 'white'
+4.5:background_color
+  Optional (css value), default is '#686868'
 
 5:tab_size
-  Optional. The default is 4.
+  Optional, default is 4
 
-6.font_family
-  Optional. The default is monospace. 
 
 
 Some Notes
@@ -98,8 +105,8 @@ Some Notes
    c files then gcc has to be installed. If kata.sh runs javac to compile java
    files then javac has to be installed.
 
-4. You can choose to make any file visible or hidden. In the example above to have a visible
-   makefile you would simply need to move makefile into the :visible_files section.
+4. You can choose to make any file visible or hidden. In the example above to have a hidden
+   makefile you would simply need to move makefile into the :hidden section.
 
 
 

@@ -12,12 +12,6 @@
 
 #editor
 {
-  font-family: monospace;
-  font-size: 12pt;
-  font-weight: normal;
-  color: white;
-
-  background-color: #686868;
   overflow: scroll;
 }
 
