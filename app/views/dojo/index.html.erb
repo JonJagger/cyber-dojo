@@ -20,12 +20,17 @@ function select_avatar(name)
 
   <tr>
     <td class="dojo panel box">
-      <% chunks = chunk_array(@avatars.sort, 4) -%>
+      <% chunks = chunk_array(@avatars.sort, 5) -%>
       <table cellpadding="7">
       <% chunks.each do |chunk| -%>
         <tr>
         <% chunk.each do |avatar| -%>
            <td>
+             <img alt="<%=avatar-%>" 
+                  class="avatar box" 
+                  src="/images/avatars/<%=avatar.downcase-%>.jpg"
+                  title="<%=avatar.humanize-%>"
+                  onClick='select_avatar("<%=avatar.downcase-%>");' />
              <img alt="<%=avatar-%>" 
                   class="avatar box" 
                   src="/images/avatars/<%=avatar.downcase-%>.jpg"
@@ -41,7 +46,7 @@ function select_avatar(name)
 
   <tr>
     <td class="dojo panel box">
-      1. Click on your designated avatar
+      1. Click your avatar
       <input readonly 
              type="hidden"
              name="avatar" 

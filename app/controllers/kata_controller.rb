@@ -1,4 +1,6 @@
 
+require 'rexml/document'
+
 class KataController < ApplicationController
 
   def start
