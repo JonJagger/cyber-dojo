@@ -148,9 +148,9 @@ Notes
 =====
 o) Watching http://vimeo.com/8630305 will probably help.
 o) The rails code does NOT use a database. Instead each increment
-   is saved to its own folder. For example if Norway is playing
-   kata 34 then the files submitted for increment 21 (for Norway) 
-   will be found in the folder  katas/34/Norway/21/
+   is saved to its own folder. For example if the Lions are doing
+   kata 34 then the files submitted for increment 21 (for the Lions) 
+   will be found in the folder  katas/34/Lions/21/
    There may be some concurrency issues related to this.
 o) When I started this (not so long ago) I didn't know any ruby, any rails,
    or any javascript. I'm self employed so I've have no-one to pair with (except google)
@@ -164,13 +164,9 @@ o) I've promised to run a browser-based dojo at the accu 2010 conference
    which starts April 14th. It would be great if a publically accesible dojo-server 
    was running by then.
 o) A VirtualBox image of the server would also be nice.
-o) It might appear to be better if the dojo-server assigned a player an animal-identifier 
-   instead of the player having to select one manually. However, if the server selects 
-   the avatar and you wish to stay as the same avatar on all increments then the server 
-   would need to record the identity of the playing computer. I also think it makes sense
-   to explicitly choose the avatar so it is less "unexpected" as you start.
-   However, suppose you schedule a kata and start it as a Koala, what is to stop 
-   another player on a different computer also choosing to start as a koala. This
-   will become an issue when players are not co-located.
+o) The dojo-server could possibly assign avatars to computers rather than
+   participants having to manually select their avatar. For now I am leaving the
+   avatar selection as a manual step because my main aim is to run the dojo
+   in a room where all participants are present. 
 
 
