@@ -90,21 +90,13 @@ class KataController < ApplicationController
     all_increments = avatar.increments
 
     if params[:increment]
-      increment_number = params[:increment]
-      @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
-      path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
-      @manifest = eval IO.read(path)
-      @shown_increment_number = increment_number
+      load_increment_manifest(params[:increment])
     elsif all_increments.length != 0
-      increment_number = all_increments.last[:number].to_s
-      @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
-      path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
-      @shown_increment_number = increment_number
-      @manifest = eval IO.read(path)
+      load_increment_manifest(all_increments.last[:number].to_s)
     else
       @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar
-      @shown_increment_number = "0"
       @manifest = kata.exercise.manifest
+      @shown_increment_number = "0"
     end
 
     @increments = limited(all_increments)
@@ -112,6 +104,13 @@ class KataController < ApplicationController
   end
 
 private
+
+  def load_increment_manifest(increment_number)
+    @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
+    path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
+    @manifest = eval IO.read(path)
+    @shown_increment_number = increment_number
+  end
 
   def load_starting_manifest(kata)
     catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
