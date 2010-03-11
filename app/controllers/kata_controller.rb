@@ -45,7 +45,12 @@ class KataController < ApplicationController
       filename.strip!
       if (filename != "")
         @manifest[:visible_files][filename] = {}
-        @manifest[:visible_files][filename][:content] = params[filename].split("\r\n").join("\n")
+        # TODO: creating a new file and then immediately deleting it
+        #       causes params[filename] to be be nil for some reason
+        #       I haven't yet tracked down.
+        if content = params[filename]
+          @manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
+        end
       end
     end
 
@@ -68,7 +73,6 @@ class KataController < ApplicationController
     end
   end
 
-  #TODO: rename this is really a view of the dojo
   def see_all_increments
     @kata_id = params[:id]
     @title = "Cyber Dojo : Kata " + @kata_id + ", all increments"
@@ -78,7 +82,6 @@ class KataController < ApplicationController
     @editable = false
   end
 
-  #TODO: this is really spying on another avatar-group
   def see_one_increment
     @kata_id = params[:id]
     kata = Kata.new(@kata_id)
