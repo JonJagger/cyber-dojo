@@ -156,7 +156,6 @@ function predict(prediction)
 function makeFileListEntry(filename)
 {
   var div = document.createElement("div");
-  div.setAttribute('title', "right click to rename/delete");
   div.onclick = new Function("loadFile('" + filename + "')");
   var inp = document.createElement("input");
   inp.setAttribute('id', "radio_" + filename);

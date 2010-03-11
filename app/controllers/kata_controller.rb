@@ -124,7 +124,7 @@ private
   end
 
   def limited(increments)
-    max_increments_displayed = 45
+    max_increments_displayed = 54
     len = [increments.length, max_increments_displayed].min
     increments[-len,len]
   end
@@ -200,7 +200,7 @@ end
 def parse_run_tests_output(manifest, output)
   so = output.to_s
   inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(so)"
-  if Regexp.new("run-tests stopped").match(so)
+  if Regexp.new("execution did not finish within").match(so)
     inc[:info] = so
     inc[:outcome] = :timeout
   else

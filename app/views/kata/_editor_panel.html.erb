@@ -7,23 +7,24 @@
         <tr>
           <td nowrap>
             <% if @editable -%>
+              <span id="shown-increment-number">
+                <%=@shown_increment_number-%>
+              </span>
               <input type="hidden" 
                      id="run_tests_prediction" 
                      name="run_tests_prediction" 
                      value="">
               <input type="submit" 
-                     id="run-tests-failed"
-                     name="run-tests-failed" 
                      class="failed increment box" 
-                     value="<%=@shown_increment_number-%>"
+                     value="  "
+                     title="we predict a red"
                      onclick="predict('failed');"/>
               <input type="submit" 
-                     id="run-tests-passed"
-                     name="run-tests-passed" 
                      class="passed increment box" 
-                     value="<%=@shown_increment_number-%>"
+                     value="  "
+                     title="we predict a green"
                      onclick="predict('passed');"/>
-            <% end -%>
+            <% end -%>                 
           </td>
         </tr>
       </table>
@@ -31,10 +32,12 @@
       <table>
         <tr>
           <td nowrap>
-            <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
+            <a href="/kata/see_all_increments/<%= @kata_id -%>" 
+               target="_blank">
               <%= avatar_image(@avatar) {|f| f} -%>
             </a>
-            <a href="/kata/see_all_increments/<%= @kata_id -%>" target="_blank">
+            <a href="/kata/see_all_increments/<%= @kata_id -%>" 
+               target="_blank">
               <%= avatar_image(@avatar) {|f| f} -%>
             </a>
           <td/>
@@ -51,8 +54,7 @@
   		  <% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
             <td>             
-			  <div onclick='loadFile("<%=filename-%>")'
-                   title="right click to rename/delete">
+			  <div onclick='loadFile("<%=filename-%>")'>
                 <input id="radio_<%=filename-%>" 
                        name="radio_filename"
                        type="radio"

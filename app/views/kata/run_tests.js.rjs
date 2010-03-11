@@ -1,8 +1,7 @@
 
 page.replace_html 'increments', :partial => 'increments';
 
-page['run-tests-passed'].set_attribute('value', "#{@shown_increment_number}")
-page['run-tests-failed'].set_attribute('value', "#{@shown_increment_number}")
-page['run-tests-error' ].set_attribute('value', "#{@shown_increment_number}")
+page.replace_html 'shown-increment-number', "#{@shown_increment_number}";
+
 
 
