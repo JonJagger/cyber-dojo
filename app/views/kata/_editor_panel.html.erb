@@ -6,7 +6,7 @@
       <table>
         <tr>
           <td nowrap>
-            <% if (run_tests) -%>
+            <% if @editable -%>
               <input type="hidden" 
                      id="run_tests_prediction" 
                      name="run_tests_prediction" 
@@ -43,7 +43,7 @@
 
       <table>
         <% if @editable -%>
-          <tbody id="file-list">       
+          <tbody id="file-list">  <!-- rename/delete popup menu keys off this id -->     
         <% else -%>
           <tbody>       
         <% end -%>
@@ -68,7 +68,7 @@
       <br/>
       <br/>
       <% if @editable -%>
-        <input type="button" name="new-file" value="new-file" onclick="newFile()"/>
+        <input type="button" name="new file" value="new file" onclick="newFile()"/>
       <% end -%>
     </td>
 

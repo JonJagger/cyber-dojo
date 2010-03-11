@@ -81,20 +81,27 @@ class KataController < ApplicationController
   #TODO: this is really spying on another avatar-group
   def see_one_increment
     @kata_id = params[:id]
-    @avatar = params[:avatar]
-    increment_number = params[:increment]
-    @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
-
-    path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
-    @manifest = eval IO.read(path)
-
     kata = Kata.new(@kata_id)
+    @avatar = params[:avatar]
     avatar = kata.avatar(@avatar)
     all_increments = avatar.increments
-    one_increment = all_increments[increment_number.to_i]
+
+    if params[:increment]
+      increment_number = params[:increment]
+      @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
+      path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
+      @manifest = eval IO.read(path)
+    elsif all_increments.length != 0
+      increment_number = all_increments.last[:number].to_s
+      @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
+      path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
+      @manifest = eval IO.read(path)
+    else
+      @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar
+      @manifest = kata.exercise.manifest
+    end
+
     @increments = limited(all_increments)
-    @shown_increment_number = one_increment[:number]
-    @shown_increment_outcome = one_increment[:outcome]
     @editable = false
   end
 

@@ -5,8 +5,13 @@
   <% @avatars.each do |avatar_name,avatar_increments| -%>
    <tr>
      <td nowrap>
-         <%= avatar_image(avatar_name) {|i| i} -%>
-         <%= avatar_image(avatar_name) {|i| i} -%>
+
+        <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>" target="_blank">
+           <%= avatar_image(avatar_name) {|i| i} -%>
+        </a>
+        <a href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= avatar_name-%>" target="_blank">
+           <%= avatar_image(avatar_name) {|i| i} -%>
+        </a>
      </td>
      <td nowrap>
        <table cellpadding="1px">
