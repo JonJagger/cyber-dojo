@@ -34,7 +34,7 @@ loaded and eval'd in the ruby code). For example:
     'notes.txt' => {},
     'instructions' => {},
     'makefile' => {},
-    'kata.sh' => { :permissions => 0755 },
+    'kata.sh' => {},
   },
 
   :hidden_files =>
@@ -56,10 +56,7 @@ Explanation of these parameters
 -------------------------------
 1:visible_files
   These are the names of the files that are visible in the editor in the browser.
-  Each file can have associated information if necessary. In the example
-  above the file called kata.sh has a permission of 755 (executable) because it is a shell 
-  file - some ruby app code checks if a filename has an associated :permission and if so 
-  chmod's the file. 
+  Each file can have associated information if necessary. 
   Any visible file with :preloaded => true will be pre-loaded into the editor
   when the browser page first opens.
 

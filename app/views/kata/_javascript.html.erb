@@ -1,22 +1,80 @@
 
 <script language="javascript" type="text/javascript">
 
+function trim(stringToTrim) 
+{
+  return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
+function renameFile(e) 
+{
+  var filename = trim(e.element().lastChild.nodeValue);
+  alert('TODO: Rename |' + filename + '|');
+}
+
+function deleteFile(e) 
+{
+  var filename = trim(e.element().lastChild.nodeValue);
+  // remove from file-list
+  var div = e.element().parentNode;
+  var td = div.parentNode;
+  var tr = td.parentNode;
+  tr.removeChild(td);
+
+  // remove hidden textarea
+  $('visible_files_container').removeChild($(filename));
+
+  // remove from visible_filenames_container
+  var current = $('visible_filenames_container').value;
+  current = current.replace(';'+filename+";", ";");
+  $('visible_filenames_container').value = current;
+
+  // if deleted file is current file set editor textarea to empty
+  if (filename == current_filename) 
+  {
+    current_filename = false;
+    $('editor').value = "";
+  }
+}
+
+document.observe('dom:loaded', function() {
+  var myMenuItems = [
+    {
+      name: 'Rename',
+      className: 'rename', 
+      callback: function(e) { renameFile(e); }
+    },
+    {
+      name: 'Delete', 
+      className: 'delete',
+      callback: function(e) { deleteFile(e); }
+    }
+  ]
+
+  new Proto.Menu({
+    selector: '#filename-button-list', 
+    className: 'menu desktop', // (can be used for css styling)
+    menuItems: myMenuItems
+  })
+})
+
 function atLoad()
 {
   <% @manifest[:visible_files].each do |filename,info| -%>
     <% if info.include? :preloaded and info[:preloaded] -%>
-      loadFile("<%=filename-%>");
+         loadFile("<%=filename-%>");
     <%- end -%>
   <%- end -%>
 }
 window.onload = atLoad;
 
-var current_file_name = false
+var current_filename = false;
 
 function saveCurrentFile()
 {
-  if (current_file_name) {
-    $(current_file_name).value = $('editor').value;
+  if (current_filename) 
+  {
+    $(current_filename).value = $('editor').value;
   }
 }
 
@@ -24,7 +82,7 @@ function loadFile(name)
 {
   saveCurrentFile();
   $('editor').value = $(name).value;
-  current_file_name = name;
+  current_filename = name;
   document.getElementById('radio_' + name).checked = true;
 }
 
@@ -48,7 +106,8 @@ function newFile()
 {
   var filename = $('new-filename').value;
   filename = filename.split(' ').join('');
-  if (filename=="") return;
+  if (filename=="") 
+    return;
 
   // Create new hidden textarea to save to before submitting.
   var ta = document.createElement("textarea");
@@ -58,11 +117,18 @@ function newFile()
 
   // Make the new filename visible in the file-manager list
   var mle = document.createElement("div");
-  mle.setAttribute('id', filename + "-button");
-  mle.setAttribute('class', 'fake-button box');
+  mle.setAttribute('title', "right click to rename/delete");
   mle.onclick = new Function("loadFile('" + filename + "')");
+  var inp = document.createElement("input");
+  inp.setAttribute('id', "radio_" + filename);
+  inp.setAttribute('name', "radio_filename");
+  inp.setAttribute('type', "radio");
+  inp.setAttribute('value', "");
+  mle.appendChild(inp);
   mle.appendChild(document.createTextNode(filename));
   $('filename-button-list').appendChild(mle);
+
+  //TODO: need to make sure the list is still sorted...
 
   // Blank out the new-filename text input
   $('new-filename').value = '';

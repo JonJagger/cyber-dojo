@@ -1,6 +1,4 @@
 
-require 'rexml/document'
-
 class KataController < ApplicationController
 
   def start
@@ -8,6 +6,7 @@ class KataController < ApplicationController
     @avatar = params[:avatar]
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
     kata = Kata.new(@kata_id)
+
     @manifest = load_starting_manifest(kata)
     avatar = kata.avatar(@avatar)
     all_increments = []
@@ -31,19 +30,23 @@ class KataController < ApplicationController
     @avatar = params[:avatar]
     kata = Kata.new(@kata_id)
     avatar = kata.avatar(@avatar)
-    @manifest = eval params['manifest.rb'] # load from web page
-    # but reload max_run_tests_duration on each increment so it can be
+
+    # load from web page, eg :hidden_files, :language, :unit_test_framework
+    @manifest = eval params['manifest.rb'] 
+
+    # reload max_run_tests_duration on each increment so it can be
     # altered by the sensei during the kata if necessary
     @manifest[:max_run_tests_duration] = kata.max_run_tests_duration
-    @manifest[:visible_files].each do |filename,file| 
-      file[:content] = params[filename].split("\r\n").join("\n") 
-    end
 
-    new_filenames = params['visible_filenames_container'].strip.split(';')
-    new_filenames.each do |new_filename|
-      new_filename.strip!
-      @manifest[:visible_files][new_filename] = {}
-      @manifest[:visible_files][new_filename][:content] = params[new_filename].split("\r\n").join("\n")
+    # filenames in the file-list may have been renamed or deleted so reload visible_files
+    @manifest[:visible_files] = {}
+    filenames = params['visible_filenames_container'].strip.split(';')
+    filenames.each do |filename|
+      filename.strip!
+      if (filename != "")
+        @manifest[:visible_files][filename] = {}
+        @manifest[:visible_files][filename][:content] = params[filename].split("\r\n").join("\n")
+      end
     end
 
     all_increments = []
@@ -59,6 +62,7 @@ class KataController < ApplicationController
     @increments = limited(all_increments)
     @shown_increment_number = @increments.last[:number] + 1
     @editable = true
+
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -90,7 +94,7 @@ class KataController < ApplicationController
     @increments = limited(all_increments)
     @shown_increment_number = one_increment[:number]
     @shown_increment_outcome = one_increment[:outcome]
-    @editable = true # enables editArea toolbar - can't run-tests anyway
+    @editable = true
   end
 
 private
@@ -100,14 +104,14 @@ private
     manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
     manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
     manifest[:language] = catalogue[:language]
+    # this is to load file content
     manifest[:visible_files] = kata.exercise.visible_files    
-    manifest[:tab_size] = manifest[:tab_size ] ||  4;
 	# load editor setting or defaults
-    manifest[:font_size] = manifest[:font_size] || 14;
-    manifest[:font_family] = manifest[:font_family] || 'monospace';
-    manifest[:font_weight] = manifest[:font_weight] || 'normal';
-    manifest[:color] = manifest[:color] || 'white';
-    manifest[:background_color] = manifest[:background_color] || '#686868';
+    manifest[:font_size] ||= 14;
+    manifest[:font_family] ||= 'monospace';
+    manifest[:font_weight] ||= 'normal';
+    manifest[:color] ||= 'white';
+    manifest[:background_color] ||= '#686868';
     manifest
   end
 
@@ -162,7 +166,7 @@ def save_file(foldername, filename, file)
     fd.write(filtered)
   end
   # .sh files (for example) need execute permissions
-  File.chmod(file[:permissions], path) if file[:permissions]
+  File.chmod(0755, path) if filename =~ /\.sh/    
 end
 
 # Tabs are a problem for makefiles since they are tab sensitive.
@@ -173,7 +177,7 @@ def makefile_filter(name, content)
     lines = []
     newline = Regexp.new('[\r]?[\n]')
     content.split(newline).each do |line|
-      if (stripped = line.lstrip!)
+      if stripped = line.lstrip!
         line = "\t" + stripped
       end
       lines.push(line)

@@ -2,12 +2,12 @@
 {
   :visible_files =>
   {
-    'unsplice.tests.c' => { :preloaded => true },
     'unsplice.c' => {},
     'unsplice.h' => {},
     'instructions' => {},
     'makefile' => {},
-    'kata.sh' => { :permissions => 0755 },
+    'kata.sh' => {},
+    'unsplice.tests.c' => { :preloaded => true },
   },
 
   :hidden_files =>
@@ -21,7 +21,5 @@
   :font_weight => 'normal',
   :color => 'white',
   :background_color => '#686868',
-
-  :tab_size => 4,
 }
 

@@ -42,7 +42,7 @@ a.increment:hover span /*the span will display just on :hover state*/
     font-size: 9pt;
     display: block;
     position: fixed;
-    top: 2em; left: 2em; width: auto;
+    top: 5em; left: 2em; width: auto;
     border:1px solid #0cf;
     background-color: #cff; 
     color: #000;

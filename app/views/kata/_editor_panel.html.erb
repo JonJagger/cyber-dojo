@@ -44,16 +44,18 @@
       <table>       
 		<% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
-            <td id="filename-button-list">
+            <% if filename != 'kata.sh' -%>
+              <td id="filename-button-list">
+            <% else -%>
+              <td>
+            <% end -%>
               
-			  <div id="<%=filename-%>-button"
-                   onclick='loadFile("<%=filename-%>")'
-                   title="edit <%= filename -%>">
+			  <div onclick='loadFile("<%=filename-%>")'
+                   title="right click to rename/delete">
                 <input id="radio_<%=filename-%>" 
                        name="radio_filename"
                        type="radio"
-                       value="">
-                  <%= filename -%>
+                       value=""><%= filename -%>
               </div>
 		    </td>
           </tr>
@@ -69,7 +71,6 @@
     </td>
 
     <td>
-      <!-- EditArea turns this textarea into a tabbed edtitor. See _javascript.html.erb -->
       <table cellpadding="0">
         <tr>
           <td>
@@ -100,6 +101,7 @@
 
   <textarea id="visible_filenames_container"
             name="visible_filenames_container">
+    ;<% @manifest[:visible_files].each do |filename,file| -%><%=filename-%>;<% end -%>   
   </textarea>
 
    <textarea id="manifest.rb" 

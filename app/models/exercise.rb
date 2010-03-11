@@ -2,7 +2,7 @@
 class Exercise
 
   def initialize(kata)
-    @kata = kata  # ADD
+    @kata = kata
   end
 
   def visible_files

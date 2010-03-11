@@ -1,7 +1,6 @@
 
 class Avatar
 
-
   def initialize(kata, name)
     #TODO: check name is in NAMES
     @kata, @name = kata, name
