@@ -153,7 +153,7 @@ def do_run_tests(dst_folder, src_folder, manifest)
   # they are stuck in an infinite loop and kill the thread
   if sandbox_thread.status != false 
     sandbox_thread.kill 
-    run_tests_output = [ "run-tests stopped as it did not finish within #{max_seconds} seconds" ]
+    run_tests_output = [ "execution did not finish within #{max_seconds} seconds" ]
   end
   run_tests_output
 end

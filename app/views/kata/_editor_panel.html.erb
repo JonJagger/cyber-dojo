@@ -41,15 +41,11 @@
         <tr/>
       </table>
 
-      <table>       
-		<% @manifest[:visible_files].sort.each do |filename,file| -%>
+      <table>
+        <tbody id="file-list">       
+  		  <% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
-            <% if filename != 'kata.sh' -%>
-              <td id="filename-button-list">
-            <% else -%>
-              <td>
-            <% end -%>
-              
+            <td>             
 			  <div onclick='loadFile("<%=filename-%>")'
                    title="right click to rename/delete">
                 <input id="radio_<%=filename-%>" 
@@ -59,7 +55,8 @@
               </div>
 		    </td>
           </tr>
-		<% end -%>
+		  <% end -%>
+        </tbody>
 	  </table>
 
       <br/>

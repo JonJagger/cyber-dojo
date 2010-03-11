@@ -9,17 +9,68 @@ function trim(stringToTrim)
 function renameFile(e) 
 {
   var filename = trim(e.element().lastChild.nodeValue);
-  alert('TODO: Rename |' + filename + '|');
+
+  if (filename == "kata.sh")
+  {
+    alert(filename + " cannot be renamed (it is the file the " +
+      "Cyber-Dojo server executes on each iteration).");
+    return;
+  }
+
+  var newname = trim(prompt("Rename " + filename + " to: ", ""));
+  if (newname == null)
+    return; // Cancelled
+
+  if (newname == "") 
+  {
+    alert("Nothing entered: rename abandoned");
+    return;
+  }
+   
+  // TODO: what if there is already a file with the chosen name
+
+  // rename hidden textarea by creating new one
+  var ta = document.createElement("textarea");
+  ta.setAttribute('id', newname);
+  ta.setAttribute('name', newname);
+  ta.value = $(filename).value;
+  $('visible_files_container').appendChild(ta);
+
+  //TODO: and then removing the old one
+
+  // change name in $('visible_files_container')
+  var current = $('visible_filenames_container').value;
+  current = current.replace(';'+filename+";", ";"+newname+";");
+  $('visible_filenames_container').value = current;
+
+  // change name in file-list
+  var td = e.element().parentNode;
+  var tr = td.parentNode;
+  var tbody = tr.parentNode;
+  tbody.removeChild(tr);
+  tbody.appendChild(makeFileListEntry(newname));
+  //TODO: sort file-list
 }
 
 function deleteFile(e) 
 {
   var filename = trim(e.element().lastChild.nodeValue);
+
+  if (filename == "kata.sh")
+  {
+    alert(filename + " cannot be deleted (it is the file the " +
+      "Cyber-Dojo server executes on each iteration).");
+    return;
+  }
+
+  if (!confirm("Click OK to delete " + filename))
+    return; // Cancelled
+
   // remove from file-list
-  var div = e.element().parentNode;
-  var td = div.parentNode;
+  var td = e.element().parentNode;
   var tr = td.parentNode;
-  tr.removeChild(td);
+  var tbody = tr.parentNode;
+  tbody.removeChild(tr);
 
   // remove hidden textarea
   $('visible_files_container').removeChild($(filename));
@@ -52,7 +103,7 @@ document.observe('dom:loaded', function() {
   ]
 
   new Proto.Menu({
-    selector: '#filename-button-list', 
+    selector: '#file-list', 
     className: 'menu desktop', // (can be used for css styling)
     menuItems: myMenuItems
   })
@@ -102,6 +153,26 @@ function predict(prediction)
    $('run_tests_prediction').value = prediction;
 }
 
+function makeFileListEntry(filename)
+{
+  var div = document.createElement("div");
+  div.setAttribute('title', "right click to rename/delete");
+  div.onclick = new Function("loadFile('" + filename + "')");
+  var inp = document.createElement("input");
+  inp.setAttribute('id', "radio_" + filename);
+  inp.setAttribute('name', "radio_filename");
+  inp.setAttribute('type', "radio");
+  inp.setAttribute('value', "");
+  div.appendChild(inp);
+  div.appendChild(document.createTextNode(filename));
+  var td = document.createElement("td");
+  td.appendChild(div);
+  var tr = document.createElement("tr");
+  tr.appendChild(td);
+
+  return tr;
+}
+
 function newFile()
 {
   var filename = $('new-filename').value;
@@ -116,18 +187,7 @@ function newFile()
   $('visible_files_container').appendChild(ta);
 
   // Make the new filename visible in the file-manager list
-  var mle = document.createElement("div");
-  mle.setAttribute('title', "right click to rename/delete");
-  mle.onclick = new Function("loadFile('" + filename + "')");
-  var inp = document.createElement("input");
-  inp.setAttribute('id', "radio_" + filename);
-  inp.setAttribute('name', "radio_filename");
-  inp.setAttribute('type', "radio");
-  inp.setAttribute('value', "");
-  mle.appendChild(inp);
-  mle.appendChild(document.createTextNode(filename));
-  $('filename-button-list').appendChild(mle);
-
+  $('file-list').appendChild(makeFileListEntry(filename));
   //TODO: need to make sure the list is still sorted...
 
   // Blank out the new-filename text input
