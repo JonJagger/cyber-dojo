@@ -1,0 +1,161 @@
+/* GENERAL STYLES */
+
+div.menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-family: verdana;
+}
+div.menu a {
+	display: block;
+	text-decoration: none;
+	cursor: default;
+	outline: none;
+	font-size: 11px;
+}
+.menu .separator {
+	height: 1px;
+	padding: 0;
+	overflow: hidden;
+	display: block;
+	font-size: 1px;
+}
+.menu ul, .menu li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.menu li {
+	list-style-position: outside;
+}
+
+
+/* FIREFOX STYLES */
+
+.menu.firefox {
+	width: 12em;
+	background: #F4F5EB;
+	border-top: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #666;
+	border-bottom: 1px solid #666;
+	padding: 2px 0;
+}
+.menu.firefox a {
+	color: #555;
+	padding: 4px 15px;
+	margin: 0 2px;
+}
+.menu.firefox a:hover {
+	background: #006;
+	color: #fff;
+}
+.menu.firefox a.disabled {
+	color: #bbb;
+}
+.menu.firefox a.disabled:hover {
+	background: #F4F5EB;
+	color: #bbb;
+}
+.menu.firefox .separator {
+	border-bottom: 1px solid #fff;
+	background: #999;
+	margin: 2px 4px;
+}
+
+
+/* GOOGLE STYLES */
+
+.menu.google {
+	width: 10.5em;
+	background: #fff;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #676767;
+	border-right: 1px solid #676767;
+}
+.menu.google a {
+	color: #00c;
+	text-decoration: none;
+	padding: 2px 5px;
+	cursor: pointer;
+	font-size: 12px;
+}
+.menu.google a:hover {
+	background: #D3E3FE;
+}
+.menu.google a.disabled {
+	color: #bbb;
+}
+.menu.google a.disabled:hover {
+	background: #fff;
+	color: #bbb;
+}
+.menu.google .separator {
+	background: #ccc;
+}
+
+/* DESKTOP STYLES */
+
+.menu.desktop {
+	width: 14em;
+	background: #f9f8f7;
+	border: 1px solid #999;
+	padding: 0;
+}
+.menu.desktop ul, .menu.desktop li {
+	margin: 0;
+	padding: 0;
+}
+.menu.desktop li.separator {
+	height: 1px;
+}
+.menu.desktop a {
+	color: #555;
+	padding: 3px 0 3px 25px;
+	margin: 0;
+	border: 1px solid #f9f8f7;
+}
+.menu.desktop a.disabled {
+	opacity: 0.25;
+	filter: alpha(opacity=25);
+	zoom: 1;
+}
+.menu.desktop li.separator {
+	border-bottom: 1px solid #fff;
+	background: #aaa;
+	margin: 1px 1px 0 1px;
+	line-height: 1px !important;
+}
+.menu.desktop a.new {
+  background: #f9f8f7 url(images/page.png) 2px 50% no-repeat;
+}
+.menu.desktop a.edit {
+  background: #f9f8f7 url(images/page_edit.png) 2px 50% no-repeat;
+}
+.menu.desktop a.copy {
+  background: #f9f8f7 url(images/page_copy.png) 2px 50% no-repeat;
+}
+.menu.desktop a.delete {
+  background: #f9f8f7 url(images/page_delete.png) 2px 50% no-repeat;
+}
+.menu.desktop a.save {
+  background: #f9f8f7 url(images/page_save.png) 2px 50% no-repeat;
+}
+.menu.desktop a.xsl {
+  background: #f9f8f7 url(images/page_excel.png) 2px 50% no-repeat;
+}
+.menu.desktop a.doc {
+  background: #f9f8f7 url(images/page_word.png) 2px 50% no-repeat;
+}
+.menu.desktop a.pdf {
+  background: #f9f8f7 url(images/page_acrobat.png) 2px 50% no-repeat;
+}
+.menu.desktop a.send {
+  background: #f9f8f7 url(images/email.png) 2px 50% no-repeat;
+}
+/* we need explicit enabled class to overcome css deficiences (without creating unnecessary markup) */
+.menu.desktop a.enabled:hover {
+	background-color: #0A246A;
+	color: #fff;
+}
