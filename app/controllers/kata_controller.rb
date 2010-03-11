@@ -91,13 +91,16 @@ class KataController < ApplicationController
       @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
       path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
       @manifest = eval IO.read(path)
+      @shown_increment_number = increment_number
     elsif all_increments.length != 0
       increment_number = all_increments.last[:number].to_s
       @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
       path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
+      @shown_increment_number = increment_number
       @manifest = eval IO.read(path)
     else
       @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar
+      @shown_increment_number = "0"
       @manifest = kata.exercise.manifest
     end
 

@@ -6,10 +6,10 @@
       <table>
         <tr>
           <td nowrap>
+            <span id="shown-increment-number">
+              <%=@shown_increment_number-%>
+            </span>
             <% if @editable -%>
-              <span id="shown-increment-number">
-                <%=@shown_increment_number-%>
-              </span>
               <input type="hidden" 
                      id="run_tests_prediction" 
                      name="run_tests_prediction" 
