@@ -42,7 +42,12 @@
       </table>
 
       <table>
-        <tbody id="file-list">       
+        <% if @editable -%>
+          <tbody id="file-list">       
+        <% else -%>
+          <tbody>       
+        <% end -%>
+
   		  <% @manifest[:visible_files].sort.each do |filename,file| -%>
 		  <tr>
             <td>             
@@ -62,7 +67,9 @@
       <br/>
       <br/>
       <br/>
-      <input type="button" name="new-file" value="new-file" onclick="newFile()"/>
+      <% if @editable -%>
+        <input type="button" name="new-file" value="new-file" onclick="newFile()"/>
+      <% end -%>
     </td>
 
     <td>
@@ -72,6 +79,9 @@
             <textarea style="font-family: <%=@manifest[:font_family]-%>; font-size: <%=@manifest[:font_size]-%>pt; font-weight: <%=@manifest[:font_weight]-%>; color: <%=@manifest[:color]-%>; background-color: <%=@manifest[:background_color]-%>; "
                       id="editor" 
                       name="editor" 
+                      <% if !@editable -%>
+                        readonly="true"
+                      <% end -%>
                       cols="80" 
                       rows="30">
             </textarea>

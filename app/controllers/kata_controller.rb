@@ -75,6 +75,7 @@ class KataController < ApplicationController
     @avatars = {}
     kata = Kata.new(@kata_id)
     kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
+    @editable = false
   end
 
   #TODO: this is really spying on another avatar-group
@@ -94,7 +95,7 @@ class KataController < ApplicationController
     @increments = limited(all_increments)
     @shown_increment_number = one_increment[:number]
     @shown_increment_outcome = one_increment[:outcome]
-    @editable = true
+    @editable = false
   end
 
 private
