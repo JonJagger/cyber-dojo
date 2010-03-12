@@ -19,7 +19,6 @@ class KataController < ApplicationController
     else
       @shown_increment_number = @increments.last[:number] + 1
     end
-    @editable = true
   end
 
   def run_tests
@@ -60,7 +59,6 @@ class KataController < ApplicationController
 
     @increments = limited(all_increments)
     @shown_increment_number = @increments.last[:number] + 1
-    @editable = true
 
     respond_to do |format|
       format.js if request.xhr?
@@ -69,14 +67,15 @@ class KataController < ApplicationController
 
   def see_all_increments
     @kata = Kata.new(params[:id])
+    @kata.readonly = true
     @title = "Cyber Dojo : Kata " + @kata.id + ", all increments"
     @avatars = {}
     @kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
-    @editable = false
   end
 
   def see_one_increment
     @kata = Kata.new(params[:id], params[:avatar])
+    @kata.readonly = true
     @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name
 
     all_increments = @kata.avatar.increments
@@ -91,7 +90,6 @@ class KataController < ApplicationController
     end
 
     @increments = limited(all_increments)
-    @editable = false
   end
 
 private

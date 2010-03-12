@@ -12,12 +12,12 @@
 
     <% @increments.each do |increment| -%>
       <td>
-          <% if @editable -%> 
+          <% if !@kata.readonly -%> 
             <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
-               href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>" target="_blank" >
+               href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= @kata.avatar.name-%>&increment=<%= increment[:number]-%>" target="_blank" >
           <% else -%>
             <a class="<%= increment[:prediction]-%>_prediction <%=increment[:outcome] -%> increment box" 
-               href="/kata/see_one_increment/<%= @kata_id -%>?avatar=<%= @avatar-%>&increment=<%= increment[:number]-%>" >
+               href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= @kata.avatar.name-%>&increment=<%= increment[:number]-%>" >
           <% end -%>
             &thinsp;
             <span><%= increment[:number] -%>:<%= increment[:info] -%></span>

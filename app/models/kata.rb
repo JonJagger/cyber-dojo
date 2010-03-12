@@ -5,8 +5,17 @@ class Kata
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
     @avatar = Avatar.new(self, name) if name != ""
+    @readonly = false
   end
   
+  def readonly
+    @readonly
+  end
+
+  def readonly=(tf)
+    @readonly = tf
+  end
+
   def id
     @id.to_s
   end

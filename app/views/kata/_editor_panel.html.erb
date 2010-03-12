@@ -9,7 +9,7 @@
             <span id="shown-increment-number">
               <%=@shown_increment_number-%>
             </span>
-            <% if @editable -%>
+            <% if !@kata.readonly -%>
               <input type="hidden" 
                      id="run_tests_prediction" 
                      name="run_tests_prediction" 
@@ -45,7 +45,7 @@
       </table>
 
       <table>
-        <% if @editable -%>
+        <% if !@kata.readonly -%>
           <tbody id="file-list">  <!-- rename/delete popup menu keys off this id -->     
         <% else -%>
           <tbody>       
@@ -69,7 +69,7 @@
       <br/>
       <br/>
       <br/>
-      <% if @editable -%>
+      <% if !@kata.readonly -%>
         <input type="button" name="new file" value="new file" onclick="newFile()"/>
       <% end -%>
     </td>
@@ -81,7 +81,7 @@
             <textarea style="font-family: <%=@manifest[:font_family]-%>; font-size: <%=@manifest[:font_size]-%>pt; font-weight: <%=@manifest[:font_weight]-%>; color: <%=@manifest[:color]-%>; background-color: <%=@manifest[:background_color]-%>; "
                       id="editor" 
                       name="editor" 
-                      <% if !@editable -%>
+                      <% if @kata.readonly -%>
                         readonly="true"
                       <% end -%>
                       cols="80" 
