@@ -31,7 +31,7 @@ function renameFile(e)
 
   // rename hidden textarea by creating new one
   var ta = new Element("textarea", 
-    { id:newname, name:newname, value:$(filename).value});
+    { id:newname, name:newname }).update($(filename).value);
   $('visible_files_container').appendChild(ta);
 
   //TODO: and then removing the old one
@@ -153,15 +153,15 @@ function predict(prediction)
 
 function makeFileListEntry(filename)
 {
-  var div = document.createElement("div");
+  var div = new Element("div");
   div.onclick = new Function("loadFile('" + filename + "')");
   var inp = new Element("input", 
     { id:"radio_" + filename, name:"radio_filename", type:"radio", value:"" });
   div.appendChild(inp);
   div.appendChild(document.createTextNode(filename));
-  var td = document.createElement("td");
+  var td = new Element("td");
   td.appendChild(div);
-  var tr = document.createElement("tr");
+  var tr = new Element("tr");
   tr.appendChild(td);
 
   return tr;
@@ -179,10 +179,8 @@ function newFile()
     return;
   }
 
-  // Create new hidden textarea to save to before submitting.
-  var ta = document.createElement("textarea");
-  ta.setAttribute('id', filename);
-  ta.setAttribute('name', filename);
+  // Create new hidden textarea (to save to before submitting)
+  var ta = new Element("textarea", { id:filename, name:filename });
   $('visible_files_container').appendChild(ta);
 
   // Make the new filename visible in the file-manager list
