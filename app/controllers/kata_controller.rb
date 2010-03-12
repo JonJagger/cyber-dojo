@@ -2,19 +2,16 @@
 class KataController < ApplicationController
 
   def start
-    #@kata = Kata.new(params[:kata_id], params[:avatar])
-
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
-    kata = Kata.new(@kata_id)
+    kata = Kata.new(@kata_id, @avatar)
 
     @manifest = load_starting_manifest(kata)
-    avatar = kata.avatar(@avatar)
     all_increments = []
     File.open(kata.folder, 'r') do |f|
       flock(f) do |lock|
-        all_increments = avatar.read_most_recent(@manifest)
+        all_increments = kata.avatar.read_most_recent(@manifest)
       end
     end
     
@@ -30,8 +27,7 @@ class KataController < ApplicationController
   def run_tests
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
-    kata = Kata.new(@kata_id)
-    avatar = kata.avatar(@avatar)
+    kata = Kata.new(@kata_id, @avatar)
 
     # load from web page, eg :hidden_files, :language, :unit_test_framework
     @manifest = eval params['manifest.rb'] 
@@ -59,10 +55,10 @@ class KataController < ApplicationController
     all_increments = []
     File.open(kata.folder, 'r') do |f|
       flock(f) do |lock|
-        @run_tests_output = do_run_tests(avatar.folder, kata.exercise.folder, @manifest)
+        @run_tests_output = do_run_tests(kata.avatar.folder, kata.exercise.folder, @manifest)
         test_info = parse_run_tests_output(@manifest, @run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
-        all_increments = avatar.save(@manifest, test_info)
+        all_increments = kata.avatar.save(@manifest, test_info)
       end
     end
 
@@ -86,10 +82,9 @@ class KataController < ApplicationController
 
   def see_one_increment
     @kata_id = params[:id]
-    kata = Kata.new(@kata_id)
     @avatar = params[:avatar]
-    avatar = kata.avatar(@avatar)
-    all_increments = avatar.increments
+    kata = Kata.new(@kata_id, @avatar)
+    all_increments = kata.avatar.increments
 
     if params[:increment]
       load_increment_manifest(params[:increment])

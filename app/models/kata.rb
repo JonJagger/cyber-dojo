@@ -1,9 +1,10 @@
 
 class Kata
 
-  def initialize(id)
+  def initialize(id, name="")
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
+    @avatar = Avatar.new(self, name) if name != ""
   end
 
   def language
@@ -26,15 +27,15 @@ class Kata
     Exercise.new(self)
   end
 
-  def avatar(name)
-    Avatar.new(self, name)
+  def avatar
+    @avatar
   end
 
   def avatars
     result = []
     Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
-      result << avatar(avatar_name) if File.exists?(path)
+      result << Avatar.new(self,avatar_name) if File.exists?(path)
     end
     result
   end
