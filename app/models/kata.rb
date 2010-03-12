@@ -6,6 +6,10 @@ class Kata
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
     @avatar = Avatar.new(self, name) if name != ""
   end
+  
+  def id
+    @id.to_s
+  end
 
   def language
     @manifest[:language].to_s
@@ -17,10 +21,6 @@ class Kata
 
   def max_run_tests_duration
     @manifest[:max_run_tests_duration]
-  end
-
-  def folder
-    'katas' + '/' + @id
   end
 
   def exercise
@@ -38,6 +38,10 @@ class Kata
       result << Avatar.new(self,avatar_name) if File.exists?(path)
     end
     result
+  end
+
+  def folder
+    'katas' + '/' + id
   end
 
 end

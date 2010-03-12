@@ -32,13 +32,13 @@
       <table>
         <tr>
           <td nowrap>
-            <a href="/kata/see_all_increments/<%= @kata_id -%>" 
+            <a href="/kata/see_all_increments/<%= @kata.id -%>" 
                target="_blank">
-              <%= avatar_image(@avatar) {|f| f} -%>
+              <%= avatar_image(@kata.avatar.name) {|f| f} -%>
             </a>
-            <a href="/kata/see_all_increments/<%= @kata_id -%>" 
+            <a href="/kata/see_all_increments/<%= @kata.id -%>" 
                target="_blank">
-              <%= avatar_image(@avatar) {|f| f} -%>
+              <%= avatar_image(@kata.avatar.name) {|f| f} -%>
             </a>
           <td/>
         <tr/>

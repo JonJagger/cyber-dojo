@@ -2,16 +2,14 @@
 class KataController < ApplicationController
 
   def start
-    @kata_id = params[:kata_id]
-    @avatar = params[:avatar]
-    @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
-    kata = Kata.new(@kata_id, @avatar)
+    @kata = Kata.new(params[:kata_id], params[:avatar])
+    @title = "Cyber Dojo : Kata " + @kata.id + ", " + @kata.avatar.name
 
-    @manifest = load_starting_manifest(kata)
+    @manifest = load_starting_manifest(@kata)
     all_increments = []
-    File.open(kata.folder, 'r') do |f|
+    File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
-        all_increments = kata.avatar.read_most_recent(@manifest)
+        all_increments = @kata.avatar.read_most_recent(@manifest)
       end
     end
     
@@ -25,16 +23,14 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    @kata_id = params[:kata_id]
-    @avatar = params[:avatar]
-    kata = Kata.new(@kata_id, @avatar)
+    @kata = Kata.new(params[:kata_id], params[:avatar])
 
     # load from web page, eg :hidden_files, :language, :unit_test_framework
     @manifest = eval params['manifest.rb'] 
 
     # reload max_run_tests_duration on each increment so it can be
     # altered by the sensei during the kata if necessary
-    @manifest[:max_run_tests_duration] = kata.max_run_tests_duration
+    @manifest[:max_run_tests_duration] = @kata.max_run_tests_duration
 
     # filenames in the file-list may have been renamed or deleted so reload visible_files
     @manifest[:visible_files] = {}
@@ -53,12 +49,12 @@ class KataController < ApplicationController
     end
 
     all_increments = []
-    File.open(kata.folder, 'r') do |f|
+    File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
-        @run_tests_output = do_run_tests(kata.avatar.folder, kata.exercise.folder, @manifest)
+        @run_tests_output = do_run_tests(@kata.avatar.folder, @kata.exercise.folder, @manifest)
         test_info = parse_run_tests_output(@manifest, @run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
-        all_increments = kata.avatar.save(@manifest, test_info)
+        all_increments = @kata.avatar.save(@manifest, test_info)
       end
     end
 
@@ -72,26 +68,24 @@ class KataController < ApplicationController
   end
 
   def see_all_increments
-    @kata_id = params[:id]
-    @title = "Cyber Dojo : Kata " + @kata_id + ", all increments"
+    @kata = Kata.new(params[:id])
+    @title = "Cyber Dojo : Kata " + @kata.id + ", all increments"
     @avatars = {}
-    kata = Kata.new(@kata_id)
-    kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
+    @kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
     @editable = false
   end
 
   def see_one_increment
-    @kata_id = params[:id]
-    @avatar = params[:avatar]
-    kata = Kata.new(@kata_id, @avatar)
-    all_increments = kata.avatar.increments
+    @kata = Kata.new(params[:id], params[:avatar])
+    @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name
+
+    all_increments = @kata.avatar.increments
 
     if params[:increment]
       load_increment_manifest(params[:increment])
     elsif all_increments.length != 0
       load_increment_manifest(all_increments.last[:number].to_s)
     else
-      @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar
       @manifest = kata.exercise.manifest
       @shown_increment_number = "0"
     end
@@ -103,8 +97,8 @@ class KataController < ApplicationController
 private
 
   def load_increment_manifest(increment_number)
-    @title = "Cyber Dojo : Kata " + @kata_id + "," + @avatar + ", increment " + increment_number
-    path = 'katas' + '/' + @kata_id + '/' + @avatar + '/' + increment_number + '/' + 'manifest.rb'
+    @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name + ", increment " + increment_number
+    path = 'katas' + '/' + @kata.id + '/' + @kata.avatar.name + '/' + increment_number + '/' + 'manifest.rb'
     @manifest = eval IO.read(path)
     @shown_increment_number = increment_number
   end

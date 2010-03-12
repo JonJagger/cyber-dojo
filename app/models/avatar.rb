@@ -27,10 +27,6 @@ class Avatar
     eval locked_read(increments_filename)
   end
 
-  def folder
-	@kata.folder + '/' + name
-  end
-
   def read_most_recent(manifest)
     if !File.exists?(folder) # start
       make_dir(folder)      
@@ -60,6 +56,10 @@ class Avatar
     my_increments << test_info
     File.open(increments_filename, 'w') { |file| file.write(my_increments.inspect) }
     my_increments
+  end
+
+  def folder
+	@kata.folder + '/' + name
   end
 
   def increments_filename
