@@ -2,6 +2,8 @@
 class KataController < ApplicationController
 
   def start
+    #@kata = Kata.new(params[:kata_id], params[:avatar])
+
     @kata_id = params[:kata_id]
     @avatar = params[:avatar]
     @title = "Cyber Dojo : Kata " + @kata_id + ", " + @avatar
@@ -178,7 +180,7 @@ def save_file(foldername, filename, file)
     filtered = makefile_filter(filename, file[:content])
     fd.write(filtered)
   end
-  # .sh files (for example) need execute permissions
+  # .sh files need execute permissions
   File.chmod(0755, path) if filename =~ /\.sh/    
 end
 
