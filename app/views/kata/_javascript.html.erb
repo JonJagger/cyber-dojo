@@ -92,14 +92,20 @@ function deleteFile(e)
 document.observe('dom:loaded', function() {
   var myMenuItems = [
     {
-      name: 'Rename',
-      className: 'rename', 
+      name: 'Create a new file...  ',
+      className: 'create-a-new-file', 
+      callback: function(e) { newFile(); }
+    },{
+    separator: true
+    },{
+      name: 'Rename this file...  ',
+      className: 'rename-this-file', 
       callback: function(e) { renameFile(e); }
     },{
     separator: true
     },{
-      name: 'Delete', 
-      className: 'delete',
+      name: 'Delete this file...  ', 
+      className: 'delete-this-file',
       callback: function(e) { deleteFile(e); }
     }
   ]
@@ -112,21 +118,15 @@ document.observe('dom:loaded', function() {
 
   var myItems = [
     {
-      name: 'Create new file',
-      className: 'create-new-file', 
-      callback: function(e) { newFile(); }
+      name: 'Go to the Cyber-Dojo home page  ',
+      className: 'go-to-home-page', 
+      callback: function(e) { alert("TODO: got to home page"); }
     },{
     separator: true
     },{
-      name: 'Goto Cyber-Dojo home page',
-      className: 'home', 
-      callback: function(e) { alert("TODO: home"); }
-    },{
-    separator: true
-    },{
-      name: 'See everyone else',
-      className: 'see-everyone', 
-      callback: function(e) { alert("TODO: see-everyone"); }
+      name: 'Go to the Cyber-Dojo arc page  ',
+      className: 'go-to-arc-page', 
+      callback: function(e) { alert("TODO: go to arc page"); }
     }
   ]
 
