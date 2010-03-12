@@ -17,10 +17,10 @@
       </table>
 
       <table>
+       <tbody id="run-tests-button">
         <tr>
           <td nowrap>
-            <input id="run-tests-button"
-                   type="image" 
+            <input type="image" 
                    style="border: 6px solid #FF3333;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
@@ -29,8 +29,7 @@
                      onclick="predict('failed');"
                    <% end -%>  />
 
-            <input id="run-tests-button"
-                   type="image" 
+            <input type="image" 
                    style="border: 6px solid #99FF99;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
@@ -40,6 +39,7 @@
                    <% end -%> />
           <td/>
         <tr/>
+       </tbody>
       </table>
 
       <table>
@@ -63,13 +63,6 @@
 		  <% end -%>
         </tbody>
 	  </table>
-
-      <br/>
-      <br/>
-      <br/>
-      <% if !@kata.readonly -%>
-        <input type="button" name="new file" value="new file" onclick="newFile()"/>
-      <% end -%>
     </td>
 
     <td>

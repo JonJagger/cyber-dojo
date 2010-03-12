@@ -95,8 +95,9 @@ document.observe('dom:loaded', function() {
       name: 'Rename',
       className: 'rename', 
       callback: function(e) { renameFile(e); }
-    },
-    {
+    },{
+    separator: true
+    },{
       name: 'Delete', 
       className: 'delete',
       callback: function(e) { deleteFile(e); }
@@ -107,6 +108,32 @@ document.observe('dom:loaded', function() {
     selector: '#file-list', 
     className: 'menu desktop', // (can be used for css styling)
     menuItems: myMenuItems
+  })
+
+  var myItems = [
+    {
+      name: 'Create new file',
+      className: 'create-new-file', 
+      callback: function(e) { newFile(); }
+    },{
+    separator: true
+    },{
+      name: 'Goto Cyber-Dojo home page',
+      className: 'home', 
+      callback: function(e) { alert("TODO: home"); }
+    },{
+    separator: true
+    },{
+      name: 'See everyone else',
+      className: 'see-everyone', 
+      callback: function(e) { alert("TODO: see-everyone"); }
+    }
+  ]
+
+  new Proto.Menu({
+    selector: '#run-tests-button', 
+    className: 'menu desktop', // (can be used for css styling)
+    menuItems: myItems
   })
 })
 
