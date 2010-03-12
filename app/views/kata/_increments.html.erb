@@ -19,7 +19,6 @@
             <a class="<%= increment[:prediction]-%>_prediction <%=increment[:outcome] -%> increment box" 
                href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= @kata.avatar.name-%>&increment=<%= increment[:number]-%>" >
           <% end -%>
-            &thinsp;
             <span><%= increment[:number] -%>:<%= increment[:info] -%></span>
           </a>
       </td>

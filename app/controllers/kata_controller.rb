@@ -64,9 +64,7 @@ class KataController < ApplicationController
   def see_all_increments
     @kata = Kata.new(params[:id])
     @kata.readonly = true
-    @title = "Cyber Dojo : Kata " + @kata.id + ", all increments"
-    @avatars = {}
-    @kata.avatars.each { |avatar| @avatars[avatar.name] = avatar.increments }
+    @title = "Cyber Dojo : Kata " + @kata.id
   end
 
   def see_one_increment
@@ -114,7 +112,7 @@ private
   end
 
   def limited(increments)
-    max_increments_displayed = 54
+    max_increments_displayed = 69
     len = [increments.length, max_increments_displayed].min
     increments[-len,len]
   end
