@@ -72,12 +72,15 @@ a.increment:hover span /*the span will display just on :hover state*/
   border-right:  2px solid #B0B0B0;
   border-bottom: 2px solid #B0B0B0;
   -moz-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  -webkit-border-radius: 4px;
 }
 
 .increment 
 { 
   padding: 0.15em; 
   text-align: center;
+  font-size: 8pt;
 }
 
 /* #99FF99=light-green,#FF3333=red */
