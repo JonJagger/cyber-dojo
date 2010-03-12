@@ -29,7 +29,7 @@ class Kata
   end
 
   def max_run_tests_duration
-    @manifest[:max_run_tests_duration]
+    @manifest[:max_run_tests_duration].to_i
   end
 
   def exercise

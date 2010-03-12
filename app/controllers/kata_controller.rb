@@ -27,10 +27,6 @@ class KataController < ApplicationController
     # load from web page, eg :hidden_files, :language, :unit_test_framework
     @manifest = eval params['manifest.rb'] 
 
-    # reload max_run_tests_duration on each increment so it can be
-    # altered by the sensei during the kata if necessary
-    @manifest[:max_run_tests_duration] = @kata.max_run_tests_duration
-
     # filenames in the file-list may have been renamed or deleted so reload visible_files
     @manifest[:visible_files] = {}
     filenames = params['visible_filenames_container'].strip.split(';')
@@ -50,7 +46,7 @@ class KataController < ApplicationController
     all_increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
-        @run_tests_output = do_run_tests(@kata.avatar.folder, @kata.exercise.folder, @manifest)
+        @run_tests_output = do_run_tests(@kata, @manifest)
         test_info = parse_run_tests_output(@manifest, @run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
         all_increments = @kata.avatar.save(@manifest, test_info)
@@ -127,7 +123,10 @@ end
 
 #=========================================================================
 
-def do_run_tests(dst_folder, src_folder, manifest)
+def do_run_tests(kata, manifest)
+  dst_folder = kata.avatar.folder
+  src_folder = kata.exercise.folder
+
   # Save current files to sandbox
   sandbox = dst_folder + '/' + 'sandbox'
   system("rm -r #{sandbox}")
@@ -145,17 +144,17 @@ def do_run_tests(dst_folder, src_folder, manifest)
     # TODO: run as a user with only execute rights; maybe using sudo -u, or qemu
     run_tests_output = IO.popen("cd #{sandbox}; ./kata.sh 2>&1").read.split("\n").join("\n")
   end
+
   # Build and run tests has limited time to complete
-  max_seconds = manifest[:max_run_tests_duration]
-  max_seconds.times do 
+  kata.max_run_tests_duration.times do
     sleep(1)
     break if sandbox_thread.status == false 
   end
-  # If tests haven't finished after max_seconds assume 
-  # they are stuck in an infinite loop and kill the thread
+  # If tests didn't finish assume they were stuck in 
+  # an infinite loop and kill the thread
   if sandbox_thread.status != false 
     sandbox_thread.kill 
-    run_tests_output = [ "execution did not finish within #{max_seconds} seconds" ]
+    run_tests_output = [ "execution terminated after #{kata.max_run_tests_duration} seconds" ]
   end
   run_tests_output
 end
@@ -194,7 +193,7 @@ end
 def parse_run_tests_output(manifest, output)
   so = output.to_s
   inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(so)"
-  if Regexp.new("execution did not finish within").match(so)
+  if Regexp.new("execution terminated after ").match(so)
     inc[:info] = so
     inc[:outcome] = :timeout
   else
