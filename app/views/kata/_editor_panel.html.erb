@@ -6,24 +6,11 @@
       <table>
         <tr>
           <td nowrap>
-            <span id="shown-increment-number">
-              <%=@shown_increment_number-%>
-            </span>
             <% if !@kata.readonly -%>
               <input type="hidden" 
                      id="run_tests_prediction" 
                      name="run_tests_prediction" 
                      value="">
-              <input type="submit" 
-                     class="failed increment box" 
-                     value="  "
-                     title="we predict a red"
-                     onclick="predict('failed');"/>
-              <input type="submit" 
-                     class="passed increment box" 
-                     value="  "
-                     title="we predict a green"
-                     onclick="predict('passed');"/>
             <% end -%>                 
           </td>
         </tr>
@@ -32,21 +19,30 @@
       <table>
         <tr>
           <td nowrap>
-            <a href="/kata/see_all_increments/<%= @kata.id -%>" 
-               target="_blank">
-              <%= avatar_image(@kata.avatar.name) {|f| f} -%>
-            </a>
-            <a href="/kata/see_all_increments/<%= @kata.id -%>" 
-               target="_blank">
-              <%= avatar_image(@kata.avatar.name) {|f| f} -%>
-            </a>
+            <input type="image" 
+                   style="border: 6px solid #FF3333;" 
+                   src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
+                   class="box" 
+                   <% if !@kata.readonly -%>
+                     title="we predict a red"
+                     onclick="predict('failed');"
+                   <% end -%>  />
+
+            <input type="image" 
+                   style="border: 6px solid #99FF99;" 
+                   src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
+                   class="box" 
+                   <% if !@kata.readonly -%>
+                     title="we predict a green"
+                     onclick="predict('passed');"
+                   <% end -%> />
           <td/>
         <tr/>
       </table>
 
       <table>
         <% if !@kata.readonly -%>
-          <tbody id="file-list">  <!-- rename/delete popup menu keys off this id -->     
+          <tbody id="file-list">  <% # rename/delete popup menu keys off this id -%>     
         <% else -%>
           <tbody>       
         <% end -%>
@@ -78,14 +74,14 @@
       <table cellpadding="0">
         <tr>
           <td>
-            <textarea style="font-family: <%=@manifest[:font_family]-%>; font-size: <%=@manifest[:font_size]-%>pt; font-weight: <%=@manifest[:font_weight]-%>; color: <%=@manifest[:color]-%>; background-color: <%=@manifest[:background_color]-%>; "
+            <textarea style="font-family: <%=@manifest[:font_family]-%>; font-size: <%=@manifest[:font_size]-%>pt; font-weight: <%=@manifest[:font_weight]-%>; color: <%=@manifest[:color]-%>; background-color: <%=@manifest[:background_color]-%>;"
                       id="editor" 
-                      name="editor" 
+                      name="editor" class="editor box"
                       <% if @kata.readonly -%>
                         readonly="true"
                       <% end -%>
                       cols="80" 
-                      rows="30">
+                      rows="28">
             </textarea>
           </td>
         </tr>
@@ -95,10 +91,10 @@
 </table>
 
 <div class="hidden">
-  <!-- When run-tests is clicked the javascript preRunTests() function copies  -->
-  <!-- the contents of currently edited file back to its hidden textarea (below)   -->
-  <!-- before submitting the form. On the server rails grabs the file contents -->
-  <!-- from these hidden textareas and not from the main textarea editor.     -->
+  <% # When run-tests is clicked the javascript preRunTests() function copies  -%>
+  <% # the contents of currently edited file back to its hidden textarea (below)  -%>
+  <% # before submitting the form. On the server rails grabs the file contents -%>
+  <% # from these hidden textareas and not from the main textarea editor.     -%>
   <div id="visible_files_container">
     <% @manifest[:visible_files].each do |filename,file| -%>
       <textarea id="<%=filename-%>" 
