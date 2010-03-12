@@ -19,7 +19,8 @@
       <table>
         <tr>
           <td nowrap>
-            <input type="image" 
+            <input id="run-tests-button"
+                   type="image" 
                    style="border: 6px solid #FF3333;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
@@ -28,7 +29,8 @@
                      onclick="predict('failed');"
                    <% end -%>  />
 
-            <input type="image" 
+            <input id="run-tests-button"
+                   type="image" 
                    style="border: 6px solid #99FF99;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
