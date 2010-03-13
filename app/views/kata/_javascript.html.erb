@@ -89,6 +89,16 @@ function deleteFile(e)
   }
 }
 
+function homePage()
+{
+  window.location = "/dojo/index/<%= @kata.id -%>";
+}
+
+function arcPage()
+{
+  window.open("/kata/see_all_increments/<%= @kata.id -%>");
+}
+
 document.observe('dom:loaded', function() {
   var myMenuItems = [
     {
@@ -120,13 +130,13 @@ document.observe('dom:loaded', function() {
     {
       name: 'Go to the Cyber-Dojo home page  ',
       className: 'go-to-home-page', 
-      callback: function(e) { alert("TODO: got to home page"); }
+      callback: function(e) { homePage(); }
     },{
     separator: true
     },{
-      name: 'Go to the Cyber-Dojo arc page  ',
+      name: 'Open new Cyber-Dojo arc page  ',
       className: 'go-to-arc-page', 
-      callback: function(e) { alert("TODO: go to arc page"); }
+      callback: function(e) { arcPage(); }
     }
   ]
 
