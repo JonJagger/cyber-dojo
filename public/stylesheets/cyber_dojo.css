@@ -12,7 +12,7 @@
 
 #editor
 {
-  overflow: scroll;
+  overflow-y: scroll;
   padding: 0.5em;
   margin-top: 0em;
 }
