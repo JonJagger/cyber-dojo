@@ -99,20 +99,19 @@ function arcPage()
   window.open("/kata/see_all_increments/<%= @kata.id -%>");
 }
 
+function todo(what)
+{
+  alert("TODO: " + what + "...");
+}
+
 document.observe('dom:loaded', function() {
-  var myMenuItems = [
+  var fileListMenuItems = [
     {
-      name: 'Create a new file...  ',
-      className: 'create-a-new-file', 
-      callback: function(e) { newFile(); }
-    },{
-    separator: true
-    },{
       name: 'Rename this file...  ',
       className: 'rename-this-file', 
       callback: function(e) { renameFile(e); }
     },{
-    separator: true
+      separator: true
     },{
       name: 'Delete this file...  ', 
       className: 'delete-this-file',
@@ -123,16 +122,38 @@ document.observe('dom:loaded', function() {
   new Proto.Menu({
     selector: '#file-list', 
     className: 'menu desktop', // (can be used for css styling)
-    menuItems: myMenuItems
+    menuItems: fileListMenuItems
   })
 
-  var myItems = [
+  var editorMenuItems = [
     {
+      name: '//Go to line...  ',
+      className: 'go-to-line', 
+      callback: function(e) { todo("Go to line"); }
+    },{
+      separator: true
+    },{
+      separator: true
+    },{
+      name: 'Create a new file...  ',
+      className: 'create-a-new-file', 
+      callback: function(e) { newFile(); }
+    },{
+      name: '//Rename this file...  ',
+      className: 'rename-this-file', 
+      callback: function(e) { todo("Rename"); }
+    },{
+      name: '//Delete this file...  ', 
+      className: 'delete-this-file',
+      callback: function(e) { todo("Delete"); }
+    },{
+      separator: true
+    },{
+      separator: true
+    },{
       name: 'Go to the Cyber-Dojo home page  ',
       className: 'go-to-home-page', 
       callback: function(e) { homePage(); }
-    },{
-    separator: true
     },{
       name: 'Open new Cyber-Dojo arc page  ',
       className: 'go-to-arc-page', 
@@ -141,10 +162,11 @@ document.observe('dom:loaded', function() {
   ]
 
   new Proto.Menu({
-    selector: '#run-tests-button', 
+    selector: '#editor', 
     className: 'menu desktop', // (can be used for css styling)
-    menuItems: myItems
+    menuItems: editorMenuItems
   })
+
 })
 
 function atLoad()

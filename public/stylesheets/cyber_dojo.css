@@ -9,7 +9,6 @@
   color: green;
 }
 
-
 #editor
 {
   overflow-y: scroll;
@@ -28,15 +27,9 @@ a.increment
     text-decoration: none;
 }
 
-a.increment:hover
-{
-    z-index: 25;
-}
+a.increment:hover { z-index: 25; }
 
-a.increment span
-{ 
-    display: none;
-}
+a.increment span { display: none; }
 
 a.increment:hover span /*the span will display just on :hover state*/
 {
@@ -45,8 +38,8 @@ a.increment:hover span /*the span will display just on :hover state*/
     display: block;
     position: fixed;
     top: 5em; left: 2em; width: auto;
-    border:1px solid #0cf;
-    background-color: #cff; 
+    border: 1px solid #0CF;
+    background-color: #CFF; 
     color: #000;
     text-align: left;
 }
@@ -58,11 +51,10 @@ a.increment:hover span /*the span will display just on :hover state*/
   padding: 1em;
 }
 
-/* #FEF5CA=sandbox */
 .increments 
 { 
   font-size: 12pt;
-  background-color: #FEF5CA; 
+  background-color: #FEF5CA; /*sandbox */
   color: #686868;
   padding: 0.5em; 
   border: none;
@@ -73,20 +65,14 @@ a.increment:hover span /*the span will display just on :hover state*/
   padding: 0.5em; 
   background-color: #FEF5CA;
   color: #686868;   
-  font-size: 10pt; 
+  font-size: 12pt; 
 }
 
+.dojo { background-color: #FEF5CA; } /* TODO: poor name */
 
-/* TODO: poor name */
-.dojo { background-color: #FEF5CA; }
-
-/* #D8D8D8=light-gray, #B0B0B0=medium-gray */
 .box 
 { 
-  border-left:   1px solid #D8D8D8;
-  border-top:    1px solid #D8D8D8;
-  border-right:  2px solid #B0B0B0;
-  border-bottom: 2px solid #B0B0B0;
+  border:   1px solid #D8D8D8; /*light-gray*/
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -96,17 +82,16 @@ a.increment:hover span /*the span will display just on :hover state*/
 { 
   padding: 0.15em; 
   text-align: center;
-  font-size: 8pt;
+  font-size: 10pt;
 }
 
-/* #99FF99=light-green,#FF3333=red */
-.failed_prediction { border-top: 6px solid #FF3333; }
-.passed_prediction { border-top: 6px solid #99FF99; }
+.failed_prediction { border: 3px solid #F33; } /*red*/
+.passed_prediction { border: 3px solid #3C3; } /*green*/
 
-.failed  { background-color: #FF3333; color: #99FF99; }
-.passed  { background-color: #99FF99; color: #FF3333; }
+.failed  { background-color: #F33; }
+.passed  { background-color: #3C3; }
 .error   { background-color: yellow;  }
-.timeout { background-color: deepskyblue; }
+.timeout { background-color: #3FF; }  /*blue*/
 
 .spinner
 {
@@ -114,12 +99,11 @@ a.increment:hover span /*the span will display just on :hover state*/
   color: black;
 }
 
-
 /* each file has a hidden textarea */
 .hidden 
 { 
-  visibility:hidden; 
-  display:none; 
+  visibility: hidden; 
+  display: none; 
 }
 
 

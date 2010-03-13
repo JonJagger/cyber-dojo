@@ -17,11 +17,11 @@
       </table>
 
       <table>
-       <tbody id="run-tests-button">
+       <tbody>
         <tr>
           <td nowrap>
             <input type="image" 
-                   style="border: 5px solid #FF3333;" 
+                   style="border: 5px solid #F33;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
                    <% if !@kata.readonly -%>
@@ -29,7 +29,7 @@
                    <% end -%>  />
 
             <input type="image" 
-                   style="border: 5px solid #99FF99;" 
+                   style="border: 5px solid #3C3;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
                    <% if !@kata.readonly -%>
@@ -69,7 +69,8 @@
           <td>
             <textarea style="font-family: <%=@manifest[:font_family]-%>; font-size: <%=@manifest[:font_size]-%>pt; font-weight: <%=@manifest[:font_weight]-%>; color: <%=@manifest[:color]-%>; background-color: <%=@manifest[:background_color]-%>;"
                       id="editor" 
-                      name="editor" class="editor box"
+                      name="editor" 
+                      class="editor box"
                       <% if @kata.readonly -%>
                         readonly="true"
                       <% end -%>

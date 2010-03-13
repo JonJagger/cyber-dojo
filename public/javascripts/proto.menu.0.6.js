@@ -39,7 +39,6 @@ Proto.Menu = Class.create({
 						? '' 
 						: Object.extend(new Element('a', {
 							href: '#',
-							title: item.name,
 							className: (item.className || '') + (item.disabled ? ' disabled' : ' enabled')
 						}), { _callback: item.callback })
 						.observe('click', this.onClick.bind(this))
