@@ -2,13 +2,12 @@
 <script language="JavaScript"><!--
 function select_avatar(name)
 {
-  document.getElementById("avatar").value = name;
-  document.images['avatar_1'].src = '/images/avatars/' + name + '.jpg';
-  document.images['avatar_2'].src = '/images/avatars/' + name + '.jpg';
+  $("avatar").value = name;
+  document.chooseAvatar.submit();
 }
 //--></script>
 
-<% form_tag('/kata/start') do -%>
+<form name="chooseAvatar" action="/kata/start">
 
 <noscript>
  &nbsp;
@@ -18,8 +17,29 @@ function select_avatar(name)
 
 <table cellspacing="4">
 
+  <tr>  
+    <td class="dojo panel box">
+      Enter the <i>kata-id</i>
+      <input name="kata_id" 
+             id="kata_id" 
+             type="text" 
+             size="5" 
+             value="<%=@kata_id-%>">
+      and click your avatar.
+    </td>  
+  </tr>
+
   <tr>
     <td class="dojo panel box">
+
+      <input readonly 
+             type="hidden"
+             name="avatar" 
+             id="avatar" 
+             type="text" 
+             size="15" 
+             value="">
+
       <% chunks = chunk_array(@avatars.sort, 4) -%>
       <table cellpadding="7">
       <% chunks.each do |chunk| -%>
@@ -44,46 +64,8 @@ function select_avatar(name)
     </td>
   </tr>
 
-  <tr>
-    <td class="dojo panel box">
-      1. Click your avatar
-      <input readonly 
-             type="hidden"
-             name="avatar" 
-             id="avatar" 
-             type="text" 
-             size="15" 
-             value="">
-      <img alt="" 
-           name="avatar_1"
-           src=""
-           title="" />
-      <img alt="" 
-           name="avatar_2"
-           src=""
-           title="" />
-    </td>
-  </tr>
-
-  <tr>  
-    <td class="dojo panel box">
-      2. Enter the <i>kata-id</i>
-      <input name="kata_id" 
-             id="kata_id" 
-             type="text" 
-             size="10" 
-             value="<%=@kata_id-%>">
-    </td>  
-  </tr>
-
-  <tr>  
-    <td class="dojo panel box">
-      3. Click <%= submit_tag 'start kata', :name => 'start' -%>
-    </td>  
-  </tr>
-
 </table>
 
-<% end -%> 
+</form>
 
 
