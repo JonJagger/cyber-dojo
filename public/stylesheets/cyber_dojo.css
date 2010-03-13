@@ -59,8 +59,22 @@ a.increment:hover span /*the span will display just on :hover state*/
 }
 
 /* #FEF5CA=sandbox */
-.increments { background-color: #FEF5CA; padding: 0.5em; }
-.file-manager { background-color: #FEF5CA; padding: 0.5em; }
+.increments 
+{ 
+  font-size: 12pt;
+  background-color: #FEF5CA; 
+  color: #686868;
+  padding: 0.5em; 
+  border: none;
+}
+
+.file-manager 
+{ 
+  padding: 0.5em; 
+  background-color: #FEF5CA;
+  color: #686868;   
+  font-size: 10pt; 
+}
 
 
 /* TODO: poor name */
@@ -93,8 +107,6 @@ a.increment:hover span /*the span will display just on :hover state*/
 .passed  { background-color: #99FF99; color: #FF3333; }
 .error   { background-color: yellow;  }
 .timeout { background-color: deepskyblue; }
-
-.run_tests_button { font-family: "verdana"; font-weight: 100; font-size: 14pt; }
 
 .spinner
 {
