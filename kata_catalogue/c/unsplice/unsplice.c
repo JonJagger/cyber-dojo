@@ -1,6 +1,6 @@
 #include "unsplice.h"
 
-void unsplice(char line[])
+void unsplice(char * line)
 {
 }
 

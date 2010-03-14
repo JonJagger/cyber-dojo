@@ -94,7 +94,7 @@ function homePage()
   window.location = "/dojo/index/<%= @kata.id -%>";
 }
 
-function arcPage()
+function everyonePage()
 {
   window.open("/kata/see_all_increments/<%= @kata.id -%>");
 }
@@ -155,9 +155,9 @@ document.observe('dom:loaded', function() {
       className: 'go-to-home-page', 
       callback: function(e) { homePage(); }
     },{
-      name: 'Open new Cyber-Dojo arc page  ',
-      className: 'go-to-arc-page', 
-      callback: function(e) { arcPage(); }
+      name: 'See how is everyone doing ',
+      className: 'go-to-everyone-page', 
+      callback: function(e) { everyonePage(); }
     }
   ]
 
