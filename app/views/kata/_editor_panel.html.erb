@@ -21,18 +21,18 @@
         <tr>
           <td nowrap>
             <input type="image" 
-                   style="border: 5px solid #F33;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
                    <% if !@kata.readonly -%>
+                     style="border: 5px solid #F33;" 
                      onclick="predict('failed');"
                    <% end -%>  />
 
             <input type="image" 
-                   style="border: 5px solid #3C3;" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
                    class="box" 
                    <% if !@kata.readonly -%>
+                     style="border: 5px solid #3C3;" 
                      onclick="predict('passed');"
                    <% end -%> />
           <td/>
