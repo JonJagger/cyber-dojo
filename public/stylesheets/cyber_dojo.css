@@ -14,6 +14,12 @@
   overflow-y: scroll;
   padding: 0.5em;
   margin-top: 0em;
+  font-size: 12pt;
+  font-family: monospace;
+  font-weight: normal;
+  color: white;
+  background-color: #686868;
+
 }
 
 /* FAKE TOOL TIPS

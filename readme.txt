@@ -42,12 +42,6 @@ loaded and eval'd in the ruby code). For example:
   },
 
   :unit_test_framework => 'assert',
-
-  :font_size => 14,
-  :font_family => 'monospace'
-  :font_weight => 'normal',
-  :color => 'white',
-  :background_color => '#686868',
 }
 
 
@@ -69,17 +63,6 @@ Explanation of these parameters
   This defines the name of the unit test framework used in the exercise. 
   This name partially determines the name of the ruby function used to
   parse the run-tests output (to see if the increment is red or green).
-
-4.1:font_size
-  Optional (css pt size value), default is '14'
-4.2:font_family
-  Optional (css value), default is 'monospace' 
-4.3:font_weight
-  Optional (css value), default is 'normal'
-4.4:color
-  Optional (css value), default is 'white'
-4.5:background_color
-  Optional (css value), default is '#686868'
 
 
 

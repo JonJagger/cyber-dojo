@@ -102,12 +102,6 @@ private
     manifest[:language] = catalogue[:language]
     # this is to load file content
     manifest[:visible_files] = kata.exercise.visible_files    
-	# load editor setting or defaults
-    manifest[:font_size] ||= 14;
-    manifest[:font_family] ||= 'monospace';
-    manifest[:font_weight] ||= 'normal';
-    manifest[:color] ||= 'white';
-    manifest[:background_color] ||= '#686868';
     manifest
   end
 
