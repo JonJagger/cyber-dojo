@@ -195,10 +195,12 @@ function loadFile(name)
   $('editor').value = $(name).value;
   current_filename = name;
   document.getElementById('radio_' + name).checked = true;
+  //$('editor').focus();
 }
 
 function preRunTests()
 {
+  //$('editor').setAttribute('readonly', 'true');
   saveCurrentFile();
   Element.show('run_tests_spinner');
 }
@@ -206,6 +208,8 @@ function preRunTests()
 function postRunTests()
 {
    Element.hide('run_tests_spinner');
+   //$('editor').removeAttribute('readonly');
+   //$('editor').focus();
 }
 
 function predict(prediction)
@@ -229,13 +233,18 @@ function makeFileListEntry(filename)
   return tr;
 }
 
+function isElement(n)
+{
+  return n.nodeType == 1;
+}
+
 function firstElement(e)
 {
   var children = e.childNodes;
   for (var i in children)
   {
     var item = children[i];
-    if (item.nodeType == 1)
+    if (isElement(item))
       return item;
   }
   return null;
@@ -246,8 +255,7 @@ function nameOf(e)
   var td = firstElement(e);
   var div = firstElement(td);
   var inp = firstElement(div);
-  var n = inp.getAttribute("value"); 
-  return n;
+  return inp.getAttribute("value"); 
 }
 
 function sortFileList()
@@ -259,7 +267,7 @@ function sortFileList()
   for (var i in items)
   {
     var item = items[i];
-    if (item.nodeType == 1) // element node
+    if (isElement(item))
       array.push(item);
   }
 
@@ -298,7 +306,7 @@ function newFile()
   $('file-list').appendChild(makeFileListEntry(filename));
   sortFileList();
 
-  // make its name available to rails
+  // Make its name available to rails
   var current = $('visible_filenames_container').value;
   current += filename;
   current += ";";
