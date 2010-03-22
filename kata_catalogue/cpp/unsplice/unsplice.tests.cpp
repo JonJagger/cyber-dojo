@@ -1,17 +1,17 @@
-#include "unsplice.h"
+#include "unsplice.hpp"
 #include <assert.h>
 #include <string.h>
 
-#define   FAIL_TEST(x) assert(0 && (x))
-#define ASSERT_TEST(x) assert(x)
-#define IGNORE_TEST(x) assert(1 || (x))
+#define   FAIL(x) assert(0 && (x))
+#define ASSERT(x) assert(x)
+#define IGNORE(x) assert(1 || (x))
 
 void unsplice_tests(void)
 {
     const char * expected = "abc";
     char actual[] = "abc";
     unsplice(actual);
-    FAIL_TEST(strcmp(actual, expected) == 0);
+    FAIL(strcmp(actual, expected) == 0);
 }
 
 typedef void (*test_function)(void);

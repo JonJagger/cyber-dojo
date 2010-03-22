@@ -15,19 +15,15 @@ function select_avatar(name)
  &nbsp;
 </noscript>
 
-<table cellspacing="4">
+<input name="kata_id" 
+       id="kata_id" 
+       type="hidden" 
+       size="5" 
+       value="<%=@kata_id-%>">
 
-  <tr>  
-    <td class="dojo panel box">
-      Enter the <i>kata-id</i>
-      <input name="kata_id" 
-             id="kata_id" 
-             type="text" 
-             size="5" 
-             value="<%=@kata_id-%>">
-      and click your avatar.
-    </td>  
-  </tr>
+<h2><b>Choose your avatar</b></h2>
+
+<table cellspacing="4">
 
   <tr>
     <td class="dojo panel box">

@@ -4,8 +4,7 @@
   {
     'roman.rb' => {},
     'test_roman.rb' => {},
-    'instructions' => { :preloaded => true },
-    'kata.sh' => { :permissions => 0755 },
+    'kata.sh' => {},
   },
 
   :hidden_files =>
