@@ -9,9 +9,19 @@ function trim(stringToTrim)
   return stringToTrim.replace(/^\s+|\s+$/g,"");
 }
 
-function renameFile(e) 
+function getFilenameTr(filename)
 {
-  var filename = trim(e.element().lastChild.nodeValue);
+  var input = document.getElementById('radio_' + filename);
+  var div = input.parentNode;
+  var td = div.parentNode;
+  var tr = td.parentNode;
+  return tr;
+}
+
+function renameCurrentFile()
+{
+  // current_filename always contains a filename
+  var filename = current_filename;
 
   if (filename == "kata.sh")
   {
@@ -32,30 +42,35 @@ function renameFile(e)
    
   // TODO: what if there is already a file with the chosen name
 
-  // rename hidden textarea by creating new one
-  var ta = new Element("textarea", 
-    { id:newname, name:newname }).update($(filename).value);
-  $('visible_files_container').appendChild(ta);
-
-  //TODO: and then removing the old one
+  // rename hidden textarea by appending new one and removing old one
+  var new_ta = new Element("textarea", { id:newname, name:newname });
+  new_ta.value = $('editor').value;
+  $('visible_files_container').appendChild(new_ta);
+  var old_ta = $(filename);
+  $('visible_files_container').removeChild(old_ta);
 
   // change name in $('visible_files_container')
   var current = $('visible_filenames_container').value;
   current = current.replace(';'+filename+";", ";"+newname+";");
   $('visible_filenames_container').value = current;
 
+
   // change name in file-list
-  var td = e.element().parentNode;
-  var tr = td.parentNode;
+  var tr = getFilenameTr(filename);
   var tbody = tr.parentNode;
   tbody.removeChild(tr);
   tbody.appendChild(makeFileListEntry(newname));
   sortFileList();
+
+  // select it in list
+  current_filename = newname;
+  loadFile(newname);
 }
 
-function deleteFile(e) 
+function deleteCurrentFile()
 {
-  var filename = trim(e.element().lastChild.nodeValue);
+  // current_filename always contains a filename
+  var filename = current_filename;
 
   if (filename == "kata.sh")
   {
@@ -67,9 +82,8 @@ function deleteFile(e)
   if (!confirm("Click OK to delete " + filename))
     return; // Cancelled
 
-  // remove from file-list
-  var td = e.element().parentNode;
-  var tr = td.parentNode;
+  // remove from file-list 
+  var tr = getFilenameTr(current_filename);
   var tbody = tr.parentNode;
   tbody.removeChild(tr);
 
@@ -81,11 +95,16 @@ function deleteFile(e)
   current = current.replace(';'+filename+";", ";");
   $('visible_filenames_container').value = current;
 
-  // if deleted file is current file set editor textarea to empty
+  // if deleted file is current file then load kata.sh
   if (filename == current_filename) 
   {
     current_filename = false;
     $('editor').value = "";
+    // important make sure something is always open 
+    // so that right-click drop-down menu options that
+    // read Rename _this_ file... and Delete _this_ file...
+    // have a this file! 
+    loadFile('kata.sh');
   }
 }
 
@@ -94,7 +113,7 @@ function homePage()
   window.location = "/dojo/index/<%= @kata.id -%>";
 }
 
-function everyonePage()
+function everyoneElsePage()
 {
   window.open("/kata/see_all_increments/<%= @kata.id -%>");
 }
@@ -105,25 +124,6 @@ function todo(what)
 }
 
 document.observe('dom:loaded', function() {
-  var fileListMenuItems = [
-    {
-      name: 'Rename this file...  ',
-      className: 'rename-this-file', 
-      callback: function(e) { renameFile(e); }
-    },{
-      separator: true
-    },{
-      name: 'Delete this file...  ', 
-      className: 'delete-this-file',
-      callback: function(e) { deleteFile(e); }
-    }
-  ]
-
-  new Proto.Menu({
-    selector: '#file-list', 
-    className: 'menu desktop', // (can be used for css styling)
-    menuItems: fileListMenuItems
-  })
 
   var editorMenuItems = [
     {
@@ -139,13 +139,17 @@ document.observe('dom:loaded', function() {
       className: 'create-a-new-file', 
       callback: function(e) { newFile(); }
     },{
-      name: '//Rename this file...  ',
-      className: 'rename-this-file', 
-      callback: function(e) { todo("Rename"); }
+      separator: true
     },{
-      name: '//Delete this file...  ', 
+      separator: true
+    },{
+      name: 'Rename this file...  ',
+      className: 'rename-this-file', 
+      callback: function(e) { renameCurrentFile(); }
+    },{
+      name: 'Delete this file...  ', 
       className: 'delete-this-file',
-      callback: function(e) { todo("Delete"); }
+      callback: function(e) { deleteCurrentFile(); }
     },{
       separator: true
     },{
@@ -155,9 +159,9 @@ document.observe('dom:loaded', function() {
       className: 'go-to-home-page', 
       callback: function(e) { homePage(); }
     },{
-      name: 'See how is everyone doing ',
-      className: 'go-to-everyone-page', 
-      callback: function(e) { everyonePage(); }
+      name: 'See how is everyone else doing ',
+      className: 'go-to-everyone-else-page', 
+      callback: function(e) { everyoneElsePage(); }
     }
   ]
 
@@ -172,10 +176,9 @@ document.observe('dom:loaded', function() {
 function atLoad()
 {
   <% @manifest[:visible_files].each do |filename,info| -%>
-    <% if info.include? :preloaded and info[:preloaded] -%>
-         loadFile("<%=filename-%>");
-    <%- end -%>
+       loadFile("<%=filename-%>"); // DROP?
   <%- end -%>
+   loadFile('kata.sh');
 }
 window.onload = atLoad;
 
