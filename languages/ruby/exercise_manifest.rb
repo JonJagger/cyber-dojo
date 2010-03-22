@@ -2,8 +2,8 @@
 {
   :visible_files =>
   {
-    'roman.rb' => {},
-    'test_roman.rb' => {},
+    'source.rb' => {},
+    'test_source.rb' => {},
     'kata.sh' => {},
   },
 

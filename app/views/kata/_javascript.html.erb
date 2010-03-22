@@ -175,9 +175,6 @@ document.observe('dom:loaded', function() {
 
 function atLoad()
 {
-  <% @manifest[:visible_files].each do |filename,info| -%>
-       loadFile("<%=filename-%>"); // DROP?
-  <%- end -%>
    loadFile('kata.sh');
 }
 window.onload = atLoad;

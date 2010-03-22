@@ -2,9 +2,9 @@
 {
   :visible_files =>
   {
-    'unsplice.tests.cpp' => {},
-    'unsplice.cpp' => {},
-    'unsplice.hpp' => {},
+    'source.tests.cpp' => {},
+    'source.cpp' => {},
+    'source.hpp' => {},
     'makefile' => {},
     'kata.sh' => {},
   },

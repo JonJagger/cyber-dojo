@@ -1,0 +1,74 @@
+
+<script language="JavaScript"><!--
+function select_language(id)
+{
+  $('kata_id').value = id;
+  document.chooseLanguage.submit();
+}
+//--></script>
+
+<form name="chooseLanguage" action="/dojo/choose_avatar">
+
+<noscript>
+ &nbsp;
+ <h2><b>You must enable JavaScript.</b></h2>
+ &nbsp;
+</noscript>
+
+<input readonly 
+       type="hidden"
+       name="kata_id" 
+       id="kata_id" 
+       type="text" 
+       size="15" 
+       value="<%=@kata_id-%>">
+
+<h2><b>Choose your language</b></h2>
+
+<table cellspacing="4" class="dojo panel box">
+
+  <tr>
+    <td>
+      <input name="c_button" 
+             id="c_button" 
+             type="button" 
+             onClick='select_language(9);'
+             value="c">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <input name="cpp_button" 
+             id="cpp_button" 
+             type="button" 
+             onClick='select_language(10);'
+             value="c++">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <input name="ruby_button" 
+             id="ruby_button" 
+             type="button" 
+             onClick='select_language(11);'
+             value="ruby">
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <input name="java_button" 
+             id="java_button" 
+             type="button" 
+             onClick='select_language(12);'
+             value="java">
+    </td>
+  </tr>
+
+</table>
+
+</form>
+
+

@@ -2,12 +2,11 @@
 {
   :visible_files =>
   {
-    'unsplice.c' => {},
-    'unsplice.h' => {},
-    'instructions' => {},
+    'source.c' => {},
+    'source.h' => {},
     'makefile' => {},
     'kata.sh' => {},
-    'unsplice.tests.c' => { :preloaded => true },
+    'source.tests.c' => {},
   },
 
   :hidden_files =>

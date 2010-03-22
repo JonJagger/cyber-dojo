@@ -37,6 +37,7 @@ class KataController < ApplicationController
         # TODO: creating a new file and then immediately deleting it
         #       causes params[filename] to be be nil for some reason
         #       I haven't yet tracked down.
+        
         if content = params[filename]
           @manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
         end
@@ -97,7 +98,7 @@ private
 
   def load_starting_manifest(kata)
     catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
-    manifest_folder = 'kata_catalogue' + '/' + catalogue[:language] + '/' + catalogue[:exercise]
+    manifest_folder = 'languages' + '/' + catalogue[:language]
     manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
     manifest[:language] = catalogue[:language]
     # this is to load file content

@@ -18,7 +18,7 @@ class Exercise
   end
 
   def folder
-    'kata_catalogue' + '/' + @kata.language + '/' + @kata.exercise_name
+    'languages' + '/' + @kata.language
   end
    
 end

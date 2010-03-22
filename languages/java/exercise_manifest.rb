@@ -2,8 +2,8 @@
 {
   :visible_files =>
   {
-    'Demo.java' => {},
-    'DemoTest.java' => {},
+    'Source.java' => {},
+    'SourceTest.java' => {},
     'kata.sh' => {},
   },
 

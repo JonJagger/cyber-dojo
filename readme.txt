@@ -28,7 +28,7 @@ loaded and eval'd in the ruby code). For example:
 {
   :visible_files =>
   {
-    'unsplice.tests.c' => { :preloaded => true },
+    'unsplice.tests.c' => {},
     'unsplice.c' => {},
     'unsplice.h' => {},
     'notes.txt' => {},
@@ -51,8 +51,6 @@ Explanation of these parameters
 1:visible_files
   These are the names of the files that are visible in the editor in the browser.
   Each file can have associated information if necessary. 
-  Any visible file with :preloaded => true will be pre-loaded into the editor
-  when the browser page first opens.
 
 2:hidden_files
   These are the names of necessary and supporting files (if there are any) that are NOT 
