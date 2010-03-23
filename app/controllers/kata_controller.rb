@@ -14,46 +14,25 @@ class KataController < ApplicationController
     end
     
     @increments = limited(all_increments)
-    if @increments.length == 0
-      @shown_increment_number = 0
-    else
-      @shown_increment_number = @increments.last[:number] + 1
-    end
+    @shown_increment_number = all_increments.length
   end
 
   def run_tests
-    @kata = Kata.new(params[:kata_id], params[:avatar])
-    @manifest = {}
-
-    # filenames in the file-list may have been renamed or deleted so reload visible_files
-    @manifest[:visible_files] = {}
-    filenames = params['visible_filenames_container'].strip.split(';')
-    filenames.each do |filename|
-      filename.strip!
-      if (filename != "")
-        @manifest[:visible_files][filename] = {}
-        # TODO: creating a new file and then immediately deleting it
-        #       causes params[filename] to be be nil for some reason
-        #       I haven't yet tracked down.
-        
-        if content = params[filename]
-          @manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
-        end
-      end
-    end
+    @kata = Kata.new(params[:kata_id], params[:avatar]) 
+    manifest = load_files_from_page
 
     all_increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
-        @run_tests_output = do_run_tests(@kata, @manifest)
-        test_info = parse_run_tests_output(@kata, @run_tests_output)
+        run_tests_output = do_run_tests(@kata, manifest)
+        test_info = parse_run_tests_output(@kata, run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
-        all_increments = @kata.avatar.save(@manifest, test_info)
+        all_increments = @kata.avatar.save(manifest, test_info)
       end
     end
 
     @increments = limited(all_increments)
-    @shown_increment_number = @increments.last[:number] + 1
+    @shown_increment_number = all_increments.length
 
     respond_to do |format|
       format.js if request.xhr?
@@ -101,6 +80,27 @@ private
     manifest[:language] = catalogue[:language]
     # this is to load file content
     manifest[:visible_files] = kata.exercise.visible_files    
+    manifest
+  end
+
+  def load_files_from_page
+    manifest = {}
+    # filenames in the file-list may have been renamed or deleted so reload visible_files
+    manifest[:visible_files] = {}
+    filenames = params['visible_filenames_container'].strip.split(';')
+    filenames.each do |filename|
+      filename.strip!
+      if (filename != "")
+        manifest[:visible_files][filename] = {}
+        # TODO: creating a new file and then immediately deleting it
+        #       causes params[filename] to be be nil for some reason
+        #       I haven't yet tracked down.
+        
+        if content = params[filename]
+          manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
+        end
+      end
+    end
     manifest
   end
 

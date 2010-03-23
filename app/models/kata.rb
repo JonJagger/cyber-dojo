@@ -4,6 +4,7 @@ class Kata
   def initialize(id, name="")
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
+    @exercise = Exercise.new(self)
     @avatar = Avatar.new(self, name) if name != ""
     @readonly = false
   end
@@ -29,15 +30,15 @@ class Kata
   end
 
   def unit_test_framework
-    exercise.unit_test_framework
+    @exercise.unit_test_framework
   end
 
   def hidden_filenames
-    exercise.hidden_files
+    @exercise.hidden_files
   end
 
   def exercise
-    Exercise.new(self)
+    @exercise
   end
 
   def avatar
