@@ -10,13 +10,6 @@ class Avatar
     %w( alligators buffalos camels cheetahs 
         frogs kangaroos koalas lemurs
         pandas raccoons squirrels wolves )
-
-    #%w( alligators badgers bats bears beavers buffalos camels cheetahs deer
-    #          elephants frogs giraffes gophers gorillas hippos kangaroos koalas 
-    #          lemurs lions pandas raccoons snakes squirrels wolves zebras )
-
-    #avatars_dir = File.join(Rails.root,'public/images/avatars/*.jpg')
-    #Dir[avatars_dir].collect{|name| name.basename.split('.').first.humanize }
   end
   
   def name
@@ -24,7 +17,7 @@ class Avatar
   end
 
   def visible_files(n)
-    path = 'katas' + '/' + @kata.id + '/' + @kata.avatar.name + '/' + n.to_s + '/' + 'manifest.rb'
+    path = 'katas' + '/' + @kata.id + '/' + name + '/' + n.to_s + '/' + 'manifest.rb'
     eval IO.read(path)
   end
   
@@ -33,7 +26,9 @@ class Avatar
   end
 
   def read_most_recent(manifest)
-    load_starting(manifest)
+    # load starting manifest
+    manifest[:visible_files] = @kata.exercise.visible_files
+
     increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
@@ -62,17 +57,10 @@ class Avatar
 	@kata.folder + '/' + name
   end
 
-  def increments_filename
-    folder + '/' + 'increments_manifest.rb'
-  end
-
 private
 
-  def load_starting(manifest)
-    catalogue = eval IO.read(@kata.folder + '/' + 'kata_manifest.rb')
-    manifest[:language] = catalogue[:language]
-    # this is to load file content
-    manifest[:visible_files] = @kata.exercise.visible_files    
+  def increments_filename
+    folder + '/' + 'increments_manifest.rb'
   end
 
   def locked_read_most_recent(manifest)
