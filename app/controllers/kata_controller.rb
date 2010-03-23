@@ -11,7 +11,7 @@ class KataController < ApplicationController
 
   def run_tests
     @kata = Kata.new(params[:kata_id], params[:avatar]) 
-    @kata.run_tests(load_files_from_page, params['run_tests_prediction'])
+    @kata.run_tests(load_files_from_page, params[:run_tests_prediction])
     @increments = @kata.avatar.increments
     @shown_increment_number = @increments.length
     respond_to do |format|
@@ -38,13 +38,11 @@ class KataController < ApplicationController
 private
 
   def load_files_from_page
-    manifest = {}
-    # filenames in the file-list may have been renamed or deleted so reload visible_files
-    manifest[:visible_files] = {}
+    manifest = { :visible_files => {} }
     filenames = params['visible_filenames_container'].strip.split(';')
     filenames.each do |filename|
       filename.strip!
-      if (filename != "")
+      if filename != ""
         manifest[:visible_files][filename] = {}
         # TODO: creating a new file and then immediately deleting it
         #       causes params[filename] to be be nil for some reason
@@ -58,8 +56,6 @@ private
     manifest
   end
 end
-
-#=========================================================================
 
 def limited(increments)
   max_increments_displayed = 51

@@ -57,7 +57,7 @@ class Kata
   def run_tests(manifest, prediction)
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
-        run_tests_output = TestRunner.new().run_tests(self, manifest)
+        run_tests_output = TestRunner.run_tests(self, manifest)
         test_info = RunTestsOutputParser.new().parse(self, run_tests_output)
         test_info[:prediction] = prediction
         avatar.save(manifest, test_info)
@@ -75,7 +75,7 @@ end
 
 class TestRunner
 
-  def run_tests(kata, manifest)
+  def self.run_tests(kata, manifest)
     dst_folder = kata.avatar.folder
     src_folder = kata.exercise.folder
 
@@ -114,7 +114,7 @@ class TestRunner
 
 private
 
-  def save_file(foldername, filename, file)
+  def self.save_file(foldername, filename, file)
     path = foldername + '/' + filename
     # no need to lock when writing these files. They are write-once-only
     File.open(path, 'w') do |fd|
@@ -128,7 +128,7 @@ private
   # Tabs are a problem for makefiles since they are tab sensitive.
   # You can't enter a tab in a plain textarea hence this special filter, 
   # just for makefiles to convert leading spaces to a tab character. 
-  def makefile_filter(name, content)
+  def self.makefile_filter(name, content)
     if name.downcase == 'makefile'
       lines = []
       newline = Regexp.new('[\r]?[\n]')
