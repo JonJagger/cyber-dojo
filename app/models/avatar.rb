@@ -33,19 +33,14 @@ class Avatar
   end
 
   def read_most_recent(manifest)
-    if !File.exists?(folder) # start
-      make_dir(folder)      
-      File.open(increments_filename, 'w') { |file| file.write([].inspect) }
-      []
-    else # restart
-      my_increments = increments
-      if my_increments.length != 0
-        current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
-        restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
-        manifest[:visible_files] = restart_manifest[:visible_files]
+    load_starting(manifest)
+    increments = []
+    File.open(@kata.folder, 'r') do |f|
+      flock(f) do |lock|
+        increments = locked_read_most_recent(manifest)
       end
-      my_increments
     end
+    increments
   end
 
   def save(manifest, test_info)    
@@ -69,6 +64,31 @@ class Avatar
 
   def increments_filename
     folder + '/' + 'increments_manifest.rb'
+  end
+
+private
+
+  def load_starting(manifest)
+    catalogue = eval IO.read(@kata.folder + '/' + 'kata_manifest.rb')
+    manifest[:language] = catalogue[:language]
+    # this is to load file content
+    manifest[:visible_files] = @kata.exercise.visible_files    
+  end
+
+  def locked_read_most_recent(manifest)
+    if !File.exists?(folder) # start
+      make_dir(folder)      
+      File.open(increments_filename, 'w') { |file| file.write([].inspect) }
+      []
+    else # restart
+      my_increments = increments
+      if my_increments.length != 0
+        current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
+        restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
+        manifest[:visible_files] = restart_manifest[:visible_files]
+      end
+      my_increments
+    end
   end
 
 end

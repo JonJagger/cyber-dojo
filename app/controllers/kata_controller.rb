@@ -4,15 +4,8 @@ class KataController < ApplicationController
   def start
     @kata = Kata.new(params[:kata_id], params[:avatar])
     @title = "Cyber Dojo : Kata " + @kata.id + ", " + @kata.avatar.name
-
-    @manifest = load_starting_manifest(@kata)
-    @increments = []
-    File.open(@kata.folder, 'r') do |f|
-      flock(f) do |lock|
-        @increments = @kata.avatar.read_most_recent(@manifest)
-      end
-    end
-
+    @manifest = {}
+    @increments = @kata.avatar.read_most_recent(@manifest)
     @shown_increment_number = @increments.length
   end
 
@@ -21,7 +14,6 @@ class KataController < ApplicationController
     @kata.run_tests(load_files_from_page, params['run_tests_prediction'])
     @increments = @kata.avatar.increments
     @shown_increment_number = @increments.length
-
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -39,22 +31,11 @@ class KataController < ApplicationController
     @shown_increment_number = params[:increment].to_i
     @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name +
        ", increment " + @shown_increment_number.to_s
-
     @manifest = @kata.avatar.visible_files(@shown_increment_number)
     @increments = [ @kata.avatar.increments[@shown_increment_number] ]
   end
 
 private
-
-  def load_starting_manifest(kata)
-    catalogue = eval IO.read(kata.folder + '/' + 'kata_manifest.rb')
-    manifest_folder = 'languages' + '/' + catalogue[:language]
-    manifest = eval IO.read(manifest_folder + '/' + 'exercise_manifest.rb')
-    manifest[:language] = catalogue[:language]
-    # this is to load file content
-    manifest[:visible_files] = kata.exercise.visible_files    
-    manifest
-  end
 
   def load_files_from_page
     manifest = {}
