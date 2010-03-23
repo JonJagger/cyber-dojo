@@ -22,18 +22,22 @@
           <td nowrap>
             <input type="image" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-                   class="box" 
+                   title="<%=@kata.avatar.name.humanize-%> predict red"
                    <% if !@kata.readonly -%>
-                     style="border: 5px solid #F33;" 
                      onclick="predict('failed');"
+                     class="failed_prediction box" 
+                   <% else -%>
+                     class="box" 
                    <% end -%>  />
 
             <input type="image" 
                    src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-                   class="box" 
+                   title="<%=@kata.avatar.name.humanize-%> predict green"
                    <% if !@kata.readonly -%>
-                     style="border: 5px solid #3C3;" 
                      onclick="predict('passed');"
+                     class="passed_prediction box" 
+                   <% else -%> 
+                     class="box" 
                    <% end -%> />
           <td/>
         <tr/>
@@ -42,7 +46,7 @@
 
       <table>
         <% if !@kata.readonly -%>
-          <tbody id="file-list">  <% # rename/delete popup menu keys off this id -%>     
+          <tbody id="file-list">
         <% else -%>
           <tbody>       
         <% end -%>

@@ -91,8 +91,8 @@ a.increment:hover span /*the span will display just on :hover state*/
   font-size: 10pt;
 }
 
-.failed_prediction { border: 3px solid #F33; } /*red*/
-.passed_prediction { border: 3px solid #3C3; } /*green*/
+.failed_prediction { border: 4px solid #F33; } /*red*/
+.passed_prediction { border: 4px solid #3C3; } /*green*/
 
 .failed  { background-color: #F33; }
 .passed  { background-color: #3C3; }

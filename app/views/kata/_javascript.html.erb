@@ -195,12 +195,10 @@ function loadFile(name)
   $('editor').value = $(name).value;
   current_filename = name;
   document.getElementById('radio_' + name).checked = true;
-  //$('editor').focus();
 }
 
 function preRunTests()
 {
-  //$('editor').setAttribute('readonly', 'true');
   saveCurrentFile();
   Element.show('run_tests_spinner');
 }
@@ -208,8 +206,6 @@ function preRunTests()
 function postRunTests()
 {
    Element.hide('run_tests_spinner');
-   //$('editor').removeAttribute('readonly');
-   //$('editor').focus();
 }
 
 function predict(prediction)
