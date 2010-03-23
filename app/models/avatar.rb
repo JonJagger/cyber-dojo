@@ -23,6 +23,11 @@ class Avatar
     @name
   end
 
+  def visible_files(n)
+    path = 'katas' + '/' + @kata.id + '/' + @kata.avatar.name + '/' + n.to_s + '/' + 'manifest.rb'
+    eval IO.read(path)
+  end
+  
   def increments
     eval locked_read(increments_filename)
   end
