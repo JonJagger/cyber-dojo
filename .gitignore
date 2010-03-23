@@ -1,7 +1,9 @@
 *~
 log/*
 tmp/**/*
-katas/99/Koalas
-katas/99/Wolves
-katas/99/Frogs
+katas/c/*
+katas/c#/*
+katas/c++/*
+katas/java/*
+katas/ruby/*
 
