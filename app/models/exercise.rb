@@ -17,6 +17,18 @@ class Exercise
     manifest[:visible_files]
   end
 
+  def hidden_files
+    if manifest[:hidden_files]
+      manifest[:hidden_files]
+    else
+      {}
+    end
+  end
+
+  def unit_test_framework
+    manifest[:unit_test_framework]
+  end
+
   def folder
     'languages' + '/' + @kata.language
   end

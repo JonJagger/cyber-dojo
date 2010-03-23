@@ -8,6 +8,10 @@ class Kata
     @readonly = false
   end
 
+  def id
+    @id.to_s
+  end
+
   def readonly
     @readonly
   end
@@ -16,20 +20,20 @@ class Kata
     @readonly = tf
   end
 
-  def id
-    @id.to_s
-  end
-
   def language
     @manifest[:language].to_s
   end
 
-  def exercise_name
-    @manifest[:exercise].to_s
-  end
-
   def max_run_tests_duration
     @manifest[:max_run_tests_duration].to_i
+  end
+
+  def unit_test_framework
+    exercise.unit_test_framework
+  end
+
+  def hidden_filenames
+    exercise.hidden_files
   end
 
   def exercise

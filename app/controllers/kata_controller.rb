@@ -23,9 +23,7 @@ class KataController < ApplicationController
 
   def run_tests
     @kata = Kata.new(params[:kata_id], params[:avatar])
-
-    # load from web page, eg :hidden_files, :language, :unit_test_framework
-    @manifest = eval params['manifest.rb'] 
+    @manifest = {}
 
     # filenames in the file-list may have been renamed or deleted so reload visible_files
     @manifest[:visible_files] = {}
@@ -48,7 +46,7 @@ class KataController < ApplicationController
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
         @run_tests_output = do_run_tests(@kata, @manifest)
-        test_info = parse_run_tests_output(@manifest, @run_tests_output)
+        test_info = parse_run_tests_output(@kata, @run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
         all_increments = @kata.avatar.save(@manifest, test_info)
       end
@@ -125,9 +123,7 @@ def do_run_tests(kata, manifest)
   system("rm -r #{sandbox}")
   make_dir(sandbox)
   manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
-  if manifest[:hidden_files]
-    manifest[:hidden_files].each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
-  end
+  kata.hidden_filenames.each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
 
   # Run tests in sandbox in dedicated thread
   run_tests_output = []
@@ -185,9 +181,9 @@ end
 
 #=========================================================================
 
-def parse_run_tests_output(manifest, output)
+def parse_run_tests_output(kata, output)
   so = output.to_s
-  inc = eval "parse_#{manifest[:language]}_#{manifest[:unit_test_framework]}(so)"
+  inc = eval "parse_#{kata.language}_#{kata.unit_test_framework}(so)"
   if Regexp.new("execution terminated after ").match(so)
     inc[:info] = so
     inc[:outcome] = :timeout
