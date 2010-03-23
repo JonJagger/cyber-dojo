@@ -211,6 +211,10 @@ def parse_ruby_test_unit(output)
   end
 end
 
+def parse_csharp_nunit(output)
+  inc = { :outcome => :failed }
+end
+
 def parse_java_junit(output)
   junit_pass_pattern = Regexp.new('^OK \((\d*) test')
   if match = junit_pass_pattern.match(output)

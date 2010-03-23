@@ -27,45 +27,17 @@ function select_language(id)
 
 <table cellspacing="4" class="dojo panel box">
 
+  <% %w(c c++ c# java ruby).sort.each do |language| -%>
   <tr>
     <td>
-      <input name="c_button" 
-             id="c_button" 
+      <input name="<%=language-%>_button" 
+             id="<%=language-%>_button" 
              type="button" 
-             onClick='select_language("c");'
-             value="c">
+             onClick='select_language("<%=language-%>");'
+             value="<%=language-%>">
     </td>
   </tr>
-
-  <tr>
-    <td>
-      <input name="cpp_button" 
-             id="cpp_button" 
-             type="button" 
-             onClick='select_language("cpp");'
-             value="c++">
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <input name="ruby_button" 
-             id="ruby_button" 
-             type="button" 
-             onClick='select_language("ruby");'
-             value="ruby">
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <input name="java_button" 
-             id="java_button" 
-             type="button" 
-             onClick='select_language("java");'
-             value="java">
-    </td>
-  </tr>
+  <% end -%>
 
 </table>
 
