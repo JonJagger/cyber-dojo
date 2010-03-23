@@ -1,12 +1,12 @@
 
 class Kata
 
-  def initialize(id, name="")
+  def initialize(id, name = "", readonly = false)
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
     @exercise = Exercise.new(self)
     @avatar = Avatar.new(self, name) if name != ""
-    @readonly = false
+    @readonly = readonly
   end
 
   def id
@@ -15,10 +15,6 @@ class Kata
 
   def readonly
     @readonly
-  end
-
-  def readonly=(tf)
-    @readonly = tf
   end
 
   def language

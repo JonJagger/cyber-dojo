@@ -20,14 +20,12 @@ class KataController < ApplicationController
   end
 
   def see_all_increments
-    @kata = Kata.new(params[:id])
-    @kata.readonly = true
+    @kata = Kata.new(params[:id], readonly = true)
     @title = "Cyber Dojo : Kata " + @kata.id
   end
 
   def see_one_increment
-    @kata = Kata.new(params[:id], params[:avatar])
-    @kata.readonly = true
+    @kata = Kata.new(params[:id], params[:avatar], readonly = true)
     @shown_increment_number = params[:increment].to_i
     @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name +
        ", increment " + @shown_increment_number.to_s
