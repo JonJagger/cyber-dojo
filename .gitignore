@@ -1,19 +1,6 @@
 *~
 log/*
 tmp/**/*
-katas/c/
-katas/c/**
-!katas/c/kata_manifest.rb
-katas/c#/
-katas/c#/**
-!katas/c#/kata_manifest.rb
-katas/c++/
-katas/c++/**
-!katas/c++/kata_manifest.rb
-katas/java/
-katas/java/**
-!katas/java/kata_manifest.rb
-katas/ruby/
-katas/ruby/**
-!katas/ruby/kata_manifest.rb
+katas/**
+!katas/*/kata_manifest.rb
 
