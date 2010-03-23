@@ -212,7 +212,16 @@ def parse_ruby_test_unit(output)
 end
 
 def parse_csharp_nunit(output)
-  inc = { :outcome => :failed }
+  nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d*)')
+  if match = nunit_pattern.match(output)
+    if match[2] == "0"
+      inc = { :outcome => :passed }
+    else # treat zero passes as a fail
+      inc = { :outcome => :failed }
+    end
+  else
+    inc = { :outcome => :error }
+  end
 end
 
 def parse_java_junit(output)
