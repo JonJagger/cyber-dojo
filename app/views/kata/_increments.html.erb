@@ -6,7 +6,7 @@
       <%= @shown_increment_number -%>
     </td>
 
-    <% @increments.each do |increment| -%>
+    <% limited(@increments).each do |increment| -%>
       <td>
           <% if !@kata.readonly -%> 
             <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
@@ -21,7 +21,7 @@
     <% end -%>
 
     <td id="run_tests_spinner" style="display:none;"> 
-      <span xclass="spinner increment box">
+      <span>
         <%= image_tag "spinner.gif" -%>
       </span>
     </td> 

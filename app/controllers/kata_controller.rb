@@ -6,33 +6,29 @@ class KataController < ApplicationController
     @title = "Cyber Dojo : Kata " + @kata.id + ", " + @kata.avatar.name
 
     @manifest = load_starting_manifest(@kata)
-    all_increments = []
+    @increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
-        all_increments = @kata.avatar.read_most_recent(@manifest)
+        @increments = @kata.avatar.read_most_recent(@manifest)
       end
     end
-    
-    @increments = limited(all_increments)
-    @shown_increment_number = all_increments.length
+    @shown_increment_number = @increments.length
   end
 
   def run_tests
     @kata = Kata.new(params[:kata_id], params[:avatar]) 
     manifest = load_files_from_page
 
-    all_increments = []
+    @increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
         run_tests_output = do_run_tests(@kata, manifest)
         test_info = parse_run_tests_output(@kata, run_tests_output)
         test_info[:prediction] = params['run_tests_prediction']
-        all_increments = @kata.avatar.save(manifest, test_info)
+        @increments = @kata.avatar.save(manifest, test_info)
       end
     end
-
-    @increments = limited(all_increments)
-    @shown_increment_number = all_increments.length
+    @shown_increment_number = @increments.length
 
     respond_to do |format|
       format.js if request.xhr?
@@ -48,29 +44,19 @@ class KataController < ApplicationController
   def see_one_increment
     @kata = Kata.new(params[:id], params[:avatar])
     @kata.readonly = true
-    @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name
+    @shown_increment_number = params[:increment].to_i
+    @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name +
+       ", increment " + @shown_increment_number.to_s
 
-    all_increments = @kata.avatar.increments
-
-    if params[:increment]
-      load_increment_manifest(params[:increment])
-    elsif all_increments.length != 0
-      load_increment_manifest(all_increments.last[:number].to_s)
-    else
-      @manifest = kata.exercise.manifest
-      @shown_increment_number = "0"
-    end
-
-    @increments = limited(all_increments)
+    load_increment_manifest(@shown_increment_number)
+    @increments = [ @kata.avatar.increments[@shown_increment_number] ]
   end
 
 private
 
   def load_increment_manifest(increment_number)
-    @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name + ", increment " + increment_number
-    path = 'katas' + '/' + @kata.id + '/' + @kata.avatar.name + '/' + increment_number + '/' + 'manifest.rb'
+    path = 'katas' + '/' + @kata.id + '/' + @kata.avatar.name + '/' + increment_number.to_s + '/' + 'manifest.rb'
     @manifest = eval IO.read(path)
-    @shown_increment_number = increment_number
   end
 
   def load_starting_manifest(kata)
@@ -103,16 +89,15 @@ private
     end
     manifest
   end
-
-  def limited(increments)
-    max_increments_displayed = 51
-    len = [increments.length, max_increments_displayed].min
-    increments[-len,len]
-  end
-
 end
 
 #=========================================================================
+
+def limited(increments)
+  max_increments_displayed = 51
+  len = [increments.length, max_increments_displayed].min
+  increments[-len,len]
+end
 
 def do_run_tests(kata, manifest)
   dst_folder = kata.avatar.folder
