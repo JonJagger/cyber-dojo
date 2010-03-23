@@ -7,10 +7,6 @@
     'kata.sh' => {},
   },
 
-  :hidden_files =>
-  {
-  },
-
   :unit_test_framework => 'test_unit',
 
 }

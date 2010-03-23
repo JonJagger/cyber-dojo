@@ -7,7 +7,7 @@ class Kata
     @avatar = Avatar.new(self, name) if name != ""
     @readonly = false
   end
-  
+
   def readonly
     @readonly
   end

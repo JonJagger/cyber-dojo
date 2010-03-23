@@ -1,0 +1,67 @@
+Welcome to the dojo.
+Your task is to convert numbers from 
+arabic form to roman form. 
+Some examples:
+
+Arabic: 1
+Roman: "i"
+
+Arabic: 2
+Roman: "ii"
+
+Arabic: 3
+Roman: "iii"
+
+Arabic: 4
+Roman: "iv"
+
+Arabic: 5
+Roman: "v"
+
+Arabic: 6
+Roman: "vi"
+
+Arabic: 7
+Roman: "vii"
+
+Arabic: 8
+Roman: "viii"
+
+Arabic: 9
+Roman: "ix"
+
+Arabic: 10
+Roman: "x"
+
+Arabic: 11
+Roman: "xi"
+
+Arabic: 15
+Roman: "xv"
+
+Arabic: 19
+Roman: "xix"
+
+Arabic: 40
+Roman: "xl"   (x and lowercase L)
+
+Arabic: 50
+Roman: "l"    (lowercase L)
+
+Arabic: 90
+Roman: "xc"
+
+Arabic: 100
+Roman: "c"
+
+Arabic: 400
+Roman: "cd"
+
+Arabic: 500
+Roman: "d"
+
+Arabic: 900
+Roman: "cm"
+
+Arabic: 1000
+Roman: "m"

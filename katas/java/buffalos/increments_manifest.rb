@@ -1,0 +1,1 @@
+[{:number=>0, :prediction=>"passed", :outcome=>:passed, :info=>"JUnit version 4.7<br/>.<br/>Time: 0.01<br/><br/>OK (1 test)", :time=>[2010, 3, 23, 5, 53, 41]}]

@@ -9,10 +9,6 @@
     'source.tests.c' => {},
   },
 
-  :hidden_files =>
-  {
-  },
-
   :unit_test_framework => 'assert',
 }
 

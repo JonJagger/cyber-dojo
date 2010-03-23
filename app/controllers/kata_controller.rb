@@ -125,7 +125,9 @@ def do_run_tests(kata, manifest)
   system("rm -r #{sandbox}")
   make_dir(sandbox)
   manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
-  manifest[:hidden_files].each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
+  if manifest[:hidden_files]
+    manifest[:hidden_files].each_key { |filename| system("cp #{src_folder}/#{filename} #{sandbox}") }
+  end
 
   # Run tests in sandbox in dedicated thread
   run_tests_output = []

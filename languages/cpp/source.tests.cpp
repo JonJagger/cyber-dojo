@@ -2,24 +2,19 @@
 #include <assert.h>
 #include <string.h>
 
-#define   FAIL(x) assert(0 && (x))
-#define ASSERT(x) assert(x)
+#define FAIL(x)   assert(0 && (x))
+#define TEST(x)   assert(x)
 #define IGNORE(x) assert(1 || (x))
 
-void requirements(void)
+static void an_example_test(void)
 {
-    const char * expected = "abc";
-    char actual[] = "abc";
-    //...
-    FAIL(strcmp(actual, expected) == 0);
+    TEST(strcmp("expected", "actual") == 0);
 }
 
-typedef void (*test_function)(void);
-
-const test_function test_functions[] =
+static void (*test_functions[])(void) =
 {
-    requirements,
-	0
+    an_example_test,
+    NULL
 };
 
 int main()

@@ -15,24 +15,20 @@ And your cyber-dojo should be running.
 
 
 
-Setting up a new exercise
-=========================
-Make a folder for the name of the exercise. For example if the exercise is called
-unsplice and is a c exercise then create a folder called unsplice in a folder called
-c in the exercises folder; 'exercises/c/unsplice/'
-Then place the files required for the exercise in this folder as 
-follows. First, the folder must contain a file called exercise_manifest.rb
-This file contains an inspected ruby object defining the exercise parameters (it is
+Setting up a new language fileset
+=================================
+Make a folder for the name of the language fileset. For example the initial
+set of files for a ruby kata are in languages/ruby/*
+The folder must contain a file called exercise_manifest.rb
+which must contain an inspected ruby object naming the files (it is
 loaded and eval'd in the ruby code). For example:
 
 {
   :visible_files =>
   {
-    'unsplice.tests.c' => {},
-    'unsplice.c' => {},
-    'unsplice.h' => {},
-    'notes.txt' => {},
-    'instructions' => {},
+    'source.tests.c' => {},
+    'source.c' => {},
+    'source.h' => {},
     'makefile' => {},
     'kata.sh' => {},
   },
@@ -50,37 +46,25 @@ Explanation of these parameters
 -------------------------------
 1:visible_files
   These are the names of the files that are visible in the editor in the browser.
-  Each file can have associated information if necessary. 
+  Each of these files must exist in the folder.
+  The filename kata.sh must be present (visible or hidden) as that is the name 
+  of the shell file assumed by the ruby app code in the dojo server to be the start point 
+  for running an increment.
+  You can write any actions in the kata.sh file but clearly any programs it
+  tries to run must be installed on the dojo-server. For example, if kata.sh runs gcc to compile
+  c files then gcc has to be installed. If kata.sh runs javac to compile java
+  files then javac has to be installed.
 
-2:hidden_files
+2:hidden_files  (optional)
   These are the names of necessary and supporting files (if there are any) that are NOT 
   visible in the editor in the browser (but are required to run-tests on each increment). 
-  Again, each file can have associated information. 
+  For example, the junit jar file. Each of these files must exist in the folder.
+  Optional if empty.
   
 3:unit_test_framework
-  This defines the name of the unit test framework used in the exercise. 
+  The name of the unit test framework used. 
   This name partially determines the name of the ruby function used to
   parse the run-tests output (to see if the increment is red or green).
-
-
-
-Some Notes
-----------
-1. The filename kata.sh must be present (visible or hidden) as that is the name 
-   of the shell file assumed by the ruby app code in the dojo server to be the start point 
-   for running an increment.
-
-2. As well as containing the file exercise_manifest.rb the exercise folder must also contain
-   all the files named in both the hidden_files section and the visible_files section.
-
-3. You can write any actions in the kata.sh file but clearly any programs it
-   tries to run must be installed on the dojo-server. For example, if kata.sh runs gcc to compile
-   c files then gcc has to be installed. If kata.sh runs javac to compile java
-   files then javac has to be installed.
-
-4. You can choose to make any file visible or hidden. In the example above to have a hidden
-   makefile you would simply need to move makefile into the :hidden section.
-
 
 
 
@@ -93,11 +77,11 @@ This currently has to be done manually.
 2. Make a folder with this id under the katas folder on the dojo server.
 
 3. Make sure this folder contains a file called kata_manifest.rb
-   this file must contain an inspected ruby object defining the chosen exercise. For example:
+   this file must contain an inspected ruby object defining two parameters
+   as follows:
 
 {
   :language => 'c',
-  :exercise => 'unsplice',
   :max_run_tests_duration => 10,
 }
 
@@ -105,9 +89,7 @@ Explanation of these parameters
 -------------------------------
 
 1:language
-2:exercise
- These two parameters define the name of the language and the name of the exercise.
- Together these parameters determine the exercise-folder, eg 'exercises/c/unsplice'
+ Determines the initial language fileset, eg 'c' --> 'languages/c/*'
  The :language parameter and :unit_test_framework parameter (from the exercise manifest)
  are used to select the ruby function to regexp parse the run tests output to determine 
  if the increment is a pass or fail. 
@@ -115,10 +97,10 @@ Explanation of these parameters
  called parse_c_assert is assumed to exist and is called to parse the output of running the tests.
  If you use a new unit test framework you will need to add a new regexp'ing ruby function.
 
-3:max_run_tests_duration
+2:max_run_tests_duration
   This is the maximum number of seconds the dojo-server allows an increment to run in
   (the time starts after all the increments files have been copied to the sandbox folder).
-  This is reloaded on each increment to allow the sensei to vary it's value during the
+  This is reloaded on each increment to allow the sensei to vary the value during the
   kata if necessary.
 
 
