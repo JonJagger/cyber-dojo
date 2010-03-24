@@ -99,14 +99,7 @@ a.increment:hover span /*the span will display just on :hover state*/
 .error   { background-color: yellow;  }
 .timeout { background-color: #3FF; }  /*blue*/
 
-.spinner
-{
-  background-color: white;
-  color: black;
-}
-
-/* each file has a hidden textarea */
-.hidden 
+.hidden_text_areas
 { 
   visibility: hidden; 
   display: none; 
