@@ -1,30 +1,28 @@
 
-<table class="dojo panel box">
-<tr><td>
-<table cellpadding="3px">
+<table class="dojo panel box" 
+       cellpadding="3px">
   <% @kata.avatars.each do |avatar| -%>
-   <tr>
-     <td nowrap>
-        <%= avatar_image(avatar.name) {|i| i} -%>
-        <%= avatar_image(avatar.name) {|i| i} -%>
-     </td>
-     <td nowrap>
-       <table cellpadding="1px">
-         <tr>
-           <% avatar.increments.each do |increment| -%>
-           <td>
-             <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
-                href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= avatar.name-%>&increment=<%= increment[:number]-%>">
-               &thinsp;
-               <span></span>
-             </a>
-           <td>
-           <% end -%>
-         </tr>
-       </table>
-     </td>
-
-   </tr>
+  <tr>
+    <td nowrap>
+      <%= avatar_image(avatar.name) {|i| i} -%>
+      <%= avatar_image(avatar.name) {|i| i} -%>
+    </td>
+    <td nowrap>
+      <table cellpadding="1px">
+        <tr>
+          <% avatar.increments.each do |increment| -%>
+          <td>
+            <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
+               href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= avatar.name-%>&increment=<%= increment[:number]-%>">
+              &thinsp;
+              <span></span>
+            </a>
+          <td>
+          <% end -%>
+        </tr>
+      </table>
+    </td>
+  </tr>
   <% end -%>
 </table>
 

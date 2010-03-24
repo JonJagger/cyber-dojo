@@ -1,0 +1,20 @@
+
+<div class="hidden_text_areas">
+  <% # When run-tests is clicked the javascript preRunTests() function copies  -%>
+  <% # the contents of currently edited file back to its hidden textarea (below)  -%>
+  <% # before submitting the form. On the server rails grabs the file contents -%>
+  <% # from these hidden textareas and not from the main textarea editor.     -%>
+  <div id="visible_files_container">
+    <% @manifest[:visible_files].each do |filename,file| -%>
+      <textarea id="<%=filename-%>" 
+                name="<%=filename-%>"><%= h file[:content] -%></textarea> 
+    <% end -%>
+  </div>
+
+  <textarea id="visible_filenames_container"
+            name="visible_filenames_container">
+    ;<% @manifest[:visible_files].each do |filename,file| -%><%=filename-%>;<% end -%>   
+  </textarea>
+
+</div>
+

@@ -49,6 +49,7 @@ a.increment:hover span /*the span will display just on :hover state*/
     color: #000;
     text-align: left;
 }
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 .panel
@@ -78,7 +79,8 @@ a.increment:hover span /*the span will display just on :hover state*/
 
 .box 
 { 
-  border:   1px solid #D8D8D8; /*light-gray*/
+  border: 1px solid #D8D8D8; /*light-gray*/
+  border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;

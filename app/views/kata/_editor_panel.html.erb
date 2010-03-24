@@ -1,109 +1,16 @@
 
-<table cellpadding="0" 
-       cellpadding="0">
+<table cellpadding="0">
   <tr valign="top">
     <td class="file-manager panel box">
-      <table>
-        <tr>
-          <td nowrap>
-            <% if !@kata.readonly -%>
-              <input type="hidden" 
-                     id="run_tests_prediction" 
-                     name="run_tests_prediction" 
-                     value="">
-            <% end -%>                 
-          </td>
-        </tr>
-      </table>
-
-      <table>
-       <tbody>
-        <tr>
-          <td nowrap>
-            <input type="image" 
-                   src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-                   title="<%=@kata.avatar.name.humanize-%> predict red"
-                   <% if !@kata.readonly -%>
-                     onclick="predict('failed');"
-                     class="failed_prediction box" 
-                   <% else -%>
-                     class="box" 
-                   <% end -%>  />
-
-            <input type="image" 
-                   src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-                   title="<%=@kata.avatar.name.humanize-%> predict green"
-                   <% if !@kata.readonly -%>
-                     onclick="predict('passed');"
-                     class="passed_prediction box" 
-                   <% else -%> 
-                     class="box" 
-                   <% end -%> />
-          <td/>
-        <tr/>
-       </tbody>
-      </table>
-
-      <table>
-        <% if !@kata.readonly -%>
-          <tbody id="file-list">
-        <% else -%>
-          <tbody>       
-        <% end -%>
-
-  		  <% @manifest[:visible_files].sort.each do |filename,file| -%>
-		  <tr>
-            <td>             
-			  <div onclick='loadFile("<%=filename-%>")'>
-                <input id="radio_<%=filename-%>" 
-                       name="radio_filename"
-                       type="radio"
-                       value="<%=filename-%>"><%= filename -%>
-              </div>
-		    </td>
-          </tr>
-		  <% end -%>
-        </tbody>
-	  </table>
+      <%= render :partial => 'avatar_buttons' -%>
+      <%= render :partial => 'file_list' -%>
     </td>
-
     <td>
-      <table cellpadding="0">
-        <tr>
-          <td>
-            <textarea id="editor" 
-                      tabindex="0"
-                      name="editor" 
-                      class="box"
-                      <% if @kata.readonly -%>
-                        readonly="true"
-                      <% end -%>
-                      cols="80" 
-                      rows="28">
-            </textarea>
-          </td>
-        </tr>
-      </table>
+      <%= render :partial => 'editor' -%>
     </td>
   </tr>
 </table>
 
-<div class="hidden_text_areas">
-  <% # When run-tests is clicked the javascript preRunTests() function copies  -%>
-  <% # the contents of currently edited file back to its hidden textarea (below)  -%>
-  <% # before submitting the form. On the server rails grabs the file contents -%>
-  <% # from these hidden textareas and not from the main textarea editor.     -%>
-  <div id="visible_files_container">
-    <% @manifest[:visible_files].each do |filename,file| -%>
-      <textarea id="<%=filename-%>" 
-                name="<%=filename-%>"><%= h file[:content] -%></textarea> 
-    <% end -%>
-  </div>
+<%= render :partial => 'hidden_text_areas' -%>
 
-  <textarea id="visible_filenames_container"
-            name="visible_filenames_container">
-    ;<% @manifest[:visible_files].each do |filename,file| -%><%=filename-%>;<% end -%>   
-  </textarea>
-
-</div>
 
