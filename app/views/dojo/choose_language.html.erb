@@ -10,9 +10,9 @@ function select_language(id)
 <form name="chooseLanguage" action="/dojo/choose_avatar">
 
 <noscript>
- &nbsp;
- <h2><b>You must enable JavaScript.</b></h2>
- &nbsp;
+  &nbsp;
+  <h2><b>You must enable JavaScript.</b></h2>
+  &nbsp;
 </noscript>
 
 <input readonly 
@@ -20,25 +20,21 @@ function select_language(id)
        name="kata_id" 
        id="kata_id" 
        type="text" 
-       size="15" 
        value="<%=@kata_id-%>">
 
 <h2><b>Choose your language</b></h2>
 
-<table cellspacing="4" class="dojo panel box">
-
+<table cellspacing="4" 
+       class="rounded panel">
   <% %w(c c++ c# java ruby).sort.each do |language| -%>
   <tr>
     <td>
-      <input name="<%=language-%>_button" 
-             id="<%=language-%>_button" 
-             type="button" 
+      <input type="button" 
              onClick='select_language("<%=language-%>");'
              value="<%=language-%>">
     </td>
   </tr>
   <% end -%>
-
 </table>
 
 </form>

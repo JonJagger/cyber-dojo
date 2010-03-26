@@ -8,7 +8,7 @@
 
     <% limited(@increments).each do |increment| -%>
     <td>
-        <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> increment box" 
+        <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> rounded increment" 
            href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= @kata.avatar.name-%>&increment=<%= increment[:number]-%>" 
           <% if !@kata.readonly -%>        
             target="_blank" 
@@ -19,7 +19,8 @@
     </td>
     <% end -%>
 
-    <td id="run_tests_spinner" style="display:none;"> 
+    <td id="run_tests_spinner" 
+        style="display:none;"> 
       <span>
         <%= image_tag "spinner.gif" -%>
       </span>

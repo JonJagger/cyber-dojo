@@ -1,6 +1,5 @@
 
-/* body style */
-.cyber-dojo-page
+#cyber_dojo_page
 {
   margin-top: 0em;
   margin-left: 1em;
@@ -9,43 +8,9 @@
   color: green;
 }
 
-/* FAKE TOOL TIPS
- * Instead of title="tool-tip" I use a hidden nested span
- * as this allows me to insert newlines.
- */
-a.increment 
-{
-    position: relative; /*this is the key*/
-    z-index: 24; 
-    text-decoration: none;
-}
-
-a.increment:hover { z-index: 25; }
-
-a.increment span { display: none; }
-
-a.increment:hover span /*the span will display just on :hover state*/
-{
-    font-family: monospace;
-    font-size: 9pt;
-    display: block;
-    position: fixed;
-    top: 5em; left: 2em; width: auto;
-    border: 1px solid #0CF;
-    background-color: #CFF; 
-    color: #000;
-    text-align: left;
-}
-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-.panel
-{    
-  margin: 0.5em 0.5em 0.5em 0em;
-  padding: 1em;
-}
-
-.box 
+.rounded
 { 
   border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 6px;
@@ -54,45 +19,18 @@ a.increment:hover span /*the span will display just on :hover state*/
   -webkit-border-radius: 6px;
 }
 
-#increments 
-{ 
+.panel
+{    
   background-color: #FEF5CA; /*sandbox */
-  padding: 0.5em; 
-}
-
-#avatar_buttons
-{
-  white-space: nowrap;
-}
-
-#file_manager 
-{ 
-  padding: 0.5em; 
-  background-color: #FEF5CA;
-  color: #686868;   
-  font-size: 12pt; 
-}
-
-#editor
-{
-  overflow-y: scroll;
+  margin: 0.5em 0.5em 0.5em 0em;
   padding: 0.5em;
-  margin-top: 0em;
-  font-size: 12pt;
-  font-family: monospace;
-  font-weight: normal;
-  color: white;
-  background-color: #686868;
-
 }
 
-
-.dojo { background-color: #FEF5CA; } /* TODO: poor name */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
 .increment 
 { 
   padding: 0.15em; 
-  text-align: center;
   font-size: 10pt;
 }
 
@@ -104,7 +42,65 @@ a.increment:hover span /*the span will display just on :hover state*/
 .error   { background-color: yellow;  }
 .timeout { background-color: #3FF; }  /*blue*/
 
-.hidden_text_areas
+/* FAKE TOOL TIPS
+ * Instead of title="tool-tip" I use a hidden nested span
+ * as this allows me to insert newlines.
+ */
+a.increment 
+{
+  position: relative; /*this is the key*/
+  z-index: 24; 
+  text-decoration: none;
+}
+
+a.increment:hover { z-index: 25; }
+
+a.increment span { display: none; }
+
+a.increment:hover span /*the span will display just on :hover state*/
+{
+  font-family: monospace;
+  font-size: 9pt;
+  display: block;
+  position: fixed;
+  top: 5em; left: 2em; width: auto;
+  border: 1px solid #0CF;
+  background-color: #CFF; 
+  color: #000;
+  text-align: left;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#avatar_buttons { white-space: nowrap; }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#file_manager 
+{ 
+  padding: 0.5em; 
+  background-color: #FEF5CA;
+  color: #686868;   
+  font-size: 12pt; 
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#editor
+{
+  overflow-y: scroll;
+  padding: 0.5em;
+  margin-top: 0em;
+  font-size: 12pt;
+  font-family: monospace;
+  font-weight: normal;
+  color: white;
+  background-color: #686868;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#hidden_text_areas
 { 
   visibility: hidden; 
   display: none; 

@@ -21,7 +21,4 @@ class DojoController < ApplicationController
     @title = "Cyber Dojo"
   end
 
-  def help
-  end
-
 end

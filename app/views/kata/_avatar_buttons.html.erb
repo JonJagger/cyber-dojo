@@ -12,10 +12,10 @@
          <% if !@kata.readonly -%>
            title="<%=@kata.avatar.name.humanize-%> predict red"
            onclick="$('run_tests_prediction').value = 'failed';"
-           class="failed_prediction box" 
+           class="rounded failed_prediction" 
          <% else -%>
            title="<%=@kata.avatar.name.humanize-%>"
-           class="box" 
+           class="rounded"
          <% end -%>  />
 
   <input type="image" 
@@ -23,10 +23,10 @@
          <% if !@kata.readonly -%>
            title="<%=@kata.avatar.name.humanize-%> predict green"
            onclick="$('run_tests_prediction').value = 'passed';"
-           class="passed_prediction box" 
+           class="rounded passed_prediction" 
          <% else -%> 
            title="<%=@kata.avatar.name.humanize-%>"
-           class="box" 
+           class="rounded" 
          <% end -%> />
 </div>
 
