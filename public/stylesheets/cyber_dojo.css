@@ -9,19 +9,6 @@
   color: green;
 }
 
-#editor
-{
-  overflow-y: scroll;
-  padding: 0.5em;
-  margin-top: 0em;
-  font-size: 12pt;
-  font-family: monospace;
-  font-weight: normal;
-  color: white;
-  background-color: #686868;
-
-}
-
 /* FAKE TOOL TIPS
  * Instead of title="tool-tip" I use a hidden nested span
  * as this allows me to insert newlines.
@@ -58,25 +45,6 @@ a.increment:hover span /*the span will display just on :hover state*/
   padding: 1em;
 }
 
-.increments 
-{ 
-  font-size: 12pt;
-  background-color: #FEF5CA; /*sandbox */
-  color: #686868;
-  padding: 0.5em; 
-  border: none;
-}
-
-.file-manager 
-{ 
-  padding: 0.5em; 
-  background-color: #FEF5CA;
-  color: #686868;   
-  font-size: 12pt; 
-}
-
-.dojo { background-color: #FEF5CA; } /* TODO: poor name */
-
 .box 
 { 
   border: 1px solid #D8D8D8; /*light-gray*/
@@ -85,6 +53,41 @@ a.increment:hover span /*the span will display just on :hover state*/
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
 }
+
+#increments 
+{ 
+  background-color: #FEF5CA; /*sandbox */
+  padding: 0.5em; 
+}
+
+#avatar_buttons
+{
+  white-space: nowrap;
+}
+
+#file_manager 
+{ 
+  padding: 0.5em; 
+  background-color: #FEF5CA;
+  color: #686868;   
+  font-size: 12pt; 
+}
+
+#editor
+{
+  overflow-y: scroll;
+  padding: 0.5em;
+  margin-top: 0em;
+  font-size: 12pt;
+  font-family: monospace;
+  font-weight: normal;
+  color: white;
+  background-color: #686868;
+
+}
+
+
+.dojo { background-color: #FEF5CA; } /* TODO: poor name */
 
 .increment 
 { 

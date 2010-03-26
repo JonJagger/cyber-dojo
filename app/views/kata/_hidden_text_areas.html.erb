@@ -6,8 +6,8 @@
   <% # from these hidden textareas and not from the main textarea editor.     -%>
   <div id="visible_files_container">
     <% @manifest[:visible_files].each do |filename,file| -%>
-      <textarea id="<%=filename-%>" 
-                name="<%=filename-%>"><%= h file[:content] -%></textarea> 
+    <textarea id="<%=filename-%>" 
+              name="<%=filename-%>"><%= h file[:content] -%></textarea> 
     <% end -%>
   </div>
 

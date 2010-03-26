@@ -1,44 +1,32 @@
 
-      <table>
-        <tr>
-          <td nowrap>
-            <% if !@kata.readonly -%>
-              <input type="hidden" 
-                     id="run_tests_prediction" 
-                     name="run_tests_prediction" 
-                     value="">
-            <% end -%>                 
-          </td>
-        </tr>
-      </table>
+<% if !@kata.readonly -%>
+<input type="hidden" 
+       id="run_tests_prediction" 
+       name="run_tests_prediction" 
+       value="">
+<% end -%>                 
 
-      <table>
-       <tbody>
-        <tr>
-          <td nowrap>
-            <input type="image" 
-                   src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-                   <% if !@kata.readonly -%>
-                     title="<%=@kata.avatar.name.humanize-%> predict red"
-                     onclick="$('run_tests_prediction').value = 'failed';"
-                     class="failed_prediction box" 
-                   <% else -%>
-                    title="<%=@kata.avatar.name.humanize-%>"
-                    class="box" 
-                   <% end -%>  />
+<div id="avatar_buttons">
+  <input type="image" 
+         src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
+         <% if !@kata.readonly -%>
+           title="<%=@kata.avatar.name.humanize-%> predict red"
+           onclick="$('run_tests_prediction').value = 'failed';"
+           class="failed_prediction box" 
+         <% else -%>
+           title="<%=@kata.avatar.name.humanize-%>"
+           class="box" 
+         <% end -%>  />
 
-            <input type="image" 
-                   src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-                   <% if !@kata.readonly -%>
-                     title="<%=@kata.avatar.name.humanize-%> predict green"
-                     onclick="$('run_tests_prediction').value = 'passed';"
-                     class="passed_prediction box" 
-                   <% else -%> 
-                     title="<%=@kata.avatar.name.humanize-%>"
-                     class="box" 
-                   <% end -%> />
-          <td/>
-        <tr/>
-       </tbody>
-      </table>
+  <input type="image" 
+         src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
+         <% if !@kata.readonly -%>
+           title="<%=@kata.avatar.name.humanize-%> predict green"
+           onclick="$('run_tests_prediction').value = 'passed';"
+           class="passed_prediction box" 
+         <% else -%> 
+           title="<%=@kata.avatar.name.humanize-%>"
+           class="box" 
+         <% end -%> />
+</div>
 

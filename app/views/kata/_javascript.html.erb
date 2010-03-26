@@ -41,6 +41,8 @@ function renameCurrentFile()
   }
    
   // TODO: what if there is already a file with the chosen name
+  // TODO: what if the chosen name is editor? Or any name whose id 
+  //       matches an existing html id attribute?
 
   // rename hidden textarea by appending new one and removing old one
   var new_ta = new Element("textarea", { id:newname, name:newname });
