@@ -1,7 +1,9 @@
 
+
 <table class="rounded panel" 
        cellpadding="3px">
-  <% @kata.avatars.each do |avatar| -%>
+  <% result = gapper(@kata.avatars) -%>
+  <% result.each do |avatar| -%>
   <tr>
     <td nowrap>
       <%= avatar_image(avatar.name) {|i| i} -%>
@@ -11,6 +13,16 @@
       <table cellpadding="1px">
         <tr>
           <% avatar.increments.each do |increment| -%>
+          <% increment[:gap].to_i.times do -%>
+            <td>
+              <a style="visibility:hidden;" 
+                 class="passed_prediction passed rounded increment" 
+                 href="">
+                &thinsp;
+                <span></span>
+              </a>
+            </td>
+          <% end -%>
           <td>
             <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> rounded increment" 
                href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= avatar.name-%>&increment=<%= increment[:number]-%>">
