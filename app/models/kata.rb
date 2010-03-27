@@ -108,8 +108,6 @@ class TestRunner
     run_tests_output
   end
 
-private
-
   def self.save_file(foldername, filename, file)
     path = foldername + '/' + filename
     # no need to lock when writing these files. They are write-once-only
@@ -146,30 +144,43 @@ end
 class RunTestsOutputParser
 
   def parse(kata, output)
-    so = output.to_s
-    inc = eval "parse_#{kata.language}_#{kata.unit_test_framework}(so)"
-    if Regexp.new("execution terminated after ").match(so)
-      inc[:info] = so
+    output = output.to_s
+    inc = { :info => output.split("\n").join("<br/>") }
+    if Regexp.new("execution terminated after ").match(output)
       inc[:outcome] = :timeout
     else
-      # put newlines into form that works in faked tool-tip
-      inc[:info] = output.split("\n").join("<br/>")
+      inc[:outcome] = eval "parse_#{kata.language}_#{kata.unit_test_framework}(output)"
     end
     inc
   end
 
 private
 
+  def parse_c_assert(output)
+    failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
+    syntax_error_pattern = Regexp.new(':(\d*): error')
+    make_error_pattern = Regexp.new('^make:')
+    if failed_pattern.match(output)
+      :failed
+    elsif make_error_pattern.match(output)
+      :error
+    elsif syntax_error_pattern.match(output)
+      :error
+    else
+      :passed
+    end
+  end
+
   def parse_ruby_test_unit(output)
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
       if match[3] == "0" 
-        inc = { :outcome => :passed }
+        :passed
       else
-        inc = { :outcome => :failed }
+        :failed
       end
     else
-      inc = { :outcome => :error }
+      :error
     end
   end
 
@@ -177,12 +188,12 @@ private
     nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d*)')
     if match = nunit_pattern.match(output)
       if match[2] == "0"
-        inc = { :outcome => :passed }
-      else # treat zero passes as a fail
-        inc = { :outcome => :failed }
+        :passed
+      else
+        :failed
       end
     else
-      inc = { :outcome => :error }
+      :error
     end
   end
 
@@ -190,37 +201,22 @@ private
     junit_pass_pattern = Regexp.new('^OK \((\d*) test')
     if match = junit_pass_pattern.match(output)
       if match[1] != "0" 
-        inc = { :outcome => :passed }
+        :passed 
       else # treat zero passes as a fail
-        inc = { :outcome => :failed }
+        :failed 
       end
     else
       junit_fail_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
       if match = junit_fail_pattern.match(output)
-        inc = { :outcome => :failed }
+        :failed 
       else
-        inc = { :outcome => :error }
+        :error
       end
     end
   end
 
   def parse_cpp_assert(output)
     parse_c_assert(output)
-  end
-
-  def parse_c_assert(output)
-    failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
-    syntax_error_pattern = Regexp.new(':(\d*): error')
-    make_error_pattern = Regexp.new('^make:')
-    if failed_pattern.match(output)
-      inc = { :outcome => :failed }
-    elsif make_error_pattern.match(output)
-      inc = { :outcome => :error }
-    elsif syntax_error_pattern.match(output)
-      inc = { :outcome => :error }
-    else
-      inc = { :outcome => :passed }
-    end
   end
 
 end
