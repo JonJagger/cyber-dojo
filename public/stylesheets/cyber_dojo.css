@@ -89,13 +89,29 @@ a.increment:hover span /*the span will display just on :hover state*/
 #editor
 {
   overflow-y: scroll;
-  padding: 0.5em;
-  margin-top: 0em;
+  padding: 0em;
+  padding-left: 5px;
+  margin: 0em;
+  margin-left: 40px;
   font-size: 12pt;
   font-family: monospace;
   font-weight: normal;
   color: white;
   background-color: #686868;
+  border: 1px solid #666;
+  border-right: none;
+}
+
+.textarea_with_line_numbers
+{
+  display: block;
+  font-size: 12pt;
+  font-weight: 100;
+  color: #686868;
+  margin: 0;
+  border: 1px solid #666;
+  border-right: none;
+  background: #aaa;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/

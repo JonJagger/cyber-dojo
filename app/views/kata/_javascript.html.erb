@@ -4,6 +4,49 @@
 
 <script language="javascript" type="text/javascript">
 
+var move = false;
+
+function createTextAreaWithLines(id)
+{
+  var el = document.createElement('TEXTAREA');
+  var ta = document.getElementById(id);
+       
+  var string = '';
+  for (var no = 1; no < 300; no++) {
+    if (string.length>0)
+      string += '\r\n';
+    string += no;
+  }
+       
+  el.className      = 'textarea_with_line_numbers';
+  el.style.height   = (ta.offsetHeight-3) + "px";
+  el.style.width    = '35px';
+  el.style.position = 'absolute';
+  el.style.overflow = 'hidden';
+  el.style.textAlign = 'right';
+  el.style.paddingRight = '0.2em';
+  el.innerHTML      = string;  // Firefox renders \n linebreak
+  el.innerText      = string; // IE6 renders \n line break
+  el.style.zIndex   = 0;
+  ta.style.zIndex   = 1;
+  ta.style.position = 'relative';
+  ta.parentNode.insertBefore(el, ta.nextSibling);
+  setLine();
+  ta.focus();
+       
+  ta.onscroll     = function() { setLine(); }
+  ta.onkeydown    = function() { setLine(); }
+  ta.onmousedown  = function() { setLine(); move=true; }
+  ta.onmouseup    = function() { setLine(); move=false; }
+  ta.onmousemove  = function() { if (move) { setLine(); } }
+             
+  function setLine() {
+    el.scrollTop   = ta.scrollTop;
+    el.style.top   = (ta.offsetTop) + "px";
+    el.style.left  = (ta.offsetLeft - 37) + "px";
+  }
+}
+
 function trim(stringToTrim) 
 {
   return stringToTrim.replace(/^\s+|\s+$/g,"");
@@ -120,18 +163,30 @@ function everyoneElsePage()
   window.open("/kata/see_all_increments/<%=@dojo.id -%>?kata_id=<%= @kata.id -%>");
 }
 
-function todo(what)
+function gotoLine()
 {
-  alert("TODO: " + what + "...");
+  var number = trim(prompt("Goto line number: ", ""));
+  if (number == null)
+    return; // Cancelled
+
+  alert("GOTO LINE: " + number);
 }
 
 document.observe('dom:loaded', function() {
 
   var editorMenuItems = [
     {
-      name: '//Go to line...  ',
+      name: 'Go to line...  ',
       className: 'go-to-line', 
-      callback: function(e) { todo("Go to line"); }
+      callback: function(e) { gotoLine(); }
+    },{
+      name: 'See how is everyone else doing ',
+      className: 'go-to-everyone-else-page', 
+      callback: function(e) { everyoneElsePage(); }
+    },{
+      name: 'Go to the Cyber-Dojo home page  ',
+      className: 'go-to-home-page', 
+      callback: function(e) { homePage(); }
     },{
       separator: true
     },{
@@ -141,10 +196,6 @@ document.observe('dom:loaded', function() {
       className: 'create-a-new-file', 
       callback: function(e) { newFile(); }
     },{
-      separator: true
-    },{
-      separator: true
-    },{
       name: 'Rename this file...  ',
       className: 'rename-this-file', 
       callback: function(e) { renameCurrentFile(); }
@@ -152,18 +203,6 @@ document.observe('dom:loaded', function() {
       name: 'Delete this file...  ', 
       className: 'delete-this-file',
       callback: function(e) { deleteCurrentFile(); }
-    },{
-      separator: true
-    },{
-      separator: true
-    },{
-      name: 'See how is everyone else doing ',
-      className: 'go-to-everyone-else-page', 
-      callback: function(e) { everyoneElsePage(); }
-    },{
-      name: 'Go to the Cyber-Dojo home page  ',
-      className: 'go-to-home-page', 
-      callback: function(e) { homePage(); }
     }
   ]
 
