@@ -18,7 +18,6 @@ function createTextAreaWithLines(id)
     string += no;
   }
        
-  el.setAttribute('wrap', 'hard');
   el.className      = 'textarea_with_line_numbers';
   el.style.height   = (ta.offsetHeight-3) + "px";
   el.style.width    = '35px';
@@ -166,7 +165,13 @@ function everyoneElsePage()
 }
 
 document.observe('dom:loaded', function() {
+  <% if !@kata.readonly -%>
+    setupMenu();
+  <% end -%>
+})
 
+function setupMenu()
+{
   var editorMenuItems = [
     {
       name: 'See how everyone else is doing ',
@@ -200,8 +205,7 @@ document.observe('dom:loaded', function() {
     className: 'menu desktop', // (can be used for css styling)
     menuItems: editorMenuItems
   })
-
-})
+}
 
 function atLoad()
 {
