@@ -163,24 +163,11 @@ function everyoneElsePage()
   window.open("/kata/see_all_increments/<%=@dojo.id -%>?kata_id=<%= @kata.id -%>");
 }
 
-function gotoLine()
-{
-  var number = trim(prompt("Goto line number: ", ""));
-  if (number == null)
-    return; // Cancelled
-
-  alert("GOTO LINE: " + number);
-}
-
 document.observe('dom:loaded', function() {
 
   var editorMenuItems = [
     {
-      name: 'Go to line...  ',
-      className: 'go-to-line', 
-      callback: function(e) { gotoLine(); }
-    },{
-      name: 'See how is everyone else doing ',
+      name: 'See how everyone else is doing ',
       className: 'go-to-everyone-else-page', 
       callback: function(e) { everyoneElsePage(); }
     },{
