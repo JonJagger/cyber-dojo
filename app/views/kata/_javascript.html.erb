@@ -112,12 +112,12 @@ function deleteCurrentFile()
 
 function homePage()
 {
-  window.location = "/dojo/index/<%= @kata.id -%>";
+  window.location = "/dojo/index/";
 }
 
 function everyoneElsePage()
 {
-  window.open("/kata/see_all_increments/<%= @kata.id -%>");
+  window.open("/kata/see_all_increments/<%=@dojo.id -%>?kata_id=<%= @kata.id -%>");
 }
 
 function todo(what)
@@ -157,13 +157,13 @@ document.observe('dom:loaded', function() {
     },{
       separator: true
     },{
-      name: 'Go to the Cyber-Dojo home page  ',
-      className: 'go-to-home-page', 
-      callback: function(e) { homePage(); }
-    },{
       name: 'See how is everyone else doing ',
       className: 'go-to-everyone-else-page', 
       callback: function(e) { everyoneElsePage(); }
+    },{
+      name: 'Go to the Cyber-Dojo home page  ',
+      className: 'go-to-home-page', 
+      callback: function(e) { homePage(); }
     }
   ]
 

@@ -2,15 +2,17 @@
 class KataController < ApplicationController
 
   def start
-    @kata = Kata.new(params[:kata_id], params[:avatar])
-    @title = "Cyber Dojo : Kata " + @kata.id + ", " + @kata.avatar.name
+    @dojo = Dojo.new(params[:dojo_id])
+    @kata = @dojo.kata(params[:kata_id], params[:avatar])
+    @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id + ", Avatar=" + @kata.avatar.name
     @manifest = {}
     @increments = @kata.avatar.read_most_recent(@manifest)
     @shown_increment_number = @increments.length
   end
 
   def run_tests
-    @kata = Kata.new(params[:kata_id], params[:avatar]) 
+    @dojo = Dojo.new(params[:dojo_id])
+    @kata = @dojo.kata(params[:kata_id], params[:avatar])
     @kata.run_tests(load_files_from_page, params[:run_tests_prediction])
     @increments = @kata.avatar.increments
     @shown_increment_number = @increments.length
@@ -20,15 +22,17 @@ class KataController < ApplicationController
   end
 
   def see_all_increments
-    @kata = Kata.new(params[:id], readonly = true)
-    @title = "Cyber Dojo : Kata " + @kata.id
+    @dojo = Dojo.new(params[:id])
+    @kata = @dojo.kata(params[:kata_id], readonly = true)
+    @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id
   end
 
   def see_one_increment
-    @kata = Kata.new(params[:id], params[:avatar], readonly = true)
+    @dojo = Dojo.new(params[:id])
+    @kata = @dojo.kata(params[:kata_id], params[:avatar], readonly = true)
     @shown_increment_number = params[:increment].to_i
-    @title = "Cyber Dojo : Kata " + @kata.id + "," + @kata.avatar.name +
-       ", increment " + @shown_increment_number.to_s
+    @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id + ", Avatar=" + @kata.avatar.name +
+       ", Increment=" + @shown_increment_number.to_s
     @manifest = @kata.avatar.visible_files(@shown_increment_number)
     @increments = [ @kata.avatar.increments[@shown_increment_number] ]
   end

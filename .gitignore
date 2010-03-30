@@ -1,6 +1,6 @@
 *~
 log/*
 tmp/**/*
-katas/**
-!katas/*/kata_manifest.rb
+dojos/**
+!dojos/*/*/kata_manifest.rb
 

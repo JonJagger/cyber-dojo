@@ -1,0 +1,42 @@
+
+<script language="JavaScript"><!--
+function select_dojo(id)
+{
+  $('dojo_id').value = id;
+  document.chooseDojo.submit();
+}
+//--></script>
+
+<form name="chooseDojo" action="/dojo/choose_kata">
+
+<noscript>
+  &nbsp;
+  <h2><b>You must enable JavaScript.</b></h2>
+  &nbsp;
+</noscript>
+
+<input readonly 
+       type="hidden"
+       name="dojo_id" 
+       id="dojo_id" 
+       type="text" 
+       value="<%=@dojo_id-%>">
+
+<h2><b>Enter your dojo</b></h2>
+
+<table cellspacing="4" 
+       class="rounded panel">
+  <% @dojos.sort.each do |dojo| -%>
+  <tr>
+    <td>
+      <input type="button" 
+             onClick='select_dojo("<%=dojo-%>");'
+             value="<%=dojo-%>">
+    </td>
+  </tr>
+  <% end -%>
+</table>
+
+</form>
+
+

@@ -17,7 +17,7 @@ class Avatar
   end
 
   def visible_files(n)
-    path = 'katas' + '/' + @kata.id + '/' + name + '/' + n.to_s + '/' + 'manifest.rb'
+    path = @kata.folder + '/' + name + '/' + n.to_s + '/' + 'manifest.rb'
     eval IO.read(path)
   end
   

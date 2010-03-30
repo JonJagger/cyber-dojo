@@ -8,14 +8,14 @@
 
     <% limited(@increments).each do |increment| -%>
     <td>
-        <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> rounded increment" 
-           href="/kata/see_one_increment/<%= @kata.id -%>?avatar=<%= @kata.avatar.name-%>&increment=<%= increment[:number]-%>" 
-          <% if !@kata.readonly -%>        
-            target="_blank" 
-          <% end -%> >
-          &thinsp;
-          <span><%= increment[:number] -%>:<%= increment[:info] -%></span>
-        </a>
+      <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> rounded increment" 
+         href="/kata/see_one_increment/<%=@dojo.id -%>?kata_id=<%= @kata.id -%>&avatar=<%= @kata.avatar.name-%>&increment=<%= increment[:number]-%>" 
+         <% if !@kata.readonly -%>        
+           target="_blank" 
+         <% end -%> >
+         &thinsp;
+         <span><%= increment[:number] -%>:<%= increment[:info] -%></span>
+      </a>
     </td>
     <% end -%>
 

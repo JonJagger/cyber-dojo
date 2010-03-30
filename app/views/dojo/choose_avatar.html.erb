@@ -9,11 +9,12 @@ function select_avatar(name)
 
 <form name="chooseAvatar" action="/kata/start">
 
-<noscript>
- &nbsp;
- <h2><b>You must enable JavaScript.</b></h2>
- &nbsp;
-</noscript>
+<input readonly 
+       type="hidden"
+       name="dojo_id" 
+       id="dojo_id" 
+       type="text" 
+       value="<%=@dojo_id-%>">
 
 <input name="kata_id" 
        id="kata_id" 
@@ -21,21 +22,20 @@ function select_avatar(name)
        size="5" 
        value="<%=@kata_id-%>">
 
+<input readonly 
+       type="hidden"
+       name="avatar" 
+       id="avatar" 
+       type="text" 
+       size="15" 
+       value="">
+
 <h2><b>Choose your avatar</b></h2>
 
 <table cellspacing="4">
 
   <tr>
     <td class="rounded panel">
-
-      <input readonly 
-             type="hidden"
-             name="avatar" 
-             id="avatar" 
-             type="text" 
-             size="15" 
-             value="">
-
       <% chunks = chunk_array(@avatars.sort, 4) -%>
       <table cellpadding="7">
       <% chunks.each do |chunk| -%>

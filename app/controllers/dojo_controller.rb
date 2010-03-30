@@ -4,19 +4,21 @@ class DojoController < ApplicationController
   protect_from_forgery :only => []
 
   def index
-    redirect_to :action => "choose_language", :id => params[:id]
+    redirect_to :action => "choose_dojo", :id => params[:id]
   end
 
-  def choose_language
+  def choose_dojo
+    @dojos = Dir.entries('dojos').select { |d| d != "." and d != ".." }
+  end
+
+  def choose_kata
+    @dojo_id = params[:dojo_id]
+    @katas = Dir.entries("dojos/#{@dojo_id}").select { |d| d != "." and d != ".." }
   end
 
   def choose_avatar
-    # retain the kata-id if there is one
-    if defined? params[:kata_id]
-      @kata_id = params[:kata_id]
-    else
-      @kata_id = ""
-    end
+    @dojo_id = params[:dojo_id]
+    @kata_id = params[:kata_id]
     @avatars = Avatar.names
     @title = "Cyber Dojo"
   end

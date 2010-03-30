@@ -1,7 +1,8 @@
 
 class Kata
 
-  def initialize(id, name = "", readonly = false)
+  def initialize(dojo, id, name = "", readonly = false)
+    @dojo = dojo
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
     @exercise = Exercise.new(self)
@@ -62,7 +63,7 @@ class Kata
   end
 
   def folder
-    'katas' + '/' + id
+    @dojo.folder + '/' + id
   end
 
 end
@@ -253,6 +254,12 @@ class MockKata
     @avatars
   end
 end
+
+# function to insert :gap values into an avatars increments
+# to reflect order of increments across all avatars
+# For example, alligators, then lions, then lions, then alligators...
+# Alligators: X     X
+# Lions     :   X X
 
 def gapper(all)
 
