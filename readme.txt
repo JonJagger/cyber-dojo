@@ -47,7 +47,7 @@ in the following format:
   {
   },
 
-  :unit_test_framework => 'assert',
+  :unit_test_framework => 'the.name.of.the.unit.test.framework.you.are.using',
 }
 
 
@@ -73,42 +73,32 @@ Explanation of these parameters
   The name of the unit test framework used.
   This name partially determines the name of the ruby function (in the cyber-dojo server)
   used to parse the run-tests output (to see if the increment passes or fails).
-
+  For example, if the value is 'cassert' then app/helpers/run_tests_output_parser.rb
+  must contain a method called parse_cassert() and will be called to parse the output of
+  running the tests. 
 
 
 Setting up and naming a new kata session in a virtual dojo
 ==========================================================
-TODO
-
-
-Setting up a new kata
-=====================
-This currently has to be done manually. 
-
-1. Choose a kata-id, eg 789
-
-2. Make a folder with this id under the katas folder on the dojo server.
-
+1. Choose a name for you kata_session, eg ruby_bowling_game
+2. Make a folder with this name under the appropriate dojos subfolder on 
+   the cyber-dojo server. For example, 
+   dojos/accu-2010/ruby_bowling_game
 3. Make sure this folder contains a file called kata_manifest.rb
    this file must contain an inspected ruby object defining two parameters
    as follows:
 
 {
-  :language => 'c',
+  :kata_name => 'ruby_bowling_game',
   :max_run_tests_duration => 10,
 }
 
 Explanation of these parameters
 -------------------------------
-
-1:language
- Determines the initial language fileset, eg 'c' --> 'languages/c/*'
- The :language parameter and :unit_test_framework parameter (from the exercise manifest)
- are used to select the ruby function to regexp parse the run tests output to determine 
- if the increment is a pass or fail. 
- For example if :language is 'c' and :unit_test_framework is 'assert' then a ruby function
- called parse_c_assert is assumed to exist and is called to parse the output of running the tests.
- If you use a new unit test framework you will need to add a new regexp'ing ruby function.
+1:kata_name
+ Determines the initial kata fileset, for example
+   'ruby_bowling_game' --> 'katalogue/ruby_bowling_game/manifest.rb'
+ This name does not have to be the same as the name of the kata session itself.
 
 2:max_run_tests_duration
   This is the maximum number of seconds the dojo-server allows an increment to run in
@@ -119,11 +109,11 @@ Explanation of these parameters
 
 Notes
 =====
-o) Watching http://vimeo.com/8630305 will probably help.
+o) http://vimeo.com/8630305 has a video of an early version of cyber-dojo
 o) The rails code does NOT use a database. Instead each increment
    is saved to its own folder. For example if the Lions are doing
-   kata 34 then the files submitted for increment 21 (for the Lions) 
-   will be found in the folder  katas/34/Lions/21/
+   kata dojos/accu-2010/ruby_bowling_game then the files submitted for increment 21 
+   for the Lions will be found in the folder dojos/accu-2010/ruby_bowling_game/Lions/21/
    There may be some concurrency issues related to this.
 o) When I started this (not so long ago) I didn't know any ruby, any rails,
    or any javascript. I'm self employed so I've have no-one to pair with (except google)
@@ -133,10 +123,6 @@ o) Players should be able to do a kata without identifying themselves.
    There is scope for allowing them to identify themself if they want to but
    it should not be compulsory. This is one of my future design guidelines.
 o) I'd like to thank Olve Maudal of Tandberg for his encouragement.
-o) I've promised to run a browser-based dojo at the accu 2010 conference
-   which starts April 14th. It would be great if a publically accesible dojo-server 
-   was running by then.
-o) A VirtualBox image of the server would also be nice.
 o) The dojo-server could possibly assign avatars to computers rather than
    participants having to manually select their avatar. For now I am leaving the
    avatar selection as a manual step because my main aim is to run the dojo
