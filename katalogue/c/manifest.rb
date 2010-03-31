@@ -9,6 +9,6 @@
     'source.tests.c' => {},
   },
 
-  :unit_test_framework => 'assert',
+  :unit_test_framework => 'cassert',
 }
 

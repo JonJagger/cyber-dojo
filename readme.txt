@@ -5,7 +5,6 @@ Ruby
 Rails
 
 
-
 Installation
 ============
 download the zip file, unzip it, cd into the cyber_dojo directory. Then
@@ -14,22 +13,33 @@ download the zip file, unzip it, cd into the cyber_dojo directory. Then
 And your cyber-dojo should be running.
 
 
+Top level folders
+=================
+o) katalogue/ this folder contains filesets for named katas. For example
+   katalogue/c/* might contain files for a blank-start c kata,
+   katalogue/ruby_bowling_game might contain ruby files for the bowling game kata.
+o) dojos/ each subfolder represents a virtual dojo. For example
+   dojos/tandberg is where the devs at tandberg perform their katas,
+   dojos/accu-2010 is where the accu-2010 conference katas will be held.
+   
 
-Setting up a new language fileset
-=================================
-Make a folder for the name of the language fileset. For example the initial
-set of files for a ruby kata are in languages/ruby/*
-The folder must contain a file called exercise_manifest.rb
-which must contain an inspected ruby object naming the files (it is
-loaded and eval'd in the ruby code). For example:
+Setting up and naming a new kata
+================================
+Make a katalogue subfolder naming the new kata. For example if you wish
+to create a fileset for the battleships kata in java you might create
+the folder katalogue/java_battleships
+Then put all the starting files for this kata into this folder.
+This folder must contain a file called manifest.rb
+which must contain an inspected ruby object naming the starting
+files (it is loaded and eval'd in ruby code in the cyber-dojo server)
+in the following format:
 
 {
   :visible_files =>
   {
-    'source.tests.c' => {},
-    'source.c' => {},
-    'source.h' => {},
-    'makefile' => {},
+    'name.of.one.file' => {},
+    'name.of.another.file' => {},
+    'etc.etc' => {},
     'kata.sh' => {},
   },
 
@@ -41,31 +51,34 @@ loaded and eval'd in the ruby code). For example:
 }
 
 
-
 Explanation of these parameters
 -------------------------------
 1:visible_files
   These are the names of the files that are visible in the editor in the browser.
   Each of these files must exist in the folder.
   The filename kata.sh must be present (visible or hidden) as that is the name 
-  of the shell file assumed by the ruby app code in the dojo server to be the start point 
-  for running an increment.
+  of the shell file assumed by the ruby code in the cyber-dojo server to be the 
+  start point for running an increment.
   You can write any actions in the kata.sh file but clearly any programs it
-  tries to run must be installed on the dojo-server. For example, if kata.sh runs gcc to compile
-  c files then gcc has to be installed. If kata.sh runs javac to compile java
+  tries to run must be installed on the cyber-dojo server. For example, if kata.sh runs gcc 
+  to compile c files then gcc has to be installed. If kata.sh runs javac to compile java
   files then javac has to be installed.
 
-2:hidden_files  (optional)
+2:hidden_files
   These are the names of necessary and supporting files (if there are any) that are NOT 
-  visible in the editor in the browser (but are required to run-tests on each increment). 
-  For example, the junit jar file. Each of these files must exist in the folder.
-  Optional if empty.
+  visible in the editor in the browser. Each of these files must exist in the folder.
+  For example, the junit jar file or the nunit assembly. Optional if empty.
   
 3:unit_test_framework
-  The name of the unit test framework used. 
-  This name partially determines the name of the ruby function used to
-  parse the run-tests output (to see if the increment is red or green).
+  The name of the unit test framework used.
+  This name partially determines the name of the ruby function (in the cyber-dojo server)
+  used to parse the run-tests output (to see if the increment passes or fails).
 
+
+
+Setting up and naming a new kata session in a virtual dojo
+==========================================================
+TODO
 
 
 Setting up a new kata

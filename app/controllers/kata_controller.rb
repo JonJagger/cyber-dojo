@@ -60,7 +60,7 @@ private
 end
 
 def limited(increments)
-  max_increments_displayed = 47
+  max_increments_displayed = 49
   len = [increments.length, max_increments_displayed].min
   increments[-len,len]
 end

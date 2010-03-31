@@ -7,7 +7,6 @@
     'kata.sh' => {},
   },
 
-  :unit_test_framework => 'test_unit',
-
+  :unit_test_framework => 'ruby_test_unit',
 }
 

@@ -9,7 +9,7 @@
     'kata.sh' => {},
   },
  
-  :unit_test_framework => 'assert',
+  :unit_test_framework => 'cassert',
 
 }
 
