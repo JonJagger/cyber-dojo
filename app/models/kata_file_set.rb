@@ -1,19 +1,19 @@
 
-class Exercise # rename KataFiles
+class KataFileSet
 
   def initialize(kata)
     @kata = kata
     @manifest = eval IO.read(folder + '/' + 'manifest.rb')
   end
 
-  def visible_files # visible
+  def visible
     @manifest[:visible_files].each do |filename,file|
       file[:content] = IO.read(folder + '/' + filename)
     end
     @manifest[:visible_files]
   end
 
-  def hidden_files # hidden
+  def hidden
     if @manifest[:hidden_files]
       @manifest[:hidden_files]
     else

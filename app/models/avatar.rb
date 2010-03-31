@@ -26,7 +26,7 @@ class Avatar
 
   def read_most_recent(manifest)
     # load starting manifest
-    manifest[:visible_files] = @kata.exercise.visible_files
+    manifest[:visible_files] = @kata.file_set.visible
 
     increments = []
     File.open(@kata.folder, 'r') do |f|

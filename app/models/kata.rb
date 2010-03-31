@@ -5,7 +5,7 @@ class Kata
     @dojo = dojo
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
-    @exercise = Exercise.new(self)
+    @file_set = KataFileSet.new(self)
     @avatar = Avatar.new(self, name) if name != ""
     @readonly = readonly
   end
@@ -27,15 +27,11 @@ class Kata
   end
 
   def unit_test_framework
-    @exercise.unit_test_framework
+    @file_set.unit_test_framework
   end
 
-  def hidden_filenames
-    @exercise.hidden_files
-  end
-
-  def exercise #TODO: rename fileset
-    @exercise
+  def file_set
+    @file_set
   end
 
   def avatar
@@ -46,7 +42,7 @@ class Kata
     result = []
     Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
-      result << Avatar.new(self,avatar_name) if File.exists?(path)
+      result << Avatar.new(self, avatar_name) if File.exists?(path)
     end
     result
   end
