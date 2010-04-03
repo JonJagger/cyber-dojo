@@ -65,6 +65,12 @@ private
   def locked_read_most_recent(manifest)
     if !File.exists?(folder) # start
       make_dir(folder)      
+      make_dir(folder + '/sandbox')
+      # Copy in hidden files from kata fileset
+      file_set = @kata.file_set
+      file_set.hidden.each_key do |hidden_filename| 
+        system("cp #{file_set.folder}/#{hidden_filename} #{folder}/sandbox") 
+      end
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
       []
     else # restart

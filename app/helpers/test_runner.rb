@@ -4,17 +4,11 @@ class TestRunner
   def self.run_tests(kata, manifest)
     dst_folder = kata.avatar.folder
 
-    # Make brand new empty sandbox
+    # Reset sandbox to contain just hidden files
     sandbox = dst_folder + '/' + 'sandbox'
-    system("rm -r #{sandbox}")
-    make_dir(sandbox)
+    remove_all_but(sandbox, kata.file_set.hidden)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
-    # Copy in hidden files from kata fileset
-    file_set = kata.file_set
-    file_set.hidden.each_key do |hidden_filename| 
-      system("cp #{file_set.folder}/#{hidden_filename} #{sandbox}") 
-    end
 
     # TODO: run as a user with only execute rights; maybe using qemu
     # Run tests in sandbox in dedicated thread
@@ -40,6 +34,13 @@ class TestRunner
     end
 
     run_tests_output
+  end
+
+  def self.remove_all_but(sandbox, these)
+    s = "\\! -samefile \".\" "
+    these.each {|n| s += "\\! -samefile \"#{sandbox}/#{n}\" " }
+    cmd = "find #{sandbox} \\( " + s + " \\) -print0 | xargs -0 rm -f"
+    system(cmd)
   end
 
   def self.save_file(foldername, filename, file)
