@@ -100,7 +100,6 @@ function renameCurrentFile()
   current = current.replace(';'+filename+";", ";"+newname+";");
   $('visible_filenames_container').value = current;
 
-
   // change name in file-list
   var tr = getFilenameTr(filename);
   var tbody = tr.parentNode;
@@ -332,7 +331,7 @@ function newFile()
   sortFileList();
 
   // Make its name available to rails
-  var current = $('visible_filenames_container').value;
+  var current = trim($('visible_filenames_container').value);
   current += filename;
   current += ";";
   $('visible_filenames_container').value = current;

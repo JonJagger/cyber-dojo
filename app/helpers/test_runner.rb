@@ -2,10 +2,8 @@
 class TestRunner
 
   def self.run_tests(kata, manifest)
-    dst_folder = kata.avatar.folder
-
+    sandbox = kata.avatar.folder + '/' + 'sandbox'
     # Reset sandbox to contain just hidden files
-    sandbox = dst_folder + '/' + 'sandbox'
     remove_all_but(sandbox, kata.file_set.hidden)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
@@ -36,6 +34,13 @@ class TestRunner
     run_tests_output
   end
 
+  # Remove all files from the sandbox except the hidden files
+  # specified in the katalogue manifest. For example, if the
+  # the kata is a java kata and :hidden_files => { 'junit-4.7.jar' => {} }
+  # then this function will execute the following system command
+  #   find sandbox ( ! -samefile "." ! -samefile "junit-4.7.jar" ) -print0 | xargs -0 rm -f
+  # with appropriate backslashses. This finds all the files in sandbox that are _not_
+  # . or junit-4.7.jar and pipes them to rm. 
   def self.remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
     these.each {|n| s += "\\! -samefile \"#{sandbox}/#{n}\" " }
