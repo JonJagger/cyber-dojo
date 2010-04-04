@@ -31,21 +31,17 @@ the folder katalogue/java_battleships
 Then put all the starting files for this kata into this folder.
 This folder must contain a file called manifest.rb
 which must contain an inspected ruby object naming the starting
-files (it is loaded and eval'd in ruby code in the cyber-dojo server)
+filenames (it is loaded and eval'd in ruby code in the cyber-dojo server)
 in the following format:
 
 {
-  :visible_files =>
-  {
-    'name.of.one.file' => {},
-    'name.of.another.file' => {},
-    'etc.etc' => {},
-    'kata.sh' => {},
-  },
+  :visible_filenames => %w( name.of.one.file
+                            name.of.another.file
+                            etc.etc
+                            kata.sh),
 
-  :hidden_files =>
-  {
-  },
+  :hidden_filenames => %w( name.of.hidden.file 
+                           name.of.another.hidden.file),
 
   :unit_test_framework => 'the.name.of.the.unit.test.framework.you.are.using',
 }
@@ -53,7 +49,7 @@ in the following format:
 
 Explanation of these parameters
 -------------------------------
-1:visible_files
+1:visible_filenames
   These are the names of the files that are visible in the editor in the browser.
   Each of these files must exist in the folder.
   The filename kata.sh must be present (visible or hidden) as that is the name 
@@ -64,10 +60,10 @@ Explanation of these parameters
   to compile c files then gcc has to be installed. If kata.sh runs javac to compile java
   files then javac has to be installed.
 
-2:hidden_files
+2:hidden_filenames
   These are the names of necessary and supporting files (if there are any) that are NOT 
   visible in the editor in the browser. Each of these files must exist in the folder.
-  For example, the junit jar file or the nunit assembly. Optional if empty.
+  For example, a junit jar file or nunit assemblies. Optional if empty.
   
 3:unit_test_framework
   The name of the unit test framework used.

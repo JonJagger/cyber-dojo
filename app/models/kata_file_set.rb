@@ -7,17 +7,19 @@ class KataFileSet
   end
 
   def visible
-    @manifest[:visible_files].each do |filename,file|
-      file[:content] = IO.read(folder + '/' + filename)
+    visible_files = {}
+    @manifest[:visible_filenames].each do |filename|
+      visible_files[filename] = {}
+      visible_files[filename][:content] = IO.read(folder + '/' + filename)
     end
-    @manifest[:visible_files]
+    visible_files
   end
 
   def hidden
-    if @manifest[:hidden_files]
-      @manifest[:hidden_files]
+    if @manifest[:hidden_filenames]
+      @manifest[:hidden_filenames]
     else
-      {}
+      []
     end
   end
 

@@ -68,7 +68,7 @@ private
       make_dir(folder + '/sandbox')
       # Copy in hidden files from kata fileset
       file_set = @kata.file_set
-      file_set.hidden.each_key do |hidden_filename| 
+      file_set.hidden.each do |hidden_filename| 
         system("cp #{file_set.folder}/#{hidden_filename} #{folder}/sandbox") 
       end
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
