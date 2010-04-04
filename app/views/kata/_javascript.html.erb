@@ -160,7 +160,7 @@ function homePage()
 
 function everyoneElsePage()
 {
-  window.open("/kata/see_all_increments/<%=@dojo.id -%>?kata_id=<%= @kata.id -%>");
+  window.open("/kata/see_all_increments/<%=h @dojo.id -%>?kata_id=<%=CGI::escape(@kata.id) -%>");
 }
 
 document.observe('dom:loaded', function() {

@@ -20,7 +20,7 @@ class KataController < ApplicationController
       format.js if request.xhr?
     end
   end
-
+  
   def see_all_increments
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], readonly = true)

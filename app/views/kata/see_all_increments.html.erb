@@ -24,7 +24,7 @@
           <% end -%>
           <td>
             <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> rounded increment" 
-               href="/kata/see_one_increment/<%= @dojo.id -%>?kata_id=<%= @kata.id -%>&avatar=<%= avatar.name-%>&increment=<%= increment[:number]-%>&ordinal=<%=increment[:ordinal]-%>">
+               href="/kata/see_one_increment/<%=h @dojo.id -%>?kata_id=<%=CGI::escape(@kata.id) -%>&avatar=<%=h avatar.name-%>&increment=<%=h increment[:number]-%>&ordinal=<%=h increment[:ordinal]-%>">
               &thinsp;
               <span></span>
             </a>

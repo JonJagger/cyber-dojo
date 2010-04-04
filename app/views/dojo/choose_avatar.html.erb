@@ -14,13 +14,13 @@ function select_avatar(name)
        name="dojo_id" 
        id="dojo_id" 
        type="text" 
-       value="<%=@dojo_id-%>">
+       value="<%=h @dojo_id-%>">
 
 <input name="kata_id" 
        id="kata_id" 
        type="hidden" 
        size="5" 
-       value="<%=@kata_id-%>">
+       value="<%=h @kata_id-%>">
 
 <input readonly 
        type="hidden"
