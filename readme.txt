@@ -115,13 +115,6 @@ o) When I started this (not so long ago) I didn't know any ruby, any rails,
    or any javascript. I'm self employed so I've have no-one to pair with (except google)
    while developing this in my limited spare time. Some of what you find is likely 
    to be non-idiomatic. Caveat emptor!
-o) Players should be able to do a kata without identifying themselves.
-   There is scope for allowing them to identify themself if they want to but
-   it should not be compulsory. This is one of my future design guidelines.
 o) I'd like to thank Olve Maudal of Tandberg for his encouragement.
-o) The dojo-server could possibly assign avatars to computers rather than
-   participants having to manually select their avatar. For now I am leaving the
-   avatar selection as a manual step because my main aim is to run the dojo
-   in a room where all participants are present. 
 
 
