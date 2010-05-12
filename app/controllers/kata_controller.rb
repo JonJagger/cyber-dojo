@@ -25,6 +25,7 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], readonly = true)
     @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id
+    render :layout => 'see_all_increments'
   end
 
   def see_one_increment
