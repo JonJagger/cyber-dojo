@@ -1,13 +1,15 @@
 
 <div id="avatar_buttons">
-  <input type="image" 
+  <img
          src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-         <% if !@kata.readonly -%>
-           title="<%=@kata.avatar.name.humanize-%> predict green"
-           class="rounded" 
-         <% else -%> 
            title="<%=@kata.avatar.name.humanize-%>"
-           class="rounded" 
-         <% end -%> />
+           class="rounded"
+  />
+  <img
+         src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
+           title="<%=@kata.avatar.name.humanize-%>"
+           class="rounded"
+  />
+
 </div>
 

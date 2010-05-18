@@ -71,7 +71,12 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-#avatar_buttons { white-space: nowrap; }
+#avatar_buttons
+{
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
