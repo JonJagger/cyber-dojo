@@ -47,12 +47,11 @@ class Kata
     result
   end
 
-  def run_tests(manifest, prediction)
+  def run_tests(manifest)
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
         run_tests_output = TestRunner.run_tests(self, manifest)
         test_info = RunTestsOutputParser.new().parse(self, run_tests_output)
-        test_info[:prediction] = prediction
         avatar.save(manifest, test_info)
       end
     end

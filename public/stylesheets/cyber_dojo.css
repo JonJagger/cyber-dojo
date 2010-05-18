@@ -31,11 +31,10 @@
 .increment 
 { 
   padding: 0.15em; 
-  font-size: 10pt;
+  font-size: 14pt;
 }
 
-.failed_prediction { border: 4px solid #F33; } /*red*/
-.passed_prediction { border: 4px solid #3C3; } /*green*/
+
 
 .failed  { background-color: #F33; }
 .passed  { background-color: #3C3; }

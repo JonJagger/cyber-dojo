@@ -13,7 +13,7 @@ class KataController < ApplicationController
   def run_tests
     @dojo = Dojo.new(params[:dojo_id])
     @kata = @dojo.kata(params[:kata_id], params[:avatar])
-    @kata.run_tests(load_files_from_page, params[:run_tests_prediction])
+    @kata.run_tests(load_files_from_page)
     @increments = @kata.avatar.increments
     @shown_increment_number = @increments.length
     respond_to do |format|

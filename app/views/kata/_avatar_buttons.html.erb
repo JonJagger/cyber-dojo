@@ -1,29 +1,10 @@
 
-<% if !@kata.readonly -%>
-<input type="hidden" 
-       id="run_tests_prediction" 
-       name="run_tests_prediction" 
-       value="">
-<% end -%>                 
-
 <div id="avatar_buttons">
   <input type="image" 
          src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
          <% if !@kata.readonly -%>
-           title="<%=@kata.avatar.name.humanize-%> predict red"
-           onclick="$('run_tests_prediction').value = 'failed';"
-           class="rounded failed_prediction" 
-         <% else -%>
-           title="<%=@kata.avatar.name.humanize-%>"
-           class="rounded"
-         <% end -%>  />
-
-  <input type="image" 
-         src="/images/avatars/<%=@kata.avatar.name.downcase-%>.jpg"
-         <% if !@kata.readonly -%>
            title="<%=@kata.avatar.name.humanize-%> predict green"
-           onclick="$('run_tests_prediction').value = 'passed';"
-           class="rounded passed_prediction" 
+           class="rounded" 
          <% else -%> 
            title="<%=@kata.avatar.name.humanize-%>"
            class="rounded" 
