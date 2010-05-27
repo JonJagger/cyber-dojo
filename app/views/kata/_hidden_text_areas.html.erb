@@ -11,6 +11,7 @@
     <% end -%>
   </div>
 
+  <% # The server extracts each filename from between the semi-colons. -%>
   <textarea id="visible_filenames_container"
             name="visible_filenames_container">
     ;<% @manifest[:visible_files].each do |filename,file| -%><%=filename-%>;<% end -%>   

@@ -6,7 +6,7 @@
 
 var move = false;
 
-function createTextAreaWithLines(id)
+function createTextAreaWithLineNumbers(id)
 {
   var el = document.createElement('TEXTAREA');
   var ta = document.getElementById(id);
@@ -151,16 +151,6 @@ function deleteCurrentFile()
     // have a this file! 
     loadFile('kata.sh');
   }
-}
-
-function homePage()
-{
-  window.location = "/dojo/index/";
-}
-
-function everyoneElsePage()
-{
-  window.open("/kata/see_all_increments/<%=h @dojo.id -%>?kata_id=<%=CGI::escape(@kata.id) -%>");
 }
 
 document.observe('dom:loaded', function() {
