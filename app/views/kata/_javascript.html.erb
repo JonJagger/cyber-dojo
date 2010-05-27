@@ -6,6 +6,41 @@
 
 var move = false;
 
+function getCaretPos(control) 
+{
+  var caretPos = 0;
+  // IE Support
+  if (document.selection) 
+  {
+    control.focus();
+    var sel = document.selection.createRange();
+    sel.moveStart('character', -control.value.length);
+    caretPos = sel.text.length;
+  }
+  // Firefox support
+  else if (control.selectionStart || control.selectionStart == '0')
+    caretPos = control.selectionStart;
+
+  return caretPos;
+}
+
+function setCaretPos(control, pos)
+{
+  if (control.setSelectionRange)
+  {
+    control.focus();
+    control.setSelectionRange(pos, pos);
+  }
+  else if (ctrl.createTextRange) 
+  {
+    var range = control.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', pos);
+    range.moveStart('character', pos);
+    range.select();
+  }
+}
+
 function createTextAreaWithLineNumbers(id)
 {
   var el = document.createElement('TEXTAREA');
@@ -13,17 +48,17 @@ function createTextAreaWithLineNumbers(id)
        
   var string = '';
   for (var no = 1; no < 300; no++) {
-    if (string.length > 0)
+    if (string.length > 0) 
       string += '\r\n';
     string += no;
   }
        
   el.className      = 'textarea_with_line_numbers';
   el.style.height   = (ta.offsetHeight-3) + "px";
-  el.style.width    = '35px';
   el.style.position = 'absolute';
   el.style.overflow = 'hidden';
   el.style.textAlign = 'right';
+  el.style.width    = '35px';
   el.style.paddingRight = '0.2em';
   el.innerHTML      = string;  // Firefox renders \n linebreak
   el.innerText      = string;  // IE6 renders \n line break
@@ -157,6 +192,7 @@ document.observe('dom:loaded', function() {
   <% if !@kata.readonly -%>
     setupMenu();
   <% end -%>
+  loadFile('kata.sh');
 })
 
 function setupMenu()
@@ -184,12 +220,6 @@ function setupMenu()
   })
 }
 
-function atLoad()
-{
-   loadFile('kata.sh');
-}
-window.onload = atLoad;
-
 var current_filename = false;
 
 function saveCurrentFile()
@@ -197,13 +227,23 @@ function saveCurrentFile()
   if (current_filename) 
   {
     $(current_filename).value = $('editor').value;
+    // Save cursor position
+    var pos = getCaretPos(document.getElementById('editor'));
+    var ta = $(current_filename);
+    ta.setAttribute('cursorPos', pos);
   }
 }
 
 function loadFile(name)
 {
   saveCurrentFile();
-  $('editor').value = $(name).value;
+  var saved = $(name);
+  var editor = $('editor');
+  editor.value = saved.value;
+  // Set cursor position
+  var pos = saved.getAttribute('cursorPos');
+  setCaretPos(editor, pos);
+
   current_filename = name;
   document.getElementById('radio_' + name).checked = true;
 }
