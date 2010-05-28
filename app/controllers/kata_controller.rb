@@ -15,7 +15,6 @@ class KataController < ApplicationController
     @kata = @dojo.kata(params[:kata_id], params[:avatar])
     @kata.run_tests(load_files_from_page)
     @increments = @kata.avatar.increments
-    @shown_increment_number = @increments.length
     respond_to do |format|
       format.js if request.xhr?
     end
