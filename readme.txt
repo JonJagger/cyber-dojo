@@ -87,6 +87,7 @@ Setting up and naming a new kata session in a virtual dojo
 {
   :kata_name => 'ruby_bowling_game',
   :max_run_tests_duration => 10,
+  :tab_size => 2,
 }
 
 Explanation of these parameters
@@ -101,6 +102,10 @@ Explanation of these parameters
   (the time starts after all the increments files have been copied to the sandbox folder).
   This is reloaded on each increment to allow the sensei to vary the value during the
   kata if necessary.
+
+3:tab_size
+  This is the number of spaces a tab character expands to in the editor textarea.
+  Optional - default to 4 spaces.
 
 
 Notes

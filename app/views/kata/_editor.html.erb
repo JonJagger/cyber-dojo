@@ -8,6 +8,9 @@
           cols="80" 
           rows="32" >
 </textarea>
-<script type="text/javascript">createTextAreaWithLineNumbers('editor');</script>
-<script type="text/javascript">TabEntry.enable('editor');</script>
+
+<script type="text/javascript">
+  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
+  TabEntry.enable('editor');
+</script>
 

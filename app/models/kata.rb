@@ -26,8 +26,8 @@ class Kata
     @manifest[:max_run_tests_duration].to_i
   end
 
-  def tab_size
-    @manifest[:tab_size] || 4
+  def tab
+    " " * (@manifest[:tab_size] || 4)
   end
 
   def unit_test_framework
