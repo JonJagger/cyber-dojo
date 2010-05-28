@@ -47,12 +47,13 @@ function createTextAreaWithLineNumbers(id)
   var ta = document.getElementById(id);
        
   var string = '';
-  for (var no = 1; no < 300; no++) {
+  for (var no = 1; no < 999; no++) {
     if (string.length > 0) 
       string += '\r\n';
     string += no;
   }
        
+  el.setAttribute('readonly', 'true');
   el.className      = 'textarea_with_line_numbers';
   el.style.height   = (ta.offsetHeight-3) + "px";
   el.style.position = 'absolute';
