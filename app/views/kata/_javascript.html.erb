@@ -97,17 +97,13 @@ function getFilenameTr(filename)
   return tr;
 }
 
-function renameCurrentFile()
+function renameFile(event)
 {
-  // current_filename always contains a filename
-  var filename = current_filename;
+  var filename = firstElement(event.element()).getAttribute('value');
 
-  if (filename == "kata.sh")
-  {
-    alert(filename + " cannot be renamed (it is the file the " +
-      "Cyber-Dojo server executes on each iteration).");
-    return;
-  }
+  // Save editor into its hidden textarea so we can
+  // just use hidden textareas in code below
+  $(current_filename).value = $('editor').value;
 
   var newname = trim(prompt("Rename " + filename + " to: ", ""));
   if (newname == null)
@@ -119,18 +115,28 @@ function renameCurrentFile()
     return;
   }
    
-  // TODO: what if there is already a file with the chosen name
-  // TODO: what if the chosen name is editor? Or any name whose id 
-  //       matches an existing html id attribute?
+  // TODO: what if there is already a file with the chosen name (including kata.sh)
+  //if (filename == "kata.sh") //TODO: DROP
+  //{
+  //  alert(filename + " cannot be renamed (it is the file the " +
+  //    "Cyber-Dojo server executes on each iteration).");
+  //  return;
+  //}
 
-  // rename hidden textarea by appending new one and removing old one
+  // rename hidden textarea by appending new one...
   var new_ta = new Element("textarea", { id:newname, name:newname });
-  new_ta.value = $('editor').value;
+  new_ta.value = $(filename).value;
   $('visible_files_container').appendChild(new_ta);
-  var old_ta = $(filename);
-  $('visible_files_container').removeChild(old_ta);
 
-  // change name in $('visible_files_container')
+  //... and removing old one
+  var old_ta = $(filename);
+  // BUG: the following line kills the functionality of selecting a file from the 
+  // filelist. However, leaving the line in might be useful. Suppose you accidentally
+  // delete a file. If it was still available you might be able to reload it by
+  // recreating it.
+  //$('visible_files_container').removeChild(old_ta);
+
+  // change name in $('visible_filenames_container')
   var current = $('visible_filenames_container').value;
   current = current.replace(';'+filename+";", ";"+newname+";");
   $('visible_filenames_container').value = current;
@@ -141,29 +147,25 @@ function renameCurrentFile()
   tbody.removeChild(tr);
   tbody.appendChild(makeFileListEntry(newname));
   sortFileList();
-
-  // select it in list
-  current_filename = newname;
-  loadFile(newname);
+  // if we are renaming the current file then reselect in the file-list
+  if (filename == current_filename)
+  {
+    current_file = newname;
+    loadFile(newname);
+  }
+  // make sure renamed file-entry has drop-down menu
+  setupFileEntryMenu();
 }
 
-function deleteCurrentFile()
+function deleteFile(event)
 {
-  // current_filename always contains a filename
-  var filename = current_filename;
-
-  if (filename == "kata.sh")
-  {
-    alert(filename + " cannot be deleted (it is the file the " +
-      "Cyber-Dojo server executes on each iteration).");
-    return;
-  }
+  var filename = firstElement(event.element()).getAttribute('value');
 
   if (!confirm("Click OK to delete " + filename))
     return; // Cancelled
 
   // remove from file-list 
-  var tr = getFilenameTr(current_filename);
+  var tr = getFilenameTr(filename);
   var tbody = tr.parentNode;
   tbody.removeChild(tr);
 
@@ -176,48 +178,42 @@ function deleteCurrentFile()
   $('visible_filenames_container').value = current;
 
   // if deleted file is current file then load kata.sh
+  // which is always available as it cannot be renamed or deleted
   if (filename == current_filename) 
   {
+    // disable auto saveCurrentFile() call in loadFile()
     current_filename = false;
-    $('editor').value = "";
-    // important make sure something is always open 
-    // so that right-click drop-down menu options that
-    // read Rename _this_ file... and Delete _this_ file...
-    // have a this file! 
     loadFile('kata.sh');
   }
 }
 
 document.observe('dom:loaded', function() {
   <% if !@kata.readonly -%>
-    setupMenu();
+    setupFileEntryMenu();
   <% end -%>
   loadFile('kata.sh');
 })
 
-function setupMenu()
+function setupFileEntryMenu()
 {
-  var editorMenuItems = [
+  var fileEntryMenuItems = [
     {
-      name: 'Create a new file...  ',
-      className: 'create-a-new-file', 
-      callback: function(e) { newFile(); }
-    },{
       name: 'Rename this file...  ',
       className: 'rename-this-file', 
-      callback: function(e) { renameCurrentFile(); }
+      callback: function(e) { renameFile(e); }
     },{
       name: 'Delete this file...  ', 
       className: 'delete-this-file',
-      callback: function(e) { deleteCurrentFile(); }
+      callback: function(e) { deleteFile(e); }
     }
   ]
 
   new Proto.Menu({
-    selector: '#editor', 
+    selector: '#radioFilename', 
     className: 'menu desktop', // (can be used for css styling)
-    menuItems: editorMenuItems
+    menuItems: fileEntryMenuItems
   })
+
 }
 
 var current_filename = false;
@@ -261,7 +257,9 @@ function postRunTests()
 
 function makeFileListEntry(filename)
 {
-  var div = new Element("div");
+  // assert(filename != kata.sh)
+
+  var div = new Element("div", { id:"radioFilename" });
   div.onclick = new Function("loadFile('" + filename + "')");
   var inp = new Element("input", 
     { id:"radio_" + filename, name:"radio_filename", type:"radio", value:filename });
@@ -340,6 +338,8 @@ function newFile()
     return;
   }
 
+  // TODO: can't be any of the existing filenames
+
   // Create new hidden textarea (to save to before submitting)
   var ta = new Element("textarea", { id:filename, name:filename });
   $('visible_files_container').appendChild(ta);
@@ -354,7 +354,7 @@ function newFile()
   current += ";";
   $('visible_filenames_container').value = current;
 
-  loadFile(filename);
+  setupFileEntryMenu();
 }
 </script>
 

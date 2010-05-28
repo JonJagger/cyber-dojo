@@ -9,7 +9,10 @@
     <% @manifest[:visible_files].sort.each do |filename,file| -%>
     <tr>
       <td>             
-        <div onclick='loadFile("<%=filename-%>")'>
+        <div <% if filename != 'kata.sh' -%>
+                id="radioFilename"  
+             <% end -%>
+             onclick='loadFile("<%=filename-%>")'>
           <input id="radio_<%=filename-%>" 
                  name="radio_filename"
                  type="radio"
@@ -20,4 +23,8 @@
     <% end -%>
   </tbody>
 </table>
+
+<br/>
+<button type="button" onclick="newFile();">new file</button>
+
 
