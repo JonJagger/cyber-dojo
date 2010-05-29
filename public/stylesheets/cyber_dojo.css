@@ -45,7 +45,7 @@
  * Instead of title="tool-tip" I use a hidden nested span
  * as this allows me to insert newlines.
  */
-#inc.increment  
+#inc.increment
 {
   position: relative; /*this is the key*/
   z-index: 24; 

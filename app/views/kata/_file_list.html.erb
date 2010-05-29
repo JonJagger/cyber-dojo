@@ -11,6 +11,7 @@
       <td>             
         <div <% if filename != 'kata.sh' -%>
                 id="radioFilename"  
+                title="Right-click=rename/delete"
              <% end -%>
              onclick='loadFile("<%=filename-%>")'>
           <input id="radio_<%=filename-%>" 

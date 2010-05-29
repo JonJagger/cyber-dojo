@@ -117,13 +117,15 @@ function renameFile(event)
     return;
   }
    
-  // TODO: what if there is already a file with the chosen name (including kata.sh)
-  //if (filename == "kata.sh") //TODO: DROP
-  //{
-  //  alert(filename + " cannot be renamed (it is the file the " +
-  //    "Cyber-Dojo server executes on each iteration).");
-  //  return;
-  //}
+  if (fileAlreadyExists(newname))
+  {
+    alert("CyberDojo cannot rename " +
+           filename + " to " + newname +
+          "\nbecause a file called " +
+           newname +
+          " already exists.");
+    return; // Cancelled
+  }
 
   // rename hidden textarea by appending new one...
   var new_ta = new Element("textarea", { id:newname, name:newname });
@@ -262,6 +264,7 @@ function makeFileListEntry(filename)
   // assert(filename != kata.sh)
 
   var div = new Element("div", { id:"radioFilename" });
+  div.title = "Right-click=rename/delete";
   div.onclick = new Function("loadFile('" + filename + "')");
   var inp = new Element("input", 
     { id:"radio_" + filename, name:"radio_filename", type:"radio", value:filename });
@@ -328,6 +331,12 @@ function sortFileList()
     list.appendChild(array[i]);
 }
 
+function fileAlreadyExists(filename)
+{
+  var filenames = trim($('visible_filenames_container').value);
+  return filenames.split(";").indexOf(filename) != -1;
+}
+
 function newFile()
 {
   var filename = trim(prompt("Enter the new file's name: ", ""));
@@ -340,7 +349,13 @@ function newFile()
     return;
   }
 
-  // TODO: can't be any of the existing filenames
+  if (fileAlreadyExists(filename))
+  {
+    alert("CyberDojo cannot create a file called " +
+           filename + 
+          " because one already exists.");
+    return; // Cancelled
+  }
 
   // Create new hidden textarea (to save to before submitting)
   var ta = new Element("textarea", { id:filename, name:filename });
@@ -351,10 +366,10 @@ function newFile()
   sortFileList();
 
   // Make its name available to rails
-  var current = trim($('visible_filenames_container').value);
-  current += filename;
-  current += ";";
-  $('visible_filenames_container').value = current;
+  var filenames = trim($('visible_filenames_container').value);
+  filenames += filename;
+  filenames += ";";
+  $('visible_filenames_container').value = filenames;
 
   setupFileEntryMenu();
 }

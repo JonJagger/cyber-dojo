@@ -2,13 +2,17 @@
 <table cellpadding="2px">
   <tr>
     <td>
-      <input type="image" width="40" height="40"
-         src="/images/PlayButton.svg.thumb.png"/>
+      <input type="image" 
+             width="40" 
+             height="40"
+             title="Click to run kata.sh on the CyberDojo server"
+             src="/images/PlayButton.svg.thumb.png"/>
     </td>
 
     <% limited(@increments).each do |increment| -%>
     <td>
-      <div class="<%= increment[:outcome] -%> rounded increment"  id="inc">
+      <div id="inc"
+           class="<%= increment[:outcome] -%> rounded increment">
          &thinsp;
          <span><%= increment[:number] -%>:<%= increment[:info] -%></span>
       </div>
