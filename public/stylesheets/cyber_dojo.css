@@ -82,10 +82,15 @@
 
 #file_manager 
 { 
-  padding: 0.5em; 
+  padding: 0.3em; 
   background-color: #FEF5CA;
   color: #686868;   
   font-size: 12pt; 
+}
+
+#radioFilename
+{
+  white-space:nowrap;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
@@ -104,6 +109,7 @@
   background-color: #686868;
   border: 1px solid #666;
   border-right: none;
+  float: right;
 }
 
 .textarea_with_line_numbers
