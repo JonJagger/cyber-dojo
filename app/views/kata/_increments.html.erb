@@ -9,7 +9,14 @@
              src="/images/PlayButton.svg.thumb.png"/>
     </td>
 
-    <% limited(@increments).each do |increment| -%>
+    <td id="run_tests_spinner" 
+        style="display:none;"> 
+      <span>
+        <%= image_tag "spinner.gif" -%>
+      </span>
+    </td> 
+
+    <% limited(@increments).reverse.each do |increment| -%>
     <td>
       <div id="inc"
            class="<%= increment[:outcome] -%> rounded increment">
@@ -18,13 +25,6 @@
       </div>
     </td>
     <% end -%>
-
-    <td id="run_tests_spinner" 
-        style="display:none;"> 
-      <span>
-        <%= image_tag "spinner.gif" -%>
-      </span>
-    </td> 
 
   </tr>
 </table>

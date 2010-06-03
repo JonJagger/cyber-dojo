@@ -7,7 +7,6 @@ class KataController < ApplicationController
     @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id + ", Avatar=" + @kata.avatar.name
     @manifest = {}
     @increments = @kata.avatar.read_most_recent(@manifest)
-    @shown_increment_number = @increments.length
   end
 
   def run_tests
@@ -30,11 +29,13 @@ class KataController < ApplicationController
   def see_one_increment
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], params[:avatar], readonly = true)
-    @shown_increment_number = params[:increment].to_i
-    @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id + ", Avatar=" + @kata.avatar.name +
-       ", Increment=" + @shown_increment_number.to_s
-    @manifest = @kata.avatar.visible_files(@shown_increment_number)
-    @increments = [ @kata.avatar.increments[@shown_increment_number] ]
+    increment_number = params[:increment].to_i
+    @title = "Cyber-Dojo=" + @dojo.id + 
+       ", Kata=" + @kata.id + 
+       ", Avatar=" + @kata.avatar.name +
+       ", Increment=" + increment_number.to_s
+    @manifest = @kata.avatar.visible_files(increment_number)
+    @increments = [ @kata.avatar.increments[increment_number] ]
   end
 
 private
@@ -60,7 +61,7 @@ private
 end
 
 def limited(increments)
-  max_increments_displayed = 49
+  max_increments_displayed = 10
   len = [increments.length, max_increments_displayed].min
   increments[-len,len]
 end

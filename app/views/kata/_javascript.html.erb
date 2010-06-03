@@ -331,32 +331,20 @@ function sortFileList()
     list.appendChild(array[i]);
 }
 
-function fileAlreadyExists(filename)
+function allFilenames()
 {
   var filenames = trim($('visible_filenames_container').value);
-  return filenames.split(";").indexOf(filename) != -1;
+  return filenames.split(";");
+}
+
+function fileAlreadyExists(filename)
+{
+  return allFilenames().indexOf(filename) != -1;
 }
 
 function newFile()
 {
-  var filename = trim(prompt("Enter the new file's name: ", ""));
-  if (filename == null)
-    return; // Cancelled
-
-  if (filename == "") 
-  {
-    alert("Nothing entered: new-file abandoned");
-    return;
-  }
-
-  if (fileAlreadyExists(filename))
-  {
-    alert("CyberDojo cannot create a file called " +
-           filename + 
-          " because one already exists.");
-    return; // Cancelled
-  }
-
+  var filename = 'untitled_' + allFilenames().length;
   // Create new hidden textarea (to save to before submitting)
   var ta = new Element("textarea", { id:filename, name:filename });
   $('visible_files_container').appendChild(ta);
