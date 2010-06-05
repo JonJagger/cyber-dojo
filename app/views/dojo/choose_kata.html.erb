@@ -7,7 +7,7 @@ function choose_kata(id)
 }
 //--></script>
 
-<form name="chooseKata" action="/dojo/choose_avatar">
+<form name="chooseKata" action="/kata/start"">
 
 <input readonly 
        type="hidden"
@@ -18,10 +18,17 @@ function choose_kata(id)
 
 <input readonly 
        type="hidden"
+       name="avatar" 
+       id="avatar" 
+       type="text" 
+       value="<%=h @avatar -%>">
+
+<input readonly 
+       type="hidden"
        name="kata_id" 
        id="kata_id" 
        type="text" 
-       value="<%=h @kata_id-%>">
+       value="">
 
 <h2><b>Select your language</b></h2>
 

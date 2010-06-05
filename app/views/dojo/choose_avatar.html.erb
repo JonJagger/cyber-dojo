@@ -7,7 +7,7 @@ function select_avatar(name)
 }
 //--></script>
 
-<form name="chooseAvatar" action="/kata/start">
+<form name="chooseAvatar" action="/dojo/choose_kata">
 
 <input readonly 
        type="hidden"
@@ -15,12 +15,6 @@ function select_avatar(name)
        id="dojo_id" 
        type="text" 
        value="<%=h @dojo_id-%>">
-
-<input name="kata_id" 
-       id="kata_id" 
-       type="hidden" 
-       size="5" 
-       value="<%=h @kata_id-%>">
 
 <input readonly 
        type="hidden"
