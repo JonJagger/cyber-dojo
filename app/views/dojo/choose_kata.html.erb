@@ -23,16 +23,23 @@ function choose_kata(id)
        type="text" 
        value="<%=h @kata_id-%>">
 
-<h2><b>Select your kata</b></h2>
+<h2><b>Select your language</b></h2>
 
 <table cellspacing="4" 
        class="rounded panel">
   <% @katas.sort.each do |kata| -%>
   <tr>
     <td>
+      <% if kata == "cplusplus" -%>
+      <%   name = "c++" -%>
+      <% elsif kata == "csharp" -%>
+      <%   name = "c#" -%>
+      <% else -%>
+      <%   name = kata -%>
+      <% end -%>
       <input type="button" 
              onClick='choose_kata("<%=kata-%>");'
-             value="<%=kata-%>">
+             value="<%=name-%>">
     </td>
   </tr>
   <% end -%>
