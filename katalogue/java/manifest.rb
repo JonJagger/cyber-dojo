@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( Source.java SourceTest.java kata.sh ),
+  :visible_filenames => %w( Untitled.java UntitledTest.java kata.sh ),
 
   :hidden_filenames => %w( junit-4.7.jar ),
 
