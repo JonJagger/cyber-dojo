@@ -1,4 +1,0 @@
-
-class Source
-
-end
