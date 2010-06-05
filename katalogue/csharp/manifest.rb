@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( Source.cs SourceTest.cs kata.sh ),
+  :visible_filenames => %w( Untitled.cs UntitledTest.cs kata.sh ),
 
   :hidden_filenames => %w(
     nunit-console.exe
