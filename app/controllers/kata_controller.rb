@@ -4,7 +4,9 @@ class KataController < ApplicationController
   def start
     @dojo = Dojo.new(params[:dojo_id])
     @kata = @dojo.kata(params[:kata_id], params[:avatar])
-    @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id + ", Avatar=" + @kata.avatar.name
+    @title = "Cyber-Dojo=" + @dojo.id + 
+           ", Language=" + @kata.id + 
+           ", Avatar=" + @kata.avatar.name
     @manifest = {}
     @increments = @kata.avatar.read_most_recent(@manifest)
   end
@@ -61,7 +63,7 @@ private
 end
 
 def limited(increments)
-  max_increments_displayed = 10
+  max_increments_displayed = 8
   len = [increments.length, max_increments_displayed].min
   increments[-len,len]
 end

@@ -54,6 +54,7 @@ function createTextAreaWithLineNumbers(id, tab)
   }
        
   el.setAttribute('readonly', 'true');  
+  el.id = "line_numbers";
   el.className      = 'textarea_with_line_numbers';
   el.style.height   = (ta.offsetHeight-3) + "px";
   el.style.position = 'absolute';
@@ -159,6 +160,12 @@ function renameFile(event)
   }
   // make sure renamed file-entry has drop-down menu
   setupFileEntryMenu();
+
+  // ensure line-number repositions by removing and re-adding
+  var old = document.getElementById('line_numbers');
+  old.parentNode.removeChild(old);
+  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
+  TabEntry.enable('editor');
 }
 
 function deleteFile(event)
@@ -194,6 +201,7 @@ function deleteFile(event)
 document.observe('dom:loaded', function() {
   <% if !@kata.readonly -%>
     setupFileEntryMenu();
+    setupEditorMenu();
   <% end -%>
   loadFile('kata.sh');
 })
@@ -214,10 +222,26 @@ function setupFileEntryMenu()
 
   new Proto.Menu({
     selector: '#radioFilename', 
-    className: 'menu desktop', // (can be used for css styling)
+    className: 'menu desktop', 
     menuItems: fileEntryMenuItems
   })
+}
 
+function setupEditorMenu()
+{
+  var editorMenuItems = [
+    {
+      name: 'Run the tests  ',
+      className: 'run-the-tests', 
+      callback: function(e) { document.getElementById('play').click(); }
+    }
+  ]
+
+  new Proto.Menu({
+    selector: '#editor', 
+    className: 'menu desktop',
+    menuItems: editorMenuItems
+  })
 }
 
 var current_filename = false;
@@ -251,12 +275,15 @@ function loadFile(name)
 function preRunTests()
 {
   saveCurrentFile();
-  Element.show('run_tests_spinner');
+
+  $('play').setAttribute('style', 'display:none');
+  $('run_tests_spinner').setAttribute('style', 'visibility:visible');
 }
 
 function postRunTests()
 {
-   Element.hide('run_tests_spinner');
+  $('run_tests_spinner').setAttribute('style', 'display:none');
+  $('play').setAttribute('style', 'visibility:visible');
 }
 
 function makeFileListEntry(filename)

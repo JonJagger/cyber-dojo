@@ -22,8 +22,8 @@
 .panel
 {    
   background-color: #FEF5CA; /*sandbox */
-  margin: 0.5em 0.5em 0.5em 0em;
-  padding: 0.5em;
+  margin: 0.3em;
+  padding: 0.3em;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
@@ -31,10 +31,7 @@
 .increment 
 { 
   padding: 0.15em; 
-  font-size: 14pt;
 }
-
-
 
 .failed  { background-color: #F33; }
 .passed  { background-color: #3C3; }
@@ -62,7 +59,7 @@
   font-size: 9pt;
   display: block;
   position: fixed;
-  top: 5em; left: 2em; width: auto;
+  bottom: 5em; left: 2em; width: auto;
   border: 1px solid #0CF;
   background-color: #CFF; 
   color: #000;
@@ -79,6 +76,11 @@
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#new_file
+{
+  font-size: 8pt;
+}
 
 #file_manager 
 { 
@@ -102,7 +104,7 @@
   padding-left: 5px;
   margin: 0em;
   margin-left: 40px;
-  font-size: 12pt;
+  font-size: 11pt;
   font-family: monospace;
   font-weight: normal;
   color: white;
@@ -115,7 +117,7 @@
 .textarea_with_line_numbers
 {
   display: block;
-  font-size: 12pt;
+  font-size: 11pt;
   font-weight: 100;
   color: #686868;
   margin: 0;

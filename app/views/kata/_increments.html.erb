@@ -2,15 +2,17 @@
 <table cellpadding="2px">
   <tr>
     <td>
-      <input type="image" 
-             width="40" 
-             height="40"
+      <input id="play"
+             type="image" 
+             width="22" 
+             height="22"
              title="Click to run kata.sh on the CyberDojo server"
-             src="/images/PlayButton.svg.thumb.png"/>
+             src="/images/PlayButton.svg.thumb.png"
+             style="visibility:visible"/>
     </td>
 
     <td id="run_tests_spinner" 
-        style="display:none;"> 
+        style="display:none"> 
       <span>
         <%= image_tag "spinner.gif" -%>
       </span>
