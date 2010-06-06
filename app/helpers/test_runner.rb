@@ -16,7 +16,7 @@ class TestRunner
       # o) popen runs its command as a subprocess
       # o) splitting and joining on "\n" removes any operating 
       #    system differences regarding new-line conventions
-      run_tests_output = IO.popen("cd #{sandbox}; ./kata.sh 2>&1").read.split("\n").join("\n")
+      run_tests_output = IO.popen("cd '#{sandbox}'; ./kata.sh 2>&1").read.split("\n").join("\n")
     end
 
     # Build and run tests has limited time to complete
