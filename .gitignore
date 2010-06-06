@@ -4,5 +4,7 @@ tmp/**/*
 dojos/**
 !dojos/My\ Virtual\ Dojo/
 !dojos/My\ Virtual\ Dojo/**
+!dojos/NDC\ Dojo/
+!dojos/NDC\ Dojo/**
 !dojos/*/*/kata_manifest.rb
 
