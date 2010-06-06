@@ -5,7 +5,7 @@ class Kata
     @dojo = dojo
     @id = id
     @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
-    @file_set = KataFileSet.new(self)
+    @file_set = KataFileSet.new(self.name) # self.name != name FIXME
     @avatar = Avatar.new(self, name) if name != ""
     @readonly = readonly
   end

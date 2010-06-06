@@ -8,7 +8,7 @@ class DojoController < ApplicationController
   end
 
   def choose_dojo
-    @dojos = Dir.entries('dojos').select { |d| d != "." and d != ".." }
+    @dojos = Dir.entries('dojos').select { |name| !dot? name }
 	if @dojos.size == 1
 		redirect_to :action => "choose_avatar", :dojo_id => @dojos[0]
 	end
@@ -16,7 +16,6 @@ class DojoController < ApplicationController
 
   def choose_avatar
     @dojo_id = params[:dojo_id]
-    #@kata_id = params[:kata_id]
     @avatars = Avatar.names
     @title = "Cyber Dojo"
   end
@@ -24,8 +23,13 @@ class DojoController < ApplicationController
   def choose_kata
     @dojo_id = params[:dojo_id]
     @avatar = params[:avatar]
-    #@kata_id = params[:kata_id]
-    @katas = Dir.entries("dojos/#{@dojo_id}").select { |d| d != "." and d != ".." }
+    @katas = Dir.entries("dojos/#{@dojo_id}").select { |name| !dot? name }
+  end
+
+private
+
+  def dot? name
+	name == '.' or name == '..'
   end
 
 end

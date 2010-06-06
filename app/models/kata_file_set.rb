@@ -1,9 +1,9 @@
 
 class KataFileSet
 
-  def initialize(kata)
-    @kata = kata
-    @manifest = eval IO.read(folder + '/' + 'manifest.rb')
+  def initialize(name)
+    @folder = 'katalogue' + '/' + name
+    @manifest = eval IO.read(@folder + '/' + 'manifest.rb')
   end
 
   def visible
@@ -16,11 +16,7 @@ class KataFileSet
   end
 
   def hidden
-    if @manifest[:hidden_filenames]
-      @manifest[:hidden_filenames]
-    else
-      []
-    end
+    @manifest[:hidden_filenames] || []
   end
 
   def unit_test_framework
@@ -28,7 +24,7 @@ class KataFileSet
   end
 
   def folder
-    'katalogue' + '/' + @kata.name
+    @folder
   end
 
 end
