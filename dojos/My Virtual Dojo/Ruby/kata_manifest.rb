@@ -1,5 +1,5 @@
 
 {
-  :file_set_names => [ 'languages/ruby' ],
+  :file_set_names => [ 'languages/Ruby' ],
 }
 

@@ -1,5 +1,5 @@
 
 {
-  :file_set_names => [ 'languages/java' ],
+  :file_set_names => [ 'languages/Java' ],
 }
 

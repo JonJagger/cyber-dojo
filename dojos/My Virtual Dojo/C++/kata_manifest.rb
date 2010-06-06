@@ -1,6 +1,6 @@
 
 {
-  :file_set_names => [ 'languages/cplusplus' ],
+  :file_set_names => [ 'languages/C++' ],
 }
 
 
