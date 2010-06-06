@@ -2,7 +2,7 @@
 log/*
 tmp/**/*
 dojos/**
-!dojos/my_virtual_dojo/
-!dojos/my_virtual_dojo/**
+!dojos/My\ Virtual\ Dojo/
+!dojos/My\ Virtual\ Dojo/**
 !dojos/*/*/kata_manifest.rb
 

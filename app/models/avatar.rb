@@ -68,7 +68,7 @@ private
       make_dir(folder + '/sandbox')
       # Copy in hidden files from kata fileset
 	  @kata.hidden_pathnames.each do |hidden_pathname|
-        system("cp #{hidden_pathname} #{folder}/sandbox") 
+        system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
 	  # Create empty increments file ready to be loaded next time
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }

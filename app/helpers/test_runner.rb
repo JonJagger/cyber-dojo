@@ -4,7 +4,7 @@ class TestRunner
   def self.run_tests(kata, manifest)
     sandbox = kata.avatar.folder + '/' + 'sandbox'
     # Reset sandbox to contain just hidden files
-    remove_all_but(sandbox, kata.hidden_filenames) # kata.file_set.hidden)
+    remove_all_but(sandbox, kata.hidden_filenames)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
 
@@ -43,8 +43,8 @@ class TestRunner
   # the . file or junit-4.7.jar and pipes them to rm. 
   def self.remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
-    these.each {|n| s += "\\! -samefile \"#{sandbox}/#{n}\" " }
-    cmd = "find #{sandbox} \\( " + s + " \\) -print0 | xargs -0 rm -f"
+    these.each {|n| s += "\\! -samefile \"'#{sandbox}/#{n}'\" " }
+    cmd = "find '#{sandbox}' \\( " + s + " \\) -print0 | xargs -0 rm -f"
     system(cmd)
   end
 
