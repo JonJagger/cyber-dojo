@@ -23,7 +23,8 @@
       <div id="inc"
            class="<%= increment[:outcome] -%> rounded increment">
          &thinsp;
-         <span><%= increment[:number] -%>:<%= increment[:info] -%></span>
+         <span>(<%= increment[:number] -%>:<%= Time.now.to_s -%>)<br/>
+               <%= increment[:info] -%></span>
       </div>
     </td>
     <% end -%>

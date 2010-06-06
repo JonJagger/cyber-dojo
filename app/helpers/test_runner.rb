@@ -36,11 +36,11 @@ class TestRunner
 
   # Remove all files from the sandbox except the hidden files
   # specified in the katalogue manifest. For example, if the
-  # the kata is a java kata and :hidden_files => { 'junit-4.7.jar' => {} }
+  # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]
   # then this function will execute the following system command
   #   find sandbox ( ! -samefile "." ! -samefile "junit-4.7.jar" ) -print0 | xargs -0 rm -f
   # with appropriate backslashses. This finds all the files in sandbox that are _not_
-  # . or junit-4.7.jar and pipes them to rm. 
+  # the . file or junit-4.7.jar and pipes them to rm. 
   def self.remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
     these.each {|n| s += "\\! -samefile \"#{sandbox}/#{n}\" " }
