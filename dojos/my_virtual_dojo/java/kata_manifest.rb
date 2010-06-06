@@ -1,6 +1,5 @@
 
 {
-  :kata_name => 'languages/java',
-  :max_run_tests_duration => 10,  
+  :file_set_names => [ 'languages/java' ],
 }
 

@@ -1,7 +1,6 @@
 
 {
-  :kata_name => 'languages/c',
-  :max_run_tests_duration => 10,
+  :file_set_names => [ 'languages/c' ],
 }
 
 

@@ -1,7 +1,5 @@
 
 {
-  :kata_name => 'languages/ruby',
-  :max_run_tests_duration => 10,  
-  :tab_size => 2
+  :file_set_names => [ 'languages/ruby' ],
 }
 

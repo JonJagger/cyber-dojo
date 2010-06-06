@@ -17,33 +17,30 @@ class Kata
     @readonly
   end
 
-  def name
-    @manifest[:kata_name].to_s
-  end
-
   def max_run_tests_duration
-    @manifest[:max_run_tests_duration].to_i
+ 	# default max_run_tests_duration = 10 seconds
+    (@manifest[:max_run_tests_duration] || 10).to_i      
   end
 
   def tab
-    default_tab_size = 4
-    " " * (@manifest[:tab_size] || default_tab_size)
+    #default tab_size = 4
+    " " * (@manifest[:tab_size] || 4)
   end
 
   def unit_test_framework
-    @file_set.unit_test_framework
+    @manifest[:unit_test_framework]
   end
   
   def visible
-    @file_set.visible
+    @visible
   end
 
   def hidden_pathnames
-    @file_set.hidden_pathnames
+    @hidden_pathnames
   end
 
   def hidden_filenames
-    @file_set.hidden_filenames
+    @hidden_filenames
   end
 
   def avatar
@@ -74,12 +71,52 @@ class Kata
   end
 
 private
-
+  
   def read_manifest
-    @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
-   
+    @visible = {}
+    @hidden_filenames = []
+	@hidden_pathnames = []
 
-    @file_set = KataFileSet.new(name)
+    @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
+    @manifest.each do |key,value|
+      if key == :file_set_names
+        read_file_sets(value)
+      end
+    end
+  end
+
+  def read_file_sets(names)
+    names.each do |file_set_name|
+      folder = 'katalogue' + '/' + file_set_name
+      file_set = eval IO.read(folder + '/' + 'manifest.rb')
+	  file_set.each do |key,value|
+		if key == :visible_filenames
+          @visible.merge! read_visible(folder, value)
+        elsif key == :hidden_filenames
+          @hidden_filenames += value
+          @hidden_pathnames += read_hidden_pathnames(folder, value)
+        else
+          @manifest[key] = value
+        end
+      end
+    end    
+  end
+
+  def read_visible(folder, filenames)
+    visible_files = {}
+    filenames.each do |filename|
+      visible_files[filename] = {}
+      visible_files[filename][:content] = IO.read(folder + '/' + filename)
+    end
+    visible_files
+  end
+
+  def read_hidden_pathnames(folder, filenames)
+    pathed = []
+    filenames.each do |filename|
+      pathed << folder + '/' + filename
+    end
+    pathed
   end
 
 end
