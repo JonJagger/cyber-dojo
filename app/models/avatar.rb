@@ -26,7 +26,7 @@ class Avatar
 
   def read_most_recent(manifest)
     # load starting manifest
-    manifest[:visible_files] = @kata.file_set.visible
+    manifest[:visible_files] = @kata.visible
 
     increments = []
     File.open(@kata.folder, 'r') do |f|
@@ -67,10 +67,10 @@ private
       make_dir(folder)      
       make_dir(folder + '/sandbox')
       # Copy in hidden files from kata fileset
-      file_set = @kata.file_set
-      file_set.hidden.each do |hidden_filename| 
-        system("cp #{file_set.folder}/#{hidden_filename} #{folder}/sandbox") 
+	  @kata.hidden_pathnames.each do |hidden_pathname|
+        system("cp #{hidden_pathname} #{folder}/sandbox") 
       end
+	  # Create empty increments file ready to be loaded next time
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
       []
     else # restart

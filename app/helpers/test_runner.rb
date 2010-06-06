@@ -4,7 +4,7 @@ class TestRunner
   def self.run_tests(kata, manifest)
     sandbox = kata.avatar.folder + '/' + 'sandbox'
     # Reset sandbox to contain just hidden files
-    remove_all_but(sandbox, kata.file_set.hidden)
+    remove_all_but(sandbox, kata.hidden_filenames) # kata.file_set.hidden)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
 

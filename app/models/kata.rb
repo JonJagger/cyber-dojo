@@ -4,8 +4,7 @@ class Kata
   def initialize(dojo, id, name = "", readonly = false)
     @dojo = dojo
     @id = id
-    @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
-    @file_set = KataFileSet.new(self.name) # self.name != name FIXME
+    read_manifest
     @avatar = Avatar.new(self, name) if name != ""
     @readonly = readonly
   end
@@ -27,15 +26,24 @@ class Kata
   end
 
   def tab
-    " " * (@manifest[:tab_size] || 4)
+    default_tab_size = 4
+    " " * (@manifest[:tab_size] || default_tab_size)
   end
 
   def unit_test_framework
     @file_set.unit_test_framework
   end
+  
+  def visible
+    @file_set.visible
+  end
 
-  def file_set
-    @file_set
+  def hidden_pathnames
+    @file_set.hidden_pathnames
+  end
+
+  def hidden_filenames
+    @file_set.hidden_filenames
   end
 
   def avatar
@@ -63,6 +71,15 @@ class Kata
 
   def folder
     @dojo.folder + '/' + id
+  end
+
+private
+
+  def read_manifest
+    @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
+   
+
+    @file_set = KataFileSet.new(name)
   end
 
 end

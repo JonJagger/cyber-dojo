@@ -15,10 +15,18 @@ class KataFileSet
     visible_files
   end
 
-  def hidden
-    @manifest[:hidden_filenames] || []
+  def hidden_pathnames
+    pathed = []
+    hidden_filenames.each do |filename|
+      pathed << folder + '/' + filename
+    end
+    pathed
   end
 
+  def hidden_filenames
+    @manifest[:hidden_filenames] || []
+  end
+  
   def unit_test_framework
     @manifest[:unit_test_framework]
   end
