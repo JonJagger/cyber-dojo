@@ -23,7 +23,7 @@ class Kata
   end
 
   def tab
-    #default tab_size = 4
+    # default tab_size = 4
     " " * (@manifest[:tab_size] || 4)
   end
 
@@ -83,6 +83,7 @@ private
         read_file_sets(value)
       end
     end
+    #@visible['run_tests_output'] = { :content => "" }
   end
 
   def read_file_sets(names)
@@ -105,8 +106,7 @@ private
   def read_visible(folder, filenames)
     visible_files = {}
     filenames.each do |filename|
-      visible_files[filename] = {}
-      visible_files[filename][:content] = IO.read(folder + '/' + filename)
+      visible_files[filename] = { :content => IO.read(folder + '/' + filename) }
     end
     visible_files
   end
