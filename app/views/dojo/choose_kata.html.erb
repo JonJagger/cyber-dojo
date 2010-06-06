@@ -37,16 +37,9 @@ function choose_kata(id)
   <% @katas.sort.each do |kata| -%>
   <tr>
     <td>
-      <% if kata == "cplusplus" -%>
-      <%   name = "c++" -%>
-      <% elsif kata == "csharp" -%>
-      <%   name = "c#" -%>
-      <% else -%>
-      <%   name = kata -%>
-      <% end -%>
       <input type="button" 
              onClick='choose_kata("<%=kata-%>");'
-             value="<%=name-%>">
+             value="<%=kata-%>">
     </td>
   </tr>
   <% end -%>

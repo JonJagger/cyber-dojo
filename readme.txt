@@ -14,7 +14,6 @@ And your CyberDojo should be running. There are no requirements on the
 clients (except of course a browser).
 
 
-
 Dojos
 =====
 Each subfolder underneath cyberdojo/dojos represents a virtual dojo. 
@@ -28,8 +27,8 @@ Avatars
 =======
 Once you have chosen your dojo the CyberDojo server will ask you to choose your
 animal avatar by selecting its image (eg Pandas). The avatar provides identity for
-each laptop participating in the kata. For example, if a laptop has to be retired
-during a kata a new laptop can easily replace it.
+each laptop participating in the kata. If a laptop has to be retired during a kata 
+a new laptop can easily replace it.
 
 
 Katas
