@@ -24,4 +24,12 @@ class DojoController < ApplicationController
     @avatar_name = params[:avatar_name]
   end
 
+  # Note that I choose in the following order
+  #   dojo -> avatar -> kata
+  # whereas I store subfolders in the following order
+  #   dojo -> kata -> avatar
+  # This is deliberate. The choose order is to minimize the
+  # keystrokes needed to finish a kata (back) at a laptop and start
+  # another one (select).
+
 end

@@ -35,13 +35,22 @@ module TestRunner
   end
 
 
+  # remove_all_but()
+  #
   # Remove all files from the sandbox except the hidden files
   # specified in the katalogue manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]
   # then this function will execute the following system command
-  #   find sandbox ( ! -samefile "." ! -samefile "junit-4.7.jar" ) -print0 | xargs -0 rm -f
+  #   find sandbox ( ! -samefile "." ! -samefile 'junit-4.7.jar' ) -print0 | xargs -0 rm -f
   # with appropriate backslashses. This finds all the files in sandbox that are _not_
-  # the . file or junit-4.7.jar and pipes them to rm. 
+  # the . file or junit-4.7.jar file and pipes them to rm. 
+  #
+  # The reason I do this rather than delete and recreate the entire sandbox
+  # every increment is an optimization: jar files and assembly files (for
+  # example) can get quite large. junit-4.7.jar is over 200K for example,
+  # and if a whole class is all doing a java kata this can slow things down
+  # on the server.
+
   def self.remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
     these.each {|n| s += "\\! -samefile '#{sandbox}/#{n}' " }
@@ -63,10 +72,13 @@ module TestRunner
   end
 
 
+  # makefile_filter()
+  #
   # Tabs are a problem for makefiles since makefiles are tab sensitive.
   # The CyberDojo editor intercept tab keys and replaces them with spaces.
   # Hence this special filter, just for makefiles to convert leading spaces 
   # back to a tab character. 
+
   def self.makefile_filter(name, content)
     if name.downcase == 'makefile'
       lines = []
