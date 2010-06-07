@@ -51,16 +51,15 @@ For example: cyberdojo/dojos/xp2010/ruby_phone_list/kata_manifest.rb
 Explanation
 - - - - - - 
 :file_set_names
-  The names of the initial kata filesets. For example
+  The locations of the initial kata fileset manifests. For example
     'languages/java'     --> 'katalogue/languages/java/manifest.rb'
     'katas/bowling_game' --> 'katalogue/katas/bowling_game/manifest.rb'
 
 
 File Set Manifests
 ==================
-The file set manifests named in manifest.rb also contain an inspected ruby
-object. 
-For example: katalogue/languages/java/manifest.rb
+The fileset manifests named in manifest.rb also contain an inspected ruby
+object. For example: katalogue/languages/java/manifest.rb
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java kata.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
@@ -72,15 +71,16 @@ Explanation
 :visible_filenames
   The names of files that are visible in the editor in the browser.
   Each of these files must exist in the folder.
-  The filename kata.sh must be present (visible or hidden) as that is the name 
-  of the shell file assumed by the ruby code in the CyberDojo server to be the 
-  start point for running an increment.
-  You can write any actions in the kata.sh file but clearly any programs it
-  tries to run must be installed on the CyberDojo server. For example, if kata.sh 
-  runs gcc to compile c files then gcc has to be installed. If kata.sh runs javac 
-  to compile java files then javac has to be installed.
-  All visible_filenames from all file-sets in a single kata_manifest will be 
-  loaded at the start of the kata.
+  All visible_filenames from all file-sets in a single kata_manifest will 
+  be loaded at the start of the kata.
+  The filename kata.sh must be present (visible or hidden) in one of the 
+  manifest.rb files. This is because kata.sh is the name of the shell file 
+  assumed by the ruby code in the CyberDojo server to be the start point for  
+  running an increment. You can write any actions in the kata.sh file but 
+  clearly any programs it tries to run must be installed on the CyberDojo 
+  server. For example, if kata.sh runs gcc to compile c files then gcc has 
+  to be installed. If kata.sh runs javac to compile java files then javac has 
+  to be installed.
 
 :hidden_filenames
   The names of necessary and supporting files (if there are any) that 
@@ -101,8 +101,8 @@ Explanation
 
 Further parameters
 ------------------
-There are two more parameters that can be specified in either manifest file
-as part of the inspected ruby object:
+There are two more parameters that can be specified in kata_manifest.rb
+or in any manifest.rb file as part of the inspected ruby object:
 
 {
   :max_run_tests_duration => 20,
@@ -141,7 +141,5 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    pair with (except google) while developing this in my limited spare time. Some 
    of what you find is likely to be non-idiomatic. Caveat emptor!
 o) I'd like to thank Olve Maudal of Tandberg for his encouragement.
-
-
 
 
