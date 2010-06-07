@@ -4,9 +4,6 @@ class KataController < ApplicationController
   def start
     @dojo = Dojo.new(params[:dojo_id])
     @kata = @dojo.kata(params[:kata_id], params[:avatar])
-    @title = "Cyber-Dojo=" + @dojo.id + 
-           ", Language=" + @kata.id + 
-           ", Avatar=" + @kata.avatar.name
     @manifest = {}
     @increments = @kata.avatar.read_most_recent(@manifest)
   end
@@ -24,7 +21,6 @@ class KataController < ApplicationController
   def see_all_increments
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], readonly = true)
-    @title = "Cyber-Dojo=" + @dojo.id + ", Kata=" + @kata.id
     render :layout => 'see_all_increments'
   end
 
@@ -32,10 +28,10 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], params[:avatar], readonly = true)
     increment_number = params[:increment].to_i
-    @title = "Cyber-Dojo=" + @dojo.id + 
-       ", Kata=" + @kata.id + 
-       ", Avatar=" + @kata.avatar.name +
-       ", Increment=" + increment_number.to_s
+    #@title = "Cyber-Dojo=" + @dojo.id + 
+    #   ", Kata=" + @kata.id + 
+    #   ", Avatar=" + @kata.avatar.name +
+    #   ", Increment=" + increment_number.to_s
     @manifest = @kata.avatar.visible_files(increment_number)
     @increments = [ @kata.avatar.increments[increment_number] ]
   end
@@ -60,12 +56,9 @@ private
     end
     manifest
   end
+
 end
 
-def limited(increments)
-  max_increments_displayed = 8
-  len = [increments.length, max_increments_displayed].min
-  increments[-len,len]
-end
+
 
 

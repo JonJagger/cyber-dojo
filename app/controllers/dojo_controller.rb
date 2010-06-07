@@ -24,13 +24,6 @@ class DojoController < ApplicationController
     @dojo_id = params[:dojo_id]
     @avatar = params[:avatar]
     @katas = Dir.entries("dojos/#{@dojo_id}").select { |name| !dot? name }
-    if @katas.size == 1
-      redirect_to :controller => 'kata',
-                  :action => 'start', 
-                  :dojo_id => @dojo_id, 
-                  :avatar => @avatar,
-                  :kata_id => @katas[0]
-    end
   end
 
 private

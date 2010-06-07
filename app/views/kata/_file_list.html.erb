@@ -1,8 +1,6 @@
 
 <div class="rounded panel">
 
-<button type="button" id="new_file" onclick="newFile();">new file</button>
-
 <table>
   <% if !@kata.readonly -%>
     <tbody id="file-list">
@@ -28,6 +26,10 @@
     <% end -%>
   </tbody>
 </table>
+
+<br/>
+
+<button type="button" id="new_file" onclick="newFile();">new file</button>
 
 </div>
 

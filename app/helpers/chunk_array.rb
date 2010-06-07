@@ -1,5 +1,3 @@
-# Methods added to this helper will be available to all templates in the application.
-module ApplicationHelper
 
 def chunk_array(array, pieces)
   len = array.length;
@@ -15,9 +13,3 @@ def chunk_array(array, pieces)
   chunks
 end
 
-
-def avatar_image(one)
-   yield image_tag "avatars/#{one.downcase}.jpg", :class => 'avatar box', :title => "#{one.humanize}"
-end
-
-end
