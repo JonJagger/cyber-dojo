@@ -1,6 +1,10 @@
 
 class Dojo
 
+  def self.names
+    Dir.entries(Root_folder).select { |name| !dot? name }
+  end
+
   def initialize(name)
     @name = name
   end
@@ -9,15 +13,36 @@ class Dojo
     @name
   end
 
-  def kata(kata_name, avatar_name = "", readonly = false)
+  def kata_names
+    Dir.entries(folder).select { |name| !dot? name }
+  end
+
+  def kata(kata_name, avatar_name = "", readonly = false) # DROP
     Kata.new(self, kata_name, avatar_name, readonly)
   end
 
-  #TODO def katas - dojo should know its own katas
+  def new_kata(name)
+    Kata.new(self, name) 
+  end
+
+  def katas
+    alive = []
+    Dir.entries(folder).select { |entry| !dot? entry }.each do |kata_name|
+      kata = Kata.new(self, kata_name)
+      if kata.avatars.size > 0
+        alive << kata
+      end
+    end
+    alive
+  end
 
   def folder
-    'dojos' + '/' + name
+    Root_folder + '/' + name
   end
+
+private
+
+  Root_folder = 'dojos'
 
 end
 

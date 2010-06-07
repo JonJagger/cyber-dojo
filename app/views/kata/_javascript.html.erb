@@ -205,10 +205,8 @@ function deleteFile(event)
 }
 
 document.observe('dom:loaded', function() {
-  <% if !@kata.readonly -%>
-    setupFileEntryMenu();
-    setupEditorMenu();
-  <% end -%>
+  setupFileEntryMenu();
+  setupEditorMenu();
   loadFile('kata.sh');
 })
 

@@ -2,12 +2,7 @@
 <div class="rounded panel">
 
 <table>
-  <% if !@kata.readonly -%>
-    <tbody id="file-list">
-  <% else -%>
-    <tbody>       
-  <% end -%>
-
+  <tbody id="file-list">
     <% @manifest[:visible_files].sort.each do |filename,file| -%>
     <tr>
       <td>             

@@ -1,10 +1,10 @@
 
-class TestRunner
+module TestRunner
 
-  def self.run_tests(kata, manifest)
-    sandbox = kata.avatar.folder + '/' + 'sandbox'
+  def self.avatar_run_tests(avatar, manifest)
+    sandbox = avatar.folder + '/' + 'sandbox'
     # Reset sandbox to contain just hidden files
-    remove_all_but(sandbox, kata.hidden_filenames)
+    remove_all_but(sandbox, avatar.kata.hidden_filenames)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
 
@@ -20,7 +20,7 @@ class TestRunner
     end
 
     # Build and run tests has limited time to complete
-    kata.max_run_tests_duration.times do
+    avatar.kata.max_run_tests_duration.times do
       sleep(1)
       break if sandbox_thread.status == false 
     end
@@ -33,6 +33,7 @@ class TestRunner
 
     run_tests_output
   end
+
 
   # Remove all files from the sandbox except the hidden files
   # specified in the katalogue manifest. For example, if the
@@ -48,6 +49,8 @@ class TestRunner
     system(cmd)
   end
 
+
+
   def self.save_file(foldername, filename, file)
     path = foldername + '/' + filename
     # No need to lock when writing these files. They are write-once-only
@@ -59,11 +62,11 @@ class TestRunner
     File.chmod(0755, path) if filename =~ /\.sh/    
   end
 
+
   # Tabs are a problem for makefiles since makefiles are tab sensitive.
-  # You can't enter a tab in a plain textarea (it simply moves the
-  # cursor based on the tabindex setting) and makefiles need leading
-  # whitespace to be tabs. Hence this special filter, just for makefiles 
-  # to convert leading spaces to a tab character. 
+  # The CyberDojo editor intercept tab keys and replaces them with spaces.
+  # Hence this special filter, just for makefiles to convert leading spaces 
+  # back to a tab character. 
   def self.makefile_filter(name, content)
     if name.downcase == 'makefile'
       lines = []

@@ -1,20 +1,14 @@
 
 class Kata
 
-  def initialize(dojo, kata_name, avatar_name = "", readonly = false)
+  def initialize(dojo, kata_name)
     @dojo = dojo
     @name = kata_name
     read_manifest
-    @avatar = Avatar.new(self, avatar_name) if avatar_name != ""
-    @readonly = readonly
   end
 
   def name
     @name.to_s
-  end
-
-  def readonly
-    @readonly
   end
 
   def max_run_tests_duration
@@ -43,27 +37,18 @@ class Kata
     @hidden_filenames
   end
 
-  def avatar
-    @avatar
+  def new_avatar(name)
+    Avatar.new(self, name)
   end
 
   def avatars
     result = []
     Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
+      # TODO use new_avatar above
       result << Avatar.new(self, avatar_name) if File.exists?(path)
     end
     result
-  end
-
-  def run_tests(manifest)
-    File.open(folder, 'r') do |f|
-      flock(f) do |lock|
-        run_tests_output = TestRunner.run_tests(self, manifest)
-        test_info = RunTestsOutputParser.new().parse(self, run_tests_output)
-        avatar.save(manifest, test_info)
-      end
-    end
   end
 
   def folder

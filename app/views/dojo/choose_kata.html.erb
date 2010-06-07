@@ -1,8 +1,8 @@
 
 <script language="JavaScript"><!--
-function choose_kata(id)
+function choose_kata(kata_name)
 {
-  $('kata_id').value = id;
+  $('kata_name').value = kata_name;
   document.chooseKata.submit();
 }
 //--></script>
@@ -11,45 +11,45 @@ function choose_kata(id)
 
 <input readonly 
        type="hidden"
-       name="dojo_id" 
-       id="dojo_id" 
+       name="dojo_name" 
+       id="dojo_name" 
        type="text" 
-       value="<%=h @dojo_id-%>">
+       value="<%=h @dojo.name-%>">
 
 <input readonly 
        type="hidden"
-       name="avatar" 
-       id="avatar" 
+       name="avatar_name" 
+       id="avatar_name" 
        type="text" 
-       value="<%=h @avatar -%>">
+       value="<%=h @avatar_name -%>">
 
 <input readonly 
        type="hidden"
-       name="kata_id" 
-       id="kata_id" 
+       name="kata_name" 
+       id="kata_name" 
        type="text" 
        value="">
 
-<h1><b><%= @dojo_id -%></b></h1>
+<h1><b><%= @dojo.name -%></b></h1>
 
-<img alt="<%=@avatar-%>" 
+<img alt="<%=@avatar_name-%>" 
      class="avatar box" 
-     src="/images/avatars/<%=@avatar-%>.jpg"
-     title="<%=@avatar.humanize-%>" />
-<img alt="<%=@avatar-%>" 
+     src="/images/avatars/<%=@avatar_name-%>.jpg"
+     title="<%=@avatar_name.humanize-%>" />
+<img alt="<%=@avatar_name-%>" 
      class="avatar box" 
-     src="/images/avatars/<%=@avatar-%>.jpg"
-     title="<%=@avatar.humanize-%>" />
+     src="/images/avatars/<%=@avatar_name-%>.jpg"
+     title="<%=@avatar_name.humanize-%>" />
 
 <table class="rounded panel"
        cellspacing="6"
        cellpadding="3">
-  <% @katas.sort.each do |kata| -%>
+  <% @dojo.kata_names.sort.each do |kata_name| -%>
   <tr>
     <td>
       <input type="button" 
-             onClick='choose_kata("<%=kata-%>");'
-             value="<%=kata-%>">
+             onClick='choose_kata("<%=kata_name-%>");'
+             value="<%=kata_name-%>">
     </td>
   </tr>
   <% end -%>

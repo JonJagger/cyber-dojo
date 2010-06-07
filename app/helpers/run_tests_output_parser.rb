@@ -1,20 +1,20 @@
 
-class RunTestsOutputParser
+module RunTestsOutputParser
 
-  def parse(kata, output)
+  def self.parse(avatar, output)
     output = output.to_s
     inc = { :info => output.split("\n").join("<br/>") }
     if Regexp.new("execution terminated after ").match(output)
       inc[:outcome] = :timeout
     else
-      inc[:outcome] = eval "parse_#{kata.unit_test_framework}(output)"
+      inc[:outcome] = eval "parse_#{avatar.kata.unit_test_framework}(output)"
     end
     inc
   end
 
 private
 
-  def parse_cassert(output)
+  def self.parse_cassert(output)
     failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
     syntax_error_pattern = Regexp.new(':(\d*): error')
     make_error_pattern = Regexp.new('^make:')
@@ -29,7 +29,7 @@ private
     end
   end
 
-  def parse_ruby_test_unit(output)
+  def self.parse_ruby_test_unit(output)
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
       if match[4] != "0"
@@ -44,7 +44,7 @@ private
     end
   end
 
-  def parse_nunit(output)
+  def self.parse_nunit(output)
     nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d*)')
     if match = nunit_pattern.match(output)
       if match[2] == "0"
@@ -57,7 +57,7 @@ private
     end
   end
 
-  def parse_junit(output)
+  def self.parse_junit(output)
     junit_pass_pattern = Regexp.new('^OK \((\d*) test')
     if match = junit_pass_pattern.match(output)
       if match[1] != "0" 

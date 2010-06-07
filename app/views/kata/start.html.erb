@@ -2,9 +2,9 @@
 <%= render :partial => 'javascript' -%>
 
 <% form_remote_tag :url => { :action   => 'run_tests',
-                             :dojo_id => @dojo.name,
-                             :kata_id => @kata.name,
-                             :avatar => @kata.avatar.name
+                             :dojo_name => @dojo.name,
+                             :kata_name => @kata.name,
+                             :avatar_name => @avatar.name
                            }, 
                              :before   => "preRunTests();",
                              :complete => "postRunTests();" do -%> 

@@ -2,7 +2,7 @@
 <script language="JavaScript"><!--
 function select_avatar(name)
 {
-  $('avatar').value = name;
+  $('avatar_name').value = name;
   document.chooseAvatar.submit();
 }
 //--></script>
@@ -17,20 +17,20 @@ function select_avatar(name)
 
 <input readonly 
        type="hidden"
-       name="dojo_id" 
-       id="dojo_id" 
+       name="dojo_name" 
+       id="dojo_name" 
        type="text" 
-       value="<%=h @dojo_id-%>">
+       value="<%=h @dojo.name-%>">
 
 <input readonly 
        type="hidden"
-       name="avatar" 
-       id="avatar" 
+       name="avatar_name" 
+       id="avatar_name" 
        type="text" 
        size="15" 
        value="">
 
-<h1><b><%= @dojo_id -%></b></h1>
+<h1><b><%= @dojo.name -%></b></h1>
 
 <table class="rounded panel" 
        cellspacing="6" 

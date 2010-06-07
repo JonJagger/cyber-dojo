@@ -4,31 +4,24 @@ class DojoController < ApplicationController
   protect_from_forgery :only => []
 
   def index
-    redirect_to :action => "choose_dojo", :id => params[:id]
+    redirect_to :action => "choose_dojo"
   end
 
   def choose_dojo
-    @dojos = Dir.entries('dojos').select { |name| !dot? name }
-	if @dojos.size == 1
-	  redirect_to :action => "choose_avatar", :dojo_id => @dojos[0]
+    @dojo_names = Dojo.names
+	if @dojo_names.size == 1
+	  redirect_to :action => "choose_avatar", :dojo_name => @dojo_names[0]
 	end
   end
 
   def choose_avatar
-    @dojo_id = params[:dojo_id]
+    @dojo = Dojo.new(params[:dojo_name])
     @avatars = Avatar.names
   end
 
   def choose_kata
-    @dojo_id = params[:dojo_id]
-    @avatar = params[:avatar]
-    @katas = Dir.entries("dojos/#{@dojo_id}").select { |name| !dot? name }
-  end
-
-private
-
-  def dot? name
-	name == '.' or name == '..'
+    @dojo = Dojo.new(params[:dojo_name])
+    @avatar_name = params[:avatar_name]
   end
 
 end

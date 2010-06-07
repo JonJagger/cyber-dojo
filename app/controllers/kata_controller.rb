@@ -2,38 +2,24 @@
 class KataController < ApplicationController
 
   def start
-    @dojo = Dojo.new(params[:dojo_id])
-    @kata = @dojo.kata(params[:kata_id], params[:avatar])
+    @dojo = Dojo.new(params[:dojo_name])
+    @kata = @dojo.new_kata(params[:kata_name])
+    @avatar = @kata.new_avatar(params[:avatar_name])
     @manifest = {}
-    @increments = @kata.avatar.read_most_recent(@manifest)
+    @increments = @avatar.read_most_recent(@manifest)
   end
 
   def run_tests
-    @dojo = Dojo.new(params[:dojo_id])
-    @kata = @dojo.kata(params[:kata_id], params[:avatar])
-    @kata.run_tests(load_files_from_page)
-    @increments = @kata.avatar.increments
+    @dojo = Dojo.new(params[:dojo_name])
+    @kata = @dojo.new_kata(params[:kata_name])
+    @avatar = @kata.new_avatar(params[:avatar_name])
+    @avatar.run_tests(load_files_from_page);
+    @increments = @avatar.increments
     respond_to do |format|
       format.js if request.xhr?
     end
   end
   
-  # TODO: MOVE
-  def see_all_increments
-    @dojo = Dojo.new(params[:id])
-    @kata = @dojo.kata(params[:kata_id], readonly = true)
-    render :layout => 'see_all_increments'
-  end
-
-  # TODO: MOVE
-  def see_one_increment
-    @dojo = Dojo.new(params[:id])
-    @kata = @dojo.kata(params[:kata_id], params[:avatar], readonly = true)
-    increment_number = params[:increment].to_i
-    @manifest = @kata.avatar.visible_files(increment_number)
-    @increments = [ @kata.avatar.increments[increment_number] ]
-  end
-
 private
 
   def load_files_from_page
