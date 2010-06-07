@@ -15,15 +15,14 @@ class SpyController < ApplicationController
   def one_dojo
     @dojo = Dojo.new(params[:dojo_name])
     @katas = []
+    # TODO: dojo should now its own katas
     Dir.entries("dojos/#{@dojo.name}").select { |entry| !dot? entry }.each do |kata_name|
-      # all kata folders have a kata_manifest.rb and . and ..
-      # if they have more assume there are some avatars in there
-      kata = Kata.new(@dojo, kata_name)
+      kata = @dojo.kata(kata_name)
       if kata.avatars.size > 0
         @katas << kata
       end
     end
-    
+    render :layout => 'spy_one_dojo'
   end
 
 private

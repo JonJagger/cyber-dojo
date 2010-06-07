@@ -7,8 +7,37 @@
 
   <% @katas.each do |kata| -%>
   <tr>
-   <td>
+   <td class="rounded panel">
      <%= kata.name -%>
+
+     <table>
+       <% kata.avatars.each do |avatar| -%>
+       <tr>
+
+         <td nowrap>
+           <%= avatar_image(avatar.name) {|i| i} -%>
+           <%= avatar_image(avatar.name) {|i| i} -%>
+         </td>
+
+         <td>
+           <table>
+            <tr>
+              <% avatar.increments.reverse.each do |increment| -%>
+              <td>
+                <a class="<%= increment[:prediction]-%>_prediction <%= increment[:outcome] -%> rounded increment" >
+                  &thinsp;
+                  <span></span>
+                </a>
+              <td>
+              <% end -%>
+            </tr>
+          </table>
+        </td>
+
+       </tr>
+       <% end -%>
+      </table>
+
    </td>
   </tr>
    <% end -%>

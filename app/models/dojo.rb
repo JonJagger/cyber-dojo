@@ -13,6 +13,8 @@ class Dojo
     Kata.new(self, kata_name, avatar_name, readonly)
   end
 
+  #TODO def katas - dojo should know its own katas
+
   def folder
     'dojos' + '/' + name
   end
