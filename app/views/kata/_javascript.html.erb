@@ -108,7 +108,7 @@ function renameFile(event)
   // just use hidden textareas in code below
   $(current_filename).value = $('editor').value;
 
-  var newname = trim(prompt("Rename " + filename + " to: ", ""));
+  var newname = trim(prompt("Rename " + filename + " to: ", filename));
   if (newname == null)
     return; // Cancelled
 
@@ -117,7 +117,13 @@ function renameFile(event)
     alert("Nothing entered: rename abandoned");
     return;
   }
-   
+
+  if (newname == filename)
+  {
+    // they changed their mind
+    return;
+  }
+
   if (fileAlreadyExists(newname))
   {
     alert("CyberDojo cannot rename " +

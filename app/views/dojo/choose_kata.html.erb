@@ -30,7 +30,18 @@ function choose_kata(id)
        type="text" 
        value="">
 
-<h2><b>Please select your Kata</b></h2>
+<h1><b><%= @dojo_id -%>
+
+<img alt="<%=@avatar-%>" 
+     class="avatar box" 
+     src="/images/avatars/<%=@avatar-%>.jpg"
+     title="<%=@avatar.humanize-%>" />
+<img alt="<%=@avatar-%>" 
+     class="avatar box" 
+     src="/images/avatars/<%=@avatar-%>.jpg"
+     title="<%=@avatar.humanize-%>" />
+
+<h2><i>Please select your Kata</i></h2>
 
 <table cellspacing="4" 
        class="rounded panel">

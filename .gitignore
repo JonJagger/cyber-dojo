@@ -2,9 +2,9 @@
 log/*
 tmp/**/*
 dojos/**
-!dojos/My\ Virtual\ Dojo/
-!dojos/My\ Virtual\ Dojo/**
-!dojos/NDC\ Dojo/
-!dojos/NDC\ Dojo/**
+!dojos/My\ Virtual\ CyberDojo/
+!dojos/My\ Virtual\ CyberDojo/**
+!dojos/NDC\ CyberDojo/
+!dojos/NDC\ CyberDojo/**
 !dojos/*/*/kata_manifest.rb
 
