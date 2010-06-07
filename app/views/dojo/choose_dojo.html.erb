@@ -1,6 +1,6 @@
 
 <script language="JavaScript"><!--
-function select_dojo(id)
+function select_CyberDojo(id)
 {
   $('dojo_id').value = id;
   document.chooseDojo.submit();
@@ -22,7 +22,7 @@ function select_dojo(id)
        type="text" 
        value="<%=h @dojo_id-%>">
 
-<h2><b>Select your dojo</b></h2>
+<h2><b>Please select your CyberDojo</b></h2>
 
 <table cellspacing="4" 
        class="rounded panel">
@@ -30,7 +30,7 @@ function select_dojo(id)
   <tr>
     <td>
       <input type="button" 
-             onClick='select_dojo("<%=dojo-%>");'
+             onClick='select_CyberDojo("<%=dojo-%>");'
              value="<%=dojo-%>">
     </td>
   </tr>
