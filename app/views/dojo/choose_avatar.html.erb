@@ -25,15 +25,15 @@ function select_avatar(name)
        value="">
 
 <h1><b><%= @dojo_id -%></b></h1>
-<h2><i>Please select your laptop Avatar</i></h2>
 
-<table cellspacing="4">
-
+<table class="rounded panel" 
+       cellspacing="6" 
+       cellpadding="3">
   <tr>
-    <td class="rounded panel">
+    <td>
       <% chunks = chunk_array(@avatars.sort, 4) -%>
-      <table cellpadding="7">
-      <% chunks.each do |chunk| -%>
+      <table>
+        <% chunks.each do |chunk| -%>
         <tr>
         <% chunk.each do |avatar| -%>
            <td>
@@ -54,8 +54,9 @@ function select_avatar(name)
       </table>    
     </td>
   </tr>
-
 </table>
+
+<h2><i>Click your laptop Avatar...</i></h2>
 
 </form>
 

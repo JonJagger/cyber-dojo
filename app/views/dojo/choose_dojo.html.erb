@@ -22,11 +22,11 @@ function select_CyberDojo(id)
        type="text" 
        value="<%=h @dojo_id-%>">
 
-<h1><b>Welcome</b></h1>
-<h2><i>Please select your CyberDojo</i></h2>
+<h1><b>Welcome to CyberDojo</b></h1>
 
-<table cellspacing="4" 
-       class="rounded panel">
+<table class="rounded panel" 
+       cellspacing="6"
+       cellpadding="3">
   <% @dojos.sort.each do |dojo| -%>
   <tr>
     <td>
@@ -37,6 +37,8 @@ function select_CyberDojo(id)
   </tr>
   <% end -%>
 </table>
+
+<h2><i>Click yours...</i></h2>
 
 </form>
 

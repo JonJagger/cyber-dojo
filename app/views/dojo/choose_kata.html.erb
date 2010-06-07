@@ -30,7 +30,7 @@ function choose_kata(id)
        type="text" 
        value="">
 
-<h1><b><%= @dojo_id -%>
+<h1><b><%= @dojo_id -%></b></h1>
 
 <img alt="<%=@avatar-%>" 
      class="avatar box" 
@@ -41,10 +41,9 @@ function choose_kata(id)
      src="/images/avatars/<%=@avatar-%>.jpg"
      title="<%=@avatar.humanize-%>" />
 
-<h2><i>Please select your Kata</i></h2>
-
-<table cellspacing="4" 
-       class="rounded panel">
+<table class="rounded panel"
+       cellspacing="6"
+       cellpadding="3">
   <% @katas.sort.each do |kata| -%>
   <tr>
     <td>
@@ -55,6 +54,8 @@ function choose_kata(id)
   </tr>
   <% end -%>
 </table>
+
+<h2><i>Click your kata....</i></h2>
 
 </form>
 
