@@ -1,16 +1,16 @@
 
 class Kata
 
-  def initialize(dojo, id, name = "", readonly = false)
+  def initialize(dojo, kata_name, avatar_name = "", readonly = false)
     @dojo = dojo
-    @id = id
+    @name = kata_name
     read_manifest
-    @avatar = Avatar.new(self, name) if name != ""
+    @avatar = Avatar.new(self, avatar_name) if avatar_name != ""
     @readonly = readonly
   end
 
-  def id
-    @id.to_s
+  def name
+    @name.to_s
   end
 
   def readonly
@@ -67,7 +67,7 @@ class Kata
   end
 
   def folder
-    @dojo.folder + '/' + id
+    @dojo.folder + '/' + name
   end
 
 private

@@ -18,20 +18,18 @@ class KataController < ApplicationController
     end
   end
   
+  # TODO: MOVE
   def see_all_increments
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], readonly = true)
     render :layout => 'see_all_increments'
   end
 
+  # TODO: MOVE
   def see_one_increment
     @dojo = Dojo.new(params[:id])
     @kata = @dojo.kata(params[:kata_id], params[:avatar], readonly = true)
     increment_number = params[:increment].to_i
-    #@title = "Cyber-Dojo=" + @dojo.id + 
-    #   ", Kata=" + @kata.id + 
-    #   ", Avatar=" + @kata.avatar.name +
-    #   ", Increment=" + increment_number.to_s
     @manifest = @kata.avatar.visible_files(increment_number)
     @increments = [ @kata.avatar.increments[increment_number] ]
   end

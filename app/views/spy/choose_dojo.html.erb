@@ -1,13 +1,13 @@
 
 <script language="JavaScript"><!--
-function select_CyberDojo(id)
+function select_CyberDojo(name)
 {
-  $('dojo_id').value = id;
+  $('dojo_name').value = name;
   document.chooseDojo.submit();
 }
 //--></script>
 
-<form name="chooseDojo" action="/dojo/choose_avatar">
+<form name="chooseDojo" action="/spy/one_dojo">
 
 <noscript>
   &nbsp;
@@ -17,28 +17,28 @@ function select_CyberDojo(id)
 
 <input readonly 
        type="hidden"
-       name="dojo_id" 
-       id="dojo_id" 
+       name="dojo_name" 
+       id="dojo_name" 
        type="text" 
        value="">
 
-<h1><b>Welcome to CyberDojo</b></h1>
+<h1><b>Spy on a CyberDojo</b></h1>
 
 <table class="rounded panel" 
        cellspacing="6"
        cellpadding="3">
-  <% @dojos.sort.each do |dojo| -%>
+  <% @dojo_names.sort.each do |dojo_name| -%>
   <tr>
     <td>
       <input type="button" 
-             onClick='select_CyberDojo("<%=dojo-%>");'
-             value="<%=dojo-%>">
+             onClick='select_CyberDojo("<%=dojo_name-%>");'
+             value="<%=dojo_name-%>">
     </td>
   </tr>
   <% end -%>
 </table>
 
-<h2><i>Click yours...</i></h2>
+<h2><i>Click one...</i></h2>
 
 </form>
 

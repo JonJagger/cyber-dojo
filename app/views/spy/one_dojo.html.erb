@@ -1,0 +1,18 @@
+
+<h2><b>Spying on <%= @dojo.name -%></b></h2>
+
+<table class="rounded panel" 
+       cellspacing="6"
+       cellpadding="3">
+
+  <% @katas.each do |kata| -%>
+  <tr>
+   <td>
+     <%= kata.name -%>
+   </td>
+  </tr>
+   <% end -%>
+
+</table>
+
+

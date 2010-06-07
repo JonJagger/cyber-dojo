@@ -17,7 +17,6 @@ class DojoController < ApplicationController
   def choose_avatar
     @dojo_id = params[:dojo_id]
     @avatars = Avatar.names
-    @title = "Cyber Dojo"
   end
 
   def choose_kata

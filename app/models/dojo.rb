@@ -1,20 +1,20 @@
 
 class Dojo
 
-  def initialize(id)
-    @id = id
+  def initialize(name)
+    @name = name
   end
 
-  def id
-    @id.to_s
+  def name
+    @name
   end
 
-  def kata(id, name = "", readonly = false)
-    Kata.new(self, id, name, readonly)
+  def kata(kata_name, avatar_name = "", readonly = false)
+    Kata.new(self, kata_name, avatar_name, readonly)
   end
 
   def folder
-    'dojos' + '/' + id
+    'dojos' + '/' + name
   end
 
 end
