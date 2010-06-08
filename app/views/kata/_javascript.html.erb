@@ -4,6 +4,21 @@
 
 <script language="javascript" type="text/javascript">
 
+document.onkeypress = function(e) 
+{
+  var code;
+  if (!e) 
+    var e = window.event;
+
+  if (e.keyCode) 
+    code = e.keyCode;
+  else if (e.which) 
+    code = e.which;
+
+  if (e.altKey && code == 114) 
+    runTests(); // Alt-t
+}
+
 var move = false;
 
 function getCaretPos(control) 
@@ -231,13 +246,18 @@ function setupFileEntryMenu()
   })
 }
 
+function runTests()
+{
+  document.getElementById('play').click();
+}
+
 function setupEditorMenu()
 {
   var editorMenuItems = [
     {
       name: 'Run the tests  ',
       className: 'run-the-tests', 
-      callback: function(e) { document.getElementById('play').click(); }
+      callback: function(e) { runTests(); }
     }
   ]
 
