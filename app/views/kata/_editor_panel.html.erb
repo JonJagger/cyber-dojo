@@ -4,9 +4,8 @@
     <td id="file_manager" 
         class="rounded panel">
       <%= render :partial => 'increments_panel' -%>
-      <%= @dojo.name -%>
-      <br/>
-      <%= @kata.name -%>
+      <span class="identifier"><%= @dojo.name -%></span>      
+      <span class="identifier"><%= @kata.name -%></span>
       <%= render :partial => 'avatar_buttons' -%>
       <%= render :partial => 'file_list' -%>
 

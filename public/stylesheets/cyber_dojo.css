@@ -4,7 +4,7 @@
   margin-top: 0em;
   margin-left: 1em;
   border-style: none;
-  background-color: #FFE4C4; /*bisque*/
+  background-color: #FEF5CA; /*sandbox */
   color: green;
 }
 
@@ -21,7 +21,7 @@
 
 .panel
 {    
-  background-color: #FEF5CA; /*sandbox */
+  background-color: #FFE4C4; /*bisque*/
   margin: 0.3em;
   padding: 0.3em;
 }
@@ -60,6 +60,15 @@
   background-color: #CFF; 
   color: #000;
   text-align: left;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+.identifier
+{
+  margin-left: 0.3em;
+  padding-left: 0.3em;
+  display: block;  
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
@@ -138,7 +147,6 @@
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
-  font-size: 2em;
 }
 
 
