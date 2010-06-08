@@ -373,9 +373,20 @@ function fileAlreadyExists(filename)
   return allFilenames().indexOf(filename) != -1;
 }
 
+function random8() 
+{
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ'.split('');
+    var str = '';
+    for (var i = 0; i < 3; i++) 
+    {
+        str += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return str;
+}
+
 function newFile()
 {
-  var filename = 'untitled_' + allFilenames().length;
+  var filename = 'untitled_' + random8();
   // Create new hidden textarea (to save to before submitting)
   var ta = new Element("textarea", { id:filename, name:filename });
   $('visible_files_container').appendChild(ta);
