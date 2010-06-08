@@ -17,10 +17,6 @@ class Dojo
     Dir.entries(folder).select { |name| !dot? name }
   end
 
-  def kata(kata_name, avatar_name = "", readonly = false) # DROP
-    Kata.new(self, kata_name, avatar_name, readonly)
-  end
-
   def new_kata(name)
     Kata.new(self, name) 
   end

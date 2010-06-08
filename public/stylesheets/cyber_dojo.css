@@ -33,9 +33,9 @@
   padding: 0.15em; 
 }
 
-.failed  { background-color: #F33; }
-.passed  { background-color: #3C3; }
-.error   { background-color: yellow;  }
+.failed  { background-color: #F33; }  
+.passed  { background-color: #3C3; }  /* green */
+.error   { background-color: #FF0; }  /* yellow */
 .timeout { background-color: #3FF; }  /*blue*/
 
 /* FAKE TOOL TIPS
@@ -133,5 +133,27 @@
   visibility: hidden; 
   display: none; 
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#spy_cell
+{
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  display: block;
+}
+
+#spy_cell.new { border: 3px solid black; }
+
+#spy_cell.old_failed { background-image: url(failed_stripe.png); }
+#spy_cell.old_passed { background-image: url(passed_stripe.png); }
+#spy_cell.old_error  { background-image: url(error_stripe.png); }
+
+#spy_cell.new_failed { background-color: #F33; }
+#spy_cell.new_passed { background-color: #3C3; }
+#spy_cell.new_error  { background-color: #FF0; }
+
 
 

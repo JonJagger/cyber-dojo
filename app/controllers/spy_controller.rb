@@ -17,6 +17,9 @@ class SpyController < ApplicationController
     render :layout => 'spy_one_dojo'
   end
 
+  def demo
+  end
+
 end
 
 

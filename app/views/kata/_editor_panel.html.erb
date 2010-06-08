@@ -3,12 +3,12 @@
   <tr valign="top">
     <td id="file_manager" 
         class="rounded panel">
+      <%= render :partial => 'increments_panel' -%>
       <%= @dojo.name -%>
       <br/>
       <%= @kata.name -%>
       <%= render :partial => 'avatar_buttons' -%>
       <%= render :partial => 'file_list' -%>
-      <%= render :partial => 'increments_panel' -%>
 
 
     </td>

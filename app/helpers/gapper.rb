@@ -1,80 +1,59 @@
 
 # function to insert :gap values into an avatars increments
 # to reflect order of increments across all avatars
-# For example, alligators, then lions, then lions, then alligators...
-# Alligators: X     X
-# Lions     :   X X
+# For example, pandas, then lions, then lions, then pandas...
+# Pandas  Lions
+# X       .
+# .       X
+# X       .
+# .       X 
 
-def gapper(all)
 
-  avs = []
-  all.each do |avatar|
-    avs << MockAvatar.new(avatar.name, avatar.increments)
-  end
-  mc = MockKata.new(avs)
+def gapper(dojo)
+      
+  all_incs, all_names = [], Set.new()
+  dojo.katas.each {|kata|
+    kata.avatars.each {|avatar|
+      all_names.add(avatar.name)
+      all_incs += marked_increments(avatar)
+    }
+  }
 
-  # record avatar for each increment to reform avatar groups later
-  mc.avatars.each do |avatar|
-    avatar.increments.each {|inc| inc[:avatar] = avatar.name }
-  end
-
-  # merge all increments across avatars
-  flat = []
-  mc.avatars.each {|avatar| avatar.increments.each { |inc| flat << inc } }
+  all_incs.sort! {|lhs,rhs| moment(lhs) <=> moment(rhs) }
   
-  # sort based on :time
-  flat.sort! {|lhs,rhs| Time.utc(*lhs[:time]) <=> Time.utc(*rhs[:time]) }
-
-  # record ordinal value across all avatars
-  flat.each_with_index {|h,n| h[:ordinal] = n }
-
-  # regroup by :avatar
-  flat = flat.group_by {|inc| inc[:avatar] }
-
-  # calculate ordinal gaps
-  flat.each do |avatar,increments|
-    prev = -1
-    increments.each do |inc|
-      inc[:gap] = inc[:ordinal] - prev - 1
-      prev = inc[:ordinal]
-    end
-  end
-
-  result = []
-  flat.each do |avatar,increments|
-    result << MockAvatar.new(avatar,increments)
-  end
-  result
-
+  all_bubbles = {}
+  all_names.each {|name|
+    bubbles, previous = [], nil
+    all_incs.each{|inc|
+      if inc[:avatar] == name
+         bubbles << 'new_' + inc[:outcome].to_s
+         previous = inc[:outcome]
+      elsif previous == nil
+        bubbles << 'no_previous'
+      else
+        bubbles << 'old_' + previous.to_s
+      end
+    }
+    all_bubbles[name] = bubbles      
+  }
+  all_bubbles
+  # { 'koalas' => [ 'no_previous', 'new_failed', 'old_failed', 'new_error'  ],
+  #   'pandas' => [ 'new_failed',  'old_failed', 'new_passed', 'old_passed' ],
+  # }
 end
 
-class MockAvatar
-  def initialize(name,incs)
-    @name,@incs = name,incs
-  end
 
-  def name
-    @name
-  end
-
-  def increments
-    @incs
-  end
-
-  def to_s
-    inspect
-  end
-
+def marked_increments(avatar)
+  incs = avatar.increments
+  incs.each {|inc|
+    inc[:avatar] = avatar.name
+  }
+  incs
 end
 
-class MockKata
-  def initialize(avatars)
-    @avatars = avatars
-  end
 
-  def avatars
-    @avatars
-  end
+def moment(at)
+  Time.utc(*at[:time])
 end
 
 

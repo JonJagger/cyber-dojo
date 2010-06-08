@@ -45,8 +45,7 @@ class Kata
     result = []
     Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
-      # TODO use new_avatar above
-      result << Avatar.new(self, avatar_name) if File.exists?(path)
+      result << new_avatar(avatar_name) if File.exists?(path)
     end
     result
   end
