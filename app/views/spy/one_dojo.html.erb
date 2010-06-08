@@ -2,30 +2,28 @@
 <h2><b>Spying on <%= @dojo.name -%></b></h2>
 
 <% gapped = gapper(@dojo) -%>
-<table cellspacing="0" cellpadding="0">
+<div id="spy">
+<table cellspacing="0" 
+       cellpadding="0">
+  <% gapped.each do |avatar_name,increments| -%>
   <tr>
-    <% gapped.each do |avatar_name,increments| -%>
+    <td><%= avatar_name -%>&nbsp;</td>
     <td>
-      <table class="rounded panel"
-             cellspacing="3"
-             cellpadding="2">
+      <table cellspacing="2"
+             cellpadding="0">
         <tr>
-          <td><%= avatar_image(avatar_name) {|i| i} -%>
-              <%= avatar_image(avatar_name) {|i| i} -%>
-          </td>
-        </tr>
-        <% increments.reverse.each do |inc| -%>
-        <tr>
+          <% increments.reverse.each do |inc| -%>
           <td>
             <span id="spy_cell" 
                   class="<%=inc-%>">&nbsp;</span>
           </td>
+          <% end -%>
         </tr>
-        <% end -%>
       </table>
     </td>
-    <% end -%>
   </tr>
+  <% end -%>
 </table>
+</div>
 
 
