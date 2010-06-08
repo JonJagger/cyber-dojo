@@ -28,7 +28,7 @@ module TestRunner
     # an infinite loop and kill the thread
     if sandbox_thread.status != false 
       sandbox_thread.kill 
-      run_tests_output = [ "execution terminated after #{kata.max_run_tests_duration} seconds" ]
+      run_tests_output = [ "execution terminated after #{avatar.kata.max_run_tests_duration} seconds" ]
     end
 
     run_tests_output
