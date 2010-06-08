@@ -7,6 +7,11 @@ class DojoController < ApplicationController
     redirect_to :action => "choose_dojo"
   end
 
+  # Note that I choose in the following order
+  #   dojo -> avatar -> kata
+  # to minimize the keystrokes needed to finish a kata
+  # and start another one (select).
+
   def choose_dojo
     @dojo_names = Dojo.names
 	if @dojo_names.size == 1
@@ -24,9 +29,9 @@ class DojoController < ApplicationController
     @avatar_name = params[:avatar_name]
   end
 
-  # Note that I choose in the following order
-  #   dojo -> avatar -> kata
-  # to minimize the keystrokes needed to finish a kata
-  # and start another one (select).
+  def sound_driver_rotate_alarm
+    @duration = params[:duration] || 240
+    render :layout => 'sound_driver_rotate_alarm'
+  end
 
 end

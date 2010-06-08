@@ -120,6 +120,15 @@ or in any manifest.rb file as part of the inspected ruby object:
   Default to 4 spaces.
 
 
+Keyboard Driver Rotate Alarm
+============================
+The way I run a dojo is to open 
+http://localhost:3000/dojo/sound_rotate_driver_alaram 
+in a tab on the CyberDojo server. This will play a bleeting-lamb sound
+every 4 minutes. When this sounds the keyboard driver at each laptop 
+moves to a new laptop and takes up a non-driver role.
+
+
 What will work and what won't work
 ==================================
 After selecting an animal avatar (eg Pandas) the initial virtual dojo is currently 
