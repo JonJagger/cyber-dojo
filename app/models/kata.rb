@@ -61,10 +61,13 @@ private
     @hidden_filenames = []
 	@hidden_pathnames = []
 
-    @manifest = eval IO.read(folder + '/' + 'kata_manifest.rb')
-    @manifest.each do |key,value|
-      if key == :file_set_names
-        read_file_sets(value)
+    path = folder + '/' + 'kata_manifest.rb'
+    if File.exists?(path)
+      @manifest = eval IO.read(path)
+      @manifest.each do |key,value|
+        if key == :file_set_names
+          read_file_sets(value)
+        end
       end
     end
     #@visible['run_tests_output'] = { :content => "" }
