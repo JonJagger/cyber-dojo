@@ -28,15 +28,11 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-.increment 
-{ 
-  padding: 0.15em; 
-}
+.increment { padding: 0.15em; }
 
-.failed  { background-color: #F33; }  
+.failed  { background-color: #F33; }  /* red */
 .passed  { background-color: #3C3; }  /* green */
 .error   { background-color: #FF0; }  /* yellow */
-.timeout { background-color: #3FF; }  /*blue*/
 
 /* FAKE TOOL TIPS
  * Instead of title="tool-tip" I use a hidden nested span
@@ -77,10 +73,7 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-#new_file
-{
-  font-size: 8pt;
-}
+#new_file { font-size: 8pt; }
 
 #file_manager 
 { 
@@ -90,10 +83,7 @@
   font-size: 12pt; 
 }
 
-#radioFilename
-{
-  white-space: nowrap;
-}
+#radioFilename { white-space: nowrap; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 

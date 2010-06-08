@@ -5,7 +5,7 @@ module RunTestsOutputParser
     output = output.to_s
     inc = { :info => output.split("\n").join("<br/>") }
     if Regexp.new("execution terminated after ").match(output)
-      inc[:outcome] = :timeout
+      inc[:outcome] = :failed
     else
       inc[:outcome] = eval "parse_#{avatar.kata.unit_test_framework}(output)"
     end
