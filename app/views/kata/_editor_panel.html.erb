@@ -1,21 +1,13 @@
 
-<table cellpadding="0">
-  <tr valign="top">
-    <td id="file_manager" 
-        class="rounded panel">
-      <%= render :partial => 'increments_panel' -%>
-      <span class="identifier"><%= @dojo.name -%></span>      
-      <span class="identifier"><%= @kata.name -%></span>
-      <%= render :partial => 'avatar_buttons' -%>
-      <%= render :partial => 'file_list' -%>
+<textarea name="editor" 
+          id="editor" 
+          class="rounded panel"
+          cols="80" 
+          rows="34" >
+</textarea>
 
-    </td>
-    <td>
-      <%= render :partial => 'editor' -%>
-    </td>
-  </tr>
-</table>
-
-<%= render :partial => 'hidden_text_areas' -%>
-
+<script type="text/javascript">
+  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
+  TabEntry.enable('editor');
+</script>
 

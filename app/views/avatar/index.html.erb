@@ -32,9 +32,7 @@ function select_avatar(name)
 
 <h1><b><%= @dojo.name -%></b></h1>
 
-<table class="rounded panel" 
-       cellspacing="6" 
-       cellpadding="3">
+<table class="rounded panel" >
   <tr>
     <td>
       <% chunks = chunk_array(@avatars.sort, 4) -%>
@@ -43,16 +41,16 @@ function select_avatar(name)
         <tr>
         <% chunk.each do |avatar| -%>
            <td>
-             <img alt="<%=avatar-%>" 
-                  class="avatar box" 
-                  src="/images/avatars/<%=avatar.downcase-%>.jpg"
-                  title="<%=avatar.humanize-%>"
-                  onClick='select_avatar("<%=avatar.downcase-%>");' />
-             <img alt="<%=avatar-%>" 
-                  class="avatar box" 
-                  src="/images/avatars/<%=avatar.downcase-%>.jpg"
-                  title="<%=avatar.humanize-%>"
-                  onClick='select_avatar("<%=avatar.downcase-%>");' />
+             <div id="avatar_pair">
+               <img alt="<%=avatar-%>" 
+                    src="/images/avatars/<%=avatar.downcase-%>.jpg"
+                    title="<%=avatar.humanize-%>"
+                    onClick='select_avatar("<%=avatar.downcase-%>");' />
+               <img alt="<%=avatar-%>" 
+                    src="/images/avatars/<%=avatar.downcase-%>.jpg"
+                    title="<%=avatar.humanize-%>"
+                    onClick='select_avatar("<%=avatar.downcase-%>");' />
+             </div>
            </td>
         <% end -%>
         </tr>

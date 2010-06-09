@@ -6,7 +6,7 @@ class KataController < ApplicationController
     @avatar_name = params[:avatar_name]
   end
 
-  def start
+  def view
     @dojo = Dojo.new(params[:dojo_name])
     @kata = @dojo.new_kata(params[:kata_name])
     @avatar = @kata.new_avatar(params[:avatar_name])

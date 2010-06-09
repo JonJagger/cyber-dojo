@@ -1,0 +1,21 @@
+
+<table cellpadding="0">
+  <tr valign="top">
+    <td id="file_manager" 
+        class="rounded panel">
+      <%= render :partial => 'increments_panel' -%>
+      <span class="identifier"><%= @dojo.name -%></span>      
+      <span class="identifier"><%= @kata.name -%></span>
+      <%= render :partial => 'avatar_pair' -%>
+      <%= render :partial => 'filenames_panel' -%>
+
+    </td>
+    <td>
+      <%= render :partial => 'editor_panel' -%>
+    </td>
+  </tr>
+</table>
+
+<%= render :partial => 'hidden_text_areas' -%>
+
+

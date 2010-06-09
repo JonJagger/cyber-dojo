@@ -7,7 +7,7 @@ function choose_kata(kata_name)
 }
 //--></script>
 
-<form name="chooseKata" action="/kata/start"">
+<form name="chooseKata" action="/kata/view"">
 
 <input readonly 
        type="hidden"
@@ -32,14 +32,14 @@ function choose_kata(kata_name)
 
 <h1><b><%= @dojo.name -%></b></h1>
 
-<img alt="<%=@avatar_name-%>" 
-     class="avatar box" 
-     src="/images/avatars/<%=@avatar_name-%>.jpg"
-     title="<%=@avatar_name.humanize-%>" />
-<img alt="<%=@avatar_name-%>" 
-     class="avatar box" 
-     src="/images/avatars/<%=@avatar_name-%>.jpg"
-     title="<%=@avatar_name.humanize-%>" />
+<div id="avatar_pair">
+  <img alt="<%=@avatar_name-%>" 
+       src="/images/avatars/<%=@avatar_name-%>.jpg"
+       title="<%=@avatar_name.humanize-%>" />
+  <img alt="<%=@avatar_name-%>" 
+       src="/images/avatars/<%=@avatar_name-%>.jpg"
+       title="<%=@avatar_name.humanize-%>" />
+</div>
 
 <table class="rounded panel"
        cellspacing="6"
