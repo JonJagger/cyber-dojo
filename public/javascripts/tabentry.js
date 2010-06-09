@@ -22,13 +22,9 @@
 ***********************************************************/
 
 var TabEntry = new function() {
-	this.enable = function(inp, chk) {
+	this.enable = function(inp) {
 		if (!inp) return;
 		inp = $(inp);
-		if (chk) {
-			chk = $(chk);
-			inp.tabEntryCheckbox = chk;
-		}
 		if (inp.selectionStart) {
 			Event.observe(inp, 'keydown', downTab);
 			Event.observe(inp, 'keyup', upTab);
@@ -39,28 +35,17 @@ var TabEntry = new function() {
 		}
 	}
 	var downTab = function(evt) {
-		var input = Event.element(evt);
-		if ( (input.tabEntryCheckbox) && (input.tabEntryCheckbox.checked == false) ) {
-			return;
-		}
 		if (evt.keyCode == 9) {
 			Event.stop(evt);
 		}
 	}
 	var upTab = function(evt) {
-		var input = Event.element(evt);
-		if ( (input.tabEntryCheckbox) && (input.tabEntryCheckbox.checked == false) ) {
-			return;
-		}
 		if (evt.keyCode == 9) {
 			Event.stop(evt);
 		}
 	}
 	var checkTab = function(evt) {
 		var input = Event.element(evt);
-		if ( (input.tabEntryCheckbox) && (input.tabEntryCheckbox.checked == false) ) {
-			return;
-		}
 		if (evt.keyCode == 9) {
 			var top = input.scrollTop;
 			SelectionRange.insert(input, input.tab);
