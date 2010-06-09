@@ -1,6 +1,11 @@
 
 class KataController < ApplicationController
 
+  def index
+    @dojo = Dojo.new(params[:dojo_name])
+    @avatar_name = params[:avatar_name]
+  end
+
   def start
     @dojo = Dojo.new(params[:dojo_name])
     @kata = @dojo.new_kata(params[:kata_name])
