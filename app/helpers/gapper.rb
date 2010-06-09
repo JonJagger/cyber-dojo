@@ -1,80 +1,87 @@
 
 # function to insert :gap values into an avatars increments
 # to reflect order of increments across all avatars
-# For example, alligators, then lions, then lions, then alligators...
-# Alligators: X     X
-# Lions     :   X X
+# For example, pandas, then lions, then lions, then pandas...
+# Pandas  Lions
+# X       .
+# .       X
+# X       .
+# .       X 
 
-def gapper(all)
 
-  avs = []
-  all.each do |avatar|
-    avs << MockAvatar.new(avatar.name, avatar.increments)
-  end
-  mc = MockKata.new(avs)
+def gapper(dojo)
+      
+  all_incs, all_names = [], Set.new()
+  dojo.katas.each {|kata|
+    kata.avatars.each {|avatar|
+      all_names.add(avatar.name)
+      all_incs += marked_increments(avatar)
+    }
+  }
 
-  # record avatar for each increment to reform avatar groups later
-  mc.avatars.each do |avatar|
-    avatar.increments.each {|inc| inc[:avatar] = avatar.name }
-  end
-
-  # merge all increments across avatars
-  flat = []
-  mc.avatars.each {|avatar| avatar.increments.each { |inc| flat << inc } }
+  all_incs.sort! {|lhs,rhs| moment(lhs) <=> moment(rhs) }
   
-  # sort based on :time
-  flat.sort! {|lhs,rhs| Time.utc(*lhs[:time]) <=> Time.utc(*rhs[:time]) }
+  all_bubbles = {}
+  all_names.each {|name|
+    bubbles, previous = [], nil
+    all_incs.each {|inc|
+      if inc[:avatar] == name
+         bubbles << 'new_' + inc[:outcome].to_s
+         previous = inc[:outcome]
+      elsif previous == nil
+        bubbles << 'no_previous'
+      else
+        bubbles << 'old_' + previous.to_s
+      end
+    }
+    all_bubbles[name] = bubbles.reverse   
+  }
+  all_bubbles
+  # eg
+  # { 'koalas' => [ 'new_error',  'old_failed', 'new_failed, 'no_previous' ], 
+  #   'pandas' => [ 'old_passed', 'new_passed', 'old_failed', new_failed'  ],
+  # }
+end
 
-  # record ordinal value across all avatars
-  flat.each_with_index {|h,n| h[:ordinal] = n }
 
-  # regroup by :avatar
-  flat = flat.group_by {|inc| inc[:avatar] }
+def marked_increments(avatar)
+  incs = avatar.increments
+  incs.each {|inc|
+    inc[:avatar] = avatar.name
+  }
+  incs
+end
 
-  # calculate ordinal gaps
-  flat.each do |avatar,increments|
-    prev = -1
-    increments.each do |inc|
-      inc[:gap] = inc[:ordinal] - prev - 1
-      prev = inc[:ordinal]
+
+def moment(at)
+  Time.utc(*at[:time])
+end
+
+
+def shared(gapped)  
+  # In a single increment column all avatars except one 
+  # have an old outcome, and one avatar has a new outcome.
+  # NB: This will change if a time-period increment is introduced.
+  # The run-test outcomes dominate each other in the follow chain
+  outcomes = [ :new_failed, :old_failed, 
+               :new_error,  :old_error,
+               :new_passed ]
+  # There is no entry for old_passed as that cannot be the shared
+  # outcome since there must be at least one new outcome.
+  rgy = []
+  gapped.inject([]) {|s,kv| s << kv[1]}.transpose.each do |all| 
+    outcomes.each do |outcome|
+      if contains(all, outcome)
+        rgy << outcome
+        break
+      end
     end
   end
-
-  result = []
-  flat.each do |avatar,increments|
-    result << MockAvatar.new(avatar,increments)
-  end
-  result
-
+  rgy
 end
 
-class MockAvatar
-  def initialize(name,incs)
-    @name,@incs = name,incs
-  end
 
-  def name
-    @name
-  end
-
-  def increments
-    @incs
-  end
-
-  def to_s
-    inspect
-  end
-
+def contains(all, find)
+  return all.select {|one| one.index(find.to_s)}.size > 0
 end
-
-class MockKata
-  def initialize(avatars)
-    @avatars = avatars
-  end
-
-  def avatars
-    @avatars
-  end
-end
-
 

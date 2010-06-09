@@ -6,11 +6,13 @@
   <% # from these hidden textareas and not from the main textarea editor.     -%>
   <div id="visible_files_container">
     <% @manifest[:visible_files].each do |filename,file| -%>
-    <textarea id="<%=filename-%>" 
+    <textarea cursorPos=""
+              id="<%=filename-%>" 
               name="<%=filename-%>"><%= h file[:content] -%></textarea> 
     <% end -%>
   </div>
 
+  <% # The server extracts each filename from between the semi-colons. -%>
   <textarea id="visible_filenames_container"
             name="visible_filenames_container">
     ;<% @manifest[:visible_files].each do |filename,file| -%><%=filename-%>;<% end -%>   

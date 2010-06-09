@@ -4,7 +4,7 @@
   margin-top: 0em;
   margin-left: 1em;
   border-style: none;
-  background-color: #FFE4C4; /*bisque*/
+  background-color: #FEF5CA; /*sandbox */
   color: green;
 }
 
@@ -21,31 +21,24 @@
 
 .panel
 {    
-  background-color: #FEF5CA; /*sandbox */
-  margin: 0.5em 0.5em 0.5em 0em;
-  padding: 0.5em;
+  background-color: #FFE4C4; /*bisque*/
+  margin: 0.3em;
+  padding: 0.3em;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-.increment 
-{ 
-  padding: 0.15em; 
-  font-size: 14pt;
-}
+.increment { padding: 0.15em; }
 
-
-
-.failed  { background-color: #F33; }
-.passed  { background-color: #3C3; }
-.error   { background-color: yellow;  }
-.timeout { background-color: #3FF; }  /*blue*/
+.failed  { background-color: #F33; }  /* red */
+.passed  { background-color: #3C3; }  /* green */
+.error   { background-color: #FF0; }  /* yellow */
 
 /* FAKE TOOL TIPS
  * Instead of title="tool-tip" I use a hidden nested span
  * as this allows me to insert newlines.
  */
-#inc.increment  
+#inc.increment
 {
   position: relative; /*this is the key*/
   z-index: 24; 
@@ -62,7 +55,7 @@
   font-size: 9pt;
   display: block;
   position: fixed;
-  top: 5em; left: 2em; width: auto;
+  bottom: 5em; left: 2em; width: auto;
   border: 1px solid #0CF;
   background-color: #CFF; 
   color: #000;
@@ -71,22 +64,37 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-#avatar_buttons
+.identifier
 {
-    white-space: nowrap;
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: 0.3em;
+  padding-left: 0.3em;
+  display: block;  
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
+#avatar_pair
+{
+    white-space: nowrap;
+    margin-left: auto;
+    margin-right: auto;
+    margin:0.3em; 
+    padding:0.3em;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#new_file { font-size: 8pt; }
+
 #file_manager 
 { 
-  padding: 0.5em; 
+  padding: 0.3em; 
   background-color: #FEF5CA;
   color: #686868;   
   font-size: 12pt; 
 }
+
+#radioFilename { white-space: nowrap; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
@@ -96,20 +104,21 @@
   padding: 0em;
   padding-left: 5px;
   margin: 0em;
-  margin-left: 40px;
-  font-size: 12pt;
+  margin-left: 40px; /* enough for line-numbers */
+  font-size: 11pt;
   font-family: monospace;
   font-weight: normal;
   color: white;
   background-color: #686868;
   border: 1px solid #666;
   border-right: none;
+  float: right;
 }
 
 .textarea_with_line_numbers
 {
   display: block;
-  font-size: 12pt;
+  font-size: 11pt;
   font-weight: 100;
   color: #686868;
   margin: 0;
@@ -125,5 +134,40 @@
   visibility: hidden; 
   display: none; 
 }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+
+#dashboard
+{
+  margin: 0.3em;
+  padding: 0.3em;
+  background-color: #FFE4C4; /*bisque*/
+  border: 1px solid #D8D8D8; /*light-gray*/
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+
+#dashboard_cell
+{
+  border: 1px solid #D8D8D8; /*light-gray*/
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  display: block;
+  padding: 0.1em;
+}
+
+#dashboard_cell.old_failed { background-image: url(failed_stripe.png); }
+#dashboard_cell.old_passed { background-image: url(passed_stripe.png); }
+#dashboard_cell.old_error  { background-image: url(error_stripe.png); }
+
+#dashboard_cell.new_failed { background-color: #F33; }
+#dashboard_cell.new_passed { background-color: #3C3; }
+#dashboard_cell.new_error  { background-color: #FF0; }
+
 
 

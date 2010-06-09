@@ -1,0 +1,7 @@
+
+{
+  :file_set_names => [ 'languages/C#',
+                       'katas/Prime Factors' ],
+}
+
+

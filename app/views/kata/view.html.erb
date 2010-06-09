@@ -1,0 +1,21 @@
+
+<%= render :partial => 'js_run_tests' -%>
+<%= render :partial => 'js_editor_menu' -%>
+<%= render :partial => 'js_line_numbers' -%>
+<%= render :partial => 'javascript' -%>
+
+<% form_remote_tag :url => { :action   => 'run_tests',
+                             :dojo_name => @dojo.name,
+                             :kata_name => @kata.name,
+                             :avatar_name => @avatar.name
+                           }, 
+                   :before   => "preRunTests();",
+                   :complete => "postRunTests();" do -%> 
+
+
+<%= render :partial => 'view_panel' -%>
+
+<% end -%>
+
+
+

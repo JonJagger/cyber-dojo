@@ -1,70 +1,44 @@
 
 <script language="JavaScript"><!--
-function select_avatar(name)
+function select_CyberDojo(dojo_name)
 {
-  $('avatar').value = name;
-  document.chooseAvatar.submit();
+  $('dojo_name').value = dojo_name;
+  document.chooseDojo.submit();
 }
 //--></script>
 
-<form name="chooseAvatar" action="/kata/start">
+<form name="chooseDojo" action="/avatar/index">
 
 <noscript>
- &nbsp;
- <h2><b>You must enable JavaScript.</b></h2>
- &nbsp;
+  &nbsp;
+  <h2><b>You must enable JavaScript.</b></h2>
+  &nbsp;
 </noscript>
 
-<table cellspacing="4">
+<input readonly 
+       type="hidden"
+       name="dojo_name" 
+       id="dojo_name" 
+       type="text" 
+       value="">
 
-  <tr>  
-    <td class="dojo panel box">
-      Enter the <i>kata-id</i>
-      <input name="kata_id" 
-             id="kata_id" 
-             type="text" 
-             size="5" 
-             value="<%=@kata_id-%>">
-      and click your avatar.
-    </td>  
-  </tr>
+<h1><b>Welcome to CyberDojo</b></h1>
 
+<table class="rounded panel" 
+       cellspacing="6"
+       cellpadding="3">
+  <% @dojo_names.sort.each do |dojo_name| -%>
   <tr>
-    <td class="dojo panel box">
-
-      <input readonly 
-             type="hidden"
-             name="avatar" 
-             id="avatar" 
-             type="text" 
-             size="15" 
-             value="">
-
-      <% chunks = chunk_array(@avatars.sort, 4) -%>
-      <table cellpadding="7">
-      <% chunks.each do |chunk| -%>
-        <tr>
-        <% chunk.each do |avatar| -%>
-           <td>
-             <img alt="<%=avatar-%>" 
-                  class="avatar box" 
-                  src="/images/avatars/<%=avatar.downcase-%>.jpg"
-                  title="<%=avatar.humanize-%>"
-                  onClick='select_avatar("<%=avatar.downcase-%>");' />
-             <img alt="<%=avatar-%>" 
-                  class="avatar box" 
-                  src="/images/avatars/<%=avatar.downcase-%>.jpg"
-                  title="<%=avatar.humanize-%>"
-                  onClick='select_avatar("<%=avatar.downcase-%>");' />
-           </td>
-        <% end -%>
-        </tr>
-      <% end -%>
-      </table>    
+    <td>
+      <input type="button" 
+             onClick='select_CyberDojo("<%=dojo_name-%>");'
+             value="<%=dojo_name-%>">
     </td>
   </tr>
-
+  <% end -%>
 </table>
+
+<h2><i>Please click your CyberDojo...</i></h2>
 
 </form>
 

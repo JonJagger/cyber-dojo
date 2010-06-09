@@ -1,16 +1,20 @@
 
 class Avatar
 
-  def initialize(kata, name)
-    @kata, @name = kata, name
-  end
-
   def self.names
     %w( alligators buffalos camels cheetahs 
         frogs kangaroos koalas lemurs
         pandas raccoons squirrels wolves )
   end
   
+  def initialize(kata, name)
+    @kata, @name = kata, name
+  end
+
+  def kata
+    @kata
+  end
+
   def name
     @name
   end
@@ -26,8 +30,7 @@ class Avatar
 
   def read_most_recent(manifest)
     # load starting manifest
-    manifest[:visible_files] = @kata.file_set.visible
-
+    manifest[:visible_files] = @kata.visible
     increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
@@ -35,6 +38,16 @@ class Avatar
       end
     end
     increments
+  end
+
+  def run_tests(manifest)
+    File.open(folder, 'r') do |f|
+      flock(f) do |lock|
+        run_tests_output = TestRunner.avatar_run_tests(self, manifest)
+        test_info = RunTestsOutputParser.parse(self, run_tests_output)
+        save(manifest, test_info)
+      end
+    end
   end
 
   def save(manifest, test_info)    
@@ -67,10 +80,10 @@ private
       make_dir(folder)      
       make_dir(folder + '/sandbox')
       # Copy in hidden files from kata fileset
-      file_set = @kata.file_set
-      file_set.hidden.each do |hidden_filename| 
-        system("cp #{file_set.folder}/#{hidden_filename} #{folder}/sandbox") 
+	  @kata.hidden_pathnames.each do |hidden_pathname|
+        system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
+	  # Create empty increments file ready to be loaded next time
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
       []
     else # restart

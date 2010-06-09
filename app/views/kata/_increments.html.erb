@@ -2,28 +2,32 @@
 <table cellpadding="2px">
   <tr>
     <td>
-      <input type="image" width="40" height="40"
-         src="/images/PlayButton.svg.thumb.png"/>
+      <input id="play"
+             type="image" 
+             width="22" 
+             height="22"
+             title="Click to run kata.sh on the CyberDojo server"
+             src="/images/PlayButton.svg.thumb.png"
+             style="visibility:visible"/>
     </td>
-    <td>
-      <%= @shown_increment_number -%>
-    </td>
-
-    <% limited(@increments).each do |increment| -%>
-    <td>
-      <div class="<%= increment[:outcome] -%> rounded increment"  id="inc">
-         &thinsp;
-         <span><%= increment[:number] -%>:<%= increment[:info] -%></span>
-      </div>
-    </td>
-    <% end -%>
 
     <td id="run_tests_spinner" 
-        style="display:none;"> 
+        style="display:none"> 
       <span>
         <%= image_tag "spinner.gif" -%>
       </span>
     </td> 
+
+    <% limited(@increments).reverse.each do |increment| -%>
+    <td>
+      <div id="inc"
+           class="<%= increment[:outcome] -%> rounded increment">
+         &thinsp;
+         <span>(<%= increment[:number] -%>:<%= Time.now.to_s -%>)<br/>
+               <%= increment[:info] -%></span>
+      </div>
+    </td>
+    <% end -%>
 
   </tr>
 </table>

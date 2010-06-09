@@ -1,0 +1,45 @@
+
+<script language="JavaScript"><!--
+function select_CyberDojo(name)
+{
+  $('dojo_name').value = name;
+  document.chooseDojo.submit();
+}
+//--></script>
+
+<form name="chooseDojo" action="/dashboard/view">
+
+<noscript>
+  &nbsp;
+  <h2><b>You must enable JavaScript.</b></h2>
+  &nbsp;
+</noscript>
+
+<input readonly 
+       type="hidden"
+       name="dojo_name" 
+       id="dojo_name" 
+       type="text" 
+       value="">
+
+<h1><b>CyberDojo Dashboard</b></h1>
+
+<table class="rounded panel" 
+       cellspacing="6"
+       cellpadding="3">
+  <% @dojo_names.sort.each do |dojo_name| -%>
+  <tr>
+    <td>
+      <input type="button" 
+             onClick='select_CyberDojo("<%=dojo_name-%>");'
+             value="<%=dojo_name-%>">
+    </td>
+  </tr>
+  <% end -%>
+</table>
+
+<h2><i>Please click a CyberDojo...</i></h2>
+
+</form>
+
+

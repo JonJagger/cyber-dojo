@@ -1,17 +1,13 @@
 
-<table cellpadding="0">
-  <tr valign="top">
-    <td id="file_manager" 
-        class="rounded panel">
-      <%= render :partial => 'avatar_buttons' -%>
-      <%= render :partial => 'file_list' -%>
-    </td>
-    <td>
-      <%= render :partial => 'editor' -%>
-    </td>
-  </tr>
-</table>
+<textarea name="editor" 
+          id="editor" 
+          class="rounded panel"
+          cols="80" 
+          rows="34" >
+</textarea>
 
-<%= render :partial => 'hidden_text_areas' -%>
-
+<script type="text/javascript">
+  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
+  TabEntry.enable('editor');
+</script>
 
