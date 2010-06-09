@@ -4,101 +4,31 @@
 
 <script language="javascript" type="text/javascript">
 
-document.onkeypress = function(e) 
+document.observe('dom:loaded', function() {
+  setupFilenameMenu();
+  setupEditorMenu();
+  loadFile('kata.sh');
+})
+
+function setupFilenameMenu()
 {
-  var code;
-  if (!e) 
-    var e = window.event;
+  var fileEntryMenuItems = [
+    {
+      name: 'Rename this file...  ',
+      className: 'rename-this-file', 
+      callback: function(e) { renameFile(e); }
+    },{
+      name: 'Delete this file...  ', 
+      className: 'delete-this-file',
+      callback: function(e) { deleteFile(e); }
+    }
+  ]
 
-  if (e.keyCode) 
-    code = e.keyCode;
-  else if (e.which) 
-    code = e.which;
-
-  if (e.altKey && code == 114) 
-    ; // runTests(); // Alt-t Commented out. Not sure this is the way to go
-}
-
-var move = false;
-
-function getCaretPos(control) 
-{
-  var caretPos = 0;
-  // IE Support
-  if (document.selection) 
-  {
-    control.focus();
-    var sel = document.selection.createRange();
-    sel.moveStart('character', -control.value.length);
-    caretPos = sel.text.length;
-  }
-  // Firefox support
-  else if (control.selectionStart || control.selectionStart == '0')
-    caretPos = control.selectionStart;
-
-  return caretPos;
-}
-
-function setCaretPos(control, pos)
-{
-  if (control.setSelectionRange)
-  {
-    control.focus();
-    control.setSelectionRange(pos, pos);
-  }
-  else if (ctrl.createTextRange) 
-  {
-    var range = control.createTextRange();
-    range.collapse(true);
-    range.moveEnd('character', pos);
-    range.moveStart('character', pos);
-    range.select();
-  }
-}
-
-function createTextAreaWithLineNumbers(id, tab)
-{
-  var el = document.createElement('TEXTAREA');
-  var ta = document.getElementById(id);
-       
-  var string = '';
-  for (var no = 1; no < 999; no++) {
-    if (string.length > 0) 
-      string += '\r\n';
-    string += no;
-  }
-       
-  el.setAttribute('readonly', 'true');  
-  el.id = "line_numbers";
-  el.className      = 'textarea_with_line_numbers';
-  el.style.height   = (ta.offsetHeight-3) + "px";
-  el.style.position = 'absolute';
-  el.style.overflow = 'hidden';
-  el.style.textAlign = 'right';
-  el.style.width    = '35px';
-  el.style.paddingRight = '0.2em';
-  el.innerHTML      = string;  // Firefox renders \n linebreak
-  el.innerText      = string;  // IE6 renders \n line break
-  el.value          = string;  // Safari
-  el.style.zIndex   = 0;
-  ta.tab = tab;
-  ta.style.zIndex   = 1;
-  ta.style.position = 'relative';
-  ta.parentNode.insertBefore(el, ta.nextSibling);
-  setLine();
-  ta.focus();
-       
-  ta.onscroll     = function() { setLine(); }
-  ta.onkeydown    = function() { setLine(); }
-  ta.onmousedown  = function() { setLine(); move=true; }
-  ta.onmouseup    = function() { setLine(); move=false; }
-  ta.onmousemove  = function() { if (move) { setLine(); } }
-             
-  function setLine() {
-    el.scrollTop   = ta.scrollTop;
-    el.style.top   = (ta.offsetTop) + "px";
-    el.style.left  = (ta.offsetLeft - 37) + "px";
-  }
+  new Proto.Menu({
+    selector: '#radioFilename', 
+    className: 'menu desktop', 
+    menuItems: fileEntryMenuItems
+  })
 }
 
 function trim(stringToTrim) 
@@ -150,6 +80,8 @@ function renameFile(event)
   }
 
   // rename hidden textarea by appending new one...
+  // IDEA: could see if old textarea with given name still exists
+  //       and if it does use that. Would still have old contents...
   var new_ta = new Element("textarea", { id:newname, name:newname });
   new_ta.value = $(filename).value;
   $('visible_files_container').appendChild(new_ta);
@@ -180,9 +112,9 @@ function renameFile(event)
     loadFile(newname);
   }
   // make sure renamed file-entry has drop-down menu
-  setupFileEntryMenu();
+  setupFilenameMenu();
 
-  // ensure line-number repositions by removing and re-adding
+  // ensure line-numbers repositions by removing and re-adding
   var old = document.getElementById('line_numbers');
   old.parentNode.removeChild(old);
   createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
@@ -202,6 +134,8 @@ function deleteFile(event)
   tbody.removeChild(tr);
 
   // remove hidden textarea
+  // IDEA: don't remove it from here, only from filenames_container
+  //       so that it can be reopened if needed...
   $('visible_files_container').removeChild($(filename));
 
   // remove from visible_filenames_container
@@ -214,100 +148,10 @@ function deleteFile(event)
   if (filename == current_filename) 
   {
     // disable auto saveCurrentFile() call in loadFile()
+    // IDEA: if not actually deleting wouldn't do this so save happens
     current_filename = false;
     loadFile('kata.sh');
   }
-}
-
-document.observe('dom:loaded', function() {
-  setupFileEntryMenu();
-  setupEditorMenu();
-  loadFile('kata.sh');
-})
-
-function setupFileEntryMenu()
-{
-  var fileEntryMenuItems = [
-    {
-      name: 'Rename this file...  ',
-      className: 'rename-this-file', 
-      callback: function(e) { renameFile(e); }
-    },{
-      name: 'Delete this file...  ', 
-      className: 'delete-this-file',
-      callback: function(e) { deleteFile(e); }
-    }
-  ]
-
-  new Proto.Menu({
-    selector: '#radioFilename', 
-    className: 'menu desktop', 
-    menuItems: fileEntryMenuItems
-  })
-}
-
-function runTests()
-{
-  document.getElementById('play').click();
-}
-
-function setupEditorMenu()
-{
-  var editorMenuItems = [
-    {
-      name: 'Run the tests  ',
-      className: 'run-the-tests', 
-      callback: function(e) { runTests(); }
-    }
-  ]
-
-  new Proto.Menu({
-    selector: '#editor', 
-    className: 'menu desktop',
-    menuItems: editorMenuItems
-  })
-}
-
-var current_filename = false;
-
-function saveCurrentFile()
-{
-  if (current_filename) 
-  {
-    $(current_filename).value = $('editor').value;
-    // Save cursor position
-    var pos = getCaretPos(document.getElementById('editor'));
-    var ta = $(current_filename);
-    ta.setAttribute('cursorPos', pos);
-  }
-}
-
-function loadFile(name)
-{
-  saveCurrentFile();
-  var saved = $(name);
-  var editor = $('editor');
-  editor.value = saved.value;
-  // Set cursor position
-  var pos = saved.getAttribute('cursorPos');
-  setCaretPos(editor, pos);
-
-  current_filename = name;
-  document.getElementById('radio_' + name).checked = true;
-}
-
-function preRunTests()
-{
-  saveCurrentFile();
-  $('play').setAttribute('style', 'display:none');
-  $('run_tests_spinner').setAttribute('style', 'visibility:visible');
-}
-
-function postRunTests()
-{
-  $('run_tests_spinner').setAttribute('style', 'display:none');
-  $('play').setAttribute('style', 'visibility:visible');
-  $('editor').focus();
 }
 
 function makeFileListEntry(filename)
@@ -393,7 +237,7 @@ function fileAlreadyExists(filename)
   return allFilenames().indexOf(filename) != -1;
 }
 
-function random8() 
+function random3() 
 {
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ'.split('');
     var str = '';
@@ -406,22 +250,26 @@ function random8()
 
 function newFile()
 {
-  var filename = 'untitled_' + random8();
+  // Append three random chars to the end of the untitled filename.
+  // This is so there is NO excuse not to rename it!
+  var filename = 'untitled_' + random3();
+
   // Create new hidden textarea (to save to before submitting)
   var ta = new Element("textarea", { id:filename, name:filename });
   $('visible_files_container').appendChild(ta);
 
-  // Make the new filename visible in the file-manager list
+  // Put the new filename into the file-list manager
   $('file-list').appendChild(makeFileListEntry(filename));
   sortFileList();
 
-  // Make its name available to rails
+  // Put the new filename into the filenames container
   var filenames = trim($('visible_filenames_container').value);
   filenames += filename;
   filenames += ";";
   $('visible_filenames_container').value = filenames;
 
-  setupFileEntryMenu();
+  // Add right-click menu to file-list manager entry
+  setupFilenameMenu();
 }
 
 </script>
