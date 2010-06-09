@@ -137,7 +137,7 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-#spy 
+#dashboard
 {
   margin: 0.3em;
   padding: 0.3em;
@@ -150,7 +150,7 @@
 }
 
 
-#spy_cell
+#dashboard_cell
 {
   border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 8px;
@@ -161,13 +161,13 @@
   padding: 0.1em;
 }
 
-#spy_cell.old_failed { background-image: url(failed_stripe.png); }
-#spy_cell.old_passed { background-image: url(passed_stripe.png); }
-#spy_cell.old_error  { background-image: url(error_stripe.png); }
+#dashboard_cell.old_failed { background-image: url(failed_stripe.png); }
+#dashboard_cell.old_passed { background-image: url(passed_stripe.png); }
+#dashboard_cell.old_error  { background-image: url(error_stripe.png); }
 
-#spy_cell.new_failed { background-color: #F33; }
-#spy_cell.new_passed { background-color: #3C3; }
-#spy_cell.new_error  { background-color: #FF0; }
+#dashboard_cell.new_failed { background-color: #F33; }
+#dashboard_cell.new_passed { background-color: #3C3; }
+#dashboard_cell.new_error  { background-color: #FF0; }
 
 
 
