@@ -24,7 +24,7 @@ def gapper(dojo)
   all_bubbles = {}
   all_names.each {|name|
     bubbles, previous = [], nil
-    all_incs.each{|inc|
+    all_incs.each {|inc|
       if inc[:avatar] == name
          bubbles << 'new_' + inc[:outcome].to_s
          previous = inc[:outcome]
@@ -34,11 +34,12 @@ def gapper(dojo)
         bubbles << 'old_' + previous.to_s
       end
     }
-    all_bubbles[name] = bubbles      
+    all_bubbles[name] = bubbles.reverse   
   }
   all_bubbles
-  # { 'koalas' => [ 'no_previous', 'new_failed', 'old_failed', 'new_error'  ],
-  #   'pandas' => [ 'new_failed',  'old_failed', 'new_passed', 'old_passed' ],
+  # eg
+  # { 'koalas' => [ 'new_error',  'old_failed', 'new_failed, 'no_previous' ], 
+  #   'pandas' => [ 'old_passed', 'new_passed', 'old_failed', new_failed'  ],
   # }
 end
 
@@ -56,4 +57,31 @@ def moment(at)
   Time.utc(*at[:time])
 end
 
+
+def shared(gapped)  
+  # In a single increment column all avatars except one 
+  # have an old outcome, and one avatar has a new outcome.
+  # NB: This will change if a time-period increment is introduced.
+  # The run-test outcomes dominate each other in the follow chain
+  outcomes = [ :new_failed, :old_failed, 
+               :new_error,  :old_error,
+               :new_passed ]
+  # There is no entry for old_passed as that cannot be the shared
+  # outcome since there must be at least one new outcome.
+  rgy = []
+  gapped.inject([]) {|s,kv| s << kv[1]}.transpose.each do |all| 
+    outcomes.each do |outcome|
+      if contains(all, outcome)
+        rgy << outcome
+        break
+      end
+    end
+  end
+  rgy
+end
+
+
+def contains(all, find)
+  return all.select {|one| one.index(find.to_s)}.size > 0
+end
 

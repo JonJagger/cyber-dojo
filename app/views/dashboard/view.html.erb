@@ -1,10 +1,11 @@
-
-<h2><b><%= @dojo.name -%> Dashboard</b></h2>
+ 
+<h1><b><%= @dojo.name -%> Dashboard</b></h1>
 
 <% gapped = gapper(@dojo) -%>
 <div id="dashboard">
 <table cellspacing="0" 
        cellpadding="0">
+
   <% gapped.each do |avatar_name,increments| -%>
   <tr>
     <td><%= avatar_name -%>&nbsp;</td>
@@ -12,7 +13,7 @@
       <table cellspacing="2"
              cellpadding="0">
         <tr>
-          <% increments.reverse.each do |inc| -%>
+          <% increments.each do |inc| -%>
           <td>
             <span id="dashboard_cell" 
                   class="<%=inc-%>">&nbsp;</span>
@@ -23,6 +24,31 @@
     </td>
   </tr>
   <% end -%>
+
+  <tr>
+   <td>&nbsp;</td>
+  </tr>
+  <tr>
+   <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td>zoo&nbsp;</td>
+    <td>
+      <table cellspacing="2"
+             cellpadding="0">
+        <tr>
+          <% shared(gapped).each do |inc| -%>
+          <td>
+            <span id="dashboard_cell" 
+                  class="<%=inc-%>">&nbsp;</span>
+          </td>
+          <% end -%>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
 </table>
 </div>
 
