@@ -122,19 +122,19 @@ or in any manifest.rb file as part of the inspected ruby object:
 
 Dojo Display
 ============
-http://localhost:3000/dojo/spy
+http://localhost:3000/dashboard
 will give you an auto-updating display of the current colour and history 
 (red, green, or yellow for each increment) of every avatar in every kata 
 in a selected dojo
 
 
-Keyboard Driver Rotate Alarm
-============================
+Alarm
+=====
 I run a CyberDojo by sounding an alarm every 4 minutes or so which
 is the cue for the keyboard driver at each laptop to get up and move
 to a new laptop where they take up a non-driver role.
 You can do this using
-http://localhost:3000/dojo/sound_rotate_driver_alarm 
+http://localhost:3000/alarm
 
 
 What will work and what won't work
