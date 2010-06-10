@@ -3,11 +3,11 @@
 function select_avatar(name)
 {
   $('avatar_name').value = name;
-  document.chooseAvatar.submit();
+  document.avatarIndex.submit();
 }
 //--></script>
 
-<form name="chooseAvatar" action="/kata/index">
+<form name="avatarIndex" action="/kata/index">
 
 <noscript>
   &nbsp;
@@ -19,15 +19,12 @@ function select_avatar(name)
        type="hidden"
        name="dojo_name" 
        id="dojo_name" 
-       type="text" 
        value="<%=h @dojo.name-%>">
 
 <input readonly 
        type="hidden"
        name="avatar_name" 
        id="avatar_name" 
-       type="text" 
-       size="" 
        value="">
 
 <h1><b><%= @dojo.name -%></b></h1>

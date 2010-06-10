@@ -3,31 +3,25 @@
 function choose_kata(kata_name)
 {
   $('kata_name').value = kata_name;
-  document.chooseKata.submit();
+  document.kataIndex.submit();
 }
 //--></script>
 
-<form name="chooseKata" action="/kata/view"">
+<form name="kataIndex" action="/kata/view"">
 
-<input readonly 
-       type="hidden"
+<input type="hidden"
        name="dojo_name" 
        id="dojo_name" 
-       type="text" 
        value="<%=h @dojo.name-%>">
 
-<input readonly 
-       type="hidden"
+<input type="hidden"
        name="avatar_name" 
        id="avatar_name" 
-       type="text" 
        value="<%=h @avatar_name -%>">
 
-<input readonly 
-       type="hidden"
+<input type="hidden"
        name="kata_name" 
        id="kata_name" 
-       type="text" 
        value="">
 
 <h1><b><%= @dojo.name -%></b></h1>
@@ -41,9 +35,7 @@ function choose_kata(kata_name)
        title="<%=@avatar_name.humanize-%>" />
 </div>
 
-<table class="rounded panel"
-       cellspacing="6"
-       cellpadding="3">
+<table class="rounded panel">
   <% @dojo.kata_names.sort.each do |kata_name| -%>
   <tr>
     <td>

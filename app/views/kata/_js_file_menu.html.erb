@@ -1,0 +1,276 @@
+
+<% # NB: I've tried putting the contents of this file into -%>
+<% #     public/javascripts/application.js but it only works here -%>
+
+<script language="javascript" type="text/javascript">
+
+document.observe('dom:loaded', function() {
+  setupFilenameMenu();
+  setupEditorMenu();
+  loadFile('kata.sh');
+})
+
+function setupFilenameMenu()
+{
+  var fileEntryMenuItems = [
+    {
+      name: 'Rename this file...  ',
+      className: 'rename-this-file', 
+      callback: function(e) { renameFile(e); }
+    },{
+      name: 'Delete this file...  ', 
+      className: 'delete-this-file',
+      callback: function(e) { deleteFile(e); }
+    }
+  ]
+
+  new Proto.Menu({
+    selector: '#radioFilename', 
+    className: 'menu desktop', 
+    menuItems: fileEntryMenuItems
+  })
+}
+
+function trim(stringToTrim) 
+{
+  return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
+function getFilenameTr(filename)
+{
+  var input = document.getElementById('radio_' + filename);
+  var div = input.parentNode;
+  var td = div.parentNode;
+  var tr = td.parentNode;
+  return tr;
+}
+
+function renameFile(event)
+{
+  var filename = firstElement(event.element()).getAttribute('value');
+
+  // Save editor into its hidden textarea so we can
+  // just use hidden textareas in code below
+  $(current_filename).value = $('editor').value;
+
+  var newname = trim(prompt("Rename " + filename + " to: ", filename));
+  if (newname == null)
+    return; // Cancelled
+
+  if (newname == "") 
+  {
+    alert("Nothing entered: rename abandoned");
+    return;
+  }
+
+  if (newname == filename)
+  {
+    // they changed their mind
+    return;
+  }
+
+  if (fileAlreadyExists(newname))
+  {
+    alert("CyberDojo cannot rename " +
+           filename + " to " + newname +
+          "\nbecause a file called " +
+           newname +
+          " already exists.");
+    return; // Cancelled
+  }
+
+  // rename hidden textarea by appending new one...
+  // IDEA: could see if old textarea with given name still exists
+  //       and if it does use that. Would still have old contents...
+  var new_ta = new Element("textarea", { id:newname, name:newname });
+  new_ta.value = $(filename).value;
+  $('visible_files_container').appendChild(new_ta);
+
+  //... and removing old one
+  var old_ta = $(filename);
+  // BUG: the following line kills the functionality of selecting a file from the 
+  // filelist. However, leaving the line in might be useful. Suppose you accidentally
+  // delete a file. If it was still available you might be able to reload it by
+  // recreating it.
+  //$('visible_files_container').removeChild(old_ta);
+
+  // change name in $('visible_filenames_container')
+  var current = $('visible_filenames_container').value;
+  current = current.replace(';'+filename+";", ";"+newname+";");
+  $('visible_filenames_container').value = current;
+
+  // change name in file-list
+  var tr = getFilenameTr(filename);
+  var tbody = tr.parentNode;
+  tbody.removeChild(tr);
+  tbody.appendChild(makeFileListEntry(newname));
+  sortFileList();
+  // if we are renaming the current file then reselect in the file-list
+  if (filename == current_filename)
+  {
+    current_file = newname;
+    loadFile(newname);
+  }
+  // make sure renamed file-entry has drop-down menu
+  setupFilenameMenu();
+
+  // ensure line-numbers repositions by removing and re-adding
+  var old = document.getElementById('line_numbers');
+  old.parentNode.removeChild(old);
+  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
+  TabEntry.enable('editor');
+}
+
+function deleteFile(event)
+{
+  var filename = firstElement(event.element()).getAttribute('value');
+
+  if (!confirm("Click OK to delete " + filename))
+    return; // Cancelled
+
+  // remove from file-list 
+  var tr = getFilenameTr(filename);
+  var tbody = tr.parentNode;
+  tbody.removeChild(tr);
+
+  // remove hidden textarea
+  // IDEA: don't remove it from here, only from filenames_container
+  //       so that it can be reopened if needed...
+  $('visible_files_container').removeChild($(filename));
+
+  // remove from visible_filenames_container
+  var current = $('visible_filenames_container').value;
+  current = current.replace(';'+filename+";", ";");
+  $('visible_filenames_container').value = current;
+
+  // if deleted file is current file then load kata.sh
+  // which is always available as it cannot be renamed or deleted
+  if (filename == current_filename) 
+  {
+    // disable auto saveCurrentFile() call in loadFile()
+    // IDEA: if not actually deleting wouldn't do this so save happens
+    current_filename = false;
+    loadFile('kata.sh');
+  }
+}
+
+function makeFileListEntry(filename)
+{
+  // assert(filename != kata.sh)
+
+  var div = new Element("div", { id:"radioFilename" });
+  div.title = "Right-click=rename/delete";
+  div.onclick = new Function("loadFile('" + filename + "')");
+  var inp = new Element("input", 
+    { id:"radio_" + filename, name:"radio_filename", type:"radio", value:filename });
+  div.appendChild(inp);
+  div.appendChild(document.createTextNode(filename));
+  var td = new Element("td");
+  td.appendChild(div);
+  var tr = new Element("tr");
+  tr.appendChild(td);
+
+  return tr;
+}
+
+function isElement(n)
+{
+  return n.nodeType == 1;
+}
+
+function firstElement(e)
+{
+  var children = e.childNodes;
+  for (var i in children)
+  {
+    var item = children[i];
+    if (isElement(item))
+      return item;
+  }
+  return null;
+}
+
+function nameOf(e)
+{
+  var td = firstElement(e);
+  var div = firstElement(td);
+  var inp = firstElement(div);
+  return inp.getAttribute("value"); 
+}
+
+function sortFileList()
+{
+  var list = $('file-list');
+  var items = list.childNodes;
+  var array = [];
+
+  for (var i in items)
+  {
+    var item = items[i];
+    if (isElement(item))
+      array.push(item);
+  }
+
+  array.sort(function(lhs,rhs) {
+    var lhs_name = nameOf(lhs);
+    var rhs_name = nameOf(rhs);
+    if (lhs_name < rhs_name)
+      return -1;
+    else if (lhs_name > rhs_name)
+      return 1;
+    else
+      return 0; // should never happen!
+  });
+
+  for (i = 0; i != array.length; i++)
+    list.appendChild(array[i]);
+}
+
+function allFilenames()
+{
+  var filenames = trim($('visible_filenames_container').value);
+  return filenames.split(";");
+}
+
+function fileAlreadyExists(filename)
+{
+  return allFilenames().indexOf(filename) != -1;
+}
+
+function random3() 
+{
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ'.split('');
+    var str = '';
+    for (var i = 0; i < 3; i++) 
+    {
+        str += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return str;
+}
+
+function newFile()
+{
+  // Append three random chars to the end of the untitled filename.
+  // This is so there is NO excuse not to rename it!
+  var filename = 'untitled_' + random3();
+
+  // Create new hidden textarea (to save to before submitting)
+  var ta = new Element("textarea", { id:filename, name:filename });
+  $('visible_files_container').appendChild(ta);
+
+  // Put the new filename into the file-list manager
+  $('file-list').appendChild(makeFileListEntry(filename));
+  sortFileList();
+
+  // Put the new filename into the filenames container
+  var filenames = trim($('visible_filenames_container').value);
+  filenames += filename;
+  filenames += ";";
+  $('visible_filenames_container').value = filenames;
+
+  // Add right-click menu to file-list manager entry
+  setupFilenameMenu();
+}
+
+</script>
+

@@ -3,11 +3,11 @@
 function select_CyberDojo(dojo_name)
 {
   $('dojo_name').value = dojo_name;
-  document.chooseDojo.submit();
+  document.dojoIndex.submit();
 }
 //--></script>
 
-<form name="chooseDojo" action="/avatar/index">
+<form name="dojoIndex" action="/avatar/index">
 
 <noscript>
   &nbsp;
@@ -19,14 +19,11 @@ function select_CyberDojo(dojo_name)
        type="hidden"
        name="dojo_name" 
        id="dojo_name" 
-       type="text" 
        value="">
 
 <h1><b>Welcome to CyberDojo</b></h1>
 
-<table class="rounded panel" 
-       cellspacing="6"
-       cellpadding="3">
+<table class="rounded panel">
   <% @dojo_names.sort.each do |dojo_name| -%>
   <tr>
     <td>
