@@ -51,21 +51,6 @@ private
     manifest[:current_filename] = params['radio_filename']
 
     manifest
-
-    #filenames = params['visible_filenames_container'].strip.split(';')
-    #filenames.each do |filename|
-    #  filename.strip!
-    #  if filename != ""
-    #    manifest[:visible_files][filename] = {}
-    #    # TODO: creating a new file and then immediately deleting it
-    #    #       causes params[filename] to be be nil for some reason
-    #    #       I haven't yet tracked down.
-    #    
-    #    if content = params[filename]
-    #      manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
-    #    end
-    #  end
-    #end
   end
 
 end
