@@ -9,13 +9,11 @@ function runTests()
   $('play').click();
 }
 
-// app/views/kata/view.html.erb
-// form_remote_tag :url => {...}, 
-//                 :before   => "preRunTests();",
-//                 :complete => "postRunTests();"
-
 function preRunTests()
 {
+  // app/views/kata/view.html.erb
+  // form_remote_tag :url => {...}, 
+  //                 :before   => "preRunTests();",
   saveCurrentFile();
   $('play').setAttribute('style', 'display:none');
   $('run_tests_spinner').setAttribute('style', 'visibility:visible');
@@ -23,6 +21,9 @@ function preRunTests()
 
 function postRunTests()
 {
+  // app/views/kata/view.html.erb
+  // form_remote_tag :url => {...}, 
+  //                 :complete => "postRunTests();"
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
   $('editor').focus();

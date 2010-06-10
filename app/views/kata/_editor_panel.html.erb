@@ -6,7 +6,9 @@
           rows="34" >
 </textarea>
 
+
 <script type="text/javascript">
+  // SHOULD THIS BE A document.observe('dom:loaded', function() ????
   createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
   TabEntry.enable('editor');
 </script>

@@ -1,0 +1,202 @@
+
+<script language="javascript" 
+        type="text/javascript">
+
+document.observe('dom:loaded', function() 
+{
+  rebuildFileList();
+})
+
+function rebuildFileList()
+{
+  filenames = allFilenames();
+  filenames.sort(function(lhs,rhs) {
+	if (lhs < rhs)
+	  return -1;
+	else if (lhs > rhs)
+	  return 1;
+	else
+	  return 0; // Should never happen
+  });
+
+  var file_list = $('file-list');
+  // Remove all children
+  while ( file_list.childNodes.length >= 1 )
+  {
+     file_list.removeChild(file_list.firstChild);
+  } 
+
+  // Add new children
+  for (at = 0; at != filenames.length; at++)
+  {
+    file_list.appendChild(makeFileListEntry(filenames[at]));
+  }
+}
+
+//====================== NEW FILE =======================
+
+function newFile()
+{
+  // Append three random chars to the end of the untitled filename.
+  // This is so there is NO excuse not to rename it!
+  newFileContent('untitled_' + random3(), '', 0);
+}
+
+function newFileContent(filename, content, caret_pos)
+{
+  // Create new hidden input elements to store new file content
+  // and its caret position (to save to before submitting form)
+  $('visible_files_container').appendChild(createFileContentInput(filename, content));
+  rebuildFileList();
+  $('visible_files_container').appendChild(createFileCaretPosInput(filename, caret_pos));
+
+  // Select it so you can immediately rename it
+  loadFile(filename);
+}
+
+//====================== DELETE FILE =======================
+
+function deleteFile()
+{
+  deleteFilePrompt(true);
+}
+
+function deleteFilePrompt(ask)
+{
+  var filename = current_filename;
+  if (filename == 'kata.sh')
+  {
+    alert("CyberDojo cannot delete kata.sh because " +
+          "\nthat is the file the CyberDojo runs.");
+    return; // Cancelled
+  }
+  if (ask && !confirm("Click OK to delete " + filename)) { return; /* Cancelled */ }
+
+  // Reload kata.sh which is always available as it cannot be renamed or deleted
+  loadFile('kata.sh');
+
+  var fc = fileContent(filename);
+  fc.parentNode.removeChild(fc);
+  rebuildFileList();
+  
+  var fcp = fileCaretPos(filename);
+  fcp.parentNode.removeChild(fcp);
+}
+
+//====================== RENAME FILE =======================
+
+function renameFile()
+{
+  var filename = current_filename;
+  if (filename == 'kata.sh')
+  {
+    alert("CyberDojo cannot rename kata.sh because " +
+          "\nthat is the file the CyberDojo runs.");
+    return; // Cancelled
+  }
+
+  var newname = trim(prompt("Rename " + filename + " to: ", filename));
+  if (newname == null) return; // Cancelled
+  if (newname == "") { alert("Nothing entered: rename abandoned"); return; }
+  if (newname == filename) { /* Same name; nothing to do. Should I alert()? */ return; }
+  if (fileAlreadyExists(newname))
+  {
+    alert("CyberDojo cannot rename " +
+           filename + " to " + newname +
+          "\nbecause a file called " +
+           newname +
+          " already exists.");
+    return; // Cancelled
+  }
+
+  var content = $('editor').value;
+  var caret_pos = getLiveCaretPos();
+  deleteFilePrompt(false);
+  newFileContent(newname, content, caret_pos);
+  rebuildFileList();
+
+  // Ensure line-numbers repositions by removing and re-adding
+  // (renaming a file can alter the file-list panel width)
+  var old = document.getElementById('line_numbers');
+  old.parentNode.removeChild(old);
+  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
+  TabEntry.enable('editor');
+}
+
+
+function createFileContentInput(filename, content)
+{
+  var input = new Element('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', "file_content['" + filename + "']");
+  input.setAttribute('id', "file_content['" + filename + "']");
+  input.setAttribute('value', content);
+  return input;
+}
+
+
+function createFileCaretPosInput(filename, caret_pos)
+{
+  var input = new Element('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', "file_caret_pos['" + filename + "']");
+  input.setAttribute('id', "file_caret_pos['" + filename + "']");
+  input.setAttribute('value', caret_pos);
+  return input;
+}
+
+
+function trim(stringToTrim) 
+{
+  return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
+
+function makeFileListEntry(filename)
+{
+  var div = new Element("div", { id:"radioFilename" });
+  div.onclick = function() { loadFile(filename); };
+  var inp = new Element("input", 
+    { id:"radio_" + filename, name:"radio_filename", type:"radio", value:filename });
+  div.appendChild(inp);
+  div.appendChild(document.createTextNode(filename));
+  var td = new Element("td");
+  td.appendChild(div);
+  var tr = new Element("tr");
+  tr.appendChild(td);
+
+  return tr;
+}
+
+function allFilenames()
+{
+  filenames = []
+  var all = $$('input[id^="file_content["]');
+  for(at = 0; at != all.length; at++)
+  {
+    var att = all[at].getAttribute('id');
+    var prefix = 'file_content['.length + 1; // +1 for '
+    var filename = att.substr(prefix, att.length - prefix - 1 - 1); // +1 for ', +1 for ]
+    filenames.push(filename);
+  }
+  return filenames;
+}
+
+function fileAlreadyExists(filename)
+{
+  return allFilenames().indexOf(filename) != -1;
+}
+
+function random3() 
+{
+    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ'.split('');
+    var str = '';
+    for (var i = 0; i < 3; i++) 
+    {
+        str += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return str;
+}
+
+</script>
+
