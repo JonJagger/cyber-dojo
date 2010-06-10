@@ -129,7 +129,7 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-#hidden_text_areas
+#hidden_file_contents
 { 
   visibility: hidden; 
   display: none; 
