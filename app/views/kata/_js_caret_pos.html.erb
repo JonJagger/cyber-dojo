@@ -1,0 +1,41 @@
+
+<script language="javascript" 
+        type="text/javascript">
+
+function getCaretPos(control) 
+{
+  var caretPos = 0;
+  // IE Support
+  if (document.selection) 
+  {
+    control.focus();
+    var sel = document.selection.createRange();
+    sel.moveStart('character', -control.value.length);
+    caretPos = sel.text.length;
+  }
+  // Firefox support
+  else if (control.selectionStart || control.selectionStart == '0')
+    caretPos = control.selectionStart;
+
+  return caretPos;
+}
+
+function setCaretPos(control, pos)
+{
+  if (control.setSelectionRange)
+  {
+    control.focus();
+    control.setSelectionRange(pos, pos);
+  }
+  else if (ctrl.createTextRange) 
+  {
+    var range = control.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', pos);
+    range.moveStart('character', pos);
+    range.select();
+  }
+}
+
+</script>
+

@@ -9,10 +9,6 @@
     <textarea cursorPos=""
               id="<%=filename-%>" 
               name="<%=filename-%>"><%= h file[:content] -%></textarea> 
-    <input type="hidden" 
-           name="filecontent[<%=filename-%>]" 
-           type="text" 
-           value="<%=h file[:content]-%>">
     <% end -%>
   </div>
 

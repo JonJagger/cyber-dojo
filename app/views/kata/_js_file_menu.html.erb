@@ -1,8 +1,20 @@
 
-<% # NB: I've tried putting the contents of this file into -%>
-<% #     public/javascripts/application.js but it only works here -%>
+<script language="javascript" 
+        type="text/javascript">
 
-<script language="javascript" type="text/javascript">
+function loadFile(name)
+{
+  saveCurrentFile();
+  var saved = $(name);
+  var editor = $('editor');
+  editor.value = saved.value;
+
+  var pos = saved.getAttribute('cursorPos');
+  setCaretPos(editor, pos);
+
+  current_filename = name;
+  document.getElementById('radio_' + name).checked = true;
+}
 
 document.observe('dom:loaded', function() {
   setupFilenameMenu();

@@ -3,7 +3,7 @@
 
 function runTests()
 {
-  // app/views/kata/start.html.erb
+  // app/views/kata/view.html.erb
   // form_remote_tag :url => {...}, 
   //                 :before   => "preRunTests();",
   //                 :complete => "postRunTests();"
@@ -22,69 +22,6 @@ function postRunTests()
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
   $('editor').focus();
-}
-
-var current_filename = false;
-
-function saveCurrentFile()
-{
-  if (current_filename) 
-  {
-    $(current_filename).value = $('editor').value;
-
-    var pos = getCaretPos(document.getElementById('editor'));
-    var ta = $(current_filename);
-    ta.setAttribute('cursorPos', pos);
-  }
-}
-
-function loadFile(name)
-{
-  saveCurrentFile();
-  var saved = $(name);
-  var editor = $('editor');
-  editor.value = saved.value;
-
-  var pos = saved.getAttribute('cursorPos');
-  setCaretPos(editor, pos);
-
-  current_filename = name;
-  document.getElementById('radio_' + name).checked = true;
-}
-
-function getCaretPos(control) 
-{
-  var caretPos = 0;
-  // IE Support
-  if (document.selection) 
-  {
-    control.focus();
-    var sel = document.selection.createRange();
-    sel.moveStart('character', -control.value.length);
-    caretPos = sel.text.length;
-  }
-  // Firefox support
-  else if (control.selectionStart || control.selectionStart == '0')
-    caretPos = control.selectionStart;
-
-  return caretPos;
-}
-
-function setCaretPos(control, pos)
-{
-  if (control.setSelectionRange)
-  {
-    control.focus();
-    control.setSelectionRange(pos, pos);
-  }
-  else if (ctrl.createTextRange) 
-  {
-    var range = control.createTextRange();
-    range.collapse(true);
-    range.moveEnd('character', pos);
-    range.moveStart('character', pos);
-    range.select();
-  }
 }
 
 </script>
