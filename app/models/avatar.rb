@@ -19,11 +19,6 @@ class Avatar
     @name
   end
 
-  def visible_files(n) # DROP - not used any more
-    path = @kata.folder + '/' + name + '/' + n.to_s + '/' + 'manifest.rb'
-    eval IO.read(path)
-  end
-  
   def increments
     eval locked_read(increments_filename)
   end

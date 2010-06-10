@@ -1,8 +1,6 @@
 
 class DojoController < ApplicationController
 
-  protect_from_forgery :only => []
-
   def index
     @dojo_names = Dojo.names
 	if @dojo_names.size == 1

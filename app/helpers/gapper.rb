@@ -1,12 +1,12 @@
 
-# function to insert :gap values into an avatars increments
-# to reflect order of increments across all avatars
-# For example, pandas, then lions, then lions, then pandas...
-# Pandas  Lions
-# X       .
-# .       X
-# X       .
-# .       X 
+# function to insert :gap values into an avatars increments to
+# reflect order of increments across all avatars for the dashboard
+# Eg in submission in time of pandas, lions, lions, frogs, pandas...
+# looks like thsi:
+#
+# pandas X...X
+# lions  .XX..
+# frogs  ...X.
 
 
 def gapper(dojo)
