@@ -2,7 +2,7 @@
 <%= render :partial => 'js_run_tests' -%>
 <%= render :partial => 'js_editor_menu' -%>
 <%= render :partial => 'js_line_numbers' -%>
-<%= render :partial => 'javascript' -%>
+<%= render :partial => 'js_file_menu' -%>
 
 <% form_remote_tag :url => { :action   => 'run_tests',
                              :dojo_name => @dojo.name,
@@ -12,8 +12,8 @@
                    :before   => "preRunTests();",
                    :complete => "postRunTests();" do -%> 
 
-
 <%= render :partial => 'view_panel' -%>
+<%= render :partial => 'hidden_text_areas' -%>
 
 <% end -%>
 
