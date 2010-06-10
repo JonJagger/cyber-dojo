@@ -2,10 +2,9 @@
 <script language="javascript" 
         type="text/javascript">
 
-document.observe('dom:loaded', function() {
+document.observe('dom:loaded', function() 
+{
   setupFilenameMenu();
-  setupEditorMenu();
-  loadFile('kata.sh');
 })
 
 function setupFilenameMenu()
@@ -35,9 +34,7 @@ function renameFile(event)
 {
   var filename = firstElement(event.element()).getAttribute('value');
 
-  // Save editor into its hidden textarea so we can
-  // just use hidden textareas in code below
-  $(current_filename).value = $('editor').value;
+  saveCurrentFile();
 
   var newname = trim(prompt("Rename " + filename + " to: ", filename));
   if (newname == null)
@@ -51,7 +48,7 @@ function renameFile(event)
 
   if (newname == filename)
   {
-    // they changed their mind
+    // should I alert()?
     return;
   }
 
@@ -65,25 +62,14 @@ function renameFile(event)
     return; // Cancelled
   }
 
-  // rename hidden textarea by appending new one...
-  // IDEA: could see if old textarea with given name still exists
-  //       and if it does use that. Would still have old contents...
-  var new_ta = new Element("textarea", { id:newname, name:newname });
-  new_ta.value = $(filename).value;
-  $('visible_files_container').appendChild(new_ta);
+  // do it!
+  var content = fileContent(filename).getAttribute('value');
+  $('visible_files_container').appendChild(createFileContentInput(newname, content));
+  //$('visible_files_container').removeChild(fileContent(filename));
 
-  //... and removing old one
-  var old_ta = $(filename);
-  // BUG: the following line kills the functionality of selecting a file from the 
-  // filelist. However, leaving the line in might be useful. Suppose you accidentally
-  // delete a file. If it was still available you might be able to reload it by
-  // recreating it.
-  //$('visible_files_container').removeChild(old_ta);
-
-  // change name in $('visible_filenames_container')
-  var current = $('visible_filenames_container').value;
-  current = current.replace(';'+filename+";", ";"+newname+";");
-  $('visible_filenames_container').value = current;
+  var caretPos = fileCaretPos(filename).getAttribute('value');
+  $('visible_files_container').appendChild(createFileCaretPosInput(newname, caretPos));
+  //$('visible_files_container').removeChild(fileCaretPos(filename));
 
   // change name in file-list
   var tr = getFilenameTr(filename);
@@ -91,6 +77,7 @@ function renameFile(event)
   tbody.removeChild(tr);
   tbody.appendChild(makeFileListEntry(newname));
   sortFileList();
+
   // if we are renaming the current file then reselect in the file-list
   if (filename == current_filename)
   {
@@ -101,6 +88,7 @@ function renameFile(event)
   setupFilenameMenu();
 
   // ensure line-numbers repositions by removing and re-adding
+  // (renaming a file can alter the file-list panel width)
   var old = document.getElementById('line_numbers');
   old.parentNode.removeChild(old);
   createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
@@ -154,19 +142,8 @@ function newFile()
 
   // Create new hidden input elements to store new file content
   // and its caret position (to save to before submitting form)
-  var fcInput = new Element('input');
-  fcInput.setAttribute('type', 'hidden');
-  fcInput.setAttribute('name', "file_content['" + filename + "']");
-  fcInput.setAttribute('id', "file_content['" + filename + "']");
-  fcInput.setAttribute('value', '');
-  $('visible_files_container').appendChild(fcInput);
-
-  var fpInput = new Element('input');
-  fpInput.setAttribute('type', 'hidden');
-  fpInput.setAttribute('name', "file_caret_pos['" + filename + "']");
-  fpInput.setAttribute('id', "file_caret_pos['" + filename + "']");
-  fpInput.setAttribute('value', '');
-  $('visible_files_container').appendChild(fpInput);
+  $('visible_files_container').appendChild(createFileContentInput(filename, ''));
+  $('visible_files_container').appendChild(createFileCaretPosInput(filename, '0'));
 
   // Put the new filename into the file-list manager
   $('file-list').appendChild(makeFileListEntry(filename));
@@ -183,6 +160,25 @@ function newFile()
   setupFilenameMenu();
 }
 
+function createFileContentInput(filename, content)
+{
+  var input = new Element('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', "file_content['" + filename + "']");
+  input.setAttribute('id', "file_content['" + filename + "']");
+  input.setAttribute('value', content);
+  return input;
+}
+
+function createFileCaretPosInput(filename, caret_pos)
+{
+  var input = new Element('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', "file_caret_pos['" + filename + "']");
+  input.setAttribute('id', "file_caret_pos['" + filename + "']");
+  input.setAttribute('value', caret_pos);
+  return input;
+}
 
 function trim(stringToTrim) 
 {
@@ -274,8 +270,16 @@ function sortFileList()
 
 function allFilenames()
 {
-  var filenames = trim($('visible_filenames_container').value);
-  return filenames.split(";");
+  filenames = []
+  var all = $$('input[id^="file_content["]');
+  for(at = 0; at != all.length; at++)
+  {
+    var att = all[at].getAttribute('id');
+    var prefix = 'file_content['.length + 1; // +1 for '
+    var filename = att.substr(prefix, att.length - prefix - 1 - 1); // +1 for ', +1 for ]
+    filenames.push(filename);
+  }
+  return filenames;
 }
 
 function fileAlreadyExists(filename)

@@ -48,6 +48,8 @@ private
       manifest[:visible_files][filename][:caret_pos] = caret_pos
     end
 
+    manifest[:current_filename] = params['radio_filename']
+
     manifest
 
     #filenames = params['visible_filenames_container'].strip.split(';')

@@ -19,7 +19,7 @@ class Avatar
     @name
   end
 
-  def visible_files(n)
+  def visible_files(n) # DROP - not used any more
     path = @kata.folder + '/' + name + '/' + n.to_s + '/' + 'manifest.rb'
     eval IO.read(path)
   end
@@ -31,6 +31,7 @@ class Avatar
   def read_most_recent(manifest)
     # load starting manifest
     manifest[:visible_files] = @kata.visible
+    manifest[:current_filename] = 'kata.sh'
     increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
@@ -92,6 +93,7 @@ private
         current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
         restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
         manifest[:visible_files] = restart_manifest[:visible_files]
+        manifest[:current_filename] = restart_manifest[:current_filename]
       end
       my_increments
     end
