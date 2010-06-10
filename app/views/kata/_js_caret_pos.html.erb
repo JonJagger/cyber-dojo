@@ -2,8 +2,9 @@
 <script language="javascript" 
         type="text/javascript">
 
-function getCaretPos(control) 
+function getLiveCaretPos() 
 {
+  var control = $('editor');
   var caretPos = 0;
   // IE Support
   if (document.selection) 
@@ -20,8 +21,9 @@ function getCaretPos(control)
   return caretPos;
 }
 
-function setCaretPos(control, pos)
+function setLiveCaretPos(pos)
 {
+  var control = $('editor');
   if (control.setSelectionRange)
   {
     control.focus();

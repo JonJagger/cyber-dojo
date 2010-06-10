@@ -27,23 +27,43 @@ class KataController < ApplicationController
   
 private
 
+  def dequote(filename)
+    # <input name="file_content['wibble.h']" ...>
+    # means filename has a leading and trailing single quote
+    # which needs to be stripped off
+    return filename[1..-2] 
+  end
+
   def load_files_from_page
     manifest = { :visible_files => {} }
-    filenames = params['visible_filenames_container'].strip.split(';')
-    filenames.each do |filename|
-      filename.strip!
-      if filename != ""
-        manifest[:visible_files][filename] = {}
-        # TODO: creating a new file and then immediately deleting it
-        #       causes params[filename] to be be nil for some reason
-        #       I haven't yet tracked down.
-        
-        if content = params[filename]
-          manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
-        end
-      end
+
+    params[:file_content].each do |filename,content|
+      filename = dequote(filename)
+      manifest[:visible_files][filename] = {}
+      manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")  
     end
+
+    params[:file_caret_pos].each do |filename,caret_pos|
+      filename = dequote(filename)
+      manifest[:visible_files][filename][:caret_pos] = caret_pos
+    end
+
     manifest
+
+    #filenames = params['visible_filenames_container'].strip.split(';')
+    #filenames.each do |filename|
+    #  filename.strip!
+    #  if filename != ""
+    #    manifest[:visible_files][filename] = {}
+    #    # TODO: creating a new file and then immediately deleting it
+    #    #       causes params[filename] to be be nil for some reason
+    #    #       I haven't yet tracked down.
+    #    
+    #    if content = params[filename]
+    #      manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")
+    #    end
+    #  end
+    #end
   end
 
 end

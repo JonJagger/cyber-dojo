@@ -4,30 +4,48 @@
 
 var current_filename = false;
 
-function loadFile(name)
-{
-  saveCurrentFile();
-  var saved = $(name);
-  var editor = $('editor');
-  editor.value = saved.value;
-
-  var pos = saved.getAttribute('cursorPos');
-  setCaretPos(editor, pos);
-
-  current_filename = name;
-  document.getElementById('radio_' + name).checked = true;
-}
-
 function saveCurrentFile()
 {
-  if (current_filename) 
-  {
-    $(current_filename).value = $('editor').value;
+  // called from preRunTests();
+  // TODO: there must always be a current file since you can't delete kata.sh
+  // however, the code in _js_file_load_save.html.erb does this
+  // document.observe('dom:loaded', function() {
+  //    ...
+  //    load('kata.sh');
+  // }
+  // and current_filename is set to false
+  // So this will need to wait until I have stored the currently selected file
+  // in the manifest.
+  // params['radio_filename'] gives the name of the selected file
 
-    var pos = getCaretPos(document.getElementById('editor'));
-    var ta = $(current_filename);
-    ta.setAttribute('cursorPos', pos);
+  if (current_filename)
+  {
+    fileContent(current_filename).setAttribute('value', $('editor').value);
+    fileCaretPos(current_filename).setAttribute('value', getLiveCaretPos());
   }
+}
+
+function loadFile(filename)
+{
+  saveCurrentFile();
+
+  var editor = $('editor');
+  var pos = fileCaretPos(filename).getAttribute('value');
+  editor.value = fileContent(filename).getAttribute('value');
+  setLiveCaretPos(pos);
+
+  current_filename = filename;
+  document.getElementById('radio_' + filename).checked = true;
+}
+
+function fileContent(filename)
+{
+  return $("file_content['" + filename + "']");
+}
+
+function fileCaretPos(filename)
+{
+  return $("file_caret_pos['" + filename + "']");
 }
 
 </script>

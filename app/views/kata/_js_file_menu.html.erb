@@ -2,20 +2,6 @@
 <script language="javascript" 
         type="text/javascript">
 
-function loadFile(name)
-{
-  saveCurrentFile();
-  var saved = $(name);
-  var editor = $('editor');
-  editor.value = saved.value;
-
-  var pos = saved.getAttribute('cursorPos');
-  setCaretPos(editor, pos);
-
-  current_filename = name;
-  document.getElementById('radio_' + name).checked = true;
-}
-
 document.observe('dom:loaded', function() {
   setupFilenameMenu();
   setupEditorMenu();
@@ -43,19 +29,7 @@ function setupFilenameMenu()
   })
 }
 
-function trim(stringToTrim) 
-{
-  return stringToTrim.replace(/^\s+|\s+$/g,"");
-}
-
-function getFilenameTr(filename)
-{
-  var input = document.getElementById('radio_' + filename);
-  var div = input.parentNode;
-  var td = div.parentNode;
-  var tr = td.parentNode;
-  return tr;
-}
+//====================== RENAME FILE =======================
 
 function renameFile(event)
 {
@@ -133,12 +107,25 @@ function renameFile(event)
   TabEntry.enable('editor');
 }
 
+//====================== DELETE FILE =======================
+
 function deleteFile(event)
 {
   var filename = firstElement(event.element()).getAttribute('value');
 
   if (!confirm("Click OK to delete " + filename))
     return; // Cancelled
+
+  // if deleted file is current file then load kata.sh
+  // which is always available as it cannot be renamed or deleted
+  if (filename == current_filename) 
+  {
+    // disable auto saveCurrentFile() call in loadFile()
+    // IDEA: if not actually deleting wouldn't do this so save happens
+    //current_filename = false;
+    loadFile('kata.sh');
+  }
+
 
   // remove from file-list 
   var tr = getFilenameTr(filename);
@@ -155,16 +142,63 @@ function deleteFile(event)
   current = current.replace(';'+filename+";", ";");
   $('visible_filenames_container').value = current;
 
-  // if deleted file is current file then load kata.sh
-  // which is always available as it cannot be renamed or deleted
-  if (filename == current_filename) 
-  {
-    // disable auto saveCurrentFile() call in loadFile()
-    // IDEA: if not actually deleting wouldn't do this so save happens
-    current_filename = false;
-    loadFile('kata.sh');
-  }
 }
+
+//====================== NEW FILE =======================
+
+function newFile()
+{
+  // Append three random chars to the end of the untitled filename.
+  // This is so there is NO excuse not to rename it!
+  var filename = 'untitled_' + random3();
+
+  // Create new hidden input elements to store new file content
+  // and its caret position (to save to before submitting form)
+  var fcInput = new Element('input');
+  fcInput.setAttribute('type', 'hidden');
+  fcInput.setAttribute('name', "file_content['" + filename + "']");
+  fcInput.setAttribute('id', "file_content['" + filename + "']");
+  fcInput.setAttribute('value', '');
+  $('visible_files_container').appendChild(fcInput);
+
+  var fpInput = new Element('input');
+  fpInput.setAttribute('type', 'hidden');
+  fpInput.setAttribute('name', "file_caret_pos['" + filename + "']");
+  fpInput.setAttribute('id', "file_caret_pos['" + filename + "']");
+  fpInput.setAttribute('value', '');
+  $('visible_files_container').appendChild(fpInput);
+
+  // Put the new filename into the file-list manager
+  $('file-list').appendChild(makeFileListEntry(filename));
+  sortFileList();
+
+  //TODO: drop this when file_content[...] working
+  // Put the new filename into the filenames container
+  //var filenames = trim($('visible_filenames_container').value);
+  //filenames += filename;
+  //filenames += ";";
+  //$('visible_filenames_container').value = filenames;
+
+  // Add right-click menu to file-list manager entry
+  setupFilenameMenu();
+}
+
+
+function trim(stringToTrim) 
+{
+  return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
+
+function getFilenameTr(filename)
+{
+  var input = document.getElementById('radio_' + filename);
+  var div = input.parentNode;
+  var td = div.parentNode;
+  var tr = td.parentNode;
+  return tr;
+}
+
 
 function makeFileListEntry(filename)
 {
@@ -258,30 +292,6 @@ function random3()
         str += chars[Math.floor(Math.random() * chars.length)];
     }
     return str;
-}
-
-function newFile()
-{
-  // Append three random chars to the end of the untitled filename.
-  // This is so there is NO excuse not to rename it!
-  var filename = 'untitled_' + random3();
-
-  // Create new hidden textarea (to save to before submitting)
-  var ta = new Element("textarea", { id:filename, name:filename });
-  $('visible_files_container').appendChild(ta);
-
-  // Put the new filename into the file-list manager
-  $('file-list').appendChild(makeFileListEntry(filename));
-  sortFileList();
-
-  // Put the new filename into the filenames container
-  var filenames = trim($('visible_filenames_container').value);
-  filenames += filename;
-  filenames += ";";
-  $('visible_filenames_container').value = filenames;
-
-  // Add right-click menu to file-list manager entry
-  setupFilenameMenu();
 }
 
 </script>

@@ -1,14 +1,18 @@
 
-<script language="javascript" type="text/javascript">
+<script language="javascript" 
+        type="text/javascript">
 
 function runTests()
 {
-  // app/views/kata/view.html.erb
-  // form_remote_tag :url => {...}, 
-  //                 :before   => "preRunTests();",
-  //                 :complete => "postRunTests();"
-  document.getElementById('play').click();
+  // _js_editor_menu.html.erb
+  // ......... callback: function(e) { runTests(); } ..........
+  $('play').click();
 }
+
+// app/views/kata/view.html.erb
+// form_remote_tag :url => {...}, 
+//                 :before   => "preRunTests();",
+//                 :complete => "postRunTests();"
 
 function preRunTests()
 {
@@ -21,6 +25,8 @@ function postRunTests()
 {
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
+  // TODO: load file that was in editor
+  // TODO: set its caretPos
   $('editor').focus();
 }
 
