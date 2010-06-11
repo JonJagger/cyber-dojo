@@ -11,7 +11,7 @@ class KataController < ApplicationController
     @kata = @dojo.new_kata(params[:kata_name])
     @avatar = @kata.new_avatar(params[:avatar_name])
     @manifest = {}
-    @increments = @avatar.read_most_recent(@manifest)
+    @increments = limited(@avatar.read_most_recent(@manifest))
     @current_file = @manifest[:current_filename] || 'kata.sh'
     @run_tests_output = @manifest[:run_tests_output] || ''
   end
@@ -60,7 +60,7 @@ end
 def limited(increments)
   max_increments_displayed = 7
   len = [increments.length, max_increments_displayed].min
-  increments[-len,len]
+  increments[-len,len].reverse
 end
 
 
