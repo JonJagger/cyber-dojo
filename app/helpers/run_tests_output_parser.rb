@@ -2,7 +2,7 @@
 module RunTestsOutputParser
 
   def self.parse(avatar, output)
-    inc = { :info => output }
+    inc = { :run_tests_output => output }
     if Regexp.new("execution terminated after ").match(output)
       inc[:outcome] = :failed
     else
