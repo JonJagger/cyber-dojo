@@ -70,7 +70,7 @@ function deleteFilePrompt(ask)
           "\nthat is the file the CyberDojo runs.");
     return; // Cancelled
   }
-  if (ask && !confirm("Click OK to delete " + filename)) { return; /* Cancelled */ }
+  if (ask && !confirm("Delete " + filename + " ?")) { return; /* Cancelled */ }
 
   // Reload kata.sh which is always available as it cannot be renamed or deleted
   loadFile('kata.sh');
@@ -81,6 +81,8 @@ function deleteFilePrompt(ask)
   
   var fcp = fileCaretPos(filename);
   fcp.parentNode.removeChild(fcp);
+
+  refreshLineNumbering();
 }
 
 //====================== RENAME FILE =======================
@@ -95,10 +97,10 @@ function renameFile()
     return; // Cancelled
   }
 
-  var newname = trim(prompt("Rename " + filename + " to: ", filename));
+  var newname = trim(prompt("Rename " + filename + " ?", 'not ' + filename));
   if (newname == null) return; // Cancelled
   if (newname == "") { alert("Nothing entered: rename abandoned"); return; }
-  if (newname == filename) { /* Same name; nothing to do. Should I alert()? */ return; }
+  if (newname == filename) { /* Same name; nothing to do. */ return; }
   if (fileAlreadyExists(newname))
   {
     alert("CyberDojo cannot rename " +
@@ -114,7 +116,12 @@ function renameFile()
   deleteFilePrompt(false);
   newFileContent(newname, content, caret_pos);
   rebuildFileList();
+  refreshLineNumbering();
+}
 
+
+function refreshLineNumbering()
+{
   // Ensure line-numbers repositions by removing and re-adding
   // (renaming a file can alter the file-list panel width)
   var old = document.getElementById('line_numbers');
