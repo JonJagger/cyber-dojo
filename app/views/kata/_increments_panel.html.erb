@@ -7,7 +7,7 @@ function loadRTOintoEditor(n)
   // Rails has automatically html_escaped the run_tests_output 
   // so I have to reverse that. Googling find nothing!?!?
   rto = rto.gsub('&lt;', '<');
-  rto = rto.gsub('&rt;', '>');
+  rto = rto.gsub('&gt;', '>');
   $('editor').value = rto;
   $('editor').readOnly = true;
   run_tests_output_loaded = true;
