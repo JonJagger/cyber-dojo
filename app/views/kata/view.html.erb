@@ -15,6 +15,9 @@
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
 
+  <span class="title"><%= @dojo.name -%>,
+                      <%= @kata.name -%></span>
+
   <%= render :partial => 'view_panel' -%>
   <%= render :partial => 'hidden_file_contents' -%>
   <%= render :partial => 'run_tests_output' -%>
