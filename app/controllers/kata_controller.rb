@@ -18,8 +18,8 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params[:dojo_name])
     @kata = @dojo.new_kata(params[:kata_name])
     @avatar = @kata.new_avatar(params[:avatar_name])
-    @avatar.run_tests(load_files_from_page);
-    @increments = @avatar.increments
+    @avatar.run_tests(load_files_from_page)
+    @increments = limited(@avatar.increments)
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -53,6 +53,12 @@ private
     manifest
   end
 
+end
+
+def limited(increments)
+  max_increments_displayed = 7
+  len = [increments.length, max_increments_displayed].min
+  increments[-len,len]
 end
 
 
