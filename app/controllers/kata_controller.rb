@@ -13,14 +13,15 @@ class KataController < ApplicationController
     @manifest = {}
     @increments = @avatar.read_most_recent(@manifest)
     @current_file = @manifest[:current_filename] || 'kata.sh'
+    @run_tests_output = @manifest[:run_tests_output] || ''
   end
 
   def run_tests
-    @dojo = Dojo.new(params[:dojo_name])
-    @kata = @dojo.new_kata(params[:kata_name])
-    @avatar = @kata.new_avatar(params[:avatar_name])
-    @avatar.run_tests(load_files_from_page)
-    @increments = limited(@avatar.increments)
+    dojo = Dojo.new(params[:dojo_name])
+    kata = dojo.new_kata(params[:kata_name])
+    avatar = kata.new_avatar(params[:avatar_name])
+    @run_tests_output = avatar.run_tests(load_files_from_page)
+    @increments = limited(avatar.increments)
     respond_to do |format|
       format.js if request.xhr?
     end

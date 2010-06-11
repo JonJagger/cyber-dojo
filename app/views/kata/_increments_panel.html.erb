@@ -1,6 +1,56 @@
 
-<div id="increments"
+<script language="javascript" 
+        type="text/javascript">
+function loadRTOintoEditor(n)
+{
+  var rto = $('rto[' + n + ']').innerHTML;
+  // Rails has automatically html_escaped the run_tests_output 
+  // so I have to reverse that. Googling find nothing!?!?
+  rto = rto.gsub('&lt;', '<');
+  rto = rto.gsub('&rt;', '>');
+  $('editor').value = rto;
+  $('editor').readOnly = true;
+  run_tests_output_loaded = true;
+}
+</script>
+
+<div id="increments_panel"
      class="rounded panel">
-  <%= render :partial => 'increments' -%>
+
+<table cellpadding="2px">
+  <tr>
+    <td>
+      <input id="play"
+             type="image" 
+             width="22" 
+             height="22"
+             title="Click to run kata.sh on the CyberDojo server"
+             src="/images/PlayButton.svg.thumb.png"
+             style="visibility:visible"/>
+    </td>
+
+    <td id="run_tests_spinner" 
+        style="display:none"> 
+      <span>
+        <%= image_tag "spinner.gif" -%>
+      </span>
+    </td> 
+
+    <% limited(@increments).reverse.each do |increment| -%>
+    <td>
+      <div id="inc"
+           class="<%= increment[:outcome] -%> rounded increment"
+           onClick="loadRTOintoEditor('<%= increment[:number] -%>');">
+         &thinsp;
+         <span>(<%= increment[:number] -%>:<%= Time.utc(*increment[:time]) -%>)</span>
+         <span style="display:none;"
+               id="rto[<%=increment[:number]-%>]"><%= increment[:info] -%></span>
+      </div>
+    </td>
+    <% end -%>
+
+  </tr>
+</table>
+
 </div>
 

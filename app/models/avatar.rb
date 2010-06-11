@@ -26,7 +26,6 @@ class Avatar
   def read_most_recent(manifest)
     # load starting manifest
     manifest[:visible_files] = @kata.visible
-    manifest[:current_filename] = 'kata.sh'
     increments = []
     File.open(@kata.folder, 'r') do |f|
       flock(f) do |lock|
@@ -37,13 +36,16 @@ class Avatar
   end
 
   def run_tests(manifest)
+    run_tests_output = ''
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
         run_tests_output = TestRunner.avatar_run_tests(self, manifest)
+        manifest[:run_tests_output] = run_tests_output
         test_info = RunTestsOutputParser.parse(self, run_tests_output)
         save(manifest, test_info)
       end
     end
+    run_tests_output
   end
 
   def save(manifest, test_info)    
@@ -79,6 +81,7 @@ private
 	  @kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
+
 	  # Create empty increments file ready to be loaded next time
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }
       []
@@ -89,6 +92,7 @@ private
         restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
         manifest[:visible_files] = restart_manifest[:visible_files]
         manifest[:current_filename] = restart_manifest[:current_filename]
+        manifest[:run_tests_output] = restart_manifest[:run_tests_output]
       end
       my_increments
     end

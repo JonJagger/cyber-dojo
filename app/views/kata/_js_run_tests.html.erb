@@ -26,6 +26,11 @@ function postRunTests()
   //                 :complete => "postRunTests();"
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
+
+  $('editor').value = $('run_tests_output').getAttribute('value');
+  $('editor').readOnly = true;
+  run_tests_output_loaded = true;
+
   $('editor').focus();
 }
 

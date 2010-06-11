@@ -3,6 +3,7 @@
         type="text/javascript">
 
 var current_filename = false;
+var run_tests_output_loaded = false;
 
 function saveCurrentFile()
 {
@@ -19,7 +20,7 @@ function saveCurrentFile()
   // in the manifest.
   // params['radio_filename'] gives the name of the selected file
 
-  if (current_filename)
+  if (current_filename && !run_tests_output_loaded)
   {
     fileContent(current_filename).setAttribute('value', $('editor').value);
     fileCaretPos(current_filename).setAttribute('value', getLiveCaretPos());
@@ -30,14 +31,13 @@ function loadFile(filename)
 {
   saveCurrentFile();
 
-  var editor = $('editor');
   var pos = fileCaretPos(filename).getAttribute('value');
-  editor.value = fileContent(filename).getAttribute('value');
-
-  //alert("loadFile:caretPos==" + pos);
+  $('editor').readOnly = false;
+  $('editor').value = fileContent(filename).getAttribute('value');
   setLiveCaretPos(pos);
 
   current_filename = filename;
+  run_tests_output_loaded = false;
   selectFileInFileList(filename);
 }
 
