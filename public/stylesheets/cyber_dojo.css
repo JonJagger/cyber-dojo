@@ -28,38 +28,15 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-.increment { padding: 0.15em; }
-
-.failed  { background-color: #F33; }  /* red */
-.passed  { background-color: #3C3; }  /* green */
-.error   { background-color: #FF0; }  /* yellow */
-
-/* FAKE TOOL TIPS
- * Instead of title="tool-tip" I use a hidden nested span
- * as this allows me to insert newlines.
- */
-#inc.increment
+.increment
 {
-  position: relative; /*this is the key*/
-  z-index: 24; 
+  padding: 0.15em;
   text-decoration: none;
 }
 
-#inc.increment:hover { z-index: 25; }
-
-#inc.increment span { display: none; }
-
-#inc.increment:hover span /*the span will display just on :hover state*/
-{
-  font-family: monospace;
-  font-size: 9pt;
-  display: block;
-  position: fixed;
-  border: 1px solid #0CF;
-  background-color: #CFF; 
-  color: #000;
-  text-align: left;
-}
+.increment.failed  { background-color: #F33; }  /* red */
+.increment.passed  { background-color: #3C3; }  /* green */
+.increment.error   { background-color: #FF0; }  /* yellow */
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 

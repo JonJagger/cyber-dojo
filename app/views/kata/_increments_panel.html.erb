@@ -5,7 +5,7 @@ function loadRTOintoEditor(n)
 {
   var rto = $('rto[' + n + ']').innerHTML;
   // Rails has automatically html_escaped the run_tests_output 
-  // so I have to reverse that. Googling find nothing!?!?
+  // so I have to reverse that. Googling finds nothing!?!?
   rto = rto.gsub('&lt;', '<');
   rto = rto.gsub('&gt;', '>');
   $('editor').value = rto;
@@ -38,11 +38,10 @@ function loadRTOintoEditor(n)
 
     <% @increments.each do |increment| -%>
     <td>
-      <div id="inc"
+      <div title="<%= increment[:number] -%>:<%= Time.utc(*increment[:time]) -%>"
            class="<%= increment[:outcome] -%> rounded increment"
            onClick="loadRTOintoEditor('<%= increment[:number] -%>');">
          &thinsp;
-         <span><%= increment[:number] -%>:<%= Time.utc(*increment[:time]) -%></span>
          <span style="display:none;"
                id="rto[<%=increment[:number]-%>]"><%= increment[:run_tests_output] -%></span>
       </div>
