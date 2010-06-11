@@ -12,6 +12,7 @@ class KataController < ApplicationController
     @avatar = @kata.new_avatar(params[:avatar_name])
     @manifest = {}
     @increments = @avatar.read_most_recent(@manifest)
+    @current_file = @manifest[:current_filename] || 'kata.sh'
   end
 
   def run_tests

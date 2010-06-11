@@ -1,0 +1,13 @@
+
+<script language="javascript" 
+        type="text/javascript">
+
+document.observe('dom:loaded', function() 
+{
+  setupEditorMenu();
+  rebuildFileList();
+  loadFile("<%=@current_file-%>");
+})
+
+</script>
+

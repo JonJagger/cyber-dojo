@@ -36,8 +36,12 @@ function loadFile(filename)
   setLiveCaretPos(pos);
 
   current_filename = filename;
-  //TODO: $('radio_....).checked = true;
-  document.getElementById('radio_' + filename).checked = true;
+  selectFileInFileList(filename);
+}
+
+function selectFileInFileList(filename)
+{
+  $('radio_' + filename).checked = true;
 }
 
 function fileContent(filename)
