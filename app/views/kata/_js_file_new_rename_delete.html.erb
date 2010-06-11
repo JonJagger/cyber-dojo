@@ -62,13 +62,10 @@ function deleteFilePrompt(ask)
   if (filename == 'kata.sh')
   {
     alert("CyberDojo cannot delete kata.sh because " +
-          "\nthat is the file the CyberDojo runs.");
+          "\nthat is the file the CyberDojo server runs.");
     return; // Cancelled
   }
   if (ask && !confirm("Delete " + filename + " ?")) { return; /* Cancelled */ }
-
-  // Reload kata.sh which is always available as it cannot be renamed or deleted
-  loadFile('kata.sh');
 
   var fc = fileContent(filename);
   fc.parentNode.removeChild(fc);
@@ -77,8 +74,12 @@ function deleteFilePrompt(ask)
   var fcp = fileCaretPos(filename);
   fcp.parentNode.removeChild(fcp);
 
+  // Reload kata.sh which is always available as it cannot be renamed or deleted
+  // NB: Important to set current_filename to false because loadFile()
+  //     does an auto saveCurrentFile() which looks into DOM nodes that
+  //     have just been deleted.
+  current_filename = false;
   loadFile('kata.sh');
-
   refreshLineNumbering();
 }
 
@@ -90,7 +91,7 @@ function renameFile()
   if (filename == 'kata.sh')
   {
     alert("CyberDojo cannot rename kata.sh because " +
-          "\nthat is the file the CyberDojo runs.");
+          "\nthat is the file the CyberDojo server runs.");
     return; // Cancelled
   }
 
@@ -161,10 +162,14 @@ function trim(stringToTrim)
 
 function makeFileListEntry(filename)
 {
-  var div = new Element("div", { id:"radioFilename" });
+  var div = new Element('div', { class:'filename' });
   div.onclick = function() { loadFile(filename); };
-  var inp = new Element("input", 
-    { id:"radio_" + filename, name:"radio_filename", type:"radio", value:filename });
+  var inp = new Element('input', 
+    { id:'radio_' + filename, 
+      name:'filename', 
+      type:'radio', 
+      value:filename 
+    });
   div.appendChild(inp);
   div.appendChild(document.createTextNode(filename));
   var td = new Element("td");

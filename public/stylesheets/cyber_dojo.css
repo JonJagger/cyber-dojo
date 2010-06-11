@@ -64,12 +64,12 @@
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-.identifier
+.title
 {
-  margin-left: 0.3em;
-  padding-left: 0.3em;
   display: block;
-  font-size: 8pt;
+  margin: 0.2em 0em 0.2em 0.2em; /* TRBL */
+  font-size: 14pt;
+  color: #686868;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
@@ -77,24 +77,22 @@
 #avatar_pair
 {
     white-space: nowrap;
-    margin-left: auto;
-    margin-right: auto;
-    margin:0.3em; 
-    padding:0.3em;
+    margin-left:0.3em; 
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
-#file_manager 
-{ 
-  background-color: #FEF5CA;
-  color: #686868;   
-  font-size: 12pt; 
+div[class="filename"]
+{
+  background-color: #F8DCBC; /* #FFE4C4; #FEF5C0; */
+  white-space: nowrap;
+  color: #686868;
+  font-size: 11pt;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
-
-#radioFilename { white-space: nowrap; }
-
-#rto { font-size: 10pt; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
 
@@ -105,14 +103,13 @@
   padding-left: 5px;
   margin: 0em;
   margin-left: 40px; /* enough for line-numbers */
-  font-size: 11pt;
+  font-size: 12pt;
   font-family: monospace;
   font-weight: normal;
   color: white;
   background-color: #686868;
   border: 1px solid #666;
   border-right: none;
-
   border-radius: 0px;
   -moz-border-radius: 0px;
   -khtml-border-radius: 0px;
@@ -122,14 +119,13 @@
 .textarea_with_line_numbers
 {
   display: block;
-  font-size: 11pt;
+  font-size: 12pt;
   font-weight: 100;
   color: #686868;
   margin: 0;
   border: 1px solid #666;
   border-right: none;
   background: #aaa;
-
   border-radius: 6px 0px 0px 6px;
   -moz-border-radius: 6px 0px 0px 6px;
   -khtml-border-radius: 6px 0px 0px 6px;

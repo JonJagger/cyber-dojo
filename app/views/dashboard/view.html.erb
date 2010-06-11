@@ -7,13 +7,14 @@
   <% gapped.each do |avatar_name,increments| -%>
   <tr>
     <td>
+      <% size = 27 -%>
       <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
-           width="25"
-           height="25"
+           width="<%=size-%>"
+           height="<%=size-%>"
            title="<%=avatar_name.humanize-%>" />
       <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
-           width="25"
-           height="25"
+           width="<%=size-%>"
+           height="<%=size-%>"
            title="<%=avatar_name.humanize-%>" />
       &nbsp;
     </td>

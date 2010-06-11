@@ -1,12 +1,13 @@
 
 <div id="avatar_pair">
-
+  <% size = 73 -%>
   <img src="/images/avatars/<%=@avatar.name.downcase-%>.jpg"
        title="<%=@avatar.name.humanize-%>"
-  />
+       width="<%= size -%>"
+       height="<%= size -%>" />
   <img src="/images/avatars/<%=@avatar.name.downcase-%>.jpg"
        title="<%=@avatar.name.humanize-%>"
-  />
-
+       width="<%= size -%>"
+       height="<%= size -%>" />
 </div>
 

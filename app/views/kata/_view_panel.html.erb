@@ -1,17 +1,18 @@
 
 <table cellpadding="0">
   <tr valign="top">
-    <td id="file_manager">
-      <%= render :partial => 'increments_panel' -%>
-
-      <span class="identifier"><%= @dojo.name -%></span>      
-      <span class="identifier"><%= @kata.name -%></span>
+    <td>
       <%= render :partial => 'avatar_pair' -%>
+      <%= render :partial => 'increments_panel' -%>
       <%= render :partial => 'file_menu_panel' -%> 
       <%= render :partial => 'filenames_panel' -%>
     </td>
     <td>
       <%= render :partial => 'editor_panel' -%>
+    </td>
+    <td>
+      <span class="title"><%= @dojo.name -%></span>
+      <span class="title"><%= @kata.name -%></span>
     </td>
   </tr>
 </table>
