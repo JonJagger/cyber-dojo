@@ -33,6 +33,8 @@ function loadFile(filename)
   var editor = $('editor');
   var pos = fileCaretPos(filename).getAttribute('value');
   editor.value = fileContent(filename).getAttribute('value');
+
+  //alert("loadFile:caretPos==" + pos);
   setLiveCaretPos(pos);
 
   current_filename = filename;
