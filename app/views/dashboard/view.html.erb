@@ -3,12 +3,20 @@
 
 <% gapped = gapper(@dojo) -%>
 <div id="dashboard">
-<table cellspacing="0" 
-       cellpadding="0">
-
+<table>
   <% gapped.each do |avatar_name,increments| -%>
   <tr>
-    <td><%= avatar_name -%>&nbsp;</td>
+    <td>
+      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
+           width="25"
+           height="25"
+           title="<%=avatar_name.humanize-%>" />
+      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
+           width="25"
+           height="25"
+           title="<%=avatar_name.humanize-%>" />
+      &nbsp;
+    </td>
     <td>
       <table cellspacing="2"
              cellpadding="0">
@@ -29,12 +37,9 @@
   <tr>
    <td>&nbsp;</td>
   </tr>
-  <tr>
-   <td>&nbsp;</td>
-  </tr>
 
   <tr>
-    <td>zoo&nbsp;</td>
+    <td>&nbsp;</td>
     <td>
       <table cellspacing="2"
              cellpadding="0">
