@@ -8,6 +8,7 @@
          disabled="false"
          onclick="newFile();">
        <img src="/images/file-new-icon.png"
+            alt="new"
             width="<%=size-%>"
             height="<%=size-%>"/><br/>
        <span class="file_op_name">new</span>
@@ -17,6 +18,7 @@
          id="file_op[delete]"
          onclick="deleteFile();">
        <img src="/images/file-delete-icon.png"
+            alt="delete"
             width="<%=size-%>"
             height="<%=size-%>"/><br/>
        <span class="file_op_name">delete</span>
@@ -26,6 +28,7 @@
          id="file_op[rename]"
          onclick="renameFile();">
        <img src="/images/file-rename-icon.png"
+            alt="rename"
             width="<%=size-%>"
             height="<%=size-%>"/><br/>
        <span class="file_op_name">rename</span>
@@ -35,6 +38,10 @@
 
 <table>
   <tbody id="filename_list">
+    <tr>
+      <td>
+      </td>
+    </tr>
   </tbody>
 </table>
 
