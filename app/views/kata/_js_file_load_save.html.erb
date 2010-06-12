@@ -7,19 +7,7 @@ var run_tests_output_loaded = false;
 
 function saveCurrentFile()
 {
-  // called from preRunTests();
-  // TODO: there must always be a current file since you can't delete kata.sh
-  // however, the code in _js_editor_menu.html.erb does this
-  // document.observe('dom:loaded', function() 
-  // {
-  //    ...
-  //    load('kata.sh');
-  // }
-  // and current_filename is set to false
-  // So this will need to wait until I have stored the currently selected file
-  // in the manifest.
-  // params['radio_filename'] gives the name of the selected file
-
+  // current_filename is initially null on dom:loaded
   if (current_filename && !run_tests_output_loaded)
   {
     fileContent(current_filename).setAttribute('value', $('editor').value);

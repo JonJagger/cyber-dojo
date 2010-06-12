@@ -61,12 +61,13 @@ function deleteFilePrompt(ask)
   var filename = current_filename;
   if (filename == 'kata.sh')
   {
-    alert("CyberDojo cannot delete kata.sh because " +
-          "\nthat is the file the CyberDojo server runs.");
+    alert("CyberDojo cannot delete kata.sh because\n" +
+          "that is the file the CyberDojo server runs.");
     return; // Cancelled
   }
-  if (ask && !confirm("Delete " + filename + " ?")) { return; /* Cancelled */ }
+  if (ask && !confirm("Delete " + filename)) { return; /* Cancelled */ }
 
+  // OK. Now do it...
   var fc = fileContent(filename);
   fc.parentNode.removeChild(fc);
   rebuildFileList();
@@ -76,7 +77,7 @@ function deleteFilePrompt(ask)
 
   // Reload kata.sh which is always available as it cannot be renamed or deleted
   // NB: Important to set current_filename to false because loadFile()
-  //     does an auto saveCurrentFile() which looks into DOM nodes that
+  //     does an auto saveCurrentFile() which would look into DOM nodes that
   //     have just been deleted.
   current_filename = false;
   loadFile('kata.sh');
@@ -90,25 +91,24 @@ function renameFile()
   var filename = current_filename;
   if (filename == 'kata.sh')
   {
-    alert("CyberDojo cannot rename kata.sh because " +
-          "\nthat is the file the CyberDojo server runs.");
+    alert("CyberDojo cannot rename kata.sh because\n" +
+          "that is the file the CyberDojo server runs.");
     return; // Cancelled
   }
 
-  var newname = trim(prompt("Rename " + filename + " ?", 'not ' + filename));
+  var newname = trim(prompt("Rename " + filename + " ?", filename));
   if (newname == null) return; // Cancelled
-  if (newname == "") { alert("Nothing entered: rename abandoned"); return; }
+  if (newname == "") { alert("No filename entered\n" +
+                             "Rename " + filename + " abandoned"); return; }
   if (newname == filename) { /* Same name; nothing to do. */ return; }
   if (fileAlreadyExists(newname))
   {
-    alert("CyberDojo cannot rename " +
-           filename + " to " + newname +
-          "\nbecause a file called " +
-           newname +
-          " already exists.");
+    alert("CyberDojo cannot rename " + filename + " to " + newname + "\n" +
+          "because a file called " + newname + " already exists.");
     return; // Cancelled
   }
 
+  // OK. Now do it...
   // Rename by deleting and recreating with previous content
   var content = $('editor').value;
   var caret_pos = getLiveCaretPos();
@@ -125,7 +125,7 @@ function refreshLineNumbering()
 {
   // Ensure line-numbers repositions by removing and re-adding
   // (renaming a file can alter the file-list panel width)
-  var old = document.getElementById('line_numbers');
+  var old = $('line_numbers');
   old.parentNode.removeChild(old);
   createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
   TabEntry.enable('editor');
