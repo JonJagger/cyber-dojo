@@ -58,21 +58,15 @@ function deleteFile()
 
 function deleteFilePrompt(ask)
 {
-  var filename = current_filename;
-  if (filename == 'kata.sh')
-  {
-    alert("CyberDojo cannot delete kata.sh because\n" +
-          "that is the file the CyberDojo server runs.");
-    return; // Cancelled
-  }
-  if (ask && !confirm("Delete " + filename)) { return; /* Cancelled */ }
+  if (current_filename == 'kata.sh') { return; }
+  if (ask && !confirm("Delete " + current_filename)) { return; /* Cancelled */ }
 
   // OK. Now do it...
-  var fc = fileContent(filename);
+  var fc = fileContent(current_filename);
   fc.parentNode.removeChild(fc);
   rebuildFileList();
   
-  var fcp = fileCaretPos(filename);
+  var fcp = fileCaretPos(current_filename);
   fcp.parentNode.removeChild(fcp);
 
   // Reload kata.sh which is always available as it cannot be renamed or deleted
@@ -88,22 +82,16 @@ function deleteFilePrompt(ask)
 
 function renameFile()
 {
-  var filename = current_filename;
-  if (filename == 'kata.sh')
-  {
-    alert("CyberDojo cannot rename kata.sh because\n" +
-          "that is the file the CyberDojo server runs.");
-    return; // Cancelled
-  }
+  if (current_filename == 'kata.sh') { return; }
 
-  var newname = trim(prompt("Rename " + filename + " ?", filename));
+  var newname = trim(prompt("Rename " + current_filename + " ?", "new name for " + current_filename));
   if (newname == null) return; // Cancelled
   if (newname == "") { alert("No filename entered\n" +
-                             "Rename " + filename + " abandoned"); return; }
-  if (newname == filename) { /* Same name; nothing to do. */ return; }
+                             "Rename " + current_filename + " abandoned"); return; }
+  if (newname == current_filename) { /* Same name; nothing to do. */ return; }
   if (fileAlreadyExists(newname))
   {
-    alert("CyberDojo cannot rename " + filename + " to " + newname + "\n" +
+    alert("CyberDojo cannot rename " + current_filename + " to " + newname + "\n" +
           "because a file called " + newname + " already exists.");
     return; // Cancelled
   }

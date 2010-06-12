@@ -1,8 +1,42 @@
 
-<div class="rounded panel">
-  <table>
-    <tbody id="filename_list">
-    </tbody>
-  </table>
+<div class="panel">
+
+<% size=30 -%>
+<table>
+  <tr>
+     <td class="file_op" 
+         disabled="false"
+         onclick="newFile();">
+       <img src="/images/file-new-icon.png"
+            width="<%=size-%>"
+            height="<%=size-%>"/><br/>
+       <span class="file_op_name">new</span>
+     </td>
+     <td class="file_op"
+         disabled="false"
+         id="file_op[delete]"
+         onclick="deleteFile();">
+       <img src="/images/file-delete-icon.png"
+            width="<%=size-%>"
+            height="<%=size-%>"/><br/>
+       <span class="file_op_name">delete</span>
+     </td>
+     <td class="file_op" 
+         disabled="false"
+         id="file_op[rename]"
+         onclick="renameFile();">
+       <img src="/images/file-rename-icon.png"
+            width="<%=size-%>"
+            height="<%=size-%>"/><br/>
+       <span class="file_op_name">rename</span>
+     </td>
+   </tr>
+</table>
+
+<table>
+  <tbody id="filename_list">
+  </tbody>
+</table>
+
 </div>
 

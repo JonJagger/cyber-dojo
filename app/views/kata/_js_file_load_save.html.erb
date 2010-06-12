@@ -8,6 +8,7 @@ var run_tests_output_loaded = false;
 function saveCurrentFile()
 {
   // current_filename is initially null on dom:loaded
+  // TODO: could it be loaded directly into the editor by rails at start?
   if (current_filename && !run_tests_output_loaded)
   {
     fileContent(current_filename).setAttribute('value', $('editor').value);
@@ -19,6 +20,7 @@ function loadFile(filename)
 {
   if (current_filename)
   {
+    // output doesn't have its own file yet...
     $('radio_' + current_filename).parentNode.setAttribute('style', 'font-weight:normal'); 
   } 
 
@@ -33,6 +35,19 @@ function loadFile(filename)
   current_filename = filename;
   run_tests_output_loaded = false;
   selectFileInFileList(filename);
+
+  if (filename == 'kata.sh')
+  {
+    $('file_op[rename]').setAttribute('disabled', 'true'); 
+    $('file_op[delete]').setAttribute('disabled', 'true'); 
+    //$('file_op[rename]').disabled = true;
+    //$('file_op[delete]').disabled = true;
+  }
+  else
+  {
+    $('file_op[rename]').setAttribute('disabled', 'false'); 
+    $('file_op[delete]').setAttribute('disabled', 'false'); 
+  }
 }
 
 function selectFileInFileList(filename)

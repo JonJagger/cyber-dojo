@@ -16,7 +16,7 @@ function loadRTOintoEditor(n)
 </script>
 
 <div id="increments_panel"
-     class="rounded panel">
+     class="panel">
 
 <table cellpadding="2px">
   <tr>
@@ -39,8 +39,7 @@ function loadRTOintoEditor(n)
 
     <% @increments.each do |increment| -%>
     <td>
-      <div title="<%= increment[:number] -%>:<%= Time.utc(*increment[:time]) -%>"
-           class="<%= increment[:outcome] -%> rounded increment"
+      <div class="<%= increment[:outcome] -%> increment"
            onClick="loadRTOintoEditor('<%= increment[:number] -%>');">
          &thinsp;
          <span style="display:none;"
