@@ -151,7 +151,7 @@ function trim(stringToTrim)
 function makeFileListEntry(filename)
 {
   var div = new Element('div', { class:'mid_tone filename' });
-  div.onclick = function() { loadFile(filename); };
+  div.onclick = function() { saveCurrentFile(); loadFile(filename); };
   var inp = new Element('input', 
     { id:'radio_' + filename, 
       name:'filename', 

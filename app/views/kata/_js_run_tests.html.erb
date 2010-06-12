@@ -27,6 +27,7 @@ function postRunTests()
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
 
+  // Save output from server to hidden input
   fileContent('output').setAttribute('value', $('run_tests_output').getAttribute('value'));
   loadFile('output');
   $('editor').focus();

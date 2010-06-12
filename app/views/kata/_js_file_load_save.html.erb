@@ -28,8 +28,6 @@ function loadFile(filename)
     $('file_op[delete]').setAttribute('disabled', 'false'); 
   }
 
-  saveCurrentFile();
-
   var pos = fileCaretPos(filename).getAttribute('value');
   $('editor').value = fileContent(filename).getAttribute('value');
 
