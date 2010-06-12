@@ -14,17 +14,17 @@ function rebuildFileList()
 	  return 0; // Should never happen
   });
 
-  var file_list = $('file-list');
+  var filename_list = $('filename_list');
   // Remove all children
-  while (file_list.childNodes.length >= 1)
+  while (filename_list.childNodes.length >= 1)
   {
-     file_list.removeChild(file_list.firstChild);
+     filename_list.removeChild(filename_list.firstChild);
   } 
 
   // Add new children
   for (at = 0; at != filenames.length; at++)
   {
-    file_list.appendChild(makeFileListEntry(filenames[at]));
+    filename_list.appendChild(makeFileListEntry(filenames[at]));
   }
 }
 
@@ -172,6 +172,7 @@ function makeFileListEntry(filename)
     });
   div.appendChild(inp);
   div.appendChild(document.createTextNode(filename));
+
   var td = new Element("td");
   td.appendChild(div);
   var tr = new Element("tr");
@@ -188,7 +189,7 @@ function allFilenames()
   {
     var att = all[at].getAttribute('id');
     var prefix = 'file_content['.length + 1; // +1 for '
-    var filename = att.substr(prefix, att.length - prefix - 1 - 1); // +1 for ', +1 for ]
+    var filename = att.substr(prefix, att.length - prefix - 1 - 1); // -1 for ', -1 for ]
     filenames.push(filename);
   }
   return filenames;
@@ -201,11 +202,12 @@ function fileAlreadyExists(filename)
 
 function random3() 
 {
-    var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ'.split('');
+    var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
     var str = '';
-    for (var i = 0; i < 3; i++) 
+    for (var at = 0; at != 3; at++) 
     {
-        str += chars[Math.floor(Math.random() * chars.length)];
+        var pos = Math.floor(Math.random() * alphabet.length);
+        str += alphabet.charAt(pos);
     }
     return str;
 }
