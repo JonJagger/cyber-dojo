@@ -9,7 +9,6 @@
 
 .light_tone { background-color: #FEF5CA; /*sandbox */ }
 .mid_tone   { background-color: #FFE4C4; /*bisque*/ }
-.dark_tone  { background-color: #F6DABA; }
 
 .file_op, div[class~="filename"], #dashboard, .increment, #dashboard_cell
 { 
@@ -71,6 +70,7 @@ div[class~="filename"]
   white-space: nowrap;
   color: #686868;
   font-size: 11pt;
+  cursor: pointer;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */

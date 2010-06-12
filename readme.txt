@@ -137,6 +137,16 @@ You can do this using
 http://ip-address:3000/alarm
 
 
+Firefox Spell-Checking
+======================
+To turn it off (and avoid annoying red underlines the code editor)
+1. Type about:config in the address bar.
+2. In the filter field type spell
+3. Find the entry for layout.spellcheckDefault and double-click it.
+4. Set the integer to 1 to enable the spell checker.
+   Set the integer to 0 to disable the spell checker.
+
+
 What will work and what won't work
 ==================================
 After selecting an animal avatar (eg Pandas) the initial virtual dojo is currently 
