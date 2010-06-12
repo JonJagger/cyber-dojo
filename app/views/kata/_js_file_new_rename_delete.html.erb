@@ -4,7 +4,7 @@
 
 function rebuildFileList()
 {
-  filenames = allFilenames();
+  var filenames = allFilenames();
   filenames.sort(function(lhs,rhs) {
 	if (lhs < rhs)
 	  return -1;
