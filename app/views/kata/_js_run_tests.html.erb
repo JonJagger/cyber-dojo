@@ -27,12 +27,8 @@ function postRunTests()
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
 
-  // dim selected filename in filename_list to indicate editor contains output
-  $('radio_' + current_filename).parentNode.setAttribute('style', 'color:darkgray');
-  $('editor').value = $('run_tests_output').getAttribute('value');
-  $('editor').readOnly = true;
-  run_tests_output_loaded = true;
-
+  fileContent('output').setAttribute('value', $('run_tests_output').getAttribute('value'));
+  loadFile('output');
   $('editor').focus();
 }
 

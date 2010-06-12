@@ -3,13 +3,12 @@
         type="text/javascript">
 
 var current_filename = false;
-var run_tests_output_loaded = false;
 
 function saveCurrentFile()
 {
   // current_filename is initially null on dom:loaded
   // TODO: could it be loaded directly into the editor by rails at start?
-  if (current_filename && !run_tests_output_loaded)
+  if (current_filename)
   {
     fileContent(current_filename).setAttribute('value', $('editor').value);
     fileCaretPos(current_filename).setAttribute('value', getLiveCaretPos());
@@ -18,42 +17,32 @@ function saveCurrentFile()
 
 function loadFile(filename)
 {
-  if (current_filename)
-  {
-    // output doesn't have its own file yet...
-    $('radio_' + current_filename).parentNode.setAttribute('style', 'font-weight:normal'); 
-  } 
-
-  saveCurrentFile();
-
-  var pos = fileCaretPos(filename).getAttribute('value');
-  $('editor').readOnly = false;
-  $('editor').value = fileContent(filename).getAttribute('value');
-
-  setLiveCaretPos(pos);
-
-  current_filename = filename;
-  run_tests_output_loaded = false;
-  selectFileInFileList(filename);
-
-  if (filename == 'kata.sh')
+  if (filename == 'kata.sh' || filename == 'output')
   {
     $('file_op[rename]').setAttribute('disabled', 'true'); 
     $('file_op[delete]').setAttribute('disabled', 'true'); 
-    //$('file_op[rename]').disabled = true;
-    //$('file_op[delete]').disabled = true;
   }
   else
   {
     $('file_op[rename]').setAttribute('disabled', 'false'); 
     $('file_op[delete]').setAttribute('disabled', 'false'); 
   }
+
+  saveCurrentFile();
+
+  var pos = fileCaretPos(filename).getAttribute('value');
+  $('editor').value = fileContent(filename).getAttribute('value');
+
+  current_filename = filename;
+
+  setLiveCaretPos(pos);
+  $('editor').readOnly = (filename == 'output');
+  selectFileInFileList(filename);
 }
 
 function selectFileInFileList(filename)
 {
   $('radio_' + filename).checked = true;
-  $('radio_' + filename).parentNode.setAttribute('style', 'font-weight:normal');
 }
 
 function fileContent(filename)

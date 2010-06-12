@@ -41,6 +41,8 @@ class Avatar
       flock(f) do |lock|
         run_tests_output = TestRunner.avatar_run_tests(self, manifest)
         manifest[:run_tests_output] = run_tests_output
+        manifest[:visible_files]['output'] = { :content => run_tests_output,
+                                               :caret_pos => '0' }
         test_info = RunTestsOutputParser.parse(self, run_tests_output)
         save(manifest, test_info)
       end
@@ -81,6 +83,7 @@ private
 	  @kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
+      manifest[:visible_files]['output'] = { :content => '', :caret_pos => 0 }
 
 	  # Create empty increments file ready to be loaded next time
       File.open(increments_filename, 'w') { |file| file.write([].inspect) }

@@ -70,7 +70,6 @@ private
         end
       end
     end
-    #@visible['run_tests_output'] = { :content => "" }
   end
 
   def read_file_sets(names)
