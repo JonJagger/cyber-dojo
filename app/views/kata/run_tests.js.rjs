@@ -1,5 +1,5 @@
 
 page.replace 'increments_panel', :partial => 'increments_panel'
 
-page.replace 'run_tests_output', :partial => 'run_tests_output'
+page.replace 'output', :partial => 'output'
 
