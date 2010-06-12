@@ -17,11 +17,17 @@ function saveCurrentFile()
 
 function loadFile(filename)
 {
+  if (current_filename)
+  {
+    $('radio_' + current_filename).parentNode.setAttribute('style', 'font-weight:normal'); 
+  } 
+
   saveCurrentFile();
 
   var pos = fileCaretPos(filename).getAttribute('value');
   $('editor').readOnly = false;
   $('editor').value = fileContent(filename).getAttribute('value');
+
   setLiveCaretPos(pos);
 
   current_filename = filename;
@@ -32,6 +38,7 @@ function loadFile(filename)
 function selectFileInFileList(filename)
 {
   $('radio_' + filename).checked = true;
+  $('radio_' + filename).parentNode.setAttribute('style', 'font-weight:normal');
 }
 
 function fileContent(filename)

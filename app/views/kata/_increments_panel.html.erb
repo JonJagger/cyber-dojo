@@ -9,6 +9,7 @@ function loadRTOintoEditor(n)
   rto = rto.gsub('&lt;', '<');
   rto = rto.gsub('&gt;', '>');
   $('editor').value = rto;
+  $('radio_' + current_filename).parentNode.setAttribute('style', 'color:darkgray');
   $('editor').readOnly = true;
   run_tests_output_loaded = true;
 }
