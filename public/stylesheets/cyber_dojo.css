@@ -11,7 +11,7 @@
 .mid_tone   { background-color: #FFE4C4; /*bisque*/ }
 .dark_tone  { background-color: #F6DABA; }
 
-.panel, .file_op, div[class~="filename"], #dashboard, .increment, #dashboard_cell
+.file_op, div[class~="filename"], #dashboard, .increment, #dashboard_cell
 { 
   border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 6px;
@@ -22,6 +22,7 @@
 
 .panel
 {    
+  border: 1px solid #D8D8D8; /*light-gray*/
   margin: 0.3em;
   padding: 0.3em;
 }
@@ -70,11 +71,6 @@ div[class~="filename"]
   white-space: nowrap;
   color: #686868;
   font-size: 11pt;
-}
-
-div[name~="output"]
-{
-  font-style: italic;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */

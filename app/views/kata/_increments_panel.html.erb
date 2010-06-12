@@ -1,20 +1,4 @@
 
-<script language="javascript" 
-        type="text/javascript">
-function loadRTOintoEditor(n)
-{
-  var rto = $('rto[' + n + ']').innerHTML;
-  // Rails has automatically html_escaped the run_tests_output 
-  // so I have to reverse that. Googling finds nothing!?!?
-  rto = rto.gsub('&lt;', '<');
-  rto = rto.gsub('&gt;', '>');
-  $('editor').value = rto;
-  $('radio_' + current_filename).parentNode.setAttribute('style', 'color:darkgray');
-  $('editor').readOnly = true;
-  run_tests_output_loaded = true;
-}
-</script>
-
 <div id="increments_panel"
      class="panel">
 
@@ -39,8 +23,7 @@ function loadRTOintoEditor(n)
 
     <% @increments.each do |increment| -%>
     <td>
-      <div class="<%= increment[:outcome] -%> increment"
-           onClick="loadRTOintoEditor('<%= increment[:number] -%>');">
+      <div class="<%= increment[:outcome] -%> increment">
          &thinsp;
          <span style="display:none;"
                id="rto[<%=increment[:number]-%>]"><%= increment[:run_tests_output] -%></span>

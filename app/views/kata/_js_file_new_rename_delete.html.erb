@@ -70,10 +70,6 @@ function deleteFilePrompt(ask)
   fcp.parentNode.removeChild(fcp);
 
   // Reload kata.sh which is always available as it cannot be renamed or deleted
-  // NB: Important to set current_filename to false because loadFile()
-  //     does an auto saveCurrentFile() which would look into DOM nodes that
-  //     have just been deleted.
-  current_filename = false;
   loadFile('kata.sh');
   refreshLineNumbering();
 }

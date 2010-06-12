@@ -17,24 +17,15 @@ function saveCurrentFile()
 
 function loadFile(filename)
 {
-  if (filename == 'kata.sh' || filename == 'output')
-  {
-    $('file_op[rename]').setAttribute('disabled', 'true'); 
-    $('file_op[delete]').setAttribute('disabled', 'true'); 
-  }
-  else
-  {
-    $('file_op[rename]').setAttribute('disabled', 'false'); 
-    $('file_op[delete]').setAttribute('disabled', 'false'); 
-  }
+  var disabled = (filename == 'kata.sh') ? 'true' : 'false';
+  $('file_op[rename]').setAttribute('disabled', disabled); 
+  $('file_op[delete]').setAttribute('disabled', disabled); 
 
   var pos = fileCaretPos(filename).getAttribute('value');
   $('editor').value = fileContent(filename).getAttribute('value');
 
   current_filename = filename;
-
   setLiveCaretPos(pos);
-  $('editor').readOnly = (filename == 'output');
   selectFileInFileList(filename);
 }
 
