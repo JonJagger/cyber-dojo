@@ -1,6 +1,4 @@
 
-<script language="javascript" 
-        type="text/javascript"><!--
 
 function getLiveCaretPos() 
 {
@@ -39,5 +37,4 @@ function setLiveCaretPos(pos)
   }
 }
 
-//--></script>
 

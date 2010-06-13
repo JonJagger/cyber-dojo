@@ -1,7 +1,4 @@
 
-<script language="javascript" 
-        type="text/javascript"><!--
-
 function runTests()
 {
   // _js_editor_menu.html.erb
@@ -28,6 +25,4 @@ function postRunTests()
   $('play').setAttribute('style', 'visibility:visible');
   $('editor').focus();
 }
-
-//--></script>
 

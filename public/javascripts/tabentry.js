@@ -48,7 +48,7 @@ var TabEntry = new function() {
 		var input = Event.element(evt);
 		if (evt.keyCode == 9) {
 			var top = input.scrollTop;
-			SelectionRange.insert(input, input.tab);
+			SelectionRange.insert(input, input.getAttribute('tab'));
 			Event.stop(evt);
 			input.scrollTop = top;
 		}

@@ -1,12 +1,7 @@
 
-<% # NB: I've tried putting the contents of this file into -%>
-<% #     public/javascripts/application.js but it only works here -%>
-
-<script language="javascript" type="text/javascript"><!--
-
 var move = false;
 
-function createTextAreaWithLineNumbers(id, tab)
+function createTextAreaWithLineNumbers(id)
 {
   var el = document.createElement('TEXTAREA');
   var ta = document.getElementById(id);
@@ -30,8 +25,7 @@ function createTextAreaWithLineNumbers(id, tab)
   el.innerHTML      = string;  // Firefox renders \n linebreak
   el.innerText      = string;  // IE6 renders \n line break
   el.value          = string;  // Safari
-  el.style.zIndex   = 0;
-  ta.tab = tab;
+  el.style.zIndex   = 0; 
   ta.style.zIndex   = 1;
   ta.style.position = 'relative';
   ta.parentNode.insertBefore(el, ta.nextSibling);
@@ -51,5 +45,4 @@ function createTextAreaWithLineNumbers(id, tab)
   }
 }
 
-//--></script>
 

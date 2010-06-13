@@ -1,7 +1,4 @@
 
-<script language="javascript" 
-        type="text/javascript"><!--
-
 function rebuildFilenameList()
 {
   var filenames = allFilenames();
@@ -164,7 +161,7 @@ function trim(stringToTrim)
 
 function makeFileListEntry(filename)
 {
-  var div = new Element('div', { class:'mid_tone filename' });
+  var div = new Element('div', { 'class':'mid_tone filename' });
   div.onclick = function() { saveCurrentFile(); loadFile(filename); };
   var inp = new Element('input', 
     { id:'radio_' + filename, 
@@ -208,5 +205,4 @@ function random3()
     return str;
 }
 
-//--></script>
 

@@ -1,6 +1,4 @@
 
-<script language="javascript" 
-        type="text/javascript"><!--
 
 var current_filename = false;
 
@@ -40,5 +38,4 @@ function fileCaretPos(filename)
   return $('file_caret_pos_for_' + filename);
 }
 
-//--></script>
 

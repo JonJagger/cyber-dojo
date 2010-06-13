@@ -1,10 +1,13 @@
 
-<%= render :partial => 'js_editor_line_numbers' -%>
-<%= render :partial => 'js_file_caret_pos' -%>
-<%= render :partial => 'js_file_load_save' -%>
-<%= render :partial => 'js_file_new_rename_delete' -%>
-<%= render :partial => 'js_on_dom_loaded' -%>
-<%= render :partial => 'js_run_tests' -%>
+<script language="javascript" type="text/javascript"><!--
+document.observe('dom:loaded', function() 
+{
+  rebuildFilenameList();
+  createTextAreaWithLineNumbers('editor');
+  TabEntry.enable('editor');
+  loadFile("<%=@current_file-%>");
+});
+//--></script>
 
 <% form_remote_tag :url  => { :action => 'run_tests',
                               :dojo_name => @dojo.name,
