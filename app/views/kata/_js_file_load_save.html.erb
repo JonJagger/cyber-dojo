@@ -17,10 +17,6 @@ function saveCurrentFile()
 
 function loadFile(filename)
 {
-  var disabled = (filename == 'kata.sh') ? 'true' : 'false';
-  $('file_op[rename]').setAttribute('disabled', disabled); 
-  $('file_op[delete]').setAttribute('disabled', disabled); 
-
   var pos = fileCaretPos(filename).getAttribute('value');
   $('editor').value = fileContent(filename).getAttribute('value');
 

@@ -45,7 +45,7 @@
 .file_op { padding: 4px; } 
 .file_op_name 
 { 
-  font-size: 7pt; 
+  font-size: 6pt; 
   color: #686868;
 }
 .file_op[disabled="false"] 

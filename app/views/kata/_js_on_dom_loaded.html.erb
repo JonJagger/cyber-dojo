@@ -5,7 +5,7 @@
 document.observe('dom:loaded', function() 
 {
   setupEditorMenu();
-  rebuildFileList();
+  rebuildFilenameList();
   createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
   TabEntry.enable('editor');
   loadFile("<%=@current_file-%>");

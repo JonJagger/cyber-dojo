@@ -2,7 +2,7 @@
 <script language="javascript" 
         type="text/javascript"><!--
 
-function rebuildFileList()
+function rebuildFilenameList()
 {
   var filenames = allFilenames();
   filenames.sort(function(lhs,rhs) {
@@ -42,8 +42,12 @@ function newFileContent(filename, content, caret_pos)
   // Create new hidden input elements to store new file content
   // and its caret position (to save to before submitting form)
   $('visible_files_container').appendChild(createFileContentInput(filename, content));
-  rebuildFileList();
+  rebuildFilenameList();
   $('visible_files_container').appendChild(createFileCaretPosInput(filename, caret_pos));
+
+  // At least one filename in filename list now
+  $('file_op_rename').setAttribute('disabled', 'false');
+  $('file_op_delete').setAttribute('disabled', 'false');
 
   // Select it so you can immediately rename it
   loadFile(filename);
@@ -58,29 +62,39 @@ function deleteFile()
 
 function deleteFilePrompt(ask)
 {
-  if (current_filename == 'kata.sh') { return; }
-  if (ask && !confirm("Delete " + current_filename)) { return; /* Cancelled */ }
+  if (ask && !confirm("Delete " + current_filename)) 
+  { 
+    return; /* Cancelled */ 
+  }
 
-  // OK. Now do it...
   var fc = fileContent(current_filename);
   fc.parentNode.removeChild(fc);
-  rebuildFileList();
+  rebuildFilenameList();
   
   var fcp = fileCaretPos(current_filename);
   fcp.parentNode.removeChild(fcp);
 
-  // Reload kata.sh which is always available as it cannot be renamed or deleted
-  loadFile('kata.sh');
-  refreshLineNumbering();
+  var filenames = allFilenames();
+  if (filenames.length != 0)
+  {
+    loadFile(filenames[0]);
+    refreshLineNumbering();
+  }
+  else
+  {
+    $('file_op_rename').setAttribute('disabled', 'true'); 
+    $('file_op_delete').setAttribute('disabled', 'true'); 
+    current_filename = false;
+    $('editor').value = '';
+  }
 }
 
 //====================== RENAME FILE =======================
 
 function renameFile()
 {
-  if (current_filename == 'kata.sh') { return; }
-
-  var newname = trim(prompt("Rename " + current_filename + " ?", "new name for " + current_filename));
+  var newname = trim(prompt("Rename " + current_filename + " ?", 
+                            "new name for " + current_filename));
   if (newname == null) return; // Cancelled
   if (newname == "") { alert("No filename entered\n" +
                              "Rename " + current_filename + " abandoned"); return; }
@@ -99,7 +113,7 @@ function renameFile()
   deleteFilePrompt(false);
   newFileContent(newname, content, caret_pos);
 
-  rebuildFileList();
+  rebuildFilenameList();
   refreshLineNumbering();
   selectFileInFileList(newname);
 }
