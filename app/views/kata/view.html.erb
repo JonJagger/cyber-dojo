@@ -6,11 +6,11 @@
 <%= render :partial => 'js_on_dom_loaded' -%>
 <%= render :partial => 'js_run_tests' -%>
 
-<% form_remote_tag :url => { :action => 'run_tests',
-                             :dojo_name => @dojo.name,
-                             :kata_name => @kata.name,
-                             :avatar_name => @avatar.name
-                           }, 
+<% form_remote_tag :url  => { :action => 'run_tests',
+                              :dojo_name => @dojo.name,
+                              :kata_name => @kata.name,
+                              :avatar_name => @avatar.name
+                            }, 
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
 

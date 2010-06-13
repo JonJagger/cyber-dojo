@@ -174,13 +174,7 @@ function makeFileListEntry(filename)
     });
   div.appendChild(inp);
   div.appendChild(document.createTextNode(filename));
-
-  var td = new Element("td");
-  td.appendChild(div);
-  var tr = new Element("tr");
-  tr.appendChild(td);
-
-  return tr;
+  return div;
 }
 
 function allFilenames()

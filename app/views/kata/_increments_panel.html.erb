@@ -4,20 +4,23 @@
 
 <table cellpadding="2px">
   <tr>
-    <td>
-      <input id="play"
-             type="image" 
-             width="22" 
-             height="22"
+    <% size = 22 -%>
+    <td id="play" 
+        style="visibility:visible">
+      <input type="image" 
+             width="<%=size-%>" 
+             height="<%=size-%>" 
              title="Run kata.sh on the CyberDojo server"
-             src="/images/PlayButton.svg.thumb.png"
-             style="visibility:visible"/>
+             src="/images/PlayButton.svg.thumb.png"/>
     </td>
 
     <td id="run_tests_spinner" 
         style="display:none"> 
       <span>
-        <%= image_tag "spinner.gif" -%>
+        <img src="/images/spinner.gif"
+             width="<%=size-%>" 
+             height="<%=size-%>" 
+             alt="Spinny Thing"/>
       </span>
     </td> 
 

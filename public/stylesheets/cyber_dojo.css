@@ -67,7 +67,7 @@
 
 div[class~="filename"]
 {
-  white-space: nowrap;
+  margin: 0.25em;
   color: #686868;
   font-size: 11pt;
   cursor: pointer;

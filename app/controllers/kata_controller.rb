@@ -13,7 +13,7 @@ class KataController < ApplicationController
     @manifest = {}
     @increments = limited(@avatar.read_most_recent(@manifest))
     @current_file = @manifest[:current_filename] || 'kata.sh'
-    @run_tests_output = @manifest[:run_tests_output] || ''
+    @run_tests_output = @manifest[:run_tests_output] || welcome_text
   end
 
   def run_tests
@@ -28,6 +28,12 @@ class KataController < ApplicationController
   end
   
 private
+
+  def welcome_text
+    [ "Welcome to the wonderful",
+      "world of CyberDojo"
+    ].join("\n")
+  end
 
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
