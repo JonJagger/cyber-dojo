@@ -32,12 +32,12 @@ function selectFileInFileList(filename)
 
 function fileContent(filename)
 {
-  return $("file_content['" + filename + "']");
+  return $('file_content_for_' + filename);
 }
 
 function fileCaretPos(filename)
 {
-  return $("file_caret_pos['" + filename + "']");
+  return $('file_caret_pos_for_' + filename);
 }
 
 //--></script>

@@ -30,8 +30,10 @@ class KataController < ApplicationController
 private
 
   def welcome_text
-    [ "Welcome to the wonderful",
-      "world of CyberDojo"
+    [ "Welcome to CyberDojo.",
+      "Clicking the play> button runs the file",
+      "kata.sh on the CyberDojo server and displays",
+      "the results here."
     ].join("\n")
   end
 

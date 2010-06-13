@@ -139,7 +139,7 @@ function createFileContentInput(filename, content)
   var input = new Element('input');
   input.setAttribute('type', 'hidden');
   input.setAttribute('name', "file_content['" + filename + "']");
-  input.setAttribute('id', "file_content['" + filename + "']");
+  input.setAttribute('id', 'file_content_for_' + filename);
   input.setAttribute('value', content);
   return input;
 }
@@ -150,7 +150,7 @@ function createFileCaretPosInput(filename, caret_pos)
   var input = new Element('input');
   input.setAttribute('type', 'hidden');
   input.setAttribute('name', "file_caret_pos['" + filename + "']");
-  input.setAttribute('id', "file_caret_pos['" + filename + "']");
+  input.setAttribute('id', 'file_caret_pos_for_' + filename);
   input.setAttribute('value', caret_pos);
   return input;
 }
@@ -179,13 +179,13 @@ function makeFileListEntry(filename)
 
 function allFilenames()
 {
+  var prefix = 'file_content_for_';
   filenames = []
-  var all = $$('input[id^="file_content["]');
+  var all = $$('input[id^="' + prefix + '"]');
   for(at = 0; at != all.length; at++)
   {
     var att = all[at].getAttribute('id');
-    var prefix = 'file_content['.length + 1; // +1 for '
-    var filename = att.substr(prefix, att.length - prefix - 1 - 1); // -1 for ', -1 for ]
+    var filename = att.substr(prefix.length, att.length - prefix.length);
     filenames.push(filename);
   }
   return filenames;

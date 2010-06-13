@@ -7,11 +7,11 @@
   <% @manifest[:visible_files].each do |filename,file| -%>
   <input type="hidden"
          name="file_content['<%=filename-%>']"
-         id="file_content['<%=filename-%>']"
+         id="file_content_for_<%=filename-%>"
          value="<%=h file[:content]-%>"/>
   <input type="hidden"
          name="file_caret_pos['<%=filename-%>']"
-         id="file_caret_pos['<%=filename-%>']"
+         id="file_caret_pos_for_<%=filename-%>"
          value="<%=h file[:caret_pos]-%>"/>
   <% end -%>
 </div>
