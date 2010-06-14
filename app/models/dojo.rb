@@ -38,7 +38,7 @@ class Dojo
 
 private
 
-  Root_folder = 'dojos'
+  Root_folder = RAILS_ROOT + '/' + 'dojos'
 
 end
 

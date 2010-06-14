@@ -92,9 +92,10 @@ private
   def read_visible(folder, filenames)
     visible_files = {}
     filenames.each do |filename|
-      visible_files[filename] = { :content => IO.read(folder + '/' + filename),
-                                  :caret_pos => 0
-                                }
+      visible_files[filename] = 
+        { :content => IO.read(folder + '/' + filename),
+          :caret_pos => 0 
+        }
     end
     visible_files
   end
