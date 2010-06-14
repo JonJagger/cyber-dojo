@@ -10,7 +10,7 @@
 .light_tone { background-color: #FEF5CA; /*sandbox */ }
 .mid_tone   { background-color: #FFE4C4; /*bisque*/ }
 
-.file_op, div[class~="filename"], #dashboard, .increment, #dashboard_cell
+.file_op, .panel, div[class~="filename"], #dashboard, .increment, #dashboard_cell
 { 
   border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 6px;

@@ -17,7 +17,7 @@ document.observe('dom:loaded', function()
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
 
-  <span class="title"><%= @dojo.name -%>,
+  <span class="title">CyberDojo: <%= @dojo.name -%>,
                       <%= @kata.name -%></span>
 
   <%= render :partial => 'view_panel' -%>
