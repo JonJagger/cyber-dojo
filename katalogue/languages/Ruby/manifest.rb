@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( untitled.rb test_untitled.rb kata.sh ),
+  :visible_filenames => %w( untitled.rb test_untitled.rb cyberdojo.sh ),
 
   :unit_test_framework => 'ruby_test_unit',
 

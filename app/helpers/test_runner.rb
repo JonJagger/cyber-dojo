@@ -12,11 +12,11 @@ module TestRunner
     # Run tests in sandbox in dedicated thread
     run_tests_output = []
     sandbox_thread = Thread.new do
-      # o) run kata.sh, capturing stdout _and_ stderr    
+      # o) run cyberdojo.sh, capturing stdout _and_ stderr    
       # o) popen runs its command as a subprocess
       # o) splitting and joining on "\n" removes any operating 
       #    system differences regarding new-line conventions
-      run_tests_output = IO.popen("cd '#{sandbox}'; ./kata.sh 2>&1").read.split("\n").join("\n")
+      run_tests_output = IO.popen("cd '#{sandbox}'; ./cyberdojo.sh 2>&1").read.split("\n").join("\n")
     end
 
     # Build and run tests has limited time to complete

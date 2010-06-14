@@ -12,7 +12,7 @@ class KataController < ApplicationController
     @avatar = @kata.new_avatar(params[:avatar_name])
     @manifest = {}
     @increments = limited(@avatar.read_most_recent(@manifest))
-    @current_file = @manifest[:current_filename] || 'kata.sh'
+    @current_file = @manifest[:current_filename] || 'cyberdojo.sh'
     @output = @manifest[:output] || welcome_text
   end
 
@@ -30,9 +30,18 @@ class KataController < ApplicationController
 private
 
   def welcome_text
-    [ 'Clicking the play> button on the left runs',
-      'kata.sh on the CyberDojo server and displays',
-      'the results here.'
+    [ 'Welcome.',
+      '',
+      'A CyberDojo is for practicing the collaborative game',
+      'called software development!',
+      '',      
+      'Clicking the play> button runs cyberdojo.sh on the',
+      'CyberDojo server and displays its output here.',
+      '',
+      'The Only CyberDojo Rule',
+      '-----------------------',
+      'When you hear the bell each keyboard driver must move',
+      'to another laptop and take up a non-driver role.',
     ].join("\n")
   end
 
