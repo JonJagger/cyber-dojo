@@ -31,7 +31,7 @@ function newFile()
 {
   // Append three random chars to the end of the untitled filename.
   // This is so there is NO excuse not to rename it!
-  newFileContent('untitled_' + random3(), '', 0);
+  newFileContent('untitled_' + random3(), 'Please rename me!', 0);
 }
 
 function newFileContent(filename, content, caret_pos)

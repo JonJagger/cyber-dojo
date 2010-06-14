@@ -23,6 +23,8 @@ function postRunTests()
   //                 :complete => "postRunTests();"
   $('run_tests_spinner').setAttribute('style', 'display:none');
   $('play').setAttribute('style', 'visibility:visible');
+  // new increment could affect layout
+  refreshLineNumbering();
   $('editor').focus();
 }
 
