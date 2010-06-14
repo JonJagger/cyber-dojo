@@ -30,17 +30,16 @@ class KataController < ApplicationController
 private
 
   def welcome_text
-    [ "Welcome to CyberDojo.",
-      "Clicking the play> button runs the file",
-      "kata.sh on the CyberDojo server and displays",
-      "the results here."
+    [ 'Clicking the play> button on the left runs',
+      'kata.sh on the CyberDojo server and displays',
+      'the results here.'
     ].join("\n")
   end
 
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
     # means filename has a leading and trailing single quote
-    # which needs to be stripped off
+    # which needs to be stripped off (and also a trailing ])
     return filename[1..-2] 
   end
 
