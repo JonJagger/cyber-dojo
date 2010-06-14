@@ -38,16 +38,16 @@ class Avatar
   end
 
   def run_tests(manifest)
-    run_tests_output = ''
+    output = ''
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
-        run_tests_output = TestRunner.avatar_run_tests(self, manifest)
-        manifest[:run_tests_output] = run_tests_output
-        test_info = RunTestsOutputParser.parse(self, run_tests_output)
+        output = TestRunner.avatar_run_tests(self, manifest)
+        manifest[:output] = output
+        test_info = RunTestsOutputParser.parse(self, output)
         save(manifest, test_info)
       end
     end
-    run_tests_output
+    output
   end
 
   def save(manifest, test_info)    
@@ -94,7 +94,7 @@ private
         restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
         manifest[:visible_files] = restart_manifest[:visible_files]
         manifest[:current_filename] = restart_manifest[:current_filename]
-        manifest[:run_tests_output] = restart_manifest[:run_tests_output]
+        manifest[:output] = restart_manifest[:output]
       end
       my_increments
     end
