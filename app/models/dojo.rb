@@ -2,7 +2,7 @@
 class Dojo
 
   def self.names
-    Dir.entries(Root_folder).select { |name| !dot? name }
+    Dir.entries(Root_folder).select { |name| !dotted? name }
   end
 
   def initialize(name)
@@ -14,7 +14,7 @@ class Dojo
   end
 
   def kata_names
-    Dir.entries(folder).select { |name| !dot? name }
+    Dir.entries(folder).select { |name| !Dojo.dotted? name }
   end
 
   def new_kata(name)
@@ -23,7 +23,7 @@ class Dojo
 
   def katas
     alive = []
-    Dir.entries(folder).select { |entry| !dot? entry }.each do |kata_name|
+    Dir.entries(folder).select { |entry| !Dojo.dotted? entry }.each do |kata_name|
       kata = Kata.new(self, kata_name)
       if kata.avatars.size > 0
         alive << kata
@@ -37,6 +37,10 @@ class Dojo
   end
 
 private
+
+  def self.dotted? name
+    name == '.' or name == '..'
+  end
 
   Root_folder = RAILS_ROOT + '/' + 'dojos'
 
