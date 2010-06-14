@@ -2,9 +2,11 @@
 class Avatar
 
   def self.names
-    %w( alligators buffalos camels cheetahs 
-        frogs kangaroos koalas lemurs
-        pandas raccoons squirrels wolves )
+    %w( alligators badgers bats bears beavers 
+        buffalos camels deer elephants frogs
+        giraffes gophers gorillas hippos kangaroos
+        koalas lemurs lions mooses pandas
+        raccoons snakes squirrels wolves zebras )
   end
   
   def initialize(kata, name)
