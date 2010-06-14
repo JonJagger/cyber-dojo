@@ -2,7 +2,6 @@
 <table cellpadding="0">
   <tr valign="top">
     <td>
-      <%= render :partial => 'avatar_pair' -%>
       <%= render :partial => 'increments_panel' -%>
       <%= render :partial => 'filenames_panel' -%>
     </td>
@@ -11,6 +10,7 @@
     </td>
     <td>
       <%= render :partial => 'output' -%>
+      <%= render :partial => 'avatar_pair' -%>
       <span class="title">CyberDojo: <%= @dojo.name -%></span>
       <span class="title">Kata: <%= @kata.name -%></span>
     </td>

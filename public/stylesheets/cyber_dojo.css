@@ -74,6 +74,10 @@ div[class~="filename"]
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
+ 
+#editor, .textarea_with_line_numbers { font-size: 11pt; }
+
+#output { font-size: 7pt; }
 
 #editor
 {
@@ -82,7 +86,6 @@ div[class~="filename"]
   padding-left: 5px;
   margin: 0em;
   margin-left: 40px; /* enough for line-numbers */
-  font-size: 12pt;
   font-family: monospace;
   font-weight: normal;
   color: white;
@@ -94,7 +97,6 @@ div[class~="filename"]
 .textarea_with_line_numbers
 {
   display: block;
-  font-size: 12pt;
   font-weight: 100;
   color: #686868;
   margin: 0;
