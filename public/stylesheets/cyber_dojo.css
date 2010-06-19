@@ -121,10 +121,6 @@ div[class~="filename"]
 
 #dashboard_cell { padding: 0.1em; }
 
-#dashboard_cell.old_failed { background-image: url(failed_stripe.png); }
-#dashboard_cell.old_passed { background-image: url(passed_stripe.png); }
-#dashboard_cell.old_error  { background-image: url(error_stripe.png); }
-
 #dashboard_cell.new_failed, .increment.failed { background-color: #F33; /* red */    }
 #dashboard_cell.new_passed, .increment.passed { background-color: #3C3; /* green */  }
 #dashboard_cell.new_error , .increment.error  { background-color: #FF0; /* yellow */ }
