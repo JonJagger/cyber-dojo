@@ -174,6 +174,6 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. Some 
    of what you find is likely to be non-idiomatic. Caveat emptor!
-o) I'd like to thank Olve Maudal of Tandberg for his encouragement.
+o) I'd like to thank Olve Maudal for his encouragement.
 
 
