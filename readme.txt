@@ -1,4 +1,11 @@
 
+VERY IMPORTANT - VERY IMPORTANT - VERY IMPORTANT
+================================================
+CyberDojo clients have full rights on the CyberDojo server.
+You are strongly advised to run the CyberDojo server inside
+a virtual box.
+
+
 Requirements
 ============
 Ruby
