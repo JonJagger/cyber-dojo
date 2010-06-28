@@ -14,6 +14,7 @@ class KataController < ApplicationController
     @increments = limited(@avatar.read_most_recent(@manifest))
     @current_file = @manifest[:current_filename] || 'cyberdojo.sh'
     @output = @manifest[:output] || welcome_text
+    @output_outcome = @increments == [] ? '' : @increments.last[:outcome]
   end
 
   def run_tests
@@ -22,6 +23,7 @@ class KataController < ApplicationController
     avatar = kata.new_avatar(params[:avatar_name])
     @output = avatar.run_tests(load_files_from_page)
     @increments = limited(avatar.increments)
+    @output_outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -32,7 +34,7 @@ private
   def welcome_text
     [ 'Welcome.',
       '',
-      'A CyberDojo is for practicing the collaborative game',
+      'In a CyberDojo you practice the collaborative game',
       'called software development!',
       '',      
       'Clicking the play> button runs cyberdojo.sh on the',

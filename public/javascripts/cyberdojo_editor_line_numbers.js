@@ -20,7 +20,7 @@ function createTextAreaWithLineNumbers(id)
   el.style.position = 'absolute';
   el.style.overflow = 'hidden';
   el.style.textAlign = 'right';
-  el.style.width    = '35px';
+  el.style.width    = '33px';
   el.style.paddingRight = '0.2em';
   el.innerHTML      = string;  // Firefox renders \n linebreak
   el.innerText      = string;  // IE6 renders \n line break

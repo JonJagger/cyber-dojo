@@ -8,7 +8,7 @@
 }
 
 .light_tone { background-color: #FEF5CA; /*sandbox */ }
-.mid_tone   { background-color: #FFE4C4; /*bisque*/ }
+.mid_tone   { background-color: #FFE4C4; /* bisque*/ }
 
 .file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell
 { 
@@ -80,7 +80,15 @@ div[class~="filename"]
  
 #editor, .textarea_with_line_numbers { font-size: 11pt; }
 
-#output { font-size: 7pt; }
+#output 
+{ 
+  font-size: 7pt; 
+  font-weight: bold; 
+}
+
+#output.failed { border: 2px solid #F33; background-color: #F33; }
+#output.error  { border: 2px solid #FF0; background-color: #FF0; }
+#output.passed { border: 2px solid #3C3; background-color: #3C3; }
 
 #editor
 {
