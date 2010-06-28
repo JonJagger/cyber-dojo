@@ -10,7 +10,7 @@
 .light_tone { background-color: #FEF5CA; /*sandbox */ }
 .mid_tone   { background-color: #FFE4C4; /*bisque*/ }
 
-.file_op, .panel, div[class~="filename"], #dashboard, .increment, #dashboard_cell
+.file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell
 { 
   border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 6px;
@@ -21,10 +21,12 @@
 
 .panel
 {    
-  border: 1px solid #D8D8D8; /*light-gray*/
+  xborder: 1px solid #D8D8D8; /*light-gray*/
   margin: 0.3em;
   padding: 0.3em;
 }
+
+#increments_panel { margin-bottom: 1em; }
 
 .title
 {
@@ -88,7 +90,7 @@ div[class~="filename"]
   margin: 0em;
   margin-left: 40px; /* enough for line-numbers */
   font-family: monospace;
-  font-weight: normal;
+  font-weight: bold;
   color: white;
   background-color: #686868;
   border: 1px solid #666;
@@ -98,7 +100,8 @@ div[class~="filename"]
 .textarea_with_line_numbers
 {
   display: block;
-  font-weight: 100;
+  xfont-weight: 100;
+  font-weight: bold;
   color: #686868;
   margin: 0;
   border: 1px solid #666;
@@ -121,15 +124,58 @@ div[class~="filename"]
 
 #dashboard_cell { padding: 0.1em; }
 
-#dashboard_cell.new_failed, .increment.failed { background-color: #F33; /* red */    }
-#dashboard_cell.new_passed, .increment.passed { background-color: #3C3; /* green */  }
-#dashboard_cell.new_error , .increment.error  { background-color: #FF0; /* yellow */ }
+#dashboard_cell.new_failed { background-color: #F33; /* red */    }
+#dashboard_cell.new_error  { background-color: #FF0; /* yellow */ }
+#dashboard_cell.new_passed { background-color: #3C3; /* green */  }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+.traffic_light
+{
+  border: 1px solid #D8D8D8; 
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
 
 .increment
 {
+  margin-bottom: 2px;
   padding: 0.15em;
-  text-decoration: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  -webkit-border-radius: 20px;
 }
+
+.increment.failed
+{
+  background-color: #F33; /* red */ 
+  border: 1px solid #F33; 
+}
+
+.increment.error
+{
+  background-color: #FF0; /* yellow */ 
+  border: 1px solid #FF0; 
+}
+
+.increment.passed
+{
+  background-color: #3C3; /* green */ 
+  border: 1px solid #3C3; 
+}
+
+.increment.off 
+{ 
+  background-color: #D8D8D8; /*light-gray*/
+  border: 1px solid #D8D8D8; 
+}
+
+
 
 
 

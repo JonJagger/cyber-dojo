@@ -8,6 +8,28 @@ module RunTestsOutputParser
     else
       inc[:outcome] = eval "parse_#{avatar.kata.unit_test_framework}(output)"
     end
+
+    # failed == red
+    # error == yellow
+    # passed == green
+    if inc[:outcome] == :failed
+      inc[:r] = :on
+    else 
+      inc[:r] = :off
+    end
+
+    if inc[:outcome] == :error
+      inc[:y] = :on
+    else 
+      inc[:y] = :off
+    end
+
+    if inc[:outcome] == :passed
+      inc[:g] = :on
+    else 
+      inc[:g] = :off
+    end
+
     inc
   end
 
