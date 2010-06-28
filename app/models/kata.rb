@@ -74,14 +74,14 @@ private
 
   def read_file_sets(names)
     names.each do |file_set_name|
-      folder = 'katalogue' + '/' + file_set_name
-      file_set = eval IO.read(folder + '/' + 'manifest.rb')
+      path = RAILS_ROOT + '/' + 'katalogue' + '/' + file_set_name
+      file_set = eval IO.read(path + '/' + 'manifest.rb')
 	  file_set.each do |key,value|
 		if key == :visible_filenames
-          @visible.merge! read_visible(folder, value)
+          @visible.merge! read_visible(path, value)
         elsif key == :hidden_filenames
           @hidden_filenames += value
-          @hidden_pathnames += read_hidden_pathnames(folder, value)
+          @hidden_pathnames += read_hidden_pathnames(path, value)
         else
           @manifest[key] = value
         end
@@ -89,21 +89,21 @@ private
     end    
   end
 
-  def read_visible(folder, filenames)
+  def read_visible(file_set_folder, filenames)
     visible_files = {}
     filenames.each do |filename|
       visible_files[filename] = 
-        { :content => IO.read(folder + '/' + filename),
+        { :content => IO.read(file_set_folder + '/' + filename),
           :caret_pos => 0 
         }
     end
     visible_files
   end
 
-  def read_hidden_pathnames(folder, filenames)
+  def read_hidden_pathnames(file_set_folder, filenames)
     pathed = []
     filenames.each do |filename|
-      pathed << folder + '/' + filename
+      pathed << file_set_folder + '/' + filename
     end
     pathed
   end
