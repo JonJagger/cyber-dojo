@@ -4,6 +4,14 @@
 
 <table cellpadding="2px">
   <tr>
+    <% @increments.each do |increment| -%>
+    <td>
+      <div class="<%= increment[:outcome] -%> increment">
+         &thinsp;
+      </div>
+    </td>
+    <% end -%>
+
     <% size = 22 -%>
     <td id="play" 
         style="visibility:visible">
@@ -23,14 +31,6 @@
              alt="Spinny Thing"/>
       </span>
     </td> 
-
-    <% @increments.each do |increment| -%>
-    <td>
-      <div class="<%= increment[:outcome] -%> increment">
-         &thinsp;
-      </div>
-    </td>
-    <% end -%>
 
   </tr>
 </table>
