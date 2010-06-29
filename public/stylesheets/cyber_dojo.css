@@ -21,12 +21,15 @@
 
 .panel
 {    
-  xborder: 1px solid #D8D8D8; /*light-gray*/
   margin: 0.3em;
   padding: 0.3em;
 }
 
-#increments_panel { margin-bottom: 1em; }
+#increments_panel 
+{ 
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; 
+}
 
 .title
 {
@@ -36,18 +39,16 @@
   color: #686868;
 }
 
-#avatar_pair
-{
-    white-space: nowrap;
-    margin-left: 0.3em; 
-}
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.file_op { padding: 4px; } 
+.file_op 
+{ 
+  padding: 4px; 
+  margin-right: 10em;
+} 
 .file_op_name 
 { 
-  font-size: 6pt; 
+  font-size: 7pt; 
   color: #686868;
 }
 .file_op[disabled="false"] 
@@ -61,7 +62,7 @@
   cursor: default;
 }
 
-.file_op, div[class~="filename"] /* fake button look */
+.file_op, div[class~="filename"], .money_rung.bank_button /* fake button look */
 {
   border-bottom: 2px solid #D8D8D8; /*light-gray*/
   border-right: 2px solid #D8D8D8; /*light-gray*/
@@ -77,49 +78,54 @@ div[class~="filename"]
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
- 
-#editor, .textarea_with_line_numbers { font-size: 11pt; }
 
-#output 
-{ 
-  font-size: 7pt; 
-  font-weight: bold; 
+#editor, .textarea_with_line_numbers
+{
+  font-size: 11pt;
+  border: 1px solid #666;
+  border-right: none;
+  margin: 0;
 }
-
-#output.failed { border: 2px solid #F33; background-color: #F33; }
-#output.error  { border: 2px solid #FF0; background-color: #FF0; }
-#output.passed { border: 2px solid #3C3; background-color: #3C3; }
 
 #editor
 {
   overflow-y: scroll;
-  padding: 0em;
+  padding: 0;
   padding-left: 5px;
-  margin: 0em;
   margin-left: 40px; /* enough for line-numbers */
   font-family: monospace;
-  font-weight: bold;
   color: white;
   background-color: #686868;
-  border: 1px solid #666;
-  border-right: none;
 }
 
 .textarea_with_line_numbers
 {
   display: block;
-  xfont-weight: 100;
-  font-weight: bold;
   color: #686868;
-  margin: 0;
-  border: 1px solid #666;
-  border-right: none;
   background: #aaa;
   border-radius: 6px 0px 0px 6px;
   -moz-border-radius: 6px 0px 0px 6px;
   -khtml-border-radius: 6px 0px 0px 6px;
   -webkit-border-radius: 6px 0px 0px 6px;
 }
+
+#avatar_pair, #output { margin-top: 0.5em; }
+
+#avatar_pair
+{
+    white-space: nowrap;
+    margin-left: 0.3em;
+}
+ 
+#output 
+{ 
+  padding: 0.5em;
+  border: 4px solid;
+}
+
+#output.failed { border-color: #F33; }
+#output.error  { border-color: #FF0; }
+#output.passed { border-color: #3C3; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -141,10 +147,11 @@ div[class~="filename"]
 .traffic_light
 {
   border: 1px solid #D8D8D8; 
-  border-radius: 4px;
-  -moz-border-radius: 4px;
-  -khtml-border-radius: 4px;
-  -webkit-border-radius: 4px;
+  background-color: darkgray;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
 
 .increment
@@ -183,7 +190,61 @@ div[class~="filename"]
   border: 1px solid #D8D8D8; 
 }
 
+/* - - - - - - - - - - - - - - - - - - - - */
 
+#titles, #money_ladder 
+{ 
+  margin: 0em 0em 1em 1em; /* Top Right Bottom Left */
+}
+
+.money_rung
+{
+  display: block;
+  margin: 2pt;
+  border: 1px solid #D8D8D8; 
+  color: gray;
+  padding: 0.25em 1em 0.15em 1em; /* Top Right Bottom Left */
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  font-size: 1.15em;
+  font-style: italic;
+  font-weight: 100;
+  text-align: right;
+}
+
+
+.money_rung.failed { background-color: #F33; }
+.money_rung.error  { background-color: #FF0; }
+.money_rung.passed { background-color: #3C3; }
+
+.money_rung.passed.top ,.money_rung.bank_button 
+{ 
+  font-weight: bold; 
+  font-style: normal; 
+  color: black; 
+}
+
+
+.money_rung.bank_button 
+{ 
+  background-color: #FFE4C4; 
+  font-weight: bold;
+  color: black;
+  font-style: normal;
+  xfont-size: 2em; 
+}
+
+.money_rung.total.amount 
+{ 
+  font-weight: bold;
+  color: black;
+  font-style: normal;
+  background-color: #3C3; 
+}
+.money_rung .amount { padding-left: 0.5em; }
+.money_rung .amount:before { content: " "; }
 
 
 

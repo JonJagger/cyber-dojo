@@ -154,6 +154,14 @@ To turn it off (and avoid annoying red underlines the code editor)
    Set the integer to 0 to disable the spell checker.
 
 
+Chrome Spell-Checking
+=====================
+To turn it off (and avoid annoying red underlines the code editor)
+1. Right click in the editor
+2. Under Spell-checker Options>
+3. Deselect Check Spelling in this Field
+
+
 What will work and what won't work
 ==================================
 After selecting an animal avatar (eg Pandas) the initial virtual dojo is currently 

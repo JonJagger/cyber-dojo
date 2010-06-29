@@ -29,6 +29,12 @@ class KataController < ApplicationController
     end
   end
   
+  def money_ladder
+    respond_to do |format|
+      format.js if request.xhr?
+    end
+  end
+
 private
 
   def welcome_text
@@ -76,7 +82,7 @@ private
 end
 
 def limited(increments)
-  max_increments_displayed = 5
+  max_increments_displayed = 6
   len = [increments.length, max_increments_displayed].min
   increments[-len,len]
 end
