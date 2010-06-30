@@ -19,8 +19,8 @@ class Dojo
 
   def avatars
     alive = []
-    Dir.entries(folder).select { |entry| !Dojo.dotted? entry }.each do |avatar_name|
-      alive << Avatar.new(self, avatar_name)
+    Avatar.names.each do |avatar_name|
+      alive << Avatar.new(self, avatar_name) if File.exists?(folder + '/' + avatar_name)
     end
     alive
   end
