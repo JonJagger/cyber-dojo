@@ -2,7 +2,7 @@
 class Dojo
 
   def self.names
-    Dir.entries(Root_folder).select { |name| !dotted? name }
+    Dir.entries(Root_folder).select { |name| name != '.' and name != '..' }
   end
 
   def initialize(name)
@@ -11,10 +11,6 @@ class Dojo
 
   def name
     @name
-  end
-
-  def kata_names
-    Dir.entries(folder).select { |name| !Dojo.dotted? name }
   end
 
   def avatars
@@ -30,10 +26,6 @@ class Dojo
   end
 
 private
-
-  def self.dotted? name
-    name == '.' or name == '..'
-  end
 
   Root_folder = RAILS_ROOT + '/' + 'dojos'
 
