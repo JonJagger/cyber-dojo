@@ -128,8 +128,8 @@ file as part of the inspected ruby object:
   Default to 4 spaces.
 
 
-Dojo Display
-============
+Dojo Dashboard Display
+======================
 http://ip-address:3000/dashboard
 will give you an auto-updating display of the current colour and history 
 (red, green, or yellow for each increment) of every avatar in a selected dojo
@@ -144,8 +144,8 @@ You can do this using
 http://ip-address:3000/alarm
 
 
-Firefox Spell-Checking
-======================
+Turn off Firefox Spell-Checking
+===============================
 To turn it off (and avoid annoying red underlines the code editor)
 1. Type about:config in the address bar.
 2. In the filter field type spell
@@ -154,8 +154,8 @@ To turn it off (and avoid annoying red underlines the code editor)
    Set the integer to 0 to disable the spell checker.
 
 
-Chrome Spell-Checking
-=====================
+Turn off Chrome Spell-Checking
+==============================
 To turn it off (and avoid annoying red underlines the code editor)
 1. Right click in the editor
 2. Under Spell-checker Options>
