@@ -1,9 +1,10 @@
 
 VERY IMPORTANT - VERY IMPORTANT - VERY IMPORTANT
 ================================================
-CyberDojo clients have full rights on the CyberDojo server.
-You are strongly advised to run the CyberDojo server inside
-a virtual box.
+CyberDojo clients have full rights on the 
+CyberDojo server. You are strongly advised to
+run the CyberDojo server inside a virtual box.
+================================================
 
 
 Requirements
@@ -21,72 +22,74 @@ And your CyberDojo should be running. There are no requirements on the
 clients (except of course a browser).
 
 
+What will work and what won't work
+==================================
+Initial filesets for five languages are provided: C, C++, C#, Java, and Ruby. 
+Whether you will be able to compile successfully in any of these languages
+(except Ruby) depends on whether these languages are installed on your CyberDojo 
+server.
+
+
 Dojos
 =====
 Each subfolder underneath cyberdojo/dojos represents a virtual dojo. 
-For example cyberdojo/dojos/xp2010 is where I put the xp2010 CyberDojo conference.
-If there is a single subfolder in cyberdojo/dojos/ the CyberDojo server will 
-take you straight into it without asking. If there are multiple subfolders  
-in cyberdojo/dojos/ the CyberDojo server will ask you to select one.
+For example cyberdojo/dojos/xp2010 is where I put the xp2010 CyberDojo 
+conference. If there is a single subfolder in cyberdojo/dojos/ the 
+CyberDojo server will take you straight into it without asking. If 
+there are multiple subfolders in cyberdojo/dojos/ the CyberDojo server 
+will ask you to select one.
 
 
 Avatars
 =======
-Once you have chosen your dojo the CyberDojo server will ask you to choose your
-animal avatar by selecting its image (eg Pandas). The avatar provides identity for
-each laptop participating in the kata. If a laptop has to be retired during a kata 
-a new laptop can easily replace it.
+Once you have chosen your dojo the CyberDojo server will ask you to choose 
+o) your animal avatar  (eg Pandas)
+   The avatar provides identity for each laptop participating in the kata. 
+   If a laptop has to be retired during a kata a new laptop can easily replace it.
+o) your language (eg C++)
+   Each language corresponds to a subfolder of cyberdojo/languages
+o) your kata (eg Prime Factors)
+   Each kata corresponds to a subfolder of cyberdojo/katas
 
 
-Katas
-=====
-Each subfolder underneath the selected dojo folder represents a kata.
-For example cyberdojo/dojos/xp2010/ruby_phone_list is where I put the Ruby phone_list
-kata at the xp2010 CyberDojo conference.
+Adding a new language
+=====================
+Create a new subfolder under cyberdojo/languages
+Create a manifest.rb file in this folder (see below)
 
 
-Kata Manifest
-=============
-Each kata folder must contain a file called kata_manifest.rb
-This file must contain an inspected ruby object. 
-For example: cyberdojo/dojos/xp2010/ruby_phone_list/kata_manifest.rb
-{
-  :file_set_names => [ 'languages/java',
-                       'katas/bowling_game' ]
-}
-
-Explanation
-- - - - - - 
-:file_set_names
-  The locations of the initial kata fileset manifests. For example
-    'languages/java'     --> 'katalogue/languages/java/manifest.rb'
-    'katas/bowling_game' --> 'katalogue/katas/bowling_game/manifest.rb'
+Adding a new kata
+=================
+Create a new subfolder under cyberdojo/katas
+Create a manifest.rb file in this folder (see below)
 
 
-File Set Manifests
-==================
-The fileset manifests named in manifest.rb also contain an inspected ruby
-object. For example: katalogue/languages/java/manifest.rb
+Manifests
+=========
+The two manifest.rb files contains inspected ruby objects. 
+For example: cyberdojo/languages/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java kata.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
 }
+For example: cyberdojo/katas/Prime Factors/manifest.rb looks like this:
+{
+  :visible_filenames => %w( instructions ),
+}
 
 Explanation
 - - - - - - 
 :visible_filenames
-  The names of files that are visible in the editor in the browser.
+  The names of files that will be visible in the editor in the browser at startup.
   Each of these files must exist in the folder.
-  All visible_filenames from all file-sets in a single kata_manifest will 
-  be loaded at the start of the kata.
-  The filename kata.sh must be present (visible or hidden) in one of the 
-  manifest.rb files. This is because kata.sh is the name of the shell file 
+  The filename cyberdojo.sh should be present (visible or hidden) in one of the 
+  manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
   assumed by the ruby code in the CyberDojo server to be the start point for  
-  running an increment. You can write any actions in the kata.sh file but 
+  running an increment. You can write any actions in the cyberdojo.sh file but 
   clearly any programs it tries to run must be installed on the CyberDojo 
-  server. For example, if kata.sh runs gcc to compile c files then gcc has 
-  to be installed. If kata.sh runs javac to compile java files then javac has 
+  server. For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
+  to be installed. If cyberdojo.sh runs javac to compile java files then javac has 
   to be installed.
 
 :hidden_filenames
@@ -94,8 +97,6 @@ Explanation
   are NOT visible in the editor in the browser. Each of these files must exist in 
   the folder. For example, a junit jar file or nunit assemblies. Not needed if
   you do not need hidden files.
-  All hidden_filenames from all file-sets in a single kata_manifest will be
-  available for use in the kata.sh commands.
   
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
@@ -103,13 +104,13 @@ Explanation
   output (to see if the increment passes or fails). For example, if the value is 
   'cassert' then app/helpers/run_tests_output_parser.rb must contain a method 
   called parse_cassert() and will be called to parse the output of running the 
-  tests via the kata.sh shell script file.
+  tests via the cyberdojo.sh shell script file.
 
 
 Further parameters
 ------------------
-There are two more parameters that can be specified in kata_manifest.rb
-or in any manifest.rb file as part of the inspected ruby object:
+There are two more parameters that can be specified in a manifest.rb
+file as part of the inspected ruby object:
 
 {
   :max_run_tests_duration => 20,
@@ -131,8 +132,7 @@ Dojo Display
 ============
 http://ip-address:3000/dashboard
 will give you an auto-updating display of the current colour and history 
-(red, green, or yellow for each increment) of every avatar in every kata 
-in a selected dojo
+(red, green, or yellow for each increment) of every avatar in a selected dojo
 
 
 Alarm
@@ -159,25 +159,18 @@ Chrome Spell-Checking
 To turn it off (and avoid annoying red underlines the code editor)
 1. Right click in the editor
 2. Under Spell-checker Options>
-3. Deselect Check Spelling in this Field
+3. Deselect 'Check Spelling in this Field'
 
-
-What will work and what won't work
-==================================
-After selecting an animal avatar (eg Pandas) the initial virtual dojo is currently 
-set up with five katas containing untitled files for C, C++, C#, Java, and Ruby. 
-Whether you will be able to compile succesfully in any of these katas (except Ruby)
-depends on whether these languages are installed on your CyberDojo server.
 
 
 Notes
 =====
 o) http://vimeo.com/8630305 has a video of a very early version of CyberDojo
 o) The rails code does NOT use a database. Instead each increment is saved to
-   its own folder. For example if the Wolves are doing kata
-   dojos/xp2010/ruby_bowling_game then the files submitted for increment 21 
-   for the Wolves will be found in the folder 
-     dojos/xp2010/ruby_bowling_game/Wolves/21/
+   its own folder. For example if the Wolves are doing kata in the xp2010 
+   CyberDojo then the files submitted for their increment 21 will be found in 
+   the folder 
+     cyberdojo/dojos/xp2010/wolves/21/
 o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. Some 

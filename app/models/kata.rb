@@ -9,7 +9,7 @@ class Kata
     # multiple katas will be selected, which hopefully
     # will increase the chances of collaboration - the game's
     # prime directive.
-    Dir.entries(RAILS_ROOT + '/katalogue/katas').select do |name|
+    Dir.entries(RAILS_ROOT + '/katas').select do |name|
       name != '.' and name != '..'
     end.sort_by {rand}
   end
@@ -61,22 +61,21 @@ private
     @visible = {}
     @hidden_filenames = []
 	@hidden_pathnames = []
-    read_file_sets(['languages/' + language_name, 'katas/' + kata_name])
+    read_file_set('languages/' + language_name)
+    read_file_set('katas/' + kata_name)
   end
   
-  def read_file_sets(names)
-    names.each do |file_set_name|
-      path = RAILS_ROOT + '/' + 'katalogue' + '/' + file_set_name
-      file_set = eval IO.read(path + '/' + 'manifest.rb')
-	  file_set.each do |key,value|
-		if key == :visible_filenames
-          @visible.merge! read_visible(path, value)
-        elsif key == :hidden_filenames
-          @hidden_filenames += value
-          @hidden_pathnames += read_hidden_pathnames(path, value)
-        else
-          @manifest[key] = value
-        end
+  def read_file_set(file_set_name)
+    path = RAILS_ROOT + '/' + file_set_name
+    file_set = eval IO.read(path + '/' + 'manifest.rb')
+    file_set.each do |key,value|
+	  if key == :visible_filenames
+        @visible.merge! read_visible(path, value)
+      elsif key == :hidden_filenames
+        @hidden_filenames += value
+        @hidden_pathnames += read_hidden_pathnames(path, value)
+      else
+        @manifest[key] = value
       end
     end    
   end
