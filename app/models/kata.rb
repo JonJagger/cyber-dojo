@@ -14,13 +14,24 @@ class Kata
     end.sort_by {rand}
   end
 
-  def initialize(dojo, kata_name)
+  def old_initialize(dojo, kata_name)
     @dojo = dojo
     @name = kata_name
     read_manifest
   end
 
-  def name
+  def initialize(dojo, language_name, kata_name)
+    @dojo = dojo
+    @language = language_name
+    @name = kata_name
+    new_read_manifest(language_name, kata_name)
+  end
+
+  def language
+    @language
+  end
+
+  def name 
     @name.to_s
   end
 
@@ -54,7 +65,7 @@ class Kata
     Avatar.new(self, @dojo, name)
   end
 
-  def avatars #TO DROP
+  def avatars #TO MOVE TO DOJO
     result = []
     Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
@@ -68,7 +79,16 @@ class Kata
   end
 
 private
+
+  def new_read_manifest(language_name, kata_name)
+    @manifest = {}
+    @visible = {}
+    @hidden_filenames = []
+	@hidden_pathnames = []
+    read_file_sets(['languages/' + language_name, 'katas/' + kata_name])
+  end
   
+
   def read_manifest
     @visible = {}
     @hidden_filenames = []

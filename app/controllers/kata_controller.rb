@@ -1,14 +1,14 @@
 
 class KataController < ApplicationController
 
-  def index
+  def index #DROP
     @dojo = Dojo.new(params[:dojo_name])
     @avatar_name = params[:avatar_name]
   end
 
   def view
     @dojo = Dojo.new(params[:dojo_name])
-    @kata = @dojo.new_kata(params[:kata_name])
+    @kata = @dojo.new_kata(params[:language_name], params[:kata_name])
     @avatar = @kata.new_avatar(params[:avatar_name])
     @manifest = {}
     @increments = limited(@avatar.read_most_recent(@manifest))
@@ -19,7 +19,7 @@ class KataController < ApplicationController
 
   def run_tests
     dojo = Dojo.new(params[:dojo_name])
-    kata = dojo.new_kata(params[:kata_name])
+    kata = dojo.new_kata(params[:language_name], params[:kata_name])
     avatar = kata.new_avatar(params[:avatar_name])
     @output = avatar.run_tests(load_files_from_page)
     @increments = limited(avatar.increments)

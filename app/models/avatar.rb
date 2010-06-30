@@ -29,7 +29,7 @@ class Avatar
     # load starting manifest
     manifest[:visible_files] = @kata.visible
     my_increments = []
-    File.open(@kata.folder, 'r') do |f| #TODO: lock on dojo folder?
+    File.open(@dojo.folder, 'r') do |f|
       flock(f) do |lock|
         my_increments = locked_read_most_recent(manifest)
       end

@@ -11,9 +11,11 @@
       <%= render :partial => 'editor_panel' -%>
     </td>
     <td>
+      <!--
       <%= render :partial => 'money_ladder' -%>
       <%= periodically_call_remote :url => { :action => 'money_ladder' },
           :frequency => 5 %>
+      -->
     </td>
   </tr>
   <tr valign="top">

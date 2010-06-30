@@ -17,8 +17,12 @@ class Dojo
     Dir.entries(folder).select { |name| !Dojo.dotted? name }
   end
 
-  def new_kata(name)
-    Kata.new(self, name) 
+  #def new_kata(name)
+  #  Kata.new(self, name) 
+  #end
+
+  def new_kata(language_name, kata_name)
+    Kata.new(self, language_name, kata_name) 
   end
 
   def katas
