@@ -1,13 +1,4 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-function select_CyberDojo(dojo_name)
-{
-  $('dojo_name').value = dojo_name;
-  document.dojoIndex.submit();
-}
-//--></script>
-
 <form name="dojoIndex" action="/kata/index">
 
 <noscript>
@@ -16,20 +7,14 @@ function select_CyberDojo(dojo_name)
   &nbsp;
 </noscript>
 
-<input readonly 
-       type="hidden"
-       name="dojo_name" 
-       id="dojo_name" 
-       value="">
-
 <h1><b>Welcome to CyberDojo</b></h1>
 
 <table class="mid_tone panel">
   <% @dojo_names.sort.each do |dojo_name| -%>
   <tr>
     <td>
-      <input type="button" 
-             onclick='select_CyberDojo("<%=dojo_name-%>");'
+      <input type="submit"
+             name="dojo"
              value="<%=dojo_name-%>">
     </td>
   </tr>

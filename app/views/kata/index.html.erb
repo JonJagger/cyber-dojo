@@ -15,22 +15,18 @@ function enable_play_if_all_selected()
 
 function select_avatar(selected, index)
 {
-  $('avatar_name').value = selected;
   $('avatar_' + index).checked = true;
   avatar_selected = true;
   enable_play_if_all_selected();
-  //document.avatarIndex.submit();
 }
 function select_language(selected, index)
 {
-  $('language_name').value = selected;
   $('language_' + index).checked = true; 
   language_selected = true;
   enable_play_if_all_selected();
 }
 function select_kata(selected, index)
 {
-  $('kata_name').value = selected;
   $('kata_' + index).checked = true;
   kata_selected = true;
   enable_play_if_all_selected();
@@ -48,27 +44,9 @@ function select_kata(selected, index)
 
 <input readonly 
        type="hidden"
-       name="dojo_name" 
-       id="dojo_name" 
+       name="dojo" 
+       id="dojo" 
        value="<%=h @dojo.name-%>">
-
-<input readonly 
-       type="hidden"
-       name="avatar_name" 
-       id="avatar_name" 
-       value="">
-
-<input readonly 
-       type="hidden"
-       name="language_name" 
-       id="language_name" 
-       value="">
-
-<input readonly 
-       type="hidden"
-       name="kata_name" 
-       id="kata_name" 
-       value="">
 
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
 <h2><i>Each laptop must have a different animal</i></h2>
@@ -88,7 +66,6 @@ function select_kata(selected, index)
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = outer*chunk_size + inner -%>
            <td onclick='select_avatar("<%=avatar.downcase-%>", "<%=index-%>");'>
-
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
@@ -132,7 +109,10 @@ function select_kata(selected, index)
   <% @katas.each_with_index do |kata,index| -%>
   <tr>
     <td onclick='select_kata("<%=kata-%>", "<%=index-%>");'>
-      <input id="kata_<%=index-%>" type="radio" name="kata" value="<%=kata-%>">
+      <input id="kata_<%=index-%>" 
+             type="radio" 
+             name="kata" 
+             value="<%=kata-%>">
       <%= kata -%>
     </td>
   </tr>
@@ -141,7 +121,11 @@ function select_kata(selected, index)
 </td>
 
 <td>
-<input id="play" type="submit" value="Play" name="play" disabled>
+<input id="play" 
+       type="submit" 
+       value="Play" 
+       name="play" 
+       disabled>
 </td>
 
 </tr>

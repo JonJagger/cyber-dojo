@@ -2,16 +2,16 @@
 class KataController < ApplicationController
 
   def index
-    @dojo = Dojo.new(params[:dojo_name])
+    @dojo = Dojo.new(params[:dojo])
     @avatars = Avatar.names
     @languages = Language.names
     @katas = Kata.names
   end
 
   def view
-    @dojo = Dojo.new(params[:dojo_name])
-    @avatar = Avatar.new(@dojo, params[:avatar_name])
-    @kata = Kata.new(params[:language_name], params[:kata_name])
+    @dojo = Dojo.new(params[:dojo])
+    @avatar = Avatar.new(@dojo, params[:avatar])
+    @kata = Kata.new(params[:language], params[:kata])
 
     @manifest = {}
     @increments = limited(@avatar.read_most_recent(@kata, @manifest))
@@ -21,9 +21,9 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    dojo = Dojo.new(params[:dojo_name])
-    avatar = Avatar.new(dojo, params[:avatar_name])
-    kata = Kata.new(params[:language_name], params[:kata_name])
+    dojo = Dojo.new(params[:dojo])
+    avatar = Avatar.new(dojo, params[:avatar])
+    kata = Kata.new(params[:language], params[:kata])
 
     @output = avatar.run_tests(kata, load_files_from_page)
     @increments = limited(avatar.increments)
