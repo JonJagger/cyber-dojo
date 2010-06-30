@@ -44,7 +44,6 @@
 .file_op 
 { 
   padding: 4px; 
-  margin-right: 10em;
 } 
 .file_op_name 
 { 
@@ -192,9 +191,15 @@ div[class~="filename"]
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#titles, #money_ladder 
+#dojo_title
 { 
-  margin: 0em 0em 1em 1em; /* Top Right Bottom Left */
+  color: #686868; 
+  margin-left: 1em; 
+}
+
+#money_ladder
+{
+  margin: 1em 0em 0em 1em; /* Top Right Bottom Left */
 }
 
 .money_rung
@@ -215,7 +220,7 @@ div[class~="filename"]
 }
 
 
-.money_rung.failed { background-color: #FF5050; color: darkgray; }
+.money_rung.failed { background-color: #FF5050; color: white; }
 .money_rung.error  { background-color: #FF0;    color: gray; }
 .money_rung.passed { background-color: #3C3; }
 
@@ -232,7 +237,6 @@ div[class~="filename"]
   font-weight: bold;
   color: black;
   font-style: normal;
-  xfont-size: 2em; 
 }
 
 .money_rung.total.amount 

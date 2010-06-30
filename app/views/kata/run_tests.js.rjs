@@ -1,5 +1,4 @@
 
 page.replace 'increments_panel', :partial => 'increments_panel'
-
 page.replace 'output', :partial => 'output'
-
+page.replace 'money_ladder', :partial => 'money_ladder'

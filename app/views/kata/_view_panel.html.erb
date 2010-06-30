@@ -3,6 +3,7 @@
   <tr valign="top">
     <td>
       <%= render :partial => 'avatar_pair' -%>
+      <span class="title">CyberDojo: <%= @dojo.name -%></span> 
       <span class="title">Language: <%=@kata.language -%></span>
       <span class="title">Kata: <%= @kata.name -%></span>
       <%= render :partial => 'filenames_panel' -%>
@@ -12,7 +13,8 @@
     </td>
     <td>
       <%= render :partial => 'money_ladder' -%>
-      <%= periodically_call_remote :url => { :action => 'money_ladder' }, :frequency => 5 %>
+      <%= periodically_call_remote :url => { :action => 'money_ladder' }, 
+            :frequency => 5 %>
     </td>
   </tr>
   <tr valign="top">
