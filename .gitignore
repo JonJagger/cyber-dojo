@@ -4,7 +4,4 @@ tmp/**/*
 dojos/**
 !dojos/Mine/
 !dojos/Mine/**
-!dojos/NDC\ 2010/
-!dojos/NDC\ 2010/**
-!dojos/*/*/kata_manifest.rb
 
