@@ -1,6 +1,19 @@
 
 class Kata
 
+  def self.names
+    # In a multi-kata dojo, if you list the katas
+    # alphabetically there is a strong likelihood that each
+    # station will simply pick the first entry.
+    # Listing the katas in a random increases the chances
+    # multiple katas will be selected, which hopefully
+    # will increase the chances of collaboration - the game's
+    # prime directive.
+    Dir.entries(RAILS_ROOT + '/katalogue/katas').select do |name|
+      name != '.' and name != '..'
+    end.sort_by {rand}
+  end
+
   def initialize(dojo, kata_name)
     @dojo = dojo
     @name = kata_name
@@ -37,11 +50,11 @@ class Kata
     @hidden_filenames
   end
 
-  def new_avatar(name)
-    Avatar.new(self, name)
+  def new_avatar(name) #TO DROP
+    Avatar.new(self, @dojo, name)
   end
 
-  def avatars
+  def avatars #TO DROP
     result = []
     Avatar.names.each do |avatar_name|
       path = folder + '/' + avatar_name
@@ -50,7 +63,7 @@ class Kata
     result
   end
 
-  def folder
+  def folder #TO DROP
     @dojo.folder + '/' + name
   end
 

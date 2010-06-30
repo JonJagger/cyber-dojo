@@ -1,10 +1,39 @@
 
 <script language="JavaScript"
         type="text/javascript"><!--
-function select_avatar(name)
+var avatar_selected = false;
+var language_selected = false;
+var kata_selected = false;
+
+function enable_play_if_all_selected()
 {
-  $('avatar_name').value = name;
-  document.avatarIndex.submit();
+  $('play').disabled 
+     =  !avatar_selected 
+     || !language_selected 
+     || !kata_selected;
+}
+
+function select_avatar(selected, index)
+{
+  $('avatar_name').value = selected;
+  $('avatar_' + index).checked = true;
+  avatar_selected = true;
+  enable_play_if_all_selected();
+  //document.avatarIndex.submit();
+}
+function select_language(selected, index)
+{
+  $('language_name').value = selected;
+  $('language_' + index).checked = true; 
+  language_selected = true;
+  enable_play_if_all_selected();
+}
+function select_kata(selected, index)
+{
+  $('kata_name').value = selected;
+  $('kata_' + index).checked = true;
+  kata_selected = true;
+  enable_play_if_all_selected();
 }
 //--></script>
 
@@ -29,23 +58,46 @@ function select_avatar(name)
        id="avatar_name" 
        value="">
 
+<input readonly 
+       type="hidden"
+       name="language_name" 
+       id="language_name" 
+       value="">
+
+<input readonly 
+       type="hidden"
+       name="kata_name" 
+       id="kata_name" 
+       value="">
+
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
+<h2><i>Each laptop must have a different animal</i></h2>
+
+<table>
+<tr>
+<td>
 
 <table class="mid_tone panel" >
-  <tr>
+  <tr>    
     <td>
-      <% chunks = chunk_array(@avatars.sort, 5) -%>
+      <% chunk_size = 5 -%>
+      <% chunks = chunk_array(@avatars.sort, chunk_size) -%>
       <table>
-        <% chunks.each do |chunk| -%>
+        <% chunks.each_with_index do |chunk,outer| -%>
         <tr>
-        <% chunk.each do |avatar| -%>
-           <td>
-             <div id="avatar_pair">
+        <% chunk.each_with_index do |avatar,inner| -%>
+           <% index = outer*chunk_size + inner -%>
+           <td onclick='select_avatar("<%=avatar.downcase-%>", "<%=index-%>");'>
+
+             <input id="avatar_<%=index-%>"
+                    type="radio"
+                    name="avatar"
+                    value="<%=avatar.downcase-%>">
+
                <img alt="<%=avatar-%>" 
                     src="/images/avatars/<%=avatar.downcase-%>.jpg"
                     title="<%=avatar.humanize-%>"
-                    onclick='select_avatar("<%=avatar.downcase-%>");' />
-             </div>
+                    xonclick='select_avatar("<%=avatar.downcase-%>");' />
            </td>
         <% end -%>
         </tr>
@@ -54,8 +106,47 @@ function select_avatar(name)
     </td>
   </tr>
 </table>
+</td>
 
-<h2><i>Please click your laptop avatar...</i></h2>
+<td>+</td>
+
+<td>
+<table class="mid_tone panel">
+  <% @languages.each_with_index do |language,index| -%>
+  <tr>
+    <td onclick='select_language("<%=language-%>", "<%=index-%>");'>
+      <input id="language_<%=index-%>" 
+             type="radio" 
+             name="language" 
+             value="<%=language-%>">
+      <%= language -%>
+    </td>
+  </tr>
+  <% end -%>
+</table>
+</td>
+
+<td>+</td>
+
+<td>
+<table class="mid_tone panel">
+  <% @katas.each_with_index do |kata,index| -%>
+  <tr>
+    <td onclick='select_kata("<%=kata-%>", "<%=index-%>");'>
+      <input id="kata_<%=index-%>" type="radio" name="kata" value="<%=kata-%>">
+      <%= kata -%>
+    </td>
+  </tr>
+  <% end -%>
+</table>
+</td>
+
+<td>
+<input id="play" type="submit" value="Play" name="play" disabled>
+</td>
+
+</tr>
+</table>
 
 </form>
 

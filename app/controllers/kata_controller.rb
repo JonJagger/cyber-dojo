@@ -40,7 +40,7 @@ private
   def welcome_text
     [ 'Welcome.',
       '',
-      'In a CyberDojo you practice the collaborative game',
+      'CyberDojo: practicing the collaborative game',
       'called software development!',
       '',      
       'Clicking the play> button runs cyberdojo.sh on the',
@@ -55,8 +55,8 @@ private
 
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
-    # means filename has a leading and trailing single quote
-    # which needs to be stripped off (and also a trailing ])
+    # means filename has a leading ' and trailing ']
+    # which need to be stripped off
     return filename[1..-2] 
   end
 
