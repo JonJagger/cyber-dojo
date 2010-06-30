@@ -12,12 +12,10 @@
 def gapper(dojo)
       
   all_incs, all_names = [], Set.new()
-  dojo.katas.each {|kata|
-    kata.avatars.each {|avatar|
-      all_names.add(avatar.name)
-      all_incs += marked_increments(avatar)
-    }
-  }
+  dojo.avatars.each do |avatar|
+    all_names.add(avatar.name)
+    all_incs += marked_increments(avatar)
+  end
 
   all_incs.sort! {|lhs,rhs| moment(lhs) <=> moment(rhs) }
   
@@ -46,9 +44,9 @@ end
 
 def marked_increments(avatar)
   incs = avatar.increments
-  incs.each {|inc|
+  incs.each do |inc|
     inc[:avatar] = avatar.name
-  }
+  end
   incs
 end
 

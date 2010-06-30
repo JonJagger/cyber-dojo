@@ -9,12 +9,8 @@ class Avatar
         raccoons snakes squirrels wolves zebras )
   end
   
-  def initialize(kata, dojo, name) 
-    @kata, @dojo, @name = kata, dojo, name
-  end
-
-  def kata
-    @kata
+  def initialize(dojo, name) 
+    @dojo, @name = dojo, name
   end
 
   def name
@@ -25,25 +21,25 @@ class Avatar
     eval locked_read(increments_filename)
   end
 
-  def read_most_recent(manifest)
+  def read_most_recent(kata, manifest)
     # load starting manifest
-    manifest[:visible_files] = @kata.visible
+    manifest[:visible_files] = kata.visible
     my_increments = []
     File.open(@dojo.folder, 'r') do |f|
       flock(f) do |lock|
-        my_increments = locked_read_most_recent(manifest)
+        my_increments = locked_read_most_recent(kata, manifest)
       end
     end
     my_increments
   end
 
-  def run_tests(manifest)
+  def run_tests(kata, manifest)
     output = ''
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
-        output = TestRunner.avatar_run_tests(self, manifest)
+        output = TestRunner.avatar_run_tests(self, kata, manifest)
         manifest[:output] = output
-        test_info = RunTestsOutputParser.parse(self, output)
+        test_info = RunTestsOutputParser.parse(self, kata, output)
         save(manifest, test_info)
       end
     end
@@ -75,12 +71,12 @@ private
     folder + '/' + 'increments_manifest.rb'
   end
 
-  def locked_read_most_recent(manifest)
+  def locked_read_most_recent(kata, manifest)
     if !File.exists?(folder) # start
       make_dir(folder)
       make_dir(folder + '/sandbox')
       # Copy in hidden files from kata fileset
-	  @kata.hidden_pathnames.each do |hidden_pathname|
+	  kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
 	  # Create empty increments file ready to be loaded next time

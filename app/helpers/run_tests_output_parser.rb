@@ -1,12 +1,12 @@
 
 module RunTestsOutputParser
 
-  def self.parse(avatar, output)
+  def self.parse(avatar, kata, output)
     inc = { :run_tests_output => output }
     if Regexp.new("execution terminated after ").match(output)
       inc[:outcome] = :failed
     else
-      inc[:outcome] = eval "parse_#{avatar.kata.unit_test_framework}(output)"
+      inc[:outcome] = eval "parse_#{kata.unit_test_framework}(output)"
     end
 
     # failed == red

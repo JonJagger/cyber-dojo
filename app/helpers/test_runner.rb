@@ -1,10 +1,10 @@
 
 module TestRunner
 
-  def self.avatar_run_tests(avatar, manifest)
+  def self.avatar_run_tests(avatar, kata, manifest)
     sandbox = avatar.folder + '/' + 'sandbox'
     # Reset sandbox to contain just hidden files
-    remove_all_but(sandbox, avatar.kata.hidden_filenames)
+    remove_all_but(sandbox, kata.hidden_filenames)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
 
@@ -20,7 +20,7 @@ module TestRunner
     end
 
     # Build and run tests has limited time to complete
-    avatar.kata.max_run_tests_duration.times do
+    kata.max_run_tests_duration.times do
       sleep(1)
       break if sandbox_thread.status == false 
     end
@@ -28,7 +28,7 @@ module TestRunner
     # an infinite loop and kill the thread
     if sandbox_thread.status != false 
       sandbox_thread.kill 
-      run_tests_output = [ "execution terminated after #{avatar.kata.max_run_tests_duration} seconds" ]
+      run_tests_output = [ "execution terminated after #{kata.max_run_tests_duration} seconds" ]
     end
 
     run_tests_output

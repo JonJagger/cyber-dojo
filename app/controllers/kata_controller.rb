@@ -1,17 +1,13 @@
 
 class KataController < ApplicationController
 
-  def index #DROP
-    @dojo = Dojo.new(params[:dojo_name])
-    @avatar_name = params[:avatar_name]
-  end
-
   def view
     @dojo = Dojo.new(params[:dojo_name])
-    @kata = @dojo.new_kata(params[:language_name], params[:kata_name])
-    @avatar = @kata.new_avatar(params[:avatar_name])
+    @avatar = Avatar.new(@dojo, params[:avatar_name])
+    @kata = Kata.new(params[:language_name], params[:kata_name])
+
     @manifest = {}
-    @increments = limited(@avatar.read_most_recent(@manifest))
+    @increments = limited(@avatar.read_most_recent(@kata, @manifest))
     @current_file = @manifest[:current_filename] || 'cyberdojo.sh'
     @output = @manifest[:output] || welcome_text
     @output_outcome = @increments == [] ? '' : @increments.last[:outcome]
@@ -19,9 +15,10 @@ class KataController < ApplicationController
 
   def run_tests
     dojo = Dojo.new(params[:dojo_name])
-    kata = dojo.new_kata(params[:language_name], params[:kata_name])
-    avatar = kata.new_avatar(params[:avatar_name])
-    @output = avatar.run_tests(load_files_from_page)
+    avatar = Avatar.new(dojo, params[:avatar_name])
+    kata = Kata.new(params[:language_name], params[:kata_name])
+
+    @output = avatar.run_tests(kata, load_files_from_page)
     @increments = limited(avatar.increments)
     @output_outcome = @increments.last[:outcome]
     respond_to do |format|

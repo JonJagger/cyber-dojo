@@ -14,17 +14,10 @@ class Kata
     end.sort_by {rand}
   end
 
-  def old_initialize(dojo, kata_name)
-    @dojo = dojo
-    @name = kata_name
-    read_manifest
-  end
-
-  def initialize(dojo, language_name, kata_name)
-    @dojo = dojo
+  def initialize(language_name, kata_name)
     @language = language_name
     @name = kata_name
-    new_read_manifest(language_name, kata_name)
+    read_manifest(language_name, kata_name)
   end
 
   def language
@@ -61,26 +54,9 @@ class Kata
     @hidden_filenames
   end
 
-  def new_avatar(name) #TO DROP
-    Avatar.new(self, @dojo, name)
-  end
-
-  def avatars #TO MOVE TO DOJO
-    result = []
-    Avatar.names.each do |avatar_name|
-      path = folder + '/' + avatar_name
-      result << new_avatar(avatar_name) if File.exists?(path)
-    end
-    result
-  end
-
-  def folder #TO DROP
-    @dojo.folder + '/' + name
-  end
-
 private
 
-  def new_read_manifest(language_name, kata_name)
+  def read_manifest(language_name, kata_name)
     @manifest = {}
     @visible = {}
     @hidden_filenames = []
@@ -88,23 +64,6 @@ private
     read_file_sets(['languages/' + language_name, 'katas/' + kata_name])
   end
   
-
-  def read_manifest
-    @visible = {}
-    @hidden_filenames = []
-	@hidden_pathnames = []
-
-    path = folder + '/' + 'kata_manifest.rb'
-    if File.exists?(path)
-      @manifest = eval IO.read(path)
-      @manifest.each do |key,value|
-        if key == :file_set_names
-          read_file_sets(value)
-        end
-      end
-    end
-  end
-
   def read_file_sets(names)
     names.each do |file_set_name|
       path = RAILS_ROOT + '/' + 'katalogue' + '/' + file_set_name

@@ -17,21 +17,10 @@ class Dojo
     Dir.entries(folder).select { |name| !Dojo.dotted? name }
   end
 
-  #def new_kata(name)
-  #  Kata.new(self, name) 
-  #end
-
-  def new_kata(language_name, kata_name)
-    Kata.new(self, language_name, kata_name) 
-  end
-
-  def katas
+  def avatars
     alive = []
-    Dir.entries(folder).select { |entry| !Dojo.dotted? entry }.each do |kata_name|
-      kata = Kata.new(self, kata_name)
-      if kata.avatars.size > 0
-        alive << kata
-      end
+    Dir.entries(folder).select { |entry| !Dojo.dotted? entry }.each do |avatar_name|
+      alive << Avatar.new(self, avatar_name)
     end
     alive
   end
