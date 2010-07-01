@@ -225,7 +225,6 @@ div[class~="filename"]
 
 .money_rung.passed, .money_rung.total.amount 
 { 
-  xfont-weight: bold; 
   font-style: normal;
   font-size: 1.5em;
   color: black; 

@@ -24,8 +24,7 @@ class Dojo
   def money_ladder_update(avatar_name, latest_increment)
     # this method must be atomic (otherwise
     # increments could interleave and be lost) 
-    # so do not use the (get)increments function
-    #latest_increment[:avatar] = avatar_name
+    # so I do not use the (get)money_ladder function
     ladder = default_money_ladder
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
@@ -58,20 +57,27 @@ class Dojo
   end
 
   def bank
-    # someone could have interleaved and banked already
+    # the following interleaving is possible
+    # 1. frogs click "bank"
+    # 2. lions click "bank"
+    # 3. lions bank is serviced here
+    # 4. frogs bank is serviced here
+    # This means that at the time the frogs clicked "bank"
+    # there was something to bank but by the time the
+    # request reaches the server there isn't.
+    # However, this is harmless, since the balance is unaltered.
+    # But again, this function must be atomic.
     ladder = {}
     File.open(folder, 'r') do |f|
       flock(f) do |lock|
-        if File.exists?(money_ladder_filename)
-          ladder = eval IO.read(money_ladder_filename)
-          ladder[:balance] += ladder[:offer]
-          ladder[:offer] = 0
-          ladder[:failed_rungs] = []
-          ladder[ :error_rungs] = []
-          ladder[:passed_rungs] = []
-          File.open(money_ladder_filename, 'w') do |file|
-            file.write(ladder.inspect) 
-          end
+        ladder = eval IO.read(money_ladder_filename)
+        ladder[:balance] += ladder[:offer]
+        ladder[:offer] = 0
+        ladder[:failed_rungs] = []
+        ladder[ :error_rungs] = []
+        ladder[:passed_rungs] = []
+        File.open(money_ladder_filename, 'w') do |file|
+          file.write(ladder.inspect) 
         end       
       end # flock
     end # File.open

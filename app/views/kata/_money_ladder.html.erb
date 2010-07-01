@@ -60,13 +60,14 @@
   <% end -%>
 
   <tr>
-    <td>&nbsp;
+    <td>
+      <% if @money_ladder[:passed_rungs].size > 0 -%>
+        <%= button_to_remote("Bank", :update => 'money_ladder',
+                                     :url => { :action => 'bank',
+                                               :dojo => @dojo.name }) -%>
+      <% end -%>
     </td>
-    <td xclass="money_rung bank_button">
-
-      <%= button_to_remote("Bank", :update => 'money_ladder',
-                                   :url => { :action => 'bank',
-                                             :dojo => @dojo.name }) -%>
+    <td>&nbsp;
     </td>
   </tr>
 
