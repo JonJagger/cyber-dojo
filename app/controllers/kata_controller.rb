@@ -15,18 +15,20 @@ class KataController < ApplicationController
 
     @manifest = {}
     @increments = limited(@avatar.read_most_recent(@kata, @manifest))
+    @money_ladder = @dojo.money_ladder
     @current_file = @manifest[:current_filename] || 'cyberdojo.sh'
     @output = @manifest[:output] || welcome_text
     @output_outcome = @increments == [] ? '' : @increments.last[:outcome]
   end
 
   def run_tests
-    dojo = Dojo.new(params[:dojo])
-    avatar = Avatar.new(dojo, params[:avatar])
+    @dojo = Dojo.new(params[:dojo])
+    avatar = Avatar.new(@dojo, params[:avatar])
     kata = Kata.new(params[:language], params[:kata])
 
     @output = avatar.run_tests(kata, load_files_from_page)
     @increments = limited(avatar.increments)
+    @money_ladder = @dojo.money_ladder_update(avatar.name, @increments.last)
     @output_outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
@@ -34,9 +36,16 @@ class KataController < ApplicationController
   end
   
   def money_ladder
+    @dojo = Dojo.new(params[:dojo])
+    @money_ladder = @dojo.money_ladder      
     respond_to do |format|
       format.js if request.xhr?
     end
+  end
+
+  def bank
+    @dojo = Dojo.new(params[:dojo])
+    @money_ladder = @dojo.bank    
   end
 
 private

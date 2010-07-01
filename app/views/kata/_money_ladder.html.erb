@@ -4,92 +4,81 @@
 
 <% size = 27 -%>
 
-<!--
-
 <table>
+  <% @money_ladder[:failed_rungs].each do |rung| -%>
   <tr>
     <td>
-      <img src="/images/avatars/lions.jpg"
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="Lions" />
-      <img src="/images/avatars/lions.jpg"
+           title="<%=rung[:avatar]-%>" />
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="Lions" />      
+           title="<%=rung[:avatar]-%>" />      
     </td>
     <td class="money_rung failed amount">
-      1,008,000
+      <%= rung[:amount] -%>
     </td>
   </tr>
+  <% end -%>
 
+  <% @money_ladder[:error_rungs].each do |rung| -%>
   <tr>
     <td>
-      <img src="/images/avatars/snakes.jpg"
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="Snakes" />
-      <img src="/images/avatars/snakes.jpg"
+           title="<%=rung[:avatar]-%>" />
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="Snakes" />      
+           title="<%=rung[:avatar]-%>" />      
     </td>
     <td class="money_rung error amount">
-      144,000
+      <%= rung[:amount] -%>
     </td>
   </tr>
+  <% end -%>
 
+  <% @money_ladder[:passed_rungs].each do |rung| -%>
   <tr>
     <td>
-      <img src="/images/avatars/frogs.jpg"
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="Frogs" />
-      <img src="/images/avatars/frogs.jpg"
+           title="<%=rung[:avatar]-%>" />
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="Frogs" />      
-    </td>
-    <td class="money_rung passed top amount">
-      24,000
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      <img src="/images/avatars/alligators.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="Alligators" />
-      <img src="/images/avatars/alligators.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="Alligators" />
+           title="<%=rung[:avatar]-%>" />      
     </td>
     <td class="money_rung passed amount">
-      4,800
+      <%= rung[:amount] -%>
+    </td>
+  </tr>
+  <% end -%>
+
+  <tr>
+    <td>&nbsp;
+    </td>
+    <td xclass="money_rung bank_button">
+
+      <%= button_to_remote("Bank", :update => 'money_ladder',
+                                   :url => { :action => 'bank',
+                                             :dojo => @dojo.name }) -%>
     </td>
   </tr>
 
   <tr>
-    <td>
+    <td>Balance
     </td>
     <td class="money_rung total amount">
-      125,600
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-    </td>
-    <td class="money_rung bank_button">
-      Bank
+      <%= @money_ladder[:balance] -%>      
     </td>
   </tr>
 
 </table>
-
--->
 
 </div>
 

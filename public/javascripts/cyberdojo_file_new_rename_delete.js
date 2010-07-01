@@ -95,7 +95,7 @@ function renameFile()
   if (!current_filename) return;
 
   var newname = trim(prompt("Rename " + current_filename + " ?", 
-                            "new name for " + current_filename));
+                            "was_" + current_filename));
   if (newname == null) return; // Cancelled
   if (newname == "") { alert("No filename entered\n" +
                              "Rename " + current_filename + " abandoned"); return; }

@@ -145,8 +145,7 @@ div[class~="filename"]
 
 .traffic_light
 {
-  border: 1px solid #D8D8D8; 
-  background-color: darkgray;
+  background-color: black;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -185,8 +184,8 @@ div[class~="filename"]
 
 .increment.off 
 { 
-  background-color: #D8D8D8; /*light-gray*/
-  border: 1px solid #D8D8D8; 
+  background-color: darkgray;
+  border: 1px solid darkgray;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -208,7 +207,7 @@ div[class~="filename"]
   margin: 2pt;
   border: 1px solid #D8D8D8; 
   color: gray;
-  padding: 0.25em 1em 0.15em 1em; /* Top Right Bottom Left */
+  padding: 0em 1em 0em 1em; /* Top Right Bottom Left */
   border-radius: 20px;
   -moz-border-radius: 20px;
   -khtml-border-radius: 20px;
@@ -220,32 +219,19 @@ div[class~="filename"]
 }
 
 
-.money_rung.failed { background-color: #FF5050; color: white; }
-.money_rung.error  { background-color: #FF0;    color: gray; }
-.money_rung.passed { background-color: #3C3; }
+.money_rung.failed       { background-color: #FF5050; color: white; }
+.money_rung.error        { background-color: #FF0;    color: gray; }
+.money_rung.passed       { background-color: #3C3; }
 
-.money_rung.passed.top ,.money_rung.bank_button 
+.money_rung.passed, .money_rung.total.amount 
 { 
-  font-weight: bold; 
-  font-style: normal; 
+  xfont-weight: bold; 
+  font-style: normal;
+  font-size: 1.5em;
   color: black; 
 }
 
-.money_rung.bank_button 
-{ 
-  background-color: #FFE4C4; 
-  font-weight: bold;
-  color: black;
-  font-style: normal;
-}
 
-.money_rung.total.amount 
-{ 
-  font-weight: bold;
-  color: black;
-  font-style: normal;
-  background-color: #3C3; 
-}
 .money_rung .amount { padding-left: 0.5em; }
 .money_rung .amount:before { content: " "; }
 
