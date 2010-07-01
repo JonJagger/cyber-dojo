@@ -1,5 +1,6 @@
 
-VERY IMPORTANT - VERY IMPORTANT - VERY IMPORTANT
+================================================
+   VERY VERY IMPORTANT - VERY VERY IMPORTANT
 ================================================
 CyberDojo clients have full rights on the 
 CyberDojo server. You are strongly advised to
@@ -15,7 +16,7 @@ Rails
 
 Installation
 ============
-download the zip file, unzip it, cd into the cyber_dojo directory. Then
+download the zip file, unzip it, cd into the cyberdojo directory. Then
   $ script/server -d
   $ open http://localhost:3000
 And your CyberDojo should be running. There are no requirements on the
@@ -32,8 +33,8 @@ server.
 
 Dojos
 =====
-Each subfolder underneath cyberdojo/dojos represents a virtual dojo. 
-For example cyberdojo/dojos/xp2010 is where I put the xp2010 CyberDojo 
+Each subfolder underneath cyberdojo/dojos/ represents a virtual dojo. 
+For example cyberdojo/dojos/xp2010/ is where I put the xp2010 CyberDojo 
 conference. If there is a single subfolder in cyberdojo/dojos/ the 
 CyberDojo server will take you straight into it without asking. If 
 there are multiple subfolders in cyberdojo/dojos/ the CyberDojo server 
@@ -45,22 +46,22 @@ Avatars
 Once you have chosen your dojo the CyberDojo server will ask you to choose 
 o) your animal avatar  (eg Pandas)
    The avatar provides identity for each laptop participating in the kata. 
-   If a laptop has to be retired during a kata a new laptop can easily replace it.
+   If a laptop has to retire during a kata a new laptop can easily replace it.
 o) your language (eg C++)
-   Each language corresponds to a subfolder of cyberdojo/languages
+   Each language corresponds to a subfolder of cyberdojo/languages/
 o) your kata (eg Prime Factors)
-   Each kata corresponds to a subfolder of cyberdojo/katas
+   Each kata corresponds to a subfolder of cyberdojo/katas/
 
 
 Adding a new language
 =====================
-Create a new subfolder under cyberdojo/languages
+Create a new subfolder under cyberdojo/languages/
 Create a manifest.rb file in this folder (see below)
 
 
 Adding a new kata
 =================
-Create a new subfolder under cyberdojo/katas
+Create a new subfolder under cyberdojo/katas/
 Create a manifest.rb file in this folder (see below)
 
 
@@ -78,8 +79,9 @@ For example: cyberdojo/katas/Prime Factors/manifest.rb looks like this:
   :visible_filenames => %w( instructions ),
 }
 
-Explanation
-- - - - - - 
+
+Manifest Parameters
+===================
 :visible_filenames
   The names of files that will be visible in the editor in the browser at startup.
   Each of these files must exist in the folder.
@@ -106,9 +108,6 @@ Explanation
   called parse_cassert() and will be called to parse the output of running the 
   tests via the cyberdojo.sh shell script file.
 
-
-Further parameters
-------------------
 There are two more parameters that can be specified in a manifest.rb
 file as part of the inspected ruby object:
 
@@ -125,7 +124,7 @@ file as part of the inspected ruby object:
 
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
-  Default to 4 spaces.
+  Defaults to 4 spaces.
 
 
 Dojo Dashboard Display
@@ -135,8 +134,8 @@ will give you an auto-updating display of the current colour and history
 (red, green, or yellow for each increment) of every avatar in a selected dojo
 
 
-Alarm
-=====
+Repeating Alarm
+===============
 I run a CyberDojo by sounding an alarm every 4 minutes or so which
 is the cue for the keyboard driver at each laptop to get up and move
 to a new laptop where they take up a non-driver role.
@@ -144,8 +143,8 @@ You can do this using
 http://ip-address:3000/alarm
 
 
-Turn off Firefox Spell-Checking
-===============================
+How to Turn off Firefox Spell-Checking
+======================================
 To turn it off (and avoid annoying red underlines the code editor)
 1. Type about:config in the address bar.
 2. In the filter field type spell
@@ -154,8 +153,8 @@ To turn it off (and avoid annoying red underlines the code editor)
    Set the integer to 0 to disable the spell checker.
 
 
-Turn off Chrome Spell-Checking
-==============================
+How to Turn off Chrome Spell-Checking
+=====================================
 To turn it off (and avoid annoying red underlines the code editor)
 1. Right click in the editor
 2. Under Spell-checker Options>
@@ -163,8 +162,8 @@ To turn it off (and avoid annoying red underlines the code editor)
 
 
 
-Notes
-=====
+Misc Notes
+==========
 o) http://vimeo.com/8630305 has a video of a very early version of CyberDojo
 o) The rails code does NOT use a database. Instead each increment is saved to
    its own folder. For example if the Wolves are doing kata in the xp2010 
@@ -175,6 +174,10 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. Some 
    of what you find is likely to be non-idiomatic. Caveat emptor!
+o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
+   simpler the environment the more players will need to collaborate with each
+   other. Remember the aim of a CyberDojo is not to ship something, it is to 
+   practice collaborative development.
 o) I'd like to thank Olve Maudal for his encouragement.
 
 
