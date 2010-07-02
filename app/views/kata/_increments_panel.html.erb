@@ -10,15 +10,19 @@
       <div class="<%= increment[:outcome] -%> <%= increment[:g] -%> increment"></div>
     </td>
     <% end -%>
+  </tr>
+</table>
 
-    <% size = 25 -%>
+<table style="float:right;">
+  <tr>
+    <% size = 30 -%>
     <td id="play" 
         style="visibility:visible">
       <input type="image" 
              width="<%=size-%>" 
              height="<%=size-%>" 
              title="Run cyberdojo.sh on the server"
-             src="/images/PlayButton.svg.thumb.png"/>
+             src="/images/triangle.gif"/>
     </td>
 
     <td id="run_tests_spinner" 

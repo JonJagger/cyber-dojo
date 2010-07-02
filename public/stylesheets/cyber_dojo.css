@@ -10,13 +10,19 @@
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
 
-.file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, #bank_button
+.file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, #bank_button, #play
 { 
   border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
+}
+
+#play 
+{ 
+  padding: 0.25em;
+  background-color: #FFE4C4; 
 }
 
 .panel
@@ -61,7 +67,7 @@
   cursor: default;
 }
 
-.file_op, div[class~="filename"], #bank_button /* fake button look */
+.file_op, div[class~="filename"], #bank_button, #play /* fake button look */
 {
   border-bottom: 2px solid gray; 
   border-right:  2px solid gray; 
