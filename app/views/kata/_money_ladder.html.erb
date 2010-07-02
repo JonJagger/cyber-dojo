@@ -2,7 +2,7 @@
 
 <div id="money_ladder">
 
-<% size = 27 -%>
+<% size = 30 -%>
 
 <table>
   <% @money_ladder[:failed_rungs].each do |rung| -%>
@@ -62,17 +62,11 @@
   <tr>
     <td>
       <% if @money_ladder[:passed_rungs].size > 0 -%>
-        <%= button_to_remote("Bank", :update => 'money_ladder',
-                                     :url => { :action => 'bank',
-                                               :dojo => @dojo.name }) -%>
+        <%= button_to_remote("Bank", {:update => 'money_ladder', 
+                                      :url => { :action => 'bank',
+                                                :dojo => @dojo.name }},
+                                     {:id=>'bank_button'}) -%>
       <% end -%>
-    </td>
-    <td>&nbsp;
-    </td>
-  </tr>
-
-  <tr>
-    <td>Balance
     </td>
     <td class="money_rung total amount">
       <%= @money_ladder[:balance] -%>      
