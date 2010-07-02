@@ -114,7 +114,7 @@ div[class~="filename"]
   -webkit-border-radius: 6px 0px 0px 6px;
 }
 
-#avatar_pair, #output { margin-top: 0.5em; }
+#output { margin-top: 0.5em; }
 
 #avatar_pair
 {
@@ -204,7 +204,7 @@ div[class~="filename"]
 
 #money_ladder
 {
-  margin: 1em 0em 0em 1em; /* Top Right Bottom Left */
+  margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
 }
 
 .money_rung
@@ -213,7 +213,7 @@ div[class~="filename"]
   margin: 2pt;
   border: 1px solid #D8D8D8; 
   color: gray;
-  padding: 0em 1em 0em 1em; /* Top Right Bottom Left */
+  padding: 0.25em 1em 0.25em 1em; /* Top Right Bottom Left */
   border-radius: 20px;
   -moz-border-radius: 20px;
   -khtml-border-radius: 20px;
@@ -234,7 +234,8 @@ div[class~="filename"]
 
 #bank_button
 {
-  padding: 0.5em;
+  font-size: 1em;
+  padding: 0.25em;
   background-color: #FFE4C4;
   color: #686868;
   cursor: pointer;

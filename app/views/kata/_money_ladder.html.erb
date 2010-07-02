@@ -2,7 +2,7 @@
 
 <div id="money_ladder">
 
-<% size = 30 -%>
+<% size = 45 -%>
 
 <table>
   <% @money_ladder[:failed_rungs].each do |rung| -%>
@@ -12,10 +12,12 @@
            width="<%=size-%>"
            height="<%=size-%>"
            title="<%=rung[:avatar]-%>" />
+    </td>
+    <td>
       <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />      
+           title="<%=rung[:avatar]-%>" />
     </td>
     <td class="money_rung failed amount">
       <%= rung[:amount] -%>
@@ -30,6 +32,8 @@
            width="<%=size-%>"
            height="<%=size-%>"
            title="<%=rung[:avatar]-%>" />
+    </td>
+    <td>
       <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
@@ -48,6 +52,8 @@
            width="<%=size-%>"
            height="<%=size-%>"
            title="<%=rung[:avatar]-%>" />
+    </td>
+    <td>
       <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
@@ -60,7 +66,7 @@
   <% end -%>
 
   <tr>
-    <td>
+    <td colspan="2">
       <% if @money_ladder[:passed_rungs].size > 0 -%>
         <%= button_to_remote("Bank", {:update => 'money_ladder', 
                                       :url => { :action => 'bank',

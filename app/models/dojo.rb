@@ -119,6 +119,7 @@ private
     amount = 100
     multiplier = 1
 
+    ladder[:passed_rungs].shuffle!
     ladder[:passed_rungs].reverse.each do |rung|
       amount *= multiplier
       multiplier += 1
@@ -131,12 +132,14 @@ private
       ladder[:offer] = 0
     end
 
+    ladder[:error_rungs].shuffle!
     ladder[:error_rungs].reverse.each do |rung|
       amount *= multiplier
       multiplier += 1
       rung[:amount] = amount
     end    
 
+    ladder[:failed_rungs].shuffle!
     ladder[:failed_rungs].reverse.each do |rung|
       amount *= multiplier
       multiplier += 1
