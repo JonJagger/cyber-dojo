@@ -20,7 +20,7 @@
            title="<%=rung[:avatar]-%>" />
     </td>
     <td class="money_rung failed amount">
-      <%= rung[:amount] -%>
+      <%= commatize(rung[:amount]) -%>
     </td>
   </tr>
   <% end -%>
@@ -40,7 +40,7 @@
            title="<%=rung[:avatar]-%>" />      
     </td>
     <td class="money_rung error amount">
-      <%= rung[:amount] -%>
+      <%= commatize(rung[:amount]) -%>
     </td>
   </tr>
   <% end -%>
@@ -60,7 +60,7 @@
            title="<%=rung[:avatar]-%>" />      
     </td>
     <td class="money_rung passed amount">
-      <%= rung[:amount] -%>
+      <%= commatize(rung[:amount]) -%>
     </td>
   </tr>
   <% end -%>
@@ -75,7 +75,7 @@
       <% end -%>
     </td>
     <td class="money_rung total amount">
-      <%= @money_ladder[:balance] -%>      
+      <%= commatize(@money_ladder[:balance]) -%>      
     </td>
   </tr>
 
