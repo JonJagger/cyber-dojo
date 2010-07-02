@@ -19,6 +19,8 @@ def gapper(dojo)
 
   all_incs.sort! {|lhs,rhs| moment(lhs) <=> moment(rhs) }
   
+  max_increments_displayed = 125
+
   all_bubbles = {}
   all_names.each {|name|
     bubbles, previous = [], nil
@@ -32,8 +34,11 @@ def gapper(dojo)
         bubbles << 'old_' + previous.to_s
       end
     }
-    all_bubbles[name] = bubbles.reverse   
+    len = [bubbles.length, max_increments_displayed].min
+    #all_bubbles[name] = bubbles
+    all_bubbles[name] = bubbles[-len,len]
   }
+
   all_bubbles
   # eg
   # { 'koalas' => [ 'new_error',  'old_failed', 'new_failed, 'no_previous' ], 

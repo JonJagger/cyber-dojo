@@ -1,23 +1,11 @@
  
-<h1><b>CyberDojo Dashboard: <%= @dojo.name -%></b></h1>
+<h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
 
 <% gapped = gapper(@dojo) -%>
 <div id="dashboard" class="mid_tone">
 <table>
   <% gapped.each do |avatar_name,increments| -%>
   <tr>
-    <td>
-      <% size = 27 -%>
-      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=avatar_name.humanize-%>" />
-      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=avatar_name.humanize-%>" />
-      &nbsp;
-    </td>
     <td>
       <table cellspacing="2"
              cellpadding="0">
@@ -31,16 +19,30 @@
         </tr>
       </table>
     </td>
+    <td>
+      <% size = 27 -%>
+      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
+           width="<%=size-%>"
+           height="<%=size-%>"
+           title="<%=avatar_name.humanize-%>" />
+    </td>
+    <td>
+      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
+           width="<%=size-%>"
+           height="<%=size-%>"
+           title="<%=avatar_name.humanize-%>" />
+    </td>
   </tr>
   <% end -%>
 
   <% if gapped.size > 1 -%>
   <tr>
    <td>&nbsp;</td>
+   <td>&nbsp;</td>
+   <td>&nbsp;</td>
   </tr>
 
   <tr>
-    <td>&nbsp;</td>
     <td>
       <table cellspacing="2"
              cellpadding="0">
@@ -54,6 +56,8 @@
         </tr>
       </table>
     </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
   </tr>
   <% end -%>
 

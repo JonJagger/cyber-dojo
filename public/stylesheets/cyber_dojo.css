@@ -196,12 +196,6 @@ div[class~="filename"]
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#dojo_title
-{ 
-  color: #686868; 
-  margin-left: 1em; 
-}
-
 #money_ladder
 {
   margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
