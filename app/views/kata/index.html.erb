@@ -5,9 +5,9 @@ var avatar_selected = false;
 var language_selected = false;
 var kata_selected = false;
 
-function enable_play_if_all_selected()
+function enable_start_if_all_selected()
 {
-  $('play').disabled 
+  $('start').disabled 
      =  !avatar_selected 
      || !language_selected 
      || !kata_selected;
@@ -17,19 +17,19 @@ function select_avatar(selected, index)
 {
   $('avatar_' + index).checked = true;
   avatar_selected = true;
-  enable_play_if_all_selected();
+  enable_start_if_all_selected();
 }
 function select_language(selected, index)
 {
   $('language_' + index).checked = true; 
   language_selected = true;
-  enable_play_if_all_selected();
+  enable_start_if_all_selected();
 }
 function select_kata(selected, index)
 {
   $('kata_' + index).checked = true;
   kata_selected = true;
-  enable_play_if_all_selected();
+  enable_start_if_all_selected();
 }
 //--></script>
 
@@ -49,15 +49,20 @@ function select_kata(selected, index)
        value="<%=h @dojo.name-%>">
 
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
-<h2><i>Each laptop must have a different animal</i></h2>
+<h3>
+Choose a <i>different</i> animal avatar for each computer.<br/>
+The server does <i><u>not</u></i> check this.<br/>
+Please self-organize this yourselves.
+</h3>
 
 <table>
 <tr>
 <td>
 
-<table class="mid_tone panel" >
+<table class="panel" >
+  <tr><th><span class="choose_title">Avatar?</span></th></tr>
   <tr>    
-    <td>
+    <td valign="top">
       <% chunk_size = 5 -%>
       <% chunks = chunk_array(@avatars.sort, chunk_size) -%>
       <table>
@@ -84,47 +89,41 @@ function select_kata(selected, index)
 </table>
 </td>
 
-<td>+</td>
-
-<td>
-<table class="mid_tone panel">
-  <% @languages.each_with_index do |language,index| -%>
-  <tr>
-    <td onclick='select_language("<%=language-%>", "<%=index-%>");'>
-      <input id="language_<%=index-%>" 
-             type="radio" 
-             name="language" 
-             value="<%=language-%>">
-      <%= language -%>
-    </td>
-  </tr>
-  <% end -%>
-</table>
+<td valign="top">
+  <div class="panel">
+    <span class="choose_title">Language?</span>
+    <% @languages.each_with_index do |language,index| -%>
+      <div onclick='select_language("<%=language-%>", "<%=index-%>");'>
+        <input id="language_<%=index-%>" 
+               type="radio" 
+               name="language" 
+               value="<%=language-%>">
+        <%= language -%>
+      </div>
+    <% end -%>
+  </div>
 </td>
 
-<td>+</td>
-
-<td>
-<table class="mid_tone panel">
+<td valign="top">
+<div class="panel">
+  <span class="choose_title">Kata?</span>
   <% @katas.each_with_index do |kata,index| -%>
-  <tr>
-    <td onclick='select_kata("<%=kata-%>", "<%=index-%>");'>
+    <div onclick='select_kata("<%=kata-%>", "<%=index-%>");'>
       <input id="kata_<%=index-%>" 
              type="radio" 
              name="kata" 
              value="<%=kata-%>">
       <%= kata -%>
-    </td>
-  </tr>
+    </div> 
   <% end -%>
-</table>
+</div>
 </td>
 
-<td>
-<input id="play" 
+<td valign="top">
+<input id="start" 
        type="submit" 
-       value="Play" 
-       name="play" 
+       value="Start" 
+       name="start" 
        disabled>
 </td>
 
