@@ -10,23 +10,20 @@
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
 
-.file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, #bank_button, #start, #play
+.file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, 
+#start_button, #play_button, #bank_button
 { 
-  border: 2px solid #D8D8D8; /*light-gray*/
+  border: 1px solid #A8A8A8;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
 }
 
-#start 
+#start_button, #play_button, #bank_button
 { 
-  padding: 0.5em;
-  background-color: #FFE4C4; 
-}
-
-#play
-{ 
+  font-size: 1em;
+  cursor: pointer;
   padding: 0.5em;
   background-color: #FFE4C4; 
 }
@@ -48,12 +45,6 @@
   padding: 0.3em;
 }
 
-#increments_panel 
-{ 
-  margin-top: 0.5em;
-  margin-bottom: 0.5em; 
-}
-
 .title
 {
   display: block;
@@ -71,29 +62,31 @@
 .file_op_name 
 { 
   font-size: 7pt; 
-  color: #686868;
+  color: #383838;
 }
 .file_op[disabled="false"] 
 { 
   background-color: #FFE4C4;
   cursor: pointer;
 }
-.file_op[disabled="true" ] 
+.file_op[disabled="true"] 
 { 
-  background-color: #D8D8D8; 
+  background-color: #D8D8D8;
   cursor: default;
 }
 
-.file_op, div[class~="filename"], #bank_button, #start, #play /* fake button look */
+.file_op, div[class~="filename"], 
+#bank_button, #start_button, #play_button 
 {
-  border-bottom: 2px solid gray; 
+  color: #383838;
+  border-bottom: 2px solid gray; /* fake button look */
   border-right:  2px solid gray; 
 }
 
 div[class~="filename"]
 {
   margin: 0.25em;
-  color: #686868;
+  color: #383838;
   font-size: 11pt;
   cursor: pointer;
   white-space: nowrap;
@@ -153,18 +146,20 @@ div[class~="filename"]
 
 #dashboard
 {
+  border: 1px solid #C8C8C8;
   margin: 0.3em;
   padding: 0.3em;
 }
 
 
-#dashboard_cell { padding: 0.1em; }
+#dashboard_cell { padding: 0.1em; border: 1px solid #C8C8C8; }
 
 #dashboard_cell.new_failed { background-color: #F33; /* red */    }
 #dashboard_cell.new_error  { background-color: #FF0; /* yellow */ }
 #dashboard_cell.new_passed { background-color: #3C3; /* green */  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
+
 
 .traffic_light
 {
@@ -234,7 +229,6 @@ div[class~="filename"]
   text-align: right;
 }
 
-
 .money_rung.failed       { background-color: #FF5050; color: white; }
 .money_rung.error        { background-color: #FF0;    color: gray; }
 .money_rung.passed       { background-color: #3C3; }
@@ -242,15 +236,6 @@ div[class~="filename"]
 
 .money_rung .amount { padding-left: 0.5em; }
 .money_rung .amount:before { content: " "; }
-
-#bank_button
-{
-  font-size: 1em;
-  padding: 0.25em;
-  background-color: #FFE4C4;
-  color: #686868;
-  cursor: pointer;
-}
 
 
 

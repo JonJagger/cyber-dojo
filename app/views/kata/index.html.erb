@@ -7,7 +7,7 @@ var kata_selected = false;
 
 function enable_start_if_all_selected()
 {
-  $('start').disabled 
+  $('start_button').disabled 
      =  !avatar_selected 
      || !language_selected 
      || !kata_selected;
@@ -120,7 +120,7 @@ Please self-organize this yourselves.
 </td>
 
 <td valign="top">
-<input id="start" 
+<input id="start_button" 
        type="submit" 
        value="Start" 
        name="start" 
