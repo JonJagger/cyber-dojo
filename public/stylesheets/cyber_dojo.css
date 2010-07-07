@@ -41,8 +41,8 @@
 
 .panel
 {    
-  margin: 0.3em;
-  padding: 0.3em;
+  margin: 1em;
+  padding: 1em;
 }
 
 .title
@@ -152,7 +152,7 @@ div[class~="filename"]
 }
 
 
-#dashboard_cell { padding: 0.1em; border: 1px solid #C8C8C8; }
+#dashboard_cell { padding: 0.1em; }
 
 #dashboard_cell.new_failed { background-color: #F33; /* red */    }
 #dashboard_cell.new_error  { background-color: #FF0; /* yellow */ }

@@ -1,28 +1,56 @@
 
-<form name="dojoIndex" action="/kata/index">
-
-<noscript>
-  &nbsp;
-  <h2><b>You must enable JavaScript.</b></h2>
-  &nbsp;
-</noscript>
-
 <h1><b>Welcome to CyberDojo</b></h1>
 
-<table class="mid_tone panel">
-  <% @dojo_names.sort.each do |dojo_name| -%>
-  <tr>
-    <td>
-      <input type="submit"
-             name="dojo"
-             value="<%=dojo_name-%>">
-    </td>
-  </tr>
+<form name="dojoNew" action="/dojo/new">
+  <span class="mid_tone panel">
+    <input type="submit"
+           name="new"
+           value="Create a new dojo named:">
+    <input type="text"
+           name="name"
+           value="">
+  </span>
+  <% if flash[:new_notice] -%>
+    <span class="notice"><%= flash[:new_notice] -%></span>
   <% end -%>
-</table>
-
-<h2><i>Please click your CyberDojo...</i></h2>
-
 </form>
+
+<br/>
+<br/>
+
+<form name="dojoEnter" action="/dojo/enter">
+  <span class="mid_tone panel">
+    <input type="submit"
+           name="enter"
+           value="Enter the existing dojo named:">
+    <input type="text"
+           name="name"
+           value="">
+  </span>
+  <% if flash[:enter_notice] -%>
+    <span class="notice"><%= flash[:enter_notice] -%></span>
+  <% end -%>
+</form>
+
+<br/>
+<br/>
+
+<form name="dojoDashboard" 
+      action="/dojo/dashboard">
+  <span class="mid_tone panel">
+    <input type="submit"
+           name="dashboard"
+           value="Show dashboard for dojo named:">
+    <input type="text"
+           name="name"
+           value="">
+  </span>
+  <% if flash[:dashboard_notice] -%>
+    <span class="notice"><%= flash[:dashboard_notice] -%></span>
+  <% end -%>
+</form>
+
+
+
 
 
