@@ -3,7 +3,7 @@ function runTests()
 {
   // _js_editor_menu.html.erb
   // ......... callback: function(e) { runTests(); } ..........
-  $('play').click();
+  $('play_button').click();
 }
 
 function preRunTests()
@@ -12,7 +12,7 @@ function preRunTests()
   // form_remote_tag :url => {...}, 
   //                 :before   => "preRunTests();",
   saveCurrentFile();
-  $('play').setAttribute('style', 'display:none');
+  $('play_button').setAttribute('style', 'display:none');
   $('run_tests_spinner').setAttribute('style', 'visibility:visible');
 }
 
@@ -22,7 +22,7 @@ function postRunTests()
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
   $('run_tests_spinner').setAttribute('style', 'display:none');
-  $('play').setAttribute('style', 'visibility:visible');
+  $('play_button').setAttribute('style', 'visibility:visible');
   // new increment could affect layout
   refreshLineNumbering();
   $('editor').focus();
