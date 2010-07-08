@@ -92,9 +92,9 @@ div[class~="filename"]
 
 #editor, .textarea_with_line_numbers
 {
+  font-weight: bold;
   font-size: 11pt;
   border: 1px solid #666;
-  border-right: none;
   margin: 0;
 }
 
@@ -105,13 +105,13 @@ div[class~="filename"]
   padding-left: 5px;
   margin-left: 40px; /* enough for line-numbers */
   font-family: monospace;
-  font-weight: bold;
   color: white;
   background-color: #686868;
 }
 
 .textarea_with_line_numbers
 {
+  border-right: none;
   display: block;
   color: #686868;
   background: #aaa;
