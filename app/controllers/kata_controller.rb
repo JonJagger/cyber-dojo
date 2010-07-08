@@ -4,8 +4,8 @@ class KataController < ApplicationController
   def index
     @dojo = Dojo.new(params[:dojo])
     @avatars = Avatar.names
-    @languages = Language.names
-    @katas = Kata.names
+    @languages = FileSets.languages
+    @katas = FileSets.katas
   end
 
   def view
@@ -51,16 +51,12 @@ class KataController < ApplicationController
 private
 
   def welcome_text
-    [ 'Welcome.',
-      '',
-      'CyberDojo: practicing the collaborative game',
+    [ 'CyberDojo: practicing the collaborative game',
       'called software development!',
       '',      
       'Clicking the play> button runs cyberdojo.sh on the',
       'CyberDojo server and displays its output here.',
       '',
-      'The Only CyberDojo Rule',
-      '-----------------------',
       'When you hear the bell each keyboard driver must move',
       'to another laptop and take up a non-driver role.',
     ].join("\n")

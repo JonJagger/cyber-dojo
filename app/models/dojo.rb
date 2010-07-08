@@ -58,14 +58,16 @@ class Dojo
 
   def bank
     # the following interleaving is possible
-    # 1. frogs click "bank"
-    # 2. lions click "bank"
-    # 3. lions bank is serviced here
-    # 4. frogs bank is serviced here
-    # This means that at the time the frogs clicked "bank"
+    # 1. Frogs click "bank"
+    # 2. Lions click "bank"
+    # 3. Lions bank is serviced here
+    # 4. Frogs bank is serviced here
+    # This means that at the time the Frogs clicked "bank"
     # there was something to bank but by the time the
     # request reaches the server there isn't.
-    # However, this is harmless, since the balance is unaltered.
+    # However, this is harmless, since the offer is reset
+    # to zero on a bank so the second bank does not
+    # alter the balance.
     # But again, this function must be atomic.
     ladder = {}
     File.open(folder, 'r') do |f|

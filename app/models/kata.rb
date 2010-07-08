@@ -1,19 +1,6 @@
 
 class Kata
 
-  def self.names
-    # In a multi-kata dojo, if you list the katas
-    # alphabetically there is a strong likelihood that each
-    # station will simply pick the first entry.
-    # Listing the katas in a random increases the chances
-    # multiple katas will be selected, which hopefully
-    # will increase the chances of collaboration - the game's
-    # prime directive.
-    Dir.entries(RAILS_ROOT + '/katas').select do |name|
-      name != '.' and name != '..'
-    end.sort_by {rand}
-  end
-
   def initialize(language_name, kata_name)
     @language = language_name
     @name = kata_name
