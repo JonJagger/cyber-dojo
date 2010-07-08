@@ -41,8 +41,8 @@
 
 .panel
 {    
-  margin: 0.3em;
-  padding: 0.3em;
+  margin: 1em;
+  padding: 1em;
 }
 
 .title
@@ -159,7 +159,6 @@ div[class~="filename"]
 #dashboard_cell.new_passed { background-color: #3C3; /* green */  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
-
 
 .traffic_light
 {
