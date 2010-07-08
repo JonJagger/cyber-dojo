@@ -25,11 +25,7 @@ class Dojo
     # this method must be atomic (otherwise
     # increments could interleave and be lost) 
     # so I do not use the (get)money_ladder function
-    ladder = default_money_ladder
-    
-    #File.open(folder, 'r') do |f|
-    #  flock(f) do |lock|
-    
+    ladder = default_money_ladder    
     io_lock(folder) do
       if !File.exists?(money_ladder_filename)
         File.open(money_ladder_filename, 'w') do |file| 
@@ -43,24 +39,16 @@ class Dojo
         file.write(ladder.inspect) 
       end
     end
-      
-    #  end # flock
-    #end # File.open
-    
     ladder
   end
 
   def money_ladder
     ladder = default_money_ladder
-    #File.open(folder, 'r') do |f|
-    #  flock(f) do |lock|
     io_lock(folder) do
       if File.exists?(money_ladder_filename)
         ladder = eval IO.read(money_ladder_filename)
       end
     end
-    #  end
-    #end
     ladder
   end
 
@@ -78,8 +66,6 @@ class Dojo
     # alter the balance.
     # But again, this function must be atomic.
     ladder = {}
-    #File.open(folder, 'r') do |f|
-    #  flock(f) do |lock|
     io_lock(folder) do
       ladder = eval IO.read(money_ladder_filename)
       ladder[:balance] += ladder[:offer]
@@ -91,8 +77,6 @@ class Dojo
         file.write(ladder.inspect) 
       end
     end
-    #  end # flock
-    #end # File.open
     ladder
   end
 

@@ -8,12 +8,15 @@ class DojoController < ApplicationController
   def new
     name = params[:name]
     folder = RAILS_ROOT + '/dojos/' + name
-    if !File.exists?(folder)
+    if File.exists?(folder)
+      flash[:new_notice] = 'There is already a CyberDojo named ' + name
+      redirect_to :action => 'index'    	
+    else    	
       Dir.mkdir(folder)
+      redirect_to :controller => 'kata', 
+                  :action => 'index',
+                  :dojo => name
     end
-    redirect_to :controller => 'kata', 
-                :action => 'index',
-                :dojo => name
   rescue
     flash[:new_notice] = 'Illegal dojo name: ' + name
     redirect_to :action => 'index'
@@ -33,13 +36,8 @@ class DojoController < ApplicationController
 
   def dashboard
     name = params[:name]
-    if !File.exists?(RAILS_ROOT + '/dojos/' + name)
-      flash[:dashboard_notice] = 'There is no dojo named: ' + name
-      redirect_to :action => 'index'
-    else
-      @dojo = Dojo.new(params[:name])
-      render :layout => 'dashboard_view'
-    end
+    @dojo = Dojo.new(params[:name])
+    render :layout => 'dashboard_view'
   end
 
 end

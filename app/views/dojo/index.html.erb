@@ -1,54 +1,64 @@
 
-<h1><b>Welcome to CyberDojo</b></h1>
+<h1><b>CyberDojo</b></h1>
 
-<form name="dojoNew" action="/dojo/new">
-  <span class="mid_tone panel">
-    <input type="submit"
-           name="new"
-           value="Create a new dojo named:">
-    <input type="text"
-           name="name"
-           value="">
-  </span>
-  <% if flash[:new_notice] -%>
-    <span class="notice"><%= flash[:new_notice] -%></span>
-  <% end -%>
-</form>
+<h3>Practicing the <em>collaborative</em> game called software development.</h3>
 
-<br/>
-<br/>
+<table>
+<tr>
 
-<form name="dojoEnter" action="/dojo/enter">
-  <span class="mid_tone panel">
-    <input type="submit"
-           name="enter"
-           value="Enter the existing dojo named:">
-    <input type="text"
-           name="name"
-           value="">
-  </span>
-  <% if flash[:enter_notice] -%>
-    <span class="notice"><%= flash[:enter_notice] -%></span>
-  <% end -%>
-</form>
+<td valign="top" class="panel">
+<p>
+  <b>What do I need?</b> 
+  <ul style="line-height: 2em;">
+    <li>a group of geek friends</li>
+    <li>some internet-connected computers</li>
+  </ul>
+</p>
+</td>
 
-<br/>
-<br/>
+<td valign="top" class="panel">
+<p>
+  <b>How do we play?</b></p>
+  <ol style="line-height: 3em;">
+    <li> 
+      <form name="dojoNew" action="/dojo/new">
+        <div>
+          <input type="submit"
+                 id="new_button"
+                 name="new"
+                 value="Create">
+          <input type="text"
+                 name="name"
+                 value="your CyberDojo name?">
+          <% if flash[:new_notice] -%>
+            <span class="notice"><%= flash[:new_notice] -%></span>
+          <% end -%>
+        </div>
+      </form>
+    </li>
 
-<form name="dojoDashboard" 
-      action="/dojo/dashboard">
-  <span class="mid_tone panel">
-    <input type="submit"
-           name="dashboard"
-           value="Show dashboard for dojo named:">
-    <input type="text"
-           name="name"
-           value="">
-  </span>
-  <% if flash[:dashboard_notice] -%>
-    <span class="notice"><%= flash[:dashboard_notice] -%></span>
-  <% end -%>
-</form>
+    <li> 
+      <form name="dojoEnter" action="/dojo/enter">
+        <div>Each computer must then
+          <input type="submit"
+                 name="enter"
+                 id="enter_button"
+                 value="Enter">
+          <input type="text"
+                 name="name"
+                 value="your CyberDojo name?">
+          <% if flash[:enter_notice] -%>
+            <span class="notice"><%= flash[:enter_notice] -%></span>
+          <% end -%>
+        </div>
+      </form>
+    </li>
+  </ol>
+</p>
+</td>
+
+</tr>
+</table>
 
 
 

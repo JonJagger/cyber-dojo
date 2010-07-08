@@ -107,7 +107,7 @@ private
 
   def welcome_text
     [ 'CyberDojo: practicing the collaborative game',
-      'called software development!',
+      'called software development.',
       '',      
       'Clicking the play> button runs cyberdojo.sh on the',
       'CyberDojo server and displays its output here.',

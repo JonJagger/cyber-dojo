@@ -9,10 +9,11 @@
 
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
-.panel { padding: 1em; }
+.panel { padding: 1em; padding-top: 0.3em; }
+.notice { color: red; }
 
 .file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, 
-#start_button, #play_button, #bank_button
+#start_button, #play_button, #bank_button, #new_button, #enter_button, #dashboard_button
 { 
   border: 1px solid #A8A8A8;
   border-radius: 6px;
@@ -21,7 +22,7 @@
   -webkit-border-radius: 6px;
 }
 
-#start_button, #play_button, #bank_button
+#start_button, #play_button, #bank_button, #new_button, #enter_button, #dashboard_button
 { 
   font-size: 1em;
   cursor: pointer;
@@ -71,7 +72,7 @@
 }
 
 .file_op, div[class~="filename"], 
-#bank_button, #start_button, #play_button 
+#bank_button, #start_button, #play_button, #new_button, #enter_button, #dashboard_button
 {
   color: #383838;
   border-bottom: 2px solid gray; /* fake button look */
