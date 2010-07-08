@@ -1,8 +1,6 @@
 
 function runTests()
 {
-  // _js_editor_menu.html.erb
-  // ......... callback: function(e) { runTests(); } ..........
   $('play_button').click();
 }
 
