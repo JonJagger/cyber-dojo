@@ -16,9 +16,9 @@ class KataController < ApplicationController
     @manifest = {}
     @increments = limited(@avatar.read_most_recent(@kata, @manifest))
     @money_ladder = @dojo.money_ladder
-    @current_file = @manifest[:current_filename] || 'cyberdojo.sh'
-    @output = @manifest[:output] || welcome_text
-    @output_outcome = @increments == [] ? '' : @increments.last[:outcome]
+    @current_file = @manifest[:current_filename]
+    @output = @manifest[:output]
+    @outcome = @increments == [] ? '' : @increments.last[:outcome]
   end
 
   def run_tests
@@ -26,10 +26,10 @@ class KataController < ApplicationController
     avatar = Avatar.new(@dojo, params[:avatar])
     kata = Kata.new(params[:language], params[:kata])
 
-    @output = avatar.run_tests(kata, load_files_from_page)
+    @output = avatar.run_tests(kata, load_visible_files_from_page)
     @increments = limited(avatar.increments)
     @money_ladder = @dojo.money_ladder_update(avatar.name, @increments.last)
-    @output_outcome = @increments.last[:outcome]
+    @outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -50,18 +50,6 @@ class KataController < ApplicationController
 
 private
 
-  def welcome_text
-    [ 'CyberDojo: practicing the collaborative game',
-      'called software development!',
-      '',      
-      'Clicking the play> button runs cyberdojo.sh on the',
-      'CyberDojo server and displays its output here.',
-      '',
-      'When you hear the bell each keyboard driver must move',
-      'to another laptop and take up a non-driver role.',
-    ].join("\n")
-  end
-
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
     # means filename has a leading ' and trailing ']
@@ -69,7 +57,7 @@ private
     return filename[1..-2] 
   end
 
-  def load_files_from_page
+  def load_visible_files_from_page
     manifest = { :visible_files => {} }
 
     (params[:file_content] || {}).each do |filename,content|

@@ -9,6 +9,7 @@
 
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
+.panel { padding: 1em; }
 
 .file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, 
 #start_button, #play_button, #bank_button
@@ -37,12 +38,6 @@
   font-style: italic;
   margin-left: 1em;
   margin-bottom: 0.5em;
-}
-
-.panel
-{    
-  margin: 1em;
-  padding: 1em;
 }
 
 .title

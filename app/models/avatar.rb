@@ -27,7 +27,6 @@ class Avatar
 
   def read_most_recent(kata, manifest)
     # load starting manifest
-    manifest[:visible_files] = kata.visible
     my_increments = []
     io_lock(@dojo.folder) do 
       my_increments = locked_read_most_recent(kata, manifest)
@@ -44,6 +43,16 @@ class Avatar
       save(manifest, test_info)
     end
     output
+  end
+
+  def folder
+    @dojo.folder + '/' + name
+  end
+
+private
+  
+  def increments_filename
+    folder + '/' + 'increments_manifest.rb'
   end
 
   def save(manifest, test_info)    
@@ -65,21 +74,16 @@ class Avatar
     my_increments
   end
 
-  def folder
-    @dojo.folder + '/' + name
-  end
-
-private
-
-  def increments_filename
-    folder + '/' + 'increments_manifest.rb'
-  end
-
   def locked_read_most_recent(kata, manifest)
     if !File.exists?(folder) # start
+    	# load manifest with initial fileset
+      manifest[:visible_files] = kata.visible
+      manifest[:current_filename] = 'cyberdojo.sh'
+      manifest[:output] = welcome_text
+      # Create sandbox and copy hidden files from kata fileset 
+      # into sandbox ready for future run_tests
       make_dir(folder)
       make_dir(folder + '/sandbox')
-      # Copy in hidden files from kata fileset
       kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
@@ -99,6 +103,18 @@ private
       end
       my_increments
     end
+  end
+
+  def welcome_text
+    [ 'CyberDojo: practicing the collaborative game',
+      'called software development!',
+      '',      
+      'Clicking the play> button runs cyberdojo.sh on the',
+      'CyberDojo server and displays its output here.',
+      '',
+      'When you hear the bell each keyboard driver must move',
+      'to another laptop and take up a non-driver role.',
+    ].join("\n")
   end
 
   def make_dir(dir)
