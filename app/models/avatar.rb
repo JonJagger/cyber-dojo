@@ -18,30 +18,30 @@ class Avatar
   end
 
   def increments
-    eval locked_read(increments_filename)
+	  result = []
+    io_lock(increments_filename) do 
+   	  result = IO.read(increments_filename) 
+    end
+    eval result
   end
 
   def read_most_recent(kata, manifest)
     # load starting manifest
     manifest[:visible_files] = kata.visible
     my_increments = []
-    File.open(@dojo.folder, 'r') do |f|
-      flock(f) do |lock|
-        my_increments = locked_read_most_recent(kata, manifest)
-      end
+    io_lock(@dojo.folder) do 
+      my_increments = locked_read_most_recent(kata, manifest)
     end
     my_increments
   end
 
   def run_tests(kata, manifest)
     output = ''
-    File.open(folder, 'r') do |f|
-      flock(f) do |lock|
-        output = TestRunner.avatar_run_tests(self, kata, manifest)
-        manifest[:output] = output
-        test_info = RunTestsOutputParser.parse(self, kata, output)
-        save(manifest, test_info)
-      end
+    io_lock(folder) do 
+      output = TestRunner.avatar_run_tests(self, kata, manifest)
+      manifest[:output] = output
+      test_info = RunTestsOutputParser.parse(self, kata, output)
+      save(manifest, test_info)
     end
     output
   end
@@ -51,13 +51,17 @@ class Avatar
 
     dst_folder = folder + '/' + my_increments.length.to_s
     make_dir(dst_folder)
-    File.open(dst_folder + '/manifest.rb', 'w') { |fd| fd.write(manifest.inspect) }
+    File.open(dst_folder + '/manifest.rb', 'w') do |fd| 
+    	fd.write(manifest.inspect) 
+    end
  
     now = Time.now
     test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
     test_info[:number] = my_increments.length
     my_increments << test_info
-    File.open(increments_filename, 'w') { |file| file.write(my_increments.inspect) }
+    File.open(increments_filename, 'w') do |file| 
+    	file.write(my_increments.inspect) 
+    end
     my_increments
   end
 
@@ -76,10 +80,10 @@ private
       make_dir(folder)
       make_dir(folder + '/sandbox')
       # Copy in hidden files from kata fileset
-	  kata.hidden_pathnames.each do |hidden_pathname|
+      kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
-	  # Create empty increments file ready to be loaded next time
+      # Create empty increments file ready to be loaded next time
       File.open(increments_filename, 'w') do |file| 
         file.write([].inspect) 
       end
@@ -97,32 +101,10 @@ private
     end
   end
 
-end
+  def make_dir(dir)
+  	Dir.mkdir(dir) if !File.exists? dir
+	end
 
-#---------------------------------------------------------------
-
-def make_dir(dir)
-  Dir.mkdir(dir) if !File.exists? dir
-end
-
-def locked_read(path)
-  result = []
-  File.open(path, 'r') do |f|
-    flock(f) { |lock| result = IO.read(path) }
-  end
-  result
-end
-
-def flock(file)
-  success = file.flock(File::LOCK_EX)
-  if success
-    begin
-      yield file
-    ensure
-      file.flock(File::LOCK_UN)
-    end
-  end
-  return success
 end
 
 

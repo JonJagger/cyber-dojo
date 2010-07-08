@@ -26,33 +26,41 @@ class Dojo
     # increments could interleave and be lost) 
     # so I do not use the (get)money_ladder function
     ladder = default_money_ladder
-    File.open(folder, 'r') do |f|
-      flock(f) do |lock|
-        if !File.exists?(money_ladder_filename)
-          File.open(money_ladder_filename, 'w') do |file| 
-            file.write(ladder.inspect) 
-          end          
-        else
-          ladder = eval IO.read(money_ladder_filename)
-        end       
-        money_ladder_rung_update(ladder, avatar_name, latest_increment)
-        File.open(money_ladder_filename, 'w') do |file|
+    
+    #File.open(folder, 'r') do |f|
+    #  flock(f) do |lock|
+    
+    io_lock(folder) do
+      if !File.exists?(money_ladder_filename)
+        File.open(money_ladder_filename, 'w') do |file| 
           file.write(ladder.inspect) 
-        end
-      end # flock
-    end # File.open
+        end          
+      else
+        ladder = eval IO.read(money_ladder_filename)
+      end       
+      money_ladder_rung_update(ladder, avatar_name, latest_increment)
+      File.open(money_ladder_filename, 'w') do |file|
+        file.write(ladder.inspect) 
+      end
+    end
+      
+    #  end # flock
+    #end # File.open
+    
     ladder
   end
 
   def money_ladder
     ladder = default_money_ladder
-    File.open(folder, 'r') do |f|
-      flock(f) do |lock|
-        if File.exists?(money_ladder_filename)
-          ladder = eval IO.read(money_ladder_filename)
-        end
+    #File.open(folder, 'r') do |f|
+    #  flock(f) do |lock|
+    io_lock(folder) do
+      if File.exists?(money_ladder_filename)
+        ladder = eval IO.read(money_ladder_filename)
       end
     end
+    #  end
+    #end
     ladder
   end
 
@@ -70,19 +78,21 @@ class Dojo
     # alter the balance.
     # But again, this function must be atomic.
     ladder = {}
-    File.open(folder, 'r') do |f|
-      flock(f) do |lock|
-        ladder = eval IO.read(money_ladder_filename)
-        ladder[:balance] += ladder[:offer]
-        ladder[:offer] = 0
-        ladder[:failed_rungs] = []
-        ladder[ :error_rungs] = []
-        ladder[:passed_rungs] = []
-        File.open(money_ladder_filename, 'w') do |file|
-          file.write(ladder.inspect) 
-        end       
-      end # flock
-    end # File.open
+    #File.open(folder, 'r') do |f|
+    #  flock(f) do |lock|
+    io_lock(folder) do
+      ladder = eval IO.read(money_ladder_filename)
+      ladder[:balance] += ladder[:offer]
+      ladder[:offer] = 0
+      ladder[:failed_rungs] = []
+      ladder[ :error_rungs] = []
+      ladder[:passed_rungs] = []
+      File.open(money_ladder_filename, 'w') do |file|
+        file.write(ladder.inspect) 
+      end
+    end
+    #  end # flock
+    #end # File.open
     ladder
   end
 
@@ -152,17 +162,4 @@ private
 
 end
 
-#----------------------------------------------
-
-def flock(file)
-  success = file.flock(File::LOCK_EX)
-  if success
-    begin
-      yield file
-    ensure
-      file.flock(File::LOCK_UN)
-    end
-  end
-  return success
-end
 
