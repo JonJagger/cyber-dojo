@@ -4,7 +4,7 @@ class Kata
   def initialize(language_name, kata_name)
     @language = language_name
     @name = kata_name
-    read_manifest(language_name, kata_name)
+    @manifest = read_manifest(language_name, kata_name)
   end
 
   def language
@@ -30,60 +30,27 @@ class Kata
   end
   
   def visible
-    @visible
+    @manifest[:visible]
   end
 
   def hidden_pathnames
-    @hidden_pathnames
+    @manifest[:hidden_pathnames]
   end
 
   def hidden_filenames
-    @hidden_filenames
+    @manifest[:hidden_filenames]
   end
 
 private
 
   def read_manifest(language_name, kata_name)
-    @manifest = {}
-    @visible = {}
-    @hidden_filenames = []
-	@hidden_pathnames = []
-    read_file_set('languages/' + language_name)
-    read_file_set('katas/' + kata_name)
-  end
-  
-  def read_file_set(file_set_name)
-    path = RAILS_ROOT + '/' + file_set_name
-    file_set = eval IO.read(path + '/' + 'manifest.rb')
-    file_set.each do |key,value|
-	  if key == :visible_filenames
-        @visible.merge! read_visible(path, value)
-      elsif key == :hidden_filenames
-        @hidden_filenames += value
-        @hidden_pathnames += read_hidden_pathnames(path, value)
-      else
-        @manifest[key] = value
-      end
-    end    
-  end
-
-  def read_visible(file_set_folder, filenames)
-    visible_files = {}
-    filenames.each do |filename|
-      visible_files[filename] = 
-        { :content => IO.read(file_set_folder + '/' + filename),
-          :caret_pos => 0 
-        }
-    end
-    visible_files
-  end
-
-  def read_hidden_pathnames(file_set_folder, filenames)
-    pathed = []
-    filenames.each do |filename|
-      pathed << file_set_folder + '/' + filename
-    end
-    pathed
+    manifest = {}
+    manifest[:visible] = {}
+    manifest[:hidden_filenames] = []
+    manifest[:hidden_pathnames] = []
+    FileSets.read(manifest, 'languages/' + language_name)
+    FileSets.read(manifest, 'katas/' + kata_name)
+    manifest
   end
 
 end
