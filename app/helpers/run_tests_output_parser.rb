@@ -35,6 +35,18 @@ module RunTestsOutputParser
 
 private
 
+	def self.parse_python_unittest(output) 
+		failed_pattern = Regexp.new('FAILED \(failures=')
+		passed_pattern = Regexp.new('OK')
+		if failed_pattern.match(output)
+			:failed
+		elsif passed_pattern.match(output)
+			:passed
+		else
+			:error
+		end
+	end
+	
   def self.parse_cassert(output)
     failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
     syntax_error_pattern = Regexp.new(':(\d*): error')
