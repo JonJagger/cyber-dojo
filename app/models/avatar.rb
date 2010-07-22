@@ -112,8 +112,8 @@ private
       'Clicking the play> button runs cyberdojo.sh on the',
       'CyberDojo server and displays its output here.',
       '',
-      'When you hear the bell each keyboard driver must move',
-      'to another laptop and take up a non-driver role.',
+      'Every five minutes or so each keyboard driver must move',
+      'to another computer and take up a non-driver role.',
     ].join("\n")
   end
 
