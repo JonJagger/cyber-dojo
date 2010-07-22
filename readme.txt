@@ -25,10 +25,9 @@ clients (except of course a browser).
 
 What will work and what won't work
 ==================================
-Initial filesets for five languages are provided: C, C++, C#, Java, and Ruby. 
+Initial filesets for six languages are provided: C, C++, C#, Java, Python and Ruby. 
 Whether you will be able to compile successfully in any of these languages
-(except Ruby) depends on whether these languages are installed on your CyberDojo 
-server.
+depends on whether these languages are installed on your CyberDojo server.
 
 
 Dojos
@@ -129,7 +128,7 @@ file as part of the inspected ruby object:
 
 Dojo Dashboard Display
 ======================
-http://ip-address:3000/dashboard
+http://ip-address:port/dashboard
 will give you an auto-updating display of the current colour and history 
 (red, green, or yellow for each increment) of every avatar in a selected dojo
 
@@ -140,7 +139,7 @@ I run a CyberDojo by sounding an alarm every 4 minutes or so which
 is the cue for the keyboard driver at each laptop to get up and move
 to a new laptop where they take up a non-driver role.
 You can do this using
-http://ip-address:3000/alarm
+http://ip-address:port/alarm
 
 
 How to Turn off Firefox Spell-Checking
@@ -178,6 +177,7 @@ o) I have worked hard to _remove_ features from CyberDojo. My idea is that the
    simpler the environment the more players will need to collaborate with each
    other. Remember the aim of a CyberDojo is not to ship something, it is to 
    practice collaborative development.
-o) I'd like to thank Olve Maudal for his encouragement.
+o) Olve Maudal has been enthusiastic about CyberDojo from the very early days.
+   Olve - I really appreciate all your encouragement.
 
 
