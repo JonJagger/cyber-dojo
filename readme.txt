@@ -13,21 +13,47 @@ Requirements
 Ruby
 Rails
 
+Here are the commands I used to install ruby and rails onto my Ubuntu server:
+>sudo aptitude install ruby build-essential libopenssl-ruby ruby1.8-dev
+>sudo apt-get install apache2 apache2-mpm-prefork apache2-prefork-dev
+>sudo apt-get install rubygems
+I then added this line
+export PATH=/var/lib/gems/1.8/bin:$PATH
+to end of ~/.bashrc
+>sudo gem install rails -v2.3.4
+>sudo apt-get install libsqlite3-dev
+>sudo gem install sqlite3-ruby
+
+There appears to be a potential rails version issue. The CyberDojo servers I 
+have built explicitly specified the version during installation as above.
+
+
 
 Installation
 ============
-download the zip file, unzip it, cd into the cyberdojo directory. Then
+After getting the sourcecode from GitHub cd into the cyberdojo directory. Then
   $ script/server -d
   $ open http://localhost:3000
 And your CyberDojo should be running. There are no requirements on the
-clients (except of course a browser).
+clients (except of course a browser). I also install and use apache on my
+CyberDojo server but that is optional.
+
 
 
 What will work and what won't work
 ==================================
-Initial filesets for six languages are provided: C, C++, C#, Java, Python and Ruby. 
-Whether you will be able to compile successfully in any of these languages
-depends on whether these languages are installed on your CyberDojo server.
+Initial filesets for six languages are provided: C, C++, C#, Java, Python and 
+Ruby. Whether you will be able to compile successfully in any of these languages
+of course depends on whether these languages are installed on your CyberDojo 
+server or not. Ubuntu comes with built-in support for C, C++, and Python and you 
+need Ruby for the CyberDojo server itself. 
+I installed support for Java as follows
+>sudo apt-get install sun-java6-sdk
+(when asked, press tab to select ok, and hit enter to continue)
+I installed support for C# as follows
+>sudo apt-get install mono-gmcs
+>sudo apt-get install nunit-console
+
 
 
 Dojos
@@ -135,10 +161,10 @@ will give you an auto-updating display of the current colour and history
 
 Repeating Alarm
 ===============
-I run a CyberDojo by sounding an alarm every 4 minutes or so which
-is the cue for the keyboard driver at each laptop to get up and move
-to a new laptop where they take up a non-driver role.
-You can do this using
+I run a CyberDojo by sounding an alarm every 4-5 minutes or so which
+is the cue for the keyboard driver at each computer to get up and move
+to a new computer where they take up a non-driver role.
+You may be able to do this using
 http://ip-address:port/alarm
 
 
