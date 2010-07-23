@@ -60,11 +60,7 @@ function deleteFile()
 function deleteFilePrompt(ask)
 {
   if (!current_filename) return;
-
-  if (ask && !confirm("Delete " + current_filename)) 
-  { 
-    return; /* Cancelled */ 
-  }
+  if (ask && !confirm("Delete " + current_filename)) return; // Cancelled  
 
   var fc = fileContent(current_filename);
   fc.parentNode.removeChild(fc);
@@ -99,7 +95,7 @@ function renameFile()
   if (newname == null) return; // Cancelled
   if (newname == "") { alert("No filename entered\n" +
                              "Rename " + current_filename + " abandoned"); return; }
-  if (newname == current_filename) { /* Same name; nothing to do. */ return; }
+  if (newname == current_filename) return; // Same name; nothing to do
   if (fileAlreadyExists(newname))
   {
     alert("CyberDojo cannot rename " + current_filename + " to " + newname + "\n" +

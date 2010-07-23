@@ -38,18 +38,17 @@ module TestRunner
   # remove_all_but()
   #
   # Remove all files from the sandbox except the hidden files
-  # specified in the katalogue manifest. For example, if the
+  # specified in the manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]
   # then this function will execute the following system command
   #   find sandbox ( ! -samefile "." ! -samefile 'junit-4.7.jar' ) -print0 | xargs -0 rm -f
-  # with appropriate backslashses. This finds all the files in sandbox that are _not_
+  # with appropriate backslashes. This finds all the files in sandbox that are _not_
   # the . file or junit-4.7.jar file and pipes them to rm. 
   #
   # The reason I do this rather than delete and recreate the entire sandbox
-  # every increment is an optimization: jar files and assembly files (for
-  # example) can get quite large. junit-4.7.jar is over 200K for example,
-  # and if a whole class is all doing a java kata this can slow things down
-  # on the server.
+  # every increment is an optimization: jar files and assembly files can get
+  # quite large (junit-4.7.jar is over 200K for example) and if a whole class
+  # is all doing a java kata this can slow things down on the server.
 
   def self.remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
@@ -67,7 +66,7 @@ module TestRunner
       filtered = makefile_filter(filename, file[:content])
       fd.write(filtered)
     end
-    # .sh files (eg kata.sh) need execute permissions
+    # .sh files (eg cyberdojo.sh) need execute permissions
     File.chmod(0755, path) if filename =~ /\.sh/    
   end
 

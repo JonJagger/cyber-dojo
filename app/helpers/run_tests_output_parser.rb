@@ -35,6 +35,18 @@ module RunTestsOutputParser
 
 private
 
+	def self.parse_perl_test_simple(output)
+		passed_pattern = Regexp.new('Result: PASS')
+		error_pattern = Regexp.new('Parse errors')
+		if passed_pattern.match(output)
+			:passed
+		elsif error_pattern.match(output)
+			:error
+		else
+			:failed
+		end
+	end
+
 	def self.parse_python_unittest(output) 
 		failed_pattern = Regexp.new('FAILED \(failures=')
 		passed_pattern = Regexp.new('OK')
