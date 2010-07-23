@@ -42,10 +42,10 @@ CyberDojo server but that is optional.
 
 What will work and what won't work
 ==================================
-Initial filesets for six languages are provided: C, C++, C#, Java, Python and 
+Initial filesets for seven languages are provided: C, C++, C#, Java, Python, Perl and 
 Ruby. Whether you will be able to compile successfully in any of these languages
 of course depends on whether these languages are installed on your CyberDojo 
-server or not. Ubuntu comes with built-in support for C, C++, and Python and you 
+server or not. Ubuntu comes with built-in support for C, C++, Python, Perl and you 
 need Ruby for the CyberDojo server itself. 
 I installed support for Java as follows
 >sudo apt-get install sun-java6-sdk
