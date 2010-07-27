@@ -21,8 +21,36 @@ class Dojo
     alive
   end
 
+  def money_ladder
+    ladder = default_money_ladder
+    io_lock(folder) do
+      if File.exists?(money_ladder_filename)
+        ladder = eval IO.read(money_ladder_filename)
+      end
+      
+      mins_per_rotate = 5
+      secs_per_rotate = mins_per_rotate * 60
+      if !ladder[:next_alarm]
+      	now = Time.now() + secs_per_rotate
+        ladder[:next_alarm] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+      end
+      
+      ladder[:sound_alarm] = Time.now() > Time.mktime(*ladder[:next_alarm])
+      if ladder[:sound_alarm]
+      	now = Time.now() + secs_per_rotate
+        ladder[:next_alarm] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+      end
+      
+      File.open(money_ladder_filename, 'w') do |file|
+        file.write(ladder.inspect) 
+      end      
+    end
+    ladder
+  end
+
   def money_ladder_update(avatar_name, latest_increment)
-    # this method must be atomic (otherwise
+  	# Called from kata_controller.run_tests
+    # This method must be atomic (otherwise
     # increments could interleave and be lost) 
     # so I do not use the (get)money_ladder function
     ladder = default_money_ladder    
@@ -41,17 +69,7 @@ class Dojo
     end
     ladder
   end
-
-  def money_ladder
-    ladder = default_money_ladder
-    io_lock(folder) do
-      if File.exists?(money_ladder_filename)
-        ladder = eval IO.read(money_ladder_filename)
-      end
-    end
-    ladder
-  end
-
+ 
   def bank
     # the following interleaving is possible
     # 1. Frogs click "bank"
@@ -72,7 +90,7 @@ class Dojo
       ladder[:offer] = 0
       ladder[:failed_rungs] = []
       ladder[ :error_rungs] = []
-      ladder[:passed_rungs] = []
+      ladder[:passed_rungs] = []      
       File.open(money_ladder_filename, 'w') do |file|
         file.write(ladder.inspect) 
       end
@@ -97,9 +115,10 @@ private
       :offer => 0,
       :failed_rungs => [],
       :error_rungs => [],
-      :passed_rungs => []
+      :passed_rungs => [],
     }
   end
+  
 
   def money_ladder_rung_update(ladder, avatar, inc)
     ladder[:failed_rungs].delete_if { |rung| rung[:avatar] == avatar }
