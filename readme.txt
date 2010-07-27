@@ -162,20 +162,12 @@ file as part of the inspected ruby object:
   Defaults to 4 spaces.
 
 
-Dojo Dashboard Display
-======================
-http://ip-address:port/dashboard
-will give you an auto-updating display of the current colour and history 
-(red, green, or yellow for each increment) of every avatar in a selected dojo
-
-
 Repeating Alarm
 ===============
-I run a CyberDojo by sounding an alarm every 4-5 minutes or so which
-is the cue for the keyboard driver at each computer to get up and move
-to a new computer where they take up a non-driver role.
-You may be able to do this using
-http://ip-address:port/alarm
+By default CyberDojo sounds an alarm every 5 minutes 
+(see app/models/dojo.rb money_ladder function)
+which is the cue for the keyboard driver at each computer to get up and 
+move to a new computer where they take up a non-driver role. 
 
 
 How to Turn off Firefox Spell-Checking
