@@ -162,6 +162,14 @@ file as part of the inspected ruby object:
   Defaults to 4 spaces.
 
 
+Dojo Dashboard Display
+======================
+http://ip-address/dojo/dashboard?name=X
+will give you an auto-updating display of the current colour and history 
+(red, green, or yellow for each increment) of every avatar in the CyberDojo
+called X.
+
+
 Repeating Alarm
 ===============
 By default CyberDojo sounds an alarm every 5 minutes 
