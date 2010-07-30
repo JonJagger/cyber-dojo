@@ -23,6 +23,7 @@ class FileSets
   end
 
   def self.read(manifest, file_set_name)
+  	# called from kata.rb read_manifest()
     path = Root_folder + '/' + file_set_name
     file_set = eval IO.read(path + '/' + 'manifest.rb')
     file_set.each do |key,value|

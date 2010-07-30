@@ -1,4 +1,4 @@
 
-class Untitled
-
+def answer()
+  42
 end
