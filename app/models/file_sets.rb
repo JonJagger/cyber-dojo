@@ -11,19 +11,19 @@ class FileSets
   # prime directive.
 
   def self.languages
-    Dir.entries(RAILS_ROOT + '/filesets/languages').select do |name| 
+    Dir.entries(Root_folder + '/' + 'languages').select do |name| 
       name != '.' and name != '..'
     end.sort_by {rand}
   end
 
   def self.katas  
-    Dir.entries(RAILS_ROOT + '/filesets/katas').select do |name|
+    Dir.entries(Root_folder + '/' + 'katas').select do |name|
       name != '.' and name != '..'
     end.sort_by {rand}
   end
 
   def self.read(manifest, file_set_name)
-    path = RAILS_ROOT + '/' + file_set_name
+    path = Root_folder + '/' + file_set_name
     file_set = eval IO.read(path + '/' + 'manifest.rb')
     file_set.each do |key,value|
 	  if key == :visible_filenames
@@ -38,6 +38,8 @@ class FileSets
   end
 
 private
+
+  Root_folder = RAILS_ROOT + '/' + 'filesets'
 
   def self.read_visible(file_set_folder, filenames)
     visible_files = {}

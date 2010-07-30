@@ -5,6 +5,10 @@ class DojoController < ApplicationController
     # offers new/enter/dashboard choice
   end
 
+  def new_new
+  	@languages = FileSets.languages
+  end
+  
   def new
     name = params[:name]
     folder = RAILS_ROOT + '/dojos/' + name

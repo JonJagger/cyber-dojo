@@ -1,5 +1,4 @@
-Given a positive integer number determine its Roman numeral representation.
-The Roman letters are:
+Given a positive integer number determine its Roman numeral representation. The Roman letters are:
 
   I = 1
   V = 5
@@ -9,9 +8,7 @@ The Roman letters are:
   D = 500
   M = 1000
 
-You cannot write numerals like IM for 999. 
-Wikipedia says "Modern Roman numerals are written by expressing
-each digit separately starting with the leftmost digit and skipping any digit
+You cannot write numerals like IM for 999. Wikipedia says "Modern Roman numerals are written by expressing each digit separately starting with the leftmost digit and skipping any digit
 with a value of zero.
 
 Examples:
