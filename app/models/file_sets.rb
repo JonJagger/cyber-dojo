@@ -11,13 +11,13 @@ class FileSets
   # prime directive.
 
   def self.languages
-    Dir.entries(RAILS_ROOT + '/languages').select do |name| 
+    Dir.entries(RAILS_ROOT + '/filesets/languages').select do |name| 
       name != '.' and name != '..'
     end.sort_by {rand}
   end
 
   def self.katas  
-    Dir.entries(RAILS_ROOT + '/katas').select do |name|
+    Dir.entries(RAILS_ROOT + '/filesets/katas').select do |name|
       name != '.' and name != '..'
     end.sort_by {rand}
   end
