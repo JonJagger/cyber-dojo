@@ -30,15 +30,18 @@ class Dojo
       
       mins_per_rotate = 5
       secs_per_rotate = mins_per_rotate * 60
+      
       if !ladder[:next_alarm]
       	now = Time.now() + secs_per_rotate
         ladder[:next_alarm] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
       end
-      
-      ladder[:sound_alarm] = Time.now() > Time.mktime(*ladder[:next_alarm])
+
+      # If we're within 5 seconds of the next alarm then ring the bell.
+      diff = (Time.now() - Time.mktime(*ladder[:next_alarm])).abs
+      ladder[:sound_alarm] = (diff <= 5)
       if ladder[:sound_alarm]
-      	now = Time.now() + secs_per_rotate
-        ladder[:next_alarm] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+        at = Time.mktime(*ladder[:next_alarm]) + secs_per_rotate
+        ladder[:next_alarm] = [at.year, at.month, at.day, at.hour, at.min, at.sec]
       end
       
       File.open(money_ladder_filename, 'w') do |file|
