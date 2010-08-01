@@ -1,6 +1,5 @@
 #include "untitled.hpp"
 #include <assert.h>
-#include <string.h>
 
 #define FAIL(x)   assert(0 && (x))
 #define TEST(x)   assert(x)
@@ -16,12 +15,12 @@ static void an_example_test(void)
 static void (*test_functions[])(void) =
 {
     an_example_test,
-    NULL
+    0
 };
 
 int main()
 {
-    for (size_t at = 0; test_functions[at]; at++)
+    for (int at = 0; test_functions[at]; at++)
         test_functions[at]();
     return 0;
 }
