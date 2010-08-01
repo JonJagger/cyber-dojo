@@ -83,33 +83,33 @@ o) your animal avatar  (eg Pandas)
    The avatar provides identity for each laptop participating in the kata. 
    If a laptop has to retire during a kata a new laptop can easily replace it.
 o) your language (eg C++)
-   Each language corresponds to a subfolder of cyberdojo/languages/
+   Each language corresponds to a subfolder of cyberdojo/filesets/language/
 o) your kata (eg Prime Factors)
-   Each kata corresponds to a subfolder of cyberdojo/katas/
+   Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
 
 
 Adding a new language
 =====================
-Create a new subfolder under cyberdojo/languages/
+Create a new subfolder under cyberdojo/filesets/language/
 Create a manifest.rb file in this folder (see below)
 
 
 Adding a new kata
 =================
-Create a new subfolder under cyberdojo/katas/
+Create a new subfolder under cyberdojo/filesets/kata/
 Create a manifest.rb file in this folder (see below)
 
 
 Manifests
 =========
 The two manifest.rb files contains inspected ruby objects. 
-For example: cyberdojo/languages/Java/manifest.rb looks like this:
+For example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java kata.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
 }
-For example: cyberdojo/katas/Prime Factors/manifest.rb looks like this:
+For example: cyberdojo/filesets/kata/Prime Factors/manifest.rb looks like this:
 {
   :visible_filenames => %w( instructions ),
 }
@@ -170,9 +170,9 @@ will give you an auto-updating display of the current colour and history
 called X.
 
 
-Repeating Alarm
-===============
-By default CyberDojo sounds an alarm every 5 minutes 
+Keyboard Rotate Alarm
+=====================
+By default CyberDojo sounds the keyboard-rotate alarm every 5 minutes 
 (see app/models/dojo.rb money_ladder function)
 which is the cue for the keyboard driver at each computer to get up and 
 move to a new computer where they take up a non-driver role. 
