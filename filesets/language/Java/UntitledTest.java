@@ -7,9 +7,8 @@ public class UntitledTest extends TestCase
 {
     public void test_hitch_hiker()
     {
-        int actual = 6 * 9;
         int expected = 42;
+        int actual = new Untitled().answer();
         assertEquals(expected, actual);
     }
 }
-
