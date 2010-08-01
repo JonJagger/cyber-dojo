@@ -4,8 +4,11 @@
     <td>
       <%= render :partial => 'avatar_pair' -%>
       <span class="title">CyberDojo: <%= @dojo.name -%></span> 
-      <span class="title">Kata: <%= @kata.name -%></span>
-      <span class="title">Language: <%=@kata.language -%></span>
+      
+      <% @kata.filesets.each do |name,value| -%>
+        <span class="title"><%=name-%>: <%=value-%></span>
+      <% end -%>
+           
       <%= render :partial => 'filenames_panel' -%>
     </td>
     <td>

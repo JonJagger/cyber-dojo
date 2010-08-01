@@ -1,5 +1,5 @@
 
-class FileSets
+class FileSet
 
   # In a multi-kata dojo, if you list the kata/language
   # filesets alphabetically there is a strong likelihood 
@@ -9,19 +9,21 @@ class FileSets
   # will make different selections, which hopefully will
   # increase the potential for collaboration - the game's
   # prime directive.
+  
+  def self.names
+  	Dir.entries(Root_folder).select { |name| name != '.' and name != '..' }
+  end
 
-  def self.languages
-    Dir.entries(Root_folder + '/' + 'languages').select do |name| 
+  def initialize(name)
+  	@name = name
+  end
+  
+  def choices
+    Dir.entries(Root_folder + '/' + @name).select do |name| 
       name != '.' and name != '..'
     end.sort_by {rand}
   end
-
-  def self.katas  
-    Dir.entries(Root_folder + '/' + 'katas').select do |name|
-      name != '.' and name != '..'
-    end.sort_by {rand}
-  end
-
+  
   def self.read(manifest, file_set_name)
   	# called from kata.rb read_manifest()
     path = Root_folder + '/' + file_set_name

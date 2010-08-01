@@ -11,8 +11,6 @@ document.observe('dom:loaded', function()
 
 <% form_remote_tag :url  => { :action => 'run_tests',
                               :dojo => @dojo.name,
-                              :kata => @kata.name,
-                              :language => @kata.language,
                               :avatar => @avatar.name
                             }, 
                    :before   => 'preRunTests();',

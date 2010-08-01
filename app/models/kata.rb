@@ -1,18 +1,13 @@
 
 class Kata
 
-  def initialize(language_name, kata_name)
-    @language = language_name
-    @name = kata_name
-    @manifest = read_manifest(language_name, kata_name)
+  def initialize(filesets)
+    @manifest = read_manifest(filesets)
+    @filesets = filesets
   end
-
-  def language
-    @language
-  end
-
-  def name 
-    @name.to_s
+  
+  def filesets
+  	@filesets
   end
 
   def max_run_tests_duration
@@ -43,13 +38,16 @@ class Kata
 
 private
 
-  def read_manifest(language_name, kata_name)
+def read_manifest(filesets)
     manifest = {}
     manifest[:visible] = {}
     manifest[:hidden_filenames] = []
     manifest[:hidden_pathnames] = []
-    FileSets.read(manifest, 'languages/' + language_name)
-    FileSets.read(manifest, 'katas/' + kata_name)
+    
+    filesets.each do |name,value|
+    	FileSet.read(manifest, name + '/' + value)
+    end
+    
     manifest
   end
 

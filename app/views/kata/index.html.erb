@@ -2,35 +2,37 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 var avatar_selected = false;
-var language_selected = false;
-var kata_selected = false;
+
+var selected = {};
+<% @filesets.each do |name| -%>
+selected['<%=name-%>'] = false;
+<% end -%>
 
 function enable_start_if_all_selected()
 {
-  $('start_button').disabled 
-     =  !avatar_selected 
-     || !language_selected 
-     || !kata_selected;
+  var all_selected = true;
+  for (one in selected) {
+    if (!selected[one]) {
+      all_selected = false;
+    }
+  }
+  $('start_button').disabled = !avatar_selected || !all_selected;     
 }
 
-function select_avatar(selected, index)
+function select_avatar(index)
 {
   $('avatar_' + index).checked = true;
   avatar_selected = true;
   enable_start_if_all_selected();
 }
-function select_language(selected, index)
+
+function selection(name, index)
 {
-  $('language_' + index).checked = true; 
-  language_selected = true;
+  $(name + '_' + index).checked = true; 
+  selected[name] = true;  
   enable_start_if_all_selected();
 }
-function select_kata(selected, index)
-{
-  $('kata_' + index).checked = true;
-  kata_selected = true;
-  enable_start_if_all_selected();
-}
+
 //--></script>
 
 <form name="avatarIndex" 
@@ -71,7 +73,7 @@ Please self-organize this yourselves.
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = outer*chunk_size + inner -%>
-           <td onclick='select_avatar("<%=avatar.downcase-%>", "<%=index-%>");'>
+           <td onclick='select_avatar("<%=index-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
@@ -90,35 +92,22 @@ Please self-organize this yourselves.
 </table>
 </td>
 
+<% @filesets.each do |name| -%>
 <td valign="top">
   <div class="panel">
-    <span class="choose_title">Language?</span>
-    <% @languages.each_with_index do |language,index| -%>
-      <div onclick='select_language("<%=language-%>", "<%=index-%>");'>
-        <input id="language_<%=index-%>" 
+    <span class="choose_title"><%=name.capitalize-%>?</span>
+    <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
+      <div onclick='selection("<%=name-%>", "<%=index-%>");'>
+        <input id="<%=name-%>_<%=index-%>" 
                type="radio" 
-               name="language" 
-               value="<%=language-%>">
-        <%= language -%>
-      </div>
-    <% end -%>
+               name="filesets[<%=name-%>]" 
+               value="<%=choice-%>">
+        <%= choice -%>
+      </div>    
+    <% end -%>    
   </div>
 </td>
-
-<td valign="top">
-<div class="panel">
-  <span class="choose_title">Kata?</span>
-  <% @katas.each_with_index do |kata,index| -%>
-    <div onclick='select_kata("<%=kata-%>", "<%=index-%>");'>
-      <input id="kata_<%=index-%>" 
-             type="radio" 
-             name="kata" 
-             value="<%=kata-%>">
-      <%= kata -%>
-    </div> 
-  <% end -%>
-</div>
-</td>
+<% end -%>
 
 <td valign="top">
 <input id="start_button" 

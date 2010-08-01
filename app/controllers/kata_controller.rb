@@ -4,17 +4,17 @@ class KataController < ApplicationController
   def index
     @dojo = Dojo.new(params[:dojo])
     @avatars = Avatar.names
-    @languages = FileSets.languages
-    @katas = FileSets.katas
+    @filesets = FileSet.names
   end
 
   def view
     @dojo = Dojo.new(params[:dojo])
-    @avatar = Avatar.new(@dojo, params[:avatar])
-    @kata = Kata.new(params[:language], params[:kata])
+    @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
+    @kata = @avatar.kata
 
     @manifest = {}
-    @increments = limited(@avatar.read_most_recent(@kata, @manifest))
+    all_increments = @avatar.read_most_recent(@kata, @manifest)
+    @increments = limited(all_increments)
     @money_ladder = @dojo.money_ladder
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
@@ -23,8 +23,8 @@ class KataController < ApplicationController
 
   def run_tests
     @dojo = Dojo.new(params[:dojo])
-    avatar = Avatar.new(@dojo, params[:avatar])
-    kata = Kata.new(params[:language], params[:kata])
+    avatar = Avatar.new(@dojo, params[:avatar], nil)
+    kata = avatar.kata
 
     @output = avatar.run_tests(kata, load_visible_files_from_page)
     @increments = limited(avatar.increments)

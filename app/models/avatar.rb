@@ -9,14 +9,27 @@ class Avatar
         raccoons snakes squirrels wolves zebras )
   end
   
-  def initialize(dojo, name) 
+  def initialize(dojo, name, filesets) 
     @dojo, @name = dojo, name
+    if filesets
+    	@filesets = filesets
+    	make_dir(folder)
+      File.open(folder + '/manifest.rb', 'w') do |fd| 
+    	  fd.write(filesets.inspect) 
+  	  end
+    else
+    	@filesets = eval IO.read(folder + '/manifest.rb')   	 
+    end
   end
 
   def name
     @name
   end
 
+  def kata
+  	Kata.new(@filesets)
+  end
+  
   def increments
 	  result = []
     io_lock(increments_filename) do 
@@ -75,14 +88,13 @@ private
   end
 
   def locked_read_most_recent(kata, manifest)
-    if !File.exists?(folder) # start
+    if !File.exists?(increments_filename) # start
     	# load manifest with initial fileset
       manifest[:visible_files] = kata.visible
       manifest[:current_filename] = 'cyberdojo.sh'
       manifest[:output] = welcome_text
       # Create sandbox and copy hidden files from kata fileset 
       # into sandbox ready for future run_tests
-      make_dir(folder)
       make_dir(folder + '/sandbox')
       kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
