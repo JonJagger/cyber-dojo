@@ -8,7 +8,9 @@
 
 static void an_example_test(void)
 {
-    TEST(strcmp("expected", "actual") == 0);
+    int expected = 42;
+    int actual = untitled().answer();
+    TEST(expected == actual);
 }
 
 static void (*test_functions[])(void) =
@@ -23,4 +25,3 @@ int main()
         test_functions[at]();
     return 0;
 }
-
