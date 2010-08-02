@@ -6,7 +6,8 @@ class DojoController < ApplicationController
   end
 
   def new_new
-  	@languages = FileSets.languages
+  	@filesets = FileSet.names
+  	@languages = FileSet.new('language').choices
   end
   
   def new
