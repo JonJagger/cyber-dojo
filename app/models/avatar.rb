@@ -91,7 +91,8 @@ private
     if !File.exists?(increments_filename) # start
     	# load manifest with initial fileset
       manifest[:visible_files] = kata.visible
-      manifest[:current_filename] = 'cyberdojo.sh'
+      opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
+      	manifest[:current_filename] = opening_file
       manifest[:output] = welcome_text
       # Create sandbox and copy hidden files from kata fileset 
       # into sandbox ready for future run_tests
