@@ -31,7 +31,7 @@ class Dojo
       mins_per_rotate = 5
       secs_per_rotate = mins_per_rotate * 60
       
-      if !ladder[:next_alarm]
+      if !ladder[:next_alarm] or Time.mktime(*ladder[:next_alarm]) < Time.now()
       	now = Time.now() + secs_per_rotate
         ladder[:next_alarm] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
       end

@@ -81,8 +81,10 @@
 
 </table>
 
-<% if @money_ladder[:sound_alarm] -%>
-  <embed src="/sounds/ChurchBell.wav" hidden="true" autostart="true" loop="1">
+<% if @money_ladder[:sound_alarm] -%>  
+  <!-- this will repeat the Ding until the next periodically_call refresh which -->
+  <!-- will, on average, be 5 (half the frequency) --> 
+  <embed src="/sounds/Ding.wav" hidden="true" autostart="true" loop="true">
 <% end -%>
 
 </div>
