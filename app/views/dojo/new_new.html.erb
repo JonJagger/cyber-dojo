@@ -5,7 +5,7 @@
 
 name?<br/>
 use points-ladder? yes/no <br/>
-use period-timer? yes/no, if so what period? default=5 mins, use bell or text?<br/>
+use period-timer? yes/no, if so what period? default=5 mins, use bell? use text?<br/>
 
 <table>
   <tr>
@@ -14,7 +14,7 @@ use period-timer? yes/no, if so what period? default=5 mins, use bell or text?<b
     <b><%=name.capitalize-%></b><br/><br/>
     <div><input id="<%=name-%>"
                 type="radio"
-                name="<%=name-%>"
+                name="fileset[<%=name-%>]"
                 value="dont_use">Don't use</div>
                 
    <br/>
@@ -22,13 +22,13 @@ use period-timer? yes/no, if so what period? default=5 mins, use bell or text?<b
       <div>
         <input id="<%=name-%>"
                type="radio"
-               name="<%=name-%>"
+               name="fileset[<%=name-%>]"
                value="alphabetical_listing">Sorted
       </div>                    
       <div>
         <input id="<%=name-%>"
                type="radio"
-               name="<%=name-%>"
+               name="fileset[<%=name-%>]"
                checked
                value="random_listing">Randomized
       </div>
@@ -40,7 +40,7 @@ use period-timer? yes/no, if so what period? default=5 mins, use bell or text?<b
         <div>
          <input id="<%=name-%>"
                 type="radio"
-                name="<%=name-%>"
+                name="fileset[<%=name-%>]"
                 value="<%=choice-%>"> <%=choice-%>  
        </div>
       <% end -%>

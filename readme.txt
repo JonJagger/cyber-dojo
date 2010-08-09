@@ -43,7 +43,7 @@ CyberDojo server but that is optional.
 What will work and what won't work
 ==================================
 Initial filesets for eight languages are provided: C, C++, C#, Java, Python, 
-Perl, Php, and Ruby. Whether you will be able to compile successfully in any of
+Perl, PHP, and Ruby. Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself. 
@@ -53,13 +53,13 @@ I installed support for Java as follows
 I installed support for C# as follows
 >sudo apt-get install mono-gmcs
 >sudo apt-get install nunit-console
-I installed support for Php as follows
+I installed support for PHP as follows
 >sudo apt-get install php-pear
 >sudo pear channel-discover pear.phpunit.de
 >sudo pear channel-discover pear.symfony-project.com
 >sudo pear install phpunit/PHPUnit
 I also had to edit /etc/php5/conf.d/mcrypt.ini
-So first line reads
+So its first line reads
 ; configuration for php MCrypt module
 instead of
 # configuration for php MCrypt module
