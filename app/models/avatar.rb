@@ -119,15 +119,14 @@ private
   end
 
   def welcome_text
-    [ 'CyberDojo: practicing the collaborative game',
-      'called software development.',
-      '',      
-      'Clicking the play> button runs cyberdojo.sh on the',
-      'CyberDojo server and displays its output here.',
+    [ "<------ THIS TRIANGLE IS THE 'PLAY' BUTTON.",
       '',
-      'At the sound of the bell each keyboard driver must',
-      '  o) move to another computer',
-      '  o) take up a non-driver role.',
+      'Clicking it runs the tests on the CyberDojo server and displays the outcome here.',
+      '                                      (it executes the cyberdojo.sh script file).',
+      'The radio-buttons on the left provides access to all files.',
+      '',
+      'At the sound of the bell each keyboard driver must move to another computer',
+      'and take up a non-driver role.',
     ].join("\n")
   end
 
