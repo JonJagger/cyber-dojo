@@ -3,12 +3,23 @@ class KataController < ApplicationController
 
   def index
     @dojo = Dojo.new(params[:dojo])
-    @avatars = Avatar.names
+    @avatars = Avatar.names   
     @filesets = FileSet.names
+    
+    @dojo.manifest[:filesets].each do |name,value|
+    	@filesets.delete name if value != "choose"
+    end
   end
 
   def view
     @dojo = Dojo.new(params[:dojo])
+    params[:filesets] ||= {} 
+    @dojo.manifest[:filesets].each do |name,value|
+    	if value != "choose"
+      	params[:filesets][name] = value
+    	end
+    end
+    
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata
 

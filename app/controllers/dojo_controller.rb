@@ -2,31 +2,37 @@
 class DojoController < ApplicationController
 
   def index
-    # offers new/enter/dashboard choice
+    # offers create/enter
   end
 
-  def new_new
-  	@filesets = FileSet.names
-  	@languages = FileSet.new('language').choices
+  def create
+  	@filesets = FileSet.names    	  	
   end
   
   def new
-    name = params[:name]
+    name = params['name'].to_s
     folder = RAILS_ROOT + '/dojos/' + name
-    if File.exists?(folder)
-      flash[:new_notice] = 'There is already a CyberDojo named ' + name
-      redirect_to :action => 'index'    	
+    if name === ""
+      flash[:name_notice] = 'Please choose a name'
+      redirect_to :action => 'create'    	    	
+    elsif File.exists?(folder)
+      flash[:name_notice] = 'Sorry, there is already a CyberDojo named ' + name
+      redirect_to :action => 'create'    	
     else    	
       Dir.mkdir(folder)
-      redirect_to :controller => 'kata', 
-                  :action => 'index',
-                  :dojo => name
+      File.open(folder + '/' + 'manifest.rb', 'w') do |file|
+      	manifest = { :filesets => params['filesets'] }
+        file.write(manifest.inspect) 
+      end   
+      redirect_to :action => 'index'
     end
   rescue
-    flash[:new_notice] = 'Illegal dojo name: ' + name
-    redirect_to :action => 'index'
+    flash[:name_notice] = 'Sorry, illegal name: ' + name
+    redirect_to :action => 'new'
   end
 
+   
+  
   def enter
     name = params[:name]
     if !File.exists?(RAILS_ROOT + '/dojos/' + name)

@@ -13,6 +13,14 @@ class Dojo
     @name
   end
 
+  def manifest
+  	if File.exists? manifest_filename
+      eval IO.read(manifest_filename)
+    else
+    	{ :filesets => {} }
+    end
+  end
+  
   def avatars
     alive = []
     Avatar.names.each do |avatar_name|
@@ -109,10 +117,14 @@ private
 
   Root_folder = RAILS_ROOT + '/' + 'dojos'
 
+  def manifest_filename
+    folder + '/' + 'manifest.rb'
+  end
+  
   def money_ladder_filename
     folder + '/' + 'money_ladder.rb'
-  end
-
+  end  
+  
   def default_money_ladder
     { :balance => 0,
       :offer => 0,

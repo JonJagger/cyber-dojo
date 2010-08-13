@@ -20,30 +20,24 @@ That's it! It's easy and it's fun. Try it!
 <p>
 <b>How do we play?</b></p>
   
-      <form name="dojoNew" action="/dojo/new">
+      <form name="dojoNew" action="/dojo/create">
         <div>First,
           <input type="submit"
                  id="new_button"
                  name="new"
-                 value="Create">
-          <input type="text"
-                 name="name"
-                 value="your CyberDojo name?">
-          <% if flash[:new_notice] -%>
-            <span class="notice"><%= flash[:new_notice] -%></span>
-          <% end -%>
+                 value="Name and configure your CyberDojo">
         </div>
       </form>
  
       <form name="dojoEnter" action="/dojo/enter">
-        <div>Then, each computer must then
+        <div>Then, each player must
           <input type="submit"
                  name="enter"
                  id="enter_button"
-                 value="Enter">
+                 value="Enter your CyberDojo">
           <input type="text"
                  name="name"
-                 value="your CyberDojo name?">
+                 value="what's its name?">
           <% if flash[:enter_notice] -%>
             <span class="notice"><%= flash[:enter_notice] -%></span>
           <% end -%>
