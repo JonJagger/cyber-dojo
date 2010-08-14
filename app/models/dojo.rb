@@ -34,6 +34,8 @@ class Dojo
     io_lock(folder) do
       if File.exists?(money_ladder_filename)
         ladder = eval IO.read(money_ladder_filename)
+        # in case rejoining game started before blank_rungs were added
+        ladder[:blank_rungs] ||= []
       end
       
       mins_per_rotate = 5
@@ -72,6 +74,8 @@ class Dojo
         end          
       else
         ladder = eval IO.read(money_ladder_filename)
+        # in case rejoining game started before blank_rungs were added
+        ladder[:blank_rungs] ||= []
       end       
       money_ladder_rung_update(ladder, avatar_name, latest_increment)
       File.open(money_ladder_filename, 'w') do |file|
@@ -88,7 +92,7 @@ class Dojo
     # 3. Lions bank is serviced here
     # 4. Frogs bank is serviced here
     # This means that at the time the Frogs clicked "bank"
-    # there was something to bank but by the time the
+    # there was something to bank but by the time their
     # request reaches the server there isn't.
     # However, this is harmless, since the offer is reset
     # to zero on a bank so the second bank does not
@@ -98,9 +102,8 @@ class Dojo
     io_lock(folder) do
       ladder = eval IO.read(money_ladder_filename)
       ladder[:balance] += ladder[:offer]
-      ladder[:offer] = 0
-      ladder[:failed_rungs] = []
-      ladder[ :error_rungs] = []
+      ladder[:offer] = 0     
+      ladder[:blank_rungs] = ladder[:passed_rungs]
       ladder[:passed_rungs] = []      
       File.open(money_ladder_filename, 'w') do |file|
         file.write(ladder.inspect) 
@@ -131,17 +134,18 @@ private
       :failed_rungs => [],
       :error_rungs => [],
       :passed_rungs => [],
+      :blank_rungs => [],
     }
   end
   
-
   def money_ladder_rung_update(ladder, avatar, inc)
+  	# remove this avatar's entry from the ladder
     ladder[:failed_rungs].delete_if { |rung| rung[:avatar] == avatar }
     ladder[ :error_rungs].delete_if { |rung| rung[:avatar] == avatar }
     ladder[:passed_rungs].delete_if { |rung| rung[:avatar] == avatar }
-
+    ladder[ :blank_rungs].delete_if { |rung| rung[:avatar] == avatar }
+    # and add it back into the ladder in it's updated state
     new_rung = { :avatar => avatar, :time => inc[:time] }
-
     ladder[:failed_rungs] << new_rung if inc[:outcome] == :failed
     ladder[ :error_rungs] << new_rung if inc[:outcome] == :error
     ladder[:passed_rungs] << new_rung if inc[:outcome] == :passed
@@ -163,19 +167,9 @@ private
     end
 
     ladder[:error_rungs].shuffle!
-    ladder[:error_rungs].reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end    
-
     ladder[:failed_rungs].shuffle!
-    ladder[:failed_rungs].reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end    
-
+    ladder[:blank_rungs].shuffle!
+    
   end
 
 end

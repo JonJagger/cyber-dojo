@@ -5,6 +5,25 @@
 <% size = 45 -%>
 
 <table>
+
+  <% @money_ladder[:blank_rungs].each do |rung| -%>
+  <tr>
+    <td>
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
+           width="<%=size-%>"
+           height="<%=size-%>"
+           title="<%=rung[:avatar]-%>" />
+    </td>
+    <td>
+      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
+           width="<%=size-%>"
+           height="<%=size-%>"
+           title="<%=rung[:avatar]-%>" />
+    </td>
+    <td class="money_rung blank amount">&nbsp;</td>
+  </tr>
+  <% end -%>
+
   <% @money_ladder[:failed_rungs].each do |rung| -%>
   <tr>
     <td>
@@ -19,9 +38,7 @@
            height="<%=size-%>"
            title="<%=rung[:avatar]-%>" />
     </td>
-    <td class="money_rung failed amount">
-      <%= commatize(rung[:amount]) -%>
-    </td>
+    <td class="money_rung failed amount">&nbsp;</td>
   </tr>
   <% end -%>
 
@@ -39,9 +56,7 @@
            height="<%=size-%>"
            title="<%=rung[:avatar]-%>" />      
     </td>
-    <td class="money_rung error amount">
-      <%= commatize(rung[:amount]) -%>
-    </td>
+    <td class="money_rung error amount">&nbsp;</td>
   </tr>
   <% end -%>
 
