@@ -1,5 +1,3 @@
-
-
 <div id="money_ladder">
 
 <% size = 45 -%>
@@ -7,77 +5,19 @@
 <table>
 
   <% @money_ladder[:blank_rungs].each do |rung| -%>
-  <tr>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />
-    </td>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />
-    </td>
-    <td class="money_rung blank amount">&nbsp;</td>
-  </tr>
+    <%= money_rung(rung, size, "blank", "&nbsp;") -%>
   <% end -%>
 
   <% @money_ladder[:failed_rungs].each do |rung| -%>
-  <tr>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />
-    </td>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />
-    </td>
-    <td class="money_rung failed amount">&nbsp;</td>
-  </tr>
+    <%= money_rung(rung, size, "failed", "&nbsp;") -%>
   <% end -%>
 
   <% @money_ladder[:error_rungs].each do |rung| -%>
-  <tr>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />
-    </td>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />      
-    </td>
-    <td class="money_rung error amount">&nbsp;</td>
-  </tr>
+    <%= money_rung(rung, size, "error", "&nbsp;") -%>
   <% end -%>
 
   <% @money_ladder[:passed_rungs].each do |rung| -%>
-  <tr>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />
-    </td>
-    <td>
-      <img src="/images/avatars/<%=rung[:avatar]-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=rung[:avatar]-%>" />      
-    </td>
-    <td class="money_rung passed amount">
-      <%= commatize(rung[:amount]) -%>
-    </td>
-  </tr>
+    <%= money_rung(rung, size, "passed", commatize(rung[:amount])) -%>
   <% end -%>
 
   <tr>
@@ -98,7 +38,7 @@
 
 <% if @money_ladder[:sound_alarm] -%>  
   <!-- this will repeat the Ding until the next periodically_call refresh which -->
-  <!-- will, on average, be 5 (half the frequency) --> 
+  <!-- will, on average, be 5 seconds (half the frequency) --> 
   <embed src="/sounds/Ding.wav" hidden="true" autostart="true" loop="true">
 <% end -%>
 

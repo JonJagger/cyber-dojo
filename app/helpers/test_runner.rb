@@ -8,7 +8,6 @@ module TestRunner
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
 
-    # TODO: run as a user with only execute rights; maybe using qemu
     # Run tests in sandbox in dedicated thread
     run_tests_output = []
     sandbox_thread = Thread.new do
@@ -73,7 +72,7 @@ module TestRunner
 
   # makefile_filter()
   #
-  # Tabs are a problem for makefiles since makefiles are tab sensitive.
+  # makefiles are tab sensitive...
   # The CyberDojo editor intercept tab keys and replaces them with spaces.
   # Hence this special filter, just for makefiles to convert leading spaces 
   # back to a tab character. 
