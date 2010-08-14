@@ -1,11 +1,11 @@
 
-================================================
+===========================================================
    VERY VERY IMPORTANT - VERY VERY IMPORTANT
-================================================
-CyberDojo clients have full rights on the 
-CyberDojo server. You are strongly advised to
-run the CyberDojo server inside a virtual box.
-================================================
+===========================================================
+CyberDojo clients have full rights on the CyberDojo server. 
+If you setup your own CyberServer you are strongly advised 
+to run the CyberDojo server inside a virtual box.
+===========================================================
 
 
 Requirements
@@ -100,9 +100,16 @@ Create a new subfolder under cyberdojo/filesets/kata/
 Create a manifest.rb file in this folder (see below)
 
 
+Adding a new fileset
+====================
+Create a new subfolder under cyberdojo/filesets
+Then repeat the folder/manifest.rb file exactly as for
+language and kata above. 
+
+
 Manifests
 =========
-The two manifest.rb files contains inspected ruby objects. 
+Each manifest.rb file contains an inspected ruby object. 
 For example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java kata.sh ),
@@ -122,7 +129,7 @@ Manifest Parameters
   Each of these files must exist in the folder.
   The filename cyberdojo.sh should be present (visible or hidden) in one of the 
   manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
-  assumed by the ruby code in the CyberDojo server to be the start point for  
+  assumed by the ruby code (in the CyberDojo server) to be the start point for  
   running an increment. You can write any actions in the cyberdojo.sh file but 
   clearly any programs it tries to run must be installed on the CyberDojo 
   server. For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
@@ -130,7 +137,7 @@ Manifest Parameters
   to be installed.
 
 :hidden_filenames
-  The names of necessary and supporting files (if there are any) that 
+  The names of necessary and/or supporting files (if there are any) that 
   are NOT visible in the editor in the browser. Each of these files must exist in 
   the folder. For example, a junit jar file or nunit assemblies. Not needed if
   you do not need hidden files.
@@ -141,7 +148,7 @@ Manifest Parameters
   output (to see if the increment passes or fails). For example, if the value is 
   'cassert' then app/helpers/run_tests_output_parser.rb must contain a method 
   called parse_cassert() and will be called to parse the output of running the 
-  tests via the cyberdojo.sh shell script file.
+  tests via the cyberdojo.sh shell file.
 
 There are two more parameters that can be specified in a manifest.rb
 file as part of the inspected ruby object:
@@ -154,7 +161,8 @@ file as part of the inspected ruby object:
 :max_run_tests_duration
   This is the maximum number of seconds the CyberDojo server allows an increment 
   to run in (the time starts after all the increments files have been copied to 
-  the sandbox folder). This is reloaded on each increment so it can be modified 
+  the sandbox folder).  This allows players to continue if they accidentally code 
+  an infinite loop for example. Reloaded on each increment so it can be modified 
   mid-kata if necessary. Defaults to 10 seconds.
 
 :tab_size

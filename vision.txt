@@ -2,14 +2,6 @@
 VISION AND PRINCIPLES
 =====================
 
-CyberDojo website
------------------
-Ultimately I would like a live CyberDojo website where developers can
-go to do katas both individually and collectively. Clearly if players
-are in different physical locations they cannot shuffle teams. However, 
-since the codebases are never on the laptops but always held on the 
-CyberDojo server it will still possible to shuffle codebases. 
-
 
 Server-image
 ------------
@@ -34,12 +26,13 @@ Allow filenames to have a full path including folders.
 Traffic-lights
 --------------
 Currently the CyberDojo server has to be programmed with regexp patterns
-to parse the output of kata.sh as reg/yellow/green.
+to parse the output of cyberdojo.sh as red/yellow/green.
 If the unit-test-framework is not specified in the manifest, or if it
 is but there is no ruby parse-function for it then the server could
 redirect to a different page which asks the players themselves to
 be a human traffic-light and mark the output themselves. This would
-be nice for making a very quick start in a new language.
+be nice for making a very quick start in a new language. It could also be
+used to gather data to test regexp patterns!
 
 
 Setting up a new kata
@@ -52,10 +45,11 @@ the CyberDojo server automatically did that for you.
 
 Metrics
 -------
-Ultimately it would be nice if each kata-name had some kind of ranking
+Ultimately it might be nice if each kata-name had some kind of ranking
 to measure how difficult it was. One possibility is simply the mean
 time previous players took to do it. This probably requires that each 
-kata be explicitly marked as finished.
+kata be explicitly marked as finished. Another idea is simply the number
+of points the whole group won on the money-ladder.
 
 
 
