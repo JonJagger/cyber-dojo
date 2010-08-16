@@ -214,7 +214,7 @@ div[class~="filename"]
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#money_ladder
+#money_ladder, #rotation
 {
   margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
 }

@@ -20,18 +20,20 @@ class DojoController < ApplicationController
       redirect_to :action => 'create'    	
     else    	
       Dir.mkdir(folder)
-      File.open(folder + '/' + 'manifest.rb', 'w') do |file|
+    	dojo = Dojo.new(name)
+      File.open(dojo.manifest_filename, 'w') do |file|
       	manifest = { :filesets => params['filesets'] }
         file.write(manifest.inspect) 
-      end   
+      end
+      File.open(dojo.rotation_filename, 'w') do |file|
+      	file.write(params['rotation'].inspect)
+      end
       redirect_to :action => 'index'
     end
   rescue
     flash[:name_notice] = 'Sorry, illegal name: ' + name
     redirect_to :action => 'new'
   end
-
-   
   
   def enter
     name = params[:name]

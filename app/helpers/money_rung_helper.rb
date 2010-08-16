@@ -1,7 +1,8 @@
 
 module MoneyRungHelper
 	
-  def money_rung(rung, size, outcome, amount)
+  def money_rung(rung, outcome)
+  	size = 45
     ['<tr>',
        '<td>',
          "<img src='/images/avatars/#{rung[:avatar]}.jpg'",
@@ -15,7 +16,7 @@ module MoneyRungHelper
               "height='#{size}'",
               "title='#{rung[:avatar]}' />",
        '</td>',
-       "<td class='money_rung #{outcome} amount'>#{amount}</td>",
+       "<td class='money_rung #{outcome} amount'>#{commatize(rung[:amount])}</td>",
      '</tr>'   
      ].join("\n")
   end

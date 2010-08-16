@@ -1,23 +1,21 @@
 <div id="money_ladder">
 
-<% size = 45 -%>
-
 <table>
 
   <% @money_ladder[:blank_rungs].each do |rung| -%>
-    <%= money_rung(rung, size, "blank", "&nbsp;") -%>
+    <%= money_rung(rung, "blank") -%>
   <% end -%>
 
   <% @money_ladder[:failed_rungs].each do |rung| -%>
-    <%= money_rung(rung, size, "failed", "&nbsp;") -%>
+    <%= money_rung(rung, "failed") -%>
   <% end -%>
 
   <% @money_ladder[:error_rungs].each do |rung| -%>
-    <%= money_rung(rung, size, "error", "&nbsp;") -%>
+    <%= money_rung(rung, "error") -%>
   <% end -%>
 
   <% @money_ladder[:passed_rungs].each do |rung| -%>
-    <%= money_rung(rung, size, "passed", commatize(rung[:amount])) -%>
+    <%= money_rung(rung, "passed") -%>
   <% end -%>
 
   <tr>
@@ -35,12 +33,6 @@
   </tr>
 
 </table>
-
-<% if @money_ladder[:sound_alarm] -%>  
-  <!-- this will repeat the Ding until the next periodically_call refresh which -->
-  <!-- will, on average, be 5 seconds (half the frequency) --> 
-  <embed src="/sounds/Ding.wav" hidden="true" autostart="true" loop="true">
-<% end -%>
 
 </div>
 

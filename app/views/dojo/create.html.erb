@@ -30,6 +30,27 @@ function selection(name, index)
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td class="boxed">
+      <b>Rotation bell?</b>
+        <div onclick='selection("bell", "0");'>    
+          <input id="bell_0"
+                 type="radio"
+                 name="rotation[bell]"
+                 checked
+                 value="yes">Yes
+        </div>             
+        <div onclick='selection("bell", "1");'>    
+          <input id="bell_1"
+                 type="radio"
+                 name="rotation[bell]"
+                 value="no">No
+        </div>             
+    </td>
+  </tr>
+</table>
+  
 <table><tr>
   <% @filesets.each do |name| -%>
   <td valign="top" class="boxed">

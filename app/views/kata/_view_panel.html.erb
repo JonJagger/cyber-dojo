@@ -15,6 +15,12 @@
       <%= render :partial => 'editor_panel' -%>
     </td>
     <td rowspan=2>
+      <%= render :partial => 'rotation' -%>
+      <%= periodically_call_remote :url => { :action => 'rotation',
+                                             :dojo => @dojo.name
+                                           }, 
+                                   :frequency => 10 -%>
+                                   
       <%= render :partial => 'money_ladder' -%>
       <%= periodically_call_remote :url => { :action => 'money_ladder',
                                              :dojo => @dojo.name
