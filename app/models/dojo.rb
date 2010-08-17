@@ -41,7 +41,11 @@ class Dojo
   	folder + '/' + 'rotation.rb'
   end
 
-  def rotation
+  def rotation(avatar_name)
+  	# with a poll-based rotation it is tricky to ensure
+  	# 1) each laptop dings 
+  	# 2) the first one to ding does not ding twice in a row
+  	# 3) a laptop joining half way through a rotation does not ding 
   	options = { 'bell' => 'yes' }
   	io_lock(folder) do
   		if File.exists?(rotation_filename)
@@ -52,22 +56,34 @@ class Dojo
       secs_per_rotate = mins_per_rotate * 60
       
       now = Time.now
-      if !options[:due_at]
-      	due = now + secs_per_rotate
-        options[:due_at] = [due.year, due.month, due.day, due.hour, due.min, due.sec]
-      end
+    	due = now + secs_per_rotate
+      options[:already_dinged] ||= []
+      options[:prev_ding_at] ||= [1966,11,23,0,0,0]
+      options[:next_ding_at] ||= [due.year, due.month, due.day, due.hour, due.min, due.sec]
+      due = Time.mktime(*options[:next_ding_at])
 
-      diff = now - Time.mktime(*options[:due_at])
+      already_dinged = options[:already_dinged].include?(avatar_name)
+      very_recent_ding = now - Time.mktime(*options[:prev_ding_at]) <= 6
+      
+      diff = now - due
       if diff >= 0
-        options[:now] = true
-        due = Time.mktime(*options[:due_at]) + secs_per_rotate
-        options[:due_at] = [due.year, due.month, due.day, due.hour, due.min, due.sec]
+      	# first avatar one over the line
+        options[:ding_now] = true
+        options[:prev_ding_at] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+        due = now + secs_per_rotate
+        options[:next_ding_at] = [due.year, due.month, due.day, due.hour, due.min, due.sec]
+        options[:already_dinged] = [avatar_name]
+      elsif !already_dinged && very_recent_ding
+     		# another avatar over the line	
+     	  options[:ding_now] = true
+     		options[:already_dinged] << avatar_name	
       else
-      	options[:now] = false
-      	diff = diff.abs
-      	options[:due_mins] = (diff / 60).to_int
-      	options[:due_secs] = leading_zero((diff % 60).to_int)
+      	options[:ding_now] = false
       end
+      
+    	diff = diff.abs
+    	options[:due_mins] = (diff / 60).to_int
+     	options[:due_secs] = leading_zero((diff % 60).to_int)
   		
       File.open(rotation_filename, 'w') do |file|
         file.write(options.inspect) 

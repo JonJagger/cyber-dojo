@@ -1,9 +1,7 @@
 #include "untitled.hpp"
 #include <assert.h>
 
-#define FAIL(x)   assert(0 && (x))
 #define TEST(x)   assert(x)
-#define IGNORE(x) assert(1 || (x))
 
 static void an_example_test(void)
 {

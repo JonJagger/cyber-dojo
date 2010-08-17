@@ -27,7 +27,7 @@ class KataController < ApplicationController
     all_increments = @avatar.read_most_recent(@kata, @manifest)
     @increments = limited(all_increments)
     @money_ladder = @dojo.money_ladder
-    @rotation = @dojo.rotation
+    @rotation = @dojo.rotation(params[:avatar])
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
     @outcome = @increments == [] ? '' : @increments.last[:outcome]
@@ -57,7 +57,7 @@ class KataController < ApplicationController
 
   def rotation
   	dojo = Dojo.new(params[:dojo])
-  	@rotation = dojo.rotation
+  	@rotation = dojo.rotation(params[:avatar])
     respond_to do |format|
       format.js if request.xhr?
     end  	

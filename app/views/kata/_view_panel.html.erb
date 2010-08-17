@@ -17,15 +17,16 @@
     <td rowspan=2>
       <%= render :partial => 'rotation' -%>
       <%= periodically_call_remote :url => { :action => 'rotation',
-                                             :dojo => @dojo.name
+                                             :dojo => @dojo.name,
+                                             :avatar => @avatar.name
                                            }, 
-                                   :frequency => 10 -%>
+                                   :frequency => 5 -%>
                                    
       <%= render :partial => 'money_ladder' -%>
       <%= periodically_call_remote :url => { :action => 'money_ladder',
                                              :dojo => @dojo.name
                                            }, 
-                                   :frequency => 10 -%>
+                                   :frequency => 5 -%>
     </td>
   </tr>
   <tr valign="top">
