@@ -13,27 +13,24 @@ Requirements
 Ruby
 Rails
 
-Here are the commands I used to install ruby and rails onto my Ubuntu server:
->sudo aptitude install ruby build-essential libopenssl-ruby ruby1.8-dev
->sudo apt-get install apache2 apache2-mpm-prefork apache2-prefork-dev
->sudo apt-get install rubygems
-I then added this line
-export PATH=/var/lib/gems/1.8/bin:$PATH
-to end of ~/.bashrc
->sudo gem install rails -v2.3.4
->sudo apt-get install libsqlite3-dev
->sudo gem install sqlite3-ruby
-
-There appears to be a potential rails version issue. The CyberDojo servers I 
-have built explicitly specified the version during installation as above.
-
-
 
 Installation
 ============
-After getting the sourcecode from GitHub cd into the cyberdojo directory. Then
-  $ script/server 
-Open http://localhost:3000 in yout browser and your CyberDojo should be running. 
+Here are the commands I used to install ruby, rails, and CyberDojo onto 
+my Ubuntu server:
+>sudo apt-get install git-core
+>git clone http://github.com/JonJagger/cyberdojo.git
+>sudo aptitude install ruby build-essential libopenssl-ruby ruby1.8-dev
+>sudo apt-get install rubygems
+>sudo gem install rails 
+>sudo apt-get install libsqlite3-dev
+>sudo gem install sqlite3-ruby
+>sudo gem update
+
+Then 
+>cd cyberdojo directory
+>script/server 
+Open http://localhost:3000 in your browser and your CyberDojo should be running. 
 There are no requirements on the clients (except of course a browser). I also 
 install and use apache on my CyberDojo server but that is optional.
 
