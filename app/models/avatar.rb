@@ -127,12 +127,10 @@ private
   def welcome_text
     [ "<------ THIS TRIANGLE IS THE 'PLAY' BUTTON.",
       '',
-      'The radio-buttons on the left provide access to all files.',
-      'At the sound of the bell each keyboard driver must move to another',
-      'computer and take up a non-driver role.',
-      '',
       "Clicking the 'play' button runs the tests on the CyberDojo server and",
-      'displays the outcome here (it executes the cyberdojo.sh script file).'
+      'displays the outcome here (it executes the cyberdojo.sh file).',
+      '',
+      'The radio-buttons on the left provide access to all files.',
     ].join("\n")
   end
 
