@@ -32,11 +32,10 @@ have built explicitly specified the version during installation as above.
 Installation
 ============
 After getting the sourcecode from GitHub cd into the cyberdojo directory. Then
-  $ script/server -d
-  $ open http://localhost:3000
-And your CyberDojo should be running. There are no requirements on the
-clients (except of course a browser). I also install and use apache on my
-CyberDojo server but that is optional.
+  $ script/server 
+Open http://localhost:3000 in yout browser and your CyberDojo should be running. 
+There are no requirements on the clients (except of course a browser). I also 
+install and use apache on my CyberDojo server but that is optional.
 
 
 

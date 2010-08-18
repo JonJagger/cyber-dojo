@@ -20,15 +20,21 @@ That's it! It's easy and it's fun. Try it!
 <p>
 <b>How do we play?</b></p>
   
-      <form name="dojoNew" action="/dojo/create">
+     <form name="dojoNew" action="/dojo/new">
         <div>First,
           <input type="submit"
                  id="new_button"
                  name="new"
-                 value="Name and configure your CyberDojo">
+                 value="Create your CyberDojo">
+          <input type="text"
+                 name="name"
+                 value="what's its name?">
+          <% if flash[:new_notice] -%>
+            <span class="notice"><%= flash[:new_notice] -%></span>
+          <% end -%>
         </div>
       </form>
- 
+      
       <form name="dojoEnter" action="/dojo/enter">
         <div>Then, each player must
           <input type="submit"
@@ -37,7 +43,7 @@ That's it! It's easy and it's fun. Try it!
                  value="Enter your CyberDojo">
           <input type="text"
                  name="name"
-                 value="what's its name?">
+                 value="<%=@name-%>">
           <% if flash[:enter_notice] -%>
             <span class="notice"><%= flash[:enter_notice] -%></span>
           <% end -%>

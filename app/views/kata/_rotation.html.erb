@@ -1,19 +1,9 @@
 <div id="rotation">
 
 <% if @rotation[:ding_now] -%>  
-  
-  <!-- this will repeat the Ding/Text until the next periodically_call refresh which -->
-  <!-- will, on average, be 5 seconds (half the frequency) -->
-
-  <% if @rotation['bell'] == 'yes' -%>
-    <embed src="/sounds/Ding.wav" hidden="true" autostart="true" loop="true">
-    ...ROTATE NOW PLEASE...
-    </embed>
-  <% else -%>
-    ...ROTATE NOW PLEASE...
-  <% end -%>
-<% else -%>
-Next rotation in <%= @rotation[:due_mins] -%>:<%= @rotation[:due_secs] -%>
+  <embed src="/sounds/Ding.wav" hidden="true" autostart="true" loop="true">
+  ...ROTATE NOW PLEASE...
+  </embed>
 <% end -%>
 
 </div>

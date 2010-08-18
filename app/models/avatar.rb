@@ -1,4 +1,6 @@
 
+require 'io_lock.rb'
+
 class Avatar
 
   def self.names
@@ -11,15 +13,16 @@ class Avatar
   
   def initialize(dojo, name, filesets) 
     @dojo, @name = dojo, name
-    if filesets
+  	make_dir(folder)
+  	if !File.exists?(manifest_filename)
     	@filesets = filesets
-    	make_dir(folder)
-      File.open(folder + '/manifest.rb', 'w') do |fd| 
-    	  fd.write(filesets.inspect) 
-  	  end
     else
-    	@filesets = eval IO.read(folder + '/manifest.rb')   	 
+    	@filesets = eval IO.read(manifest_filename)
     end
+		    
+    File.open(manifest_filename, 'w') do |fd| 
+   	  fd.write(@filesets.inspect) 
+	  end
   end
 
   def name
@@ -39,9 +42,8 @@ class Avatar
   end
 
   def read_most_recent(kata, manifest)
-    # load starting manifest
     my_increments = []
-    io_lock(@dojo.folder) do 
+    io_lock(folder) do
       my_increments = locked_read_most_recent(kata, manifest)
     end
     my_increments
@@ -63,6 +65,10 @@ class Avatar
   end
 
 private
+
+  def manifest_filename
+  	folder + '/' + 'manifest.rb'
+  end
   
   def increments_filename
     folder + '/' + 'increments_manifest.rb'
@@ -92,7 +98,7 @@ private
     	# load manifest with initial fileset
       manifest[:visible_files] = kata.visible
       opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
-      	manifest[:current_filename] = opening_file
+      manifest[:current_filename] = opening_file
       manifest[:output] = welcome_text
       # Create sandbox and copy hidden files from kata fileset 
       # into sandbox ready for future run_tests

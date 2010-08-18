@@ -1,4 +1,6 @@
 
+require 'io_lock.rb'
+
 class Dojo
 
   def self.names
@@ -25,28 +27,12 @@ class Dojo
     Root_folder + '/' + name
   end
 
-  def manifest_filename
-    folder + '/' + 'manifest.rb'
-  end
-  
-  def manifest
-  	if File.exists? manifest_filename
-      eval IO.read(manifest_filename)
-    else
-    	{ :filesets => {} }
-    end
-  end
-  
-  def rotation_filename
-  	folder + '/' + 'rotation.rb'
-  end
-
   def rotation(avatar_name)
   	# with a poll-based rotation it is tricky to ensure
   	# 1) each laptop dings 
   	# 2) the first one to ding does not ding twice in a row
   	# 3) a laptop joining half way through a rotation does not ding 
-  	options = { 'bell' => 'yes' }
+  	options = {}
   	io_lock(folder) do
   		if File.exists?(rotation_filename)
   			options = eval IO.read(rotation_filename)
@@ -68,6 +54,8 @@ class Dojo
       diff = now - due
       if diff >= 0
       	# first avatar one over the line
+      	# TODO: could be entering a dojo which hasn't been entered in a long time
+      	#       in which case you'll get an immeadiate rotation... not right...worth fixing?
         options[:ding_now] = true
         options[:prev_ding_at] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
         due = now + secs_per_rotate
@@ -81,20 +69,12 @@ class Dojo
       	options[:ding_now] = false
       end
       
-    	diff = diff.abs
-    	options[:due_mins] = (diff / 60).to_int
-     	options[:due_secs] = leading_zero((diff % 60).to_int)
-  		
       File.open(rotation_filename, 'w') do |file|
         file.write(options.inspect) 
       end        		
   	end
   	options
   end
-  
-  def money_ladder_filename
-    folder + '/' + 'money_ladder.rb'
-  end  
   
   def money_ladder
     ladder = default_money_ladder
@@ -141,6 +121,14 @@ class Dojo
 
 private
 
+  def rotation_filename
+  	folder + '/' + 'rotation.rb'
+  end
+
+  def money_ladder_filename
+    folder + '/' + 'money_ladder.rb'
+  end  
+  
   Root_folder = RAILS_ROOT + '/' + 'dojos'
     
   def default_money_ladder
@@ -178,12 +166,7 @@ private
     amount = 100
     multiplier = 1
 
-    ladder[:passed_rungs].shuffle!
-    ladder[:passed_rungs].reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end    
+    amount, multiplier = re_rung(ladder[:passed_rungs], amount, multiplier)
 
     if ladder[:passed_rungs].size > 0
       ladder[:offer] = amount
@@ -191,28 +174,21 @@ private
       ladder[:offer] = 0
     end
 
-    ladder[:error_rungs].shuffle!
-    ladder[:error_rungs].reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end    
-    
-    ladder[:failed_rungs].shuffle!
-    ladder[:failed_rungs].reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end    
-    
-    ladder[:blank_rungs].shuffle!
-    ladder[:blank_rungs].reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end    
+    amount, multiplier = re_rung(ladder[:error_rungs], amount, multiplier)
+    amount, multiplier = re_rung(ladder[:failed_rungs], amount, multiplier)
+    amount, multiplier = re_rung(ladder[:blank_rungs], amount, multiplier)    
   end
 
+  def re_rung(rungs, amount, multiplier)
+    rungs.shuffle!
+    rungs.reverse.each do |rung|
+      amount *= multiplier
+      multiplier += 1
+      rung[:amount] = amount
+    end  
+    [amount, multiplier]
+  end
+  
 end
 
 
