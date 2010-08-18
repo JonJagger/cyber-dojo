@@ -140,15 +140,7 @@ private
       :blank_rungs => [],
     }
   end
-  
-  def leading_zero(number)
-  	if number < 10
-  		"0" + number.to_s
-  	else
-  		number
-  	end
-  end
-  
+   
   def money_ladder_rung_update(ladder, avatar, inc)
   	# remove this avatar's entry from the ladder
     ladder[:failed_rungs].delete_if { |rung| rung[:avatar] == avatar }
