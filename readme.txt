@@ -4,7 +4,7 @@
 ===========================================================
 CyberDojo clients have full rights on the CyberDojo server. 
 If you setup your own CyberServer you are strongly advised 
-to run the CyberDojo server inside a virtual box.
+to consider running the CyberDojo server inside a virtual box.
 ===========================================================
 
 
@@ -100,7 +100,7 @@ Adding a new fileset
 ====================
 Create a new subfolder under cyberdojo/filesets
 Then repeat the folder/manifest.rb file exactly as for
-language and kata above. 
+Adding a new kata and adding a new language above. 
 
 
 Manifests

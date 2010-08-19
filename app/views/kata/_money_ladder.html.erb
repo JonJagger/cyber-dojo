@@ -2,33 +2,30 @@
 
 <table>
 
-  <% @money_ladder[:blank_rungs].each do |rung| -%>
-    <%= money_rung(rung, "blank") -%>
+  <% @money_ladder[:blank_rungs].each_with_index do |rung,index| -%>
+    <%= money_rung(rung, index, "blank") -%>
   <% end -%>
 
-  <% @money_ladder[:failed_rungs].each do |rung| -%>
-    <%= money_rung(rung, "failed") -%>
+  <% @money_ladder[:failed_rungs].each_with_index do |rung,index| -%>
+    <%= money_rung(rung, index, "failed") -%>
   <% end -%>
 
-  <% @money_ladder[:error_rungs].each do |rung| -%>
-    <%= money_rung(rung, "error") -%>
+  <% @money_ladder[:error_rungs].each_with_index do |rung,index| -%>
+    <%= money_rung(rung, index, "error") -%>
   <% end -%>
 
-  <% @money_ladder[:passed_rungs].each do |rung| -%>
-    <%= money_rung(rung, "passed") -%>
+  <% @money_ladder[:passed_rungs].each_with_index do |rung,index| -%>
+    <%= money_rung(rung, index, "passed") -%>
   <% end -%>
 
   <tr>
     <td colspan="2">
-      <% if @money_ladder[:passed_rungs].size > 0 -%>
-        <%= button_to_remote("Bank", {:update => 'money_ladder', 
-                                      :url => { :action => 'bank',
-                                                :dojo => @dojo.name }},
-                                     {:id=>'bank_button'}) -%>
-      <% end -%>
+      Banked points
     </td>
     <td class="money_rung total amount">
       <%= commatize(@money_ladder[:balance]) -%>      
+    </td>
+    <td>
     </td>
   </tr>
 
