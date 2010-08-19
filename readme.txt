@@ -66,10 +66,7 @@ Dojos
 =====
 Each subfolder underneath cyberdojo/dojos/ represents a virtual dojo. 
 For example cyberdojo/dojos/xp2010/ is where I put the xp2010 CyberDojo 
-conference. If there is a single subfolder in cyberdojo/dojos/ the 
-CyberDojo server will take you straight into it without asking. If 
-there are multiple subfolders in cyberdojo/dojos/ the CyberDojo server 
-will ask you to select one.
+conference. 
 
 
 Avatars
@@ -99,8 +96,8 @@ Create a manifest.rb file in this folder (see below)
 Adding a new fileset
 ====================
 Create a new subfolder under cyberdojo/filesets
-Then repeat the folder/manifest.rb file exactly as for
-Adding a new kata and adding a new language above. 
+Then repeat the subfolder/manifest.rb file exactly as for
+adding a new kata and adding a new language above. 
 
 
 Manifests
@@ -174,12 +171,12 @@ will give you an auto-updating display of the current colour and history
 called X.
 
 
-Keyboard Rotate Alarm
-=====================
-By default CyberDojo sounds the keyboard-rotate alarm every 5 minutes 
-(see app/models/dojo.rb money_ladder function)
-which is the cue for the keyboard driver at each computer to get up and 
-move to a new computer where they take up a non-driver role. 
+Keyboard-Driver Move Alarm
+============================
+By default CyberDojo sounds the keyboard-driver alarm every 5 minutes 
+(see app/models/dojo.rb rotation function) which is the cue for the keyboard 
+driver at each computer to get up and move to a new computer where they take 
+up a non-driver role. 
 
 
 How to Turn off Firefox Spell-Checking
