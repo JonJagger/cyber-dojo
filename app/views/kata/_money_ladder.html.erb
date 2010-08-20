@@ -1,35 +1,19 @@
 <div id="money_ladder">
-
-<table>
-
-  <% @money_ladder[:blank_rungs].each_with_index do |rung,index| -%>
-    <%= money_rung(rung, index, "blank") -%>
-  <% end -%>
-
-  <% @money_ladder[:failed_rungs].each_with_index do |rung,index| -%>
-    <%= money_rung(rung, index, "failed") -%>
-  <% end -%>
-
-  <% @money_ladder[:error_rungs].each_with_index do |rung,index| -%>
-    <%= money_rung(rung, index, "error") -%>
-  <% end -%>
-
-  <% @money_ladder[:passed_rungs].each_with_index do |rung,index| -%>
-    <%= money_rung(rung, index, "passed") -%>
-  <% end -%>
-
-  <tr>
-    <td colspan="2">
-      Banked points
-    </td>
-    <td class="money_rung total amount">
-      <%= commatize(@money_ladder[:balance]) -%>      
-    </td>
-    <td>
-    </td>
-  </tr>
-
-</table>
-
+  <table>
+    <%= rungs(@money_ladder, "blank") -%>
+    <%= rungs(@money_ladder, "failed") -%>
+    <%= rungs(@money_ladder, "error") -%>
+    <%= rungs(@money_ladder, "passed") -%>
+    <tr>
+      <td colspan="2">
+        Banked
+      </td>
+      <td class="money_rung total amount">
+        <%= commatize(@money_ladder[:balance]) -%>      
+      </td>
+      <td>
+      </td>
+    </tr>
+  </table>
 </div>
 

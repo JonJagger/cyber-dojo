@@ -1,6 +1,15 @@
 
 module MoneyRungHelper
 	
+	def rungs(ladder, name)
+		html = ''
+		symbol = (name + '_rungs').to_sym
+    ladder[symbol].each_with_index do |rung,index|
+    	html = html + money_rung(rung, index, name) 
+    end
+    html
+	end
+		
   def money_rung(rung, index, outcome)
  	
   	if outcome == "passed" and index == 0
