@@ -91,7 +91,6 @@ class Dojo
     io_lock(folder) do
       ladder = eval IO.read(money_ladder_filename)         
       money_ladder_rung_update(ladder, avatar_name, latest_increment)
-      monetize(ladder)
       File.open(money_ladder_filename, 'w') do |file|
         file.write(ladder.inspect) 
       end
@@ -99,22 +98,6 @@ class Dojo
     ladder
   end
  
-  def bank
-    ladder = {}
-    io_lock(folder) do
-      ladder = eval IO.read(money_ladder_filename)
-      ladder[:balance] += ladder[:offer]
-      ladder[:offer] = 0     
-      ladder[:blank_rungs] = ladder[:blank_rungs] + ladder[:passed_rungs]
-      ladder[:passed_rungs] = []
-      monetize(ladder)
-      File.open(money_ladder_filename, 'w') do |file|
-        file.write(ladder.inspect) 
-      end
-    end
-    ladder
-  end
-
 private
 
   def rotation_filename
@@ -148,33 +131,11 @@ private
     ladder[:failed_rungs] << new_rung if inc[:outcome] == :failed
     ladder[ :error_rungs] << new_rung if inc[:outcome] == :error
     ladder[:passed_rungs] << new_rung if inc[:outcome] == :passed
-  end
-  
-  def monetize(ladder)
-    amount = 100
-    multiplier = 1
 
-    amount, multiplier = re_rung(ladder[:passed_rungs], amount, multiplier)
-
-    if ladder[:passed_rungs].size > 0
-      ladder[:offer] = amount
-    else
-      ladder[:offer] = 0
-    end
-
-    amount, multiplier = re_rung(ladder[:error_rungs], amount, multiplier)
-    amount, multiplier = re_rung(ladder[:failed_rungs], amount, multiplier)
-    amount, multiplier = re_rung(ladder[:blank_rungs], amount, multiplier)    
-  end
-
-  def re_rung(rungs, amount, multiplier)
-    rungs.shuffle!
-    rungs.reverse.each do |rung|
-      amount *= multiplier
-      multiplier += 1
-      rung[:amount] = amount
-    end  
-    [amount, multiplier]
+    ladder[:balance] +=
+        (ladder[:error_rungs].size + 8) +
+        (ladder[:failed_rungs].size * 8) +
+        (ladder[:passed_rungs].size ** 8)
   end
   
 end

@@ -6,10 +6,9 @@
     <%= rungs(@money_ladder, "passed") -%>
     <tr>
       <td colspan="2">
-        Banked
       </td>
       <td class="money_rung total amount">
-        <%= commatize(@money_ladder[:balance]) -%>      
+        $<%= commatize(@money_ladder[:balance]) -%>      
       </td>
       <td>
       </td>

@@ -52,11 +52,6 @@ class KataController < ApplicationController
     end  	
   end
   
-  def bank
-    @dojo = Dojo.new(params[:dojo])
-    @money_ladder = @dojo.bank    
-  end
-
 private
 
   def dequote(filename)

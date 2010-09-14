@@ -20,8 +20,8 @@
                                              :dojo => @dojo.name,
                                              :avatar => @avatar.name
                                            }, 
-                                   :frequency => 5 -%>
-                                   
+                                   :frequency => 5 -%>                
+                   
       <%= render :partial => 'money_ladder' -%>
       <%= periodically_call_remote :url => { :action => 'money_ladder',
                                              :dojo => @dojo.name
@@ -35,7 +35,6 @@
          <tr>
           <td>
             <%= render :partial => 'play_button' -%>
-            <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://www.cyber-dojo.com" data-text="Check out #CyberDojo by @JonJagger at" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
           </td>
          </tr>
          <tr>
