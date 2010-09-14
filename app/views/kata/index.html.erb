@@ -1,37 +1,34 @@
 
 <script language="JavaScript"
         type="text/javascript"><!--
-var avatar_selected = false;
-
-var selected = {};
-<% @filesets.each do |name| -%>
-selected['<%=name-%>'] = false;
-<% end -%>
-
-function enable_start_if_all_selected()
-{
-  var all_selected = true;
-  for (one in selected) {
-    if (!selected[one]) {
-      all_selected = false;
-    }
-  }
-  $('start_button').disabled = !avatar_selected || !all_selected;     
-}
-
-function select_avatar(index)
-{
-  $('avatar_' + index).checked = true;
-  avatar_selected = true;
-  enable_start_if_all_selected();
-}
 
 function selection(name, index)
 {
   $(name + '_' + index).checked = true; 
-  selected[name] = true;  
   enable_start_if_all_selected();
 }
+
+function selected(name)
+{
+  radio = avatarIndex[name];
+  for (at = 0; at != radio.length; at++)
+    if (radio[at].checked)
+      return true;
+  return false;
+}
+
+function enable_start_if_all_selected()
+{
+  $('start_button').disabled = 
+       !selected('avatar')
+    || !selected('filesets[kata]')
+    || !selected('filesets[language]');
+}
+
+document.observe('dom:loaded', function() 
+{
+  enable_start_if_all_selected();
+});
 
 //--></script>
 
@@ -69,7 +66,7 @@ function selection(name, index)
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = outer*chunk_size + inner -%>
-           <td onclick='select_avatar("<%=index-%>");'>
+           <td onclick='selection("avatar", "<%=index-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
@@ -117,5 +114,4 @@ function selection(name, index)
 </table>
 
 </form>
-
 
