@@ -9,6 +9,8 @@ document.observe('dom:loaded', function()
 });
 //--></script>
 
+<div id="play_panel"
+     style="visibility:visible">
 <% form_remote_tag :url  => { :action => 'run_tests',
                               :dojo => @dojo.name,
                               :avatar => @avatar.name
@@ -19,6 +21,17 @@ document.observe('dom:loaded', function()
   <%= render :partial => 'view_panel' -%>
   <%= render :partial => 'hidden_file_contents' -%>
 <% end -%>
+</div>
+
+<div id="rotate_panel"
+     style="display:none">
+     
+<h1>...PLEASE ROTATE NOW...</h1>
+<h2>Keyboard drivers move to another laptop</h2>
+<h2>and take up a non-driver role</h2>
+
+</div>
+
 
 
 

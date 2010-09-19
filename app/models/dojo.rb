@@ -39,30 +39,30 @@ class Dojo
       
       now = Time.now
     	due = now + secs_per_rotate
-      options[:already_dinged] ||= []
-      options[:prev_ding_at] ||= [1966,11,23,0,0,0]      
-      options[:next_ding_at] ||= [due.year, due.month, due.day, due.hour, due.min, due.sec]
+      options[:already_rotated] ||= []
+      options[:prev_rotation_at] ||= [1966,11,23,0,0,0]      
+      options[:next_rotation_at] ||= [due.year, due.month, due.day, due.hour, due.min, due.sec]
 
-      already_dinged = options[:already_dinged].include?(avatar_name)
+      already_rotated = options[:already_rotated].include?(avatar_name)
       refresh_period = 5 # from view_panel.html.erb :frequency
-      very_recent_ding = (now - Time.mktime(*options[:prev_ding_at])).abs <= refresh_period
-      due = Time.mktime(*options[:next_ding_at])
+      very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= refresh_period
+      due = Time.mktime(*options[:next_rotation_at])
       
       if now > due
       	# first avatar over the now-line
-      	# but don't ding if we're re-entering a dojo after a long break
-        options[:ding_now] = (now - due < (2 * refresh_period))
-        options[:prev_ding_at] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+      	# but don't rotate if we're re-entering a dojo after a long break
+        options[:do_now] = (now - due < (2 * refresh_period))
+        options[:prev_rotation_at] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
         due = now + secs_per_rotate
-        options[:next_ding_at] = [due.year, due.month, due.day, due.hour, due.min, due.sec]
-        options[:already_dinged] = [avatar_name]
-      elsif !already_dinged && very_recent_ding
+        options[:next_rotation_at] = [due.year, due.month, due.day, due.hour, due.min, due.sec]
+        options[:already_rotated] = [avatar_name]
+      elsif !already_rotated && very_recent_rotation
      		# another avatar over the line
-     		# but don't re-ding for the first avatar again
-     	  options[:ding_now] = true
-     		options[:already_dinged] << avatar_name	
+     		# but don't re-rotate for the first avatar again
+     	  options[:do_now] = true
+     		options[:already_rotated] << avatar_name	
       else
-      	options[:ding_now] = false
+      	options[:do_now] = false
       end
 
       File.open(rotation_filename, 'w') do |file|
