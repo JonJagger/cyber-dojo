@@ -1,4 +1,25 @@
 
+var isControl = false;
+
+document.onkeyup = function(e) 
+{
+	if (e.which == 17) 
+		isControl = false;
+}
+
+document.onkeydown = function(e)
+{
+	if (e.which == 17) 
+		isControl = true;
+	
+	if (e.which == 83 && isControl == true) 
+	{
+		//run code for CTRL+S -- ie, save!
+		alert("There is no Save! Press the play button instead");
+		return false;
+	}
+}
+
 function runTests()
 {
   $('play_button').click();
