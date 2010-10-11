@@ -1,11 +1,11 @@
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.*;
+import static org.junit.Assert.*;
 
-public class UntitledTest extends TestCase
+public class UntitledTest 
 {
-    public void test_hitch_hiker()
+    @Test
+    public void hitch_hiker()
     {
         int expected = 42;
         int actual = new Untitled().answer();
