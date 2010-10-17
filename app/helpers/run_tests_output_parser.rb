@@ -48,8 +48,8 @@ private
 	end
 
 	def self.parse_perl_test_simple(output)
-		passed_pattern = Regexp.new('Result: PASS')
-		error_pattern = Regexp.new('Parse errors')
+		passed_pattern = Regexp.new('All tests successful')
+		error_pattern = Regexp.new('syntax error')
 		if passed_pattern.match(output)
 			:passed
 		elsif error_pattern.match(output)
