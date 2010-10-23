@@ -12,6 +12,6 @@ static void test(void)
 int main(void) 
 {
     test();
-	printf("ALL TESTS PASSED\n");
+    printf("ALL TESTS PASSED\n");
     return 0;
 }
