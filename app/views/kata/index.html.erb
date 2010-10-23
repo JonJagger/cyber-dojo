@@ -10,7 +10,7 @@ function selection(name, index)
 
 function selected(name)
 {
-  radio = avatarIndex[name];
+  radio = document.getElementsByName(name); 
   for (at = 0; at != radio.length; at++)
     if (radio[at].checked)
       return true;
