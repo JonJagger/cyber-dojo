@@ -38,7 +38,7 @@ install and use apache on my CyberDojo server but that is optional.
 
 What will work and what won't work
 ==================================
-Initial filesets for eight languages are provided: C, C++, C#, Java, Python, 
+Initial filesets for nine languages are provided: C, C++, C#, Objective C, Java, Python, 
 Perl, PHP, and Ruby. Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
@@ -59,6 +59,10 @@ So its first line reads
 ; configuration for php MCrypt module
 instead of
 # configuration for php MCrypt module
+I installed support for Objective C as follows
+>sudo apt-get -y install build-essential
+>sudo apt-get install gobjc
+>sudo apt-get install libgnustep-base-dev
 
 
 
@@ -163,17 +167,10 @@ file as part of the inspected ruby object:
   Defaults to 4 spaces.
 
 
-Dojo Dashboard Display
-======================
-http://ip-address/dojo/dashboard?name=X
-will give you an auto-updating display of the current colour and history 
-(red, green, or yellow for each increment) of every avatar in the CyberDojo
-called X.
-
 
 Keyboard-Driver Move Alarm
 ============================
-By default CyberDojo sounds the keyboard-driver alarm every 5 minutes 
+By default CyberDojo displays the keyboard-driver rotate page every 5 minutes 
 (see app/models/dojo.rb rotation function) which is the cue for the keyboard 
 driver at each computer to get up and move to a new computer where they take 
 up a non-driver role. 
