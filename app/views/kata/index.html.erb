@@ -2,7 +2,7 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-function selection(name, index)
+function start_selection(name, index)
 {
   $(name + '_' + index).checked = true; 
   enable_start_if_all_selected();
@@ -23,15 +23,6 @@ function enable_start_if_all_selected()
        !selected('avatar')
     || !selected('filesets[kata]')
     || !selected('filesets[language]');
-  
-  // Internet Explorer does not appear to be working with the
-  // td onclick events. This means the start button is never
-  // enabled. Work around this by enabling start for IE.
-  
-  if (navigator.appName == 'Microsoft Internet Explorer')
-  {
-    $('start_button').disabled = false;
-  }
 }
 
 document.observe('dom:loaded', function() 
@@ -74,7 +65,7 @@ document.observe('dom:loaded', function()
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = outer*chunk_size + inner -%>
-           <td onclick='selection("avatar", "<%=index-%>");'>
+           <td onclick='start_selection("avatar", "<%=index-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
@@ -98,7 +89,7 @@ document.observe('dom:loaded', function()
   <div class="panel">
     <span class="choose_title"><%=name.capitalize-%>?</span>
     <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
-      <div onclick='selection("<%=name-%>", "<%=index-%>");'>
+      <div onclick='start_selection("<%=name-%>", "<%=index-%>");'>
         <input id="<%=name-%>_<%=index-%>" 
                type="radio" 
                name="filesets[<%=name-%>]" 
