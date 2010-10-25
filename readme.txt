@@ -64,7 +64,7 @@ I installed support for Objective C as follows
 >sudo apt-get -y install build-essential
 >sudo apt-get install gobjc
 >sudo apt-get install libgnustep-base-dev
-I intalled support for Javascript using Rhino. I downloaded rhino_7R2.zip from 
+I installed support for Javascript using Rhino. I downloaded rhino_7R2.zip from 
 https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
 
