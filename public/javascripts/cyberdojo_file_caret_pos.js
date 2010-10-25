@@ -27,7 +27,7 @@ function setLiveCaretPos(pos)
     control.focus();
     control.setSelectionRange(pos, pos);
   }
-  else if (ctrl.createTextRange) 
+  else if (control.createTextRange) 
   {
     var range = control.createTextRange();
     range.collapse(true);
