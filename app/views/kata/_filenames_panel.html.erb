@@ -17,14 +17,7 @@ else {
     addEvent = new Function; // not supported
 }
 
-document.observe('dom:loaded', function() 
-{
-  addEvent($('file_op_new'),    'click', newFile, false); 
-  addEvent($('file_op_rename'), 'click', renameFile, false);
-  addEvent($('file_op_delete'), 'click', deleteFile, false);
-});
 //--></script>
-
 
 <div>
 
@@ -65,4 +58,10 @@ document.observe('dom:loaded', function()
 </div>
 
 </div>
+
+<script language="javascript" type="text/javascript"><!--
+addEvent($('file_op_new'),    'click', newFile, false); 
+addEvent($('file_op_rename'), 'click', renameFile, false);
+addEvent($('file_op_delete'), 'click', deleteFile, false);
+//--></script>
 

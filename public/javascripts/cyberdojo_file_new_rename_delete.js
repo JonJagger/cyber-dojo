@@ -3,13 +3,13 @@ function rebuildFilenameList()
 {
   var filenames = allFilenames();
   filenames.sort(function(lhs,rhs) {
-	if (lhs < rhs)
-	  return -1;
-	else if (lhs > rhs)
-	  return 1;
-	else
-	  return 0; // Should never happen
-  });
+	  if (lhs < rhs)
+	    return -1;
+	  else if (lhs > rhs)
+	    return 1;
+	  else
+	    return 0; // Should never happen
+    });
 
   var filename_list = $('filename_list');
   // Remove all children
