@@ -24,6 +24,10 @@ function enable_start_if_all_selected()
     || !selected('filesets[kata]')
     || !selected('filesets[language]');
   
+  // Internet Explorer does not appear to be working with the
+  // td onclick events. This means the start button is never
+  // enabled. Work around this by enabling start for IE.
+  
   if (navigator.appName == 'Microsoft Internet Explorer')
   {
     $('start_button').disabled = false;
