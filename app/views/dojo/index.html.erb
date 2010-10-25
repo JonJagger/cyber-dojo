@@ -20,10 +20,10 @@
           <input type="submit"
                  id="new_button"
                  name="new"
-                 value="Create your CyberDojo">
+                 value="Create your CyberDojo" />
           <input type="text"
                  name="name"
-                 value="what's its name?">
+                 value="what's its name?" />
           <% if flash[:new_notice] -%>
             <span class="notice"><%= flash[:new_notice] -%></span>
           <% end -%>
@@ -35,10 +35,10 @@
           <input type="submit"
                  name="enter"
                  id="enter_button"
-                 value="Enter your CyberDojo">
+                 value="Enter your CyberDojo" />
           <input type="text"
                  name="name"
-                 value="<%=@name-%>">
+                 value="<%=@name-%>" />
           <% if flash[:enter_notice] -%>
             <span class="notice"><%= flash[:enter_notice] -%></span>
           <% end -%>

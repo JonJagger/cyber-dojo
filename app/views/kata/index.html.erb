@@ -70,7 +70,7 @@ document.observe('dom:loaded', function()
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
-                    value="<%=avatar.downcase-%>">
+                    value="<%=avatar.downcase-%>" />
 
                <img alt="<%=avatar-%>" 
                     src="/images/avatars/<%=avatar.downcase-%>.jpg"
@@ -94,7 +94,7 @@ document.observe('dom:loaded', function()
         <input id="<%=name-%>_<%=index-%>" 
                type="radio" 
                name="filesets[<%=name-%>]" 
-               value="<%=choice-%>">
+               value="<%=choice-%>" />
         <%= choice -%>
       </div>    
     <% end -%>    
@@ -107,7 +107,7 @@ document.observe('dom:loaded', function()
        type="submit" 
        value="Start" 
        name="start" 
-       disabled>
+       disabled />
 </td>
 
 </tr>
