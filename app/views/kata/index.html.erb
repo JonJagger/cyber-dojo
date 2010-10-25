@@ -2,13 +2,23 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-function start_selection(name, index)
+var Start = {}
+        
+Start.selection = function(name, index)
 {
   $(name + '_' + index).checked = true; 
-  enable_start_if_all_selected();
+  Start.enable_start_if_all_selected();
 }
 
-function selected(name)
+Start.enable_start_if_all_selected = function()
+{
+  $('start_button').disabled = 
+       !selected('avatar')
+    || !Start.selected('filesets[kata]')
+    || !Start.selected('filesets[language]');
+}
+
+Start.selected = function(name)
 {
   radio = document.getElementsByName(name); 
   for (at = 0; at != radio.length; at++)
@@ -17,17 +27,10 @@ function selected(name)
   return false;
 }
 
-function enable_start_if_all_selected()
-{
-  $('start_button').disabled = 
-       !selected('avatar')
-    || !selected('filesets[kata]')
-    || !selected('filesets[language]');
-}
 
 document.observe('dom:loaded', function() 
 {
-  enable_start_if_all_selected();
+  Start.enable_start_if_all_selected();
 });
 
 //--></script>
@@ -65,7 +68,7 @@ document.observe('dom:loaded', function()
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = outer*chunk_size + inner -%>
-           <td onclick='start_selection("avatar", "<%=index-%>");'>
+           <td onclick='Start.selection("avatar", "<%=index-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
@@ -89,7 +92,7 @@ document.observe('dom:loaded', function()
   <div class="panel">
     <span class="choose_title"><%=name.capitalize-%>?</span>
     <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
-      <div onclick='start_selection("<%=name-%>", "<%=index-%>");'>
+      <div onclick='Start.selection("<%=name-%>", "<%=index-%>");'>
         <input id="<%=name-%>_<%=index-%>" 
                type="radio" 
                name="filesets[<%=name-%>]" 

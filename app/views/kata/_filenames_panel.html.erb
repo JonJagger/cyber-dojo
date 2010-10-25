@@ -6,6 +6,7 @@
   <tr>
      <td class="file_op" 
          id="file_op_new"
+         onclick="newFile();"
          disabled="false" >
        <img src="/images/file-new-icon.png"
             alt="new"
@@ -14,8 +15,9 @@
        <span class="file_op_name">new</span>
      </td>
      <td class="file_op" 
-         disabled="false"
-         id="file_op_rename" >
+         id="file_op_rename"         
+         onclick="renameFile();"
+         disabled="false" >
        <img src="/images/file-rename-icon.png"
             alt="rename"
             width="<%=size-%>"
@@ -23,8 +25,9 @@
        <span class="file_op_name">rename</span>
      </td>
      <td class="file_op"
-         disabled="false"
-         id="file_op_delete" >
+         id="file_op_delete"
+         onclick="deleteFile();"
+         disabled="false" >
        <img src="/images/file-delete-icon.png"
             alt="delete"
             width="<%=size-%>"
@@ -39,11 +42,4 @@
 
 </div>
 
-<script language="javascript" type="text/javascript"><!--
- 
-$('file_op_new').onclick = function() { newFile(); }; 
-$('file_op_rename').onclick = function() { renameFile(); };
-$('file_op_delete').onclick = function() { deleteFile(); };
-
-//--></script>
 
