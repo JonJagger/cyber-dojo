@@ -1,12 +1,39 @@
 
+<script language="javascript" type="text/javascript"><!--
+
+var addEvent;
+
+if (document.addEventListener) {
+    addEvent = function(element, type, handler) {
+        element.addEventListener(type, handler, null);
+    }
+}
+else if (document.attachEvent) {
+    addEvent = function(element, type, handler) {
+    element.attachEvent("on" + type, handler);
+    }
+}
+else {
+    addEvent = new Function; // not supported
+}
+
+document.observe('dom:loaded', function() 
+{
+  addEvent($('file_op_new'),    'click', newFile, false); 
+  addEvent($('file_op_rename'), 'click', renameFile, false);
+  addEvent($('file_op_delete'), 'click', deleteFile, false);
+});
+//--></script>
+
+
 <div>
 
 <% size=30 -%>
 <table style="margin-left:0.1em">
   <tr>
      <td class="file_op" 
-         disabled="false"
-         onclick="newFile();">
+         id="file_op_new"
+         disabled="false" >
        <img src="/images/file-new-icon.png"
             alt="new"
             width="<%=size-%>"
@@ -15,8 +42,7 @@
      </td>
      <td class="file_op" 
          disabled="false"
-         id="file_op_rename"
-         onclick="renameFile();">
+         id="file_op_rename" >
        <img src="/images/file-rename-icon.png"
             alt="rename"
             width="<%=size-%>"
@@ -25,8 +51,7 @@
      </td>
      <td class="file_op"
          disabled="false"
-         id="file_op_delete"
-         onclick="deleteFile();">
+         id="file_op_delete" >
        <img src="/images/file-delete-icon.png"
             alt="delete"
             width="<%=size-%>"
