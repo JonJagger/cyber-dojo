@@ -41,11 +41,10 @@ document.observe('dom:loaded', function()
   &nbsp;
 </noscript>
 
-<input readonly 
-       type="hidden"
+<input type="hidden"
        name="dojo" 
        id="dojo" 
-       value="<%=h @dojo.name-%>">
+       value="<%=h @dojo.name-%>" />
 
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
 <h3>
@@ -106,8 +105,7 @@ document.observe('dom:loaded', function()
 <input id="start_button" 
        type="submit" 
        value="Start" 
-       name="start" 
-       disabled />
+       name="start" />
 </td>
 
 </tr>
