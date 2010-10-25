@@ -1,24 +1,4 @@
 
-<script language="javascript" type="text/javascript"><!--
-
-var addEvent;
-
-if (document.addEventListener) {
-    addEvent = function(element, type, handler) {
-        element.addEventListener(type, handler, null);
-    }
-}
-else if (document.attachEvent) {
-    addEvent = function(element, type, handler) {
-    element.attachEvent("on" + type, handler);
-    }
-}
-else {
-    addEvent = new Function; // not supported
-}
-
-//--></script>
-
 <div>
 
 <% size=30 -%>
@@ -60,8 +40,10 @@ else {
 </div>
 
 <script language="javascript" type="text/javascript"><!--
-addEvent($('file_op_new'),    'click', newFile, false); 
-addEvent($('file_op_rename'), 'click', renameFile, false);
-addEvent($('file_op_delete'), 'click', deleteFile, false);
+ 
+$('file_op_new').onclick = function() { newFile(); }; 
+$('file_op_rename').onclick = function() { renameFile(); };
+$('file_op_delete').onclick = function() { deleteFile(); };
+
 //--></script>
 
