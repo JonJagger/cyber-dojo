@@ -23,6 +23,11 @@ function enable_start_if_all_selected()
        !selected('avatar')
     || !selected('filesets[kata]')
     || !selected('filesets[language]');
+  
+  if (navigator.appName == 'Microsoft Internet Explorer')
+  {
+    $('start_button').disabled = false;
+  }
 }
 
 document.observe('dom:loaded', function() 
