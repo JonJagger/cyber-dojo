@@ -2,8 +2,8 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var Start = {}
-        
+var Start = {};
+
 Start.selection = function(name, index)
 {
   $(name + '_' + index).checked = true; 
@@ -13,7 +13,7 @@ Start.selection = function(name, index)
 Start.enable_start_if_all_selected = function()
 {
   $('start_button').disabled = 
-       !selected('avatar')
+       !Start.selected('avatar')
     || !Start.selected('filesets[kata]')
     || !Start.selected('filesets[language]');
 }
@@ -26,7 +26,6 @@ Start.selected = function(name)
       return true;
   return false;
 }
-
 
 document.observe('dom:loaded', function() 
 {
