@@ -3,21 +3,31 @@ var isControl = false;
 
 document.onkeyup = function(e) 
 {
-	if (e.which == 17) 
+	if (keyCode(e) == 17) 
 		isControl = false;
 }
 
 document.onkeydown = function(e)
 {
-	if (e.which == 17) 
+	if (keyCode(e) == 17) 
 		isControl = true;
 	
-	if (e.which == 83 && isControl == true) 
+	if (keyCode(e) == 83 && isControl == true) 
 	{
 		//run code for CTRL+S -- ie, save!
 		alert("There is no Save! Press the play button instead");
 		return false;
 	}
+}
+
+function keyCode(e)
+{
+	var code;
+	if (e.keyCode)
+		code = e.keyCode;
+	else if (e.which)
+		code = e.which;
+	return code;
 }
 
 function runTests()
