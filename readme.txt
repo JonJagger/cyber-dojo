@@ -38,8 +38,9 @@ install and use apache on my CyberDojo server but that is optional.
 
 What will work and what won't work
 ==================================
-Initial filesets for nine languages are provided: C, C++, C#, Objective C, Java, Python, 
-Perl, PHP, and Ruby. Whether you will be able to compile successfully in any of
+Initial filesets for ten languages are provided: C, C++, C#, Objective C, 
+Java, Javascript, Python, Perl, PHP, and Ruby. 
+Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself. 
@@ -63,7 +64,9 @@ I installed support for Objective C as follows
 >sudo apt-get -y install build-essential
 >sudo apt-get install gobjc
 >sudo apt-get install libgnustep-base-dev
-
+I intalled support for Javascript using Rhino. I downloaded rhino_7R2.zip from 
+https://developer.mozilla.org/en/RhinoDownload which contains the necessary
+js.jar file. Rhino runs on top of Java.
 
 
 Dojos

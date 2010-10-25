@@ -59,6 +59,19 @@ private
 		end
 	end
 
+	def self.parse_js_test_simple(output)
+		error_pattern = Regexp.new('Exception in thread "main" org.mozilla')
+		failed_pattern = Regexp.new('FAILED:assertEqual')
+		if error_pattern.match(output)
+			:error
+		elsif failed_pattern.match(output)
+			:failed
+		else
+			:passed
+		end
+	end
+
+
 	def self.parse_python_unittest(output) 
 		failed_pattern = Regexp.new('FAILED \(failures=')
 		passed_pattern = Regexp.new('OK')
