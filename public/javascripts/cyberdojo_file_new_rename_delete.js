@@ -143,9 +143,9 @@ function createFileCaretPosInput(filename, caret_pos)
 }
 
 
-function trim(stringToTrim) 
+function trim(s) 
 {
-  return stringToTrim.replace(/^\s+|\s+$/g,"");
+  return s == null ? null : s.replace(/^\s+|\s+$/g,"");
 }
 
 
