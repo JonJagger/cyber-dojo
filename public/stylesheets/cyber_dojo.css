@@ -65,21 +65,13 @@
 .file_op 
 { 
   padding: 4px; 
+  background-color: #FFE4C4;
+  cursor: pointer;
 } 
 .file_op_name 
 { 
   font-size: 7pt; 
   color: #383838;
-}
-.file_op[disabled="false"] 
-{ 
-  background-color: #FFE4C4;
-  cursor: pointer;
-}
-.file_op[disabled="true"] 
-{ 
-  background-color: #D8D8D8;
-  cursor: default;
 }
 
 .file_op, div[class~="filename"], 

@@ -42,10 +42,6 @@ function newFileContent(filename, content, caret_pos)
   rebuildFilenameList();
   $('visible_files_container').appendChild(createFileCaretPosInput(filename, caret_pos));
 
-  // At least one filename in filename list now
-  $('file_op_rename').setAttribute('disabled', 'false');
-  $('file_op_delete').setAttribute('disabled', 'false');
-
   // Select it so you can immediately rename it
   loadFile(filename);
 }
@@ -77,8 +73,6 @@ function deleteFilePrompt(ask)
   }
   else
   {
-    $('file_op_rename').setAttribute('disabled', 'true'); 
-    $('file_op_delete').setAttribute('disabled', 'true'); 
     current_filename = false;
     $('editor').value = '';
   }
