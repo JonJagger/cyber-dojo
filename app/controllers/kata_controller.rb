@@ -24,7 +24,7 @@ class KataController < ApplicationController
 
   def run_tests
     @dojo = Dojo.new(params[:dojo])
-    avatar = Avatar.new(@dojo, params[:avatar], nil)
+    avatar = Avatar.new(@dojo, params[:avatar])
     kata = avatar.kata
 
     @output = avatar.run_tests(kata, load_visible_files_from_page)

@@ -81,7 +81,7 @@ class Dojo
         File.open(money_ladder_filename, 'w') do |file|
           file.write(ladder.inspect)
         end
-      end      
+      end
     end
     ladder
   end

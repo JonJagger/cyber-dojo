@@ -11,7 +11,7 @@ class Avatar
         raccoons snakes squirrels wolves zebras )
   end
   
-  def initialize(dojo, name, filesets) 
+  def initialize(dojo, name, filesets = nil) 
     @dojo, @name = dojo, name
   	make_dir(folder)
   	if !File.exists?(manifest_filename)

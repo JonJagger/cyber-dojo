@@ -1,3 +1,5 @@
+<% if @dojo.avatars.length > 1 -%>
+
 <div id="money_ladder">
   <table>
     <%= rungs(@money_ladder, "blank") -%>
@@ -8,11 +10,14 @@
       <td colspan="2">
       </td>
       <td class="money_rung total amount">
-        $<%= commatize(@money_ladder[:balance]) -%>      
+        $<%= commatize(@money_ladder[:balance]) -%>
       </td>
       <td>
       </td>
     </tr>
   </table>
 </div>
+
+<% end -%>
+
 
