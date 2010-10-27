@@ -9,6 +9,7 @@ function preRunTests()
   // app/views/kata/view.html.erb
   // form_remote_tag :url => {...}, 
   //                 :before   => "preRunTests();",
+  $('output').setAttribute('class', 'waiting');
 	$('output').value = "Running tests...";
   saveCurrentFile();
   $('play_button').setAttribute('style', 'display:none');

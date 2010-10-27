@@ -140,6 +140,7 @@ div[class~="filename"]
 #output.failed { border-color: #F33; }
 #output.error  { border-color: #FF0; }
 #output.passed { border-color: #3C3; }
+#output.waiting{ border-color: gray; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
