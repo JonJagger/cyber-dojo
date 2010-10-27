@@ -1,3 +1,0 @@
-
-page.replace 'money_ladder', :partial => 'money_ladder'
-

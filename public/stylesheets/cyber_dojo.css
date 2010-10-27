@@ -162,11 +162,8 @@ div[class~="filename"]
 
 .traffic_light
 {
-  background-color: black;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  -webkit-border-radius: 6px;
+  background-color: #EEC591;
+  border: 1px solid #EEC591; 
 }
 
 .increment
@@ -201,40 +198,15 @@ div[class~="filename"]
 
 .increment.off 
 { 
-  background-color: darkgray;
-  border: 1px solid darkgray;
+  background-color: #8B8378; /* darkish gray */
+  border: 1px solid #8B8378;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#money_ladder, #rotation
+##rotation
 {
   margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
 }
-
-.money_rung
-{
-  display: block;
-  margin: 2pt;
-  border: 1px solid #D8D8D8; 
-  color: gray;
-  padding: 0.25em 1em 0.25em 1em; /* Top Right Bottom Left */
-  border-radius: 20px;
-  -moz-border-radius: 20px;
-  -khtml-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  font-size: 1.5em;
-  font-weight: 100;
-  text-align: right;
-}
-
-.money_rung.failed       { background-color: #FF5050; color: white; }
-.money_rung.error        { background-color: #FF0;    color: gray; }
-.money_rung.passed       { background-color: #3C3; }
-.money_rung.passed, .money_rung.total.amount { color: black; }
-
-.money_rung .amount { padding-left: 0.5em; }
-.money_rung .amount:before { content: " "; }
-
 
 

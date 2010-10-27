@@ -15,7 +15,7 @@ class KataController < ApplicationController
     @manifest = {}
     all_increments = @avatar.read_most_recent(@kata, @manifest)
     @increments = limited(all_increments)
-    @money_ladder = @dojo.money_ladder
+    @ladder = @dojo.ladder
     @rotation = @dojo.rotation(params[:avatar])
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
@@ -29,16 +29,16 @@ class KataController < ApplicationController
 
     @output = avatar.run_tests(kata, load_visible_files_from_page)
     @increments = limited(avatar.increments)
-    @money_ladder = @dojo.money_ladder_update(avatar.name, @increments.last)
+    @ladder = @dojo.ladder_update(avatar.name, @increments.last)
     @outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
     end
   end
   
-  def money_ladder
+  def ladder
     @dojo = Dojo.new(params[:dojo])  # @dojo.name needed for bank button
-    @money_ladder = @dojo.money_ladder      
+    @ladder = @dojo.ladder      
     respond_to do |format|
       format.js if request.xhr?
     end

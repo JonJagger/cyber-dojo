@@ -22,8 +22,8 @@
                                            }, 
                                    :frequency => 5 -%>                
                    
-      <%= render :partial => 'money_ladder' -%>
-      <%= periodically_call_remote :url => { :action => 'money_ladder',
+      <%= render :partial => 'ladder' -%>
+      <%= periodically_call_remote :url => { :action => 'ladder',
                                              :dojo => @dojo.name
                                            }, 
                                    :frequency => 5 -%>

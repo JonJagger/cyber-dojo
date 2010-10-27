@@ -72,30 +72,32 @@ class Dojo
   	options
   end
   
-  def money_ladder
-    ladder = default_money_ladder
+  def ladder
+    rungs = []
     io_lock(folder) do
       if File.exists?(money_ladder_filename)
-        ladder = eval IO.read(money_ladder_filename)
+        rungs = eval IO.read(money_ladder_filename)
       else
         File.open(money_ladder_filename, 'w') do |file|
-          file.write(ladder.inspect)
+          file.write(rungs.inspect)
         end
       end
     end
-    ladder
+    ladder_sort(rungs)
   end
 
-  def money_ladder_update(avatar_name, latest_increment)
-    ladder = {}    
+  def ladder_update(avatar_name, latest_increment)
+    rungs = []
     io_lock(folder) do
-      ladder = eval IO.read(money_ladder_filename)         
-      money_ladder_rung_update(ladder, avatar_name, latest_increment)
+      if File.exists?(money_ladder_filename)
+        rungs = eval IO.read(money_ladder_filename)
+      end
+      ladder_rung_update(rungs, avatar_name, latest_increment)
       File.open(money_ladder_filename, 'w') do |file|
-        file.write(ladder.inspect) 
+        file.write(rungs.inspect) 
       end
     end
-    ladder
+    ladder_sort(rungs)
   end
  
 private
@@ -105,37 +107,18 @@ private
   end
 
   def money_ladder_filename
-    folder + '/' + 'money_ladder.rb'
+    folder + '/' + 'ladder.rb'
   end  
   
   Root_folder = RAILS_ROOT + '/' + 'dojos'
     
-  def default_money_ladder
-    { :balance => 0,
-      :offer => 0,
-      :failed_rungs => [],
-      :error_rungs => [],
-      :passed_rungs => [],
-      :blank_rungs => [],
-    }
+  def ladder_rung_update(ladder, avatar, inc)
+    ladder.delete_if { |rung| rung[:avatar] == avatar } 
+    ladder << { :avatar => avatar, :time => inc[:time], :outcome => inc[:outcome] }
   end
-   
-  def money_ladder_rung_update(ladder, avatar, inc)
-  	# remove this avatar's entry from the ladder
-    ladder[:failed_rungs].delete_if { |rung| rung[:avatar] == avatar }
-    ladder[ :error_rungs].delete_if { |rung| rung[:avatar] == avatar }
-    ladder[:passed_rungs].delete_if { |rung| rung[:avatar] == avatar }
-    ladder[ :blank_rungs].delete_if { |rung| rung[:avatar] == avatar }
-    # and add it back into the ladder in it's updated state
-    new_rung = { :avatar => avatar, :time => inc[:time] }
-    ladder[:failed_rungs] << new_rung if inc[:outcome] == :failed
-    ladder[ :error_rungs] << new_rung if inc[:outcome] == :error
-    ladder[:passed_rungs] << new_rung if inc[:outcome] == :passed
-
-    ladder[:balance] +=
-        (ladder[:error_rungs].size + 8) +
-        (ladder[:failed_rungs].size * 8) +
-        (ladder[:passed_rungs].size ** 8)
+  
+  def ladder_sort(rungs)
+  	rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
   end
   
 end
