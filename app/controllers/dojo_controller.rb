@@ -2,7 +2,7 @@
 class DojoController < ApplicationController
 
   def index
-  	@name = params['name']
+  	@name = params['name'] || "MyCyberDojoName"
     # offers new/enter
   end
  

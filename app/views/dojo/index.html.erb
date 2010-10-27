@@ -1,29 +1,30 @@
 
-<h1>CyberDojo - Practising the <em><u>collaborative</u></em> game called software development.</h1>
+<h1>CyberDojo</h1>
+<h3>Practising the <em>collaborative</em> game called software development</h3>
 
 <table><tr>
 
 <td valign="top" class="panel">
-<b>What is CyberDojo?</b>
-<br/>CyberDojo is a <em>browser-based</em> code-dojo (a "dojo" is simply "a place to practice").
-<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you write code and tests in a simple editor <em>inside</em> a browser 
+CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to practice'">dojo</span>
+<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you write your code and tests in a simple editor inside a browser 
 <br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you click a button and the CyberDojo server runs your tests
+<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;that's it! nothing needs to be installed
 </td>
 </tr>
 
 <tr>
 <td valign="top" class="panel">
-<b>Try it right now...</b>
-  
-     <form name="dojoNew" action="/dojo/new">
-        <div>First,
+  <form name="dojoNew" action="/dojo/new">
+    First... 
+    <div>pick a name
+          <input type="text"
+                 name="name"
+                 value="<%=@name-%>" />
+          and click
           <input type="submit"
                  id="new_button"
                  name="new"
-                 value="Create your CyberDojo" />
-          <input type="text"
-                 name="name"
-                 value="what's its name?" />
+                 value="Create my CyberDojo" />
           <% if flash[:new_notice] -%>
             <span class="notice"><%= flash[:new_notice] -%></span>
           <% end -%>
@@ -31,14 +32,16 @@
       </form>
       
       <form name="dojoEnter" action="/dojo/enter">
-        <div>Then, each computer must
-          <input type="submit"
-                 name="enter"
-                 id="enter_button"
-                 value="Enter your CyberDojo" />
+      Then, <em>each</em> computer must...
+        <div>type the name
           <input type="text"
                  name="name"
                  value="<%=@name-%>" />
+          and click
+          <input type="submit"
+                 name="enter"
+                 id="enter_button"
+                 value="Enter my CyberDojo" />
           <% if flash[:enter_notice] -%>
             <span class="notice"><%= flash[:enter_notice] -%></span>
           <% end -%>
@@ -48,38 +51,21 @@
 
 <tr>
 <td valign="top" class="panel">
-<b>How is a CyberDojo organized?</b>
-<br/>CyberDojo is designed to encourage <em>collaboration</em> (but feel free to try it alone).
-<br/>&nbsp;&bull;&nbsp;gather some geek friends and split into groups - at least two people per group
-<br/>&nbsp;&bull;&nbsp;if there are N groups you will need N computers, each with a modern browser
-<br/>&nbsp;&nbsp;&nbsp;(Chrome, Firefox, Opera, Safari, IE8) and internet connectivity
-</td>
-</tr>
-
-<tr>
-<td valign="top" class="panel">
-<b>What are the rules?</b>
-<br/>CyberDojo is also designed to encourage <em>dojo-level collaboration</em>.
+CyberDojo is designed to encourage <em>collaboration</em> and is most effective if you
+<br/>&nbsp;&bull;&nbsp;gather some geek friends and split into groups with two or more people per group
+<br/>&nbsp;&nbsp;&nbsp;allocate one computer to each group and point each computer's browser to this page
 <br/>&nbsp;&bull;&nbsp;every 5 minutes you will be asked to rotate
-<br/>&nbsp;&bull;&nbsp;<em>all</em> keyboard-drivers must put the mouse down, step away 
-<br/>&nbsp;&nbsp;&nbsp;from the keyboard, and take up a non-driver role at one of the <em>other</em> computers
-</td>
-</tr>
-
-<tr>
-<td valign="top" class="panel">
-<b>What is the aim of the game?</b>
-<br/><em>Everyone</em> must work <em>collectively</em> towards:
-<br/>&nbsp;&bull;&nbsp;a working solution on <em>all</em> computers, and...
-<br/>&nbsp;&bull;&nbsp;acquiring as many points as possible (the more computers simultaneously passing  
-<br/>&nbsp;&nbsp;&nbsp;all their tests the more points acquired)  
+<br/>&nbsp;&nbsp;&nbsp;keyboard-drivers must then take up a non-driver role at a <em>different</em> computer
+<br/>&nbsp;&bull;&nbsp;the aim is to work <em>collectively</em> towards working solutions on <em>all</em> computers
 </td>
 </tr>
 
 </table>
+CyberDojo supports C, C++, C#, Java, Javascript, Objective C, Perl, PHP, Python, Ruby
+<br/>
 CyberDojo was conceived and implemented by <a href="http://www.jaggersoft.com">Jon Jagger</a>.
 <br/>
-CyberDojo server software is open source on Github at <a href="http://github.com/JonJagger/cyberdojo">http://github.com/JonJagger/cyberdojo</a>.
+CyberDojo is open sourced on Github at <a href="http://github.com/JonJagger/cyberdojo">http://github.com/JonJagger/cyberdojo</a>.
 <br/>
 CyberDojo information at <a href="http://jonjagger.blogspot.com/p/cyberdojo.html">http://jonjagger.blogspot.com/p/cyberdojo.html</a>.
 <br/>
