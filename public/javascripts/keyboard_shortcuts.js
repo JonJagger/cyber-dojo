@@ -223,6 +223,6 @@ shortcut = {
 }
 
 shortcut.add("Ctrl+S",function() {
-	alert("There is no save!\nPress >Play instead.");
+	runTests();	
 });
 

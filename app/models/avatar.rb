@@ -125,12 +125,11 @@ private
   end
 
   def welcome_text
-    [ "<------ THIS TRIANGLE IS THE 'PLAY' BUTTON.",
+    [ "<----- Click this 'play' button (keyboard shortcut Control S) to run the",
+      '       tests on the CyberDojo server (it executes the cyberdojo.sh file)',
+      '       and display the outcome here.',
       '',
-      "Clicking the 'play' button runs the tests on the CyberDojo server and",
-      'displays the outcome here (it executes the cyberdojo.sh file).',
-      '',
-      'The radio-buttons on the left provide access to all files.',
+      '       Click the radio-buttons on the left to open files in the editor.',
     ].join("\n")
   end
 

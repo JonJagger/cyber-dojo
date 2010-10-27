@@ -1,7 +1,7 @@
 
 function runTests()
-{
-  $('play_button').click();
+{	
+  $('play_button_inner').click();
 }
 
 function preRunTests()
@@ -9,6 +9,7 @@ function preRunTests()
   // app/views/kata/view.html.erb
   // form_remote_tag :url => {...}, 
   //                 :before   => "preRunTests();",
+	$('output').value = "Running tests...";
   saveCurrentFile();
   $('play_button').setAttribute('style', 'display:none');
   $('run_tests_spinner').setAttribute('style', 'visibility:visible');
