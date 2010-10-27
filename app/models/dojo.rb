@@ -75,10 +75,10 @@ class Dojo
   def ladder
     rungs = []
     io_lock(folder) do
-      if File.exists?(money_ladder_filename)
-        rungs = eval IO.read(money_ladder_filename)
+      if File.exists?(ladder_filename)
+        rungs = eval IO.read(ladder_filename)
       else
-        File.open(money_ladder_filename, 'w') do |file|
+        File.open(ladder_filename, 'w') do |file|
           file.write(rungs.inspect)
         end
       end
@@ -89,11 +89,11 @@ class Dojo
   def ladder_update(avatar_name, latest_increment)
     rungs = []
     io_lock(folder) do
-      if File.exists?(money_ladder_filename)
-        rungs = eval IO.read(money_ladder_filename)
+      if File.exists?(ladder_filename)
+        rungs = eval IO.read(ladder_filename)
       end
       ladder_rung_update(rungs, avatar_name, latest_increment)
-      File.open(money_ladder_filename, 'w') do |file|
+      File.open(ladder_filename, 'w') do |file|
         file.write(rungs.inspect) 
       end
     end
@@ -106,7 +106,7 @@ private
   	folder + '/' + 'rotation.rb'
   end
 
-  def money_ladder_filename
+  def ladder_filename
     folder + '/' + 'ladder.rb'
   end  
   
