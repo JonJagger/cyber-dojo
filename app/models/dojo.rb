@@ -77,10 +77,6 @@ class Dojo
     io_lock(folder) do
       if File.exists?(ladder_filename)
         rungs = eval IO.read(ladder_filename)
-      else
-        File.open(ladder_filename, 'w') do |file|
-          file.write(rungs.inspect)
-        end
       end
     end
     ladder_sort(rungs)
