@@ -4,10 +4,15 @@
 
 var Start = {};
 
-Start.selection = function(name, index)
+Start.selection = function(name, index, choice)
 {
   $(name + '_' + index).checked = true; 
   Start.enable_start_if_all_selected();
+  
+  if (name == 'kata')
+  {     
+  	 $('kata_info').value = $('kata[' + choice + ']').value;
+  }
 }
 
 Start.enable_start_if_all_selected = function()
@@ -52,28 +57,25 @@ document.observe('dom:loaded', function()
 <h3>
 </h3>
 
-<table>
-<tr>
-<td>
-
 <table class="panel" >
   <tr><th><span class="choose_title">Avatar?</span></th></tr>
   <tr>    
     <td valign="top">
-      <% chunk_size = 5 -%>
+      <% chunk_size = 2 -%>
       <% chunks = chunk_array(@avatars.sort, chunk_size) -%>
       <table>
         <% chunks.each_with_index do |chunk,outer| -%>
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
-           <% index = outer*chunk_size + inner -%>
+           <% index = inner*chunk_size + outer -%>
            <td onclick='Start.selection("avatar", "<%=index-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
                     value="<%=avatar.downcase-%>" />
-
                <img alt="<%=avatar-%>" 
+                    width='50'
+                    height='50'
                     src="/images/avatars/<%=avatar.downcase-%>.jpg"
                     title="<%=avatar.humanize-%>" />
            </td>
@@ -84,14 +86,45 @@ document.observe('dom:loaded', function()
     </td>
   </tr>
 </table>
+
+
+<% name = 'kata' -%>
+<table>
+<tr>
+<td valign="top">
+<table class="panel">
+<tr>
+<td valign="top">
+   <span class="choose_title"><%=name.capitalize-%>?</span>
+   <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
+     <div onclick='Start.selection("<%=name-%>", "<%=index-%>", "<%=choice-%>");'>
+       <input id="<%=name-%>_<%=index-%>" 
+              type="radio" 
+              name="filesets[<%=name-%>]" 
+              value="<%=choice-%>" />
+       <%= choice -%>
+     </div>    
+   <% end -%>    
+</td>
+<td>
+   <textarea name="kata_info" 
+             id="kata_info"
+             cols="62" 
+             rows="28">
+   </textarea>
+</td>
+</tr>
+</table>
 </td>
 
-<% @filesets.each do |name| -%>
 <td valign="top">
-  <div class="panel">
+<% name = 'language' -%>
+<table class="panel">
+<tr>
+<td>
     <span class="choose_title"><%=name.capitalize-%>?</span>
     <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
-      <div onclick='Start.selection("<%=name-%>", "<%=index-%>");'>
+      <div onclick='Start.selection("<%=name-%>", "<%=index-%>", "<%=choice-%>");'>
         <input id="<%=name-%>_<%=index-%>" 
                type="radio" 
                name="filesets[<%=name-%>]" 
@@ -99,9 +132,10 @@ document.observe('dom:loaded', function()
         <%= choice -%>
       </div>    
     <% end -%>    
-  </div>
 </td>
-<% end -%>
+</tr>
+</table>
+</td>
 
 <td valign="top">
 <input id="start_button" 
@@ -109,9 +143,16 @@ document.observe('dom:loaded', function()
        value="Start" 
        name="start" />
 </td>
-
 </tr>
 </table>
 
 </form>
+
+<% name = 'kata' -%>
+<% FileSet.new(name).choices.each_with_index do |choice,index| -%>
+   <textarea style="display:none;" 
+             name="kata[<%=choice-%>]"
+             id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>
+<% end -%>      
+
 

@@ -5,6 +5,12 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params[:dojo])
     @avatars = Avatar.names   
     @filesets = FileSet.names
+    
+    @kata_info = {}
+    FileSet.new('kata').choices.each do |name|  	
+    	path = RAILS_ROOT + '/' + 'filesets' + '/' + 'kata' + '/' + name + '/' + 'instructions'
+   	  @kata_info[name] = IO.read(path)
+    end    
   end
 
   def view

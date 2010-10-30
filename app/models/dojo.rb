@@ -37,11 +37,10 @@ class Dojo
       mins_per_rotate = 5
       secs_per_rotate = mins_per_rotate * 60
       
-      now = Time.now
-    	due = now + secs_per_rotate
+      now = Time.now    	
       options[:already_rotated] ||= []
       options[:prev_rotation_at] ||= [1966,11,23,0,0,0]      
-      options[:next_rotation_at] ||= [due.year, due.month, due.day, due.hour, due.min, due.sec]
+      options[:next_rotation_at] ||= make_time(due = now + secs_per_rotate)
 
       already_rotated = options[:already_rotated].include?(avatar_name)
       refresh_period = 5 # from view_panel.html.erb :frequency
@@ -52,9 +51,9 @@ class Dojo
       	# first avatar over the now-line
       	# but don't rotate if we're re-entering a dojo after a long break
         options[:do_now] = (now - due < (2 * refresh_period))
-        options[:prev_rotation_at] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+        options[:prev_rotation_at] = make_time(now)
         due = now + secs_per_rotate
-        options[:next_rotation_at] = [due.year, due.month, due.day, due.hour, due.min, due.sec]
+        options[:next_rotation_at] = make_time(due)
         options[:already_rotated] = [avatar_name]
       elsif !already_rotated && very_recent_rotation
      		# another avatar over the line
@@ -115,6 +114,10 @@ private
   
   def ladder_sort(rungs)
   	rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
+  end
+  
+  def make_time(at)
+  	[at.year, at.month, at.day, at.hour, at.min, at.sec]
   end
   
 end

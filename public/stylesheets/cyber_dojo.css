@@ -23,6 +23,18 @@
 .panel { padding: 1em; padding-top: 0.3em; }
 .notice { color: red; }
 
+#kata_info
+{
+  overflow-y: scroll;
+  padding: 0;
+  padding-left: 5px;
+  margin-left: 40px; /* enough for line-numbers */
+  font-family: monospace;
+  color: white;
+  background-color: #686868;
+}
+
+
 .file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, 
 #start_button, #play_button, #bank_button, #new_button, #enter_button, #dashboard_button, #create_button
 { 
@@ -204,7 +216,7 @@ div[class~="filename"]
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-##rotation
+#rotation
 {
   margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
 }

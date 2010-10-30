@@ -5,7 +5,7 @@ class Avatar
 
   def self.names
     %w( alligators badgers bats bears beavers 
-        buffalos camels deer elephants frogs
+        buffalos camels cheetahs deer elephants frogs
         giraffes gophers gorillas hippos kangaroos
         koalas lemurs lions mooses pandas
         raccoons snakes squirrels wolves zebras )
