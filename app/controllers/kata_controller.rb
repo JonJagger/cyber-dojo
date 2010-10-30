@@ -37,7 +37,7 @@ class KataController < ApplicationController
   end
   
   def ladder
-    @dojo = Dojo.new(params[:dojo])  # @dojo.name needed for bank button
+    @dojo = Dojo.new(params[:dojo])
     @ladder = @dojo.ladder      
     respond_to do |format|
       format.js if request.xhr?
