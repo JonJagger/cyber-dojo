@@ -112,9 +112,9 @@ private
   
   Root_folder = RAILS_ROOT + '/' + 'dojos'
     
-  def ladder_rung_update(ladder, avatar, inc)
-    ladder.delete_if { |rung| rung[:avatar] == avatar } 
-    ladder << { :avatar => avatar, :time => inc[:time], :outcome => inc[:outcome] }
+  def ladder_rung_update(rungs, avatar, inc)
+    rungs.delete_if { |rung| rung[:avatar] == avatar } 
+    rungs << { :avatar => avatar, :time => inc[:time], :outcome => inc[:outcome] }
   end
   
   def ladder_sort(rungs)
