@@ -1,3 +1,4 @@
 
+page.replace 'ladder', :partial => 'ladder'
 page.replace 'rotation', :partial => 'rotation'
 

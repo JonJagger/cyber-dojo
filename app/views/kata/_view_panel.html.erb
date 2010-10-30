@@ -16,17 +16,7 @@
     </td>
     <td rowspan=2>
       <%= render :partial => 'rotation' -%>
-      <%= periodically_call_remote :url => { :action => 'rotation',
-                                             :dojo => @dojo.name,
-                                             :avatar => @avatar.name
-                                           }, 
-                                   :frequency => 5 -%>                
-                   
       <%= render :partial => 'ladder' -%>
-      <%= periodically_call_remote :url => { :action => 'ladder',
-                                             :dojo => @dojo.name
-                                           }, 
-                                   :frequency => 5 -%>
     </td>
   </tr>
   <tr valign="top">
@@ -51,4 +41,10 @@
 </table>
 
 
+<%= periodically_call_remote :url => { :action => 'heartbeat',
+                                       :dojo => @dojo.name,
+                                       :avatar => @avatar.name
+                                     }, 
+                             :frequency => 5 -%>                
+                   
 

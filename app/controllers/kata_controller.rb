@@ -36,22 +36,15 @@ class KataController < ApplicationController
     end
   end
   
-  def ladder
+  def heartbeat
     @dojo = Dojo.new(params[:dojo])
+  	@rotation = @dojo.rotation(params[:avatar])
     @ladder = @dojo.ladder      
     respond_to do |format|
       format.js if request.xhr?
     end
   end
-
-  def rotation
-  	dojo = Dojo.new(params[:dojo])
-  	@rotation = dojo.rotation(params[:avatar])
-    respond_to do |format|
-      format.js if request.xhr?
-    end  	
-  end
-  
+   
 private
 
   def dequote(filename)
