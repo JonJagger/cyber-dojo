@@ -3,8 +3,13 @@ module LadderHelper
 	
 	def rungs(ladder)
 		html = '<table>'
-		ladder.each do |rung|
-			html += one_rung(rung) 
+		chunks = chunk_array(ladder, 8)
+		chunks.each do |chunk|
+			html += '<tr>'
+			chunk.each do |rung|
+				html += one_rung(rung)
+			end
+			html += '</tr>'
 		end
 		html += '</table>'
 	end
@@ -30,8 +35,7 @@ module LadderHelper
   def one_rung(rung)
   	size = 45
   	
-    ['<tr>',
-       '<td>',
+    [  '<td>',
          "<img src='/images/avatars/#{rung[:avatar]}.jpg'",
               "width='#{size}'",
               "height='#{size}'",
@@ -43,8 +47,8 @@ module LadderHelper
               "width='#{size}'",
               "height='#{size}'",
               "title='#{rung[:avatar]}' />",
-       '</td>',
-     '</tr>'   
+       '</td>',  
+       '<td>&nbsp;</td>'
      ].join("\n")
   end
 
