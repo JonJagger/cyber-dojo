@@ -20,6 +20,12 @@ function createTextAreaWithLineNumbers(id)
   el.style.position = 'absolute';
   el.style.overflow = 'hidden';
   el.style.textAlign = 'right';
+  // When the textarea has the focus the browser highlights it typically by
+  // adding a small extra faint margin. Counteract this by reducing the
+  // margin. This means the textarea editor and its accompanying line numbers
+  // have better horizontal alignment.
+  el.style.marginTop       = '-1px';
+  el.style.marginBottom    = '-1px';
   el.style.width    = '33px';
   el.style.paddingRight = '0.2em';
   el.innerHTML      = string;  // Firefox renders \n linebreak

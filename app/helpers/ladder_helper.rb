@@ -33,7 +33,7 @@ module LadderHelper
 	end
 	
   def one_rung(rung)
-  	size = 45
+  	size = 55
   	
     [  '<td>',
          "<img src='/images/avatars/#{rung[:avatar]}.jpg'",

@@ -35,8 +35,8 @@
 }
 
 
-.file_op, .panel, div[class~="filename"], #dashboard, #dashboard_cell, 
-#start_button, #play_button, #bank_button, #new_button, #enter_button, #dashboard_button, #create_button
+.file_op, .panel, div[class~="filename"],  
+#start_button, #play_button, #new_button, #enter_button, #create_button
 { 
   border: 1px solid #A8A8A8;
   border-radius: 6px;
@@ -45,7 +45,7 @@
   -webkit-border-radius: 6px;
 }
 
-#start_button, #play_button, #bank_button, #new_button, #enter_button, #dashboard_button, #create_button
+#start_button, #play_button, #new_button, #enter_button, #create_button
 { 
   font-size: 1em;
   cursor: pointer;
@@ -87,7 +87,7 @@
 }
 
 .file_op, div[class~="filename"], 
-#bank_button, #start_button, #play_button, #new_button, #enter_button, #dashboard_button, #create_button
+#start_button, #play_button, #new_button, #enter_button, #create_button
 {
   color: #383838;
   border-bottom: 2px solid gray; /* fake button look */
@@ -109,7 +109,7 @@ div[class~="filename"]
 {
   font-weight: bold;
   font-size: 11pt;
-  border: 1px solid #666;
+  border: 0;
   margin: 0;
 }
 
@@ -130,10 +130,10 @@ div[class~="filename"]
   display: block;
   color: #686868;
   background: #aaa;
-  border-radius: 6px 0px 0px 6px;
-  -moz-border-radius: 6px 0px 0px 6px;
-  -khtml-border-radius: 6px 0px 0px 6px;
-  -webkit-border-radius: 6px 0px 0px 6px;
+  xborder-radius: 6px 0px 0px 6px;
+  x-moz-border-radius: 6px 0px 0px 6px;
+  x-khtml-border-radius: 6px 0px 0px 6px;
+  x-webkit-border-radius: 6px 0px 0px 6px;
 }
 
 #avatar_pair
@@ -146,29 +146,13 @@ div[class~="filename"]
 { 
   margin-top: 0.5em;
   padding: 0.5em;
-  border: 4px solid;
+  border: 2px solid;
 }
 
 #output.failed { border-color: #F33; }
 #output.error  { border-color: #FF0; }
 #output.passed { border-color: #3C3; }
 #output.waiting{ border-color: gray; }
-
-/* - - - - - - - - - - - - - - - - - - - - */
-
-#dashboard
-{
-  border: 1px solid #C8C8C8;
-  margin: 0.3em;
-  padding: 0.3em;
-}
-
-
-#dashboard_cell { padding: 0.1em; }
-
-#dashboard_cell.new_failed { background-color: #F33; /* red */    }
-#dashboard_cell.new_error  { background-color: #FF0; /* yellow */ }
-#dashboard_cell.new_passed { background-color: #3C3; /* green */  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
