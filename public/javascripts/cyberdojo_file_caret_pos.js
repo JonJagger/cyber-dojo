@@ -35,6 +35,10 @@ function setLiveCaretPos(pos)
     range.moveStart('character', pos);
     range.select();
   }
+  // Trying to use this to scroll the textarea to ensure
+  // the cursor/caret position comes into view.
+  // It works but only if the css style for the textarea is
+  // overflow-y: hidden;
+  control.scrollTop = pos;
 }
-
 
