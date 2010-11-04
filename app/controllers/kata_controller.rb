@@ -19,8 +19,9 @@ class KataController < ApplicationController
     @kata = @avatar.kata
 
     @manifest = {}
-    all_increments = @avatar.read_most_recent(@kata, @manifest)
+    all_increments = @avatar.read_most_recent(@kata, @manifest)    
     @increments = limited(all_increments)
+    @increment_number = all_increments.size
     @ladder = @dojo.ladder
     @rotation = @dojo.rotation(params[:avatar])
     @current_file = @manifest[:current_filename]
@@ -34,7 +35,9 @@ class KataController < ApplicationController
     kata = avatar.kata
 
     @output = avatar.run_tests(kata, load_visible_files_from_page)
-    @increments = limited(avatar.increments)
+    all_increments = avatar.increments
+    @increments = limited(all_increments)
+    @increment_number = all_increments.size    
     @ladder = @dojo.ladder_update(avatar.name, @increments.last)
     @outcome = @increments.last[:outcome]
     respond_to do |format|

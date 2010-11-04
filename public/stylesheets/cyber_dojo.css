@@ -76,7 +76,7 @@
 {
   display: block;
   margin: 0.2em 0em 0.2em 0.2em; /* Top Right Bottom Left */
-  font-size: 9pt;
+  font-size: 0.9em;
   color: #686868;
 }
 
@@ -84,7 +84,7 @@
 {
   display: block;
   margin: 0.2em 0em 0.2em 0.2em; /* Top Right Bottom Left */
-  font-size: 1em;
+  font-size: 1.1em;
   color: #686868;
 }
 
@@ -98,7 +98,7 @@
 } 
 .file_op_name 
 { 
-  font-size: 7pt; 
+  font-size: 9pt; 
   color: #383838;
 }
 
@@ -224,6 +224,12 @@ input[type="radio"]:checked+img
 { 
   background-color: #8B8378; /* darkish gray */
   border: 1px solid #8B8378;
+}
+
+#increment_number
+{
+	float:right;
+	color: #686868;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
