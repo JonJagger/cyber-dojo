@@ -31,14 +31,17 @@ function setLiveCaretPos(pos)
   {
     var range = control.createTextRange();
     range.collapse(true);
-    range.moveEnd('character', pos);
-    range.moveStart('character', pos);
+    range.move('character', pos);
     range.select();
   }
+  else
+  	control.focus();
+  
   // Trying to use this to scroll the textarea to ensure
   // the cursor/caret position comes into view.
-  // It works but only if the css style for the textarea is
-  // overflow-y: hidden;
+  // Doesn't work :-(
+  // Spent a lot of time on this searching google etc.
+  // Haven't found a solution yet.
   control.scrollTop = pos;
 }
 
