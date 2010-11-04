@@ -53,6 +53,14 @@
   background-color: #FFE4C4; 
 }
 
+#start_button[disabled]
+{
+	background-color: lightgray;
+	border: 0;
+	font-style: italic;
+	font-weight: 100;
+}
+
 .choose_title
 {
   text-align: left;
@@ -101,6 +109,19 @@ div[class~="filename"]
   font-size: 11pt;
   cursor: pointer;
   white-space: nowrap;
+}
+
+input[type="radio"]:checked+label
+{
+	font-weight: bold;
+}
+input[type="radio"]+img
+{
+	border: 2px solid #FEF5CA;;
+}
+input[type="radio"]:checked+img
+{
+	border: 2px solid green;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */

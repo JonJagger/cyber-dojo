@@ -13,6 +13,10 @@ Start.selection = function(name, index, choice)
   {     
   	 $('kata_info').value = $('kata[' + choice + ']').value;
   }
+  if (name == 'avatar')
+  {
+  	$('avatar_choice').innerHTML = choice;
+  }
 }
 
 Start.enable_start_if_all_selected = function()
@@ -54,11 +58,9 @@ document.observe('dom:loaded', function()
        value="<%=h @dojo.name-%>" />
 
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
-<h3>
-</h3>
 
 <table class="panel" >
-  <tr><th><span class="choose_title">Avatar?</span></th></tr>
+  <tr><th><span class="choose_title">Avatar? <span id="avatar_choice"></span></span></th></tr>
   <tr>    
     <td valign="top">
       <% chunk_size = 2 -%>
@@ -68,7 +70,7 @@ document.observe('dom:loaded', function()
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = inner*chunk_size + outer -%>
-           <td onclick='Start.selection("avatar", "<%=index-%>");'>
+           <td onclick='Start.selection("avatar", "<%=index-%>", "<%=avatar.humanize-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
@@ -94,6 +96,13 @@ document.observe('dom:loaded', function()
 <td valign="top">
 <table class="panel">
 <tr>
+<td>
+   <textarea name="kata_info" 
+             id="kata_info"
+             cols="62" 
+             rows="28">
+   </textarea>
+</td>
 <td valign="top">
    <span class="choose_title"><%=name.capitalize-%>?</span>
    <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
@@ -102,16 +111,9 @@ document.observe('dom:loaded', function()
               type="radio" 
               name="filesets[<%=name-%>]" 
               value="<%=choice-%>" />
-       <%= choice -%>
+       <label><%= choice -%></label>
      </div>    
    <% end -%>    
-</td>
-<td>
-   <textarea name="kata_info" 
-             id="kata_info"
-             cols="62" 
-             rows="28">
-   </textarea>
 </td>
 </tr>
 </table>
@@ -129,7 +131,7 @@ document.observe('dom:loaded', function()
                type="radio" 
                name="filesets[<%=name-%>]" 
                value="<%=choice-%>" />
-        <%= choice -%>
+        <label><%= choice -%></label>
       </div>    
     <% end -%>    
 </td>
