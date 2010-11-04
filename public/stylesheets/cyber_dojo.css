@@ -53,14 +53,6 @@
   background-color: #FFE4C4; 
 }
 
-#start_button[disabled]
-{
-	background-color: lightgray;
-	border: 0;
-	font-style: italic;
-	font-weight: 100;
-}
-
 .choose_title
 {
   text-align: left;

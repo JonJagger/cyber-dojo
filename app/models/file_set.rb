@@ -14,6 +14,10 @@ class FileSet
   	Dir.entries(Root_folder).select { |name| name != '.' and name != '..' }
   end
 
+  def self.random(name)
+  	FileSet.new(name).choices[0]
+  end
+  
   def initialize(name)
   	@name = name
   end

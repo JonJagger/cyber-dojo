@@ -7,7 +7,6 @@ var Start = {};
 Start.selection = function(name, index, choice)
 {
   $(name + '_' + index).checked = true; 
-  Start.enable_start_if_all_selected();
   
   if (name == 'kata')
   {     
@@ -18,28 +17,6 @@ Start.selection = function(name, index, choice)
   	$('avatar_choice').innerHTML = choice;
   }
 }
-
-Start.enable_start_if_all_selected = function()
-{
-  $('start_button').disabled = 
-       !Start.selected('avatar')
-    || !Start.selected('filesets[kata]')
-    || !Start.selected('filesets[language]');
-}
-
-Start.selected = function(name)
-{
-  radio = document.getElementsByName(name); 
-  for (at = 0; at != radio.length; at++)
-    if (radio[at].checked)
-      return true;
-  return false;
-}
-
-document.observe('dom:loaded', function() 
-{
-  Start.enable_start_if_all_selected();
-});
 
 //--></script>
 
@@ -100,7 +77,7 @@ document.observe('dom:loaded', function()
    <textarea name="kata_info" 
              id="kata_info"
              cols="62" 
-             rows="28">
+             rows="24">
    </textarea>
 </td>
 <td valign="top">
@@ -147,6 +124,8 @@ document.observe('dom:loaded', function()
 </td>
 </tr>
 </table>
+
+If unselected, the server will randomly choose the Avatar, the Kata, and the Language.
 
 </form>
 

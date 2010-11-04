@@ -12,17 +12,37 @@ class Avatar
   end
   
   def initialize(dojo, name, filesets = nil) 
-    @dojo, @name = dojo, name
-  	make_dir(folder)
-  	if !File.exists?(manifest_filename)
-    	@filesets = filesets
-    else
-    	@filesets = eval IO.read(manifest_filename)
-    end
+  	@dojo = dojo
+  	io_lock(@dojo.folder) do
+  		# if name not specified choose an unused one at random
+  		if name == nil
+  			unused = []
+  			Avatar.names.each do |one|
+  				if !File.exists?(@dojo.folder + '/' + one + '/' + 'manifest.rb')
+  					unused += [one]
+  				end
+  			end  			
+  			@name = unused.shuffle[0]
+  		else
+  			@name = name
+  		end
+  		# if kata or language not specified choose one at random
+  		filesets ||= {}
+  		filesets['kata'] ||= FileSet.random('kata')
+  		filesets['language'] ||= FileSet.random('language')
+  	
+			# if already started with given avatar, retain its original filesets
+			if File.exists?(manifest_filename)
+				@filesets = eval IO.read(manifest_filename)
+			else
+				@filesets = filesets
+			end
 		    
-    File.open(manifest_filename, 'w') do |fd| 
-   	  fd.write(@filesets.inspect) 
-	  end
+  		make_dir(folder)  		
+			File.open(manifest_filename, 'w') do |fd| 
+				fd.write(@filesets.inspect) 
+			end
+		end
   end
 
   def name
