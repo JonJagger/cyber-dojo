@@ -7,11 +7,11 @@ class Kata
   end
   
   def filesets
-  	@filesets
+    @filesets
   end
 
   def max_run_tests_duration
- 	# default max_run_tests_duration = 10 seconds
+  # default max_run_tests_duration = 10 seconds
     (@manifest[:max_run_tests_duration] || 10).to_i      
   end
 
@@ -38,14 +38,14 @@ class Kata
 
 private
 
-def read_manifest(filesets)
+  def read_manifest(filesets)
     manifest = {}
     manifest[:visible] = {}
     manifest[:hidden_filenames] = []
     manifest[:hidden_pathnames] = []
     
     filesets.each do |name,value|
-    	FileSet.read(manifest, name + '/' + value)
+      FileSet.read(manifest, name + '/' + value)
     end
     
     manifest

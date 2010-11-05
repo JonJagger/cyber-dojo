@@ -15,7 +15,7 @@ class FileSet
   end
 
   def self.random(name)
-  	FileSet.new(name).choices[0]
+    FileSet.new(name).choices[0]
   end
   
   def initialize(name)

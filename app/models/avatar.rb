@@ -12,25 +12,25 @@ class Avatar
   end
   
   def initialize(dojo, name, filesets = nil) 
-  	@dojo = dojo
-  	io_lock(@dojo.folder) do
-  		@name = name || random_unused_avatar
-  		
-  		filesets ||= {}
-  		filesets['kata'] ||= FileSet.random('kata')
-  		filesets['language'] ||= FileSet.random('language')
-  	
-			if File.exists?(manifest_filename)
-				@filesets = eval IO.read(manifest_filename)
-			else
-				@filesets = filesets
-			end
-		    
-  		make_dir(folder)  		
-			File.open(manifest_filename, 'w') do |fd| 
-				fd.write(@filesets.inspect) 
-			end
-		end
+    @dojo = dojo
+    io_lock(@dojo.folder) do
+      @name = name || random_unused_avatar
+      
+      filesets ||= {}
+      filesets['kata'] ||= FileSet.random('kata')
+      filesets['language'] ||= FileSet.random('language')
+    
+      if File.exists?(manifest_filename)
+        @filesets = eval IO.read(manifest_filename)
+      else
+        @filesets = filesets
+      end
+        
+      make_dir(folder)      
+      File.open(manifest_filename, 'w') do |fd| 
+        fd.write(@filesets.inspect) 
+      end
+    end
   end
   
   def name
@@ -38,7 +38,7 @@ class Avatar
   end
 
   def kata
-  	Kata.new(@filesets)
+    Kata.new(@filesets)
   end
   
   def increments
@@ -65,7 +65,7 @@ class Avatar
 private
 
   def manifest_filename
-  	folder + '/' + 'manifest.rb'
+    folder + '/' + 'manifest.rb'
   end
   
   def increments_filename
@@ -73,7 +73,7 @@ private
   end
 
   def random_unused_avatar
-		Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
+    Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
     
   def save(manifest, test_info)    
@@ -82,7 +82,7 @@ private
     dst_folder = folder + '/' + my_increments.length.to_s
     make_dir(dst_folder)
     File.open(dst_folder + '/manifest.rb', 'w') do |fd| 
-    	fd.write(manifest.inspect) 
+      fd.write(manifest.inspect) 
     end
 
     now = Time.now
@@ -91,14 +91,14 @@ private
     my_increments << test_info
     
     File.open(increments_filename, 'w') do |file| 
-    	file.write(my_increments.inspect) 
+      file.write(my_increments.inspect) 
     end
     my_increments
   end
 
   def locked_read_most_recent(kata, manifest)
     if !File.exists?(increments_filename) # start
-    	load_manifest_from_kata(manifest, kata)     
+      load_manifest_from_kata(manifest, kata)     
       # Create sandbox and copy hidden files from kata fileset 
       # into sandbox ready for future run_tests
       make_dir(folder + '/sandbox')
@@ -119,18 +119,18 @@ private
         manifest[:current_filename] = restart_manifest[:current_filename]
         manifest[:output] = restart_manifest[:output]
       else
-      	load_manifest_from_kata(manifest, kata)
+        load_manifest_from_kata(manifest, kata)
       end
       my_increments
     end
   end
 
   def load_manifest_from_kata(manifest, kata)
-   	# load manifest with initial fileset
-		manifest[:visible_files] = kata.visible
-		opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
-		manifest[:current_filename] = opening_file
-		manifest[:output] = welcome_text
+    # load manifest with initial fileset
+    manifest[:visible_files] = kata.visible
+    opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
+    manifest[:current_filename] = opening_file
+    manifest[:output] = welcome_text
   end
   
   def welcome_text
@@ -143,8 +143,8 @@ private
   end
 
   def make_dir(dir)
-  	Dir.mkdir(dir) if !File.exists? dir
-	end
+    Dir.mkdir(dir) if !File.exists? dir
+  end
 
 end
 

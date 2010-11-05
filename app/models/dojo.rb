@@ -24,16 +24,16 @@ class Dojo
   end
 
   def rotation(avatar_name)
-  	options = {}
-  	io_lock(folder) do
-  		if File.exists?(rotation_filename)
-  			options = eval IO.read(rotation_filename)
-  		end
-
+    options = {}
+    io_lock(folder) do
+      if File.exists?(rotation_filename)
+        options = eval IO.read(rotation_filename)
+      end
+      
       mins_per_rotate = 5
       secs_per_rotate = mins_per_rotate * 60
       
-      now = Time.now    	
+      now = Time.now      
       options[:already_rotated] ||= []
       options[:prev_rotation_at] ||= [1966,11,23,0,0,0]      
       options[:next_rotation_at] ||= make_time(due = now + secs_per_rotate)
@@ -44,27 +44,27 @@ class Dojo
       due = Time.mktime(*options[:next_rotation_at])
       
       if now > due
-      	# first avatar over the now-line
-      	# but don't rotate if we're re-entering a dojo after a long break
+        # first avatar over the now-line
+        # but don't rotate if we're re-entering a dojo after a long break
         options[:do_now] = (now - due < (2 * refresh_period))
         options[:prev_rotation_at] = make_time(now)
         due = now + secs_per_rotate
         options[:next_rotation_at] = make_time(due)
         options[:already_rotated] = [avatar_name]
       elsif !already_rotated && very_recent_rotation
-     		# another avatar over the line
-     		# but don't re-rotate for the first avatar again
-     	  options[:do_now] = true
-     		options[:already_rotated] << avatar_name	
+        # another avatar over the line
+        # but don't re-rotate for the first avatar again
+        options[:do_now] = true
+        options[:already_rotated] << avatar_name  
       else
-      	options[:do_now] = false
+        options[:do_now] = false
       end
 
       File.open(rotation_filename, 'w') do |file|
         file.write(options.inspect) 
-      end        		
-  	end
-  	options
+      end           
+    end
+    options
   end
   
   def ladder
@@ -94,7 +94,7 @@ class Dojo
 private
 
   def rotation_filename
-  	folder + '/' + 'rotation.rb'
+    folder + '/' + 'rotation.rb'
   end
 
   def ladder_filename
@@ -102,7 +102,7 @@ private
   end  
 
   def exists?(name)
-  	File.exists? folder + '/' + name
+    File.exists? folder + '/' + name
   end
     
   Root_folder = RAILS_ROOT + '/' + 'dojos'
@@ -113,11 +113,11 @@ private
   end
   
   def ladder_sort(rungs)
-  	rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
+    rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
   end
   
   def make_time(at)
-  	[at.year, at.month, at.day, at.hour, at.min, at.sec]
+    [at.year, at.month, at.day, at.hour, at.min, at.sec]
   end
   
 end
