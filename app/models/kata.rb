@@ -11,12 +11,10 @@ class Kata
   end
 
   def max_run_tests_duration
-  # default max_run_tests_duration = 10 seconds
     (@manifest[:max_run_tests_duration] || 10).to_i      
   end
 
   def tab
-    # default tab_size = 4
     " " * (@manifest[:tab_size] || 4)
   end
 
