@@ -4,11 +4,7 @@
 <table cellpadding="2px">
   <tr>
     <% @increments.each do |increment| -%>
-    <td class="mid_tone traffic_light">
-      <div class="<%= increment[:outcome] -%> <%= increment[:r] -%> increment"></div>
-      <div class="<%= increment[:outcome] -%> <%= increment[:y] -%> increment"></div>
-      <div class="<%= increment[:outcome] -%> <%= increment[:g] -%> increment"></div>
-    </td>
+      <%= traffic_light(increment) -%>
     <% end -%>
   </tr>
 </table>

@@ -24,12 +24,12 @@ module LadderHelper
 		red = on_off(outcome, 'failed')
 		yellow = on_off(outcome, 'error')
 		green = on_off(outcome, 'passed')
-		
-		'<div>' + 
-		"<div class='#{outcome} #{red}  increment'></div>" +
-		"<div class='#{outcome} #{yellow} increment'></div>" +
-		"<div class='#{outcome} #{green} increment'></div>" +	
-		'</div>'
+
+    "<td class='mid_tone traffic_light'>" +		
+    		"<div class='#{outcome} #{red}  increment'></div>" +
+	    	"<div class='#{outcome} #{yellow} increment'></div>" +
+	    	"<div class='#{outcome} #{green} increment'></div>" +	
+   	'</td>'
 	end
 	
   def one_rung(rung)
@@ -41,7 +41,7 @@ module LadderHelper
               "height='#{size}'",
               "title='#{rung[:avatar]}' />",
        '</td>',
-       "<td class='mid_tone traffic_light'>#{traffic_light(rung)}</td>",       
+       traffic_light(rung),       
        '<td>',
          "<img src='/images/avatars/#{rung[:avatar]}.jpg'",
               "width='#{size}'",
