@@ -19,7 +19,7 @@ class Avatar
   			unused = []
   			Avatar.names.each do |one|
   				if !File.exists?(@dojo.folder + '/' + one + '/' + 'manifest.rb')
-  					unused += [one]
+  					unused << one
   				end
   			end  			
   			@name = unused.shuffle[0]
@@ -44,7 +44,7 @@ class Avatar
 			end
 		end
   end
-
+  
   def name
     @name
   end
@@ -102,7 +102,7 @@ private
     File.open(dst_folder + '/manifest.rb', 'w') do |fd| 
     	fd.write(manifest.inspect) 
     end
- 
+
     now = Time.now
     test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
     test_info[:number] = my_increments.length
@@ -115,11 +115,7 @@ private
 
   def locked_read_most_recent(kata, manifest)
     if !File.exists?(increments_filename) # start
-    	# load manifest with initial fileset
-      manifest[:visible_files] = kata.visible
-      opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
-      manifest[:current_filename] = opening_file
-      manifest[:output] = welcome_text
+    	load_manifest_from_kata(manifest, kata)     
       # Create sandbox and copy hidden files from kata fileset 
       # into sandbox ready for future run_tests
       make_dir(folder + '/sandbox')
@@ -139,11 +135,21 @@ private
         manifest[:visible_files] = restart_manifest[:visible_files]
         manifest[:current_filename] = restart_manifest[:current_filename]
         manifest[:output] = restart_manifest[:output]
+      else
+      	load_manifest_from_kata(manifest, kata)
       end
       my_increments
     end
   end
 
+  def load_manifest_from_kata(manifest, kata)
+   	# load manifest with initial fileset
+		manifest[:visible_files] = kata.visible
+		opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
+		manifest[:current_filename] = opening_file
+		manifest[:output] = welcome_text
+  end
+  
   def welcome_text
     [ "<----- Click this 'play' button (keyboard shortcut Control S) to run the",
       '       tests on the CyberDojo server (it executes the cyberdojo.sh file)',

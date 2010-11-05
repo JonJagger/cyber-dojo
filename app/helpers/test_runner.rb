@@ -73,7 +73,7 @@ module TestRunner
   # makefile_filter()
   #
   # makefiles are tab sensitive...
-  # The CyberDojo editor intercept tab keys and replaces them with spaces.
+  # The CyberDojo editor intercepts tab keys and replaces them with spaces.
   # Hence this special filter, just for makefiles to convert leading spaces 
   # back to a tab character. 
 
