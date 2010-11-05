@@ -14,24 +14,12 @@ class Avatar
   def initialize(dojo, name, filesets = nil) 
   	@dojo = dojo
   	io_lock(@dojo.folder) do
-  		# if name not specified choose an unused one at random
-  		if name == nil
-  			unused = []
-  			Avatar.names.each do |one|
-  				if !File.exists?(@dojo.folder + '/' + one + '/' + 'manifest.rb')
-  					unused << one
-  				end
-  			end  			
-  			@name = unused.shuffle[0]
-  		else
-  			@name = name
-  		end
-  		# if kata or language not specified choose one at random
+  		@name = name || random_unused_avatar
+  		
   		filesets ||= {}
   		filesets['kata'] ||= FileSet.random('kata')
   		filesets['language'] ||= FileSet.random('language')
   	
-			# if already started with given avatar, retain its original filesets
 			if File.exists?(manifest_filename)
 				@filesets = eval IO.read(manifest_filename)
 			else
@@ -94,6 +82,16 @@ private
     folder + '/' + 'increments_manifest.rb'
   end
 
+  def random_unused_avatar
+		unused = []
+		Avatar.names.each do |name|
+			if !File.exists?(@dojo.folder + '/' + name)
+				unused << name
+			end
+		end  			
+		unused.shuffle[0]
+  end
+    
   def save(manifest, test_info)    
     my_increments = increments
 
