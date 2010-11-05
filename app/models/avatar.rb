@@ -42,30 +42,20 @@ class Avatar
   end
   
   def increments
-	  result = []
-    io_lock(increments_filename) do 
-   	  result = IO.read(increments_filename) 
-    end
-    eval result
+    io_lock(increments_filename) { eval IO.read(increments_filename) }
   end
 
   def read_most_recent(kata, manifest)
-    my_increments = []
-    io_lock(folder) do
-      my_increments = locked_read_most_recent(kata, manifest)
-    end
-    my_increments
+    io_lock(folder) { locked_read_most_recent(kata, manifest) }
   end
 
   def run_tests(kata, manifest)
-    output = ''
     io_lock(folder) do 
       output = TestRunner.avatar_run_tests(self, kata, manifest)
       manifest[:output] = output
       test_info = RunTestsOutputParser.parse(self, kata, output)
       save(manifest, test_info)
     end
-    output
   end
 
   def folder
@@ -99,6 +89,7 @@ private
     test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
     test_info[:number] = my_increments.length
     my_increments << test_info
+    
     File.open(increments_filename, 'w') do |file| 
     	file.write(my_increments.inspect) 
     end

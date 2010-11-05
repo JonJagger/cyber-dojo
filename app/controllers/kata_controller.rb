@@ -34,7 +34,9 @@ class KataController < ApplicationController
     avatar = Avatar.new(@dojo, params[:avatar])
     kata = avatar.kata
 
-    @output = avatar.run_tests(kata, load_visible_files_from_page)
+    manifest = load_visible_files_from_page
+    avatar.run_tests(kata, manifest)
+    @output = manifest[:output]
     all_increments = avatar.increments
     @increments = limited(all_increments)
     @increment_number = all_increments.size    
@@ -44,7 +46,7 @@ class KataController < ApplicationController
       format.js if request.xhr?
     end
   end
-  
+   
   def heartbeat
     @dojo = Dojo.new(params[:dojo])
   	@rotation = @dojo.rotation(params[:avatar])

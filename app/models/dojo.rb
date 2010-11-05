@@ -16,11 +16,7 @@ class Dojo
   end
 
   def avatars
-    alive = []
-    Avatar.names.each do |avatar_name|
-      alive << Avatar.new(self, avatar_name) if File.exists?(folder + '/' + avatar_name)
-    end
-    alive
+    Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) } 
   end
 
   def folder
@@ -104,7 +100,11 @@ private
   def ladder_filename
     folder + '/' + 'ladder.rb'
   end  
-  
+
+  def exists?(name)
+  	File.exists? folder + '/' + name
+  end
+    
   Root_folder = RAILS_ROOT + '/' + 'dojos'
     
   def ladder_rung_update(rungs, avatar, inc)
