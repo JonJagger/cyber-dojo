@@ -1,13 +1,11 @@
 
 <div id="increments_panel">
-
-<table cellpadding="2px">
-  <tr>
-    <% @increments.each do |increment| -%>
-      <%= traffic_light(increment) -%>
-    <% end -%>
-  </tr>
-</table>
-<span id="increment_number"><%= @increment_number.to_s -%></span>
-
+  <table cellpadding="2px">
+    <tr>
+      <% @increments.each do |increment| -%>
+        <%= traffic_light(increment) -%>
+      <% end -%>
+    </tr>
+  </table>
+  <span id="increment_number"><%= @increment_number.to_s -%></span>
 </div>

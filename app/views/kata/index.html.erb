@@ -2,9 +2,7 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var Start = {};
-
-Start.selection = function(name, index, choice)
+function makeSelection(name, index, choice)
 {
   $(name + '_' + index).checked = true; 
   
@@ -37,7 +35,12 @@ Start.selection = function(name, index, choice)
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
 
 <table class="panel" >
-  <tr><th><span class="choose_title">Avatar? <span id="avatar_choice"></span></span></th></tr>
+  <tr>
+    <th>
+      <span class="choose_title">Avatar? <span id="avatar_choice"></span>
+      </span>
+    </th>
+  </tr>
   <tr>    
     <td valign="top">
       <% chunk_size = 2 -%>
@@ -67,62 +70,69 @@ Start.selection = function(name, index, choice)
 </table>
 
 
-<% name = 'kata' -%>
+<!-- In a multi-kata dojo, if you list the kata/language -->
+<!-- filesets alphabetically there is a strong likelihood -->
+<!-- each station will simply pick the first entry. That -->
+<!-- happened at the 2010 NDC conference for example. Listing --> 
+<!-- them in a random order increases the chances stations -->
+<!-- will make different selections, which hopefully will -->
+<!-- increase the potential for collaboration - the game's -->
+<!-- prime directive. --> 
+
 <table>
-<tr>
-<td valign="top">
-<table class="panel">
-<tr>
-<td>
-   <textarea name="kata_info" 
-             id="kata_info"
-             cols="62" 
-             rows="24">
-   </textarea>
-</td>
-<td valign="top">
-   <span class="choose_title"><%=name.capitalize-%>?</span>
-   <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
-     <div onclick='Start.selection("<%=name-%>", "<%=index-%>", "<%=choice-%>");'>
-       <input id="<%=name-%>_<%=index-%>" 
-              type="radio" 
-              name="filesets[<%=name-%>]" 
-              value="<%=choice-%>" />
-       <label><%= choice -%></label>
-     </div>    
-   <% end -%>    
-</td>
-</tr>
-</table>
-</td>
-
-<td valign="top">
-<% name = 'language' -%>
-<table class="panel">
-<tr>
-<td>
-    <span class="choose_title"><%=name.capitalize-%>?</span>
-    <% FileSet.new(name).choices.each_with_index do |choice,index| -%>
-      <div onclick='Start.selection("<%=name-%>", "<%=index-%>", "<%=choice-%>");'>
-        <input id="<%=name-%>_<%=index-%>" 
-               type="radio" 
-               name="filesets[<%=name-%>]" 
-               value="<%=choice-%>" />
-        <label><%= choice -%></label>
-      </div>    
-    <% end -%>    
-</td>
-</tr>
-</table>
-</td>
-
-<td valign="top">
-<input id="start_button" 
-       type="submit" 
-       value="Start" 
-       name="start" />
-</td>
-</tr>
+  <tr>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td>
+            <textarea name="kata_info" 
+                      id="kata_info"
+                      cols="62" 
+                      rows="24">
+            </textarea>
+          </td>
+          <td valign="top">
+            <span class="choose_title">Kata?</span>
+            <% katas = FileSet.new('kata').choices.shuffle -%>
+            <% katas.each_with_index do |choice,index| -%>
+              <div onclick='makeSelection("kata", "<%=index-%>", "<%=choice-%>");'>
+                <input id="kata_<%=index-%>" 
+                       type="radio" 
+                       name="filesets[kata]" 
+                       value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td>
+            <span class="choose_title">Language?</span>
+            <% languages = FileSet.new('language').choices.shuffle -%>
+            <% languages.each_with_index do |choice,index| -%>
+              <div onclick='makeSelection("language", "<%=index-%>", "<%=choice-%>");'>
+                <input id="language_<%=index-%>" 
+                       type="radio" 
+                       name="filesets[language]" 
+                      value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+      <input id="start_button" 
+             type="submit" 
+             value="Start" 
+             name="start" />
+    </td>
+  </tr>
 </table>
 
 If unselected, the server will randomly choose the Avatar, the Kata, and the Language.<br/>
@@ -130,8 +140,7 @@ Kata and Language selection will be ignored for an already started Avatar.
 
 </form>
 
-<% name = 'kata' -%>
-<% FileSet.new(name).choices.each_with_index do |choice,index| -%>
+<% FileSet.new('kata').choices.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 
              name="kata[<%=choice-%>]"
              id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>

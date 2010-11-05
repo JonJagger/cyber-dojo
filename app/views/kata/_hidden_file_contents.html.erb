@@ -3,6 +3,7 @@
 <% # the contents of currently edited file to its input below -%>
 <% # before submitting the form. On the server rails grabs the file contents -%>
 <% # from these hidden inputs and not from the main textarea editor. -%>
+
 <div id="visible_files_container">
   <% @manifest[:visible_files].each do |filename,file| -%>
   <input type="hidden"
