@@ -83,13 +83,7 @@ private
   end
 
   def random_unused_avatar
-		unused = []
-		Avatar.names.each do |name|
-			if !File.exists?(@dojo.folder + '/' + name)
-				unused << name
-			end
-		end  			
-		unused.shuffle[0]
+		Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
     
   def save(manifest, test_info)    
