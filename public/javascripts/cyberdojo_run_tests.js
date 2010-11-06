@@ -1,7 +1,8 @@
 
-function runTests()
+function runTests() 
 {	
-  $('play_button_inner').click();
+  // called from Control-S keyboard shortcut
+  $('play_button').click();
 }
 
 function preRunTests()
