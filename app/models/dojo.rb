@@ -1,10 +1,12 @@
 
 require 'io_lock.rb'
+require 'folders_in.rb'
+require 'make_time.rb'
 
 class Dojo
 
   def self.names
-    Dir.entries(Root_folder).select { |name| name != '.' and name != '..' }
+    folders_in(Root_folder)
   end
 
   def initialize(name)
@@ -93,6 +95,8 @@ class Dojo
  
 private
 
+  Root_folder = RAILS_ROOT + '/' + 'dojos'
+    
   def rotation_filename
     folder + '/' + 'rotation.rb'
   end
@@ -105,8 +109,6 @@ private
     File.exists? folder + '/' + name
   end
     
-  Root_folder = RAILS_ROOT + '/' + 'dojos'
-    
   def ladder_rung_update(rungs, avatar, inc)
     rungs.delete_if { |rung| rung[:avatar] == avatar } 
     rungs << { :avatar => avatar, :time => inc[:time], :outcome => inc[:outcome] }
@@ -114,10 +116,6 @@ private
   
   def ladder_sort(rungs)
     rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
-  end
-  
-  def make_time(at)
-    [at.year, at.month, at.day, at.hour, at.min, at.sec]
   end
   
 end

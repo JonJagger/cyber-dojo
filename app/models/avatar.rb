@@ -1,14 +1,14 @@
 
 require 'io_lock.rb'
+require 'make_time.rb'
 
 class Avatar
 
   def self.names
-    %w( alligators badgers bats bears beavers 
-        buffalos camels cheetahs deer elephants frogs
-        giraffes gophers gorillas hippos kangaroos
-        koalas lemurs lions mooses pandas
-        raccoons snakes squirrels wolves zebras )
+    %w( alligators bats bears buffalos camels cheetahs 
+        deer elephants frogs giraffes gophers gorillas 
+        hippos kangaroos koalas lemurs lions mooses 
+        pandas raccoons snakes squirrels wolves zebras )
   end
   
   def initialize(dojo, name, filesets = nil) 
@@ -27,9 +27,7 @@ class Avatar
       end
         
       make_dir(folder)      
-      File.open(manifest_filename, 'w') do |fd| 
-        fd.write(@filesets.inspect) 
-      end
+      file_write(manifest_filename, @filesets)
     end
   end
   
@@ -78,25 +76,18 @@ private
     
   def save(manifest, test_info)    
     my_increments = increments
-
     dst_folder = folder + '/' + my_increments.length.to_s
     make_dir(dst_folder)
-    File.open(dst_folder + '/manifest.rb', 'w') do |fd| 
-      fd.write(manifest.inspect) 
-    end
-
-    now = Time.now
-    test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
+    file_write(dst_folder + '/manifest.rb', manifest)
+    test_info[:time] = make_time(Time.now)
     test_info[:number] = my_increments.length
     my_increments << test_info
-    
-    File.open(increments_filename, 'w') do |file| 
-      file.write(my_increments.inspect) 
-    end
+    file_write(increments_filename, my_increments)
     my_increments
   end
 
   def locked_read_most_recent(kata, manifest)
+    most_recent = nil
     if !File.exists?(increments_filename) # start
       load_manifest_from_kata(manifest, kata)     
       # Create sandbox and copy hidden files from kata fileset 
@@ -106,14 +97,12 @@ private
         system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
       end
       # Create empty increments file ready to be loaded next time
-      File.open(increments_filename, 'w') do |file| 
-        file.write([].inspect) 
-      end
-      []
+      most_recent = []
+      file_write(increments_filename, most_recent)
     else # restart
-      my_increments = increments
-      if my_increments.length != 0
-        current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
+      most_recent = increments
+      if most_recent.length != 0
+        current_increment_folder = folder + '/' + (most_recent.length - 1).to_s
         restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
         manifest[:visible_files] = restart_manifest[:visible_files]
         manifest[:current_filename] = restart_manifest[:current_filename]
@@ -121,8 +110,8 @@ private
       else
         load_manifest_from_kata(manifest, kata)
       end
-      my_increments
     end
+    most_recent
   end
 
   def load_manifest_from_kata(manifest, kata)
@@ -131,6 +120,12 @@ private
     opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
     manifest[:current_filename] = opening_file
     manifest[:output] = welcome_text
+  end
+
+  def file_write(filename, object)
+    File.open(filename, 'w') do |file| 
+      file.write(object.inspect) 
+    end
   end
   
   def welcome_text

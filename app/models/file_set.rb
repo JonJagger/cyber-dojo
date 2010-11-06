@@ -14,7 +14,7 @@ class FileSet
   end
 
   def choices
-    FileSet.folders_in(Root_folder + '/' + @name)
+    folders_in(Root_folder + '/' + @name)
   end  
   
   def self.read(manifest, file_set_name)
@@ -35,10 +35,6 @@ class FileSet
 private
 
   Root_folder = RAILS_ROOT + '/' + 'filesets'
-
-  def self.folders_in(path)
-    Dir.entries(path).select { |name| name != '.' and name != '..' }
-  end    
 
   def self.read_visible(file_set_folder, filenames)
     visible_files = {}
