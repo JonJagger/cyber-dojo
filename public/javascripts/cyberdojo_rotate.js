@@ -11,5 +11,7 @@ function endRotation()
 {
   $('rotate_panel').setAttribute('style', 'display:none');
   $('play_panel').setAttribute('style', 'visibility:visible');
+  // refresh caretPos in current filename
+  loadFile(current_filename);
 }
 
