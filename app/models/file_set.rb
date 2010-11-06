@@ -2,22 +2,20 @@
 class FileSet
 
   def self.names
-  	Dir.entries(Root_folder).select { |name| name != '.' and name != '..' }
+  	folders_in(Root_folder)
   end
 
   def self.random(name)
-    FileSet.new(name).choices[0]
+    FileSet.new(name).choices.shuffle[0]
   end
   
   def initialize(name)
   	@name = name
   end
-  
+
   def choices
-    Dir.entries(Root_folder + '/' + @name).select do |name| 
-      name != '.' and name != '..'
-    end
-  end
+    FileSet.folders_in(Root_folder + '/' + @name)
+  end  
   
   def self.read(manifest, file_set_name)
     path = Root_folder + '/' + file_set_name
@@ -37,6 +35,10 @@ class FileSet
 private
 
   Root_folder = RAILS_ROOT + '/' + 'filesets'
+
+  def self.folders_in(path)
+    Dir.entries(path).select { |name| name != '.' and name != '..' }
+  end    
 
   def self.read_visible(file_set_folder, filenames)
     visible_files = {}

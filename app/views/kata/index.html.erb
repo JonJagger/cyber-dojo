@@ -50,7 +50,7 @@ function makeSelection(name, index, choice)
         <tr>
         <% chunk.each_with_index do |avatar,inner| -%>
            <% index = inner*chunk_size + outer -%>
-           <td onclick='Start.selection("avatar", "<%=index-%>", "<%=avatar.humanize-%>");'>
+           <td onclick='makeSelection("avatar", "<%=index-%>", "<%=avatar.humanize-%>");'>
              <input id="avatar_<%=index-%>"
                     type="radio"
                     name="avatar"
