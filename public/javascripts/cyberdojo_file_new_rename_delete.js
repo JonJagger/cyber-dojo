@@ -1,7 +1,6 @@
 
-function rebuildFilenameList()
+function sortFilenames(filenames)
 {
-  var filenames = allFilenames();
   filenames.sort(function(lhs,rhs) {
 	  if (lhs < rhs)
 	    return -1;
@@ -10,6 +9,12 @@ function rebuildFilenameList()
 	  else
 	    return 0; // Should never happen
     });
+}
+
+function rebuildFilenameList()
+{
+  var filenames = allFilenames();
+  sortFilenames(filenames);
 
   var filename_list = $('filename_list');
   // Remove all children

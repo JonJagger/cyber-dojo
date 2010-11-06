@@ -226,3 +226,19 @@ shortcut.add("Ctrl+S",function() {
 	runTests();	
 });
 
+shortcut.add("Ctrl+N", function() {
+  var filenames = allFilenames();
+  sortFilenames(filenames);
+
+  for (at = 0; at != filenames.length; at++)
+  {
+    var filename = filenames[at];
+    if (current_filename == filename)
+    {
+      saveCurrentFile();
+      loadFile(filenames[(at+1) % filenames.length]);
+      return;
+    }
+  }
+});
+
