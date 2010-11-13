@@ -1,6 +1,7 @@
 
 function doRotation()
 {
+  saveCurrentFile();
   $('play_panel').setAttribute('style', 'display:none');
   $('rotate_panel').setAttribute('style', 'visibility:visible');
   var oneSecond = 1000;
