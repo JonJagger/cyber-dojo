@@ -35,6 +35,40 @@ There are no requirements on the clients (except of course a browser). I also
 install and use apache on my CyberDojo server but that is optional.
 
 
+Installation Update
+===================
+Emily Bache created a cyberdojo server starting from the aging instructions
+above and reported the following issues (many thanks Emily)
+>I got an error when installing rails:
+>
+>Error installing rails:
+>    bundler requires RubyGems version >= 1.3.6
+>
+>I found this helpful blog post which explains what to do about this:
+>
+>http://blog.eike.se/2010/08/rails-3-on-ubuntu-910.html
+>
+>Then I when I tried to start rails I got an error with rack:
+>
+>version error: rack(1.2.1 not ~> 1.0.0) (Gem::LoadError)
+>
+>I installed the earlier version like this:
+>
+>sudo gem install rack -v 1.0.0
+>
+>Then when installing java, the package seems to have changed name:
+>
+>Couldn't find package oracle-java6-sdk
+>
+>I instead installed package "default-jdk", which pulled in a lot of stuff.
+>
+>With C#, I found that in file 
+>
+>cyberdojo/filesets/language/C#/cyberdojo.sh
+>
+>was trying to run the program "nunit-console2", whereas the one I had installed was called "nunit-console". So I edited >that file and then I could use C# in the dojo.
+
+
 
 What will work and what won't work
 ==================================
@@ -171,8 +205,8 @@ file as part of the inspected ruby object:
 
 
 
-Keyboard-Driver Move Alarm
-============================
+Keyboard-Driver Rotation
+========================
 By default CyberDojo displays the keyboard-driver rotate page every 5 minutes 
 (see app/models/dojo.rb rotation function) which is the cue for the keyboard 
 driver at each computer to get up and move to a new computer where they take 
