@@ -18,7 +18,6 @@ function loadFile(filename)
   var pos = fileCaretPos(filename).getAttribute('value');
   $('editor').value = fileContent(filename).getAttribute('value');
 
-  current_filename = filename;
   setLiveCaretPos(pos);
   selectFileInFileList(filename);
 }
@@ -26,6 +25,8 @@ function loadFile(filename)
 function selectFileInFileList(filename)
 {
   $('radio_' + filename).checked = true;
+  $('current_filename').setAttribute('value', filename);
+  current_filename = filename;
 }
 
 function fileContent(filename)
