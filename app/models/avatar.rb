@@ -34,14 +34,13 @@ class Avatar
         # into sandbox ready for future run_tests        
         kata = Kata.new(@filesets)
         kata.hidden_pathnames.each do |hidden_pathname|
-          # Don't add hidden files to the git repository
           system("cp '#{hidden_pathname}' '#{sandbox}'") 
         end
         # Copy visible files into sandbox (needed for diff 0 1)
         kata.visible_files.each do |filename,file|
           TestRunner.save_file(sandbox, filename, file)
         end
-        #manifest = kata.manifest
+
         kata.manifest[:output] = welcome_text
         kata.manifest[:current_filename] = 'instructions'
         kata.manifest.delete(:hidden_filenames)
@@ -53,13 +52,9 @@ class Avatar
         cmd += "git add '#{manifest_filename}';"
         cmd += "git add '#{filesets_filename}';"
         cmd += "git add '#{increments_filename}';"
-        
-        kata.visible_files.each do |filename,|
-          cmd += "git add '#{sandbox}/#{filename}';"
-        end
-        cmd += 'git commit -a -m "0";'
-        cmd += 'git tag -m "0" 0 HEAD;'
         system(cmd)
+        
+        git_add_commit_tag(kata.visible_files, 0)
       end
     end
   end
@@ -77,7 +72,13 @@ class Avatar
   end
 
   def read_most_recent(kata, manifest)
-    io_lock(folder) { locked_read_most_recent(kata, manifest) }
+    io_lock(folder) do
+      restart_manifest = eval IO.read(manifest_filename)
+      manifest[:visible_files] = restart_manifest[:visible_files]
+      manifest[:current_filename] = restart_manifest[:current_filename]
+      manifest[:output] = restart_manifest[:output]
+      increments
+    end
   end
 
   def run_tests(kata, manifest)
@@ -96,16 +97,7 @@ class Avatar
       manifest[:output] = output      
       file_write(manifest_filename, manifest)
       
-      cmd  = "cd '#{folder}';"
-      manifest[:visible_files].each do |filename,|
-        cmd += "git add '#{sandbox}/#{filename}';"
-      end
-      
-      n = incs.length
-      cmd += "git commit -a -m '#{n}';"
-      cmd += "git tag -m '#{n}' #{n} HEAD;"
-      system(cmd)
-      
+      git_add_commit_tag(manifest[:visible_files], incs.length)
     end
     incs
   end
@@ -121,7 +113,6 @@ class Avatar
 private
 
   def filesets_filename
-    # Written to only once
     folder + '/' + 'filesets.rb'
   end
 
@@ -139,14 +130,6 @@ private
     Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
 
-  def locked_read_most_recent(kata, manifest)
-    restart_manifest = eval IO.read(manifest_filename)
-    manifest[:visible_files] = restart_manifest[:visible_files]
-    manifest[:current_filename] = restart_manifest[:current_filename]
-    manifest[:output] = restart_manifest[:output]
-    increments
-  end
-  
   def welcome_text
     [ "<----- Click this 'play' button to run the tests on the CyberDojo server",
       '       (execute cyberdojo.sh). The test outcome is displayed here.',
@@ -163,6 +146,18 @@ private
     Dir.mkdir(dir) if !File.exists? dir
   end
 
+  def git_add_commit_tag(visible_files, n)
+    # I add visible files to the git repository
+    # but never the hidden files.
+    cmd  = "cd '#{folder}';"
+    visible_files.each do |filename,|
+      cmd += "git add '#{sandbox}/#{filename}';"
+    end
+    cmd += "git commit -a -m '#{n}';"
+    cmd += "git tag -m '#{n}' #{n} HEAD;"
+    system(cmd)    
+  end
+  
 end
 
 
