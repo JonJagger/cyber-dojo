@@ -2,9 +2,9 @@
 <h1>CyberDojo</h1>
 <h3>Practising the <em>collaborative</em> game called software development</h3>
 
-<table><tr>
-
-<td valign="top" class="panel">
+<table valign="top" align="center">
+<tr>
+<td class="panel">
 CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to practice'">dojo</span>
 <br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you write your code and tests in a simple editor inside a browser 
 <br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you click a button and the CyberDojo server runs your tests
@@ -13,7 +13,7 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
 </tr>
 
 <tr>
-<td valign="top" class="panel">
+<td class="panel">
   <form name="dojoNew" action="/dojo/new">
     First... 
     <div>pick a name
@@ -26,7 +26,7 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
                  name="new"
                  value="Create my CyberDojo" />
           <% if flash[:new_notice] -%>
-            <span class="notice"><%= flash[:new_notice] -%></span>
+            <div class="notice"><%= flash[:new_notice] -%></div>
           <% end -%>
         </div>
       </form>
@@ -43,14 +43,14 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
                  id="enter_button"
                  value="Enter my CyberDojo" />
           <% if flash[:enter_notice] -%>
-            <span class="notice"><%= flash[:enter_notice] -%></span>
+            <div class="notice"><%= flash[:enter_notice] -%></div>
           <% end -%>
         </div>
       </form>
 </td></tr>
 
 <tr>
-<td valign="top" class="panel">
+<td class="panel">
 CyberDojo is designed to encourage <em>collaboration</em> and is most effective if you
 <br/>&nbsp;&bull;&nbsp;gather some geek friends and split into groups with two or more people per group
 <br/>&nbsp;&nbsp;&nbsp;allocate one computer to each group and point each computer's browser to this page
@@ -60,7 +60,8 @@ CyberDojo is designed to encourage <em>collaboration</em> and is most effective 
 </td>
 </tr>
 
-</table>
+<tr>
+<td>
 CyberDojo supports C, C++, C#, Java, Javascript, Objective C, Perl, PHP, Python, Ruby
 <br/>
 CyberDojo was conceived and implemented by <a href="http://www.jaggersoft.com">Jon Jagger</a>.
@@ -71,5 +72,7 @@ CyberDojo information at <a href="http://jonjagger.blogspot.com/p/cyberdojo.html
 <br/>
 CyberDojo video of the Roman Numerals kata in Ruby at <a href="http://vimeo.com/15104374">http://vimeo.com/15104374</a>.
 <br/>
-
+</td>
+</tr>
+</table>
 

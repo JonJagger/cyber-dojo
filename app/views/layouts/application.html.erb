@@ -11,8 +11,16 @@
     <%= javascript_include_tag :all -%>
   </head>
 
-  <body id="cyber_dojo_page" class="light_tone">
-    <%= yield -%>
+  <body id="center" class="light_tone">
+    <table valign="top" align="center">
+      <tr>
+        <td>
+          <div id="cyber_dojo_page"> 
+            <%= yield -%>
+          </div>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
 
