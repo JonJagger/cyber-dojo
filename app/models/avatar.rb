@@ -1,4 +1,5 @@
 
+require 'file_write.rb'
 require 'io_lock.rb'
 require 'make_time.rb'
 
@@ -122,18 +123,15 @@ private
     manifest[:output] = welcome_text
   end
 
-  def file_write(filename, object)
-    File.open(filename, 'w') do |file| 
-      file.write(object.inspect) 
-    end
-  end
-  
   def welcome_text
-    [ "<----- Click this 'play' button (keyboard shortcut Control S) to run the",
-      '       tests on the CyberDojo server (it executes the cyberdojo.sh file)',
-      '       and display the outcome here.',
+    [ "<----- Click this 'play' button to run the tests on the CyberDojo server",
+      '       (execute cyberdojo.sh). The test outcome is displayed here.',
       '',
       '       Click the radio-buttons on the left to open files in the editor.',
+      '',
+      '       Keyboard shortcuts',
+      '         Control-S == run tests',
+      '         Control-N == open next file)'
     ].join("\n")
   end
 

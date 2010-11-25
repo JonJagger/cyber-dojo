@@ -1,12 +1,48 @@
 
-require 'io_lock.rb'
+require 'digest/sha1'
+require 'file_write.rb'
 require 'folders_in.rb'
+require 'io_lock.rb'
 require 'make_time.rb'
 
 class Dojo
 
-  def self.names
-    folders_in(Root_folder)
+  def self.find(name)
+    id = Digest::SHA1.hexdigest name
+    inner = Root_folder + '/' + id[0..1]
+    outer = inner + '/' + id[2..-1]
+    File.directory? inner and File.directory? outer
+  end
+  
+  def self.create(name)
+    id = Digest::SHA1.hexdigest name
+    result = nil
+    io_lock(Root_folder) do
+      inner = Root_folder + '/' + id[0..1]
+      outer = inner + '/' + id[2..-1]
+      if File.directory? inner and File.directory? outer
+        result = false
+      else
+        Dir.mkdir inner
+        Dir.mkdir outer
+        index = eval IO.read(Index_filename)
+        info = { :name => name, :created => make_time(Time.now) }
+        index << info        
+        file_write(Index_filename, index)
+        dojo = Dojo.new(name)
+        file_write(dojo.ladder_filename, [])
+        file_write(dojo.rotation_filename, {})
+        file_write(dojo.manifest_filename, info)
+        result = true;
+      end
+    end
+    result
+  end
+
+  #---------------------------------
+  
+  def self.Xnames
+    folders_in(folder)
   end
 
   def initialize(name)
@@ -17,20 +53,24 @@ class Dojo
     @name
   end
 
+  def created
+    manifest = eval IO.read(manifest_filename)
+    Time.mktime(*manifest[:created])
+  end
+
   def avatars
     Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) } 
   end
 
   def folder
-    Root_folder + '/' + name
+    id = Digest::SHA1.hexdigest name
+    Root_folder + '/' + id[0..1] + '/' + id[2..-1]
   end
 
   def rotation(avatar_name)
     options = {}
     io_lock(folder) do
-      if File.exists?(rotation_filename)
-        options = eval IO.read(rotation_filename)
-      end
+      options = eval IO.read(rotation_filename)
       
       mins_per_rotate = 5
       secs_per_rotate = mins_per_rotate * 60
@@ -62,41 +102,30 @@ class Dojo
         options[:do_now] = false
       end
 
-      File.open(rotation_filename, 'w') do |file|
-        file.write(options.inspect) 
-      end           
+      file_write(rotation_filename, options)
     end
     options
   end
   
   def ladder
-    rungs = []
-    io_lock(folder) do
-      if File.exists?(ladder_filename)
-        rungs = eval IO.read(ladder_filename)
-      end
-    end
+    rungs = io_lock(folder) { eval IO.read(ladder_filename) }
     ladder_sort(rungs)
   end
 
   def ladder_update(avatar_name, latest_increment)
     rungs = []
     io_lock(folder) do
-      if File.exists?(ladder_filename)
-        rungs = eval IO.read(ladder_filename)
-      end
+      rungs = eval IO.read(ladder_filename)
       ladder_rung_update(rungs, avatar_name, latest_increment)
-      File.open(ladder_filename, 'w') do |file|
-        file.write(rungs.inspect) 
-      end
+      file_write(ladder_filename, rungs)
     end
     ladder_sort(rungs)
   end
- 
-private
 
-  Root_folder = RAILS_ROOT + '/' + 'dojos'
-    
+  def manifest_filename
+    folder + '/' + 'manifest.rb'
+  end
+
   def rotation_filename
     folder + '/' + 'rotation.rb'
   end
@@ -104,6 +133,12 @@ private
   def ladder_filename
     folder + '/' + 'ladder.rb'
   end  
+
+private
+
+  Root_folder = RAILS_ROOT + '/' + 'dojos'
+
+  Index_filename = Root_folder + '/' + 'index.rb' 
 
   def exists?(name)
     File.exists? folder + '/' + name
