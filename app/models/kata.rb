@@ -2,51 +2,46 @@
 class Kata
 
   def initialize(filesets)
-    @manifest = read_manifest(filesets)
     @filesets = filesets
+    @manifest = {}
+    @manifest[:visible_files] = {}
+    @manifest[:hidden_filenames] = []
+    @manifest[:hidden_pathnames] = []    
+    filesets.each do |name,value|
+      FileSet.read(@manifest, name + '/' + value)
+    end
   end
   
   def filesets
     @filesets
   end
 
+  def manifest
+    @manifest
+  end
+  
   def max_run_tests_duration
-    (@manifest[:max_run_tests_duration] || 10).to_i      
+    (manifest[:max_run_tests_duration] || 10).to_i      
   end
 
   def tab
-    " " * (@manifest[:tab_size] || 4)
+    " " * (manifest[:tab_size] || 4)
   end
 
   def unit_test_framework
-    @manifest[:unit_test_framework]
+    manifest[:unit_test_framework]
   end
   
-  def visible
-    @manifest[:visible]
+  def visible_files
+    manifest[:visible_files]
   end
 
   def hidden_pathnames
-    @manifest[:hidden_pathnames]
+    manifest[:hidden_pathnames]
   end
 
   def hidden_filenames
-    @manifest[:hidden_filenames]
-  end
-
-private
-
-  def read_manifest(filesets)
-    manifest = {}
-    manifest[:visible] = {}
-    manifest[:hidden_filenames] = []
-    manifest[:hidden_pathnames] = []
-    
-    filesets.each do |name,value|
-      FileSet.read(manifest, name + '/' + value)
-    end
-    
-    manifest
+    manifest[:hidden_filenames]
   end
 
 end

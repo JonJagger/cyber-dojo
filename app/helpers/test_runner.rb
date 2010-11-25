@@ -2,7 +2,7 @@
 module TestRunner
 
   def self.avatar_run_tests(avatar, kata, manifest)
-    sandbox = avatar.folder + '/' + 'sandbox'
+    sandbox = avatar.sandbox
     # Reset sandbox to contain just hidden files
     remove_all_but(sandbox, kata.hidden_filenames)
     # Copy in visible files from this increment
@@ -20,7 +20,8 @@ module TestRunner
 
     # Build and run tests has limited time to complete
     kata.max_run_tests_duration.times do
-      sleep(1)
+      one_second = 1
+      sleep(one_second)
       break if sandbox_thread.status == false 
     end
     # If tests didn't finish assume they were stuck in 
@@ -46,7 +47,7 @@ module TestRunner
   #
   # The reason I do this rather than delete and recreate the entire sandbox
   # every increment is an optimization: jar files and assembly files can get
-  # quite large (junit-4.7.jar is over 200K for example) and if a whole class
+  # quite large (junit-4.7.jar is over 200K for example) and if a whole room
   # is all doing a java kata this can slow things down on the server.
 
   def self.remove_all_but(sandbox, these)
@@ -70,8 +71,6 @@ module TestRunner
   end
 
 
-  # makefile_filter()
-  #
   # makefiles are tab sensitive...
   # The CyberDojo editor intercepts tab keys and replaces them with spaces.
   # Hence this special filter, just for makefiles to convert leading spaces 

@@ -21,14 +21,46 @@ class Avatar
       filesets['kata'] ||= FileSet.random('kata')
       filesets['language'] ||= FileSet.random('language')
     
-      if File.exists?(manifest_filename)
-        @filesets = eval IO.read(manifest_filename)
+      if File.exists?(filesets_filename)
+        @filesets = eval IO.read(filesets_filename)
       else
         @filesets = filesets
-      end
+        make_dir(folder)
+        file_write(filesets_filename, @filesets)
+        file_write(increments_filename, [])
+        # Create sandbox
+         make_dir(sandbox)
+        # Copy hidden files from kata fileset 
+        # into sandbox ready for future run_tests        
+        kata = Kata.new(@filesets)
+        kata.hidden_pathnames.each do |hidden_pathname|
+          # Don't add hidden files to the git repository
+          system("cp '#{hidden_pathname}' '#{sandbox}'") 
+        end
+        # Copy visible files into sandbox (needed for diff 0 1)
+        kata.visible_files.each do |filename,file|
+          TestRunner.save_file(sandbox, filename, file)
+        end
+        #manifest = kata.manifest
+        kata.manifest[:output] = welcome_text
+        kata.manifest[:current_filename] = 'instructions'
+        kata.manifest.delete(:hidden_filenames)
+        kata.manifest.delete(:hidden_pathnames)
+        file_write(manifest_filename, kata.manifest)
         
-      make_dir(folder)      
-      file_write(manifest_filename, @filesets)
+        cmd  = "cd '#{folder}';"
+        cmd += "git init;"
+        cmd += "git add '#{manifest_filename}';"
+        cmd += "git add '#{filesets_filename}';"
+        cmd += "git add '#{increments_filename}';"
+        
+        kata.visible_files.each do |filename,|
+          cmd += "git add '#{sandbox}/#{filename}';"
+        end
+        cmd += 'git commit -a -m "0";'
+        cmd += 'git tag -m "0" 0 HEAD;'
+        system(cmd)
+      end
     end
   end
   
@@ -49,80 +81,72 @@ class Avatar
   end
 
   def run_tests(kata, manifest)
+    incs = [] 
     io_lock(folder) do 
+      
       output = TestRunner.avatar_run_tests(self, kata, manifest)
-      manifest[:output] = output
       test_info = RunTestsOutputParser.parse(self, kata, output)
-      save(manifest, test_info)
+      
+      incs = increments     
+      incs << test_info
+      test_info[:time] = make_time(Time.now)
+      test_info[:number] = incs.length
+      file_write(increments_filename, incs)
+
+      manifest[:output] = output      
+      file_write(manifest_filename, manifest)
+      
+      cmd  = "cd '#{folder}';"
+      manifest[:visible_files].each do |filename,|
+        cmd += "git add '#{sandbox}/#{filename}';"
+      end
+      
+      n = incs.length
+      cmd += "git commit -a -m '#{n}';"
+      cmd += "git tag -m '#{n}' #{n} HEAD;"
+      system(cmd)
+      
     end
+    incs
   end
 
   def folder
     @dojo.folder + '/' + name
   end
+  
+  def sandbox
+    folder + '/' + 'sandbox'
+  end
 
 private
+
+  def filesets_filename
+    # Written to only once
+    folder + '/' + 'filesets.rb'
+  end
 
   def manifest_filename
     folder + '/' + 'manifest.rb'
   end
   
   def increments_filename
-    folder + '/' + 'increments_manifest.rb'
+    # The number of entries in this file equals the number
+    # of git commits/tags, including zero.
+    folder + '/' + 'increments.rb'
   end
 
   def random_unused_avatar
     Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
-    
-  def save(manifest, test_info)    
-    my_increments = increments
-    dst_folder = folder + '/' + my_increments.length.to_s
-    make_dir(dst_folder)
-    file_write(dst_folder + '/manifest.rb', manifest)
-    test_info[:time] = make_time(Time.now)
-    test_info[:number] = my_increments.length
-    my_increments << test_info
-    file_write(increments_filename, my_increments)
-    my_increments
-  end
 
   def locked_read_most_recent(kata, manifest)
-    most_recent = nil
-    if !File.exists?(increments_filename) # start
-      load_manifest_from_kata(manifest, kata)     
-      # Create sandbox and copy hidden files from kata fileset 
-      # into sandbox ready for future run_tests
-      make_dir(folder + '/sandbox')
-      kata.hidden_pathnames.each do |hidden_pathname|
-        system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
-      end
-      # Create empty increments file ready to be loaded next time
-      most_recent = []
-      file_write(increments_filename, most_recent)
-    else # restart
-      most_recent = increments
-      if most_recent.length != 0
-        current_increment_folder = folder + '/' + (most_recent.length - 1).to_s
-        restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
-        manifest[:visible_files] = restart_manifest[:visible_files]
-        manifest[:current_filename] = restart_manifest[:current_filename]
-        manifest[:output] = restart_manifest[:output]
-      else
-        load_manifest_from_kata(manifest, kata)
-      end
-    end
-    most_recent
+    restart_manifest = eval IO.read(manifest_filename)
+    manifest[:visible_files] = restart_manifest[:visible_files]
+    manifest[:current_filename] = restart_manifest[:current_filename]
+    manifest[:output] = restart_manifest[:output]
+    increments
   end
-
-  def load_manifest_from_kata(manifest, kata)
-    # load manifest with initial fileset
-    manifest[:visible_files] = kata.visible
-    opening_file = kata.visible.include?('instructions') ? 'instructions' : 'cyberdojo.sh'
-    manifest[:current_filename] = opening_file
-    manifest[:output] = welcome_text
-  end
-
+  
   def welcome_text
     [ "<----- Click this 'play' button to run the tests on the CyberDojo server",
       '       (execute cyberdojo.sh). The test outcome is displayed here.',

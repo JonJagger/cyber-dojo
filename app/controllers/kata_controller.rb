@@ -35,9 +35,9 @@ class KataController < ApplicationController
     kata = avatar.kata
 
     manifest = load_visible_files_from_page
-    avatar.run_tests(kata, manifest)
+    all_increments = avatar.run_tests(kata, manifest)
     @output = manifest[:output]
-    all_increments = avatar.increments
+    #all_increments = avatar.increments
     @increments = limited(all_increments)
     @increment_number = all_increments.size    
     @ladder = @dojo.ladder_update(avatar.name, @increments.last)

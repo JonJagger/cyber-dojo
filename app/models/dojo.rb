@@ -62,11 +62,6 @@ class Dojo
     Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) } 
   end
 
-  def folder
-    id = Digest::SHA1.hexdigest name
-    Root_folder + '/' + id[0..1] + '/' + id[2..-1]
-  end
-
   def rotation(avatar_name)
     options = {}
     io_lock(folder) do
@@ -120,6 +115,11 @@ class Dojo
       file_write(ladder_filename, rungs)
     end
     ladder_sort(rungs)
+  end
+
+  def folder
+    id = Digest::SHA1.hexdigest name
+    Root_folder + '/' + id[0..1] + '/' + id[2..-1]
   end
 
   def manifest_filename
