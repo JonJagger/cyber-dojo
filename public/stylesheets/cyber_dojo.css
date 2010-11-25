@@ -26,16 +26,14 @@
 
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
-.panel { padding: 1em; padding-top: 0.3em; }
+.panel { padding: 0.5em; }
 .notice { color: red; }
 
 #kata_info
 {
   overflow-y: scroll;
-  padding: 0;
-  padding-left: 5px;
-  margin-left: 40px; /* enough for line-numbers */
   font-family: monospace;
+  font-size: 10pt;
   color: white;
   background-color: #686868;
 }
