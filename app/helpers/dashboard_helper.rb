@@ -1,10 +1,22 @@
 
 module DashboardHelper
 
+  def new_gapper(dojo)
+    all = {}
+    dojo.avatars.each do |avatar|
+      all_incs = avatar.increments
+      max_increments_displayed = 75
+      len = [all_incs.length, max_increments_displayed].min
+      all[avatar.name] = all_incs[-len,len]
+    end
+    all
+  end
+  
   # function to insert :gap values into an avatars increments to
-  # reflect order of increments across all avatars for the dashboard
+  # reflect order of increments across all avatars for the 
+  # traffic light dashboard
   # Eg in submission in time of pandas, lions, lions, frogs, pandas...
-  # looks like thsi:
+  # looks like this (where each X is a traffic light)
   #
   # pandas X...X
   # lions  .XX..
@@ -19,31 +31,19 @@ module DashboardHelper
     end
 
     all_incs.sort! {|lhs,rhs| moment(lhs) <=> moment(rhs) }
-  
-    max_increments_displayed = 125
 
+    gap = { :outcome => :gap }
+    
     all_bubbles = {}
-    all_names.each {|name|
+    all_names.each do |name|
       bubbles, previous = [], nil
-      all_incs.each {|inc|
-        if inc[:avatar] == name
-           bubbles << 'new_' + inc[:outcome].to_s
-           previous = inc[:outcome]
-        elsif previous == nil
-          bubbles << 'no_previous'
-        else
-          bubbles << 'old_' + previous.to_s
-        end
-      }
+      all_incs.each { |inc| bubbles << (inc[:avatar] == name ? inc : gap) }
+      max_increments_displayed = 125
       len = [bubbles.length, max_increments_displayed].min
       all_bubbles[name] = bubbles[-len,len]
-    }
+    end
 
     all_bubbles
-    # eg
-    # { 'koalas' => [ 'new_error',  'old_failed', 'new_failed, 'no_previous' ], 
-    #   'pandas' => [ 'old_passed', 'new_passed', 'old_failed', new_failed'  ],
-    # }
   end
 
 
@@ -57,32 +57,6 @@ module DashboardHelper
 
   def moment(at)
     Time.utc(*at[:time])
-  end
-
-  def shared(gapped)  
-    # In a single increment column all avatars except one 
-    # have an old outcome, and one avatar has a new outcome.
-    # NB: This will change if a time-period increment is introduced.
-    # The run-test outcomes dominate each other in the follow chain
-    outcomes = [ :new_failed, :old_failed, 
-                 :new_error,  :old_error,
-                 :new_passed ]
-    # There is no entry for old_passed as that cannot be the shared
-    # outcome since there must be at least one new outcome.
-    rgy = []
-    gapped.inject([]) {|s,kv| s << kv[1]}.transpose.each do |all| 
-      outcomes.each do |outcome|
-        if contains(all, outcome)
-          rgy << outcome
-          break
-        end
-      end
-    end
-    rgy
-  end
-
-  def contains(all, find)
-    return all.select {|one| one.index(find.to_s)}.size > 0
   end
 
 end

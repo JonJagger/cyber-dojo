@@ -54,7 +54,8 @@ class Avatar
         cmd += "git add '#{increments_filename}';"
         system(cmd)
         
-        git_add_commit_tag(kata.visible_files, 0)
+        tag = 0
+        git_commit_tag(kata.visible_files, tag)
       end
     end
   end
@@ -66,7 +67,7 @@ class Avatar
   def kata
     Kata.new(@filesets)
   end
-  
+   
   def increments
     io_lock(increments_filename) { eval IO.read(increments_filename) }
   end
@@ -97,7 +98,8 @@ class Avatar
       manifest[:output] = output      
       file_write(manifest_filename, manifest)
       
-      git_add_commit_tag(manifest[:visible_files], incs.length)
+      tag = incs.length
+      git_commit_tag(manifest[:visible_files], tag)
     end
     incs
   end
@@ -146,7 +148,7 @@ private
     Dir.mkdir(dir) if !File.exists? dir
   end
 
-  def git_add_commit_tag(visible_files, n)
+  def git_commit_tag(visible_files, n)
     # I add visible files to the git repository
     # but never the hidden files.
     cmd  = "cd '#{folder}';"

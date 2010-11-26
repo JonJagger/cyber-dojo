@@ -2,9 +2,11 @@
 ===========================================================
    VERY VERY IMPORTANT - VERY VERY IMPORTANT
 ===========================================================
-CyberDojo clients have full rights on the CyberDojo server. 
-If you setup your own CyberServer you are strongly advised 
-to consider running the CyberDojo server inside a virtual box.
+CyberDojo clients have full rights on the CyberDojo server. If you 
+setup your own CyberServer you are strongly advised to consider using
+o) a dedicated network segment
+o) a dedicated server
+o) a virtual box.
 ===========================================================
 
 
@@ -14,8 +16,8 @@ Ruby
 Rails
 
 
-Installation
-============
+Installing CyberDojo
+====================
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
 >sudo apt-get install git-core
@@ -70,8 +72,8 @@ above and reported the following issues (many thanks Emily)
 
 
 
-What will work and what won't work
-==================================
+Installing Languages
+====================
 Initial filesets for ten languages are provided: C, C++, C#, Objective C, 
 Java, Javascript, Python, Perl, PHP, and Ruby. 
 Whether you will be able to compile successfully in any of
@@ -103,46 +105,81 @@ https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
 
 
-Dojos
-=====
-Each subfolder underneath cyberdojo/dojos/ represents a virtual dojo. 
-For example cyberdojo/dojos/xp2010/ is where I put the xp2010 CyberDojo 
-conference. 
-
-
-Avatars
-=======
-Once you have chosen your dojo the CyberDojo server will ask you to choose 
+Starting a Kata
+===============
+Once you have created and entered your dojo the CyberDojo server will ask you to choose 
 o) your animal avatar  (eg Pandas)
    The avatar provides identity for each laptop participating in the kata. 
-   If a laptop has to retire during a kata a new laptop can easily replace it.
 o) your language (eg C++)
    Each language corresponds to a subfolder of cyberdojo/filesets/language/
 o) your kata (eg Prime Factors)
    Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
+   
+If you have not selected any of these when you press the Start button
+the CyberDojo server will make random selections for you.
+If you select an avatar that has already started then your language and kata
+selections (if any) will be ignored and you will restart where that avatar
+left off. This is handy if a laptop has to retire as a new laptop can easily
+and instantly replace it.
+
+
+Dojo Folder Structure
+=====================
+The rails code does NOT use a database.
+Originally the name of each dojo corresponded to a subfolder underneath
+cyberdojo/dojos/ however the number of subfolders started to get large
+so this has now changed. Instead I use a git-like folder structure based
+on the sha1 hexdigest of the dojo's name. For example, a CyberDojo called 
+'Jon Jagger' (without the quotes) has a sha1 hexdigest of, wait for it,
+  381fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab 
+so the root folder for the CyberDojo called 'Jon Jagger' is
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
+Each started avatar has a subfolder underneath this, for example
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolves
+  
+
+Git Repositories
+================
+Each started avatar has its own git respository, eg
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolves/.git
+The starting files (as loaded via the manifests.rb's :visible_filenames) form
+tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
+message and tag which is simply the increment number. For example, the fourth
+time the wolves press the run-tests button causes
+>git commit -a -m '4'
+>git tag -m '4' 4 HEAD
+From an avatar's folder you can issue the following commands:
+To look at filename for tag 4
+>git show 4:sandbox/filename
+To look at filename's differences between tag 4 and tag 3
+>git diff 4 3 sandbox/filename 
+
+
+Traffic Lights
+==============
+The display of each increment now uses a traffic light making the colours
+positional. This means you can still read the display if you are colour blind
+(which a surprising number of people are). 
+o) Top Red = tests ran but at least one failed
+o) Middle Yellow = syntax error somewhere, tests not run
+o) Bottom Green = tests ran and all passed
 
 
 Adding a new language
 =====================
 Create a new subfolder under cyberdojo/filesets/language/
-Create a manifest.rb file in this folder (see below)
+Create a manifest.rb file in this folder (see below). 
+(see Manifests below)
 
 
 Adding a new kata
 =================
 Create a new subfolder under cyberdojo/filesets/kata/
-Create a manifest.rb file in this folder (see below)
+Create a manifest.rb file in this folder (see below). 
 
 
-Adding a new fileset
-====================
-Create a new subfolder under cyberdojo/filesets
-Then repeat the subfolder/manifest.rb file exactly as for
-adding a new kata and adding a new language above. 
-
-
-Manifests
-=========
+manifest.rb
+===========
 Each manifest.rb file contains an inspected ruby object. 
 For example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
 {
@@ -156,8 +193,8 @@ For example: cyberdojo/filesets/kata/Prime Factors/manifest.rb looks like this:
 }
 
 
-Manifest Parameters
-===================
+manifest.rb Parameters
+======================
 :visible_filenames
   The names of files that will be visible in the editor in the browser at startup.
   Each of these files must exist in the folder.
@@ -194,7 +231,7 @@ file as part of the inspected ruby object:
 
 :max_run_tests_duration
   This is the maximum number of seconds the CyberDojo server allows an increment 
-  to run in (the time starts after all the increments files have been copied to 
+  to run in (the time starts after all that increments' files have been copied to 
   the sandbox folder).  This allows players to continue if they accidentally code 
   an infinite loop for example. Reloaded on each increment so it can be modified 
   mid-kata if necessary. Defaults to 10 seconds.
@@ -204,13 +241,19 @@ file as part of the inspected ruby object:
   Defaults to 4 spaces.
 
 
-
 Keyboard-Driver Rotation
 ========================
 By default CyberDojo displays the keyboard-driver rotate page every 5 minutes 
 (see app/models/dojo.rb rotation function) which is the cue for the keyboard 
 driver at each computer to get up and move to a new computer where they take 
 up a non-driver role. 
+
+
+Dashboard
+=========
+The dashboard button on the CyberDojo entry page takes you to the dashboard
+which shows a continuously updating display of all the avatars traffic light
+increments. 
 
 
 How to Turn off Firefox Spell-Checking
@@ -234,19 +277,15 @@ To turn it off (and avoid annoying red underlines the code editor)
 
 Misc Notes
 ==========
+o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in Ruby  
 o) http://vimeo.com/8630305 has a video of a very early version of CyberDojo
-o) The rails code does NOT use a database. Instead each increment is saved to
-   its own folder. For example if the Wolves are doing kata in the xp2010 
-   CyberDojo then the files submitted for their increment 21 will be found in 
-   the folder 
-     cyberdojo/dojos/xp2010/wolves/21/
 o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. Some 
    of what you find is likely to be non-idiomatic. Caveat emptor!
 o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
    simpler the environment the more players will need to collaborate with each
-   other. Remember the aim of a CyberDojo is not to ship something, it is to 
+   other. Remember the aim of a CyberDojo is _not_ to ship something, it is to 
    practice collaborative development.
 o) Olve Maudal has been enthusiastic about CyberDojo from the very early days.
    Olve - I really appreciate all your encouragement.

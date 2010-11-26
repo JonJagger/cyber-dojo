@@ -1,63 +1,47 @@
  
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
 
-<% gapped = gapper(@dojo) -%>
-<div id="dashboard" class="mid_tone">
+<% gapped = new_gapper(@dojo) -%>
+
+<div>
 <table>
   <% gapped.each do |avatar_name,increments| -%>
   <tr>
     <td>
-      <table cellspacing="2"
+      <table align="right"
+             cellspacing="2"
              cellpadding="0">
         <tr>
-          <% increments.each do |inc| -%>
-          <td>
-            <span id="dashboard_cell" 
-                  class="<%=inc-%>">&nbsp;</span>
-          </td>
+          <% increments[0..-2].each do |inc| -%>
+            <%= traffic_light(inc)-%>
           <% end -%>
         </tr>
       </table>
     </td>
     <td>
-      <% size = 27 -%>
+      <% size = 45 -%>
       <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
            title="<%=avatar_name.humanize-%>" />
     </td>
+    <% if increments.length > 0 -%>
+    <%   last = increments.last -%>
+    <% else -%>
+    <%   last = { :outcome => :gap } -%>
+    <% end -%>
+    <%= traffic_light(last) -%>
     <td>
       <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
            width="<%=size-%>"
            height="<%=size-%>"
            title="<%=avatar_name.humanize-%>" />
     </td>
-  </tr>
-  <% end -%>
-
-  <% if gapped.size > 1 -%>
-  <tr>
-   <td>&nbsp;</td>
-   <td>&nbsp;</td>
-   <td>&nbsp;</td>
-  </tr>
-
-  <tr>
+    <% kata = Avatar.new(@dojo, avatar_name).kata -%> 
     <td>
-      <table cellspacing="2"
-             cellpadding="0">
-        <tr>
-          <% shared(gapped).each do |inc| -%>
-          <td>
-            <span id="dashboard_cell" 
-                  class="<%=inc-%>">&nbsp;</span>
-          </td>
-          <% end -%>
-        </tr>
-      </table>
-    </td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+      <div class='small_title'><%= kata.language -%></div>
+      <div class='small_title'><%= kata.name -%></div>
+    </td>    
   </tr>
   <% end -%>
 

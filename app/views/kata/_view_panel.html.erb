@@ -5,7 +5,7 @@
       <%= render :partial => 'avatar_pair' -%>
       
       <% @kata.filesets.each do |name,value| -%>
-        <span class="small_title"><%=name.humanize-%>=<%=value-%></span>
+        <span class="small_title"><%=value-%></span>
       <% end -%>
            
       <%= render :partial => 'filenames_panel' -%>
@@ -15,7 +15,7 @@
     </td>
     <td rowspan=2>
       <%= render :partial => 'rotation' -%>
-      <span class="title">CyberDojo=<%= @dojo.name -%></span> 
+      <span class="title">CyberDojo: <%= @dojo.name -%></span> 
       <%= render :partial => 'ladder' -%>
     </td>
   </tr>

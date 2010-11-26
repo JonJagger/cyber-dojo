@@ -125,12 +125,33 @@ function makeSelection(name, index, choice)
           </td>
         </tr>
       </table>
-    </td>
-    <td valign="top">
-      <input id="start_button" 
-             type="submit" 
-             value="Start" 
-             name="start" />
+      
+      <table>
+        <tr>
+          <td valign="top">
+            <input id="start_button" 
+                   type="submit" 
+                   value="Start" 
+                   name="start" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            &nbsp;<br/>
+            &nbsp;<br/>
+          </td>  
+        </tr>
+        <tr>
+          <td valign="bottom">
+            <%= link_to 'Dashboard', 
+                   { :controller => 'dojo', 
+                     :action => 'dashboard',
+                     :name => @dojo.name 
+                   },
+                   { :id => 'dashboard_button' } -%>
+          </td>
+        </tr>
+      </table>        
     </td>
   </tr>
 </table>

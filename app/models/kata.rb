@@ -19,6 +19,14 @@ class Kata
   def manifest
     @manifest
   end
+
+  def language
+    @filesets['language']
+  end
+  
+  def name
+    @filesets['kata']
+  end
   
   def max_run_tests_duration
     (manifest[:max_run_tests_duration] || 10).to_i      
