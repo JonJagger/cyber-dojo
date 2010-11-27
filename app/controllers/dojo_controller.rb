@@ -2,7 +2,7 @@
 class DojoController < ApplicationController
 
   def index
-  	@name = params[:name].to_s
+    @name = params[:name].to_s
     # offers new and enter
   end
  

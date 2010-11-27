@@ -41,10 +41,6 @@ class Dojo
 
   #---------------------------------
   
-  def self.Xnames
-    folders_in(folder)
-  end
-
   def initialize(name)
     @name = name
   end

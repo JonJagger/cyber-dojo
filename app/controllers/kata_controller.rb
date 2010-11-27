@@ -8,13 +8,13 @@ class KataController < ApplicationController
     
     @kata_info = {}
     FileSet.new('kata').choices.each do |name|  	
-    	path = RAILS_ROOT + '/' + 'filesets' + '/' + 'kata' + '/' + name + '/' + 'instructions'
+      path = RAILS_ROOT + '/' + 'filesets' + '/' + 'kata' + '/' + name + '/' + 'instructions'
    	  @kata_info[name] = IO.read(path)
     end    
   end
 
   def view
-  	@dojo = Dojo.new(params[:dojo])
+    @dojo = Dojo.new(params[:dojo])
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata
 
@@ -49,7 +49,7 @@ class KataController < ApplicationController
    
   def heartbeat
     @dojo = Dojo.new(params[:dojo])
-  	@rotation = @dojo.rotation(params[:avatar])
+    @rotation = @dojo.rotation(params[:avatar])
     @ladder = @dojo.ladder      
     respond_to do |format|
       format.js if request.xhr?
@@ -85,10 +85,10 @@ private
   end
 
   def limited(increments)
-  	max_increments_displayed = 7
-  	len = [increments.length, max_increments_displayed].min
-  	increments[-len,len]
-	end
+    max_increments_displayed = 7
+    len = [increments.length, max_increments_displayed].min
+    increments[-len,len]
+  end
 
 end
 
