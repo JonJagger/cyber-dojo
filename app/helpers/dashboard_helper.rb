@@ -5,7 +5,7 @@ module DashboardHelper
     all = {}
     dojo.avatars.each do |avatar|
       all_incs = avatar.increments
-      max_increments_displayed = 75
+      max_increments_displayed = 65
       len = [all_incs.length, max_increments_displayed].min
       all[avatar.name] = all_incs[-len,len]
     end
