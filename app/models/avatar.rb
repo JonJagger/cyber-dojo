@@ -25,11 +25,11 @@ class Avatar
         @filesets = eval IO.read(filesets_filename)
       else
         @filesets = filesets
-        make_dir(folder)
+        Dir.mkdir(folder)
         file_write(filesets_filename, @filesets)
         file_write(increments_filename, [])
         # Create sandbox
-         make_dir(sandbox)
+        Dir.mkdir(sandbox)
         # Copy hidden files from kata fileset 
         # into sandbox ready for future run_tests        
         kata = Kata.new(@filesets)
@@ -72,7 +72,7 @@ class Avatar
     io_lock(increments_filename) { eval IO.read(increments_filename) }
   end
 
-  def read_most_recent(kata, manifest)
+  def read_most_recent(manifest)
     io_lock(folder) do
       restart_manifest = eval IO.read(manifest_filename)
       manifest[:visible_files] = restart_manifest[:visible_files]
@@ -142,10 +142,6 @@ private
       '         Control-S == run tests',
       '         Control-N == open next file)'
     ].join("\n")
-  end
-
-  def make_dir(dir)
-    Dir.mkdir(dir) if !File.exists? dir
   end
 
   def git_commit_tag(visible_files, n)
