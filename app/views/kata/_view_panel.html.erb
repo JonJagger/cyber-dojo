@@ -4,9 +4,8 @@
     <td>
       <%= render :partial => 'avatar_pair' -%>
       
-      <% @kata.filesets.each do |name,value| -%>
-        <span class="small_title"><%=value-%></span>
-      <% end -%>
+      <span class="small_title"><%= @kata.language -%></span>
+      <span class="small_title"><%= @kata.name -%></span>
            
       <%= render :partial => 'filenames_panel' -%>
     </td>
@@ -21,18 +20,18 @@
   </tr>
   <tr valign="top">
     <td>
-       <table style="float:right;">
-         <tr>
+      <table style="float:right;">
+        <tr>
           <td>
             <%= render :partial => 'play_button' -%>
           </td>
-         </tr>
-         <tr>
+        </tr>
+        <tr>
           <td>
             <%= render :partial => 'increments_panel' -%>
           </td>
          </tr>
-        </table>
+       </table>
     </td>
     <td>
       <%= render :partial => 'output' -%>

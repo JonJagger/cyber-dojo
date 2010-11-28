@@ -1,11 +1,9 @@
  
 <h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
 
-<% gapped = new_gapper(@dojo) -%>
-
 <div>
 <table>
-  <% gapped.each do |avatar_name,increments| -%>
+  <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>
   <tr>
     <td>
       <table align="right"
