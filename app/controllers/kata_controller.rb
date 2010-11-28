@@ -22,6 +22,7 @@ class KataController < ApplicationController
     @increments = @avatar.read_most_recent(@manifest)    
     @ladder = @dojo.ladder
     @rotation = @dojo.rotation(params[:avatar])
+    @rotation[:do_now] = false # don't rotate when re-entering
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
     @outcome = @increments == [] ? '' : @increments.last[:outcome]
