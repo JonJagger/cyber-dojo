@@ -1,6 +1,6 @@
 *~
 log/*
 tmp/**/*
-dojos/**
+dojos/*
 dojos/index.rb
 
