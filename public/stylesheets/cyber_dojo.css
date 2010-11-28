@@ -76,7 +76,7 @@
   display: block;
   margin: 0.2em 0em 0.2em 0.2em; /* Top Right Bottom Left */
   font-size: 0.8em;
-  color: #686868;
+  color: green;
 }
 
 .title
@@ -84,7 +84,7 @@
   display: block;
   margin: 0.2em 0em 0.2em 0.2em; /* Top Right Bottom Left */
   font-size: 1.1em;
-  color: #686868;
+  color: green;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */

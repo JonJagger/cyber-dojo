@@ -1,8 +1,20 @@
 
 module LadderHelper
   
-  def rungs(ladder)
-    html = '<table cellspacing="4">'
+  def rungs(dojo, ladder)
+    age = dojo.age
+    html = '<span class="small_title">'
+    html += 'Started'
+
+    prefix = ' '    
+    if age[:days] > 0
+      html += prefix + pluralize(age[:days], 'day')
+      prefix = ', '
+    end
+    html += prefix + "%02dh:%02dm:%02ds" % [age[:hours], age[:mins], age[:secs] ]
+    html += ' ago'      
+    html += '</span>'
+    html += '<table cellspacing="4">'
     chunks = chunk_array(ladder, 12)
     chunks.each do |chunk|
       html += '<tr>'

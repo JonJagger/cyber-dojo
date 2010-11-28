@@ -25,14 +25,24 @@ class Dojo
       else
         Dir.mkdir inner
         Dir.mkdir outer
+
+        now = Time.now
+        info = { :name => name, :created => make_time(now) }
+
         index = eval IO.read(Index_filename)
-        info = { :name => name, :created => make_time(Time.now) }
         index << info        
         file_write(Index_filename, index)
-        dojo = Dojo.new(name)
+        
+        rotation = {}
+        rotation[:already_rotated] = []
+        rotation[:prev_rotation_at] = make_time(now)      
+        rotation[:next_rotation_at] = make_time(now + Seconds_per_rotate)
+
+        dojo = Dojo.new(name)        
         file_write(dojo.ladder_filename, [])
-        file_write(dojo.rotation_filename, {})
+        file_write(dojo.rotation_filename, rotation)
         file_write(dojo.manifest_filename, info)
+
         result = true;
       end
     end
@@ -53,6 +63,14 @@ class Dojo
     manifest = eval IO.read(manifest_filename)
     Time.mktime(*manifest[:created])
   end
+  
+  def age
+    diff = Time.now - created
+    diff,secs = diff.divmod(60)
+    diff,mins = diff.divmod(60)
+    days,hours = diff.divmod(24)    
+    { :days => days, :hours => hours, :mins => mins, :secs => secs.to_i }
+  end
 
   def avatars
     Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) } 
@@ -63,16 +81,10 @@ class Dojo
     io_lock(folder) do
       options = eval IO.read(rotation_filename)
       
-      mins_per_rotate = 5
-      secs_per_rotate = mins_per_rotate * 60
-      
       now = Time.now      
-      options[:already_rotated] ||= []
-      options[:prev_rotation_at] ||= [1966,11,23,0,0,0]      
-      options[:next_rotation_at] ||= make_time(due = now + secs_per_rotate)
 
       already_rotated = options[:already_rotated].include?(avatar_name)
-      refresh_period = 5 # from view_panel.html.erb :frequency
+      refresh_period = 5 # from _view_panel.html.erb :frequency
       very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= refresh_period
       due = Time.mktime(*options[:next_rotation_at])
       
@@ -81,7 +93,7 @@ class Dojo
         # but don't rotate if we're re-entering a dojo after a long break
         options[:do_now] = (now - due < (2 * refresh_period))
         options[:prev_rotation_at] = make_time(now)
-        due = now + secs_per_rotate
+        due = now + Seconds_per_rotate
         options[:next_rotation_at] = make_time(due)
         options[:already_rotated] = [avatar_name]
       elsif !already_rotated && very_recent_rotation
@@ -132,6 +144,8 @@ class Dojo
 
 private
 
+  Seconds_per_rotate = 5 * 60
+  
   Root_folder = RAILS_ROOT + '/' + 'dojos'
 
   Index_filename = Root_folder + '/' + 'index.rb' 
@@ -139,7 +153,7 @@ private
   def exists?(name)
     File.exists? folder + '/' + name
   end
-    
+  
   def ladder_rung_update(rungs, avatar, inc)
     rungs.delete_if { |rung| rung[:avatar] == avatar } 
     rungs << { :avatar => avatar, :time => inc[:time], :outcome => inc[:outcome] }

@@ -13,7 +13,7 @@ class KataController < ApplicationController
     end    
   end
 
-  def view
+  def edit
     @dojo = Dojo.new(params[:dojo])
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata

@@ -19,7 +19,7 @@ function makeSelection(name, index, choice)
 //--></script>
 
 <form name="avatarIndex" 
-      action="/kata/view">
+      action="/kata/edit">
 
 <noscript>
   &nbsp;
@@ -32,7 +32,7 @@ function makeSelection(name, index, choice)
        id="dojo" 
        value="<%=h @dojo.name-%>" />
 
-<h1><b>CyberDojo: <%= @dojo.name -%></b></h1>
+<h1>CyberDojo: <%= @dojo.name -%></h1>
 
 <table class="panel" >
   <tr>
