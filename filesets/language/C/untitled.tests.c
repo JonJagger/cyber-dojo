@@ -1,16 +1,19 @@
 #include "untitled.h"
 #include <assert.h>
+#include <stdio.h>
 
-#define TEST(x)   assert(x)
+#define ASSERT(x)   assert(x)
 
 static void an_example_test(void)
 {
     int expected = 42;
     int actual = answer();
-    TEST(expected == actual);
+    ASSERT(expected == actual);
 }
 
-static void (*test_functions[])(void) =
+typedef void test_function(void);
+
+static test_function * tests[] =
 {
     an_example_test,
     0
@@ -18,8 +21,13 @@ static void (*test_functions[])(void) =
 
 int main(void)
 {
-    for (int at = 0; test_functions[at]; at++)
-        test_functions[at]();
+    int at;
+    for (at = 0; tests[at]; at++)
+    {
+        tests[at]();
+        putchar('.');
+    }
+    printf("\n%d", at);
     return 0;
 }
 

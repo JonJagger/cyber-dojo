@@ -35,10 +35,12 @@
            height="<%=size-%>"
            title="<%=avatar_name.humanize-%>" />
     </td>
-    <% kata = Avatar.new(@dojo, avatar_name).kata -%> 
+    <% avatar = Avatar.new(@dojo, avatar_name) -%> 
+    <% kata = avatar.kata -%> 
     <td>
-      <div class='small_title'><%= kata.language -%></div>
-      <div class='small_title'><%= kata.name -%></div>
+      <div class='small_title'>
+        <%= kata.language -%>, <%= kata.name -%>, <%= pluralize(avatar.increments.length, 'increment') -%>
+      </div>
     </td>    
   </tr>
   <% end -%>
