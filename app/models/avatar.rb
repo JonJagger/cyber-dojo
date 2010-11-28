@@ -82,12 +82,13 @@ class Avatar
     end
   end
 
-  def run_tests(kata, manifest)
+  def run_tests(manifest)
+    the_kata = kata
     incs = [] 
     io_lock(folder) do 
       
-      output = TestRunner.avatar_run_tests(self, kata, manifest)
-      test_info = RunTestsOutputParser.parse(self, kata, output)
+      output = TestRunner.avatar_run_tests(self, the_kata, manifest)
+      test_info = RunTestsOutputParser.parse(self, the_kata, output)
       
       incs = increments     
       incs << test_info

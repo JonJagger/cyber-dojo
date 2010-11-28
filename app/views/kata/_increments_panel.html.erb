@@ -2,10 +2,11 @@
 <div id="increments_panel">
   <table cellpadding="2px">
     <tr>
-      <% @increments.each do |increment| -%>
+      <% max_displayed = 7 -%>
+      <% recent(@increments, max_displayed).each do |increment| -%>
         <%= traffic_light(increment) -%>
       <% end -%>
     </tr>
   </table>
-  <span id="increment_number"><%= @increment_number.to_s -%></span>
+  <span id="increment_number"><%= @increments.length.to_s -%></span>
 </div>
