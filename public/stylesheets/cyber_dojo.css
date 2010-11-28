@@ -51,6 +51,7 @@
 
 #new_button, #enter_button, #start_button, #play_button, #dashboard_button
 { 
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;
   font-size: 1em;
   cursor: pointer;
   padding: 0.5em;
