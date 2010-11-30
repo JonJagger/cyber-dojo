@@ -29,7 +29,10 @@ class Dojo
         now = Time.now
         info = { :name => name, :created => make_time(now) }
 
-        index = eval IO.read(Index_filename)
+        index = []
+        if File.exists? Index_filename
+          index = eval IO.read(Index_filename)
+        end
         index << info        
         file_write(Index_filename, index)
         
