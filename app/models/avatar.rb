@@ -138,10 +138,6 @@ private
       '       (execute cyberdojo.sh). The test outcome is displayed here.',
       '',
       '       Click the radio-buttons on the left to open files in the editor.',
-      '',
-      '       Keyboard shortcuts',
-      '         Control-S == run tests',
-      '         Control-N == open next file)'
     ].join("\n")
   end
 
