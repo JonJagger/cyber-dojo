@@ -23,8 +23,8 @@ class Dojo
       if File.directory? inner and File.directory? outer
         result = false
       else
-        Dir.mkdir inner
-        Dir.mkdir outer
+        make_dir(inner)
+        make_dir(outer)
 
         now = Time.now
         info = { :name => name, :created => make_time(now) }
@@ -165,7 +165,13 @@ private
   def ladder_sort(rungs)
     rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
   end
-  
+
+  def self.make_dir(name)
+    if !File.directory? name
+      Dir.mkdir name
+    end
+  end
+    
 end
 
 
