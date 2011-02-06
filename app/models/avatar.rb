@@ -17,14 +17,13 @@ class Avatar
     io_lock(@dojo.folder) do
       @name = name || random_unused_avatar
       
-      filesets ||= {}
-      filesets['kata'] ||= FileSet.random('kata')
-      filesets['language'] ||= FileSet.random('language')
-    
       if File.exists?(filesets_filename)
         @filesets = eval IO.read(filesets_filename)
       else
         @filesets = filesets
+        @filesets ||= {}
+        @filesets['kata'] ||= FileSet.random('kata')
+        @filesets['language'] ||= FileSet.random('language')
         Dir.mkdir(folder)
         file_write(filesets_filename, @filesets)
         file_write(increments_filename, [])
