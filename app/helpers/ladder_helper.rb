@@ -1,14 +1,14 @@
 
 module LadderHelper
   
-  def rungs(dojo, ladder)
-    
+  def rungs(dojo, ladder)   
     html = ''
     
     if dojo.expired
       html += small_title('Dojo now closed')
     else
-      html += small_title(started(dojo.age))
+      age = dojo.age
+      html += small_title("%02d:%02d" % [ age[:mins], age[:secs] ])
     end
     
     html += '<table cellspacing="4">'
@@ -23,16 +23,6 @@ module LadderHelper
     html += '</table>'
   end
     
-  def started(age)
-    html = ''
-    prefix = ' '    
-    if age[:days] > 0
-      html += prefix + pluralize(age[:days], 'day')
-      prefix = ', '
-    end
-    html += prefix + "%02d:%02d" % [ age[:mins], age[:secs] ]     
-  end
-  
   def small_title(html)
     '<span class="small_title">' + html + '</span>'
   end
@@ -48,30 +38,33 @@ module LadderHelper
     yellow = on_off(outcome, 'error')
     green = on_off(outcome, 'passed')
 
-    "<td class='mid_tone traffic_light'>" +   
-        "<div class='#{red}  increment'></div>" +
-        "<div class='#{yellow} increment'></div>" +
-        "<div class='#{green} increment'></div>" +  
-    '</td>'
+    [ "<td class='mid_tone traffic_light'>",   
+        "<div class='#{red}  increment'></div>",
+        "<div class='#{yellow} increment'></div>",
+        "<div class='#{green} increment'></div>",  
+      '</td>'
+    ].join('')
   end
   
   def one_rung(rung)
     size = 50
-    [  '<td>',
-         "<img src='/images/avatars/#{rung[:avatar]}.jpg'",
-              "width='#{size}'",
-              "height='#{size}'",
-              "title='#{rung[:avatar]}' />",
-       '</td>',
+    [  td(avatar_img(rung, size)),
        traffic_light(rung),       
-       '<td>',
-         "<img src='/images/avatars/#{rung[:avatar]}.jpg'",
-              "width='#{size}'",
-              "height='#{size}'",
-              "title='#{rung[:avatar]}' />",
-       '</td>'  
-     ].join("\n")
+       td(avatar_img(rung, size)),
+    ].join('')
   end
 
+  def avatar_img(rung,size)
+    [ "<img src='/images/avatars/#{rung[:avatar]}.jpg'", 
+        "width='#{size}'",
+        "height='#{size}'",
+        "title='#{rung[:avatar]}' />"
+    ].join('')
+  end
+
+  def td(html)
+    '<td>' + html + '</td>' 
+  end
+  
 end
 
