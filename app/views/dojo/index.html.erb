@@ -1,5 +1,5 @@
 
-<h1 align="center">CyberDojo</h1>
+<h1 align="center">CyberDojo - the Coding Gym</h1>
 <h3 align="center">Practising the <em>collaborative</em> game called software development</h3>
 
 <table valign="top" align="center">
@@ -14,9 +14,8 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
 
 <tr>
 <td class="panel">
-  <form name="dojoNew" action="/dojo/new">
-    First... 
-    <div>choose a name
+      <form action="/dojo/new">
+        <div>Choose a name
           <input type="text"
                  name="name"
                  value="" />
@@ -24,30 +23,43 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
           <input type="submit"
                  id="new_button"
                  name="new"
-                 value="Create our CyberDojo" />
+                 value="Create" /> our CyberDojo
           <% if flash[:new_notice] -%>
             <div class="notice"><%= flash[:new_notice] -%></div>
           <% end -%>
         </div>
       </form>
       
-      <form name="dojoEnter" action="/dojo/enter">
+      <form action="/dojo/enter">
       Then, at <em>each</em> computer...
-        <div>type the name
+        <div>type its name
           <input type="text"
                  name="name"
                  value="<%=@name-%>" />
-          and click
+          and click          
           <input type="submit"
                  name="enter"
                  id="enter_button"
-                 value="Enter our CyberDojo" />
+                 value="Enter" />
+          or                 
+          <input type="submit"
+                 name="reenter"
+                 id="reenter_button"
+                 value="ReEnter" />
+          or                 
+          <input type="submit"
+                 name="view"
+                 id="view_button"
+                 value="View" />
+                 
           <% if flash[:enter_notice] -%>
             <div class="notice"><%= flash[:enter_notice] -%></div>
           <% end -%>
         </div>
       </form>
-</td></tr>
+      
+</td>
+</tr>
 
 <tr>
 <td class="panel">

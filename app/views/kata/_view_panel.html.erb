@@ -7,10 +7,11 @@
       <span class="small_title"><%= @kata.language -%></span>
       <span class="small_title"><%= @kata.name -%></span>
            
-      <%= render :partial => 'filenames_panel' -%>
+      <%= render :partial => 'fileops' -%>
+      <%= render :partial => 'filenames' -%>
     </td>
     <td>
-      <%= render :partial => 'editor_panel' -%>
+      <%= render :partial => 'editor' -%>
     </td>
     <td rowspan=2>
       <%= render :partial => 'rotation' -%>
@@ -23,12 +24,12 @@
       <table style="float:right;">
         <tr>
           <td>
-            <%= render :partial => 'play_button' -%>
+            <%= render :partial => 'play' -%>
           </td>
         </tr>
         <tr>
           <td>
-            <%= render :partial => 'increments_panel' -%>
+            <%= render :partial => 'increments' -%>
           </td>
          </tr>
        </table>
@@ -39,11 +40,12 @@
   </tr>
 </table>
 
-
+<% if !@dojo.readonly -%>
 <%= periodically_call_remote :url => { :action => 'heartbeat',
                                        :dojo => @dojo.name,
                                        :avatar => @avatar.name
                                      }, 
-                             :frequency => 5 -%>                
+                             :frequency => 5 -%>
+<% end -%>                             
                    
 

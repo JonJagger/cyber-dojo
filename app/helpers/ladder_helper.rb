@@ -2,18 +2,15 @@
 module LadderHelper
   
   def rungs(dojo, ladder)
-    age = dojo.age
-    html = '<span class="small_title">'
-    html += 'Started'
-
-    prefix = ' '    
-    if age[:days] > 0
-      html += prefix + pluralize(age[:days], 'day')
-      prefix = ', '
+    
+    html = ''
+    
+    if dojo.expired
+      html += small_title('Dojo now closed')
+    else
+      html += small_title(started(dojo.age))
     end
-    html += prefix + "%02dh:%02dm:%02ds" % [age[:hours], age[:mins], age[:secs] ]
-    html += ' ago'      
-    html += '</span>'
+    
     html += '<table cellspacing="4">'
     chunks = chunk_array(ladder, 12)
     chunks.each do |chunk|
@@ -26,6 +23,20 @@ module LadderHelper
     html += '</table>'
   end
     
+  def started(age)
+    html = ''
+    prefix = ' '    
+    if age[:days] > 0
+      html += prefix + pluralize(age[:days], 'day')
+      prefix = ', '
+    end
+    html += prefix + "%02d:%02d" % [ age[:mins], age[:secs] ]     
+  end
+  
+  def small_title(html)
+    '<span class="small_title">' + html + '</span>'
+  end
+  
   def on_off(outcome, is)
     return outcome == is ? is : 'off'
   end

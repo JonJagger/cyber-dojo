@@ -1,7 +1,6 @@
 
 require 'digest/sha1'
 require 'file_write.rb'
-require 'folders_in.rb'
 require 'io_lock.rb'
 require 'make_time.rb'
 
@@ -54,8 +53,9 @@ class Dojo
 
   #---------------------------------
   
-  def initialize(name)
+  def initialize(name, readonly = false)
     @name = name
+    @readonly = readonly
   end
 
   def name
@@ -65,6 +65,14 @@ class Dojo
   def created
     manifest = eval IO.read(manifest_filename)
     Time.mktime(*manifest[:created])
+  end
+  
+  def readonly
+    expired or @readonly
+  end
+  
+  def expired
+    age[:days] > 0 or age[:hours] >= 1
   end
   
   def age

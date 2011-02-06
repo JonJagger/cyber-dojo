@@ -3,6 +3,9 @@
           id="editor"
           tab="<%=@kata.tab-%>"
           cols="70" 
+          <% if @dojo.readonly -%>
+          readonly="readonly"
+          <% end -%>
           rows="28">
 </textarea>
 

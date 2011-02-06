@@ -10,16 +10,11 @@ function makeSelection(name, index, choice)
   {     
   	 $('kata_info').value = $('kata[' + choice + ']').value;
   }
-  if (name == 'avatar')
-  {
-  	$('avatar_choice').innerHTML = choice;
-  }
 }
 
 //--></script>
 
-<form name="avatarIndex" 
-      action="/kata/edit">
+<form action="/kata/edit">
 
 <noscript>
   &nbsp;
@@ -34,42 +29,6 @@ function makeSelection(name, index, choice)
 
 <h1>CyberDojo: <%= @dojo.name -%></h1>
 
-<table class="panel" >
-  <tr>
-    <th>
-      <span class="choose_title">Avatar? <span id="avatar_choice"></span>
-      </span>
-    </th>
-  </tr>
-  <tr>    
-    <td valign="top">
-      <% chunk_size = 2 -%>
-      <% chunks = chunk_array(@avatars.sort, chunk_size) -%>
-      <table>
-        <% chunks.each_with_index do |chunk,outer| -%>
-        <tr>
-        <% chunk.each_with_index do |avatar,inner| -%>
-           <% index = inner*chunk_size + outer -%>
-           <td onclick='makeSelection("avatar", "<%=index-%>", "<%=avatar.humanize-%>");'>
-             <input id="avatar_<%=index-%>"
-                    type="radio"
-                    name="avatar"
-                    value="<%=avatar.downcase-%>" />
-               <img alt="<%=avatar-%>" 
-                    width='44'
-                    height='44'
-                    src="/images/avatars/<%=avatar.downcase-%>.jpg"
-                    title="<%=avatar.humanize-%>" />
-           </td>
-        <% end -%>
-        </tr>
-      <% end -%>
-      </table>    
-    </td>
-  </tr>
-</table>
-
-
 <!-- In a multi-kata dojo, if you list the kata/language -->
 <!-- filesets alphabetically there is a strong likelihood -->
 <!-- each station will simply pick the first entry. That -->
@@ -78,6 +37,8 @@ function makeSelection(name, index, choice)
 <!-- will make different selections, which hopefully will -->
 <!-- increase the potential for collaboration - the game's -->
 <!-- prime directive. --> 
+
+If unselected, the server will randomly choose the Kata, and the Language.<br/>
 
 <table>
   <tr>
@@ -131,33 +92,14 @@ function makeSelection(name, index, choice)
           <td valign="top">
             <input id="start_button" 
                    type="submit" 
-                   value="Start" 
+                   value="Enter" 
                    name="start" />
-          </td>
-        </tr>
-        <tr>
-          <td>
-            &nbsp;<br/>
-            &nbsp;<br/>
-          </td>  
-        </tr>
-        <tr>
-          <td valign="bottom">
-            <%= link_to 'Dashboard', 
-                   { :controller => 'dojo', 
-                     :action => 'dashboard',
-                     :name => @dojo.name 
-                   },
-                   { :id => 'dashboard_button' } -%>
           </td>
         </tr>
       </table>        
     </td>
   </tr>
 </table>
-
-If unselected, the server will randomly choose the Avatar, the Kata, and the Language.<br/>
-Kata and Language selection will be ignored for an already started Avatar.
 
 </form>
 

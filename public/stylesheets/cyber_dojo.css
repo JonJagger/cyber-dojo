@@ -40,7 +40,7 @@
 
 
 .file_op, .panel, div[class~="filename"],  
-#new_button, #enter_button, #start_button, #play_button, #dashboard_button
+#new_button, #enter_button, #reenter_button, #start_button, #play_button, #view_button
 { 
   border: 1px solid #A8A8A8;
   border-radius: 6px;
@@ -49,12 +49,12 @@
   -webkit-border-radius: 6px;
 }
 
-#new_button, #enter_button, #start_button, #play_button, #dashboard_button
+#new_button, #enter_button, #reenter_button, #start_button, #play_button, #view_button
 { 
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;
   font-size: 1em;
   cursor: pointer;
-  padding: 0.5em;
+  padding: 4px;
   background-color: #FFE4C4; 
   text-decoration: none;
   font-weight: normal;
@@ -95,6 +95,28 @@
   background-color: #FFE4C4;
   cursor: pointer;
 } 
+.file_op_disabled
+{
+  border: 1px solid #A8A8A8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;  
+  padding: 4px; 
+  background-color: lightgray;
+}
+
+#play_button_disabled
+{
+  border: 1px solid #A8A8A8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;  
+  padding: 4px; 
+  background-color: lightgray;
+}
+
 .file_op_name 
 { 
   font-size: 9pt; 
@@ -102,7 +124,7 @@
 }
 
 .file_op, div[class~="filename"], 
-#new_button, #enter_button, #start_button, #play_button,  #dashboard_button
+#new_button, #enter_button, #reenter_button, #start_button, #play_button,  #view_button
 {
   color: #383838;
   border-bottom: 2px solid gray; /* fake button look */
@@ -237,7 +259,7 @@ input[type="radio"]:checked+img
 {
   margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
   text-align: center;
-  width: 30em;
+  width: 40em;
   padding: 0 4em;
   margin: 4em auto 0 auto;
   border: 1px solid #ccc;

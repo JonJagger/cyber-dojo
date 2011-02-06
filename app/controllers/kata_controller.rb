@@ -1,9 +1,8 @@
 
 class KataController < ApplicationController
 
-  def index
+  def enter
     @dojo = Dojo.new(params[:dojo])
-    @avatars = Avatar.names   
     @filesets = FileSet.names
     
     @kata_info = {}
@@ -12,9 +11,18 @@ class KataController < ApplicationController
    	  @kata_info[name] = IO.read(path)
     end    
   end
-
-  def edit
+  
+  def reenter
     @dojo = Dojo.new(params[:dojo])
+    @avatars = @dojo.avatars.map { |avatar| avatar.name }   
+  end
+    
+  def view
+    redirect_to :action => :edit, :dojo => params[:dojo], :avatar => params[:avatar], :readonly => true
+  end
+  
+  def edit
+    @dojo = Dojo.new(params[:dojo], params[:readonly])
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata
 

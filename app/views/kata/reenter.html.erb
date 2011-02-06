@@ -6,17 +6,6 @@
   <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>
   <tr>
     <td>
-      <table align="right"
-             cellspacing="2"
-             cellpadding="0">
-        <tr>
-          <% increments[0..-2].each do |inc| -%>
-            <%= traffic_light(inc)-%>
-          <% end -%>
-        </tr>
-      </table>
-    </td>
-    <td>
       <% size = 45 -%>
       <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
            width="<%=size-%>"
@@ -34,15 +23,16 @@
            width="<%=size-%>"
            height="<%=size-%>"
            title="<%=avatar_name.humanize-%>" />
-    </td>    
+    </td>
+    
     <td>
-      <form action="/kata/view">
+      <form action="/kata/edit">
         <input type="hidden" name="dojo" id="dojo" value="<%=h @dojo.name-%>" />
         <input type="hidden" name="avatar" id="avatar" value="<%=h avatar_name-%>" />
-        <input id="view_button" 
+        <input id="reenter_button" 
            type="submit" 
-           value="View" 
-           name="view" />
+           value="ReEnter" 
+           name="reenter" />
       </form>
     </td>
     <td>
