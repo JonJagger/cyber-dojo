@@ -28,7 +28,6 @@ class KataController < ApplicationController
 
     @manifest = {}
     @increments = @avatar.read_most_recent(@manifest)    
-    @ladder = @dojo.ladder
     @rotation = @dojo.rotation(params[:avatar])
     @rotation[:do_now] = false # don't rotate when re-entering
     @current_file = @manifest[:current_filename]
@@ -42,7 +41,7 @@ class KataController < ApplicationController
     manifest = load_visible_files_from_page
     @increments = avatar.run_tests(manifest)
     @output = manifest[:output]
-    @ladder = @dojo.ladder_update(avatar.name, @increments.last)
+    @dojo.ladder_update(avatar.name, @increments.last)
     @outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
@@ -52,7 +51,6 @@ class KataController < ApplicationController
   def heartbeat
     @dojo = Dojo.new(params[:dojo])
     @rotation = @dojo.rotation(params[:avatar])
-    @ladder = @dojo.ladder      
     respond_to do |format|
       format.js if request.xhr?
     end

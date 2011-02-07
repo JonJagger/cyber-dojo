@@ -1,13 +1,26 @@
 
 module LadderHelper
   
-  def rungs(dojo, ladder) 
+  def rungs(dojo) 
     html = age_or_closed(dojo)
     
     if @dojo.avatars.length == 1
       return html
     end
       
+    ladder = []
+    dojo.avatars.each do |avatar|
+      rung = { :avatar => avatar.name }
+      incs = avatar.increments
+
+      if incs.length > 0 
+        rung[:outcome] = incs.last[:outcome]
+      else
+        rung[:outcome] = :blank 
+      end
+      ladder << rung
+    end   
+    
     html += '<table cellspacing="4">'
     chunks = chunk_array(ladder, 12)
     chunks.each do |chunk|
