@@ -44,5 +44,8 @@ class DojoController < ApplicationController
     @dojo = Dojo.new(params[:name])
     render :layout => 'dashboard_view'
   end
+  
+  def ifaq
+  end
 
 end
