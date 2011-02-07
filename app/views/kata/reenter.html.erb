@@ -1,6 +1,8 @@
  
 <h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
 
+<div align="center"><%= age_or_closed(@dojo) -%></div>
+
 <div>
 <table>
   <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>

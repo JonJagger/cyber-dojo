@@ -15,6 +15,7 @@ class KataController < ApplicationController
   def reenter
     @dojo = Dojo.new(params[:dojo])
     @avatars = @dojo.avatars.map { |avatar| avatar.name }   
+    render :layout => 'dashboard_view'
   end
     
   def view
