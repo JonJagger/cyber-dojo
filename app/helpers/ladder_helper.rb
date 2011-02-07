@@ -1,16 +1,13 @@
 
 module LadderHelper
   
-  def rungs(dojo, ladder)   
-    html = ''
+  def rungs(dojo, ladder) 
+    html = age_or_closed(dojo)
     
-    if dojo.expired
-      html += small_title('Dojo now closed')
-    else
-      age = dojo.age
-      html += small_title("%02d:%02d" % [ age[:mins], age[:secs] ])
+    if @dojo.avatars.length == 1
+      return html
     end
-    
+      
     html += '<table cellspacing="4">'
     chunks = chunk_array(ladder, 12)
     chunks.each do |chunk|
@@ -23,6 +20,15 @@ module LadderHelper
     html += '</table>'
   end
     
+  def age_or_closed(dojo)
+    if dojo.expired
+      small_title('Dojo has ended')
+    else
+      age = dojo.age
+      small_title("%02d:%02d" % [ age[:mins], age[:secs] ])
+    end
+  end
+  
   def small_title(html)
     '<span class="small_title">' + html + '</span>'
   end
