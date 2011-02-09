@@ -2,16 +2,15 @@
 class DojoController < ApplicationController
 
   def index
-    @name = params[:name].to_s
+    @name = name
     # offers new, enter, re_enter, view
   end
  
   def new
-    name = params[:name].to_s
     if name == ""
       flash[:new_notice] = 'Please choose a name'
       redirect_to :action => :index    	    	
-    elsif Dojo.create(name)
+    elsif Dojo.create(params)
       redirect_to :action => :index, :name => name
     else      
       flash[:new_notice] = 'There is already a CyberDojo named ' + name
@@ -20,14 +19,13 @@ class DojoController < ApplicationController
   end
   
   def enter
-    name = params[:name].to_s
     if name == ""
       flash[:enter_notice] = 'Please choose a name'
       redirect_to :action => :index
-    elsif !Dojo.find(name)
+    elsif !Dojo.find(params)
       flash[:enter_notice] = 'There is no CyberDojo named ' + name
       redirect_to :action => :index, :name => name
-    elsif !params[:view] and Dojo.new(params[:name]).expired
+    elsif !params[:view] and Dojo.new(params).expired
       flash[:enter_notice] = 'The CyberDojo named ' + name + ' has ended'
       redirect_to :action => :index, :name => name
     elsif params[:enter]
@@ -40,12 +38,17 @@ class DojoController < ApplicationController
   end
 
   def dashboard
-    name = params[:name].to_s
-    @dojo = Dojo.new(params[:name])
+    @dojo = Dojo.new(params)
     render :layout => 'dashboard_view'
   end
   
   def ifaq
   end
 
+private
+
+  def name
+    params[:name]
+  end
+  
 end

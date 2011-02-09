@@ -2,7 +2,8 @@
 class KataController < ApplicationController
 
   def enter
-    @dojo = Dojo.new(params[:dojo])
+    params[:name] = params[:dojo]
+    @dojo = Dojo.new(params)
     @filesets = FileSet.names
     
     @kata_info = {}
@@ -13,7 +14,8 @@ class KataController < ApplicationController
   end
   
   def reenter
-    @dojo = Dojo.new(params[:dojo])
+    params[:name] = params[:dojo]
+    @dojo = Dojo.new(params)
     @avatars = @dojo.avatars.map { |avatar| avatar.name }   
     render :layout => 'dashboard_view'
   end
@@ -23,7 +25,8 @@ class KataController < ApplicationController
   end
   
   def edit
-    @dojo = Dojo.new(params[:dojo], params[:readonly])
+    params[:name] = params[:dojo]
+    @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata
 
@@ -37,7 +40,8 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    @dojo = Dojo.new(params[:dojo])
+    params[:name] = params[:dojo]
+    @dojo = Dojo.new(params)
     avatar = Avatar.new(@dojo, params[:avatar])
     manifest = load_visible_files_from_page
     @increments = avatar.run_tests(manifest)
@@ -50,7 +54,8 @@ class KataController < ApplicationController
   end
    
   def heartbeat
-    @dojo = Dojo.new(params[:dojo])
+    params[:name] = params[:dojo]
+    @dojo = Dojo.new(params)
     @rotation = @dojo.rotation(params[:avatar])
     respond_to do |format|
       format.js if request.xhr?

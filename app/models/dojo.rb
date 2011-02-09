@@ -6,18 +6,30 @@ require 'make_time.rb'
 
 class Dojo
 
-  def self.find(name)
+  Default_root_folder = RAILS_ROOT + '/' + 'dojos'
+  Index_filename = 'index.rb' 
+  Default_seconds_per_rotate = 5 * 60
+
+  def self.find(params)
+    name = params[:name]
+    root_folder = params[:root_folder] || Dojo::Default_root_folder
+    
     id = Digest::SHA1.hexdigest name
-    inner = Root_folder + '/' + id[0..1]
+    inner = root_folder + '/' + id[0..1]
     outer = inner + '/' + id[2..-1]
     File.directory? inner and File.directory? outer
   end
   
-  def self.create(name)
+  def self.create(params)
+    name = params[:name]
+    root_folder = params[:root_folder] || Dojo::Default_root_folder
+    index_filename = root_folder + '/' + Dojo::Index_filename
+    seconds_per_rotate = params[:seconds_per_rotate] || Dojo::Default_seconds_per_rotate
+    
     id = Digest::SHA1.hexdigest name
     result = nil
-    io_lock(Root_folder) do
-      inner = Root_folder + '/' + id[0..1]
+    io_lock(root_folder) do
+      inner = root_folder + '/' + id[0..1]
       outer = inner + '/' + id[2..-1]
       if File.directory? inner and File.directory? outer
         result = false
@@ -29,18 +41,18 @@ class Dojo
         info = { :name => name, :created => make_time(now) }
 
         index = []
-        if File.exists? Index_filename
-          index = eval IO.read(Index_filename)
+        if File.exists? index_filename
+          index = eval IO.read(index_filename)
         end
         index << info        
-        file_write(Index_filename, index)
+        file_write(index_filename, index)
         
         rotation = {}
         rotation[:already_rotated] = []
         rotation[:prev_rotation_at] = make_time(now)      
-        rotation[:next_rotation_at] = make_time(now + Seconds_per_rotate)
+        rotation[:next_rotation_at] = make_time(now + seconds_per_rotate)
 
-        dojo = Dojo.new(name)        
+        dojo = Dojo.new(params)        
         file_write(dojo.ladder_filename, [])
         file_write(dojo.rotation_filename, rotation)
         file_write(dojo.manifest_filename, info)
@@ -52,10 +64,12 @@ class Dojo
   end
 
   #---------------------------------
-  
-  def initialize(name, readonly = false)
-    @name = name
-    @readonly = readonly
+
+  def initialize(params)
+    @name = params[:name]
+    @readonly = params.has_key?(:readonly) ? params[:readonly] : false
+    @root_folder = params[:root_folder] || Dojo::Default_root_folder
+    @seconds_per_rotate = params[:seconds_per_rotate] || Dojo::Default_seconds_per_rotate
   end
 
   def name
@@ -104,7 +118,7 @@ class Dojo
         # but don't rotate if we're re-entering a dojo after a long break
         options[:do_now] = (now - due < (2 * refresh_period))
         options[:prev_rotation_at] = make_time(now)
-        due = now + Seconds_per_rotate
+        due = now + seconds_per_rotate
         options[:next_rotation_at] = make_time(due)
         options[:already_rotated] = [avatar_name]
       elsif !already_rotated && very_recent_rotation
@@ -138,7 +152,7 @@ class Dojo
 
   def folder
     id = Digest::SHA1.hexdigest name
-    Root_folder + '/' + id[0..1] + '/' + id[2..-1]
+    root_folder + '/' + id[0..1] + '/' + id[2..-1]
   end
 
   def manifest_filename
@@ -155,11 +169,17 @@ class Dojo
 
 private
 
-  Seconds_per_rotate = 5 * 60
-  
-  Root_folder = RAILS_ROOT + '/' + 'dojos'
+  def root_folder
+    @root_folder
+  end
 
-  Index_filename = Root_folder + '/' + 'index.rb' 
+  def index_filename
+    root_folder + '/' + Dojo::Index_filename
+  end
+  
+  def seconds_per_rotate
+    @seconds_per_rotate
+  end
 
   def exists?(name)
     File.exists? folder + '/' + name
