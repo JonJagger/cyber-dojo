@@ -25,7 +25,7 @@ class DojoController < ApplicationController
     elsif !Dojo.find(params)
       flash[:enter_notice] = 'There is no CyberDojo named ' + name
       redirect_to :action => :index, :name => name
-    elsif !params[:view] and Dojo.new(params).expired
+    elsif !params[:view] and Dojo.new(params).closed
       flash[:enter_notice] = 'The CyberDojo named ' + name + ' has ended'
       redirect_to :action => :index, :name => name
     elsif params[:enter]
