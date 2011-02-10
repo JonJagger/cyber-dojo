@@ -15,6 +15,8 @@ class Avatar
   def initialize(dojo, name, filesets = nil) 
     @dojo = dojo
     io_lock(@dojo.folder) do
+      # important to choose random_unused_avatar inside io_lock to prevent
+      # more than one computer entering the dojo as the same avatar
       @name = name || random_unused_avatar
       
       if File.exists?(filesets_filename)

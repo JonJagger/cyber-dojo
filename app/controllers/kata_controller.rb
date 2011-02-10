@@ -13,6 +13,13 @@ class KataController < ApplicationController
     end    
   end
   
+  def choose_avatar
+    params[:name] = params[:dojo]
+    @dojo = Dojo.new(params)
+    @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])    
+    redirect_to :action => :edit, :dojo => params[:dojo], :avatar => @avatar.name
+  end
+  
   def reenter
     params[:name] = params[:dojo]
     @dojo = Dojo.new(params)
