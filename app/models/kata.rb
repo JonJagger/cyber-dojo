@@ -28,6 +28,7 @@ class Kata
     @filesets['kata']
   end
   
+  #TODO: this should be at Dojo level, not in a kata or fileset
   def max_run_tests_duration
     (manifest[:max_run_tests_duration] || 10).to_i      
   end
