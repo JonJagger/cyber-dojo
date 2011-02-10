@@ -15,9 +15,8 @@ class Dojo
     name = params[:name]
     root_folder = params[:root_folder] || Dojo::Default_root_folder
     
-    id = Digest::SHA1.hexdigest name
-    inner = root_folder + '/' + id[0..1]
-    outer = inner + '/' + id[2..-1]
+    inner = root_folder + '/' + Dojo::inner_folder(name)
+    outer = inner + '/' + Dojo::outer_folder(name)
     File.directory? inner and File.directory? outer
   end
   
@@ -28,11 +27,10 @@ class Dojo
     minutes_per_rotation = params[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
     minutes_duration = params[:minutes_duration] || Dojo::Default_minutes_per_dojo
     
-    id = Digest::SHA1.hexdigest name
     result = nil
     io_lock(root_folder) do
-      inner = root_folder + '/' + Dojo::inner_folder(id)
-      outer = inner + '/' + Dojo::outer_folder(id)
+      inner = root_folder + '/' + Dojo::inner_folder(name)
+      outer = inner + '/' + Dojo::outer_folder(name)
       if File.directory? inner and File.directory? outer
         result = false
       else
@@ -70,12 +68,16 @@ class Dojo
     result
   end
   
-  def self.inner_folder(id)
-    id[0..1] # ala git    
+  def self.inner_folder(name)
+    Dojo::sha1(name)[0..1] # ala git    
   end
 
-  def self.outer_folder(id)
-    id[2..-1] # ala git
+  def self.outer_folder(name)
+    Dojo::sha1(name)[2..-1] # ala git
+  end
+
+  def self.sha1(name)
+    Digest::SHA1.hexdigest(name)
   end
   
   #---------------------------------
@@ -159,8 +161,7 @@ class Dojo
   end
 
   def folder
-    id = Digest::SHA1.hexdigest name
-    root_folder + '/' + Dojo::inner_folder(id) + '/' + Dojo::outer_folder(id)
+    root_folder + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
   end
 
   def manifest_filename

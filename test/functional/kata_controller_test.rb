@@ -2,50 +2,19 @@ require 'test_helper'
 
 class KataControllerTest < ActionController::TestCase
 
-  class MockKata
-    def initialize(language, unit_test_framework)
-      @language, @unit_test_framework = language, unit_test_framework
-    end
-    def language
-      @language
-    end
-    def unit_test_framework
-      @unit_test_framework
-    end
+  def test_creating_a_new_dojo_builds_git_like_folder_structure
+    params = {}
+    params[:root_folder] = 'test_dojos'
+    #params[:name] = 
+    #
+    #if !File.directory? name
+    #  Dir.mkdir name
+    #end
+    
   end
-
-  def test_parse_execution_terminated
-    execution_terminated_output = "execution terminated after "
-    expected = { :outcome => :timeout, :info => 'execution terminated after ' }
-    actual = RunTestsOutputParser.new().parse(
-		MockKata.new('c', 'assert'), execution_terminated_output)
-    assert_equal expected, actual
-  end
-
-  #---------------------------------
-
-  def test_parse_junit_test_fail_with_count
-    junit_output = "Tests run: 5,  Failures: 4"
-    actual = RunTestsOutputParser.new().parse(
-		MockKata.new('java', 'junit'), junit_output)
-    assert_equal :failed, actual[:outcome]
-  end
-
-  def test_parse_junit_test_zero_is_a_fail
-    junit_output = "DemoTest.java:7: ';' expected" + "\n" + "OK (0 tests)"
-    actual = RunTestsOutputParser.new().parse(
-		MockKata.new('java', 'junit'), junit_output)
-    assert_equal :failed, actual[:outcome]
-  end
-
-  def test_parse_junit_test_pass_with_count
-    junit_output = "OK (42 test"
-    actual = RunTestsOutputParser.new().parse(
-		MockKata.new('java', 'junit'), junit_output)
-    assert_equal :passed, actual[:outcome]
-  end
-
-  #---------------------------------
+  
+  
+  #def test_parse_execution_terminated
 
   def test_makefile_filter_filename_not_makefile
      name     = 'not_makefile'
