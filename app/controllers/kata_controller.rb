@@ -2,26 +2,26 @@
 class KataController < ApplicationController
 
   def enter
-    params[:name] = params[:dojo]
+    configure(params) 
     @dojo = Dojo.new(params)
-    @filesets = FileSet.names
-    
+    @katas = FileSet.new(params[:filesets_root], 'kata').choices.shuffle
+    @languages = FileSet.new(params[:filesets_root], 'language').choices.shuffle
     @kata_info = {}
-    FileSet.new('kata').choices.each do |name|  	
-      path = RAILS_ROOT + '/' + 'filesets' + '/' + 'kata' + '/' + name + '/' + 'instructions'
+    @katas.each do |name|
+      path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
    	  @kata_info[name] = IO.read(path)
     end    
   end
   
   def choose_avatar
-    params[:name] = params[:dojo]
+    configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])    
     redirect_to :action => :edit, :dojo => params[:dojo], :avatar => @avatar.name
   end
   
   def reenter
-    params[:name] = params[:dojo]
+    configure(params)
     @dojo = Dojo.new(params)
     @avatars = @dojo.avatars.map { |avatar| avatar.name }   
     render :layout => 'dashboard_view'
@@ -32,7 +32,7 @@ class KataController < ApplicationController
   end
   
   def edit
-    params[:name] = params[:dojo]
+    configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata
@@ -47,7 +47,7 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    params[:name] = params[:dojo]
+    configure(params)
     @dojo = Dojo.new(params)
     avatar = Avatar.new(@dojo, params[:avatar])
     manifest = load_visible_files_from_page
@@ -61,7 +61,7 @@ class KataController < ApplicationController
   end
    
   def heartbeat
-    params[:name] = params[:dojo]
+    configure(params)
     @dojo = Dojo.new(params)
     @rotation = @dojo.rotation(params[:avatar])
     respond_to do |format|
@@ -71,6 +71,12 @@ class KataController < ApplicationController
    
 private
 
+  def configure(params)
+    params[:name] = params[:dojo]
+    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
+    params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
+  end
+  
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
     # means filename has a leading ' and trailing ']

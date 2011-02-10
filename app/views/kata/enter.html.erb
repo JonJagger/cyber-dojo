@@ -59,8 +59,7 @@ function makeSelection(name, index, choice)
           </td>
           <td valign="top">
             <span class="choose_title">Kata?</span>
-            <% katas = FileSet.new('kata').choices.shuffle -%>
-            <% katas.each_with_index do |choice,index| -%>
+            <% @katas.each_with_index do |choice,index| -%>
               <div onclick='makeSelection("kata", "<%=index-%>", "<%=choice-%>");'>
                 <input id="kata_<%=index-%>" 
                        type="radio" 
@@ -78,8 +77,7 @@ function makeSelection(name, index, choice)
         <tr>
           <td>
             <span class="choose_title">Language?</span>
-            <% languages = FileSet.new('language').choices.shuffle -%>
-            <% languages.each_with_index do |choice,index| -%>
+            <% @languages.each_with_index do |choice,index| -%>
               <div onclick='makeSelection("language", "<%=index-%>", "<%=choice-%>");'>
                 <input id="language_<%=index-%>" 
                        type="radio" 
@@ -108,7 +106,7 @@ function makeSelection(name, index, choice)
 
 </form>
 
-<% FileSet.new('kata').choices.each_with_index do |choice,index| -%>
+<% @katas.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 
              name="kata[<%=choice-%>]"
              id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>

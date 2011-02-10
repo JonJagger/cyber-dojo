@@ -14,6 +14,7 @@ Requirements
 ============
 Ruby
 Rails
+git
 
 
 Installing CyberDojo

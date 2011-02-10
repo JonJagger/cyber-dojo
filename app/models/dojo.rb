@@ -6,14 +6,13 @@ require 'make_time.rb'
 
 class Dojo
 
-  Default_root_folder = RAILS_ROOT + '/' + 'dojos'
   Index_filename = 'index.rb' 
   Default_minutes_per_rotation = 5
   Default_minutes_per_dojo = 60
 
   def self.find(params)
     name = params[:name]
-    root_folder = params[:root_folder] || Dojo::Default_root_folder
+    root_folder = params[:dojo_root]
     
     inner = root_folder + '/' + Dojo::inner_folder(name)
     outer = inner + '/' + Dojo::outer_folder(name)
@@ -22,7 +21,7 @@ class Dojo
   
   def self.create(params)
     name = params[:name]
-    root_folder = params[:root_folder] || Dojo::Default_root_folder
+    root_folder = params[:dojo_root]
     index_filename = root_folder + '/' + Dojo::Index_filename
     minutes_per_rotation = params[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
     minutes_duration = params[:minutes_duration] || Dojo::Default_minutes_per_dojo
@@ -85,7 +84,8 @@ class Dojo
   def initialize(params)
     @name = params[:name]
     @readonly = params.has_key?(:readonly) ? params[:readonly] : false
-    @root_folder = params[:root_folder] || Dojo::Default_root_folder
+    @dojo_root = params[:dojo_root]
+    @filesets_root = params[:filesets_root]
   end
 
   def name
@@ -160,8 +160,16 @@ class Dojo
     end
   end
 
+  def filesets_root
+    @filesets_root
+  end
+  
+  def dojo_root
+    @dojo_root
+  end
+
   def folder
-    root_folder + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
+    dojo_root + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
   end
 
   def manifest_filename
@@ -193,10 +201,6 @@ class Dojo
   end
   
 private
-
-  def root_folder
-    @root_folder
-  end
 
   def exists?(name)
     File.exists? folder + '/' + name

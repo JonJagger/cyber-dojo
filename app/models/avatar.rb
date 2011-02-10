@@ -24,8 +24,8 @@ class Avatar
       else
         @filesets = filesets
         @filesets ||= {}
-        @filesets['kata'] ||= FileSet.random('kata')
-        @filesets['language'] ||= FileSet.random('language')
+        @filesets['kata']     ||= FileSet.new(@dojo.filesets_root, 'kata'    ).choices.shuffle[0]
+        @filesets['language'] ||= FileSet.new(@dojo.filesets_root, 'language').choices.shuffle[0]
         Dir.mkdir(folder)
         file_write(filesets_filename, @filesets)
         file_write(increments_filename, [])
@@ -33,7 +33,7 @@ class Avatar
         Dir.mkdir(sandbox)
         # Copy hidden files from kata fileset 
         # into sandbox ready for future run_tests        
-        kata = Kata.new(@filesets)
+        kata = Kata.new(@dojo.filesets_root, @filesets)
         kata.hidden_pathnames.each do |hidden_pathname|
           system("cp '#{hidden_pathname}' '#{sandbox}'") 
         end
@@ -54,7 +54,6 @@ class Avatar
         cmd += "git add '#{filesets_filename}';"
         cmd += "git add '#{increments_filename}';"
         system(cmd)
-        
         tag = 0
         git_commit_tag(kata.visible_files, tag)
       end
@@ -66,7 +65,7 @@ class Avatar
   end
 
   def kata
-    Kata.new(@filesets)
+    Kata.new(@dojo.filesets_root, @filesets)
   end
    
   def increments

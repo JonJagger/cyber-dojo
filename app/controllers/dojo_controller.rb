@@ -1,12 +1,13 @@
 
 class DojoController < ApplicationController
-
+ 
   def index
     @name = name
     # offers new, enter, re_enter, view
   end
  
   def new
+    configure(params)
     if name == ""
       flash[:new_notice] = 'Please choose a name'
       redirect_to :action => :index    	    	
@@ -19,6 +20,7 @@ class DojoController < ApplicationController
   end
   
   def enter
+    configure(params)
     if name == ""
       flash[:enter_notice] = 'Please choose a name'
       redirect_to :action => :index
@@ -38,6 +40,7 @@ class DojoController < ApplicationController
   end
 
   def dashboard
+    configure(params)
     @dojo = Dojo.new(params)
     render :layout => 'dashboard_view'
   end
@@ -49,6 +52,11 @@ private
 
   def name
     params[:name]
+  end
+  
+  def configure(params)
+    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
+    params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
   end
   
 end

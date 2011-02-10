@@ -1,14 +1,14 @@
 
 class Kata
 
-  def initialize(filesets)
+  def initialize(filesets_root, filesets)
     @filesets = filesets
     @manifest = {}
     @manifest[:visible_files] = {}
     @manifest[:hidden_filenames] = []
     @manifest[:hidden_pathnames] = []    
     filesets.each do |name,value|
-      FileSet.read(@manifest, name + '/' + value)
+      FileSet.read_into(@manifest, filesets_root + '/' + name + '/' + value)
     end
   end
   
