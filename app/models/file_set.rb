@@ -7,24 +7,30 @@ class FileSet
   end
 
   def choices
-    folders_in(@filesets_root + '/' + @name)
+    folders_in(path)
   end  
   
-  def self.read_into(manifest, path)
-    file_set = eval IO.read(path + '/' + 'manifest.rb')
+  def read_into(manifest, choice)
+    fullpath = path + '/' + choice
+    file_set = eval IO.read(fullpath + '/' + 'manifest.rb')
     file_set.each do |key,value|
 	    if key == :visible_filenames
-        manifest[:visible_files].merge! read_visible(path, value)
+        manifest[:visible_files].merge! FileSet::read_visible(fullpath, value)
       elsif key == :hidden_filenames
         manifest[:hidden_filenames] += value
-        manifest[:hidden_pathnames] += read_hidden_pathnames(path, value)
+        manifest[:hidden_pathnames] += FileSet::read_hidden_pathnames(fullpath, value)
       else
         manifest[key] = value
       end
     end    
-  end  
 
+  end
+  
 private
+
+  def path
+    @filesets_root + '/' + @name
+  end
 
   def self.read_visible(file_set_folder, filenames)
     visible_files = {}

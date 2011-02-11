@@ -184,14 +184,14 @@ class Dojo
     folder + '/' + 'ladder.rb'
   end  
 
-  def seconds_per_heartbeat
-    5
-  end
-
   def created
     Time.mktime(*manifest[:created])
   end
   
+  def seconds_per_heartbeat
+    5
+  end
+
   def minutes_per_rotation
     manifest[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
   end

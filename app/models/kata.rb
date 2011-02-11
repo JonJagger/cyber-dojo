@@ -7,8 +7,8 @@ class Kata
     @manifest[:visible_files] = {}
     @manifest[:hidden_filenames] = []
     @manifest[:hidden_pathnames] = []    
-    filesets.each do |name,value|
-      FileSet.read_into(@manifest, filesets_root + '/' + name + '/' + value)
+    filesets.each do |name,choice|
+      FileSet.new(filesets_root, name).read_into(@manifest, choice)
     end
   end
   

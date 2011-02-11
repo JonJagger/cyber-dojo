@@ -25,7 +25,7 @@ class DojoTests < ActionController::TestCase
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
-    assert File.exists?(dojo.folder), 'outer folder created'
+    assert File.exists?(dojo.folder), 'inner/outer folder created'
     assert File.exists?(dojo.ladder_filename), 'ladder.rb created'
     assert File.exists?(dojo.rotation_filename), 'rotation.rb created'
     assert File.exists?(dojo.manifest_filename), 'manifest.rb created'
