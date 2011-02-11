@@ -19,16 +19,21 @@ class LanguageFileSetTests < ActionController::TestCase
     }
   end
   
-  def test_that_initial_fileset_for_csharp_is_green
+  def test_that_initial_fileset_for_all_languages_is_green
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, nil, { 'language' => 'C#' })    
-    manifest = {}
-    avatar.read_most_recent(manifest)
-    increments = avatar.run_tests(manifest)
-    assert_equal :passed, increments.last[:outcome]     
+    FileSet.new(dojo.filesets_root, 'language').choices.each do |language|    
+      avatar = Avatar.new(dojo, nil, { 'language' => language })    
+      manifest = {}
+      avatar.read_most_recent(manifest)
+      increments = avatar.run_tests(manifest)
+      info = language + ', ' + avatar.name
+      assert_equal :passed, increments.last[:outcome], info
+      p info      
+    end
+
   end
     
 end
