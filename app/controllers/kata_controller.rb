@@ -4,8 +4,18 @@ class KataController < ApplicationController
   def enter
     configure(params) 
     @dojo = Dojo.new(params)
-    @katas = FileSet.new(params[:filesets_root], 'kata').choices.shuffle
-    @languages = FileSet.new(params[:filesets_root], 'language').choices.shuffle
+    
+    # In a multi-kata dojo, if you list the kata/language
+    # filesets alphabetically there is a strong likelihood
+    # each computer will simply pick the first entry. That
+    # happened at the 2010 NDC conference for example. Listing 
+    # them in a random order increases the chances stations
+    # will make different selections, which hopefully will
+    # increase the potential for collaboration - the game's
+    # prime directive. 
+
+    @katas = FileSet.new(@dojo.filesets_root, 'kata').choices.shuffle
+    @languages = FileSet.new(@dojo.filesets_root, 'language').choices.shuffle
     @kata_info = {}
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'

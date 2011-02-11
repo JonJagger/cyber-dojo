@@ -10,6 +10,10 @@ class FileSet
     folders_in(path)
   end  
   
+  def random_choice
+    choices.shuffle[0]
+  end
+  
   def read_into(manifest, choice)
     fullpath = path + '/' + choice
     file_set = eval IO.read(fullpath + '/' + 'manifest.rb')

@@ -24,8 +24,8 @@ class Avatar
       else
         @filesets = filesets
         @filesets ||= {}
-        @filesets['kata']     ||= FileSet.new(@dojo.filesets_root, 'kata'    ).choices.shuffle[0]
-        @filesets['language'] ||= FileSet.new(@dojo.filesets_root, 'language').choices.shuffle[0]
+        @filesets['kata']     ||= FileSet.new(@dojo.filesets_root, 'kata'    ).random_choice
+        @filesets['language'] ||= FileSet.new(@dojo.filesets_root, 'language').random_choice
         Dir.mkdir(folder)
         file_write(filesets_filename, @filesets)
         file_write(increments_filename, [])

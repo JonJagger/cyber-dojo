@@ -1,7 +1,7 @@
 require 'test_helper'
 
-# from the cyberdojo/tests folder
-# ruby functional/dojo_tests.rb
+# > cd cyberdojo/test
+# > ruby functional/dojo_tests.rb
 
 class DojoTests < ActionController::TestCase
 
@@ -15,8 +15,7 @@ class DojoTests < ActionController::TestCase
   def make_params
     { :name => 'Jon Jagger', 
       :dojo_root => Dir.getwd + '/' + Root_test_folder,
-      :filesets_root => Dir.getwd + '/../filesets',
-      :minutes_duration => 65 
+      :filesets_root => Dir.getwd + '/../filesets'
     }
   end
   
@@ -38,16 +37,27 @@ class DojoTests < ActionController::TestCase
     assert !Dojo::create(params)    
   end
   
-  def test_that_creating_a_new_dojo_with_specified_duration_succeeds
+  def test_that_a_player_can_create_a_new_dojo_with_specified_duration
     root_test_folder_reset
-    params = make_params 
+    params = make_params
+    params[:minutes_duration] = 65
     assert Dojo::create(params)
     dojo = Dojo.new(params)
     manifest = eval IO.read(dojo.manifest_filename)
     assert_equal 65, manifest[:minutes_duration]    
   end
   
-  def test_that_creating_a_new_avatar_in_a_new_dojo_succeeds
+  def test_that_a_player_can_create_a_new_dojo_with_specified_rotation
+    root_test_folder_reset
+    params = make_params
+    params[:minutes_per_rotation] = 10
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    manifest = eval IO.read(dojo.manifest_filename)
+    assert_equal 10, manifest[:minutes_per_rotation]    
+  end
+  
+  def test_that_a_player_can_create_a_new_avatar_in_a_new_dojo
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
@@ -56,6 +66,19 @@ class DojoTests < ActionController::TestCase
     name = avatar.name
     assert File.exists?(avatar.folder), 'avatar folder created'    
   end
+  
+  # def test_that_a_player_can_create_a_new_avatar_with_specified_kata
+  # end
+  
+  # def test_that_a_player_can_create_a_new_avatar_with_specified_language
+  # end
+  
+  # def test_that_a_player_can_create_a_new_avatar_with_specified_kata_and_language
+  # end
+  
+  # def test_that_initial_fileset_for_csharp_is_green
+  # end
+  
   
   #-----------------------------------------------------------------------------
   #def test_parse_execution_terminated
