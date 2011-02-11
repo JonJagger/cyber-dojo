@@ -40,7 +40,7 @@
   </tr>
 </table>
 
-<% if !@dojo.readonly -%>
+<% if !@dojo.closed -%>
 <%= periodically_call_remote :url => { :action => 'heartbeat',
                                        :dojo => @dojo.name,
                                        :avatar => @avatar.name

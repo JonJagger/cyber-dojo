@@ -8,6 +8,17 @@
   <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>
   <tr>
     <td>
+      <table align="right"
+             cellspacing="2"
+             cellpadding="0">
+        <tr>
+          <% increments[0..-2].each do |inc| -%>
+            <%= traffic_light(inc)-%>
+          <% end -%>
+        </tr>
+      </table>
+    </td>
+    <td>
       <% size = 45 -%>
       <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
            width="<%=size-%>"
