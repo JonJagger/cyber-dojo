@@ -49,7 +49,7 @@ class Avatar
         file_write(manifest_filename, kata.manifest)
         
         cmd  = "cd '#{folder}';"
-        cmd += "git init;"
+        cmd += "git init -quiet;"
         cmd += "git add '#{manifest_filename}';"
         cmd += "git add '#{filesets_filename}';"
         cmd += "git add '#{increments_filename}';"
