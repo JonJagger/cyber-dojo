@@ -48,6 +48,7 @@ function newFileContent(filename, content, caret_pos)
   $('visible_files_container').appendChild(createFileCaretPosInput(filename, caret_pos));
 
   // Select it so you can immediately rename it
+  saveCurrentFile();
   loadFile(filename);
 }
 

@@ -63,18 +63,46 @@ class DojoTests < ActionController::TestCase
     assert Dojo::create(params)
     dojo = Dojo.new(params)
     avatar = Avatar.new(dojo, nil, nil)
-    name = avatar.name
     assert File.exists?(avatar.folder), 'avatar folder created'    
   end
   
-  # def test_that_a_player_can_create_a_new_avatar_with_specified_kata
-  # end
+  def test_that_a_player_can_create_a_new_avatar_with_specified_kata
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    kata_choice = 'Unsplice (*)'
+    expected_filesets = { 'kata' => kata_choice }
+    avatar = Avatar.new(dojo, nil, expected_filesets)
+    actual_filesets = eval IO.read(avatar.filesets_filename)
+    assert_equal kata_choice, actual_filesets['kata']
+  end
   
-  # def test_that_a_player_can_create_a_new_avatar_with_specified_language
-  # end
+  def test_that_a_player_can_create_a_new_avatar_with_specified_language
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    language_choice = 'Ruby'
+    expected_filesets = { 'language' => language_choice }
+    avatar = Avatar.new(dojo, nil, expected_filesets)
+    actual_filesets = eval IO.read(avatar.filesets_filename)
+    assert_equal language_choice, actual_filesets['language']
+  end
   
-  # def test_that_a_player_can_create_a_new_avatar_with_specified_kata_and_language
-  # end
+  def test_that_a_player_can_create_a_new_avatar_with_specified_kata_and_language
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    kata_choice = 'Unsplice (*)'
+    language_choice = 'Ruby'
+    expected_filesets = { 'kata' => kata_choice, 'language' => language_choice }
+    avatar = Avatar.new(dojo, nil, expected_filesets)
+    actual_filesets = eval IO.read(avatar.filesets_filename)
+    assert_equal kata_choice, actual_filesets['kata']
+    assert_equal language_choice, actual_filesets['language']
+  end
   
   # def test_that_initial_fileset_for_csharp_is_green
   # end

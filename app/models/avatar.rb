@@ -113,11 +113,11 @@ class Avatar
     folder + '/' + 'sandbox'
   end
 
-private
-
   def filesets_filename
     folder + '/' + 'filesets.rb'
   end
+
+private
 
   def manifest_filename
     folder + '/' + 'manifest.rb'
