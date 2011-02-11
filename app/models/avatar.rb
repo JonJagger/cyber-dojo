@@ -49,7 +49,7 @@ class Avatar
         file_write(manifest_filename, kata.manifest)
         
         cmd  = "cd '#{folder}';"
-        cmd += "git init -quiet;"
+        cmd += "git init --quiet;"
         cmd += "git add '#{manifest_filename}';"
         cmd += "git add '#{filesets_filename}';"
         cmd += "git add '#{increments_filename}';"
@@ -148,7 +148,7 @@ private
     visible_files.each do |filename,|
       cmd += "git add '#{sandbox}/#{filename}';"
     end
-    cmd += "git commit -a -m '#{n}';"
+    cmd += "git commit -a -m '#{n}' --quiet;"
     cmd += "git tag -m '#{n}' #{n} HEAD;"
     system(cmd)    
   end
