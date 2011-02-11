@@ -52,6 +52,7 @@ module TestRunner
 
   def self.remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
+    s += "\\! -samefile '#{sandbox}' "
     these.each {|n| s += "\\! -samefile '#{sandbox}/#{n}' " }
     cmd = "find '#{sandbox}' \\( " + s + " \\) -print0 | xargs -0 rm -f"
     system(cmd)

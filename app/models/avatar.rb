@@ -86,7 +86,6 @@ class Avatar
     the_kata = kata
     incs = [] 
     io_lock(folder) do 
-      
       output = TestRunner.avatar_run_tests(self, the_kata, manifest)
       test_info = RunTestsOutputParser.parse(self, the_kata, output)
       
@@ -96,7 +95,7 @@ class Avatar
       test_info[:number] = incs.length
       file_write(increments_filename, incs)
 
-      manifest[:output] = output      
+      manifest[:output] = output
       file_write(manifest_filename, manifest)
       
       tag = incs.length

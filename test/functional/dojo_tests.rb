@@ -104,13 +104,7 @@ class DojoTests < ActionController::TestCase
     assert_equal language_choice, actual_filesets['language']
   end
   
-  # def test_that_initial_fileset_for_csharp_is_green
-  # end
   
-  
-  #-----------------------------------------------------------------------------
-  #def test_parse_execution_terminated
-
   def test_makefile_filter_filename_not_makefile
      name     = 'not_makefile'
      content  = "    abc"
