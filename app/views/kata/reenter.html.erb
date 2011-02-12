@@ -19,11 +19,7 @@
       </table>
     </td>
     <td>
-      <% size = 45 -%>
-      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=avatar_name.humanize-%>" />
+      <%= avatar_image(avatar_name,45) -%>
     </td>
     <% if increments.length > 0 -%>
     <%   last = increments.last -%>
@@ -32,10 +28,7 @@
     <% end -%>
     <%= traffic_light(last) -%>
     <td>
-      <img src="/images/avatars/<%=avatar_name.downcase-%>.jpg"
-           width="<%=size-%>"
-           height="<%=size-%>"
-           title="<%=avatar_name.humanize-%>" />
+      <%= avatar_image(avatar_name,45) -%>
     </td>
     
     <td>

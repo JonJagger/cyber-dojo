@@ -14,6 +14,7 @@
      <td class="<%=fop-%>" 
          id="file_op_new"
          <% if !@dojo.readonly -%>
+           title="create a new file"
            onclick="newFile();"
          <% end -%>
          >
@@ -26,6 +27,7 @@
      <td class="<%=fop-%>" 
          id="file_op_rename"         
          <% if !@dojo.readonly -%>
+           title="rename the current file"
            onclick="renameFile();"
          <% end -%>
          >
@@ -38,6 +40,7 @@
      <td class="<%=fop-%>"
          id="file_op_delete"
          <% if !@dojo.readonly -%>
+           title="delete the current file"
            onclick="deleteFile();"
          <% end -%>
          >

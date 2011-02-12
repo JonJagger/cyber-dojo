@@ -66,18 +66,9 @@ module LadderHelper
   end
   
   def one_rung(rung)
-    size = 50
-    [  td(avatar_img(rung, size)),
+    [  td(avatar_image(rung[:avatar], 50)),
        traffic_light(rung),       
-       td(avatar_img(rung, size)),
-    ].join('')
-  end
-
-  def avatar_img(rung,size)
-    [ "<img src='/images/avatars/#{rung[:avatar]}.jpg'", 
-        "width='#{size}'",
-        "height='#{size}'",
-        "title='#{rung[:avatar]}' />"
+       td(avatar_image(rung[:avatar], 50)),
     ].join('')
   end
 

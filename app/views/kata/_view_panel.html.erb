@@ -2,8 +2,11 @@
 <table cellpadding="0">
   <tr valign="top">
     <td>
-      <%= render :partial => 'avatar_pair' -%>
-      
+      <div id="avatar_pair">
+        <%= avatar_image(@avatar.name, 65) -%> 
+        <%= avatar_image(@avatar.name, 65) -%>        
+      </div>
+
       <span class="small_title"><%= @kata.language -%></span>
       <span class="small_title"><%= @kata.name -%></span>
            
