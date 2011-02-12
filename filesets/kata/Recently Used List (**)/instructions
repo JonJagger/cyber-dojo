@@ -1,8 +1,8 @@
 
 Develop a recently-used-list class to hold strings 
-uniquiely in Last-In-First-Out order.
+uniquely in Last-In-First-Out order.
 
-o) The most recently added item is first the least
+o) The most recently added item is first, the least
    recently added item is last.
 
 o) Items can be looked up by index, which counts from zero.
