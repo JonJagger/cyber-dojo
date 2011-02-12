@@ -15,7 +15,11 @@
     </td>
     <td rowspan=2>
       <%= render :partial => 'rotation' -%>
-      <span class="title"><%= @dojo.name -%></span> 
+      
+      <%= link_to "#{@dojo.name}", 
+             { :controller => :dojo, :action => :dashboard, :name => "#{@dojo.name}" }, 
+             { :class => "title", :target => "_blank" } -%> 
+ 
       <%= render :partial => 'ladder' -%>
     </td>
   </tr>
