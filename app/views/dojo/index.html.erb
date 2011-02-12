@@ -23,7 +23,7 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
           <input type="submit"
                  id="new_button"
                  name="new"
-                 value="Create" /> our CyberDojo
+                 value="Create" /> our CyberDojo.
           <% if flash[:new_notice] -%>
             <div class="notice"><%= flash[:new_notice] -%></div>
           <% end -%>
@@ -32,7 +32,7 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
       
       <form action="/dojo/enter">
       Then, at <em>each</em> computer...
-        <div>type its name
+        <div>type the name
           <input type="text"
                  name="name"
                  value="<%=@name-%>" />
@@ -41,7 +41,7 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
                  name="enter"
                  id="enter_button"
                  value="Enter" />
-          or                 
+          ,                 
           <input type="submit"
                  name="reenter"
                  id="reenter_button"

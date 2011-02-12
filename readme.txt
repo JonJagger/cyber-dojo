@@ -12,8 +12,8 @@ o) a virtual box.
 
 Requirements
 ============
-Ruby
-Rails
+ruby
+rails
 git
 
 
@@ -69,7 +69,8 @@ above and reported the following issues (many thanks Emily)
 >
 >cyberdojo/filesets/language/C#/cyberdojo.sh
 >
->was trying to run the program "nunit-console2", whereas the one I had installed was called "nunit-console". So I edited >that file and then I could use C# in the dojo.
+>was trying to run the program "nunit-console2", whereas the one I had installed was called "nunit-console". So I edited 
+>that file and then I could use C# in the dojo.
 
 
 
@@ -106,22 +107,20 @@ https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
 
 
-Starting a Kata
-===============
-Once you have created and entered your dojo the CyberDojo server will ask you to choose 
-o) your animal avatar  (eg Pandas)
-   The avatar provides identity for each laptop participating in the kata. 
+(Re)Entering a Kata
+===================
+Once you have entered your dojo the CyberDojo server will ask you to choose
 o) your language (eg C++)
+   If you do not choose, the CyberDojo server will make a random selection.
    Each language corresponds to a subfolder of cyberdojo/filesets/language/
 o) your kata (eg Prime Factors)
+   If you do not choose, the CyberDojo server will make a random selection.
    Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
-   
-If you have not selected any of these when you press the Start button
-the CyberDojo server will make random selections for you.
-If you select an avatar that has already started then your language and kata
-selections (if any) will be ignored and you will restart where that avatar
-left off. This is handy if a laptop has to retire as a new laptop can easily
-and instantly replace it.
+
+The CyberDojo server will choose your animal avatar (eg Pandas). The avatar 
+provides identity for each laptop participating in the kata. You can re-enter
+at any time by choosing the avatar. This is handy if a laptop has to retire 
+as a new laptop can easily and instantly replace it.
 
 
 Dojo Folder Structure
@@ -184,11 +183,11 @@ manifest.rb
 Each manifest.rb file contains an inspected ruby object. 
 For example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
 {
-  :visible_filenames => %w( Untitled.java UntitledTest.java kata.sh ),
+  :visible_filenames => %w( Untitled.java UntitledTest.java cyberdojo.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
 }
-For example: cyberdojo/filesets/kata/Prime Factors/manifest.rb looks like this:
+For example: cyberdojo/filesets/kata/Prime Factors (*)/manifest.rb looks like this:
 {
   :visible_filenames => %w( instructions ),
 }
@@ -209,10 +208,9 @@ manifest.rb Parameters
   to be installed.
 
 :hidden_filenames
-  The names of necessary and/or supporting files (if there are any) that 
-  are NOT visible in the editor in the browser. Each of these files must exist in 
-  the folder. For example, a junit jar file or nunit assemblies. Not needed if
-  you do not need hidden files.
+  The names of necessary and/or supporting files that are NOT visible in the editor 
+  in the browser. Each of these files must exist in the folder. For example, a 
+  junit jar file or nunit assemblies. Not needed if you do not need hidden files.
   
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
@@ -246,13 +244,12 @@ Keyboard-Driver Rotation
 ========================
 By default CyberDojo displays the keyboard-driver rotate page every 5 minutes 
 (see app/models/dojo.rb rotation function) which is the cue for the keyboard 
-driver at each computer to get up and move to a new computer where they take 
-up a non-driver role. 
+driver at each computer to take a non-driver role, possibly at a new computer.
 
 
-Dashboard
-=========
-The dashboard button on the CyberDojo entry page takes you to the dashboard
+Dashboard View
+==============
+The view button on the CyberDojo entry page takes you to the dashboard
 which shows a continuously updating display of all the avatars traffic light
 increments. 
 

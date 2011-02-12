@@ -134,7 +134,11 @@ private
 
   def welcome_text
     [ "<----- Click this 'play' button to run the tests on the CyberDojo server",
-      '       (execute cyberdojo.sh). The test outcome is displayed here.',
+    '       (execute cyberdojo.sh). The run-tests output is displayed here.',
+      '',
+      '          a red traffic light means the tests ran but one or more failed',
+      '          a yellow traffic-light means the tests could not be run',
+      '          a green traffic-light means the tests ran and all passed',
       '',
       '       Click the radio-buttons on the left to open files in the editor.',
     ].join("\n")
