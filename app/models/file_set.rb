@@ -1,3 +1,4 @@
+require 'folders_in.rb'
 
 class FileSet
 

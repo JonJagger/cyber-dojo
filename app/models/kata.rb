@@ -1,3 +1,5 @@
+require 'avatar_image.rb'
+require 'recent.rb'
 
 class Kata
 
