@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 # > cd cyberdojo/test
 # > ruby functional/dojo_tests.rb
@@ -14,8 +14,8 @@ class DojoTests < ActionController::TestCase
 
   def make_params
     { :name => 'Jon Jagger', 
-      :dojo_root => Dir.getwd + '/' + Root_test_folder,
-      :filesets_root => Dir.getwd + '/../filesets'
+      :dojo_root => Dir.getwd + "/" + Root_test_folder,
+      :filesets_root => File.join(RAILS_ROOT, '/filesets')
     }
   end
   
