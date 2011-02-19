@@ -19,7 +19,7 @@
       </table>
     </td>
     <td>
-      <%= avatar_image(avatar_name,45) -%>
+      <%= avatar_image(avatar_name, 45) -%>
     </td>
     <% if increments.length > 0 -%>
     <%   last = increments.last -%>
@@ -28,24 +28,16 @@
     <% end -%>
     <%= traffic_light(last) -%>
     <td>
-      <%= avatar_image(avatar_name,45) -%>
+      <%= avatar_image(avatar_name, 45) -%>
     </td>
     
     <td>
-      <form action="/kata/edit">
-        <input type="hidden" name="dojo" id="dojo" value="<%=h @dojo.name-%>" />
-        <input type="hidden" name="avatar" id="avatar" value="<%=h avatar_name-%>" />
-        <input id="reenter_button" 
-           type="submit" 
-           value="ReEnter" 
-           name="reenter" />
-      </form>
+      <%= reenter_button(@dojo.name, avatar_name) -%>
     </td>
+    
     <td>
       <% avatar = Avatar.new(@dojo, avatar_name) -%> 
       <% kata = avatar.kata -%>
-    </td>
-    <td>
       <div class='small_title'>
         <%= kata.language -%>, <%= kata.name -%>, <%= pluralize(avatar.increments.length, 'increment') -%>
       </div>

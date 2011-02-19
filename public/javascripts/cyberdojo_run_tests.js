@@ -1,7 +1,6 @@
 
 function runTests() 
 {	
-  // called from Control-S keyboard shortcut
   $('play_button').click();
 }
 
