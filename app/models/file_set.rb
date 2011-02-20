@@ -1,4 +1,6 @@
 
+require 'folders_in.rb'
+
 class FileSet
 
   def initialize(filesets_root, name)

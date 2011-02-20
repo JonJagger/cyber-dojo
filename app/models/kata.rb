@@ -1,4 +1,7 @@
 
+require 'avatar_image.rb'
+require 'recent.rb'
+
 class Kata
 
   def initialize(filesets_root, filesets)
