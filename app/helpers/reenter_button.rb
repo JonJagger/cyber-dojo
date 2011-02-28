@@ -6,7 +6,7 @@ def reenter_button(dojo_name, avatar_name)
     "<input id='reenter_button'" + 
             "type='submit'" +
             "value='ReEnter'" + 
-            "name='reenter' />" +
+            "name='' />" +
   "</form>"
 end
 

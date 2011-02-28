@@ -38,7 +38,17 @@ class KataController < ApplicationController
   end
     
   def view
-    redirect_to :action => :edit, :dojo => params[:dojo], :avatar => params[:avatar], :readonly => true
+    configure(params)
+    params[:readonly] = true
+    @dojo = Dojo.new(params)
+    @avatar = Avatar.new(@dojo, params[:avatar])
+    @kata = @avatar.kata
+
+    @manifest = {}
+    @increments = @avatar.read_manifest(@manifest, params[:tag])   
+    @current_file = @manifest[:current_filename]
+    @output = @manifest[:output]
+    @outcome = @increments == [] ? '' : @increments.last[:outcome]
   end
   
   def edit
@@ -48,7 +58,7 @@ class KataController < ApplicationController
     @kata = @avatar.kata
 
     @manifest = {}
-    @increments = @avatar.read_most_recent(@manifest)    
+    @increments = @avatar.read_manifest(@manifest)    
     @rotation = @dojo.rotation(params[:avatar])
     @rotation[:do_now] = false # don't rotate when re-entering
     @current_file = @manifest[:current_filename]

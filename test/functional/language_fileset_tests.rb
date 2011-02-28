@@ -27,7 +27,7 @@ class LanguageFileSetTests < ActionController::TestCase
     FileSet.new(dojo.filesets_root, 'language').choices.each do |language|    
       avatar = Avatar.new(dojo, nil, { 'language' => language })    
       manifest = {}
-      avatar.read_most_recent(manifest)
+      avatar.read_manifest(manifest)
       increments = avatar.run_tests(manifest)
       info = avatar.name + ', ' + language + ', green'
       assert_equal :passed, increments.last[:outcome], info
@@ -59,7 +59,7 @@ class LanguageFileSetTests < ActionController::TestCase
       avatar = Avatar.new(dojo, nil, { 'language' => language })
       info = avatar.name + ', ' + language
       manifest = {}
-      avatar.read_most_recent(manifest)
+      avatar.read_manifest(manifest)
       test_code = manifest[:visible_files][filename][:content]
       manifest[:visible_files][filename][:content] = test_code.sub('42', '41')
       increments = avatar.run_tests(manifest)
@@ -78,7 +78,7 @@ class LanguageFileSetTests < ActionController::TestCase
       avatar = Avatar.new(dojo, nil, { 'language' => language })
       info = avatar.name + ', ' + language
       manifest = {}
-      avatar.read_most_recent(manifest)
+      avatar.read_manifest(manifest)
       test_code = manifest[:visible_files][filename][:content]
       manifest[:visible_files][filename][:content] = test_code.sub('42', '4s1')
       increments = avatar.run_tests(manifest)

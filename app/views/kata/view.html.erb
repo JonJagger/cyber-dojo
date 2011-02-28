@@ -1,0 +1,17 @@
+
+<script language="javascript" type="text/javascript"><!--
+document.observe('dom:loaded', function() 
+{
+  rebuildFilenameList();
+  createTextAreaWithLineNumbers('editor');
+  loadFile("<%=@current_file-%>");
+});
+//--></script>
+
+<div id="play_panel"
+     style="visibility:visible">
+  <%= render :partial => 'view_panel' -%>
+  <%= render :partial => 'hidden_file_contents' -%>
+</div>
+
+

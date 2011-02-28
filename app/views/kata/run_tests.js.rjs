@@ -1,5 +1,6 @@
 
 page.replace 'increments', :partial => 'increments'
+page.replace 'increment_number', :partial => 'increment_number'
 page.replace 'output', :partial => 'output'
 page.replace 'ladder', :partial => 'ladder'
 

@@ -17,9 +17,13 @@
       <%= render :partial => 'editor' -%>
     </td>
     <td rowspan=2>
+      <%= render :partial => 'rotation' -%>
+
       <%= link_to "#{@dojo.name}", 
              { :controller => :dojo, :action => :dashboard, :name => "#{@dojo.name}" }, 
              { :class => "title", :target => "_blank" } -%>
+
+      <%= render :partial => 'ladder' -%>
     </td>
   </tr>
   <tr valign="top">
@@ -30,13 +34,10 @@
             <table style="float:right;">
               <tr>
                 <td>
-                  <%= render :partial => 'prev_increment_button' -%>
-                </td>                
+                  <%= render :partial => 'increment_number' -%>
+                </td>
                 <td>
-                  <span id="increment_number"><%= @increments.length.to_s -%></span>
-                </td>                
-                <td>
-                  <%= render :partial => 'next_increment_button' -%>                      
+                  <%= render :partial => 'play' -%>
                 </td>
               </tr>
             </table>
@@ -54,5 +55,13 @@
     </td>
   </tr>
 </table>
+
+<% if !@dojo.closed -%>
+<%= periodically_call_remote :url => { :action => 'heartbeat',
+                                       :dojo => @dojo.name,
+                                       :avatar => @avatar.name
+                                     }, 
+                             :frequency => @dojo.seconds_per_heartbeat -%>
+<% end -%>                             
                    
 

@@ -1,0 +1,26 @@
+
+<table style="float:right;">
+  <tr>
+    <td>
+      <form action='/kata/view'>
+        <input type='hidden' name='dojo' id='dojo' value='<%= @dojo.name-%>'/> 
+        <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
+        <input type='hidden' name='tag' id='tag' value='<%= @increments.length + 1-%>' />
+        <button 
+                <% if @increments.length < @avatar.increments.length -%>
+                type="submit"
+                id="play_button">
+                <% else -%>
+                type="button"
+                id="play_button_disabled">
+                <% end -%>
+          <img src="/images/triangle.gif"
+               width="30" 
+               height="30"
+               title="View next increment" />
+        </button>
+      </form>
+    </td>
+  </tr>
+</table>
+

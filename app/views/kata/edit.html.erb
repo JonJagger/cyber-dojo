@@ -18,7 +18,7 @@ document.observe('dom:loaded', function()
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
 
-  <%= render :partial => 'view_panel' -%>
+  <%= render :partial => 'edit_panel' -%>
   <%= render :partial => 'hidden_file_contents' -%>
 <% end -%>
 </div>

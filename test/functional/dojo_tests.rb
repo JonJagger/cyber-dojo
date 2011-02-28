@@ -74,7 +74,7 @@ class DojoTests < ActionController::TestCase
     kata_choice = 'Unsplice (*)'
     expected_filesets = { 'kata' => kata_choice }
     avatar = Avatar.new(dojo, nil, expected_filesets)
-    actual_filesets = eval IO.read(avatar.filesets_filename)
+    actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal kata_choice, actual_filesets['kata']
   end
   
@@ -86,7 +86,7 @@ class DojoTests < ActionController::TestCase
     language_choice = 'Ruby'
     expected_filesets = { 'language' => language_choice }
     avatar = Avatar.new(dojo, nil, expected_filesets)
-    actual_filesets = eval IO.read(avatar.filesets_filename)
+    actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal language_choice, actual_filesets['language']
   end
   
@@ -99,7 +99,7 @@ class DojoTests < ActionController::TestCase
     language_choice = 'Ruby'
     expected_filesets = { 'kata' => kata_choice, 'language' => language_choice }
     avatar = Avatar.new(dojo, nil, expected_filesets)
-    actual_filesets = eval IO.read(avatar.filesets_filename)
+    actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal kata_choice, actual_filesets['kata']
     assert_equal language_choice, actual_filesets['language']
   end
