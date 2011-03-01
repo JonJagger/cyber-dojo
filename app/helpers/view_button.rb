@@ -5,8 +5,7 @@ def view_button(dojo_name, avatar_name)
     "<input type='hidden' name='avatar' id='avatar' value='#{avatar_name}' />" +
     "<input id='view_button'" + 
             "type='submit'" +
-            "value='View'" + 
-            "name='' />" +
+            "value='View' />" + 
   "</form>"
 end
 
