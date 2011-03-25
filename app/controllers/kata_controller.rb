@@ -19,7 +19,7 @@ class KataController < ApplicationController
     @kata_info = {}
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
-   	  @kata_info[name] = IO.read(path)
+      @kata_info[name] = IO.read(path)
     end    
   end
   

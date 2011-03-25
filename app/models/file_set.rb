@@ -20,7 +20,7 @@ class FileSet
     fullpath = path + '/' + choice
     file_set = eval IO.read(fullpath + '/' + 'manifest.rb')
     file_set.each do |key,value|
-	    if key == :visible_filenames
+      if key == :visible_filenames
         manifest[:visible_files].merge! FileSet::read_visible(fullpath, value)
       elsif key == :hidden_filenames
         manifest[:hidden_filenames] += value
