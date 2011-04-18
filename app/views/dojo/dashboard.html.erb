@@ -1,7 +1,19 @@
  
 <h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
 
-<div align="center"><%= age_or_closed(@dojo) -%></div>
+<% avatars = @dojo.avatars -%>
+<% languages = avatars.collect { |avatar| avatar.kata.language }.uniq -%>
+<% katas = avatars.collect { |avatar| avatar.kata.name }.uniq -%>
+
+<div align="center">
+  <% if languages.length == 1 -%> 
+    <%= languages[0] -%>, 
+  <% end -%>
+  <% if katas.length == 1 -%> 
+    <%= katas[0] -%>, 
+  <% end -%>
+  <%= age_or_closed(@dojo) -%>
+</div>
 
 <div>
 <table>
@@ -29,7 +41,9 @@
       <% avatar = Avatar.new(@dojo, avatar_name) -%> 
       <% kata = avatar.kata -%>
       <div class='small_title'>
-        <%= kata.language -%>, <%= kata.name -%>, <%= pluralize(avatar.increments.length, 'increment') -%>
+        <% if languages.length != 1 -%> <%= kata.language -%>, <% end -%> 
+        <% if katas.length != 1 -%> <%= kata.name -%>, <% end -%>
+        <%= pluralize(avatar.increments.length, 'increment') -%>
       </div>
     </td>    
   </tr>

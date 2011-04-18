@@ -35,10 +35,10 @@ module LadderHelper
     
   def age_or_closed(dojo)
     if dojo.closed
-      small_title('This CyberDojo has ended')
+      'This CyberDojo has ended'
     else
       age = dojo.age
-      small_title("%02dh:%02dm:%02ds" % [ age[:hours], age[:mins], age[:secs] ])
+      "%02dh:%02dm:%02ds" % [ age[:hours], age[:mins], age[:secs] ]
     end
   end
   
