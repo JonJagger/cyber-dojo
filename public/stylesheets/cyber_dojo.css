@@ -185,7 +185,7 @@ input[type="radio"]:checked+img
   background: #aaa;
 }
 
-#avatar_pair
+#avatar_id
 {
     white-space: nowrap;
     margin-left: 0.3em;

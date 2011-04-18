@@ -68,7 +68,6 @@ module LadderHelper
   def one_rung(rung)
     [  td(avatar_image(rung[:avatar], 50)),
        traffic_light(rung),       
-       td(avatar_image(rung[:avatar], 50)),
     ].join('')
   end
 

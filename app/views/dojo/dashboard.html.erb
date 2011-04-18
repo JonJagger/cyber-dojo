@@ -12,7 +12,7 @@
              cellspacing="2"
              cellpadding="0">
         <tr>
-          <% increments[0..-2].each do |inc| -%>
+          <% increments.each do |inc| -%>
             <%= traffic_light(inc)-%>
           <% end -%>
         </tr>
@@ -21,16 +21,6 @@
     <td>
       <%= avatar_image(avatar_name, 45) -%>
     </td>
-    <% if increments.length > 0 -%>
-    <%   last = increments.last -%>
-    <% else -%>
-    <%   last = { :outcome => :blank } -%>
-    <% end -%>
-    <%= traffic_light(last) -%>
-    <td>
-      <%= avatar_image(avatar_name, 45) -%>
-    </td>    
-
     <td>
       <%= view_button(@dojo.name, avatar_name) -%>
     </td>
