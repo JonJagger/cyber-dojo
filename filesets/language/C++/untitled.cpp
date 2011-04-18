@@ -1,7 +1,8 @@
 #include "untitled.hpp"
 
-int untitled::answer()
+int answer()
 {
     return 42;
 }
+
 

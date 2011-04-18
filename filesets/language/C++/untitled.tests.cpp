@@ -1,17 +1,17 @@
 #include "untitled.hpp"
-#include <assert.h>
-#include <stdio.h>
+#include <cassert>
+#include <iostream>
 
 #define ASSERT(x)   assert(x)
 
-static void an_example_test(void)
+static void an_example_test()
 {
     int expected = 42;
-    int actual = untitled().answer();
+    int actual = answer();
     ASSERT(expected == actual);
 }
 
-typedef void test_function(void);
+typedef void test_function();
 
 static test_function * tests[] =
 {
@@ -19,15 +19,15 @@ static test_function * tests[] =
     0
 };
 
-int main(void)
+int main()
 {
     int at;
     for (at = 0; tests[at]; at++)
     {
         tests[at]();
-        putchar('.');
+        std::cout << '.';
     }
-    printf("\n%d", at);
+    std::cout << std::endl << at;
     return 0;
 }
 
