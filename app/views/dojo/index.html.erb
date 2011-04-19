@@ -17,7 +17,7 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
       <form action="/dojo/new">
         <div>Choose a name
           <input type="text"
-                 name="name"
+                 name="dojo_name"
                  value="" />
           and click
           <input type="submit"
@@ -30,12 +30,12 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
         </div>
       </form>
       
-      <form action="/dojo/enter">
+      <form action="/dojo/enter" target="_blank">
       Then, at <em>each</em> computer...
         <div>type the name
           <input type="text"
-                 name="name"
-                 value="<%=@name-%>" />
+                 name="dojo_name"
+                 value="<%=@dojo_name-%>" />
           and click          
           <input type="submit"
                  name="enter"

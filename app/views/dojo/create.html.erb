@@ -1,0 +1,166 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var languageCount = "<%=@languages.length-%>";
+var kataCount = "<%=@katas.length-%>";
+
+function languageSelected()
+{
+  for (at = 0; at != languageCount; at = at + 1)
+    if ($('language_' + at).checked)
+      return true;
+  return false;
+}
+
+function kataSelected()
+{
+  for (at = 0; at != kataCount; at = at + 1)
+    if ($('kata_' + at).checked)
+      return true;
+  return false;
+}
+
+function toggleSelection(name, index, size, choice)
+{
+  var current = $(name + '_' + index).checked;
+  $(name + '_' + index).checked = !current; 
+  
+  if (name == 'kata')
+  {     
+    if (current)
+      showKataInstructions();
+    else
+      $('kata_info').value = $('kata[' + choice + ']').value;
+  }
+  setCreateButtonState();
+}
+
+function setAll(name, size, to)
+{
+  for (at = 0; at != size; at = at + 1)
+    $(name + '_' + at).checked = to;
+  setCreateButtonState();
+}
+
+function setCreateButtonState()
+{
+  $('create_button').disabled = !kataSelected() || !languageSelected();
+}
+
+function showKataInstructions()
+{
+  $('kata_info').value =
+    "\n" +
+    "\n" +                  
+    "               Select a Kata from the list --->\n" +
+    "               to view its instructions";
+}
+
+//--></script>
+
+<form action="/dojo/save" target="_blank">
+
+<noscript>
+  &nbsp;
+  <h2><b>You must enable JavaScript.</b></h2>
+  &nbsp;
+</noscript>
+
+<input type="hidden"
+       name="dojo" 
+       id="dojo" 
+       value="<%=h @dojo.name-%>" />
+
+<h1>CyberDojo: <%= @dojo.name -%></h1>
+
+&nbsp;&bull;&nbsp;All CyberDojos automatically close 1 hour after creation.<br/>
+&nbsp;&bull;&nbsp;Each computer will be randomly assigned a kata and language from those selected.<br/>
+
+<table>
+  <tr>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td>
+            <textarea name="kata_info" 
+                      id="kata_info"
+                      cols="62" 
+                      rows="24">
+                      
+                      
+               Select a Kata from the list ---&gt;
+               to view its instructions
+            </textarea>
+          </td>
+          <td valign="top">
+            <span class="choose_title">Kata?</span>
+            <span onclick='setAll("kata", "<%= @katas.length -%>", true);'>
+              <input type="button" name="selectAllKatas" value="Select-All" />
+            </span>
+            <span onclick='setAll("kata", "<%= @katas.length -%>", false);'>            
+              <input type="button" name="clearAllKatas" value="Clear-All" />
+            </span>           
+            <% @katas.each_with_index do |choice,index| -%>
+              <div onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'>
+                <input id="kata_<%=index-%>" 
+                       type="checkbox" 
+                       onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
+                       name="kata[<%=index-%>]" 
+                       value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+          </td>          
+        </tr>
+      </table>
+    </td>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td>
+            <span class="choose_title">Language?</span>
+            <span onclick='setAll("language", "<%= @languages.length -%>", true);'>            
+              <input type="button" name="selectAllLanguages" value="Select-All" />
+            </span>
+            <span onclick='setAll("language", "<%= @languages.length -%>", false);'>            
+              <input type="button" name="clearAllLanguages" value="Clear-All" />
+            </span>
+            <% @languages.each_with_index do |choice,index| -%>
+              <div onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'>
+                <input id="language_<%=index-%>" 
+                       type="checkbox" 
+                       onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'
+                       name="language[<%=index-%>]" 
+                      value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+          </td>
+        </tr>
+      </table>
+      
+      <table>
+        <tr>
+          <td valign="top">
+            <input id="save_button" 
+                   type="submit" 
+                   value="Save" 
+                   name="save"
+                   disabled/>
+          </td>
+        </tr>
+      </table>        
+    </td>
+  </tr>
+</table>
+
+</form>
+
+<% @katas.each_with_index do |choice,index| -%>
+   <textarea style="display:none;" 
+             name="kata[<%=choice-%>]"
+             id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>
+<% end -%>      
+
+

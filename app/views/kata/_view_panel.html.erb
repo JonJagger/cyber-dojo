@@ -18,7 +18,7 @@
     </td>
     <td rowspan=2>
       <%= link_to "#{@dojo.name}", 
-             { :controller => :dojo, :action => :dashboard, :name => "#{@dojo.name}" }, 
+             { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
              { :class => "title", :target => "_blank" } -%>
     </td>
   </tr>

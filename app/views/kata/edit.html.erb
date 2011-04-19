@@ -12,7 +12,7 @@ document.observe('dom:loaded', function()
 <div id="play_panel"
      style="visibility:visible">
 <% form_remote_tag :url  => { :action => 'run_tests',
-                              :dojo => @dojo.name,
+                              :dojo_name => @dojo.name,
                               :avatar => @avatar.name
                             }, 
                    :before   => 'preRunTests();',

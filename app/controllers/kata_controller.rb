@@ -3,33 +3,15 @@ class KataController < ApplicationController
 
   def enter
     configure(params) 
-    @dojo = Dojo.new(params)
+    @dojo = Dojo.new(params)   
+    manifest = @dojo.manifest
+    filesets = {}
+    filesets['kata'] = manifest[:katas].shuffle[0]
+    filesets['language'] = manifest[:languages].shuffle[0]
+    @avatar = Avatar.new(@dojo, params[:avatar], filesets)    
+    redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
+  end    
     
-    # In a multi-kata dojo, if you list the kata/language
-    # filesets alphabetically there is a strong likelihood
-    # each computer will simply pick the first entry. That
-    # happened at the 2010 NDC conference for example. Listing 
-    # them in a random order increases the chances stations
-    # will make different selections, which hopefully will
-    # increase the potential for collaboration - the game's
-    # prime directive. 
-
-    @katas = FileSet.new(@dojo.filesets_root, 'kata').choices.shuffle
-    @languages = FileSet.new(@dojo.filesets_root, 'language').choices.shuffle
-    @kata_info = {}
-    @katas.each do |name|
-      path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
-      @kata_info[name] = IO.read(path)
-    end    
-  end
-  
-  def choose_avatar
-    configure(params)
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])    
-    redirect_to :action => :edit, :dojo => params[:dojo], :avatar => @avatar.name
-  end
-  
   def reenter
     configure(params)
     @dojo = Dojo.new(params)
@@ -92,7 +74,6 @@ class KataController < ApplicationController
 private
 
   def configure(params)
-    params[:name] = params[:dojo]
     params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
   end

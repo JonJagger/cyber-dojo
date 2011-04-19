@@ -11,7 +11,7 @@ class Dojo
   Default_minutes_per_dojo = 60
 
   def self.find(params)
-    name = params[:name]
+    name = params[:dojo_name]
     root_folder = params[:dojo_root]
     
     inner = root_folder + '/' + Dojo::inner_folder(name)
@@ -20,7 +20,7 @@ class Dojo
   end
   
   def self.create(params)
-    name = params[:name]
+    name = params[:dojo_name]
     root_folder = params[:dojo_root]
     index_filename = root_folder + '/' + Dojo::Index_filename
     minutes_per_rotation = params[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
@@ -67,6 +67,24 @@ class Dojo
     result
   end
   
+  def self.configure(params)
+    name = params[:dojo_name]
+    root_folder = params[:dojo_root]
+    io_lock(root_folder) do
+      dojo = Dojo.new(params)
+      info = eval IO.read(dojo.manifest_filename)
+      info[:katas] = []
+      params["kata"].each do |number,kata|
+        info[:katas] << kata
+      end
+      info[:languages] = []
+      params["language"].each do |number,language|
+        info[:languages] << language
+      end
+      file_write(dojo.manifest_filename, info)
+    end    
+  end
+  
   def self.inner_folder(name)
     Dojo::sha1(name)[0..1] # ala git    
   end
@@ -82,7 +100,7 @@ class Dojo
   #---------------------------------
 
   def initialize(params)
-    @name = params[:name]
+    @name = params[:dojo_name]
     @readonly = params.has_key?(:readonly) ? params[:readonly] : false
     @dojo_root = params[:dojo_root]
     @filesets_root = params[:filesets_root]
@@ -200,14 +218,14 @@ class Dojo
     manifest[:minutes_duration] || Dojo::Default_minutes_per_dojo
   end
   
+  def manifest
+    eval IO.read(manifest_filename)
+  end
+
 private
 
   def exists?(name)
     File.exists? folder + '/' + name
-  end
-
-  def manifest
-    eval IO.read(manifest_filename)
   end
   
   def self.make_dir(name)
