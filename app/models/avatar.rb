@@ -6,10 +6,10 @@ require 'make_time.rb'
 class Avatar
 
   def self.names
-    %w( alligators bats bears buffalos camels cheetahs 
-        deer elephants frogs giraffes gophers gorillas 
-        hippos kangaroos koalas lemurs lions mooses 
-        pandas raccoons snakes squirrels wolves zebras )
+    %w( alligator bat bear buffalo camel cheetah 
+        deer elephant frog giraffe gopher gorilla 
+        hippo kangaroo koala lemur lion moose 
+        panda raccoon snake squirrel wolf zebra )
   end
   
   def initialize(dojo, name, filesets = nil) 
