@@ -41,8 +41,8 @@
       <% avatar = Avatar.new(@dojo, avatar_name) -%> 
       <% kata = avatar.kata -%>
       <div class='small_title'>
-        <% if languages.length != 1 -%> <%= kata.language -%>, <% end -%> 
-        <% if katas.length != 1 -%> <%= kata.name -%>, <% end -%>
+        <% if languages.length != 1 -%> <%= kata.language -%>. <% end -%> 
+        <% if katas.length != 1 -%> <%= kata.name -%>. <% end -%>
         <%= pluralize(avatar.increments.length, 'increment') -%>
       </div>
     </td>    
