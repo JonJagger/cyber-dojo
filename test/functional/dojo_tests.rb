@@ -13,7 +13,7 @@ class DojoTests < ActionController::TestCase
   end
 
   def make_params
-    { :name => 'Jon Jagger', 
+    { :dojo_name => 'Jon Jagger', 
       :dojo_root => Dir.getwd + '/' + Root_test_folder,
       :filesets_root => Dir.getwd + '/../filesets'
     }
@@ -62,7 +62,10 @@ class DojoTests < ActionController::TestCase
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, nil, nil)
+    filesets = {}
+    filesets['kata'] = FileSet.new(params[:filesets_root], 'kata').choices
+    filesets['language'] = FileSet.new(params[:filesets_root], 'language').choices
+    avatar = Avatar.new(dojo, nil, filesets)
     assert File.exists?(avatar.folder), 'avatar folder created'    
   end
   

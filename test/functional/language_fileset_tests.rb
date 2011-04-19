@@ -13,7 +13,7 @@ class LanguageFileSetTests < ActionController::TestCase
   end
 
   def make_params
-    { :name => 'Jon Jagger', 
+    { :dojo_name => 'Jon Jagger', 
       :dojo_root => Dir.getwd + '/' + Root_test_folder,
       :filesets_root => Dir.getwd + '/../filesets'
     }
