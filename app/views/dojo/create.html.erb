@@ -33,19 +33,19 @@ function toggleSelection(name, index, size, choice)
     else
       $('kata_info').value = $('kata[' + choice + ']').value;
   }
-  setCreateButtonState();
+  setSaveButtonState();
 }
 
 function setAll(name, size, to)
 {
   for (at = 0; at != size; at = at + 1)
     $(name + '_' + at).checked = to;
-  setCreateButtonState();
+  setSaveButtonState();
 }
 
-function setCreateButtonState()
+function setSaveButtonState()
 {
-  $('create_button').disabled = !kataSelected() || !languageSelected();
+  $('save_button').disabled = !kataSelected() || !languageSelected();
 }
 
 function showKataInstructions()
