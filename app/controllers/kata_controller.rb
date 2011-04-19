@@ -6,6 +6,7 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params)   
     manifest = @dojo.manifest
     filesets = {}
+    # randonly choose kata and language from selections made at dojo creation
     filesets['kata'] = manifest[:katas].shuffle[0]
     filesets['language'] = manifest[:languages].shuffle[0]
     @avatar = Avatar.new(@dojo, params[:avatar], filesets)    

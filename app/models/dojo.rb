@@ -41,7 +41,10 @@ class Dojo
           :name => name, 
           :created => make_time(now),
           :minutes_per_rotation => minutes_per_rotation,
-          :minutes_duration => minutes_duration
+          :minutes_duration => minutes_duration,
+          # full choice, save will probably narrow the selection 
+          :katas => FileSet.new(params[:filesets_root], 'kata').choices,
+          :languages => FileSet.new(params[:filesets_root], 'language').choices,          
         }
 
         index = []
@@ -72,7 +75,7 @@ class Dojo
     root_folder = params[:dojo_root]
     io_lock(root_folder) do
       dojo = Dojo.new(params)
-      info = eval IO.read(dojo.manifest_filename)
+      info = dojo.manifest
       info[:katas] = []
       params["kata"].each do |number,kata|
         info[:katas] << kata
