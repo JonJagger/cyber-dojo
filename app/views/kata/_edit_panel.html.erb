@@ -3,8 +3,10 @@
   <tr valign="top">
     <td>
       <div id="avatar_id">
-        <%= avatar_image(@avatar.name, 65) -%> 
+        <%= avatar_image(@avatar.name, 65) -%>
+        <%= @avatar.name.capitalize -%>
       </div>
+        
 
       <span class="small_title"><%= @kata.language -%></span>
       <span class="small_title"><%= @kata.name -%></span>
@@ -18,9 +20,11 @@
     <td rowspan=2>
       <%= render :partial => 'rotation' -%>
 
-      <%= link_to "#{@dojo.name}", 
+      <span class="title">
+        <%= link_to "#{@dojo.name}", 
              { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
              { :class => "title", :target => "_blank" } -%>
+      </span>
 
       <%= render :partial => 'ladder' -%>
     </td>
@@ -57,7 +61,7 @@
 
 <% if !@dojo.closed -%>
 <%= periodically_call_remote :url => { :action => 'heartbeat',
-                                       :dojo => @dojo.name,
+                                       :dojo_name => @dojo.name,
                                        :avatar => @avatar.name
                                      }, 
                              :frequency => @dojo.seconds_per_heartbeat -%>

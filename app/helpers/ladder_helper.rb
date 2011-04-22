@@ -2,7 +2,7 @@
 module LadderHelper
   
   def rungs(dojo) 
-    html = age_or_closed(dojo)
+    html = title(age_or_closed(dojo))
     
     if @dojo.avatars.length == 1
       return html
@@ -22,7 +22,7 @@ module LadderHelper
     end   
     
     html += '<table cellspacing="4">'
-    chunks = chunk_array(ladder, 12)
+    chunks = chunk_array(ladder, 8)
     chunks.each do |chunk|
       html += '<tr>'
       chunk.each do |rung|
@@ -42,8 +42,8 @@ module LadderHelper
     end
   end
   
-  def small_title(html)
-    '<span class="small_title">' + html + '</span>'
+  def title(html)
+    '<span class="title">' + html + '</span>'
   end
   
   def on_off(outcome, is)
@@ -66,7 +66,7 @@ module LadderHelper
   end
   
   def one_rung(rung)
-    [  td(avatar_image(rung[:avatar], 50)),
+    [  td(avatar_image(rung[:avatar], 60)),
        traffic_light(rung),       
     ].join('')
   end
