@@ -2,16 +2,16 @@
 function doRotation()
 {
   saveCurrentFile();
-  $('play_panel').setAttribute('style', 'display:none');
-  $('rotate_panel').setAttribute('style', 'visibility:visible');
+  $('play_panel').hide();
+  $('rotate_panel').show();
   var oneSecond = 1000;
   setTimeout( "endRotation();", 10 * oneSecond);
 }
 
 function endRotation()
 {
-  $('rotate_panel').setAttribute('style', 'display:none');
-  $('play_panel').setAttribute('style', 'visibility:visible');
+  $('rotate_panel').hide();
+  $('play_panel').show();
   // refresh caretPos in current filename
   loadFile(current_filename);
 }
