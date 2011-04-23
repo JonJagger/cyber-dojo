@@ -107,16 +107,21 @@ https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
 
 
-(Re)Entering a Kata
-===================
-Once you have entered your dojo the CyberDojo server will ask you to choose
-o) your language (eg C++)
-   If you do not choose, the CyberDojo server will make a random selection.
+Creating a CyberDojo
+====================
+The CyberDojo server will ask you to choose
+o) your language(s) (eg C++)
    Each language corresponds to a subfolder of cyberdojo/filesets/language/
-o) your kata (eg Prime Factors)
-   If you do not choose, the CyberDojo server will make a random selection.
+   You must select at least one language. Any player entering the CyberDojo
+   will be randomly assigned a language from those selected at creation.
+o) your kata(s) (eg Prime Factors)
    Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
+   You must select at least one kata. Any player entering the CyberDojo
+   will be randomly assigned a kata from those selected at creation.
 
+
+Entering a CyberDojo
+====================
 The CyberDojo server will choose your animal avatar (eg Pandas). The avatar 
 provides identity for each laptop participating in the kata. You can re-enter
 at any time by choosing the avatar. This is handy if a laptop has to retire 

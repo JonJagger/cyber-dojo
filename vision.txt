@@ -6,7 +6,7 @@ VISION AND PRINCIPLES
 Server-image
 ------------
 The server should have a full image that can be saved onto a memory stick
-and provides an pre-prepared os to boot into. This would provide a very
+and provides a pre-prepared os to boot into. This would provide a very
 quick start if you wanted to run a CyberDojo server but did not have all
 the compilers installed on your computer.
 
