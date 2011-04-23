@@ -84,6 +84,8 @@ class Dojo
       params["language"].each do |number,language|
         info[:languages] << language
       end
+      info[:minutes_duration] = params["duration"].to_i
+      info[:minutes_per_rotation] = params["rotation"].to_i      
       file_write(dojo.manifest_filename, info)
     end    
   end

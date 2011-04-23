@@ -21,6 +21,11 @@ function kataSelected()
   return false;
 }
 
+function selectRadio(name, index)
+{
+  $(name + '_' + index).checked = true;
+}
+
 function toggleSelection(name, index, size, choice)
 {
   var current = $(name + '_' + index).checked;
@@ -68,7 +73,82 @@ function showKataInstructions()
 
 <h1>CyberDojo: <%= @dojo.name -%></h1>
 
-All CyberDojos automatically close 1 hour after creation.
+<table>
+  <tr>
+    <td>
+      <table class="panel">
+        <tr>
+          <td>
+            <span class="choose_title">Duration?</span>
+            
+              <span onclick='selectRadio("duration",0);'>
+                <input id="duration_0" 
+                       type="radio" 
+                       name="duration" 
+                       value="20" />
+                <label>20 mins</label>
+              </span>
+
+              <span onclick='selectRadio("duration",1);'>
+                <input id="duration_1" 
+                       type="radio" 
+                       name="duration" 
+                       value="40" />
+                <label>40 mins</label>
+              </span>
+
+              <span onclick='selectRadio("duration",2);'>
+                <input id="duration_2" 
+                       type="radio" 
+                       name="duration" 
+                       value="60" 
+                       checked="true" />
+                <label>1 hour</label>
+              </span>
+
+              <span onclick='selectRadio("duration",3);'>
+                <input id="duration_3" 
+                       type="radio" 
+                       name="duration" 
+                       value="120" />
+                <label>2 hours</label>
+              </span>
+              
+          </td>
+        </tr>
+      </table>
+    </td>
+
+     <td>
+      <table class="panel">
+        <tr>
+          <td>
+            <span class="choose_title">Rotation?</span>
+
+              <span onclick='selectRadio("rotation",0);'>
+                <input id="rotation_0" 
+                       type="radio" 
+                       name="rotation" 
+                       value="5"
+                       checked />
+                <label>5 mins</label>
+              </span>
+              
+              <span onclick='selectRadio("rotation",1);'>
+                <input id="rotation_1" 
+                       type="radio" 
+                       name="rotation" 
+                       value="10" />
+                <label>10 mins</label>
+              </span>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+    
+  </tr>
+</table>
 
 <table>
   <tr>

@@ -140,6 +140,7 @@ div[class~="filename"]
   white-space: nowrap;
 }
 
+input[type="radio"]:checked+label,
 input[type="checkbox"]:checked+label
 {
 	font-weight: bold;
