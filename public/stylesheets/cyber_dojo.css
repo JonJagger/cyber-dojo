@@ -65,7 +65,6 @@
   text-align: left;
   font-size: 1.5em;
   font-weight: bold;
-  display: block;
   font-style: italic;
   margin-left: 1em;
   margin-bottom: 0.5em;
@@ -141,17 +140,17 @@ div[class~="filename"]
   white-space: nowrap;
 }
 
-input[type="radio"]:checked+label
+input[type="checkbox"]:checked+label
 {
 	font-weight: bold;
 }
 
-input[type="radio"]+img
+input[type="checkbox"]+img
 {
 	border: 2px solid #FEF5CA;;
 }
 
-input[type="radio"]:checked+img
+input[type="checkbox"]:checked+img
 {
 	border: 2px solid green;
 }

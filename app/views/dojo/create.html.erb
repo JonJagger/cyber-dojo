@@ -61,12 +61,6 @@ function showKataInstructions()
 
 <form action="/dojo/save">
 
-<noscript>
-  &nbsp;
-  <h2><b>You must enable JavaScript.</b></h2>
-  &nbsp;
-</noscript>
-
 <input type="hidden"
        name="dojo_name" 
        id="dojo_name" 
@@ -74,8 +68,7 @@ function showKataInstructions()
 
 <h1>CyberDojo: <%= @dojo.name -%></h1>
 
-&nbsp;&bull;&nbsp;All CyberDojos automatically close 1 hour after creation.<br/>
-&nbsp;&bull;&nbsp;Each computer will be randomly assigned a kata and language from those selected.<br/>
+All CyberDojos automatically close 1 hour after creation.
 
 <table>
   <tr>
@@ -94,7 +87,7 @@ function showKataInstructions()
             </textarea>
           </td>
           <td valign="top">
-            <span class="choose_title">Kata?</span>
+            <div class="choose_title">Kata?</div>
             <span onclick='setAll("kata", "<%= @katas.length -%>", true);'>
               <input type="button" name="selectAllKatas" value="Select-All" />
             </span>
@@ -113,13 +106,20 @@ function showKataInstructions()
             <% end -%>    
           </td>          
         </tr>
+        <tr>
+          <td>
+            Each computer entering your CyberDojo will be randomly assigned<br/>
+            a kata and language from those selected.
+          </td>
+        </tr>
+
       </table>
     </td>
     <td valign="top">
       <table class="panel">
         <tr>
           <td>
-            <span class="choose_title">Language?</span>
+            <div class="choose_title">Language?</div>
             <span onclick='setAll("language", "<%= @languages.length -%>", true);'>            
               <input type="button" name="selectAllLanguages" value="Select-All" />
             </span>
