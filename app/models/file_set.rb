@@ -9,12 +9,8 @@ class FileSet
   end
 
   def choices
-    folders_in(path)
+    folders_in(path).sort
   end  
-  
-  def random_choice
-    choices.shuffle[0]
-  end
   
   def read_into(manifest, choice)
     fullpath = path + '/' + choice
@@ -29,7 +25,6 @@ class FileSet
         manifest[key] = value
       end
     end    
-
   end
   
 private

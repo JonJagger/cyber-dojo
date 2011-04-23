@@ -22,8 +22,8 @@ class DojoController < ApplicationController
   def create
     configure(params) 
     @dojo = Dojo.new(params)
-    @katas = FileSet.new(@dojo.filesets_root, 'kata').choices.sort
-    @languages = FileSet.new(@dojo.filesets_root, 'language').choices.sort
+    @katas = FileSet.new(@dojo.filesets_root, 'kata').choices
+    @languages = FileSet.new(@dojo.filesets_root, 'language').choices
     @kata_info = {}
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
