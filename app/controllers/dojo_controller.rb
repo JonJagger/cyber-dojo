@@ -32,7 +32,6 @@ class DojoController < ApplicationController
   end
   
   def save
-    params[:dojo_name] = params[:dojo]
     configure(params)
     Dojo.configure(params)
     redirect_to :action => :index, :dojo_name => dojo_name
@@ -69,8 +68,8 @@ class DojoController < ApplicationController
 
 private
 
-def dojo_name
-  params[:dojo_name]
+  def dojo_name
+    params[:dojo_name]
   end
   
   def configure(params)
