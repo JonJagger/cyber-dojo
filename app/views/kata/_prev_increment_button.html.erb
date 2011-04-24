@@ -7,6 +7,7 @@
         <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
         <input type='hidden' name='tag' id='tag' value='<%= @increments.length - 1-%>' />
         <button 
+                class="button"
                 <% if @increments.length != 0 -%>
                 type="submit"
                 id="play_button">

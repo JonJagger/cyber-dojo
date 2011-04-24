@@ -1,3 +1,7 @@
+.name_input
+{
+  font-size: 1.15em;
+}
 .button, .main_button
 {
   border: 1px solid #A8A8A8;
@@ -5,8 +9,7 @@
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
-  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;
-  font-size: 1em;
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   cursor: pointer;
   padding: 4px;
   background-color: #FFE4C4; 
@@ -16,14 +19,8 @@
   border-bottom: 2px solid gray; /* fake button look */
   border-right:  2px solid gray; 
 }
-.main_button 
-{
-  font-size: 1.35em;
-}
-.name_input
-{
-  font-size: 1.15em;
-}
+.button      { font-size: 1em; } 
+.main_button { font-size: 1.35em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -41,17 +38,6 @@
   color: green;
 }
 
-.boxed 
-{ 	
-	margin: 0.2em;
-  padding: 0.5em;
-  border: 1px solid #A8A8A8;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  -webkit-border-radius: 6px;
-}
-
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
 .panel { padding: 0.5em; }
@@ -64,27 +50,6 @@
   font-size: 10pt;
   color: white;
   background-color: #686868;
-}
-
-
-.file_op, .panel, div[class~="filename"], #play_button
-{ 
-  border: 1px solid #A8A8A8;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  -webkit-border-radius: 6px;
-}
-
-#play_button
-{ 
-  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;
-  font-size: 1em;
-  cursor: pointer;
-  padding: 4px;
-  background-color: #FFE4C4; 
-  text-decoration: none;
-  font-weight: normal;
 }
 
 .choose_title
@@ -114,6 +79,15 @@
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
+
+.file_op, .panel, div[class~="filename"]
+{ 
+  border: 1px solid #A8A8A8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
 
 .file_op 
 { 
@@ -149,7 +123,7 @@
   color: #383838;
 }
 
-.file_op, div[class~="filename"], #play_button
+.file_op, div[class~="filename"]
 {
   color: #383838;
   border-bottom: 2px solid gray; /* fake button look */
