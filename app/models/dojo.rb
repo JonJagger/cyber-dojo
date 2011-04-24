@@ -22,9 +22,9 @@ class Dojo
   def self.create(params)
     name = params[:dojo_name]
     root_folder = params[:dojo_root]
-    index_filename = root_folder + '/' + Dojo::Index_filename
-    minutes_per_rotation = params[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
-    minutes_duration = params[:minutes_duration] || Dojo::Default_minutes_per_dojo
+    #index_filename = root_folder + '/' + Dojo::Index_filename
+    #minutes_per_rotation = params[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
+    #minutes_duration = params[:minutes_duration] || Dojo::Default_minutes_per_dojo
     
     result = nil
     io_lock(root_folder) do
@@ -40,14 +40,15 @@ class Dojo
         info = { 
           :name => name, 
           :created => make_time(now),
-          :minutes_per_rotation => minutes_per_rotation,
-          :minutes_duration => minutes_duration,
+          :minutes_per_rotation => Dojo::Default_minutes_per_rotation,
+          :minutes_duration => Dojo::Default_minutes_per_dojo,
           # full choice, save will probably narrow the selection 
           :katas => FileSet.new(params[:filesets_root], 'kata').choices,
           :languages => FileSet.new(params[:filesets_root], 'language').choices,          
         }
 
         index = []
+        index_filename = root_folder + '/' + Dojo::Index_filename
         if File.exists? index_filename
           index = eval IO.read(index_filename)
         end
@@ -57,7 +58,7 @@ class Dojo
         rotation = {}
         rotation[:already_rotated] = []
         rotation[:prev_rotation_at] = make_time(now)      
-        rotation[:next_rotation_at] = make_time(now + minutes_per_rotation * 60)
+        rotation[:next_rotation_at] = make_time(now + info[:minutes_per_rotation] * 60)
 
         dojo = Dojo.new(params)        
         file_write(dojo.ladder_filename, [])
@@ -77,11 +78,11 @@ class Dojo
       dojo = Dojo.new(params)
       info = dojo.manifest
       info[:katas] = []
-      params["kata"].each do |number,kata|
+      params['kata'].each do |number,kata|
         info[:katas] << kata
       end
       info[:languages] = []
-      params["language"].each do |number,language|
+      params['language'].each do |number,language|
         info[:languages] << language
       end
       info[:minutes_duration] = params["duration"].to_i

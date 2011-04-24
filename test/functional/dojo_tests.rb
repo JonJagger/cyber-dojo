@@ -37,36 +37,44 @@ class DojoTests < ActionController::TestCase
     assert !Dojo::create(params)    
   end
   
-  def test_that_a_player_can_create_a_new_dojo_with_specified_duration
-    root_test_folder_reset
-    params = make_params
-    params[:minutes_duration] = 65
-    assert Dojo::create(params)
-    dojo = Dojo.new(params)
-    manifest = eval IO.read(dojo.manifest_filename)
-    assert_equal 65, manifest[:minutes_duration]    
-  end
-  
-  def test_that_a_player_can_create_a_new_dojo_with_specified_rotation
-    root_test_folder_reset
-    params = make_params
-    params[:minutes_per_rotation] = 10
-    assert Dojo::create(params)
-    dojo = Dojo.new(params)
-    manifest = eval IO.read(dojo.manifest_filename)
-    assert_equal 10, manifest[:minutes_per_rotation]    
-  end
-  
   def test_that_a_player_can_create_a_new_avatar_in_a_new_dojo
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
     filesets = {}
-    filesets['kata'] = FileSet.new(params[:filesets_root], 'kata').choices
-    filesets['language'] = FileSet.new(params[:filesets_root], 'language').choices
+    filesets['kata'] = FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0]
+    filesets['language'] = FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
     avatar = Avatar.new(dojo, nil, filesets)
     assert File.exists?(avatar.folder), 'avatar folder created'    
+  end
+  
+  def test_that_a_player_can_create_a_new_dojo_with_specified_duration
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    specified_duration = 65
+    params['duration'] = specified_duration
+    params['kata'] = { 0 => 'Unsplice' }
+    params['language'] = { 0 => 'C++' }
+    Dojo::configure(params)
+    dojo = Dojo.new(params)
+    manifest = eval IO.read(dojo.manifest_filename)
+    assert_equal specified_duration, manifest[:minutes_duration]    
+  end
+  
+  def test_that_a_player_can_create_a_new_dojo_with_specified_rotation
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    specified_rotation = 10
+    params['rotation'] = specified_rotation
+    params['kata'] = { 0 => 'Unsplice' }
+    params['language'] = { 0 => 'C++' }
+    Dojo::configure(params)
+    dojo = Dojo.new(params)
+    manifest = eval IO.read(dojo.manifest_filename)
+    assert_equal specified_rotation, manifest[:minutes_per_rotation]    
   end
   
   def test_that_a_player_can_create_a_new_avatar_with_specified_kata

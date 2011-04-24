@@ -16,7 +16,7 @@
   text-decoration: none;
   font-weight: normal;
   color: #383838;
-  border-bottom: 2px solid gray; /* fake button look */
+  border-bottom: 2px solid gray;
   border-right:  2px solid gray; 
 }
 .button      { font-size: 1em; } 
