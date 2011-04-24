@@ -7,8 +7,6 @@ require 'make_time.rb'
 class Dojo
 
   Index_filename = 'index.rb' 
-  Default_minutes_per_rotation = 5
-  Default_minutes_per_dojo = 60
 
   def self.find(params)
     name = params[:dojo_name]
@@ -202,11 +200,11 @@ class Dojo
   end
 
   def minutes_per_rotation
-    manifest[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
+    manifest[:minutes_per_rotation]
   end
 
   def minutes_duration
-    manifest[:minutes_duration] || Dojo::Default_minutes_per_dojo
+    manifest[:minutes_duration]
   end
   
   def manifest
