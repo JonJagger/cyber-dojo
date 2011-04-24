@@ -19,17 +19,14 @@ class DojoTests < ActionController::TestCase
     }
   end
   
-  def test_that_creating_a_new_dojo_succeeds_and_builds_git_like_folder_structure
+  def test_that_creating_a_new_dojo_succeeds_and_creates_root_folder
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
     assert File.exists?(dojo.folder), 'inner/outer folder created'
-    assert File.exists?(dojo.ladder_filename), 'ladder.rb created'
-    assert File.exists?(dojo.rotation_filename), 'rotation.rb created'
-    assert File.exists?(dojo.manifest_filename), 'manifest.rb created'
   end
-
+  
   def test_that_trying_to_create_an_existing_dojo_fails
     root_test_folder_reset
     params = make_params
@@ -37,6 +34,21 @@ class DojoTests < ActionController::TestCase
     assert !Dojo::create(params)    
   end
   
+  def test_that_configuring_a_new_dojo_creates_three_core_files
+    root_test_folder_reset
+    params = make_params
+    params['duration'] = 60
+    params['rotation'] = 5
+    params['kata'] = { 0 => 'Unsplice' }
+    params['language'] = { 0 => 'C++' }    
+    assert Dojo::create(params)
+    Dojo::configure(params)
+    dojo = Dojo.new(params)
+    assert File.exists?(dojo.ladder_filename), 'ladder.rb created'
+    assert File.exists?(dojo.rotation_filename), 'rotation.rb created'
+    assert File.exists?(dojo.manifest_filename), 'manifest.rb created'
+  end
+
   def test_that_a_player_can_create_a_new_avatar_in_a_new_dojo
     root_test_folder_reset
     params = make_params
@@ -55,6 +67,7 @@ class DojoTests < ActionController::TestCase
     assert Dojo::create(params)
     specified_duration = 65
     params['duration'] = specified_duration
+    params['rotation'] = 5
     params['kata'] = { 0 => 'Unsplice' }
     params['language'] = { 0 => 'C++' }
     Dojo::configure(params)
@@ -69,6 +82,7 @@ class DojoTests < ActionController::TestCase
     assert Dojo::create(params)
     specified_rotation = 10
     params['rotation'] = specified_rotation
+    params['duration'] = 60
     params['kata'] = { 0 => 'Unsplice' }
     params['language'] = { 0 => 'C++' }
     Dojo::configure(params)

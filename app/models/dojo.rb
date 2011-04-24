@@ -12,8 +12,7 @@ class Dojo
 
   def self.find(params)
     name = params[:dojo_name]
-    root_folder = params[:dojo_root]
-    
+    root_folder = params[:dojo_root]    
     inner = root_folder + '/' + Dojo::inner_folder(name)
     outer = inner + '/' + Dojo::outer_folder(name)
     File.directory? inner and File.directory? outer
@@ -21,54 +20,18 @@ class Dojo
   
   def self.create(params)
     name = params[:dojo_name]
-    root_folder = params[:dojo_root]
-    #index_filename = root_folder + '/' + Dojo::Index_filename
-    #minutes_per_rotation = params[:minutes_per_rotation] || Dojo::Default_minutes_per_rotation
-    #minutes_duration = params[:minutes_duration] || Dojo::Default_minutes_per_dojo
-    
-    result = nil
-    io_lock(root_folder) do
-      inner = root_folder + '/' + Dojo::inner_folder(name)
-      outer = inner + '/' + Dojo::outer_folder(name)
-      if File.directory? inner and File.directory? outer
-        result = false
-      else
+    root_folder = params[:dojo_root]    
+    inner = root_folder + '/' + Dojo::inner_folder(name)
+    outer = inner + '/' + Dojo::outer_folder(name)
+    if File.directory? inner and File.directory? outer
+      return false
+    else
+      io_lock(root_folder) do
         make_dir(inner)
         make_dir(outer)
-
-        now = Time.now
-        info = { 
-          :name => name, 
-          :created => make_time(now),
-          :minutes_per_rotation => Dojo::Default_minutes_per_rotation,
-          :minutes_duration => Dojo::Default_minutes_per_dojo,
-          # full choice, save will probably narrow the selection 
-          :katas => FileSet.new(params[:filesets_root], 'kata').choices,
-          :languages => FileSet.new(params[:filesets_root], 'language').choices,          
-        }
-
-        index = []
-        index_filename = root_folder + '/' + Dojo::Index_filename
-        if File.exists? index_filename
-          index = eval IO.read(index_filename)
-        end
-        index << info        
-        file_write(index_filename, index)
-        
-        rotation = {}
-        rotation[:already_rotated] = []
-        rotation[:prev_rotation_at] = make_time(now)      
-        rotation[:next_rotation_at] = make_time(now + info[:minutes_per_rotation] * 60)
-
-        dojo = Dojo.new(params)        
-        file_write(dojo.ladder_filename, [])
-        file_write(dojo.rotation_filename, rotation)
-        file_write(dojo.manifest_filename, info)
-
-        result = true;
       end
+      return true
     end
-    result
   end
   
   def self.configure(params)
@@ -76,7 +39,15 @@ class Dojo
     root_folder = params[:dojo_root]
     io_lock(root_folder) do
       dojo = Dojo.new(params)
-      info = dojo.manifest
+      
+      now = Time.now
+      info = { 
+        :name => name, 
+        :created => make_time(now),
+        :minutes_per_rotation => params['rotation'].to_i,
+        :minutes_duration => params['duration'].to_i,
+      }
+      
       info[:katas] = []
       params['kata'].each do |number,kata|
         info[:katas] << kata
@@ -85,9 +56,23 @@ class Dojo
       params['language'].each do |number,language|
         info[:languages] << language
       end
-      info[:minutes_duration] = params["duration"].to_i
-      info[:minutes_per_rotation] = params["rotation"].to_i      
       file_write(dojo.manifest_filename, info)
+      
+      index = []
+      index_filename = root_folder + '/' + Dojo::Index_filename
+      if File.exists? index_filename
+        index = eval IO.read(index_filename)
+      end
+      index << info        
+      file_write(index_filename, index)
+      
+      rotation = {}
+      rotation[:already_rotated] = []
+      rotation[:prev_rotation_at] = make_time(now)      
+      rotation[:next_rotation_at] = make_time(now + info[:minutes_per_rotation] * 60)
+      file_write(dojo.rotation_filename, rotation)
+      
+      file_write(dojo.ladder_filename, [])
     end    
   end
   
