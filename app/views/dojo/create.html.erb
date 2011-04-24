@@ -80,40 +80,17 @@ function showKataInstructions()
         <tr>
           <td>
             <span class="choose_title">Duration?</span>
-            
-              <span onclick='selectRadio("duration",0);'>
-                <input id="duration_0" 
+            <% @durations.each_with_index do |choice,index| -%>
+              <span onclick='selectRadio("duration","<%=index-%>");'>
+                <input id="duration_<%=index-%>" 
                        type="radio" 
                        name="duration" 
-                       value="20" />
-                <label>20 mins</label>
+                       value="<%=choice[:mins]-%>"
+                       <%=choice[:checked]-%>
+                       />
+                <label><%=choice[:label]-%></label>
               </span>
-
-              <span onclick='selectRadio("duration",1);'>
-                <input id="duration_1" 
-                       type="radio" 
-                       name="duration" 
-                       value="40" />
-                <label>40 mins</label>
-              </span>
-
-              <span onclick='selectRadio("duration",2);'>
-                <input id="duration_2" 
-                       type="radio" 
-                       name="duration" 
-                       value="60" 
-                       checked="true" />
-                <label>1 hour</label>
-              </span>
-
-              <span onclick='selectRadio("duration",3);'>
-                <input id="duration_3" 
-                       type="radio" 
-                       name="duration" 
-                       value="120" />
-                <label>2 hours</label>
-              </span>
-              
+            <% end -%>
           </td>
         </tr>
       </table>
@@ -124,24 +101,17 @@ function showKataInstructions()
         <tr>
           <td>
             <span class="choose_title">Rotation?</span>
-
-              <span onclick='selectRadio("rotation",0);'>
-                <input id="rotation_0" 
+            <% @rotations.each_with_index do |choice,index| -%>
+              <span onclick='selectRadio("rotation","<%=index-%>");'>
+                <input id="rotation_<%=index-%>" 
                        type="radio" 
                        name="rotation" 
-                       value="5"
-                       checked />
-                <label>5 mins</label>
-              </span>
-              
-              <span onclick='selectRadio("rotation",1);'>
-                <input id="rotation_1" 
-                       type="radio" 
-                       name="rotation" 
-                       value="10" />
-                <label>10 mins</label>
-              </span>
-
+                       value="<%=choice[:mins]-%>"
+                       <%=choice[:checked]-%>
+                       />
+                <label><%=choice[:label]-%></label>
+              </span>              
+            <% end -%>              
           </td>
         </tr>
       </table>
@@ -169,10 +139,10 @@ function showKataInstructions()
           <td valign="top">
             <div class="choose_title">Kata?</div>
             <span onclick='setAll("kata", "<%= @katas.length -%>", true);'>
-              <input type="button" name="selectAllKatas" value="Select-All" />
+              <input type="button" class="button" name="selectAllKatas" value="Select-All" />
             </span>
             <span onclick='setAll("kata", "<%= @katas.length -%>", false);'>            
-              <input type="button" name="clearAllKatas" value="Clear-All" />
+              <input type="button" class="button" name="clearAllKatas" value="Clear-All" />
             </span>           
             <% @katas.each_with_index do |choice,index| -%>
               <div onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'>
@@ -201,10 +171,10 @@ function showKataInstructions()
           <td>
             <div class="choose_title">Language?</div>
             <span onclick='setAll("language", "<%= @languages.length -%>", true);'>            
-              <input type="button" name="selectAllLanguages" value="Select-All" />
+              <input type="button" class="button" name="selectAllLanguages" value="Select-All" />
             </span>
             <span onclick='setAll("language", "<%= @languages.length -%>", false);'>            
-              <input type="button" name="clearAllLanguages" value="Clear-All" />
+              <input type="button" class="button" name="clearAllLanguages" value="Clear-All" />
             </span>
             <% @languages.each_with_index do |choice,index| -%>
               <div onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'>
@@ -224,6 +194,7 @@ function showKataInstructions()
         <tr>
           <td valign="top">
             <input id="save_button" 
+                   class="main_button"
                    type="submit" 
                    value="Save" 
                    name="save"

@@ -18,12 +18,13 @@ module TestRunner
       run_tests_output = IO.popen("cd '#{sandbox}'; ./cyberdojo.sh 2>&1").read.split("\n").join("\n")
     end
 
-    # Build and run tests has limited time to complete
+    # Run tests has limited time to complete
     kata.max_run_tests_duration.times do
       one_second = 1
       sleep(one_second)
       break if sandbox_thread.status == false 
     end
+    
     # If tests didn't finish assume they were stuck in 
     # an infinite loop and kill the thread
     if sandbox_thread.status != false 
@@ -35,8 +36,6 @@ module TestRunner
   end
 
 
-  # remove_all_but()
-  #
   # Remove all files from the sandbox except the hidden files
   # specified in the manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]

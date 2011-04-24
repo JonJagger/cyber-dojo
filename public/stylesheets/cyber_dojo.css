@@ -1,3 +1,31 @@
+.button, .main_button
+{
+  border: 1px solid #A8A8A8;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  padding: 4px;
+  background-color: #FFE4C4; 
+  text-decoration: none;
+  font-weight: normal;
+  color: #383838;
+  border-bottom: 2px solid gray; /* fake button look */
+  border-right:  2px solid gray; 
+}
+.main_button 
+{
+  font-size: 1.35em;
+}
+.name_input
+{
+  font-size: 1.15em;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - */
 
 #center
 {
@@ -39,8 +67,7 @@
 }
 
 
-.file_op, .panel, div[class~="filename"],  
-#new_button, #save_button, #enter_button, #reenter_button, #start_button, #play_button, #view_button
+.file_op, .panel, div[class~="filename"], #play_button
 { 
   border: 1px solid #A8A8A8;
   border-radius: 6px;
@@ -49,7 +76,7 @@
   -webkit-border-radius: 6px;
 }
 
-#new_button, #save_button, #enter_button, #reenter_button, #start_button, #play_button, #view_button
+#play_button
 { 
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;
   font-size: 1em;
@@ -105,7 +132,7 @@
   background-color: lightgray;
 }
 
-#play_button_disabled, #save_button[disabled]
+#play_button_disabled, .main_button[disabled]
 {
   border: 1px solid #A8A8A8;
   border-radius: 6px;
@@ -122,8 +149,7 @@
   color: #383838;
 }
 
-.file_op, div[class~="filename"], 
-#new_button, #save_button, #enter_button, #reenter_button, #start_button, #play_button,  #view_button
+.file_op, div[class~="filename"], #play_button
 {
   color: #383838;
   border-bottom: 2px solid gray; /* fake button look */
