@@ -42,8 +42,7 @@ class KataController < ApplicationController
 
     @manifest = {}
     @increments = @avatar.read_manifest(@manifest)    
-    @rotation = @dojo.rotation(params[:avatar])
-    @rotation[:do_now] = false # don't rotate when re-entering
+    @server_message = ""
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
     @outcome = @increments == [] ? '' : @increments.last[:outcome]
@@ -66,7 +65,7 @@ class KataController < ApplicationController
   def heartbeat
     configure(params)
     @dojo = Dojo.new(params)
-    @rotation = @dojo.rotation(params[:avatar])
+    @server_message = @dojo.heartbeat(params[:avatar])
     respond_to do |format|
       format.js if request.xhr?
     end

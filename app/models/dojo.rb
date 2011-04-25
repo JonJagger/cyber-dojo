@@ -120,39 +120,22 @@ class Dojo
     Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) } 
   end
 
-  def rotation(avatar_name)
-    options = {}
-    io_lock(folder) do
-      options = eval IO.read(rotation_filename)
-      
-      now = Time.now      
-
-      already_rotated = options[:already_rotated].include?(avatar_name)
-      very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= seconds_per_heartbeat
-      due = Time.mktime(*options[:next_rotation_at])
-      
-      if now > due
-        # first avatar over the now-line
-        # but don't rotate if we're re-entering a dojo after a long break
-        options[:do_now] = (now - due < (2 * seconds_per_heartbeat))
-        options[:prev_rotation_at] = make_time(now)
-        due = now + minutes_per_rotation * 60
-        options[:next_rotation_at] = make_time(due)
-        options[:already_rotated] = [avatar_name]
-      elsif !already_rotated && very_recent_rotation
-        # another avatar over the line
-        # but don't re-rotate for the first avatar again
-        options[:do_now] = true
-        options[:already_rotated] << avatar_name  
-      else
-        options[:do_now] = false
-      end
-
-      file_write(rotation_filename, options)
-    end
-    options
+  def seconds_per_heartbeat
+    5
   end
-  
+
+  def heartbeat(avatar_name)
+    if closed
+      return ""
+    end
+    if rotation(avatar_name)[:do_now]
+      return "<h2>...ROTATE NOW. ..</h2>" +
+        "<h2>Keyboard drivers please take a non-driver role,</h2>" +
+        "<h2>either at the same computer or at a new computer.</h2>"
+    end
+    return "" 
+  end
+
   def ladder
     rungs = io_lock(folder) { eval IO.read(ladder_filename) }
     rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
@@ -195,10 +178,6 @@ class Dojo
     Time.mktime(*manifest[:created])
   end
   
-  def seconds_per_heartbeat
-    5
-  end
-
   def minutes_per_rotation
     manifest[:minutes_per_rotation]
   end
@@ -222,7 +201,40 @@ private
       Dir.mkdir name
     end
   end
-    
+
+  def rotation(avatar_name)
+    options = {}
+    io_lock(folder) do
+      options = eval IO.read(rotation_filename)
+      
+      now = Time.now      
+
+      already_rotated = options[:already_rotated].include?(avatar_name)
+      very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= seconds_per_heartbeat
+      due = Time.mktime(*options[:next_rotation_at])
+      
+      if now > due
+        # first avatar over the now-line
+        # but don't rotate if we're re-entering a dojo after a long break
+        options[:do_now] = (now - due < (2 * seconds_per_heartbeat))
+        options[:prev_rotation_at] = make_time(now)
+        due = now + minutes_per_rotation * 60
+        options[:next_rotation_at] = make_time(due)
+        options[:already_rotated] = [avatar_name]
+      elsif !already_rotated && very_recent_rotation
+        # another avatar over the line
+        # but don't re-rotate for the first avatar again
+        options[:do_now] = true
+        options[:already_rotated] << avatar_name  
+      else
+        options[:do_now] = false
+      end
+
+      file_write(rotation_filename, options)
+    end
+    options
+  end
+  
 end
 
 

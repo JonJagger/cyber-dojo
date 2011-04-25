@@ -6,7 +6,6 @@
         <%= avatar_image(@avatar.name, 65) -%>
         <%= @avatar.name.capitalize -%>
       </div>
-        
 
       <span class="small_title"><%= @kata.language -%></span>
       <span class="small_title"><%= @kata.name -%></span>
@@ -18,7 +17,7 @@
       <%= render :partial => 'editor' -%>
     </td>
     <td rowspan=2>
-      <%= render :partial => 'rotation' -%>
+      <%= render :partial => 'server_message' -%>
 
       <span class="title">
         <%= link_to "#{@dojo.name}", 
@@ -59,12 +58,10 @@
   </tr>
 </table>
 
-<% if !@dojo.closed -%>
 <%= periodically_call_remote :url => { :action => 'heartbeat',
                                        :dojo_name => @dojo.name,
                                        :avatar => @avatar.name
                                      }, 
                              :frequency => @dojo.seconds_per_heartbeat -%>
-<% end -%>                             
                    
 

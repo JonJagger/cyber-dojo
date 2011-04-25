@@ -256,7 +256,7 @@ input[type="checkbox"]:checked+img
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#rotate_panel
+#server_message_panel
 {
   margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
   text-align: center;
