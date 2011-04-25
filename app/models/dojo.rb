@@ -9,19 +9,19 @@ class Dojo
   Index_filename = 'index.rb' 
 
   def self.rotation_choices
-    rotations = []
-    rotations << { :mins => 5, :label => "5 mins",   :checked => "checked" }
-    rotations << { :mins => 10, :label => "10 mins", :checked => ""  }
-    rotations
+    [
+      { :mins => 5, :label => "5 mins",   :checked => "checked" },
+      { :mins => 10, :label => "10 mins", :checked => ""  },
+    ]
   end
   
   def self.duration_choices
-    durations = []
-    durations << { :mins => 20, :label => "20 mins", :checked => "" }
-    durations << { :mins => 40, :label => "40 mins", :checked => "" }
-    durations << { :mins => 60, :label => "1 hour",  :checked => "checked" }
-    durations << { :mins => 120,:label => "2 hours", :checked => "" }
-    durations
+    [
+      { :mins => 20, :label => "20 mins", :checked => "" },
+      { :mins => 40, :label => "40 mins", :checked => "" },
+      { :mins => 60, :label => "1 hour",  :checked => "checked" },
+      { :mins => 120,:label => "2 hours", :checked => "" },
+    ]
   end
   
   def self.find(params)
