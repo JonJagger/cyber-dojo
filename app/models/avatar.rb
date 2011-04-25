@@ -71,7 +71,7 @@ class Avatar
 
   def read_manifest(manifest, tag = nil)
     io_lock(folder) do
-      tag ||= eval IO.popen("cd #{folder};git tag").read
+      tag ||= eval IO.popen("cd #{folder};git tag|sort -g").read
       read_manifest = eval IO.popen("cd #{folder};git show #{tag}:#{manifest_filename} 2>&1").read
       manifest[:visible_files] = read_manifest[:visible_files]
       manifest[:current_filename] = read_manifest[:current_filename]
