@@ -10,7 +10,7 @@ class Dojo
 
   def self.rotation_choices
     [
-      { :mins => 5, :label => "5 mins",   :checked => "checked" },
+      { :mins => 5,  :label => "5 mins",  :checked => "checked" },
       { :mins => 10, :label => "10 mins", :checked => ""  },
     ]
   end
