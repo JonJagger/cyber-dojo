@@ -8,6 +8,22 @@ class Dojo
 
   Index_filename = 'index.rb' 
 
+  def self.rotation_choices
+    rotations = []
+    rotations << { :mins => 5, :label => "5 mins",   :checked => "checked" }
+    rotations << { :mins => 10, :label => "10 mins", :checked => ""  }
+    rotations
+  end
+  
+  def self.duration_choices
+    durations = []
+    durations << { :mins => 20, :label => "20 mins", :checked => "" }
+    durations << { :mins => 40, :label => "40 mins", :checked => "" }
+    durations << { :mins => 60, :label => "1 hour",  :checked => "checked" }
+    durations << { :mins => 120,:label => "2 hours", :checked => "" }
+    durations
+  end
+  
   def self.find(params)
     name = params[:dojo_name]
     root_folder = params[:dojo_root]    
@@ -126,14 +142,14 @@ class Dojo
 
   def heartbeat(avatar_name)
     if closed
-      return ""
+      ""
+    elsif rotation(avatar_name)[:do_now]
+      "<h2>...ROTATE NOW. ..</h2>" +
+      "<h2>Keyboard drivers please take a non-driver role,</h2>" +
+      "<h2>either at the same computer or at a new computer.</h2>"
+    else
+      ""
     end
-    if rotation(avatar_name)[:do_now]
-      return "<h2>...ROTATE NOW. ..</h2>" +
-        "<h2>Keyboard drivers please take a non-driver role,</h2>" +
-        "<h2>either at the same computer or at a new computer.</h2>"
-    end
-    return "" 
   end
 
   def ladder

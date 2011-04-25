@@ -24,8 +24,8 @@ class DojoController < ApplicationController
     @dojo = Dojo.new(params)
     @katas = FileSet.new(@dojo.filesets_root, 'kata').choices
     @languages = FileSet.new(@dojo.filesets_root, 'language').choices
-    @durations = make_durations
-    @rotations = make_rotations
+    @durations = Dojo::duration_choices
+    @rotations = Dojo::rotation_choices
     @kata_info = {}
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
@@ -79,19 +79,4 @@ private
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
   end
 
-  def make_rotations
-    rotations = []
-    rotations << { :mins => 5, :label => "5 mins",   :checked => "checked" }
-    rotations << { :mins => 10, :label => "10 mins", :checked => ""  }
-    rotations
-  end
-  
-  def make_durations
-    durations = []
-    durations << { :mins => 20, :label => "20 mins", :checked => "" }
-    durations << { :mins => 40, :label => "40 mins", :checked => "" }
-    durations << { :mins => 60, :label => "1 hour",  :checked => "checked" }
-    durations << { :mins => 120,:label => "2 hours", :checked => "" }
-    durations
-  end
 end
