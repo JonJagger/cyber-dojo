@@ -37,14 +37,15 @@ class Dojo
     root_folder = params[:dojo_root]    
     inner = root_folder + '/' + Dojo::inner_folder(name)
     outer = inner + '/' + Dojo::outer_folder(name)
-    if File.directory? inner and File.directory? outer
-      return false
-    else
-      io_lock(root_folder) do
+    
+    io_lock(root_folder) do
+      if File.directory? inner and File.directory? outer
+        false
+      else
         make_dir(inner)
         make_dir(outer)
+        true
       end
-      return true
     end
   end
   
@@ -80,11 +81,12 @@ class Dojo
       index << info        
       file_write(index_filename, index)
       
-      rotation = {}
-      rotation[:already_rotated] = []
-      rotation[:prev_rotation_at] = make_time(now)      
-      rotation[:next_rotation_at] = make_time(now + info[:minutes_per_rotation] * 60)
-      file_write(dojo.rotation_filename, rotation)
+      file_write(dojo.rotation_filename, 
+        {
+          :already_rotated => [],
+          :prev_rotation_at => make_time(now),      
+          :next_rotation_at => make_time(now + info[:minutes_per_rotation] * 60)
+        })
       
       file_write(dojo.ladder_filename, [])
     end    
@@ -143,7 +145,7 @@ class Dojo
   def heartbeat(avatar_name)
     if closed
       ""
-    elsif rotation(avatar_name)[:do_now]
+    elsif rotate(avatar_name)
       "<h2>...ROTATE NOW. ..</h2>" +
       "<h2>Keyboard drivers please take a non-driver role,</h2>" +
       "<h2>either at the same computer or at a new computer.</h2>"
@@ -218,37 +220,36 @@ private
     end
   end
 
-  def rotation(avatar_name)
-    options = {}
+  def rotate(avatar_name)
     io_lock(folder) do
       options = eval IO.read(rotation_filename)
       
       now = Time.now      
-
+      due = Time.mktime(*options[:next_rotation_at])
+      if now > due
+        # first avatar over the now-line, move prev/next forward 
+        # (it turns out to be simpler to do this when the first avatar)
+        # (rotates rather than try to do it when the last avatar rotates)
+        options[:prev_rotation_at] = make_time(now)
+        options[:next_rotation_at] = make_time(now + minutes_per_rotation * 60)
+        options[:already_rotated] = [avatar_name]
+        file_write(rotation_filename, options)
+        # don't rotate if we're re-entering the dojo after a break
+        return now - due < (2 * seconds_per_heartbeat)
+      end
+      
       already_rotated = options[:already_rotated].include?(avatar_name)
       very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= seconds_per_heartbeat
-      due = Time.mktime(*options[:next_rotation_at])
-      
-      if now > due
-        # first avatar over the now-line
-        # but don't rotate if we're re-entering a dojo after a long break
-        options[:do_now] = (now - due < (2 * seconds_per_heartbeat))
-        options[:prev_rotation_at] = make_time(now)
-        due = now + minutes_per_rotation * 60
-        options[:next_rotation_at] = make_time(due)
-        options[:already_rotated] = [avatar_name]
-      elsif !already_rotated && very_recent_rotation
+      if !already_rotated && very_recent_rotation
         # another avatar over the line
         # but don't re-rotate for the first avatar again
-        options[:do_now] = true
-        options[:already_rotated] << avatar_name  
-      else
-        options[:do_now] = false
+        options[:already_rotated] << avatar_name
+        file_write(rotation_filename, options)
+        return true
       end
-
-      file_write(rotation_filename, options)
+      
+      return false
     end
-    options
   end
   
 end
