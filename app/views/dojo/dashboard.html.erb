@@ -5,7 +5,7 @@
 <% languages = avatars.collect { |avatar| avatar.kata.language }.uniq -%>
 <% katas = avatars.collect { |avatar| avatar.kata.name }.uniq -%>
 
-<div align="center">
+<h3 align="center">
   <% if languages.length == 1 -%> 
     <%= languages[0] -%>, 
   <% end -%>
@@ -13,7 +13,7 @@
     <%= katas[0] -%>, 
   <% end -%>
   <%= age_or_closed(@dojo) -%>
-</div>
+</h3>
 
 <div>
 <table>

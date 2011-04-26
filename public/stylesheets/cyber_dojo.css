@@ -4,7 +4,6 @@
 }
 .button, .main_button
 {
-  border: 1px solid #A8A8A8;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -16,8 +15,10 @@
   text-decoration: none;
   font-weight: normal;
   color: #383838;
-  border-bottom: 2px solid gray;
-  border-right:  2px solid gray; 
+  border-top: none;
+  border-left: none;
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8; 
 }
 .button      { font-size: 1em; } 
 .main_button { font-size: 1.35em; }
@@ -40,7 +41,7 @@
 
 .light_tone { background-color: #FEF5CA; /* sandy */ }
 .mid_tone   { background-color: #FFE4C4; }
-.panel { padding: 0.5em; }
+.panel { padding: 0.5em; border: 1px solid lightgray; }
 .notice { color: red; }
 
 #kata_info
@@ -65,7 +66,7 @@
 .small_title
 {
   display: block;
-  margin: 0.2em 0em 0.2em 0.2em; /* Top Right Bottom Left */
+  margin: 0.2em 0em 1em 0.2em; /* Top Right Bottom Left */
   font-size: 0.8em;
   color: green;
 }
@@ -82,7 +83,6 @@
 
 .file_op, .panel, div[class~="filename"]
 { 
-  border: 1px solid #A8A8A8;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -97,7 +97,10 @@
 } 
 .file_op_disabled
 {
-  border: 1px solid #A8A8A8;
+  border-top: none;
+  border-left: none;
+  border-right: 1px solid #A8A8A8;
+  border-bottom: 1px solid #A8A8A8;  
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -108,7 +111,10 @@
 
 #play_button_disabled, .main_button[disabled]
 {
-  border: 1px solid #A8A8A8;
+  border-top: none;
+  border-left: none;
+  border-right: 1px solid #A8A8A8;
+  border-bottom: 1px solid #A8A8A8;
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
@@ -126,8 +132,8 @@
 .file_op, div[class~="filename"]
 {
   color: #383838;
-  border-bottom: 2px solid gray; /* fake button look */
-  border-right:  2px solid gray; 
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8; 
 }
 
 div[class~="filename"]
@@ -202,14 +208,13 @@ input[type="checkbox"]:checked+img
 #output.failed { border-color: #F33; }
 #output.error  { border-color: #FF0; }
 #output.passed { border-color: #3C3; }
-#output.waiting{ border-color: gray; }
+#output.waiting{ border-color: #A8A8A8; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .traffic_light
 {
-  background-color: #EEC591;
-  border: 1px solid #EEC591; 
+  background-color: #FEF5CA;
 }
 
 .increment
@@ -224,29 +229,10 @@ input[type="checkbox"]:checked+img
   -webkit-border-radius: 20px;
 }
 
-.increment.failed
-{
-  background-color: #F33; /* red */ 
-  border: 1px solid #F33; 
-}
-
-.increment.error
-{
-  background-color: #FF0; /* yellow */ 
-  border: 1px solid #FF0; 
-}
-
-.increment.passed
-{
-  background-color: #3C3; /* green */ 
-  border: 1px solid #3C3; 
-}
-
-.increment.off 
-{ 
-  background-color: #8B8378; /* darkish gray */
-  border: 1px solid #8B8378;
-}
+.increment.failed { background-color: #F33; /* red */   }
+.increment.error  { background-color: #FC3; /* amber */ }
+.increment.passed { background-color: #3C3; /* green */ }
+.increment.off    { background-color: #8B8378; /* darkish gray */ }
 
 #increment_number
 {

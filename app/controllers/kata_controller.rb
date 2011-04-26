@@ -9,7 +9,7 @@ class KataController < ApplicationController
     # randonly choose kata and language from selections made at dojo creation
     filesets['kata'] = manifest[:katas].shuffle[0]
     filesets['language'] = manifest[:languages].shuffle[0]
-    @avatar = Avatar.new(@dojo, params[:avatar], filesets)    
+    @avatar = Avatar.new(@dojo, params[:avatar], filesets)  
     redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
   end    
     
@@ -45,7 +45,7 @@ class KataController < ApplicationController
     @server_message = ""
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    @outcome = @increments == [] ? '' : @increments.last[:outcome]
+    @outcome = @increments == [] ? 'waiting' : @increments.last[:outcome]
   end
 
   def run_tests
