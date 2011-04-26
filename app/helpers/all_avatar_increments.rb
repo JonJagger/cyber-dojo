@@ -5,6 +5,6 @@ def all_avatar_increments(dojo)
     max_increments_displayed = 65
     all[avatar.name] = recent(avatar.increments, max_increments_displayed)
   end
-  all
+  all.sort
 end
 

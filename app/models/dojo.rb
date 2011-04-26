@@ -135,7 +135,7 @@ class Dojo
   end
 
   def avatars
-    Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) } 
+    Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) }
   end
 
   def seconds_per_heartbeat
