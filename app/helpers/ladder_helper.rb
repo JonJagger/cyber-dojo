@@ -68,7 +68,7 @@ module LadderHelper
   end
   
   def aref(dojo_name, avatar_name, rung, colour)
-      "<a href='http://localhost:443/kata/view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}' title='#{rung[:number]}' target='_blank'>" +
+    "<a href='http://www.cyber-dojo.com/kata/view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}' title='#{rung[:number]}' target='_blank'>" +
       "<span class='#{colour} increment'></span>" +
       '</a>'
   end
