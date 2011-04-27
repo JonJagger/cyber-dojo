@@ -1,14 +1,9 @@
 #include "untitled.h"
-#include <assert.h>
-#include <stdio.h>
-
-#define ASSERT(x)   assert(x)
+#include "check.h"
 
 static void an_example_test(void)
 {
-    int expected = 9 * 6;
-    int actual = answer();
-    ASSERT(expected == actual);
+    CHECK_EQ(int, 9 * 6, answer());
 }
 
 typedef void test_function(void);
@@ -21,13 +16,12 @@ static test_function * tests[] =
 
 int main(void)
 {
-    int at;
-    for (at = 0; tests[at]; at++)
+    for (int at = 0; tests[at]; at++)
     {
         tests[at]();
         putchar('.');
     }
-    printf("\n%d", at);
+    check_report();
     return 0;
 }
 
