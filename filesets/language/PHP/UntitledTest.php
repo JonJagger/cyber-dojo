@@ -7,7 +7,7 @@ class UntitledTest extends PHPUnit_Framework_TestCase
 {
     public function testAnswer()
     {
-        $this->assertEquals(42, answer());
+        $this->assertEquals(9 * 6, answer());
     }
 }
 

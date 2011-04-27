@@ -1,7 +1,7 @@
 
 public class Untitled
 {
-    public int answer()
+    public static int answer()
     {
         return 42;
     }

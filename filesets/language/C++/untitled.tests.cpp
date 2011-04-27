@@ -6,7 +6,7 @@
 
 static void an_example_test()
 {
-    int expected = 42;
+    int expected = 9 * 6;
     int actual = answer();
     ASSERT(expected == actual);
 }

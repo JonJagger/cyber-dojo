@@ -7,8 +7,8 @@ public class UntitledTest
     @Test
     public void hitch_hiker()
     {
-        int expected = 42;
-        int actual = new Untitled().answer();
+        int expected = 9 * 6;
+        int actual = Untitled.answer();
         assertEquals(expected, actual);
     }
 }

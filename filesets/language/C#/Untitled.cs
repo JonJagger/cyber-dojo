@@ -1,7 +1,7 @@
 
 public class Untitled
 {
-    public int Answer
+    public static int Answer
     {
         get { return 42; }
     }

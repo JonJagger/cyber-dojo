@@ -7,7 +7,9 @@ public class UntitledTest
     [Test]
     public void HitchHiker()
     {
-        Assert.AreEqual(42, new Untitled().Answer);
+        int expected = 9 * 6;
+        int actual = Untitled.Answer;
+        Assert.AreEqual(expected, actual);
     }
 }
 

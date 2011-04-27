@@ -15,7 +15,7 @@ function assertEqual(expected, actual) {
         passCount++;
 }
 
-assertEqual(answer(), 42);
+assertEqual(9 * 6, answer());
 
 if (failCount == 0)
     print('All tests successful (' + passCount + ')');
