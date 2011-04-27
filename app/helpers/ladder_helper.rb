@@ -1,7 +1,7 @@
 
 module LadderHelper
   
-  def rungs(dojo) 
+  def rungs(dojo, avatar_name) 
     html = title(age_or_closed(dojo))
     
     if @dojo.avatars.length == 1
@@ -18,6 +18,7 @@ module LadderHelper
       else
         rung[:outcome] = :blank 
       end
+      rung[:number] = incs.length
       ladder << rung
     end   
     
@@ -26,7 +27,7 @@ module LadderHelper
     chunks.each do |chunk|
       html += '<tr>'
       chunk.each do |rung|
-        html += one_rung(rung)
+        html += one_rung(dojo.name, rung[:avatar], rung)
       end
       html += '</tr>'
     end
@@ -50,24 +51,32 @@ module LadderHelper
     return outcome == is ? is : 'off'
   end
   
-  def traffic_light(rung)
+  def traffic_light(dojo_name, avatar_name, rung)
     outcome = rung[:outcome].to_s
     
     red = on_off(outcome, 'failed')
-    yellow = on_off(outcome, 'error')
+    amber = on_off(outcome, 'error')
     green = on_off(outcome, 'passed')
 
-    [ "<td class='mid_tone traffic_light'>",   
-        "<div class='#{red}  increment'></div>",
-        "<div class='#{yellow} increment'></div>",
-        "<div class='#{green} increment'></div>",  
-      '</td>'
+    [ 
+      "<td class='mid_tone traffic_light'>",
+      aref(dojo_name, avatar_name, rung, red),
+      aref(dojo_name, avatar_name, rung, amber),
+      aref(dojo_name, avatar_name, rung, green),
+      '</td>',
     ].join('')
   end
   
-  def one_rung(rung)
-    [  td(avatar_image(rung[:avatar], 60)),
-       traffic_light(rung),       
+  def aref(dojo_name, avatar_name, rung, colour)
+      "<a href='http://localhost:443/kata/view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}' title='#{rung[:number]}' target='_blank'>" +
+      "<span class='#{colour} increment'></span>" +
+      '</a>'
+  end
+  
+  def one_rung(dojo_name, avatar_name, rung)
+    [  
+      td(avatar_image(avatar_name, 60)),
+      traffic_light(dojo_name, avatar_name, rung),       
     ].join('')
   end
 

@@ -53,12 +53,18 @@ class DojoController < ApplicationController
     elsif params[:enter]
       redirect_to :controller => :kata, :action => :enter, :dojo_name => dojo_name
     elsif params[:reenter]
-      redirect_to :controller => :kata, :action => :reenter, :dojo_name => dojo_name
+      redirect_to :action => :reenter, :dojo_name => dojo_name
     elsif params[:view]
       redirect_to :action => :dashboard, :dojo_name => dojo_name
     end
   end
 
+  def reenter
+    configure(params)
+    @dojo = Dojo.new(params) 
+    render :layout => 'dashboard_view'
+  end
+  
   def dashboard
     configure(params)
     @dojo = Dojo.new(params)

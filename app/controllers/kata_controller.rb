@@ -13,13 +13,6 @@ class KataController < ApplicationController
     redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
   end    
     
-  def reenter
-    configure(params)
-    @dojo = Dojo.new(params)
-    @avatars = @dojo.avatars.map { |avatar| avatar.name }   
-    render :layout => 'dashboard_view'
-  end
-    
   def view
     configure(params)
     params[:readonly] = true
@@ -51,11 +44,11 @@ class KataController < ApplicationController
   def run_tests
     configure(params)
     @dojo = Dojo.new(params)
-    avatar = Avatar.new(@dojo, params[:avatar])
+    @avatar = Avatar.new(@dojo, params[:avatar])
     manifest = load_visible_files_from_page
-    @increments = avatar.run_tests(manifest)
+    @increments = @avatar.run_tests(manifest)
     @output = manifest[:output]
-    @dojo.ladder_update(avatar.name, @increments.last)
+    @dojo.ladder_update(@avatar.name, @increments.last)
     @outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
@@ -65,7 +58,8 @@ class KataController < ApplicationController
   def heartbeat
     configure(params)
     @dojo = Dojo.new(params)
-    @server_message = @dojo.heartbeat(params[:avatar])
+    @avatar = Avatar.new(@dojo, params[:avatar])
+    @server_message = @dojo.heartbeat(@avatar.name)
     respond_to do |format|
       format.js if request.xhr?
     end

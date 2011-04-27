@@ -17,29 +17,17 @@
 
 <div>
 <table>
-  <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>
+  <% @dojo.avatars.each do |avatar| -%>
   <tr>
     <td>
-      <table align="right"
-             cellspacing="2"
-             cellpadding="0">
-        <tr>
-          <% increments.each do |inc| -%>
-            <%= traffic_light(inc)-%>
-          <% end -%>
-        </tr>
-      </table>
-    </td>
-    <td>
-      <%= avatar_image(avatar_name, 45) -%>
+      <%= avatar_image(avatar.name, 45) -%>
     </td>
     
     <td>
-      <%= reenter_button(@dojo.name, avatar_name) -%>
+      <%= reenter_button(@dojo.name, avatar.name) -%>
     </td>
     
     <td>
-      <% avatar = Avatar.new(@dojo, avatar_name) -%> 
       <% kata = avatar.kata -%>
       <div class='small_title'>
         <% if languages.length != 1 -%> <%= kata.language -%>, <% end -%> 
