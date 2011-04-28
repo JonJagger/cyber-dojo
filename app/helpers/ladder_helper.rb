@@ -54,7 +54,7 @@ module LadderHelper
   def traffic_light(dojo_name, avatar_name, rung)
     outcome = rung[:outcome].to_s
     
-    red = on_off(outcome, 'failed')
+    red   = on_off(outcome, 'failed')
     amber = on_off(outcome, 'error')
     green = on_off(outcome, 'passed')
 
@@ -68,10 +68,13 @@ module LadderHelper
   end
   
   def aref(dojo_name, avatar_name, rung, colour)
-    # TODO: refactor this so URL is not hard-wired
-    "<a href='http://www.cyber-dojo.com/kata/view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}' title='#{rung[:number]}' target='_blank'>" +
-    "<span class='#{colour} increment'></span>" +
-    '</a>'
+    link_to "<span class='#{colour} increment'></span>", 
+      { :controller => :kata, 
+        :action => "view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}" 
+      }, 
+      { :title => "#{rung[:number]}", 
+        :target => "_blank" 
+      } 
   end
   
   def one_rung(dojo_name, avatar_name, rung)
