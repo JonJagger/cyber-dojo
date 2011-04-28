@@ -19,21 +19,20 @@
 <table>
   <% @dojo.avatars.each do |avatar| -%>
   <tr>
-    <td>
-      <%= avatar_image(avatar.name, 45) -%>
-    </td>
-    
+
     <td>
       <%= reenter_button(@dojo.name, avatar.name) -%>
     </td>
     
     <td>
+      <%= avatar_image(avatar.name, 45) -%>
+    </td>
+    
+    <td>
+      <span class="small_title"><%= avatar.name.capitalize -%></span>
       <% kata = avatar.kata -%>
-      <div class='small_title'>
-        <% if languages.length != 1 -%> <%= kata.language -%>, <% end -%> 
-        <% if katas.length != 1 -%> <%= kata.name -%>, <% end -%>
-        <%= pluralize(avatar.increments.length, 'increment') -%>
-      </div>
+      <% if languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
+      <% if katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>
     </td>    
   </tr>
   <% end -%>

@@ -44,7 +44,7 @@ module LadderHelper
   end
   
   def title(html)
-    '<span class="title">' + html + '</span>'
+    '<span class="small_title">' + html + '</span>'
   end
   
   def on_off(outcome, is)
@@ -59,7 +59,7 @@ module LadderHelper
     green = on_off(outcome, 'passed')
 
     [ 
-      "<td class='mid_tone traffic_light'>",
+      '<td class="traffic_light">',
       aref(dojo_name, avatar_name, rung, red),
       aref(dojo_name, avatar_name, rung, amber),
       aref(dojo_name, avatar_name, rung, green),
@@ -68,14 +68,15 @@ module LadderHelper
   end
   
   def aref(dojo_name, avatar_name, rung, colour)
+    # TODO: refactor this so URL is not hard-wired
     "<a href='http://www.cyber-dojo.com/kata/view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}' title='#{rung[:number]}' target='_blank'>" +
-      "<span class='#{colour} increment'></span>" +
-      '</a>'
+    "<span class='#{colour} increment'></span>" +
+    '</a>'
   end
   
   def one_rung(dojo_name, avatar_name, rung)
     [  
-      td(avatar_image(avatar_name, 60)),
+      td(avatar_image(avatar_name, 45)),
       traffic_light(dojo_name, avatar_name, rung),       
     ].join('')
   end

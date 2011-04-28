@@ -3,12 +3,12 @@
   <tr valign="top">
     <td>
       <div id="avatar_id">
-        <%= avatar_image(@avatar.name, 65) -%>
-        <%= @avatar.name.capitalize -%>
+        <%= avatar_image(@avatar.name, 65) -%>        
       </div>
 
-      <span class="small_title"><%= @kata.language -%></span>
+      <span class="small_title"><%= @avatar.name.capitalize -%></span>
       <span class="small_title"><%= @kata.name -%></span>
+      <span class="small_title"><%= @kata.language -%></span>
            
       <%= render :partial => 'fileops' -%>
       <%= render :partial => 'filenames' -%>
@@ -19,7 +19,7 @@
     <td rowspan=2>
       <%= render :partial => 'server_message' -%>
 
-      <span class="title">
+      <span class="small_title">
         <%= link_to "#{@dojo.name}", 
              { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
              { :class => "title", :target => "_blank" } -%>

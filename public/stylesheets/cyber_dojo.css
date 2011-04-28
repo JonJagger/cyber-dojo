@@ -71,14 +71,6 @@
   color: green;
 }
 
-.title
-{
-  display: block;
-  margin: 0.2em 0em 0.2em 0.2em; /* Top Right Bottom Left */
-  font-size: 1.1em;
-  color: green;
-}
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .file_op, .panel, div[class~="filename"]
@@ -220,7 +212,7 @@ input[type="checkbox"]:checked+img
 .increment
 {
   display: block;
-  margin-bottom: 2px;
+  margin: 2px 0px 0px 1px; /* Top Right Bottom Left */
   padding: 0.15em;
   width: 8px;
   height: 8px;
