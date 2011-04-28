@@ -228,8 +228,6 @@ private
       due = Time.mktime(*options[:next_rotation_at])
       if now > due
         # first avatar over the now-line, move prev/next forward 
-        # (it turns out to be simpler to do this when the first avatar)
-        # (rotates rather than try to do it when the last avatar rotates)
         options[:prev_rotation_at] = make_time(now)
         options[:next_rotation_at] = make_time(now + minutes_per_rotation * 60)
         options[:already_rotated] = [avatar_name]
@@ -242,7 +240,6 @@ private
       very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= seconds_per_heartbeat
       if !already_rotated && very_recent_rotation
         # another avatar over the line
-        # but don't re-rotate for the first avatar again
         options[:already_rotated] << avatar_name
         file_write(rotation_filename, options)
         return true

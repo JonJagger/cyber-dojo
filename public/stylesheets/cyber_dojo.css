@@ -11,7 +11,7 @@
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   cursor: pointer;
   padding: 4px;
-  background-color: #FFE4C4; 
+  background-color: #FEF5CA;
   text-decoration: none;
   font-weight: normal;
   color: #383838;
@@ -40,8 +40,14 @@
 }
 
 .light_tone { background-color: #FEF5CA; /* sandy */ }
-.mid_tone   { background-color: #FFE4C4; }
-.panel { padding: 0.5em; border: 1px solid lightgray; }
+.mid_tone   { background-color: #FEF5CA; }
+.panel 
+{ 
+  display: block;
+  padding: 1em;
+  border: 5px solid #FEF5CA;
+  background: Moccasin; /*PaleGoldenRod;*/
+}
 .notice { color: red; }
 
 #kata_info
@@ -84,7 +90,7 @@
 .file_op 
 { 
   padding: 4px; 
-  background-color: #FFE4C4;
+  background-color: #FEF5CA;
   cursor: pointer;
 } 
 .file_op_disabled
@@ -237,13 +243,13 @@ input[type="checkbox"]:checked+img
 
 #server_message_panel
 {
-  margin: 0em 0em 0em 1em; /* Top Right Bottom Left */
-  text-align: center;
-  width: 40em;
-  padding: 0 4em;
-  margin: 4em auto 0 auto;
-  border: 1px solid #ccc;
-  border-right-color: #999;
-  border-bottom-color: #999;
+  xmargin: 0em 0em 0em 1em; /* Top Right Bottom Left */
+  xtext-align: center;
+  xwidth: 40em;
+  xpadding: 0 4em;
+  xmargin: 4em auto 0 auto;
+  xborder: 1px solid #ccc;
+  xborder-right-color: #999;
+  xborder-bottom-color: #999;
 }
 

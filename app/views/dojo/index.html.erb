@@ -1,13 +1,13 @@
 
-<h1 align="center">CyberDojo - the Coding Gym</h1>
+<h1 align="center">CyberDojo</h1>
 <h3 align="center">Practising the <em>collaborative</em> game called software development</h3>
 
 <table valign="top" align="center">
 <tr>
 <td class="panel">
 CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to practice'">dojo</span>
-<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you write your code and tests in a simple editor inside a browser 
-<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;you click a button and the CyberDojo server runs your tests
+<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;write your code and tests in a simple editor inside a browser 
+<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;click a button and the CyberDojo server runs your tests
 <br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;that's it! <em>nothing</em> needs to be installed - try it now!
 </td>
 </tr>
@@ -15,50 +15,56 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
 <tr>
 <td class="panel">
       <form action="/dojo/new">
-        <div>Choose a name
+        <div>Choose your CyberDojo's name
+          <br/>
           <input type="text"
                  class="name_input"
                  name="dojo_name"
+                 size="15"
                  value="" />
-          and 
+          and
           <input type="submit"
                  class="main_button"
                  id="new_button"
                  name="new"
-                 value="Create" /> our CyberDojo.
+                 value="Configure It" />
           <% if flash[:new_notice] -%>
             <div class="notice"><%= flash[:new_notice] -%></div>
           <% end -%>
         </div>
       </form>
-      
+</td>
+</tr>
+<tr>
+<td class="panel">
       <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
       <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
-      Then, at <em>each</em> computer...
-        <div>type its name
+      Then, on <em>each</em> participating computer<br/> type in your CyberDojo's name
+        <div>
           <input type="text"
                  class="name_input"
                  name="dojo_name"
+                 size="15"
                  value="<%=@dojo_name-%>" />
-          and           
+          and         
           <input type="submit"
                  class="main_button"
                  name="enter"
                  id="enter_button"
-                 value="Enter" />
-          ,                 
+                 value="Start Coding" />
+          or 
           <input type="submit"
                  class="main_button"
                  name="reenter"
                  id="reenter_button"
-                 value="ReEnter" />
-          or                 
+                 value="Resume Coding" />
+          or
           <input type="submit"
                  class="main_button"
                  name="view"
                  id="view_button"
-                 value="View" />
-                 
+                 value="View Code" />
+      
           <% if flash[:enter_notice] -%>
             <div class="notice"><%= flash[:enter_notice] -%></div>
           <% end -%>
@@ -79,7 +85,7 @@ CyberDojo is designed to encourage <em>practising</em> and <em>collaborating</em
 </tr>
 
 <tr>
-<td>
+<td class="panel">
 Supports C, C++, C#, Java, Javascript, Objective C, Perl, PHP, Python, Ruby
 <br/>
 Video of the Roman Numerals kata in Ruby at <a href="http://vimeo.com/15104374" target="_blank">http://vimeo.com/15104374</a>.

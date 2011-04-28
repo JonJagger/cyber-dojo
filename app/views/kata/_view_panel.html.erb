@@ -2,16 +2,20 @@
 <table cellpadding="0">
   <tr valign="top">
     <td>
-      <div id="avatar_pair">
-        <%= avatar_image(@avatar.name, 65) -%> 
-        <%= avatar_image(@avatar.name, 65) -%>        
-      </div>
+      <div class="panel">
+        <div id="avatar_pair">
+          <%= avatar_image(@avatar.name, 65) -%>        
+        </div>
 
-      <span class="small_title"><%= @kata.language -%></span>
-      <span class="small_title"><%= @kata.name -%></span>
+        <span class="small_title"><%= @avatar.name.capitalize -%></span>      
+        <span class="small_title"><%= @kata.language -%></span>
+        <span class="small_title"><%= @kata.name -%></span>
+      </div>
            
-      <%= render :partial => 'fileops' -%>
-      <%= render :partial => 'filenames' -%>
+      <div class="panel">
+        <%= render :partial => 'fileops' -%>
+        <%= render :partial => 'filenames' -%>
+      </div>
     </td>
     <td>
       <%= render :partial => 'editor' -%>
@@ -24,10 +28,10 @@
   </tr>
   <tr valign="top">
     <td>
-      <table style="float:right;">
+      <table class="panel" xstyle="float:right;">
         <tr>
           <td>
-            <table style="float:right;">
+            <table style="float:left;">
               <tr>
                 <td>
                   <%= render :partial => 'prev_increment_button' -%>

@@ -19,7 +19,6 @@ int main(void)
     for (int at = 0; tests[at]; at++)
     {
         tests[at]();
-        putchar('.');
     }
     check_report();
     return 0;
