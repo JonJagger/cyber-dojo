@@ -24,7 +24,6 @@ class KataController < ApplicationController
     @increments = @avatar.read_manifest(@manifest, params[:tag])   
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    @outcome = @increments == [] ? '' : @increments.last[:outcome]
   end
   
   def edit
@@ -38,7 +37,6 @@ class KataController < ApplicationController
     @server_message = ""
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    @outcome = @increments == [] ? 'waiting' : @increments.last[:outcome]
   end
 
   def run_tests
@@ -49,7 +47,6 @@ class KataController < ApplicationController
     @increments = @avatar.run_tests(manifest)
     @output = manifest[:output]
     @dojo.ladder_update(@avatar.name, @increments.last)
-    @outcome = @increments.last[:outcome]
     respond_to do |format|
       format.js if request.xhr?
     end
