@@ -1,21 +1,14 @@
 
-<h1 align="center">CyberDojo</h1>
-<h3 align="center">Practising the <em>collaborative</em> game called software development</h3>
+<h1>CyberDojo</h1>
+<h3>Practising Coding <em>Collaboratively</em></h3>
 
-<table valign="top" align="center">
-<tr>
-<td class="panel">
-CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to practice'">dojo</span>
-<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;write your code and tests in a simple editor inside a browser 
-<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;click a button and the CyberDojo server runs your tests
-<br/>&nbsp;&nbsp;&nbsp;&bull;&nbsp;that's it! <em>nothing</em> needs to be installed - try it now!
-</td>
-</tr>
+<table>
 
 <tr>
 <td class="panel">
       <form action="/dojo/new">
         <div>Choose your CyberDojo's name
+          <br/>
           <br/>
           <input type="text"
                  class="name_input"
@@ -39,8 +32,12 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
 <td class="panel">
       <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
       <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
-      Then, on <em>each</em> participating computer<br/> type in your CyberDojo's name
+      
         <div>
+          Then, on <em>each</em> participating computer type in your CyberDojo's name
+          <br/>
+          <br/>
+        
           <input type="text"
                  class="name_input"
                  name="dojo_name"
@@ -68,37 +65,26 @@ CyberDojo is a browser-based coding-<span title="a dojo is simply 'a place to pr
           <% if flash[:enter_notice] -%>
             <div class="notice"><%= flash[:enter_notice] -%></div>
           <% end -%>
+          
+         <br/>
+         <br/>
+         The aim is to work <em>collectively</em> towards solutions on <em>all</em> computers
+          
         </div>
       </form>
       
 </td>
 </tr>
 
+
 <tr>
-<td class="panel">
-CyberDojo is designed to encourage <em>practising</em> and <em>collaborating</em>
-<br/>&nbsp;&bull;&nbsp;gather some geek friends, split into groups, two or more people per group
-<br/>&nbsp;&bull;&nbsp;allocate one computer to each group, point each computer's browser here
-<br/>&nbsp;&bull;&nbsp;every 5 minutes you will be asked to rotate keyboard drivers
-<br/>&nbsp;&bull;&nbsp;the aim is to work <em>collectively</em> towards working solutions on <em>all</em> computers
+<td>
+<%= link_to 'inFrequently Asked Questions', 
+  { :controller => :dojo, :action => :ifaq }, 
+  { :target => "_blank", :title => 'inFrequently Asked Questions' } 
+-%>
 </td>
 </tr>
 
-<tr>
-<td class="panel">
-Supports C, C++, C#, Java, Javascript, Objective C, Perl, PHP, Python, Ruby
-<br/>
-Video of the Roman Numerals kata in Ruby at <a href="http://vimeo.com/15104374" target="_blank">http://vimeo.com/15104374</a>.
-<br/>
-Open sourced on Github at <a href="http://github.com/JonJagger/cyberdojo" target="_blank">http://github.com/JonJagger/cyberdojo</a>.
-<br/>
-More information at <a href="http://jonjagger.blogspot.com/p/cyberdojo.html" target="_blank">http://jonjagger.blogspot.com/p/cyberdojo.html</a>.
-<br/>
-Conceived and implemented by <a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>.
-<br/>
-<%= link_to 'iFAQs', { :controller => :dojo, :action => :ifaq }, { :target => "_blank", :title => 'inFrequently Asked Questions' } -%>
- <a href="/images/avatars/big/AllAvatars.pdf" target="_blank" title="So you can print your own badges">Avatars PDF</a> 
-</td>
-</tr>
 </table>
 

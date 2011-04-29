@@ -146,7 +146,7 @@ class Dojo
     if closed
       ""
     elsif rotate(avatar_name)
-      "<h2>...ROTATE NOW. ..</h2>" +
+      "<h2>...Rotate Now Please...</h2>" +
       "<h2>Keyboard drivers please take a non-driver role,</h2>" +
       "<h2>either at the same computer or at a new computer.</h2>"
     else

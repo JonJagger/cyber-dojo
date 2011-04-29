@@ -2,7 +2,7 @@
 module LadderHelper
   
   def rungs(dojo, avatar_name) 
-    html = title(age_or_closed(dojo))
+    html = ''
     
     if @dojo.avatars.length == 1
       return html
@@ -22,14 +22,16 @@ module LadderHelper
       ladder << rung
     end   
     
-    html += '<table cellspacing="4">'
+    html += '<table cellspacing="6">'
     chunks = chunk_array(ladder, 8)
     chunks.each do |chunk|
-      html += '<tr>'
-      chunk.each do |rung|
-        html += one_rung(dojo.name, rung[:avatar], rung)
+      if chunk.length != 0
+        html += '<tr>'
+        chunk.each do |rung|
+          html += one_rung(dojo.name, rung[:avatar], rung)
+        end
+        html += '</tr>'
       end
-      html += '</tr>'
     end
     html += '</table>'
   end
@@ -79,8 +81,8 @@ module LadderHelper
   
   def one_rung(dojo_name, avatar_name, rung)
     [  
-      td(avatar_image(avatar_name, 45)),
       traffic_light(dojo_name, avatar_name, rung),       
+      td(avatar_image(avatar_name, 45)),
     ].join('')
   end
 

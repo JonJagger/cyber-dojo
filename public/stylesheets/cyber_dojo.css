@@ -1,3 +1,32 @@
+#center
+{
+  align: center;
+  width: 95%;
+  padding: 0em;
+  margin: 1em auto 0 auto;
+}
+
+#cyber_dojo_page
+{
+  text-align: left;
+  color: green;
+}
+
+h1 { font-size: 4em;   text-align: center; margin: 0; }
+h3 { font-size: 1.3em; text-align: center; margin: 0; }
+.light_tone { background-color: #FEF5CA; /* sandy */ }
+.mid_tone   { background-color: #FEF5CA; }
+.panel 
+{ 
+  display: block;
+  padding: 1em;
+  border: 5px solid #FEF5CA;
+  background: Moccasin;
+}
+.notice { color: red; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
 .name_input
 {
   font-size: 1.15em;
@@ -25,38 +54,13 @@
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#center
-{
-  align: center;
-  width: 95%;
-  padding: 0em;
-  margin: 1em auto 0 auto;
-}
-
-#cyber_dojo_page
-{
-  text-align: left;
-  color: green;
-}
-
-.light_tone { background-color: #FEF5CA; /* sandy */ }
-.mid_tone   { background-color: #FEF5CA; }
-.panel 
-{ 
-  display: block;
-  padding: 1em;
-  border: 5px solid #FEF5CA;
-  background: Moccasin; /*PaleGoldenRod;*/
-}
-.notice { color: red; }
-
 #kata_info
 {
   overflow-y: scroll;
   font-family: monospace;
   font-size: 10pt;
-  color: white;
-  background-color: #686868;
+  color: green;
+  background-color: #FEF5CA;
 }
 
 .choose_title
@@ -177,23 +181,25 @@ input[type="checkbox"]:checked+img
   padding-left: 3px;
   margin-right: 10px;
   margin-left: 40px; /* enough for line-numbers */
-  font-family: monospace;
-  color: white;
-  background-color: #686868;
+  xfont-family: monospace;
+  font-weight: normal;
+  color: #383838;;
+  background-color: CornSilk;
+  border: 1px dashed lightgray;
 }
 
 .textarea_with_line_numbers
 {
   border-right: none;
   display: block;
-  color: #686868;
-  background: #aaa;
+  background: #FEF5CA;
+  color: gray;
 }
 
 #avatar_id
 {
-    white-space: nowrap;
-    margin-left: 0.3em;
+  white-space: nowrap;
+  margin-left: 0.3em;
 }
 
 #output 
@@ -201,6 +207,7 @@ input[type="checkbox"]:checked+img
   margin-top: 0.5em;
   padding: 0.5em;
   border: 2px solid;
+  background-color: CornSilk;
 }
 
 #output.failed { border-color: #F33; } /* red */
