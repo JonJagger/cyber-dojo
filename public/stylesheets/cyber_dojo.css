@@ -4,6 +4,7 @@
   width: 95%;
   padding: 0em;
   margin: 1em auto 0 auto;
+  background: GhostWhite;
 }
 
 #cyber_dojo_page
@@ -14,13 +15,13 @@
 
 h1 { font-size: 4em;   text-align: center; margin: 0; }
 h3 { font-size: 1.3em; text-align: center; margin: 0; }
-.light_tone { background-color: #FEF5CA; /* sandy */ }
-.mid_tone   { background-color: #FEF5CA; }
+.mid_tone   { background-color: CornSilk; }
 .panel 
 { 
   display: block;
   padding: 1em;
   background: Moccasin;
+  border: 4px solid GhostWhite;
 }
 .notice { color: red; }
 
@@ -39,7 +40,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   cursor: pointer;
   padding: 4px;
-  background-color: #FEF5CA;
+  background-color: CornSilk;
   text-decoration: none;
   font-weight: normal;
   color: #383838;
@@ -59,7 +60,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
   font-family: monospace;
   font-size: 10pt;
   color: green;
-  background-color: #FEF5CA;
+  background-color: Moccasin;
 }
 
 .choose_title
@@ -93,7 +94,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 .file_op 
 { 
   padding: 4px; 
-  background-color: #FEF5CA;
+  background-color: CornSilk;
   cursor: pointer;
 } 
 .file_op_disabled
@@ -155,7 +156,7 @@ input[type="checkbox"]:checked+label
 
 input[type="checkbox"]+img
 {
-	border: 2px solid #FEF5CA;;
+	border: 2px solid Moccasin;;
 }
 
 input[type="checkbox"]:checked+img
@@ -176,14 +177,14 @@ input[type="checkbox"]:checked+img
 #editor
 {
   overflow: auto;
-  padding: 0;
   padding-left: 3px;
-  margin-right: 10px;
+  margin-top: 5px;
+  margin-right: 5px;
   margin-left: 40px; /* enough for line-numbers */
   font-family: monospace;
   font-weight: normal;
   color: #383838;;
-  background-color: CornSilk; /*#FFE4B5; /*Beige; /*Moccasin; /*Bisque; /*CornSilk;*/
+  background-color: CornSilk;
   border: 1px dashed lightgray;
 }
 
@@ -191,7 +192,7 @@ input[type="checkbox"]:checked+img
 {
   border-right: none;
   display: block;
-  background: #FEF5CA;
+  background: GhostWhite;
   color: gray;
   font-weight: normal;
 }
@@ -207,13 +208,13 @@ input[type="checkbox"]:checked+img
   margin-top: 0.5em;
   margin-left: 40px; /* to match line-numbers */
   padding: 0.5em;
-  border: 1px solid;
+  border: 1px dashed;
   background-color: CornSilk;
   width: 53em;
 }
 
 #output.failed { border-color: #F33; } /* red */
-#output.error  { border-color: #FF0; } /* ammber */
+#output.error  { border-color: #FC3; } /* ammber */
 #output.passed { border-color: #3C3; } /* green */
 #output.waiting{ border-color: #A8A8A8; } /* darkish gray */ }
 
@@ -221,7 +222,7 @@ input[type="checkbox"]:checked+img
 
 .traffic_light
 {
-  background-color: #FEF5CA;
+  background-color: Moccasin; /*Moccasin;*/
 }
 
 .increment
