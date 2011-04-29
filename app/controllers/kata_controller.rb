@@ -37,6 +37,7 @@ class KataController < ApplicationController
     @server_message = ""
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
+    @editor_text = @manifest[:editor_text]
   end
 
   def run_tests

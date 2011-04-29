@@ -1,33 +1,25 @@
 #include "untitled.hpp"
-#include <cassert>
-#include <iostream>
+#include "check.h"
 
-#define ASSERT(x)   assert(x)
-
-static void an_example_test()
+static void example(void)
 {
-    int expected = 9 * 6;
-    int actual = answer();
-    ASSERT(expected == actual);
+    CHECK_NE(int, 9 * 6, answer());
+    CHECK_EQ(int, 9 * 6, answer());
 }
 
-typedef void test_function();
+typedef void test(void);
 
-static test_function * tests[] =
+static test * tests[] =
 {
-    an_example_test,
-    0
+    example,
 };
 
-int main()
+int main(void)
 {
-    int at;
-    for (at = 0; tests[at]; at++)
-    {
-        tests[at]();
-        std::cout << '.';
-    }
-    std::cout << std::endl << at;
+    check_log = stderr;
+    RUN_ALL(tests);
+    check_log_print();
     return 0;
 }
+
 

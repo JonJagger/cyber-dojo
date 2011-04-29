@@ -16,8 +16,10 @@ static test * tests[] =
 
 int main(void)
 {
+    check_log = stderr;
     RUN_ALL(tests);
-    check_report();
+    check_log_print();
     return 0;
 }
+
 

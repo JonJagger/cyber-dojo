@@ -39,7 +39,8 @@ class Avatar
           TestRunner.save_file(sandbox, filename, file)
         end
 
-        kata.manifest[:output] = welcome_text
+        kata.manifest[:output] = initial_output_text()
+        kata.manifest[:editor_text] = initial_editor_text
         kata.manifest[:current_filename] = 'instructions'
         kata.manifest.delete(:hidden_filenames)
         kata.manifest.delete(:hidden_pathnames)
@@ -76,6 +77,7 @@ class Avatar
       manifest[:visible_files] = read_manifest[:visible_files]
       manifest[:current_filename] = read_manifest[:current_filename]
       manifest[:output] = read_manifest[:output]
+      manifest[:editor_text] = read_manifest[:editor_text]
       incs = eval IO.popen("cd #{folder};git show #{tag}:#{increments_filename} 2>&1").read
     end    
   end
@@ -134,14 +136,43 @@ private
     Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
 
-  def welcome_text
-    [ '       Click the radio-buttons on the left to open files in the editor.',
-      "<----- Click this 'play' button to run the tests on the CyberDojo server",
-      '       (execute cyberdojo.sh). The run-tests output is displayed here.',
+  def initial_editor_text
+    [
+'',
+'',
+'',
+'',
+" <----- This is the #{@name.capitalize} computer.",
+'',
+'',
+"                                         Every computer's status ---->",
+'                                         is periodically updated',
+'                                         here.',
+'',
+' <----- Click these to create new files,',
+'        rename files, and delete files.',
+'',
+'',
+'',
+' <----- Click a filename to edit it.',
+'        It will appear here.',      
+        ].join("\n")      
+  end
+  
+  def initial_output_text
+    [ 
       '',
-      '          a red traffic light means the tests ran but one or more failed',
-      '          a yellow traffic-light means the tests could not be run',
-      '          a green traffic-light means the tests ran and all passed',
+      '',
+      '',
+      "<----- Click this 'play' button to run the tests.",
+      '       The test output will appear here.',
+      '',
+      '',
+      '<----- A traffic light will also apppear:',
+      '',
+      '          (o) red    - the tests ran but one or more failed',
+      '          (o) yellow - the tests could not be run',
+      '          (o) green  - the tests ran and all passed',
       '',
     ].join("\n")
   end
