@@ -1,10 +1,14 @@
+body 
+{
+  background: GhostWhite;
+}
+
 #center
 {
   align: center;
   width: 95%;
   padding: 0em;
   margin: 1em auto 0 auto;
-  background: GhostWhite;
 }
 
 #cyber_dojo_page

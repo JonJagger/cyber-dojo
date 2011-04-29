@@ -1,25 +1,22 @@
 #include "untitled.h"
 #include "check.h"
 
-static void an_example_test(void)
+static void example(void)
 {
+    CHECK_NE(int, 9 * 6, answer());
     CHECK_EQ(int, 9 * 6, answer());
 }
 
-typedef void test_function(void);
+typedef void test(void);
 
-static test_function * tests[] =
+static test * tests[] =
 {
-    an_example_test,
-    0
+    example,
 };
 
 int main(void)
 {
-    for (int at = 0; tests[at]; at++)
-    {
-        tests[at]();
-    }
+    RUN_ALL(tests);
     check_report();
     return 0;
 }
