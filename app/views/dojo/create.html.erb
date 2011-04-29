@@ -45,6 +45,8 @@ function setAll(name, size, to)
 {
   for (at = 0; at != size; at = at + 1)
     $(name + '_' + at).checked = to;
+  if (name == 'kata')
+    showKataInstructions();
   setSaveButtonState();
 }
 
@@ -136,7 +138,8 @@ function showKataInstructions()
                to view its instructions
             </textarea>
           </td>
-          <td valign="top">
+          <td>&nbsp;</rd>
+          <td>
             <div class="choose_title">Kata?</div>
             <span onclick='setAll("kata", "<%= @katas.length -%>", true);'>
               <input type="button" class="button" name="selectAllKatas" value="Select-All" />

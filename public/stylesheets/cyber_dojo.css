@@ -19,7 +19,7 @@ body
 
 h1 { font-size: 4em;   text-align: center; margin: 0; }
 h3 { font-size: 1.3em; text-align: center; margin: 0; }
-.mid_tone   { background-color: CornSilk; }
+.mid_tone { background-color: CornSilk; }
 .panel 
 { 
   display: block;
@@ -60,7 +60,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 
 #kata_info
 {
-  overflow-y: scroll;
+  overflow-y: auto;
   font-family: monospace;
   font-size: 10pt;
   color: green;
