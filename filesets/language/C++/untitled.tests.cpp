@@ -3,7 +3,6 @@
 
 static void example(void)
 {
-    CHECK_NE(int, 9 * 6, answer());
     CHECK_EQ(int, 9 * 6, answer());
 }
 

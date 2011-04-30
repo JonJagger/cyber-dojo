@@ -19,7 +19,7 @@ class LanguageFileSetTests < ActionController::TestCase
     }
   end
   
-  def test_that_initial_fileset_for_all_languages_is_green_passed
+  def test_that_initial_fileset_for_all_languages_is_red_failed
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
@@ -29,60 +29,60 @@ class LanguageFileSetTests < ActionController::TestCase
       manifest = {}
       avatar.read_manifest(manifest)
       increments = avatar.run_tests(manifest)
-      info = avatar.name + ', ' + language + ', green'
-      assert_equal :passed, increments.last[:outcome], info
-      p language + ', green(:passed) as expected'      
-    end
-  end
-
-  Test_files = { 
-    'C' => 'untitled.tests.c',
-    'C#' => 'UntitledTest.cs',
-    'C++' => 'untitled.tests.cpp',
-    'Java' => 'UntitledTest.java',
-    'Javascript' => 'untitled_test.js',
-    'Objective C' => 'untitled_tests.m',
-    'Perl' => 'untitled.t',
-    'PHP' => 'UntitledTest.php',
-    'Python' => 'test_untitled.py',
-    'Ruby' => 'test_untitled.rb'
-    
-  }
-  
-  def test_that_altering_42_to_41_for_all_languages_is_red_failed
-    root_test_folder_reset
-    params = make_params
-    assert Dojo::create(params)
-    dojo = Dojo.new(params)
-    
-    Test_files.each do |language,filename|
-      avatar = Avatar.new(dojo, nil, { 'language' => language })
-      info = avatar.name + ', ' + language
-      manifest = {}
-      avatar.read_manifest(manifest)
-      test_code = manifest[:visible_files][filename][:content]
-      manifest[:visible_files][filename][:content] = test_code.sub('42', '41')
-      increments = avatar.run_tests(manifest)
-      assert_equal :failed, increments.last[:outcome], info  + ', red'
+      info = avatar.name + ', ' + language + ', red'
+      assert_equal :failed, increments.last[:outcome], info + ', red,' + manifest[:output]
       p language + ', red(:failed) as expected'      
     end
   end
+
+  Code_files = { 
+    'C' => 'untitled.c',
+    'C#' => 'Untitled.cs',
+    'C++' => 'untitled.cpp',
+    'Java' => 'Untitled.java',
+    'Javascript' => 'untitled.js',
+    'Objective C' => 'untitled.m',
+    'Perl' => 'untitled.perl',
+    'PHP' => 'Untitled.php',
+    'Python' => 'untitled.py',
+    'Ruby' => 'untitled.rb'
     
-  def test_that_altering_42_to_4s1_for_all_languages_is_amber_error
+  }
+  
+  def test_that_altering_42_to_54_for_all_languages_is_green_passed
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
     
-    Test_files.each do |language,filename|
+    Code_files.each do |language,filename|
       avatar = Avatar.new(dojo, nil, { 'language' => language })
       info = avatar.name + ', ' + language
       manifest = {}
       avatar.read_manifest(manifest)
       test_code = manifest[:visible_files][filename][:content]
-      manifest[:visible_files][filename][:content] = test_code.sub('42', '4s1')
+      manifest[:visible_files][filename][:content] = test_code.sub('42', '54')
       increments = avatar.run_tests(manifest)
-      assert_equal :error, increments.last[:outcome], info  + ', amber'
+      assert_equal :passed, increments.last[:outcome], info  + ', green,' + manifest[:output]
+      p language + ', green(:passed) as expected'      
+    end
+  end
+    
+  def test_that_altering_42_to_4typo2_for_all_languages_is_amber_error
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    
+    Code_files.each do |language,filename|
+      avatar = Avatar.new(dojo, nil, { 'language' => language })
+      info = avatar.name + ', ' + language
+      manifest = {}
+      avatar.read_manifest(manifest)
+      test_code = manifest[:visible_files][filename][:content]
+      manifest[:visible_files][filename][:content] = test_code.sub('42', '4typo2')
+      increments = avatar.run_tests(manifest)
+      assert_equal :error, increments.last[:outcome], info  + ', amber,' + manifest[:output]
       p language + ', amber(:error) as expected'      
     end
   end
