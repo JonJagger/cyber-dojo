@@ -8,23 +8,60 @@
   <title>The page you were looking for doesn't exist (404)</title>
 	<style type="text/css">
 		body { background-color: #fff; color: #666; text-align: center; font-family: arial, sans-serif; }
-		div.dialog {
-			width: 25em;
-			padding: 0 4em;
-			margin: 4em auto 0 auto;
-			border: 1px solid #ccc;
-			border-right-color: #999;
-			border-bottom-color: #999;
+		#center {
+		  align: center;
+      width: 95%;
+      padding: 0em;
+      margin: 1em auto 0 auto;
 		}
-		h1 { font-size: 100%; color: #f00; line-height: 1.5em; }
 	</style>
 </head>
 
 <body>
-  <!-- This file lives in public/404.html -->
-  <div class="dialog">
-    <h1>The page you were looking for doesn't exist.</h1>
-    <p>You may have mistyped the address or the page may have moved.</p>
+
+  <% avatars = Avatar.names.shuffle -%>
+  <% size = 120 -%>
+  
+  <!-- This file lives in public/500.html -->
+  <div id="center">
+    <table align="center">
+      <tr>
+        <td><%= avatar_image(avatars[0],size) -%></td>
+        <td><%= avatar_image(avatars[1],size) -%></td>
+        <td><%= avatar_image(avatars[2],size) -%></td>
+        <td><%= avatar_image(avatars[3],size) -%></td>
+        <td><%= avatar_image(avatars[4],size) -%></td>
+      </tr>
+      <tr>
+        <td><%= avatar_image(avatars[5],size) -%></td>
+        <td><%= avatar_image(avatars[6],size) -%></td>
+        <td><%= avatar_image(avatars[7],size) -%></td>
+        <td><%= avatar_image(avatars[8],size) -%></td>
+        <td><%= avatar_image(avatars[9],size) -%></td>
+      </tr>
+      <tr>
+        <td><%= avatar_image(avatars[10],size) -%></td>
+        <td><%= avatar_image(avatars[11],size) -%></td>
+        <td>Page<br/>not<br/>found</td>
+        <td><%= avatar_image(avatars[12],size) -%></td>
+        <td><%= avatar_image(avatars[13],size) -%></td>
+      </tr>
+      <tr>
+        <td><%= avatar_image(avatars[14],size) -%></td>
+        <td><%= avatar_image(avatars[15],size) -%></td>
+        <td><%= avatar_image(avatars[16],size) -%></td>
+        <td><%= avatar_image(avatars[17],size) -%></td>
+        <td><%= avatar_image(avatars[18],size) -%></td>
+      </tr>
+      <tr>
+        <td><%= avatar_image(avatars[19],size) -%></td>
+        <td><%= avatar_image(avatars[20],size) -%></td>
+        <td><%= avatar_image(avatars[21],size) -%></td>
+        <td><%= avatar_image(avatars[22],size) -%></td>
+        <td><%= avatar_image(avatars[23],size) -%></td>
+      </tr>
+    </table>      
   </div>
 </body>
-</html>
+</html>  
+  
