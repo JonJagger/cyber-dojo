@@ -48,7 +48,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 .button      { font-size: 1em; } 
 .main_button { font-size: 1.35em; }
 
-.main_button[disabled]
+.main_button[disabled], .button[disabled]
 {
   border-radius: 6px;
   -moz-border-radius: 6px;

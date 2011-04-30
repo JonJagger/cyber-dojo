@@ -15,7 +15,7 @@ document.observe('dom:loaded', function()
                               :dojo_name => @dojo.name,
                               :avatar => @avatar.name
                             }, 
-                   
+
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
                    <!-- NB: not :loading and not :after -->
