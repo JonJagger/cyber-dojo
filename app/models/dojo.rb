@@ -17,7 +17,6 @@ class Dojo
   
   def self.duration_choices
     [
-      { :mins => 2, :label => "2 mins", :checked => "" },
       { :mins => 20, :label => "20 mins", :checked => "" },
       { :mins => 40, :label => "40 mins", :checked => "" },
       { :mins => 60, :label => "1 hour",  :checked => "checked" },
