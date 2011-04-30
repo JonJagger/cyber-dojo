@@ -5,7 +5,7 @@ document.observe('dom:loaded', function()
   rebuildFilenameList();
   createTextAreaWithLineNumbers('editor');
   TabEntry.enable('editor');
-  //loadFile("<%=@current_file-%>");
+  loadFile("<%=@current_file-%>");
 });
 //--></script>
 
@@ -15,8 +15,10 @@ document.observe('dom:loaded', function()
                               :dojo_name => @dojo.name,
                               :avatar => @avatar.name
                             }, 
+                   
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
+                   <!-- NB: not :loading and not :after -->
 
   <%= render :partial => 'edit_panel' -%>
   <%= render :partial => 'hidden_file_contents' -%>

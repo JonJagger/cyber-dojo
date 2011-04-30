@@ -41,7 +41,6 @@ class Avatar
 
         kata.manifest[:output] = initial_output_text()
         kata.manifest[:editor_text] = initial_editor_text
-        kata.manifest[:current_filename] = 'instructions'
         kata.manifest.delete(:hidden_filenames)
         kata.manifest.delete(:hidden_pathnames)
         file_write(pathed(manifest_filename), kata.manifest)
@@ -138,25 +137,25 @@ private
 
   def initial_editor_text
     [
-'',
-'',
-'',
-'',
-" <----- This is the #{@name.capitalize} computer.",
-'',
-'',
-"                                         Every computer's status ---->",
-'                                         is periodically updated',
-'                                         here.',
-'',
-' <----- Click these to create new files,',
-'        rename files, and delete files.',
-'',
-'',
-'',
-' <----- Click a filename to edit it.',
-'        It will appear here.',      
-        ].join("\n")      
+      '',
+      '',
+      '',
+      '',
+      " <----- This is the #{@name.capitalize} computer.",
+      '',
+      '',
+      "                                     The status of all computers ---->",
+      '                                     periodically updates here.',
+      '',
+      '',
+      '',
+      ' <----- Click these to create new files,',
+      '        rename files, and delete files.',
+      '',
+      '',
+      ' <----- Click a filename to edit it.',
+      '        It will appear here.',      
+    ].join("\n")      
   end
   
   def initial_output_text
@@ -164,11 +163,10 @@ private
       '',
       '',
       '',
-      "<----- Click this 'play' button to run the tests.",
-      '       The test output will appear here.',
+      ' <----- Click Run Tests to start. The output will appear here.',
       '',
       '',
-      '<----- A traffic light will also apppear:',
+      ' <----- A traffic light will also apppear:',
       '',
       '          (o) red    - the tests ran but one or more failed',
       '          (o) yellow - the tests could not be run',

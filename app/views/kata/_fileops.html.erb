@@ -1,4 +1,34 @@
 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var dojo_closed = disableRunTestsButtonIf("<%=@dojo.readonly-%>");
+
+function disableRunTestsButtonIf(closed)
+{
+  // Why is this here?
+  // I wasted time thinking I could update the status of
+  // the Run Tests button directly via a partial in
+  // heartbeat.js.rjs
+  // But I can't. The reason is that when you press the
+  // Run Tests button it is hidden and the spinner shown.
+  // I want the spinner to remain visibly spinning until 
+  // the run-tests comes back from the server. And a partial
+  // in heartbeat.js.rjs could easily hide the spinner (and
+  // reshow the Run Tests button) well before the run-tests
+  // result had come back from the server.
+  
+  rtb = $('run_tests_button');
+  if (rtb && closed == "true") 
+  {
+    rtb.disabled = true;
+    $('editor').setAttribute('readonly', 'readonly');    
+  }
+  return closed;
+}
+//--></script>
+
+
 <div id="fileops">
 
 <% size=30 -%>

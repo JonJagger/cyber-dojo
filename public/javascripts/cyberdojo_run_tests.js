@@ -1,30 +1,25 @@
 
-function runTests() 
-{	
-  $('play_button').click();
-}
-
 function preRunTests()
 {
-  // app/views/kata/view.html.erb
+  // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
-  //                 :before   => "preRunTests();",
+  //                 :before => "preRunTests();",
+  $('run_tests').hide();
+  $('spinner').show();
   $('output').setAttribute('class', 'waiting');
-	$('output').value = "Running tests...";
+  $('output').value = "Running tests...";
   saveCurrentFile();
-  $('play_button').hide();
-  $('run_tests_spinner').show();
 }
 
 function postRunTests()
-{
-  // app/views/kata/view.html.erb
+{ 
+  // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
-  $('play_button').show();
   // new increment could affect layout
   refreshLineNumbering();
   $('editor').focus();
-  $('run_tests_spinner').hide();
+  $('spinner').hide();
+  $('run_tests').show();
 }
 

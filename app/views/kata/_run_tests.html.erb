@@ -1,0 +1,19 @@
+
+<div id="run_tests">
+  <input type="submit"
+         <% if @dojo.closed -%>
+         disabled
+         <% end -%>
+         class="main_button"
+         value="Run Tests"
+         name="run_tests_button"
+         id="run_tests_button"/>
+</div>
+
+<div id="spinner" 
+     style='display:none'>
+   <img src="/images/spinner.gif"          
+        width="36" 
+        height="36"/>
+</div>
+

@@ -11,7 +11,7 @@ module TestRunner
     # Run tests in sandbox in dedicated thread
     run_tests_output = ''
     sandbox_thread = Thread.new do
-      # o) run cyberdojo.sh, capturing stdout _and_ stderr    
+      # o) run cyberdojo.sh, capturing stdout and stderr    
       # o) popen runs its command as a subprocess
       # o) splitting and joining on "\n" removes any operating 
       #    system differences regarding new-line conventions
@@ -29,7 +29,7 @@ module TestRunner
     # an infinite loop and kill the thread
     if sandbox_thread.status != false 
       sandbox_thread.kill 
-      run_tests_output = "execution terminated after #{kata.max_run_tests_duration} seconds"
+      run_tests_output = "Execution terminated after #{kata.max_run_tests_duration} seconds"
     end
 
     run_tests_output

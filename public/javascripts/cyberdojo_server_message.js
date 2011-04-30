@@ -1,4 +1,10 @@
 
+function seconds(n)
+{
+    var milliSeconds = 1000;
+    return n * milliSeconds;
+}
+
 function showServerMessage(message)
 {
   if (message != "")
@@ -8,9 +14,7 @@ function showServerMessage(message)
     $('server_message_content').innerHTML = message;
     $('server_message_panel').show();
   
-    var milliSeconds = 1;
-    var oneSecond = 1000 * milliSeconds;
-    setTimeout( function() { hideServerMessage(); }, 10 * oneSecond);
+    setTimeout( function() { hideServerMessage(); }, seconds(10));
   }  
 }
 

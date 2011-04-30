@@ -2,5 +2,4 @@
 page.replace 'ladder', :partial => 'ladder'
 page.replace 'server_message', :partial => 'server_message'
 page.replace 'fileops', :partial => 'fileops'
-page.replace 'play', :partial => 'play'
 
