@@ -5,6 +5,43 @@
 var languageCount = "<%=@languages.length-%>";
 var kataCount = "<%=@katas.length-%>";
 
+function selectRadio(name, index)
+{
+  $(name + '_' + index).checked = true;
+}
+
+function toggleAll(name, size)
+{
+  var current = $(name + '_all').checked;
+
+  for (at = 0; at != size; at = at + 1)
+    $(name + '_' + at).checked = current;
+  if (name == 'kata')
+    showKataInstructions();
+  setSaveButtonState();  
+}
+
+
+function toggleSelection(name, index, size, choice)
+{
+  var current = $(name + '_' + index).checked;
+  $(name + '_' + index).checked = !current; 
+  
+  if (name == 'kata')
+  {     
+    if (current)
+      showKataInstructions();
+    else
+      $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
+  }
+  setSaveButtonState();
+}
+
+function setSaveButtonState()
+{
+  $('save_button').disabled = !kataSelected() || !languageSelected();
+}
+
 function languageSelected()
 {
   for (at = 0; at != languageCount; at = at + 1)
@@ -19,40 +56,6 @@ function kataSelected()
     if ($('kata_' + at).checked)
       return true;
   return false;
-}
-
-function selectRadio(name, index)
-{
-  $(name + '_' + index).checked = true;
-}
-
-function toggleSelection(name, index, size, choice)
-{
-  var current = $(name + '_' + index).checked;
-  $(name + '_' + index).checked = !current; 
-  
-  if (name == 'kata')
-  {     
-    if (current)
-      showKataInstructions();
-    else
-      $('kata_info').value = $('kata[' + choice + ']').value;
-  }
-  setSaveButtonState();
-}
-
-function setAll(name, size, to)
-{
-  for (at = 0; at != size; at = at + 1)
-    $(name + '_' + at).checked = to;
-  if (name == 'kata')
-    showKataInstructions();
-  setSaveButtonState();
-}
-
-function setSaveButtonState()
-{
-  $('save_button').disabled = !kataSelected() || !languageSelected();
 }
 
 function showKataInstructions()
@@ -75,19 +78,20 @@ function showKataInstructions()
 <input type="hidden"
        name="dojo_name" 
        id="dojo_name" 
-       value="<%=h @dojo.name-%>" />
+       value="<%=@dojo.name-%>" />
 
-<h1>CyberDojo: <%= @dojo.name -%></h1>
+<h1>CyberDojo: <%=@dojo.name-%></h1>
 
 <table>
-  <tr>
-    <td>
-      <table class="panel">
+  <tr>  
+    <td class="panel">
+      <table >
         <tr>
           <td>
-            <span class="choose_title">Duration?</span>
+            <span class="choose_title">Duration</span>
             <% @durations.each_with_index do |choice,index| -%>
-              <span onclick='selectRadio("duration","<%=index-%>");'>
+              <span class="mid_tone fileset"
+                    onclick='selectRadio("duration","<%=index-%>");'>
                 <input id="duration_<%=index-%>" 
                        type="radio" 
                        name="duration" 
@@ -102,13 +106,14 @@ function showKataInstructions()
       </table>
     </td>
 
-    <td>
-      <table class="panel">
+    <td class="panel">
+      <table>
         <tr>
           <td>
-            <span class="choose_title">Rotation?</span>
+            <span class="choose_title">Rotation</span>
             <% @rotations.each_with_index do |choice,index| -%>
-              <span onclick='selectRadio("rotation","<%=index-%>");'>
+              <span class="mid_tone fileset"
+                    onclick='selectRadio("rotation","<%=index-%>");'>
                 <input id="rotation_<%=index-%>" 
                        type="radio" 
                        name="rotation" 
@@ -132,6 +137,32 @@ function showKataInstructions()
       <table class="panel">
         <tr>
           <td>
+            <div>
+              <span class="choose_title">Katas</span>
+            </div>
+            
+            <span style="margin-left: 0.25em">
+              <input id="kata_all"
+                     type="checkbox"
+                     onclick='toggleAll("kata", "<%=@katas.length-%>");'
+                     value="" />
+            </span>
+            
+            <% @katas.each_with_index do |choice,index| -%>
+              <div class="mid_tone fileset" 
+                   onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'>
+                <input id="kata_<%=index-%>" 
+                       type="checkbox" 
+                       onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
+                       name="kata[<%=index-%>]" 
+                       value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+            
+          </td>
+          <td>&nbsp;</rd>
+          <td>
             <textarea name="kata_info" 
                       id="kata_info"
                       cols="62" 
@@ -145,47 +176,30 @@ function showKataInstructions()
                Select a Kata from the list ---&gt;
                to view its instructions
             </textarea>
-          </td>
-          <td>&nbsp;</rd>
-          <td>
-            <div class="choose_title">Kata?</div>
-            <span onclick='setAll("kata", "<%= @katas.length -%>", true);'>
-              <input type="button" class="button" name="selectAllKatas" value="Select-All" />
-            </span>
-            <span onclick='setAll("kata", "<%= @katas.length -%>", false);'>            
-              <input type="button" class="button" name="clearAllKatas" value="Clear-All" />
-            </span>           
-            <% @katas.each_with_index do |choice,index| -%>
-              <div onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'>
-                <input id="kata_<%=index-%>" 
-                       type="checkbox" 
-                       onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
-                       name="kata[<%=index-%>]" 
-                       value="<%=choice-%>" />
-                <label><%= choice -%></label>
-              </div>    
-            <% end -%>    
           </td>          
         </tr>
       </table>
-        &nbsp;&nbsp;Each participating computer entering your CyberDojo will be randomly
+        &nbsp;&nbsp;Each computer entering your CyberDojo will be randomly
         <br/>
-        &nbsp;&nbsp;assigned a kata and language from those selected.
+        &nbsp;&nbsp;assigned a kata and a language from those selected.
       
     </td>
     <td valign="top">
       <table class="panel">
         <tr>
           <td>
-            <div class="choose_title">Language?</div>
-            <span onclick='setAll("language", "<%= @languages.length -%>", true);'>            
-              <input type="button" class="button" name="selectAllLanguages" value="Select-All" />
+            <div class="choose_title">Languages</div>
+
+            <span style="margin-left: 0.25em">
+              <input id="language_all"
+                     type="checkbox"
+                     onclick='toggleAll("language", "<%=@languages.length-%>");'
+                     value="" />
             </span>
-            <span onclick='setAll("language", "<%= @languages.length -%>", false);'>            
-              <input type="button" class="button" name="clearAllLanguages" value="Clear-All" />
-            </span>
+
             <% @languages.each_with_index do |choice,index| -%>
-              <div onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'>
+              <div class="mid_tone fileset"
+                   onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'>
                 <input id="language_<%=index-%>" 
                        type="checkbox" 
                        onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'

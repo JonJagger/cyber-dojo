@@ -15,8 +15,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 .mid_tone { background-color: CornSilk; }
 .panel 
 { 
-  display: block;
-  padding: 1em;
+  padding: 0.7em;
   background: #FFECCB;
   border: 4px solid GhostWhite;
 }
@@ -72,16 +71,17 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
   font-size: 10pt;
   color: green;
   background-color: CornSilk;
+  border: 1px dashed lightgray;
+  padding: 5px;
 }
 
 .choose_title
 {
   text-align: left;
-  font-size: 1.5em;
-  font-weight: bold;
+  font-size: 1.3em;
   font-style: italic;
-  margin-left: 1em;
-  margin-bottom: 0.5em;
+  margin-left: 0.3em;
+  margin-bottom: 0.3em;
 }
 
 .small_title
@@ -92,9 +92,11 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
   color: green;
 }
 
+.select_all_clear_all { padding-bottom: 0.5em; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.file_op, .panel, div[class~="filename"]
+.file_op, .panel, div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
 { 
   border-radius: 6px;
   -moz-border-radius: 6px;
@@ -125,18 +127,18 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 
 .file_op_name { font-size: 9pt; color: #383838; }
 
-.file_op, div[class~="filename"]
+.file_op, div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
 {
   color: #383838;
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8; 
 }
 
-div[class~="filename"]
+div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
 {
   margin: 0.25em;
   padding-right: 0.5em;
-  color: #383838;
+  color: #383838; 
   font-size: 11pt;
   cursor: pointer;
   white-space: nowrap;
@@ -144,9 +146,8 @@ div[class~="filename"]
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-input[type="radio"]:checked+label,
-
-input[type="checkbox"]:checked+label { font-weight: bold; }
+input[type="radio"]:checked+label, 
+input[type="checkbox"]:checked+label { color: green; }
 
 input[type="checkbox"]+img { border: 2px solid #FFECCB; }
 
