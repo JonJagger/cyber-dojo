@@ -25,13 +25,11 @@ module LadderHelper
     html += '<table cellspacing="6">'
     chunks = chunk_array(ladder, 8)
     chunks.each do |chunk|
-      if chunk.length != 0
-        html += '<tr>'
-        chunk.each do |rung|
-          html += one_rung(dojo.name, rung[:avatar], rung)
-        end
-        html += '</tr>'
+      html += '<tr>'
+      chunk.each do |rung|
+        html += one_rung(dojo.name, rung[:avatar], rung)
       end
+      html += '</tr>'
     end
     html += '</table>'
   end
