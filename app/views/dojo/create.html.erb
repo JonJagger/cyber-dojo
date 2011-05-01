@@ -5,55 +5,51 @@
 var languageCount = "<%=@languages.length-%>";
 var kataCount = "<%=@katas.length-%>";
 
-function selectRadio(name, index)
-{
+function selectRadio(name, index) {
   $(name + '_' + index).checked = true;
 }
 
-function toggleAll(name, size)
-{
+function toggleAll(name, size) {
   var current = $(name + '_all').checked;
-
-  for (at = 0; at != size; at = at + 1)
+  for (at = 0; at !== size; at += 1) {
     $(name + '_' + at).checked = current;
+  }
   setSaveButtonState();  
 }
 
-function showKata(choice)
-{
+function showKata(choice) {
   $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
 }
 
-function toggleSelection(name, index, size, choice)
-{
+function toggleSelection(name, index, size, choice) { 
   var selection = $(name + '_' + index); 
-  selection.checked = !selection.checked; 
-  
-  if (name == 'kata')
-  {   
+  selection.checked = !selection.checked;   
+  if (name === 'kata') {   
     showKata(choice);  
   }
   setSaveButtonState();
 }
 
-function setSaveButtonState()
-{
+function setSaveButtonState() {
   $('save_button').disabled = !kataSelected() || !languageSelected();
 }
 
-function languageSelected()
-{
-  for (at = 0; at != languageCount; at = at + 1)
-    if ($('language_' + at).checked)
+function languageSelected() {
+  for (at = 0; at !== languageCount; at += 1) {
+    if ($('language_' + at).checked) {
       return true;
+    }
+  }
   return false;
 }
 
 function kataSelected()
 {
-  for (at = 0; at != kataCount; at = at + 1)
-    if ($('kata_' + at).checked)
+  for (at = 0; at != kataCount; at += 1) {
+    if ($('kata_' + at).checked) {
       return true;
+    }
+  }
   return false;
 }
 
