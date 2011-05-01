@@ -166,7 +166,7 @@ The display of each increment now uses a traffic light making the colours
 positional. This means you can still read the display if you are colour blind
 (which a surprising number of people are). 
 o) Top Red = tests ran but at least one failed
-o) Middle Yellow = syntax error somewhere, tests not run
+o) Middle Amber = syntax error somewhere, tests not run
 o) Bottom Green = tests ran and all passed
 
 
@@ -248,34 +248,30 @@ file as part of the inspected ruby object:
 Keyboard-Driver Rotation
 ========================
 By default CyberDojo displays the keyboard-driver rotate page every 5 minutes 
-(see app/models/dojo.rb rotation function) which is the cue for the keyboard 
-driver at each computer to take a non-driver role, possibly at a new computer.
+(see app/models/dojo.rb) which is the cue for the keyboard driver at each 
+computer to take a non-driver role, possibly at a new computer.
 
 
-Dashboard View
+Dashboard Review
 ==============
-The view button on the CyberDojo entry page takes you to the dashboard
+The review button on the CyberDojo entry page takes you to the dashboard
 which shows a continuously updating display of all the avatars traffic light
 increments. 
 
 
-How to Turn off Firefox Spell-Checking
-======================================
-To turn it off (and avoid annoying red underlines the code editor)
-1. Type about:config in the address bar.
-2. In the filter field type spell
-3. Find the entry for layout.spellcheckDefault and double-click it.
-4. Set the integer to 1 to enable the spell checker.
-   Set the integer to 0 to disable the spell checker.
-
-
-How to Turn off Chrome Spell-Checking
-=====================================
+How to Turn off Chrome Spell-Checking in Chrome
+===============================================
 To turn it off (and avoid annoying red underlines the code editor)
 1. Right click in the editor
 2. Under Spell-checker Options>
-3. Deselect 'Check Spelling in this Field'
+3. Deselect 'Check Spelling in this Field
 
+
+How to Turn off Spell-checking in Opera/Firefox
+===============================================
+To turn it off (and avoid annoying red underlines the code editor)
+1. Right click in the editor
+2. Deselect 'Check spelling'
 
 
 Misc Notes
