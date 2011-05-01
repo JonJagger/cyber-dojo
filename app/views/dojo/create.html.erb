@@ -16,23 +16,22 @@ function toggleAll(name, size)
 
   for (at = 0; at != size; at = at + 1)
     $(name + '_' + at).checked = current;
-  if (name == 'kata')
-    showKataInstructions();
   setSaveButtonState();  
 }
 
+function showKata(choice)
+{
+  $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
+}
 
 function toggleSelection(name, index, size, choice)
 {
-  var current = $(name + '_' + index).checked;
-  $(name + '_' + index).checked = !current; 
+  var selection = $(name + '_' + index); 
+  selection.checked = !selection.checked; 
   
   if (name == 'kata')
-  {     
-    if (current)
-      showKataInstructions();
-    else
-      $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
+  {   
+    showKata(choice);  
   }
   setSaveButtonState();
 }
@@ -56,19 +55,6 @@ function kataSelected()
     if ($('kata_' + at).checked)
       return true;
   return false;
-}
-
-function showKataInstructions()
-{
-  $('kata_info').value =
-    "\n" +
-    "\n" +                  
-    "\n" +
-    "\n" +                  
-    "\n" +
-    "\n" +                  
-    "               Select a Kata from the list --->\n" +
-    "               to view its instructions";
 }
 
 //--></script>
@@ -150,7 +136,8 @@ function showKataInstructions()
             
             <% @katas.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset" 
-                   onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'>
+                   onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
+                   onmouseover='showKata("<%=choice-%>");'>
                 <input id="kata_<%=index-%>" 
                        type="checkbox" 
                        onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
@@ -167,14 +154,6 @@ function showKataInstructions()
                       id="kata_info"
                       cols="62" 
                       rows="24">
-                      
-
-
-
-
-                      
-               Select a Kata from the list ---&gt;
-               to view its instructions
             </textarea>
           </td>          
         </tr>

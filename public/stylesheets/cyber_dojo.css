@@ -79,7 +79,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 {
   text-align: left;
   font-size: 1.3em;
-  font-style: italic;
+  xfont-style: italic;
   margin-left: 0.3em;
   margin-bottom: 0.3em;
 }
@@ -224,7 +224,6 @@ input[type="checkbox"]:checked+img { border: 2px solid green; }
 
 #increment_number
 {
-	float: right;
 	color: #686868;
 	font-size: 0.8em;
 	font-weight: normal;

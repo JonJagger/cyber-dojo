@@ -1,11 +1,11 @@
 
-<div id="increments">
+<span id="increments">
   <table>
     <tr>
-      <% max_displayed = 7 -%>
+      <% max_displayed = 9 -%>
       <% recent(@increments, max_displayed).each do |increment| -%>
         <%= traffic_light(@dojo.name, @avatar.name, increment) -%>
       <% end -%>
     </tr>
   </table>
-</div>
+</span>
