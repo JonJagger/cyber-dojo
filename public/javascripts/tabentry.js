@@ -33,24 +33,24 @@ var TabEntry = new function() {
 			Event.observe(inp, 'keydown', downTab);
 			Event.observe(inp, 'keyup', checkTab);
 		}
-	}
+	};
 	var downTab = function(evt) {
-		if (evt.keyCode == 9) {
+		if (evt.keyCode === 9) {
 			Event.stop(evt);
 		}
-	}
+	};
 	var upTab = function(evt) {
-		if (evt.keyCode == 9) {
+		if (evt.keyCode === 9) {
 			Event.stop(evt);
 		}
-	}
+	};
 	var checkTab = function(evt) {
 		var input = Event.element(evt);
-		if (evt.keyCode == 9) {
+		if (evt.keyCode === 9) {
 			var top = input.scrollTop;
 			SelectionRange.insert(input, input.getAttribute('tab'));
 			Event.stop(evt);
 			input.scrollTop = top;
 		}
-	}
+	};
 }

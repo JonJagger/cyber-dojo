@@ -25,7 +25,7 @@ var SelectionRange = new function() {
 			range.moveEnd("character", end - start);
 			range.select();
 		}
-	}
+	};
 	this.start = function(input) {
 		if (input.setSelectionRange) {
 			return input.selectionStart;
@@ -39,7 +39,7 @@ var SelectionRange = new function() {
 			range.collapse(true);
 		var b = range.getBookmark();
 		return b.charCodeAt(2) - 2 - inpStart;
-	}
+	};
 	this.end = function(input) {
 		if (input.setSelectionRange) {
 			return input.selectionEnd;
@@ -53,7 +53,7 @@ var SelectionRange = new function() {
 			range.collapse(false);
 		var b = range.getBookmark();
 		return b.charCodeAt(2) - 2 - inpStart;
-	}
+	};
 	this.insert = function(input, text) {
 		if (input.setSelectionRange) {
 			var start = input.selectionStart;
@@ -64,5 +64,5 @@ var SelectionRange = new function() {
 			var range = document.selection.createRange();
 			range.text = text;
 		}
-	}
+	};
 }

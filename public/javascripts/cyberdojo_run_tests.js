@@ -17,7 +17,8 @@ function postRunTests()
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
   // new increment could affect layout
-  refreshLineNumbering();
+  
+  refreshLineNumbering();  
   $('editor').focus();
   $('spinner').hide();
   $('run_tests').show();

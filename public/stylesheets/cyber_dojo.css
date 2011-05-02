@@ -2,7 +2,6 @@ body { background: GhostWhite; }
 
 #center
 {
-  align: center;
   width: 95%;
   padding: 0em;
   margin: 1em auto 0 auto;
@@ -79,7 +78,6 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 {
   text-align: left;
   font-size: 1.3em;
-  xfont-style: italic;
   margin-left: 0.3em;
   margin-bottom: 0.3em;
 }
