@@ -1,10 +1,11 @@
 
-var move = false;
 
 function createLineNumbersFor(id)
 {
+  var move = false;
+  
   var ta = document.getElementById(id);
-  var el = document.createElement('TEXTAREA'); // line-numbers textarea
+  var el = document.createElement('textarea'); // line-numbers textarea
        
   var string = '';
   for (var no = 1; no < 999; no++) 
@@ -19,7 +20,7 @@ function createLineNumbersFor(id)
   el.setAttribute('readonly', 'true');  
   el.id = "line_numbers";
   el.className      = 'textarea_with_line_numbers';
-  el.style.height   = (ta.offsetHeight-3) + "px";
+  el.style.height   = (ta.offsetHeight - 3) + "px";
   el.style.position = 'absolute';
   el.style.overflow = 'hidden';
   el.style.textAlign = 'right';

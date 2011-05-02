@@ -42,7 +42,7 @@
 			// build element specific options
 			var options = $.meta ? $.extend({}, opts, $this.data()) : opts;
 			
-			$this.bind('keydown',function (e) {
+			$this.bind('keydown', function (e) {
 				var kc = $.fn.tabby.catch_kc(e);
 				if (16 === kc) 
 				  pressed.shft = true;
@@ -51,27 +51,37 @@
 				will prevent js from capturing the keyup event, we'll set a timer on releasing them.
 				*/
 				if (17 === kc) {
-				  pressed.ctrl = true;	
-				  setTimeout("$.fn.tabby.pressed.ctrl = false;",1000);
+				  pressed.ctrl = true;
+				  setTimeout(
+				    function() {
+				      $.fn.tabby.pressed.ctrl = false;
+				    }, 1000);
 				}
 				if (18 === kc) {
 				  pressed.alt = true; 	
-				  setTimeout("$.fn.tabby.pressed.alt = false;",1000);
+				  setTimeout(
+				    function() {
+				      $.fn.tabby.pressed.alt = false;
+				    }, 1000);
 				}
 					
 				if (9 === kc && !pressed.ctrl && !pressed.alt) {
 					e.preventDefault; // does not work in O9.63 ??
-					pressed.last = kc;	setTimeout("$.fn.tabby.pressed.last = null;", 0);
+					pressed.last = kc;	
+					setTimeout(
+					  function() { 
+					    $.fn.tabby.pressed.last = null;
+					  }, 0);
 					process_keypress($(e.target).get(0), pressed.shft, options);
 					return false;
 				}
 				
-			}).bind('keyup',function (e) {
+			}).bind('keyup', function (e) {
 				if (16 === $.fn.tabby.catch_kc(e)) 
 				  pressed.shft = false;
 			}).bind('blur',function (e) { // workaround for Opera -- http://www.webdeveloper.com/forum/showthread.php?p=806588
 				if (9 === pressed.last) 
-				  $(e.target).one('focus',function (e) { pressed.last = null; }).get(0).focus();
+				  $(e.target).one('focus', function (e) { pressed.last = null; }).get(0).focus();
 			});
 		
 		});
@@ -87,9 +97,8 @@
 		  window.console.log('textarea count: ' + $obj.size());
 	};
 
-	function process_keypress (o,shft,options) {
+	function process_keypress (o, shft, options) {
 		var scrollTo = o.scrollTop;
-		//var tabString = String.fromCharCode(9);
 		
 		// gecko; o.setSelectionRange is only available when the text box has focus
 		if (o.setSelectionRange) 
@@ -154,12 +163,12 @@
 					var pos = indices[i].start + modifier; // adjust for tabs already inserted/removed
 					// SHIFT+TAB
 					if (shft && options.tabString === o.value.substring(pos, pos + options.tabString.length)) { // only SHIFT+TAB if there's a tab at the start of the line
-						o.value = o.value.substring(0,pos) + o.value.substring(pos + options.tabString.length); // omit the tabstring to the right
+						o.value = o.value.substring(0, pos) + o.value.substring(pos + options.tabString.length); // omit the tabstring to the right
 						modifier -= options.tabString.length;
 					}
 					// TAB
 					else if (!shft) {
-						o.value = o.value.substring(0,pos) + options.tabString + o.value.substring(pos); // insert the tabstring
+						o.value = o.value.substring(0, pos) + options.tabString + o.value.substring(pos); // insert the tabstring
 						modifier += options.tabString.length;
 					}
 				}
@@ -243,14 +252,14 @@
 				}
 				
 				for (var i = 1; i < selection_arr.length; i++) {
-					if (shft && options.tabString == selection_arr[i].substring(0,options.tabString.length))
+					if (shft && options.tabString == selection_arr[i].substring(0, options.tabString.length))
 						selection_arr[i] = selection_arr[i].substring(options.tabString.length);
 					else if (!shft) 
 					  selection_arr[i] = options.tabString + selection_arr[i];
 				}
 				
 				if (1 === before_arr.length && 0 === before_len) {
-					if (shft && options.tabString === selection_arr[0].substring(0,options.tabString.length))
+					if (shft && options.tabString === selection_arr[0].substring(0, options.tabString.length))
 						selection_arr[0] = selection_arr[0].substring(options.tabString.length);
 					else if (!shft) 
 					  selection_arr[0] = options.tabString + selection_arr[0];
