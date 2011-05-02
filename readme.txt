@@ -253,8 +253,8 @@ computer to take a non-driver role, possibly at a new computer.
 
 
 Dashboard Review
-==============
-The review button on the CyberDojo entry page takes you to the dashboard
+================
+The review button on the CyberDojo home page takes you to the dashboard
 which shows a continuously updating display of all the avatars traffic light
 increments. 
 

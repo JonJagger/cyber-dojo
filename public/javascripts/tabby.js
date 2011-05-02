@@ -34,6 +34,15 @@
 		// build main options before element iteration
 		var opts = $.extend({}, $.fn.tabby.defaults, options);
 		var pressed = $.fn.tabby.pressed; 
+    var KEY_CODE = {
+        TAB: 9,
+        SHIFT: 16,
+        CONTROL: 17,
+        ALT: 18    
+    };
+    var seconds = function(n) { 
+      return n * 1000; 
+    }
 		
 		// iterate and reformat each matched element
 		return this.each(function() {
@@ -41,46 +50,48 @@
 			
 			// build element specific options
 			var options = $.meta ? $.extend({}, opts, $this.data()) : opts;
+
 			
 			$this.bind('keydown', function (e) {
 				var kc = $.fn.tabby.catch_kc(e);
-				if (16 === kc) 
+				
+				if (kc === KEY_CODE.SHIFT) 
 				  pressed.shft = true;
 				/*
 				because both CTRL+TAB and ALT+TAB default to an event (changing tab/window) that 
 				will prevent js from capturing the keyup event, we'll set a timer on releasing them.
 				*/
-				if (17 === kc) {
+				if (kc === KEY_CODE.CONTROL) {
 				  pressed.ctrl = true;
 				  setTimeout(
 				    function() {
 				      $.fn.tabby.pressed.ctrl = false;
-				    }, 1000);
+				    }, seconds(1));
 				}
-				if (18 === kc) {
+				if (kc === KEY_CODE.ALT) {
 				  pressed.alt = true; 	
 				  setTimeout(
 				    function() {
 				      $.fn.tabby.pressed.alt = false;
-				    }, 1000);
+				    }, seconds(1));
 				}
 					
-				if (9 === kc && !pressed.ctrl && !pressed.alt) {
+				if (kc === KEY_CODE.TAB && !pressed.ctrl && !pressed.alt) {
 					e.preventDefault; // does not work in O9.63 ??
 					pressed.last = kc;	
 					setTimeout(
 					  function() { 
 					    $.fn.tabby.pressed.last = null;
-					  }, 0);
+					  }, seconds(0));
 					process_keypress($(e.target).get(0), pressed.shft, options);
 					return false;
 				}
 				
 			}).bind('keyup', function (e) {
-				if (16 === $.fn.tabby.catch_kc(e)) 
+				if ($.fn.tabby.catch_kc(e) === KEY_CODE.SHIFT) 
 				  pressed.shft = false;
-			}).bind('blur',function (e) { // workaround for Opera -- http://www.webdeveloper.com/forum/showthread.php?p=806588
-				if (9 === pressed.last) 
+			}).bind('blur', function (e) { // workaround for Opera -- http://www.webdeveloper.com/forum/showthread.php?p=806588
+				if (pressed.last === KEY_CODE.TAB) 
 				  $(e.target).one('focus', function (e) { pressed.last = null; }).get(0).focus();
 			});
 		
@@ -132,7 +143,7 @@
 				else if ("\t" === o.value.substring(ss, ss + options.tabString.length)) {
 					o.value = o.value.substring(0, ss) + o.value.substring(ss + options.tabString.length); // put it back together omitting one character to the right
 					o.focus();
-					o.setSelectionRange(ss,ss);
+					o.setSelectionRange(ss, ss);
 				}
 			}
 			// TAB
@@ -176,7 +187,7 @@
 			o.focus();
 			var ns = ss + ((modifier > 0) ? options.tabString.length : (modifier < 0) ? -options.tabString.length : 0);
 			var ne = es + modifier;
-			o.setSelectionRange(ns,ne);
+			o.setSelectionRange(ns, ne);
 		}
 	}
 	
