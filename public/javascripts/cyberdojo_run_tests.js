@@ -16,9 +16,9 @@ function postRunTests() {
   //                 :complete => "postRunTests();"
   // new increment could affect layout
   
-  refreshLineNumbering();  
   $('editor').focus();
   $('spinner').hide();
   $('run_tests').show();
+  refreshLineNumbering();  
 }
 

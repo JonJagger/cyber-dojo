@@ -1,10 +1,10 @@
 
 var move = false;
 
-function createTextAreaWithLineNumbers(id)
+function createLineNumbersFor(id)
 {
-  var el = document.createElement('TEXTAREA');
   var ta = document.getElementById(id);
+  var el = document.createElement('TEXTAREA'); // line-numbers textarea
        
   var string = '';
   for (var no = 1; no < 999; no++) 

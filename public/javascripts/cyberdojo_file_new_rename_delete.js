@@ -123,8 +123,7 @@ function refreshLineNumbering()
   // (renaming a file can alter the filename-list panel width)
   var old = $('line_numbers');
   old.parentNode.removeChild(old);
-  createTextAreaWithLineNumbers('editor', "<%=@kata.tab-%>");
-  TabEntry.enable('editor');
+  createLineNumbersFor('editor');
 }
 
 
