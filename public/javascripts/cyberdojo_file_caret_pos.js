@@ -1,5 +1,4 @@
 
-
 function getLiveCaretPos() 
 {
   var control = $('editor');
@@ -11,29 +10,30 @@ function getLiveCaretPos()
     var sel = document.selection.createRange();
     sel.moveStart('character', -control.value.length);
     caretPos = sel.text.length;
-  }
+  } 
   // Firefox support
-  else if (control.selectionStart || control.selectionStart == '0')
+  else if (control.selectionStart || control.selectionStart === '0')
+  {
     caretPos = control.selectionStart;
-
+  }
   return caretPos;
 }
 
-function setLiveCaretPos(pos)
+function setLiveCaretPos(pos) 
 {
   var control = $('editor');
-  if (control.setSelectionRange)
+  if (control.setSelectionRange) 
   {
     control.focus();
     control.setSelectionRange(pos, pos);
-  }
+  } 
   else if (control.createTextRange) 
   {
     var range = control.createTextRange();
     range.collapse(true);
     range.move('character', pos);
     range.select();
-  }
+  } 
   else
   	control.focus();
   

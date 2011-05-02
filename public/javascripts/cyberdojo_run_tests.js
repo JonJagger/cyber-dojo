@@ -1,6 +1,5 @@
 
-function preRunTests()
-{
+function preRunTests() {
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
@@ -11,8 +10,7 @@ function preRunTests()
   saveCurrentFile();
 }
 
-function postRunTests()
-{ 
+function postRunTests() { 
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"

@@ -7,9 +7,12 @@ function createTextAreaWithLineNumbers(id)
   var ta = document.getElementById(id);
        
   var string = '';
-  for (var no = 1; no < 999; no++) {
+  for (var no = 1; no < 999; no++) 
+  {
     if (string.length > 0) 
+    {
       string += '\r\n';
+    }
     string += no;
   }
        
@@ -44,10 +47,11 @@ function createTextAreaWithLineNumbers(id)
   ta.onmouseup    = function() { setLine(); move = false; }
   ta.onmousemove  = function() { if (move) { setLine(); } }
              
-  function setLine() {
-    el.scrollTop   = ta.scrollTop;
-    el.style.top   = (ta.offsetTop) + "px";
-    el.style.left  = (ta.offsetLeft - 37) + "px";
+  function setLine() 
+  {
+    el.scrollTop  = ta.scrollTop;
+    el.style.top  = (ta.offsetTop) + "px";
+    el.style.left = (ta.offsetLeft - 37) + "px";
   }
 }
 

@@ -7,7 +7,7 @@ function seconds(n)
 
 function showServerMessage(message)
 {
-  if (message != "")
+  if (message !== "")
   {
     saveCurrentFile();
     $('play_panel').hide();

@@ -1,30 +1,31 @@
 
-function sortFilenames(filenames)
+function sortFilenames(filenames) 
 {
-  filenames.sort(function(lhs,rhs) {
+  filenames.sort(function(lhs,rhs) 
+    {
 	  if (lhs < rhs)
 	    return -1;
 	  else if (lhs > rhs)
 	    return 1;
 	  else
-	    return 0; // Should never happen
+	    return 0; // Should never happen (implies two files with same name)
     });
 }
 
-function rebuildFilenameList()
+function rebuildFilenameList() 
 {
   var filenames = allFilenames();
   sortFilenames(filenames);
 
   var filename_list = $('filename_list');
   // Remove all children
-  while (filename_list.childNodes.length >= 1)
+  while (filename_list.childNodes.length >= 1) 
   {
      filename_list.removeChild(filename_list.firstChild);
   } 
 
   // Add new children
-  for (at = 0; at != filenames.length; at++)
+  for (at = 0; at < filenames.length; at++) 
   {
     filename_list.appendChild(makeFileListEntry(filenames[at]));
   }
@@ -32,14 +33,14 @@ function rebuildFilenameList()
 
 //====================== NEW FILE =======================
 
-function newFile()
+function newFile() 
 {
   // Append three random chars to the end of the untitled filename.
   // This is so there is NO excuse not to rename it!
   newFileContent('untitled_' + random3(), 'Please rename me!', 0);
 }
 
-function newFileContent(filename, content, caret_pos)
+function newFileContent(filename, content, caret_pos) 
 {
   // Create new hidden input elements to store new file content
   // and its caret position (to save to before submitting form)
@@ -54,12 +55,12 @@ function newFileContent(filename, content, caret_pos)
 
 //====================== DELETE FILE =======================
 
-function deleteFile()
+function deleteFile() 
 {
   deleteFilePrompt(true);
 }
 
-function deleteFilePrompt(ask)
+function deleteFilePrompt(ask) 
 {
   if (!current_filename) return;
   if (ask && !confirm("Delete " + current_filename)) return; // Cancelled  
@@ -72,12 +73,12 @@ function deleteFilePrompt(ask)
   fcp.parentNode.removeChild(fcp);
 
   var filenames = allFilenames();
-  if (filenames.length != 0)
+  if (filenames.length !== 0) 
   {
     loadFile(filenames[0]);
     refreshLineNumbering();
-  }
-  else
+  } 
+  else 
   {
     current_filename = false;
     $('editor').value = '';
@@ -86,16 +87,16 @@ function deleteFilePrompt(ask)
 
 //====================== RENAME FILE =======================
 
-function renameFile()
+function renameFile() 
 {
   if (!current_filename) return;
 
   var newname = trim(prompt("Rename " + current_filename + " ?", 
                             "was_" + current_filename));
-  if (newname == null) return; // Cancelled
-  if (newname == "") { alert("No filename entered\n" +
+  if (newname === null) return; // Cancelled
+  if (newname === "") { alert("No filename entered\n" +
                              "Rename " + current_filename + " abandoned"); return; }
-  if (newname == current_filename) return; // Same name; nothing to do
+  if (newname === current_filename) return; // Same name; nothing to do
   if (fileAlreadyExists(newname))
   {
     alert("CyberDojo cannot rename " + current_filename + " to " + newname + "\n" +
@@ -116,7 +117,7 @@ function renameFile()
 }
 
 
-function refreshLineNumbering()
+function refreshLineNumbering() 
 {
   // Ensure line-numbers repositions by removing and re-adding
   // (renaming a file can alter the filename-list panel width)
@@ -127,7 +128,7 @@ function refreshLineNumbering()
 }
 
 
-function createFileContentInput(filename, content)
+function createFileContentInput(filename, content) 
 {
   var input = new Element('input');
   input.setAttribute('type', 'hidden');
@@ -138,7 +139,7 @@ function createFileContentInput(filename, content)
 }
 
 
-function createFileCaretPosInput(filename, caret_pos)
+function createFileCaretPosInput(filename, caret_pos) 
 {
   var input = new Element('input');
   input.setAttribute('type', 'hidden');
@@ -151,11 +152,11 @@ function createFileCaretPosInput(filename, caret_pos)
 
 function trim(s) 
 {
-  return s == null ? null : s.replace(/^\s+|\s+$/g,"");
+  return s === null ? null : s.replace(/^\s+|\s+$/g,"");
 }
 
 
-function makeFileListEntry(filename)
+function makeFileListEntry(filename) 
 {
   var div = new Element('div', { 'class':'mid_tone filename' });
   div.onclick = function() { saveCurrentFile(); loadFile(filename); };
@@ -170,12 +171,12 @@ function makeFileListEntry(filename)
   return div;
 }
 
-function allFilenames()
+function allFilenames() 
 {
   var prefix = 'file_content_for_';
   filenames = []
   var all = $$('input[id^="' + prefix + '"]');
-  for(at = 0; at != all.length; at++)
+  for(at = 0; at < all.length; at++) 
   {
     var att = all[at].getAttribute('id');
     var filename = att.substr(prefix.length, att.length - prefix.length);
@@ -184,16 +185,16 @@ function allFilenames()
   return filenames;
 }
 
-function fileAlreadyExists(filename)
+function fileAlreadyExists(filename) 
 {
-  return allFilenames().indexOf(filename) != -1;
+  return allFilenames().indexOf(filename) !== -1;
 }
 
 function random3() 
 {
     var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
     var str = '';
-    for (var at = 0; at != 3; at++) 
+    for (var at = 0; at < 3; at++) 
     {
         var pos = Math.floor(Math.random() * alphabet.length);
         str += alphabet.charAt(pos);
