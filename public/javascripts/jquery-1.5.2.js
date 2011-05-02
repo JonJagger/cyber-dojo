@@ -2585,7 +2585,7 @@ jQuery.event = {
 		return event.result;
 	},
 
-	props: "altKey attrChange attrName bubbles button cancelable charCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which".split(" "),
+	props: "altKey attrChange attrName bubbles button cancelable XcharCode clientX clientY ctrlKey currentTarget data detail eventPhase fromElement handler keyCode layerX layerY metaKey newValue offsetX offsetY pageX pageY prevValue relatedNode relatedTarget screenX screenY shiftKey srcElement target toElement view wheelDelta which".split(" "),
 
 	fix: function( event ) {
 		if ( event[ jQuery.expando ] ) {
@@ -2628,8 +2628,8 @@ jQuery.event = {
 		}
 
 		// Add which for key events
-		if ( event.which == null && (event.charCode != null || event.keyCode != null) ) {
-			event.which = event.charCode != null ? event.charCode : event.keyCode;
+		if ( event.which == null && (event.XcharCode != null || event.keyCode != null) ) {
+			event.which = event.XcharCode != null ? event.XcharCode : event.keyCode;
 		}
 
 		// Add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)

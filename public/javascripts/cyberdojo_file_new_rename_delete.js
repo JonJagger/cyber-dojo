@@ -25,7 +25,7 @@ function rebuildFilenameList()
   } 
 
   // Add new children
-  for (at = 0; at < filenames.length; at++) 
+  for (var at = 0; at < filenames.length; at++) 
   {
     filename_list.appendChild(makeFileListEntry(filenames[at]));
   }
@@ -175,7 +175,7 @@ function allFilenames()
   var prefix = 'file_content_for_';
   filenames = []
   var all = $$('input[id^="' + prefix + '"]');
-  for(at = 0; at < all.length; at++) 
+  for(var at = 0; at < all.length; at++) 
   {
     var att = all[at].getAttribute('id');
     var filename = att.substr(prefix.length, att.length - prefix.length);
