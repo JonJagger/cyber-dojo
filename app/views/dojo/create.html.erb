@@ -31,7 +31,7 @@ function toggleSelection(name, index, size, choice) {
 }
 
 function setSaveButtonState() {
-  $('save_button').disabled = !kataSelected() || !languageSelected();
+  $('save_button').disabled = !languageSelected() || !kataSelected();
 }
 
 function languageSelected() {

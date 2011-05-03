@@ -91,7 +91,7 @@ private
       manifest[:visible_files][filename][:caret_pos] = caret_pos
     end
 
-    manifest[:current_filename] = params['filename']
+    manifest[:current_filename] = params['current_filename']
 
     manifest
   end

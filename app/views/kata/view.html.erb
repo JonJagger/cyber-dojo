@@ -1,11 +1,12 @@
 
 <script language="javascript" type="text/javascript"><!--
-document.observe('dom:loaded', function() 
-{
+
+$j(document).ready(function() {
   rebuildFilenameList();
-  createTextAreaWithLineNumbers('editor');
+  createLineNumbersFor('editor');
   loadFile("<%=@current_file-%>");
 });
+
 //--></script>
 
 <div id="play_panel"

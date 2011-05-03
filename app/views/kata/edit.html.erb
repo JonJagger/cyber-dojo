@@ -4,8 +4,8 @@
 $j(document).ready(function() {
   var editor = $j('#editor');
   editor.tabby({ tabString: editor.attr('tab') });
-  rebuildFilenameList();
   createLineNumbersFor('editor');
+  rebuildFilenameList();
   loadFile("<%=@current_file-%>");  
 });
 
