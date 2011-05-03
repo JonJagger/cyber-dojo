@@ -12,7 +12,7 @@ class Dojo
     [
       { :mins => 5,  :label => "5 mins",  :checked => "checked" },
       { :mins => 10, :label => "10 mins", :checked => ""  },
-      { :mins => 1000*365*24*60, :label => "don't",   :checked => ""  },      
+      { :mins => 10*365*24*60, :label => "don't",   :checked => ""  },      
     ]
   end
   
@@ -21,7 +21,7 @@ class Dojo
       { :mins => 30, :label => "30 mins", :checked => "" },
       { :mins => 60, :label => "1 hour",  :checked => "checked" },
       { :mins => 120,:label => "2 hours", :checked => "" },
-      { :mins => 1000*365*24*60, :label => "forever", :checked => "" },
+      { :mins => 10*365*24*60, :label => "forever", :checked => "" },
     ]
   end
   

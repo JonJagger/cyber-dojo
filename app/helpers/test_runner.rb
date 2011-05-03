@@ -15,7 +15,9 @@ module TestRunner
       # o) popen runs its command as a subprocess
       # o) splitting and joining on "\n" removes any operating 
       #    system differences regarding new-line conventions
-      run_tests_output = IO.popen("cd '#{sandbox}'; ./cyberdojo.sh 2>&1").read.split("\n").join("\n")
+			cmd  = "cd '#{sandbox}';"
+			cmd += "./cyberdojo.sh"
+      run_tests_output = IO.popen(with_stderr(cmd)).read.split("\n").join("\n")
     end
 
     # Run tests has limited time to complete
@@ -35,7 +37,10 @@ module TestRunner
     run_tests_output
   end
 
-
+  def self.with_stderr(cmd)
+    cmd + " " + "2>&1"
+  end
+	
   # Remove all files from the sandbox except the hidden files
   # specified in the manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]

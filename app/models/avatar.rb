@@ -18,16 +18,16 @@ class Avatar
       # important to choose random_unused_avatar inside io_lock to prevent
       # more than one computer entering the dojo as the same avatar
       @name = name || random_unused_avatar
-      
-      if File.exists?(pathed(filesets_filename))
-        @filesets = eval IO.read(pathed(filesets_filename))
+
+      if File.exists?(pathed(Filesets_filename))
+        @filesets = eval IO.read(pathed(Filesets_filename))
       else
         @filesets = filesets
-        Dir.mkdir(folder)
-        file_write(pathed(filesets_filename), @filesets)
-        file_write(pathed(increments_filename), [])
+        Dir::mkdir(folder)
+        file_write(pathed(Filesets_filename), @filesets)
+        file_write(pathed(Increments_filename), [])
         # Create sandbox
-        Dir.mkdir(sandbox)
+        Dir::mkdir(sandbox)
         # Copy hidden files from kata fileset 
         # into sandbox ready for future run_tests        
         kata = Kata.new(@dojo.filesets_root, @filesets)
@@ -36,20 +36,20 @@ class Avatar
         end
         # Copy visible files into sandbox (needed for diff 0 1)
         kata.visible_files.each do |filename,file|
-          TestRunner.save_file(sandbox, filename, file)
+          TestRunner::save_file(sandbox, filename, file)
         end
 
-        kata.manifest[:output] = initial_output_text()
+        kata.manifest[:output] = initial_output_text
         kata.manifest[:editor_text] = initial_editor_text
         kata.manifest.delete(:hidden_filenames)
         kata.manifest.delete(:hidden_pathnames)
-        file_write(pathed(manifest_filename), kata.manifest)
+        file_write(pathed(Manifest_filename), kata.manifest)
         
         cmd  = "cd '#{folder}';"
         cmd += "git init --quiet;"
-        cmd += "git add '#{manifest_filename}';"
-        cmd += "git add '#{filesets_filename}';"
-        cmd += "git add '#{increments_filename}';"
+        cmd += "git add '#{Manifest_filename}';"
+        cmd += "git add '#{Filesets_filename}';"
+        cmd += "git add '#{Increments_filename}';"
         system(cmd)
         tag = 0
         git_commit_tag(kata.visible_files, tag)
@@ -66,18 +66,29 @@ class Avatar
   end
    
   def increments
-    io_lock(pathed(increments_filename)) { eval IO.read(pathed(increments_filename)) }
+    io_lock(pathed(Increments_filename)) { 
+      eval IO.read(pathed(Increments_filename)) 
+    }
   end
 
   def read_manifest(manifest, tag = nil)
     io_lock(folder) do
-      tag ||= eval IO.popen("cd #{folder};git tag|sort -g").read
-      read_manifest = eval IO.popen("cd #{folder};git show #{tag}:#{manifest_filename} 2>&1").read
+      cmd  = "cd #{folder};"
+      cmd += "git tag|sort -g"
+      tag ||= eval IO::popen(cmd).read
+      
+      cmd  = "cd #{folder};"
+      cmd += "git show #{tag}:#{Manifest_filename}"
+      read_manifest = eval IO::popen(with_stderr(cmd)).read
+      
       manifest[:visible_files] = read_manifest[:visible_files]
       manifest[:current_filename] = read_manifest[:current_filename]
       manifest[:output] = read_manifest[:output]
       manifest[:editor_text] = read_manifest[:editor_text]
-      incs = eval IO.popen("cd #{folder};git show #{tag}:#{increments_filename} 2>&1").read
+      
+      cmd  = "cd #{folder};"
+      cmd += "git show #{tag}:#{Increments_filename}"
+      incs = eval IO::popen(with_stderr(cmd)).read
     end    
   end
   
@@ -85,17 +96,17 @@ class Avatar
     the_kata = kata
     incs = [] 
     io_lock(folder) do 
-      output = TestRunner.avatar_run_tests(self, the_kata, manifest)
-      test_info = RunTestsOutputParser.parse(self, the_kata, output)
+      output = TestRunner::avatar_run_tests(self, the_kata, manifest)
+      test_info = RunTestsOutputParser::parse(self, the_kata, output)
       
       incs = increments     
       incs << test_info
-      test_info[:time] = make_time(Time.now)
+      test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
-      file_write(pathed(increments_filename), incs)
+      file_write(pathed(Increments_filename), incs)
 
       manifest[:output] = output
-      file_write(pathed(manifest_filename), manifest)
+      file_write(pathed(Manifest_filename), manifest)
       
       tag = incs.length
       git_commit_tag(manifest[:visible_files], tag)
@@ -113,26 +124,22 @@ class Avatar
 
 private
 
+  def with_stderr(cmd)
+    cmd + " " + "2>&1"
+  end
+
   def pathed(filename)
     folder + '/' + filename
   end
 
-  def filesets_filename
-    'filesets.rb'
-  end
-
-  def manifest_filename
-    'manifest.rb'
-  end
-  
-  def increments_filename
-    # The number of entries in this file equals the number
-    # of git commits/tags, including zero.
-    'increments.rb'
-  end
+  # The number of entries in this file equals the number
+  # of git commits/tags, including zero.
+  Increments_filename = 'increments.rb'
+  Filesets_filename = 'filesets.rb'
+  Manifest_filename = 'manifest.rb'
 
   def random_unused_avatar
-    Avatar.names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
+    Avatar::names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
 
   def initial_editor_text
