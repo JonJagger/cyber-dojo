@@ -148,19 +148,17 @@ private
       '                                     periodically updates here.',
       '',
       '',
-      '',
-      ' <----- Click these to create new files,',
+      ' <----- Click these buttons to create new files,',
       '        rename files, and delete files.',
       '',
       '',
-      ' <----- Click a filename to edit it.',
-      '        It will appear here.',      
+      ' <----- Click a filename button and it will',
+      '        appear here, ready for editing.',      
     ].join("\n")      
   end
   
   def initial_output_text
     [ 
-      '',
       '',
       '',
       ' <----- Click Run Tests to start. The output will appear here.',
