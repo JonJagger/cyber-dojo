@@ -70,7 +70,7 @@ function kataSelected()
       <table >
         <tr>
           <td>
-            <span class="choose_title">Duration</span>
+            <span class="choose_title">Lasts</span>
             <% @durations.each_with_index do |choice,index| -%>
               <span class="mid_tone fileset"
                     onclick='selectRadio("duration","<%=index-%>");'>
@@ -92,19 +92,35 @@ function kataSelected()
       <table>
         <tr>
           <td>
-            <span class="choose_title">Rotation</span>
-            <% @rotations.each_with_index do |choice,index| -%>
-              <span class="mid_tone fileset"
-                    onclick='selectRadio("rotation","<%=index-%>");'>
-                <input id="rotation_<%=index-%>" 
-                       type="radio" 
-                       name="rotation" 
-                       value="<%=choice[:mins]-%>"
-                       <%=choice[:checked]-%>
-                       />
-                <label><%=choice[:label]-%></label>
-              </span>              
-            <% end -%>              
+          
+            <table>
+              <tr>
+                <td>
+                  <%= image_tag "rotate.png",
+                    :style => "position:relative; float:left;",
+   		              :title => "rotate",
+                    :width => 30,
+                    :height => 30 -%>
+                </td>      
+                <td>
+                  <span class="choose_title">Every</span>
+                  <% @rotations.each_with_index do |choice,index| -%>
+                    <span class="mid_tone fileset"
+                          onclick='selectRadio("rotation","<%=index-%>");'>
+                      <input id="rotation_<%=index-%>" 
+                             type="radio" 
+                             name="rotation" 
+                             value="<%=choice[:mins]-%>"
+                             <%=choice[:checked]-%>
+                             />
+                      <label><%=choice[:label]-%></label>
+                    </span>              
+                  <% end -%>
+                 </span>
+               </td>
+             </tr>
+            </table>
+            
           </td>
         </tr>
       </table>
