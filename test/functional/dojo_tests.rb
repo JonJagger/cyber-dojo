@@ -76,6 +76,21 @@ class DojoTests < ActionController::TestCase
     assert_equal specified_duration, manifest[:minutes_duration]    
   end
   
+  def test_that_a_player_can_create_a_new_dojo_with_forever_duration
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    years_10 = 10*365*24*60
+    params['duration'] = years_10
+    params['rotation'] = 5
+    params['kata'] = { 0 => 'Unsplice' }
+    params['language'] = { 0 => 'C++' }
+    Dojo::configure(params)
+    dojo = Dojo.new(params)
+    manifest = eval IO.read(dojo.manifest_filename)
+    assert_equal years_10, manifest[:minutes_duration]    
+    end
+  
   def test_that_a_player_can_create_a_new_dojo_with_specified_rotation
     root_test_folder_reset
     params = make_params
@@ -91,6 +106,21 @@ class DojoTests < ActionController::TestCase
     assert_equal specified_rotation, manifest[:minutes_per_rotation]    
   end
   
+  def test_that_a_player_can_create_a_new_dojo_with_rotation_of_none
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    years_10 = 10*365*24*60
+    params['rotation'] = years_10
+    params['duration'] = 60
+    params['kata'] = { 0 => 'Unsplice' }
+    params['language'] = { 0 => 'C++' }
+    Dojo::configure(params)
+    dojo = Dojo.new(params)
+    manifest = eval IO.read(dojo.manifest_filename)
+    assert_equal years_10, manifest[:minutes_per_rotation]    
+  end
+
   def test_that_a_player_can_create_a_new_avatar_with_specified_kata
     root_test_folder_reset
     params = make_params

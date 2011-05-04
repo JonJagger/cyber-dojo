@@ -3,7 +3,7 @@ class DojoController < ApplicationController
  
   def index
     @dojo_name = dojo_name
-    # offers new, enter, re_enter, review
+    # offers new, enter, resume, review
   end
  
   def new
@@ -52,14 +52,14 @@ class DojoController < ApplicationController
       redirect_to :action => :index, :dojo_name => dojo_name
     elsif params[:enter]
       redirect_to :controller => :kata, :action => :enter, :dojo_name => dojo_name
-    elsif params[:reenter]
-      redirect_to :action => :reenter, :dojo_name => dojo_name
+    elsif params[:resume]
+      redirect_to :action => :resume, :dojo_name => dojo_name
     elsif params[:review]
       redirect_to :action => :dashboard, :dojo_name => dojo_name
     end
   end
 
-  def reenter
+  def resume
     configure(params)
     @dojo = Dojo.new(params) 
     render :layout => 'dashboard_view'
