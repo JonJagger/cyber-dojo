@@ -36,35 +36,10 @@ function setLiveCaretPos(pos)
   } 
   else
   	control.focus();
-  
-  // Trying to use this to scroll the textarea to ensure
-  // the cursor/caret position comes into view.
-  // Doesn't work :-(
-  // Spent a lot of time on this searching google etc.
-  // Haven't found a solution yet.
-  control.scrollTop = pos;
 }
 
 
-function getLiveScrollTop()
-{
-  return $j('#editor').scrollTop();
-}
 
-function getLiveScrollLeft()
-{
-  return $j('#editor').scrollLeft();
-}
-
-function setLiveScrollTop(at)
-{
-  $j('#editor').scrollTop(at);
-}
-
-function setLiveScrollLeft(at)
-{
-  $j('#editor').scrollLeft(at);
-}
 
 
 

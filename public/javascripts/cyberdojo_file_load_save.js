@@ -7,8 +7,8 @@ function saveCurrentFile()
   {
     fileContent(current_filename).setAttribute('value', $('editor').value);
     fileCaretPos(current_filename).setAttribute('value', getLiveCaretPos());
-    fileScrollLeft(current_filename).setAttribute('value', getLiveScrollLeft());
-    fileScrollTop(current_filename).setAttribute('value', getLiveScrollTop());
+    fileScrollLeft(current_filename).setAttribute('value', $j('#editor').scrollLeft());
+    fileScrollTop(current_filename).setAttribute('value', $j('#editor').scrollTop());
   }
 }
 
@@ -19,8 +19,9 @@ function loadFile(filename)
   var scroll_left = fileScrollLeft(filename).getAttribute('value');
   $('editor').value = fileContent(filename).getAttribute('value');
   setLiveCaretPos(caret_pos);
-  setLiveScrollTop(scroll_top);
-  setLiveScrollLeft(scroll_left);
+  $j('#editor').scrollTop(scroll_top);
+  $j('#editor').scrollLeft(scroll_left);
+  
   selectFileInFileList(filename);
 }
 
