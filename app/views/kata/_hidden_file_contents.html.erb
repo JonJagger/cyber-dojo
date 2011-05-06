@@ -14,6 +14,14 @@
          name="file_caret_pos['<%=filename-%>']"
          id="file_caret_pos_for_<%=filename-%>"
          value="<%=h file[:caret_pos]-%>"/>
+  <input type="hidden"
+         name="file_scroll_top['<%=filename-%>']"
+         id="file_scroll_top_for_<%=filename-%>"
+         value="<%=h file[:scroll_top]-%>"/>
+  <input type="hidden"
+         name="file_scroll_left['<%=filename-%>']"
+         id="file_scroll_left_for_<%=filename-%>"
+         value="<%=h file[:scroll_left]-%>"/>         
   <% end -%>
 </div>
 

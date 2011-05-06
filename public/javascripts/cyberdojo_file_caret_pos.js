@@ -19,7 +19,7 @@ function getLiveCaretPos()
   return caretPos;
 }
 
-function setLiveCaretPos(pos) 
+function setLiveCaretPos(pos)
 {
   var control = $('editor');
   if (control.setSelectionRange) 
@@ -44,4 +44,37 @@ function setLiveCaretPos(pos)
   // Haven't found a solution yet.
   control.scrollTop = pos;
 }
+
+
+function getLiveScrollTop()
+{
+  return $j('#editor').scrollTop();
+}
+
+function getLiveScrollLeft()
+{
+  return $j('#editor').scrollLeft();
+}
+
+function setLiveScrollTop(at)
+{
+  $j('#editor').scrollTop(at);
+}
+
+function setLiveScrollLeft(at)
+{
+  $j('#editor').scrollLeft(at);
+}
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,23 +1,26 @@
 
-
 var current_filename = false;
 
 function saveCurrentFile() 
 {
-  // current_filename is initially null on dom:loaded
-  // TODO: could it be loaded directly into the editor by rails at start?
   if (current_filename) 
   {
     fileContent(current_filename).setAttribute('value', $('editor').value);
     fileCaretPos(current_filename).setAttribute('value', getLiveCaretPos());
+    fileScrollLeft(current_filename).setAttribute('value', getLiveScrollLeft());
+    fileScrollTop(current_filename).setAttribute('value', getLiveScrollTop());
   }
 }
 
 function loadFile(filename) 
 {
-  var pos = fileCaretPos(filename).getAttribute('value');
+  var caret_pos = fileCaretPos(filename).getAttribute('value');
+  var scroll_top = fileScrollTop(filename).getAttribute('value');
+  var scroll_left = fileScrollLeft(filename).getAttribute('value');
   $('editor').value = fileContent(filename).getAttribute('value');
-  setLiveCaretPos(pos);
+  setLiveCaretPos(caret_pos);
+  setLiveScrollTop(scroll_top);
+  setLiveScrollLeft(scroll_left);
   selectFileInFileList(filename);
 }
 
@@ -36,6 +39,16 @@ function fileContent(filename)
 function fileCaretPos(filename) 
 {
   return $('file_caret_pos_for_' + filename);
+}
+
+function fileScrollLeft(filename)
+{
+  return $('file_scroll_left_for_' + filename);
+}
+
+function fileScrollTop(filename)
+{
+  return $('file_scroll_top_for_' + filename);
 }
 
 

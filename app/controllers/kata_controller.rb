@@ -91,6 +91,16 @@ private
       manifest[:visible_files][filename][:caret_pos] = caret_pos
     end
 
+    (params[:file_scroll_top] || {}).each do |filename,scroll_top|
+      filename = dequote(filename)
+      manifest[:visible_files][filename][:scroll_top] = scroll_top
+    end
+    
+    (params[:file_scroll_left] || {}).each do |filename,scroll_left|
+      filename = dequote(filename)
+      manifest[:visible_files][filename][:scroll_left] = scroll_left
+    end
+    
     manifest[:current_filename] = params['current_filename']
 
     manifest

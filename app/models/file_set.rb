@@ -38,7 +38,9 @@ private
     filenames.each do |filename|
       visible_files[filename] = 
         { :content => IO.read(file_set_folder + '/' + filename),
-          :caret_pos => 0 
+          :caret_pos => 0,
+          :scroll_top => 0,
+          :scroll_left => 0
         }
     end
     visible_files

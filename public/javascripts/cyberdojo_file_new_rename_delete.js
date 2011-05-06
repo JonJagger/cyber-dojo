@@ -37,16 +37,18 @@ function newFile()
 {
   // Append three random chars to the end of the untitled filename.
   // This is so there is NO excuse not to rename it!
-  newFileContent('untitled_' + random3(), 'Please rename me!', 0);
+  newFileContent('untitled_' + random3(), 'Please rename me!', 0, 0, 0);
 }
 
-function newFileContent(filename, content, caret_pos) 
+function newFileContent(filename, content, caret_pos, scroll_top, scroll_left) 
 {
   // Create new hidden input elements to store new file content
   // and its caret position (to save to before submitting form)
   $('visible_files_container').appendChild(createFileContentInput(filename, content));
   rebuildFilenameList();
   $('visible_files_container').appendChild(createFileCaretPosInput(filename, caret_pos));
+  $('visible_files_container').appendChild(createFileScrollTopInput(filename, scroll_top));
+  $('visible_files_container').appendChild(createFileScrollLeftInput(filename, scroll_left));
 
   // Select it so you can immediately rename it
   saveCurrentFile();
@@ -108,8 +110,10 @@ function renameFile()
   // Rename by deleting and recreating with previous content
   var content = $('editor').value;
   var caret_pos = getLiveCaretPos();
+  var scroll_top = getLiveScrollTop();
+  var scroll_left = getLiveScrollLeft();
   deleteFilePrompt(false);
-  newFileContent(newname, content, caret_pos);
+  newFileContent(newname, content, caret_pos, scroll_top, scroll_left);
 
   rebuildFilenameList();
   refreshLineNumbering();
@@ -148,6 +152,25 @@ function createFileCaretPosInput(filename, caret_pos)
   return input;
 }
 
+function createFileScrollLeftInput(filename, scroll_left)
+{
+  var input = new Element('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', "file_scroll_left['" + filename + "']");
+  input.setAttribute('id', 'file_scroll_left_for_' + filename);
+  input.setAttribute('value', scroll_left);
+  return input;
+}
+
+function createFileScrollTopInput(filename, scroll_top)
+{
+  var input = new Element('input');
+  input.setAttribute('type', 'hidden');
+  input.setAttribute('name', "file_scroll_top['" + filename + "']");
+  input.setAttribute('id', 'file_scroll_top_for_' + filename);
+  input.setAttribute('value', scroll_top);
+  return input;
+}
 
 function trim(s) 
 {
@@ -158,7 +181,10 @@ function trim(s)
 function makeFileListEntry(filename) 
 {
   var div = new Element('div', { 'class':'mid_tone filename' });
-  div.onclick = function() { saveCurrentFile(); loadFile(filename); };
+  div.onclick = function() { 
+    saveCurrentFile();
+    loadFile(filename);
+  };
   var inp = new Element('input', 
     { id:'radio_' + filename, 
       name:'filename', 
