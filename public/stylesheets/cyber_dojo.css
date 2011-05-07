@@ -94,7 +94,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.file_op, .panel, div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
+.file_op, .panel, div[class~="filename"], *[class~="fileset"]
 { 
   border-radius: 6px;
   -moz-border-radius: 6px;
@@ -125,14 +125,14 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 
 .file_op_name { font-size: 9pt; color: #383838; }
 
-.file_op, div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
+.file_op, div[class~="filename"], *[class~="fileset"]
 {
   color: #383838;
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8; 
 }
 
-div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
+div[class~="filename"], *[class~="fileset"]
 {
   margin: 0.25em;
   padding-right: 0.5em;
@@ -140,6 +140,12 @@ div[class~="filename"], div[class~="fileset"], span[class~="fileset"]
   font-size: 11pt;
   cursor: pointer;
   white-space: nowrap;
+}
+
+*[class~="fileset"]:hover, div[class~="filename"]:hover, .file_op:hover, .button:hover, .main_button:hover
+{
+  border-bottom: 1px solid #7E7E7E;
+  border-right:  1px solid #7E7E7E;   
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
