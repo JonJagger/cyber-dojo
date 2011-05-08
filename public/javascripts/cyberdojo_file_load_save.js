@@ -5,10 +5,11 @@ function saveCurrentFile()
 {
   if (current_filename) 
   {
-    fileContent(current_filename).setAttribute('value', $('editor').value);
-    fileCaretPos(current_filename).setAttribute('value', $j('#editor').getCaretPos());
-    fileScrollLeft(current_filename).setAttribute('value', $j('#editor').scrollLeft());
-    fileScrollTop(current_filename).setAttribute('value', $j('#editor').scrollTop());
+    var editor = $j('#editor');
+    fileContent(current_filename).setAttribute('value', editor.val());
+    fileCaretPos(current_filename).setAttribute('value', editor.caretPos());
+    fileScrollLeft(current_filename).setAttribute('value', editor.scrollLeft());
+    fileScrollTop(current_filename).setAttribute('value', editor.scrollTop());
   }
 }
 
@@ -17,12 +18,13 @@ function loadFile(filename)
   var caret_pos = fileCaretPos(filename).getAttribute('value');
   var scroll_top  = fileScrollTop(filename).getAttribute('value');
   var scroll_left = fileScrollLeft(filename).getAttribute('value');
-  
-  $('editor').value = fileContent(filename).getAttribute('value');
+  var code = fileContent(filename).getAttribute('value');
 
-  $j('#editor').setCaretPos(caret_pos);
-  $j('#editor').scrollTop(scroll_top);
-  $j('#editor').scrollLeft(scroll_left);
+  $j('#editor')
+    .val(code)
+    .scrollTop(scroll_top)
+    .scrollLeft(scroll_left)
+    .caretPos(caret_pos);
   
   selectFileInFileList(filename);
 }
