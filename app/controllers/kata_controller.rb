@@ -82,10 +82,10 @@ private
 
     (params[:file_content] || {}).each do |filename,content|
       filename = dequote(filename)
-      manifest[:visible_files][filename] = {}
+      manifest[:visible_files][filename] ||= {}
       manifest[:visible_files][filename][:content] = content.split("\r\n").join("\n")  
     end
-
+ 
     (params[:file_caret_pos] || {}).each do |filename,caret_pos|
       filename = dequote(filename)
       manifest[:visible_files][filename][:caret_pos] = caret_pos

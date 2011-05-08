@@ -11,7 +11,7 @@ function selectRadio(name, index) {
 
 function toggleAll(name, size) {
   var current = $(name + '_all').checked;
-  for (at = 0; at !== size; at += 1) {
+  for (var at = 0; at !== size; at += 1) {
     $(name + '_' + at).checked = current;
   }
   setSaveButtonState();  
@@ -35,7 +35,7 @@ function setSaveButtonState() {
 }
 
 function languageSelected() {
-  for (at = 0; at !== languageCount; at += 1) {
+  for (var at = 0; at !== languageCount; at += 1) {
     if ($('language_' + at).checked) {
       return true;
     }
@@ -45,7 +45,7 @@ function languageSelected() {
 
 function kataSelected()
 {
-  for (at = 0; at != kataCount; at += 1) {
+  for (var at = 0; at != kataCount; at += 1) {
     if ($('kata_' + at).checked) {
       return true;
     }

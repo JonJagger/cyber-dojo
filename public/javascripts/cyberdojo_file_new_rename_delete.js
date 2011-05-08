@@ -43,13 +43,17 @@ function newFile()
 function newFileContent(filename, content, caret_pos, scroll_top, scroll_left) 
 {
   // Create new hidden input elements to store new file content
-  // and its caret position (to save to before submitting form)
-  $('visible_files_container').appendChild(createFileContentInput(filename, content));
-  rebuildFilenameList();
-  $('visible_files_container').appendChild(createFileCaretPosInput(filename, caret_pos));
-  $('visible_files_container').appendChild(createFileScrollTopInput(filename, scroll_top));
-  $('visible_files_container').appendChild(createFileScrollLeftInput(filename, scroll_left));
+  // and its caret and scroll positions (to save to before submitting form)
+  $('visible_files_container').appendChild(
+    createHiddenInput(filename, 'content', content));
+  $('visible_files_container').appendChild(
+    createHiddenInput(filename, 'caret_pos', caret_pos));
+  $('visible_files_container').appendChild(
+    createHiddenInput(filename, 'scroll_top', scroll_top));
+  $('visible_files_container').appendChild(
+    createHiddenInput(filename, 'scroll_left', scroll_left));
 
+  rebuildFilenameList();
   // Select it so you can immediately rename it
   saveCurrentFile();
   loadFile(filename);
@@ -73,6 +77,12 @@ function deleteFilePrompt(ask)
   
   var fcp = fileCaretPos(current_filename);
   fcp.parentNode.removeChild(fcp);
+  
+  var fst = fileScrollTop(current_filename);
+  fst.parentNode.removeChild(fst);
+  
+  var fsl = fileScrollLeft(current_filename);
+  fsl.parentNode.removeChild(fsl);
 
   var filenames = allFilenames();
   if (filenames.length !== 0) 
@@ -108,10 +118,13 @@ function renameFile()
 
   // OK. Now do it...
   // Rename by deleting and recreating with previous content
-  var content = $('editor').value;
-  var caret_pos = getLiveCaretPos();
-  var scroll_top = getLiveScrollTop();
-  var scroll_left = getLiveScrollLeft();
+  
+  var editor = $j('#editor');
+  var content = editor.val();
+  var caret_pos = editor.caretPos();
+  var scroll_top = editor.scrollTop();
+  var scroll_left = editor.scrollLeft();
+  
   deleteFilePrompt(false);
   newFileContent(newname, content, caret_pos, scroll_top, scroll_left);
 
@@ -130,45 +143,13 @@ function refreshLineNumbering()
   createLineNumbersFor('editor');
 }
 
-
-function createFileContentInput(filename, content) 
+function createHiddenInput(filename, aspect, value)
 {
   var input = new Element('input');
   input.setAttribute('type', 'hidden');
-  input.setAttribute('name', "file_content['" + filename + "']");
-  input.setAttribute('id', 'file_content_for_' + filename);
-  input.setAttribute('value', content);
-  return input;
-}
-
-
-function createFileCaretPosInput(filename, caret_pos) 
-{
-  var input = new Element('input');
-  input.setAttribute('type', 'hidden');
-  input.setAttribute('name', "file_caret_pos['" + filename + "']");
-  input.setAttribute('id', 'file_caret_pos_for_' + filename);
-  input.setAttribute('value', caret_pos);
-  return input;
-}
-
-function createFileScrollLeftInput(filename, scroll_left)
-{
-  var input = new Element('input');
-  input.setAttribute('type', 'hidden');
-  input.setAttribute('name', "file_scroll_left['" + filename + "']");
-  input.setAttribute('id', 'file_scroll_left_for_' + filename);
-  input.setAttribute('value', scroll_left);
-  return input;
-}
-
-function createFileScrollTopInput(filename, scroll_top)
-{
-  var input = new Element('input');
-  input.setAttribute('type', 'hidden');
-  input.setAttribute('name', "file_scroll_top['" + filename + "']");
-  input.setAttribute('id', 'file_scroll_top_for_' + filename);
-  input.setAttribute('value', scroll_top);
+  input.setAttribute('name', 'file_' + aspect + "['" + filename + "']");
+  input.setAttribute('id', 'file_' + aspect + '_for_' + filename);
+  input.setAttribute('value', value);
   return input;
 }
 
@@ -176,7 +157,6 @@ function trim(s)
 {
   return s === null ? null : s.replace(/^\s+|\s+$/g,"");
 }
-
 
 function makeFileListEntry(filename) 
 {
