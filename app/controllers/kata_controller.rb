@@ -95,7 +95,6 @@ private
       filename = dequote(filename)
       manifest[:visible_files][filename][:scroll_top] = scroll_top
     end
-    
     (params[:file_scroll_left] || {}).each do |filename,scroll_left|
       filename = dequote(filename)
       manifest[:visible_files][filename][:scroll_left] = scroll_left
