@@ -20,11 +20,12 @@ function loadFile(filename)
   var scroll_left = fileScrollLeft(filename).getAttribute('value');
   var code = fileContent(filename).getAttribute('value');
 
-  $j('#editor')
-    .val(code)
+  var editor = $j('#editor');
+  editor.val(code);
+  editor.caretPos(caret_pos);
+  editor
     .scrollTop(scroll_top)
-    .scrollLeft(scroll_left)
-    .caretPos(caret_pos);
+    .scrollLeft(scroll_left);
   
   selectFileInFileList(filename);
 }

@@ -153,7 +153,7 @@ function createHiddenInput(filename, aspect, value)
   return input;
 }
 
-function trim(s) 
+function trim(s)  // TODO: jQuery has a trim function $.trim(s) 
 {
   return s === null ? null : s.replace(/^\s+|\s+$/g,"");
 }

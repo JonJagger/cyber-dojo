@@ -1,12 +1,6 @@
 
-
 function createLineNumbersFor(id)
-{
-  var move = false;
-  
-  var ta = document.getElementById(id);
-  var el = document.createElement('textarea'); // line-numbers textarea
-       
+{  
   var string = '';
   for (var no = 1; no < 999; no++) 
   {
@@ -17,8 +11,11 @@ function createLineNumbersFor(id)
     string += no;
   }
        
+  var ta = document.getElementById(id);
+  var el = document.createElement('textarea'); // line-numbers textarea
+  
   el.setAttribute('readonly', 'true');  
-  el.id = "line_numbers";
+  el.id = 'line_numbers';
   el.className      = 'textarea_with_line_numbers';
   el.style.height   = (ta.offsetHeight - 3) + "px";
   el.style.position = 'absolute';
@@ -35,6 +32,7 @@ function createLineNumbersFor(id)
   el.innerHTML      = string;  // Firefox renders \n linebreak
   el.innerText      = string;  // IE6 renders \n line break
   el.value          = string;  // Safari
+  
   el.style.zIndex   = 0; 
   ta.style.zIndex   = 1;
   ta.style.position = 'relative';
@@ -42,11 +40,17 @@ function createLineNumbersFor(id)
   setLine();
   ta.focus();
        
-  ta.onscroll     = function() { setLine(); }
-  ta.onkeydown    = function() { setLine(); }
-  ta.onmousedown  = function() { setLine(); move = true; }
-  ta.onmouseup    = function() { setLine(); move = false; }
-  ta.onmousemove  = function() { if (move) { setLine(); } }
+  var move = false;
+
+  
+  $j('#editor').bind({
+    scroll:     function(ev) { setLine(); },
+    mousewheel: function(ev) { setLine(); }, // needed for Opera
+    keydown:    function(ev) { setLine(); },
+    mousedown:  function(ev) { setLine(); move = true; },
+    mouseup:    function(ev) { setLine(); move = false; },
+    mousemove:  function(ev) { if (move) { setLine(); }}
+  });
              
   function setLine() 
   {
