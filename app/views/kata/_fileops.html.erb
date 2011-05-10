@@ -18,8 +18,8 @@ function disableRunTestsButtonIf(closed)
   // reshow the Run Tests button) well before the run-tests
   // result had come back from the server.
   
-  rtb = $('run_tests_button');
-  if (rtb && closed == "true") 
+  var rtb = $('run_tests_button');
+  if (rtb && closed === "true") 
   {
     rtb.disabled = true;
     $('editor').setAttribute('readonly', 'readonly');    

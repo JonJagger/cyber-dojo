@@ -70,19 +70,30 @@ function kataSelected()
       <table >
         <tr>
           <td>
-            <span class="choose_title">Lasts</span>
-            <% @durations.each_with_index do |choice,index| -%>
-              <span class="mid_tone fileset"
-                    onclick='selectRadio("duration","<%=index-%>");'>
-                <input id="duration_<%=index-%>" 
-                       type="radio" 
-                       name="duration" 
-                       value="<%=choice[:mins]-%>"
-                       <%=choice[:checked]-%>
-                       />
-                <label><%=choice[:label]-%></label>
-              </span>
-            <% end -%>
+          
+            <table>
+              <tr>
+                <td>
+                  <span class="choose_title">Lasts</span>
+                </td>
+            
+                <% @durations.each_with_index do |choice,index| -%>
+                  <td>
+                  <span class="mid_tone fileset"
+                        onclick='selectRadio("duration","<%=index-%>");'>
+                    <input id="duration_<%=index-%>" 
+                           type="radio" 
+                           name="duration" 
+                           value="<%=choice[:mins]-%>"
+                           <%=choice[:checked]-%>
+                           />
+                    <label><%=choice[:label]-%></label>
+                  </span>
+                  </td>
+                <% end -%>
+              </tr>
+            </table>
+            
           </td>
         </tr>
       </table>
@@ -104,7 +115,9 @@ function kataSelected()
                 </td>      
                 <td>
                   <span class="choose_title">Every</span>
-                  <% @rotations.each_with_index do |choice,index| -%>
+                </td>
+                <% @rotations.each_with_index do |choice,index| -%>
+                  <td>
                     <span class="mid_tone fileset"
                           onclick='selectRadio("rotation","<%=index-%>");'>
                       <input id="rotation_<%=index-%>" 
@@ -114,11 +127,10 @@ function kataSelected()
                              <%=choice[:checked]-%>
                              />
                       <label><%=choice[:label]-%></label>
-                    </span>              
-                  <% end -%>
-                 </span>
-               </td>
-             </tr>
+                    </span>
+                  </td>
+                <% end -%>
+              </tr>
             </table>
             
           </td>

@@ -153,10 +153,6 @@ div[class~="filename"], *[class~="fileset"]
 input[type="radio"]:checked+label, 
 input[type="checkbox"]:checked+label { color: green; }
 
-input[type="checkbox"]+img { border: 2px solid #FFECCB; }
-
-input[type="checkbox"]:checked+img { border: 2px solid green; }
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
 #editor, .textarea_with_line_numbers

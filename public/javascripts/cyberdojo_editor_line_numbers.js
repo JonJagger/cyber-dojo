@@ -41,7 +41,6 @@ function createLineNumbersFor(id)
   ta.focus();
        
   var move = false;
-
   
   $j('#editor').bind({
     scroll:     function(ev) { setLine(); },
