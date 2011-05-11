@@ -23,7 +23,7 @@ module LadderHelper
     end   
     
     html += '<table cellspacing="6">'
-    chunks = chunk_array(ladder, 8)
+    chunks = chunk_array(ladder, 6)
     chunks.each do |chunk|
       html += '<tr>'
       chunk.each do |rung|

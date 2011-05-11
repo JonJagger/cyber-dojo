@@ -3,10 +3,10 @@
   <tr valign="top">
     <td>
       <div class="panel">
+        <span class="small_title"><%= @dojo.name -%></span>
         <div id="avatar_id">
           <%= avatar_image(@avatar.name, 65) -%>        
         </div>
-
         <span class="small_title"><%= @avatar.name.capitalize -%></span>
         <span class="small_title"><%= @kata.name -%></span>
         <span class="small_title"><%= @kata.language -%></span>
@@ -26,7 +26,7 @@
 
       <div class="panel">
         <span class="small_title">
-          <%= link_to "#{@dojo.name}", 
+          <%= link_to 'Dashboard', 
                { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
                { :class => "title", :target => "_blank" } -%>
         </span>
