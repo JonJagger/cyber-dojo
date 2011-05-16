@@ -68,6 +68,14 @@ class DojoController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
   end
+
+  def dashboard_heartbeat
+    configure(params)
+    @dojo = Dojo.new(params)
+    respond_to do |format|
+      format.js if request.xhr?
+    end
+  end
   
   def ifaq
   end
