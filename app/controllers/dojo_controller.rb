@@ -62,13 +62,11 @@ class DojoController < ApplicationController
   def resume
     configure(params)
     @dojo = Dojo.new(params) 
-    render :layout => 'dashboard_view'
   end
   
   def dashboard
     configure(params)
     @dojo = Dojo.new(params)
-    render :layout => 'dashboard_view'
   end
   
   def ifaq

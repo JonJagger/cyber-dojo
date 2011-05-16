@@ -1,12 +1,5 @@
 body { background: GhostWhite; }
 
-#center
-{
-  width: 95%;
-  padding: 0em;
-  margin: 1em auto 0 auto;
-}
-
 #cyber_dojo_page { text-align: left; color: green; }
 
 h1 { font-size: 4em;   text-align: center; margin: 0; }
