@@ -2,16 +2,14 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var languageCount = "<%=@languages.length-%>";
-var kataCount = "<%=@katas.length-%>";
-
-function selectRadio(name, index) {
-  $(name + '_' + index).checked = true;
-}
+var languageCount = <%=@languages.length-%>;
+var kataCount = <%=@katas.length-%>;
 
 function toggleAll(name, size) {
   var current = $(name + '_all').checked;
   for (var at = 0; at !== size; at += 1) {
+    var r = $(name + '_' + at);
+    if (r === null) alert("null: " + name + "," + at + "," + size);
     $(name + '_' + at).checked = current;
   }
   setSaveButtonState();  
@@ -65,83 +63,6 @@ function kataSelected()
 <h1>CyberDojo: <%=@dojo.name-%></h1>
 
 <table>
-  <tr>  
-    <td class="panel">
-      <table >
-        <tr>
-          <td>
-          
-            <table>
-              <tr>
-                <td>
-                  <span class="choose_title">Lasts</span>
-                </td>
-            
-                <% @durations.each_with_index do |choice,index| -%>
-                  <td>
-                  <span class="mid_tone fileset"
-                        onclick='selectRadio("duration","<%=index-%>");'>
-                    <input id="duration_<%=index-%>" 
-                           type="radio" 
-                           name="duration" 
-                           value="<%=choice[:mins]-%>"
-                           <%=choice[:checked]-%>
-                           />
-                    <label><%=choice[:label]-%></label>
-                  </span>
-                  </td>
-                <% end -%>
-              </tr>
-            </table>
-            
-          </td>
-        </tr>
-      </table>
-    </td>
-
-    <td class="panel">
-      <table>
-        <tr>
-          <td>
-          
-            <table>
-              <tr>
-                <td>
-                  <%= image_tag "rotate.png",
-                    :style => "position:relative; float:left;",
-   		              :title => "rotate",
-                    :width => 30,
-                    :height => 30 -%>
-                </td>      
-                <td>
-                  <span class="choose_title">Every</span>
-                </td>
-                <% @rotations.each_with_index do |choice,index| -%>
-                  <td>
-                    <span class="mid_tone fileset"
-                          onclick='selectRadio("rotation","<%=index-%>");'>
-                      <input id="rotation_<%=index-%>" 
-                             type="radio" 
-                             name="rotation" 
-                             value="<%=choice[:mins]-%>"
-                             <%=choice[:checked]-%>
-                             />
-                      <label><%=choice[:label]-%></label>
-                    </span>
-                  </td>
-                <% end -%>
-              </tr>
-            </table>
-            
-          </td>
-        </tr>
-      </table>
-    </td>
-    
-  </tr>
-</table>
-
-<table>
   <tr>
     <td valign="top">
       <table class="panel">
@@ -154,17 +75,17 @@ function kataSelected()
             <span style="margin-left: 0.25em">
               <input id="kata_all"
                      type="checkbox"
-                     onclick='toggleAll("kata", "<%=@katas.length-%>");'
+                     onclick='toggleAll("kata", <%=@katas.length-%>);'
                      value="" />
             </span>
             
             <% @katas.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset" 
-                   onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
+                   onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'
                    onmouseover='showKata("<%=choice-%>");'>
                 <input id="kata_<%=index-%>" 
                        type="checkbox" 
-                       onclick='toggleSelection("kata", "<%=index-%>", "<%=@katas.length-%>", "<%=choice-%>");'
+                       onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'
                        name="kata[<%=index-%>]" 
                        value="<%=choice-%>" />
                 <label><%= choice -%></label>
@@ -196,16 +117,16 @@ function kataSelected()
             <span style="margin-left: 0.25em">
               <input id="language_all"
                      type="checkbox"
-                     onclick='toggleAll("language", "<%=@languages.length-%>");'
+                     onclick='toggleAll("language", <%=@languages.length-%>);'
                      value="" />
             </span>
 
             <% @languages.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset"
-                   onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'>
+                   onclick='toggleSelection("language", <%=index-%>, <%=@languages.length-%>, "<%=choice-%>");'>
                 <input id="language_<%=index-%>" 
                        type="checkbox" 
-                       onclick='toggleSelection("language", "<%=index-%>", "<%=@languages.length-%>", "<%=choice-%>");'
+                       onclick='toggleSelection("language", <%=index-%>, <%=@languages.length-%>, "<%=choice-%>");'
                        name="language[<%=index-%>]" 
                       value="<%=choice-%>" />
                 <label><%= choice -%></label>

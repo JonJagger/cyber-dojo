@@ -3,32 +3,28 @@
   <tr valign="top">
     <td>
       <div class="panel">
-        <div id="avatar_pair">
-          <%= avatar_image(@avatar.name, 65) -%>        
+        <%= link_to "#{@dojo.name}", 
+             { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
+             { :class => "title", :target => "_blank" } -%>
+        <div>
+          <%= avatar_image(@avatar.name, 65) -%>
         </div>
-
-        <span class="small_title"><%= @avatar.name.capitalize -%></span>      
+ 
         <span class="small_title"><%= @kata.language -%></span>
         <span class="small_title"><%= @kata.name -%></span>
       </div>
            
       <div class="panel">
-        <%= render :partial => 'fileops' -%>
         <%= render :partial => 'filenames' -%>
       </div>
     </td>
     <td>
       <%= render :partial => 'editor' -%>
     </td>
-    <td rowspan=2>
-      <%= link_to "#{@dojo.name}", 
-             { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
-             { :class => "title", :target => "_blank" } -%>
-    </td>
   </tr>
   <tr valign="top">
     <td>
-      <table class="panel" xstyle="float:right;">
+      <table class="panel">
         <tr>
           <td>
             <table style="float:left;">

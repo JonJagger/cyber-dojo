@@ -26,15 +26,12 @@ class Avatar
         Dir::mkdir(folder)
         file_write(pathed(Filesets_filename), @filesets)
         file_write(pathed(Increments_filename), [])
-        # Create sandbox
+
         Dir::mkdir(sandbox)
-        # Copy hidden files from kata fileset 
-        # into sandbox ready for future run_tests        
         kata = Kata.new(@dojo.filesets_root, @filesets)
         kata.hidden_pathnames.each do |hidden_pathname|
           system("cp '#{hidden_pathname}' '#{sandbox}'") 
         end
-        # Copy visible files into sandbox (needed for diff 0 1)
         kata.visible_files.each do |filename,file|
           TestRunner::save_file(sandbox, filename, file)
         end

@@ -60,8 +60,6 @@ class Dojo
       info = { 
         :name => name, 
         :created => make_time(now),
-        :minutes_per_rotation => params['rotation'].to_i,
-        :minutes_duration => params['duration'].to_i,
       }
       
       info[:katas] = []
@@ -81,14 +79,8 @@ class Dojo
       end
       index << info        
       file_write(index_filename, index)
-      
-      file_write(dojo.rotation_filename, 
-        {
-          :already_rotated => [],
-          :prev_rotation_at => make_time(now),      
-          :next_rotation_at => make_time(now + info[:minutes_per_rotation] * 60)
-        })
 
+      file_write(dojo.messages_filename, [])
     end    
   end
   
@@ -122,7 +114,7 @@ class Dojo
   end
   
   def closed
-    age[:total_mins] >= minutes_duration
+    false
   end
   
   def age
@@ -174,24 +166,12 @@ class Dojo
     folder + '/' + 'manifest.rb'
   end
 
-  def rotation_filename
-    folder + '/' + 'rotation.rb'
-  end
-
-  def messages_filename#
+  def messages_filename
     folder + '/' + 'messages.rb'
   end
   
   def created
     Time.mktime(*manifest[:created])
-  end
-  
-  def minutes_per_rotation
-    manifest[:minutes_per_rotation]
-  end
-
-  def minutes_duration
-    manifest[:minutes_duration]
   end
   
   def manifest
@@ -207,35 +187,6 @@ private
   def self.make_dir(name)
     if !File.directory? name
       Dir.mkdir name
-    end
-  end
-
-  def rotate(avatar_name)
-    io_lock(folder) do
-      options = eval IO.read(rotation_filename)
-      
-      now = Time.now      
-      due = Time.mktime(*options[:next_rotation_at])
-      if now > due
-        # first avatar over the now-line, move prev/next forward 
-        options[:prev_rotation_at] = make_time(now)
-        options[:next_rotation_at] = make_time(now + minutes_per_rotation * 60)
-        options[:already_rotated] = [avatar_name]
-        file_write(rotation_filename, options)
-        # don't rotate if we're re-entering the dojo after a break
-        return now - due < (2 * seconds_per_heartbeat)
-      end
-      
-      already_rotated = options[:already_rotated].include?(avatar_name)
-      very_recent_rotation = (now - Time.mktime(*options[:prev_rotation_at])).abs <= seconds_per_heartbeat
-      if !already_rotated && very_recent_rotation
-        # another avatar over the line
-        options[:already_rotated] << avatar_name
-        file_write(rotation_filename, options)
-        return true
-      end
-      
-      return false
     end
   end
   
