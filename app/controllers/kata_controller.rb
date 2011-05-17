@@ -29,12 +29,11 @@ class KataController < ApplicationController
   def edit
     configure(params)
     @dojo = Dojo.new(params)
+    @messages = @dojo.messages
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
-    @kata = @avatar.kata
-
+    @kata = @avatar.kata    
     @manifest = {}
     @increments = @avatar.read_manifest(@manifest)    
-    @server_message = ""
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
     @editor_text = @manifest[:editor_text]
@@ -47,7 +46,6 @@ class KataController < ApplicationController
     manifest = load_visible_files_from_page
     @increments = @avatar.run_tests(manifest)
     @output = manifest[:output]
-    @dojo.ladder_update(@avatar.name, @increments.last)
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -56,13 +54,21 @@ class KataController < ApplicationController
   def heartbeat
     configure(params)
     @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
-    @server_message = @dojo.heartbeat(@avatar.name)
+    @messages = @dojo.messages
     respond_to do |format|
       format.js if request.xhr?
     end
   end
    
+  def post_message
+    configure(params)
+    @dojo = Dojo.new(params)
+    @messages = @dojo.post_message(params[:avatar], params[:message])
+    respond_to do |format|
+      format.js if request.xhr?
+    end
+  end
+    
 private
 
   def configure(params)

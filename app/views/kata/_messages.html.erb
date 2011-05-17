@@ -1,0 +1,14 @@
+<div id="messages">
+  <table>
+    <% @messages.each do |message| -%>
+       <tr>
+         <td class="message_container">
+           <%= avatar_image(message[:sender].to_s, 45) -%>
+           <%= message[:text] -%>
+         </td>
+       </tr>
+    <% end -%>
+  </table>  
+</div>
+
+

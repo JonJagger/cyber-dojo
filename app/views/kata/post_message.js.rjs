@@ -1,4 +1,3 @@
 
 page.replace 'messages', :partial => 'messages'
-page.replace 'fileops',  :partial => 'fileops'
 

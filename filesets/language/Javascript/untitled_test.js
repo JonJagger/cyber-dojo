@@ -5,7 +5,7 @@ var passCount = 0;
 var failCount = 0;
 
 function assertEqual(expected, actual) {
-    if (expected != actual) {
+    if (expected !== actual) {
         print('FAILED:assertEqual(' +
             'expected=' + expected + ', ' + 
             'actual=' + actual + ')');
@@ -17,6 +17,6 @@ function assertEqual(expected, actual) {
 
 assertEqual(9 * 6, answer());
 
-if (failCount == 0)
+if (failCount === 0)
     print('All tests successful (' + passCount + ')');
 

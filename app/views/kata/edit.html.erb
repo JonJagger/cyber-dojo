@@ -11,8 +11,6 @@ $j(document).ready(function() {
 
 //--></script>
 
-<div id="play_panel"
-     style="visibility:visible">
 <% form_remote_tag :url  => { :action => 'run_tests',
                               :dojo_name => @dojo.name,
                               :avatar => @avatar.name
@@ -25,12 +23,5 @@ $j(document).ready(function() {
   <%= render :partial => 'edit_panel' -%>
   <%= render :partial => 'hidden_file_contents' -%>
 <% end -%>
-</div>
-
-<div class="panel" 
-     id="server_message_panel"
-     style="display:none">     
-  <div id="server_message_content"></div>
-</div>
 
 

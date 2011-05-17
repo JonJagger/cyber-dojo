@@ -88,8 +88,7 @@ class Dojo
           :prev_rotation_at => make_time(now),      
           :next_rotation_at => make_time(now + info[:minutes_per_rotation] * 60)
         })
-      
-      file_write(dojo.ladder_filename, [])
+
     end    
   end
   
@@ -143,32 +142,22 @@ class Dojo
     5
   end
 
-  def heartbeat(avatar_name)
-    if closed
-      ""
-    elsif rotate(avatar_name)
-      "<h2>...Rotate Now Please...</h2>" +
-      "<h2>Keyboard drivers please take a non-driver role,</h2>" +
-      "<h2>either at the same computer or at a new computer.</h2>"
-    else
-      ""
+  def messages
+    file = messages_filename
+    io_lock(file) { eval IO.read(file) }
+  end
+
+  def post_message(sender, text)
+    messages = []
+    file = messages_filename
+    io_lock(file) do
+      messages = eval IO.read(file)
+      messages.insert(0, { :sender => sender, :text => text })
+      file_write(file, messages)
     end
+    messages
   end
-
-  def ladder
-    rungs = io_lock(folder) { eval IO.read(ladder_filename) }
-    rungs.sort! { |lhs,rhs| lhs[:avatar] <=> rhs[:avatar] }
-  end
-
-  def ladder_update(avatar_name, latest_increment)
-    io_lock(folder) do
-      rungs = eval IO.read(ladder_filename)
-      rungs.delete_if { |rung| rung[:avatar] == avatar_name } 
-      rungs << { :avatar => avatar_name, :time => latest_increment[:time], :outcome => latest_increment[:outcome] }
-      file_write(ladder_filename, rungs)
-    end
-  end
-
+  
   def filesets_root
     @filesets_root
   end
@@ -189,10 +178,10 @@ class Dojo
     folder + '/' + 'rotation.rb'
   end
 
-  def ladder_filename
-    folder + '/' + 'ladder.rb'
-  end  
-
+  def messages_filename#
+    folder + '/' + 'messages.rb'
+  end
+  
   def created
     Time.mktime(*manifest[:created])
   end

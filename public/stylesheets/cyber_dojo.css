@@ -187,11 +187,45 @@ input[type="checkbox"]:checked+label { color: green; }
   margin-left: 40px; /* to match line-numbers */
   padding: 0.5em;
   border: 1px dashed LightGray;
-  background-color: CornSilk;
+  background: CornSilk;
   width: 53em;
 }
 
 #output.waiting { border-color: Gray; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+#message_text
+{
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
+  font-size: 0.9em;
+  border-color: Gray;
+  background-color: CornSilk;
+  color: Green;
+}
+  
+#messages
+{
+  height: 42em;
+  width: 20em;
+  overflow: auto;
+}
+
+.message_container
+{
+  display: block;
+  margin: 0.3em 0.3em 0em 0em;
+  border-top: 1px dashed LightGray;
+  padding: 0.3em 0.3em 0em 0em;  /* Top Right Bottom Left */
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
+  font-size: 0.9em;
+}
+
+.message_container > .avatar_image 
+{ 
+  float: left;
+  margin: 0.3em 0.3em 0em 0em;
+}
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
