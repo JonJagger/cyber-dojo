@@ -63,14 +63,14 @@ class Dojo
       index << info        
       file_write(index_filename, index)
 
-      file_write(dojo.messages_filename, Dojo::initial_messages)
+      file_write(dojo.messages_filename, Dojo::initial_message)
     end    
   end
 
-  def self.initial_messages
+  def self.initial_message
     [
       { :sender => 'server',
-        :text => "Welcome. I built CyberDojo for you to do deliberate practice. " +
+        :text => "Welcome. CyberDojo is for deliberate practice. " +
           "Don't think about completing, releasing, or shipping; think about practising, repeating, and improving."  
       },
     ]

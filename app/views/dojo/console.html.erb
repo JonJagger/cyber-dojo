@@ -1,0 +1,78 @@
+
+<h1>CyberDojo</h1>
+<h3>Collaborative Coding Practice</h3>
+
+<table>
+
+<tr>
+<td class="panel">
+      <form action="/dojo/new">
+        <div>Choose your CyberDojo's name
+          <br/>
+          <br/>
+          <input type="text"
+                 class="name_input"
+                 name="dojo_name"
+                 size="15"
+                 value="" />
+          and
+          <input type="submit"
+                 class="main_button"
+                 id="new_button"
+                 name="new"
+                 value="Configure It" />
+          <% if flash[:new_notice] -%>
+            <div class="notice"><%= flash[:new_notice] -%></div>
+          <% end -%>
+        </div>
+      </form>
+</td>
+</tr>
+<tr>
+<td class="panel">
+      
+        <div>
+          Then, on <em>each</em> participating computer type in your CyberDojo's name
+          <br/>
+          <br/>
+        
+          <input type="text"
+                 class="name_input"
+                 name="dojo_name"
+                 size="15"
+                 value="<%=@dojo_name-%>" />
+          and         
+          <input type="submit"
+                 class="main_button"
+                 name="enter"
+                 id="enter_button"
+                 value="Start Coding" />
+          or 
+          <input type="submit"
+                 class="main_button"
+                 name="resume"
+                 id="resume_button"
+                 value="Resume Coding" />
+          or
+          <input type="submit"
+                 class="main_button"
+                 name="review"
+                 id="review_button"
+                 value="Review Code" />
+      
+          <% if flash[:enter_notice] -%>
+            <div class="notice"><%= flash[:enter_notice] -%></div>
+          <% end -%>
+          
+         <br/>
+         <br/>
+         The aim is to work <em>collectively</em> towards solutions on <em>all</em> computers
+          
+        </div>
+      </form>
+      
+</td>
+</tr>
+
+</table>
+

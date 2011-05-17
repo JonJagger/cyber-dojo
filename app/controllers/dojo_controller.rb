@@ -6,6 +6,10 @@ class DojoController < ApplicationController
     # offers new, enter, resume, review
   end
  
+  def console
+    # allows facilitator to post messages 
+  end
+  
   def new
     configure(params)
     if dojo_name == ""
