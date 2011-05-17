@@ -1,6 +1,14 @@
 
 def avatar_image(one, size)
-  image_tag "avatars/#{one.downcase}.jpg", 
+  
+  one = one.downcase
+  if one == 'server' or one == 'rotate'
+    ext = 'png'
+  else
+    ext = 'jpg'
+  end
+  
+  image_tag "avatars/#{one}.#{ext}", 
    		:title => "#{one.humanize}",
       :width => size,
       :height => size,

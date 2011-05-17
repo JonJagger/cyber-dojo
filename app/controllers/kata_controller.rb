@@ -36,7 +36,7 @@ class KataController < ApplicationController
     @increments = @avatar.read_manifest(@manifest)    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    @editor_text = @manifest[:editor_text]
+    #@editor_text = @manifest[:editor_text]
   end
 
   def run_tests

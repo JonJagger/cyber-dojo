@@ -8,23 +8,6 @@ class Dojo
 
   Index_filename = 'index.rb' 
 
-  def self.rotation_choices
-    [
-      { :mins => 5,  :label => "5 mins",  :checked => "checked" },
-      { :mins => 10, :label => "10 mins", :checked => ""  },
-      { :mins => 10*365*24*60, :label => "don't",   :checked => ""  },      
-    ]
-  end
-  
-  def self.duration_choices
-    [
-      { :mins => 30, :label => "30 mins", :checked => "" },
-      { :mins => 60, :label => "1 hour",  :checked => "checked" },
-      { :mins => 120,:label => "2 hours", :checked => "" },
-      { :mins => 10*365*24*60, :label => "forever", :checked => "" },
-    ]
-  end
-  
   def self.find(params)
     name = params[:dojo_name]
     root_folder = params[:dojo_root]    
@@ -80,8 +63,17 @@ class Dojo
       index << info        
       file_write(index_filename, index)
 
-      file_write(dojo.messages_filename, [])
+      file_write(dojo.messages_filename, Dojo::initial_messages)
     end    
+  end
+
+  def self.initial_messages
+    [
+      { :sender => 'server',
+        :text => "Welcome. I built CyberDojo for you to do deliberate practice. " +
+          "Don't think about completing, releasing, or shipping; think about practising, repeating, and improving."  
+      },
+    ]
   end
   
   def self.inner_folder(name)

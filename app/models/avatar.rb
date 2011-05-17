@@ -36,8 +36,8 @@ class Avatar
           TestRunner::save_file(sandbox, filename, file)
         end
 
+        kata.manifest[:current_filename] = 'instructions'
         kata.manifest[:output] = initial_output_text
-        kata.manifest[:editor_text] = initial_editor_text
         kata.manifest.delete(:hidden_filenames)
         kata.manifest.delete(:hidden_pathnames)
         file_write(pathed(Manifest_filename), kata.manifest)
@@ -81,7 +81,6 @@ class Avatar
       manifest[:visible_files] = read_manifest[:visible_files]
       manifest[:current_filename] = read_manifest[:current_filename]
       manifest[:output] = read_manifest[:output]
-      manifest[:editor_text] = read_manifest[:editor_text]
       
       cmd  = "cd #{folder};"
       cmd += "git show #{tag}:#{Increments_filename}"
@@ -129,8 +128,6 @@ private
     folder + '/' + filename
   end
 
-  # The number of entries in this file equals the number
-  # of git commits/tags, including zero.
   Increments_filename = 'increments.rb'
   Filesets_filename = 'filesets.rb'
   Manifest_filename = 'manifest.rb'
@@ -139,28 +136,6 @@ private
     Avatar::names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
   end
 
-  def initial_editor_text
-    [
-      '',
-      '',
-      '',
-      " <---- This is the #{@name.capitalize} computer.",
-      '',
-      '',
-      "                                     The status of all computers ---->",
-      '                                     periodically updates here.',
-      '',
-      '',
-      ' <---- Click these buttons to create new files,',
-      '       rename files, and delete files.',
-      '',
-      '',
-      '',
-      ' <---- Click a filename button and it will',
-      '       appear here, ready for editing.',      
-    ].join("\n")      
-  end
-  
   def initial_output_text
     [ 
       '',

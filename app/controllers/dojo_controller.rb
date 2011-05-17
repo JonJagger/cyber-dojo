@@ -24,8 +24,6 @@ class DojoController < ApplicationController
     @dojo = Dojo.new(params)
     @katas = FileSet.new(@dojo.filesets_root, 'kata').choices
     @languages = FileSet.new(@dojo.filesets_root, 'language').choices
-    @durations = Dojo::duration_choices
-    @rotations = Dojo::rotation_choices
     @kata_info = {}
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'

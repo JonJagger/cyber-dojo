@@ -44,14 +44,12 @@
             <td>
              <textarea cols=20" rows="1" name="message_text" id="message_text"></textarea>
             </td>
-            
-            <!-- TODO: when posted message has been posted remove it from message_text -->
-            
+                       
             <td>
               <%= tag("input", 
                 { :type => "button",
                   :class => "button",
-                  :onclick => "#{remote_function(post_message_options)};",
+                  :onclick => "#{remote_function(post_message_options)};$j('#message_text').val('');",
                   :name => "post_message",
                   :value => "Post",            
                 }) -%>
