@@ -19,7 +19,6 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
-
     @manifest = {}
     @increments = @avatar.read_manifest(@manifest, params[:tag])   
     @current_file = @manifest[:current_filename]
@@ -36,7 +35,6 @@ class KataController < ApplicationController
     @increments = @avatar.read_manifest(@manifest)    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    #@editor_text = @manifest[:editor_text]
   end
 
   def run_tests

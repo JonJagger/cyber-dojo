@@ -43,7 +43,7 @@ $j(document).ready(function() {
                     <% end -%>
                   </td>
                   <td>
-                    <span id="increment_number"><%= @increments.length.to_s -%></span>
+                    <span id="increment_number"><%= @increments.length.to_s -%> / <%= @avatar.increments.length -%></span>
                   </td>                
                   <td>
                     <%= render :partial => 'next_increment_button' -%>                      
