@@ -1,22 +1,16 @@
  
 <h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
 
-<% avatars = @dojo.avatars -%>
-<% languages = avatars.collect { |avatar| avatar.kata.language }.uniq -%>
-<% katas = avatars.collect { |avatar| avatar.kata.name }.uniq -%>
-
 <h4 align="center">
-  <% if languages.length == 1 -%> 
-    <%= languages[0] -%>,
+  <% if @languages.length == 1 -%> 
+    <%= @languages[0] -%>,
   <% end -%>
-  <% if katas.length == 1 -%> 
-    <%= katas[0] -%>, 
+  <% if @katas.length == 1 -%> 
+    <%= @katas[0] -%> 
   <% end -%>
-  <%= age_or_closed(@dojo) -%>
 </h4>
 
-<div class="panel">
-<table>
+<table class="panel">
   <% @dojo.avatars.each do |avatar| -%>
   <tr>
 
@@ -31,13 +25,12 @@
     <td>
       <span class="small_title"><%= avatar.name.capitalize -%></span>
       <% kata = avatar.kata -%>
-      <% if languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
-      <% if katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>
+      <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
+      <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>
     </td>    
   </tr>
   <% end -%>
 
 </table>
-</div>
 
 

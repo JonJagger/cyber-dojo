@@ -2,14 +2,11 @@
 class DojoController < ApplicationController
  
   def index
+    # offers new, start, resume, dashboard
+    configure(params)
     @dojo_name = dojo_name
-    # offers new, enter, resume, review
   end
  
-  def console
-    # allows facilitator to post messages 
-  end
-  
   def new
     configure(params)
     if dojo_name == ""
@@ -44,19 +41,19 @@ class DojoController < ApplicationController
   def enter
     configure(params)
     if dojo_name == ""
-      flash[:enter_notice] = 'Please choose a name'
+      flash[:notice] = 'Please choose a name'
       redirect_to :action => :index
     elsif !Dojo.find(params)
-      flash[:enter_notice] = 'There is no CyberDojo named ' + dojo_name
+      flash[:notice] = 'There is no CyberDojo named ' + dojo_name
       redirect_to :action => :index, :dojo_name => dojo_name
-    elsif !params[:review] and Dojo.new(params).closed
-      flash[:enter_notice] = 'The CyberDojo named ' + dojo_name + ' has ended'
+    elsif !params[:dashboard] and Dojo.new(params).closed
+      flash[:notice] = 'The CyberDojo named ' + dojo_name + ' has ended'
       redirect_to :action => :index, :dojo_name => dojo_name
-    elsif params[:enter]
+    elsif params[:start]
       redirect_to :controller => :kata, :action => :enter, :dojo_name => dojo_name
     elsif params[:resume]
       redirect_to :action => :resume, :dojo_name => dojo_name
-    elsif params[:review]
+    elsif params[:dashboard]
       redirect_to :action => :dashboard, :dojo_name => dojo_name
     end
   end
@@ -64,16 +61,27 @@ class DojoController < ApplicationController
   def resume
     configure(params)
     @dojo = Dojo.new(params) 
+    avatars = @dojo.avatars
+    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
+    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
   end
   
   def dashboard
     configure(params)
-    @dojo = Dojo.new(params)
+    @dojo = Dojo.new(params)    
+    @messages = @dojo.messages
+    avatars = @dojo.avatars
+    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
+    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
   end
 
   def dashboard_heartbeat
     configure(params)
     @dojo = Dojo.new(params)
+    @messages = @dojo.messages
+    avatars = @dojo.avatars
+    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
+    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
     respond_to do |format|
       format.js if request.xhr?
     end

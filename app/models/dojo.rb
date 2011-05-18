@@ -109,15 +109,6 @@ class Dojo
     false
   end
   
-  def age
-    diff = Time.now - created
-    diff,secs = diff.divmod(60)
-    total_mins = diff
-    diff,mins = diff.divmod(60)
-    days,hours = diff.divmod(24)    
-    { :days => days, :hours => hours, :mins => mins, :secs => secs.to_i, :total_mins => total_mins }
-  end
-
   def avatars
     Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) }
   end

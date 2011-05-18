@@ -1,0 +1,38 @@
+ 
+<div id="traffic_lights" class="panel">
+  <table>
+  
+    <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>
+    <tr>
+      <td>
+        <table align="right">
+          <tr>
+            <% increments.each do |inc| -%>
+              <%= traffic_light(@dojo.name, avatar_name, inc)-%>
+            <% end -%>
+          </tr>
+        </table>
+      </td>
+  
+      <td>
+        <%= review_button(@dojo.name, avatar_name) -%>
+      </td>
+  
+      <td>
+        <td><%= avatar_image(avatar_name, 45) -%></td>
+      </td>
+      
+      <td>
+        <span class="small_title"><%= avatar_name.capitalize -%></span>
+        <% avatar = Avatar.new(@dojo, avatar_name) -%> 
+        <% kata = avatar.kata -%>
+        <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
+        <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
+      </td>
+      
+    </tr>
+    <% end -%>
+  
+  </table>
+</div>
+

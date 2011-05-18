@@ -1,7 +1,25 @@
  
 <h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
 
-<%= render :partial => 'dashboard' -%>
+<h4 align="center">
+  <% if @languages.length == 1 -%> 
+    <%= @languages[0] -%>, 
+  <% end -%>
+  <% if @katas.length == 1 -%> 
+    <%= @katas[0] -%>
+  <% end -%>
+</h4>
+
+<table>
+  <tr valign="top">
+    <td>
+      <%= render :partial => 'traffic_lights' -%>
+    </td>
+    <td>
+      <%= render :partial => 'messages_panel' -%>
+    </td>
+  </tr>
+</table>
 
 <%= periodically_call_remote :url => { :action => 'dashboard_heartbeat',
                                        :dojo_name => @dojo.name

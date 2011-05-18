@@ -140,14 +140,12 @@ private
     [ 
       '',
       '',
-      ' <---- Click Run Tests to start. The output will appear here.',
+      '  Click Run Tests to start. The output will appear here.',
       '',
-      '',
-      ' <---- A traffic light will also apppear:',
-      '',
-      '          (o) red    - the tests ran but one or more failed',
-      '          (o) yellow - the tests could not be run',
-      '          (o) green  - the tests ran and all passed',
+      '  A traffic light will also apppear:',
+      '     (o) red   - the tests ran but one or more failed',
+      '     (o) amber - the tests could not be run',
+      '     (o) green - the tests ran and all passed',
       '',
     ].join("\n")
   end

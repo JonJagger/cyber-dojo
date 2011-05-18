@@ -46,8 +46,8 @@
           and         
           <input type="submit"
                  class="main_button"
-                 name="enter"
-                 id="enter_button"
+                 name="start"
+                 id="start_button"
                  value="Start Coding" />
           or 
           <input type="submit"
@@ -58,12 +58,12 @@
           or
           <input type="submit"
                  class="main_button"
-                 name="review"
-                 id="review_button"
-                 value="Review Code" />
+                 name="dashboard"
+                 id="dashboard_button"
+                 value="Dashboard" />
       
-          <% if flash[:enter_notice] -%>
-            <div class="notice"><%= flash[:enter_notice] -%></div>
+          <% if flash[:notice] -%>
+            <div class="notice"><%= flash[:notice] -%></div>
           <% end -%>
           
          <br/>
