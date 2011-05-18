@@ -1,17 +1,18 @@
 
-function createLineNumbersFor(id)
-{  
+var line_numbers = function() {
   var string = '';
+  var crlf = '';
   for (var no = 1; no < 999; no++) 
   {
-    if (string.length > 0) 
-    {
-      string += '\r\n';
-    }
-    string += no;
+    string += crlf + no;
+    crlf = '\r\n';
   }
-       
-  var ta = document.getElementById(id);
+  return string;  
+}();
+
+function createLineNumbersForEditor()
+{         
+  var ta = document.getElementById('editor');
   var el = document.createElement('textarea'); // line-numbers textarea
   
   el.setAttribute('readonly', 'true');  
@@ -24,9 +25,9 @@ function createLineNumbersFor(id)
   
   el.style.width    = '33px';
   
-  el.innerHTML      = string;  // Firefox renders \n linebreak
-  el.innerText      = string;  // IE6 renders \n line break
-  el.value          = string;  // Safari
+  el.innerHTML      = line_numbers;  // Firefox renders \n linebreak
+  el.innerText      = line_numbers;  // IE6 renders \n line break
+  el.value          = line_numbers;  // Safari
   
   el.style.zIndex   = 0; 
   ta.style.zIndex   = 1;

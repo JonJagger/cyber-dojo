@@ -3,7 +3,7 @@
 
 $j(document).ready(function() {
   rebuildFilenameList();
-  createLineNumbersFor('editor');
+  createLineNumbersForEditor();
   loadFile("<%=@current_file-%>");
 });
 
@@ -13,15 +13,19 @@ $j(document).ready(function() {
   <tr valign="top">
     <td>
       <div class="panel">
-        <%= link_to "#{@dojo.name}", 
-             { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
-             { :class => "title", :target => "_blank" } -%>
+        <div class="small_title">
+          <%= link_to "#{@dojo.name}", 
+               { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
+               { :class => "title", :target => "_blank" } -%>
+        </div>
+        <div class="small_title">
+          <%= @kata.language -%>,
+          <%= @kata.name -%>
+        </div>
+        
         <div>
           <%= avatar_image(@avatar.name, 65) -%>
         </div>
- 
-        <span class="small_title"><%= @kata.language -%></span>
-        <span class="small_title"><%= @kata.name -%></span>
       </div>
            
       <div class="panel">
@@ -39,7 +43,9 @@ $j(document).ready(function() {
                     <% end -%>
                   </td>
                   <td>
-                    <span id="increment_number"><%= @increments.length.to_s -%> / <%= @avatar.increments.length -%></span>
+                    <div id="increment_number">
+                       <%= @increments.length.to_s -%> / <%= @avatar.increments.length -%>
+                    </div>
                   </td>                
                   <td>
                     <%= render :partial => 'next_increment_button' -%>                      

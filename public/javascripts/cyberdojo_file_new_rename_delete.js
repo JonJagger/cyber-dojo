@@ -73,7 +73,6 @@ function deleteFilePrompt(ask)
 
   var fc = fileContent(current_filename);
   fc.parentNode.removeChild(fc);
-  rebuildFilenameList();
   
   var fcp = fileCaretPos(current_filename);
   fcp.parentNode.removeChild(fcp);
@@ -84,6 +83,7 @@ function deleteFilePrompt(ask)
   var fsl = fileScrollLeft(current_filename);
   fsl.parentNode.removeChild(fsl);
 
+  rebuildFilenameList();
   var filenames = allFilenames();
   if (filenames.length !== 0) 
   {
@@ -140,7 +140,7 @@ function refreshLineNumbering()
   // (renaming a file can alter the filename-list panel width)
   var old = $('editor_line_numbers');
   old.parentNode.removeChild(old);
-  createLineNumbersFor('editor');
+  createLineNumbersForEditor();
 }
 
 function createHiddenInput(filename, aspect, value)

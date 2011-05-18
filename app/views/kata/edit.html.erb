@@ -4,7 +4,7 @@
 $j(document).ready(function() {
   var editor = $j('#editor');
   editor.tabby({ tabString: editor.attr('tab') });
-  createLineNumbersFor('editor');
+  createLineNumbersForEditor();
   rebuildFilenameList();
   loadFile("<%=@current_file-%>");  
 });
@@ -22,9 +22,6 @@ $j(document).ready(function() {
   <table>
     <tr valign="top">
       <td>
-        <%= render :partial => 'message_panel' -%>
-      </td>
-      <td>
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
@@ -35,11 +32,12 @@ $j(document).ready(function() {
           <%= render :partial => 'increments' -%>
         </div>
       </td>
+      <td style="width:42em;">
+        <%= render :partial => 'editor' -%>
+        <%= render :partial => 'output' -%>
+      </td>
       <td>
-        <div style="width:42em;">
-          <%= render :partial => 'editor' -%>
-          <%= render :partial => 'output' -%>
-        </div>
+        <%= render :partial => 'message_panel' -%>
       </td>
     </tr>
   </table>

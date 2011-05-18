@@ -184,6 +184,8 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#message_panel { margin-left: 37px; } /* to match line-numbers offset */ 
+
 #message_text, #messages
 {
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
@@ -199,7 +201,7 @@ input[type="checkbox"]:checked+label { color: green; }
   
 #messages
 {
-  height: 40em;
+  height: 42em;
   width: 25em;
   overflow: auto;
 }

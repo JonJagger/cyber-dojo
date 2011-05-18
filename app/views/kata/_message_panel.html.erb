@@ -1,5 +1,5 @@
 
-<div class="panel">
+<div id="message_panel">
           
   <% post_message_options = {
     :url => { :controller => 'kata',
@@ -10,24 +10,27 @@
     :with => "{ message: Field.getValue('message_text')}"
   } -%>
   
-  <table>
+  <table class="panel">
     <tr>
       <td colspan="3">
-        <span class="small_title">
+        <div class="small_title">
           <%= link_to "#{@dojo.name}", 
                { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
                { :class => "title", :target => "_blank" } -%>
-        </span>            
-        <span class="small_title"><%= @avatar.name.humanize -%>: <%= @kata.name -%>, <%= @kata.language -%></span>      
+        </div>            
+        <div class="small_title">
+          <%= @kata.name -%>,
+          <%= @kata.language -%>
+        </div>      
       </td>
     </tr>
     <tr>
       <td>
-         <%= avatar_image(@avatar.name, 45) -%>
+         <%= avatar_image(@avatar.name, 40) -%>
       </td>
     
       <td>
-       <textarea cols=22" rows="2" name="message_text" id="message_text"></textarea>
+       <textarea cols=24" rows="2" name="message_text" id="message_text"></textarea>
       </td>
                  
       <td>
@@ -41,9 +44,10 @@
       </td>
     </tr>
   </table>
-</div>
 
-<div class="panel">
-  <%= render :partial => 'messages' -%>  
+  <div class="panel">
+    <%= render :partial => 'messages' -%>  
+  </div>
+
 </div>
 
