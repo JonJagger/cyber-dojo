@@ -13,7 +13,7 @@ class KataController < ApplicationController
     redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
   end    
     
-  def view
+  def review
     configure(params)
     params[:readonly] = true
     @dojo = Dojo.new(params)

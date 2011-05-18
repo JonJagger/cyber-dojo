@@ -23,7 +23,7 @@ end
 def aref(dojo_name, avatar_name, rung, colour)
   link_to "<span class='#{colour} increment'></span>", 
     { :controller => :kata, 
-      :action => "view?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}" 
+      :action => "review?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{rung[:number]}" 
     }, 
     { :title => "#{rung[:number]}", 
       :target => "_blank" 

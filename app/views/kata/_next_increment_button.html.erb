@@ -1,26 +1,20 @@
 
-<table style="float:right;">
-  <tr>
-    <td>
-      <form action='/kata/view'>
-        <input type='hidden' name='dojo_name' id='dojo_name' value='<%= @dojo.name-%>'/> 
-        <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
-        <input type='hidden' name='tag' id='tag' value='<%= @increments.length + 1-%>' />
-        <button class="button"
-                <% if @increments.length < @avatar.increments.length -%>
-                type="submit"
-                id="play_button">
-                <% else -%>
-                type="button"
-                disabled>
-                <% end -%>
-          <img src="/images/triangle.gif"
-               width="30" 
-               height="30"
-               title="View next increment" />
-        </button>
-      </form>
-    </td>
-  </tr>
-</table>
+<form action='/kata/review'>
+  <input type='hidden' name='dojo_name' id='dojo_name' value='<%= @dojo.name-%>'/> 
+  <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
+  <input type='hidden' name='tag' id='tag' value='<%= @increments.length + 1-%>' />
+  <button class="button"
+          <% if @increments.length < @avatar.increments.length -%>
+          type="submit"
+          id="next_button">
+          <% else -%>
+          type="button"
+          disabled>
+          <% end -%>
+    <img src="/images/triangle.gif"
+         width="30" 
+         height="30"
+         title="View next increment" />
+  </button>
+</form>
 
