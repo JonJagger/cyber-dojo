@@ -18,40 +18,28 @@ $j(document).ready(function() {
 
                    :before   => 'preRunTests();',
                    :complete => 'postRunTests();' do -%> 
-                   <!-- NB: not :loading and not :after -->
 
   <table>
     <tr valign="top">
+      <td>
+        <%= render :partial => 'message_panel' -%>
+      </td>
       <td>
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
         </div>
+        
+        <div class="panel">      
+          <%= render :partial => 'run_tests' -%>
+          <%= render :partial => 'increments' -%>
+        </div>
       </td>
       <td>
-        <%= render :partial => 'editor' -%>
-      </td>
-      <td rowspan=2>
-        <%= render :partial => 'message_panel' -%>
-      </td>
-    </tr>
-    <tr valign="top">
-      <td>
-        <table class="panel">      
-          <tr>
-            <td>
-              <%= render :partial => 'run_tests' -%>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <%= render :partial => 'increments' -%>
-            </td>
-           </tr>
-         </table>
-      </td>
-      <td>
-        <%= render :partial => 'output' -%>
+        <div style="width:42em;">
+          <%= render :partial => 'editor' -%>
+          <%= render :partial => 'output' -%>
+        </div>
       </td>
     </tr>
   </table>

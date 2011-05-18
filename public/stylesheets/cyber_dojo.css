@@ -148,57 +148,50 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#editor, .textarea_with_line_numbers
+#editor, #editor_line_numbers
 {
-  font-weight: bold;
+  font-weight: normal;
   font-size: 11pt;
   border: 0;
   margin: 0;
 }
 
-#editor
-{
+#editor, #output 
+{ 
+  font-weight: normal;
+  width: 100%;
+  background: CornSilk;
+  margin-top: 5px;
+  margin-left: 30px; /* enough for line-numbers */
+  border: 1px dashed LightGray;
+  color: #383838;;
   overflow: auto;
   padding-left: 3px;
-  margin-top: 5px;
-  margin-right: 5px;
-  margin-left: 40px; /* enough for line-numbers */
-  font-family: monospace;
-  font-weight: normal;
-  color: #383838;;
-  background-color: CornSilk;
-  border: 1px dashed lightgray;
 }
 
-.textarea_with_line_numbers
+#editor { font-family: monospace; }
+
+#editor_line_numbers
 {
-  border-right: none;
+  border-top: 1px dashed LightGray;
   display: block;
   background: GhostWhite;
   color: gray;
   font-weight: normal;
 }
 
-#avatar_id { white-space: nowrap; margin-left: 0.3em; }
-
-#output 
-{ 
-  margin-top: 0.5em;
-  margin-left: 40px; /* to match line-numbers */
-  padding: 0.5em;
-  border: 1px dashed LightGray;
-  background: CornSilk;
-  width: 53em;
-}
-
 #output.waiting { border-color: Gray; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#message_text
+#message_text, #messages
 {
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
-  font-size: 0.9em;
+  font-size: 0.8em;
+}
+
+#message_text
+{
   border-color: Gray;
   background-color: CornSilk;
   color: Green;
@@ -207,7 +200,7 @@ input[type="checkbox"]:checked+label { color: green; }
 #messages
 {
   height: 40em;
-  width: 20em;
+  width: 25em;
   overflow: auto;
 }
 
@@ -216,9 +209,7 @@ input[type="checkbox"]:checked+label { color: green; }
   display: block;
   margin: 0.3em 0.3em 0.3em 0em;
   border-top: 1px dashed LightGray;
-  padding: 0.3em 0.3em 0.3em 0em;  /* Top Right Bottom Left */
-  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
-  font-size: 0.9em;
+  padding: 0.3em 0.3em 0.3em 0em;  /* Top Right Bottom Left */ 
 }
 
 .message_container > .avatar_image 
@@ -256,9 +247,4 @@ input[type="checkbox"]:checked+label { color: green; }
 	font-weight: normal;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - */
-
-#server_message_panel
-{
-}
 
