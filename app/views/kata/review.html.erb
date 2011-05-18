@@ -35,6 +35,11 @@ $j(document).ready(function() {
               <table>
                 <tr>
                   <td>
+                    <div id="increment_number">
+                      0
+                    </div>
+                  </td>                
+                  <td>
                     <%= render :partial => 'prev_increment_button' -%>
                   </td>                
                   <td>
@@ -44,12 +49,17 @@ $j(document).ready(function() {
                   </td>
                   <td>
                     <div id="increment_number">
-                       <%= @increments.length.to_s -%> / <%= @avatar.increments.length -%>
+                       <%= @increments.length.to_s -%>
                     </div>
                   </td>                
                   <td>
                     <%= render :partial => 'next_increment_button' -%>                      
                   </td>
+                  <td>
+                    <div id="increment_number">
+                      <%= @avatar.increments.length -%>
+                    </div>
+                  </td>                
                 </tr>
               </table>
             </td>
