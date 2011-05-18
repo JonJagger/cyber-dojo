@@ -138,7 +138,7 @@ function refreshLineNumbering()
 {
   // Ensure line-numbers repositions by removing and re-adding
   // (renaming a file can alter the filename-list panel width)
-  var old = $('line_numbers');
+  var old = $('editor_line_numbers');
   old.parentNode.removeChild(old);
   createLineNumbersFor('editor');
 }
