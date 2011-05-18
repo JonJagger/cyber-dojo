@@ -1,0 +1,11 @@
+
+<div class="panel">
+  <span class="small_title">
+    <%= link_to "#{@dojo.name}", 
+         { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
+         { :class => "title", :target => "_blank" } -%>
+  </span>            
+  <span class="small_title"><%= @kata.name -%></span>
+  <span class="small_title"><%= @kata.language -%></span>
+</div>
+

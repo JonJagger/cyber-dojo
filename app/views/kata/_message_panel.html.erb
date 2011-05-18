@@ -1,0 +1,49 @@
+
+<div class="panel">
+          
+  <% post_message_options = {
+    :url => { :controller => 'kata',
+              :action => 'post_message',
+              :dojo_name => @dojo.name,
+              :avatar => @avatar.name
+            },
+    :with => "{ message: Field.getValue('message_text')}"
+  } -%>
+  
+  <table>
+    <tr>
+      <td colspan="3">
+        <span class="small_title">
+          <%= link_to "#{@dojo.name}", 
+               { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
+               { :class => "title", :target => "_blank" } -%>
+        </span>            
+        <span class="small_title"><%= @avatar.name.humanize -%>: <%= @kata.name -%>, <%= @kata.language -%></span>      
+      </td>
+    </tr>
+    <tr>
+      <td>
+         <%= avatar_image(@avatar.name, 45) -%>
+      </td>
+    
+      <td>
+       <textarea cols=20" rows="2" name="message_text" id="message_text"></textarea>
+      </td>
+                 
+      <td>
+        <%= tag("input", 
+          { :type => "button",
+            :class => "button",
+            :onclick => "#{remote_function(post_message_options)};$j('#message_text').val('');",
+            :name => "post_message",
+            :value => "Post",            
+          }) -%>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="panel">
+  <%= render :partial => 'messages' -%>  
+</div>
+

@@ -206,7 +206,7 @@ input[type="checkbox"]:checked+label { color: green; }
   
 #messages
 {
-  height: 42em;
+  height: 40em;
   width: 20em;
   overflow: auto;
 }
@@ -214,9 +214,9 @@ input[type="checkbox"]:checked+label { color: green; }
 .message_container
 {
   display: block;
-  margin: 0.3em 0.3em 0em 0em;
+  margin: 0.3em 0.3em 0.3em 0em;
   border-top: 1px dashed LightGray;
-  padding: 0.3em 0.3em 0em 0em;  /* Top Right Bottom Left */
+  padding: 0.3em 0.3em 0.3em 0em;  /* Top Right Bottom Left */
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   font-size: 0.9em;
 }

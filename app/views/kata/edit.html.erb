@@ -20,8 +20,50 @@ $j(document).ready(function() {
                    :complete => 'postRunTests();' do -%> 
                    <!-- NB: not :loading and not :after -->
 
-  <%= render :partial => 'edit_panel' -%>
+  <table>
+    <tr valign="top">
+      <td>
+        <div class="panel">
+          <%= render :partial => 'fileops' -%>
+          <%= render :partial => 'filenames' -%>
+        </div>
+      </td>
+      <td>
+        <%= render :partial => 'editor' -%>
+      </td>
+      <td rowspan=2>
+        <%= render :partial => 'message_panel' -%>
+      </td>
+    </tr>
+    <tr valign="top">
+      <td>
+        <table class="panel">      
+          <tr>
+            <td>
+              <%= render :partial => 'run_tests' -%>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <%= render :partial => 'increments' -%>
+            </td>
+           </tr>
+         </table>
+      </td>
+      <td>
+        <%= render :partial => 'output' -%>
+      </td>
+    </tr>
+  </table>
+  
+  <%= periodically_call_remote :url => { :action => 'heartbeat',
+                                         :dojo_name => @dojo.name,
+                                         :avatar => @avatar.name
+                                       }, 
+                               :frequency => @dojo.seconds_per_heartbeat -%>
+                   
   <%= render :partial => 'hidden_file_contents' -%>
+
 <% end -%>
 
 
