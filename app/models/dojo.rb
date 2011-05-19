@@ -113,8 +113,14 @@ class Dojo
     Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) }
   end
 
+  def all_increments
+    all = {}
+    avatars.each { |avatar| all[avatar.name] = avatar.increments }
+    all.sort
+  end
+  
   def seconds_per_heartbeat
-    5
+    10
   end
 
   def messages

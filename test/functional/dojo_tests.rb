@@ -34,18 +34,15 @@ class DojoTests < ActionController::TestCase
     assert !Dojo::create(params)    
   end
   
-  def test_that_configuring_a_new_dojo_creates_three_core_files
+  def test_that_configuring_a_new_dojo_creates_two_core_files
     root_test_folder_reset
     params = make_params
-    params['duration'] = 60
-    params['rotation'] = 5
     params['kata'] = { 0 => 'Unsplice' }
     params['language'] = { 0 => 'C++' }    
     assert Dojo::create(params)
     Dojo::configure(params)
     dojo = Dojo.new(params)
-    assert File.exists?(dojo.ladder_filename), 'ladder.rb created'
-    assert File.exists?(dojo.rotation_filename), 'rotation.rb created'
+    assert File.exists?(dojo.messages_filename), 'messages.rb created'
     assert File.exists?(dojo.manifest_filename), 'manifest.rb created'
   end
 
@@ -61,66 +58,6 @@ class DojoTests < ActionController::TestCase
     assert File.exists?(avatar.folder), 'avatar folder created'    
   end
   
-  def test_that_a_player_can_create_a_new_dojo_with_specified_duration
-    root_test_folder_reset
-    params = make_params
-    assert Dojo::create(params)
-    specified_duration = 65
-    params['duration'] = specified_duration
-    params['rotation'] = 5
-    params['kata'] = { 0 => 'Unsplice' }
-    params['language'] = { 0 => 'C++' }
-    Dojo::configure(params)
-    dojo = Dojo.new(params)
-    manifest = eval IO.read(dojo.manifest_filename)
-    assert_equal specified_duration, manifest[:minutes_duration]    
-  end
-  
-  def test_that_a_player_can_create_a_new_dojo_with_forever_duration
-    root_test_folder_reset
-    params = make_params
-    assert Dojo::create(params)
-    years_10 = 10*365*24*60
-    params['duration'] = years_10
-    params['rotation'] = 5
-    params['kata'] = { 0 => 'Unsplice' }
-    params['language'] = { 0 => 'C++' }
-    Dojo::configure(params)
-    dojo = Dojo.new(params)
-    manifest = eval IO.read(dojo.manifest_filename)
-    assert_equal years_10, manifest[:minutes_duration]    
-    end
-  
-  def test_that_a_player_can_create_a_new_dojo_with_specified_rotation
-    root_test_folder_reset
-    params = make_params
-    assert Dojo::create(params)
-    specified_rotation = 10
-    params['rotation'] = specified_rotation
-    params['duration'] = 60
-    params['kata'] = { 0 => 'Unsplice' }
-    params['language'] = { 0 => 'C++' }
-    Dojo::configure(params)
-    dojo = Dojo.new(params)
-    manifest = eval IO.read(dojo.manifest_filename)
-    assert_equal specified_rotation, manifest[:minutes_per_rotation]    
-  end
-  
-  def test_that_a_player_can_create_a_new_dojo_with_rotation_of_none
-    root_test_folder_reset
-    params = make_params
-    assert Dojo::create(params)
-    years_10 = 10*365*24*60
-    params['rotation'] = years_10
-    params['duration'] = 60
-    params['kata'] = { 0 => 'Unsplice' }
-    params['language'] = { 0 => 'C++' }
-    Dojo::configure(params)
-    dojo = Dojo.new(params)
-    manifest = eval IO.read(dojo.manifest_filename)
-    assert_equal years_10, manifest[:minutes_per_rotation]    
-  end
-
   def test_that_a_player_can_create_a_new_avatar_with_specified_kata
     root_test_folder_reset
     params = make_params
@@ -159,7 +96,6 @@ class DojoTests < ActionController::TestCase
     assert_equal language_choice, actual_filesets['language']
   end
   
-  
   def test_makefile_filter_filename_not_makefile
      name     = 'not_makefile'
      content  = "    abc"
@@ -182,6 +118,57 @@ class DojoTests < ActionController::TestCase
      actual   = TestRunner.makefile_filter(name, content)
      expected = "\tabc"
      assert_equal expected, actual
+  end
+  
+  def test_gap_all
+    all_incs =
+    {
+      :hippo => [ a={ :time => [2011,5,18,9,50,24] },
+                  b={ :time => [2011,5,18,9,50,27] },
+                ],
+      :lion =>  [ c={ :time => [2011,5,18,9,50,25] },
+                  d={ :time => [2011,5,18,9,50,40] },
+                ],
+      :panda => [ e={ :time => [2011,5,18,9,50,39] },
+                ]
+    }
+    created = Time.mktime(*[2011,5,18,9,50,23])
+    now = Time.mktime(*d[:time])
+    seconds_per_gap = 5
+    actual_time_gaps = time_gaps(created, now, seconds_per_gap)
+    expected_time_gaps = 
+    [
+      created + 0*seconds_per_gap,
+      created + 1*seconds_per_gap,
+      created + 2*seconds_per_gap,
+      created + 3*seconds_per_gap,
+      created + 4*seconds_per_gap,
+    ]
+    assert_equal expected_time_gaps, actual_time_gaps
+
+    expected_gaps = {
+      :hippo => [
+        [a,b], # [50:23 -> 50:28] # 0-5 
+        [],    # [50:28 -> 50:33] # 5-10 
+        [],    # [50:33 -> 50:38] # 10-15 
+        [],    # [50:38 -> 50:43] # 15-20 
+      ],
+      :lion => [
+        [c],
+        [],
+        [],
+        [d],
+      ],
+      :panda => [
+        [],
+        [],
+        [],
+        [e],
+      ]    
+    }
+
+    actual_gaps = gap_all(all_incs, created, now, seconds_per_gap)
+    assert_equal expected_gaps, actual_gaps
   end
 
 end

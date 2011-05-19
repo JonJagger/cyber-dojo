@@ -1,37 +1,47 @@
  
 <div id="traffic_lights" class="panel">
-  <table>
+  <table cellspacing="0">
   
-    <% all_avatar_increments(@dojo).each do |avatar_name,increments| -%>
-    <tr>
-          <td>
-            <%= review_button(@dojo.name, avatar_name) -%>
-          </td>
+    <% index = 0 -%>
+    <% seconds_per_td = 10 -%>
+    <% gap_all(@dojo.all_increments, @dojo.created, Time.now, seconds_per_td).each do |avatar_name,gapped| -%>
+      <% parity = (index % 2 == 0) ? "even" : "odd" -%>
+      <% index += 1 -%>
+      <tr class="<%=parity-%> traffic_light_row">
+        <td>
+          <%= review_button(@dojo.name, avatar_name) -%>
+        </td>
+        
+        <td>
+          <td><%= avatar_image(avatar_name, 45) -%></td>
+        </td>
+        
+        <td>
+          <span class="small_title"><%= avatar_name.capitalize -%></span>
+          <% avatar = Avatar.new(@dojo, avatar_name) -%> 
+          <% kata = avatar.kata -%>
+          <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
+          <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
+        </td>
       
+        <% # 10 secs per td, so 6 per minute, 60 for 10 mins -%>
+        <% max_tds = 120 -%>
+        <% recent(gapped, max_tds).each do |incs| -%>
           <td>
-            <td><%= avatar_image(avatar_name, 45) -%></td>
+            <% if incs == [] -%>
+              &nbsp;
+            <% end -%>
+            <table>
+              <tr>
+                <% incs.each do |inc| -%>
+                  <%= traffic_light(@dojo.name, avatar_name, inc) -%>
+                <% end -%>
+              </tr>
+            </table>
           </td>
-          
-          <td>
-            <span class="small_title"><%= avatar_name.capitalize -%></span>
-            <% avatar = Avatar.new(@dojo, avatar_name) -%> 
-            <% kata = avatar.kata -%>
-            <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
-            <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
-          </td>
-    
-          <td>
-            <div class="traffic_light_row">
-              <table>
-                <tr>
-                  <% increments.each do |inc| -%>
-                    <%= traffic_light(@dojo.name, avatar_name, inc)-%>
-                  <% end -%>
-                </tr>
-              </table>
-            </div>
-          </td>
-    </tr>
+        <% end -%>
+      
+      </tr>    
     <% end -%>
   
   </table>

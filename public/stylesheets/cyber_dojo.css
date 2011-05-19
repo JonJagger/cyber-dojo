@@ -204,32 +204,24 @@ input[type="checkbox"]:checked+label { color: green; }
 #messages
 {
   height: 42em;
-  width: 25em;
+  width: 23em;
   overflow: auto;
 }
 
 .message_container
 {
   display: block;
-  margin: 0.3em;
-  padding: 0.3em;
+  margin: 0.1em;
+  padding: 0.1em;
 }
 .message_container.odd  { background-color: Ivory; }
 .message_container.even { background-color: CornSilk; }
 
-.avatar_image { margin: 0.3em; }
+.avatar_image { margin: 0.1em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#traffic_lights 
-{
-  width: 100em;
-  overflow: auto;  /*TODO: drop this. Auto refresh interferes*/
-}
-
-.traffic_light_row { border-bottom: 1px dashed LightGray; }
-
-.traffic_light { background-color: #FFECCB; }
+.traffic_light_row.even { background-color: #FFC; }
 
 .increment
 {
