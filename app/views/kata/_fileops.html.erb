@@ -39,8 +39,11 @@ function disableRunTestsButtonIf(closed)
 <% fop="file_op" -%> 
 <% end -%>
 
-<table style="margin-left:0.1em">
+<table>
   <tr>
+     <td>
+       <span class="small_title">Files:</span>
+     </td>
      <td class="<%=fop-%>" 
          id="file_op_new"
          <% if !@dojo.readonly -%>
@@ -48,10 +51,6 @@ function disableRunTestsButtonIf(closed)
            onclick="newFile();"
          <% end -%>
          >
-       <img src="/images/file-new-icon.png"
-            alt="new"
-            width="<%=size-%>"
-            height="<%=size-%>"/><br/>
        <span class="file_op_name">new</span>
      </td>
      <td class="<%=fop-%>" 
@@ -61,10 +60,6 @@ function disableRunTestsButtonIf(closed)
            onclick="renameFile();"
          <% end -%>
          >
-       <img src="/images/file-rename-icon.png"
-            alt="rename"
-            width="<%=size-%>"
-            height="<%=size-%>"/><br/>
        <span class="file_op_name">rename</span>
      </td>
      <td class="<%=fop-%>"
@@ -74,10 +69,6 @@ function disableRunTestsButtonIf(closed)
            onclick="deleteFile();"
          <% end -%>
          >
-       <img src="/images/file-delete-icon.png"
-            alt="delete"
-            width="<%=size-%>"
-            height="<%=size-%>"/><br/>
        <span class="file_op_name">delete</span>
      </td>
    </tr>

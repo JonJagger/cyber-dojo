@@ -176,7 +176,7 @@ input[type="checkbox"]:checked+label { color: green; }
   border-top: 1px dashed LightGray;
   display: block;
   background: GhostWhite;
-  color: gray;
+  color: #B0B0B0;
   font-weight: normal;
 }
 
@@ -222,13 +222,21 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#traffic_lights 
+{
+  width: 100em;
+  overflow: auto;
+}
+
+.traffic_light_row { border-bottom:1px dashed LightGray; }
+
 .traffic_light { background-color: #FFECCB; }
 
 .increment
 {
   display: block;
   margin: 2px 0px 0px 1px; /* Top Right Bottom Left */
-  padding: 0.15em;
+  padding: 3px; /* increasing this increases the traffic light circles */
   width: 8px;
   height: 8px;
   border-radius: 20px;
@@ -240,7 +248,7 @@ input[type="checkbox"]:checked+label { color: green; }
 .increment.failed { background-color: #F33; /* red */   }
 .increment.error  { background-color: #FC3; /* amber */ }
 .increment.passed { background-color: #3C3; /* green */ }
-.increment.off    { background-color: #8B8378; /* darkish gray */ }
+.increment.off    { background-color: LightGray; }
 
 #increment_number
 {

@@ -2,7 +2,7 @@
 def avatar_image(one, size)
   
   one = one.downcase
-  if one == 'server' or one == 'rotate'
+  if one == 'server'
     ext = 'png'
   else
     ext = 'jpg'

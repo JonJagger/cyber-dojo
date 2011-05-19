@@ -12,19 +12,6 @@
   
   <table class="panel">
     <tr>
-      <td colspan="3">
-        <div class="small_title">
-          <%= link_to "#{@dojo.name}", 
-               { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
-               { :class => "title", :target => "_blank" } -%>
-        </div>            
-        <div class="small_title">
-          <%= @kata.name -%>,
-          <%= @kata.language -%>
-        </div>      
-      </td>
-    </tr>
-    <tr>
       <td>
          <%= avatar_image(@avatar.name, 40) -%>
       </td>
