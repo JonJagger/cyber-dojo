@@ -127,8 +127,11 @@ class Dojo
     file = messages_filename
     io_lock(file) do
       messages = eval IO.read(file)
-      messages.insert(0, { :sender => sender, :text => text })
-      file_write(file, messages)
+      text = text.lstrip.rstrip
+      if text != ''
+        messages.insert(0, { :sender => sender, :text => text })
+        file_write(file, messages)
+      end
     end
     messages
   end
