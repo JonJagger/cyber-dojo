@@ -133,6 +133,8 @@ div[class~="filename"], *[class~="fileset"]
   font-size: 11pt;
   cursor: pointer;
   white-space: nowrap;
+  padding-bottom: 2px;
+  
 }
 
 *[class~="fileset"]:hover, div[class~="filename"]:hover, .file_op:hover, .button:hover, .main_button:hover
@@ -209,26 +211,23 @@ input[type="checkbox"]:checked+label { color: green; }
 .message_container
 {
   display: block;
-  margin: 0.3em 0.3em 0.3em 0em;
-  border-top: 1px dashed LightGray;
-  padding: 0.3em 0.3em 0.3em 0em;  /* Top Right Bottom Left */ 
+  margin: 0.3em;
+  padding: 0.3em;
 }
+.message_container.odd  { background-color: Ivory; }
+.message_container.even { background-color: CornSilk; }
 
-.message_container > .avatar_image 
-{ 
-  float: left;
-  margin: 0.3em 0.3em 0em 0em;
-}
+.avatar_image { margin: 0.3em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
 #traffic_lights 
 {
   width: 100em;
-  overflow: auto;
+  overflow: auto;  /*TODO: drop this. Auto refresh interferes*/
 }
 
-.traffic_light_row { border-bottom:1px dashed LightGray; }
+.traffic_light_row { border-bottom: 1px dashed LightGray; }
 
 .traffic_light { background-color: #FFECCB; }
 

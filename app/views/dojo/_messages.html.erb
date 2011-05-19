@@ -1,11 +1,20 @@
 
 <div id="messages">
   <table>
-    <% @messages.each do |message| -%>
-       <tr>
-         <td class="message_container">
-           <%= avatar_image(message[:sender].to_s, 40) -%>
-           <%= message[:text] -%>
+    <% @messages.each_with_index do |message,index| -%>
+       <% parity = (index % 2 == 0) ? "even" : "odd" -%>
+       <tr class="<%=parity-%> message_container">
+         <td>
+           <table>
+             <tr valign="top">
+               <td>
+                 <%= avatar_image(message[:sender].to_s, 40) -%>
+               </td>
+               <td style="vertical-align: middle;">
+                 <%= message[:text] -%>
+               </td>
+             </tr>
+           </table>
          </td>
        </tr>
     <% end -%>

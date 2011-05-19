@@ -2,7 +2,7 @@
 def avatar_image(one, size)
   
   one = one.downcase
-  if one == 'server'
+  if one == 'compass'
     ext = 'png'
   else
     ext = 'jpg'

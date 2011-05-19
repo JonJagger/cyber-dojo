@@ -1,4 +1,4 @@
 
-page.replace 'messages', :partial => 'messages'
+page.replace 'messages', :partial => 'dojo/messages'
 page.replace 'fileops',  :partial => 'fileops'
 
