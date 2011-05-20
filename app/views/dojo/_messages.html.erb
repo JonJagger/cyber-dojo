@@ -22,10 +22,9 @@
     <br/>   
     <%= link_to "<span class='button'>...</span>", 
     { :controller => :dojo, 
-      :action => "all_messages?dojo_name=#{@dojo.name}" 
+      :action => "message_board_all?dojo_name=#{@dojo.name}" 
     }, 
     { :title => "Show all messages", 
-      :target => "_blank" 
     }
     -%>
   <% end -%>

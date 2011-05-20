@@ -10,16 +10,7 @@
   <% end -%>
 </h4>
 
-<table>
-  <tr valign="top">
-    <td>
-      <%= render :partial => 'messages_panel' -%>
-    </td>
-    <td>
-      <%= render :partial => 'traffic_lights' -%>
-    </td>
-  </tr>
-</table>
+<%= render :partial => 'traffic_lights' -%>
 
 <%= periodically_call_remote :url => { :action => 'dashboard_heartbeat',
                                        :dojo_name => @dojo.name

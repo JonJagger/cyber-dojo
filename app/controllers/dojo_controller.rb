@@ -55,46 +55,54 @@ class DojoController < ApplicationController
       redirect_to :action => :resume, :dojo_name => dojo_name
     elsif params[:dashboard]
       redirect_to :action => :dashboard, :dojo_name => dojo_name
+    elsif params[:message_board]
+      redirect_to :action => :message_board, :dojo_name => dojo_name
     end
   end
 
   def resume
-    configure(params)
-    @dojo = Dojo.new(params) 
-    avatars = @dojo.avatars
-    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
-    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
+    board_config(params)
   end
   
+  #---------------------------
+  
   def dashboard
-    configure(params)
-    @dojo = Dojo.new(params)    
-    @messages = @dojo.messages
-    avatars = @dojo.avatars
-    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
-    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
+    board_config(params)
   end
 
   def dashboard_heartbeat
-    configure(params)
-    @dojo = Dojo.new(params)
-    @messages = @dojo.messages
-    avatars = @dojo.avatars
-    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
-    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
+    board_config(params)
     respond_to do |format|
       format.js if request.xhr?
     end
   end
   
-  def all_messages
+  def dashboard_collapsed
+    board_config(params)
+  end
+  
+  #---------------------------
+  
+  def message_board
+    board_config(params)
+    @messages = @dojo.messages
+  end
+
+  def message_board_heartbeat
     configure(params)
     @dojo = Dojo.new(params)
     @messages = @dojo.messages
-    avatars = @dojo.avatars
-    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
-    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
+    respond_to do |format|
+      format.js if request.xhr?
+    end
   end
+  
+  def message_board_all
+    board_config(params)
+    @messages = @dojo.messages
+  end
+
+  #---------------------------
   
   def ifaq
   end
@@ -110,4 +118,12 @@ private
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
   end
 
+  def board_config(params)
+    configure(params)
+    @dojo = Dojo.new(params)
+    avatars = @dojo.avatars
+    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
+    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
+  end
+  
 end

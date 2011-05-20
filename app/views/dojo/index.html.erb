@@ -60,8 +60,14 @@
                  class="main_button"
                  name="dashboard"
                  id="dashboard_button"
-                 value="Open Dashboard" />
-      
+                 value="Show Dashboard" />
+          or
+          <input type="submit"
+                 class="main_button"
+                 name="message_board"
+                 id="messages_button"
+                 value="Show Messages" />      
+                 
           <% if flash[:notice] -%>
             <div class="notice"><%= flash[:notice] -%></div>
           <% end -%>

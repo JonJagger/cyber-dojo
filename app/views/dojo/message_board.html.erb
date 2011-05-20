@@ -1,3 +1,14 @@
+ 
+<h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
+
+<h4 align="center">
+  <% if @languages.length == 1 -%> 
+    <%= @languages[0] -%>, 
+  <% end -%>
+  <% if @katas.length == 1 -%> 
+    <%= @katas[0] -%>
+  <% end -%>
+</h4>
 
 <% post_message_options = {
   :url => { :controller => 'kata',
@@ -30,5 +41,9 @@
   </tr>
 </table>
 
+<%= periodically_call_remote :url => { :action => 'message_board_heartbeat',
+                                       :dojo_name => @dojo.name
+                                     }, 
+                             :frequency => 10 -%>
 
 

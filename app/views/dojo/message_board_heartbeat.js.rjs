@@ -1,0 +1,4 @@
+
+page.replace 'messages', :partial => 'messages'
+
+
