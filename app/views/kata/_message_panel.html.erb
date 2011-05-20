@@ -1,25 +1,17 @@
 
+<% post_message_options = {
+  :url => { :controller => 'kata',
+            :action => 'post_message',
+            :dojo_name => @dojo.name,
+            :avatar => @avatar.name
+          },
+  :with => "{ message: Field.getValue('message_text')}"
+} -%>
+
 <div id="message_panel">
           
-  <% post_message_options = {
-    :url => { :controller => 'kata',
-              :action => 'post_message',
-              :dojo_name => @dojo.name,
-              :avatar => @avatar.name
-            },
-    :with => "{ message: Field.getValue('message_text')}"
-  } -%>
-  
   <table class="panel">
     <tr>
-      <td>
-         <%= avatar_image(@avatar.name, 40) -%>
-      </td>
-    
-      <td>
-       <textarea cols=22" rows="2" name="message_text" id="message_text"></textarea>
-      </td>
-                 
       <td>
         <%= tag("input", 
           { :type => "button",
@@ -29,12 +21,16 @@
             :value => "Post",            
           }) -%>
       </td>
+      <td>
+       <textarea cols=22" rows="2" name="message_text" id="message_text"></textarea>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <%= render :partial => 'dojo/messages' -%>  
+      </td>
     </tr>
   </table>
-
-  <div class="panel">
-    <%= render :partial => 'dojo/messages' -%>  
-  </div>
 
 </div>
 

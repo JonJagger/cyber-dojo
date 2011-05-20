@@ -17,14 +17,13 @@
         </td>
         
         <td>
-          <span class="small_title"><%= avatar_name.capitalize -%></span>
           <% avatar = Avatar.new(@dojo, avatar_name) -%> 
           <% kata = avatar.kata -%>
           <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
           <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
         </td>
       
-        <% # 10 secs per td, so 6 per minute, 60 for 10 mins -%>
+        <% # 10 seconds per td, so 6 == minute, 60 == 10 mins, 120 == 20 mins -%>
         <% max_tds = 120 -%>
         <% recent(gapped, max_tds).each do |incs| -%>
           <td>

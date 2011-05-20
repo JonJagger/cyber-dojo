@@ -69,7 +69,7 @@ class Dojo
 
   def self.initial_message
     [
-      { :sender => 'server',
+      { :sender => 'compass',
         :text => "Welcome. CyberDojo is for deliberate practice. " +
           "Don't think about completing, releasing, or shipping; think about practising, repeating, and improving."  
       },
@@ -135,7 +135,7 @@ class Dojo
       messages = eval IO.read(file)
       text = text.lstrip.rstrip
       if text != ''
-        messages.insert(0, { :sender => sender, :text => text })
+        messages <<  { :sender => sender, :text => text }
         file_write(file, messages)
       end
     end

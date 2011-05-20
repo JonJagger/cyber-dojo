@@ -1,10 +1,24 @@
 
 <div class="panel">
-  <span class="small_title">
-    <%= link_to "#{@dojo.name}", 
-         { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
-         { :class => "title", :target => "_blank" } -%>
-  </span>            
-  <span class="small_title"><%= @kata.name -%>, <%= @kata.language -%></span>
+  <table>
+    <tr>
+      <td colspan="2">
+        <span class="small_title">
+          <%= link_to "#{@dojo.name}", 
+               { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
+               { :class => "title", :target => "_blank" } -%>
+        </span>            
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= avatar_image(@avatar.name, 45) -%>
+      </td>
+      <td>
+        <span class="small_title"><%= @kata.name -%></span>
+        <span class="small_title"><%= @kata.language -%></span>
+      </td>
+    </tr>
+  </table>
 </div>
 

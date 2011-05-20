@@ -3,14 +3,18 @@ body { background: GhostWhite; }
 #cyber_dojo_page { text-align: left; color: green; }
 
 h1 { font-size: 4em;   text-align: center; margin: 0; }
+
 h3 { font-size: 1.3em; text-align: center; margin: 0; }
+
 .mid_tone { background-color: CornSilk; }
+
 .panel 
 { 
   padding: 0.7em;
   background: #FFECCB;
   border: 4px solid GhostWhite;
 }
+
 .notice { color: red; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -37,6 +41,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 }
 
 .button      { font-size: 1em; } 
+
 .main_button { font-size: 1.35em; }
 
 .main_button[disabled], .button[disabled]
@@ -201,23 +206,18 @@ input[type="checkbox"]:checked+label { color: green; }
   color: Green;
 }
   
-#messages
-{
-  height: 42em;
-  width: 23em;
-  overflow: auto;
-}
+#messages { width: 23em; }
 
 .message_container
 {
   display: block;
-  margin: 0.1em;
-  padding: 0.1em;
+  margin-top: 0.2em;
 }
-.message_container.odd  { background-color: Ivory; }
-.message_container.even { background-color: CornSilk; }
 
-.avatar_image { margin: 0.1em; }
+.message_container.even { background-color: Ivory; }
+.message_container.odd  { background-color: CornSilk; }
+
+.avatar_image { margin: 0.2em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
