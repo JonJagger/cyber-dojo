@@ -1,14 +1,5 @@
- 
-<h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
 
-<h4 align="center">
-  <% if @languages.length == 1 -%> 
-    <%= @languages[0] -%>, 
-  <% end -%>
-  <% if @katas.length == 1 -%> 
-    <%= @katas[0] -%>
-  <% end -%>
-</h4>
+<%= render :partial => 'banner' -%>
 
 <% post_message_options = {
   :url => { :controller => 'kata',

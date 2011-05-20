@@ -90,7 +90,6 @@ class DojoController < ApplicationController
 
   def message_board_heartbeat
     configure(params)
-    @dojo = Dojo.new(params)
     @messages = @dojo.messages
     respond_to do |format|
       format.js if request.xhr?
