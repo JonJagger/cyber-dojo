@@ -87,6 +87,15 @@ class DojoController < ApplicationController
     end
   end
   
+  def all_messages
+    configure(params)
+    @dojo = Dojo.new(params)
+    @messages = @dojo.messages
+    avatars = @dojo.avatars
+    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
+    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
+  end
+  
   def ifaq
   end
 

@@ -18,8 +18,16 @@
      </div>
   <% end -%>
   <% if @messages.length > max_messages -%>
-    <% parity = (max_messages % 2 == 0) ? "even" : "odd" -%>
-     ...
+    <% parity = (max_messages % 2 == 0) ? "even" : "odd" -%>    
+    <br/>   
+    <%= link_to "<span class='button'>...</span>", 
+    { :controller => :dojo, 
+      :action => "all_messages?dojo_name=#{@dojo.name}" 
+    }, 
+    { :title => "Show all messages", 
+      :target => "_blank" 
+    }
+    -%>
   <% end -%>
 </div>
 

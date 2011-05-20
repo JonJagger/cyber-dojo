@@ -191,6 +191,15 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#all_messages
+{
+  width: 45em;
+  height: 30em;
+  overflow: auto;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
 #message_panel { margin-left: 37px; } /* to match line-numbers offset */ 
 
 #message_text, #messages
@@ -208,12 +217,6 @@ input[type="checkbox"]:checked+label { color: green; }
   
 #messages { width: 23em; }
 
-.message_container
-{
-  display: block;
-  margin-top: 0.2em;
-}
-
 .message_container.even { background-color: Ivory; }
 .message_container.odd  { background-color: CornSilk; }
 
@@ -221,7 +224,12 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+.message_container, .traffic_light_row { display: block; margin-top: 0.2em; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
 .traffic_light_row.even { background-color: #FFC; }
+.traffic_light_row.odd  { background-color: Ivory; }
 
 .increment
 {

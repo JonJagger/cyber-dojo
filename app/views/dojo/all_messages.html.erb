@@ -1,0 +1,31 @@
+ 
+<h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
+
+<h4 align="center">
+  <% if @languages.length == 1 -%> 
+    <%= @languages[0] -%>, 
+  <% end -%>
+  <% if @katas.length == 1 -%> 
+    <%= @katas[0] -%>
+  <% end -%>
+</h4>
+
+<div id="all_messages" class="panel">
+  <% @messages.reverse.each_with_index do |message,index| -%>
+     <% parity = (index % 2 == 0) ? "even" : "odd" -%>
+     <div class="<%=parity-%> message_container">
+       <table>
+         <tr>
+           <td>
+             <%= avatar_image(message[:sender].to_s, 40) -%>
+           </td>
+           <td style="vertical-align: middle;">
+             <%= message[:text] -%>
+           </td>
+         </tr>
+       </table>
+     </div>
+  <% end -%>
+</div>
+
+
