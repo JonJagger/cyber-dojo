@@ -231,7 +231,7 @@ input[type="checkbox"]:checked+label { color: green; }
 {
   display: block;
   margin: 2px 0px 0px 1px; /* Top Right Bottom Left */
-  padding: 3px; /* increasing this increases the traffic light circles */
+  padding: 2px; /* this controls the traffic light circle diameters */
   width: 8px;
   height: 8px;
   border-radius: 20px;
