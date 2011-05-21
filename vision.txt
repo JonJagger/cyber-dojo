@@ -5,15 +5,26 @@ VISION AND PRINCIPLES
 Deliberate Practice
 -------------------
 I believe that the role of deliberate practice has vast untapped potential 
-in the field of software development. I am particularly passionate about
+in the field of software development. My particularly passion is 
 doing deliberate practice in a collaborative way. Hence cyberdojo.
+I would like to see students using cyberdojo, and their tutors marking
+their work not just based on a static snapshot of how it ends up but also
+on a dynamic way it changes possibly during explicit repetitions.
+I can also imagine job applicants being asked to perform some katas
+in CyberDojo and the resulting "session video" being used to help the
+applicants prove their ability. 
+ 
 
 
 Player-identification
 ---------------------
 Players should be able to do a kata without identifying themselves.
 However if players wish to identify themselves (in some way) it should
-be possible to return to and continue previous katas.
+be possible to return to and continue previous katas. However, this
+idea is somewhat in tension with the idea of deliberate practice and in 
+particular the idea of repetition. I want to be able to mark a deliberate
+practice session as being over to encourage participants to repeat the
+session.
 
 
 Server-image
@@ -51,7 +62,7 @@ the CyberDojo server automatically did that for you.
 
 Metrics
 -------
-Ultimately it might be nice if each kata-name had some kind of ranking
+It might be nice if each kata-name had some kind of ranking
 to measure how difficult it was. One possibility is simply the mean
 time previous players took to do it. This probably requires that each 
 kata be explicitly marked as finished. 

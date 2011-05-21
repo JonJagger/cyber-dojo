@@ -158,6 +158,10 @@ To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
+To find the folder...
+  >irb
+  >require 'digest/sha1'
+  >Digest::SHA1.hexdigest(name)
 
 
 Traffic Lights
