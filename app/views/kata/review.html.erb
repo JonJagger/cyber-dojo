@@ -12,33 +12,21 @@ $j(document).ready(function() {
 <table>
   <tr valign="top">
     <td>
-      <div class="panel">
-        <div class="small_title">
-          <%= link_to "#{@dojo.name}", 
-               { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
-               { :class => "title", :target => "_blank" } -%>
-        </div>
-        <div class="small_title">
-          <%= @kata.language -%>,
-          <%= @kata.name -%>
-        </div>
-        
-        <div>
-          <%= avatar_image(@avatar.name, 65) -%>
-        </div>
-      </div>
-           
+      <%= render :partial => 'info_panel' -%>
+      
       <div class="panel">
         <table>
           <tr>
             <td>
               <table>
                 <tr>
+                  <% if @increments.length != 0 -%>
                   <td>
                     <div id="increment_number">
                       0
                     </div>
                   </td>                
+                  <% end -%>
                   <td>
                     <%= render :partial => 'prev_increment_button' -%>
                   </td>                
@@ -49,17 +37,19 @@ $j(document).ready(function() {
                   </td>
                   <td>
                     <div id="increment_number">
-                       <%= @increments.length.to_s -%>
+                       <%= @increments.length -%>
                     </div>
                   </td>                
                   <td>
                     <%= render :partial => 'next_increment_button' -%>                      
                   </td>
+                  <% if @increments.length < @avatar_increments.length -%>
                   <td>
                     <div id="increment_number">
-                      <%= @avatar.increments.length -%>
+                      <%= @avatar_increments.length -%>
                     </div>
                   </td>                
+                  <% end -%>
                 </tr>
               </table>
             </td>

@@ -20,7 +20,8 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
     @manifest = {}
-    @increments = @avatar.read_manifest(@manifest, params[:tag])   
+    @increments = @avatar.read_manifest(@manifest, params[:tag])
+    @avatar_increments = @avatar.increments
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
   end
