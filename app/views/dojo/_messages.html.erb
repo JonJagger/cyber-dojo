@@ -25,6 +25,7 @@
       :action => "message_board_all?dojo_name=#{@dojo.name}" 
     }, 
     { :title => "Show all messages", 
+      :target => defined?(target) ? target : ''
     }
     -%>
   <% end -%>
