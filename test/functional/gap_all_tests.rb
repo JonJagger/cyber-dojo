@@ -15,9 +15,8 @@ class Gapper
 
   def stats(all_incs)
     obj = { :avatars => {}, :td_nos => [] }
-    avatars = obj[:avatars]    
     all_incs.each do |avatar_name, incs|
-      an = avatars[avatar_name] = {}
+      an = obj[:avatars][avatar_name] = {}
       incs.each do |inc|
         tdn = td_number(inc)
         an[tdn] ||= [] 
@@ -29,6 +28,14 @@ class Gapper
     obj
   end
 
+  def filler_tds(an, td_nos, from, to)
+    if to == nil
+      to = td_nos.length != 0 ? td_nos.last : from
+      to += 1
+    end
+    (from...to).each { |n| an << :gap }
+  end
+  
   def gap(all_incs)
     s = stats(all_incs) 
     obj = {}
@@ -36,11 +43,11 @@ class Gapper
       an = obj[avatar_name] = []
       prev_tdn = 0     
       kv.sort.each do |tdn,incs|
-        (prev_tdn ... tdn).each {|n| an << [] }
+        filler_tds(an, s[:td_nos], prev_tdn, tdn)
         an << incs
         prev_tdn = tdn + 1
       end
-      (prev_tdn .. s[:td_nos].last).each {|n| an << [] }
+      filler_tds(an, s[:td_nos], prev_tdn, nil)  
     end
     obj
   end
@@ -98,7 +105,7 @@ class GapperTests < ActionController::TestCase
     assert_equal expected, gapper.stats(all_incs)
   end
   
-  def test_no_gaps
+  def test_gaps_but_no_collapsed_gaps
     year = 2011; month = 5; day = 18; hour = 2;
     start = Time.mktime(*[year,month,day,hour,30,0])
     seconds_per_td = 20
@@ -116,13 +123,59 @@ class GapperTests < ActionController::TestCase
     }    
     expected = 
     {
-      :hippo => [ [ t1 ], [ t2 ], [], [], [], [] ],
-      :lion  => [ [], [ t3 ], [], [], [ t4,t5 ], [] ],
-      :panda => [ [], [], [], [], [], [ t6 ] ]
+      :hippo => [ [ t1 ], [ t2 ], :gap, :gap, :gap, :gap ],
+      :lion  => [ :gap, [ t3 ], :gap, :gap, [ t4,t5 ], :gap ],
+      :panda => [ :gap, :gap, :gap, :gap, :gap, [ t6 ] ]
     }    
     gapper = Gapper.new(start, seconds_per_td)
     
     assert_equal expected, gapper.gap(all_incs)
+  end
+  
+  def test_collapsed_gaps
+    # Suppose I have :hippo with lights for td's numbered 5 and 15 
+    # and that the time this gap represents is large enough to be collapsed. 
+    # Does this mean the hippo's tr gets 10 empty td's between the 
+    # td#5 and the td#15 (each of which contains at least one light). 
+    # The answer is it depends on the other avatars. 
+    # The td's have to align vertically. 
+    # For example if the :lion has a td at 11 then
+    # this effectively means that for the hippo its 5-15 has to be
+    # considered as 5-11-15
+    # This is where the :td_nos array comes in. 
+    # Suppose the :td_nos array is [1,5,11,13,15,16,18,23]
+    # This means that the hippo has to treat its 5-15 gap as 5-11-13-15
+    # There can be multiple genuine "lit" td's (11,13) from other avatars
+    # and we can't collapse "across" or "through" these.
+    # Thus the time gaps between (5,11) (11,13) (13,15) are what need
+    # to be considered to see if a special collapsed td gets used.
+    # For example, suppose a dojo runs over two days, there would be a long
+    # period of time at night when no traffic lights would get added. Thus
+    # the :td_nos array is likely to have large gaps, 
+    # eg [....450,1236,1237,...]
+    # at 20 seconds per gap the difference between 450 and 2236 is 1786
+    # and 1786*20 == 35,720 seconds == 9 hours 55 mins 20 secs
+    # and we would want this collapsed to a single special td.
+    #
+    # Of course you could get a situation where the consecutive td numbers
+    # for an avatar are something like 34,3675 and the :td_nos array for 
+    # contains several collapsed gaps interspersed with lights from other
+    # avatars.
+    #
+    # It is clear that I only need to calculate the empty fillers td's 
+    # and the collapsed td's once for the whole :td_nos array.
+    # Consider N = td_nos[i] and M = td_nos[i+1]
+    # and an avatar wanting to process one or more lights in a td at 
+    # position i. You have to first create a td and fill it with the lights.
+    # It then has to consider if M-N is less than the collapse limit,
+    #   If it is it has to add M-N-1 empty td's.
+    #   If if isn't it add a single collapsed td.
+    # And this has to be done in a loop. An avatar wanting to fill in
+    # between td's at positions [p] and [q] has to process all (i, i+1) 
+    # pairs between p and q. 
+    
+
+    
   end
   
 end
