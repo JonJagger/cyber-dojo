@@ -4,7 +4,7 @@
   
     <tr>
       <td>
-        <%= link_to "<span class='button'>Remove time</span>", 
+        <%= link_to "<span class='button'>Remove time gaps</span>", 
         { :controller => :dojo, 
           :action => "dashboard_collapsed?dojo_name=#{@dojo.name}" 
         }, 
@@ -16,6 +16,7 @@
     
     <% index = 0 -%>
     <% seconds_per_td = 10 -%>
+    
     <% gap_all(@dojo.all_increments, @dojo.created, Time.now, seconds_per_td).each do |avatar_name,gapped| -%>
       <% parity = (index % 2 == 0) ? "even" : "odd" -%>
       <% index += 1 -%>
