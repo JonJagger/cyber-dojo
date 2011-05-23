@@ -71,7 +71,7 @@ class Dojo
     [
       { :sender => 'compass',
         :text => "Welcome. CyberDojo is for deliberate practice. " +
-          "Don't think about completing, releasing, or shipping; think about practising, repeating, and improving."  
+          "Don't think about releasing, or shipping; think about practising, and improving."  
       },
     ]
   end
