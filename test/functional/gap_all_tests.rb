@@ -17,9 +17,10 @@ class TdGapper
   end
 
   def stats(all_incs, now)
-    obj = { :avatars => { }, :td_nos => [ ] }
-    obj[:td_nos] << 0
-    obj[:td_nos] << number({:time => now})
+    obj = {
+      :avatars => { },
+      :td_nos => [ 0, number({:time => now}) ]
+    }
     all_incs.each do |avatar_name, incs|
       an = obj[:avatars][avatar_name] = {}
       incs.each do |inc|
@@ -33,14 +34,12 @@ class TdGapper
     obj
   end
 
-  def vertical_bleed(all_incs, now)
-    s = stats(all_incs, now)
+  def vertical_bleed(s)
     s[:td_nos].each do |n|
       s[:avatars].each do |name,td_map|
         td_map[n] ||= []
       end
     end
-    s[:avatars]
   end
   
   def collapsed_table(td_nos)
@@ -56,29 +55,18 @@ class TdGapper
 
   def fully_gapped(all_incs, now)
     s = stats(all_incs, now)
-    # vertical_bleed
-    s[:td_nos].each do |n|
-      s[:avatars].each do |name,td_map|
-        td_map[n] ||= []
-      end
-    end
-
+    vertical_bleed(s)
     collapsed_table(s[:td_nos]).each do |td,gi|
       count = gi[1]
-      if gi[0] == :tds
-        count.times do |n|
-          s[:avatars].each do |name,td_map|
-            td_map[td+n+1] = []
-          end
+      s[:avatars].each do |name,td_map|
+        if gi[0] == :tds # short gap, show all td's
+          count.times {|n| td_map[td+n+1] = [] }
         end
-      end
-      if gi[0] == :collapsed
-        s[:avatars].each do |name,td_map|
+        if gi[0] == :collapsed # long gap, collapse to one t
           td_map[td+1] = { :collapsed => count }
         end
       end
     end
-
     s[:avatars]
   end
 
@@ -173,8 +161,9 @@ class TdGapperTests < ActionController::TestCase
       :panda => { 0 => [], 1 => [],     4 => [],        5 => [ t6 ], 7 => [] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
-
-    assert_equal expected, gapper.vertical_bleed(all_incs, now)
+    s = gapper.stats(all_incs, now)
+    gapper.vertical_bleed(s)
+    assert_equal expected, s[:avatars]
   end
 
   def test_collapsed_table
