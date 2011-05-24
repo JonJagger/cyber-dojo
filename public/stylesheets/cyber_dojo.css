@@ -245,3 +245,5 @@ input[type="checkbox"]:checked+label { color: green; }
 .increment.passed { background-color: #3C3; /* green */ }
 .increment.off    { background-color: LightGray; }
 
+#increment_number { color: #686868; }
+
