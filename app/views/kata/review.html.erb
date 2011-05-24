@@ -22,9 +22,13 @@ $j(document).ready(function() {
                 <tr>
                   <% if @increments.length != 0 -%>
                   <td>
-                    <div id="increment_number">
-                      0
-                    </div>
+                    <%= link_to "0", 
+                    { :controller => :kata, 
+                      :action => :review,
+                      :dojo_name => "#{@dojo.name}",
+                      :avatar => "#{@avatar.name}",
+                      :tag => "0" }, 
+                    { :class => "title" } -%>
                   </td>                
                   <% end -%>
                   <td>
@@ -36,7 +40,7 @@ $j(document).ready(function() {
                     <% end -%>
                   </td>
                   <td>
-                    <div id="increment_number">
+                    <div id="xxincrement_number">
                        <%= @increments.length -%>
                     </div>
                   </td>                
@@ -45,9 +49,13 @@ $j(document).ready(function() {
                   </td>
                   <% if @increments.length < @avatar_increments.length -%>
                   <td>
-                    <div id="increment_number">
-                      <%= @avatar_increments.length -%>
-                    </div>
+                    <%= link_to "#{@avatar_increments.length}", 
+                    { :controller => :kata, 
+                      :action => :review,
+                      :dojo_name => "#{@dojo.name}",
+                      :avatar => "#{@avatar.name}",
+                      :tag => "#{@avatar_increments.length}" }, 
+                    { :class => "title" } -%>
                   </td>                
                   <% end -%>
                 </tr>
