@@ -5,7 +5,7 @@
     <% index = 0 -%>
     
     <% seconds_per_td = 20 -%>
-    <% max_seconds_uncollapsed = 30 * 60 -%>
+    <% max_seconds_uncollapsed = 20 * 60 -%>
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
     <% gapper.fully_gapped(@dojo.all_increments, make_time(Time.now)).each do |avatar_name,td_map| -%>
       <% parity = (index % 2 == 0) ? "even" : "odd" -%>
@@ -29,7 +29,7 @@
         
         <% if recent_td_nos.length < all_td_nos.length -%>
           <td>
-          ...
+            <span class="small_title">...</span>
           </td>
         <% end -%>
         
@@ -51,7 +51,7 @@
           <% end -%>
           
           <% if lights.class == Hash -%>
-             ... <% # lights[:collapsed] -%>
+             <span class="small_title">...</span>
           <% end -%>          
           </td>          
         <% end -%>
