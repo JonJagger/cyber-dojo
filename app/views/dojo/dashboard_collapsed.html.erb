@@ -1,5 +1,15 @@
- 
+
 <%= render :partial => 'banner' -%>
+
+<%= link_to "<span class='button'>Add time gaps</span>", 
+{ :controller => :dojo, 
+  :action => "dashboard?dojo_name=#{@dojo.name}" 
+}, 
+{ :title => "Expand the traffic lights", 
+}
+-%>        
+
 <%= render :partial => 'traffic_lights_collapsed' -%>
+
 Click a traffic light to view it.
 

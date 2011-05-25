@@ -1,5 +1,5 @@
 
-body, #editor_line_numbers { background: GhostWhite; }
+body, #editor_line_numbers { background-color: GhostWhite; }
 .panel { border: 5px solid GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
@@ -10,7 +10,7 @@ h3 { font-size: 1.3em; text-align: center; margin: 0; }
 
 .mid_tone { background-color: CornSilk; }
 
-.panel { padding: 0.7em; background: #FFECCB; }
+.panel { padding: 0.7em; background-color: #FFECCB; }
 
 .notice { color: Red; }
 
@@ -220,7 +220,7 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.message_container, .traffic_light_row { display: block; margin-top: 0.2em; }
+.message_container, { display: block; margin-top: 0.2em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 

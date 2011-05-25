@@ -2,25 +2,13 @@
 <div id="traffic_lights" class="panel">
   <table>
   
-    <tr>
-      <td>
-        <%= link_to "<span class='button'>Add time gaps</span>", 
-        { :controller => :dojo, 
-          :action => "dashboard?dojo_name=#{@dojo.name}" 
-        }, 
-        { :title => "Expand the traffic lights", 
-        }
-        -%>        
-      </td>
-    </tr>
-    
     <% index = 0 -%>
     <% @dojo.all_increments.each do |avatar_name,incs| -%>
       <% parity = (index % 2 == 0) ? "even" : "odd" -%>
       <% index += 1 -%>
       <tr class="<%=parity-%> traffic_light_row">
         <td>
-          <td><%= avatar_image(avatar_name, 45) -%></td>
+          <%= avatar_image(avatar_name, 45) -%>
         </td>
         
         <td>

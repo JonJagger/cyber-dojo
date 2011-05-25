@@ -1,28 +1,19 @@
- 
+
 <div id="traffic_lights" class="panel">
   <table>
   
-    <tr>
-      <td>
-        <%= link_to "<span class='button'>Remove time gaps</span>", 
-        { :controller => :dojo, 
-          :action => "dashboard_collapsed?dojo_name=#{@dojo.name}" 
-        }, 
-        { :title => "Collapse the traffic lights", 
-        }
-        -%>        
-      </td>
-    </tr>
-    
     <% index = 0 -%>
-    <% seconds_per_td = 10 -%>
     
-    <% gap_all(@dojo.all_increments, @dojo.created, Time.now, seconds_per_td).each do |avatar_name,gapped| -%>
+    <% seconds_per_td = 20 -%>
+    <% max_seconds_uncollapsed = 30 * 60 -%>
+    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
+    <% gapper.fully_gapped(@dojo.all_increments, make_time(Time.now)).each do |avatar_name,td_map| -%>
       <% parity = (index % 2 == 0) ? "even" : "odd" -%>
       <% index += 1 -%>
       <tr class="<%=parity-%> traffic_light_row">
+      
         <td>
-          <td><%= avatar_image(avatar_name, 45) -%></td>
+          <%= avatar_image(avatar_name, 45) -%>
         </td>
         
         <td>
@@ -31,24 +22,40 @@
           <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
           <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
         </td>
-      
-        <% # 10 seconds per td, so 6 == minute, 60 == 10 mins, 120 == 20 mins -%>
-        <% max_tds = 120 -%>
-        <% recent(gapped, max_tds).each do |incs| -%>
+        
+        <% max_tds_displayed = 90 -%>
+        <% all_td_nos = td_map.keys.sort -%>
+        <% recent_td_nos = recent(all_td_nos, max_tds_displayed) -%>
+        
+        <% if recent_td_nos.length < all_td_nos.length -%>
           <td>
-            <% if incs == [] -%>
-              &nbsp;
-            <% end -%>
-            <table>
-              <tr>
-                <% incs.each do |inc| -%>
-                  <%= traffic_light(@dojo.name, avatar_name, inc) -%>
-                <% end -%>
-              </tr>
-            </table>
+          ...
           </td>
         <% end -%>
-      
+        
+        <% recent_td_nos.each do |td_no| -%>
+          <% lights = td_map[td_no] -%>            
+          <td>
+          <% if lights.class == Array -%>
+            <% if lights.length == 0 -%>
+              &nbsp;
+            <% else -%>
+              <table>
+                <tr>
+                  <% lights.each do |light| -%>
+                  <%=  traffic_light(@dojo.name, avatar_name, light) -%>     
+                  <% end -%>
+                </tr>
+              </table>
+            <% end -%>
+          <% end -%>
+          
+          <% if lights.class == Hash -%>
+             ... <% # lights[:collapsed] -%>
+          <% end -%>          
+          </td>          
+        <% end -%>
+        
       </tr>    
     <% end -%>
   

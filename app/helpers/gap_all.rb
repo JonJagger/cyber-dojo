@@ -27,6 +27,77 @@
   # correspond to the time period can be shown on the time-shifting auto
   # updating display), then collapse all these td's into a single td with a
   # special css class which displays as ellision in some way...
+
+class TdGapper
+
+  def initialize(start, seconds_per_td, max_seconds_uncollapsed)
+    @start = start
+    @seconds_per_td = seconds_per_td    
+    @max_seconds_uncollapsed = max_seconds_uncollapsed
+    @max_uncollapsed_tds = max_seconds_uncollapsed / seconds_per_td
+  end
+
+  def number(light)    
+    ((Time.mktime(*light[:time]) - @start) / @seconds_per_td).to_i
+  end
+
+  def stats(all_incs, now)
+    obj = {
+      :avatars => { },
+      :td_nos => [ 0, number({:time => now}) ]
+    }
+    all_incs.each do |avatar_name, incs|
+      an = obj[:avatars][avatar_name] = {}
+      incs.each do |inc|
+        tdn = number(inc)
+        an[tdn] ||= [] 
+        an[tdn] << inc
+        obj[:td_nos] << tdn 
+      end
+    end
+    obj[:td_nos].sort!.uniq!
+    obj
+  end
+
+  def vertical_bleed(s)
+    s[:td_nos].each do |n|
+      s[:avatars].each do |name,td_map|
+        td_map[n] ||= []
+      end
+    end
+  end
+  
+  def collapsed_table(td_nos)
+    max_uncollapsed_tds = @max_seconds_uncollapsed / @seconds_per_td
+    obj = {}
+    td_nos.each_cons(2) do |p|
+      diff = p[1] - p[0]
+      key = diff < max_uncollapsed_tds ? :tds : :collapsed
+      obj[p[0]] = [ key, diff-1 ]
+    end
+    obj
+  end
+
+  def fully_gapped(all_incs, now)
+    s = stats(all_incs, now)
+    vertical_bleed(s)
+    collapsed_table(s[:td_nos]).each do |td,gi|
+      count = gi[1]
+      s[:avatars].each do |name,td_map|
+        if gi[0] == :tds # short gap, show all td's
+          count.times {|n| td_map[td+n+1] = [] }
+        end
+        if gi[0] == :collapsed # long gap, collapse to one t
+          td_map[td+1] = { :collapsed => count }
+        end
+      end
+    end
+    s[:avatars]
+  end
+
+end
+
+#----------------------------------
   
 def gap_all(all_incs, created, now, seconds_per_gap)
   now = latest(all_incs) # fixme (no need to pass parameter)
