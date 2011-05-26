@@ -22,24 +22,56 @@
 #define CHECK_EQ(type,expected,actual)   \
     do \
     { \
-        type x = expected; \
-        type a = actual; \
-        CHECK_INNER(check_ ## type ## _equal(x,a), "EQ", \
-            type, x, #expected, a, #actual, \
-            __FILE__, __LINE__, __func__); \
+        if (#expected[0] != 'x') \
+        { \
+            type x0 = expected; \
+            type x1 = actual; \
+            CHECK_INNER( \
+                check_ ## type ## _print, \
+                check_ ## type ## _equal(x0,x1), "EQ", \
+                type, x0, #expected, x1, #actual, \
+                __FILE__, __LINE__, __func__); \
+        } \
+        else \
+        { \
+            type y0 = expected; \
+            type y1 = actual; \
+            CHECK_INNER( \
+                check_ ## type ## _print, \
+                check_ ## type ## _equal(y0,y1), "EQ", \
+                type, y0, #expected, y1, #actual, \
+                __FILE__, __LINE__, __func__); \
+        } \
     } while (0)
+
 
 #define CHECK_NE(type,expected,actual)   \
     do \
     { \
-        type x = expected; \
-        type a = actual; \
-        CHECK_INNER(!check_ ## type ## _equal(x,a), "NE", \
-            type, x, #expected, a, #actual, \
-            __FILE__, __LINE__, __func__); \
+        if (#expected[0] != 'x') \
+        { \
+            type x0 = expected; \
+            type x1 = actual; \
+            CHECK_INNER( \
+                check_ ## type ## _print, \
+                !check_ ## type ## _equal(x0,x1), "NE", \
+                type, x0, #expected, x1, #actual, \
+                __FILE__, __LINE__, __func__); \
+        } \
+        else \
+        { \
+            type y0 = expected; \
+            type y1 = actual; \
+            CHECK_INNER( \
+                check_ ## type ## _print, \
+                !check_ ## type ## _equal(y0,y1), "NE", \
+                type, y0, #expected, y1, #actual, \
+                __FILE__, __LINE__, __func__); \
+        } \
     } while (0)
 
-#define CHECK_INNER(tf, ass, type, e, expected, a, actual, file, line, func) \
+
+#define CHECK_INNER(pf, tf, ass, type, e, expected, a, actual, file, line, func) \
     do { \
         if (tf) \
             check_pass_count++; \
@@ -50,10 +82,10 @@
                 file, (unsigned long)line, func, \
                 ass, #type, expected, actual); \
             fprintf(check_log, "    %s == ", expected); \
-            check_ ## type ## _print(check_log, x); \
+            pf(check_log, e); \
             fputc('\n', check_log); \
             fprintf(check_log, "    %s == ", actual); \
-            check_ ## type ## _print(check_log, a); \
+            pf(check_log, a); \
             fputc('\n', check_log); \
         } \
     } while (0)
@@ -64,6 +96,7 @@
             tests[at](); \
     } while (0)
 
+
 extern FILE * check_log;
 
 extern int check_pass_count;
@@ -72,8 +105,12 @@ extern int check_fail_count;
 extern bool check_int_equal(int lhs, int rhs);
 extern void check_int_print(FILE *, int value);
 
+extern bool check_bool_equal(bool lhs, bool rhs);
+extern void check_bool_print(FILE *, bool value);
+
 extern void check_log_print(void);
 
 #endif
+
 
 
