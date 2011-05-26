@@ -22,7 +22,9 @@
           <table>
             <tr>
               <% incs.each do |inc| -%>
-                <%= traffic_light(@dojo.name, avatar_name, inc) -%>
+                <td>
+                  <%= traffic_light(@dojo.name, avatar_name, inc) -%>
+                </td>
               <% end -%>
             </tr>
           </table>

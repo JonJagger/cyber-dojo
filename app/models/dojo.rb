@@ -70,7 +70,7 @@ class Dojo
   def self.initial_message
     [
       { :sender => 'compass',
-        :text => "Welcome. CyberDojo is for deliberate practice. " +
+        :text => "Welcome. In a CyberDojo you do deliberate software practice. " +
           "Don't think about releasing, or shipping; think about practising, and improving."  
       },
     ]

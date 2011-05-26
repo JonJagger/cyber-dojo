@@ -43,7 +43,9 @@
               <table>
                 <tr>
                   <% lights.each do |light| -%>
-                  <%=  traffic_light(@dojo.name, avatar_name, light) -%>     
+                    <td>
+                      <%=  traffic_light(@dojo.name, avatar_name, light) -%>
+                    </td>
                   <% end -%>
                 </tr>
               </table>

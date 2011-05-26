@@ -6,11 +6,9 @@ def traffic_light(dojo_name, avatar_name, rung)
   amber = on_off(outcome, 'error')
   green = on_off(outcome, 'passed')
 
-  [ '<td class="traffic_light">',
-    aref(dojo_name, avatar_name, rung, red),
+  [ aref(dojo_name, avatar_name, rung, red),
     aref(dojo_name, avatar_name, rung, amber),
     aref(dojo_name, avatar_name, rung, green),
-    '</td>',
   ].join('')
 end
 
