@@ -26,6 +26,7 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
     @manifest = {}
+    #could @traffic_lights_to_tag.length be replaced with @tag?
     @traffic_lights_to_tag = @avatar.read_manifest(@manifest, params[:tag])
     @all_traffic_lights = @avatar.increments    
     @current_file = @manifest[:current_filename]

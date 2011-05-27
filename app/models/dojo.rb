@@ -39,29 +39,21 @@ class Dojo
     io_lock(root_folder) do
       dojo = Dojo.new(params)
       
-      now = Time.now
       info = { 
         :name => name, 
-        :created => make_time(now),
+        :created => make_time(Time.now),
+        :katas => [],
+        :languages => []
       }
       
-      info[:katas] = []
-      params['kata'].each do |number,kata|
-        info[:katas] << kata
-      end
-      info[:languages] = []
-      params['language'].each do |number,language|
-        info[:languages] << language
-      end
+      params['kata'].each {|n,kata| info[:katas] << kata }
+      params['language'].each {|n,language| info[:languages] << language }
+      
       file_write(dojo.manifest_filename, info)
       
-      index = []
       index_filename = root_folder + '/' + Dojo::Index_filename
-      if File.exists? index_filename
-        index = eval IO.read(index_filename)
-      end
-      index << info        
-      file_write(index_filename, index)
+      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : []       
+      file_write(index_filename, index << info)      
 
       file_write(dojo.messages_filename, Dojo::initial_message)
     end    
@@ -70,7 +62,7 @@ class Dojo
   def self.initial_message
     [
       { :sender => 'compass',
-        :text => "Welcome. In a CyberDojo you do deliberate software practice. " +
+        :text => "Welcome. CyberDojo is for doing deliberate software practice. " +
           "Don't think about releasing, or shipping; think about practising, and improving."  
       },
     ]
@@ -102,13 +94,9 @@ class Dojo
   end
   
   def readonly
-    closed or @readonly
+    @readonly
   end
   
-  def closed
-    false
-  end
-
   def create_avatar(filesets)
     io_lock(folder) do
       unused_avatars = Avatar::names.select { |name| !File.exists? folder + '/' + name }
@@ -135,19 +123,17 @@ class Dojo
   end
 
   def messages
-    file = messages_filename
-    io_lock(file) { eval IO.read(file) }
+    io_lock(messages_filename) { eval IO.read(messages_filename) }
   end
 
   def post_message(sender, text)
     messages = []
-    file = messages_filename
-    io_lock(file) do
-      messages = eval IO.read(file)
+    io_lock(messages_filename) do
+      messages = eval IO.read(messages_filename)
       text = text.lstrip.rstrip
       if text != ''
         messages <<  { :sender => sender, :text => text }
-        file_write(file, messages)
+        file_write(messages_filename, messages)
       end
     end
     messages
