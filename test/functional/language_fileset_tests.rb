@@ -25,7 +25,7 @@ class LanguageFileSetTests < ActionController::TestCase
     assert Dojo::create(params)
     dojo = Dojo.new(params)
     FileSet.new(dojo.filesets_root, 'language').choices.each do |language|    
-      avatar = Avatar.new(dojo, nil, { 'language' => language })    
+      avatar = dojo.create_avatar({ 'language' => language })    
       manifest = {}
       avatar.read_manifest(manifest)
       increments = avatar.run_tests(manifest)
@@ -56,7 +56,7 @@ class LanguageFileSetTests < ActionController::TestCase
     dojo = Dojo.new(params)
     
     Code_files.each do |language,filename|
-      avatar = Avatar.new(dojo, nil, { 'language' => language })
+      avatar = dojo.create_avatar({ 'language' => language })
       info = avatar.name + ', ' + language
       manifest = {}
       avatar.read_manifest(manifest)
@@ -75,7 +75,7 @@ class LanguageFileSetTests < ActionController::TestCase
     dojo = Dojo.new(params)
     
     Code_files.each do |language,filename|
-      avatar = Avatar.new(dojo, nil, { 'language' => language })
+      avatar = dojo.create_avatar({ 'language' => language })
       info = avatar.name + ', ' + language
       manifest = {}
       avatar.read_manifest(manifest)

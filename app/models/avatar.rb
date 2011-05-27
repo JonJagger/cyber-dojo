@@ -6,54 +6,53 @@ require 'make_time.rb'
 class Avatar
 
   def self.names
-    %w( alligator bat bear buffalo camel cheetah 
-        deer elephant frog giraffe gopher gorilla 
-        hippo kangaroo koala lemur lion moose 
-        panda raccoon snake squirrel wolf zebra )
+    %w( alligator buffalo cheetah elephant 
+        frog giraffe hippo koala 
+        lion snake wolf zebra )
   end
-  
+
+  #def random_unused_avatar
+  #  Avatar::names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
+  #end
+ 
   def initialize(dojo, name, filesets = nil) 
     @dojo = dojo
-    io_lock(@dojo.folder) do
-      # important to choose random_unused_avatar inside io_lock to prevent
-      # more than one computer entering the dojo as the same avatar
-      @name = name || random_unused_avatar
+    @name = name
 
-      if File.exists?(pathed(Filesets_filename))
-        @filesets = eval IO.read(pathed(Filesets_filename))
-      else
-        @filesets = filesets
-        Dir::mkdir(folder)
-        file_write(pathed(Filesets_filename), @filesets)
-        file_write(pathed(Increments_filename), [])
+    if File.exists?(pathed(Filesets_filename))
+      @filesets = eval IO.read(pathed(Filesets_filename))
+    else
+      @filesets = filesets
+      Dir::mkdir(folder)
+      file_write(pathed(Filesets_filename), @filesets)
+      file_write(pathed(Increments_filename), [])
 
-        Dir::mkdir(sandbox)
-        kata = Kata.new(@dojo.filesets_root, @filesets)
-        kata.hidden_pathnames.each do |hidden_pathname|
-          system("cp '#{hidden_pathname}' '#{sandbox}'") 
-        end
-        kata.visible_files.each do |filename,file|
-          TestRunner::save_file(sandbox, filename, file)
-        end
-
-        kata.manifest[:current_filename] = 'instructions'
-        kata.manifest[:output] = initial_output_text
-        kata.manifest.delete(:hidden_filenames)
-        kata.manifest.delete(:hidden_pathnames)
-        file_write(pathed(Manifest_filename), kata.manifest)
-        
-        cmd  = "cd '#{folder}';"
-        cmd += "git init --quiet;"
-        cmd += "git add '#{Manifest_filename}';"
-        cmd += "git add '#{Filesets_filename}';"
-        cmd += "git add '#{Increments_filename}';"
-        system(cmd)
-        tag = 0
-        git_commit_tag(kata.visible_files, tag)
+      Dir::mkdir(sandbox)
+      kata = Kata.new(@dojo.filesets_root, @filesets)
+      kata.hidden_pathnames.each do |hidden_pathname|
+        system("cp '#{hidden_pathname}' '#{sandbox}'") 
       end
+      kata.visible_files.each do |filename,file|
+        TestRunner::save_file(sandbox, filename, file)
+      end
+
+      kata.manifest[:current_filename] = 'instructions'
+      kata.manifest[:output] = initial_output_text
+      kata.manifest.delete(:hidden_filenames)
+      kata.manifest.delete(:hidden_pathnames)
+      file_write(pathed(Manifest_filename), kata.manifest)
+      
+      cmd  = "cd '#{folder}';"
+      cmd += "git init --quiet;"
+      cmd += "git add '#{Manifest_filename}';"
+      cmd += "git add '#{Filesets_filename}';"
+      cmd += "git add '#{Increments_filename}';"
+      system(cmd)
+      tag = 0
+      git_commit_tag(kata.visible_files, tag)
     end
   end
-  
+
   def name
     @name
   end
@@ -131,10 +130,6 @@ private
   Increments_filename = 'increments.rb'
   Filesets_filename = 'filesets.rb'
   Manifest_filename = 'manifest.rb'
-
-  def random_unused_avatar
-    Avatar::names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
-  end
 
   def initial_output_text
     [ 

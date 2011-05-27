@@ -51,11 +51,47 @@ class DojoTests < ActionController::TestCase
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
-    filesets = {}
-    filesets['kata'] = FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0]
-    filesets['language'] = FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
-    avatar = Avatar.new(dojo, nil, filesets)
+    filesets = {
+      'kata' => FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0],
+      'language' => FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
+    }
+    avatar = dojo.create_avatar(filesets)
     assert File.exists?(avatar.folder), 'avatar folder created'    
+  end
+  
+  def test_that_a_dojo_creates_a_new_avatar_when_its_not_full
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    filesets = { 
+       'kata' => FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0],
+       'language' => FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
+    }
+    avatar = dojo.create_avatar(filesets)
+    assert avatar != nil    
+  end
+  
+  def test_that_full_dojo_does_not_create_a_new_avatar
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    dojo = Dojo.new(params)
+    filesets = { 
+       'kata' => FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0],
+       'language' => FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
+    }
+
+    names = []
+    (0...Avatar::names.length).each do |n| 
+      avatar = dojo.create_avatar(filesets)
+      assert avatar != nil
+      names << avatar.name
+    end
+    assert_equal Avatar::names.sort, names.sort
+    # and one more time... 
+    avatar = dojo.create_avatar(filesets)
+    assert avatar == nil    
   end
   
   def test_that_a_player_can_create_a_new_avatar_with_specified_kata
@@ -65,7 +101,7 @@ class DojoTests < ActionController::TestCase
     dojo = Dojo.new(params)
     kata_choice = 'Unsplice (*)'
     expected_filesets = { 'kata' => kata_choice }
-    avatar = Avatar.new(dojo, nil, expected_filesets)
+    avatar = dojo.create_avatar(expected_filesets)
     actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal kata_choice, actual_filesets['kata']
   end
@@ -77,7 +113,7 @@ class DojoTests < ActionController::TestCase
     dojo = Dojo.new(params)
     language_choice = 'Ruby'
     expected_filesets = { 'language' => language_choice }
-    avatar = Avatar.new(dojo, nil, expected_filesets)
+    avatar = dojo.create_avatar(expected_filesets)
     actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal language_choice, actual_filesets['language']
   end
@@ -90,7 +126,7 @@ class DojoTests < ActionController::TestCase
     kata_choice = 'Unsplice (*)'
     language_choice = 'Ruby'
     expected_filesets = { 'kata' => kata_choice, 'language' => language_choice }
-    avatar = Avatar.new(dojo, nil, expected_filesets)
+    avatar = dojo.create_avatar(expected_filesets)
     actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal kata_choice, actual_filesets['kata']
     assert_equal language_choice, actual_filesets['language']

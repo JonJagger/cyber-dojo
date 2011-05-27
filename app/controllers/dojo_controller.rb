@@ -106,6 +106,20 @@ class DojoController < ApplicationController
   def ifaq
   end
 
+  #---------------------------
+  
+  def render_404
+    render :file => RAILS_ROOT + '/' + 'public' +'/' + '404.html'
+  end
+  
+  def render_422
+    render :file => RAILS_ROOT + '/' + 'public' +'/' + '422.html'
+  end
+  
+  def render_500
+    render :file => RAILS_ROOT + '/' + 'public' +'/' + '500.html'
+  end
+  
 private
 
   def dojo_name

@@ -100,13 +100,24 @@ class Dojo
   def name
     @name
   end
-
+  
   def readonly
     closed or @readonly
   end
   
   def closed
     false
+  end
+
+  def create_avatar(filesets)
+    io_lock(folder) do
+      unused_avatars = Avatar::names.select { |name| !File.exists? folder + '/' + name }
+      if unused_avatars == []
+        nil
+      else
+        Avatar.new(self, unused_avatars.shuffle[0], filesets)
+      end
+    end
   end
   
   def avatars

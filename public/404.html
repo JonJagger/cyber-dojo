@@ -22,8 +22,7 @@
 
   <% avatars = Avatar.names.shuffle -%>
   <% size = 120 -%>
-  
-  <!-- This file lives in public/500.html -->
+
   <div id="center">
     <h1>CyberDojo</h1>
     <table align="center">
@@ -31,36 +30,16 @@
         <td><%= avatar_image(avatars[0],size) -%></td>
         <td><%= avatar_image(avatars[1],size) -%></td>
         <td><%= avatar_image(avatars[2],size) -%></td>
+      </tr>
+      <tr>
         <td><%= avatar_image(avatars[3],size) -%></td>
+        <td>Page<br/>not<br/>found</td>
         <td><%= avatar_image(avatars[4],size) -%></td>
       </tr>
       <tr>
         <td><%= avatar_image(avatars[5],size) -%></td>
         <td><%= avatar_image(avatars[6],size) -%></td>
         <td><%= avatar_image(avatars[7],size) -%></td>
-        <td><%= avatar_image(avatars[8],size) -%></td>
-        <td><%= avatar_image(avatars[9],size) -%></td>
-      </tr>
-      <tr>
-        <td><%= avatar_image(avatars[10],size) -%></td>
-        <td><%= avatar_image(avatars[11],size) -%></td>
-        <td>Page<br/>not<br/>found</td>
-        <td><%= avatar_image(avatars[12],size) -%></td>
-        <td><%= avatar_image(avatars[13],size) -%></td>
-      </tr>
-      <tr>
-        <td><%= avatar_image(avatars[14],size) -%></td>
-        <td><%= avatar_image(avatars[15],size) -%></td>
-        <td><%= avatar_image(avatars[16],size) -%></td>
-        <td><%= avatar_image(avatars[17],size) -%></td>
-        <td><%= avatar_image(avatars[18],size) -%></td>
-      </tr>
-      <tr>
-        <td><%= avatar_image(avatars[19],size) -%></td>
-        <td><%= avatar_image(avatars[20],size) -%></td>
-        <td><%= avatar_image(avatars[21],size) -%></td>
-        <td><%= avatar_image(avatars[22],size) -%></td>
-        <td><%= avatar_image(avatars[23],size) -%></td>
       </tr>
     </table>      
   </div>
