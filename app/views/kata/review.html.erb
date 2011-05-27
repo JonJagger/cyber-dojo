@@ -9,6 +9,8 @@ $j(document).ready(function() {
 
 //--></script>
 
+<% tag_number = @traffic_lights_to_tag.length -%>
+
 <table>
   <tr valign="top">
     <td>
@@ -21,15 +23,15 @@ $j(document).ready(function() {
               <table>
                 <tr>
                 
-                  <% if @traffic_lights_to_tag.length != 0 -%>
+                  <% if tag_number != 0 -%>
                   <td>
-                    <%= link_to "0", 
+                    <%= link_to 0, 
                     { :controller => :kata, 
                       :action => :review,
-                      :dojo_name => "#{@dojo.name}",
-                      :avatar => "#{@avatar.name}",
-                      :tag => "0" }, 
-                    { :class => "title" } -%>
+                      :dojo_name => @dojo.name,
+                      :avatar => @avatar.name,
+                      :tag => 0 
+                    } -%>
                   </td>                
                   <% end -%>
                   
@@ -38,14 +40,14 @@ $j(document).ready(function() {
                   </td>
                   
                   <td>
-                    <% if @traffic_lights_to_tag.length != 0-%>
+                    <% if tag_number != 0-%>
                       <%= traffic_light(@dojo.name, @avatar.name, @traffic_lights_to_tag.last) -%>
                     <% end -%>
                   </td>
                   
                   <td>
                     <span class="traffic_light_number">
-                       <%= @traffic_lights_to_tag.length -%>
+                       <%= tag_number -%>
                     </span>
                   </td>   
                   
@@ -53,15 +55,15 @@ $j(document).ready(function() {
                     <%= render :partial => 'next_traffic_light_button' -%>                      
                   </td>
                   
-                  <% if @traffic_lights_to_tag.length < @all_traffic_lights.length -%>
+                  <% if tag_number < @all_traffic_lights.length -%>
                   <td>
-                    <%= link_to "#{@all_traffic_lights.length}", 
+                    <%= link_to @all_traffic_lights.length, 
                     { :controller => :kata, 
                       :action => :review,
-                      :dojo_name => "#{@dojo.name}",
-                      :avatar => "#{@avatar.name}",
-                      :tag => "#{@all_traffic_lights.length}" }, 
-                    { :class => "title" } -%>
+                      :dojo_name => @dojo.name,
+                      :avatar => @avatar.name,
+                      :tag => @all_traffic_lights.length 
+                    } -%>
                   </td>                
                   <% end -%>
                 </tr>
