@@ -6,15 +6,9 @@ require 'make_time.rb'
 class Avatar
 
   def self.names
-    %w( alligator buffalo cheetah elephant 
-        frog giraffe hippo koala 
-        lion snake wolf zebra )
+    %w( alligator buffalo cheetah elephant frog giraffe hippo koala lion snake wolf zebra )
   end
 
-  #def random_unused_avatar
-  #  Avatar::names.select { |name| !File.exists? @dojo.folder + '/' + name }.shuffle[0]
-  #end
- 
   def initialize(dojo, name, filesets = nil) 
     @dojo = dojo
     @name = name
@@ -62,9 +56,7 @@ class Avatar
   end
    
   def increments
-    io_lock(pathed(Increments_filename)) { 
-      eval IO.read(pathed(Increments_filename)) 
-    }
+    io_lock(pathed(Increments_filename)) { eval IO.read(pathed(Increments_filename)) }
   end
 
   def read_manifest(manifest, tag = nil)
@@ -128,7 +120,9 @@ private
   end
 
   Increments_filename = 'increments.rb'
+  
   Filesets_filename = 'filesets.rb'
+  
   Manifest_filename = 'manifest.rb'
 
   def initial_output_text

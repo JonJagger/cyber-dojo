@@ -13,7 +13,8 @@ class DojoController < ApplicationController
       flash[:new_notice] = 'Please choose a name'
       redirect_to :action => :index    	    	
     elsif Dojo.create(params)
-      redirect_to :action => :create, :dojo_name => dojo_name
+      redirect_to :action => :create, 
+                  :dojo_name => dojo_name
     else      
       flash[:new_notice] = 'There is already a CyberDojo named ' + dojo_name
       redirect_to :action => :index    	
@@ -45,15 +46,25 @@ class DojoController < ApplicationController
       redirect_to :action => :index
     elsif !Dojo.find(params)
       flash[:notice] = 'There is no CyberDojo named ' + dojo_name
-      redirect_to :action => :index, :dojo_name => dojo_name
+      redirect_to :action => :index, 
+                  :dojo_name => dojo_name
+                  
     elsif params[:start]
-      redirect_to :controller => :kata, :action => :enter, :dojo_name => dojo_name
+      redirect_to :controller => :kata, 
+                  :action => :enter, 
+                  :dojo_name => dojo_name
+                  
     elsif params[:resume]
-      redirect_to :action => :resume, :dojo_name => dojo_name
+      redirect_to :action => :resume, 
+                  :dojo_name => dojo_name
+                  
     elsif params[:dashboard]
-      redirect_to :action => :dashboard, :dojo_name => dojo_name
+      redirect_to :action => :dashboard, 
+                  :dojo_name => dojo_name
+                  
     elsif params[:message_board]
-      redirect_to :action => :message_board, :dojo_name => dojo_name
+      redirect_to :action => :message_board, 
+                  :dojo_name => dojo_name
     end
   end
 

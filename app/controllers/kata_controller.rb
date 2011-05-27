@@ -11,11 +11,11 @@ class KataController < ApplicationController
       'language' => manifest[:languages].shuffle[0]
     }    
     @avatar = @dojo.create_avatar(filesets)    
-    if @avatar != nil
-      redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
-    else
+    if @avatar == nil
       flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
       redirect_to :controller => :dojo, :action => :index, :dojo_name => @dojo.name
+    else
+      redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
     end
   end    
     
