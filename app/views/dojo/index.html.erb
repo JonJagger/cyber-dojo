@@ -3,9 +3,8 @@
 <h3>Deliberate Software Practice</h3>
 
 <table>
-
-<tr>
-<td class="panel">
+  <tr>
+    <td class="panel">
       <form action="/dojo/new">
         <div>Choose your CyberDojo's name
           <br/>
@@ -26,10 +25,11 @@
           <% end -%>
         </div>
       </form>
-</td>
-</tr>
-<tr>
-<td class="panel">
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="panel">
       <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
       <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
       
@@ -37,36 +37,59 @@
           Then, on <em>each</em> participating computer type in your CyberDojo's name
           <br/>
           <br/>
-        
+      
+          <table>
+            <tr>
+              <td>
           <input type="text"
                  class="name_input"
                  name="dojo_name"
                  size="15"
                  value="<%=@dojo_name-%>" />
-          and         
+               </td>
+               <td>and</td>
+          <td>         
           <input type="submit"
                  class="main_button"
                  name="start"
                  id="start_button"
                  value="Start Coding" />
-          or 
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
           <input type="submit"
                  class="main_button"
                  name="resume"
                  id="resume_button"
                  value="Resume Coding" />
-          or
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
           <input type="submit"
                  class="main_button"
                  name="dashboard"
                  id="dashboard_button"
                  value="Show Dashboard" />
-          or
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
           <input type="submit"
                  class="main_button"
                  name="message_board"
                  id="messages_button"
-                 value="Show Messages" />      
+                 value="Show Messages" />
+          </td>
+        </tr>
+      </table>
                  
           <% if flash[:notice] -%>
             <div class="notice"><%= flash[:notice] -%></div>
@@ -77,20 +100,24 @@
          The aim is to work <em>collectively</em> towards solutions on <em>all</em> computers
           
         </div>
-      </form>
-      
-</td>
-</tr>
+      </form>      
+    </td>
+  </tr>
 
-
-<tr>
-<td align="center">
-<%= link_to 'inFrequently Asked Questions', 
-  { :controller => :dojo, :action => :ifaq }, 
-  { :target => "_blank", :title => 'inFrequently Asked Questions' } 
--%>
-</td>
-</tr>
+  <tr>
+    <td align="center">
+      Conceived and implemented by <a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center">
+      <%= link_to 'inFrequently Asked Questions', 
+        { :controller => :dojo, :action => :ifaq }, 
+        { :target => "_blank", :title => 'inFrequently Asked Questions' } 
+      -%>
+    </td>
+  </tr>
 
 </table>
 
