@@ -31,7 +31,7 @@ class LanguageFileSetTests < ActionController::TestCase
       increments = avatar.run_tests(manifest)
       info = avatar.name + ', ' + language + ', red'
       assert_equal :failed, increments.last[:outcome], info + ', red,' + manifest[:output]
-      p language + ', red(:failed) as expected'      
+      print '.'      
     end
   end
 
@@ -64,7 +64,7 @@ class LanguageFileSetTests < ActionController::TestCase
       manifest[:visible_files][filename][:content] = test_code.sub('42', '54')
       increments = avatar.run_tests(manifest)
       assert_equal :passed, increments.last[:outcome], info  + ', green,' + manifest[:output]
-      p language + ', green(:passed) as expected'      
+      print '.'      
     end
   end
     
@@ -83,7 +83,7 @@ class LanguageFileSetTests < ActionController::TestCase
       manifest[:visible_files][filename][:content] = test_code.sub('42', '4typo2')
       increments = avatar.run_tests(manifest)
       assert_equal :error, increments.last[:outcome], info  + ', amber,' + manifest[:output]
-      p language + ', amber(:error) as expected'      
+      print '.'      
     end
   end
   

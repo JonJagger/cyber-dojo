@@ -15,7 +15,9 @@ class DojoTests < ActionController::TestCase
   def make_params
     { :dojo_name => 'Jon Jagger', 
       :dojo_root => Dir.getwd + '/' + Root_test_folder,
-      :filesets_root => Dir.getwd + '/../filesets'
+      :filesets_root => Dir.getwd + '/../filesets',
+      'kata' => { 0 => 'Unsplice' },
+      'language' => { 0 => 'C++' }    
     }
   end
   
@@ -37,8 +39,6 @@ class DojoTests < ActionController::TestCase
   def test_that_configuring_a_new_dojo_creates_two_core_files
     root_test_folder_reset
     params = make_params
-    params['kata'] = { 0 => 'Unsplice' }
-    params['language'] = { 0 => 'C++' }    
     assert Dojo::create(params)
     Dojo::configure(params)
     dojo = Dojo.new(params)
@@ -46,42 +46,30 @@ class DojoTests < ActionController::TestCase
     assert File.exists?(dojo.manifest_filename), 'manifest.rb created'
   end
 
-  def test_that_a_player_can_create_a_new_avatar_in_a_new_dojo
+  def test_that_you_can_create_an_avatar_in_a_new_dojo
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
+    Dojo::configure(params)    
     dojo = Dojo.new(params)
-    filesets = {
-      'kata' => FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0],
-      'language' => FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
-    }
+    kata = FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0]
+    language = FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
+    filesets = { 'kata' => kata, 'language' => language } 
     avatar = dojo.create_avatar(filesets)
+    assert avatar != nil    
     assert File.exists?(avatar.folder), 'avatar folder created'    
   end
   
-  def test_that_a_dojo_creates_a_new_avatar_when_its_not_full
+  def test_that_you_cant_create_an_avatar_in_a_full_dojo
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
+    Dojo::configure(params)    
     dojo = Dojo.new(params)
     filesets = { 
        'kata' => FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0],
        'language' => FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
     }
-    avatar = dojo.create_avatar(filesets)
-    assert avatar != nil    
-  end
-  
-  def test_that_full_dojo_does_not_create_a_new_avatar
-    root_test_folder_reset
-    params = make_params
-    assert Dojo::create(params)
-    dojo = Dojo.new(params)
-    filesets = { 
-       'kata' => FileSet.new(params[:filesets_root], 'kata').choices.shuffle[0],
-       'language' => FileSet.new(params[:filesets_root], 'language').choices.shuffle[0]
-    }
-
     names = []
     (0...Avatar::names.length).each do |n| 
       avatar = dojo.create_avatar(filesets)
@@ -98,6 +86,7 @@ class DojoTests < ActionController::TestCase
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
+    Dojo::configure(params)    
     dojo = Dojo.new(params)
     kata_choice = 'Unsplice (*)'
     expected_filesets = { 'kata' => kata_choice }
@@ -110,6 +99,7 @@ class DojoTests < ActionController::TestCase
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
+    Dojo::configure(params)    
     dojo = Dojo.new(params)
     language_choice = 'Ruby'
     expected_filesets = { 'language' => language_choice }
@@ -122,17 +112,18 @@ class DojoTests < ActionController::TestCase
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
+    Dojo::configure(params)    
     dojo = Dojo.new(params)
     kata_choice = 'Unsplice (*)'
     language_choice = 'Ruby'
-    expected_filesets = { 'kata' => kata_choice, 'language' => language_choice }
-    avatar = dojo.create_avatar(expected_filesets)
+    filesets = { 'kata' => kata_choice, 'language' => language_choice }
+    avatar = dojo.create_avatar(filesets)
     actual_filesets = eval IO.read(avatar.folder + '/' + 'filesets.rb')
     assert_equal kata_choice, actual_filesets['kata']
     assert_equal language_choice, actual_filesets['language']
   end
-  
-  def test_makefile_filter_filename_not_makefile
+
+  def test_makefile_filter_when_filename_not_makefile
      name     = 'not_makefile'
      content  = "    abc"
      actual   = TestRunner.makefile_filter(name, content)
@@ -140,7 +131,7 @@ class DojoTests < ActionController::TestCase
      assert_equal expected, actual
   end
 
-  def test_makefile_filter_filename_is_makefile
+  def test_makefile_filter_when_filename_is_makefile
      name     = 'makefile'
      content  = "    abc"
      actual   = TestRunner.makefile_filter(name, content)
@@ -148,7 +139,7 @@ class DojoTests < ActionController::TestCase
      assert_equal expected, actual
   end
 
-  def test_makefile_filter_filename_is_Makefile_with_uppercase_M
+  def test_makefile_filter_when_filename_is_Makefile_with_uppercase_M
      name     = 'Makefile'
      content  = "    abc"
      actual   = TestRunner.makefile_filter(name, content)
