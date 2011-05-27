@@ -138,9 +138,7 @@ as a new laptop can easily and instantly replace it.
 Dojo Folder Structure
 =====================
 The rails code does NOT use a database.
-Originally the name of each dojo corresponded to a subfolder underneath
-cyberdojo/dojos/ however the number of subfolders started to get large
-so this has now changed. Instead I use a git-like folder structure based
+Instead I use a git-like folder structure based
 on the sha1 hexdigest of the dojo's name. For example, a CyberDojo called 
 'Jon Jagger' (without the quotes) has a sha1 hexdigest of, wait for it,
   381fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab 
@@ -176,22 +174,21 @@ Traffic Lights
 The display of each increment now uses a traffic light making the colours
 positional. This means you can still read the display if you are colour blind
 (which a surprising number of people are). 
-o) Top Red = tests ran but at least one failed
-o) Middle Amber = syntax error somewhere, tests not run
-o) Bottom Green = tests ran and all passed
+o) red   - top    = tests ran but at least one failed
+o) amber - middle = syntax error somewhere, tests not run
+o) green - bottom = tests ran and all passed
 
 
 Adding a new language
 =====================
 Create a new subfolder under cyberdojo/filesets/language/
-Create a manifest.rb file in this folder (see below). 
-(see Manifests below)
+Create a manifest.rb file in this folder (see manifest.rb below).
 
 
 Adding a new kata
 =================
 Create a new subfolder under cyberdojo/filesets/kata/
-Create a manifest.rb file in this folder (see below). 
+Create a manifest.rb file in this folder (see manifest.rb below). 
 
 
 manifest.rb
@@ -256,17 +253,17 @@ file as part of the inspected ruby object:
   Defaults to 4 spaces.
 
 
-Keyboard-Driver Rotation
-========================
-By default CyberDojo displays the keyboard-driver rotate page every 5 minutes 
-(see app/models/dojo.rb) which is the cue for the keyboard driver at each 
-computer to take a non-driver role, possibly at a new computer.
+Messages Board
+==============
+Avatars can post tweet like messages which appear on the message board on
+the right hand side. I encourage players to use this to work together.
+Remember, the aim is to get working solutions on _all_ laptops.
 
 
 Dashboard Review
 ================
 The review button on the CyberDojo home page takes you to the dashboard
-which shows a continuously updating display of all the avatars traffic light
+which shows a continuously updating display of all the avatar's traffic light
 increments. 
 
 
