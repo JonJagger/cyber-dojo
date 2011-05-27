@@ -21,7 +21,7 @@ $j(document).ready(function() {
               <table>
                 <tr>
                 
-                  <% if @increments.length != 0 -%>
+                  <% if @traffic_lights_to_tag.length != 0 -%>
                   <td>
                     <%= link_to "0", 
                     { :controller => :kata, 
@@ -38,14 +38,14 @@ $j(document).ready(function() {
                   </td>
                   
                   <td>
-                    <% if @increments.length != 0-%>
-                      <%= traffic_light(@dojo.name, @avatar.name, @increments.last) -%>
+                    <% if @traffic_lights_to_tag.length != 0-%>
+                      <%= traffic_light(@dojo.name, @avatar.name, @traffic_lights_to_tag.last) -%>
                     <% end -%>
                   </td>
                   
                   <td>
                     <span class="traffic_light_number">
-                       <%= @increments.length -%>
+                       <%= @traffic_lights_to_tag.length -%>
                     </span>
                   </td>   
                   
@@ -53,14 +53,14 @@ $j(document).ready(function() {
                     <%= render :partial => 'next_increment_button' -%>                      
                   </td>
                   
-                  <% if @increments.length < @avatar_increments.length -%>
+                  <% if @traffic_lights_to_tag.length < @all_traffic_lights.length -%>
                   <td>
-                    <%= link_to "#{@avatar_increments.length}", 
+                    <%= link_to "#{@all_traffic_lights.length}", 
                     { :controller => :kata, 
                       :action => :review,
                       :dojo_name => "#{@dojo.name}",
                       :avatar => "#{@avatar.name}",
-                      :tag => "#{@avatar_increments.length}" }, 
+                      :tag => "#{@all_traffic_lights.length}" }, 
                     { :class => "title" } -%>
                   </td>                
                   <% end -%>

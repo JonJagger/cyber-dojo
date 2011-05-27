@@ -26,11 +26,8 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
     @manifest = {}
-    
-    @increments = @avatar.read_manifest(@manifest, params[:tag])
-    @avatar_increments = @avatar.increments    
-    #@tag = params[:tag].to_i
-    
+    @traffic_lights_to_tag = @avatar.read_manifest(@manifest, params[:tag])
+    @all_traffic_lights = @avatar.increments    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
   end

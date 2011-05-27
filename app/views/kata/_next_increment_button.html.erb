@@ -2,9 +2,9 @@
 <form action='/kata/review'>
   <input type='hidden' name='dojo_name' id='dojo_name' value='<%= @dojo.name-%>'/> 
   <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
-  <input type='hidden' name='tag' id='tag' value='<%= @increments.length + 1-%>' />
+  <input type='hidden' name='tag' id='tag' value='<%= @traffic_lights_to_tag.length + 1-%>' />
   <button class="button"
-          <% if @increments.length < @avatar_increments.length -%>
+          <% if @traffic_lights_to_tag.length < @all_traffic_lights.length -%>
           type="submit"
           id="next_button">
           <% else -%>
