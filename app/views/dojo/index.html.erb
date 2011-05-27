@@ -4,11 +4,16 @@
 
 <table>
   <tr>
-    <td class="panel">
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      &nbsp;First, choose your CyberDojo's name:
+      <div class="panel">
       <form action="/dojo/new">
-        <div>Choose your CyberDojo's name
-          <br/>
-          <br/>
+        <div>
           <input type="text"
                  class="name_input"
                  name="dojo_name"
@@ -25,20 +30,23 @@
           <% end -%>
         </div>
       </form>
+      </div>
     </td>
   </tr>
   
   <tr>
-    <td class="panel">
+    <td>
+    
+      &nbsp;Then, on <em>each</em> participating computer<br/>
+      &nbsp;type in your CyberDojo's name:
+      
+      <div class="panel">
+      
       <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
+      
       <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
       
-        <div>
-          Then, on <em>each</em> participating computer type in your CyberDojo's name
-          <br/>
-          <br/>
-      
-          <table>
+        <table>
             <tr>
               <td>
           <input type="text"
@@ -94,13 +102,9 @@
           <% if flash[:notice] -%>
             <div class="notice"><%= flash[:notice] -%></div>
           <% end -%>
-          
-         <br/>
-         <br/>
-         The aim is to work <em>collectively</em> towards solutions on <em>all</em> computers
-          
         </div>
-      </form>      
+      </form>
+      The aim is to work <em>collectively</em> towards solutions on <em>all</em> computers
     </td>
   </tr>
 
