@@ -37,6 +37,13 @@ Open http://localhost:3000 in your browser and your CyberDojo should be running.
 There are no requirements on the clients (except of course a browser). I also 
 install and use apache on my CyberDojo server but that is optional.
 
+>script/about
+reports that my server is using the following
+Ruby version              1.8.7 (x86_64-linux)
+RubyGems version          1.3.5
+Rack version              1.0
+Rails version             2.3.4
+
 
 Installation Update
 ===================
