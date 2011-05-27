@@ -1,0 +1,33 @@
+
+<% post_message_options = {
+  :url => { :controller => 'kata',
+            :action => 'post_message',
+            :dojo_name => @dojo.name,
+            :avatar => @avatar.name
+          },
+  :with => "{ message: Field.getValue('message_text')}"
+} -%>
+         
+<table>
+  <tr>
+    <td>
+      <%= tag("input", 
+        { :type => "button",
+          :class => "button",
+          :onclick => "#{remote_function(post_message_options)};$j('#message_text').val('');",
+          :name => "post_message",
+          :value => "Post",            
+        }) -%>
+    </td>
+    <td>
+     <textarea cols=22" rows="2" name="message_text" id="message_text"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <%= render :partial => 'dojo/messages', :locals => { :target => '_blank' } -%>  
+    </td>
+  </tr>
+</table>
+
+

@@ -22,7 +22,9 @@ $j(document).ready(function() {
   <table>
     <tr valign="top">
       <td>
-        <%= render :partial => 'info_panel' -%>
+        <div class="panel">
+          <%= render :partial => 'info' -%>
+        </div>
          
         <div class="panel">
           <%= render :partial => 'fileops' -%>
@@ -34,13 +36,20 @@ $j(document).ready(function() {
           <%= render :partial => 'traffic_lights' -%>
         </div>
       </td>
+      
       <td style="width:42em;">
         <%= render :partial => 'editor' -%>
         <%= render :partial => 'output' -%>
       </td>
+      
       <td>
-        <%= render :partial => 'message_panel' -%>
+        <div id="message_panel_indent">
+          <div class="panel">
+            <%= render :partial => 'messages' -%>
+          </div>
+        </div>
       </td>
+      
     </tr>
   </table>
   

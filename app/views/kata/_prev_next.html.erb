@@ -1,0 +1,54 @@
+
+<% tag_number = @traffic_lights_to_tag.length -%>
+
+<table>
+  <tr>
+  
+    <% if tag_number != 0 -%>
+    <td>
+      <%= link_to 0, 
+      { :controller => :kata, 
+        :action => :review,
+        :dojo_name => @dojo.name,
+        :avatar => @avatar.name,
+        :tag => 0 
+      } -%>
+    </td>                
+    <% end -%>
+    
+    <td>
+      <%= render :partial => 'prev_traffic_light_button' -%>
+    </td>
+    
+    <td>
+      <% if tag_number != 0-%>
+        <%= traffic_light(@dojo.name, @avatar.name, @traffic_lights_to_tag.last) -%>
+      <% end -%>
+    </td>
+    
+    <td>
+      <span class="traffic_light_number">
+         <%= tag_number -%>
+      </span>
+    </td>   
+    
+    <td>
+      <%= render :partial => 'next_traffic_light_button' -%>                      
+    </td>
+    
+    <% if tag_number < @all_traffic_lights.length -%>
+    <td>
+      <%= link_to @all_traffic_lights.length, 
+      { :controller => :kata, 
+        :action => :review,
+        :dojo_name => @dojo.name,
+        :avatar => @avatar.name,
+        :tag => @all_traffic_lights.length 
+      } -%>
+    </td>                
+    <% end -%>
+    
+  </tr>
+</table>      
+    
+

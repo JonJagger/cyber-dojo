@@ -196,7 +196,7 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#message_panel { margin-left: 37px; } /* to match line-numbers offset */ 
+#message_panel_indent { margin-left: 37px; } /* to match line-numbers offset */ 
 
 #message_text, #messages
 {
@@ -220,7 +220,7 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.message_container, { display: block; margin-top: 0.2em; }
+.message_container { display: block; margin-top: 0.2em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
