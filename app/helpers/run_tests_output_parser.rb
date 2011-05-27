@@ -77,6 +77,15 @@ private
   end
 
   def self.parse_ruby_test_unit(output)
+    # If a player creates a cyberdojo.sh file with two lines
+    # ruby test_gapper.rb
+    # ruby test_git_diff.rb
+    # then it's possible the first one will pass and the second
+    # one will have a failure. The regex below won't detect that.
+    # Not sure if this is a bug or not. In a dojo should you be
+    # doing a simple small kata which should only have one test 
+    # class?
+
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
       if match[4] != "0"

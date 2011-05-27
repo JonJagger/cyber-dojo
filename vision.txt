@@ -5,26 +5,33 @@ VISION AND PRINCIPLES
 Deliberate Practice
 -------------------
 I believe that the role of deliberate practice has vast untapped potential 
-in the field of software development. My particularly passion is 
-doing deliberate practice in a collaborative way. Hence cyberdojo.
+in the field of software development. My particularly passion is doing deliberate 
+software practice in a collaborative way. Hence CyberDojo.  
+
+I would like a central CyberDojo where you do named practice sessions
+inside named dojos and everything is visible to everyone. Open Kimono.
+Software luminaries such as Ward Cunningham could be tempted to do their katas
+which would be recorded for posterity.
+
 I would like to see students using cyberdojo, and their tutors marking
 their work not just based on a static snapshot of how it ends up but also
-on a dynamic way it changes possibly during explicit repetitions.
+on the dynamic way it changed as it was worked on. And possibly during 
+several explicit repetitions. 
+
 I can also imagine job applicants being asked to perform some katas
 in CyberDojo and the resulting "session video" being used to help the
 applicants prove their ability. 
  
 
-
 Player-identification
 ---------------------
-Players should be able to do a kata without identifying themselves.
-However if players wish to identify themselves (in some way) it should
-be possible to return to and continue previous katas. However, this
-idea is somewhat in tension with the idea of deliberate practice and in 
-particular the idea of repetition. I want to be able to mark a deliberate
-practice session as being over to encourage participants to repeat the
-session.
+Players should be able to do a kata without identifying themselves
+However if players wish to identify themselves (eg my naming their dojo after
+themselves) it should be possible to return to and continue previous katas. 
+However, this idea is somewhat in tension with the idea of deliberate practice 
+and in particular the idea of repetition. I think it might be useful to be able 
+to mark a deliberate practice session as being over to encourage participants 
+to repeat the session.
 
 
 Server-image
@@ -37,7 +44,9 @@ the compilers installed on your computer.
 
 Enhanced file-support
 ---------------------
-Allow filenames to have a full path including folders.
+Allow filenames to have a full path including folders. Not sure about this.
+This is leading towards a full IDE. At the moment if you try to create a file
+with a / in it the run-tests will go into an infinite loop.
 
 
 Traffic-lights
@@ -65,10 +74,10 @@ Metrics
 It might be nice if each kata-name had some kind of ranking
 to measure how difficult it was. One possibility is simply the mean
 time previous players took to do it. This probably requires that each 
-kata be explicitly marked as finished. 
-
-
-
+kata be explicitly marked as finished.
+Not at all sure about this though. I don't really want to encourage competition
+as the idea is to gain _personal_ improvement. If the bar is seen as being too
+high some may be reluctant to start.
 
 
 
