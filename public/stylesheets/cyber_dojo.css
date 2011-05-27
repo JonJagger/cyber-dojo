@@ -227,7 +227,7 @@ input[type="checkbox"]:checked+label { color: green; }
 .traffic_light_row.even { background-color: #FFC; }
 .traffic_light_row.odd  { background-color: Ivory; }
 
-.increment
+.traffic_light_bulb
 {
   display: block;
   margin: 2px 0px 0px 1px; /* Top Right Bottom Left */
@@ -240,10 +240,10 @@ input[type="checkbox"]:checked+label { color: green; }
   -webkit-border-radius: 20px;
 }
 
-.increment.failed { background-color: #F00; /* red */   }
-.increment.error  { background-color: #FC3; /* amber */ }
-.increment.passed { background-color: #0F0; /* green */ }
-.increment.off    { background-color: LightGray; }
+.traffic_light_bulb.failed { background-color: #F00; /* red */   }
+.traffic_light_bulb.error  { background-color: #FC3; /* amber */ }
+.traffic_light_bulb.passed { background-color: #0F0; /* green */ }
+.traffic_light_bulb.off    { background-color: LightGray; }
 
-#increment_number { color: #686868; }
+.traffic_light_number { color: #686868; }
 

@@ -26,8 +26,11 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
     @manifest = {}
+    
     @increments = @avatar.read_manifest(@manifest, params[:tag])
-    @avatar_increments = @avatar.increments
+    @avatar_increments = @avatar.increments    
+    #@tag = params[:tag].to_i
+    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
   end
@@ -39,7 +42,7 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
     @kata = @avatar.kata    
     @manifest = {}
-    @increments = @avatar.read_manifest(@manifest)    
+    @traffic_lights = @avatar.read_manifest(@manifest)
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
   end
@@ -49,7 +52,7 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
     manifest = load_visible_files_from_page
-    @increments = @avatar.run_tests(manifest)
+    @traffic_lights = @avatar.run_tests(manifest)
     @output = manifest[:output]
     respond_to do |format|
       format.js if request.xhr?

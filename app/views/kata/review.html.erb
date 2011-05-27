@@ -20,6 +20,7 @@ $j(document).ready(function() {
             <td>
               <table>
                 <tr>
+                
                   <% if @increments.length != 0 -%>
                   <td>
                     <%= link_to "0", 
@@ -31,22 +32,27 @@ $j(document).ready(function() {
                     { :class => "title" } -%>
                   </td>                
                   <% end -%>
+                  
                   <td>
                     <%= render :partial => 'prev_increment_button' -%>
-                  </td>                
+                  </td>
+                  
                   <td>
-                    <% if @increments.length != 0 -%>
+                    <% if @increments.length != 0-%>
                       <%= traffic_light(@dojo.name, @avatar.name, @increments.last) -%>
                     <% end -%>
                   </td>
+                  
                   <td>
-                    <div id="increment_number">
+                    <span class="traffic_light_number">
                        <%= @increments.length -%>
-                    </div>
-                  </td>                
+                    </span>
+                  </td>   
+                  
                   <td>
                     <%= render :partial => 'next_increment_button' -%>                      
                   </td>
+                  
                   <% if @increments.length < @avatar_increments.length -%>
                   <td>
                     <%= link_to "#{@avatar_increments.length}", 
