@@ -240,9 +240,9 @@ input[type="checkbox"]:checked+label { color: green; }
   -webkit-border-radius: 20px;
 }
 
-.increment.failed { background-color: #F33; /* red */   }
+.increment.failed { background-color: #F00; /* red */   }
 .increment.error  { background-color: #FC3; /* amber */ }
-.increment.passed { background-color: #3C3; /* green */ }
+.increment.passed { background-color: #0F0; /* green */ }
 .increment.off    { background-color: LightGray; }
 
 #increment_number { color: #686868; }
