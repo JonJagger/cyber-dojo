@@ -12,6 +12,7 @@
         </td>
         
         <td>
+          <span class="small_title"><%= avatar_name.humanize -%></span>        
           <% avatar = Avatar.new(@dojo, avatar_name) -%> 
           <% kata = avatar.kata -%>
           <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
