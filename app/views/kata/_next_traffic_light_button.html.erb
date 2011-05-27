@@ -1,20 +1,21 @@
+<% tag_number = @traffic_lights_to_tag.length -%>
 
 <form action='/kata/review'>
   <input type='hidden' name='dojo_name' id='dojo_name' value='<%= @dojo.name-%>'/> 
   <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
-  <input type='hidden' name='tag' id='tag' value='<%= @traffic_lights_to_tag.length - 1-%>' />
+  <input type='hidden' name='tag' id='tag' value='<%= tag_number + 1-%>' />
   <button class="button"
-          <% if @traffic_lights_to_tag.length != 0 -%>
+          <% if tag_number < @all_traffic_lights.length -%>
           type="submit"
-          id="prev_button">
+          id="next_button"
+          title="View <%=tag_number+1-%>" >
           <% else -%>
           type="button"
           disabled>
           <% end -%>
-    <img src="/images/left-triangle.gif"
+    <img src="/images/triangle.gif"
          width="30" 
-         height="30"
-         title="View previous increment" />
+         height="30" />
   </button>
 </form>
 
