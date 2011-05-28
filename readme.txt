@@ -145,17 +145,17 @@ on the sha1 hexdigest of the dojo's name. For example, a CyberDojo called
 so the root folder for the CyberDojo called 'Jon Jagger' is
   cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
 Each started avatar has a subfolder underneath this, for example
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolves
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf
   
 
 Git Repositories
 ================
 Each started avatar has its own git respository, eg
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolves/.git
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
 The starting files (as loaded via the manifests.rb's :visible_filenames) form
 tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
 message and tag which is simply the increment number. For example, the fourth
-time the wolves press the run-tests button causes
+time the wolf computer presses the run-tests button causes
 >git commit -a -m '4'
 >git tag -m '4' 4 HEAD
 From an avatar's folder you can issue the following commands:
@@ -171,12 +171,14 @@ To find the folder...
 
 Traffic Lights
 ==============
-The display of each increment now uses a traffic light making the colours
-positional. This means you can still read the display if you are colour blind
+The display of each increment uses a traffic light, with meanings for
+the three colours as follows:
+  o) red   - tests ran but at least one failed
+  o) amber - syntax error somewhere, tests not run
+  o) green - tests ran and all passed
+The colours are positional, top red, middle amber, bottom green.
+This means you can still read the display if you are colour blind
 (which a surprising number of people are). 
-o) red   - top    = tests ran but at least one failed
-o) amber - middle = syntax error somewhere, tests not run
-o) green - bottom = tests ran and all passed
 
 
 Adding a new language
@@ -263,8 +265,8 @@ Remember, the aim is to get working solutions on _all_ laptops.
 Dashboard Review
 ================
 The review button on the CyberDojo home page takes you to the dashboard
-which shows a continuously updating display of all the avatar's traffic light
-increments. 
+which shows a continuously updating display of all traffic lights for
+all the avatars in the dojo. 
 
 
 How to Turn off Chrome Spell-Checking in Chrome
@@ -284,8 +286,10 @@ To turn it off (and avoid annoying red underlines the code editor)
 
 Misc Notes
 ==========
-o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in Ruby  
-o) http://vimeo.com/8630305 has a video of a very early version of CyberDojo
+o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in Ruby
+   in an earlier version of CyberDojo
+o) http://vimeo.com/8630305 has a video of an even earlier version of CyberDojo
+   I submitted as a proposal to the Software Craftsmanship conference 2010.
 o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. Some 
@@ -293,7 +297,7 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
 o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
    simpler the environment the more players will need to collaborate with each
    other. Remember the aim of a CyberDojo is _not_ to ship something, it is to 
-   practice collaborative development.
+   deliberately practice developing software collaboratively.
 o) Olve Maudal has been enthusiastic about CyberDojo from the very early days.
    Olve - I really appreciate all your encouragement.
 
