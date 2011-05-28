@@ -76,8 +76,9 @@ above and reported the following issues (many thanks Emily)
 >
 >cyberdojo/filesets/language/C#/cyberdojo.sh
 >
->was trying to run the program "nunit-console2", whereas the one I had installed was called "nunit-console". So I edited 
->that file and then I could use C# in the dojo.
+>was trying to run the program "nunit-console2", whereas the one I had installed 
+>was called "nunit-console". So I edited that file and then I could use C# in 
+>the dojo.
 
 
 
@@ -196,13 +197,13 @@ Create a manifest.rb file in this folder (see manifest.rb below).
 manifest.rb
 ===========
 Each manifest.rb file contains an inspected ruby object. 
-For example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
+Example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java cyberdojo.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
 }
-For example: cyberdojo/filesets/kata/Prime Factors (*)/manifest.rb looks like this:
+Example: cyberdojo/filesets/kata/Prime Factors (*)/manifest.rb looks like this:
 {
   :visible_filenames => %w( instructions ),
 }
@@ -211,29 +212,30 @@ For example: cyberdojo/filesets/kata/Prime Factors (*)/manifest.rb looks like th
 manifest.rb Parameters
 ======================
 :visible_filenames
-  The names of files that will be visible in the editor in the browser at startup.
-  Each of these files must exist in the folder.
+  The names of files that will be visible in the editor in the browser at 
+  startup. Each of these files must exist in the folder.
   The filename cyberdojo.sh should be present (visible or hidden) in one of the 
   manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
   assumed by the ruby code (in the CyberDojo server) to be the start point for  
   running an increment. You can write any actions in the cyberdojo.sh file but 
   clearly any programs it tries to run must be installed on the CyberDojo 
   server. For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
-  to be installed. If cyberdojo.sh runs javac to compile java files then javac has 
-  to be installed.
+  to be installed. If cyberdojo.sh runs javac to compile java files then javac 
+  has to be installed.
 
 :hidden_filenames
-  The names of necessary and/or supporting files that are NOT visible in the editor 
-  in the browser. Each of these files must exist in the folder. For example, a 
-  junit jar file or nunit assemblies. Not needed if you do not need hidden files.
+  The names of necessary and/or supporting files that are NOT visible in the 
+  editor in the browser. Each of these files must exist in the folder. For 
+  example, a junit jar file or nunit assemblies. Not needed if you do not need 
+  hidden files.
   
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
-  name of the ruby function (in the CyberDojo server) used to parse the run-tests 
-  output (to see if the increment passes or fails). For example, if the value is 
-  'cassert' then app/helpers/run_tests_output_parser.rb must contain a method 
-  called parse_cassert() and will be called to parse the output of running the 
-  tests via the cyberdojo.sh shell file.
+  name of the ruby function (in the CyberDojo server) used to parse the 
+  run-tests output (to see if the increment passes or fails). For example, if 
+  the value is 'cassert' then app/helpers/run_tests_output_parser.rb must 
+  contain a method called parse_cassert() and will be called to parse the output 
+  of running the tests via the cyberdojo.sh shell file.
 
 There are two more parameters that can be specified in a manifest.rb
 file as part of the inspected ruby object:
@@ -245,10 +247,10 @@ file as part of the inspected ruby object:
 
 :max_run_tests_duration
   This is the maximum number of seconds the CyberDojo server allows an increment 
-  to run in (the time starts after all that increments' files have been copied to 
-  the sandbox folder).  This allows players to continue if they accidentally code 
-  an infinite loop for example. Reloaded on each increment so it can be modified 
-  mid-kata if necessary. Defaults to 10 seconds.
+  to run in (the time starts after all that increments' files have been copied
+  to the sandbox folder).  This allows players to continue if they accidentally 
+  code an infinite loop for example. Reloaded on each increment so it can be
+  modified mid-kata if necessary. Defaults to 10 seconds.
 
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
@@ -286,14 +288,14 @@ To turn it off (and avoid annoying red underlines the code editor)
 
 Misc Notes
 ==========
-o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in Ruby
-   in an earlier version of CyberDojo
+o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in 
+   Ruby in an earlier version of CyberDojo
 o) http://vimeo.com/8630305 has a video of an even earlier version of CyberDojo
    I submitted as a proposal to the Software Craftsmanship conference 2010.
 o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
-   pair with (except google) while developing this in my limited spare time. Some 
-   of what you find is likely to be non-idiomatic. Caveat emptor!
+   pair with (except google) while developing this in my limited spare time. 
+   Some of what you find is likely to be non-idiomatic. Caveat emptor!
 o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
    simpler the environment the more players will need to collaborate with each
    other. Remember the aim of a CyberDojo is _not_ to ship something, it is to 
