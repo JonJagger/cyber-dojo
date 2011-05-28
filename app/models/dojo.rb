@@ -115,7 +115,7 @@ class Dojo
   def all_increments
     all = {}
     avatars.each { |avatar| all[avatar.name] = avatar.increments }
-    all.sort
+    all
   end
   
   def seconds_per_heartbeat

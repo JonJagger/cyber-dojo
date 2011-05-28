@@ -1,17 +1,21 @@
 
 <%= render :partial => 'banner' -%>
 
-<div style="margin:0.5em;">
-  <%= link_to "<span class='button' style='font-size:0.8em;'>Expand</span>", 
-  { :controller => :dojo, 
-    :action => "dashboard?dojo_name=#{@dojo.name}" 
-  }, 
-  { :title => "Expand the traffic lights", 
-  }
-  -%>        
-</div>
-
-<%= render :partial => 'traffic_lights_collapsed' -%>
-
-<span class="small_title">&nbsp;Click a traffic light to view its code.</span>
+<table>
+  <tr>
+    <td>
+      <%= link_to "<span class='button' style='font-size:0.8em;'>Inflate</span>", 
+      { :controller => :dojo, 
+        :action => "dashboard?dojo_name=#{@dojo.name}" 
+      }, 
+      { :title => "Inflate time gaps", 
+      }
+      -%>        
+    </td>
+    <td>
+      <%= render :partial => 'traffic_lights_collapsed' -%>
+      <span class="small_title">&nbsp;Click a traffic light to view its code.</span>
+    </td>
+  </tr>
+</table>
 

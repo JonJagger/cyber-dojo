@@ -3,10 +3,17 @@
   <table>
   
     <% index = 0 -%>
-    <% @dojo.all_increments.each do |avatar_name,incs| -%>
+    <% all_incs = @dojo.all_increments -%>
+    <% all_incs.keys.sort.each do |avatar_name| -%>
+      <% lights = all_incs[avatar_name] -%>    
       <% parity = (index % 2 == 0) ? "even" : "odd" -%>
       <% index += 1 -%>
       <tr class="<%=parity-%> traffic_light_row">
+      
+        <td align="right">
+           <%= render :partial => 'traffic_lights_summary', :locals => { :avatar_name => avatar_name, :lights => lights } -%> 
+        </td>
+      
         <td>
           <%= avatar_image(avatar_name, 45) -%>
         </td>
@@ -22,9 +29,9 @@
         <td>
           <table>
             <tr>
-              <% incs.each do |inc| -%>
+              <% lights.each do |light| -%>
                 <td>
-                  <%= traffic_light(@dojo.name, avatar_name, inc) -%>
+                  <%= traffic_light(@dojo.name, avatar_name, light) -%>
                 </td>
               <% end -%>
             </tr>
