@@ -1,21 +1,20 @@
 
 body, #editor_line_numbers { background-color: GhostWhite; }
-.panel { border: 5px solid GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
 
 h1 { font-size: 4em;  }
 h3 { font-size: 1.3em; }
-h1, h3, h4 
-{ 
-  text-align: center;
-  margin: 0; 
-}
-
+h1, h3, h4 { text-align: center; margin: 0; }
 
 .mid_tone { background-color: CornSilk; }
 
-.panel { padding: 0.7em; background-color: #FFECCB; }
+.panel 
+{ 
+  border: 5px solid GhostWhite; 
+  padding: 0.7em; 
+  background-color: #FFECCB; 
+}
 
 .notice { color: Red; }
 
@@ -229,6 +228,9 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#secs_per_col { width:4em; }
+#max_cols { width: 4em; }
+
 .traffic_light_row.even { background-color: #FFC; }
 .traffic_light_row.odd  { background-color: Ivory; }
 
@@ -245,11 +247,11 @@ input[type="checkbox"]:checked+label { color: green; }
   -webkit-border-radius: 20px;
 }
 
-.traffic_light_bulb.failed { background-color: #F00; /* red */   }
+.traffic_light_bulb.failed { background-color: #F00; /* red   */ }
 .traffic_light_bulb.error  { background-color: #FC3; /* amber */ }
 .traffic_light_bulb.passed { background-color: #0F0; /* green */ }
 .traffic_light_bulb.off    { background-color: LightGray; }
 
-.traffic_light_number { color: #686868; }
+.traffic_light_number   { color: #686868; }
 .traffic_light_ellision { color: #686868; font-size: 0.8em; }
 

@@ -4,7 +4,7 @@
   
     <% index = 0 -%>
     
-    <% seconds_per_td = 20 -%>
+    <% seconds_per_td = @secs_per_col -%>
     <% max_seconds_uncollapsed = 20 * 60 -%>
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
     <% gapper.fully_gapped(@dojo.all_increments, make_time(Time.now)).each do |avatar_name,td_map| -%>
@@ -24,7 +24,7 @@
           <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
         </td>
         
-        <% max_tds_displayed = 90 -%>
+        <% max_tds_displayed = @max_cols -%>
         <% all_td_nos = td_map.keys.sort -%>
         <% recent_td_nos = recent(all_td_nos, max_tds_displayed) -%>
         

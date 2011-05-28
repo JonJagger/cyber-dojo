@@ -1,13 +1,45 @@
- 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+  $j('#secs_per_col').updown(10,60, 20);
+  $j('#max_cols').updown(10,120, 90);  
+});
+        
+//--></script>
+
 <%= render :partial => 'banner' -%>
 
-<%= link_to "<span class='button'>Remove time gaps</span>", 
-{ :controller => :dojo, 
-  :action => "dashboard_collapsed?dojo_name=#{@dojo.name}" 
-}, 
-{ :title => "Collapse the traffic lights", 
-}
--%>        
+<table>
+  <tr>
+    <td>
+      <%= link_to "<span class='button'>Remove time gaps</span>", 
+      { :controller => :dojo, 
+        :action => "dashboard_collapsed?dojo_name=#{@dojo.name}" 
+      }, 
+      { :title => "Collapse the traffic lights" }
+      -%>
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      Secs/column: 
+    </td>
+    <td>
+      <input type="text" name="secs_per_col" id="secs_per_col"/>
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      Max columns: 
+    </td>
+    <td>
+      <input type="text" name="max_cols" id="max_cols"/>
+    </td>
+  </tr>
+</table>
 
 <%= render :partial => 'traffic_lights' -%>
 &nbsp;Click a traffic light to view its code.
@@ -15,5 +47,8 @@
 <%= periodically_call_remote :url => { :action => 'dashboard_heartbeat',
                                        :dojo_name => @dojo.name
                                      }, 
+                             :with => "{ secs_per_col: Field.getValue('secs_per_col')," +
+                                      "  max_cols: Field.getValue('max_cols')" +
+                                      "}",                                     
                              :frequency => 10 -%>
 

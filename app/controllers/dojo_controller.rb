@@ -77,10 +77,16 @@ class DojoController < ApplicationController
   
   def dashboard
     board_config(params)
+    @secs_per_col = 20
+    @max_cols = 90
   end
 
   def dashboard_heartbeat
     board_config(params)
+    @secs_per_col = params[:secs_per_col].to_i
+    @secs_per_col = 20 if @secs_per_col == 0
+    @max_cols = params[:max_cols].to_i
+    @max_cols = 90 if @max_cols == 0
     respond_to do |format|
       format.js if request.xhr?
     end
