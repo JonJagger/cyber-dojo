@@ -1,6 +1,10 @@
 
 module RunTestsOutputParser
 
+  #  :failed - this means the tests ran but at least one failed
+  #  :error  - this means the tests could not be run (eg syntax error)
+  #  :passed - this means the tests ran and all passed
+  
   def self.parse(avatar, kata, output)
     inc = { :run_tests_output => output }
     if Regexp.new("Execution terminated after ").match(output)
