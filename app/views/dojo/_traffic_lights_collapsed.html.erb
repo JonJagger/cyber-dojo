@@ -6,7 +6,7 @@
     <% all_incs = @dojo.all_increments -%>
     <% all_incs.keys.sort.each do |avatar_name| -%>
       <% lights = all_incs[avatar_name] -%>    
-      <% parity = (index % 2 == 0) ? "even" : "odd" -%>
+      <% parity = index.odd? ? "odd" : "even" -%>
       <% index += 1 -%>
       <tr class="<%=parity-%> traffic_light_row">
       

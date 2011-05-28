@@ -9,9 +9,12 @@
     <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
     <% all_incs = @dojo.all_increments -%>
+    <% gapped = gapper.fully_gapped(all_incs, make_time(Time.now)) -%> 
     
-    <% gapper.fully_gapped(all_incs, make_time(Time.now)).each do |avatar_name,td_map| -%>
-      <% parity = (index % 2 == 0) ? "even" : "odd" -%>
+    <% all_incs.keys.sort.each do |avatar_name| -%>
+      <% td_map = gapped[avatar_name] -%>
+    
+      <% parity = index.odd? ? "odd" : "even" -%>
       <% index += 1 -%>
       <tr class="<%=parity-%> traffic_light_row">
       
