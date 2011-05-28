@@ -10,7 +10,7 @@
 -%>        
 
 <%= render :partial => 'traffic_lights' -%>
-Click a traffic light to view it.
+&nbsp;Click a traffic light to view its code.
 
 <%= periodically_call_remote :url => { :action => 'dashboard_heartbeat',
                                        :dojo_name => @dojo.name

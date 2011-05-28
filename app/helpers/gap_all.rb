@@ -87,7 +87,7 @@ class TdGapper
         end
       end
     end
-    s[:avatars]
+    s[:avatars].sort
   end
 
 end
