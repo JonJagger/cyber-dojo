@@ -8,8 +8,6 @@ var kataCount = <%=@katas.length-%>;
 function toggleAll(name, size) {
   var current = $(name + '_all').checked;
   for (var at = 0; at !== size; at += 1) {
-    var r = $(name + '_' + at);
-    if (r === null) alert("null: " + name + "," + at + "," + size);
     $(name + '_' + at).checked = current;
   }
   setSaveButtonState();  
