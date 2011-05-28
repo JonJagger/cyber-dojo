@@ -3,7 +3,7 @@ body, #editor_line_numbers { background-color: GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
 
-h1 { font-size: 4em;  }
+h1 { font-size: 3em;  }
 h3 { font-size: 1.3em; }
 h1, h3, h4 { text-align: center; margin: 0; }
 
@@ -143,7 +143,7 @@ div[class~="filename"], *[class~="fileset"]
   
 }
 
-*[class~="fileset"]:hover, div[class~="filename"]:hover, .file_op:hover, .button:hover, .main_button:hover
+*[class~="fileset"]:hover, div[class~="filename"]:hover, .file_op:hover, .button:hover, .main_button:hover,
 {
   border-bottom: 1px solid #7E7E7E;
   border-right:  1px solid #7E7E7E;   
@@ -228,8 +228,10 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#secs_per_col { width:4em; }
-#max_cols { width: 4em; }
+#secs_per_col_panel, #max_cols_panel { font-size: 0.8em; }
+#secs_per_col, #max_cols { font-size: 0.8em; width: 3em; text-align: center; }
+.updown_up, .updown_down { text-align: center; font-size: 1.3em; font-family: monospace; }
+
 
 .traffic_light_row.even { background-color: #FFC; }
 .traffic_light_row.odd  { background-color: Ivory; }

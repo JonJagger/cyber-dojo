@@ -1,0 +1,54 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+  $j('#secs_per_col').updown(10,60, 20)    
+  $j('#max_cols').updown(10,120, 90);
+});
+        
+//--></script>
+
+
+<table>
+  <tr>
+    <td>
+      <table id="secs_per_col_panel">
+        <tr>
+          <td>
+            Secs/col: 
+          </td>
+          <td>
+            <input type="text" name="secs_per_col" id="secs_per_col" readonly/>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= link_to "<span class='button' style='font-size:0.8em;'>Collapse</span>", 
+      { :controller => :dojo, 
+        :action => "dashboard_collapsed?dojo_name=#{@dojo.name}" 
+      }, 
+      { :title => "Collapse the traffic lights" }
+      -%>
+    </td>
+  </tr>
+  <tr>  
+    <td>
+      <table id="max_cols_panel">
+        <tr>
+          <td>
+            Max col: 
+          </td>
+          <td>
+            <input type="text" name="max_cols" id="max_cols" readonly/>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+

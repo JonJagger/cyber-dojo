@@ -14,13 +14,13 @@ jQuery.fn.updown = function (min, max, initial, valueChangedCallback) {
 			: valueChangedCallback);	// Use the given callback.
 		
 		target
-			.before("<div class=\"updown updown_up\">up</div>")		// Insert the markup for the up button.
+			.before("<div class=\"updown updown_up button\">+</div>")		// Insert the markup for the up button.
 			.prev()													// Select the newly created up button.
 			.data("target", target)									// Tell the button which element it is associated with.
 			.click(increment);										// Attach behaviour.
 		
 		target
-			.after("<div class=\"updown updown_down\">down</div>")	// Same as for the up button, see above.
+			.after("<div class=\"updown updown_down button\">&ndash;</div>")	// Same as for the up button, see above.
 			.next()
 			.data("target", target)
 			.click(decrement);
