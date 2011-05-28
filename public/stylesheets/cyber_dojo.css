@@ -246,4 +246,5 @@ input[type="checkbox"]:checked+label { color: green; }
 .traffic_light_bulb.off    { background-color: LightGray; }
 
 .traffic_light_number { color: #686868; }
+.traffic_light_ellision { color: #686868; font-size: 0.8em; }
 
