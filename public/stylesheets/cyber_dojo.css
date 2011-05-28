@@ -144,7 +144,7 @@ div[class~="filename"], *[class~="fileset"]
   
 }
 
-*[class~="fileset"]:hover, div[class~="filename"]:hover, .file_op:hover, .button:hover, .main_button:hover,
+*[class~="fileset"]:hover, div[class~="filename"]:hover, .file_op:hover, .button:hover, .main_button:hover
 {
   border-bottom: 1px solid #7E7E7E;
   border-right:  1px solid #7E7E7E;   
