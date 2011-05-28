@@ -1,13 +1,15 @@
 
 <%= render :partial => 'banner' -%>
 
-<%= link_to "<span class='button' style='font-size:0.8em;'>Expand</span>", 
-{ :controller => :dojo, 
-  :action => "dashboard?dojo_name=#{@dojo.name}" 
-}, 
-{ :title => "Expand the traffic lights", 
-}
--%>        
+<div style="margin:0.5em;">
+  <%= link_to "<span class='button' style='font-size:0.8em;'>Expand</span>", 
+  { :controller => :dojo, 
+    :action => "dashboard?dojo_name=#{@dojo.name}" 
+  }, 
+  { :title => "Expand the traffic lights", 
+  }
+  -%>        
+</div>
 
 <%= render :partial => 'traffic_lights_collapsed' -%>
 

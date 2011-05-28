@@ -11,20 +11,21 @@ $j(document).ready(function() {
 
 
 <table>
-  <tr>
+  <tr id="secs_per_col_panel">
     <td>
-      <table id="secs_per_col_panel">
-        <tr>
-          <td>
-            Secs/col: 
-          </td>
-          <td>
-            <input type="text" name="secs_per_col" id="secs_per_col" readonly/>
-          </td>
-        </tr>
-      </table>
+      Secs/col: 
+    </td>
+    <td>
+      <input type="text" name="secs_per_col" id="secs_per_col" readonly/>
     </td>
   </tr>
+
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+  
   <tr>
     <td>
       <%= link_to "<span class='button' style='font-size:0.8em;'>Collapse</span>", 
@@ -34,19 +35,23 @@ $j(document).ready(function() {
       { :title => "Collapse the traffic lights" }
       -%>
     </td>
-  </tr>
-  <tr>  
     <td>
-      <table id="max_cols_panel">
-        <tr>
-          <td>
-            Max col: 
-          </td>
-          <td>
-            <input type="text" name="max_cols" id="max_cols" readonly/>
-          </td>
-        </tr>
-      </table>
+      &nbsp;
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+
+  <tr id="max_cols_panel">
+    <td>
+      Max cols: 
+    </td>
+    <td>
+      <input type="text" name="max_cols" id="max_cols" readonly/>
     </td>
   </tr>
 </table>
