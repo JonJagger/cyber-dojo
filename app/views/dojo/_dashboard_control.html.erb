@@ -3,8 +3,19 @@
         type="text/javascript"><!--
 
 $j(document).ready(function() {
-  $j('#secs_per_col').updown(10,60, 20)    
-  $j('#max_cols').updown(10,120, 90);
+  var minimum = 10;
+  var initial = 30;
+  var maximum = 120;  
+  $j('#secs_per_col').updown(minimum, maximum, initial);
+  
+  var minimum = 10;
+  var initial = 60;
+  var maximum = 120;
+  $j('#max_cols').updown(minimum, maximum, initial);
+  
+  // minimum time period =  10 seconds *  10 columns =  100 seconds
+  // initial time period =  30 seconds *  60 columns =   30 minutes
+  // maximum time period = 120 seconds * 120 columns =    4 hours
 });
         
 //--></script>
@@ -13,7 +24,7 @@ $j(document).ready(function() {
 <table>
   <tr id="secs_per_col_panel">
     <td>
-      Secs/col: 
+      secs/col 
     </td>
     <td>
       <input type="text" name="secs_per_col" id="secs_per_col" readonly/>
@@ -48,7 +59,7 @@ $j(document).ready(function() {
 
   <tr id="max_cols_panel">
     <td>
-      Max cols: 
+      max cols 
     </td>
     <td>
       <input type="text" name="max_cols" id="max_cols" readonly/>

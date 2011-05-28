@@ -4,8 +4,9 @@ body, #editor_line_numbers { background-color: GhostWhite; }
 #cyber_dojo_page { text-align: left; color: Green; }
 
 h1 { font-size: 3em;  }
+h2 { font-size: 2em;  }
 h3 { font-size: 1.3em; }
-h1, h3, h4 { text-align: center; margin: 0; }
+h1, h2, h3, h4 { text-align: center; margin: 0; }
 
 .mid_tone { background-color: CornSilk; }
 
@@ -193,8 +194,8 @@ input[type="checkbox"]:checked+label { color: green; }
 
 #all_messages
 {
-  width: 45em;
-  height: 30em;
+  width: 35em;
+  height: 40em;
   overflow: auto;
 }
 
