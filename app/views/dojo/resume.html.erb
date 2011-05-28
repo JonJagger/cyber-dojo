@@ -1,15 +1,6 @@
  
-<h1 align="center">CyberDojo: <%= @dojo.name -%></h1>
-
-<h4 align="center">
-  <% if @languages.length == 1 -%> 
-    <%= @languages[0] -%>,
-  <% end -%>
-  <% if @katas.length == 1 -%> 
-    <%= @katas[0] -%> 
-  <% end -%>
-</h4>
-
+<%= render :partial => 'banner' -%>
+       
 <table class="panel">
   <% @dojo.avatars.each do |avatar| -%>
   <tr>
@@ -24,6 +15,7 @@
     
     <td>
       <% kata = avatar.kata -%>
+      <span class="small_title"><%= avatar.name.humanize -%></span>
       <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
       <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>
     </td>    

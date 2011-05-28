@@ -4,9 +4,14 @@ body, #editor_line_numbers { background-color: GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
 
-h1 { font-size: 4em;   text-align: center; margin: 0; }
+h1 { font-size: 4em;  }
+h3 { font-size: 1.3em; }
+h1, h3, h4 
+{ 
+  text-align: center;
+  margin: 0; 
+}
 
-h3 { font-size: 1.3em; text-align: center; margin: 0; }
 
 .mid_tone { background-color: CornSilk; }
 
