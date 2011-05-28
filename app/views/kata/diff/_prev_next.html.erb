@@ -6,13 +6,15 @@
   
     <% if tag_number != 0 -%>
     <td>
-      <%= link_to 0, 
-      { :controller => :kata, 
-        :action => :review,
-        :dojo_name => @dojo.name,
-        :avatar => @avatar.name,
-        :tag => 0 
-      } -%>
+      <span class="traffic_light_number"
+        <%= link_to 0, 
+        { :controller => :kata, 
+          :action => :review,
+          :dojo_name => @dojo.name,
+          :avatar => @avatar.name,
+          :tag => 0 
+        } -%>
+      </span>
     </td>                
     <% end -%>
     
@@ -38,13 +40,15 @@
     
     <% if tag_number < @all_traffic_lights.length -%>
     <td>
-      <%= link_to @all_traffic_lights.length, 
-      { :controller => :kata, 
-        :action => :review,
-        :dojo_name => @dojo.name,
-        :avatar => @avatar.name,
-        :tag => @all_traffic_lights.length 
-      } -%>
+      <span class="traffic_light_number"
+        <%= link_to @all_traffic_lights.length, 
+        { :controller => :kata, 
+          :action => :review,
+          :dojo_name => @dojo.name,
+          :avatar => @avatar.name,
+          :tag => @all_traffic_lights.length 
+        } -%>
+      </span>
     </td>                
     <% end -%>
     

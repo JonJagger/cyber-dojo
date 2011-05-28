@@ -21,7 +21,7 @@
         </td>
         
         <td>
-          <%= avatar_image(avatar_name, 45) -%>
+          <%= avatar_image(avatar_name, 43) -%>
         </td>
         
         <td>
@@ -32,9 +32,8 @@
           <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
         </td>
         
-        <% max_tds_displayed = @max_cols -%>
         <% all_td_nos = td_map.keys.sort -%>
-        <% recent_td_nos = recent(all_td_nos, max_tds_displayed) -%>
+        <% recent_td_nos = recent(all_td_nos, max_cols) -%>
         
         <% if recent_td_nos.length < all_td_nos.length -%>
           <td>
