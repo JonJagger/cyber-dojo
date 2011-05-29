@@ -12,12 +12,10 @@
     <% gapped = gapper.fully_gapped(all_incs, make_time(Time.now)) -%> 
     
     <% all_incs.keys.sort.each do |avatar_name| -%>
-      <% td_map = gapped[avatar_name] -%>
-    
-      <% parity = index.odd? ? "odd" : "even" -%>
-      <% index += 1 -%>
-      <tr class="<%=parity-%> traffic_light_row">
-      
+      <% td_map = gapped[avatar_name] -%>    
+      <tr class="<%=parity(index)-%> traffic_light_row">
+        <% index += 1 -%>
+        
         <td align="right">
            <% incs = all_incs[avatar_name] -%>
            <%= render :partial => 'traffic_lights_summary', :locals => { :avatar_name => avatar_name, :lights => incs } -%> 

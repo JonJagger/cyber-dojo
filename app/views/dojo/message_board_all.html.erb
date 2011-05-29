@@ -3,14 +3,13 @@
 
 <div id="all_messages" class="panel">
   <% @messages.reverse.each_with_index do |message,index| -%>
-     <% parity = (index % 2 == 0) ? "even" : "odd" -%>
-     <div class="<%=parity-%> message_container">
+     <div class="<%=parity(index)-%> message_container">
        <table>
          <tr>
            <td>
-             <%= avatar_image(message[:sender].to_s, 40) -%>
+             <%= avatar_image(message[:sender].to_s, 43) -%>
            </td>
-           <td style="vertical-align: middle;">
+           <td class="message_text">
              <%= message[:text] -%>
            </td>
          </tr>

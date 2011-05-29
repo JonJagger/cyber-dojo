@@ -19,6 +19,8 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
 
 .notice { color: Red; }
 
+.avatar_image { margin: 0.2em; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .name_input { font-size: 1.15em; }
@@ -218,14 +220,12 @@ input[type="checkbox"]:checked+label { color: green; }
   
 #messages { width: 23em; }
 
+.message_container { display: block; margin-top: 0.2em; }
+
 .message_container.even { background-color: Ivory; }
 .message_container.odd  { background-color: CornSilk; }
 
-.avatar_image { margin: 0.2em; }
-
-/* - - - - - - - - - - - - - - - - - - - - */
-
-.message_container { display: block; margin-top: 0.2em; }
+.message_text { vertical-align: middle; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 

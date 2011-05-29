@@ -6,9 +6,8 @@
     <% all_incs = @dojo.all_increments -%>
     <% all_incs.keys.sort.each do |avatar_name| -%>
       <% lights = all_incs[avatar_name] -%>    
-      <% parity = index.odd? ? "odd" : "even" -%>
-      <% index += 1 -%>
-      <tr class="<%=parity-%> traffic_light_row">
+      <tr class="<%=parity(index)-%> traffic_light_row">
+        <% index += 1 -%>
       
         <td align="right">
            <%= render :partial => 'traffic_lights_summary', :locals => { :avatar_name => avatar_name, :lights => lights } -%> 
