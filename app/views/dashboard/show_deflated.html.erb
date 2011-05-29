@@ -6,7 +6,8 @@
     <td>
       <%= link_to "<span class='button' style='font-size:0.8em;'>Inflate</span>", 
       { :controller => :dashboard, 
-        :action => "show_inflated?dojo_name=#{@dojo.name}" 
+        :action => :show_inflated,
+        :dojo_name => @dojo.name 
       }, 
       { :title => "Inflate time gaps", 
       }

@@ -22,7 +22,8 @@
       <br/>
       <%= link_to "<span class='button'>...</span>", 
       { :controller => :message_board, 
-        :action => "show_all?dojo_name=#{@dojo.name}" 
+        :action => :show_all,
+        :dojo_name => @dojo.name 
       }, 
       { :title => "Show all messages", 
         :target => defined?(target) ? target : ''
