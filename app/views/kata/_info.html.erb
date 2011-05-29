@@ -4,7 +4,7 @@
     <td colspan="2">
       <span class="small_title">
         <%= link_to "#{@dojo.name}", 
-             { :controller => :dojo, :action => :dashboard, :dojo_name => "#{@dojo.name}" }, 
+             { :controller => :dashboard, :action => :show_inflated, :dojo_name => "#{@dojo.name}" }, 
              { :class => "title", :target => "_blank" } -%>
       </span>            
     </td>
