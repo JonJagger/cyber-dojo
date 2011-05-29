@@ -1,88 +1,41 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-
-var dojo_closed = disableRunTestsButtonIf("<%=@dojo.readonly-%>");
-
-function disableRunTestsButtonIf(closed)
-{
-  // Why is this here?
-  // I wasted time thinking I could update the status of
-  // the Run Tests button (disabled in review mode) directly 
-  // via a partial in heartbeat.js.rjs  - but I can't. 
-  // The reason is that when you press the
-  // Run Tests button it is hidden and the spinner shown.
-  // I want the spinner to remain visibly spinning until 
-  // the run-tests comes back from the server. And a partial
-  // in heartbeat.js.rjs could easily hide the spinner (and
-  // reshow the Run Tests button) well before the run-tests
-  // result had come back from the server.
-  
-  var rtb = $('run_tests_button');
-  if (rtb && closed === "true") 
-  {
-    rtb.disabled = true;
-    $('editor').setAttribute('readonly', 'readonly');    
-  }
-  return closed;
-}
-//--></script>
-
-
-<div id="fileops">
-
 <% size=30 -%>
 
-<% if @dojo.readonly -%>
-<% fop="file_op_disabled" -%>
-<% else -%>
-<% fop="file_op" -%> 
-<% end -%>
-
-<table>
-<tr>
-     <td class="<%=fop-%>"
-         id="file_op_new"
-         <% if !@dojo.readonly -%>
-           title="create a new file"
-           onclick="newFile();"
-         <% end -%>
-         >
-       <img src="/images/file-new-icon.png"
-            alt="new"
-            width="<%=size-%>"
-            height="<%=size-%>"/><br/>
-       <span class="file_op_name">new</span>
-     </td>
-     <td class="<%=fop-%>"
-         id="file_op_rename"
-         <% if !@dojo.readonly -%>
-           title="rename the current file"
-           onclick="renameFile();"
-         <% end -%>
-         >
-       <img src="/images/file-rename-icon.png"
-            alt="rename"
-            width="<%=size-%>"
-            height="<%=size-%>"/><br/>
-       <span class="file_op_name">rename</span>
-     </td>
-     <td class="<%=fop-%>"
-         id="file_op_delete"
-         <% if !@dojo.readonly -%>
-           title="delete the current file"
-           onclick="deleteFile();"
-         <% end -%>
-         >
-       <img src="/images/file-delete-icon.png"
-            alt="delete"
-            width="<%=size-%>"
-            height="<%=size-%>"/><br/>
-       <span class="file_op_name">delete</span>
-     </td>
-   </tr>
-</table>
+<div id="fileops">
+  <table>
+    <tr>
+      <td class="file_op"
+          id="file_op_new"
+          title="create a new file"
+          onclick="newFile();" >
+        <img src="/images/file-new-icon.png"
+             alt="new"
+             width="<%=size-%>"
+             height="<%=size-%>"/><br/>
+        <span class="file_op_name">new</span>
+      </td>
+      <td class="file_op"
+          id="file_op_rename"
+          title="rename the current file"
+          onclick="renameFile();" >
+        <img src="/images/file-rename-icon.png"
+             alt="rename"
+             width="<%=size-%>"
+             height="<%=size-%>"/><br/>
+        <span class="file_op_name">rename</span>
+      </td>
+      <td class="file_op"
+          id="file_op_delete"
+          title="delete the current file"
+          onclick="deleteFile();" >
+        <img src="/images/file-delete-icon.png"
+             alt="delete"
+             width="<%=size-%>"
+             height="<%=size-%>"/><br/>
+        <span class="file_op_name">delete</span>
+      </td>
+    </tr>
+  </table>
 </div>
-
 
 
