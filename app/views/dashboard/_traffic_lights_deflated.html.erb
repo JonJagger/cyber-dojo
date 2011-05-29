@@ -1,16 +1,15 @@
  
 <div id="traffic_lights" class="panel" style="width:90em;overflow:auto">
-  <table>
-  
-    <% index = 0 -%>
-    <% all_incs = @dojo.all_increments -%>
-    <% all_incs.keys.sort.each do |avatar_name| -%>
-      <% lights = all_incs[avatar_name] -%>    
+  <table>  
+
+    <% all_lights = @dojo.all_increments -%>
+    <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
+      <% lights = all_lights[avatar_name] -%>    
       <tr class="<%=parity(index)-%> traffic_light_row">
-        <% index += 1 -%>
       
         <td align="right">
-           <%= render :partial => 'traffic_lights_summary', :locals => { :avatar_name => avatar_name, :lights => lights } -%> 
+           <%= render :partial => 'traffic_lights_summary', 
+                      :locals => { :avatar_name => avatar_name, :lights => lights } -%> 
         </td>
       
         <td>
@@ -18,11 +17,8 @@
         </td>
         
         <td>
-          <span class="small_title"><%= avatar_name.humanize -%></span>        
-          <% avatar = Avatar.new(@dojo, avatar_name) -%> 
-          <% kata = avatar.kata -%>
-          <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
-          <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
+          <%= render :partial => 'avatar_summary',
+                     :locals => { :avatar_name => avatar_name, :lights => lights } -%>
         </td>
       
         <td>

@@ -2,23 +2,22 @@
 <div id="traffic_lights" class="panel">
   <table>
   
-    <% index = 0 -%>
-    
     <% seconds_per_td = @secs_per_col -%>
     <% max_cols = @max_cols -%>
     <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
-    <% all_incs = @dojo.all_increments -%>
-    <% gapped = gapper.fully_gapped(all_incs, make_time(Time.now)) -%> 
+    <% all_lights = @dojo.all_increments -%>
+    <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%> 
     
-    <% all_incs.keys.sort.each do |avatar_name| -%>
+    <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
       <% td_map = gapped[avatar_name] -%>    
       <tr class="<%=parity(index)-%> traffic_light_row">
-        <% index += 1 -%>
         
+        <% lights = all_lights[avatar_name] -%>
+           
         <td align="right">
-           <% incs = all_incs[avatar_name] -%>
-           <%= render :partial => 'traffic_lights_summary', :locals => { :avatar_name => avatar_name, :lights => incs } -%> 
+           <%= render :partial => 'traffic_lights_summary', 
+                      :locals => { :avatar_name => avatar_name, :lights => lights } -%> 
         </td>
         
         <td>
@@ -26,11 +25,8 @@
         </td>
         
         <td>
-          <span class="small_title"><%= avatar_name.humanize -%></span>
-          <% avatar = Avatar.new(@dojo, avatar_name) -%> 
-          <% kata = avatar.kata -%>
-          <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
-          <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>      
+          <%= render :partial => 'avatar_summary',
+                     :locals => { :avatar_name => avatar_name, :lights => lights } -%>
         </td>
         
         <% all_td_nos = td_map.keys.sort -%>
