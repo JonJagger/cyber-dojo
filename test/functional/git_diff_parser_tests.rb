@@ -1,6 +1,8 @@
 require 'test/unit'
 
-class GitDiff
+# Work In Progress...
+
+class GitDiffParser
 
   PREFIX_RE         = '(^[^-+].*)'
   WAS_FILENAME_RE   = '^--- a/(.*)'
@@ -107,7 +109,7 @@ end
 
 #--------------------------------------------
 
-class TestGitDiff < Test::Unit::TestCase
+class TestGitDiffParser < Test::Unit::TestCase
 
   def test_standard_diff
 
@@ -166,7 +168,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiff.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).obj
 
   end
 
@@ -209,7 +211,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiff.new(lines).obj  
+    assert_equal expected, GitDiffParser.new(lines).obj  
   end
 
 #-----------------------------------------------------
@@ -249,7 +251,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiff.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).obj
   end  
 
 #-----------------------------------------------------
@@ -315,7 +317,7 @@ HERE
             }
           ]    
     }
-    assert_equal expected, GitDiff.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).obj
 
   end
 

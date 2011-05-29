@@ -1,4 +1,7 @@
 
+# currently unused - I plan to use this (or something built on this)
+# to show a tool-tip for ... ellision on the dashboard
+
 def time_in_words(seconds)
   years,days,hours,minutes,seconds = time_split(seconds)
 
