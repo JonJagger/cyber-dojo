@@ -21,8 +21,8 @@
   <% if @messages.length > max_messages -%>
       <br/>
       <%= link_to "<span class='button'>...</span>", 
-      { :controller => :dojo, 
-        :action => "message_board_all?dojo_name=#{@dojo.name}" 
+      { :controller => :message_board, 
+        :action => "show_all?dojo_name=#{@dojo.name}" 
       }, 
       { :title => "Show all messages", 
         :target => defined?(target) ? target : ''

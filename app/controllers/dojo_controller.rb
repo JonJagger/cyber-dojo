@@ -64,7 +64,8 @@ class DojoController < ApplicationController
                   :dojo_name => dojo_name
                   
     elsif params[:message_board]
-      redirect_to :action => :message_board, 
+      redirect_to :controller => :message_board,
+                  :action => :show_some, 
                   :dojo_name => dojo_name
     end
   end

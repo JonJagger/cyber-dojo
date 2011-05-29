@@ -1,6 +1,6 @@
 
 <% post_message_options = {
-  :url => { :controller => 'kata',
+  :url => { :controller => 'message_board',
             :action => 'post_message',
             :dojo_name => @dojo.name,
             :avatar => @avatar.name
@@ -25,7 +25,7 @@
   </tr>
   <tr>
     <td colspan="2">
-      <%= render :partial => 'dojo/messages', :locals => { :target => '_blank' } -%>  
+      <%= render :partial => 'message_board/messages', :locals => { :target => '_blank' } -%>  
     </td>
   </tr>
 </table>

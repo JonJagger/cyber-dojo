@@ -1,8 +1,8 @@
 
-<%= render :partial => 'banner' -%>
+<%= render :partial => 'dojo/banner' -%>
 
 <% post_message_options = {
-  :url => { :controller => 'kata',
+  :url => { :controller => 'message_board',
             :action => 'post_message',
             :dojo_name => @dojo.name,
             :avatar => 'compass'
@@ -27,12 +27,12 @@
   </tr>
   <tr>
     <td colspan="2">
-      <%= render :partial => 'dojo/messages' -%>  
+      <%= render :partial => 'messages' -%>  
     </td>
   </tr>
 </table>
 
-<%= periodically_call_remote :url => { :action => 'message_board_heartbeat',
+<%= periodically_call_remote :url => { :action => 'heartbeat',
                                        :dojo_name => @dojo.name
                                      }, 
                              :frequency => 10 -%>

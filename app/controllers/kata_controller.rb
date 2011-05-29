@@ -66,7 +66,7 @@ class KataController < ApplicationController
     end
   end
    
-  def post_message
+  def XXXpost_message
     configure(params)
     @dojo = Dojo.new(params)
     @messages = @dojo.post_message(params[:avatar], params[:message])
