@@ -40,8 +40,8 @@ $j(document).ready(function() {
   <tr>
     <td>
       <%= link_to "<span class='button' style='font-size:0.8em;'>Deflate</span>", 
-      { :controller => :dojo, 
-        :action => "dashboard_collapsed?dojo_name=#{@dojo.name}" 
+      { :controller => :dashboard, 
+        :action => "show_deflated?dojo_name=#{@dojo.name}" 
       }, 
       { :title => "Deflate time gaps" }
       -%>

@@ -60,7 +60,8 @@ class DojoController < ApplicationController
                   :dojo_name => dojo_name
                   
     elsif params[:dashboard]
-      redirect_to :action => :dashboard, 
+      redirect_to :controller => :dashboard,
+                  :action => :show_inflated, 
                   :dojo_name => dojo_name
                   
     elsif params[:message_board]
@@ -75,48 +76,7 @@ class DojoController < ApplicationController
   end
   
   #---------------------------
-  
-  def dashboard
-    board_config(params)
-    @secs_per_col = 30
-    @max_cols = 60
-  end
-
-  def dashboard_heartbeat
-    board_config(params)
-    @secs_per_col = params[:secs_per_col].to_i
-    @max_cols = params[:max_cols].to_i
-    respond_to do |format|
-      format.js if request.xhr?
-    end
-  end
-  
-  def dashboard_collapsed
-    board_config(params)
-  end
-  
-  #---------------------------
-  
-  def message_board
-    board_config(params)
-    @messages = @dojo.messages
-  end
-
-  def message_board_heartbeat
-    board_config(params)
-    @messages = @dojo.messages
-    respond_to do |format|
-      format.js if request.xhr?
-    end
-  end
-  
-  def message_board_all
-    board_config(params)
-    @messages = @dojo.messages
-  end
-
-  #---------------------------
-  
+    
   def ifaq
   end
 

@@ -1,13 +1,13 @@
 
-<%= render :partial => 'banner' -%>
+<%= render :partial => 'dojo/banner' -%>
 
 <table>
   <tr>
     <td>
-      <%= render :partial => 'dashboard_control' -%>
+      <%= render :partial => 'controls' -%>
     </td>
     <td>
-      <%= render :partial => 'traffic_lights' -%>      
+      <%= render :partial => 'traffic_lights_inflated' -%>      
       <span class="small_title">
         &nbsp;Click a traffic light to view its code.
       </span>      
@@ -15,7 +15,7 @@
   </tr>
 </table>
 
-<%= periodically_call_remote :url => { :action => 'dashboard_heartbeat',
+<%= periodically_call_remote :url => { :action => :heartbeat,
                                        :dojo_name => @dojo.name
                                      }, 
                              :with => "{ secs_per_col: Field.getValue('secs_per_col')," +

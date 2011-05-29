@@ -1,19 +1,19 @@
 
-<%= render :partial => 'banner' -%>
+<%= render :partial => 'dojo/banner' -%>
 
 <table>
   <tr>
     <td>
       <%= link_to "<span class='button' style='font-size:0.8em;'>Inflate</span>", 
-      { :controller => :dojo, 
-        :action => "dashboard?dojo_name=#{@dojo.name}" 
+      { :controller => :dashboard, 
+        :action => "show_inflated?dojo_name=#{@dojo.name}" 
       }, 
       { :title => "Inflate time gaps", 
       }
       -%>        
     </td>
     <td>
-      <%= render :partial => 'traffic_lights_collapsed' -%>
+      <%= render :partial => 'traffic_lights_deflated' -%>
       <span class="small_title">&nbsp;Click a traffic light to view its code.</span>
     </td>
   </tr>
