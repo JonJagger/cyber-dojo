@@ -1,5 +1,5 @@
 
-class MessageBoardController < ApplicationController
+class MessagesController < ApplicationController
  
   def show_some
     board_config(params)
@@ -19,10 +19,10 @@ class MessageBoardController < ApplicationController
     @messages = @dojo.messages
   end 
   
-  def post_message
+  def post
     configure(params)
     @dojo = Dojo.new(params)
-    @messages = @dojo.post_message(params[:avatar], params[:message])
+    @messages = @dojo.post_message(params[:poster], params[:message])
     respond_to do |format|
       format.js if request.xhr?
     end

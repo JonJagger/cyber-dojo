@@ -1,0 +1,33 @@
+
+<div id="messages">
+  <% max_messages = 9 -%>
+  <% some = recent(@messages, max_messages) -%>  
+  <% some.reverse.each_with_index do |message,index| -%>
+     <table class="<%=parity(index)-%> message_container">
+       <tr>
+         <td>
+           <%= avatar_image(message[:sender].to_s, 43) -%>
+         </td>
+         <td class="message_text">
+           <%= message[:text] -%>
+         </td>
+       </tr>
+     </table>
+  <% end -%>
+  
+  <% if @messages.length > max_messages -%>
+      <div class="message_ellision">      
+        <%= link_to "<span class='button'>...</span>", 
+            { 
+              :controller => :messages, 
+              :action => :show_all,
+              :dojo_name => @dojo.name 
+            }, 
+            { :title => "Show all messages", 
+              :target => defined?(target) ? target : ''
+            }
+        -%>
+      </div>
+  <% end -%>
+</div>
+

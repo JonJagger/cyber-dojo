@@ -9,7 +9,8 @@
       
         <td align="right">
            <%= render :partial => 'traffic_lights_summary', 
-                      :locals => { :avatar_name => avatar_name, :lights => lights } -%> 
+                      :locals => { :avatar_name => avatar_name, 
+                                   :lights => lights } -%> 
         </td>
       
         <td>
@@ -18,7 +19,7 @@
         
         <td>
           <%= render :partial => 'avatar_summary',
-                     :locals => { :avatar_name => avatar_name, :lights => lights } -%>
+                     :locals => { :avatar_name => avatar_name } -%>
         </td>
       
         <td>

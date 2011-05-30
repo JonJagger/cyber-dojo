@@ -1,4 +1,4 @@
 
-page.replace 'messages', :partial => 'message_board/messages'
+page.replace 'messages', :partial => 'messages/messages'
 page.replace 'fileops',  :partial => 'fileops'
 

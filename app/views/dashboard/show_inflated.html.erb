@@ -1,16 +1,12 @@
 
-<%= render :partial => 'dojo/banner' -%>
-
 <table>
   <tr>
     <td>
       <%= render :partial => 'controls' -%>
     </td>
     <td>
-      <%= render :partial => 'traffic_lights_inflated' -%>      
-      <span class="small_title">
-        &nbsp;Click a traffic light to view its code.
-      </span>      
+      <%= render :partial => 'traffic_lights_inflated' -%>
+      <%= render :partial => 'click_info' -%>      
     </td>
   </tr>
 </table>

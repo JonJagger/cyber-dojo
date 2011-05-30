@@ -64,8 +64,8 @@ class DojoController < ApplicationController
                   :action => :show_inflated, 
                   :dojo_name => dojo_name
                   
-    elsif params[:message_board]
-      redirect_to :controller => :message_board,
+    elsif params[:messages]
+      redirect_to :controller => :messages,
                   :action => :show_some, 
                   :dojo_name => dojo_name
     end

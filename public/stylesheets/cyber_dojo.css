@@ -180,32 +180,23 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#all_messages
-{
-  width: 35em;
-  height: 40em;
-  overflow: auto;
-}
-
-/* - - - - - - - - - - - - - - - - - - - - */
+#all_messages  { width: 23em; height: 40em; overflow: auto; }
 
 #message_panel_indent { margin-left: 37px; } /* to match line-numbers offset */ 
 
-#message_text, #messages
+#message_text_input, #message_text, #messages
 {
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   font-size: 0.8em;
 }
 
-#message_text
+#message_text_input
 {
   border-color: Gray;
   background-color: CornSilk;
   color: Green;
 }
   
-#messages { width: 23em; }
-
 .message_container { display: block; margin-top: 0.2em; }
 
 .message_container.even { background-color: Ivory; }
@@ -213,12 +204,16 @@ input[type="checkbox"]:checked+label { color: green; }
 
 .message_text { vertical-align: middle; }
 
+.message_ellision { margin-top: 1em; text-align: right; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
 #secs_per_col_panel, #max_cols_panel { font-size: 0.8em; }
 #secs_per_col, #max_cols { font-size: 0.8em; width: 3em; text-align: center; }
 .updown_up, .updown_down { text-align: center; font-size: 1.3em; font-family: monospace; }
+.inflate.button, .deflate.button { font-size: 0.8em; }
 
+/* - - - - - - - - - - - - - - - - - - - - */
 
 .traffic_light_row.even { background-color: #FFC; }
 .traffic_light_row.odd  { background-color: Ivory; }

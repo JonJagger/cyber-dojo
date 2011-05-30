@@ -1,0 +1,32 @@
+
+<div class="panel">
+  <div id="all_messages">
+    <table>
+      <% @messages.reverse.each_with_index do |message,index| -%>
+      <tr class="<%=parity(index)-%> message_container">
+        <td>
+          <%= avatar_image(message[:sender].to_s, 43) -%>
+        </td>
+        <td class="message_text">
+          <%= message[:text] -%>
+        </td>
+      </tr>
+      <% end -%>    
+    </table>
+  </div>      
+      
+  <div class="message_ellision">
+    <%= link_to "<span class='button'>...</span>", 
+        { 
+          :controller => :messages, 
+          :action => :show_some,
+          :dojo_name => @dojo.name 
+        }, 
+        { :title => "Show some messages", 
+          :target => defined?(target) ? target : ''
+        }
+    -%>
+  </div>
+  
+</div>
+      

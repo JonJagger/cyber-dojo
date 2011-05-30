@@ -39,12 +39,13 @@ $j(document).ready(function() {
   
   <tr>
     <td>
-      <%= link_to "<span class='button' style='font-size:0.8em;'>Deflate</span>", 
-      { :controller => :dashboard, 
-        :action => :show_deflated,
-        :dojo_name => @dojo.name 
-      }, 
-      { :title => "Deflate time gaps" }
+      <%= link_to "<span class='deflate button'>Deflate</span>", 
+          { 
+            :controller => :dashboard, 
+            :action => :show_deflated,
+            :dojo_name => @dojo.name 
+          }, 
+          { :title => "Deflate time gaps" }
       -%>
     </td>
     <td>

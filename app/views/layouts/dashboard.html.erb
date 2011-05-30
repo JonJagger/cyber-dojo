@@ -1,0 +1,30 @@
+<!DOCTYPE 
+  html PUBLIC 
+  "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+  <head>  
+    <meta http-equiv="content-type"  content="text/html;charset=UTF-8" />
+    <meta name="description" content="Free Online Coding Dojo" />
+    <meta name="keywords" content="Code Dojo Kata Coding Deliberate Software Practice" />
+    <meta name="author" content="Jon Jagger" />
+    <title>CyberDojo</title>  
+    <%= stylesheet_link_tag :all -%> 
+    <%= javascript_include_tag :all -%>
+    <script>var $j = jQuery.noConflict();</script>    
+  </head>
+  
+  <body class="light_tone">
+    <table valign="top" align="center">
+      <tr>
+        <td>
+          <div id="cyber_dojo_page"> 
+            <%= render :partial => 'dojo/banner' -%>
+            <%= yield -%>                     
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+
