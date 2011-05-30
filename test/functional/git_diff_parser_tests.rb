@@ -15,28 +15,17 @@ class GitDiffParser
   ADDED_LINE_RE     = '^\+(.*)'
 
   def initialize(lines)
-    lines = lines.split("\n")
+    @lines = lines.split("\n")
+    @n = 0
+  end
 
-    n = 0
+  def parse
+    prefix_lines = parse_lines(/#{PREFIX_RE}/)
+    was_filename = parse_filename(/#{WAS_FILENAME_RE}/)
+    now_filename = parse_filename(/#{NOW_FILENAME_RE}/) 
 
-    @prefix_lines = []
-    while md = /#{PREFIX_RE}/.match(lines[n]) do
-      @prefix_lines << md[1]
-      n += 1
-    end
-
-    if md = /#{WAS_FILENAME_RE}/.match(lines[n])
-      @was_filename = md[1]
-      n += 1
-    end
-
-    if md = /#{NOW_FILENAME_RE}/.match(lines[n])
-      @now_filename = md[1]
-      n += 1
-    end
-
-    @chunks = []
-    while range = /#{RANGE_RE}/.match(lines[n])
+    chunks = []
+    while range = /#{RANGE_RE}/.match(@lines[@n])
       was = { 
         :start_line => range[1].to_i, 
         :size => range[2].to_i 
@@ -45,47 +34,11 @@ class GitDiffParser
         :start_line => range[3].to_i, 
         :size => range[4].to_i 
       }
-      n += 1
+      @n += 1
 
-      before_lines = []
-      while md = /#{COMMON_LINE_RE}/.match(lines[n]) 
-        before_lines << md[1]
-        n += 1
-      end
+      before_lines = parse_lines(/#{COMMON_LINE_RE}/)
 
-      sections = []
-      while n != lines.length && !/#{RANGE_RE}/.match(lines[n]) do
-               
-        deleted_lines = []
-        while md = /#{DELETED_LINE_RE}/.match(lines[n]) 
-          deleted_lines << md[1]
-          n += 1    
-        end
-        if /#{NEWLINE_AT_EOF_RE}/.match(lines[n])
-          n += 1
-        end
-  
-        added_lines = []
-        while md = /#{ADDED_LINE_RE}/.match(lines[n]) 
-          added_lines << md[1]
-          n += 1
-        end
-        if /#{NEWLINE_AT_EOF_RE}/.match(lines[n])
-          n += 1
-        end
-    
-        after_lines = []
-        while md = /#{COMMON_LINE_RE}/.match(lines[n]) 
-          after_lines << md[1]
-          n += 1
-        end
-        
-        sections << {        
-          :deleted_lines => deleted_lines,        
-          :added_lines => added_lines,
-          :after_lines => after_lines
-        }
-      end
+      sections = parse_sections
       
       chunk = {
         :was => was,
@@ -93,24 +46,61 @@ class GitDiffParser
         :before_lines => before_lines,
         :sections => sections
       }
-      @chunks << chunk
+      chunks << chunk
+    end 
 
-    end # sections
-
-  end # chunks
-
-  def prefix_lines; @prefix_lines; end
-  def was_filename; @was_filename; end
-  def now_filename; @now_filename; end
-  def chunks; @chunks; end
-
-  def obj
     {
       :prefix_lines => prefix_lines,
       :was_filename => was_filename,
       :now_filename => now_filename,
       :chunks => chunks
     }
+    
+  end 
+
+private
+
+  def parse_sections
+    sections = []
+    while @n != @lines.length && !/#{RANGE_RE}/.match(@lines[@n]) do
+             
+      deleted_lines = parse_lines(/#{DELETED_LINE_RE}/)
+      parse_newline_at_eof
+      
+      added_lines = parse_lines(/#{ADDED_LINE_RE}/)
+      parse_newline_at_eof
+      
+      after_lines = parse_lines(/#{COMMON_LINE_RE}/)
+      
+      sections << {        
+        :deleted_lines => deleted_lines,        
+        :added_lines => added_lines,
+        :after_lines => after_lines
+      }
+    end
+    sections
+  end
+
+  def parse_filename(re)
+    if md = re.match(@lines[@n])
+      @n += 1
+      md[1]
+    end    
+  end
+  
+  def parse_lines(re)
+    lines = []
+    while md = re.match(@lines[@n]) do
+      lines << md[1]
+      @n += 1
+    end
+    lines
+  end
+
+  def parse_newline_at_eof
+    if /#{NEWLINE_AT_EOF_RE}/.match(@lines[@n])
+      @n += 1
+    end
   end
 
 end
@@ -180,7 +170,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
 
   end
 
@@ -221,7 +211,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiffParser.new(lines).obj  
+    assert_equal expected, GitDiffParser.new(lines).parse
   end
 
   #-----------------------------------------------------
@@ -266,7 +256,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
   end  
 
   #-----------------------------------------------------
@@ -341,7 +331,7 @@ HERE
             }
           ]    
     }
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
 
   end
 
@@ -407,7 +397,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
 
   end
 
@@ -473,7 +463,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
     
   end
 
@@ -543,7 +533,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
   end    
   
   #-----------------------------------------------------
@@ -631,7 +621,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).obj
+    assert_equal expected, GitDiffParser.new(lines).parse
     
   end
 
