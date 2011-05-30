@@ -4,47 +4,27 @@ require 'test/unit'
 
 class GitDiffParser
 
-  PREFIX_RE         = '(^[^-+].*)'
-  WAS_FILENAME_RE   = '^--- a/(.*)'
-  NOW_FILENAME_RE   = '^\+\+\+ b/(.*)'
-
-  RANGE_RE          = '^@@ -(\d+),(\d+) \+(\d+),(\d+) @@.*'
-  COMMON_LINE_RE    = '^[^-+@](.*)'
-  DELETED_LINE_RE   = '^\-(.*)'
-  NEWLINE_AT_EOF_RE = '^\\ No newline at end of file'
-  ADDED_LINE_RE     = '^\+(.*)'
-
   def initialize(lines)
     @lines = lines.split("\n")
     @n = 0
   end
+
+  PREFIX_RE       = '(^[^-+].*)'
+  WAS_FILENAME_RE = '^--- a/(.*)'
+  NOW_FILENAME_RE = '^\+\+\+ b/(.*)'
+  COMMON_LINE_RE  = '^[^-+@](.*)'
 
   def parse
     prefix_lines = parse_lines(/#{PREFIX_RE}/)
     was_filename = parse_filename(/#{WAS_FILENAME_RE}/)
     now_filename = parse_filename(/#{NOW_FILENAME_RE}/) 
 
-    chunks = []
-    while range = /#{RANGE_RE}/.match(@lines[@n])
-      was = { 
-        :start_line => range[1].to_i, 
-        :size => range[2].to_i 
-      }
-      now = {
-        :start_line => range[3].to_i, 
-        :size => range[4].to_i 
-      }
-      range = { :was => was, :now => now }
-      @n += 1
-
+    chunks = []     
+    while range = parse_range
       before_lines = parse_lines(/#{COMMON_LINE_RE}/)
-
       sections = parse_sections
-      
       chunk = {
         :range => range,
-        #:was => was,
-        #:now => now,
         :before_lines => before_lines,
         :sections => sections
       }
@@ -61,6 +41,27 @@ class GitDiffParser
   end 
 
 private
+
+  RANGE_RE = '^@@ -(\d+),(\d+) \+(\d+),(\d+) @@.*'
+
+  def parse_range
+    if range = /#{RANGE_RE}/.match(@lines[@n])
+      @n += 1
+      was = { :start_line => range[1].to_i, 
+              :size => range[2].to_i 
+            }
+      now = { :start_line => range[3].to_i, 
+              :size => range[4].to_i 
+            }
+      { :was => was, :now => now } 
+    else
+      nil
+    end
+  end
+
+
+  DELETED_LINE_RE = '^\-(.*)'
+  ADDED_LINE_RE   = '^\+(.*)'
 
   def parse_sections
     sections = []
@@ -99,6 +100,8 @@ private
     lines
   end
 
+  NEWLINE_AT_EOF_RE = '^\\ No newline at end of file'
+  
   def parse_newline_at_eof
     if /#{NEWLINE_AT_EOF_RE}/.match(@lines[@n])
       @n += 1
