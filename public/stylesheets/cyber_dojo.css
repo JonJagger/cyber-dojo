@@ -180,6 +180,8 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#messages { width: 23em; }
+
 #all_messages  { width: 23em; height: 40em; overflow: auto; }
 
 #message_panel_indent { margin-left: 37px; } /* to match line-numbers offset */ 
