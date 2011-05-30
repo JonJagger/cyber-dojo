@@ -34,6 +34,7 @@ class GitDiffParser
         :start_line => range[3].to_i, 
         :size => range[4].to_i 
       }
+      range = { :was => was, :now => now }
       @n += 1
 
       before_lines = parse_lines(/#{COMMON_LINE_RE}/)
@@ -41,8 +42,9 @@ class GitDiffParser
       sections = parse_sections
       
       chunk = {
-        :was => was,
-        :now => now,
+        :range => range,
+        #:was => was,
+        #:now => now,
         :before_lines => before_lines,
         :sections => sections
       }
@@ -140,8 +142,11 @@ HERE
       :chunks => 
       [
         {
-          :was => { :start_line => 4, :size => 7 },
-          :now => { :start_line => 5, :size => 8 },
+          :range => 
+          {
+            :was => { :start_line => 4, :size => 7 },
+            :now => { :start_line => 5, :size => 8 },
+          },
           :before_lines => 
           [ 
             "  (0..n+1).collect {|i| from + i * seconds_per_gap }",
@@ -204,8 +209,11 @@ HERE
       :chunks =>
       [
         {
-          :was => { :start_line => 73, :size => 7 },
-          :now => { :start_line => 73, :size => 7 },
+          :range =>
+          {
+            :was => { :start_line => 73, :size => 7 },
+            :now => { :start_line => 73, :size => 7 },
+          },
           :before_lines => [],
           :sections => []
         }
@@ -242,8 +250,11 @@ HERE
       :chunks =>
       [
         {
-          :was => { :start_line => 9, :size => 4 },
-          :now => { :start_line => 9, :size => 3 },
+          :range =>
+          {
+            :was => { :start_line => 9, :size => 4 },
+            :now => { :start_line => 9, :size => 3 },
+          },
           :before_lines => [],
           :sections =>
           [ 
@@ -289,16 +300,11 @@ HERE
         :chunks =>
           [
             {
-              :was =>
-              { 
-                :start_line => 9, 
-                :size => 4 
+              :range =>
+              {
+                :was => { :start_line => 9, :size => 4 },
+                :now => { :start_line => 9, :size => 3 },
               },
-              :now =>
-                { 
-                  :start_line => 9, 
-                  :size => 3 
-                },
               :before_lines => [],
               :sections =>
               [
@@ -309,16 +315,11 @@ HERE
               ]
             },
             {
-              :was =>
-              { 
-                :start_line => 19, 
-                :size => 4 
+              :range =>
+              {
+                :was => { :start_line => 19, :size => 4 },
+                :now => { :start_line => 19, :size => 3 },
               },
-              :now =>
-                { 
-                  :start_line => 19, 
-                  :size => 3 
-                },
               :before_lines => [],
               :sections =>
               [
@@ -370,16 +371,11 @@ HERE
         :chunks =>
           [
             {
-              :was =>
+              :range =>
               { 
-                :start_line => 5, 
-                :size => 9 
+                :was => { :start_line => 5, :size => 9 },
+                :now => { :start_line => 5, :size => 9 },
               },
-              :now =>
-                { 
-                  :start_line => 5, 
-                  :size => 9 
-                },
               :before_lines => [ "5", "6", "7" ],
               :sections =>
               [
@@ -436,16 +432,11 @@ HERE
         :chunks =>
           [
             {
-              :was =>
-              { 
-                :start_line => 5, 
-                :size => 10 
+              :range =>
+              {
+                :was => { :start_line => 5, :size => 10 },
+                :now => { :start_line => 5, :size => 10 },
               },
-              :now =>
-                { 
-                  :start_line => 5, 
-                  :size => 10 
-                },
               :before_lines => [ "5", "6", "7" ],
               :sections =>
               [
@@ -506,16 +497,11 @@ HERE
         :chunks =>
           [
             {
-              :was =>
-              { 
-                :start_line => 5, 
-                :size => 14 
+              :range =>
+              {
+                :was => { :start_line => 5, :size => 14 },
+                :now => { :start_line => 5, :size => 14 },
               },
-              :now =>
-                { 
-                  :start_line => 5, 
-                  :size => 14 
-                },
               :before_lines => [ "5", "6", "7" ],
               :sections =>
               [
@@ -578,16 +564,11 @@ HERE
         :chunks =>
           [
             {
-              :was =>
-              { 
-                :start_line => 5, 
-                :size => 7 
+              :range =>
+              {
+                :was => { :start_line => 5, :size => 7 },
+                :now => { :start_line => 5, :size => 7 },
               },
-              :now =>
-                { 
-                  :start_line => 5, 
-                  :size => 7 
-                },
               :before_lines => [ "5", "6", "7" ],
               :sections =>
               [
@@ -599,16 +580,11 @@ HERE
               ]
             },
             {
-              :was =>
-              { 
-                :start_line => 13, 
-                :size => 7 
+              :range =>
+              {
+                :was => { :start_line => 13, :size => 7 },
+                :now => { :start_line => 13, :size => 7 },
               },
-              :now =>
-                { 
-                  :start_line => 13, 
-                  :size => 7 
-                },
               :before_lines => [ "13", "14", "15" ],
               :sections =>
               [
