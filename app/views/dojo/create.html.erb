@@ -58,9 +58,11 @@ function kataSelected()
        id="dojo_name" 
        value="<%=@dojo.name-%>" />
 
-<h1>CyberDojo: <%=@dojo.name-%></h1>
+<h1 title="<%= @dojo.name-%>">   
+  <%= ellided_name(@dojo.name, 40) -%>
+</h1>
 
-<table>
+<table align="center">
   <tr>
     <td valign="top">
       <table class="panel">

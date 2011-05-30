@@ -3,9 +3,16 @@
   <tr>
     <td colspan="2">
       <span class="small_title">
-        <%= link_to @dojo.name, 
-             { :controller => :dashboard, :action => :show_inflated, :dojo_name => @dojo.name }, 
-             { :class => "title", :target => "_blank" } -%>
+        <%= link_to ellided_name(@dojo.name, 20), 
+             { :controller => :dashboard, 
+               :action => :show_inflated, 
+               :dojo_name => @dojo.name 
+             }, 
+             { :class => "title",
+               :title => @dojo.name,
+               :target => "_blank" 
+             } 
+        -%>
       </span>            
     </td>
   </tr>

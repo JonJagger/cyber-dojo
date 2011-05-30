@@ -1,22 +1,20 @@
       
-<div class="panel">
-  <table>
-    <tr>
-      <td>
-        <%= render :partial => 'post_button',
-                   :locals => { :poster => 'compass' } -%>
-      </td>
-      <td>
-        <%= render :partial => 'input_area' -%>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <%= render :partial => 'messages' -%>  
-      </td>
-    </tr>
-  </table>
-</div>
+<table class="panel" align="center">
+  <tr>
+    <td>
+      <%= render :partial => 'post_button',
+                 :locals => { :poster => 'compass' } -%>
+    </td>
+    <td>
+      <%= render :partial => 'input_area' -%>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <%= render :partial => 'messages' -%>  
+    </td>
+  </tr>
+</table>
 
 <%= periodically_call_remote :url => { :action => :heartbeat,
                                        :dojo_name => @dojo.name
