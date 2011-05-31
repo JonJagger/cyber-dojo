@@ -24,7 +24,7 @@
     
     <td>
       <% if tag_number != 0-%>
-        <%= traffic_light(@dojo.name, @avatar.name, @traffic_lights_to_tag.last) -%>
+        <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
     </td>
     

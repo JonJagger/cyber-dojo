@@ -1,29 +1,42 @@
  
-def traffic_light(dojo_name, avatar_name, light)
-  outcome = light[:outcome].to_s
+def traffic_light(dojo_name, avatar_name, inc)
+  link_to make_light(inc, ''), 
+    { :controller => :kata, 
+      :action => :review,
+      :dojo_name => dojo_name,
+      :avatar => avatar_name,
+      :tag => inc[:number] 
+    }, 
+    { :title => inc[:number], 
+      :target => '_blank' 
+    } 
+end
 
-  red   = on_off(outcome, 'failed')
-  amber = on_off(outcome, 'error')
-  green = on_off(outcome, 'passed')
+def unlinked_traffic_light(inc)
+  make_light(inc, 'unlinked ')
+end
 
-  [ bulb(dojo_name, avatar_name, light, red),
-    bulb(dojo_name, avatar_name, light, amber),
-    bulb(dojo_name, avatar_name, light, green),
-  ].join('')
+def make_light(inc, extra)
+  outcome = inc[:outcome].to_s
+
+  red_state   = on_off(outcome, 'failed')
+  amber_state = on_off(outcome, 'error')
+  green_state = on_off(outcome, 'passed')
+
+  [ "<div class='#{extra}traffic_light'>",
+    bulb(red_state),
+    bulb(amber_state),
+    bulb(green_state),
+    "</div>"
+  ].join('')  
 end
 
 def on_off(outcome, is)
   return outcome == is ? is : 'off'
 end
 
-def bulb(dojo_name, avatar_name, light, colour)
-  link_to "<span class='#{colour} traffic_light_bulb'></span>", 
-    { :controller => :kata, 
-      :action => "review?dojo_name=#{dojo_name}&avatar=#{avatar_name}&tag=#{light[:number]}" 
-    }, 
-    { :title => "#{light[:number]}", 
-      :target => "_blank" 
-    } 
+def bulb(state)
+  "<span class='#{state} bulb'></span>"  
 end
  
 

@@ -239,11 +239,25 @@ input[type="checkbox"]:checked+label { color: green; }
 .traffic_light_row.even { background-color: #FFC; }
 .traffic_light_row.odd  { background-color: Ivory; }
 
-.traffic_light_bulb
+/* - - - - - - - - - - - - - - - - - - - - */
+
+.traffic_light:hover 
+{ 
+  background-color: #6E6E6E; 
+  cursor: pointer; 
+}
+
+.unlinked.traffic_light:hover  
+{ 
+  background-color: #FFECCB; 
+  cursor: default; 
+}
+
+.traffic_light .bulb
 {
   display: block;
-  margin: 1px 0px 0px 0px; /* Top Right Bottom Left */
-  padding: 2px; /* this controls the traffic light circle diameters */
+  margin: 1px 0px 0px 0px; /* vertical bulb separation */
+  padding: 2px; /* bulb diameter */
   width: 8px;
   height: 8px;
   border-radius: 20px;
@@ -252,10 +266,10 @@ input[type="checkbox"]:checked+label { color: green; }
   -webkit-border-radius: 20px;
 }
 
-.traffic_light_bulb.failed { background-color: #F00; /* red   */ }
-.traffic_light_bulb.error  { background-color: #FC3; /* amber */ }
-.traffic_light_bulb.passed { background-color: #0F0; /* green */ }
-.traffic_light_bulb.off    { background-color: LightGray; }
+.traffic_light .bulb.failed { background-color: #F00; /* red   */ }
+.traffic_light .bulb.error  { background-color: #FC3; /* amber */ }
+.traffic_light .bulb.passed { background-color: #0F0; /* green */ }
+.traffic_light .bulb.off    { background-color: #D8D8D8; /* gray;*/ }
 
 .traffic_light_number,
 .traffic_light_ellision { color: #686868; font-size: 0.8em; }
