@@ -4,6 +4,110 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  def test_parse_diffs_for_two_files
+
+lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index 896ddd8..2c8d1b8 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -1,7 +1,7 @@
+ 1
+ 2
+ 3
+-4
++4a
+ 5
+ 6
+ 7
+diff --git a/sandbox/other b/sandbox/other
+index cf0389a..b28bf03 100644
+--- a/sandbox/other
++++ b/sandbox/other
+@@ -1,6 +1,6 @@
+ 1
+ 2
+-3
+-4
++3a
++4a
+ 5
+ 6
+\ No newline at end of file
+HERE
+    
+    expected_diff_1 =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index 896ddd8..2c8d1b8 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 6 },
+                :now => { :start_line => 1, :size => 6 },
+              },
+              :before_lines => [ "1", "2"],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "3", "4" ],
+                  :added_lines   => [ "4a" ],
+                  :after_lines => [ "5", "6" ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    } # expected
+  
+    expected_diff_2 =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/other b/sandbox/other",
+            "index cf0389a..b28bf03 100644"
+          ],
+        :was_filename => 'sandbox/other',
+        :now_filename => 'sandbox/other',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 6 },
+                :now => { :start_line => 1, :size => 6 },
+              },
+              :before_lines => [ "1", "2"],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "3", "4" ],
+                  :added_lines   => [ "3a", "4a" ],
+                  :after_lines => [ "5", "6" ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    } # expected
+    
+    expected = 
+    {
+      'sandbox/lines' => expected_diff_1,
+      'sandbox/other' => expected_diff_2
+    }
+    
+    assert_equal expected, GitDiffParser.new(lines).parse_all
+
+  end
+  
+  #-----------------------------------------------------
+
   def test_parse_range_was_and_now_size_defaulted
     lines = "@@ -3 +5 @@ suffix"
     expected = 
@@ -64,10 +168,10 @@ index e69de29..2e65efe 100644
 \\ No newline at end of file
 HERE
 
-  #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
-  #Is a blog entry by Guido van Rossum.
-  #He says that in L,S the ,S can be omitted if the chunk size
-  #S is 1. So -3 is the same as -3,1
+    #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+    #Is a blog entry by Guido van Rossum.
+    #He says that in L,S the ,S can be omitted if the chunk size
+    #S is 1. So -3 is the same as -3,1
 
     expected =
     {

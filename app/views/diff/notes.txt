@@ -1,39 +1,97 @@
 
 #--------------------------------------------
-# to get the visible files for a specific tag
-# tag = 20
-# manifest = eval IO.popen("git show #{tag}:manifest.rb').read
-# manifest[:visible_files].each |filename,file] do
-#   p filename
-#   lines = file[:content].split("\n")
-#   p lines
-# end
-#
-# I have to be in the correct folder too of course.
-# Need to make sure that doesn't bleed into the read.
+to get the visible files for a specific tag
 
-#--------------------------------------------
-# to get the diffs for a specific tag
-# tag = 20
-# lines = IO.popen('git diff #{tag-1} #{tag} sandbox').readlines
-# ...and then parse the lines....
-# From this I need only the lines deleted and added and
-# at what position (line-number)
-# Do the deleted or added lines tend to get displayed first?
-# What does github do?
-# Answer deleted lines first 
-#   (with a - in column 1, faintish red background)
-#   no line number before column 1
-# then added lines next
-#   (with a + in column 1, faintish green background)
-#   with line numbers before column 1
-#
-# Line background colouring is full-width on github.
-# Think I prefer just the width of the line itself.
+tag = 20
+manifest = eval IO.popen("git show #{tag}:manifest.rb').read
+manifest[:visible_files].each |filename,file] do
+  p filename
+  lines = file[:content].split("\n")
+  p lines
+end
+
+I have to be in the correct folder too of course.
+Need to make sure that doesn't bleed into the read.
 
 
 #--------------------------------------------
-# TODO: find out what options I need to set to make a whitespace
-# difference not show up on a diff. 
+to get the diffs for a specific tag
+
+tag = 20
+lines = IO.popen('git diff #{tag-1} #{tag} sandbox').readlines
+
+...and then parse the lines....
+From this I need only the lines deleted and added and
+at what position (line-number)
+Do the deleted or added lines tend to get displayed first?
+What does github do?
+Answer deleted lines first 
+  (with a - in column 1, faintish red background)
+  no line number before column 1
+then added lines next
+  (with a + in column 1, faintish green background)
+  with line numbers before column 1
+
+Line background colouring is full-width on github.
+Think I prefer just the width of the line itself.
 
 
+#--------------------------------------------
+TODO: find out what options I need to set to make a whitespace
+difference not show up on a diff. 
+
+#--------------------------------------------
+>git diff tag1 tag2 sandbox
+will only show the diffs in the sandbox subfolder.
+This is ideal as I don't want to waste time
+on the increments.rb file or the messages.rb file
+or the manifest.rb files since changes to these
+files aren't being displayed.
+
+#--------------------------------------------
+When you do a 
+>diff x y --stat sandbox
+You get something like this...
+ increments.rb          |    2 +-
+ manifest.rb            |    2 +-
+ sandbox/gapper.rb      |    3 ++-
+ sandbox/test_gapper.rb |    2 +-
+Where the number indicates the combined number of additions
+and deletions. It is followed by one + for each addition
+and then one - for each deletion.
+
+#--------------------------------------------
+git diff does not detect some file renames.
+>git diff --find-copies-harder ...
+So
+>git diff --find-copies-harder --stat 149 150 sandbox
+ sandbox/{new => original} |   0
+Is perhaps what I want?
+This seems to only work if the files are identical
+With a one character difference it didn't detect the rename
+Hmmm but perhaps thats because it was only a 1 line file and
+1 char in 1 line is not a lot.
+Yes, making a small change in a big file (copy of this) did 
+detect the rename (but only with the --find-copies-harder option)
+>git diff --find-copies-harder --stat 163 164 sandbox
+sandbox/{old_name => new_name} |   2 +-
+
+#-------------------------------------------------------------
+But for just getting the initial patches
+>git diff --find-copies-harder 163 164 sandbox
+diff --git a/sandbox/oldname b/sandbox/newname
+similarity index 99%
+rename from sandbox/oldname
+rename to sandbox/newname
+index afcb4df..c0f407c 100644
+--- a/sandbox/oldname
++++ b/sandbox/newname
+@@ -73,7 +73,7 @@ LINE: +++ /dev/null
+.....
+.....
+
+#-------------------------------------------------------------
+How would diff handle it if you created two new files which were
+the same and very similar to a just deleted file?
+Would it spot one of them as a rename?
+No! It's spots both of them as a rename. Brilliant!

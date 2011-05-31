@@ -16,6 +16,12 @@ class GitDiffParser
     @n
   end
   
+  def parse_all
+    all = {}
+    #TODO...
+    all
+  end
+  
   PREFIX_RE       = '(^[^-+].*)'
   WAS_FILENAME_RE = '^--- a/(.*)'
   NOW_FILENAME_RE = '^\+\+\+ b/(.*)'
@@ -42,8 +48,7 @@ class GitDiffParser
       :was_filename => was_filename,
       :now_filename => now_filename,
       :chunks => chunks
-    }
-    
+    }    
   end 
 
   RANGE_RE = '^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@.*'

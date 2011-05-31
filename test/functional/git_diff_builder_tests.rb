@@ -61,6 +61,73 @@ end
 
 class GitDiffBuilderTests < ActionController::TestCase
 
+  def test_build_chunk_with_defaulted_now_line_info
+    
+lines = <<HERE
+diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3
+index e69de29..2e65efe 100644
+--- a/sandbox/untitled_5G3
++++ b/sandbox/untitled_5G3
+@@ -0,0 +1 @@
++a
+\\ No newline at end of file
+HERE
+
+    #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+    #Is a blog entry by Guido van Rossum.
+    #He says that in L,S the ,S can be omitted if the chunk size
+    #S is 1. So -3 is the same as -3,1
+
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3",
+            "index e69de29..2e65efe 100644"
+          ],
+        :was_filename => 'sandbox/untitled_5G3',
+        :now_filename => 'sandbox/untitled_5G3',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 0, :size => 0 },
+                :now => { :start_line => 1, :size => 1 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   => [ "a" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    } # expected
+    
+    assert_equal expected_diff, GitDiffParser.new(lines).parse
+
+source_lines = <<HERE
+a
+HERE
+
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "a", :type => :added, :number => 1 },
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   def test_build_two_chunks_with_leading_and_trailing_same_lines_and_no_newline_at_eof
     
 diff_lines = <<HERE
@@ -169,8 +236,7 @@ HERE
       { :line => "11", :type => :deleted },
       { :line => "11a", :type => :added, :number => 11 },
       { :line => "12", :type => :same, :number => 12 },
-      { :line => "13", :type => :same, :number => 13 },
-      
+      { :line => "13", :type => :same, :number => 13 },      
     ]
     
     assert_equal expected_source_diff, source_diff
