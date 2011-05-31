@@ -33,7 +33,7 @@ index cf0389a..b28bf03 100644
 +4a
  5
  6
-\ No newline at end of file
+\\ No newline at end of file
 HERE
     
     expected_diff_1 =
@@ -50,16 +50,16 @@ HERE
             {
               :range =>
               {
-                :was => { :start_line => 1, :size => 6 },
-                :now => { :start_line => 1, :size => 6 },
+                :was => { :start_line => 1, :size => 7 },
+                :now => { :start_line => 1, :size => 7 },
               },
-              :before_lines => [ "1", "2"],
+              :before_lines => [ "1", "2", "3"],
               :sections =>
               [
                 {
-                  :deleted_lines => [ "3", "4" ],
+                  :deleted_lines => [ "4" ],
                   :added_lines   => [ "4a" ],
-                  :after_lines => [ "5", "6" ]
+                  :after_lines => [ "5", "6", "7" ]
                 }, # section
               ] # sections
             } # chunk
@@ -102,7 +102,8 @@ HERE
       'sandbox/other' => expected_diff_2
     }
     
-    assert_equal expected, GitDiffParser.new(lines).parse_all
+    parser = GitDiffParser.new(lines)    
+    assert_equal expected, parser.parse_all
 
   end
   

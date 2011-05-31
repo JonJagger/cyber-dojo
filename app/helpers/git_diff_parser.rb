@@ -18,23 +18,26 @@ class GitDiffParser
   
   def parse_all
     all = {}
-    #TODO...
+    while /^diff/.match(@lines[@n]) do
+      one = parse
+      all[one[:now_filename]] = one
+    end
     all
   end
   
-  PREFIX_RE       = '(^[^-+].*)'
+  PREFIX_RE       = /(^[^-+].*)/
   WAS_FILENAME_RE = '^--- a/(.*)'
   NOW_FILENAME_RE = '^\+\+\+ b/(.*)'
-  COMMON_LINE_RE  = '^[ ](.*)'
+  COMMON_LINE_RE  = /^[ ](.*)/
 
   def parse
-    prefix_lines = parse_lines(/#{PREFIX_RE}/)
+    prefix_lines = parse_lines(PREFIX_RE)
     was_filename = parse_filename(/#{WAS_FILENAME_RE}/)
     now_filename = parse_filename(/#{NOW_FILENAME_RE}/) 
 
     chunks = []     
     while range = parse_range
-      before_lines = parse_lines(/#{COMMON_LINE_RE}/)
+      before_lines = parse_lines(COMMON_LINE_RE)
       sections = parse_sections
       chunks << {
         :range => range,
@@ -51,10 +54,10 @@ class GitDiffParser
     }    
   end 
 
-  RANGE_RE = '^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@.*'
+  RANGE_RE = /^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@.*/
 
   def parse_range
-    if range = /#{RANGE_RE}/.match(@lines[@n])
+    if range = RANGE_RE.match(@lines[@n])
       @n += 1
       was = { :start_line => range[1].to_i, 
               :size => size_or_default(range[2]) 
@@ -72,17 +75,18 @@ class GitDiffParser
     size != nil ? size.to_i : 1 
   end
 
-  DELETED_LINE_RE = '^\-(.*)'
-  ADDED_LINE_RE   = '^\+(.*)'
+  DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE = /^[\+\- ]/ 
+  DELETED_LINE_RE = /^\-(.*)/
+  ADDED_LINE_RE   = /^\+(.*)/
 
   def parse_sections
     sections = []
-    while @n != @lines.length && !/#{RANGE_RE}/.match(@lines[@n]) do
+    while DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE.match(@lines[@n]) do
              
-      deleted_lines = parse_lines(/#{DELETED_LINE_RE}/)
+      deleted_lines = parse_lines(DELETED_LINE_RE)
       parse_newline_at_eof
       
-      added_lines = parse_lines(/#{ADDED_LINE_RE}/)
+      added_lines = parse_lines(ADDED_LINE_RE)
       parse_newline_at_eof
       
       after_lines = parse_lines(/#{COMMON_LINE_RE}/)
