@@ -11,23 +11,21 @@ class GitDiffBuilder
   def build(diff, lines)
     
     result = []
-    
     line_number = 1    
-
-    # TODO: handle multiple chunks...    
     from = 0    
-    chunk = diff[:chunks][0]
-    range = chunk[:range]
-    to = range[:now][:start_line] + chunk[:before_lines].length - 1
-    
-    line_number = fill(result, :same, lines, from, to, line_number)
-    
-    chunk[:sections].each do |section|
-      line_number = build_section(result, section, line_number)
+    diff[:chunks].each_with_index do |chunk,index|
+      range = chunk[:range]
+      to = range[:now][:start_line] + chunk[:before_lines].length - 1
+      #p "" if index == 1
+      #p "range[:now][:start_line] = #{range[:now][:start_line]}" if index == 1
+      #p "chunk[:before_lines].length == #{chunk[:before_lines].length}" if index == 1
+      #p "to == #{to}" if index == 1
+      line_number = fill(result, :same, lines, from, to, line_number)
+      chunk[:sections].each do |section|
+        line_number = build_section(result, section, line_number)
+      end
+      from = line_number - 1      
     end
-    
-    
-    
     
     last_lines = lines[line_number-1..lines.length]   
     from = 0
