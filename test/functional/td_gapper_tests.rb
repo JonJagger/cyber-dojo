@@ -1,7 +1,7 @@
 require 'test_helper'
 
 # > cd cyberdojo/test
-# > ruby functional/gap_all_tests.rb
+# > ruby functional/td_gapper_tests.rb
 
 class TdGapperTests < ActionController::TestCase
 

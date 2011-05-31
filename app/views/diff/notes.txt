@@ -8,6 +8,9 @@
 #   lines = file[:content].split("\n")
 #   p lines
 # end
+#
+# I have to be in the correct folder too of course.
+# Need to make sure that doesn't bleed into the read.
 
 #--------------------------------------------
 # to get the diffs for a specific tag
@@ -25,7 +28,8 @@
 #   (with a + in column 1, faintish green background)
 #   with line numbers before column 1
 #
-# Line background colouring is full-width
+# Line background colouring is full-width on github.
+# Think I prefer just the width of the line itself.
 
 
 #--------------------------------------------
