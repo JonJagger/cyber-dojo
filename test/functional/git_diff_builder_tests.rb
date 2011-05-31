@@ -13,17 +13,21 @@ class GitDiffBuilder
     result = []
     
     line_number = 1    
-    
+
+    # TODO: handle multiple chunks...    
     from = 0    
     chunk = diff[:chunks][0]
     range = chunk[:range]
-    to = range[:was][:start_line] + chunk[:before_lines].length - 1
+    to = range[:now][:start_line] + chunk[:before_lines].length - 1
     
     line_number = fill(result, :same, lines, from, to, line_number)
     
     chunk[:sections].each do |section|
       line_number = build_section(result, section, line_number)
     end
+    
+    
+    
     
     last_lines = lines[line_number-1..lines.length]   
     from = 0
@@ -66,7 +70,108 @@ end
 
 class GitDiffBuilderTests < ActionController::TestCase
 
-  
+  def test_build_two_chunks
+    # diffs need to be 7 lines apart not to be merged into contiguous sections in one chunk
+    
+diff_lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index 0719398..2943489 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -1,4 +1,4 @@
+-1
++1a
+ 2
+ 3
+ 4
+@@ -6,4 +6,4 @@
+ 6
+ 7
+ 8
+-9
++9a
+HERE
+
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index 0719398..2943489 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 4 },
+                :now => { :start_line => 1, :size => 4 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "1" ],
+                  :added_lines   => [ "1a" ],
+                  :after_lines => [ "2", "3", "4" ]
+                }, # section
+              ] # sections
+            }, # chunk
+            {
+              :range =>
+              {
+                :was => { :start_line => 6, :size => 4 },
+                :now => { :start_line => 6, :size => 4 },
+              },
+              :before_lines => [ "6", "7", "8" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "9" ],
+                  :added_lines   => [ "9a" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections              
+            }
+          ] # chunks
+    } # expected
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+
+source_lines = <<HERE
+1a
+2
+3
+4
+5
+6
+7
+8
+9a
+HERE
+
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "1", :type => :deleted },
+      { :line => "1a", :type => :added, :number => 1 },        
+      { :line => "2", :type => :same, :number => 2 },
+      { :line => "3", :type => :same, :number => 3 },
+      { :line => "4", :type => :same, :number => 4 },
+      { :line => "5", :type => :same, :number => 5 },
+      { :line => "6", :type => :same, :number => 6 },
+      { :line => "7", :type => :same, :number => 7 },
+      { :line => "8", :type => :same, :number => 8 },
+      { :line => "9", :type => :deleted },  # lost this...!
+      { :line => "9a", :type => :added, :number => 9 },      
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+    
+  end
   
   #- - - - - - - - - - - - - - - - - - - - - - -  
   

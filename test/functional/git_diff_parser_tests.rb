@@ -4,6 +4,78 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  def test_diff_on_first_and_last_line_in_two_chunks
+
+lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index 0719398..2943489 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -1,4 +1,4 @@
+-1
++1a
+ 2
+ 3
+ 4
+@@ -6,4 +6,4 @@
+ 6
+ 7
+ 8
+-9
++9a
+HERE
+
+    expected =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index 0719398..2943489 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 4 },
+                :now => { :start_line => 1, :size => 4 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "1" ],
+                  :added_lines   => [ "1a" ],
+                  :after_lines => [ "2", "3", "4" ]
+                }, # section
+              ] # sections
+            }, # chunk
+            {
+              :range =>
+              {
+                :was => { :start_line => 6, :size => 4 },
+                :now => { :start_line => 6, :size => 4 },
+              },
+              :before_lines => [ "6", "7", "8" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "9" ],
+                  :added_lines   => [ "9a" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections              
+            }
+          ] # chunks
+    } # expected
+    assert_equal expected, GitDiffParser.new(lines).parse
+    
+  end
+  
+  #-----------------------------------------------------
+  
   def test_standard_diff
 
 lines = <<HERE
@@ -232,7 +304,7 @@ HERE
   #-----------------------------------------------------
   
   def test_when_diffs_are_one_line_apart
-  
+
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
 index 5ed4618..c47ec44 100644
@@ -293,6 +365,7 @@ HERE
   #-----------------------------------------------------
   
   def test_when_diffs_are_2_lines_apart
+    
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
 index 5ed4618..aad3f67 100644
@@ -354,7 +427,8 @@ HERE
   #-----------------------------------------------------
 
   def test_when_diffs_are_6_lines_apart
-    # when there is 1..6 unchanged lines between 2 lines they are merged into one chunk 
+    # when there is 1..6 unchanged lines between 2 lines they are merged into one chunk
+    
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
 index 5ed4618..33d0e05 100644
@@ -420,6 +494,7 @@ HERE
   def test_when_diffs_are_seven_lines_apart
     # viz 7 unchanged lines between two changes lines
     # this creates two chunks.
+    
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
 index 5ed4618..e78c888 100644
