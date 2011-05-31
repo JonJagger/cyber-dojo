@@ -8,10 +8,18 @@ class GitDiffParser
     @n = 0
   end
 
+  def lines
+    @lines
+  end
+  
+  def n
+    @n
+  end
+  
   PREFIX_RE       = '(^[^-+].*)'
   WAS_FILENAME_RE = '^--- a/(.*)'
   NOW_FILENAME_RE = '^\+\+\+ b/(.*)'
-  COMMON_LINE_RE  = '^[^-+@](.*)'
+  COMMON_LINE_RE  = '^[ ](.*)'
 
   def parse
     prefix_lines = parse_lines(/#{PREFIX_RE}/)
@@ -22,12 +30,11 @@ class GitDiffParser
     while range = parse_range
       before_lines = parse_lines(/#{COMMON_LINE_RE}/)
       sections = parse_sections
-      chunk = {
+      chunks << {
         :range => range,
         :before_lines => before_lines,
         :sections => sections
       }
-      chunks << chunk
     end 
 
     {
@@ -38,8 +45,6 @@ class GitDiffParser
     }
     
   end 
-
-private
 
   RANGE_RE = '^@@ -(\d+),(\d+) \+(\d+),(\d+) @@.*'
 
@@ -73,6 +78,7 @@ private
       parse_newline_at_eof
       
       after_lines = parse_lines(/#{COMMON_LINE_RE}/)
+      parse_newline_at_eof
       
       sections << {        
         :deleted_lines => deleted_lines,        
@@ -99,7 +105,7 @@ private
     lines
   end
 
-  NEWLINE_AT_EOF_RE = '^\\ No newline at end of file'
+  NEWLINE_AT_EOF_RE = '^\\\\ No newline at end of file'
   
   def parse_newline_at_eof
     if /#{NEWLINE_AT_EOF_RE}/.match(@lines[@n])

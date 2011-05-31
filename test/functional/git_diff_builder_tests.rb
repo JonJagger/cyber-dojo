@@ -16,10 +16,6 @@ class GitDiffBuilder
     diff[:chunks].each_with_index do |chunk,index|
       range = chunk[:range]
       to = range[:now][:start_line] + chunk[:before_lines].length - 1
-      #p "" if index == 1
-      #p "range[:now][:start_line] = #{range[:now][:start_line]}" if index == 1
-      #p "chunk[:before_lines].length == #{chunk[:before_lines].length}" if index == 1
-      #p "to == #{to}" if index == 1
       line_number = fill(result, :same, lines, from, to, line_number)
       chunk[:sections].each do |section|
         line_number = build_section(result, section, line_number)
@@ -68,7 +64,125 @@ end
 
 class GitDiffBuilderTests < ActionController::TestCase
 
-  def test_build_two_chunks
+  def test_build_two_chunks_with_leading_and_trailing_same_lines_and_no_newline_at_eof
+    
+diff_lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index b1a30d9..7fa9727 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -1,5 +1,5 @@
+ 1
+-2
++2a
+ 3
+ 4
+ 5
+@@ -8,6 +8,6 @@
+ 8
+ 9
+ 10
+-11
++11a
+ 12
+ 13
+\\ No newline at end of file
+HERE
+
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index b1a30d9..7fa9727 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 5 },
+                :now => { :start_line => 1, :size => 5 },
+              },
+              :before_lines => [ "1" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "2" ],
+                  :added_lines   => [ "2a" ],
+                  :after_lines => [ "3", "4", "5" ]
+                }, # section
+              ] # sections
+            }, # chunk
+            {
+              :range =>
+              {
+                :was => { :start_line => 8, :size => 6 },
+                :now => { :start_line => 8, :size => 6 },
+              },
+              :before_lines => [ "8", "9", "10" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "11" ],
+                  :added_lines   => [ "11a" ],
+                  :after_lines => [ "12", "13" ]
+                }, # section
+              ] # sections              
+            }
+          ] # chunks
+    } # expected
+    
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+
+source_lines = <<HERE
+1
+2a
+3
+4
+5
+6
+7
+8
+9
+10
+11a
+12
+13
+HERE
+
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "1", :type => :same, :number => 1 },
+      { :line => "2", :type => :deleted },
+      { :line => "2a", :type => :added, :number => 2 },      
+      { :line => "3", :type => :same, :number => 3 },
+      { :line => "4", :type => :same, :number => 4 },
+      { :line => "5", :type => :same, :number => 5 },
+      { :line => "6", :type => :same, :number => 6 },
+      { :line => "7", :type => :same, :number => 7 },
+      { :line => "8", :type => :same, :number => 8 },
+      { :line => "9", :type => :same, :number => 9 },
+      { :line => "10", :type => :same, :number => 10 },      
+      { :line => "11", :type => :deleted },
+      { :line => "11a", :type => :added, :number => 11 },
+      { :line => "12", :type => :same, :number => 12 },
+      { :line => "13", :type => :same, :number => 13 },
+      
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -  
+
+  def test_build_two_chunks_first_and_last_lines_change_and_are_7_lines_apart
     # diffs need to be 7 lines apart not to be merged into contiguous sections in one chunk
     
 diff_lines = <<HERE
@@ -163,7 +277,7 @@ HERE
       { :line => "6", :type => :same, :number => 6 },
       { :line => "7", :type => :same, :number => 7 },
       { :line => "8", :type => :same, :number => 8 },
-      { :line => "9", :type => :deleted },  # lost this...!
+      { :line => "9", :type => :deleted },
       { :line => "9a", :type => :added, :number => 9 },      
     ]
     

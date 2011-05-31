@@ -4,6 +4,106 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  
+  def test_parse_no_newline_at_eof_false
+    lines = ' No newline at eof'
+    parser = GitDiffParser.new(lines)
+
+    assert 0, parser.n
+    parser.parse_newline_at_eof
+    assert 0, parser.n        
+  end
+  
+  #-----------------------------------------------------
+
+  def test_parse_no_newline_at_eof_true
+    lines = '\\ No newline at eof'
+    parser = GitDiffParser.new(lines)
+
+    assert 0, parser.n
+    parser.parse_newline_at_eof
+    assert 1, parser.n        
+  end
+  
+  #-----------------------------------------------------
+  
+  def test_two_chunks_with_no_newline_at_end_of_file
+    
+lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index b1a30d9..7fa9727 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -1,5 +1,5 @@
+ 1
+-2
++2a
+ 3
+ 4
+ 5
+@@ -8,6 +8,6 @@
+ 8
+ 9
+ 10
+-11
++11a
+ 12
+ 13
+\\ No newline at end of file
+HERE
+
+    expected =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index b1a30d9..7fa9727 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 5 },
+                :now => { :start_line => 1, :size => 5 },
+              },
+              :before_lines => [ "1" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "2" ],
+                  :added_lines   => [ "2a" ],
+                  :after_lines => [ "3", "4", "5" ]
+                }, # section
+              ] # sections
+            }, # chunk
+            {
+              :range =>
+              {
+                :was => { :start_line => 8, :size => 6 },
+                :now => { :start_line => 8, :size => 6 },
+              },
+              :before_lines => [ "8", "9", "10" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "11" ],
+                  :added_lines   => [ "11a" ],
+                  :after_lines => [ "12", "13" ]
+                }, # section
+              ] # sections              
+            }
+          ] # chunks
+    } # expected
+    
+    assert_equal expected, GitDiffParser.new(lines).parse
+    
+  end
+  
+  #-----------------------------------------------------
+  
   def test_diff_on_first_and_last_line_in_two_chunks
 
 lines = <<HERE
@@ -198,9 +298,9 @@ index 4d3ca1b..61e88f0 100644
 +++ b/sandbox/test_gapper.rb
 @@ -9,4 +9,3 @@ class TestGapper < Test::Unit::TestCase
 -p Timw.now
-\ No newline at end of file
+\\ No newline at end of file
 +p Time.now
-\ No newline at end of file
+\\ No newline at end of file
 HERE
 
     expected =
@@ -247,7 +347,7 @@ index 4d3ca1b..61e88f0 100644
 @@ -9,4 +9,3 @@ class TestGapper < Test::Unit::TestCase
 -p Timw.now
 +p Time.now
-\ No newline at end of file
+\\ No newline at end of file
 @@ -19,4 +19,3 @@ class TestGapper < Test::Unit::TestCase
 -q Timw.now
 +q Time.now
