@@ -8,8 +8,7 @@ class GitDiffBuilder
   def initialize
   end
   
-  def build(diff, lines)
-    
+  def build(diff, lines)    
     result = []
     line_number = 1    
     from = 0    
@@ -20,11 +19,9 @@ class GitDiffBuilder
         line_number = build_section(result, section, line_number)
       end
       from = line_number - 1      
-    end
-    
+    end    
     last_lines = lines[line_number-1..lines.length]   
-    fill_all(result, :same, last_lines, line_number)
-    
+    fill_all(result, :same, last_lines, line_number)    
     result
   end
   

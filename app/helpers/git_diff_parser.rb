@@ -25,15 +25,15 @@ class GitDiffParser
     all
   end
   
-  PREFIX_RE       = /(^[^-+].*)/
-  WAS_FILENAME_RE = '^--- a/(.*)'
-  NOW_FILENAME_RE = '^\+\+\+ b/(.*)'
-  COMMON_LINE_RE  = /^[ ](.*)/
+  PREFIX_RE       = %r|^([^-+].*)|
+  WAS_FILENAME_RE = %r|^\-\-\- a/(.*)|
+  NOW_FILENAME_RE = %r|^\+\+\+ b/(.*)|
+  COMMON_LINE_RE  = %r|^ (.*)|
 
   def parse
     prefix_lines = parse_lines(PREFIX_RE)
-    was_filename = parse_filename(/#{WAS_FILENAME_RE}/)
-    now_filename = parse_filename(/#{NOW_FILENAME_RE}/) 
+    was_filename = parse_filename(WAS_FILENAME_RE)
+    now_filename = parse_filename(NOW_FILENAME_RE) 
 
     chunks = []     
     while range = parse_range
@@ -89,7 +89,7 @@ class GitDiffParser
       added_lines = parse_lines(ADDED_LINE_RE)
       parse_newline_at_eof
       
-      after_lines = parse_lines(/#{COMMON_LINE_RE}/)
+      after_lines = parse_lines(COMMON_LINE_RE)
       parse_newline_at_eof
       
       sections << {        
@@ -117,10 +117,10 @@ class GitDiffParser
     lines
   end
 
-  NEWLINE_AT_EOF_RE = '^\\\\ No newline at end of file'
+  NEWLINE_AT_EOF_RE = /^\\ No newline at end of file/
   
   def parse_newline_at_eof
-    if /#{NEWLINE_AT_EOF_RE}/.match(@lines[@n])
+    if NEWLINE_AT_EOF_RE.match(@lines[@n])
       @n += 1
     end
   end
