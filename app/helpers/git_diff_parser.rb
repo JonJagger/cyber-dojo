@@ -46,16 +46,16 @@ class GitDiffParser
     
   end 
 
-  RANGE_RE = '^@@ -(\d+),(\d+) \+(\d+),(\d+) @@.*'
+  RANGE_RE = '^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@.*'
 
   def parse_range
     if range = /#{RANGE_RE}/.match(@lines[@n])
       @n += 1
       was = { :start_line => range[1].to_i, 
-              :size => range[2].to_i 
+              :size => size_or_default(range[2]) 
             }
       now = { :start_line => range[3].to_i, 
-              :size => range[4].to_i 
+              :size => size_or_default(range[4]) 
             }
       { :was => was, :now => now } 
     else
@@ -63,6 +63,9 @@ class GitDiffParser
     end
   end
 
+  def size_or_default(size)
+    size != nil ? size.to_i : 1 
+  end
 
   DELETED_LINE_RE = '^\-(.*)'
   ADDED_LINE_RE   = '^\+(.*)'

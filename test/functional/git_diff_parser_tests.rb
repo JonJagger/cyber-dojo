@@ -4,6 +4,106 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  def test_parse_range_was_and_now_size_defaulted
+    lines = "@@ -3 +5 @@ suffix"
+    expected = 
+    {
+      :was => { :start_line => 3, :size => 1 },
+      :now => { :start_line => 5, :size => 1 },
+    }
+    assert_equal expected, GitDiffParser.new(lines).parse_range   
+  end
+  
+  #-----------------------------------------------------
+  
+  def test_parse_range_was_size_defaulted
+    lines = "@@ -3 +5,9 @@ suffix"
+    expected = 
+    {
+      :was => { :start_line => 3, :size => 1 },
+      :now => { :start_line => 5, :size => 9 },
+    }
+    assert_equal expected, GitDiffParser.new(lines).parse_range   
+  end
+  
+  #-----------------------------------------------------
+
+  def test_parse_range_now_size_defaulted
+    lines = "@@ -3,4 +5 @@ suffix"
+    expected = 
+    {
+      :was => { :start_line => 3, :size => 4 },
+      :now => { :start_line => 5, :size => 1 },
+    }
+    assert_equal expected, GitDiffParser.new(lines).parse_range   
+  end
+  
+  #-----------------------------------------------------
+  
+  def test_parse_range_nothing_defaulted
+    lines = "@@ -3,4 +5,6 @@ suffix"
+    expected = 
+    {
+      :was => { :start_line => 3, :size => 4 },
+      :now => { :start_line => 5, :size => 6 },
+    }
+    assert_equal expected, GitDiffParser.new(lines).parse_range   
+  end
+  
+  #-----------------------------------------------------
+  
+  def test_parse_chunk_with_defaulted_line_info
+    
+lines = <<HERE
+diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3
+index e69de29..2e65efe 100644
+--- a/sandbox/untitled_5G3
++++ b/sandbox/untitled_5G3
+@@ -0,0 +1 @@
++a
+\\ No newline at end of file
+HERE
+
+  #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+  #Is a blog entry by Guido van Rossum.
+  #He says that in L,S the ,S can be omitted if the chunk size
+  #S is 1. So -3 is the same as -3,1
+
+    expected =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3",
+            "index e69de29..2e65efe 100644"
+          ],
+        :was_filename => 'sandbox/untitled_5G3',
+        :now_filename => 'sandbox/untitled_5G3',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 0, :size => 0 },
+                :now => { :start_line => 1, :size => 1 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   => [ "a" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    } # expected
+    
+    assert_equal expected, GitDiffParser.new(lines).parse
+
+  end
+
+  #-----------------------------------------------------
   
   def test_parse_no_newline_at_eof_false
     lines = ' No newline at eof'
