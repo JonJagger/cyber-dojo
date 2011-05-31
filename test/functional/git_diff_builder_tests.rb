@@ -66,6 +66,265 @@ end
 
 class GitDiffBuilderTests < ActionController::TestCase
 
+  def test_build_one_chunk_with_one_section_with_only_lines_added
+    
+diff_lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index 06e567b..59e88aa 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -1,6 +1,9 @@
+ 1
+ 2
+ 3
++3a1
++3a2
++3a3
+ 4
+ 5
+ 6
+HERE
+  
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index 06e567b..59e88aa 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 6 },
+                :now => { :start_line => 1, :size => 9 },
+              },
+              :before_lines => [ "1", "2", "3" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   => [ "3a1", "3a2", "3a3" ],
+                  :after_lines => [ "4", "5", "6" ]
+                } # section
+              ] # sections
+            } # chunk      
+          ] # chunks
+    } # expected
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+
+source_lines = <<HERE
+1
+2
+3
+3a1
+3a2
+3a3
+4
+5
+6
+7
+HERE
+  
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "1", :type => :same, :number => 1 },
+      { :line => "2", :type => :same, :number => 2 },
+      { :line => "3", :type => :same, :number => 3 },      
+      { :line => "3a1", :type => :added, :number => 4 },
+      { :line => "3a2", :type => :added, :number => 5 },
+      { :line => "3a3", :type => :added, :number => 6 },
+      { :line => "4", :type => :same, :number => 7 },
+      { :line => "5", :type => :same, :number => 8 },
+      { :line => "6", :type => :same, :number => 9 },
+      { :line => "7", :type => :same, :number => 10 },           
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -  
+  
+  def test_build_one_chunk_with_one_section_with_only_lines_deleted
+    
+diff_lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index 0b669b6..a972632 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -2,8 +2,6 @@
+ 2
+ 3
+ 4
+-5
+-6
+ 7
+ 8
+ 9
+HERE
+
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index 0b669b6..a972632 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 2, :size => 8 },
+                :now => { :start_line => 2, :size => 6 },
+              },
+              :before_lines => [ "2", "3", "4" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "5", "6" ],
+                  :added_lines   => [ ],
+                  :after_lines => [ "7", "8", "9" ]
+                } # section
+              ] # sections
+            } # chunk      
+          ] # chunks
+    } # expected
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+
+source_lines = <<HERE
+1
+2
+3
+4
+7
+8
+9
+10
+HERE
+  
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "1", :type => :same, :number => 1 },
+      { :line => "2", :type => :same, :number => 2 },
+      { :line => "3", :type => :same, :number => 3 },      
+      { :line => "4", :type => :same, :number => 4 },      
+      { :line => "5", :type => :deleted },
+      { :line => "6", :type => :deleted },
+      { :line => "7", :type => :same, :number => 5 },
+      { :line => "8", :type => :same, :number => 6 },
+      { :line => "9", :type => :same, :number => 7 },
+      { :line => "10", :type => :same, :number => 8 },           
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -  
+  
+  def test_build_one_chunk_with_one_section_with_more_lines_deleted_than_added
+
+diff_lines = <<HERE
+diff --git a/sandbox/lines b/sandbox/lines
+index 08fe19c..1f8695e 100644
+--- a/sandbox/lines
++++ b/sandbox/lines
+@@ -3,9 +3,7 @@
+ 3
+ 4
+ 5
+-6
+-7
+-8
++7a
+ 9
+ 10
+ 11
+HERE
+
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/lines b/sandbox/lines",
+            "index 08fe19c..1f8695e 100644"
+          ],
+        :was_filename => 'sandbox/lines',
+        :now_filename => 'sandbox/lines',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 3, :size => 9 },
+                :now => { :start_line => 3, :size => 7 },
+              },
+              :before_lines => [ "3", "4", "5" ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "6", "7", "8" ],
+                  :added_lines   => [ "7a" ],
+                  :after_lines => [ "9", "10", "11" ]
+                } # section
+              ] # sections
+            } # chunk      
+          ] # chunks
+    } # expected
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+
+source_lines = <<HERE
+1
+2
+3
+4
+5
+7a
+9
+10
+11
+12
+HERE
+
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "1", :type => :same, :number => 1 },
+      { :line => "2", :type => :same, :number => 2 },
+      { :line => "3", :type => :same, :number => 3 },
+      { :line => "4", :type => :same, :number => 4 },
+      { :line => "5", :type => :same, :number => 5 },
+      { :line => "6", :type => :deleted },
+      { :line => "7", :type => :deleted },
+      { :line => "8", :type => :deleted },      
+      { :line => "7a", :type => :added, :number => 6 },
+      { :line => "9", :type => :same, :number => 7 },
+      { :line => "10", :type => :same, :number => 8 },
+      { :line => "11", :type => :same, :number => 9 },
+      { :line => "12", :type => :same, :number => 10 },           
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -
+  
   def test_build_one_chunk_with_one_section_with_more_lines_added_than_deleted
   
 diff_lines = <<HERE
@@ -161,7 +420,7 @@ HERE
 
   #- - - - - - - - - - - - - - - - - - - - - - -
   
-  def test_build_one_chunk_with_one_section
+  def test_build_one_chunk_with_one_section_with_one_line_deleted_and_one_line_added
     
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
