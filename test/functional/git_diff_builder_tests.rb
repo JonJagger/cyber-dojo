@@ -13,9 +13,8 @@ class GitDiffBuilder
     result = []
     line_number = 1    
     from = 0    
-    diff[:chunks].each_with_index do |chunk,index|
-      range = chunk[:range]
-      to = range[:now][:start_line] + chunk[:before_lines].length - 1
+    diff[:chunks].each do |chunk|
+      to = chunk[:range][:now][:start_line] + chunk[:before_lines].length - 1
       line_number = fill(result, :same, lines, from, to, line_number)
       chunk[:sections].each do |section|
         line_number = build_section(result, section, line_number)
@@ -24,9 +23,7 @@ class GitDiffBuilder
     end
     
     last_lines = lines[line_number-1..lines.length]   
-    from = 0
-    to = last_lines.length
-    line_number = fill(result, :same, last_lines, from, to, line_number)
+    fill_all(result, :same, last_lines, line_number)
     
     result
   end
