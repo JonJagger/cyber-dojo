@@ -2,11 +2,13 @@
 <%= render :partial => 'banner' -%>
        
 <table align="center" class="panel">
-  <% @dojo.avatars.each do |avatar| -%>
-  <tr>
+  <% @dojo.avatars.each_with_index do |avatar,index| -%>
+  <tr class="<%=parity(index)-%> traffic_light_row">
 
     <td>
-      <%= resume_button(@dojo.name, avatar.name) -%>
+           <%= render :partial => 'dashboard/traffic_lights_summary', 
+                      :locals => { :avatar_name => avatar.name, 
+                                   :lights => avatar.increments } -%>
     </td>
     
     <td>
@@ -14,11 +16,14 @@
     </td>
     
     <td>
-      <% kata = avatar.kata -%>
-      <span class="small_title"><%= avatar.name.humanize -%></span>
-      <% if @languages.length != 1 -%> <span class="small_title"><%= kata.language -%></span> <% end -%> 
-      <% if @katas.length != 1 -%> <span class="small_title"><%= kata.name -%></span> <% end -%>
+      <%= render :partial => 'dashboard/avatar_summary',
+                 :locals => { :avatar_name => avatar.name } -%>
     </td>    
+    
+    <td>
+      <%= resume_button(@dojo.name, avatar.name) -%>
+    </td>
+    
   </tr>
   <% end -%>
 

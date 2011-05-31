@@ -15,7 +15,7 @@
         
         <% lights = all_lights[avatar_name] -%>
            
-        <td align="right">
+        <td>
            <%= render :partial => 'traffic_lights_summary', 
                       :locals => { :avatar_name => avatar_name, 
                                    :lights => lights } -%> 
