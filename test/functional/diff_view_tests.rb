@@ -4,25 +4,25 @@ require 'test_helper'
 # > ruby functional/diff_view_tests.rb
 
 def diff_view(avatar, tag)
-
-    #tag = 2    
-    cmd  = "cd #{avatar.folder};"
-    cmd += "git diff #{tag-1} #{tag} sandbox;"   
-    diff = IO::popen(cmd).read
-
-    diff = GitDiffParser.new(diff).parse
-
-    # Now grab the current version of the file
+    
     cmd  = "cd #{avatar.folder};"
     cmd += "git show #{tag}:manifest.rb;"
     manifest = eval IO::popen(cmd).read
     
-    source_lines = manifest[:visible_files]['untitled.rb'][:content]
-    
-    builder = GitDiffBuilder.new()
-    source_diff = builder.build(diff, source_lines.split("\n"))
+    cmd  = "cd #{avatar.folder};"
+    cmd += "git diff #{tag-1} #{tag} sandbox;"   
+    diff_lines = IO::popen(cmd).read
 
-    { 'untitled.rb' => source_diff }
+    view = {}
+    builder = GitDiffBuilder.new()
+    
+    diffs = GitDiffParser.new(diff_lines).parse_all
+    diffs.each do |sandbox_name,diff|
+      name = %r|^sandbox/(.*)|.match(sandbox_name)[1] 
+      source_lines = manifest[:visible_files][name][:content]
+      view[name] = builder.build(diff, source_lines.split("\n"))
+    end
+    view
 end
 
 #-----------------------------------------------
@@ -50,50 +50,24 @@ class DiffViewTests < ActionController::TestCase
 
   #-----------------------------------------------
   
+  #-----------------------------------------------
+  
   def test_building_diff_view_from_git_repo
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
     dojo = Dojo.new(params)
-    language = 'Ruby'
-    avatar = dojo.create_avatar({ 'language' => language })    
+    filesets = { 'language' => 'Ruby' }
+    avatar = Avatar.new(dojo, 'wolf', filesets)    
     # that will have created tag 0 in the repo
-
-test_untitled_rb = <<HERE
-require 'untitled'
-require 'test/unit'
-
-class TestUntitled < Test::Unit::TestCase
-
-  def test_simple
-    assert_equal 9 * 6, answer  
-  end
-
-end
-HERE
-
-untitled_rb = <<HERE
-def answer
-  42
-end
-HERE
 
     manifest =
     {
       :visible_files =>
       {
-        'cyberdojo.sh' =>
-        {
-          :content => 'ruby test_untitled.rb'
-        },
-        'untitled.rb'=>
-        {
-          :content => untitled_rb
-        },
-        'test_untitled.rb' =>
-        {
-          :content => test_untitled_rb
-        }
+        'cyberdojo.sh'     => { :content => 'ruby test_untitled.rb' },
+        'untitled.rb'      => { :content => untitled_rb },
+        'test_untitled.rb' => { :content => test_untitled_rb }
       }
     }
 
@@ -105,7 +79,6 @@ HERE
     manifest[:visible_files]['untitled.rb'][:content] = untitled_rb.sub('42', '54')
     increments = avatar.run_tests(manifest)
     assert_equal :passed, increments.last[:outcome]
-
     
     tag = 2    
     view = diff_view(avatar, tag)
@@ -118,10 +91,54 @@ HERE
         { :line => "  42", :type => :deleted },
         { :line => "  54", :type => :added, :number => 2 },
         { :line => "end", :type => :same, :number => 3 },
-      ]
+      ],
     }
+    
+    x={}
+    
+      x['test_untitled.rb'] =
+      [
+        { :line => "require 'untitled'", :type => :same, :number => 1 },
+        { :line => "require 'test/unit'", :type => :same, :number => 2 },
+        { :line => "", :type => :same, :number => 3 },
+        { :line => "class TestUntitled < Test::Unit::TestCase", :type => :same, :number => 4 },
+        { :line => "", :type => :same, :number => 5 },
+        { :line => "  def test_simple", :type => :same, :number => 6 },
+        { :line => "    assert_equal 9 * 6, answer", :type => :same, :number => 7 },
+        { :line => "  end", :type => :same, :number => 8 },
+        { :line => "", :type => :same, :number => 9 },
+        { :line => "end", :type => :same, :number => 10 }
+      ]
+    
     assert_equal expected, view
     
   end
+
+  #-----------------------------------------------
+
+  def test_untitled_rb 
+<<HERE
+require 'untitled'
+require 'test/unit'
+
+class TestUntitled < Test::Unit::TestCase
+
+  def test_simple
+    assert_equal 9 * 6, answer  
+  end
+
+end
+HERE
+  end
+
+  #-----------------------------------------------
+  
+  def untitled_rb
+<<HERE
+def answer
+  42
+end
+HERE
+  end  
   
 end
