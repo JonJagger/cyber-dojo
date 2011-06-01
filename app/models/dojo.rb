@@ -99,7 +99,7 @@ class Dojo
   
   def create_avatar(filesets)
     io_lock(folder) do
-      unused_avatars = Avatar::names.select { |name| !File.exists? folder + '/' + name }
+      unused_avatars = Avatar::names.select { |name| !exists? name }
       if unused_avatars == []
         nil
       else
@@ -130,8 +130,7 @@ class Dojo
     messages = []
     io_lock(messages_filename) do
       messages = eval IO.read(messages_filename)
-      text.strip!
-      if text != ''
+      if text.strip! != ''
         messages <<  { 
           :sender => sender, 
           :text => text,
