@@ -66,15 +66,6 @@ class KataController < ApplicationController
     end
   end
    
-  def XXXpost_message
-    configure(params)
-    @dojo = Dojo.new(params)
-    @messages = @dojo.post_message(params[:avatar], params[:message])
-    respond_to do |format|
-      format.js if request.xhr?
-    end
-  end
-    
 private
 
   def configure(params)

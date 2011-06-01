@@ -1,44 +1,8 @@
 
 #--------------------------------------------
-to get the visible files for a specific tag
-
-tag = 20
-manifest = eval IO.popen("git show #{tag}:manifest.rb").read
-manifest[:visible_files].each |filename,file] do
-  p filename
-  lines = file[:content].split("\n")
-  p lines
-end
-
-I have to be in the correct folder too of course.
-Need to make sure that doesn't bleed into the read.
-
-
-#--------------------------------------------
-to get the diffs for a specific tag
-
-tag = 20
-lines = IO.popen('git diff #{tag-1} #{tag} sandbox').readlines
-
-...and then parse the lines....
-From this I need only the lines deleted and added and
-at what position (line-number)
-Do the deleted or added lines tend to get displayed first?
-What does github do?
-Answer deleted lines first 
-  (with a - in column 1, faintish red background)
-  no line number before column 1
-then added lines next
-  (with a + in column 1, faintish green background)
-  with line numbers before column 1
-
-Line background colouring is full-width on github.
-Think I prefer just the width of the line itself.
-
-
-#--------------------------------------------
-TODO: find out what options I need to set to make a whitespace
+What options I need to set to make a whitespace at eol
 difference not show up on a diff. 
+>git diff --ignore-space-at-eol tag tag2
 
 #--------------------------------------------
 >git diff tag1 tag2 sandbox
@@ -104,4 +68,5 @@ So I'll need to separate out the files into
 o) newly created
 o) deleted
 o) changed (possible renamed too)
- 
+Either that or simply don't bother showing deleted files. 
+Think that's simpler, at least for now....
