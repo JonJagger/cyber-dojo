@@ -8,11 +8,12 @@
              },
      :with => "{ message: Field.getValue('message_text_input')}"
    } -%>
-<%= tag("input", 
-    { :type => "button",
-      :class => "button",
+<%= tag( :input, 
+    { 
+      :type => :button,
+      :class => :button,
       :onclick => "#{remote_function(post_message_options)};$j('#message_text_input').val('');",
-      :name => "post_message",
-      :value => "Post",            
+      :name => :post_message,
+      :value => :Post,            
     }) -%>
 

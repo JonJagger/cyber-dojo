@@ -1,9 +1,28 @@
 <% tag_number = @traffic_lights_to_tag.length -%>
 
 <form action='/diff/show'>
-  <input type='hidden' name='dojo_name' id='dojo_name' value='<%= @dojo.name-%>'/> 
-  <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
-  <input type='hidden' name='tag' id='tag' value='<%= tag_number - 1-%>' />
+ 
+<%= tag( :input, 
+    { 
+      :type => :hidden,
+      :name => :dojo_name,
+      :value => @dojo.name,            
+    }) -%>
+  
+<%= tag( :input, 
+    { 
+      :type => :hidden,
+      :name => :avatar,
+      :value => @avatar.name,            
+    }) -%>
+    
+<%= tag( :input, 
+    { 
+      :type => :hidden,
+      :name => :tag,
+      :value => tag_number - 1,            
+    }) -%>
+    
   <button class="button"
           <% if tag_number != 0 -%>
           type="submit"
