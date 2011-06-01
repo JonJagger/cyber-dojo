@@ -3,6 +3,32 @@ require 'test_helper'
 # > cd cyberdojo/test
 # > ruby functional/diff_view_tests.rb
 
+def diff_view(avatar, tag)
+
+    #tag = 2    
+    cmd  = "cd #{avatar.folder};"
+    cmd += "git diff #{tag-1} #{tag} sandbox;"   
+    diff = IO::popen(cmd).read
+
+    diff = GitDiffParser.new(diff).parse
+
+    # Now grab the current version of the file
+    cmd  = "cd #{avatar.folder};"
+    cmd += "git show #{tag}:manifest.rb;"
+    manifest = eval IO::popen(cmd).read
+    
+    source_lines = manifest[:visible_files]['untitled.rb'][:content]
+    
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(diff, source_lines.split("\n"))
+
+    { 'untitled.rb' => source_diff }
+end
+
+#-----------------------------------------------
+#-----------------------------------------------
+#-----------------------------------------------
+
 class DiffViewTests < ActionController::TestCase
 
   ROOT_TEST_FOLDER = 'test_dojos'
@@ -80,65 +106,22 @@ HERE
     increments = avatar.run_tests(manifest)
     assert_equal :passed, increments.last[:outcome]
 
-    # Now grab the diff
+    
     tag = 2    
-    cmd  = "cd #{avatar.folder};"
-    cmd += "git diff #{tag-1} #{tag} sandbox;"   
-    diff = IO::popen(cmd).read
-
-    expected_diff =
+    view = diff_view(avatar, tag)
+    
+    expected =
     {
-        :prefix_lines =>  
-          [
-            "diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb",
-            "index 5c4b3ab..d7efe57 100644"
-          ],
-        :was_filename => 'sandbox/untitled.rb',
-        :now_filename => 'sandbox/untitled.rb',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 1, :size => 3 },
-                :now => { :start_line => 1, :size => 3 },
-              },
-              :before_lines => [ "def answer"],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ "  42" ],
-                  :added_lines   => [ "  54" ],
-                  :after_lines => [ "end" ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    } # expected
-
-    actual_diff = GitDiffParser.new(diff).parse
-    assert_equal expected_diff, actual_diff
-
-    # Now grab the current version of the file
-    cmd  = "cd #{avatar.folder};"
-    cmd += "git show #{tag}:manifest.rb;"
-    m = eval IO::popen(cmd).read
-    source_lines = m[:visible_files]['untitled.rb'][:content]
-    
-    # Build the diff-view-model
-    expected_source_diff =
-    [
-      { :line => "def answer", :type => :same, :number => 1 },
-      { :line => "  42", :type => :deleted },
-      { :line => "  54", :type => :added, :number => 2 },
-      { :line => "end", :type => :same, :number => 3 },
-    ]
-    
-    builder = GitDiffBuilder.new()
-    source_diff = builder.build(actual_diff, source_lines.split("\n"))
-    
-    assert_equal expected_source_diff, source_diff
+      'untitled.rb' =>
+      [
+        { :line => "def answer", :type => :same, :number => 1 },
+        { :line => "  42", :type => :deleted },
+        { :line => "  54", :type => :added, :number => 2 },
+        { :line => "end", :type => :same, :number => 3 },
+      ]
+    }
+    assert_equal expected, view
     
   end
-
+  
 end
