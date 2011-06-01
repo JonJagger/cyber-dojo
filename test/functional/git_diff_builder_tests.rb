@@ -5,6 +5,10 @@ require 'test_helper'
 
 class GitDiffBuilderTests < ActionController::TestCase
 
+  
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   def test_build_chunk_with_defaulted_now_line_info
     
 lines = <<HERE

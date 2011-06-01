@@ -44,18 +44,17 @@ difference not show up on a diff.
 >git diff tag1 tag2 sandbox
 will only show the diffs in the sandbox subfolder.
 This is ideal as I don't want to waste time
-on the increments.rb file or the messages.rb file
-or the manifest.rb files since changes to these
+on the increments.rb file since changes to this
 files aren't being displayed.
 
 #--------------------------------------------
 When you do a 
 >diff x y --stat sandbox
 You get something like this...
- increments.rb          |    2 +-
- manifest.rb            |    2 +-
+
  sandbox/gapper.rb      |    3 ++-
  sandbox/test_gapper.rb |    2 +-
+
 Where the number indicates the combined number of additions
 and deletions. It is followed by one + for each addition
 and then one - for each deletion.
