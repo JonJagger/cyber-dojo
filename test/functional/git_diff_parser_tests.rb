@@ -1,6 +1,7 @@
 require 'test_helper'
 
-# Work In Progress...
+# > cd cyberdojo/test
+# > ruby functional/git_diff_parser_tests.rb
 
 class TestGitDiffParser < ActionController::TestCase 
 
