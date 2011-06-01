@@ -8,8 +8,8 @@
     <td>
       <span class="traffic_light_number"
         <%= link_to 0, 
-        { :controller => :kata, 
-          :action => :review,
+        { :controller => :diff, 
+          :action => :show,
           :dojo_name => @dojo.name,
           :avatar => @avatar.name,
           :tag => 0 
@@ -19,7 +19,7 @@
     <% end -%>
     
     <td>
-      <%= render :partial => 'kata/diff/prev_traffic_light_button' -%>
+      <%= render :partial => 'prev_traffic_light_button' -%>
     </td>
     
     <td>
@@ -35,15 +35,15 @@
     </td>   
     
     <td>
-      <%= render :partial => 'kata/diff/next_traffic_light_button' -%>                      
+      <%= render :partial => 'next_traffic_light_button' -%>                      
     </td>
     
     <% if tag_number < @all_traffic_lights.length -%>
     <td>
       <span class="traffic_light_number"
         <%= link_to @all_traffic_lights.length, 
-        { :controller => :kata, 
-          :action => :review,
+        { :controller => :diff, 
+          :action => :show,
           :dojo_name => @dojo.name,
           :avatar => @avatar.name,
           :tag => @all_traffic_lights.length 
@@ -54,5 +54,4 @@
     
   </tr>
 </table>      
-    
 

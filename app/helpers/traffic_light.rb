@@ -1,8 +1,8 @@
  
 def traffic_light(dojo_name, avatar_name, inc)
   link_to make_light(inc, ''), 
-    { :controller => :kata, 
-      :action => :review,
+  {   :controller => :diff, 
+      :action => :show,
       :dojo_name => dojo_name,
       :avatar => avatar_name,
       :tag => inc[:number] 

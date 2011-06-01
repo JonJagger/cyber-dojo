@@ -1,6 +1,6 @@
 <% tag_number = @traffic_lights_to_tag.length -%>
 
-<form action='/kata/review'>
+<form action='/diff/show'>
   <input type='hidden' name='dojo_name' id='dojo_name' value='<%= @dojo.name-%>'/> 
   <input type='hidden' name='avatar' id='avatar' value='<%=@avatar.name-%>' />
   <input type='hidden' name='tag' id='tag' value='<%= tag_number + 1-%>' />
