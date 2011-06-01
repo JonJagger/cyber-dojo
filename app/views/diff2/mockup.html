@@ -1,0 +1,72 @@
+<html>
+<head>
+  <meta name="description" content="CyberDojo Diff Proof" />
+  <meta name="keywords" content="CyberDojo Diff" />
+  <title>Diff</title>  
+
+<style type="text/css">
+body { background: #FFECCB; }
+
+#sheet
+{
+  width: 45em;
+  height: 15em; /* so I can see scrolling */
+  padding: 0em;
+  margin: 0 auto 0 auto;
+  background: Cornsilk;
+  overflow: auto;
+  border: 1px dashed #E6E6E6;
+}
+.diffed_code 
+{ 
+  font-family: Monospace;
+  font-size: 1.5em;
+}
+
+pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
+pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
+pre.diffed_code removed { padding-left: 3px; background-color: #F6CECE; }
+
+pre.diffed_code same:before { content: " "; }
+pre.diffed_code added:before { content: "+"; }
+pre.diffed_code removed:before { content: "-"; }
+
+pre.diffed_code ln 
+{ 
+  background-color: white;
+  color: #BDBDBD; 
+  padding-right: 3px; 
+}
+
+</style>
+</head>
+
+<body>
+<br/>
+<br/>
+<br/>
+<pre class="diffed_code"><div id="sheet"><ln> 1</ln><same>if (failCount == 0) </same>
+<ln> 2</ln><same>    print('All tests successful (' + passCount + ')');</same>
+<ln> 3</ln><same></same>
+<ln>  </ln><removed>print(typeof /&([^&;]+);/); </removed>
+<ln> 4</ln><added>var t = typeof /&([^&;]+);/;</added>
+<ln> 5</ln><added>print(t);</added>
+<ln> 6</ln><same></same>
+<ln> 7</ln><same>var memoizer = function(memo, formula) {</same>
+<ln> 8</ln><same>    var recur = function(n) {</same>
+<ln> 9</ln><same>        var result = memo[n];</same>
+<ln>10</ln><same>        if (typeof result !== 'number') {</same>
+<ln>11</ln><same>            result = formula(n);</same>
+<ln>  </ln><removed>            mem[n] = result;</removed>
+<ln>12</ln><added>            memo[n] = result;</added>
+<ln>13</ln><same>        }</same>
+<ln>14</ln><same>        return result;</same>
+<ln>15</ln><same>    };</same>
+<ln>16</ln><same>    return recur;</same>
+<ln>18</ln><same>};</same>
+<ln>19</ln><same></same>
+</div>
+</pre>
+</body>
+</html>
+

@@ -24,25 +24,6 @@ class GitDiffViewTests < ActionController::TestCase
 
   #-----------------------------------------------
 
-  def test_sameify
-    expected =
-    [
-        { :line => "require 'untitled'", :type => :same, :number => 1 },
-        { :line => "require 'test/unit'", :type => :same, :number => 2 },
-        { :line => "", :type => :same, :number => 3 },
-        { :line => "class TestUntitled < Test::Unit::TestCase", :type => :same, :number => 4 },
-        { :line => "", :type => :same, :number => 5 },
-        { :line => "  def test_simple", :type => :same, :number => 6 },
-        { :line => "    assert_equal 9 * 6, answer", :type => :same, :number => 7 },
-        { :line => "  end", :type => :same, :number => 8 },
-        { :line => "", :type => :same, :number => 9 },
-        { :line => "end", :type => :same, :number => 10 }
-      ]
-      assert_equal expected, sameify(test_untitled_rb)
-    end
-  
-  #-----------------------------------------------
-  
   def test_building_diff_view_from_git_repo
     root_test_folder_reset
     params = make_params

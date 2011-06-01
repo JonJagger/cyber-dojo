@@ -1,0 +1,61 @@
+
+#--------------------------------------------
+What options I need to set to make a whitespace at eol
+difference not show up on a diff. 
+>git diff --ignore-space-at-eol tag tag2
+
+#--------------------------------------------
+>git diff tag1 tag2 sandbox
+will only show the diffs in the sandbox subfolder.
+This is ideal as I don't want to waste time
+on the increments.rb file since changes to this
+files aren't being displayed.
+
+#--------------------------------------------
+When you do a 
+>diff x y --stat sandbox
+You get something like this...
+
+ sandbox/gapper.rb      |    3 ++-
+ sandbox/test_gapper.rb |    2 +-
+
+Where the number indicates the combined number of additions
+and deletions. It is followed by one + for each addition
+and then one - for each deletion.
+
+#--------------------------------------------
+git diff does not detect some file renames.
+>git diff --find-copies-harder ...
+So
+>git diff --find-copies-harder --stat 149 150 sandbox
+ sandbox/{new => original} |   0
+Is perhaps what I want?
+This seems to only work if the files are identical
+With a one character difference it didn't detect the rename
+Hmmm but perhaps thats because it was only a 1 line file and
+1 char in 1 line is not a lot.
+Yes, making a small change in a big file (copy of this) did 
+detect the rename (but only with the --find-copies-harder option)
+>git diff --find-copies-harder --stat 163 164 sandbox
+sandbox/{old_name => new_name} |   2 +-
+
+#-------------------------------------------------------------
+But for just getting the initial patches
+>git diff --find-copies-harder 163 164 sandbox
+diff --git a/sandbox/oldname b/sandbox/newname
+similarity index 99%
+rename from sandbox/oldname
+rename to sandbox/newname
+index afcb4df..c0f407c 100644
+--- a/sandbox/oldname
++++ b/sandbox/newname
+@@ -73,7 +73,7 @@ LINE: +++ /dev/null
+.....
+.....
+
+#-------------------------------------------------------------
+How does diff handle it if you created two new files which were
+the same and very similar to a just deleted file?
+It's spots both of them as a rename. Brilliant!
+
+

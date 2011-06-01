@@ -1,0 +1,40 @@
+<% tag_number = @traffic_lights_to_tag.length -%>
+
+<form action='/diff/show'>
+ 
+<%= tag( :input, 
+    { 
+      :type => :hidden,
+      :name => :dojo_name,
+      :value => @dojo.name,            
+    }) -%>
+  
+<%= tag( :input, 
+    { 
+      :type => :hidden,
+      :name => :avatar,
+      :value => @avatar.name,            
+    }) -%>
+    
+<%= tag( :input, 
+    { 
+      :type => :hidden,
+      :name => :tag,
+      :value => tag_number - 1,            
+    }) -%>
+    
+  <button class="button"
+          <% if tag_number != 0 -%>
+          type="submit"
+          id="prev_button"
+          title="View <%=tag_number-1-%>" >
+          <% else -%>
+          type="button"
+          disabled>
+          <% end -%>
+    <img src="/images/left-triangle.gif"
+         width="30" 
+         height="30" />
+  </button>
+</form>
+

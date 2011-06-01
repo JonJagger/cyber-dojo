@@ -268,4 +268,46 @@ input[type="checkbox"]:checked+label { color: green; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+.diffed_code 
+{ 
+  margin-top: 5px;
+  font-size: 1.3em;
+  margin-bottom: 0em;
+}
+
+#diff_sheet
+{
+  background: Cornsilk;
+  color: #383838;;
+  height: 34em;
+  overflow: auto;
+  border: 1px dashed #E6E6E6;
+}
+
+pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
+pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
+pre.diffed_code removed { padding-left: 3px; background-color: #F6CECE; }
+
+pre.diffed_code same:before { content: " "; }
+pre.diffed_code added:before { content: "+"; }
+pre.diffed_code removed:before { content: "-"; }
+
+pre.diffed_code ln 
+{ 
+  background-color: white;
+  color: #BDBDBD; 
+  padding-right: 3px; 
+}
+
+#diff_output 
+{ 
+  font-weight: normal;
+  width: 100%;
+  background: CornSilk;
+  border: 1px dashed LightGray;
+  color: #383838;;
+  overflow: auto;
+  padding: 0em;
+  margin: 0em;
+}
 

@@ -2,7 +2,7 @@
 class DojoController < ApplicationController
  
   def index
-    # offers new, start, resume, dashboard
+    # offers new, start, resume, dashboard, messages
     configure(params)
     @dojo_name = dojo_name
   end
@@ -75,13 +75,9 @@ class DojoController < ApplicationController
     board_config(params)
   end
   
-  #---------------------------
-    
   def ifaq
   end
 
-  #---------------------------
-  
   def render_404
     render :file => RAILS_ROOT + '/' + 'public' +'/' + '404.html'
   end
