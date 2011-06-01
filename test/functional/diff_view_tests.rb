@@ -8,6 +8,7 @@ def diff_view(avatar, tag)
     cmd  = "cd #{avatar.folder};"
     cmd += "git show #{tag}:manifest.rb;"
     manifest = eval IO::popen(cmd).read
+    visible_files = manifest[:visible_files]
     
     cmd  = "cd #{avatar.folder};"
     cmd += "git diff #{tag-1} #{tag} sandbox;"   
@@ -19,10 +20,28 @@ def diff_view(avatar, tag)
     diffs = GitDiffParser.new(diff_lines).parse_all
     diffs.each do |sandbox_name,diff|
       name = %r|^sandbox/(.*)|.match(sandbox_name)[1] 
-      source_lines = manifest[:visible_files][name][:content]
+      source_lines = visible_files[name][:content]
       view[name] = builder.build(diff, source_lines.split("\n"))
+      visible_files.delete(name)
     end
+    
+    visible_files.each do |name,file|
+      view[name] = sameify(file[:content])
+    end
+    
     view
+end
+
+def sameify(source)
+  result = []
+  source.split("\n").each_with_index do |line,number|
+    result << {
+      :line => line,
+      :type => :same,
+      :number => number + 1
+    }
+  end
+  result
 end
 
 #-----------------------------------------------
@@ -49,6 +68,23 @@ class DiffViewTests < ActionController::TestCase
   end
 
   #-----------------------------------------------
+
+  def test_sameify
+    expected =
+    [
+        { :line => "require 'untitled'", :type => :same, :number => 1 },
+        { :line => "require 'test/unit'", :type => :same, :number => 2 },
+        { :line => "", :type => :same, :number => 3 },
+        { :line => "class TestUntitled < Test::Unit::TestCase", :type => :same, :number => 4 },
+        { :line => "", :type => :same, :number => 5 },
+        { :line => "  def test_simple", :type => :same, :number => 6 },
+        { :line => "    assert_equal 9 * 6, answer", :type => :same, :number => 7 },
+        { :line => "  end", :type => :same, :number => 8 },
+        { :line => "", :type => :same, :number => 9 },
+        { :line => "end", :type => :same, :number => 10 }
+      ]
+      assert_equal expected, sameify(test_untitled_rb)
+    end
   
   #-----------------------------------------------
   
@@ -65,7 +101,7 @@ class DiffViewTests < ActionController::TestCase
     {
       :visible_files =>
       {
-        'cyberdojo.sh'     => { :content => 'ruby test_untitled.rb' },
+        'cyberdojo.sh'     => { :content => cyberdojo_sh },
         'untitled.rb'      => { :content => untitled_rb },
         'test_untitled.rb' => { :content => test_untitled_rb }
       }
@@ -92,23 +128,9 @@ class DiffViewTests < ActionController::TestCase
         { :line => "  54", :type => :added, :number => 2 },
         { :line => "end", :type => :same, :number => 3 },
       ],
+      'test_untitled.rb' => sameify(test_untitled_rb),
+      'cyberdojo.sh' => sameify(cyberdojo_sh)
     }
-    
-    x={}
-    
-      x['test_untitled.rb'] =
-      [
-        { :line => "require 'untitled'", :type => :same, :number => 1 },
-        { :line => "require 'test/unit'", :type => :same, :number => 2 },
-        { :line => "", :type => :same, :number => 3 },
-        { :line => "class TestUntitled < Test::Unit::TestCase", :type => :same, :number => 4 },
-        { :line => "", :type => :same, :number => 5 },
-        { :line => "  def test_simple", :type => :same, :number => 6 },
-        { :line => "    assert_equal 9 * 6, answer", :type => :same, :number => 7 },
-        { :line => "  end", :type => :same, :number => 8 },
-        { :line => "", :type => :same, :number => 9 },
-        { :line => "end", :type => :same, :number => 10 }
-      ]
     
     assert_equal expected, view
     
@@ -116,6 +138,14 @@ class DiffViewTests < ActionController::TestCase
 
   #-----------------------------------------------
 
+  def cyberdojo_sh
+<<HERE
+ruby test_untitled.rb
+HERE
+  end
+  
+  #-----------------------------------------------
+  
   def test_untitled_rb 
 <<HERE
 require 'untitled'
@@ -124,7 +154,7 @@ require 'test/unit'
 class TestUntitled < Test::Unit::TestCase
 
   def test_simple
-    assert_equal 9 * 6, answer  
+    assert_equal 9 * 6, answer
   end
 
 end
