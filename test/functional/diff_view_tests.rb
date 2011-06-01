@@ -80,9 +80,9 @@ HERE
     increments = avatar.run_tests(manifest)
     assert_equal :passed, increments.last[:outcome]
 
-    # Now grab the diffs
+    # Now grab the diff
     tag = 2    
-    cmd = "cd #{avatar.folder};"
+    cmd  = "cd #{avatar.folder};"
     cmd += "git diff #{tag-1} #{tag} sandbox;"   
     diff = IO::popen(cmd).read
 
@@ -119,10 +119,25 @@ HERE
     actual_diff = GitDiffParser.new(diff).parse
     assert_equal expected_diff, actual_diff
 
-    # Now grab the current version of the files
+    # Now grab the current version of the file
+    cmd  = "cd #{avatar.folder};"
+    cmd += "git show #{tag}:manifest.rb;"
+    m = eval IO::popen(cmd).read
+    source_lines = m[:visible_files]['untitled.rb'][:content]
     
-    # And finally make the diff-view
-
+    # Build the diff-view-model
+    expected_source_diff =
+    [
+      { :line => "def answer", :type => :same, :number => 1 },
+      { :line => "  42", :type => :deleted },
+      { :line => "  54", :type => :added, :number => 2 },
+      { :line => "end", :type => :same, :number => 3 },
+    ]
+    
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(actual_diff, source_lines.split("\n"))
+    
+    assert_equal expected_source_diff, source_diff
     
   end
 

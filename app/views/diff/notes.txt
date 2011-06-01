@@ -3,7 +3,7 @@
 to get the visible files for a specific tag
 
 tag = 20
-manifest = eval IO.popen("git show #{tag}:manifest.rb').read
+manifest = eval IO.popen("git show #{tag}:manifest.rb").read
 manifest[:visible_files].each |filename,file] do
   p filename
   lines = file[:content].split("\n")
