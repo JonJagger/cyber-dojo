@@ -1,4 +1,6 @@
 
+# Work In Progress...
+
 class GitDiffBuilder
 
   def initialize

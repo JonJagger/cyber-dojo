@@ -132,7 +132,11 @@ class Dojo
       messages = eval IO.read(messages_filename)
       text.strip!
       if text != ''
-        messages <<  { :sender => sender, :text => text }
+        messages <<  { 
+          :sender => sender, 
+          :text => text,
+          :created => make_time(Time.now)
+        }
         file_write(messages_filename, messages)
       end
     end
