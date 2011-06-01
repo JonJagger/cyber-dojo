@@ -54,19 +54,8 @@ index afcb4df..c0f407c 100644
 .....
 
 #-------------------------------------------------------------
-How would diff handle it if you created two new files which were
+How does diff handle it if you created two new files which were
 the same and very similar to a just deleted file?
-Would it spot one of them as a rename?
-No! It's spots both of them as a rename. Brilliant!
+It's spots both of them as a rename. Brilliant!
 
-#-------------------------------------------------------------
-What about if you delete a file and then create a new file with
-the same name but completely different content. Ideally I'll show
-both files, one as being deleted, and one as being new.
-But that means I'll need two files with the same name.
-So I'll need to separate out the files into
-o) newly created
-o) deleted
-o) changed (possible renamed too)
-Either that or simply don't bother showing deleted files. 
-Think that's simpler, at least for now....
+
