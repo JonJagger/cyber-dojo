@@ -147,15 +147,13 @@ input[type="checkbox"]:checked+label { color: green; }
 
 #editor, #editor_line_numbers
 {
-  font-weight: normal;
-  font-size: 11pt;
+  font-size: 12pt;
   border: 0;
   margin: 0;
 }
 
 #editor, #output 
 { 
-  font-weight: normal;
   width: 100%;
   background: CornSilk;
   margin-top: 5px;
@@ -273,6 +271,10 @@ input[type="checkbox"]:checked+label { color: green; }
   margin-top: 5px;
   font-size: 1.3em;
   margin-bottom: 1em;
+  background-color: White;
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
 }
 
 #diff_sheet
@@ -281,18 +283,27 @@ input[type="checkbox"]:checked+label { color: green; }
   color: #383838;;
   height: 34em;
   overflow: auto;
-  border: 1px dashed #E6E6E6;
+  border-top: 1px dashed #E6E6E6;
+  border-bottom: 1px dashed #E6E6E6;
+  border-right: 1px dashed #E6E6E6;
+  border-left: 1px dashed #E6E6E6;
 }
 
 pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
 pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
 pre.diffed_code deleted { padding-left: 3px; background-color: #F6CECE; }
 
+pre.diffed_code    same:before { content: " "; background-color: White; }
+pre.diffed_code   added:before { content: "+"; }
+pre.diffed_code deleted:before { content: "-"; }
+
 pre.diffed_code ln 
 { 
-  background-color: white;
+  background-color: White;
   color: #BDBDBD; 
-  padding-right: 3px; 
+  margin-right: 3px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 #diff_output 
@@ -301,9 +312,26 @@ pre.diffed_code ln
   width: 100%;
   background: CornSilk;
   border: 1px dashed LightGray;
-  color: #383838;;
+  color: #383838;
   overflow: auto;
   padding: 0em;
   margin: 0em;
+}
+
+.dot
+{
+  display: inline-block;
+  height: 7px;
+}
+
+.added.dot   
+{ 
+  background-color: #CEF6CE;
+  border: 1px dotted #0F0;
+}  
+.deleted.dot 
+{ 
+  background-color: #F6CECE;
+  border: 1px dotted #F00;
 }
 

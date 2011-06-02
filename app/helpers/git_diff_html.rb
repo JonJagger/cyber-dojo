@@ -5,7 +5,9 @@ def git_diff_html(diff)
 end
 
 def diff_htmlify(n, max_digits)
-    '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
-    "<#{n[:type]}>" + n[:line] + "</#{n[:type]}>"
+    "<#{n[:type]}>" +
+       '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
+       n[:line] + 
+    "</#{n[:type]}>"
 end
 

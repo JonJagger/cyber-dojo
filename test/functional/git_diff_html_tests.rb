@@ -23,18 +23,18 @@ class GitDiffHtmlTests < ActionController::TestCase
     ]    
     expected =
     [ 
-        "<ln> 1</ln><same>once</same>",
-        "<ln> 2</ln><same>upon a</same>",
-        "<ln> 3</ln><same>time</same>",
-        "<ln>  </ln><deleted>IN</deleted>",
-        "<ln> 4</ln><added>in</added>",
-        "<ln> 5</ln><same>the west</same>",
-        "<ln> 6</ln><same>Charles Bronson</same>",
-        "<ln> 7</ln><same>Jason Robarts</same>",
-        "<ln> 8</ln><same>Henry Fonda</same>",
-        "<ln> 9</ln><same>Claudia Cardinale</same>",
-        "<ln>10</ln><added>Sergio Leone</added>",
-        "<ln>11</ln><same>Ennio Morricone</same>",        
+        "<same><ln> 1</ln>once</same>",
+        "<same><ln> 2</ln>upon a</same>",
+        "<same><ln> 3</ln>time</same>",
+        "<deleted><ln>  </ln>IN</deleted>",
+        "<added><ln> 4</ln>in</added>",
+        "<same><ln> 5</ln>the west</same>",
+        "<same><ln> 6</ln>Charles Bronson</same>",
+        "<same><ln> 7</ln>Jason Robarts</same>",
+        "<same><ln> 8</ln>Henry Fonda</same>",
+        "<same><ln> 9</ln>Claudia Cardinale</same>",
+        "<added><ln>10</ln>Sergio Leone</added>",
+        "<same><ln>11</ln>Ennio Morricone</same>",        
     ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
@@ -54,12 +54,12 @@ class GitDiffHtmlTests < ActionController::TestCase
     ]    
     expected =
     [ 
-        "<ln>1</ln><same>once</same>",
-        "<ln>2</ln><same>upon a</same>",
-        "<ln>3</ln><same>time</same>",
-        "<ln> </ln><deleted>IN</deleted>",
-        "<ln>4</ln><added>in</added>",
-        "<ln>5</ln><same>the west</same>",
+        "<same><ln>1</ln>once</same>",
+        "<same><ln>2</ln>upon a</same>",
+        "<same><ln>3</ln>time</same>",
+        "<deleted><ln> </ln>IN</deleted>",
+        "<added><ln>4</ln>in</added>",
+        "<same><ln>5</ln>the west</same>",
     ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
@@ -78,11 +78,11 @@ class GitDiffHtmlTests < ActionController::TestCase
     ]    
     expected =
     [ 
-        "<ln>1</ln><same>once</same>",
-        "<ln>2</ln><same>upon a</same>",
-        "<ln>3</ln><same>time</same>",
-        "<ln>4</ln><added>in</added>",
-        "<ln>5</ln><same>the west</same>",
+        "<same><ln>1</ln>once</same>",
+        "<same><ln>2</ln>upon a</same>",
+        "<same><ln>3</ln>time</same>",
+        "<added><ln>4</ln>in</added>",
+        "<same><ln>5</ln>the west</same>",
         ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
@@ -101,10 +101,10 @@ class GitDiffHtmlTests < ActionController::TestCase
     
     expected =
     [ 
-        "<ln>1</ln><same>once</same>",
-        "<ln>2</ln><same>upon a</same>",
-        "<ln>3</ln><same>time</same>",
-        "<ln>4</ln><same>in the west</same>"
+        "<same><ln>1</ln>once</same>",
+        "<same><ln>2</ln>upon a</same>",
+        "<same><ln>3</ln>time</same>",
+        "<same><ln>4</ln>in the west</same>"
     ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)

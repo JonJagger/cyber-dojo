@@ -32,6 +32,7 @@ function makeDiffFileListEntry(filename)
     saveCurrentDiffFile();
     loadDiffFile(filename);
   };
+  
   var inp = new Element('input', 
     { id:'radio_' + filename, 
       name:'filename', 
@@ -40,6 +41,7 @@ function makeDiffFileListEntry(filename)
     });
   div.appendChild(inp);
   div.appendChild(document.createTextNode(filename));
+
   return div;
 }
 
@@ -90,7 +92,7 @@ function loadDiffFile(filename)
 
 function selectFileInDiffFileList(filename) 
 {
-  $('radio_' + filename).checked = true;
+  $('radio_' + filename).checked = true;  
   $('current_filename').setAttribute('value', filename);
   current_filename = filename;  
 }
@@ -111,7 +113,7 @@ function selectFileInDiffFileList(filename)
       <div class="panel">
         <%= render :partial => 'prev_next' -%>
       </div>
-            
+      
     </td>
     
     <td>

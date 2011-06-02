@@ -13,7 +13,7 @@ files aren't being displayed.
 
 #--------------------------------------------
 When you do a 
->diff x y --stat sandbox
+>git diff x y --stat sandbox
 You get something like this...
 
  sandbox/gapper.rb      |    3 ++-
