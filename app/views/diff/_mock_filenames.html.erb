@@ -1,90 +1,25 @@
 
+<% def diff_dots(n,kind)
+     html = '<table>';
+     html += '<tr>'     
+     n.times { html += "<td><div class='#{kind} dot'></div></td>" }
+     html += '</tr>'
+     html += '</table>'
+   end
+-%>
+
 <table vertical-align="middle">
-
-  <tr>
-    <td align="right">
-      <table>
-        <tr>
-          <td>
-            <div class="deleted dot">&nbsp;</div>
-          </td>
-          <td>
-            <div class="deleted dot">&nbsp;</div>
-          </td>
-        </tr>
-      </table>
-    </td>
-    
-    <td align="left">
-      <div class="mid_tone filename">&nbsp;gapper.rb</div>
-    </td>
-    <td align="left">
-      <table>
-        <tr>
-          <td>
-            <div class="added dot">&nbsp;</div>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  
-  <tr>
-    <td align="right">
-      <table>
-        <tr>
-          <td>
-            <div class="deleted dot">&nbsp;</div>
-          </td>
-        </tr>
-      </table>
-    </td>
-    <td>
-      <div class="mid_tone filename">&nbsp;pairs.rb</div>
-    </td>
-    <td align="left">
-      <table>
-        <tr>
-          <td>          
-            <div class="added dot">&nbsp;</div>
-          </td>          
-          <td>                      
-            <div class="added dot">&nbsp;</div>
-          </td>          
-          <td>                      
-            <div class="added dot">&nbsp;</div>
-          </td>          
-          <td>                      
-            <div class="added dot">&nbsp;</div>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="right">
-    </td>
-    
-    <td>
-      <div class="mid_tone filename">&nbsp;test_pairs.rb</div>
-    </td>
-    
-    <td align="left">
-      <table>
-        <tr>
-          <td>    
-            <div class="added dot">&nbsp;</div>
-          </td>
-          <td>
-            <div class="added dot">&nbsp;</div>
-          </td>
-          <td>
-            <div class="added dot">&nbsp;</div>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
+  <% @diffs.each do |file| -%>
+    <tr>
+      <td align="right">
+        <%= diff_dots(file[:deleted_line_count], 'deleted') -%>
+      </td>      
+      <td align="left">
+        <div class="mid_tone filename" id="<%= file[:name] -%>"><%= file[:name] -%></div>
+      </td>    
+      <td align="left">
+        <%= diff_dots(file[:added_line_count], 'added') -%>
+      </td>    
+    </tr>
+  <% end -%>
 </table>

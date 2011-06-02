@@ -12,7 +12,15 @@ class DiffController < ApplicationController
     @all_traffic_lights = @avatar.increments    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    @diffed_files = git_diff_view(@avatar, params[:tag].to_i)
+    @diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
+  end
+  
+  def scratch
+    @diffs = [
+      { :deleted_line_count => 2, :name => 'gapper.rb',     :added_line_count => 1, :content => "X" },
+      { :deleted_line_count => 1, :name => 'pairs.rb',      :added_line_count => 4, :content => "Y" },
+      { :deleted_line_count => 0, :name => 'test_pairs.rb', :added_line_count => 3, :content => "Z" },
+    ]
   end
   
 private

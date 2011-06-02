@@ -1,0 +1,45 @@
+
+<script language="javascript" type="text/javascript"><!--
+
+var diffs = <%= @diffs.to_json -%>;
+
+$j(document).ready(function() {
+  build_filenames();
+});
+
+function build_filenames() 
+{
+  var view = $('diff_sheet');
+
+  var load = function(diff) {
+    return function() {
+      view.innerHTML = diff.content;
+    };
+  };
+
+  for (var i = 0; i != diffs.length; i++) {
+    var diff = diffs[i]
+    var file = $(diff.name);
+    file.onclick = load(diff);    
+  }
+}
+
+//--></script>
+    
+<table>
+  <tr>
+    <td>
+      <div class="panel">
+        <%= render :partial => 'mock_filenames' -%>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre class="diffed_code"><div id="diff_sheet"></div></pre>
+    </td>
+  </tr>
+</table>
+
+  
+
