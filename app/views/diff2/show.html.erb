@@ -3,8 +3,7 @@
 
 $j(document).ready(function() {
   rebuildDiffFilenameList();
-  //createLineNumbersForEditor();
-  //loadFile("<%=@current_file-%>");
+  loadDiffFile("<%=@current_file-%>");
 });
 
 function rebuildDiffFilenameList() 
@@ -95,7 +94,6 @@ function selectFileInDiffFileList(filename)
   $('current_filename').setAttribute('value', filename);
   current_filename = filename;  
 }
-
 
 //--></script>
 
