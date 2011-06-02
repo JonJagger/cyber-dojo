@@ -272,7 +272,7 @@ input[type="checkbox"]:checked+label { color: green; }
 { 
   margin-top: 5px;
   font-size: 1.3em;
-  margin-bottom: 0em;
+  margin-bottom: 1em;
 }
 
 #diff_sheet
@@ -287,10 +287,6 @@ input[type="checkbox"]:checked+label { color: green; }
 pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
 pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
 pre.diffed_code deleted { padding-left: 3px; background-color: #F6CECE; }
-
-pre.diffed_code    same:before { content: " "; }
-pre.diffed_code   added:before { content: "+"; }
-pre.diffed_code deleted:before { content: "-"; }
 
 pre.diffed_code ln 
 { 
