@@ -29,8 +29,8 @@ HERE
             "diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3",
             "index e69de29..2e65efe 100644"
           ],
-        :was_filename => 'sandbox/untitled_5G3',
-        :now_filename => 'sandbox/untitled_5G3',
+        :was_filename => 'a/sandbox/untitled_5G3',
+        :now_filename => 'b/sandbox/untitled_5G3',
         :chunks =>
           [
             {
@@ -104,8 +104,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index b1a30d9..7fa9727 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -218,8 +218,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 0719398..2943489 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -321,8 +321,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 535d2b0..a173ef1 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -410,8 +410,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 06e567b..59e88aa 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -495,8 +495,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 0b669b6..a972632 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -580,8 +580,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 08fe19c..1f8695e 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -669,8 +669,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 8e435da..a787223 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -763,8 +763,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 5ed4618..aad3f67 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {

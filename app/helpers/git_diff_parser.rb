@@ -1,6 +1,4 @@
 
-# Work In Progress...
-
 class GitDiffParser 
 
   def initialize(lines)
@@ -26,8 +24,8 @@ class GitDiffParser
   end
   
   PREFIX_RE       = %r|^([^-+].*)|
-  WAS_FILENAME_RE = %r|^\-\-\- a/(.*)|
-  NOW_FILENAME_RE = %r|^\+\+\+ b/(.*)|
+  WAS_FILENAME_RE = %r|^\-\-\- (.*)|
+  NOW_FILENAME_RE = %r|^\+\+\+ (.*)|
   COMMON_LINE_RE  = %r|^ (.*)|
 
   def parse

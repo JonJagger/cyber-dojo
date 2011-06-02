@@ -5,6 +5,54 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  def test_parse_diff_for_new_file
+lines = <<HERE
+diff --git a/sandbox/untitled_6TJ b/sandbox/untitled_6TJ
+new file mode 100644
+index 0000000..21984c7
+--- /dev/null
++++ b/sandbox/untitled_6TJ
+@@ -0,0 +1 @@
++Please rename me!
+\\ No newline at end of file
+HERE
+
+    expected =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/untitled_6TJ b/sandbox/untitled_6TJ",
+            "new file mode 100644",
+            "index 0000000..21984c7"
+          ],
+        :was_filename => '/dev/null',
+        :now_filename => 'b/sandbox/untitled_6TJ',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 0, :size => 0 },
+                :now => { :start_line => 1, :size => 1 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   => [ "Please rename me!" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    }    
+    assert_equal expected, GitDiffParser.new(lines).parse
+
+  end
+  
+  #-----------------------------------------------------
+  
   def test_parse_diffs_for_two_files
 
 lines = <<HERE
@@ -44,8 +92,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 896ddd8..2c8d1b8 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -74,8 +122,8 @@ HERE
             "diff --git a/sandbox/other b/sandbox/other",
             "index cf0389a..b28bf03 100644"
           ],
-        :was_filename => 'sandbox/other',
-        :now_filename => 'sandbox/other',
+        :was_filename => 'a/sandbox/other',
+        :now_filename => 'b/sandbox/other',
         :chunks =>
           [
             {
@@ -99,8 +147,8 @@ HERE
     
     expected = 
     {
-      'sandbox/lines' => expected_diff_1,
-      'sandbox/other' => expected_diff_2
+      'b/sandbox/lines' => expected_diff_1,
+      'b/sandbox/other' => expected_diff_2
     }
     
     parser = GitDiffParser.new(lines)    
@@ -182,8 +230,8 @@ HERE
             "diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3",
             "index e69de29..2e65efe 100644"
           ],
-        :was_filename => 'sandbox/untitled_5G3',
-        :now_filename => 'sandbox/untitled_5G3',
+        :was_filename => 'a/sandbox/untitled_5G3',
+        :now_filename => 'b/sandbox/untitled_5G3',
         :chunks =>
           [
             {
@@ -265,8 +313,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index b1a30d9..7fa9727 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -338,8 +386,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 0719398..2943489 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -408,8 +456,8 @@ HERE
         "diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb",
         "index 26bc41b..8a5b0b7 100644"
       ],
-      :was_filename => 'sandbox/gapper.rb',
-      :now_filename => 'sandbox/gapper.rb',
+      :was_filename => 'a/sandbox/gapper.rb',
+      :now_filename => 'b/sandbox/gapper.rb',
       :chunks => 
       [
         {
@@ -475,8 +523,8 @@ HERE
         "rename to sandbox/newname",
         "index afcb4df..c0f407c 100644"
       ],
-      :was_filename => 'sandbox/oldname',
-      :now_filename => 'sandbox/newname',
+      :was_filename => 'a/sandbox/oldname',
+      :now_filename => 'b/sandbox/newname',
       :chunks =>
       [
         {
@@ -516,8 +564,8 @@ HERE
         "diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb",
         "index 4d3ca1b..61e88f0 100644"
       ],
-      :was_filename => 'sandbox/test_gapper.rb',
-      :now_filename => 'sandbox/test_gapper.rb',
+      :was_filename => 'a/sandbox/test_gapper.rb',
+      :now_filename => 'b/sandbox/test_gapper.rb',
       :chunks =>
       [
         {
@@ -566,8 +614,8 @@ HERE
             "diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb",
             "index 4d3ca1b..61e88f0 100644"
           ],
-        :was_filename => 'sandbox/test_gapper.rb',
-        :now_filename => 'sandbox/test_gapper.rb',
+        :was_filename => 'a/sandbox/test_gapper.rb',
+        :now_filename => 'b/sandbox/test_gapper.rb',
         :chunks =>
           [
             {
@@ -637,8 +685,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 5ed4618..c47ec44 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -699,8 +747,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 5ed4618..aad3f67 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -765,8 +813,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 5ed4618..33d0e05 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
@@ -833,8 +881,8 @@ HERE
             "diff --git a/sandbox/lines b/sandbox/lines",
             "index 5ed4618..e78c888 100644"
           ],
-        :was_filename => 'sandbox/lines',
-        :now_filename => 'sandbox/lines',
+        :was_filename => 'a/sandbox/lines',
+        :now_filename => 'b/sandbox/lines',
         :chunks =>
           [
             {
