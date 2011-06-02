@@ -35,7 +35,7 @@ class GitDiffHtmlTests < ActionController::TestCase
         "<ln> 9</ln><same>Claudia Cardinale</same>",
         "<ln>10</ln><added>Sergio Leone</added>",
         "<ln>11</ln><same>Ennio Morricone</same>",        
-    ].join('')
+    ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
   end
@@ -60,7 +60,7 @@ class GitDiffHtmlTests < ActionController::TestCase
         "<ln> </ln><deleted>IN</deleted>",
         "<ln>4</ln><added>in</added>",
         "<ln>5</ln><same>the west</same>",
-    ].join('')
+    ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
   end  
@@ -83,7 +83,7 @@ class GitDiffHtmlTests < ActionController::TestCase
         "<ln>3</ln><same>time</same>",
         "<ln>4</ln><added>in</added>",
         "<ln>5</ln><same>the west</same>",
-    ].join('')
+        ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
   end
@@ -105,7 +105,7 @@ class GitDiffHtmlTests < ActionController::TestCase
         "<ln>2</ln><same>upon a</same>",
         "<ln>3</ln><same>time</same>",
         "<ln>4</ln><same>in the west</same>"
-    ].join('')
+    ].join("\n")
     
     assert_equal expected, git_diff_html(diffed)
   end

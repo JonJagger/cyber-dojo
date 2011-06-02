@@ -32,6 +32,7 @@ private
   end
 
   def fill_all(result, type, lines, line_number)
+    lines ||= []
     fill(result, type, lines, 0, lines.length, line_number)
   end
   
