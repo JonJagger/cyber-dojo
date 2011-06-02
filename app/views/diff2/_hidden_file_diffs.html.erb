@@ -1,8 +1,10 @@
 
 <div style="display:none"
      id="visible_files_container">
-  <% @manifest[:visible_files].each do |filename,html| -%>
-  
+     
+  <% @diffed_files.each do |filename,diff| -%>
+    <% html = html_sameify(diff) -%>
+    
     <div name="file_content['<%=filename-%>']"
          id="file_content_for_<%=filename-%>"><%=html-%></div>
     

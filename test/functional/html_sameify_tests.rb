@@ -3,16 +3,6 @@ require 'test_helper'
 # > cd cyberdojo/test
 # > ruby functional/html_sameify_tests.rb
 
-def html_sameify(samed)
-  html = ''
-  max_digits = samed.length.to_s.length
-  samed.each do |n|
-    html += '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>'
-    html += "<#{n[:type]}>" + n[:line] + "</#{n[:type]}>"
-  end
-  html
-end
-
 class HtmlSameifyTests < ActionController::TestCase
 
   def test_mixture_with_more_than_9_lines

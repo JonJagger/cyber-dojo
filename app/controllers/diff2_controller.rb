@@ -13,6 +13,7 @@ class Diff2Controller < ApplicationController
     @all_traffic_lights = @avatar.increments    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
+    @diffed_files = git_diff_view(@avatar, params[:tag].to_i)
   end
   
 private

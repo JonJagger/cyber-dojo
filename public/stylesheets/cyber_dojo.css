@@ -288,8 +288,8 @@ pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
 pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
 pre.diffed_code removed { padding-left: 3px; background-color: #F6CECE; }
 
-pre.diffed_code same:before { content: " "; }
-pre.diffed_code added:before { content: "+"; }
+pre.diffed_code    same:before { content: " "; }
+pre.diffed_code   added:before { content: "+"; }
 pre.diffed_code removed:before { content: "-"; }
 
 pre.diffed_code ln 
