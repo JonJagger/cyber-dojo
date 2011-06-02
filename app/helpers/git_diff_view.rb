@@ -15,10 +15,17 @@ def git_diff_view(avatar, tag)
     
     diffs = GitDiffParser.new(diff_lines).parse_all
     diffs.each do |sandbox_name,diff|
-      name = %r|^b/sandbox/(.*)|.match(sandbox_name)[1] 
-      source_lines = visible_files[name][:content]
-      view[name] = builder.build(diff, source_lines.split("\n"))
-      visible_files.delete(name)
+      
+      md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
+      if md[1] == 'b'
+        name = md[2]
+        # md[1] == 'a' indicates a deleted file
+        # which of course is not in the manifest
+        # I could handle this though, by retrieving it explicitly...
+        source_lines = visible_files[name][:content]
+        view[name] = builder.build(diff, source_lines.split("\n"))
+        visible_files.delete(name)
+      end
     end
     
     visible_files.each do |name,file|

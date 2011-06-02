@@ -18,7 +18,12 @@ class GitDiffParser
     all = {}
     while /^diff/.match(@lines[@n]) do
       one = parse
-      all[one[:now_filename]] = one
+      if one[:now_filename] != '/dev/null'
+        name = one[:now_filename]
+      else
+        name = one[:was_filename]
+      end
+      all[name] = one      
     end
     all
   end

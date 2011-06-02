@@ -5,6 +5,56 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  def test_parse_diff_for_deleted_file
+lines = <<HERE
+diff --git a/sandbox/xxx b/sandbox/xxx
+deleted file mode 100644
+index 6e2723c..0000000
+--- a/sandbox/xxx
++++ /dev/null
+@@ -1,2 +0,0 @@
+-Please rename me!
+-This was xxx
+\\ No newline at end of file
+HERE
+
+    value =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/xxx b/sandbox/xxx",
+            "deleted file mode 100644",
+            "index 6e2723c..0000000"
+          ],
+        :was_filename => 'a/sandbox/xxx',
+        :now_filename => '/dev/null',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 1, :size => 2 },
+                :now => { :start_line => 0, :size => 0 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ "Please rename me!", "This was xxx" ],
+                  :added_lines   => [ ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    }    
+    expected = { 'a/sandbox/xxx' => value }
+    assert_equal expected, GitDiffParser.new(lines).parse_all
+
+  end
+  
+  #-----------------------------------------------------
+  
   def test_parse_diff_for_new_file
 lines = <<HERE
 diff --git a/sandbox/untitled_6TJ b/sandbox/untitled_6TJ
