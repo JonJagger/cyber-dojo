@@ -3,7 +3,7 @@
      id="visible_files_container">
      
   <% @diffed_files.each do |filename,diff| -%>
-    <% html = html_sameify(diff) -%>
+    <% html = git_diff_html(diff) -%>
     
     <div name="file_content['<%=filename-%>']"
          id="file_content_for_<%=filename-%>"><%=html-%></div>

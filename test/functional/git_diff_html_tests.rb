@@ -1,9 +1,9 @@
 require 'test_helper'
 
 # > cd cyberdojo/test
-# > ruby functional/html_sameify_tests.rb
+# > ruby functional/git_diff_html_tests.rb
 
-class HtmlSameifyTests < ActionController::TestCase
+class GitDiffHtmlTests < ActionController::TestCase
 
   def test_mixture_with_more_than_9_lines
     diffed =
@@ -37,7 +37,7 @@ class HtmlSameifyTests < ActionController::TestCase
         "<ln>11</ln><same>Ennio Morricone</same>",        
     ].join('')
     
-    assert_equal expected, html_sameify(diffed)
+    assert_equal expected, git_diff_html(diffed)
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,7 +62,7 @@ class HtmlSameifyTests < ActionController::TestCase
         "<ln>5</ln><same>the west</same>",
     ].join('')
     
-    assert_equal expected, html_sameify(diffed)
+    assert_equal expected, git_diff_html(diffed)
   end  
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -85,7 +85,7 @@ class HtmlSameifyTests < ActionController::TestCase
         "<ln>5</ln><same>the west</same>",
     ].join('')
     
-    assert_equal expected, html_sameify(diffed)
+    assert_equal expected, git_diff_html(diffed)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -107,7 +107,7 @@ class HtmlSameifyTests < ActionController::TestCase
         "<ln>4</ln><same>in the west</same>"
     ].join('')
     
-    assert_equal expected, html_sameify(diffed)
+    assert_equal expected, git_diff_html(diffed)
   end
     
 end
