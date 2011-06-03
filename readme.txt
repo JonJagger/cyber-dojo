@@ -135,40 +135,6 @@ at any time by choosing the avatar. This is handy if a laptop has to retire
 as a new laptop can easily and instantly replace it.
 
 
-Dojo Folder Structure
-=====================
-The rails code does NOT use a database.
-Instead I use a git-like folder structure based
-on the sha1 hexdigest of the dojo's name. For example, a CyberDojo called 
-'Jon Jagger' (without the quotes) has a sha1 hexdigest of, wait for it,
-  381fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab 
-so the root folder for the CyberDojo called 'Jon Jagger' is
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
-Each started avatar has a subfolder underneath this, for example
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf
-  
-
-Git Repositories
-================
-Each started avatar has its own git respository, eg
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
-The starting files (as loaded via the manifests.rb's :visible_filenames) form
-tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
-message and tag which is simply the increment number. For example, the fourth
-time the wolf computer presses the run-tests button causes
->git commit -a -m '4'
->git tag -m '4' 4 HEAD
-From an avatar's folder you can issue the following commands:
-To look at filename for tag 4
->git show 4:sandbox/filename
-To look at filename's differences between tag 4 and tag 3
->git diff 4 3 sandbox/filename 
-To find the folder...
-  >irb
-  >require 'digest/sha1'
-  >Digest::SHA1.hexdigest(name)
-
-
 Traffic Lights
 ==============
 The display of each increment uses a traffic light, with meanings for
@@ -179,6 +145,20 @@ the three colours as follows:
 The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind
 (which a surprising number of people are). 
+
+
+Messages
+========
+Each computer can post tweet like messages which appear on the message board on
+the right hand side. I encourage players to use this to work together.
+Remember, the aim is to get working solutions on _all_ laptops. 
+
+
+Dashboard
+=========
+Shows a periodically updating display of all traffic lights for
+all the computers in the dojo. Clicking on a traffic light opens
+a new page showing the diffs for that increment.
 
 
 Adding a new language
@@ -256,19 +236,40 @@ file as part of the inspected ruby object:
   Defaults to 4 spaces.
 
 
-Messages Board
-==============
-Avatars can post tweet like messages which appear on the message board on
-the right hand side. I encourage players to use this to work together.
-Remember, the aim is to get working solutions on _all_ laptops.
+Dojo Folder Structure
+=====================
+The rails code does NOT use a database.
+Instead I use a git-like folder structure based
+on the sha1 hexdigest of the dojo's name. For example, a CyberDojo called 
+'Jon Jagger' (without the quotes) has a sha1 hexdigest of, wait for it,
+  381fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab 
+so the root folder for the CyberDojo called 'Jon Jagger' is
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
+Each started avatar has a subfolder underneath this, for example
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf
+  
 
-
-Dashboard Review
+Git Repositories
 ================
-The review button on the CyberDojo home page takes you to the dashboard
-which shows a continuously updating display of all traffic lights for
-all the avatars in the dojo. 
-
+Each started avatar has its own git respository, eg
+  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
+The starting files (as loaded via the manifests.rb's :visible_filenames) form
+tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
+message and tag which is simply the increment number. For example, the fourth
+time the wolf computer presses the run-tests button causes
+>git commit -a -m '4'
+>git tag -m '4' 4 HEAD
+From an avatar's folder you can issue the following commands:
+To look at filename for tag 4
+>git show 4:sandbox/filename
+To look at filename's differences between tag 4 and tag 3
+>git diff 4 3 sandbox/filename 
+To find the folder...
+  >irb
+  >require 'digest/sha1'
+  >Digest::SHA1.hexdigest(name)
+It's much easier and more informative to just click on a traffic light.
+  
 
 How to Turn off Chrome Spell-Checking in Chrome
 ===============================================
