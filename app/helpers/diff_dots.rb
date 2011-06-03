@@ -11,8 +11,9 @@ def diff_dots(n, kind)
   if kind == 'deleted'
     if n <= max_dots
       (max_dots - n).times { html += td_dot('spacer') }
+      html += '<td><diff_dots class="off"></diff_dots></td>'
     else
-      html += '<td><more_diff_dots></more_diff_dots></td>'
+      html += '<td><diff_dots class="on"></diff_dots></td>'
     end
   end  
   
@@ -21,8 +22,9 @@ def diff_dots(n, kind)
   if kind == 'added'
     if n <= max_dots
       (max_dots - n).times { html += td_dot('spacer') }
+      html += '<td><diff_dots class="off"></diff_dots></td>'
     else
-      html += '<td><more_diff_dots></more_diff_dots></td>'
+      html += '<td><diff_dots class="on"></diff_dots></td>'
     end
   end
   

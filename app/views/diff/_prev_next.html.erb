@@ -1,7 +1,7 @@
 
 <% tag_number = @traffic_lights_to_tag.length -%>
 
-<table>
+<table align="center">
   <tr>
   
     <% if tag_number != 0 -%>
@@ -21,6 +21,12 @@
     <td>
       <%= render :partial => 'prev_button' -%>
     </td>
+    
+    <td>
+      <span class="traffic_light_number">
+         <%= tag_number -%>
+      </span>
+    </td>   
     
     <td>
       <% if tag_number != 0-%>
