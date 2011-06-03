@@ -332,8 +332,21 @@ pre.diffed_code ln
 }
 
 .dot { display: inline-block; height: 7px; }
-.dot:after { content: "\00a0"; }
+.dot:after { content: "\00a0"; } /* non breaking space */
 
 .added.dot   { background-color: #CEF6CE; border: 1px dotted #0F0; }  
 .deleted.dot { background-color: #F6CECE; border: 1px dotted #F00; }
+
+/* IDEA: I could show more dots for more ellision */
+/* Eg . for up to 10 lines */
+/*    .. for up to 25 lines */
+/*    ... for up to 100 lines */
+
+more_diff_dots:after  
+{ 
+  content: '...'; 
+  color: #383838;
+  font-size: 0.7em;
+}
+
 

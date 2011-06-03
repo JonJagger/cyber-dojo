@@ -28,10 +28,12 @@ class DiffController < ApplicationController
 
     @diffs = []
     diffed_files.each do |name,diff|
+      n_deleted = diff.count { |line| line[:type] == :deleted }
+      n_added   = diff.count { |line| line[:type] == :added }      
       @diffs << {
-        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
+        :deleted_line_count => n_deleted,
         :name => name,
-        :added_line_count => diff.count { |line| line[:type] == :added },
+        :added_line_count => n_added,
         :content => git_diff_html(diff),
       }
     end

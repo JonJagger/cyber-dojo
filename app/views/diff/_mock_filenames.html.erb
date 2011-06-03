@@ -1,24 +1,39 @@
 
 <% def diff_dots(n, kind)
-     html = '<table>';
+     max = [n,4].min
+     html = '<table>'
      html += '<tr>'     
-     n.times { html += "<td><div class='#{kind} dot'></div></td>" }
+     html += '<td><more_diff_dots></more_diff_dots></td>' if kind == 'deleted' && n > max     
+     max.times { html += "<td><div class='#{kind} dot'></div></td>" }
+     html += '<td><more_diff_dots></more_diff_dots></td>' if kind == 'added'   && n > max
      html += '</tr>'
      html += '</table>'
    end
 -%>
 
+<% def diff_tip(n_deleted, n_added)
+     pluralize(n_deleted, "deletion") + " & " + pluralize(n_added, "addition")
+   end
+-%>
+
 <table vertical-align="middle">
   <% @diffs.each do |file| -%>
+    <% filename  = file[:name] -%>
+    <% n_deleted = file[:deleted_line_count] -%>
+    <% n_added   = file[:added_line_count]   -%>
     <tr>
       <td align="right">
-        <%= diff_dots(file[:deleted_line_count], 'deleted') -%>
+        <%= diff_dots(n_deleted, 'deleted') -%>
       </td>      
       <td align="left">
-        <filename class="mid_tone" id="<%= file[:name] -%>"><%= file[:name] -%></filename>
+        <filename class="mid_tone" 
+                  id="<%= filename -%>"
+                  title="<%= diff_tip(n_deleted, n_added) -%>" >
+          <%= filename -%>
+        </filename>
       </td>    
       <td align="left">
-        <%= diff_dots(file[:added_line_count], 'added') -%>
+        <%= diff_dots(n_added, 'added') -%>
       </td>    
     </tr>
   <% end -%>

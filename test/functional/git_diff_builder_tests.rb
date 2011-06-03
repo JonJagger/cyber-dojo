@@ -837,7 +837,7 @@ HERE
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   
-  def test_count_added_lines
+  def test_count_added_and_deleted_lines
     diff =
     [
       { :line => "1", :type => :same, :number => 1 },
@@ -858,8 +858,24 @@ HERE
     assert_equal 2, diff.count { |e| e[:type] == :added }
     assert_equal 1, diff.count { |e| e[:type] == :deleted }
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  def test_added_deleted_rough_diff_ratios
+    assert_equal [0,0], rough_diff_ratios(0,0)
+    # if there is at least one deleted line, deleted ratio >= 1
+    assert_equal 1, rough_diff_ratios(1,999)[0]
+    # if there is at least one added line, added ratio >= 1
+    assert_equal 1, rough_diff_ratios(999,1)[1]
+    # maximum deleted ratio is 5
+    assert_equal 5, rough_diff_ratios(999,999)[0]
+    # good enough for now 
+  end
   
 end
 
+def rough_diff_ratios(deleted,added)
+  [ [deleted,5].min, [added,5].min ]
+end
 
 
