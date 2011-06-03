@@ -835,6 +835,31 @@ HERE
     
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+  def test_count_added_lines
+    diff =
+    [
+      { :line => "1", :type => :same, :number => 1 },
+      { :line => "2", :type => :same, :number => 2 },
+      { :line => "3", :type => :same, :number => 3 },
+      { :line => "4", :type => :same, :number => 4 },
+      { :line => "5", :type => :same, :number => 5 },
+      { :line => "6", :type => :same, :number => 6 },
+      { :line => "7a",:type => :added,:number => 7 },
+      { :line => "8", :type => :deleted },
+      { :line => "8a", :type => :added, :number => 8 },
+      { :line => "9", :type => :same, :number => 9 },
+      { :line => "10", :type => :same, :number => 10 },
+      { :line => "11", :type => :same, :number => 11 },
+      { :line => "12", :type => :same, :number => 12 },
+      { :line => "13", :type => :same, :number => 13 },            
+    ]
+    assert_equal 2, diff.count { |e| e[:type] == :added }
+    assert_equal 1, diff.count { |e| e[:type] == :deleted }
+  end
+  
 end
+
 
 

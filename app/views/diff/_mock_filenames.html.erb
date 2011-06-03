@@ -1,5 +1,5 @@
 
-<% def diff_dots(n,kind)
+<% def diff_dots(n, kind)
      html = '<table>';
      html += '<tr>'     
      n.times { html += "<td><div class='#{kind} dot'></div></td>" }
@@ -15,7 +15,7 @@
         <%= diff_dots(file[:deleted_line_count], 'deleted') -%>
       </td>      
       <td align="left">
-        <filename class="mid_tone filename" id="<%= file[:name] -%>"><%= file[:name] -%></filename>
+        <filename class="mid_tone" id="<%= file[:name] -%>"><%= file[:name] -%></filename>
       </td>    
       <td align="left">
         <%= diff_dots(file[:added_line_count], 'added') -%>

@@ -46,8 +46,8 @@ function build_filenames()
     var diff = diffs[i]
     var filename = jq(diff.name);
     filename.click( load_from(filename, diff.content, save_to(filename)) );
-    filename.attr('scroll_top', '0');
-    filename.attr('scroll_left', '0');
+    filename.attr('scroll_top', 0);
+    filename.attr('scroll_left', 0);
   }
 }
 

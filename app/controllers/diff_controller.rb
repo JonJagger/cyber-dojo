@@ -24,15 +24,15 @@ class DiffController < ApplicationController
     @all_traffic_lights = @avatar.increments    
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    @diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
+    diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
 
     @diffs = []
-    @diffed_files.each do |name,diff|
+    diffed_files.each do |name,diff|
       @diffs << {
-        :deleted_line_count => [0,1,2,3,4].shuffle[0],
+        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :name => name,
-        :added_line_count => [0,1,2,3,4].shuffle[0],
-        :content => git_diff_html(diff)
+        :added_line_count => diff.count { |line| line[:type] == :added },
+        :content => git_diff_html(diff),
       }
     end
   end
