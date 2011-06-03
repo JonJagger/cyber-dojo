@@ -21,6 +21,7 @@ class DiffController < ApplicationController
         :deleted_line_count => n_deleted,
         # TODO: name will end up as an node id and there are
         # wc3 rules about validity for ids...
+        # One option is to use the sha1 of a filename as its id
         :name => name,
         :added_line_count => n_added,
         :content => git_diff_html(diff),

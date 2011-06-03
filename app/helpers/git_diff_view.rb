@@ -24,7 +24,8 @@ def git_diff_view(avatar, tag)
         # I could handle this though, by retrieving it explicitly...
         file = visible_files[name]
         # something that is not in the manifest... 
-        # what is it?
+        # TODO: what is it? it's related to filenames with characters
+        # that are illegal in a dom node id
         if file
           source_lines = visible_files[name][:content]
           view[name] = builder.build(diff, source_lines.split("\n"))

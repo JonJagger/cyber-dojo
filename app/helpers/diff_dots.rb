@@ -1,8 +1,4 @@
 
-def td_dot(kind)
-  "<td><div class='#{kind} dot'></div></td>"
-end
-
 def diff_dots(n, kind)
   max_dots = 4
   html = '<table>'
@@ -31,4 +27,9 @@ def diff_dots(n, kind)
   html += '</tr>'
   html += '</table>'
 end
+
+def td_dot(kind)
+  "<td><div class='#{kind} dot'></div></td>"
+end
+
 
