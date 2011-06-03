@@ -54,13 +54,6 @@ HERE
     diffs = GitDiffParser.new(lines).parse_all
     assert_equal expected, diffs
     assert_equal 1, diffs.length
-    diffs.each do |sandbox_name, diff|
-      p ":#{sandbox_name}:"
-      md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
-      p "a/b == :#{md[1]}:"
-      p "name = :#{md[2]}:"
-      
-    end
 
   end
     
