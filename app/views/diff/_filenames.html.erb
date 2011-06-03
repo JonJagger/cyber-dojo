@@ -1,4 +1,23 @@
 
-<div id="filename_list">
-</div>
-
+<table vertical-align="middle">
+  <% @diffs.each do |file| -%>
+    <% filename  = file[:name] -%>
+    <% n_deleted = file[:deleted_line_count] -%>
+    <% n_added   = file[:added_line_count]   -%>
+    <tr>
+      <td align="right">
+        <%= diff_dots(n_deleted, 'deleted') -%>
+      </td>      
+      <td align="left">
+        <filename class="mid_tone" 
+                  id="<%= filename -%>"
+                  title="<%= diff_tip(n_deleted, n_added) -%>" >
+          <%= filename -%>
+        </filename>
+      </td>    
+      <td align="left">
+        <%= diff_dots(n_added, 'added') -%>
+      </td>    
+    </tr>
+  <% end -%>
+</table>
