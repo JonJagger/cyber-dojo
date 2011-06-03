@@ -52,7 +52,7 @@ HERE
           ] # chunks
     } # expected
     
-    assert_equal expected_diff, GitDiffParser.new(lines).parse
+    assert_equal expected_diff, GitDiffParser.new(lines).parse_one
 
 source_lines = <<HERE
 a
@@ -143,7 +143,7 @@ HERE
           ] # chunks
     } # expected
     
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -256,7 +256,7 @@ HERE
             }
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1a
@@ -348,7 +348,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -432,7 +432,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -517,7 +517,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -602,7 +602,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -691,7 +691,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -785,7 +785,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse
+    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
     
 source_lines = <<HERE
 1

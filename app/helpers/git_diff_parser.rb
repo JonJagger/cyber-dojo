@@ -17,7 +17,7 @@ class GitDiffParser
   def parse_all
     all = {}
     while /^diff/.match(@lines[@n]) do
-      one = parse
+      one = parse_one
       if one[:now_filename] != '/dev/null'
         name = one[:now_filename]
       else
@@ -33,7 +33,7 @@ class GitDiffParser
   NOW_FILENAME_RE = %r|^\+\+\+ (.*)|
   COMMON_LINE_RE  = %r|^ (.*)|
 
-  def parse
+  def parse_one
     prefix_lines = parse_lines(PREFIX_RE)
     was_filename = parse_filename(WAS_FILENAME_RE)
     now_filename = parse_filename(NOW_FILENAME_RE) 

@@ -97,7 +97,7 @@ HERE
             } # chunk
           ] # chunks
     }    
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
 
   end
   
@@ -297,13 +297,13 @@ HERE
                   :deleted_lines => [ ],
                   :added_lines   => [ "a" ],
                   :after_lines => [ ]
-                }, # section
+                } # section
               ] # sections
             } # chunk
           ] # chunks
     } # expected
     
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
 
   end
 
@@ -402,7 +402,7 @@ HERE
           ] # chunks
     } # expected
     
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
     
   end
   
@@ -474,7 +474,7 @@ HERE
             }
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
     
   end
   
@@ -544,7 +544,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
 
   end
 
@@ -588,7 +588,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
   end
 
   #-----------------------------------------------------
@@ -636,7 +636,7 @@ HERE
         }
       ]
     }
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
   end  
 
   #-----------------------------------------------------
@@ -701,7 +701,7 @@ HERE
             }
           ]    
     }
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
 
   end
 
@@ -762,7 +762,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
 
   end
 
@@ -824,7 +824,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
     
   end
 
@@ -890,7 +890,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
   end    
   
   #-----------------------------------------------------
@@ -969,7 +969,7 @@ HERE
             } # chunk      
           ] # chunks
     } # expected
-    assert_equal expected, GitDiffParser.new(lines).parse
+    assert_equal expected, GitDiffParser.new(lines).parse_one
     
   end
 

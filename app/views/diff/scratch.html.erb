@@ -11,35 +11,26 @@ function build_filenames()
 {
   var view = $('diff_sheet');
 
-  var load = function(diff) {
+  var load = function(diffed_lines) {
     return function() {
-      view.innerHTML = diff.content;
+      // need to save scrollPos etc first
+      view.innerHTML = diffed_lines;
+      // now set saved scrollPos of this file, etc
     };
   };
 
   for (var i = 0; i != diffs.length; i++) {
     var diff = diffs[i]
-    var file = $(diff.name);
-    file.onclick = load(diff);    
+    var filename = $(diff.name);
+    filename.onclick = load(diff.content);    
   }
 }
 
 //--></script>
-    
-<table>
-  <tr>
-    <td>
-      <div class="panel">
-        <%= render :partial => 'mock_filenames' -%>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <pre class="diffed_code"><div id="diff_sheet"></div></pre>
-    </td>
-  </tr>
-</table>
 
-  
+<div class="panel">
+  <%= render :partial => 'mock_filenames' -%>
+</div>
+
+<pre class="diffed_code"><div id="diff_sheet"></div></pre>
 
