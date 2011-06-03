@@ -7,8 +7,7 @@ def git_diff_view(avatar, tag)
     visible_files = manifest[:visible_files]
     
     cmd  = "cd #{avatar.folder};"
-    # TODO: add --find-copies-harder
-    cmd += "git diff --ignore-space-at-eol #{tag-1} #{tag} sandbox;"   
+    cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
     diff_lines = IO::popen(cmd).read
 
     view = {}
