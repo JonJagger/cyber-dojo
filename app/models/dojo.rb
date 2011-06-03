@@ -84,17 +84,12 @@ class Dojo
 
   def initialize(params)
     @name = params[:dojo_name]
-    @readonly = params.has_key?(:readonly) ? params[:readonly] : false
     @dojo_root = params[:dojo_root]
     @filesets_root = params[:filesets_root]
   end
 
   def name
     @name
-  end
-  
-  def readonly
-    @readonly
   end
   
   def create_avatar(filesets)

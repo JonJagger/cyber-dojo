@@ -3,7 +3,6 @@ class DiffController < ApplicationController
 
   def show
     configure(params)
-    params[:readonly] = true
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
