@@ -25,15 +25,16 @@ $j(document).ready(function() {
           <%= render :partial => 'info' -%>
         </div>
          
+        <div class="panel">      
+          <%= render :partial => 'run_tests' -%>
+          <%= render :partial => 'traffic_lights' -%>
+        </div>
+
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
         </div>
         
-        <div class="panel">      
-          <%= render :partial => 'run_tests' -%>
-          <%= render :partial => 'traffic_lights' -%>
-        </div>
       </td>
       
       <td style="width:42em;">
