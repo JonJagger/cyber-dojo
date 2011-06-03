@@ -15,7 +15,7 @@
         <%= diff_dots(file[:deleted_line_count], 'deleted') -%>
       </td>      
       <td align="left">
-        <div class="mid_tone filename" id="<%= file[:name] -%>"><%= file[:name] -%></div>
+        <filename class="mid_tone filename" id="<%= file[:name] -%>"><%= file[:name] -%></filename>
       </td>    
       <td align="left">
         <%= diff_dots(file[:added_line_count], 'added') -%>

@@ -7,9 +7,19 @@ $j(document).ready(function() {
   build_filenames();
 });
 
+function jq(myid) { 
+  // When I have a dom-node whose id has CSS special characters
+  // (such as a dot, which I often do in filenames)
+  // then I need to turn these characters off when
+  // creating the jQuery id selector string...
+  // From the jQuery FAQ
+
+   return $j('#' + myid.replace(/(:|\.)/g,'\\$1'));
+}
+
 function build_filenames() 
 {
-  var view = $j('#diff_sheet');
+  var view = jq('diff_sheet');
 
   view.save = function() { };
 
@@ -17,25 +27,27 @@ function build_filenames()
     return function() {
       view.save();
       view.html(diffed_lines);
-      view.scrollTop(filename.scroll_top);
-      view.scrollLeft(filename.scroll_left);
+      view.scrollTop(filename.attr('scroll_top'));
+      view.scrollLeft(filename.attr('scroll_left'));
       view.save = save;
+      filename.toggleClass('selected');
     };
   };
 
   var save_to = function(filename) {
     return function() {
-      filename.scroll_top = view.scrollTop();
-      filename.scroll_left = view.scrollLeft();
+      filename.attr('scroll_top', view.scrollTop());
+      filename.attr('scroll_left', view.scrollLeft());
+      filename.toggleClass('selected');
     };
   };
   
   for (var i = 0; i != diffs.length; i++) {
     var diff = diffs[i]
-    var filename = $(diff.name);
-    filename.onclick = load_from(filename, diff.content, save_to(filename));       
-    filename.scroll_top = 0;
-    filename.scroll_left = 0;
+    var filename = jq(diff.name);
+    filename.click( load_from(filename, diff.content, save_to(filename)) );
+    filename.attr('scroll_top', '0');
+    filename.attr('scroll_left', '0');
   }
 }
 
