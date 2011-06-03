@@ -3,7 +3,7 @@
 
 $j(document).ready(function() {
   build_diff_filenames(<%= @diffs.to_json -%>);
-  jq("<%=@current_file-%>").click();
+  jq("<%=h @current_file-%>").click();
 });
 
 //--></script>

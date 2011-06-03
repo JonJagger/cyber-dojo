@@ -27,6 +27,7 @@ function build_diff_filenames(diffs)
   for (var i = 0; i != diffs.length; i++) {
     var diff = diffs[i]
     var filename = jq(diff.name);
+    //TODO: what if filename (==id) has illegal id characters, eg space | {
     filename.click( load_from(filename, diff.content, save_to(filename)) );
     filename.attr('scroll_top', 0);
     filename.attr('scroll_left', 0);

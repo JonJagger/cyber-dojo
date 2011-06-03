@@ -5,6 +5,67 @@ require 'test_helper'
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  def test_parse_diff_for_file_with_space_in_its_name
+    
+lines = <<HERE
+diff --git a/sandbox/file with_space b/sandbox/file with_space
+new file mode 100644
+index 0000000..21984c7
+--- /dev/null
++++ b/sandbox/file with_space
+@@ -0,0 +1 @@
++Please rename me!
+\\ No newline at end of file
+HERE
+
+    value =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/file with_space b/sandbox/file with_space",
+            "new file mode 100644",
+            "index 0000000..21984c7",
+          ],
+        :was_filename => '/dev/null',
+        :now_filename => 'b/sandbox/file with_space',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 0, :size => 0 },
+                :now => { :start_line => 1, :size => 1 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   => [ "Please rename me!" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    }    
+    assert_equal value, GitDiffParser.new(lines).parse_one
+
+    expected = { 'b/sandbox/file with_space' => value }
+    diffs = GitDiffParser.new(lines).parse_all
+    assert_equal expected, diffs
+    assert_equal 1, diffs.length
+    diffs.each do |sandbox_name, diff|
+      p ":#{sandbox_name}:"
+      md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
+      p "a/b == :#{md[1]}:"
+      p "name = :#{md[2]}:"
+      
+    end
+
+  end
+    
+  #-----------------------------------------------------
+
   def test_parse_diff_for_deleted_file
 lines = <<HERE
 diff --git a/sandbox/xxx b/sandbox/xxx

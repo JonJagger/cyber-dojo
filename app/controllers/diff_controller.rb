@@ -14,11 +14,13 @@ class DiffController < ApplicationController
     diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
 
     @diffs = []
-    diffed_files.each do |name,diff|
+    diffed_files.sort.each do |name,diff|
       n_deleted = diff.count { |line| line[:type] == :deleted }
       n_added   = diff.count { |line| line[:type] == :added }      
       @diffs << {
         :deleted_line_count => n_deleted,
+        # TODO: name will end up as an node id and there are
+        # wc3 rules about validity for ids...
         :name => name,
         :added_line_count => n_added,
         :content => git_diff_html(diff),

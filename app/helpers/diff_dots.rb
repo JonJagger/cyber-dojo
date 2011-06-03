@@ -1,11 +1,31 @@
 
+def td_dot(kind)
+  "<td><div class='#{kind} dot'></div></td>"
+end
+
 def diff_dots(n, kind)
-  max = [n,4].min
+  max_dots = 4
   html = '<table>'
-  html += '<tr>'     
-  html += '<td><more_diff_dots></more_diff_dots></td>' if kind == 'deleted' && n > max     
-  max.times { html += "<td><div class='#{kind} dot'></div></td>" }
-  html += '<td><more_diff_dots></more_diff_dots></td>' if kind == 'added'   && n > max
+  html += '<tr>'
+  
+  if kind == 'deleted'
+    if n <= max_dots
+      (max_dots - n).times { html += td_dot('spacer') }
+    else
+      html += '<td><more_diff_dots></more_diff_dots></td>'
+    end
+  end  
+  
+  [max_dots,n].min.times { html += td_dot(kind) }
+  
+  if kind == 'added'
+    if n <= max_dots
+      (max_dots - n).times { html += td_dot('spacer') }
+    else
+      html += '<td><more_diff_dots></more_diff_dots></td>'
+    end
+  end
+  
   html += '</tr>'
   html += '</table>'
 end

@@ -5,6 +5,70 @@ require 'test_helper'
 
 class GitDiffBuilderTests < ActionController::TestCase
 
+  def test_build_chunk_with_space_in_its_filename
+
+lines = <<HERE
+diff --git a/sandbox/file with_space b/sandbox/file with_space
+new file mode 100644
+index 0000000..21984c7
+--- /dev/null
++++ b/sandbox/file with_space
+@@ -0,0 +1 @@
++Please rename me!
+\\ No newline at end of file
+HERE
+
+    expected_diff =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/file with_space b/sandbox/file with_space",
+            "new file mode 100644",
+            "index 0000000..21984c7",
+          ],
+        :was_filename => '/dev/null',
+        :now_filename => 'b/sandbox/file with_space',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 0, :size => 0 },
+                :now => { :start_line => 1, :size => 1 },
+              },
+              :before_lines => [ ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   => [ "Please rename me!" ],
+                  :after_lines => [ ]
+                }, # section
+              ] # sections
+            } # chunk
+          ] # chunks
+    }    
+    
+    assert_equal expected_diff, GitDiffParser.new(lines).parse_one    
+
+source_lines = <<HERE
+Please rename me!
+HERE
+
+    builder = GitDiffBuilder.new()
+    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    
+    expected_source_diff =
+    [
+      { :line => "Please rename me!", :type => :added, :number => 1 },
+    ]
+    
+    assert_equal expected_source_diff, source_diff
+
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - -
+  
   def test_build_chunk_with_defaulted_now_line_info
     
 lines = <<HERE
@@ -859,23 +923,5 @@ HERE
     assert_equal 1, diff.count { |e| e[:type] == :deleted }
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-  def test_added_deleted_rough_diff_ratios
-    assert_equal [0,0], rough_diff_ratios(0,0)
-    # if there is at least one deleted line, deleted ratio >= 1
-    assert_equal 1, rough_diff_ratios(1,999)[0]
-    # if there is at least one added line, added ratio >= 1
-    assert_equal 1, rough_diff_ratios(999,1)[1]
-    # maximum deleted ratio is 5
-    assert_equal 5, rough_diff_ratios(999,999)[0]
-    # good enough for now 
-  end
-  
 end
-
-def rough_diff_ratios(deleted,added)
-  [ [deleted,5].min, [added,5].min ]
-end
-
 

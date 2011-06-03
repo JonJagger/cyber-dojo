@@ -22,9 +22,14 @@ def git_diff_view(avatar, tag)
         # md[1] == 'a' indicates a deleted file
         # which of course is not in the manifest for this tag
         # I could handle this though, by retrieving it explicitly...
-        source_lines = visible_files[name][:content]
-        view[name] = builder.build(diff, source_lines.split("\n"))
-        visible_files.delete(name)
+        file = visible_files[name]
+        # something that is not in the manifest... 
+        # what is it?
+        if file
+          source_lines = visible_files[name][:content]
+          view[name] = builder.build(diff, source_lines.split("\n"))
+          visible_files.delete(name)
+        end
       end
     end
     
