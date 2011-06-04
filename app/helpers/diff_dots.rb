@@ -1,6 +1,6 @@
 
 def diff_dots(n, kind)
-  max_dots = 4
+  max_dots = 3
   html = '<table>'
   html += '<tr>'
   
