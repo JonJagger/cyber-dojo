@@ -56,4 +56,3 @@ class TimeInWordsTests < ActionController::TestCase
    
 end
 
-

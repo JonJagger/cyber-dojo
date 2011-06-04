@@ -6,26 +6,26 @@ class DiffController < ApplicationController
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
-    @manifest = {}
-    @traffic_lights_to_tag = @avatar.read_manifest(@manifest, params[:tag])
+    manifest = {}
+    @traffic_lights_to_tag = @avatar.read_manifest(manifest, params[:tag])
     @all_traffic_lights = @avatar.increments    
-    @current_file = @manifest[:current_filename]
-    @output = @manifest[:output]
-    diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
+    @output = manifest[:output]
 
     @diffs = []
+    generate = IdGenerator.new("jj")
+    diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
     diffed_files.sort.each do |name,diff|
-      n_deleted = diff.count { |line| line[:type] == :deleted }
-      n_added   = diff.count { |line| line[:type] == :added }      
+      id = generate.id      
       @diffs << {
-        :deleted_line_count => n_deleted,
-        # TODO: name will end up as an node id and there are
-        # wc3 rules about validity for ids...
-        # One option is to use the sha1 of a filename as its id
+        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
+        :id => id,          
         :name => name,
-        :added_line_count => n_added,
+        :added_line_count => diff.count { |line| line[:type] == :added },
         :content => git_diff_html(diff),
       }
+      if name == manifest[:current_filename]
+        @current_filename_id = id 
+      end
     end
   end
   

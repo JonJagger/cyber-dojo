@@ -1,7 +1,6 @@
 
 <table vertical-align="middle">
   <% @diffs.each do |file| -%>
-    <% filename  = file[:name] -%>
     <% n_deleted = file[:deleted_line_count] -%>
     <% n_added   = file[:added_line_count]   -%>
     <tr>
@@ -10,9 +9,9 @@
       </td>      
       <td align="left">
         <filename class="mid_tone" 
-                  id="<%= h(filename) -%>"
+                  id="<%= file[:id] -%>"
                   title="<%= diff_tip(n_deleted, n_added) -%>" >
-          <%= filename -%>
+          <%= file[:name] -%>
         </filename>
       </td>    
       <td align="left">

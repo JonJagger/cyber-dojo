@@ -1,7 +1,7 @@
 
 function build_diff_filenames(diffs) 
 {
-  var view = jq('diff_sheet');
+  var view = $j('#diff_sheet');
 
   view.save = function() { };
 
@@ -25,11 +25,8 @@ function build_diff_filenames(diffs)
   };
   
   for (var i = 0; i != diffs.length; i++) {
-    var diff = diffs[i]
-    var filename = jq(diff.name);
-    //TODO: what if filename (==id) has illegal id characters, eg space
-    //  One option is to use a files sha1 hexdigest
-    filename.click( load_from(filename, diff.content, save_to(filename)) );
+    var filename = $j('#' + diffs[i].id);
+    filename.click( load_from(filename, diffs[i].content, save_to(filename)) );
     filename.attr('scroll_top', 0);
     filename.attr('scroll_left', 0);
   }  
