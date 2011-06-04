@@ -7,7 +7,7 @@ def traffic_light(dojo_name, avatar_name, inc)
       :avatar => avatar_name,
       :tag => inc[:number] 
     }, 
-    { :title => avatar_name.humanize + ' ' + inc[:number].to_s, 
+    { :title => 'View ' + avatar_name.humanize + ' diff ' + inc[:number].to_s, 
       :target => '_blank' 
     } 
 end
