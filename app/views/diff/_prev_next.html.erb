@@ -29,18 +29,6 @@
     </td>   
     
     <td>
-      <% if tag_number != 0-%>
-        <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
-      <% end -%>
-    </td>
-    
-    <td>
-      <span class="traffic_light_number">
-         <%= tag_number -%>
-      </span>
-    </td>   
-    
-    <td>
       <%= render :partial => 'next_button' -%>                      
     </td>
     
