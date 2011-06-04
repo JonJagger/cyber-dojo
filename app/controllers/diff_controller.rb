@@ -6,14 +6,14 @@ class DiffController < ApplicationController
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata
+    tag = params[:tag].to_i
     manifest = {}
-    @traffic_lights_to_tag = @avatar.read_manifest(manifest, params[:tag])
+    @traffic_lights_to_tag = @avatar.read_manifest(manifest, tag)
     @all_traffic_lights = @avatar.increments    
     @output = manifest[:output]
-
     @diffs = []
     generate = IdGenerator.new("jj")
-    diffed_files = git_diff_view(@avatar, params[:tag].to_i)    
+    diffed_files = git_diff_view(@avatar, tag)
     diffed_files.sort.each do |name,diff|
       id = generate.id      
       @diffs << {
@@ -23,10 +23,8 @@ class DiffController < ApplicationController
         :added_line_count => diff.count { |line| line[:type] == :added },
         :content => git_diff_html(diff),
       }
-      if name == manifest[:current_filename]
-        @current_filename_id = id 
-      end
     end
+    @current_filename_id = @diffs.find {|diff| diff[:name] == manifest[:current_filename]}[:id]
   end
   
 private
