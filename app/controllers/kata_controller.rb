@@ -86,7 +86,7 @@ private
     (params[:file_content] || {}).each do |filename,content|
       filename = dequote(filename)
       manifest[:visible_files][filename] ||= {}
-      manifest[:visible_files][filename][:content] = content  
+      manifest[:visible_files][filename][:content] = content.gsub(/\r\n/, "\n")  
     end
  
     (params[:file_caret_pos] || {}).each do |filename,caret_pos|
