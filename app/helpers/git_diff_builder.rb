@@ -30,7 +30,7 @@ private
   end
 
   def fill_all(result, type, lines, line_number)
-    lines ||= []
+    lines ||= [] # Don't think this is needed
     fill(result, type, lines, 0, lines.length, line_number)
   end
   

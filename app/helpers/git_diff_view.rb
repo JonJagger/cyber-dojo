@@ -23,13 +23,13 @@ def git_diff_view(avatar, tag)
         # which of course is not in the manifest for this tag
         # I could handle this though, by retrieving it explicitly...
         file = visible_files[name]
-        # something that is not in the manifest... 
-        # TODO: what is it? it's related to filenames with characters
-        # that are illegal in a dom node id
         if file
-          source_lines = visible_files[name][:content]
-          view[name] = builder.build(diff, source_lines.split("\n"))
+          source = file[:content]
+          lines = source.split(/(\n)/).select { |line| line != "\n" }
+          view[name] = builder.build(diff, lines)
           visible_files.delete(name)
+        else
+          # I don't think this should never happen...
         end
       end
     end
