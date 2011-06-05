@@ -141,7 +141,7 @@ div[class~="filename"]:hover,
   border-right:  1px solid #A8A8A8;   
 }
 
-div[class~="filename"]:before { content: "\00a0";  } 
+div[class~="filename"]:before { content: "\00a0";  } /* \00a0 is a retained space */
 div[class~="filename"]:after  { content: "\00a0";  } 
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -165,7 +165,7 @@ filename
   -webkit-border-radius: 6px;
 }
 
-filename:before { content: "\00a0";  }
+filename:before { content: "\00a0";  } /* \00a0 is a retained space */
 filename:after  { content: "\00a0";  }
 
 filename:hover
@@ -322,10 +322,7 @@ filename.selected { background-color: LightGray; }
   color: #383838;;
   height: 34em;
   overflow: auto;
-  border-top: 1px dashed #E6E6E6;
-  border-bottom: 1px dashed #E6E6E6;
-  border-right: 1px dashed #E6E6E6;
-  border-left: 1px dashed #E6E6E6;
+  border: 1px dashed #E6E6E6;
 }
 
 pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
@@ -335,6 +332,7 @@ pre.diffed_code deleted { padding-left: 3px; background-color: #F6CECE; }
 pre.diffed_code    same:before { content: " "; background-color: White; padding-right: 3px; }
 pre.diffed_code   added:before { content: "+";     color: #BDBDBD;      padding-right: 3px; }
 pre.diffed_code deleted:before { content: "\2013"; color: #ADADAD;      padding-right: 3px; }
+/* \2013 is the en-dash, a slightly wider minus */
 
 pre.diffed_code ln 
 { 
@@ -367,15 +365,10 @@ pre.diffed_code ln
 .deleted.dot { background-color: #F6CECE; border: 1px dotted #F00; }
 .spacer.dot  { background-color: #FFECCB; border: 1px dotted #FFECCB; } /* same as background */
 
-/* IDEA: I could show more dots for more ellision */
-/* Eg . for up to 10 lines */
-/*    .. for up to 25 lines */
-/*    ... for up to 100 lines */
-
 diff_dots { color: #383838; font-size: 0.7em; }
 
 diff_dots.on:after  { content: '...'; }
-diff_dots.off:after { content: '\00a0\00a0\00a0'; }
+diff_dots.off:after { content: '\00a0\00a0\00a0'; } /* \00a0 is a retained space */
 
 
 

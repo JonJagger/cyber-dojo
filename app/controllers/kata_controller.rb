@@ -86,6 +86,7 @@ private
     (params[:file_content] || {}).each do |filename,content|
       filename = dequote(filename)
       manifest[:visible_files][filename] ||= {}
+      # Cater for windows line endings from windows browser
       manifest[:visible_files][filename][:content] = content.gsub(/\r\n/, "\n")  
     end
  

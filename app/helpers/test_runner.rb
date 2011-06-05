@@ -11,16 +11,9 @@ module TestRunner
     # Run tests in sandbox in dedicated thread
     run_tests_output = ''
     sandbox_thread = Thread.new do
-      # o) run cyberdojo.sh, capturing stdout and stderr    
-      # o) popen runs its command as a subprocess
-      # o) splitting and joining on "\n" removes any operating 
-      #    system differences regarding new-line conventions
 			cmd  = "cd '#{sandbox}';"
 			cmd += "./cyberdojo.sh"
-      run_tests_output = IO.popen(with_stderr(cmd)).read.split("\n").join("\n")
-      # TODO: revist the above split("\n").join("\n")
-      # TODO: I don't think it does anything. And split does not behave
-      # TODO: as I first thought, see tests/functional/line_split_test.rb
+      run_tests_output = IO.popen(with_stderr(cmd)).read
     end
 
     # Run tests has limited time to complete
