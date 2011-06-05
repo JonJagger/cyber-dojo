@@ -1,5 +1,5 @@
 
-# I want horizontal spacing between dashboard traffic lights is 
+# I want horizontal spacing between dashboard traffic lights  
 # proportional to the time difference between them.
 #
 # I also want traffic-lights from different avatars but occurring at
@@ -13,7 +13,7 @@
 # The start time will be the start time of the dojo. 
 # The end time will be the current time.
 # 
-# As time passes, traffic lights from the past move backwards.
+# As time passes, traffic lights from the past move backwards (left).
 # The page auto refreshes via a periodic ajax call so it won't
 # work to have horizontal scrollbars if the width of the display (the time
 # between start and end) increases. So I limit the display to a maximum
