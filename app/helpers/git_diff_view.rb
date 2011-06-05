@@ -24,9 +24,7 @@ def git_diff_view(avatar, tag)
         # I could handle this though, by retrieving it explicitly...
         file = visible_files[name]
         if file
-          source = file[:content]
-          lines = source.split(/(\n)/).select { |line| line != "\n" }
-          view[name] = builder.build(diff, lines)
+          view[name] = builder.build(diff, line_split(file[:content]))
           visible_files.delete(name)
         else
           # I don't think this should never happen...

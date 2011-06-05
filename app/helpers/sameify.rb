@@ -1,7 +1,7 @@
 
 def sameify(source)
   result = []
-  source.split("\n").each_with_index do |line,number|
+  line_split(source).each_with_index do |line,number|
     result << {
       :line => line,
       :type => :same,

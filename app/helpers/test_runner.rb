@@ -18,6 +18,9 @@ module TestRunner
 			cmd  = "cd '#{sandbox}';"
 			cmd += "./cyberdojo.sh"
       run_tests_output = IO.popen(with_stderr(cmd)).read.split("\n").join("\n")
+      # TODO: revist the above split("\n").join("\n")
+      # TODO: I don't think it does anything. And split does not behave
+      # TODO: as I first thought, see tests/functional/line_split_test.rb
     end
 
     # Run tests has limited time to complete

@@ -1,8 +1,8 @@
 
 class GitDiffParser 
 
-  def initialize(lines)
-    @lines = lines.split("\n")
+  def initialize(diff_text)
+    @lines = line_split(diff_text) 
     @n = 0
   end
 
