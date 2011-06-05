@@ -356,6 +356,9 @@ pre.diffed_code ln
   padding: 0em;
   margin: 0em;
 }
+#diff_output.failed { border: 1px dashed #F00; } /* red */
+#diff_output.error  { border: 1px dashed #FC3; } /* amber */
+#diff_output.passed { border: 1px dashed #0F0; } /* green */
 
 .dot { display: inline-block; height: 7px; }
 .dot:after { content: "\00a0"; } /* non breaking space */
