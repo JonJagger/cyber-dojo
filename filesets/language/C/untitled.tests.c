@@ -1,9 +1,9 @@
 #include "untitled.h"
-#include "check.h"
+#include <assert.h>
 
 static void example(void)
 {
-    CHECK_EQ(int, 9 * 6, answer());
+    assert(9*6 == answer());
 }
 
 typedef void test(void);
@@ -15,10 +15,8 @@ static test * tests[] =
 
 int main(void)
 {
-    check_log = stderr;
-    RUN_ALL(tests);
-    check_log_print();
+    for (int at = 0; at != sizeof tests / sizeof tests[0]; at++)
+        tests[at]();
     return 0;
 }
-
 
