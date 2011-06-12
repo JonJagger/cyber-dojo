@@ -16,8 +16,14 @@ rails
 git
 
 
-Installing CyberDojo
-====================
+Running your own CyberDojo
+==========================
+Install VirtualBox
+Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/
+
+
+Building your own CyberDojo from scratch
+========================================
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
 >sudo apt-get install git-core
@@ -157,7 +163,9 @@ Dashboard
 =========
 Shows a periodically updating display of all traffic lights for
 all the computers in the dojo. Clicking on a traffic light opens
-a new page showing the diffs for that increment.
+a new page showing the diffs for that increment. There is a bug somewhere
+in the diff code, it often fails for the 1st traffic-light. I decided
+to release it anyway.
 
 
 Adding a new language
