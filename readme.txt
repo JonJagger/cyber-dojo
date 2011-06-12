@@ -1,4 +1,3 @@
-
 ===========================================================
    VERY VERY IMPORTANT - VERY VERY IMPORTANT
 ===========================================================
@@ -302,5 +301,3 @@ o) I have worked hard to _remove_ features from CyberDojo. My idea is that the
    deliberately practice developing software collaboratively.
 o) Olve Maudal has been enthusiastic about CyberDojo from the very early days.
    Olve - I really appreciate all your encouragement.
-
-
