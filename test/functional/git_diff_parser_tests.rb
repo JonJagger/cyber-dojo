@@ -187,59 +187,6 @@ HERE
     }
     assert_equal expected, GitDiffParser.new(lines).parse_range   
   end
-  
-  #-----------------------------------------------------
-  
-  def test_parse_chunk_with_defaulted_line_info
-    
-lines = <<HERE
-diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3
-index e69de29..2e65efe 100644
---- a/sandbox/untitled_5G3
-+++ b/sandbox/untitled_5G3
-@@ -0,0 +1 @@
-+a
-\\ No newline at end of file
-HERE
-
-    #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
-    #Is a blog entry by Guido van Rossum.
-    #He says that in L,S the ,S can be omitted if the chunk size
-    #S is 1. So -3 is the same as -3,1
-
-    expected =
-    {
-        :prefix_lines =>  
-          [
-            "diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3",
-            "index e69de29..2e65efe 100644"
-          ],
-        :was_filename => 'a/sandbox/untitled_5G3',
-        :now_filename => 'b/sandbox/untitled_5G3',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 0, :size => 0 },
-                :now => { :start_line => 1, :size => 1 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ ],
-                  :added_lines   => [ "a" ],
-                  :after_lines => [ ]
-                } # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    } # expected
-    
-    assert_equal expected, GitDiffParser.new(lines).parse_one
-
-  end
 
   #-----------------------------------------------------
   
@@ -342,73 +289,81 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_diff_on_first_and_last_line_in_two_chunks
-
+  def test_diff_one_chunk_one_section
 lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index 0719398..2943489 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
 @@ -1,4 +1,4 @@
 -1
 +1a
  2
  3
  4
-@@ -6,4 +6,4 @@
- 6
- 7
- 8
--9
-+9a
 HERE
 
     expected =
-    {
-        :prefix_lines =>  
-          [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 0719398..2943489 100644"
-          ],
-        :was_filename => 'a/sandbox/lines',
-        :now_filename => 'b/sandbox/lines',
-        :chunks =>
+      {
+        :range =>
+        {
+          :was => { :start_line => 1, :size => 4 },
+          :now => { :start_line => 1, :size => 4 },
+        },
+        :before_lines => [ ],
+        :sections =>
+        [
+          {
+            :deleted_lines => [ "1" ],
+            :added_lines   => [ "1a" ],
+            :after_lines => [ "2", "3", "4" ]
+          }, # section
+        ] # sections
+      } # chunk
+
+    assert_equal expected, 
+      GitDiffParser.new(lines).parse_chunk_one
+  end
+
+  #-----------------------------------------------------
+
+  def test_diff_one_chunk_two_sections
+lines = <<HERE
+@@ -1,8 +1,8 @@
+ 1
+ 2
+-3
++3a
+ 4
+-5
++5a
+ 6
+ 7
+ 8
+HERE
+
+    expected =
+      [
+        {
+          :range =>
+          {
+            :was => { :start_line => 1, :size => 8 },
+            :now => { :start_line => 1, :size => 8 },
+          },
+          :before_lines => [ "1", "2" ],
+          :sections =>
           [
             {
-              :range =>
-              {
-                :was => { :start_line => 1, :size => 4 },
-                :now => { :start_line => 1, :size => 4 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ "1" ],
-                  :added_lines   => [ "1a" ],
-                  :after_lines => [ "2", "3", "4" ]
-                }, # section
-              ] # sections
-            }, # chunk
+              :deleted_lines => [ "3" ],
+              :added_lines   => [ "3a" ],
+              :after_lines => [ "4" ]
+            }, # section
             {
-              :range =>
-              {
-                :was => { :start_line => 6, :size => 4 },
-                :now => { :start_line => 6, :size => 4 },
-              },
-              :before_lines => [ "6", "7", "8" ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ "9" ],
-                  :added_lines   => [ "9a" ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections              
-            }
-          ] # chunks
-    } # expected
-    assert_equal expected, GitDiffParser.new(lines).parse_one
+              :deleted_lines => [ "5" ],
+              :added_lines   => [ "5a" ],
+              :after_lines => [ "6", "7", "8" ]
+            }, # section            
+          ] # sections
+        } # chunk
+      ] # chunks
+    assert_equal expected, 
+      GitDiffParser.new(lines).parse_chunk_all
     
   end
   
@@ -667,7 +622,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_when_two_chunks_are_present
+  def test_diff_two_chunks
 
 lines = <<HERE
 diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb

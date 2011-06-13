@@ -27,32 +27,33 @@ class GitDiffParser
     end
     all
   end
-  
-  COMMON_LINE_RE = %r|^ (.*)|
 
   def parse_one
-    prefix_lines = parse_prefix_lines
-    was_filename = parse_was_filename
-    now_filename = parse_now_filename
-
-    chunks = []     
-    while range = parse_range
-      before_lines = parse_lines(COMMON_LINE_RE)
-      sections = parse_sections
-      chunks << {
-        :range => range,
-        :before_lines => before_lines,
-        :sections => sections
-      }
-    end 
-
     {
-      :prefix_lines => prefix_lines,
-      :was_filename => was_filename,
-      :now_filename => now_filename,
-      :chunks => chunks
+      :prefix_lines => parse_prefix_lines,
+      :was_filename => parse_was_filename,
+      :now_filename => parse_now_filename,
+      :chunks => parse_chunk_all
     }
-  end 
+  end
+
+  def parse_chunk_all
+    chunks = []     
+    while chunk = parse_chunk_one
+      chunks << chunk
+    end
+    chunks
+  end
+
+  def parse_chunk_one
+    if range = parse_range
+      {
+        :range => range,
+        :before_lines => parse_common_lines,
+        :sections => parse_sections
+      }      
+    end
+  end
 
   RANGE_RE = /^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@.*/
 
@@ -72,6 +73,10 @@ class GitDiffParser
   end
 
   def size_or_default(size)
+    #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+    #Is a blog entry by Guido van Rossum.
+    #He says that in L,S the ,S can be omitted if the chunk size
+    #S is 1. So -3 is the same as -3,1
     size != nil ? size.to_i : 1 
   end
 
@@ -87,7 +92,7 @@ class GitDiffParser
       added_lines = parse_added_lines
       parse_newline_at_eof
       
-      after_lines = parse_lines(COMMON_LINE_RE)
+      after_lines = parse_common_lines
       parse_newline_at_eof
       
       sections << {        
@@ -109,6 +114,12 @@ class GitDiffParser
 
   def parse_added_lines
     parse_lines(ADDED_LINE_RE)
+  end
+
+  COMMON_LINE_RE = %r|^ (.*)|
+
+  def parse_common_lines
+    parse_lines(COMMON_LINE_RE)
   end
 
   PREFIX_RE = %r|^([^-+].*)|
