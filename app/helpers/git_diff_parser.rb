@@ -28,15 +28,12 @@ class GitDiffParser
     all
   end
   
-  PREFIX_RE       = %r|^([^-+].*)|
-  WAS_FILENAME_RE = %r|^\-\-\- (.*)|
-  NOW_FILENAME_RE = %r|^\+\+\+ (.*)|
-  COMMON_LINE_RE  = %r|^ (.*)|
+  COMMON_LINE_RE = %r|^ (.*)|
 
   def parse_one
-    prefix_lines = parse_lines(PREFIX_RE)
-    was_filename = parse_filename(WAS_FILENAME_RE)
-    now_filename = parse_filename(NOW_FILENAME_RE) 
+    prefix_lines = parse_prefix_lines
+    was_filename = parse_was_filename
+    now_filename = parse_now_filename
 
     chunks = []     
     while range = parse_range
@@ -54,7 +51,7 @@ class GitDiffParser
       :was_filename => was_filename,
       :now_filename => now_filename,
       :chunks => chunks
-    }    
+    }
   end 
 
   RANGE_RE = /^@@ -(\d+),?(\d+)? \+(\d+),?(\d+)? @@.*/
@@ -79,17 +76,15 @@ class GitDiffParser
   end
 
   DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE = /^[\+\- ]/ 
-  DELETED_LINE_RE = /^\-(.*)/
-  ADDED_LINE_RE   = /^\+(.*)/
 
   def parse_sections
     sections = []
     while DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE.match(@lines[@n]) do
              
-      deleted_lines = parse_lines(DELETED_LINE_RE)
+      deleted_lines = parse_deleted_lines
       parse_newline_at_eof
       
-      added_lines = parse_lines(ADDED_LINE_RE)
+      added_lines = parse_added_lines
       parse_newline_at_eof
       
       after_lines = parse_lines(COMMON_LINE_RE)
@@ -104,6 +99,36 @@ class GitDiffParser
     sections
   end
 
+  DELETED_LINE_RE = /^\-(.*)/
+
+  def parse_deleted_lines
+    parse_lines(DELETED_LINE_RE)
+  end
+
+  ADDED_LINE_RE   = /^\+(.*)/
+
+  def parse_added_lines
+    parse_lines(ADDED_LINE_RE)
+  end
+
+  PREFIX_RE = %r|^([^-+].*)|
+
+  def parse_prefix_lines
+    parse_lines(PREFIX_RE)
+  end
+
+  WAS_FILENAME_RE = %r|^\-\-\- (.*)|
+
+  def parse_was_filename
+    parse_filename(WAS_FILENAME_RE)
+  end
+
+  NOW_FILENAME_RE = %r|^\+\+\+ (.*)|
+
+  def parse_now_filename
+    parse_filename(NOW_FILENAME_RE)
+  end
+  
   def parse_filename(re)
     if md = re.match(@lines[@n])
       @n += 1

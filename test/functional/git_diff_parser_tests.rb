@@ -6,153 +6,33 @@ require 'test_helper'
 class TestGitDiffParser < ActionController::TestCase 
 
   def test_parse_diff_for_file_with_space_in_its_name
-    
-lines = <<HERE
-diff --git a/sandbox/file with_space b/sandbox/file with_space
-new file mode 100644
-index 0000000..21984c7
---- /dev/null
-+++ b/sandbox/file with_space
-@@ -0,0 +1 @@
-+Please rename me!
-\\ No newline at end of file
-HERE
-
-    value =
-    {
-        :prefix_lines =>  
-          [
-            "diff --git a/sandbox/file with_space b/sandbox/file with_space",
-            "new file mode 100644",
-            "index 0000000..21984c7",
-          ],
-        :was_filename => '/dev/null',
-        :now_filename => 'b/sandbox/file with_space',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 0, :size => 0 },
-                :now => { :start_line => 1, :size => 1 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ ],
-                  :added_lines   => [ "Please rename me!" ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    }    
-    assert_equal value, GitDiffParser.new(lines).parse_one
-
-    expected = { 'b/sandbox/file with_space' => value }
-    diffs = GitDiffParser.new(lines).parse_all
-    assert_equal expected, diffs
-    assert_equal 1, diffs.length
-
+    was_line =  '--- a/sand box/xxx'
+    assert_equal 'a/sand box/xxx', 
+      GitDiffParser.new(was_line).parse_was_filename
   end
     
   #-----------------------------------------------------
 
   def test_parse_diff_for_deleted_file
-lines = <<HERE
-diff --git a/sandbox/xxx b/sandbox/xxx
-deleted file mode 100644
-index 6e2723c..0000000
---- a/sandbox/xxx
-+++ /dev/null
-@@ -1,2 +0,0 @@
--Please rename me!
--This was xxx
-\\ No newline at end of file
-HERE
+    was_line =  '--- a/sandbox/xxx'
+    assert_equal 'a/sandbox/xxx', 
+      GitDiffParser.new(was_line).parse_was_filename
 
-    value =
-    {
-        :prefix_lines =>  
-          [
-            "diff --git a/sandbox/xxx b/sandbox/xxx",
-            "deleted file mode 100644",
-            "index 6e2723c..0000000"
-          ],
-        :was_filename => 'a/sandbox/xxx',
-        :now_filename => '/dev/null',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 1, :size => 2 },
-                :now => { :start_line => 0, :size => 0 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ "Please rename me!", "This was xxx" ],
-                  :added_lines   => [ ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    }    
-    expected = { 'a/sandbox/xxx' => value }
-    assert_equal expected, GitDiffParser.new(lines).parse_all
-
+      now_line = '+++ /dev/null'
+      assert_equal '/dev/null',
+      GitDiffParser.new(now_line).parse_now_filename
   end
   
   #-----------------------------------------------------
   
   def test_parse_diff_for_new_file
-lines = <<HERE
-diff --git a/sandbox/untitled_6TJ b/sandbox/untitled_6TJ
-new file mode 100644
-index 0000000..21984c7
---- /dev/null
-+++ b/sandbox/untitled_6TJ
-@@ -0,0 +1 @@
-+Please rename me!
-\\ No newline at end of file
-HERE
+    was_line =  '--- /dev/null'
+    assert_equal '/dev/null', 
+      GitDiffParser.new(was_line).parse_was_filename
 
-    expected =
-    {
-        :prefix_lines =>  
-          [
-            "diff --git a/sandbox/untitled_6TJ b/sandbox/untitled_6TJ",
-            "new file mode 100644",
-            "index 0000000..21984c7"
-          ],
-        :was_filename => '/dev/null',
-        :now_filename => 'b/sandbox/untitled_6TJ',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 0, :size => 0 },
-                :now => { :start_line => 1, :size => 1 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ ],
-                  :added_lines   => [ "Please rename me!" ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    }    
-    assert_equal expected, GitDiffParser.new(lines).parse_one
-
+    now_line = '+++ b/sandbox/untitled_6TJ'
+    assert_equal 'b/sandbox/untitled_6TJ',
+      GitDiffParser.new(now_line).parse_now_filename
   end
   
   #-----------------------------------------------------
@@ -605,93 +485,185 @@ HERE
   #-----------------------------------------------------
 
   def test_find_copies_harder_finds_a_rename
-
 lines = <<HERE
 diff --git a/sandbox/oldname b/sandbox/newname
 similarity index 99%
 rename from sandbox/oldname
 rename to sandbox/newname
 index afcb4df..c0f407c 100644
---- a/sandbox/oldname
-+++ b/sandbox/newname
-@@ -73,7 +73,7 @@ LINE: +++ /dev/null
 HERE
 
     expected = 
-    {
-      :prefix_lines =>  
       [
         "diff --git a/sandbox/oldname b/sandbox/newname",
         "similarity index 99%",
         "rename from sandbox/oldname",
         "rename to sandbox/newname",
         "index afcb4df..c0f407c 100644"
-      ],
-      :was_filename => 'a/sandbox/oldname',
-      :now_filename => 'b/sandbox/newname',
-      :chunks =>
-      [
-        {
-          :range =>
-          {
-            :was => { :start_line => 73, :size => 7 },
-            :now => { :start_line => 73, :size => 7 },
-          },
-          :before_lines => [],
-          :sections => []
-        }
       ]
-    }
-    assert_equal expected, GitDiffParser.new(lines).parse_one
+    assert_equal expected, 
+      GitDiffParser.new(lines).parse_prefix_lines
+  end
+  
+  #-----------------------------------------------------
+
+  def test_no_deleted_line
+lines = <<HERE
++p Timw.now
++p Time.now
+HERE
+
+    expected = []
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_deleted_lines      
   end
 
   #-----------------------------------------------------
 
-  def test_when_newline_at_end_of_file_is_present
-
+  def test_no_added_line
 lines = <<HERE
-diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb
-index 4d3ca1b..61e88f0 100644
---- a/sandbox/test_gapper.rb
-+++ b/sandbox/test_gapper.rb
-@@ -9,4 +9,3 @@ class TestGapper < Test::Unit::TestCase
+ p Timw.now
+ p Time.now
+HERE
+
+    expected = []
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_added_lines      
+  end
+
+  #-----------------------------------------------------
+
+  def test_single_deleted_line
+lines = <<HERE
 -p Timw.now
++p Time.now
+HERE
+
+    expected =
+      [
+        'p Timw.now'
+      ]
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_deleted_lines  
+  end
+
+  #-----------------------------------------------------
+
+  def test_single_added_line
+lines = <<HERE
++p Time.now
+ common line
+HERE
+
+    expected =
+      [
+        'p Time.now'
+      ]
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_added_lines  
+  end
+
+  #-----------------------------------------------------
+
+  def test_single_deleted_line_with_following_newline_at_eof
+lines = <<HERE
+-p Timw.now
+\\ No newline at end of file'
+HERE
+
+    expected =
+      [
+        'p Timw.now',
+      ]
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_deleted_lines  
+  end
+
+  #-----------------------------------------------------
+
+  def test_single_added_line_with_following_newline_at_eof
+lines = <<HERE
++p Timw.now
+\\ No newline at end of file'
+HERE
+
+    expected =
+      [
+        'p Timw.now',
+      ]
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_added_lines      
+  end
+
+  #-----------------------------------------------------
+  
+  def test_two_deleted_lines
+lines = <<HERE
+-p Timw.now
+-p Time.now
+HERE
+
+    expected =
+      [
+        'p Timw.now',
+        'p Time.now'
+      ]
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_deleted_lines  
+  end
+
+  #-----------------------------------------------------
+
+  def test_two_added_lines
+lines = <<HERE
++p Timw.now
++p Time.now
+HERE
+
+    expected =
+      [
+        'p Timw.now',
+        'p Time.now'
+      ]
+    assert_equal expected,
+    GitDiffParser.new(lines).parse_added_lines      
+  end
+
+  #-----------------------------------------------------
+
+  def test_two_deleted_lines_with_following_newline_at_eof
+lines = <<HERE
+-p Timw.now
+-p Time.now
 \\ No newline at end of file
+HERE
+
+    expected =
+      [
+        'p Timw.now',
+        'p Time.now'
+      ]
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_deleted_lines      
+  end
+
+  #-----------------------------------------------------
+
+  def test_two_added_lines_with_following_newline_at_eof
+lines = <<HERE
++p Timw.now
 +p Time.now
 \\ No newline at end of file
 HERE
 
     expected =
-    {
-      :prefix_lines =>  
       [
-        "diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb",
-        "index 4d3ca1b..61e88f0 100644"
-      ],
-      :was_filename => 'a/sandbox/test_gapper.rb',
-      :now_filename => 'b/sandbox/test_gapper.rb',
-      :chunks =>
-      [
-        {
-          :range =>
-          {
-            :was => { :start_line => 9, :size => 4 },
-            :now => { :start_line => 9, :size => 3 },
-          },
-          :before_lines => [],
-          :sections =>
-          [ 
-            {          
-              :deleted_lines => [ "p Timw.now" ],
-              :added_lines   => [ "p Time.now" ],
-              :after_lines => []
-            }
-          ]
-        }
+        'p Timw.now',
+        'p Time.now'
       ]
-    }
-    assert_equal expected, GitDiffParser.new(lines).parse_one
-  end  
+    assert_equal expected,
+      GitDiffParser.new(lines).parse_added_lines          
+  end
 
   #-----------------------------------------------------
 
@@ -1029,78 +1001,4 @@ HERE
 
 end
 
-
-
-#--------------------------------------------------------------
-#
-#LINE: --- a/sandbox/gapper.rb
-#
-#  The original file is preceded by --- 
-#  If this is a new file this is --- /dev/null
-#
-#LINE: +++ b/sandbox/gapper.rb
-#
-#  The new file is preceded by +++
-#  If this is a deleted file this is +++ /dev/null
-#
-#LINE: @@ -4,7 +4,8 @@ def time_gaps(from, to, seconds_per_gap)
-#
-#  Following this is a change chunk containing the line differences.
-#  A chunk begins with range information. The range information 
-#  is surrounded by double-at signs. 
-#    So in this example its @@ -4,7 +4,8 @@
-#  The chunk range information contains two chunk ranges. 
-#  Each chunk range is of the format L,S where 
-#  L is the starting line number and 
-#  S is the number of lines the change chunk applies to for 
-#  each respective file.
-#  The ,S is optional and if missing indicates a chunk size of 1.
-#  So -3 is the same as -3,1 and -1 is the same as -1,1
-#
-#  The range for the chunk of the original file is preceded by a 
-#  minus symbol. 
-#    So in this example its -4,7
-#  If this is a new file (--- /dev/null) this is -0,0
-#
-#  The range for the chunk of the new file is preceded by a 
-#  plus symbol. 
-#    So in this example its +4,8
-#  If this is a deleted file (+++ /dev/null) this is -0,0
-#
-#LINE:   (0..n+1).collect {|i| from + i * seconds_per_gap }
-#LINE: end
-#LINE: 
-#
-#  Following this, optionally, are the unchanged, contextual lines,
-#  each preceded by a space character.
-#  These are lines that are common to both the old file and the new file.
-#  So here there are three lines, (the third line is a newline)
-#  So the -4,7 tells us that these three common lines are lines
-#  4,5,6 in the original file.
-#
-#LINE:-def full_gapper(all_incs, gaps)
-#
-#  Following this, optionally, are the deleted lines, each preceded by a 
-#  minus sign. This is the first deleted line so it was line 7 (one after 6)
-#  If there were subsequent deleted lines they would having incrementing line
-#  numbers, 8,9 etc.
-#
-#LINE:\ No newline at end of file
-#
-#  Following this, optionally, is a single line starting with a \ character
-#  as above.
-# 
-#LINE:+def full_gapper(all_incs, created, seconds_per_gap)
-#LINE:+  gaps = time_gaps(created, latest(all_incs), seconds_per_gap)
-#
-#  Following this, optionally, are the added lines, each preceeded by a
-#  + sign. So the +4,8 and the 3 common lines tells us that the first +
-#  line is line 7 in the new file, and the second + line is line 8 in
-#  the new file.
-#
-#LINE:\ No newline at end of file
-#
-#  Following this, optionally, is a single line starting with a \ character
-#  as above.
-#--------------------------------------------------------------
 
