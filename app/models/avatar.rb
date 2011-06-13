@@ -1,128 +1,163 @@
 
+require 'file_write.rb'
+require 'io_lock.rb'
+require 'make_time.rb'
+
 class Avatar
 
   def self.names
-    %w( alligators buffalos camels cheetahs 
-        frogs kangaroos koalas lemurs
-        pandas raccoons squirrels wolves )
-  end
-  
-  def initialize(kata, name)
-    @kata, @name = kata, name
+    %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra )
   end
 
-  def kata
-    @kata
+  def initialize(dojo, name, filesets = nil) 
+    @dojo = dojo
+    @name = name
+
+    if File.exists?(pathed(Filesets_filename))
+      @filesets = eval IO.read(pathed(Filesets_filename))
+    else
+      @filesets = filesets
+      Dir::mkdir(folder)
+      file_write(pathed(Filesets_filename), @filesets)
+      file_write(pathed(Increments_filename), [])
+
+      Dir::mkdir(sandbox)
+      kata = Kata.new(@dojo.filesets_root, @filesets)
+      kata.hidden_pathnames.each do |hidden_pathname|
+        system("cp '#{hidden_pathname}' '#{sandbox}'") 
+      end
+      kata.visible_files.each do |filename,file|
+        TestRunner::save_file(sandbox, filename, file)
+      end
+
+      kata.manifest[:current_filename] = 'instructions'
+      kata.manifest[:output] = initial_output_text
+      kata.manifest.delete(:hidden_filenames)
+      kata.manifest.delete(:hidden_pathnames)
+      file_write(pathed(Manifest_filename), kata.manifest)
+      
+      cmd  = "cd '#{folder}';"
+      cmd += "git init --quiet;"
+      cmd += "git add '#{Manifest_filename}';"
+      cmd += "git add '#{Filesets_filename}';"
+      cmd += "git add '#{Increments_filename}';"
+      system(cmd)
+      tag = 0
+      git_commit_tag(kata.visible_files, tag)
+    end
   end
 
   def name
     @name
   end
 
-  def visible_files(n)
-    path = @kata.folder + '/' + name + '/' + n.to_s + '/' + 'manifest.rb'
-    eval IO.read(path)
+  def kata
+    Kata.new(@dojo.filesets_root, @filesets)
+  end
+   
+  def increments
+    io_lock(pathed(Increments_filename)) { eval IO.read(pathed(Increments_filename)) }
+  end
+
+  def read_manifest(manifest, tag = nil)
+    io_lock(folder) do
+      cmd  = "cd #{folder};"
+      cmd += "git tag|sort -g"
+      tag ||= eval IO::popen(cmd).read
+      
+      cmd  = "cd #{folder};"
+      cmd += "git show #{tag}:#{Manifest_filename}"
+      read_manifest = eval IO::popen(with_stderr(cmd)).read
+      
+      manifest[:visible_files] = read_manifest[:visible_files]
+      manifest[:current_filename] = read_manifest[:current_filename]
+      manifest[:output] = read_manifest[:output]
+      
+      cmd  = "cd #{folder};"
+      cmd += "git show #{tag}:#{Increments_filename}"
+      incs = eval IO::popen(with_stderr(cmd)).read
+    end    
   end
   
-  def increments
-    eval locked_read(increments_filename)
-  end
-
-  def read_most_recent(manifest)
-    # load starting manifest
-    manifest[:visible_files] = @kata.visible
-    increments = []
-    File.open(@kata.folder, 'r') do |f|
-      flock(f) do |lock|
-        increments = locked_read_most_recent(manifest)
-      end
-    end
-    increments
-  end
-
   def run_tests(manifest)
-    File.open(folder, 'r') do |f|
-      flock(f) do |lock|
-        run_tests_output = TestRunner.avatar_run_tests(self, manifest)
-        test_info = RunTestsOutputParser.parse(self, run_tests_output)
-        save(manifest, test_info)
-      end
+    the_kata = kata
+    incs = [] 
+    io_lock(folder) do 
+      output = TestRunner::avatar_run_tests(self, the_kata, manifest)
+      test_info = RunTestsOutputParser::parse(self, the_kata, output)
+      
+      incs = increments     
+      incs << test_info
+      test_info[:time] = make_time(Time::now)
+      test_info[:number] = incs.length
+      file_write(pathed(Increments_filename), incs)
+
+      manifest[:output] = output
+      file_write(pathed(Manifest_filename), manifest)
+      
+      tag = incs.length
+      git_commit_tag(manifest[:visible_files], tag)
+
+      #TODO: get diff stats and save it in increments
+      # cmd = "git diff #{tag-1} #{tag} --stat sandbox"
+      #  sandbox/gapper.rb      |    2 +-
+      #  sandbox/test_gapper.rb |    4 ++--
+      #  2 files changed, 3 insertions(+), 3 deletions(-)
+
     end
-  end
-
-  def save(manifest, test_info)    
-    my_increments = increments
-
-    dst_folder = folder + '/' + my_increments.length.to_s
-    make_dir(dst_folder)
-    File.open(dst_folder + '/manifest.rb', 'w') { |fd| fd.write(manifest.inspect) }
- 
-    now = Time.now
-    test_info[:time] = [now.year, now.month, now.day, now.hour, now.min, now.sec]
-    test_info[:number] = my_increments.length
-    my_increments << test_info
-    File.open(increments_filename, 'w') { |file| file.write(my_increments.inspect) }
-    my_increments
+    incs
   end
 
   def folder
-	@kata.folder + '/' + name
+    @dojo.folder + '/' + name
+  end
+  
+  def sandbox
+    pathed('sandbox')
   end
 
 private
 
-  def increments_filename
-    folder + '/' + 'increments_manifest.rb'
+  def with_stderr(cmd)
+    cmd + " " + "2>&1"
   end
 
-  def locked_read_most_recent(manifest)
-    if !File.exists?(folder) # start
-      make_dir(folder)      
-      make_dir(folder + '/sandbox')
-      # Copy in hidden files from kata fileset
-	  @kata.hidden_pathnames.each do |hidden_pathname|
-        system("cp '#{hidden_pathname}' '#{folder}/sandbox'") 
-      end
-	  # Create empty increments file ready to be loaded next time
-      File.open(increments_filename, 'w') { |file| file.write([].inspect) }
-      []
-    else # restart
-      my_increments = increments
-      if my_increments.length != 0
-        current_increment_folder = folder + '/' + (my_increments.length - 1).to_s
-        restart_manifest = eval IO.read(current_increment_folder + '/' + 'manifest.rb')
-        manifest[:visible_files] = restart_manifest[:visible_files]
-      end
-      my_increments
+  def pathed(filename)
+    folder + '/' + filename
+  end
+
+  Increments_filename = 'increments.rb'
+  
+  Filesets_filename = 'filesets.rb'
+  
+  Manifest_filename = 'manifest.rb'
+
+  def initial_output_text
+    [ 
+      '',
+      '',
+      '  Click Run Tests to start. The output will appear here.',
+      '',
+      '  A traffic light will also apppear:',
+      '     (o) red   - the tests ran but one or more failed',
+      '     (o) amber - the tests could not be run',
+      '     (o) green - the tests ran and all passed',
+      '',
+    ].join("\n")
+  end
+
+  def git_commit_tag(visible_files, n)
+    # I add visible files to the git repository
+    # but never the hidden files.
+    cmd  = "cd '#{folder}';"
+    visible_files.each do |filename,|
+      cmd += "git add '#{sandbox}/#{filename}';"
     end
+    cmd += "git commit -a -m '#{n}' --quiet;"
+    cmd += "git tag -m '#{n}' #{n} HEAD;"
+    system(cmd)    
   end
-
-end
-
-#---------------------------------------------------------------
-
-def make_dir(dir)
-  Dir.mkdir(dir) if !File.exists? dir
-end
-
-def locked_read(path)
-  result = []
-  File.open(path, 'r') do |f|
-    flock(f) { |lock| result = IO.read(path) }
-  end
-  result
-end
-
-def flock(file)
-  success = file.flock(File::LOCK_EX)
-  if success
-    begin
-      yield file
-    ensure
-      file.flock(File::LOCK_UN)
-    end
-  end
-  return success
+  
 end
 
 

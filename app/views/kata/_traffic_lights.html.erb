@@ -1,0 +1,18 @@
+
+<div id="traffic_lights">
+  <table>
+    <tr>
+      <% max_displayed = 9 -%>
+      <% recent(@traffic_lights, max_displayed).each do |light| -%>
+        <td>
+          <%= traffic_light(@dojo.name, @avatar.name, light) -%>
+        </td>
+      <% end -%>
+      <td>
+        <span class="traffic_light_number">
+         <%= @traffic_lights.length -%>
+        </span>
+      </td>      
+    </tr>
+  </table>
+</div>

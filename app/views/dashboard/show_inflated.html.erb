@@ -1,0 +1,21 @@
+
+<table>
+  <tr>
+    <td>
+      <%= render :partial => 'controls' -%>
+    </td>
+    <td>
+      <%= render :partial => 'traffic_lights_inflated' -%>
+      <%= render :partial => 'click_info' -%>      
+    </td>
+  </tr>
+</table>
+
+<%= periodically_call_remote :url => { :action => :heartbeat,
+                                       :dojo_name => @dojo.name
+                                     }, 
+                             :with => "{ secs_per_col: Field.getValue('secs_per_col')," +
+                                      "  max_cols: Field.getValue('max_cols')" +
+                                      "}",                                     
+                             :frequency => 10 -%>
+

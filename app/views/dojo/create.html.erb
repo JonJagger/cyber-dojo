@@ -1,0 +1,163 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var languageCount = <%=@languages.length-%>;
+var kataCount = <%=@katas.length-%>;
+
+function toggleAll(name, size) {
+  var current = $(name + '_all').checked;
+  for (var at = 0; at !== size; at += 1) {
+    $(name + '_' + at).checked = current;
+  }
+  setSaveButtonState();  
+}
+
+function showKata(choice) {
+  $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
+}
+
+function toggleSelection(name, index, size, choice) { 
+  var selection = $(name + '_' + index); 
+  selection.checked = !selection.checked;   
+  if (name === 'kata') {   
+    showKata(choice);  
+  }
+  setSaveButtonState();
+}
+
+function setSaveButtonState() {
+  $('save_button').disabled = !languageSelected() || !kataSelected();
+}
+
+function languageSelected() {
+  for (var at = 0; at !== languageCount; at += 1) {
+    if ($('language_' + at).checked) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function kataSelected()
+{
+  for (var at = 0; at != kataCount; at += 1) {
+    if ($('kata_' + at).checked) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//--></script>
+
+<form action="/dojo/save">
+
+<input type="hidden"
+       name="dojo_name" 
+       id="dojo_name" 
+       value="<%=@dojo.name-%>" />
+
+<h1 title="<%= @dojo.name-%>">   
+  <%= ellided_name(@dojo.name, 40) -%>
+</h1>
+
+<table align="center">
+  <tr>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td>
+            <div>
+              <span class="choose_title">Katas</span>
+            </div>
+            
+            <span style="margin-left: 0.25em">
+              <input id="kata_all"
+                     type="checkbox"
+                     onclick='toggleAll("kata", <%=@katas.length-%>);'
+                     value="" />
+            </span>
+            
+            <% @katas.each_with_index do |choice,index| -%>
+              <div class="mid_tone fileset" 
+                   onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'
+                   onmouseover='showKata("<%=choice-%>");'>
+                <input id="kata_<%=index-%>" 
+                       type="checkbox" 
+                       onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'
+                       name="kata[<%=index-%>]" 
+                       value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+            
+          </td>
+          <td>&nbsp;</rd>
+          <td>
+            <textarea name="kata_info" 
+                      id="kata_info"
+                      cols="62" 
+                      rows="24">
+            </textarea>
+          </td>          
+        </tr>
+      </table>
+        &nbsp;&nbsp;Each computer entering your CyberDojo will be randomly
+        <br/>
+        &nbsp;&nbsp;assigned a kata and a language from those selected.
+      
+    </td>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td>
+            <div class="choose_title">Languages</div>
+
+            <span style="margin-left: 0.25em">
+              <input id="language_all"
+                     type="checkbox"
+                     onclick='toggleAll("language", <%=@languages.length-%>);'
+                     value="" />
+            </span>
+
+            <% @languages.each_with_index do |choice,index| -%>
+              <div class="mid_tone fileset"
+                   onclick='toggleSelection("language", <%=index-%>, <%=@languages.length-%>, "<%=choice-%>");'>
+                <input id="language_<%=index-%>" 
+                       type="checkbox" 
+                       onclick='toggleSelection("language", <%=index-%>, <%=@languages.length-%>, "<%=choice-%>");'
+                       name="language[<%=index-%>]" 
+                      value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+          </td>
+        </tr>
+      </table>
+      
+      <table>
+        <tr>
+          <td valign="top">
+            <input id="save_button" 
+                   class="main button"
+                   type="submit" 
+                   value="Save" 
+                   name="save"
+                   disabled/>
+          </td>
+        </tr>
+      </table>        
+    </td>
+  </tr>
+</table>
+
+</form>
+
+<% @katas.each_with_index do |choice,index| -%>
+   <textarea style="display:none;" 
+             name="kata[<%=choice-%>]"
+             id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>
+<% end -%>      
+
+

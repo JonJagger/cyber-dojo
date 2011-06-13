@@ -1,0 +1,51 @@
+
+<% tag_number = @traffic_lights_to_tag.length -%>
+
+<table align="center">
+  <tr>
+  
+    <% if tag_number != 0 -%>
+    <td>
+      <span class="traffic_light_number"
+        <%= link_to 0, 
+        { :controller => :diff, 
+          :action => :show,
+          :dojo_name => @dojo.name,
+          :avatar => @avatar.name,
+          :tag => 0 
+        } -%>
+      </span>
+    </td>                
+    <% end -%>
+    
+    <td>
+      <%= render :partial => 'prev_button' -%>
+    </td>
+    
+    <td>
+      <span class="small_title">
+         <%= tag_number -%>
+      </span>
+    </td>   
+    
+    <td>
+      <%= render :partial => 'next_button' -%>                      
+    </td>
+    
+    <% if tag_number < @all_traffic_lights.length -%>
+    <td>
+      <span class="traffic_light_number"
+        <%= link_to @all_traffic_lights.length, 
+        { :controller => :diff, 
+          :action => :show,
+          :dojo_name => @dojo.name,
+          :avatar => @avatar.name,
+          :tag => @all_traffic_lights.length 
+        } -%>
+      </span>
+    </td>                
+    <% end -%>
+    
+  </tr>
+</table>      
+

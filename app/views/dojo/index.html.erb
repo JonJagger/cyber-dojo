@@ -1,45 +1,153 @@
 
-<script language="JavaScript"><!--
-function select_CyberDojo(dojo_name)
-{
-  $('dojo_name').value = dojo_name;
-  document.chooseDojo.submit();
-}
-//--></script>
+<h1>CyberDojo</h1>
+<h3>Deliberate Software Practice</h3>
 
-<form name="chooseDojo" action="/avatar/index">
-
-<noscript>
-  &nbsp;
-  <h2><b>You must enable JavaScript.</b></h2>
-  &nbsp;
-</noscript>
-
-<input readonly 
-       type="hidden"
-       name="dojo_name" 
-       id="dojo_name" 
-       type="text" 
-       value="">
-
-<h1><b>Welcome to CyberDojo</b></h1>
-
-<table class="rounded panel" 
-       cellspacing="6"
-       cellpadding="3">
-  <% @dojo_names.sort.each do |dojo_name| -%>
+<table>
   <tr>
     <td>
-      <input type="button" 
-             onClick='select_CyberDojo("<%=dojo_name-%>");'
-             value="<%=dojo_name-%>">
+      &nbsp;
     </td>
   </tr>
-  <% end -%>
+  <tr>
+    <td>
+      &nbsp;First, choose your CyberDojo's name:
+      <div class="panel">
+      <form action="/dojo/new">
+        <div>
+          <input type="text"
+                 class="name_input"
+                 name="dojo_name"
+                 size="15"
+                 value="" />
+          and
+          <input type="submit"
+                 class="main button"
+                 id="new_button"
+                 name="new"
+                 value="Configure It" />
+          <% if flash[:new_notice] -%>
+            <div class="notice"><%= flash[:new_notice] -%></div>
+          <% end -%>
+        </div>
+      </form>
+      </div>
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+    
+      &nbsp;Then, on <em>each</em> participating computer<br/>
+      &nbsp;type in your CyberDojo's name:
+      
+      <div class="panel">
+      
+      <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
+      
+      <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
+      
+        <table>
+            <tr>
+              <td>
+          <input type="text"
+                 class="name_input"
+                 name="dojo_name"
+                 size="15"
+                 value="<%=@dojo_name-%>" />
+               </td>
+               <td>and</td>
+          <td>         
+          <input type="submit"
+                 class="main button"
+                 name="start"
+                 id="start_button"
+                 value="Start Coding" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
+          <input type="submit"
+                 class="main button"
+                 name="resume"
+                 id="resume_button"
+                 value="Resume Coding" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
+          <input type="submit"
+                 class="main button"
+                 name="dashboard"
+                 id="dashboard_button"
+                 value="Show Dashboard" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
+          <input type="submit"
+                 class="main button"
+                 name="messages"
+                 id="messages_button"
+                 value="Show Messages" />
+          </td>
+        </tr>
+      </table>
+                 
+          <% if flash[:notice] -%>
+            <div class="notice"><%= flash[:notice] -%></div>
+          <% end -%>
+        </div>
+      </form>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
+      CyberDojo TurnKey Linux VirtualBox image <a href="
+http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/" target="_blank">download</a>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center">
+      Conceived and implemented by <a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center">
+      <%= link_to 'inFrequently Asked Questions', 
+        { :controller => :dojo, :action => :ifaq }, 
+        { :target => "_blank", :title => 'inFrequently Asked Questions' } 
+      -%>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center">
+      <a href="http://www.accu.org">
+        <img src="/images/accu_button.gif" 
+             style="border:none;" 
+             target="_blank"
+             width="120"
+             height="60" 
+             title="ACCU is an organisation of programmers who care about professionalism in programming and are dedicated to raising the standard of programming. "/>
+      </a>
+    </td>
+  </tr>
+  
 </table>
-
-<h2><i>Please click your CyberDojo...</i></h2>
-
-</form>
-
 

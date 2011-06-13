@@ -1,0 +1,74 @@
+
+<div id="traffic_lights" 
+     class="panel">
+
+  <table>
+  
+    <% seconds_per_td = @secs_per_col -%>
+    <% max_cols = @max_cols -%>
+    <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
+    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
+    <% all_lights = @dojo.all_increments -%>
+    <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%> 
+    
+    <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
+      <% td_map = gapped[avatar_name] -%>    
+      <tr class="<%=parity(index)-%> traffic_light_row">
+        
+        <% all_td_nos = td_map.keys.sort -%>
+        <% recent_td_nos = recent(all_td_nos, max_cols) -%>
+        
+        <% if recent_td_nos.length < all_td_nos.length -%>
+          <td>
+            <span class="traffic_light_ellision">...</span>
+          </td>
+        <% end -%>
+        
+        <% recent_td_nos.each do |td_no| -%>
+          <% td = td_map[td_no] -%>            
+          <td>
+          <% if td.class == Array -%>
+            <% if td.length == 0 -%>
+              &nbsp;
+            <% else -%>
+              <table>
+                <tr>
+                  <% td.each do |light| -%>
+                    <td>
+                      <%=  traffic_light(@dojo.name, avatar_name, light) -%>
+                    </td>
+                  <% end -%>
+                </tr>
+              </table>
+            <% end -%>
+          <% end -%>
+          
+          <% if td.class == Hash -%>
+            <span class="traffic_light_ellision">...</span>         
+          <% end -%>          
+          </td>          
+        <% end -%>
+        
+        <% lights = all_lights[avatar_name] -%>
+           
+        <td>
+           <%= render :partial => 'traffic_lights_summary', 
+                      :locals => { :avatar_name => avatar_name, 
+                                   :lights => lights } -%> 
+        </td>
+        
+        <td>
+          <%= avatar_image(avatar_name, 43) -%>
+        </td>
+        
+        <td>
+          <%= render :partial => 'avatar_summary',
+                     :locals => { :avatar_name => avatar_name } -%>
+        </td>
+        
+      </tr>    
+    <% end -%>
+  
+  </table>
+</div>
+

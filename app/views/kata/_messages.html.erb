@@ -1,0 +1,21 @@
+
+         
+<table>
+  <tr>  
+    <td>
+      <%= render :partial => 'messages/post_button',
+                 :locals => { :poster => @avatar.name } -%>
+    </td>
+    <td>
+      <%= render :partial => 'messages/input_area' -%>
+    </td>  
+  </tr>
+  <tr>
+    <td colspan="2">
+      <%= render :partial => 'messages/messages', 
+                 :locals => { :target => '_blank' } -%>  
+    </td>
+  </tr>
+</table>
+
+

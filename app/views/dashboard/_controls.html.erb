@@ -1,0 +1,78 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+  var minimum = 10;
+  var initial = 30;
+  var maximum = 120;  
+  $j('#secs_per_col').updown(minimum, maximum, initial);
+  
+  var minimum = 10;
+  var initial = 60;
+  var maximum = 120;
+  $j('#max_cols').updown(minimum, maximum, initial);
+  
+  // minimum time period =  10 seconds *  10 columns =  100 seconds
+  // initial time period =  30 seconds *  60 columns =   30 minutes
+  // maximum time period = 120 seconds * 120 columns =    4 hours
+});
+        
+//--></script>
+
+
+<table>
+  <tr id="secs_per_col_panel">
+    <td>
+      secs/col
+    </td>
+    <td>
+      <input type="text" 
+             name="secs_per_col" 
+             id="secs_per_col" 
+             readonly/>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <%= link_to "<span class='deflate button'>Deflate</span>", 
+          { 
+            :controller => :dashboard, 
+            :action => :show_deflated,
+            :dojo_name => @dojo.name 
+          }, 
+          { :title => "Deflate time gaps" }
+      -%>
+    </td>
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      &nbsp;
+    </td>
+  </tr>
+
+  <tr id="max_cols_panel">
+    <td>
+      max cols 
+    </td>
+    <td>
+      <input type="text" 
+             name="max_cols" 
+             id="max_cols" 
+             readonly/>
+    </td>
+  </tr>
+</table>
+
+

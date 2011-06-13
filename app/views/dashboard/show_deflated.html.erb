@@ -1,0 +1,20 @@
+
+<table>
+  <tr>
+    <td>
+      <%= link_to "<span class='inflate button'>Inflate</span>", 
+          { 
+            :controller => :dashboard, 
+            :action => :show_inflated,
+            :dojo_name => @dojo.name 
+          }, 
+          { :title => "Inflate time gaps" }
+      -%>        
+    </td>
+    <td>
+      <%= render :partial => 'traffic_lights_deflated' -%>
+      <%= render :partial => 'click_info' -%>      
+    </td>
+  </tr>
+</table>
+

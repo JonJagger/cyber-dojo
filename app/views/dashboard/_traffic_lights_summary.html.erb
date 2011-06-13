@@ -1,0 +1,16 @@
+          
+<table align="right">
+ <tr>
+   <td>
+     <span class="traffic_light_number">
+       <%= lights.length -%>
+     </span>
+   </td>
+   <td>             
+     <% if lights != [] -%>
+       <%=  traffic_light(@dojo.name, avatar_name, lights.last) -%>             
+     <% end -%>
+   </td>
+ </tr>
+</table>
+

@@ -1,0 +1,34 @@
+ 
+<%= render :partial => 'banner' -%>
+       
+<table align="center" 
+      class="panel">
+
+  <% @dojo.avatars.each_with_index do |avatar,index| -%>
+    <tr class="<%=parity(index)-%> traffic_light_row">
+  
+      <td>
+         <%= render :partial => 'dashboard/traffic_lights_summary', 
+                    :locals => { :avatar_name => avatar.name, 
+                                 :lights => avatar.increments } -%>
+      </td>
+      
+      <td>
+        <%= avatar_image(avatar.name, 45) -%>
+      </td>
+      
+      <td>
+        <%= render :partial => 'dashboard/avatar_summary',
+                   :locals => { :avatar_name => avatar.name } -%>
+      </td>    
+      
+      <td>
+        <%= resume_button(@dojo.name, avatar.name) -%>
+      </td>
+      
+    </tr>
+  <% end -%>
+
+</table>
+
+

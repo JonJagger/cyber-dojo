@@ -1,173 +1,375 @@
 
-#cyber_dojo_page
+body, #editor_line_numbers { background-color: GhostWhite; }
+
+#cyber_dojo_page { text-align: left; color: Green; }
+
+h1 { font-size: 3em;  }
+h2 { font-size: 2em;  }
+h3 { font-size: 1.3em; }
+h1, h2, h3, h4 { text-align: center; margin: 0; }
+
+.mid_tone { background-color: CornSilk; }
+
+.panel 
+{ 
+  border: 5px solid GhostWhite; 
+  padding: 0.7em; 
+  background-color: #FFECCB; 
+}
+
+.notice { color: Red; }
+
+.avatar_image { margin: 0.2em; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+.name_input { font-size: 1.15em; }
+
+.button      { font-size: 1em; } 
+
+.main.button { font-size: 1.35em; }
+
+.button
 {
-  margin-top: 0em;
-  margin-left: 1em;
-  border-style: none;
-  background-color: #FEF5CA; /*sandbox */
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
+  cursor: pointer;
+  padding: 4px;
+  background-color: CornSilk;
+  text-decoration: none;
+  font-weight: normal;
+  color: #383838;
+  border-top: none;
+  border-left: none;
+  border-right:  1px solid #A8A8A8; 
+  border-bottom: 1px solid #A8A8A8;
+}
+
+.button[disabled]
+{
+  cursor: default;
+  background-color: lightgray;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+#kata_info
+{
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 10pt;
+  color: green;
+  background-color: CornSilk;
+  border: 1px dashed lightgray;
+  padding: 5px;
+}
+
+.choose_title
+{
+  text-align: left;
+  font-size: 1.3em;
+  margin-left: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.small_title
+{
+  display: block;
+  margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
+  font-size: 0.8em;
   color: green;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+.select_all_clear_all { padding-bottom: 0.5em; }
 
-.rounded
+/* - - - - - - - - - - - - - - - - - - - - */
+
+input[type="radio"]:checked+label, 
+input[type="checkbox"]:checked+label { color: green; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+.file_op, 
+.panel, 
+div[class~="filename"], 
+  *[class~="fileset"]
 { 
-  border: 1px solid #D8D8D8; /*light-gray*/
   border-radius: 6px;
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
 }
 
-.panel
-{    
-  background-color: #FFE4C4; /*bisque*/
-  margin: 0.3em;
-  padding: 0.3em;
-}
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-.increment { padding: 0.15em; }
-
-.failed  { background-color: #F33; }  /* red */
-.passed  { background-color: #3C3; }  /* green */
-.error   { background-color: #FF0; }  /* yellow */
-
-/* FAKE TOOL TIPS
- * Instead of title="tool-tip" I use a hidden nested span
- * as this allows me to insert newlines.
- */
-#inc.increment
-{
-  position: relative; /*this is the key*/
-  z-index: 24; 
-  text-decoration: none;
-}
-
-#inc.increment:hover { z-index: 25; }
-
-#inc.increment span { display: none; }
-
-#inc.increment:hover span /*the span will display just on :hover state*/
-{
-  font-family: monospace;
-  font-size: 9pt;
-  display: block;
-  position: fixed;
-  bottom: 5em; left: 2em; width: auto;
-  border: 1px solid #0CF;
-  background-color: #CFF; 
-  color: #000;
-  text-align: left;
-}
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-.identifier
-{
-  margin-left: 0.3em;
-  padding-left: 0.3em;
-  display: block;  
-}
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-#avatar_pair
-{
-    white-space: nowrap;
-    margin-left: auto;
-    margin-right: auto;
-    margin:0.3em; 
-    padding:0.3em;
-}
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-#new_file { font-size: 8pt; }
-
-#file_manager 
+.file_op 
 { 
-  padding: 0.3em; 
-  background-color: #FEF5CA;
-  color: #686868;   
-  font-size: 12pt; 
-}
+  padding: 4px; 
+  background-color: CornSilk;
+} 
 
-#radioFilename { white-space: nowrap; }
+.file_op_name { font-size: 9pt; color: #383838; }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-#editor
+.file_op,
+div[class~="filename"], 
+  *[class~="fileset"]
 {
-  overflow-y: scroll;
-  padding: 0em;
-  padding-left: 5px;
-  margin: 0em;
-  margin-left: 40px; /* enough for line-numbers */
+  margin: 0.25em;
+  padding-right: 0.5em;
+  padding-bottom: 2px;  
+  color: #383838; 
   font-size: 11pt;
-  font-family: monospace;
-  font-weight: normal;
-  color: white;
-  background-color: #686868;
-  border: 1px solid #666;
-  border-right: none;
-  float: right;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8; 
 }
 
-.textarea_with_line_numbers
+   *[class~="fileset"]:hover, 
+div[class~="filename"]:hover, 
+              .file_op:hover, 
+               .button:hover
 {
+  border-bottom: 1px solid #7E7E7E;
+  border-right:  1px solid #7E7E7E;   
+}
+
+.button[disabled]:hover
+{
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8;   
+}
+
+div[class~="filename"]:before { content: "\00a0";  } /* \00a0 is a retained space */
+div[class~="filename"]:after  { content: "\00a0";  } 
+
+/* - - - - - - - - - - - - - - - - - - - - */
+/* Used by app/view/diff                   */
+
+filename
+{ 
   display: block;
+  margin: 0.25em;
+  padding-right: 0.5em;
+  padding-bottom: 2px;  
+  color: #383838; 
   font-size: 11pt;
-  font-weight: 100;
-  color: #686868;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8; 
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+filename:before { content: "\00a0";  } /* \00a0 is a retained space */
+filename:after  { content: "\00a0";  }
+
+filename:hover
+{
+  border-bottom: 1px solid #7E7E7E;
+  border-right:  1px solid #7E7E7E;   
+}
+
+filename.selected:hover /* remove hover effect if filename is selected */
+{
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8; 
+}
+
+filename.selected { background-color: LightGray; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+#editor, #editor_line_numbers
+{
+  font-size: 12pt;
+  border: 0;
   margin: 0;
-  border: 1px solid #666;
-  border-right: none;
-  background: #aaa;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
-
-#hidden_text_areas
+#editor, #output 
 { 
-  visibility: hidden; 
-  display: none; 
+  width: 100%;
+  background: CornSilk;
+  margin-top: 5px;
+  margin-left: 30px; /* enough for line-numbers */
+  border: 1px dashed LightGray;
+  color: #383838;;
+  overflow: auto;
+  padding-left: 3px;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+#editor { font-family: monospace; }
 
-#dashboard
+#editor_line_numbers
 {
-  margin: 0.3em;
-  padding: 0.3em;
-  background-color: #FFE4C4; /*bisque*/
-  border: 1px solid #D8D8D8; /*light-gray*/
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  -webkit-border-radius: 6px;
-}
-
-
-#dashboard_cell
-{
-  border: 1px solid #D8D8D8; /*light-gray*/
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  -webkit-border-radius: 8px;
+  border-top: 1px dashed LightGray;
   display: block;
-  padding: 0.1em;
+  color: #B0B0B0;
+  font-weight: normal;
 }
 
-#dashboard_cell.old_failed { background-image: url(failed_stripe.png); }
-#dashboard_cell.old_passed { background-image: url(passed_stripe.png); }
-#dashboard_cell.old_error  { background-image: url(error_stripe.png); }
+#output.waiting { border-color: Gray; }
 
-#dashboard_cell.new_failed { background-color: #F33; }
-#dashboard_cell.new_passed { background-color: #3C3; }
-#dashboard_cell.new_error  { background-color: #FF0; }
+/* - - - - - - - - - - - - - - - - - - - - */
+
+#messages { width: 23em; }
+
+#all_messages  { width: 23em; height: 40em; overflow: auto; }
+
+#message_panel_indent { margin-left: 37px; } /* to match line-numbers offset */ 
+
+#message_text_input, #message_text, #messages
+{
+  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
+  font-size: 0.8em;
+}
+
+#message_text_input
+{
+  border-color: Gray;
+  background-color: CornSilk;
+  color: Green;
+}
+  
+.message_container { display: block; margin-top: 0.2em; }
+
+.message_container.even { background-color: Ivory; }
+.message_container.odd  { background-color: CornSilk; }
+
+.message_text { vertical-align: middle; }
+
+.message_ellision { margin-top: 1em; text-align: right; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+#secs_per_col_panel, #max_cols_panel { font-size: 0.8em; }
+
+#secs_per_col, #max_cols 
+{ 
+  font-size: 0.8em; 
+  width: 3em; 
+  text-align: center; 
+}
+
+.inflate.button, .deflate.button { font-size: 0.8em; }
+
+.updown_up, .updown_down 
+{ 
+  text-align: center; 
+  font-size: 1.3em; 
+  font-family: monospace; 
+}
+
+.traffic_light_row.even { background-color: #FFC; }
+.traffic_light_row.odd  { background-color: Ivory; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+.traffic_light:hover 
+{ 
+  background-color: #6E6E6E; 
+  cursor: pointer; 
+}
+
+.unlinked.traffic_light:hover  
+{ 
+  background-color: #FFECCB; 
+  cursor: default; 
+}
+
+.traffic_light .bulb
+{
+  display: block;
+  margin: 1px 0px 0px 0px; /* vertical bulb separation */
+  padding: 2px; /* bulb diameter */
+  width: 8px;
+  height: 8px;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+.traffic_light .bulb.failed { background-color: #F00; /* red   */ }
+.traffic_light .bulb.error  { background-color: #FC3; /* amber */ }
+.traffic_light .bulb.passed { background-color: #0F0; /* green */ }
+.traffic_light .bulb.off    { background-color: #D8D8D8; /* gray;*/ }
+
+.traffic_light_number,
+.traffic_light_ellision { color: #686868; font-size: 0.8em; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+.diffed_code 
+{ 
+  margin-top: 5px;
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  background-color: White;
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
+}
+
+#diff_sheet
+{
+  background: Cornsilk;
+  color: #383838;;
+  height: 34em;
+  overflow: auto;
+  border: 1px dashed #E6E6E6;
+}
+
+pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
+pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
+pre.diffed_code deleted { padding-left: 3px; background-color: #F6CECE; }
+
+pre.diffed_code    same:before { content: " "; background-color: White; padding-right: 3px; }
+pre.diffed_code   added:before { content: "+";     color: #BDBDBD;      padding-right: 3px; }
+pre.diffed_code deleted:before { content: "\2013"; color: #ADADAD;      padding-right: 3px; }
+/* \2013 is the en-dash, a slightly wider minus */
+
+pre.diffed_code ln 
+{ 
+  background-color: White;
+  color: #BDBDBD; 
+  margin-right: 3px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#diff_output 
+{ 
+  font-weight: normal;
+  width: 100%;
+  background: CornSilk;
+  border: 1px dashed LightGray;
+  color: #383838;
+  overflow: auto;
+  padding: 0em;
+  margin: 0em;
+}
+#diff_output.failed { border: 1px dashed #F00; } /* red */
+#diff_output.error  { border: 1px dashed #FC3; } /* amber */
+#diff_output.passed { border: 1px dashed #0F0; } /* green */
+
+.dot { display: inline-block; height: 7px; }
+.dot:after { content: "\00a0"; } /* non breaking space */
+
+.added.dot   { background-color: #CEF6CE; border: 1px dotted #0F0; }  
+.deleted.dot { background-color: #F6CECE; border: 1px dotted #F00; }
+.spacer.dot  { background-color: #FFECCB; border: 1px dotted #FFECCB; } /* same as background */
+
+diff_dots { color: #383838; font-size: 0.7em; }
+
+diff_dots.on:after  { content: '...'; }
+diff_dots.off:after { content: '\00a0\00a0\00a0'; } /* \00a0 is a retained space */
+
 
 
 
