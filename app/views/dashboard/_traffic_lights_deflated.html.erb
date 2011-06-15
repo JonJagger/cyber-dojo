@@ -9,6 +9,18 @@
       <% lights = all_lights[avatar_name] -%>    
       <tr class="<%=parity(index)-%> traffic_light_row">
       
+        <td>
+          <table>
+            <tr>
+              <% lights.each do |light| -%>
+                <td>
+                  <%= traffic_light(@dojo.name, avatar_name, light) -%>
+                </td>
+              <% end -%>
+            </tr>
+          </table>
+        </td>
+      
         <td align="right">
            <%= render :partial => 'traffic_lights_summary', 
                       :locals => { :avatar_name => avatar_name, 
@@ -22,18 +34,6 @@
         <td>
           <%= render :partial => 'avatar_summary',
                      :locals => { :avatar_name => avatar_name } -%>
-        </td>
-      
-        <td>
-          <table>
-            <tr>
-              <% lights.each do |light| -%>
-                <td>
-                  <%= traffic_light(@dojo.name, avatar_name, light) -%>
-                </td>
-              <% end -%>
-            </tr>
-          </table>
         </td>
       
       </tr>    
