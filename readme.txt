@@ -19,7 +19,7 @@ git
 Running your own CyberDojo
 ==========================
 Install VirtualBox
-Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/
+Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
 
 
 Building your own CyberDojo from scratch
