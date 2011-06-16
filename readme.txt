@@ -20,11 +20,7 @@ need to know the username and password which I will happily tell you if you emai
 Building your own CyberDojo from scratch
 ========================================
 
-Requirements
-------------
-ruby
-rails
-git
+Requirements: ruby, rails, git
 
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
