@@ -9,21 +9,23 @@ o) a virtual box.
 ===========================================================
 
 
-Requirements
-============
-ruby
-rails
-git
-
-
 Running your own CyberDojo
 ==========================
 Install VirtualBox
 Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
+It's easy to pull the latest CyberDojo source code from github onto your TurnKey image. You just
+need to know the username and password which I will happily tell you if you email me: jon@jaggersoft.com
 
 
 Building your own CyberDojo from scratch
 ========================================
+
+Requirements
+------------
+ruby
+rails
+git
+
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
 >sudo apt-get install git-core
@@ -119,8 +121,8 @@ https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
 
 
-Creating a CyberDojo
-====================
+Configuring a CyberDojo
+=======================
 The CyberDojo server will ask you to choose
 o) your language(s) (eg C++)
    Each language corresponds to a subfolder of cyberdojo/filesets/language/
@@ -304,8 +306,9 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    pair with (except google) while developing this in my limited spare time. 
    Some of what you find is likely to be non-idiomatic. Caveat emptor!
 o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
-   simpler the environment the more players will need to collaborate with each
-   other. Remember the aim of a CyberDojo is _not_ to ship something, it is to 
+   simpler the environment the more players will concentrate on the practice and
+   the more they will need to collaborate with each other. 
+   Remember the aim of a CyberDojo is _not_ to ship something, it is to 
    deliberately practice developing software collaboratively.
-o) Olve Maudal has been enthusiastic about CyberDojo from the very early days.
-   Olve - I really appreciate all your encouragement.
+o) Olve Maudal and Mike Long have been enthusiastic about CyberDojo from the very early days.
+   Olve and Mike - I really appreciate all your encouragement.
