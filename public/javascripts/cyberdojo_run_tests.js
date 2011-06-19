@@ -28,7 +28,6 @@ function postRunTests() {
     .focus();
     
   selectFileInFileList('output');
-  //saveCurrentFile();
   
   // new increment could affect layout
   refreshLineNumbering();  
