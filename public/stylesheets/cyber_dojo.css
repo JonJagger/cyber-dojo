@@ -217,11 +217,9 @@ filename.selected { background-color: LightGray; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#messages { width: 23em; }
+#messages { width: 20em; }
 
-#all_messages  { width: 23em; height: 40em; overflow: auto; }
-
-#message_panel_indent { margin-left: 37px; } /* to match line-numbers offset */ 
+#all_messages  { width: 20em; height: 40em; overflow: auto; }
 
 #message_text_input, #message_text, #messages
 {

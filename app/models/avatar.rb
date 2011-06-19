@@ -38,7 +38,6 @@ class Avatar
           :scroll_left => 0
         }
       kata.manifest[:current_filename] = 'output'
-      #kata.manifest[:output] = initial_output_text
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)

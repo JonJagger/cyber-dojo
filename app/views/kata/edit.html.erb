@@ -35,19 +35,15 @@ $j(document).ready(function() {
           <%= render :partial => 'filenames' -%>
         </div>
         
+        <div class="panel">
+          <%= render :partial => 'messages' -%>
+        </div>
+        
       </td>
       
       <td style="width:42em;">
         <%= render :partial => 'editor' -%>
         <%= render :partial => 'output' -%>
-      </td>
-      
-      <td>
-        <div id="message_panel_indent">
-          <div class="panel">
-            <%= render :partial => 'messages' -%>
-          </div>
-        </div>
       </td>
       
     </tr>
