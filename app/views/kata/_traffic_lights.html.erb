@@ -1,18 +1,76 @@
 
 <div id="traffic_lights">
+
   <table>
-    <tr>
-      <% max_displayed = 9 -%>
-      <% recent(@traffic_lights, max_displayed).each do |light| -%>
+
+    <% seconds_per_td = 15 -%>
+    <% max_cols = 30 -%>
+    <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
+    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
+    
+    <% lights = @avatar.increments -%> 
+    <% all_lights = { @avatar.name =>  lights } -%>    
+    <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%>     
+    <% td_map = gapped[@avatar.name] -%>    
+    
+    <tr class="even traffic_light_row">
+        
+      <% all_td_nos = td_map.keys.sort -%>
+      <% recent_td_nos = recent(all_td_nos, max_cols) -%>
+      
+      <% if recent_td_nos.length < all_td_nos.length -%>
         <td>
-          <%= traffic_light(@dojo.name, @avatar.name, light) -%>
+          <span class="traffic_light_ellision">...</span>
         </td>
       <% end -%>
+      
+      <% recent_td_nos.each do |td_no| -%>
+        <% td = td_map[td_no] -%>            
+        <td>
+        <% if td.class == Array -%>
+          <% if td.length == 0 -%>
+            &nbsp;
+          <% else -%>
+            <table>
+              <tr>
+                <% td.each do |light| -%>
+                  <td>
+                    <%=  traffic_light(@dojo.name, @avatar.name, light) -%>
+                  </td>
+                <% end -%>
+              </tr>
+            </table>
+          <% end -%>
+        <% end -%>
+        
+        <% if td.class == Hash -%>
+          <span class="traffic_light_ellision">...</span>         
+        <% end -%>          
+        </td>          
+      <% end -%>
+      
       <td>
-        <span class="traffic_light_number">
-         <%= @traffic_lights.length -%>
-        </span>
-      </td>      
-    </tr>
+        <%= avatar_image(@avatar.name, 43) -%>
+      </td>
+      
+      <td>
+        <span class="small_title"><%= @avatar.name.humanize -%></span>        
+        <span class="small_title"><%= @kata.language -%></span> 
+        <span class="small_title"><%= @kata.name -%></span>                           
+      </td>
+      
+      <td>
+         <%= render :partial => 'dashboard/traffic_lights_summary', 
+                    :locals => { :avatar_name => @avatar.name, 
+                                 :lights => lights } -%> 
+      </td>
+      
+      <td>
+        <%= render :partial => 'run_tests' -%>
+      </td>    
+        
+    </tr>    
+  
   </table>
 </div>
+
