@@ -13,8 +13,14 @@ Running your own CyberDojo
 ==========================
 Install VirtualBox
 Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
-It's easy to pull the latest CyberDojo source code from github onto your TurnKey image. You just
-need to know the username and password which I will happily tell you if you email me: jon@jaggersoft.com
+The turnkey image screen will tell you its IP address, eg 192.168.2.13
+Open your browser at 192.168.2.13:12320
+Now you need the username and password.
+I will happily tell you these if you email me: jon@jaggersoft.com
+CyberDojo lives at /var/www/cyberdojo
+It's easy to pull the latest CyberDojo source code from github onto your TurnKey image
+>git pull origin master
+
 
 
 Issues
