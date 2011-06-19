@@ -119,7 +119,7 @@ div[class~="filename"],
   padding-right: 0.5em;
   padding-bottom: 2px;  
   color: #383838; 
-  font-size: 11pt;
+  font-size: 15pt;
   cursor: pointer;
   white-space: nowrap;
   border-bottom: 1px solid #A8A8A8;
@@ -186,7 +186,7 @@ filename.selected { background-color: LightGray; }
 
 #editor, #editor_line_numbers
 {
-  font-size: 12pt;
+  font-size: 14pt;
   border: 0;
   margin: 0;
 }
