@@ -110,13 +110,10 @@ I installed support for C# as follows
 I installed support for PHP as follows
 >sudo apt-get install php-pear
 >sudo pear channel-discover pear.phpunit.de
->sudo pear channel-discover pear.symfony-project.com
+>sudo pear channel-discover components.ez.no
+>sudo pear install PEAR
 >sudo pear install phpunit/PHPUnit
-I also had to edit /etc/php5/conf.d/mcrypt.ini
-So its first line reads
-; configuration for php MCrypt module
-instead of
-# configuration for php MCrypt module
+>sudo pear install phpunit/PHP_CodeCoverage
 I installed support for Objective C as follows
 >sudo apt-get -y install build-essential
 >sudo apt-get install gobjc
