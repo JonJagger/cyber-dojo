@@ -213,7 +213,7 @@ filename.selected { background-color: LightGray; }
   font-weight: normal;
 }
 
-#output.waiting { border-color: Gray; }
+#output { display: none; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 

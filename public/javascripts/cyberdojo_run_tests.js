@@ -4,14 +4,14 @@ function preRunTests() {
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
 
-  $j('#output')
+  saveCurrentFile();
+  $j('#editor')
     .attr('class', 'waiting')
     .val("Running tests...");
   
   $j('#run_tests').fadeOut('slow', function() {   
       $j('#spinner').show();
   });
-  saveCurrentFile();
 }
 
 function postRunTests() { 
@@ -22,8 +22,14 @@ function postRunTests() {
   $j('#spinner').fadeOut('slow', function() {
       $j('#run_tests').show();
   });
+
+  $j('#editor')
+    .val($j('#output').val())
+    .focus();
+    
+  selectFileInFileList('output');
+  //saveCurrentFile();
   
-  $j('#editor').focus();
   // new increment could affect layout
   refreshLineNumbering();  
 }

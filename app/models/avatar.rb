@@ -30,8 +30,15 @@ class Avatar
         TestRunner::save_file(sandbox, filename, file)
       end
 
-      kata.manifest[:current_filename] = 'instructions'
-      kata.manifest[:output] = initial_output_text
+      kata.manifest[:visible_files]['output'] = 
+        {
+          :content => initial_output_text,
+          :caret_pos => 0,
+          :scroll_top => 0,
+          :scroll_left => 0
+        }
+      kata.manifest[:current_filename] = 'output'
+      #kata.manifest[:output] = initial_output_text
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)

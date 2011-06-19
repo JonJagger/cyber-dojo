@@ -17,6 +17,15 @@ It's easy to pull the latest CyberDojo source code from github onto your TurnKey
 need to know the username and password which I will happily tell you if you email me: jon@jaggersoft.com
 
 
+Issues
+======
+1. There is a bug somewhere in diff-view. Trying to view the diff for the 
+   first increment in particular is liable to give you a 500 error 
+   "sorry something went wrong". I'll look into when I get a chance.
+   To work-around just manually edit the ...&tag=X value at the end of the URL 
+2. Occasionally the server does not seem to respond at all.
+
+
 Building your own CyberDojo from scratch
 ========================================
 
