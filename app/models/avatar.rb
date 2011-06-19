@@ -20,7 +20,7 @@ class Avatar
       Dir::mkdir(folder)
       file_write(pathed(Filesets_filename), @filesets)
       file_write(pathed(Increments_filename), [])
-
+   
       Dir::mkdir(sandbox)
       kata = Kata.new(@dojo.filesets_root, @filesets)
       kata.hidden_pathnames.each do |hidden_pathname|
@@ -41,6 +41,7 @@ class Avatar
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)
+      kata.manifest[:visible_files].delete('output')
       
       cmd  = "cd '#{folder}';"
       cmd += "git init --quiet;"
