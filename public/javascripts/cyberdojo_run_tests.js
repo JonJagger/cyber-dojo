@@ -19,17 +19,18 @@ function postRunTests() {
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
   
-  $j('#spinner').fadeOut('slow', function() {
-      $j('#run_tests').show();
-  });
-
-  $j('#editor')
-    .val($j('#output').val())
-    .focus();
+  var editor = $j('#editor');
+  editor.val($j('#output').val());
+  editor.focus();
+  editor.caretPos(0);
     
   selectFileInFileList('output');
   
   // new increment could affect layout
-  refreshLineNumbering();  
+  refreshLineNumbering();
+
+  $j('#spinner').fadeOut('slow', function() {
+      $j('#run_tests').show();
+  });
 }
 
