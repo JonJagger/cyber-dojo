@@ -20,16 +20,12 @@ $j(document).ready(function() {
 
   <table>
     <tr valign="top">
-      <td>
-        <div class="panel">
-          <%= render :partial => 'info' -%>
-        </div>
-         
-        <div class="panel">      
-          <%= render :partial => 'run_tests' -%>
-          <%= render :partial => 'traffic_lights' -%>
-        </div>
-
+      <td colspan="2">
+          <%= render :partial => 'top_row' -%>
+      </td>    
+    </tr>
+    <tr valign="top">
+      <td>         
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
