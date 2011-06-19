@@ -24,6 +24,10 @@ Issues
    "sorry something went wrong". I'll look into when I get a chance.
    To work-around just manually edit the ...&tag=X value at the end of the URL 
 2. Occasionally the server does not seem to respond at all.
+3. Objective-C no longer compiles. After a server-upgrade it reports
+   The current setting for native-objc-exceptions does not match that of gnustep-base 
+      ... please correct this
+   On the todo list.
 
 
 Building your own CyberDojo from scratch
@@ -88,7 +92,7 @@ above and reported the following issues (many thanks Emily)
 Currently my server reports...
 >script/about
 Ruby version              1.8.7 (x86_64-linux)
-RubyGems version          1.3.5
+RubyGems version          1.3.7
 Rack version              1.0
 Rails version             2.3.4
 
