@@ -60,7 +60,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
 {
   overflow-y: auto;
   font-family: monospace;
-  font-size: 10pt;
+  font-size: 12pt;
   color: green;
   background-color: CornSilk;
   border: 1px dashed lightgray;
