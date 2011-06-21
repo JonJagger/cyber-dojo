@@ -30,7 +30,6 @@ Pull the latest CyberDojo source code from github onto your TurnKey image
 >git pull origin master
 
 
-
 Issues
 ======
 1. There is a bug somewhere in diff-view. Trying to view the diff for the 
@@ -183,11 +182,15 @@ Remember, the aim is to get working solutions on _all_ laptops.
 
 Dashboard
 =========
-Shows a periodically updating display of all traffic lights for
-all the computers in the dojo. Clicking on a traffic light opens
-a new page showing the diffs for that increment. There is a bug somewhere
-in the diff code, it often fails for the 1st traffic-light. I decided
-to release it anyway.
+Shows a periodically updating display of all traffic lights for 
+all the computers in the dojo. 
+
+
+Diff-view
+=========
+Clicking on a traffic light opens a new page showing the diffs for that increment. 
+There is a bug somewhere in the diff code, it often fails for the 1st traffic-light. 
+I decided to release it anyway.
 
 
 Adding a new language
@@ -280,7 +283,7 @@ Each started avatar has a subfolder underneath this, for example
 
 Git Repositories
 ================
-Each started avatar has its own git respository, eg
+Each started animal avatar has its own git respository, eg
   cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
 The starting files (as loaded via the manifests.rb's :visible_filenames) form
 tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
