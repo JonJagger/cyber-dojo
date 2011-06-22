@@ -191,6 +191,7 @@ Diff-view
 Clicking on a traffic light opens a new page showing the diffs for that increment. 
 There is a bug somewhere in the diff code, it often fails for the 1st traffic-light. 
 I decided to release it anyway.
+The diff-view page does not work in Internet Explorer 8.
 
 
 Adding a new language
