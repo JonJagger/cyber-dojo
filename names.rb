@@ -1,7 +1,6 @@
-
 # ruby names.rb
 # >dojo-name1 is in ca/cfefd7daacd9694bd893527581c59596ebd21e
-# >dojo-name1 is in f6/893527581c59596ebd21ecfefd7daacd9694bd
+# >dojo-name2 is in f6/893527581c59596ebd21ecfefd7daacd9694bd
 
 require 'digest/sha1'
 

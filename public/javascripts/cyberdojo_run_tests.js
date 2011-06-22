@@ -20,10 +20,10 @@ function postRunTests() {
   //                 :complete => "postRunTests();"
   
   var editor = $j('#editor');
-  editor.val($j('#output').val());
-  editor.focus();
-  editor.caretPos(0);
-    
+  editor.val($j('#output').val())
+        .scrollTop(0)
+        .scrollLeft(0);
+
   selectFileInFileList('output');
   
   // new increment could affect layout

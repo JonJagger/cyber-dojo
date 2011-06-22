@@ -53,7 +53,7 @@ class Kata
   def hidden_filenames
     manifest[:hidden_filenames]
   end
-
+  
 end
 
 
