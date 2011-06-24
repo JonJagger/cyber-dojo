@@ -35,7 +35,7 @@ names.each do |name|
   print created.strftime('%b %d %H:%M') + 
     '  ' + inner + '/' + outer[0..6] + '...' + 
     '  ' + name +
-    '  ' + inc_lengths.sort.join(',') +
+    '  ' + '[' + inc_lengths.sort.join(',') + '] -> ' + inc_lengths.reduce(:+).to_s +
     "\n"
 
 end
