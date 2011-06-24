@@ -86,8 +86,7 @@ class Avatar
     end    
   end
   
-  def run_tests(manifest)
-    the_kata = kata
+  def run_tests(manifest, the_kata = kata)  
     incs = [] 
     io_lock(folder) do 
       output = TestRunner::avatar_run_tests(self, the_kata, manifest)
