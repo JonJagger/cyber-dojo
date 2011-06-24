@@ -19,13 +19,12 @@ class SimulatedFullDojoTests < ActionController::TestCase
     }
   end
   
-  
   def defunct_count
-    # See comments in /app/helpers/popen_read.rb
+    # See comments in app/helpers/popen_read.rb
     `ps`.count('<defunct>')
   end
   
-  def test_if_server_stays_responsive_with_8_avatars_submitting_10_run_tests_each
+  def test_run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes
     ps_defunct_count_1 = defunct_count
     
     root_test_folder_reset    

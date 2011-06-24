@@ -4,7 +4,7 @@
 # However, running tests/functional/simulated_full_dojo_tests.rb
 # and stopping it mid-run (^Z) and then issuing a 
 #>ps 
-# command showed that many [sh <defunct>] processes.
+# command showed many [sh <defunct>] processes.
 # Googling, reveals that this means that the parent process
 # had not yet wait()ed for it to finish.
 # This popen call turned out to be he culprit.
