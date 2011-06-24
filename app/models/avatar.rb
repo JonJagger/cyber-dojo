@@ -70,11 +70,11 @@ class Avatar
     io_lock(folder) do
       cmd  = "cd #{folder};"
       cmd += "git tag|sort -g"
-      tag ||= eval IO::popen(cmd).read
+      tag ||= eval popen_read(cmd)
       
       cmd  = "cd #{folder};"
       cmd += "git show #{tag}:#{Manifest_filename}"
-      read_manifest = eval IO::popen(with_stderr(cmd)).read
+      read_manifest = eval popen_read(cmd) 
       
       manifest[:visible_files] = read_manifest[:visible_files]
       manifest[:current_filename] = read_manifest[:current_filename]
@@ -82,7 +82,7 @@ class Avatar
       
       cmd  = "cd #{folder};"
       cmd += "git show #{tag}:#{Increments_filename}"
-      incs = eval IO::popen(with_stderr(cmd)).read
+      incs = eval popen_read(cmd)
     end    
   end
   
@@ -124,10 +124,6 @@ class Avatar
 
 private
 
-  def with_stderr(cmd)
-    cmd + " " + "2>&1"
-  end
-
   def pathed(filename)
     folder + '/' + filename
   end
@@ -161,7 +157,7 @@ private
     end
     cmd += "git commit -a -m '#{n}' --quiet;"
     cmd += "git tag -m '#{n}' #{n} HEAD;"
-    system(cmd)    
+    system(cmd)   
   end
   
 end

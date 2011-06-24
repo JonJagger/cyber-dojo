@@ -3,12 +3,12 @@ def git_diff_view(avatar, tag)
     
     cmd  = "cd #{avatar.folder};"
     cmd += "git show #{tag}:manifest.rb;"
-    manifest = eval IO::popen(cmd).read
+    manifest = eval popen_read(cmd)
     visible_files = manifest[:visible_files]
     
     cmd  = "cd #{avatar.folder};"
     cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
-    diff_lines = IO::popen(cmd).read
+    diff_lines = popen_read(cmd)
 
     view = {}
     builder = GitDiffBuilder.new()
