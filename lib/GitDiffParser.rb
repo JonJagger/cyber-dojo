@@ -1,4 +1,6 @@
-module GitDiffParserHelper
+require 'Utils.rb'
+
+module GitDiff
   class GitDiffParser 
   
     def initialize(diff_text)

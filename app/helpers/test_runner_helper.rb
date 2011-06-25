@@ -1,7 +1,7 @@
 
 module TestRunnerHelper
 
-  def self.avatar_run_tests(avatar, kata, manifest)
+  def avatar_run_tests(avatar, kata, manifest)
     sandbox = avatar.sandbox
     # Reset sandbox to contain just hidden files
     remove_all_but(sandbox, kata.hidden_filenames)
@@ -33,7 +33,7 @@ module TestRunnerHelper
     run_tests_output
   end
 
-  def self.with_stderr(cmd)
+  def with_stderr(cmd)
     cmd + " " + "2>&1"
   end
 	
@@ -50,7 +50,7 @@ module TestRunnerHelper
   # quite large (junit-4.7.jar is over 200K for example) and if a whole room
   # is all doing a java kata this can slow things down on the server.
 
-  def self.remove_all_but(sandbox, these)
+  def remove_all_but(sandbox, these)
     s = "\\! -samefile \".\" "
     s += "\\! -samefile '#{sandbox}' "
     these.each {|n| s += "\\! -samefile '#{sandbox}/#{n}' " }
@@ -60,7 +60,7 @@ module TestRunnerHelper
 
 
 
-  def self.save_file(foldername, filename, file)
+  def save_file(foldername, filename, file)
     path = foldername + '/' + filename
     # No need to lock when writing these files. They are write-once-only
     File.open(path, 'w') do |fd|
@@ -77,7 +77,7 @@ module TestRunnerHelper
   # Hence this special filter, just for makefiles to convert leading spaces 
   # back to a tab character. 
 
-  def self.makefile_filter(name, content)
+  def makefile_filter(name, content)
     if name.downcase == 'makefile'
       lines = []
       newline = Regexp.new('[\r]?[\n]')

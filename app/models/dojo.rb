@@ -1,11 +1,19 @@
 
 require 'digest/sha1'
-require 'file_write.rb'
-require 'io_lock.rb'
-require 'make_time.rb'
+require 'make_time_helper.rb'
+require 'locking'
+require 'files'
 
 class Dojo
-
+#  helper_method :io_lock
+#  include IoLockHelper
+  extend Locking
+  include Locking
+  extend MakeTimeHelper
+  include MakeTimeHelper
+  extend Files
+  include Files
+  
   Index_filename = 'index.rb' 
 
   def self.find(params)
@@ -15,7 +23,7 @@ class Dojo
     outer = inner + '/' + Dojo::outer_folder(name)
     File.directory? inner and File.directory? outer
   end
-  
+
   def self.create(params)
     name = params[:dojo_name]
     root_folder = params[:dojo_root]    

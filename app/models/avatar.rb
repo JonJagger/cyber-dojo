@@ -1,10 +1,15 @@
 
-require 'file_write.rb'
-require 'io_lock.rb'
-require 'make_time.rb'
+require 'test_runner_helper.rb'
+require 'locking'
+require 'files'
 
 class Avatar
-
+  include MakeTimeHelper
+  include TestRunnerHelper
+  include Files
+  include Locking
+  include RunTestsOutputParserHelper
+  
   def self.names
     %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra )
   end
@@ -27,7 +32,7 @@ class Avatar
         system("cp '#{hidden_pathname}' '#{sandbox}'") 
       end
       kata.visible_files.each do |filename,file|
-        TestRunner::save_file(sandbox, filename, file)
+        save_file(sandbox, filename, file)
       end
 
       kata.manifest[:current_filename] = 'instructions'
@@ -83,8 +88,8 @@ class Avatar
     the_kata = kata
     incs = [] 
     io_lock(folder) do 
-      output = TestRunner::avatar_run_tests(self, the_kata, manifest)
-      test_info = RunTestsOutputParser::parse(self, the_kata, output)
+      output = avatar_run_tests(self, the_kata, manifest)
+      test_info = parse(self, the_kata, output)
       
       incs = increments     
       incs << test_info

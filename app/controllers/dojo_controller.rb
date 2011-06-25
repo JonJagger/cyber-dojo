@@ -1,6 +1,6 @@
 
 class DojoController < ApplicationController
- 
+    
   def index
     # offers new, start, resume, dashboard, messages
     configure(params)

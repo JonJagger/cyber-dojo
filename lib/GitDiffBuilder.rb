@@ -1,4 +1,4 @@
-module GitDiffBuilderHelper
+module GitDiff
   class GitDiffBuilder
   
     def initialize

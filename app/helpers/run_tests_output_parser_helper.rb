@@ -5,7 +5,7 @@ module RunTestsOutputParserHelper
   #  :error  - this means the tests could not be run (eg syntax error)
   #  :passed - this means the tests ran and all passed
   
-  def self.parse(avatar, kata, output)
+  def parse(avatar, kata, output)
     inc = { :run_tests_output => output }
     if Regexp.new("Execution terminated after ").match(output)
       inc[:outcome] = :failed
@@ -17,7 +17,7 @@ module RunTestsOutputParserHelper
 
 private
 
-	def self.parse_php_unit(output)
+	def parse_php_unit(output)
 		passed_pattern = Regexp.new('OK \(')
 		failed_pattern = Regexp.new('FAILURES!')
 		if passed_pattern.match(output)
@@ -29,7 +29,7 @@ private
 		end
 	end
 
-	def self.parse_perl_test_simple(output)
+	def parse_perl_test_simple(output)
 		passed_pattern = Regexp.new('All tests successful')
 		error_pattern = Regexp.new('syntax error')
 		if passed_pattern.match(output)
@@ -41,7 +41,7 @@ private
 		end
 	end
 
-	def self.parse_js_test_simple(output)
+	def parse_js_test_simple(output)
 		error_pattern = Regexp.new('Exception in thread "main" org.mozilla')
 		failed_pattern = Regexp.new('FAILED:assertEqual')
 		if error_pattern.match(output)
@@ -53,7 +53,7 @@ private
 		end
 	end
 
-	def self.parse_python_unittest(output) 
+	def parse_python_unittest(output) 
 		failed_pattern = Regexp.new('FAILED \(failures=')
 		passed_pattern = Regexp.new('OK')
 		if failed_pattern.match(output)
@@ -65,7 +65,7 @@ private
 		end
 	end
 	
-  def self.parse_cassert(output)
+  def parse_cassert(output)
     failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
     syntax_error_pattern = Regexp.new(':(\d*): error')
     make_error_pattern = Regexp.new('^make:')
@@ -80,7 +80,7 @@ private
     end
   end
 
-  def self.parse_ruby_test_unit(output)
+  def parse_ruby_test_unit(output)
     # If a player creates a cyberdojo.sh file with two lines
     # ruby test_gapper.rb
     # ruby test_git_diff.rb
@@ -104,7 +104,7 @@ private
     end
   end
 
-  def self.parse_nunit(output)
+  def parse_nunit(output)
     nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d*)')
     if match = nunit_pattern.match(output)
       if match[2] == "0"
@@ -117,7 +117,7 @@ private
     end
   end
 
-  def self.parse_junit(output)
+  def parse_junit(output)
     junit_pass_pattern = Regexp.new('^OK \((\d*) test')
     if match = junit_pass_pattern.match(output)
       if match[1] != "0" 

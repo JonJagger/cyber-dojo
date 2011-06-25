@@ -1,4 +1,4 @@
-
+module TdGapperHelper
 # I want horizontal spacing between dashboard traffic lights  
 # proportional to the time difference between them.
 #
@@ -92,3 +92,4 @@
   
   end
 
+end

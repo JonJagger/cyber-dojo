@@ -1,6 +1,7 @@
 
 class MessagesController < ApplicationController
- 
+  extend MakeTimeHelper
+  
   def show_some
     board_config(params)
     @messages = @dojo.messages

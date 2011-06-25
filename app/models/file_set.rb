@@ -1,8 +1,10 @@
 
-require 'folders_in.rb'
+require 'folders'
 
 class FileSet
 
+  include Folders
+  
   def initialize(filesets_root, name)
     @filesets_root = filesets_root
     @name = name

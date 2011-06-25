@@ -1,4 +1,4 @@
-module IOLockHelper
+module IoLockHelper
 
   def io_lock(path, &block)
     result = nil

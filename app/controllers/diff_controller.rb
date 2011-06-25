@@ -1,6 +1,11 @@
+require 'ids'
+require 'GitDiff'
 
 class DiffController < ApplicationController
 
+  include Ids
+  include GitDiff
+  
   def show
     configure(params)
     @dojo = Dojo.new(params)
