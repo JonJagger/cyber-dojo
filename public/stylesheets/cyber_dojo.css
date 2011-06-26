@@ -154,7 +154,7 @@ filename
   padding-right: 0.5em;
   padding-bottom: 2px;  
   color: #383838; 
-  font-size: 11pt;
+  font-size: 15pt;
   cursor: pointer;
   white-space: nowrap;
   border-bottom: 1px solid #A8A8A8;
@@ -306,7 +306,7 @@ filename.selected { background-color: LightGray; }
 .diffed_code 
 { 
   margin-top: 5px;
-  font-size: 1.3em;
+  font-size: 15pt;
   margin-bottom: 1em;
   background-color: White;
   margin-left: 0;
