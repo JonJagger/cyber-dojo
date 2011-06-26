@@ -12,8 +12,11 @@
 
 def popen_read(cmd)  
   ios = IO::popen(with_stderr(cmd))
-  output = ios.read
-  ios.close
+  begin
+    output = ios.read
+  ensure
+    ios.close
+  end
   output
 end
   
