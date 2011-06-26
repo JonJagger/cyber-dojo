@@ -21,13 +21,16 @@ def git_diff_view(avatar, tag)
         name = md[2]
         # md[1] == 'a' indicates a deleted file
         # which of course is not in the manifest for this tag
-        # I could handle this though, by retrieving it explicitly...
+        # I could handle this though, by retrieving it explicitly...but I don't
+        if name == 'output'
+          undiff(diff)
+        end
         file = visible_files[name]
         if file
           view[name] = builder.build(diff, line_split(file[:content]))
           visible_files.delete(name)
         else
-          # I don't think this should never happen...
+          # I don't think this should ever happen...
         end
       end
     end
@@ -37,5 +40,15 @@ def git_diff_view(avatar, tag)
     end
     
     view
+end
+
+def undiff(diff)
+  diff[:chunks].each do |chunk|
+    chunk[:sections].each do |section|
+      section[:after_lines] = section[:added_lines]
+      section.delete(:deleted_lines)
+      section.delete(:added_lines)
+    end
+  end
 end
 

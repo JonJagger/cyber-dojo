@@ -24,6 +24,9 @@ class DiffController < ApplicationController
         :content => git_diff_html(diff),
       }
     end
+    # Now that 'output' is not a separate textarea but a pseudo filename
+    # the current file is always 'output'
+    # Revisit this... Perhaps choose the file with the most diffs?
     @current_filename_id = @diffs.find {|diff| diff[:name] == manifest[:current_filename]}[:id]
   end
   
