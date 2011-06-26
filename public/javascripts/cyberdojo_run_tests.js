@@ -12,16 +12,18 @@ function preRunTests() {
   $j('#editor')
     .attr('class', 'waiting')
     .val('Running tests...');
-  
-  $j('#run_tests').fadeOut('slow', function() {   
-      $j('#spinner').show();
-  });
+    
+  $j('#run_tests').hide();
+  $j('#spinner').show();
 }
 
 function postRunTests() { 
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
+
+  $j('#spinner').hide();
+  $j('#run_tests').show();
 
   selectFileInFileList('output');
   //TODO: there is a possible race here...
@@ -33,9 +35,5 @@ function postRunTests() {
 
   // new increment could affect layout
   refreshLineNumbering();
-
-  $j('#spinner').fadeOut('slow', function() {
-      $j('#run_tests').show();
-  });
 }
 
