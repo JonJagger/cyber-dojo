@@ -1,10 +1,12 @@
 require 'test_helper'
+require 'GitDiffParser'
 
 # > cd cyberdojo/test
 # > ruby functional/git_diff_parser_tests.rb
 
 class TestGitDiffParser < ActionController::TestCase 
 
+  include GitDiff
   def test_parse_diff_for_file_with_space_in_its_name
     
 lines = <<HERE

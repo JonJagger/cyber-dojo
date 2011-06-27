@@ -1,7 +1,10 @@
 require 'test_helper'
+require 'Ids'
 
 class DomIdGeneratorTests < ActionController::TestCase
-  
+
+  include Ids
+    
   def test_generation
     prefix = "jj"
     g = IdGenerator.new(prefix)

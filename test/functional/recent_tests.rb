@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'recent_helper'
 
 # > cd cyberdojo/test
 # > ruby functional/recent_tests.rb
 
 class RecentTests < ActionController::TestCase
 
+  include RecentHelper
+  
   def test_when_array_is_empty_result_is_empty
     empty = []
     assert_equal [], recent(empty, 0)

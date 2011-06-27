@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'GitDiffParser'
 
 # > cd cyberdojo/test
 # > ruby functional/diff_bug_trap_tests.rb
 
 class DiffBugTrapTests < ActionController::TestCase
-
+  
+  include GitDiff
+  
   def test_specific_real_dojo_that_fails_diff_show_narrowing
 
     manifest = { :visible_files => {} }

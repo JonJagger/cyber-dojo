@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'GitDiff'
 
 # > cd cyberdojo/test
 # > ruby functional/git_diff_html_tests.rb
 
 class GitDiffHtmlTests < ActionController::TestCase
 
+  include GitDiff
+  
   def test_mixture_with_more_than_9_lines
     diffed =
     [

@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'Utils'
 
 # > cd cyberdojo/test
 # > ruby functional/sameify_tests.rb

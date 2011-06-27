@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'parity_helper'
 
 # > cd cyberdojo/test
 # > ruby functional/parity_tests.rb
 
 class ParityTests < ActionController::TestCase
 
+  include ParityHelper
+  
   def test_odd
     assert_equal "odd", parity(1)
     assert_equal "odd", parity(3)

@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'GitDiff'
 
 # > cd cyberdojo/test
 # > ruby functional/git_diff_view_tests.rb
 
 class GitDiffViewTests < ActionController::TestCase
 
+  include GitDiff
+  
   ROOT_TEST_FOLDER = 'test_dojos'
   DOJO_NAME = 'Jon Jagger'
   # the test_dojos sub-folder for 'Jon Jagger' is

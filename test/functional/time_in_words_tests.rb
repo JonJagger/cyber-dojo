@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'time_in_words_helper'
 
 # > cd cyberdojo/test
 # > ruby functional/time_in_words_tests.rb
 
 class TimeInWordsTests < ActionController::TestCase
 
+  include TimeInWordsHelper
+  
   def time_split_unsplit_words(ydhms, total_seconds, words=nil)
     assert_equal total_seconds, time_unsplit(*ydhms)
     assert_equal ydhms, time_split(total_seconds)

@@ -1,10 +1,13 @@
 require 'test_helper'
+require 'GitDiff'
 
 # > cd cyberdojo/test
 # > ruby functional/spaced_line_number_tests.rb
 
 class SpacedLineNumberTests < ActionController::TestCase
 
+  include GitDiff
+  
   def test_max_digits_1_2_3_4
     max_digits = 1
     (0..9).each {|n| assert_equal n.to_s, spaced_line_number(n, max_digits) }
