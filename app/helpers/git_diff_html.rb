@@ -7,7 +7,7 @@ end
 def diff_htmlify(n, max_digits)
     "<#{n[:type]}>" +
        '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
-       n[:line] + 
+         CGI.escapeHTML(n[:line]) + 
     "</#{n[:type]}>"
 end
 
