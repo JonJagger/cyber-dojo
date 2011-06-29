@@ -9,21 +9,45 @@ o) a virtual box.
 ===========================================================
 
 
-Requirements
-============
-ruby
-rails
-git
-
-
-Running your own CyberDojo
-==========================
+Running your own CyberDojo server
+=================================
 Install VirtualBox
-Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/
+Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
+Run the ova file in VirtualBox. Mike Long has written some instructions for this here
+http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
+The TurnKey image screen will tell you its IP address, eg 192.168.2.13
+Put the URL into your browser. That's it!
+
+
+Pulling the latest github source onto your server
+=================================================
+Add port 12320 to the URL you put into your browser above, eg
+192.168.2.13:12320
+Now you need the username and password.
+I will happily tell you these if you email me: jon@jaggersoft.com
+CyberDojo lives in the folder /var/www/cyberdojo 
+Pull the latest CyberDojo source code from github onto your TurnKey image
+>git pull origin master
+
+
+Issues
+======
+1. There is a bug somewhere in diff-view. Trying to view the diff for the 
+   first increment in particular is liable to give you a 500 error 
+   "sorry something went wrong". I'll look into when I get a chance.
+   To work-around just manually edit the ...&tag=X value at the end of the URL 
+2. Occasionally the server does not seem to respond at all.
+3. Objective-C no longer compiles. After a server-upgrade it reports
+   The current setting for native-objc-exceptions does not match that of gnustep-base 
+      ... please correct this
+   On the todo list.
 
 
 Building your own CyberDojo from scratch
 ========================================
+
+Requirements: ruby, rails, git
+
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
 >sudo apt-get install git-core
@@ -81,7 +105,7 @@ above and reported the following issues (many thanks Emily)
 Currently my server reports...
 >script/about
 Ruby version              1.8.7 (x86_64-linux)
-RubyGems version          1.3.5
+RubyGems version          1.3.7
 Rack version              1.0
 Rails version             2.3.4
 
@@ -103,13 +127,10 @@ I installed support for C# as follows
 I installed support for PHP as follows
 >sudo apt-get install php-pear
 >sudo pear channel-discover pear.phpunit.de
->sudo pear channel-discover pear.symfony-project.com
+>sudo pear channel-discover components.ez.no
+>sudo pear install PEAR
 >sudo pear install phpunit/PHPUnit
-I also had to edit /etc/php5/conf.d/mcrypt.ini
-So its first line reads
-; configuration for php MCrypt module
-instead of
-# configuration for php MCrypt module
+>sudo pear install phpunit/PHP_CodeCoverage
 I installed support for Objective C as follows
 >sudo apt-get -y install build-essential
 >sudo apt-get install gobjc
@@ -119,8 +140,8 @@ https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
 
 
-Creating a CyberDojo
-====================
+Configuring a CyberDojo
+=======================
 The CyberDojo server will ask you to choose
 o) your language(s) (eg C++)
    Each language corresponds to a subfolder of cyberdojo/filesets/language/
@@ -161,11 +182,16 @@ Remember, the aim is to get working solutions on _all_ laptops.
 
 Dashboard
 =========
-Shows a periodically updating display of all traffic lights for
-all the computers in the dojo. Clicking on a traffic light opens
-a new page showing the diffs for that increment. There is a bug somewhere
-in the diff code, it often fails for the 1st traffic-light. I decided
-to release it anyway.
+Shows a periodically updating display of all traffic lights for 
+all the computers in the dojo. 
+
+
+Diff-view
+=========
+Clicking on a traffic light opens a new page showing the diffs for that increment. 
+There is a bug somewhere in the diff code, it often fails for the 1st traffic-light. 
+I decided to release it anyway.
+The diff-view page does not work in Internet Explorer 8.
 
 
 Adding a new language
@@ -258,7 +284,7 @@ Each started avatar has a subfolder underneath this, for example
 
 Git Repositories
 ================
-Each started avatar has its own git respository, eg
+Each started animal avatar has its own git respository, eg
   cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
 The starting files (as loaded via the manifests.rb's :visible_filenames) form
 tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
@@ -304,8 +330,9 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    pair with (except google) while developing this in my limited spare time. 
    Some of what you find is likely to be non-idiomatic. Caveat emptor!
 o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
-   simpler the environment the more players will need to collaborate with each
-   other. Remember the aim of a CyberDojo is _not_ to ship something, it is to 
+   simpler the environment the more players will concentrate on the practice and
+   the more they will need to collaborate with each other. 
+   Remember the aim of a CyberDojo is _not_ to ship something, it is to 
    deliberately practice developing software collaboratively.
-o) Olve Maudal has been enthusiastic about CyberDojo from the very early days.
-   Olve - I really appreciate all your encouragement.
+o) Olve Maudal and Mike Long have been enthusiastic about CyberDojo from the very early days.
+   Olve and Mike - I really appreciate all your encouragement.

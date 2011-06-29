@@ -35,6 +35,10 @@ function selectFileInFileList(filename)
   $('radio_' + filename).checked = true;
   $('current_filename').setAttribute('value', filename);
   current_filename = filename;
+  if (filename === 'output')
+    $j('#editor').attr('readonly', 'true');
+  else
+    $j('#editor').removeAttr('readonly');
 }
 
 function fileContent(filename) 

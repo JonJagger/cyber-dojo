@@ -25,7 +25,7 @@ class Avatar
       Dir::mkdir(folder)
       file_write(pathed(Filesets_filename), @filesets)
       file_write(pathed(Increments_filename), [])
-
+   
       Dir::mkdir(sandbox)
       kata = Kata.new(@dojo.filesets_root, @filesets)
       kata.hidden_pathnames.each do |hidden_pathname|
@@ -35,11 +35,18 @@ class Avatar
         save_file(sandbox, filename, file)
       end
 
-      kata.manifest[:current_filename] = 'instructions'
-      kata.manifest[:output] = initial_output_text
+      kata.manifest[:visible_files]['output'] = 
+        {
+          :content => initial_output_text,
+          :caret_pos => 0,
+          :scroll_top => 0,
+          :scroll_left => 0
+        }
+      kata.manifest[:current_filename] = 'output'
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)
+      kata.manifest[:visible_files].delete('output')
       
       cmd  = "cd '#{folder}';"
       cmd += "git init --quiet;"
@@ -68,11 +75,11 @@ class Avatar
     io_lock(folder) do
       cmd  = "cd #{folder};"
       cmd += "git tag|sort -g"
-      tag ||= eval IO::popen(cmd).read
+      tag ||= eval popen_read(cmd)
       
       cmd  = "cd #{folder};"
       cmd += "git show #{tag}:#{Manifest_filename}"
-      read_manifest = eval IO::popen(with_stderr(cmd)).read
+      read_manifest = eval popen_read(cmd) 
       
       manifest[:visible_files] = read_manifest[:visible_files]
       manifest[:current_filename] = read_manifest[:current_filename]
@@ -80,12 +87,11 @@ class Avatar
       
       cmd  = "cd #{folder};"
       cmd += "git show #{tag}:#{Increments_filename}"
-      incs = eval IO::popen(with_stderr(cmd)).read
+      incs = eval popen_read(cmd)
     end    
   end
   
-  def run_tests(manifest)
-    the_kata = kata
+  def run_tests(manifest, the_kata = kata)  
     incs = [] 
     io_lock(folder) do 
       output = avatar_run_tests(self, the_kata, manifest)
@@ -123,10 +129,6 @@ class Avatar
 
 private
 
-  def with_stderr(cmd)
-    cmd + " " + "2>&1"
-  end
-
   def pathed(filename)
     folder + '/' + filename
   end
@@ -160,7 +162,7 @@ private
     end
     cmd += "git commit -a -m '#{n}' --quiet;"
     cmd += "git tag -m '#{n}' #{n} HEAD;"
-    system(cmd)    
+    system(cmd)   
   end
   
 end

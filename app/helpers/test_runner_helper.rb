@@ -11,32 +11,25 @@ module TestRunnerHelper
     # Run tests in sandbox in dedicated thread
     run_tests_output = ''
     sandbox_thread = Thread.new do
-			cmd  = "cd '#{sandbox}';"
-			cmd += "./cyberdojo.sh"
-      run_tests_output = IO.popen(with_stderr(cmd)).read
+      cmd  = "cd '#{sandbox}';"
+      cmd += "./cyberdojo.sh"
+      run_tests_output = popen_read(cmd)
     end
 
-    # Run tests has limited time to complete
-    kata.max_run_tests_duration.times do
-      one_second = 1
-      sleep(one_second)
-      break if sandbox_thread.status == false 
-    end
-    
-    # If tests didn't finish assume they were stuck in 
-    # an infinite loop and kill the thread
-    if sandbox_thread.status != false 
-      sandbox_thread.kill 
+    if sandbox_thread.join(kata.max_run_tests_duration) == nil
       run_tests_output = "Execution terminated after #{kata.max_run_tests_duration} seconds"
     end
 
     run_tests_output
   end
 
+<<<<<<< HEAD:app/helpers/test_runner_helper.rb
   def with_stderr(cmd)
     cmd + " " + "2>&1"
   end
 	
+=======
+>>>>>>> upstream/master:app/helpers/test_runner.rb
   # Remove all files from the sandbox except the hidden files
   # specified in the manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]

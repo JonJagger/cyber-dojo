@@ -63,19 +63,10 @@ class Dojo
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : []       
       file_write(index_filename, index << info)      
 
-      file_write(dojo.messages_filename, Dojo::initial_message)
+      file_write(dojo.messages_filename, [])
     end    
   end
 
-  def self.initial_message
-    [
-      { :sender => 'compass',
-        :text => "Welcome. CyberDojo is for doing deliberate software practice. " +
-          "Don't think about releasing, or shipping; think about practising, and improving."  
-      },
-    ]
-  end
-  
   def self.inner_folder(name)
     Dojo::sha1(name)[0..1] # ala git    
   end

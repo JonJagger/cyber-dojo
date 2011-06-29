@@ -4,27 +4,36 @@ function preRunTests() {
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
 
-  $j('#output')
-    .attr('class', 'waiting')
-    .val("Running tests...");
-  
-  $j('#run_tests').fadeOut('slow', function() {   
-      $j('#spinner').show();
-  });
   saveCurrentFile();
+  selectFileInFileList('output');
+  //TODO: there is a possible race here...
+  //TODO: If, here, a different file is selected in the filename list
+  //TODO: then this could overwrite the wrong file
+  $j('#editor')
+    .attr('class', 'waiting')
+    .val('Running tests...');
+    
+  $j('#run_tests').hide();
+  $j('#spinner').show();
 }
 
 function postRunTests() { 
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
-  
-  $j('#spinner').fadeOut('slow', function() {
-      $j('#run_tests').show();
-  });
-  
-  $j('#editor').focus();
+
+  $j('#spinner').hide();
+  $j('#run_tests').show();
+
+  selectFileInFileList('output');
+  //TODO: there is a possible race here...
+  //TODO: If, here, a different file is selected in the filename list
+  //TODO: then this could overwrite the wrong file  
+  $j('#editor').val($j('#output').val())
+               .scrollTop(0)
+               .scrollLeft(0);
+
   // new increment could affect layout
-  refreshLineNumbering();  
+  refreshLineNumbering();
 }
 

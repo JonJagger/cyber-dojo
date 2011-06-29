@@ -20,34 +20,39 @@ $j(document).ready(function() {
 
   <table>
     <tr valign="top">
-      <td>
-        <div class="panel">
-          <%= render :partial => 'info' -%>
-        </div>
-         
-        <div class="panel">      
-          <%= render :partial => 'run_tests' -%>
+      <td colspan="2">
           <%= render :partial => 'traffic_lights' -%>
-        </div>
-
+      </td>    
+    </tr>
+    <tr valign="top">
+    
+      <td>         
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
         </div>
         
+        <div class="panel">
+          <span class="small_title">
+            <%= link_to ellided_name(@dojo.name, 20), 
+                 { :controller => :dashboard, 
+                   :action => :show_inflated, 
+                   :dojo_name => @dojo.name 
+                 }, 
+                 { :class => "title",
+                   :title => @dojo.name,
+                   :target => "_blank" 
+                 } 
+            -%>
+          </span>            
+          <%= render :partial => 'messages' -%>
+        </div>
+        
       </td>
       
-      <td style="width:42em;">
+      <td style="width:50em;">
         <%= render :partial => 'editor' -%>
         <%= render :partial => 'output' -%>
-      </td>
-      
-      <td>
-        <div id="message_panel_indent">
-          <div class="panel">
-            <%= render :partial => 'messages' -%>
-          </div>
-        </div>
       </td>
       
     </tr>
