@@ -2,4 +2,5 @@
 log/*
 tmp/**/*
 dojos/*
+test/test_dojos/**/*
 
