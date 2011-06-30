@@ -41,7 +41,6 @@ class LanguageFileSetTests < ActionController::TestCase
     'C++' => 'untitled.cpp',
     'Java' => 'Untitled.java',
     'Javascript' => 'untitled.js',
-    'Objective C' => 'untitled.m',
     'Perl' => 'untitled.perl',
     'PHP' => 'Untitled.php',
     'Python' => 'untitled.py',
