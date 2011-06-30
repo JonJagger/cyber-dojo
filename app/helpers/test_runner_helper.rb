@@ -23,13 +23,10 @@ module TestRunnerHelper
     run_tests_output
   end
 
-<<<<<<< HEAD:app/helpers/test_runner_helper.rb
   def with_stderr(cmd)
     cmd + " " + "2>&1"
   end
 	
-=======
->>>>>>> upstream/master:app/helpers/test_runner.rb
   # Remove all files from the sandbox except the hidden files
   # specified in the manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]

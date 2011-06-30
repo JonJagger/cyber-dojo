@@ -1,9 +1,13 @@
 require 'test_helper'
+require 'Files'
+require 'Locking'
 
 # > cd cyberdojo/test
 # > ruby functional/io_lock_tests.rb
 
 class IoLockTests < Test::Unit::TestCase
+  include Files
+  include Locking
   
   def test_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil
     block_run = false
