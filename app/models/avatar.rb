@@ -1,7 +1,7 @@
 
 require 'test_runner_helper.rb'
-require 'locking'
-require 'files'
+require 'Locking'
+require 'Files'
 
 class Avatar
   include MakeTimeHelper

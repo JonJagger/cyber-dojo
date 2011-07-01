@@ -1,5 +1,5 @@
 
-require 'folders'
+require 'Folders'
 
 class FileSet
 

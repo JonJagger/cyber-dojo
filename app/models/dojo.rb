@@ -1,8 +1,8 @@
 
 require 'digest/sha1'
 require 'make_time_helper.rb'
-require 'locking'
-require 'files'
+require 'Locking'
+require 'Files'
 
 class Dojo
 #  helper_method :io_lock

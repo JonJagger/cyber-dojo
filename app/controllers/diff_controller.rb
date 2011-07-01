@@ -1,4 +1,4 @@
-require 'ids'
+require 'Ids'
 require 'GitDiff'
 
 class DiffController < ApplicationController
