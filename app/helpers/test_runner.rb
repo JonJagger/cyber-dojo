@@ -7,21 +7,16 @@ module TestRunner
     remove_all_but(sandbox, kata.hidden_filenames)
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
-
-    # Run tests in sandbox in dedicated thread
-    run_tests_output = ''
-    sandbox_thread = Thread.new do
-      cmd  = "cd '#{sandbox}';"
-      cmd += "./cyberdojo.sh"
-      run_tests_output = popen_read(cmd)
+   
+    cmd  = "cd '#{sandbox}';"
+    cmd += "./cyberdojo.sh"
+    output = popen_read(cmd, kata.max_run_tests_duration)
+    
+    if output =~ /Terminated\n$/
+      output += "(by the CyberDojo server after #{kata.max_run_tests_duration} seconds)"
     end
-
-    if sandbox_thread.join(kata.max_run_tests_duration) == nil
-      run_tests_output = "Execution terminated after #{kata.max_run_tests_duration} seconds"
-    end
-
-    Thread.kill(sandbox_thread)      
-    run_tests_output
+    
+    output
   end
 
   # Remove all files from the sandbox except the hidden files

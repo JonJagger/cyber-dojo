@@ -1,39 +1,57 @@
 
 # Originally I was writing
 #   eval IO::popen(cmd).read
-# However, running tests/functional/simulated_full_dojo_tests.rb
-# and stopping it mid-run (^Z) and then issuing a 
-#>ps 
-# command showed many [sh <defunct>] processes.
+# However, this was leaving many [sh <defunct>] processes.
 # Googling, reveals that this means that the parent process
 # had not yet wait()ed for it to finish.
-# The popen call turned out to be he culprit.
+# The popen call turned out to be the culprit.
 #
-# Furthermore, the run_tests_timeout_tests.rb showed that
-# if there was an infinite loop somewhere then the child
-# processes of cyberdojo.sh were not being killed.
-# What has to be done is ensure that _all_ the child processes, at
-# whatever depth of parentage, are killed.  
+# Furthermore,  killing a process does not necessarily kill its child processes. 
+# So that had to be coded. At first I killed all the descendant processes in 
+# an ensure block. However this...
+#   http://blog.headius.com/2008/02/rubys-threadraise-threadkill-timeoutrb.html
+# says there is a ruby bug in the interaction between Thread.kill and ensure,
+# and I seemed to be hitting that on occasion.
+# So I have refactored: now the descendent processes are killed outside of
+# an ensure block.
 
-def popen_read(cmd)
-  output = ''  
+def popen_read cmd, max_seconds = nil
+  output = nil
   pipe = IO::popen(with_stderr(cmd))
-  begin
+  
+  if max_seconds == nil
     output = pipe.read
-  ensure
-    pids = descendant_pids_of(pipe.pid)
-    pids.sort.reverse.each { |pid|
-      Process.kill('HUP', pid)
-      Process.wait
-    }
+  else
+    sandbox_thread = Thread.new { output = pipe.read }    
+    sandbox_thread.join(max_seconds)
   end
+  
+  pids = descendant_pids_of(pipe.pid)
+  kill(pids)
+  
+  if sandbox_thread != nil
+    Thread.kill(sandbox_thread)
+  end
+  
+  pipe.close
+  
   output
 end
-  
+
+
 def with_stderr(cmd)
   cmd + " " + "2>&1"
 end
 
+
+def kill(pids)
+  return if pids == []
+  begin
+    `kill #{pids.join(' ')}`
+  rescue => ex
+    # Could happen if the OS/GC reclaims the process? 
+  end
+end
 
 # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
 
@@ -45,6 +63,6 @@ def descendant_pids_of(base)
   # to its parent's descendants list    
   pid_map.each{ |pid,ppid| descendants[ppid] << descendants[pid] }
   # Flatten away the generations 
-  descendants[base].flatten
+  descendants[base].flatten - [base]
 end
 
