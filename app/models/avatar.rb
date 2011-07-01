@@ -109,7 +109,7 @@ class Avatar
       tag = incs.length
       git_commit_tag(manifest[:visible_files], tag)
 
-      #TODO: get diff stats and save it in increments
+      #TODO?: get diff stats and save it in increments
       # cmd = "git diff #{tag-1} #{tag} --stat sandbox"
       #  sandbox/gapper.rb      |    2 +-
       #  sandbox/test_gapper.rb |    4 ++--

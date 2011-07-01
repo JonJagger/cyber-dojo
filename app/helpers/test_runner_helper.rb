@@ -20,6 +20,7 @@ module TestRunnerHelper
       run_tests_output = "Execution terminated after #{kata.max_run_tests_duration} seconds"
     end
 
+    Thread.kill(sandbox_thread)      
     run_tests_output
   end
 

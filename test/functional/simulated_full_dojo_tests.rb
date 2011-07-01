@@ -21,7 +21,7 @@ class SimulatedFullDojoTests < ActionController::TestCase
   
   def defunct_count
     # See comments in app/helpers/popen_read.rb
-    `ps`.count('<defunct>')
+    `ps`.scan(/<defunct>/).length
   end
   
   def test_run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes
