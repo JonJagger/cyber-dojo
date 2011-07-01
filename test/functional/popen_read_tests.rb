@@ -5,11 +5,11 @@ require 'test_helper'
 
 class PopenReadTests < Test::Unit::TestCase
 
-  def xtest_popen_read_without_timeout
+  def test_popen_read_without_timeout
     assert_equal "Linux\n", popen_read('uname')
   end
 
-  def xtest_popen_read_with_timeout
+  def test_popen_read_with_timeout
     assert_equal "Linux\n", popen_read('uname', 1)
   end
   
