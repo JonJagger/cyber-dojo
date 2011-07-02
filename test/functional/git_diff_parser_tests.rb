@@ -4,9 +4,10 @@ require 'GitDiffParser'
 # > cd cyberdojo/test
 # > ruby functional/git_diff_parser_tests.rb
 
-class TestGitDiffParser < ActionController::TestCase 
+class GitDiffParserTests < ActionController::TestCase 
 
   include GitDiff
+  
   def test_parse_diff_for_file_with_space_in_its_name
     was_line =  '--- a/sand box/xxx'
     assert_equal 'a/sand box/xxx', 

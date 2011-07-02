@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'Ids'
 
-class DomIdGeneratorTests < ActionController::TestCase
+class IdGeneratorTests < ActionController::TestCase
 
   include Ids
     

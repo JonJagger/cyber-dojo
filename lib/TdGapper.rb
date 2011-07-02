@@ -81,7 +81,7 @@ class TdGapper
         if gi[0] == :tds # short gap, show all td's
           count.times {|n| td_map[td+n+1] = [] }
         end
-        if gi[0] == :collapsed # long gap, collapse to one t
+        if gi[0] == :collapsed # long gap, collapse to one td
           td_map[td+1] = { :collapsed => count }
         end
       end

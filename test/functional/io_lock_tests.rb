@@ -6,6 +6,7 @@ require 'Locking'
 # > ruby functional/io_lock_tests.rb
 
 class IoLockTests < Test::Unit::TestCase
+  
   include Files
   include Locking
   

@@ -1,6 +1,7 @@
 # ruby names.rb
-# >June 19 15:17 ca/cfefd7... php-caret 9,4,13 
-# >June 29 19:05 f6/893527... dojo-name 0,1,3 
+# >June 19 15:17 ca/cfefd7... php-caret [4,9,13] -> 26 
+# >June 29 19:05 f6/893527... dojo-name [0,1,3] -> 4
+# Columns are: Date, Time, Folder, Name, [Increments per avatar], Total Number of Increments 
 
 require 'digest/sha1'
 

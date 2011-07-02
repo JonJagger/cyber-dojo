@@ -64,6 +64,7 @@ module Files
   # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
   
   def descendant_pids_of(base)
+    # Autovivify the hash
     descendants = Hash.new { |ht,k| ht[k] = [k] }
     # Get process parentage information and turn it into a hash  
     pid_map = Hash[*`ps -eo pid,ppid`.scan(/\d+/).map{ |x| x.to_i }]

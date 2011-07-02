@@ -7,6 +7,7 @@ require 'GitDiffParser'
 class GitDiffBuilderTests < ActionController::TestCase
 
   include GitDiff
+  
   def test_build_chunk_with_space_in_its_filename
 
 lines = <<HERE
