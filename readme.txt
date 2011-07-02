@@ -11,7 +11,7 @@ o) a virtual box.
 
 Running your own CyberDojo server
 =================================
-Install VirtualBox
+Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
@@ -30,6 +30,61 @@ Pull the latest CyberDojo source code from github onto your TurnKey image
 >git pull origin master
 
 
+Configuring a CyberDojo
+=======================
+The CyberDojo server will ask you to choose
+o) your language(s) (eg C++)
+   Each language corresponds to a subfolder of cyberdojo/filesets/language/
+   You must select at least one language. Any player entering the CyberDojo
+   will be randomly assigned a language from those selected at creation.
+o) your kata(s) (eg Prime Factors)
+   Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
+   You must select at least one kata. Any player entering the CyberDojo
+   will be randomly assigned a kata from those selected at creation.
+
+
+Entering a CyberDojo
+====================
+The CyberDojo server will choose your animal avatar (eg Pandas). The avatar 
+provides identity for each laptop participating in the kata. You can re-enter
+at any time by choosing the avatar. This is handy if a laptop has to retire 
+as a new laptop can easily and instantly replace it.
+
+
+Traffic Lights
+==============
+The display of each run-tests increment uses a traffic light, with meanings for
+the three colours as follows:
+  o) red   - tests ran but at least one failed
+  o) amber - syntax error somewhere, tests not run
+  o) green - tests ran and all passed
+The colours are positional, top red, middle amber, bottom green.
+This means you can still read the display if you are colour blind
+(which a surprising number of people are). 
+
+
+Messages
+========
+Each computer can post tweet like messages which appear on the message board on
+the right hand side. I encourage players to use this to work together, 
+particularly when running the dojo with the aim of getting working solutions 
+on _all_ laptops. 
+
+
+Dashboard
+=========
+Shows a periodically updating display of all traffic lights for 
+all the computers in the dojo. 
+
+
+Diff-view
+=========
+Clicking on a traffic light opens a new page showing the diffs for that increment. 
+There is a bug somewhere in the diff code, it often fails for the 1st traffic-light. 
+I decided to release it anyway.
+The diff-view page does not work in Internet Explorer 8.
+
+
 Issues
 ======
 1. There is a bug somewhere in diff-view. Trying to view the diff for the 
@@ -45,9 +100,7 @@ Issues
    
 Building your own CyberDojo from scratch
 ========================================
-
 Requirements: ruby, rails, git
-
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
 >sudo apt-get install git-core
@@ -105,60 +158,6 @@ I installed support for Objective C as follows
 I installed support for Javascript using Rhino. I downloaded rhino_7R2.zip from 
 https://developer.mozilla.org/en/RhinoDownload which contains the necessary
 js.jar file. Rhino runs on top of Java.
-
-
-Configuring a CyberDojo
-=======================
-The CyberDojo server will ask you to choose
-o) your language(s) (eg C++)
-   Each language corresponds to a subfolder of cyberdojo/filesets/language/
-   You must select at least one language. Any player entering the CyberDojo
-   will be randomly assigned a language from those selected at creation.
-o) your kata(s) (eg Prime Factors)
-   Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
-   You must select at least one kata. Any player entering the CyberDojo
-   will be randomly assigned a kata from those selected at creation.
-
-
-Entering a CyberDojo
-====================
-The CyberDojo server will choose your animal avatar (eg Pandas). The avatar 
-provides identity for each laptop participating in the kata. You can re-enter
-at any time by choosing the avatar. This is handy if a laptop has to retire 
-as a new laptop can easily and instantly replace it.
-
-
-Traffic Lights
-==============
-The display of each increment uses a traffic light, with meanings for
-the three colours as follows:
-  o) red   - tests ran but at least one failed
-  o) amber - syntax error somewhere, tests not run
-  o) green - tests ran and all passed
-The colours are positional, top red, middle amber, bottom green.
-This means you can still read the display if you are colour blind
-(which a surprising number of people are). 
-
-
-Messages
-========
-Each computer can post tweet like messages which appear on the message board on
-the right hand side. I encourage players to use this to work together.
-Remember, the aim is to get working solutions on _all_ laptops. 
-
-
-Dashboard
-=========
-Shows a periodically updating display of all traffic lights for 
-all the computers in the dojo. 
-
-
-Diff-view
-=========
-Clicking on a traffic light opens a new page showing the diffs for that increment. 
-There is a bug somewhere in the diff code, it often fails for the 1st traffic-light. 
-I decided to release it anyway.
-The diff-view page does not work in Internet Explorer 8.
 
 
 Adding a new language
