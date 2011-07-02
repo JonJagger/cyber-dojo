@@ -49,8 +49,8 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_green_game_session',
-    :secret      => '4a888726eeb9ae5ca6ca781eff705b5f9c91293ad2af1fa3997dbceee8dd62cc61adc73025c311af521ef33965f9bbb8d6b1c0021cfdb3c53ecee6fc3625e323'
+    :key    => '_green_game_session',
+    :secret => '4a888726eeb9ae5ca6ca781eff705b5f9c91293ad2af1fa3997dbceee8dd62cc61adc73025c311af521ef33965f9bbb8d6b1c0021cfdb3c53ecee6fc3625e323'
   }
 
   # Use the database for sessions instead of the cookie-based default,
