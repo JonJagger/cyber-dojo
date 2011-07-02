@@ -77,42 +77,6 @@ Rack version              1.1.2
 Rails version             2.3.8
 
 
-Installation Reports
-====================
-Emily Bache created a cyberdojo server starting from the aging instructions
-above and reported the following issues (many thanks Emily)
->I got an error when installing rails:
->
->Error installing rails:
->    bundler requires RubyGems version >= 1.3.6
->
->I found this helpful blog post which explains what to do about this:
->
->http://blog.eike.se/2010/08/rails-3-on-ubuntu-910.html
->
->Then I when I tried to start rails I got an error with rack:
->
->version error: rack(1.2.1 not ~> 1.0.0) (Gem::LoadError)
->
->I installed the earlier version like this:
->
->sudo gem install rack -v 1.0.0
->
->Then when installing java, the package seems to have changed name:
->
->Couldn't find package oracle-java6-sdk
->
->I instead installed package "default-jdk", which pulled in a lot of stuff.
->
->With C#, I found that in file 
->
->cyberdojo/filesets/language/C#/cyberdojo.sh
->
->was trying to run the program "nunit-console2", whereas the one I had installed 
->was called "nunit-console". So I edited that file and then I could use C# in 
->the dojo.
-
-
 Installing Languages
 ====================
 Initial filesets for ten languages are provided: C, C++, C#, Objective C, 
@@ -122,8 +86,8 @@ these languages of course depends on whether these languages are installed on
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself. 
 I installed support for Java as follows
->sudo apt-get install sun-java6-sdk
-(when asked, press tab to select ok, and hit enter to continue)
+>sudo apt-get install default-jdk
+(if asked, press tab to select ok, and hit enter to continue)
 I installed support for C# as follows
 >sudo apt-get install mono-gmcs
 >sudo apt-get install nunit-console
