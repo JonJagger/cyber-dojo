@@ -40,9 +40,9 @@ Issues
 3. Objective-C no longer compiles. After a server-upgrade it reports
    The current setting for native-objc-exceptions does not match that of gnustep-base 
       ... please correct this
-   On the todo list.
+   On the todo list but not a high priority.
 
-
+   
 Building your own CyberDojo from scratch
 ========================================
 
@@ -67,8 +67,18 @@ There are no requirements on the clients (except of course a browser). I also
 install and use apache on my CyberDojo server but that is optional.
 
 
-Installation Update
-===================
+Versions
+========
+After Mike Long's sterling upgrade work my server reports...
+>script/about
+Ruby version              1.8.7 (x86_64-linux)
+RubyGems version          1.3.7
+Rack version              1.1.2
+Rails version             2.3.8
+
+
+Installation Reports
+====================
 Emily Bache created a cyberdojo server starting from the aging instructions
 above and reported the following issues (many thanks Emily)
 >I got an error when installing rails:
@@ -101,13 +111,6 @@ above and reported the following issues (many thanks Emily)
 >was trying to run the program "nunit-console2", whereas the one I had installed 
 >was called "nunit-console". So I edited that file and then I could use C# in 
 >the dojo.
-
-Currently my server reports...
->script/about
-Ruby version              1.8.7 (x86_64-linux)
-RubyGems version          1.3.7
-Rack version              1.0
-Rails version             2.3.4
 
 
 Installing Languages
