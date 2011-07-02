@@ -2,11 +2,10 @@
    VERY VERY IMPORTANT - VERY VERY IMPORTANT
 ===========================================================
 CyberDojo clients have full rights on the CyberDojo server. If you 
-setup your own CyberServer you are strongly advised to consider using
+setup your own server you are strongly advised to consider using
 o) a dedicated network segment
 o) a dedicated server
 o) a virtual box.
-===========================================================
 
 
 Running your own CyberDojo server
