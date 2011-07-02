@@ -11,10 +11,10 @@ def sameify(source)
   result
 end
 
-
 def line_split(source)
   source.split(/(\n)/).select { |line| line != "\n" }
 end
+
 # Note that
 # source = "a\nb"
 # line_split(source) --> [ "a, "b" ]

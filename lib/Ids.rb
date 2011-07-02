@@ -1,4 +1,5 @@
 module Ids
+  
   class IdGenerator
     
     def initialize(prefix)

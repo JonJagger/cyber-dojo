@@ -1,4 +1,5 @@
 module Files
+  
   def file_write(path, object)
     # When doing a git diff on a repository that includes files created
     # by this function I found the output contained extra lines thus
@@ -34,8 +35,7 @@ module Files
       sandbox_thread.join(max_seconds)
     end
     
-    pids = descendant_pids_of(pipe.pid)
-    kill(pids)
+    kill(descendant_pids_of(pipe.pid))
     
     if sandbox_thread != nil
       Thread.kill(sandbox_thread)
@@ -56,7 +56,7 @@ module Files
     return if pids == []
     begin
       `kill #{pids.join(' ')}`
-    rescue => ex
+    rescue
       # Could happen if the OS/GC reclaims the process? 
     end
   end

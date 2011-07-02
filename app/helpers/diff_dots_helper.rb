@@ -1,4 +1,5 @@
 module DiffDotsHelper
+  
   def diff_dots(n, kind)
     max_dots = 3
     html = '<table>'
@@ -31,4 +32,5 @@ module DiffDotsHelper
   def td_dot(kind)
     "<td><div class='#{kind} dot'></div></td>"
   end
+  
 end

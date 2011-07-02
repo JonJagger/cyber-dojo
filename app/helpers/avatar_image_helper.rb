@@ -1,4 +1,5 @@
 module AvatarImageHelper
+  
   def avatar_image(one, size)
 
     one = one.downcase

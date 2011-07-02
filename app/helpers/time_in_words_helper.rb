@@ -1,4 +1,6 @@
 module TimeInWordsHelper
+
+  # Something akin to git log --relative-date option  
   # currently unused - I plan to use this (or something built on this)
   # to show a tool-tip for ... ellision on the dashboard
   
