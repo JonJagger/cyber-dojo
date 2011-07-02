@@ -40,7 +40,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     increments = avatar.run_tests(manifest)
     ps_count_after = ps_count
 
-    assert manifest[:output].match /^Execution terminated after 10 seconds/
+    assert manifest[:output] =~ /\(by the CyberDojo server after 10 seconds\)$/
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
   end
   
@@ -65,7 +65,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     ended = Time.now
     ps_count_after = ps_count
     
-    assert manifest[:output].match /^Execution terminated after 2 seconds/
+    assert manifest[:output] =~ /\(by the CyberDojo server after 2 seconds\)$/ 
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
     time_taken = ended - started
