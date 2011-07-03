@@ -55,6 +55,13 @@ class DojoController < ApplicationController
                   :action => :enter, 
                   :dojo_name => dojo_name
                   
+    elsif params[:start_selected]
+      redirect_to :controller => :kata, 
+                  :action => :enter_selected, 
+                  :dojo_name => dojo_name,
+                  :language => params[:language],
+                  :kata => params[:kata]
+                                      
     elsif params[:resume]
       redirect_to :action => :resume, 
                   :dojo_name => dojo_name

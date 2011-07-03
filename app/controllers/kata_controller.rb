@@ -6,10 +6,32 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params)   
     manifest = @dojo.manifest
     # randonly choose kata and language from selections made at dojo creation
+    if manifest[:katas].length > 1
+      redirect_to :action => :select, :dojo_name => params[:dojo_name]
+    else
+      
+      filesets = {
+        'kata' => manifest[:katas].shuffle[0],
+        'language' => manifest[:languages].shuffle[0]
+      }    
+      @avatar = @dojo.create_avatar(filesets)    
+      if @avatar == nil
+        flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
+        redirect_to :controller => :dojo, :action => :index, :dojo_name => @dojo.name
+      else
+        redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
+      end
+    end
+  end    
+
+  def enter_selected
+    configure(params) 
+    @dojo = Dojo.new(params)   
+    manifest = @dojo.manifest
     filesets = {
-      'kata' => manifest[:katas].shuffle[0],
-      'language' => manifest[:languages].shuffle[0]
-    }    
+      'kata' => params[:kata],
+      'language' => params[:language]
+    }
     @avatar = @dojo.create_avatar(filesets)    
     if @avatar == nil
       flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
@@ -17,8 +39,16 @@ class KataController < ApplicationController
     else
       redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
     end
-  end    
-    
+  end
+  
+  def select
+    configure(params) 
+    @dojo = Dojo.new(params)   
+    manifest = @dojo.manifest
+    @katas = manifest[:katas]
+    @languages = manifest[:languages]
+  end
+  
   def review
     configure(params)
     params[:readonly] = true

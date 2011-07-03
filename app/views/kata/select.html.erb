@@ -1,0 +1,28 @@
+
+<script language="javascript" type="text/javascript"><!--
+
+$j(document).ready(function() {
+ 
+});
+
+//--></script>
+
+<h1> Select Kata and Language </h1>
+Dojo name = <%= debug @dojo %> 
+Dojo name = <%= debug @dojo.name %> 
+<div class="panel">
+      
+  <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
+  
+  <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
+    <%= hidden_field_tag :dojo_name, @dojo.name, :id => 'dojo_name' %>
+	<%= select_tag "kata", options_for_select(@katas, @katas[0]) %>
+	<%= select_tag "language", options_for_select(@languages, @languages[0]) %>
+	
+	<input type="submit"
+     	class="main button"
+     	name="start_selected"
+     	id="start_button"
+     	value="Start Coding" />
+  </form>
+</div>
