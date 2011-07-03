@@ -6,7 +6,7 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params)   
     manifest = @dojo.manifest
     # randonly choose kata and language from selections made at dojo creation
-    if manifest[:katas].length > 1
+    if manifest[:katas].length > 1 or manifest[:languages].length > 1 
       redirect_to :action => :select, :dojo_name => params[:dojo_name]
     else
       
