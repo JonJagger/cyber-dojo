@@ -4,8 +4,7 @@
 
 <div class="panel">
       
-  <!-- Check with Jon if the onsubmit is really needed here -->
-  <form action="/dojo/enter" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
+  <form action="/dojo/enter" target="_blank" method="post">
     <%= hidden_field_tag :dojo_name, @dojo.name, :id => 'dojo_name' %>
 	<%= select_tag "kata", options_for_select(@katas, @katas[0]) %>
 	<%= select_tag "language", options_for_select(@languages, @languages[0]) %>
