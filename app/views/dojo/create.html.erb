@@ -62,6 +62,9 @@ function kataSelected()
   <%= ellided_name(@dojo.name, 40) %>
 </h1>
 
+&nbsp;&nbsp;Each computer entering your CyberDojo will be able to select a 
+kata and a language from those selected.
+
 <table align="center">
   <tr>
     <td valign="top">
@@ -85,7 +88,7 @@ function kataSelected()
                    onmouseover='showKata("<%=choice-%>");'>
                 <input id="kata_<%=index-%>" 
                        type="checkbox" 
-                       onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'
+                       onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'                      
                        name="kata[<%=index-%>]" 
                        value="<%=choice-%>" />
                 <label><%= choice -%></label>
@@ -103,9 +106,6 @@ function kataSelected()
           </td>          
         </tr>
       </table>
-        &nbsp;&nbsp;Each computer entering your CyberDojo will be able
-        <br/>
-        &nbsp;&nbsp;to select a kata and a language from those selected.
       
     </td>
     <td valign="top">
@@ -154,7 +154,7 @@ function kataSelected()
 
 </form>
 
-<% @katas.each_with_index do |choice,index| -%>
+<% @katas.each do |choice| -%>
    <textarea style="display:none;" 
              name="kata[<%=choice-%>]"
              id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>

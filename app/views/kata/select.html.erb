@@ -1,19 +1,166 @@
 
 
-<h1> Select Kata and Language </h1>
+<script language="JavaScript"
+        type="text/javascript"><!--
 
-<div class="panel">
+$j(document).ready(function() {
+  if (kataCount === 1) {
+    makeSelection('kata', 0, $('kata_0').value);
+  }
+  if (languageCount == 1) {
+    makeSelection('language', 0, $('language_0').value);
+  }
+});
+        
+var languageCount = <%=@languages.length-%>;
+var kataCount = <%=@katas.length-%>;
+
+function showKata(choice) {
+  $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
+}
+
+function makeSelection(name, index, choice) { 
+  var selection = $(name + '_' + index); 
+  selection.checked = true;   
+  if (name === 'kata') {   
+    showKata(choice);  
+  }
+  setStartButtonState();
+}
+
+function setStartButtonState() {
+  $('start_button').disabled = !languageSelected() || !kataSelected();
+}
+
+function languageSelected() {
+  for (var at = 0; at !== languageCount; at += 1) {
+    if ($('language_' + at).checked) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function kataSelected()
+{
+  for (var at = 0; at != kataCount; at += 1) {
+    if ($('kata_' + at).checked) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//--></script>
+
+<form action="/dojo/enter" target="_blank" method="post">
+
+<input type="hidden"
+       name="dojo_name" 
+       id="dojo_name" 
+       value="<%=@dojo.name%>" />
+
+<h1 title="<%= @dojo.name%>">   
+  <%= ellided_name(@dojo.name, 40) %>
+</h1>
+
+&nbsp;&nbsp;Please select
+<% if @katas.length > 1 -%>
+your kata 
+<% end -%>
+<% if @katas.length > 1 && @languages.length > 1 -%>
+and 
+<% end -%>
+<% if @languages.length > 1 -%>
+your language
+<% end -%>
+
+
+<table align="center">
+  <tr>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td valign="top">
+            <div>
+              <span class="choose_title">
+                <%= "Kata" + (@katas.length > 1 ? "s" : "") -%>
+              </span>
+            </div>
+            
+            <% @katas.each_with_index do |choice,index| -%>
+              <div class="mid_tone fileset" 
+                   onclick='makeSelection("kata", <%=index-%>, "<%=choice-%>");' >
+                <input id="kata_<%=index-%>" 
+                       type="radio" 
+                       onclick='makeSelection("kata", <%=index-%>, "<%=choice-%>");'                      
+                       name="kata"
+                       <% if @katas.length == 1 -%>
+                       <% end -%>
+                       value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+            
+          </td>
+          <td>&nbsp;</rd>
+          <td>
+            <textarea name="kata_info" 
+                      id="kata_info"
+                      cols="62" 
+                      rows="24">
+            </textarea>
+          </td>          
+        </tr>
+      </table>
       
-  <form action="/dojo/enter" target="_blank" method="post">
-    <%= hidden_field_tag :dojo_name, @dojo.name, :id => 'dojo_name' %>
-	<%= select_tag "kata", options_for_select(@katas, @katas[0]) %>
-	<%= select_tag "language", options_for_select(@languages, @languages[0]) %>
-	
-	<input type="submit"
-     	class="main button"
-     	name="start_selected"
-     	id="start_button"
-     	value="Start Coding" />
-  </form>
-  
-</div>
+    </td>
+    <td valign="top">
+      <table class="panel">
+        <tr>
+          <td valign="top">
+            <div class="choose_title">
+             <%= "Language" + (@languages.length > 1 ? "s" : "") -%>
+            </div>
+
+            <% @languages.each_with_index do |choice,index| -%>
+              <div class="mid_tone fileset"
+                   onclick='makeSelection("language", <%=index-%>, "<%=choice-%>");'>
+                <input id="language_<%=index-%>" 
+                       type="radio" 
+                       onclick='makeSelection("language", <%=index-%>, "<%=choice-%>");'
+                       name="language" 
+                      value="<%=choice-%>" />
+                <label><%= choice -%></label>
+              </div>    
+            <% end -%>    
+          </td>
+        </tr>
+      </table>
+      
+      <table>
+        <tr>
+          <td valign="top">
+            <input id="start_button" 
+                   class="main button"
+                   type="submit" 
+                   value="Start Coding" 
+                   name="start_selected"
+                   disabled/>
+          </td>
+        </tr>
+      </table>        
+    </td>
+  </tr>
+</table>
+
+</form>
+
+<% @katas.each do |choice| -%>
+   <textarea style="display:none;" 
+             name="kata[<%=choice-%>]"
+             id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>
+<% end -%>      
+
+
+

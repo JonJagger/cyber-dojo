@@ -5,7 +5,7 @@ class KataController < ApplicationController
     configure(params) 
     @dojo = Dojo.new(params)   
     manifest = @dojo.manifest
-    # randonly choose kata and language from selections made at dojo creation
+    # choose kata and language from selections made at dojo creation
     if manifest[:katas].length > 1 or manifest[:languages].length > 1 
       redirect_to :action => :select, :dojo_name => params[:dojo_name]
     else
@@ -47,6 +47,11 @@ class KataController < ApplicationController
     manifest = @dojo.manifest
     @katas = manifest[:katas]
     @languages = manifest[:languages]
+    @kata_info = {}
+    @katas.each do |name|
+      path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
+      @kata_info[name] = IO.read(path)
+    end            
   end
   
   def review
