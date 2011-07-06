@@ -58,14 +58,13 @@ the three colours as follows:
   o) amber - syntax error somewhere, tests not run
   o) green - tests ran and all passed
 The colours are positional, top red, middle amber, bottom green.
-This means you can still read the display if you are colour blind
-(which a surprising number of people are). 
+This means you can still read the display if you are colour blind.
 
 
 Messages
 ========
-Each computer can post tweet like messages which appear on the message board on
-the right hand side. I encourage players to use this to work together, 
+Each computer can post tweet like messages which appear on the lower
+left hand side. I encourage players to use this to work together, 
 particularly when running the dojo with the aim of getting working solutions 
 on _all_ laptops. 
 
@@ -90,7 +89,7 @@ Issues
    first increment in particular is liable to give you a 500 error 
    "sorry something went wrong". I'll look into when I get a chance.
    To work-around just manually edit the ...&tag=X value at the end of the URL 
-2. Occasionally the server does not seem to respond at all.
+2. Occasionally the server does not seem to respond when trying to enter a dojo.
 3. Objective-C no longer compiles. After a server-upgrade it reports
    The current setting for native-objc-exceptions does not match that of gnustep-base 
       ... please correct this
