@@ -11,8 +11,8 @@ class KataController < ApplicationController
     else
       
       filesets = {
-        'kata' => manifest[:katas].shuffle[0],
-        'language' => manifest[:languages].shuffle[0]
+        'kata' => manifest[:katas][0],
+        'language' => manifest[:languages][0]
       }    
       @avatar = @dojo.create_avatar(filesets)    
       if @avatar == nil
