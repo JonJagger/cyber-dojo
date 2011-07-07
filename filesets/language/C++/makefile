@@ -1,7 +1,7 @@
-run.tests : run.tests.exe
-	./run.tests.exe
+run.tests.output : run.tests
+	./run.tests
 
-run.tests.exe : *.cpp
-	g++ -Wall -Werror *.cpp -o run.tests.exe
+run.tests : *.cpp
+	g++ -Wall -Werror *.cpp -o run.tests
 
 

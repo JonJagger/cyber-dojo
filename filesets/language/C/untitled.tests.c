@@ -3,7 +3,7 @@
 
 static void example(void)
 {
-    assert(9*6 == answer());
+    assert(6*9 == answer());
 }
 
 typedef void test(void);

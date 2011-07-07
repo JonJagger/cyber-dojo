@@ -15,8 +15,6 @@ module RunTestsOutputParserHelper
     inc
   end
 
-private
-
 	def parse_php_unit(output)
 		passed_pattern = Regexp.new('OK \(')
 		failed_pattern = Regexp.new('FAILURES!')

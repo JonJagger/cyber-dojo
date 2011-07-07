@@ -1,19 +1,19 @@
 #include "untitled.hpp"
 #include <assert.h>
 
-static void example(void)
+static void example()
 {
-    assert(9*6 == answer());
+    assert(6*9 == answer());
 }
 
-typedef void test(void);
+typedef void test();
 
 static test * tests[] =
 {
     example,
 };
 
-int main(void)
+int main()
 {
     for (int at = 0; at != sizeof tests / sizeof tests[0]; at++)
         tests[at]();

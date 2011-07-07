@@ -4,6 +4,7 @@ require 'Locking'
 require 'Files'
 
 class Avatar
+
   include MakeTimeHelper
   include TestRunnerHelper
   include Files

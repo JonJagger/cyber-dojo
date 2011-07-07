@@ -3,6 +3,7 @@ require 'GitDiffParser'
 require 'Files'
 
 module GitDiff
+
   include Files
   
   def git_diff_html(diff)

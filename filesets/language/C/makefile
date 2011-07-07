@@ -1,7 +1,7 @@
-run.tests : run.tests.exe
-	./run.tests.exe
+run.tests.output : run.tests
+	./run.tests
 
-run.tests.exe : *.c 
-	gcc -Wall -Werror -std=c99 *.c -o run.tests.exe
+run.tests : *.c 
+	gcc -Wall -Werror -std=c99 *.c -o run.tests
 
 
