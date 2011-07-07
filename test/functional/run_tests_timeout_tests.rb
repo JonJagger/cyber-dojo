@@ -20,10 +20,10 @@ class RunTestsTimeOutTests < ActionController::TestCase
   end
   
   def ps_count
-    `ps aux | grep -E "(cyberdojo|make|run\.tests\.exe)"`.lines.count
+    `ps aux | grep -E "(cyberdojo|make|run\.tests)"`.lines.count
   end
   
-  def test_that_code_with_infinite_loop_times_out
+  def test_that_code_with_infinite_loop_times_out_and_doesnt_leak_processes
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
@@ -44,7 +44,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
   end
   
-  def test_that_reduced_max_run_tests_duration_stops_infinite_loop_earlier
+  def test_that_reduced_max_run_tests_duration_stops_infinite_loop_earlier_and_doesnt_leak_processes
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
