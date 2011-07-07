@@ -61,4 +61,37 @@ function fileScrollTop(filename)
   return $('file_scroll_top_for_' + filename);
 }
 
+function sortedFilenames()
+{
+  filenames = allFilenames();
+  sortFilenames(filenames);
+  return filenames;
+}
+
+function indexOfCurrentFile(filenames)
+{
+  for(var at = 0; at < filenames.length; at++)
+    if (filenames[at] === current_filename)
+      var index = at;
+  return index;
+}
+
+function loadPreviousFile()
+{
+  var filenames = sortedFilenames();
+  var index = indexOfCurrentFile(filenames);       
+  var previousIndex = (index === 0) ? filenames.length - 1 : index - 1;
+  saveCurrentFile();
+  loadFile(filenames[previousIndex]);
+}
+
+function loadNextFile()
+{
+  var filenames = sortedFilenames();
+  var index = indexOfCurrentFile(filenames);       
+  var nextIndex = (index === filenames.length - 1) ? 0 : index + 1;
+  saveCurrentFile();
+  loadFile(filenames[nextIndex]);  
+}
+
 

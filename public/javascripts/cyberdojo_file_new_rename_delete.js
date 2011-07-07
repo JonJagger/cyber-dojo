@@ -35,9 +35,10 @@ function rebuildFilenameList()
 
 function newFile() 
 {
-  // Append three random chars to the end of the untitled filename.
+  // Append three random chars to the end of the filename.
   // This is so there is NO excuse not to rename it!
-  newFileContent('untitled_' + random3(), 'Please rename me!', 0, 0, 0);
+  newFileContent('newfile_' + random3(), 'Please rename me!', 0, 0, 0);
+  renameFile();
 }
 
 function newFileContent(filename, content, caret_pos, scroll_top, scroll_left) 

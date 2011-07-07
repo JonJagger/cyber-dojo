@@ -143,14 +143,16 @@ private
   def initial_output_text
     [ 
       '',
+      '  Click the Run Tests button (above). The output will appear here.',
       '',
-      '  Click Run Tests to start. The output will appear here.',
-      '',
-      '  A traffic light will also apppear:',
+      '  A traffic-light will indicate the outcome:',
       '     (o) red   - the tests ran but one or more failed',
       '     (o) amber - the tests could not be run',
       '     (o) green - the tests ran and all passed',
       '',
+      " Click a file's name to edit it.",
+      '',
+      ' Use the Post button to send messages to everyone in the dojo.'
     ].join("\n")
   end
 

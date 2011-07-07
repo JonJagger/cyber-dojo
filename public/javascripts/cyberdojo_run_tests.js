@@ -1,4 +1,9 @@
 
+function runTests()
+{
+  $j('#run_tests_button').click();
+}
+
 function preRunTests() {
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
@@ -34,6 +39,6 @@ function postRunTests() {
                .scrollLeft(0);
 
   // new increment could affect layout
-  refreshLineNumbering();
+  refreshLineNumbering();  
 }
 
