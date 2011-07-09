@@ -1,6 +1,6 @@
 
 <h1>CyberDojo</h1>
-<h3>Deliberate Software Practice</h3>
+<h3>Deliberate Software Team Practice</h3>
 
 <table>
   <tr>
@@ -111,16 +111,20 @@
   <tr>
     <td align="center">
       <a href="http://jonjagger.blogspot.com/p/cyberdojo.html" target="_blank">CyberDojo<a/> 
-      TurnKey Linux 
-      <a href="http://www.virtualbox.org/" target="_blank">VirtualBox</a> 
-      image 
-      <a href="http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/" target="_blank">download</a>
+      <a href="http://www.virtualbox.org/" target="_blank">VirtualBox</a>      
+      <a href="http://www.turnkeylinux.org/" target="_blank">TurnKey Linux</a>
+      <a href="http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/" target="_blank">image download</a>
     </td>
   </tr>
   
   <tr>
     <td align="center">
-      Conceived and implemented by <a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>
+      <%= link_to 'Conceived', 
+        { :controller => :dojo, :action => :conceived }, 
+        { :target => "_blank" } 
+      -%>
+      and implemented by 
+      <a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>
     </td>
   </tr>
   
@@ -128,14 +132,17 @@
     <td align="center">
       <%= link_to 'inFrequently Asked Questions', 
         { :controller => :dojo, :action => :ifaq }, 
-        { :target => "_blank", :title => 'inFrequently Asked Questions' } 
+        { :target => "_blank" } 
       -%>
     </td>
   </tr>
 
   <tr>
-    <td>
-      &nbsp;
+    <td align="center">
+      <%= link_to 'Tips', 
+        { :controller => :dojo, :action => :tips }, 
+        { :target => "_blank" } 
+      -%>
     </td>
   </tr>
   
@@ -154,7 +161,8 @@
   
   <tr>
     <td align="center">
-      <a href="http://www.MasteringAgilePractice.com" target="_blank">http://www.MasteringAgilePractice.com</a> 
+      <a href="http://www.MasteringAgilePractice.com" 
+         target="_blank">http://www.MasteringAgilePractice.com</a> 
     </td>
   </tr>
 

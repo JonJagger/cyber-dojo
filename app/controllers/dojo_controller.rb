@@ -85,6 +85,9 @@ class DojoController < ApplicationController
   def ifaq
   end
 
+  def conceived
+  end
+  
   def render_404
     render :file => RAILS_ROOT + '/' + 'public' +'/' + '404.html'
   end
