@@ -61,14 +61,6 @@ The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind.
 
 
-Messages
-========
-Each computer can post tweet like messages which appear on the lower
-left hand side. I encourage players to use this to work together, 
-particularly when running the dojo with the aim of getting working solutions 
-on _all_ laptops. 
-
-
 Dashboard
 =========
 Shows a periodically updating display of all traffic lights for 
@@ -81,6 +73,14 @@ Clicking on a traffic light opens a new page showing the diffs for that incremen
 There is a bug somewhere in the diff code, it often fails for the 1st traffic-light. 
 I decided to release it anyway.
 The diff-view page does not work in Internet Explorer 8.
+
+
+Messages
+========
+Each computer can post tweet like messages which appear on the lower
+left hand side. I encourage players to use this to work together, 
+particularly when running the dojo with the aim of getting working solutions 
+on _all_ laptops. 
 
 
 Issues
@@ -261,10 +261,9 @@ To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
-To find the folder...
-  >irb
-  >require 'digest/sha1'
-  >Digest::SHA1.hexdigest(name)
+To find the folder... from the cyberdojo folder
+>ruby names.rb
+Which will provide the sha1 based folder name for recent dojos.
 It's much easier and more informative to just click on a traffic light.
   
 
