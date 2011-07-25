@@ -85,12 +85,8 @@ on _all_ laptops.
 
 Issues
 ======
-1. There is a bug somewhere in diff-view. Trying to view the diff for the 
-   first increment in particular is liable to give you a 500 error 
-   "sorry something went wrong". I'll look into when I get a chance.
-   To work-around just manually edit the ...&tag=X value at the end of the URL 
-2. Occasionally the server does not seem to respond when trying to enter a dojo.
-3. Objective-C no longer compiles. After a server-upgrade it reports
+1. Occasionally the server does not seem to respond when trying to enter a dojo.
+2. Objective-C no longer compiles. After a server-upgrade it reports
    The current setting for native-objc-exceptions does not match that of gnustep-base 
       ... please correct this
    On the todo list but not a high priority.
