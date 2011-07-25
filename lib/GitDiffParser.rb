@@ -32,14 +32,48 @@ module GitDiff
     end
   
     def parse_one
+      one =
       {
         :prefix_lines => parse_prefix_lines,
         :was_filename => parse_was_filename,
         :now_filename => parse_now_filename,
         :chunks => parse_chunk_all
       }
+      check_for_unchanged_rename(one)
+      check_for_deleted_file(one)
+      one
     end
-  
+
+    RENAME_FROM_RE = /^rename from (.*)/
+    RENAME_TO_RE   = /^rename to (.*)/
+    
+    def check_for_unchanged_rename(one)
+      prefix = one[:prefix_lines]
+      if prefix.length == 4 and prefix[1] == 'similarity index 100%'
+        one[:was_filename] = 'a/' + RENAME_FROM_RE.match(prefix[2])[1]
+        one[:now_filename] = 'b/' + RENAME_TO_RE.match(prefix[3])[1]
+      end      
+    end
+      
+    DIFF_GIT_RE = /^diff --git (.*)/
+    
+    def check_for_deleted_file(one)
+      prefix = one[:prefix_lines]
+      if prefix.length == 3 and prefix[1] == 'deleted file mode 100644'
+        re = DIFF_GIT_RE.match(prefix[0])
+        if re
+          both = re[1]
+          length = both.length
+          # both = "a/sandbox/xx b/sandbox/xx"
+          # -1 (space in middle) / 2 (to get one filename)
+          was = both[0..both.length/2 - 1]
+          one[:was_filename] = was
+          one[:now_filename] = '/dev/null'          
+        end
+      end
+      one
+    end
+    
     def parse_chunk_all
       chunks = []     
       while chunk = parse_chunk_one
