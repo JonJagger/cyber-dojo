@@ -14,8 +14,7 @@ class DiffController < ApplicationController
     tag = params[:tag].to_i
     manifest = {}
     @traffic_lights_to_tag = @avatar.read_manifest(manifest, tag)
-    @all_traffic_lights = @avatar.increments    
-    @output = manifest[:output]    
+    @all_traffic_lights = @avatar.increments   
     diffed_files = git_diff_view(@avatar, tag)    
     @diffs = git_diff_prepare(diffed_files)    
     @current_filename_id = most_changed_lines_file_id(@diffs)

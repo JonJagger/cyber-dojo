@@ -179,9 +179,14 @@ module GitDiff
     
     def parse_filename(re)
       if md = re.match(@lines[@n])
-        @n += 1
-        md[1]
+        @n += 1        
+        filename = md[1]
+        # If you have filenames with spaces in them then the 'git diff'
+        # command used in GitDiff.rb sometimes generates
+        # --- and +++ lines with a tab appended to the filename!!!
+        filename.rstrip!
       end    
+      filename      
     end
     
     def parse_lines(re)

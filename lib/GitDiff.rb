@@ -8,7 +8,8 @@ module GitDiff
   include Ids
   
   def git_diff_view(avatar, tag)
-      
+      builder = GitDiffBuilder.new()
+    
       cmd  = "cd #{avatar.folder};"
       cmd += "git show #{tag}:manifest.rb;"
       manifest = eval popen_read(cmd)
@@ -17,32 +18,28 @@ module GitDiff
       cmd  = "cd #{avatar.folder};"
       cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
       diff_lines = popen_read(cmd)
-  
-      view = {}
-      builder = GitDiffBuilder.new()
-      
-      diffs = GitDiffParser.new(diff_lines).parse_all
-           
-      diffs.each do |sandbox_name,diff|
         
+      view = {}      
+      diffs = GitDiffParser.new(diff_lines).parse_all           
+      diffs.each do |sandbox_name,diff|        
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
-        if md[1] == 'b'
+        if !deleted_file?(md[1])
           name = md[2]
-          # md[1] == 'a' indicates a deleted file
-          # which of course is not in the manifest for this tag
-          if name == 'output'
-            undiff(diff)
-          end
           file = visible_files[name]
-          if file
-            view[name] = builder.build(diff, line_split(file[:content]))
-            visible_files.delete(name)
-          end
+          view[name] = builder.build(diff, line_split(file[:content]))
+          visible_files.delete(name)
         end
       end
-      
+
+      # other files have not changed...      
       visible_files.each do |name,file|
         view[name] = sameify(file[:content])
+      end
+
+      # output of run tests is not stored as an actual file and
+      # so is not in the diffs. It's also not in the visible_files.
+      if tag != 0
+        view['output'] = sameify(manifest[:output])
       end
       
       view
@@ -50,17 +47,15 @@ module GitDiff
 
   #-----------------------------------------------------------
   
-  def undiff(diff)
-    diff[:chunks].each do |chunk|
-      chunk[:sections].each do |section|
-        section[:after_lines] = section[:added_lines]
-        section.delete(:deleted_lines)
-        section.delete(:added_lines)
-      end
-    end
+  def deleted_file?(ch)
+    # GitDiffParser uses names beginning with
+    # a/... to indicate a deleted file 
+    # b/... to indicate a new/modified file
+    # This mirrors the git diff command output
+    ch == 'a'
   end
-
-  #-----------------------------------------------------------
+  
+  #-----------------------------------------------------------  
   
   def git_diff_prepare(diffed_files)
     diffs = []

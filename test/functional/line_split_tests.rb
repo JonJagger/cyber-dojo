@@ -12,6 +12,14 @@ class LineSplitTests < Test::Unit::TestCase
     assert_equal [ "", "" ], line_split("\n\n")
   end
 
+  def test_splits_empty_string
+    assert_equal [], line_split("")  
+  end
+  
+  def test_splits_nil_as_empty_string
+    assert_equal [], line_split(nil)  
+  end
+  
 end
 
 

@@ -6,10 +6,14 @@ require 'GitDiffParser'
 # > ruby functional/diff_tag_bug_trap_tests.rb
 
 class DiffTagBugTrapTests < ActionController::TestCase
-  
-  # There were two bugs in the diff-view code
-  # related to a renamed file and a deleted file
-  # I used these these tests to track them down.
+
+  # The diff-view code initially shipped without
+  # code to handle renamed files or deleted files.
+  # It also seemed to have a bug that cropped up
+  # on increment zero.
+  # I used these these tests to make sure the modified
+  # diff-code worked for all avatars for all dojos
+  # on my hard disk.
   # I added specific tests in git_diff_parser_tests.rb
   # so the tests are commented out as they take quite
   # a while to run over numerous dojos
@@ -18,20 +22,20 @@ class DiffTagBugTrapTests < ActionController::TestCase
   include Ids
   include GitDiff
 
-  # I used this to check individual tags
-  def X_test_look_for_tag_bug
+  # For when regression test below finds a failure
+  def X_test_look_for_diff_tag_bug_in_specific_increment
     params = { 
-      :dojo_name => 'ruby-gapper', 
+      :dojo_name => 'new-info', 
       :dojo_root => Dir.getwd + '/../dojos',
       :filesets_root => Dir.getwd + '/../filesets'
     }      
     dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'elephant')
-    look_for_diff_bug_in_traffic_light(dojo,avatar,153)   
+    avatar = Avatar.new(dojo, 'frog')
+    look_for_diff_bug_in_traffic_light(dojo,avatar,26)   
   end
 
-  # I used this to check all tags on an all dojos
-  def X_test_look_for_diff_tag_bugs_in_entire_dojo    
+  # Regression test. Takes a long time. Default is X_ prefix so it won't run.
+  def X_test_look_for_diff_tag_bugs_in_all_dojos_on_hard_disk    
     index = eval IO.popen('cat ../dojos/index.rb').read
     index.each {|e| look_for_diff_tag_bug_in_dojo(e[:name]) }
   end
@@ -58,6 +62,8 @@ class DiffTagBugTrapTests < ActionController::TestCase
       begin
         look_for_diff_bug_in_traffic_light(dojo,avatar,tag+1)
       rescue Errno::ENOENT => msg
+        # I removed Objective C filesets from my hard disk
+        # (Compiler needs some tweaking after OS upgrade)
         if !msg.to_s.include? 'Objective C'
           p dojo.name + "," + avatar.name + "," + tag.to_s + ":" + msg
           abort
@@ -74,7 +80,6 @@ class DiffTagBugTrapTests < ActionController::TestCase
     manifest = {}
     @traffic_lights_to_tag = avatar.read_manifest(manifest, tag)
     @all_traffic_lights = avatar.increments    
-    @output = manifest[:output]
     diffed_files = git_diff_view(avatar, tag)
     @diffs = git_diff_prepare(diffed_files) 
     @current_filename_id = most_changed_lines_file_id(@diffs)    

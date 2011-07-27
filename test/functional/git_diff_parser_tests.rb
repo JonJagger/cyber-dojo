@@ -9,10 +9,18 @@ class GitDiffParserTests < ActionController::TestCase
   include GitDiff
 
   #-----------------------------------------------------
+   
+  def test_parse_diff_for_filename_ending_in_tab_removes_the_tab
+    was_line =  '--- a/sandbox/ab cd'
+    assert_equal 'a/sandbox/ab cd', 
+      GitDiffParser.new(was_line + "\t").parse_was_filename    
+  end
   
-  def test_parse_diff_for_file_with_space_in_its_name
-    was_line =  '--- a/sand box/xxx'
-    assert_equal 'a/sand box/xxx', 
+  #-----------------------------------------------------
+  
+  def test_parse_diff_for_filename_with_space_in_its_name
+    was_line =  '--- a/sandbox/ab cd'
+    assert_equal 'a/sandbox/ab cd', 
       GitDiffParser.new(was_line).parse_was_filename
   end
     
@@ -23,8 +31,8 @@ class GitDiffParserTests < ActionController::TestCase
     assert_equal 'a/sandbox/xxx', 
       GitDiffParser.new(was_line).parse_was_filename
 
-      now_line = '+++ /dev/null'
-      assert_equal '/dev/null',
+    now_line = '+++ /dev/null'
+    assert_equal '/dev/null',
       GitDiffParser.new(now_line).parse_now_filename
   end
   
