@@ -1,4 +1,4 @@
-require 'test_helper'
+require '../test_helper'
 require 'GitDiffParser'
 
 # > cd cyberdojo/test
@@ -338,20 +338,20 @@ HERE
     lines = ' No newline at eof'
     parser = GitDiffParser.new(lines)
 
-    assert 0, parser.n
+    assert_equal 0, parser.n
     parser.parse_newline_at_eof
-    assert 0, parser.n        
+    assert_equal 0, parser.n        
   end
   
   #-----------------------------------------------------
 
   def test_parse_no_newline_at_eof_true
-    lines = '\\ No newline at eof'
+    lines = '\\ No newline at end of file'
     parser = GitDiffParser.new(lines)
 
-    assert 0, parser.n
+    assert_equal 0, parser.n
     parser.parse_newline_at_eof
-    assert 1, parser.n        
+    assert_equal 1, parser.n        
   end
   
   #-----------------------------------------------------

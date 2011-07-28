@@ -19,14 +19,7 @@ class DiffController < ApplicationController
     @diffs = git_diff_prepare(diffed_files)    
     @current_filename_id = most_changed_lines_file_id(@diffs)
   end
-  
-private
-
-  def configure(params)
-    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
-    params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
-  end
-  
+   
 end
 
 

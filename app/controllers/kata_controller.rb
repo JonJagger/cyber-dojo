@@ -105,11 +105,6 @@ class KataController < ApplicationController
    
 private
 
-  def configure(params)
-    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
-    params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
-  end
-  
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
     # means filename has a leading ' and trailing ']

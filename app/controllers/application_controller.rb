@@ -14,4 +14,9 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
+  def configure(params)
+    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
+    params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
+  end
+  
 end

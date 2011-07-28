@@ -1,6 +1,5 @@
 
 class MessagesController < ApplicationController
-  extend MakeTimeHelper
   
   def show_some
     board_config(params)
@@ -35,11 +34,6 @@ private
     params[:dojo_name]
   end
   
-  def configure(params)
-    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
-    params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
-  end
-
   def board_config(params)
     configure(params)
     @dojo = Dojo.new(params)
