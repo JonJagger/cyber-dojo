@@ -32,14 +32,10 @@ Pull the latest CyberDojo source code from github onto your TurnKey image
 Configuring a CyberDojo
 =======================
 The CyberDojo server will ask you to choose
-o) your language(s) (eg C++)
+o) your language (eg C++)
    Each language corresponds to a subfolder of cyberdojo/filesets/language/
-   You must select at least one language. Any player entering the CyberDojo
-   will be randomly assigned a language from those selected at creation.
-o) your kata(s) (eg Prime Factors)
+o) your kata (eg Prime Factors)
    Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
-   You must select at least one kata. Any player entering the CyberDojo
-   will be randomly assigned a kata from those selected at creation.
 
 
 Entering a CyberDojo
