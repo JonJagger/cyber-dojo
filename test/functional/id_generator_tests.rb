@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 require 'Ids'
 
 class IdGeneratorTests < ActionController::TestCase

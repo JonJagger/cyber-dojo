@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 # > cd cyberdojo/test
 # > ruby functional/td_gapper_tests.rb

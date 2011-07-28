@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 # > cd cyberdojo/test
 # > ruby functional/simulated_full_dojo_tests.rb

@@ -38,7 +38,7 @@ $j(document).ready(function() {
         
         <div class="panel">
           <span class="small_title">
-            <%= link_to ellided_name(@dojo.name, 20), 
+            <%= link_to elided_name(@dojo.name, 20), 
                  { :controller => :dashboard, 
                    :action => :show_inflated, 
                    :dojo_name => @dojo.name 

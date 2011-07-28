@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 require 'run_tests_output_parser_helper'
 
 # > cd cyberdojo/test
