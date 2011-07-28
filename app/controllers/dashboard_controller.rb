@@ -20,18 +20,4 @@ class DashboardController < ApplicationController
     board_config(params)
   end  
   
-private
-
-  def dojo_name
-    params[:dojo_name]
-  end
-  
-  def board_config(params)
-    configure(params)
-    @dojo = Dojo.new(params)
-    avatars = @dojo.avatars
-    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
-    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
-  end
-  
 end

@@ -5,25 +5,13 @@
 var languageCount = <%=@languages.length-%>;
 var kataCount = <%=@katas.length-%>;
 
-function toggleAll(name, size) {
-  var current = $(name + '_all').checked;
-  for (var at = 0; at !== size; at += 1) {
-    $(name + '_' + at).checked = current;
-  }
-  setSaveButtonState();  
-}
-
 function showKata(choice) {
   $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
 }
 
-function hideKata() {
-  $('kata_info').value = '';
-}
-
-function toggleSelection(name, index, size, choice) { 
+function makeSelection(name, index, choice) { 
   var selection = $(name + '_' + index); 
-  selection.checked = !selection.checked;   
+  selection.checked = true;   
   if (name === 'kata') {   
     showKata(choice);  
   }
@@ -66,9 +54,6 @@ function kataSelected()
   <%= elided_name(@dojo.name, 40) %>
 </h1>
 
-&nbsp;&nbsp;Each computer entering your CyberDojo will be able to select a 
-kata and a language from those selected.
-
 <table align="center">
   <tr>
     <td valign="top">
@@ -79,22 +64,13 @@ kata and a language from those selected.
               <span class="choose_title">Katas</span>
             </div>
             
-            <span style="margin-left: 0.25em">
-              <input id="kata_all"
-                     type="checkbox"
-                     onclick='toggleAll("kata", <%=@katas.length-%>);'
-                     value="" />
-            </span>
-            
             <% @katas.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset" 
-                   onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'
-                   onmouseover='showKata("<%=choice-%>");'
-                   onmouseout='hideKata();'>
+                   onclick='makeSelection("kata", <%=index-%>, "<%=choice-%>");' >
                 <input id="kata_<%=index-%>" 
-                       type="checkbox" 
-                       onclick='toggleSelection("kata", <%=index-%>, <%=@katas.length-%>, "<%=choice-%>");'                      
-                       name="kata[<%=index-%>]" 
+                       type="radio" 
+                       onclick='makeSelection("kata", <%=index-%>, "<%=choice-%>");'                      
+                       name="kata" 
                        value="<%=choice-%>" />
                 <label><%= choice -%></label>
               </div>    
@@ -119,20 +95,13 @@ kata and a language from those selected.
           <td>
             <div class="choose_title">Languages</div>
 
-            <span style="margin-left: 0.25em">
-              <input id="language_all"
-                     type="checkbox"
-                     onclick='toggleAll("language", <%=@languages.length-%>);'
-                     value="" />
-            </span>
-
             <% @languages.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset"
-                   onclick='toggleSelection("language", <%=index-%>, <%=@languages.length-%>, "<%=choice-%>");'>
+                   onclick='makeSelection("language", <%=index-%>, "<%=choice-%>");'>
                 <input id="language_<%=index-%>" 
-                       type="checkbox" 
-                       onclick='toggleSelection("language", <%=index-%>, <%=@languages.length-%>, "<%=choice-%>");'
-                       name="language[<%=index-%>]" 
+                       type="radio" 
+                       onclick='makeSelection("language", <%=index-%>, "<%=choice-%>");'
+                       name="language" 
                       value="<%=choice-%>" />
                 <label><%= choice -%></label>
               </div>    

@@ -4,13 +4,8 @@
     <%= elided_name(@dojo.name, 45) -%>
   </h2>
   
-  <h4>
-    <% if @languages.length == 1 -%> 
-      <%= @languages[0] -%> 
-    <% end -%>
-    <% if @katas.length == 1 -%> 
-      <%= @katas[0] -%>
-    <% end -%>
+  <h4> 
+    <%= @dojo.language -%> , <%= @dojo.kata_name -%>
   </h4>
 </div>
 

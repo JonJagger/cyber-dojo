@@ -4,73 +4,19 @@ class KataController < ApplicationController
   def enter
     configure(params) 
     @dojo = Dojo.new(params)   
-    manifest = @dojo.manifest
-    # choose kata and language from selections made at dojo creation
-    if manifest[:katas].length > 1 or manifest[:languages].length > 1 
-      redirect_to :action => :select, :dojo_name => params[:dojo_name]
-    else
-      
-      filesets = {
-        'kata' => manifest[:katas][0],
-        'language' => manifest[:languages][0]
-      }    
-      @avatar = @dojo.create_avatar(filesets)    
-      if @avatar == nil
-        flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
-        redirect_to :controller => :dojo, :action => :index, :dojo_name => @dojo.name
-      else
-        redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
-      end
-    end
-  end    
-
-  def enter_selected
-    configure(params) 
-    @dojo = Dojo.new(params)   
-    manifest = @dojo.manifest
-    filesets = {
-      'kata' => params[:kata],
-      'language' => params[:language]
-    }
-    @avatar = @dojo.create_avatar(filesets)    
+    @avatar = @dojo.create_avatar()    
     if @avatar == nil
       flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
       redirect_to :controller => :dojo, :action => :index, :dojo_name => @dojo.name
     else
       redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
     end
-  end
-  
-  def select
-    configure(params) 
-    @dojo = Dojo.new(params)   
-    manifest = @dojo.manifest
-    @katas = manifest[:katas]
-    @languages = manifest[:languages]
-    @kata_info = {}
-    @katas.each do |name|
-      path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
-      @kata_info[name] = IO.read(path)
-    end            
-  end
-  
-  def review
-    configure(params)
-    params[:readonly] = true
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
-    @kata = @avatar.kata
-    @manifest = {}
-    @traffic_lights_to_tag = @avatar.read_manifest(@manifest, params[:tag])
-    @all_traffic_lights = @avatar.increments    
-    @current_file = @manifest[:current_filename]
-    @output = @manifest[:output]
-  end
-  
+  end    
+ 
   def edit
     configure(params)
     @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar], params[:filesets])
+    @avatar = Avatar.new(@dojo, params[:avatar])
     @kata = @avatar.kata    
     @messages = @dojo.messages
     @manifest = {}

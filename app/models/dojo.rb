@@ -5,14 +5,13 @@ require 'Locking'
 require 'Files'
 
 class Dojo
-#  helper_method :io_lock
-#  include IoLockHelper
-  extend Locking
+  
   include Locking
-  extend MakeTimeHelper
+  extend Locking  
   include MakeTimeHelper
-  extend Files
+  extend MakeTimeHelper
   include Files
+  extend Files
   
   Index_filename = 'index.rb' 
 
@@ -50,12 +49,9 @@ class Dojo
       info = { 
         :name => name, 
         :created => make_time(Time.now),
-        :katas => [],
-        :languages => []
+        :kata => params['kata'],
+        :language => params['language']
       }
-      
-      params['kata'].each {|n,kata| info[:katas] << kata }
-      params['language'].each {|n,language| info[:languages] << language }
       
       file_write(dojo.manifest_filename, info)
       
@@ -91,13 +87,13 @@ class Dojo
     @name
   end
   
-  def create_avatar(filesets)
+  def create_avatar()
     io_lock(folder) do
       unused_avatars = Avatar::names.select { |name| !exists? name }
       if unused_avatars == []
         nil
       else
-        Avatar.new(self, unused_avatars.shuffle[0], filesets)
+        Avatar.new(self, unused_avatars.shuffle[0])
       end
     end
   end
@@ -134,6 +130,21 @@ class Dojo
       end
     end
     messages
+  end
+  
+  def language
+    manifest[:language]
+  end
+  
+  def kata_name
+    manifest[:kata]
+  end
+  
+  def filesets
+    {
+      'kata' => manifest[:kata],
+      'language' => manifest[:language]
+    }
   end
   
   def filesets_root

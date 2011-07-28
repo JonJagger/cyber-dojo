@@ -55,13 +55,6 @@ class DojoController < ApplicationController
                   :action => :enter, 
                   :dojo_name => dojo_name
                   
-    elsif params[:start_selected]
-      redirect_to :controller => :kata, 
-                  :action => :enter_selected, 
-                  :dojo_name => dojo_name,
-                  :language => params[:language],
-                  :kata => params[:kata]
-                                      
     elsif params[:resume]
       redirect_to :action => :resume, 
                   :dojo_name => dojo_name
@@ -99,19 +92,5 @@ class DojoController < ApplicationController
   def render_500
     render :file => RAILS_ROOT + '/' + 'public' +'/' + '500.html'
   end
-  
-private
-
-  def dojo_name
-    params[:dojo_name]
-  end
-  
-  def board_config(params)
-    configure(params)
-    @dojo = Dojo.new(params)
-    avatars = @dojo.avatars
-    @languages = avatars.collect { |avatar| avatar.kata.language }.uniq
-    @katas = avatars.collect { |avatar| avatar.kata.name }.uniq    
-  end
-  
+     
 end

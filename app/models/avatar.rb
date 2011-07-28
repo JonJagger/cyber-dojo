@@ -15,14 +15,14 @@ class Avatar
     %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra )
   end
 
-  def initialize(dojo, name, filesets = nil) 
+  def initialize(dojo, name) 
     @dojo = dojo
     @name = name
 
     if File.exists?(pathed(Filesets_filename))
       @filesets = eval IO.read(pathed(Filesets_filename))
     else
-      @filesets = filesets
+      @filesets = dojo.filesets
       Dir::mkdir(folder)
       file_write(pathed(Filesets_filename), @filesets)
       file_write(pathed(Increments_filename), [])
@@ -157,8 +157,6 @@ private
   end
 
   def git_commit_tag(visible_files, n)
-    # I add visible files to the git repository
-    # but never the hidden files.
     cmd  = "cd '#{folder}';"
     visible_files.each do |filename,|
       cmd += "git add '#{sandbox}/#{filename}';"

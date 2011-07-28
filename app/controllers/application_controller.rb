@@ -19,4 +19,13 @@ class ApplicationController < ActionController::Base
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
   end
   
+  def board_config(params)
+    configure(params)
+    @dojo = Dojo.new(params)
+  end
+  
+  def dojo_name
+    params[:dojo_name]
+  end
+    
 end
