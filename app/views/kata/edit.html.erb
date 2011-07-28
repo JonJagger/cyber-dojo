@@ -24,8 +24,9 @@ $j(document).ready(function() {
 
   <table>
     <tr valign="top">
+
       <td colspan="2" class="panel">
-          <%= render :partial => 'traffic_lights' -%>
+        <%= render :partial => 'traffic_lights' -%>
       </td>    
     </tr>
     
@@ -33,23 +34,12 @@ $j(document).ready(function() {
     
       <td>         
         <div class="panel">
+          <%= render :partial => 'info' -%>       
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
         </div>
         
         <div class="panel">
-          <span class="small_title">
-            <%= link_to elided_name(@dojo.name, 20), 
-                 { :controller => :dashboard, 
-                   :action => :show_inflated, 
-                   :dojo_name => @dojo.name 
-                 }, 
-                 { :class => "title",
-                   :title => @dojo.name,
-                   :target => "_blank" 
-                 } 
-            -%>
-          </span>            
           <%= render :partial => 'messages' -%>
         </div>
         

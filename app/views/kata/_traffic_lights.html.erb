@@ -14,7 +14,20 @@
     <% td_map = gapped[@avatar.name] -%>    
     
     <tr class="even traffic_light_row">
-        
+ 
+      <td>
+        <%= link_to "View<br/>All", 
+          { 
+            :controller => :dashboard, 
+            :action => :show_inflated,
+            :dojo_name => @dojo.name 
+          }, 
+          { :title => "View the traffic-light time-lines for all animals",
+            :target => "_blank" 
+          }
+        -%>
+      </td>        
+
       <% all_td_nos = td_map.keys.sort -%>
       <% recent_td_nos = recent(all_td_nos, max_cols) -%>
       
@@ -50,20 +63,19 @@
       <% end -%>
       
       <td>
+         <%= render :partial => 'dashboard/traffic_lights_summary', 
+                    :locals => { :avatar_name => @avatar.name, 
+                                 :lights => lights } -%> 
+      </td>
+      
+      <td>
         <%= avatar_image(@avatar.name, 43) -%>
       </td>
       
       <td>
         <span class="small_title"><%= @avatar.name.humanize -%></span>        
-        <span class="small_title"><%= @dojo.language -%></span> 
-        <span class="small_title"><%= @dojo.kata_name -%></span>                           
       </td>
       
-      <td>
-         <%= render :partial => 'dashboard/traffic_lights_summary', 
-                    :locals => { :avatar_name => @avatar.name, 
-                                 :lights => lights } -%> 
-      </td>
       
       <td>
         <%= render :partial => 'run_tests' -%>
