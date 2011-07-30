@@ -1,4 +1,3 @@
-
 VISION AND PRINCIPLES
 =====================
 
@@ -42,17 +41,10 @@ quick start if you wanted to run a CyberDojo server but did not have all
 the compilers installed on your computer.
 
 
-Enhanced file-support
----------------------
-Allow filenames to have a full path including folders. Not sure about this.
-This is leading towards a full IDE. At the moment if you try to create a file
-with a / in it the run-tests will go into an infinite loop.
-
-
 Traffic-lights
 --------------
 Currently the CyberDojo server has to be programmed with regexp patterns
-to parse the output of cyberdojo.sh as red/yellow/green.
+to parse the output of cyberdojo.sh as red/amber/green.
 If the unit-test-framework is not specified in the manifest, or if it
 is but there is no ruby parse-function for it then the server could
 redirect to a different page which asks the players themselves to
@@ -67,18 +59,6 @@ After adding and renaming files from a blank state and doing many increments
 you may have the files in a state that you want to become the starting fileset
 for a new kata. It would be nice if there was a way to click a button and
 the CyberDojo server automatically did that for you.
-
-
-Metrics
--------
-It might be nice if each kata-name had some kind of ranking
-to measure how difficult it was. One possibility is simply the mean
-time previous players took to do it. This probably requires that each 
-kata be explicitly marked as finished.
-Not at all sure about this though. I don't really want to encourage competition
-as the idea is to gain _personal_ improvement. If the bar is seen as being too
-high some may be reluctant to start.
-
 
 
 
