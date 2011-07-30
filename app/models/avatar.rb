@@ -49,12 +49,12 @@ class Avatar
       file_write(pathed(Manifest_filename), kata.manifest)
       kata.manifest[:visible_files].delete('output')
       
-      cmd  = "cd '#{folder}';"
-      cmd += "git init --quiet;"
-      cmd += "git add '#{Manifest_filename}';"
-      cmd += "git add '#{Filesets_filename}';"
-      cmd += "git add '#{Increments_filename}';"
-      system(cmd)
+      command  = "cd '#{folder}';" +
+                 "git init --quiet;" +
+                 "git add '#{Manifest_filename}';" +
+                 "git add '#{Filesets_filename}';" +
+                 "git add '#{Increments_filename}';"
+      system(command)
       tag = 0
       git_commit_tag(kata.visible_files, tag)
     end
@@ -68,28 +68,19 @@ class Avatar
     Kata.new(@dojo.filesets_root, @filesets)
   end
    
-  def increments
-    io_lock(pathed(Increments_filename)) { eval IO.read(pathed(Increments_filename)) }
+  def increments(tag = nil)
+    io_lock(folder) { locked_increments(tag) }
   end
-
-  def read_manifest(manifest, tag = nil)
+  
+  def manifest(tag = nil)
+    result = nil
     io_lock(folder) do
-      cmd  = "cd #{folder};"
-      cmd += "git tag|sort -g"
-      tag ||= eval popen_read(cmd)
-      
-      cmd  = "cd #{folder};"
-      cmd += "git show #{tag}:#{Manifest_filename}"
-      read_manifest = eval popen_read(cmd) 
-      
-      manifest[:visible_files] = read_manifest[:visible_files]
-      manifest[:current_filename] = read_manifest[:current_filename]
-      manifest[:output] = read_manifest[:output]
-      
-      cmd  = "cd #{folder};"
-      cmd += "git show #{tag}:#{Increments_filename}"
-      incs = eval popen_read(cmd)
-    end    
+      tag ||= most_recent_tag      
+      command  = "cd #{folder};" +
+                 "git show #{tag}:#{Manifest_filename}"
+      result = eval popen_read(command) 
+    end
+    result    
   end
   
   def run_tests(manifest, the_kata = kata)
@@ -99,7 +90,7 @@ class Avatar
       manifest[:output] = output
       test_info = parse(self, the_kata, output)
       
-      incs = increments     
+      incs = locked_increments     
       incs << test_info
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
@@ -109,7 +100,6 @@ class Avatar
       
       tag = incs.length
       git_commit_tag(manifest[:visible_files], tag)
-
     end
     incs
   end
@@ -150,16 +140,32 @@ private
     ].join("\n")
   end
 
-  def git_commit_tag(visible_files, n)
-    cmd  = "cd '#{folder}';"
-    visible_files.each do |filename,|
-      cmd += "git add '#{sandbox}/#{filename}';"
-    end
-    cmd += "git commit -a -m '#{n}' --quiet;"
-    cmd += "git tag -m '#{n}' #{n} HEAD;"
-    system(cmd)   
+  def most_recent_tag
+    command  = "cd #{folder};" +
+               "git tag|sort -g"
+    eval popen_read(command)    
   end
   
+  def git_commit_tag(visible_files, n)
+    command = "cd '#{folder}';"
+    visible_files.each do |filename,|
+      command += "git add '#{sandbox}/#{filename}';"
+    end
+    command += "git commit -a -m '#{n}' --quiet;"
+    command += "git tag -m '#{n}' #{n} HEAD;"
+    system(command)   
+  end
+  
+  def locked_increments(tag = nil)
+    if tag == nil
+      eval IO.read(pathed(Increments_filename))
+    else
+      command  = "cd #{folder};" +
+                 "git show #{tag}:#{Increments_filename}"
+      eval popen_read(command)        
+    end
+  end
+
 end
 
 

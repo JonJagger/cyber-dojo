@@ -41,9 +41,8 @@ class LanguageFileSetTests < ActionController::TestCase
       assert Dojo::create(params)
       assert Dojo::configure(params)
       dojo = Dojo.new(params)
-      avatar = dojo.create_avatar()    
-      manifest = {}
-      avatar.read_manifest(manifest)
+      avatar = dojo.create_avatar    
+      manifest = avatar.manifest
       increments = avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
       assert_equal :failed, increments.last[:outcome], info + ', red,' + manifest[:output]
@@ -58,9 +57,8 @@ class LanguageFileSetTests < ActionController::TestCase
       assert Dojo::create(params)
       assert Dojo::configure(params)
       dojo = Dojo.new(params)
-      avatar = dojo.create_avatar()    
-      manifest = {}
-      avatar.read_manifest(manifest)
+      avatar = dojo.create_avatar    
+      manifest = avatar.manifest
         test_code = manifest[:visible_files][filename][:content]
         manifest[:visible_files][filename][:content] = test_code.sub('42', '54')
       increments = avatar.run_tests(manifest)
@@ -77,9 +75,8 @@ class LanguageFileSetTests < ActionController::TestCase
       assert Dojo::create(params)
       assert Dojo::configure(params)
       dojo = Dojo.new(params)
-      avatar = dojo.create_avatar()    
-      manifest = {}
-      avatar.read_manifest(manifest)
+      avatar = dojo.create_avatar    
+      manifest = avatar.manifest
         test_code = manifest[:visible_files][filename][:content]
         manifest[:visible_files][filename][:content] = test_code.sub('42', '4typo2')
       increments = avatar.run_tests(manifest)

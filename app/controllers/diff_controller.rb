@@ -10,10 +10,8 @@ class DiffController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
-    @kata = @avatar.kata
     tag = params[:tag].to_i
-    manifest = {}
-    @traffic_lights_to_tag = @avatar.read_manifest(manifest, tag)
+    @traffic_lights_to_tag = @avatar.increments(tag)
     @all_traffic_lights = @avatar.increments   
     diffed_files = git_diff_view(@avatar, tag)    
     @diffs = git_diff_prepare(diffed_files)    

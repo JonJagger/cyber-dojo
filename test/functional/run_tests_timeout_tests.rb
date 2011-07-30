@@ -33,9 +33,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
     Dojo.configure(params)
     dojo = Dojo.new(params)
     filename = 'untitled.c'
-    avatar = dojo.create_avatar()    
-    manifest = {}
-    avatar.read_manifest(manifest)
+    avatar = dojo.create_avatar    
+    manifest = avatar.manifest
     code = manifest[:visible_files][filename][:content]
     manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')
     
@@ -54,9 +53,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
     Dojo.configure(params)
     dojo = Dojo.new(params)
     filename = 'untitled.c'
-    avatar = dojo.create_avatar()    
-    manifest = {}
-    avatar.read_manifest(manifest)
+    avatar = dojo.create_avatar    
+    manifest = avatar.manifest
     code = manifest[:visible_files][filename][:content]
     manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')
     

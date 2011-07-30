@@ -22,31 +22,30 @@ class DiffTagBugTrapTests < ActionController::TestCase
   include Ids
   include GitDiff
 
+  def params
+    { 
+      :dojo_name => 'new-info', 
+      :dojo_root => RAILS_ROOT + '/dojos',
+      :filesets_root => RAILS_ROOT + '/filesets'
+    }      
+  end
+  
   # For when regression test below finds a failure
   def X_test_look_for_diff_tag_bug_in_specific_increment
-    params = { 
-      :dojo_name => 'new-info', 
-      :dojo_root => Dir.getwd + '/../dojos',
-      :filesets_root => Dir.getwd + '/../filesets'
-    }      
     dojo = Dojo.new(params)
     avatar = Avatar.new(dojo, 'frog')
     look_for_diff_bug_in_traffic_light(dojo,avatar,26)   
   end
 
   # Regression test. Takes a long time. Default is X_ prefix so it won't run.
-  def X_test_look_for_diff_tag_bugs_in_all_dojos_on_hard_disk    
-    index = eval IO.popen('cat ../dojos/index.rb').read
+  def X_test_look_for_diff_tag_bugs_in_all_dojos_on_hard_disk
+    index_filename = params[:dojo_root] + '/index.rb'
+    index = eval IO.popen("cat #{index_filename}").read
     index.each {|e| look_for_diff_tag_bug_in_dojo(e[:name]) }
   end
   
   def look_for_diff_tag_bug_in_dojo(name)
     p name    
-    params = { 
-      :dojo_name => name, 
-      :dojo_root => Dir.getwd + '/../dojos',
-      :filesets_root => Dir.getwd + '/../filesets'
-    }      
     dojo = Dojo.new(params)
     dojo.avatars.each do |avatar|
       look_for_diff_tag_bug_in_avatar(dojo,avatar)
@@ -74,11 +73,7 @@ class DiffTagBugTrapTests < ActionController::TestCase
   
   def look_for_diff_bug_in_traffic_light(dojo,avatar,tag)
     p "        " + tag.to_s
-    params = { :avatar => avatar.name, :tag => tag }
-    @kata = avatar.kata
-    tag = params[:tag].to_i
-    manifest = {}
-    @traffic_lights_to_tag = avatar.read_manifest(manifest, tag)
+    @traffic_lights_to_tag = avatar.increments(tag)
     @all_traffic_lights = avatar.increments    
     diffed_files = git_diff_view(avatar, tag)
     @diffs = git_diff_prepare(diffed_files) 
