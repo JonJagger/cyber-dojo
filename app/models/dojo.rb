@@ -121,7 +121,8 @@ class Dojo
     messages = []
     io_lock(messages_filename) do
       messages = eval IO.read(messages_filename)
-      if text.strip! != ''
+      text = text.strip
+      if text != ''
         messages <<  { 
           :sender => sender, 
           :text => text,
