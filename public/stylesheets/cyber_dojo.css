@@ -1,4 +1,4 @@
-
+e
 body, #editor_line_numbers { background-color: GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
@@ -241,7 +241,7 @@ filename.selected { background-color: LightGray; }
 
 .message_text { vertical-align: middle; }
 
-.message_ellision { margin-top: 1em; text-align: right; }
+.message_elision { margin-top: 1em; text-align: right; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
