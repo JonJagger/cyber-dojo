@@ -11,18 +11,9 @@ module TestRunnerHelper
     cmd  = "cd '#{sandbox}';"
     cmd += "./cyberdojo.sh"
     output = popen_read(cmd, kata.max_run_tests_duration)
-    
-    if output =~ /Terminated\n$/
-      output += "(by the CyberDojo server after #{kata.max_run_tests_duration} seconds)"
-    end
-    
     output
   end
 
-  def with_stderr(cmd)
-    cmd + " " + "2>&1"
-  end
-	
   # Remove all files from the sandbox except the hidden files
   # specified in the manifest. For example, if the
   # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]

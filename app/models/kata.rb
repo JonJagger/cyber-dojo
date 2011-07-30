@@ -30,8 +30,8 @@ class Kata
   end
 
   def max_run_tests_duration
-    (manifest[:max_run_tests_duration] || 10).to_i      
-  end
+    manifest[:max_run_tests_duration] || 10
+  end  
 
   def tab
     " " * (manifest[:tab_size] || 4)

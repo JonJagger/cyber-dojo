@@ -25,14 +25,16 @@ module Files
   # an ensure block.
   
   def popen_read(cmd, max_seconds = nil)
-    output = nil
     pipe = IO::popen(with_stderr(cmd))
     
+    output = ""
+    timed_out = false
     if max_seconds == nil
-      output = pipe.read
+      output += pipe.read
     else
-      sandbox_thread = Thread.new { output = pipe.read }    
-      sandbox_thread.join(max_seconds)
+      sandbox_thread = Thread.new { output += pipe.read }    
+      result = sandbox_thread.join(max_seconds);
+      timed_out = (result == nil)
     end
     
     kill(descendant_pids_of(pipe.pid))
@@ -42,6 +44,10 @@ module Files
     end
     
     pipe.close
+
+    if timed_out
+      output += "Terminated by the CyberDojo server after #{max_seconds} seconds."
+    end
     
     output
   end

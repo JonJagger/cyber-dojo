@@ -44,8 +44,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     ps_count_after = ps_count
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
-    # TODO: really a diffent test
-    #assert_equal true, manifest[:output] =~ /\(by the CyberDojo server after 10 seconds\)/, manifest[:output]
+    assert_not_nil manifest[:output] =~ /Terminated by the CyberDojo server after 10 seconds/, manifest[:output]
   end
   
   def test_that_reduced_max_run_tests_duration_stops_infinite_loop_earlier_and_doesnt_leak_processes
@@ -60,21 +59,20 @@ class RunTestsTimeOutTests < ActionController::TestCase
     avatar.read_manifest(manifest)
     code = manifest[:visible_files][filename][:content]
     manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')
-    kata = avatar.kata 
-    kata.manifest[:max_run_tests_duration] = 2
     
     ps_count_before = ps_count    
     started = Time.now
+    kata = avatar.kata
+    kata.manifest[:max_run_tests_duration] = 2
     increments = avatar.run_tests(manifest, kata)
     ended = Time.now
     ps_count_after = ps_count
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
     time_taken = ended - started
-    assert time_taken > 0 && time_taken < 3;
+    assert time_taken > 0 && time_taken < 3, time_taken.to_s
     
-    # TODO: really a diffent test
-    #assert_equal true, manifest[:output] =~ /\(by the CyberDojo server after 2 seconds\)/, manifest[:output]
+    assert_not_nil manifest[:output] =~ /Terminated by the CyberDojo server after 2 seconds/, manifest[:output]
   end
   
 end

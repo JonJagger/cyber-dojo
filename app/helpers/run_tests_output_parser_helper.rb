@@ -7,8 +7,8 @@ module RunTestsOutputParserHelper
   
   def parse(avatar, kata, output)
     inc = { :run_tests_output => output }
-    if Regexp.new("Execution terminated after ").match(output)
-      inc[:outcome] = :failed
+    if Regexp.new("Terminated by the CyberDojo server after").match(output)
+      inc[:outcome] = :error
     else
       inc[:outcome] = eval "parse_#{kata.unit_test_framework}(output)"
     end

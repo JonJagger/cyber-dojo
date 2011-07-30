@@ -17,7 +17,7 @@ class KataController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
-    @kata = @avatar.kata    
+    @tab = @avatar.kata.tab    
     @messages = @dojo.messages
     @manifest = {}
     @traffic_lights = @avatar.read_manifest(@manifest)  #are traffic_lights NEEDED?
@@ -28,8 +28,7 @@ class KataController < ApplicationController
   def run_tests
     configure(params)
     @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
-    @kata = @avatar.kata    
+    @avatar = Avatar.new(@dojo, params[:avatar])   
     manifest = load_visible_files_from_page
     @traffic_lights = @avatar.run_tests(manifest)
     @output = manifest[:output]
@@ -41,8 +40,7 @@ class KataController < ApplicationController
   def heartbeat
     configure(params)
     @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
-    @kata = @avatar.kata    
+    @avatar = Avatar.new(@dojo, params[:avatar])   
     @messages = @dojo.messages
     respond_to do |format|
       format.js if request.xhr?

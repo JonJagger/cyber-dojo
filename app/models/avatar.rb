@@ -59,7 +59,7 @@ class Avatar
       git_commit_tag(kata.visible_files, tag)
     end
   end
-
+  
   def name
     @name
   end
@@ -92,10 +92,11 @@ class Avatar
     end    
   end
   
-  def run_tests(manifest, the_kata = kata)  
+  def run_tests(manifest, the_kata = kata)
     incs = [] 
-    io_lock(folder) do 
+    io_lock(folder) do
       output = avatar_run_tests(self, the_kata, manifest)
+      manifest[:output] = output
       test_info = parse(self, the_kata, output)
       
       incs = increments     
@@ -104,7 +105,6 @@ class Avatar
       test_info[:number] = incs.length
       file_write(pathed(Increments_filename), incs)
 
-      manifest[:output] = output
       file_write(pathed(Manifest_filename), manifest)
       
       tag = incs.length
