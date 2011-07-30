@@ -34,9 +34,10 @@ names.each do |name|
   end
 
   print created.strftime('%b %d %H:%M') + 
-    '  ' + inner + '/' + outer[0..6] + '...' + 
-    '  ' + name +
-    '  ' + '[' + inc_lengths.sort.join(',') + '] -> ' + inc_lengths.reduce(:+).to_s +
+    ' ' + inner + '/' + outer[0..6] + '...' + 
+    ' ' + name +
+    ' ' + '[' + inc_lengths.sort.join(',') + '] -> ' + inc_lengths.reduce(:+).to_s +
+    ' ' + (manifest[:browser] || "") +
     "\n"
 
 end

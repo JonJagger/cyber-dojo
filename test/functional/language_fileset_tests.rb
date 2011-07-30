@@ -17,7 +17,8 @@ class LanguageFileSetTests < ActionController::TestCase
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
-      'kata' => 'Prime Factors (*)'
+      'kata' => 'Prime Factors (*)',
+      :browser => 'None (test)'
     }
   end
 

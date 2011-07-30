@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   def configure(params)
     params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
+    params[:browser] = request.env['HTTP_USER_AGENT'] 
   end
   
   def board_config(params)

@@ -16,7 +16,7 @@ module Files
   # The popen call turned out to be the culprit.
   #
   # Furthermore,  killing a process does not necessarily kill its child processes. 
-  # So that had to be coded. At first I killed all the descendant processes in 
+  # So that haS to be coded. At first I killed all the descendant processes in 
   # an ensure block. However this...
   #   http://blog.headius.com/2008/02/rubys-threadraise-threadkill-timeoutrb.html
   # says there is a ruby bug in the interaction between Thread.kill and ensure,
@@ -24,7 +24,7 @@ module Files
   # So I have refactored: now the descendent processes are killed outside of
   # an ensure block.
   
-  def popen_read cmd, max_seconds = nil
+  def popen_read(cmd, max_seconds = nil)
     output = nil
     pipe = IO::popen(with_stderr(cmd))
     

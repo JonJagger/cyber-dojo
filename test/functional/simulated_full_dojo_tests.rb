@@ -17,7 +17,8 @@ class SimulatedFullDojoTests < ActionController::TestCase
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'kata' => 'Unsplice (*)',
-      'language' => 'C'
+      'language' => 'C',
+      :browser => 'None (test)'
     }
   end
   

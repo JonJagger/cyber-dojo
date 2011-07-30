@@ -17,7 +17,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => 'C',
-      'kata' => 'Unsplice (*)'
+      'kata' => 'Unsplice (*)',
+      :browser => 'None (test)'
     }
   end
   
@@ -44,7 +45,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
     # TODO: really a diffent test
-    #assert_equal true, manifest[:output] =~ /\(by the CyberDojo server after 10 seconds\)$/, manifest[:output]
+    #assert_equal true, manifest[:output] =~ /\(by the CyberDojo server after 10 seconds\)/, manifest[:output]
   end
   
   def test_that_reduced_max_run_tests_duration_stops_infinite_loop_earlier_and_doesnt_leak_processes
@@ -73,7 +74,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     assert time_taken > 0 && time_taken < 3;
     
     # TODO: really a diffent test
-    #assert_equal true, manifest[:output] =~ /\(by the CyberDojo server after 2 seconds\)$/, manifest[:output]
+    #assert_equal true, manifest[:output] =~ /\(by the CyberDojo server after 2 seconds\)/, manifest[:output]
   end
   
 end

@@ -50,7 +50,8 @@ class Dojo
         :name => name, 
         :created => make_time(Time.now),
         :kata => params['kata'],
-        :language => params['language']
+        :language => params['language'],
+        :browser => params[:browser]
       }
       
       file_write(dojo.manifest_filename, info)
