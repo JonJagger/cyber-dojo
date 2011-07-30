@@ -110,12 +110,6 @@ class Avatar
       tag = incs.length
       git_commit_tag(manifest[:visible_files], tag)
 
-      #TODO?: get diff stats and save it in increments
-      # cmd = "git diff #{tag-1} #{tag} --stat sandbox"
-      #  sandbox/gapper.rb      |    2 +-
-      #  sandbox/test_gapper.rb |    4 ++--
-      #  2 files changed, 3 insertions(+), 3 deletions(-)
-
     end
     incs
   end
@@ -144,15 +138,15 @@ private
     [ 
       '',
       '  Click the Run Tests button (above). The output will appear here.',
-      '',
-      '  A traffic-light will indicate the outcome:',
+      '  A traffic-light will also appear:',
       '     (o) red   - the tests ran but one or more failed',
       '     (o) amber - the tests could not be run',
       '     (o) green - the tests ran and all passed',
+      '  Click any traffic light to view its diff.',
       '',
-      " Click a file's name to edit it.",
+      "  Click a filename (left) to edit it here.",
       '',
-      ' Use the Post button to send messages to everyone in the dojo.'
+      '  Click the Post button (left) to send a message to everyone.'
     ].join("\n")
   end
 
