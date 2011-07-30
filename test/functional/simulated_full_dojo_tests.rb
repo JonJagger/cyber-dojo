@@ -38,7 +38,7 @@ class SimulatedFullDojoTests < ActionController::TestCase
     avatars = []
     
     8.times do |n|
-      avatar = dojo.create_avatar()
+      avatar = dojo.create_avatar
       manifests[avatar.name] = avatar.manifest
       avatars << avatar
     end

@@ -53,7 +53,7 @@ class DojoTests < ActionController::TestCase
     assert Dojo::create(params)
     Dojo::configure(params)    
     dojo = Dojo.new(params)
-    avatar = dojo.create_avatar() #filesets)
+    avatar = dojo.create_avatar
     assert avatar != nil    
     assert File.exists?(avatar.folder), 'avatar folder created'    
   end
@@ -66,13 +66,13 @@ class DojoTests < ActionController::TestCase
     dojo = Dojo.new(params)
     names = []
     (0...Avatar::names.length).each do |n| 
-      avatar = dojo.create_avatar()
+      avatar = dojo.create_avatar
       assert avatar != nil
       names << avatar.name
     end
     assert_equal Avatar::names.sort, names.sort
     # and one more time... 
-    avatar = dojo.create_avatar()
+    avatar = dojo.create_avatar
     assert avatar == nil    
   end
 

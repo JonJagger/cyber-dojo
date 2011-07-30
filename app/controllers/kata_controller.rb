@@ -4,7 +4,7 @@ class KataController < ApplicationController
   def enter
     configure(params) 
     @dojo = Dojo.new(params)   
-    @avatar = @dojo.create_avatar()    
+    @avatar = @dojo.create_avatar
     if @avatar == nil
       flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
       redirect_to :controller => :dojo, :action => :index, :dojo_name => @dojo.name
