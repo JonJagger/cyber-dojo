@@ -8,10 +8,9 @@ module TestRunnerHelper
     # Copy in visible files from this increment
     manifest[:visible_files].each { |filename,file| save_file(sandbox, filename, file) }
    
-    cmd  = "cd '#{sandbox}';"
-    cmd += "./cyberdojo.sh"
-    output = popen_read(cmd, kata.max_run_tests_duration)
-    output
+    command  = "cd '#{sandbox}';" +
+               "./cyberdojo.sh"
+    popen_read(command, kata.max_run_tests_duration) 
   end
 
   # Remove all files from the sandbox except the hidden files

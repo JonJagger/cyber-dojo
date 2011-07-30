@@ -9,7 +9,7 @@ class KataController < ApplicationController
       flash[:notice] = 'Sorry, the CyberDojo named ' + @dojo.name + ' is full'
       redirect_to :controller => :dojo, :action => :index, :dojo_name => @dojo.name
     else
-      redirect_to :action => :edit, :dojo_name => params[:dojo_name], :avatar => @avatar.name
+      redirect_to :action => :edit, :dojo_name => @dojo.name, :avatar => @avatar.name
     end
   end    
  
@@ -17,7 +17,7 @@ class KataController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
-    @tab = @avatar.kata.tab    
+    @tab = @avatar.tab    
     @messages = @dojo.messages
     @manifest = @avatar.manifest
     @current_file = @manifest[:current_filename]

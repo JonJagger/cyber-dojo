@@ -39,7 +39,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')
     
     ps_count_before = ps_count
-    increments = avatar.run_tests(manifest)
+    avatar.run_tests(manifest)
     ps_count_after = ps_count
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
@@ -60,9 +60,9 @@ class RunTestsTimeOutTests < ActionController::TestCase
     
     ps_count_before = ps_count    
     started = Time.now
-    kata = avatar.kata
+    kata = dojo.kata
     kata.manifest[:max_run_tests_duration] = 2
-    increments = avatar.run_tests(manifest, kata)
+    avatar.run_tests(manifest, kata)
     ended = Time.now
     ps_count_after = ps_count
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'

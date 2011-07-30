@@ -8,7 +8,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  ROOT_TEST_FOLDER = 'test_dojos'
+  ROOT_TEST_FOLDER = RAILS_ROOT + '/test/test_dojos'
   DOJO_NAME = 'Jon Jagger'
   # the test_dojos sub-folder for 'Jon Jagger' is
   # 38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
@@ -20,8 +20,10 @@ class GitDiffViewTests < ActionController::TestCase
 
   def make_params
     { :dojo_name => DOJO_NAME, 
-      :dojo_root => Dir.getwd + '/' + ROOT_TEST_FOLDER,
-      :filesets_root => Dir.getwd + '/../filesets'
+      :dojo_root => ROOT_TEST_FOLDER,
+      :filesets_root => RAILS_ROOT + '/filesets',
+      'kata' => 'Unsplice (*)',
+      'language' => 'Ruby'
     }
   end
 
@@ -31,9 +33,9 @@ class GitDiffViewTests < ActionController::TestCase
     root_test_folder_reset
     params = make_params
     assert Dojo::create(params)
+    Dojo::configure(params)
     dojo = Dojo.new(params)
-    filesets = { 'language' => 'Ruby' }
-    avatar = Avatar.new(dojo, 'wolf', filesets)    
+    avatar = Avatar.new(dojo, 'wolf')    
     # that will have created tag 0 in the repo
 
     manifest =
@@ -46,17 +48,18 @@ class GitDiffViewTests < ActionController::TestCase
       }
     }
 
-    # create tag 1 in the repo 
-    increments = avatar.run_tests(manifest)
-    assert_equal :failed, increments.last[:outcome]
+    # create tag 1 in the repo
+    avatar.run_tests(manifest)
+    assert_equal :failed, avatar.increments.last[:outcome]
 
     # create tag 2 in the repo 
     manifest[:visible_files]['untitled.rb'][:content] = untitled_rb.sub('42', '54')
-    increments = avatar.run_tests(manifest)
-    assert_equal :passed, increments.last[:outcome]
+    avatar.run_tests(manifest)
+    assert_equal :passed, avatar.increments.last[:outcome]
     
     tag = 2    
     view = git_diff_view(avatar, tag)
+    view.delete('output')
     
     expected =
     {

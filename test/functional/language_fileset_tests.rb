@@ -43,9 +43,9 @@ class LanguageFileSetTests < ActionController::TestCase
       dojo = Dojo.new(params)
       avatar = dojo.create_avatar    
       manifest = avatar.manifest
-      increments = avatar.run_tests(manifest)
+      avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
-      assert_equal :failed, increments.last[:outcome], info + ', red,' + manifest[:output]
+      assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + manifest[:output]
       print '.'      
     end    
   end    
@@ -61,9 +61,9 @@ class LanguageFileSetTests < ActionController::TestCase
       manifest = avatar.manifest
         test_code = manifest[:visible_files][filename][:content]
         manifest[:visible_files][filename][:content] = test_code.sub('42', '54')
-      increments = avatar.run_tests(manifest)
+      avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
-      assert_equal :passed, increments.last[:outcome], info  + ', green,' + manifest[:output]
+      assert_equal :passed, avatar.increments.last[:outcome], info  + ', green,' + manifest[:output]
       print '.'      
     end    
   end    
@@ -79,9 +79,9 @@ class LanguageFileSetTests < ActionController::TestCase
       manifest = avatar.manifest
         test_code = manifest[:visible_files][filename][:content]
         manifest[:visible_files][filename][:content] = test_code.sub('42', '4typo2')
-      increments = avatar.run_tests(manifest)
+      avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
-      assert_equal :error, increments.last[:outcome], info  + ', amber,' + manifest[:output]
+      assert_equal :error, avatar.increments.last[:outcome], info  + ', amber,' + manifest[:output]
       print '.'      
     end    
   end

@@ -9,7 +9,7 @@ class Kata
       :hidden_pathnames => []
     }
     filesets.each do |name,choice|
-      FileSet.new(filesets_root, name).read_into(@manifest, choice)
+      FileSet.new(filesets_root, name.to_s).read_into(@manifest, choice)
     end
   end
   
@@ -22,11 +22,11 @@ class Kata
   end
 
   def language
-    @filesets['language']
+    @filesets[:language]
   end
   
   def name
-    @filesets['kata']
+    @filesets[:kata]
   end
 
   def max_run_tests_duration

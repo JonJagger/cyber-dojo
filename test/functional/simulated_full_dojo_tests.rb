@@ -48,12 +48,12 @@ class SimulatedFullDojoTests < ActionController::TestCase
         manifest = manifests[avatar.name]
         
         defunct_before = defunct_count
-        increments = avatar.run_tests(manifest)
+        avatar.run_tests(manifest)
         defunct_after = defunct_count
         assert_equal defunct_before, defunct_after, 'avatar.run_tests(manifest)' 
         
         info = avatar.name + ', red'
-        assert_equal :failed, increments.last[:outcome], info + ', red,' + manifest[:output]
+        assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + manifest[:output]
         print '.'
       end
     end

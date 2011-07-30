@@ -142,23 +142,17 @@ class Dojo
     manifest[:kata]
   end
   
-  def filesets
+  def kata
+    filesets =
     {
-      'kata' => manifest[:kata],
-      'language' => manifest[:language]
+      :kata => kata_name,
+      :language => language
     }
+    Kata.new(filesets_root, filesets)
   end
   
-  def filesets_root
-    @filesets_root
-  end
-  
-  def dojo_root
-    @dojo_root
-  end
-
   def folder
-    dojo_root + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
+    @dojo_root + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
   end
 
   def manifest_filename
@@ -177,6 +171,10 @@ class Dojo
     eval IO.read(manifest_filename)
   end
 
+  def filesets_root
+    @filesets_root
+  end
+  
 private
 
   def exists?(name)

@@ -19,16 +19,12 @@ class Avatar
     @dojo = dojo
     @name = name
 
-    if File.exists?(pathed(Filesets_filename))
-      @filesets = eval IO.read(pathed(Filesets_filename))
-    else
-      @filesets = dojo.filesets
+    if !File.exists? folder
       Dir::mkdir(folder)
-      file_write(pathed(Filesets_filename), @filesets)
       file_write(pathed(Increments_filename), [])
    
       Dir::mkdir(sandbox)
-      kata = Kata.new(@dojo.filesets_root, @filesets)
+      kata = @dojo.kata
       kata.hidden_pathnames.each do |hidden_pathname|
         system("cp '#{hidden_pathname}' '#{sandbox}'") 
       end
@@ -52,7 +48,6 @@ class Avatar
       command  = "cd '#{folder}';" +
                  "git init --quiet;" +
                  "git add '#{Manifest_filename}';" +
-                 "git add '#{Filesets_filename}';" +
                  "git add '#{Increments_filename}';"
       system(command)
       tag = 0
@@ -64,30 +59,23 @@ class Avatar
     @name
   end
 
-  def kata
-    Kata.new(@dojo.filesets_root, @filesets)
-  end
-   
   def increments(tag = nil)
     io_lock(folder) { locked_increments(tag) }
   end
   
   def manifest(tag = nil)
-    result = nil
     io_lock(folder) do
       tag ||= most_recent_tag      
       command  = "cd #{folder};" +
                  "git show #{tag}:#{Manifest_filename}"
-      result = eval popen_read(command) 
+      eval popen_read(command) 
     end
-    result    
   end
   
-  def run_tests(manifest, the_kata = kata)
-    incs = [] 
+  # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
+  def run_tests(manifest, the_kata = @dojo.kata)
     io_lock(folder) do
-      output = avatar_run_tests(self, the_kata, manifest)
-      manifest[:output] = output
+      output = avatar_run_tests(self, the_kata, manifest)      
       test_info = parse(self, the_kata, output)
       
       incs = locked_increments     
@@ -96,12 +84,12 @@ class Avatar
       test_info[:number] = incs.length
       file_write(pathed(Increments_filename), incs)
 
+      manifest[:output] = output
       file_write(pathed(Manifest_filename), manifest)
       
       tag = incs.length
       git_commit_tag(manifest[:visible_files], tag)
     end
-    incs
   end
 
   def folder
@@ -112,15 +100,45 @@ class Avatar
     pathed('sandbox')
   end
 
+  # Stop gap till diff-history is public and dojos are unnamed
+  # Older dojos have fileset.rb file per avatar, the contents of
+  # this file are { 'language' => 'C', ... }
+  # Newer dojos (since the switch to a single kata.language per dojo)
+  # do not have a fileset.rb file per avatar but they do have a 
+  # manifest.rb file at the dojo folder level, the contents of
+  # this file are { :language => 'C', ... }
+  def language
+    filesets_manifest[:language] || filesets_manifest['language']
+  end
+
+  def kata_name
+    filesets_manifest[:kata] || filesets_manifest['kata']  
+  end
+  
+  # Stop gap till diff-history is public and dojos are unnamed
+  def tab
+    tab_manifest = eval IO.read(@dojo.filesets_root + '/language/' + language + '/manifest.rb')
+    " " * (tab_manifest[:tab_size] || 4)
+  end
+  
 private
+  
+  # Stop gap till diff-history is public and dojos are unnamed
+  def filesets_manifest
+    # Have to allow resumption of dojos before dojos were
+    # single kata x language. 
+    filename = folder + '/filesets.rb'
+    if !File.exists? filename 
+      filename = @dojo.folder + '/manifest.rb'
+    end
+    eval IO.read(filename)    
+  end
 
   def pathed(filename)
     folder + '/' + filename
   end
 
   Increments_filename = 'increments.rb'
-  
-  Filesets_filename = 'filesets.rb'
   
   Manifest_filename = 'manifest.rb'
 

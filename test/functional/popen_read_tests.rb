@@ -17,7 +17,8 @@ class PopenReadTests < Test::Unit::TestCase
   end
   
   def test_popen_read_when_timeout_times_out
-    assert_equal "Terminated\n", popen_read('sleep 10000', 1)
+    output = popen_read('sleep 10000', 1)
+    assert_not_nil output =~ /Terminated by the CyberDojo server after 1 seconds/, output 
   end
 end
 
