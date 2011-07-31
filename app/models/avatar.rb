@@ -12,7 +12,8 @@ class Avatar
   include RunTestsOutputParserHelper
   
   def self.names
-    %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra )
+    %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra 
+        gopher koala squirrel moose bear bat camel lemur panda gorilla deer kangaroo )
   end
 
   def initialize(dojo, name) 
