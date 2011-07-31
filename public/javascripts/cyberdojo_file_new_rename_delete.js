@@ -38,7 +38,6 @@ function newFile()
   // Append three random chars to the end of the filename.
   // This is so there is NO excuse not to rename it!
   newFileContent('newfile_' + random3(), 'Please rename me!', 0, 0, 0);
-  renameFile();
 }
 
 function newFileContent(filename, content, caret_pos, scroll_top, scroll_left) 
@@ -73,7 +72,7 @@ function deleteFilePrompt(ask)
   if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
   
-  if (ask && !confirm("Delete " + current_filename)) return; // Cancelled  
+  if (ask && !confirm("Delete " + current_filename + " ?")) return; // Cancelled  
 
   var fc = fileContent(current_filename);
   fc.parentNode.removeChild(fc);
@@ -117,11 +116,27 @@ function renameFile()
   if (newname === current_filename) return; // Same name; nothing to do
   if (fileAlreadyExists(newname))
   {
-    alert("CyberDojo cannot rename " + current_filename + " to " + newname + "\n" +
+    alert("CyberDojo cannot rename\n" +
+           "\n" + 
+           "    " + current_filename + "\n" +
+           "to\n" + 
+           "    " + newname + "\n" +
+           "\n" +
           "because a file called " + newname + " already exists.");
     return; // Cancelled
   }
-
+  if (newname.indexOf("/") !== -1)
+  {
+    alert("CyberDojo cannot rename\n" +
+          "\n" +
+          "    " + current_filename + "\n" +
+          "to\n" +
+          "    " + newname + "\n" +
+          "\n" +
+          "because a Unix filename cannot contain a forward slash.");
+    return; // Cancelled
+  }
+  
   // OK. Now do it...
   // Rename by deleting and recreating with previous content
   

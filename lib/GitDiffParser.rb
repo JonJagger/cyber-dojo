@@ -50,8 +50,8 @@ module GitDiff
     def check_for_unchanged_rename(one)
       prefix = one[:prefix_lines]
       if prefix.length == 4 and prefix[1] == 'similarity index 100%'
-        one[:was_filename] = 'a/' + RENAME_FROM_RE.match(prefix[2])[1]
-        one[:now_filename] = 'b/' + RENAME_TO_RE.match(prefix[3])[1]
+        one[:was_filename] = 'a/' + unescaped(RENAME_FROM_RE.match(prefix[2])[1])
+        one[:now_filename] = 'b/' + unescaped(RENAME_TO_RE.match(prefix[3])[1])
       end      
     end
       
@@ -67,7 +67,7 @@ module GitDiff
           # both = "a/sandbox/xx b/sandbox/xx"
           # -1 (space in middle) / 2 (to get one filename)
           was = both[0..both.length/2 - 1]
-          one[:was_filename] = was
+          one[:was_filename] = unescaped(was)
           one[:now_filename] = '/dev/null'          
         end
       end
@@ -185,8 +185,18 @@ module GitDiff
         # command used in GitDiff.rb sometimes generates
         # --- and +++ lines with a tab appended to the filename!!!
         filename.rstrip!
+        filename = unescaped(filename)
       end    
       filename      
+    end
+    
+    def unescaped(filename)
+      # If the filename contains a backslash, then the 'git diff'
+      # command will escape the filename
+      if filename[0].chr == '"'
+        filename = eval filename
+      end
+      filename
     end
     
     def parse_lines(re)

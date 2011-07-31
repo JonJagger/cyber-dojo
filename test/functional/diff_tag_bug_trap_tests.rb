@@ -24,7 +24,7 @@ class DiffTagBugTrapTests < ActionController::TestCase
 
   def params
     { 
-      :dojo_name => 'new-info', 
+      :dojo_name => 'diff-ok', 
       :dojo_root => RAILS_ROOT + '/dojos',
       :filesets_root => RAILS_ROOT + '/filesets'
     }      
@@ -33,8 +33,8 @@ class DiffTagBugTrapTests < ActionController::TestCase
   # For when regression test below finds a failure
   def X_test_look_for_diff_tag_bug_in_specific_increment
     dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'frog')
-    look_for_diff_bug_in_traffic_light(dojo,avatar,26)   
+    avatar = Avatar.new(dojo, 'raccoon')
+    look_for_diff_bug_in_traffic_light(dojo,avatar,3)   
   end
 
   # Regression test. Takes a long time. Default is X_ prefix so it won't run.

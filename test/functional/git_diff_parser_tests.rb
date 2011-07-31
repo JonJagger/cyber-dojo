@@ -50,6 +50,86 @@ class GitDiffParserTests < ActionController::TestCase
   
   #-----------------------------------------------------
   
+  def test_here_processing
+    # backslash characters still have to be escaped in a here string
+line = <<HERE
+"\\\\was"
+HERE
+    assert_equal '"', line[0].chr
+    assert_equal "\\", line[1].chr
+    assert_equal "\\", line[2].chr
+    assert_equal "w", line[3].chr
+    assert_equal "a", line[4].chr
+    assert_equal "s", line[5].chr
+    assert_equal '"', line[6].chr
+  end
+  
+  #-----------------------------------------------------
+
+  def test_parse_diff_quoted_filename_with_backslash
+    filename = "\"\\\\was\""      
+    expected = "\\was"
+    actual = GitDiffParser.new("").unescaped(filename)
+    assert_equal expected, actual    
+  end
+  
+  #-----------------------------------------------------
+  
+  def test_parse_diff_containing_filename_with_backslash
+
+lines = <<HERE
+diff --git "a/sandbox/\\\\was_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
+deleted file mode 100644
+index 21984c7..0000000
+--- "a/sandbox/\\\\was_newfile_FIU"
++++ /dev/null
+@@ -1 +0,0 @@
+-Please rename me!
+\\ No newline at end of file
+HERE
+
+expected =
+{
+  "a/sandbox/\\was_newfile_FIU" =>   # <------ single backslash
+  {
+    :prefix_lines => 
+    [
+        "diff --git \"a/sandbox/\\\\was_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
+        "deleted file mode 100644",
+        "index 21984c7..0000000",
+    ],
+    :was_filename => "a/sandbox/\\was_newfile_FIU", # <------ single backslash
+    :now_filename => '/dev/null',
+    :chunks => 
+    [
+      {
+        :range =>
+        {
+          :now => { :size => 0, :start_line => 0 },
+          :was => { :size => 1, :start_line => 1 }
+        },          
+        :sections => 
+        [
+          {
+            :deleted_lines => [ "Please rename me!"],
+            :added_lines => [],
+            :after_lines => []
+          }
+        ],
+        :before_lines => []
+      }
+    ]
+  }
+}
+
+    parser = GitDiffParser.new(lines)    
+    actual = parser.parse_all
+    assert_equal expected, actual
+
+  end
+  
+  #-----------------------------------------------------
+  
   def test_parse_diff_deleted_file
     
 lines = <<HERE
@@ -80,6 +160,38 @@ expected =
 
   end
   
+  #-----------------------------------------------------
+
+  def test_parse_diff_for_renamed_but_unchanged_file_and_newname_is_quoted
+lines = <<HERE
+diff --git "a/sandbox/was_\\\\wa s_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
+similarity index 100%
+rename from "sandbox/was_\\\\wa s_newfile_FIU"
+rename to "sandbox/\\\\was_newfile_FIU"
+HERE
+
+expected = 
+{
+  'b/sandbox/\\was_newfile_FIU' => # <------ single backslash
+  {
+    :prefix_lines => 
+    [
+        "diff --git \"a/sandbox/was_\\\\wa s_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
+        "similarity index 100%",
+        "rename from \"sandbox/was_\\\\wa s_newfile_FIU\"",
+        "rename to \"sandbox/\\\\was_newfile_FIU\"",
+    ],
+    :was_filename => 'a/sandbox/was_\\wa s_newfile_FIU', # <------ single backslash
+    :now_filename => 'b/sandbox/\\was_newfile_FIU', # <------ single backslash
+    :chunks => []
+  }
+}
+    parser = GitDiffParser.new(lines)    
+    actual = parser.parse_all
+    assert_equal expected, actual
+
+  end
+
   #-----------------------------------------------------
   
   def test_parse_diff_for_renamed_but_unchanged_file
