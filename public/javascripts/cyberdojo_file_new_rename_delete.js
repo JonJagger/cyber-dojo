@@ -70,6 +70,9 @@ function deleteFile()
 function deleteFilePrompt(ask) 
 {
   if (!current_filename) return;
+  if (current_filename === 'output') return;
+  if (current_filename === 'cyberdojo.sh') return;
+  
   if (ask && !confirm("Delete " + current_filename)) return; // Cancelled  
 
   var fc = fileContent(current_filename);
@@ -103,6 +106,8 @@ function deleteFilePrompt(ask)
 function renameFile() 
 {
   if (!current_filename) return;
+  if (current_filename === 'output') return;
+  if (current_filename === 'cyberdojo.sh') return;
 
   var newname = trim(prompt("Rename " + current_filename + " ?", 
                             "was_" + current_filename));

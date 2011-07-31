@@ -39,6 +39,17 @@ function selectFileInFileList(filename)
     $j('#editor').attr('readonly', 'true');
   else
     $j('#editor').removeAttr('readonly');
+  
+  if (filename === 'output' || filename === 'cyberdojo.sh')
+  {
+    $j('#file_op_rename').attr('disabled', true);
+    $j('#file_op_delete').attr('disabled', true);
+  }
+  else
+  {
+    $j('#file_op_rename').removeAttr('disabled');
+    $j('#file_op_delete').removeAttr('disabled');
+  }
 }
 
 function fileContent(filename) 
