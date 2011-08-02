@@ -28,9 +28,9 @@ module Files
     pipe = IO::popen(with_stderr(cmd))
     
     output = ""
-    timed_out = false
     if max_seconds == nil
       output += pipe.read
+      timed_out = false
     else
       sandbox_thread = Thread.new { output += pipe.read }    
       result = sandbox_thread.join(max_seconds);

@@ -1,10 +1,18 @@
 module GitDiff
+
+  # Combines diff and lines to build a data structure that
+  # containes a complete view of a file; the lines that were 
+  # deleted, the lines that were added, and the lines that
+  # have stayed the same.
+  #
+  # diff: created from GitDiffParser. The diff between
+  #       sucessive tags (run-tests) of a file.
+  #
+  # lines: an array containing the current content of the 
+  #        diffed file.
   
   class GitDiffBuilder
   
-    def initialize
-    end
-    
     def build(diff, lines)    
       result = []
       line_number = 1    

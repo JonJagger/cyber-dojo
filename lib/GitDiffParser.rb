@@ -2,6 +2,10 @@ require 'Utils.rb'
 
 module GitDiff
 
+  # Parses the out of 'git diff' command.
+  # Specfically, the one in git_diff_view()
+  # Also, see test/functional/git_diff_parser_tests.rb
+
   class GitDiffParser 
   
     def initialize(diff_text)
@@ -64,7 +68,7 @@ module GitDiff
         if re
           both = re[1]
           length = both.length
-          # both = "a/sandbox/xx b/sandbox/xx"
+          # e.g. both = "a/sandbox/xx b/sandbox/xx"
           # -1 (space in middle) / 2 (to get one filename)
           was = both[0..both.length/2 - 1]
           one[:was_filename] = unescaped(was)
@@ -110,10 +114,10 @@ module GitDiff
     end
   
     def size_or_default(size)
-      #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
-      #Is a blog entry by Guido van Rossum.
-      #He says that in L,S the ,S can be omitted if the chunk size
-      #S is 1. So -3 is the same as -3,1
+      # http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+      # Is a blog entry by Guido van Rossum.
+      # He says that in L,S the ,S can be omitted if the chunk size
+      # S is 1. So -3 is the same as -3,1
       size != nil ? size.to_i : 1 
     end
   
@@ -182,7 +186,7 @@ module GitDiff
         @n += 1        
         filename = md[1]
         # If you have filenames with spaces in them then the 'git diff'
-        # command used in GitDiff.rb sometimes generates
+        # command used in git_diff_view() sometimes generates
         # --- and +++ lines with a tab appended to the filename!!!
         filename.rstrip!
         filename = unescaped(filename)

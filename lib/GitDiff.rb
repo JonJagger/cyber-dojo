@@ -7,6 +7,11 @@ module GitDiff
   include Files
   include Ids
   
+  # Top level function used by diff_controller.rb to create data structure
+  # (to build view from) containing diffs for all files, for a given avatar, 
+  # for a given tag.
+  # See, test/functional/git_diff_view_tests.rb
+  
   def git_diff_view(avatar, tag)
       builder = GitDiffBuilder.new()
     
@@ -38,6 +43,8 @@ module GitDiff
 
       # output of run tests is not stored as an actual file and
       # so is not in the diffs. It's also not in the visible_files.
+      # tag zero is the initial commit done at start-coding before
+      # the run-tests button has been pressed.
       if tag != 0
         view['output'] = sameify(manifest[:output])
       end
@@ -75,8 +82,7 @@ module GitDiff
 
   #-----------------------------------------------------------
   
-  def most_changed_lines_file_id(diffs)
-    
+  def most_changed_lines_file_id(diffs)    
     output = diffs.find {|diff| diff[:name] == 'output'}
     # early dojos will have diffs that don't include output
     # because they were created before output became a 
@@ -110,7 +116,7 @@ module GitDiff
       "</#{n[:type]}>"
   end
   
-    #-----------------------------------------------------------
+  #-----------------------------------------------------------
     
   def spaced_line_number(n, max_digits)
       digit_count = n.to_s.length
