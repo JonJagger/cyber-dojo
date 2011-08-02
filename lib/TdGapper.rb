@@ -28,7 +28,6 @@ class TdGapper
     @start = start
     @seconds_per_td = seconds_per_td    
     @max_seconds_uncollapsed = max_seconds_uncollapsed
-    @max_uncollapsed_tds = max_seconds_uncollapsed / seconds_per_td
   end
 
   def number(light)    

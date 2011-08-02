@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/language_fileset_tests.rb
+# > ruby test/functional/language_fileset_tests.rb
 
 class LanguageFileSetTests < ActionController::TestCase
 

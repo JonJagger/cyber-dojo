@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > cd cyberdojo/test
-# > ruby functional/git_diff_view_tests.rb
+# > ruby test/functional/git_diff_view_tests.rb
 
 class GitDiffViewTests < ActionController::TestCase
 

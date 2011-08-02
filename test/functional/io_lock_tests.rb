@@ -2,8 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 require 'Locking'
 
-# > cd cyberdojo/test
-# > ruby functional/io_lock_tests.rb
+# > ruby test/functional/io_lock_tests.rb
 
 class IoLockTests < Test::Unit::TestCase
   

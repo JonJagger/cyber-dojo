@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'time_in_words_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/time_in_words_tests.rb
+# > ruby test/functional/time_in_words_tests.rb
 
 class TimeInWordsTests < ActionController::TestCase
 
@@ -53,8 +52,7 @@ class TimeInWordsTests < ActionController::TestCase
     time_split_unsplit_words([0, 2, 0, 0, 1], 172801, '2 days')
     time_split_unsplit_words([1, 0, 0, 0, 0], 31536000, '1 year')
     time_split_unsplit_words([1, 0, 0, 0,15], 31536015, '1 year')
-    time_split_unsplit_words([2, 0, 0, 0, 0], 63072000, '2 years')
-    
+    time_split_unsplit_words([2, 0, 0, 0, 0], 63072000, '2 years')    
   end
    
 end

@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiffParser'
 
-# > cd cyberdojo/test
-# > ruby functional/git_diff_parser_tests.rb
+# > ruby test/functional/git_diff_parser_tests.rb
 
 class GitDiffParserTests < ActionController::TestCase 
 

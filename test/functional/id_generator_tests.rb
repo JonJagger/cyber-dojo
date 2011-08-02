@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Ids'
 
+# > ruby test/functional/id_generator_tests.rb
+
 class IdGeneratorTests < ActionController::TestCase
 
   include Ids

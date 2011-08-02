@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'recent_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/recent_tests.rb
+# > ruby test/functional/recent_tests.rb
 
 class RecentTests < ActionController::TestCase
 

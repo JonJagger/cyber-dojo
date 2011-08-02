@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/line_split_tests.rb
+# > ruby test/functional/line_split_tests.rb
 
 class LineSplitTests < Test::Unit::TestCase
 

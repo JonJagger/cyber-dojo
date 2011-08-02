@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > cd cyberdojo/test
-# > ruby functional/spaced_line_number_tests.rb
+# > ruby test/functional/spaced_line_number_tests.rb
 
 class SpacedLineNumberTests < ActionController::TestCase
 

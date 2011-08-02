@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Utils'
 
-# > cd cyberdojo/test
-# > ruby functional/sameify_tests.rb
+# > ruby test/functional/sameify_tests.rb
 
 class SameifyTests < ActionController::TestCase
 

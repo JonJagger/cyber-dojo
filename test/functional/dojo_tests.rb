@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/dojo_tests.rb
+# > ruby test/functional/dojo_tests.rb
 
 class DojoTests < ActionController::TestCase
 

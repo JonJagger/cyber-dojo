@@ -2,8 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'recent_helper'
 require 'GitDiffParser'
 
-# > cd cyberdojo/test
-# > ruby functional/diff_tag_bug_trap_tests.rb
+# > ruby test/functional/diff_tag_bug_trap_tests.rb
 
 class DiffTagBugTrapTests < ActionController::TestCase
 

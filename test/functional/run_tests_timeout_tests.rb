@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/run_tests_timeout_tests.rb
+# > ruby test/functional/run_tests_timeout_tests.rb
 
 class RunTestsTimeOutTests < ActionController::TestCase
 

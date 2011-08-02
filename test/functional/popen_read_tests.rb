@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
-# > cd cyberdojo/test
-# > ruby functional/popen_read_tests.rb
+# > ruby test/functional/popen_read_tests.rb
 
 class PopenReadTests < Test::Unit::TestCase
 

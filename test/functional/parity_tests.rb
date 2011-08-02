@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'parity_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/parity_tests.rb
+# > ruby test/functional/parity_tests.rb
 
 class ParityTests < ActionController::TestCase
 

@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'test_runner_helper'
 
-# > cd cyberdojo/test
-# > ruby functional/makefile_filter_tests.rb
+# > ruby test/functional/makefile_filter_tests.rb
 
 class MakefileFilterTests < ActionController::TestCase
 
