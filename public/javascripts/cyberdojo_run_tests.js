@@ -10,10 +10,9 @@ function preRunTests() {
   //                 :before => "preRunTests();",
 
   saveCurrentFile();
+  // Make sure filenames cannot be used to change file selection
+  tests_running = true;  
   selectFileInFileList('output');
-  //TODO: there is a possible race here...
-  //TODO: If, here, a different file is selected in the filename list
-  //TODO: then this could overwrite the wrong file
   $j('#editor')
     .attr('class', 'waiting')
     .val('Running tests...');
@@ -31,13 +30,10 @@ function postRunTests() {
   $j('#run_tests').show();
 
   selectFileInFileList('output');
-  //TODO: there is a possible race here...
-  //TODO: If, here, a different file is selected in the filename list
-  //TODO: then this could overwrite the wrong file  
   $j('#editor').val($j('#output').val())
                .scrollTop(0)
                .scrollLeft(0);
-
+  tests_running = false;
   // new increment could affect layout
   refreshLineNumbering();  
 }

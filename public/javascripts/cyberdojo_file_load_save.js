@@ -1,8 +1,12 @@
 
 var current_filename = false;
+var tests_running = false;
 
 function saveCurrentFile() 
 {
+  if (tests_running)
+    return;
+  
   if (current_filename) 
   {
     var editor = $j('#editor');
@@ -15,6 +19,9 @@ function saveCurrentFile()
 
 function loadFile(filename) 
 {
+  if (tests_running)
+    return;
+  
   var caret_pos = fileCaretPos(filename).getAttribute('value');
   var scroll_top  = fileScrollTop(filename).getAttribute('value');
   var scroll_left = fileScrollLeft(filename).getAttribute('value');
