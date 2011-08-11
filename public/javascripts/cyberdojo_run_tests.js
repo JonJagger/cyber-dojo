@@ -13,6 +13,7 @@ function preRunTests() {
   // Make sure filenames cannot be used to change file selection
   tests_running = true;  
   selectFileInFileList('output');
+  $j('#file_op_new').attr('disabled', true);
   $j('#editor')
     .attr('class', 'waiting')
     .val('Running tests...');
@@ -33,6 +34,7 @@ function postRunTests() {
   $j('#editor').val($j('#output').val())
                .scrollTop(0)
                .scrollLeft(0);
+  $j('#file_op_new').removeAttr('disabled');
   tests_running = false;
   // new increment could affect layout
   refreshLineNumbering();  
