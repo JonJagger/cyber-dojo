@@ -1,7 +1,7 @@
 # ruby names.rb
 # >June 19 15:17 ca/cfefd7... php-caret [4,9,13] -> 26 
 # >June 29 19:05 f6/893527... dojo-name [0,1,3] -> 4
-# Columns are: Date, Time, Folder, Name, [Increments per avatar], Total Number of Increments 
+# Columns are: Date, Time, Folder, Name, [Increments per avatar], Total Number of Increments, Browser
 
 require 'digest/sha1'
 
@@ -11,7 +11,8 @@ def recent(array, max_length)
 end
 
 def avatars
-  %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra )
+  %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra 
+      gopher koala squirrel moose bear bat camel lemur panda gorilla deer kangaroo )
 end
 
 index = eval IO.popen('cat dojos/index.rb').read

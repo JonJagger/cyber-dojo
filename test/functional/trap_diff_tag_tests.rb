@@ -2,9 +2,9 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'recent_helper'
 require 'GitDiffParser'
 
-# > ruby test/functional/diff_tag_bug_trap_tests.rb
+# > ruby test/functional/trap_diff_tag_tests.rb
 
-class DiffTagBugTrapTests < ActionController::TestCase
+class TrapDiffTagTests < ActionController::TestCase
 
   # The diff-view code initially shipped without
   # code to handle renamed files or deleted files.

@@ -86,6 +86,7 @@ class Avatar
       file_write(pathed(Increments_filename), incs)
 
       manifest[:output] = output
+      manifest[:visible_files]['output'][:content] = output
       file_write(pathed(Manifest_filename), manifest)
       
       tag = incs.length
