@@ -1,5 +1,5 @@
-VISION AND PRINCIPLES
-=====================
+                     VISION
+                     ======
 
 Deliberate Practice
 -------------------
@@ -7,39 +7,54 @@ I believe that the role of deliberate practice has vast untapped potential
 in the field of software development. My particularly passion is doing deliberate 
 software practice in a collaborative way. Hence CyberDojo.  
 
-I would like a central CyberDojo where you do named practice sessions
-inside named dojos and everything is visible to everyone. Open Kimono.
-Software luminaries such as Ward Cunningham could be tempted to do their katas
-which would be recorded for posterity.
+Making all sessions viewable
+----------------------------
+At the moment you need to know the name of a dojo to enter it and view
+it via the dashboard traffic lights and diffs. I want a public list of all 
+previous dojos. 
 
+Branching from any traffic light
+--------------------------------
+I want a button which starts a new dojo (without creating a new named starting 
+fileset) from the state of the files at that traffic light. This will allow you 
+to create a new exploratory "branch" for any new variations. 
+
+Dojo Rooms
+-------------
+I want separate unnamed "rooms" visible from the front page. Eg rooms with 
+different colours. Players enter, name and configure an empty room to do a dojo.
+To join a dojo you don't need to know its name, simply which colour room to enter.
+This will make the startup time for players even faster. To make this work a 
+dojo will need to timeout after being unused for a period of time (thus making
+the room empty again for a new group). The number of rooms could be tailored
+to the power of the server.
+
+Creating new kata filesets
+--------------------------
+After doing many increments you may have your files in a state you want 
+to become a new named starting fileset. This would be a good way to create 
+a "flying start" for a kata. So I want a button to automatically create a 
+new named fileset starting point from the state of the current files.
+
+Federated CyberDojos 
+--------------------
+I would like lots of CyberDojo servers setup across the world.
+They could be specialized to particular areas. For example Mikes CyberDojo
+could be run from Oslo and host just C katas.
+I would like 
+
+Education
+---------
 I would like to see students using cyberdojo, and their tutors marking
 their work not just based on a static snapshot of how it ends up but also
 on the dynamic way it changed as it was worked on. And possibly during 
 several explicit repetitions. 
 
+Employment
+----------
 I can also imagine job applicants being asked to perform some katas
 in CyberDojo and the resulting "session video" being used to help the
 applicants prove their ability. 
- 
-
-Player-identification
----------------------
-Players should be able to do a kata without identifying themselves
-However if players wish to identify themselves (eg my naming their dojo after
-themselves) it should be possible to return to and continue previous katas. 
-However, this idea is somewhat in tension with the idea of deliberate practice 
-and in particular the idea of repetition. I think it might be useful to be able 
-to mark a deliberate practice session as being over to encourage participants 
-to repeat the session.
-
-
-Server-image
-------------
-The server should have a full image that can be saved onto a memory stick
-and provides a pre-prepared os to boot into. This would provide a very
-quick start if you wanted to run a CyberDojo server but did not have all
-the compilers installed on your computer.
-
 
 Traffic-lights
 --------------
@@ -52,13 +67,6 @@ be a human traffic-light and mark the output themselves. This would
 be nice for making a very quick start in a new language. It could also be
 used to gather data to test regexp patterns!
 
-
-Setting up a new kata
----------------------
-After adding and renaming files from a blank state and doing many increments
-you may have the files in a state that you want to become the starting fileset
-for a new kata. It would be nice if there was a way to click a button and
-the CyberDojo server automatically did that for you.
 
 
 
