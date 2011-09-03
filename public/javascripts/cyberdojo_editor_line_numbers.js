@@ -23,7 +23,7 @@ function createLineNumbersForEditor()
   el.style.overflow = 'hidden';
   el.style.textAlign = 'right';
   
-  el.style.width    = '35px';
+  el.style.width    = '37px';
   
   el.innerHTML      = line_numbers;  // Firefox renders \n linebreak
   el.innerText      = line_numbers;  // IE6 renders \n line break
