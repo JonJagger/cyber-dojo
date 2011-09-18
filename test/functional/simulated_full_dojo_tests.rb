@@ -12,38 +12,49 @@ class SimulatedFullDojoTests < ActionController::TestCase
     Dir.mkdir Root_test_folder
   end
 
-  def make_params
+  def params?(language)
     { :dojo_name => 'Jon Jagger', 
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'kata' => 'Unsplice (*)',
-      'language' => 'C',
+      'language' => language,
       :browser => 'None (test)'
     }
   end
   
+  def create_dojo(language)
+    root_test_folder_reset    
+    assert Dojo::create(params?(language))
+    Dojo.configure(params?(language))
+    Dojo.new(params?(language))
+  end
+  
   def defunct_count
-    # See comments in app/helpers/popen_read.rb
+    # See comments in app/lib/Files.rb
     `ps`.scan(/<defunct>/).length
   end
   
-  def test_run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes
-    root_test_folder_reset    
-    params = make_params
-    assert Dojo::create(params)
-    Dojo.configure(params)
-    dojo = Dojo.new(params)
+  def test_no_ruby_zombie_processes_left_unkilled
+    run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes('Ruby')
+  end
+  
+  def test_no_java_zombies_left_unkilled
+    run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes('Java',3,4)
+  end
+  
+  def run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes(language, avatar_count=8, run_tests_count=10)
+    dojo = create_dojo(language)
 
     manifests = {}
     avatars = []
     
-    8.times do |n|
+    avatar_count.times do |n|
       avatar = dojo.create_avatar
       manifests[avatar.name] = avatar.manifest
       avatars << avatar
     end
 
-    10.times do |n|
+    run_tests_count.times do |n|
       avatars.each do |avatar|
         manifest = manifests[avatar.name]
         

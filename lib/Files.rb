@@ -15,12 +15,12 @@ module Files
   # had not yet wait()ed for it to finish.
   # The popen call turned out to be the culprit.
   #
-  # Furthermore,  killing a process does not necessarily kill its child processes. 
+  # Furthermore, killing a process does not necessarily kill its child processes. 
   # So that has to be coded. At first I killed all the descendant processes in 
   # an ensure block. However this...
   #   http://blog.headius.com/2008/02/rubys-threadraise-threadkill-timeoutrb.html
   # says there is a ruby bug in the interaction between Thread.kill and ensure,
-  # and I seemed to be hitting that on occasion.
+  # and I seemed to be hitting that.
   # So I have refactored: now the descendent processes are killed outside of
   # an ensure block.
   
