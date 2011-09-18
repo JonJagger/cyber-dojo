@@ -24,7 +24,14 @@
     
     <td>
       <span class="small_title">
-         <%= tag_number -%>
+         Increment <%= tag_number -%>
+		 <br/>
+		 <% unless @traffic_lights_to_tag.empty? %>
+		 (<%= duration_in_minutes(
+			   @dojo.created,
+			   Time.mktime(*@traffic_lights_to_tag.last[:time])) -%>
+		 minutes in)
+		<% end -%>
       </span>
     </td>   
     

@@ -1,6 +1,12 @@
 module TrafficLightHelper
   
-  def traffic_light(dojo_name, avatar_name, inc)
+  def duration_in_minutes(started, finished)
+    (finished - started).to_i / 60
+  end
+  
+  def traffic_light(dojo, avatar_name, inc)
+    dojo_name = dojo.name
+    minutes = duration_in_minutes(dojo.created, Time.mktime(*inc[:time]))
     link_to make_light(inc, ''), 
     {   :controller => :diff, 
         :action => :show,
@@ -8,11 +14,11 @@ module TrafficLightHelper
         :avatar => avatar_name,
         :tag => inc[:number] 
       }, 
-      { :title => 'View ' + avatar_name.humanize + ' diff ' + inc[:number].to_s, 
+      { :title => "View #{avatar_name.humanize} diff #{inc[:number]} : #{minutes} minutes", 
         :target => '_blank' 
       } 
   end
-  
+
   def unlinked_traffic_light(inc)
     make_light(inc, 'unlinked ')
   end
