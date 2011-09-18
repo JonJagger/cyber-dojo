@@ -75,11 +75,21 @@ class Avatar
   
   def auto_post_message()
     all_incs = Increment.all(increments)
-    @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test(all_incs)
+    @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
+    @dojo.post_message(name, "looks like the #{name} laptop is on a hot refactoring streak!") if refactoring_streak?(all_incs)
   end
   
-  def just_passed_first_test(increments)
+  def just_passed_first_test?(increments)
     increments.count { |inc| inc.passed? } == 1 and increments.last.passed?
+  end
+  
+  def refactoring_streak?(increments)
+    streak_count = 0
+    reversed = increments.reverse
+    while streak_count < reversed.length && reversed[streak_count].passed?
+      streak_count += 1
+    end
+    streak_count != 0 && streak_count % 5 == 0
   end
   
   # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
