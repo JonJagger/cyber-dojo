@@ -20,6 +20,7 @@ function preRunTests() {
     
   $j('#run_tests').hide();
   $j('#spinner').show();
+  $j('#output').val('CyberDojo client could not connect to server\n(have you lost your internet connection?)');
 }
 
 function postRunTests() { 
