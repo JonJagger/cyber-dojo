@@ -41,8 +41,9 @@ class KataController < ApplicationController
   def heartbeat
     configure(params)
     @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])   
+    @avatar = Avatar.new(@dojo, params[:avatar])
     @messages = @dojo.messages
+    @avatar.auto_post_message_if_reluctant_to_test(@messages)
     respond_to do |format|
       format.js if request.xhr?
     end

@@ -120,7 +120,7 @@ class Dojo
     io_lock(messages_filename) { eval IO.read(messages_filename) }
   end
 
-  def post_message(sender_name, text)
+  def post_message(sender_name, text, type = :notification)
     messages = []
     io_lock(messages_filename) do
       messages = eval IO.read(messages_filename)
@@ -129,7 +129,9 @@ class Dojo
         messages <<  { 
           :sender => sender_name, 
           :text => text,
-          :created => make_time(Time.now)
+          :created => make_time(Time.now),
+          :type => type
+          
         }
         file_write(messages_filename, messages)
       end

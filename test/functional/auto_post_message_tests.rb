@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'avatar'
+require 'DateTimeExtensions'
 
 
 class AutoPostMessageTests < ActionController::TestCase
@@ -65,6 +66,43 @@ class AutoPostMessageTests < ActionController::TestCase
       {:outcome => :passed},
       ]
       assert !avatar.refactoring_streak?(Increment.all(interrupted_streak))      
+  end
+  
+  def test_reluctant_to_run_tests
+    avatar = create_avatar
+    assert !avatar.reluctant_to_run_tests?(Increment.all([]), [])
+    recent_run = [ {:time => 11.minutes.ago.to_a}, {:time => 9.minutes.ago.to_a }]
+    assert !avatar.reluctant_to_run_tests?(Increment.all(recent_run), [])
+    reluctant_run = [ {:time => 12.minutes.ago.to_a}, {:time => 11.minutes.ago.to_a }]
+    assert avatar.reluctant_to_run_tests?(Increment.all(reluctant_run), [])
+  end
+  
+  def test_dont_send_reluctance_message_if_already_send
+    avatar = create_avatar
+    reluctant_run = Increment.all([{:time => 11.minutes.ago.to_a }])
+    messages_containing_reluctance = [{:sender => avatar.name, :type => :test_reluctance, :created => 1.minute.ago.to_a}]
+    assert !avatar.reluctant_to_run_tests?(reluctant_run, messages_containing_reluctance)
+  end
+  
+  def test_do_send_reluctance_message_if_message_is_not_regarding_reluctance
+    avatar = create_avatar
+    reluctant_run = Increment.all([{:time => 11.minutes.ago.to_a }])
+    irrelevant_messages = [{:sender => avatar.name, :type => nil, :created => 1.minute.ago.to_a}]
+    assert avatar.reluctant_to_run_tests?(reluctant_run, irrelevant_messages)
+  end
+
+  def test_do_send_reluctance_message_if_message_regards_different_avatar
+    avatar = create_avatar
+    reluctant_run = Increment.all([{:time => 11.minutes.ago.to_a }])
+    irrelevant_messages = [{:sender => "somebody else", :type => :test_reluctance, :created => 1.minute.ago.to_a}]
+    assert avatar.reluctant_to_run_tests?(reluctant_run, irrelevant_messages)
+  end
+  
+  def test_do_send_reluctance_message_if_last_message_was_10_minutes_ago
+    avatar = create_avatar
+    reluctant_run = Increment.all([{:time => 11.minutes.ago.to_a }])
+    irrelevant_messages = [{:sender => avatar.name, :type => :test_reluctance, :created => 11.minute.ago.to_a}]
+    assert avatar.reluctant_to_run_tests?(reluctant_run, irrelevant_messages)
   end
   
 end

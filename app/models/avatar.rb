@@ -76,7 +76,7 @@ class Avatar
   def auto_post_message()
     all_incs = Increment.all(increments)
     @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
-    @dojo.post_message(name, "looks like the #{name} laptop is on a hot refactoring streak!") if refactoring_streak?(all_incs)
+    @dojo.post_message(name, "looks like #{name} is on a hot refactoring streak!") if refactoring_streak?(all_incs)
   end
   
   def just_passed_first_test?(increments)
@@ -90,6 +90,24 @@ class Avatar
       streak_count += 1
     end
     streak_count != 0 && streak_count % 5 == 0
+  end
+  
+  def auto_post_message_if_reluctant_to_test(messages)
+    all_incs = Increment.all(increments)
+    if reluctant_to_run_tests?(all_incs, messages)
+      @dojo.post_message(name, "looks like #{name} is reluctant to run tests", :test_reluctance)
+    else
+    end
+  end
+  
+  def reluctant_to_run_tests?(increments, messages)
+    relevant_messages = messages.select do |message|
+      message[:type] == :test_reluctance && 
+        message[:sender] == name &&
+          DateTime.new(*message[:created]) > 10.minutes.ago
+    end
+    return false unless relevant_messages.empty?
+    !increments.empty? and increments.last.old?
   end
   
   # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
