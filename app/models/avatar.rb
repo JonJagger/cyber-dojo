@@ -73,6 +73,15 @@ class Avatar
     end
   end
   
+  def auto_post_message()
+    all_incs = Increment.all(increments)
+    @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test(all_incs)
+  end
+  
+  def just_passed_first_test(increments)
+    increments.count { |inc| inc.passed? } == 1 and increments.last.passed?
+  end
+  
   # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
   def run_tests(manifest, the_kata = @dojo.kata)
     io_lock(folder) do
@@ -84,7 +93,6 @@ class Avatar
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
       file_write(pathed(Increments_filename), incs)
-
       manifest[:output] = output
       manifest[:visible_files]['output'][:content] = output
       file_write(pathed(Manifest_filename), manifest)
@@ -182,7 +190,7 @@ private
     else
       command  = "cd #{folder};" +
                  "git show #{tag}:#{Increments_filename}"
-      eval popen_read(command)        
+      eval popen_read(command)
     end
   end
 

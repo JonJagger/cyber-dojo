@@ -30,7 +30,9 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])   
     manifest = load_visible_files_from_page
     @avatar.run_tests(manifest)
+    @avatar.auto_post_message()
     @output = manifest[:output]
+    @messages = @dojo.messages
     respond_to do |format|
       format.js if request.xhr?
     end
