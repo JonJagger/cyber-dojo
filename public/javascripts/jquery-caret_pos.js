@@ -1,8 +1,4 @@
 
-/*
- * Cobbled together by Jon Jagger
- */
-
 (function($) {
   
   $.fn.caretPos = function(pos) {

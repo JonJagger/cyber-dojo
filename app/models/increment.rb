@@ -1,4 +1,13 @@
+
+# At the moment almost all the codebase uses each increment (traffic-light) as
+# a plain hash (eg inc[:time]) 
+# This needs to be refactored to use an Increment model object instead.
+# At the moment the only code that uses this Increment class is the
+# auto post message code in avatar.rb mostly written by the awesome
+# Johannes Brodwall. There needs to be a model class for Messages too.
+
 class Increment
+  
   def self.all(hashes)
     hashes.map { |hash| Increment.new(hash) }
   end
@@ -20,4 +29,5 @@ class Increment
   def to_hash
     @hash
   end
+
 end

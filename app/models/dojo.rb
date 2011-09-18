@@ -131,7 +131,6 @@ class Dojo
           :text => text,
           :created => make_time(Time.now),
           :type => type
-          
         }
         file_write(messages_filename, messages)
       end

@@ -5,9 +5,6 @@ require 'DateTimeExtensions'
 
 class AutoPostMessageTests < ActionController::TestCase
 
-  #def just_passed_first_test(increments)
-  #  increments.count { |inc| inc[:outcome] == :passed } == 1 and increments.last[:outcome] == :passed
-  #end
   Root_test_folder = RAILS_ROOT + '/test/test_dojos'
 
   def root_test_folder_reset
@@ -77,7 +74,7 @@ class AutoPostMessageTests < ActionController::TestCase
     assert avatar.reluctant_to_run_tests?(Increment.all(reluctant_run), [])
   end
   
-  def test_dont_send_reluctance_message_if_already_send
+  def test_dont_send_reluctance_message_if_already_sent
     avatar = create_avatar
     reluctant_run = Increment.all([{:time => 11.minutes.ago.to_a }])
     messages_containing_reluctance = [{:sender => avatar.name, :type => :test_reluctance, :created => 1.minute.ago.to_a}]

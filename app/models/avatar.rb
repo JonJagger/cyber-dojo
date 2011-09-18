@@ -74,6 +74,7 @@ class Avatar
   end
   
   def auto_post_message()
+    # this is called from kata_controller.run_tests
     all_incs = Increment.all(increments)
     @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
     @dojo.post_message(name, "looks like #{name} is on a hot refactoring streak!") if refactoring_streak?(all_incs)
@@ -93,6 +94,7 @@ class Avatar
   end
   
   def auto_post_message_if_reluctant_to_test(messages)
+    # this is called from kata_controller.heartbeat
     all_incs = Increment.all(increments)
     if reluctant_to_run_tests?(all_incs, messages)
       @dojo.post_message(name, "looks like #{name} is reluctant to run tests", :test_reluctance)
@@ -110,8 +112,8 @@ class Avatar
     !increments.empty? and increments.last.old?
   end
   
-  # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
   def run_tests(manifest, the_kata = @dojo.kata)
+    # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
     io_lock(folder) do
       output = avatar_run_tests(self, the_kata, manifest)      
       test_info = parse(self, the_kata, output)
