@@ -89,14 +89,17 @@ class Dojo
   end
   
   def create_avatar()
+    avatar = nil
     io_lock(folder) do
       unused_avatars = Avatar::names.select { |name| !exists? name }
       if unused_avatars == []
         nil
       else
-        Avatar.new(self, unused_avatars.shuffle[0])
+        avatar = Avatar.new(self, unused_avatars.shuffle[0])
       end
     end
+    post_message(avatar.name, "#{avatar.name} has joined") if avatar
+    avatar
   end
   
   def avatars
@@ -117,14 +120,14 @@ class Dojo
     io_lock(messages_filename) { eval IO.read(messages_filename) }
   end
 
-  def post_message(sender, text)
+  def post_message(sender_name, text)
     messages = []
     io_lock(messages_filename) do
       messages = eval IO.read(messages_filename)
       text = text.strip
       if text != ''
         messages <<  { 
-          :sender => sender, 
+          :sender => sender_name, 
           :text => text,
           :created => make_time(Time.now)
         }
