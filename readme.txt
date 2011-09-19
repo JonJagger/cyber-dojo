@@ -26,7 +26,8 @@ Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 CyberDojo lives in the folder /var/www/cyberdojo 
 Pull the latest CyberDojo source code from github onto your TurnKey image
->git pull origin master
+>git remote add github git@github.com:JonJagger/cyberdojo.git
+>git pull github master
 
 
 Configuring a CyberDojo
@@ -40,7 +41,7 @@ o) your kata (eg Prime Factors)
 
 Entering a CyberDojo
 ====================
-The CyberDojo server will choose your animal avatar (eg Pandas). The avatar 
+The CyberDojo server will choose your animal avatar (eg Panda). The avatar 
 provides identity for each laptop participating in the kata. You can re-enter
 at any time by choosing the avatar. This is handy if a laptop has to retire 
 as a new laptop can easily and instantly replace it.
@@ -74,16 +75,18 @@ Messages
 Each computer can post tweet like messages which appear on the lower
 left hand side. I encourage players to use this to work together, 
 particularly when running the dojo with the aim of getting working solutions 
-on _all_ laptops. 
+on _all_ laptops (eg in The Average Time To Green Game).
 
 
 Issues
 ======
-1. Occasionally the server does not seem to respond when trying to enter a dojo.
-2. Objective-C no longer compiles. After a server-upgrade it reports
+1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout.
+   When this happens it is best to reboot the server and then get each laptop to resume
+   coding as their avatar.
+2. Occasionally the run-tests output text somehow overwrites the contents of a source file.
+3. Objective-C no longer compiles. After a server-upgrade it reports
    The current setting for native-objc-exceptions does not match that of gnustep-base 
       ... please correct this
-   On the todo list but not a high priority.
 
    
 Building your own CyberDojo from scratch
@@ -251,7 +254,7 @@ To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
-To find the folder... from the cyberdojo folder
+To find the folder from the cyberdojo folder
 >ruby names.rb
 Which will provide the sha1 based folder name for recent dojos.
 It's much easier and more informative to just click on a traffic light.
