@@ -74,7 +74,7 @@ class Avatar
   end
   
   def auto_post_message()
-    # this is called from kata_controller.run_tests
+    # called from kata_controller.run_tests
     all_incs = Increment.all(increments)
     @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
     @dojo.post_message(name, "looks like #{name} is on a hot refactoring streak!") if refactoring_streak?(all_incs)
@@ -94,7 +94,7 @@ class Avatar
   end
   
   def auto_post_message_if_reluctant_to_test(messages)
-    # this is called from kata_controller.heartbeat
+    # called from kata_controller.heartbeat
     all_incs = Increment.all(increments)
     if reluctant_to_run_tests?(all_incs, messages)
       @dojo.post_message(name, "looks like #{name} is reluctant to run tests", :test_reluctance)
@@ -140,7 +140,6 @@ class Avatar
     pathed('sandbox')
   end
 
-  # Stop gap till diff-history is public and dojos are unnamed
   # Older dojos have fileset.rb file per avatar, the contents of
   # this file are { 'language' => 'C', ... }
   # Newer dojos (since the switch to a single kata.language per dojo)
@@ -155,7 +154,6 @@ class Avatar
     filesets_manifest[:kata] || filesets_manifest['kata']  
   end
   
-  # Stop gap till diff-history is public and dojos are unnamed
   def tab
     tab_manifest = eval IO.read(@dojo.filesets_root + '/language/' + language + '/manifest.rb')
     " " * (tab_manifest[:tab_size] || 4)
@@ -163,7 +161,6 @@ class Avatar
   
 private
   
-  # Stop gap till diff-history is public and dojos are unnamed
   def filesets_manifest
     # Have to allow resumption of dojos before dojos were
     # single kata x language. 
