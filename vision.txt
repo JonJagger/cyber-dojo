@@ -52,13 +52,14 @@ Education
 I would like to see students using cyberdojo, and their tutors marking
 their work not just based on a static snapshot of how it ends up but also
 on the dynamic way it changed as it was worked on. And possibly during 
-several explicit repetitions. 
+several explicit repetitions.
 
-Employment
-----------
+Recruitment
+-----------
 I can also imagine job applicants being asked to perform some katas
-in CyberDojo and the resulting "session video" being used to help the
-applicants demonstrate their ability. 
+in CyberDojo (ideally with the team they are hoping to join)
+and the resulting session (and the traffic-light "video" being used to
+help the team judge the applicant's ability. 
 
 Traffic-lights
 --------------
