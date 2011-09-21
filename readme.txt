@@ -8,14 +8,40 @@ o) a dedicated server
 o) a virtual box.
 
 
-Running your own CyberDojo server
-=================================
+Running your own VirtualBox TurnKey Linux CyberDojo server
+==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
 The TurnKey image screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
+
+
+Getting files off the VirtualBox TurnKey Linux server
+=====================================================
+These were the steps I took...
+ 0. Don't boot the Virtual Box TurnKey Linux server yet
+ 1. insert a USB stick
+ 2. In Virtual Box add a filter for the USB stick
+ 3. Remove the USB stick
+ 4. boot the Virtual Box server and note its IP address (eg 192.168.61.25)
+ 5. open a browser page to the Virtual Box server (eg 192.168.61.25:12320)
+ 6. login (you need username and password for this, see below)
+ 7. Find the name of the USB device, eg sdb1
+ 8. >tail /var/log/messages
+ 9. Mount the usb device
+10. >mkdir /root/usbdrive
+11. >mount -t vfat /dev/sdb1 /root/usbdrive
+12. >cd /var/www/cyberdojo
+13. Find the folder you want
+14. >ruby names.rb    
+15. eg suppose the folder is dojos/82/b583c11…..
+16. cd to that folder, then
+17. >tar -zcvf name.tar.gz .
+18. >mv name.tar.gz /root/usbdrive
+19. >umount /dev/sdb1
+20. shut down the VBox image
 
 
 Pulling the latest github source onto your server
@@ -26,7 +52,8 @@ Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 CyberDojo lives in the folder /var/www/cyberdojo 
 Pull the latest CyberDojo source code from github onto your TurnKey image
->git pull origin master
+>git remote add github git@github.com:JonJagger/cyberdojo.git
+>git pull github master
 
 
 Configuring a CyberDojo
@@ -40,7 +67,7 @@ o) your kata (eg Prime Factors)
 
 Entering a CyberDojo
 ====================
-The CyberDojo server will choose your animal avatar (eg Pandas). The avatar 
+The CyberDojo server will choose your animal avatar (eg Panda). The avatar 
 provides identity for each laptop participating in the kata. You can re-enter
 at any time by choosing the avatar. This is handy if a laptop has to retire 
 as a new laptop can easily and instantly replace it.
@@ -74,16 +101,18 @@ Messages
 Each computer can post tweet like messages which appear on the lower
 left hand side. I encourage players to use this to work together, 
 particularly when running the dojo with the aim of getting working solutions 
-on _all_ laptops. 
+on _all_ laptops (eg in The Average Time To Green Game).
 
 
 Issues
 ======
-1. Occasionally the server does not seem to respond when trying to enter a dojo.
-2. Objective-C no longer compiles. After a server-upgrade it reports
+1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout.
+   When this happens it is best to reboot the server and then get each laptop to resume
+   coding as their avatar.
+2. Occasionally the run-tests output text somehow overwrites the contents of a source file.
+3. Objective-C no longer compiles. After a server-upgrade it reports
    The current setting for native-objc-exceptions does not match that of gnustep-base 
       ... please correct this
-   On the todo list but not a high priority.
 
    
 Building your own CyberDojo from scratch
@@ -251,7 +280,7 @@ To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
-To find the folder... from the cyberdojo folder
+To find the folder from the cyberdojo folder
 >ruby names.rb
 Which will provide the sha1 based folder name for recent dojos.
 It's much easier and more informative to just click on a traffic light.

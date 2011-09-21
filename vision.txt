@@ -3,7 +3,7 @@
 
 Deliberate Practice
 -------------------
-I believe that the role of deliberate practice has vast untapped potential 
+I believe that the role of deliberate practice has huge untapped potential 
 in the field of software development. My particularly passion is doing deliberate 
 software practice in a collaborative way. Hence CyberDojo.  
 
@@ -21,7 +21,7 @@ to create a new exploratory "branch" for any new variations.
 
 Dojo Rooms
 -------------
-I want separate unnamed "rooms" visible from the front page. Eg rooms with 
+I want four separate unnamed "rooms" visible from the front page. Eg rooms with 
 different colours. Players enter, name and configure an empty room to do a dojo.
 To join a dojo you don't need to know its name, simply which colour room to enter.
 This will make the startup time for players even faster. To make this work a 
@@ -35,6 +35,11 @@ After doing many increments you may have your files in a state you want
 to become a new named starting fileset. This would be a good way to create 
 a "flying start" for a kata. So I want a button to automatically create a 
 new named fileset starting point from the state of the current files.
+
+Reliable Servers
+----------------
+http://www.cyber-dojo.com has an unreliable connection to the internet and sometimes
+goes down. I would like to host the server on a cloud provider, eg via Amazon.
 
 Federated CyberDojos 
 --------------------
@@ -53,7 +58,7 @@ Employment
 ----------
 I can also imagine job applicants being asked to perform some katas
 in CyberDojo and the resulting "session video" being used to help the
-applicants prove their ability. 
+applicants demonstrate their ability. 
 
 Traffic-lights
 --------------
