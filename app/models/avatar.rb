@@ -2,6 +2,7 @@
 require 'test_runner_helper.rb'
 require 'Locking'
 require 'Files'
+require 'Messages'
 
 class Avatar
 
@@ -10,6 +11,7 @@ class Avatar
   include Files
   include Locking
   include RunTestsOutputParserHelper
+  include Messages
   
   def self.names
     %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra 
@@ -56,6 +58,10 @@ class Avatar
     end
   end
   
+  def dojo
+    @dojo
+  end
+  
   def name
     @name
   end
@@ -73,45 +79,14 @@ class Avatar
     end
   end
   
-  def auto_post_message()
-    # called from kata_controller.run_tests
-    all_incs = Increment.all(increments)
-    @dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
-    @dojo.post_message(name, "looks like #{name} is on a hot refactoring streak!") if refactoring_streak?(all_incs)
+  def post_run_test_messages()
+    MessageAutoPoster.new(self).post_run_test_messages()
   end
   
-  def just_passed_first_test?(increments)
-    increments.count { |inc| inc.passed? } == 1 and increments.last.passed?
+  def post_heartbeat_messages()
+    MessageAutoPoster.new(self).post_heartbeat_messages()
   end
-  
-  def refactoring_streak?(increments)
-    streak_count = 0
-    reversed = increments.reverse
-    while streak_count < reversed.length && reversed[streak_count].passed?
-      streak_count += 1
-    end
-    streak_count != 0 && streak_count % 5 == 0
-  end
-  
-  def auto_post_message_if_reluctant_to_test(messages)
-    # called from kata_controller.heartbeat
-    all_incs = Increment.all(increments)
-    if reluctant_to_run_tests?(all_incs, messages)
-      @dojo.post_message(name, "looks like #{name} is reluctant to run tests", :test_reluctance)
-    else
-    end
-  end
-  
-  def reluctant_to_run_tests?(increments, messages)
-    relevant_messages = messages.select do |message|
-      message[:type] == :test_reluctance && 
-        message[:sender] == name &&
-          DateTime.new(*message[:created]) > 10.minutes.ago
-    end
-    return false unless relevant_messages.empty?
-    !increments.empty? and increments.last.old?
-  end
-  
+    
   def run_tests(manifest, the_kata = @dojo.kata)
     # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
     io_lock(folder) do
@@ -122,13 +97,9 @@ class Avatar
       incs << test_info
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
-      file_write(pathed(Increments_filename), incs)
       manifest[:output] = output
       manifest[:visible_files]['output'][:content] = output
-      file_write(pathed(Manifest_filename), manifest)
-      
-      tag = incs.length
-      git_commit_tag(manifest[:visible_files], tag)
+      save_run_tests_outcomes(incs, manifest)
     end
   end
 
@@ -160,6 +131,13 @@ class Avatar
   end
   
 private
+  
+  def save_run_tests_outcomes(increments, manifest)
+    file_write(pathed(Increments_filename), increments)
+    file_write(pathed(Manifest_filename), manifest)
+    tag = increments.length
+    git_commit_tag(manifest[:visible_files], tag)
+  end
   
   def filesets_manifest
     # Have to allow resumption of dojos before dojos were

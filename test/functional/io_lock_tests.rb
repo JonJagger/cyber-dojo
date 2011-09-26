@@ -58,6 +58,37 @@ class IoLockTests < Test::Unit::TestCase
     end
   end
   
+  def test_when_file_is_locked_then_io_lock_waits_till_its_unlocked
+    filename = 'locked_file.txt'
+    `echo xx > #{filename}`
+    f1 = File.open(filename)
+    result = f1.flock(File::LOCK_EX)
+    assert_equal 0, result
+
+    second_lock_blocked_when_first_lock_not_yet_closed = true    
+    blocked = Thread.new {
+      File.open(filename).flock(File::LOCK_EX)
+      second_lock_blocked_when_first_lock_not_yet_closed = false
+    }
+    result = blocked.join(2)
+    assert second_lock_blocked_when_first_lock_not_yet_closed
+    
+    f1.close()
+    
+    second_lock_acquired_when_first_lock_closed = false
+    acquired = Thread.new {
+      f2 = File.open(filename)
+      f2.flock(File::LOCK_EX)
+      second_lock_acquired_when_first_lock_closed = true
+      f2.close()      
+    }
+    
+    result = acquired.join()
+    assert second_lock_acquired_when_first_lock_closed
+    
+    `rm #{filename}`
+  end
+    
 end
 
 

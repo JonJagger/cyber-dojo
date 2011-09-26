@@ -1,10 +1,10 @@
 
 # At the moment almost all the codebase uses each increment (traffic-light) as
 # a plain hash (eg inc[:time]) 
-# This needs to be refactored to use an Increment model object instead.
+# This could be refactored to use this Increment model object instead.
 # At the moment the only code that uses this Increment class is the
 # auto post message code in avatar.rb mostly written by the awesome
-# Johannes Brodwall. There needs to be a model class for Messages too.
+# Johannes Brodwall. 
 
 class Increment
   
@@ -18,7 +18,9 @@ class Increment
   
   def time; DateTime.new(*self[:time]); end
 
-  def old?; time < 10.minutes.ago; end
+  def old?
+    time < 10.minutes.ago
+  end
   
   def passed?; self[:outcome] == :passed; end
   

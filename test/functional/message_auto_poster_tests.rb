@@ -1,33 +1,19 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'avatar'
 require 'DateTimeExtensions'
+require 'Messages'
 
 
 class AutoPostMessageTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
-
-  def root_test_folder_reset
-    system("rm -rf #{Root_test_folder}")
-    Dir.mkdir Root_test_folder
-  end
-
-  def make_params
-    { :dojo_name => 'Jon Jagger', 
-      :dojo_root => Root_test_folder,
-      :filesets_root => RAILS_ROOT +  '/filesets',
-      'kata' => 'Unsplice (*)',
-      'language' => 'C++',
-      :browser => 'None (test)'
-    }
+  include Messages
+  
+  class MockAvatar
+    def name; "frog"; end
   end
   
   def create_avatar
-    root_test_folder_reset
-    assert Dojo::create(make_params)
-    Dojo::configure(make_params)    
-    dojo = Dojo.new(make_params)
-    dojo.create_avatar
+    avatar = MessageAutoPoster.new(MockAvatar.new())
   end
   
   def test_increment_queries

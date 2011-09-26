@@ -30,7 +30,7 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])   
     manifest = load_visible_files_from_page
     @avatar.run_tests(manifest)
-    @avatar.auto_post_message()
+    @avatar.post_run_test_messages()
     @output = manifest[:output]
     @messages = @dojo.messages
     respond_to do |format|
@@ -42,8 +42,8 @@ class KataController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
+    @avatar.post_heartbeat_messages()
     @messages = @dojo.messages
-    @avatar.auto_post_message_if_reluctant_to_test(@messages)
     respond_to do |format|
       format.js if request.xhr?
     end

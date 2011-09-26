@@ -15,53 +15,53 @@ module RunTestsOutputParserHelper
     inc
   end
 
-	def parse_php_unit(output)
-		passed_pattern = Regexp.new('OK \(')
-		failed_pattern = Regexp.new('FAILURES!')
-		if passed_pattern.match(output)
-			:passed
-		elsif failed_pattern.match(output)
-			:failed
-		else
-			:error
-		end
-	end
+  def parse_php_unit(output)
+    passed_pattern = Regexp.new('OK \(')
+    failed_pattern = Regexp.new('FAILURES!')
+    if passed_pattern.match(output)
+	    :passed
+    elsif failed_pattern.match(output)
+	    :failed
+    else
+	    :error
+    end
+  end
 
-	def parse_perl_test_simple(output)
-		passed_pattern = Regexp.new('All tests successful')
-		error_pattern = Regexp.new('syntax error')
-		if passed_pattern.match(output)
-			:passed
-		elsif error_pattern.match(output)
-			:error
-		else
-			:failed
-		end
-	end
+  def parse_perl_test_simple(output)
+    passed_pattern = Regexp.new('All tests successful')
+    error_pattern = Regexp.new('syntax error')
+    if passed_pattern.match(output)
+	    :passed
+    elsif error_pattern.match(output)
+	    :error
+    else
+	    :failed
+    end
+  end
 
-	def parse_js_test_simple(output)
-		error_pattern = Regexp.new('Exception in thread "main" org.mozilla')
-		failed_pattern = Regexp.new('FAILED:assertEqual')
-		if error_pattern.match(output)
-			:error
-		elsif failed_pattern.match(output)
-			:failed
-		else
-			:passed
-		end
-	end
+  def parse_js_test_simple(output)
+    error_pattern = Regexp.new('Exception in thread "main" org.mozilla')
+    failed_pattern = Regexp.new('FAILED:assertEqual')
+    if error_pattern.match(output)
+	    :error
+    elsif failed_pattern.match(output)
+	    :failed
+    else
+	    :passed
+    end
+  end
 
-	def parse_python_unittest(output) 
-		failed_pattern = Regexp.new('FAILED \(failures=')
-		passed_pattern = Regexp.new('OK')
-		if failed_pattern.match(output)
-			:failed
-		elsif passed_pattern.match(output)
-			:passed
-		else
-			:error
-		end
-	end
+  def parse_python_unittest(output) 
+    failed_pattern = Regexp.new('FAILED \(failures=')
+    passed_pattern = Regexp.new('OK')
+    if failed_pattern.match(output)
+	    :failed
+    elsif passed_pattern.match(output)
+	    :passed
+    else
+	    :error
+    end
+  end
 	
   def parse_cassert(output)
     failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')

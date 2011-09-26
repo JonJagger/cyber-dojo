@@ -198,7 +198,7 @@ end
 # eg [....450,2236,2237,...]
 # at 20 seconds per gap the difference between 450 and 2236 is 1786
 # and 1786*20 == 35,720 seconds == 9 hours 55 mins 20 secs.
-# We would not want this displayed at 1786 empty td's because it would
+# We would not want this displayed as 1786 empty td's because it would
 # ensure all lights would vanish off the left of the display. Remember
 # there is a maximum number of td's displayed in a tr (to avoid a scrollbar
 # because the page auto refreshes).
