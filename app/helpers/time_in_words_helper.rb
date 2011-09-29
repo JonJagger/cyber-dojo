@@ -1,8 +1,15 @@
+require 'plural_helper'
+
 module TimeInWordsHelper
 
+  include PluralHelper
+
   # Something akin to git log --relative-date option  
-  # currently unused - I plan to use this (or something built on this)
+  # currently unused - I planned to use this (or something built on this)
   # to show a tool-tip for ... ellision on the dashboard
+  # However, my current plan is to limit each dojo to 60 minutes
+  # (to control server load in preparation for moving to cloud)
+  # in which case this won't be needed...
   
   def time_in_words(seconds)
     years,days,hours,minutes,seconds = time_split(seconds)
@@ -44,9 +51,4 @@ module TimeInWordsHelper
     seconds
   end
   
-  def plural(n, word)
-    n.to_s + ' ' + word + (n == 1 ? '' : 's')
-  end
-
-
 end

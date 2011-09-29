@@ -1,5 +1,9 @@
+require 'plural_helper'
+
 module TrafficLightHelper
-  
+
+  include PluralHelper
+
   def duration_in_minutes(started, finished)
     (finished - started).to_i / 60
   end
@@ -14,21 +18,25 @@ module TrafficLightHelper
         :avatar => avatar_name,
         :tag => inc[:number] 
       }, 
-      { :title => "View #{avatar_name.humanize} diff #{inc[:number]} : #{minutes} minutes", 
+      { :title => tool_tip(avatar_name, inc[:number], minutes),
         :target => '_blank' 
       } 
   end
 
+  def tool_tip(avatar_name, inc_number, minutes)
+     "View #{avatar_name.humanize} diff #{inc_number} : #{plural(minutes, 'minute')}"
+  end
+  
   def unlinked_traffic_light(inc)
     make_light(inc, 'unlinked ')
   end
   
   def make_light(inc, extra)
-    outcome = inc[:outcome].to_s
+    outcome = inc[:outcome]
   
-    red_state   = on_off(outcome, 'failed')
-    amber_state = on_off(outcome, 'error')
-    green_state = on_off(outcome, 'passed')
+    red_state   = on_off(outcome, :failed)
+    amber_state = on_off(outcome, :error)
+    green_state = on_off(outcome, :passed)
   
     [ "<div class='#{extra}traffic_light'>",
       bulb(red_state),
@@ -39,11 +47,11 @@ module TrafficLightHelper
   end
   
   def on_off(outcome, is)
-    return outcome == is ? is : 'off'
+    return outcome == is ? is : :off
   end
   
   def bulb(state)
-    "<span class='#{state} bulb'></span>"  
+    "<span class='#{state.to_s} bulb'></span>"  
   end
  
 end

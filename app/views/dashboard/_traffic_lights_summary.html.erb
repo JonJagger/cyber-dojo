@@ -7,9 +7,12 @@
      </span>
    </td>
    <td>             
-     <% if lights != [] -%>
-       <%=  traffic_light(@dojo, avatar_name, lights.last) -%>             
+     <% if lights != [ ] -%>
+       <% inc = lights.last -%>
+     <% else -%>
+       <% inc = { :number => 0, :time => @dojo.manifest[:created] } -%>
      <% end -%>
+     <%=  traffic_light(@dojo, avatar_name, inc) -%>
    </td>
  </tr>
 </table>
