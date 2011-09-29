@@ -43,7 +43,8 @@ class GitDiffViewTests < ActionController::TestCase
       {
         'cyberdojo.sh'     => { :content => cyberdojo_sh },
         'untitled.rb'      => { :content => untitled_rb },
-        'test_untitled.rb' => { :content => test_untitled_rb }
+        'test_untitled.rb' => { :content => test_untitled_rb },
+        'output'           => { :content => '' }
       }
     }
 

@@ -14,8 +14,26 @@ class Avatar
   include Messages
   
   def self.names
-    %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra 
+    twenty_four = %w( alligator buffalo cheetah elephant frog giraffe hippo lion raccoon snake wolf zebra 
         gopher koala squirrel moose bear bat camel lemur panda gorilla deer kangaroo )
+  end
+  
+  def self.less_names
+    # I'd like to switch to only 16 animals. This is partly to limit the number of
+    # players in preparation for moving the server to the cloud (where there will be
+    # only 4 rooms)
+    # Also, I'd like players to pick their own avatar animal on entering a dojo.
+    # This helps interaction, and it also helps players to know what the animal
+    # stands for. So players will pick from a 4x4 grid that updates every 3 seconds
+    # and when an avatar is gone, its spot in the grid will simply become vacant.
+    # However, when determining which avatars are playing in a dojo the server
+    # simply iterates through Avatar.names and sees which folders have been created.
+    %w(
+      alligator buffalo cheetah deer
+      elephant frog gorilla hippo
+      koala lion moose panda
+      raccoon snake wolf zebra
+    )
   end
 
   def initialize(dojo, name) 

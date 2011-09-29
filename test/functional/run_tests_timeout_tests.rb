@@ -11,6 +11,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
     Dir.mkdir Root_test_folder
   end
 
+  # Relies on gcc and make being installed
+
   def make_params
     { :dojo_name => 'Jon Jagger', 
       :dojo_root => Root_test_folder,

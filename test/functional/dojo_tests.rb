@@ -64,12 +64,12 @@ class DojoTests < ActionController::TestCase
     Dojo::configure(params)    
     dojo = Dojo.new(params)
     names = []
-    (0...Avatar::names.length).each do |n| 
+    (0...Avatar::less_names.length).each do |n| 
       avatar = dojo.create_avatar
       assert avatar != nil
       names << avatar.name
     end
-    assert_equal Avatar::names.sort, names.sort
+    assert_equal Avatar::less_names.sort, names.sort
     # and one more time... 
     avatar = dojo.create_avatar
     assert avatar == nil    

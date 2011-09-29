@@ -91,7 +91,7 @@ class Dojo
   def create_avatar()
     avatar = nil
     io_lock(folder) do
-      unused_avatars = Avatar::names.select { |name| !exists? name }
+      unused_avatars = Avatar::less_names.select { |name| !exists? name }
       if unused_avatars == []
         nil
       else
