@@ -11,16 +11,17 @@ module TrafficLightHelper
   def traffic_light(dojo, avatar_name, inc)
     dojo_name = dojo.name
     minutes = duration_in_minutes(dojo.created, Time.mktime(*inc[:time]))
-    link_to make_light(inc, ''), 
+    a_href = link_to make_light(inc), 
     {   :controller => :diff, 
         :action => :show,
         :dojo_name => dojo_name,
         :avatar => avatar_name,
         :tag => inc[:number] 
-      }, 
-      { :title => tool_tip(avatar_name, inc[:number], minutes),
-        :target => '_blank' 
-      } 
+    }, 
+    { :title => tool_tip(avatar_name, inc[:number], minutes),
+      :target => '_blank' 
+    }
+    traffic_light_div('', a_href)
   end
 
   def tool_tip(avatar_name, inc_number, minutes)
@@ -28,22 +29,19 @@ module TrafficLightHelper
   end
   
   def unlinked_traffic_light(inc)
-    make_light(inc, 'unlinked ')
+    traffic_light_div('unlinked ', make_light(inc))
   end
   
-  def make_light(inc, extra)
-    outcome = inc[:outcome]
+  def traffic_light_div(extra,html)
+    "<div class='#{extra}traffic_light'>" + html + "</div>"
+  end
   
-    red_state   = on_off(outcome, :failed)
-    amber_state = on_off(outcome, :error)
-    green_state = on_off(outcome, :passed)
-  
-    [ "<div class='#{extra}traffic_light'>",
-      bulb(red_state),
-      bulb(amber_state),
-      bulb(green_state),
-      "</div>"
-    ].join('')  
+  def make_light(inc)
+    outcome = inc[:outcome]  
+    [ bulb(on_off(outcome, :failed)), # red
+      bulb(on_off(outcome, :error)),  # amber
+      bulb(on_off(outcome, :passed)), # green
+    ].join('')
   end
   
   def on_off(outcome, is)
@@ -51,6 +49,7 @@ module TrafficLightHelper
   end
   
   def bulb(state)
+    # This creates an empty span which HTML Validator warns about
     "<span class='#{state.to_s} bulb'></span>"  
   end
  

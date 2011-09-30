@@ -14,7 +14,7 @@ module GitDiff
   class GitDiffBuilder
   
     def build(diff, lines)    
-      result = []
+      result = [ ]
       line_number = 1    
       from = 0    
       diff[:chunks].each do |chunk|
@@ -33,13 +33,34 @@ module GitDiff
   private
   
     def build_section(result, section, line_number)
+      # if you make a change to a line and  also insert
+      # some lines after it you get a diff that looks ok.
+      # That is, it shows something like this:
+      # - Changed line
+      # + changed line
+      # + added line 1
+      # + added line 2
+      # + added line 3
+      # However, if you make a change to a line and also
+      # insert some lines _before_ it you get a diff that
+      # doesn't look quite so good. That is, it looks
+      # something like this:
+      # - Changed line
+      # + added line 1
+      # + added line 2
+      # + added line 3
+      # + changed line
+      # It would be nice to add some checking here to work out
+      # if showing the + before the - in the first case would
+      # result in a nice diff-view.
+ 
       line_number = fill_all(result, :deleted, section[:deleted_lines], line_number)
       line_number = fill_all(result, :added, section[:added_lines], line_number)
       line_number = fill_all(result, :same, section[:after_lines], line_number)
     end
   
     def fill_all(result, type, lines, line_number)
-      lines ||= [] # Don't think this is needed
+      lines ||= [ ] # Don't think this is needed
       fill(result, type, lines, 0, lines.length, line_number)
     end
     

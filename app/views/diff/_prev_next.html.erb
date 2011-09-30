@@ -25,13 +25,12 @@
     <td>
       <span class="small_title">
          Increment <%= tag_number -%>
-		 <br/>
-		 <% unless @traffic_lights_to_tag.empty? %>
-		 (<%= plural(duration_in_minutes(
-			   @dojo.created,
-			   Time.mktime(*@traffic_lights_to_tag.last[:time])), 'minute') -%>
-		 in)
-		<% end -%>
+	      <br/>
+	      <% unless @traffic_lights_to_tag.empty? %>
+		<% light_time = Time.mktime(*@traffic_lights_to_tag.last[:time]) -%> 
+		<% minutes = duration_in_minutes(@dojo.created, light_time) -%>
+		(<%= plural(minutes, 'minute') -%> in)
+	      <% end -%>
       </span>
     </td>   
     
