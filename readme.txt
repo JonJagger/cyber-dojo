@@ -26,8 +26,7 @@ Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 CyberDojo lives in the folder /var/www/cyberdojo 
 Pull the latest CyberDojo source code from github onto your TurnKey image
->git remote add github git@github.com:JonJagger/cyberdojo.git
->git pull github master
+>git pull origin master
 
 
 Configuring a CyberDojo
