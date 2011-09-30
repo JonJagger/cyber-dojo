@@ -6,7 +6,7 @@
   
     <% if tag_number != 0 -%>
     <td>
-      <span class="traffic_light_number"
+      <span class="traffic_light_number">
         <%= link_to 0, 
         { :controller => :diff, 
           :action => :show,
@@ -40,7 +40,7 @@
     
     <% if tag_number < @all_traffic_lights.length -%>
     <td>
-      <span class="traffic_light_number"
+      <span class="traffic_light_number">
         <%= link_to @all_traffic_lights.length, 
         { :controller => :diff, 
           :action => :show,

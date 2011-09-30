@@ -49,7 +49,7 @@ module TrafficLightHelper
   end
   
   def bulb(state)
-    # This creates an empty span which HTML Validator warns about
+    # This creates an empty span which HTML Validator Tidy warns about
     "<span class='#{state.to_s} bulb'></span>"  
   end
  
