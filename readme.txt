@@ -173,9 +173,14 @@ I installed support for Objective C as follows
 >sudo apt-get -y install build-essential
 >sudo apt-get install gobjc
 >sudo apt-get install libgnustep-base-dev
-I installed support for Javascript using Rhino. I downloaded rhino_7R2.zip from 
-https://developer.mozilla.org/en/RhinoDownload which contains the necessary
-js.jar file. Rhino runs on top of Java.
+I installed support for Javascript using node. I followed the instructions
+at https://github.com/joyent/node/wiki/Installation  as follows
+>git clone git://github.com/joyent/node.git
+>cd node
+>git checkout v0.4.11
+>./configure
+>make -j2
+>[sudo] make install
 
 
 Adding a new language
