@@ -111,8 +111,8 @@ Issues
    coding as their avatar.
 2. Occasionally the run-tests output text somehow overwrites the contents of a source file.
 3. Objective-C no longer compiles. After a server-upgrade it reports
-   The current setting for native-objc-exceptions does not match that of gnustep-base 
-      ... please correct this
+   The current setting for native-objc-exceptions does not match that of
+   gnustep-base... please correct this...
 
    
 Building your own CyberDojo from scratch
@@ -180,6 +180,8 @@ at https://github.com/joyent/node/wiki/Installation  as follows
 >./configure
 >make -j2
 >[sudo] make install
+>If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
+>need https://github.com/kennethreitz/osx-gcc-installer/downloads
 
 
 Adding a new language
