@@ -18,32 +18,6 @@ The TurnKey image screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
 
 
-Getting files off the VirtualBox TurnKey Linux server
-=====================================================
-These were the steps I took...
- 0. Don't boot the Virtual Box TurnKey Linux server yet
- 1. insert a USB stick
- 2. In Virtual Box add a filter for the USB stick
- 3. Remove the USB stick
- 4. boot the Virtual Box server and note its IP address (eg 192.168.61.25)
- 5. open a browser page to the Virtual Box server (eg 192.168.61.25:12320)
- 6. login (you need username and password for this, see below)
- 7. Find the name of the USB device, eg sdb1
- 8. >tail /var/log/messages
- 9. Mount the usb device
-10. >mkdir /root/usbdrive
-11. >mount -t vfat /dev/sdb1 /root/usbdrive
-12. >cd /var/www/cyberdojo
-13. Find the folder you want
-14. >ruby names.rb    
-15. eg suppose the folder is dojos/82/b583c11…..
-16. cd to that folder, then
-17. >tar -zcvf name.tar.gz .
-18. >mv name.tar.gz /root/usbdrive
-19. >umount /dev/sdb1
-20. shut down the VBox image
-
-
 Pulling the latest github source onto your server
 =================================================
 Add port 12320 to the URL you put into your browser above, eg
@@ -102,6 +76,33 @@ Each computer can post tweet like messages which appear on the lower
 left hand side. I encourage players to use this to work together, 
 particularly when running the dojo with the aim of getting working solutions 
 on _all_ laptops (eg in The Average Time To Green Game).
+
+
+Getting files off the VirtualBox TurnKey Linux server
+=====================================================
+These were the steps I took...
+ 0. Don't boot the Virtual Box TurnKey Linux server yet
+ 1. insert a USB stick
+ 2. In Virtual Box add a filter for the USB stick
+ 3. Remove the USB stick
+ 4. boot the Virtual Box server and note its IP address (eg 192.168.61.25)
+ 5. open a browser page to the Virtual Box server (eg 192.168.61.25:12320)
+ 6. login (you need username and password for this, see below)
+ 7. Insert the USB stick
+ 8. Find the name of the USB device, eg sdb1
+ 9. >tail /var/log/messages
+10. Mount the usb device
+11. >mkdir /root/usbdrive
+12. >mount -t vfat /dev/sdb1 /root/usbdrive
+13. >cd /var/www/cyberdojo
+14. Find the folder you want
+15. >ruby names.rb    
+16. eg suppose the folder is dojos/82/b583c11…..
+17. cd to that folder, then
+18. >tar -zcvf name.tar.gz .
+19. >mv name.tar.gz /root/usbdrive
+20. >umount /dev/sdb1
+21. shut down the VBox image
 
 
 Issues

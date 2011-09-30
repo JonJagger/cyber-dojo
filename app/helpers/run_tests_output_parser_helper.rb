@@ -15,6 +15,18 @@ module RunTestsOutputParserHelper
     inc
   end
 
+  def parse_node(output)
+    failed_pattern = Regexp.new('AssertionError')
+    error_pattern = Regexp.new('Error')
+    if failed_pattern.match(output)
+      :failed
+    elsif error_pattern.match(output)
+      :error
+    else
+      :passed
+    end
+  end
+
   def parse_php_unit(output)
     passed_pattern = Regexp.new('OK \(')
     failed_pattern = Regexp.new('FAILURES!')
