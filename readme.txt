@@ -106,13 +106,11 @@ These were the steps I took...
 
 Issues
 ======
+0. In Internet Explorer 9 you need to use Compatiblity View (hit ALT to get the menu, then Tools)
 1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout.
    When this happens it is best to reboot the server and then get each laptop to resume
    coding as their avatar.
 2. Occasionally the run-tests output text somehow overwrites the contents of a source file.
-3. Objective-C no longer compiles. After a server-upgrade it reports
-   The current setting for native-objc-exceptions does not match that of
-   gnustep-base... please correct this...
 
    
 Building your own CyberDojo from scratch
@@ -168,10 +166,6 @@ I installed support for PHP as follows
 >sudo pear install PEAR
 >sudo pear install phpunit/PHPUnit
 >sudo pear install phpunit/PHP_CodeCoverage
-I installed support for Objective C as follows
->sudo apt-get -y install build-essential
->sudo apt-get install gobjc
->sudo apt-get install libgnustep-base-dev
 I installed support for Javascript using node. I followed the instructions
 at https://github.com/joyent/node/wiki/Installation  as follows
 >git clone git://github.com/joyent/node.git
