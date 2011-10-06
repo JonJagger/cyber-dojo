@@ -15,7 +15,8 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   def configure(params)
-    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos' 
+    params[:dojo_root] = RAILS_ROOT + '/' + 'dojos'
+    params[:starting_filesets_root] = RAILS_ROOT + '/' + 'starting_filesets'
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
     params[:browser] = request.env['HTTP_USER_AGENT'] 
   end

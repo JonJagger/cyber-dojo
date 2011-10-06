@@ -1,4 +1,6 @@
 module Locking
+
+  # Note: fd.flock() is not available on Windows
   
   def io_lock(path, &block)
     result = nil

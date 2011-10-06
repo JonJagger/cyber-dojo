@@ -3,12 +3,12 @@ function sortFilenames(filenames)
 {
   filenames.sort(function(lhs,rhs) 
     {
-	  if (lhs < rhs)
-	    return -1;
-	  else if (lhs > rhs)
-	    return 1;
-	  else
-	    return 0; // Should never happen (implies two files with same name)
+      if (lhs < rhs)
+	return -1;
+      else if (lhs > rhs)
+	return 1;
+      else
+	return 0; // Should never happen (implies two files with same name)
     });
 }
 
@@ -17,17 +17,11 @@ function rebuildFilenameList()
   var filenames = allFilenames();
   sortFilenames(filenames);
 
-  var filename_list = $('filename_list');
-  // Remove all children
-  while (filename_list.childNodes.length >= 1) 
-  {
-     filename_list.removeChild(filename_list.firstChild);
-  } 
-
-  // Add new children
+  var filename_list = $j('#filename_list');
+  filename_list.empty();
   for (var at = 0; at < filenames.length; at++) 
   {
-    filename_list.appendChild(makeFileListEntry(filenames[at]));
+    filename_list.append(makeFileListEntry(filenames[at]));
   }
 }
 
@@ -75,7 +69,7 @@ function deleteFilePrompt(ask)
   if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
   
-  if (ask && !confirm("Delete " + current_filename + " ?")) return; // Cancelled  
+  if (ask && !confirm("Delete " + current_filename + " ?")) return; // Cancelled
 
   var fc = fileContent(current_filename);
   fc.parentNode.removeChild(fc);
@@ -105,38 +99,40 @@ function deleteFilePrompt(ask)
 
 //====================== RENAME FILE =======================
 
+function renameFailure(current_filename, new_filename, because)
+{
+  alert("CyberDojo cannot rename\n" +
+	 "\n" +
+	 "    " + current_filename + "\n" +
+	 "to\n" + 
+	 "    " + new_filename + "\n" +
+	 "\n" +
+	"because " + because + ".");  
+}
+
 function renameFile() 
 {
   if (!current_filename) return;
   if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
 
-  var newname = trim(prompt("Rename " + current_filename + " ?", 
-                            "was_" + current_filename));
-  if (newname === null) return; // Cancelled
-  if (newname === "") { alert("No filename entered\n" +
+  var new_filename = prompt("Rename " + current_filename + " ?", 
+                            "was_" + current_filename);
+  var new_filename = trim(new_filename);
+  if (new_filename === null) return; // Cancelled
+  if (new_filename === "") { alert("No filename entered\n" +
                              "Rename " + current_filename + " abandoned"); return; }
-  if (newname === current_filename) return; // Same name; nothing to do
-  if (fileAlreadyExists(newname))
+  if (new_filename === current_filename) return; // Same name; nothing to do
+  if (fileAlreadyExists(new_filename))
   {
-    alert("CyberDojo cannot rename\n" +
-           "\n" + 
-           "    " + current_filename + "\n" +
-           "to\n" + 
-           "    " + newname + "\n" +
-           "\n" +
-          "because a file called " + newname + " already exists.");
+    renameFailure(current_filename, new_filename,
+		  "a file called " + new_filename + " already exists");
     return; // Cancelled
   }
-  if (newname.indexOf("/") !== -1)
+  if (new_filename.indexOf("/") !== -1)
   {
-    alert("CyberDojo cannot rename\n" +
-          "\n" +
-          "    " + current_filename + "\n" +
-          "to\n" +
-          "    " + newname + "\n" +
-          "\n" +
-          "because a Unix filename cannot contain a forward slash.");
+    renameFailure(current_filename, new_filename,
+		  new_filename + " contains a forward slash");
     return; // Cancelled
   }
   
@@ -150,13 +146,12 @@ function renameFile()
   var scroll_left = editor.scrollLeft();
   
   deleteFilePrompt(false);
-  newFileContent(newname, content, caret_pos, scroll_top, scroll_left);
+  newFileContent(new_filename, content, caret_pos, scroll_top, scroll_left);
 
   rebuildFilenameList();
   refreshLineNumbering();
-  selectFileInFileList(newname);
+  selectFileInFileList(new_filename);
 }
-
 
 function refreshLineNumbering() 
 {
@@ -177,33 +172,36 @@ function createHiddenInput(filename, aspect, value)
   return input;
 }
 
-function trim(s)  // TODO: jQuery has a trim function $.trim(s) 
+function trim(s)
 {
   return s === null ? null : s.replace(/^\s+|\s+$/g,"");
+  // $j.trim(s); fails in IE8
 }
 
 function makeFileListEntry(filename) 
 {
-  var div = new Element('div', { 'class':'mid_tone filename' });
-  div.onclick = function() { 
+  var div = $j("<div>");
+  div.attr('class', 'mid_tone filename');
+  div.click( function() {
     saveCurrentFile();
-    loadFile(filename);
-  };
-  var inp = new Element('input', 
-    { id:'radio_' + filename, 
-      name:'filename', 
-      type:'radio', 
-      value:filename 
-    });
-  div.appendChild(inp);
-  div.appendChild(document.createTextNode(filename));
+    loadFile(filename);    
+  });
+  
+  var inp = $j("<input>");
+  inp.attr('id', 'radio_' + filename);
+  inp.attr('name', 'filename');
+  inp.attr('type', 'radio');
+  inp.attr('value', filename);
+  
+  div.append(inp);
+  div.append(document.createTextNode(filename));
   return div;
 }
 
 function allFilenames() 
 {
   var prefix = 'file_content_for_';
-  filenames = []
+  filenames = [ ]
   var all = $$('input[id^="' + prefix + '"]');
   for(var at = 0; at < all.length; at++) 
   {
