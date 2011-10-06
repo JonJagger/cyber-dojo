@@ -106,7 +106,6 @@ These were the steps I took...
 
 Issues
 ======
-0. In Internet Explorer 9 you need to use Compatiblity View (hit ALT to get the menu, then Tools)
 1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout.
    When this happens it is best to reboot the server and then get each laptop to resume
    coding as their avatar.
