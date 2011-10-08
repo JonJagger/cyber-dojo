@@ -193,8 +193,10 @@ function makeFileListEntry(filename)
   inp.attr('type', 'radio');
   inp.attr('value', filename);
   
+  var label = $j("<label>", { text: ' ' + filename } );
+  
   div.append(inp);
-  div.append(document.createTextNode(' ' + filename));
+  div.append(label);
   return div;
 }
 
