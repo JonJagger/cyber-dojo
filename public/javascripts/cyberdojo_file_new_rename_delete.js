@@ -194,7 +194,7 @@ function makeFileListEntry(filename)
   inp.attr('value', filename);
   
   div.append(inp);
-  div.append(document.createTextNode(filename));
+  div.append(document.createTextNode(' ' + filename));
   return div;
 }
 

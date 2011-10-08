@@ -23,7 +23,7 @@ function createLineNumbersForEditor()
   el.style.overflow = 'hidden';
   el.style.textAlign = 'right';
   
-  el.style.width    = '37px';
+  el.style.width    = '40px';
   
   el.innerHTML      = line_numbers;  // Firefox renders \n linebreak
   el.innerText      = line_numbers;  // IE6 renders \n line break
@@ -51,7 +51,7 @@ function createLineNumbersForEditor()
   {
     el.scrollTop  = ta.scrollTop;
     el.style.top  = (ta.offsetTop) + "px";
-    el.style.left = (ta.offsetLeft - 37) + "px";
+    el.style.left = (ta.offsetLeft - 44) + "px";
   }
 }
 

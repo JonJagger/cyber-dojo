@@ -89,6 +89,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
 
 input[type="radio"]:checked+label, 
 input[type="checkbox"]:checked+label { color: green; }
+input+label { cursor: pointer; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -139,8 +140,8 @@ div[class~="filename"]:hover,
               .file_op:hover, 
                .button:hover
 {
-  border-bottom: 1px solid #7E7E7E;
-  border-right:  1px solid #7E7E7E;   
+  border-bottom: 1px solid #555555;
+  border-right:  1px solid #555555;   
 }
 
 .button[disabled]:hover, .file_op[disabled]:hover
@@ -178,8 +179,8 @@ filename:after  { content: "\00a0";  }
 
 filename:hover
 {
-  border-bottom: 1px solid #7E7E7E;
-  border-right:  1px solid #7E7E7E;   
+  border-bottom: 1px solid #555555;
+  border-right:  1px solid #555555;   
 }
 
 filename.selected:hover /* remove hover effect if filename is selected */
@@ -375,5 +376,4 @@ diff_dots { color: #383838; font-size: 0.7em; }
 
 diff_dots.on:after  { content: '...'; }
 diff_dots.off:after { content: '\00a0\00a0\00a0'; } /* \00a0 is a retained space */
-
 
