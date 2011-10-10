@@ -29,6 +29,10 @@ class Dojo
     inner = root_folder + '/' + Dojo::inner_folder(name)
     outer = inner + '/' + Dojo::outer_folder(name)
     
+    if !File.directory? root_folder
+      make_dir(root_folder)
+    end
+
     io_lock(root_folder) do
       if File.directory? inner and File.directory? outer
         false
