@@ -73,6 +73,8 @@ class DojoController < ApplicationController
 
   def resume
     board_config(params)
+    @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }
+    @all_avatar_names = Avatar.less_names
   end
   
   def ifaq

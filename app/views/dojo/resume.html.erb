@@ -1,34 +1,29 @@
- 
+
+<%= render :partial => 'dojo/title',
+           :locals => { :title => 'Resume' } -%>
+
 <%= render :partial => 'banner' -%>
-       
-<table align="center" 
+
+<table align="center"
       class="panel">
-
-  <% @dojo.avatars.each_with_index do |avatar,index| -%>
-    <tr class="<%=parity(index)-%> traffic_light_row">
-  
-      <td>
-         <%= render :partial => 'dashboard/traffic_lights_summary', 
-                    :locals => { :avatar_name => avatar.name, 
-                                 :lights => avatar.increments } -%>
-      </td>
-      
-      <td>
-        <%= avatar_image(avatar.name, 45) -%>
-      </td>
-      
-      <td>
-        <%= render :partial => 'dashboard/avatar_summary',
-                   :locals => { :avatar_name => avatar.name } -%>
-      </td>    
-      
-      <td>
-        <%= resume_button(@dojo.name, avatar.name) -%>
-      </td>
-      
-    </tr>
+  <% index = 0 -%>
+  <% (1..4).each do |_| -%>
+  <tr>
+    <% (1..4).each do |_| -%>
+    <td>
+      <% avatar_name = @all_avatar_names[index] -%>
+      <% if @live_avatar_names.include?(avatar_name) -%>
+        
+        <%= resume_button(@dojo.name, avatar_name, 100) -%>
+        
+      <% else -%>
+        <%= bw_avatar_image(avatar_name, 100) -%>
+      <% end -%>      
+      <% index += 1 -%>
+    </td>
+    <% end -%>     
+  </tr>
   <% end -%>
-
 </table>
-
+  
 
