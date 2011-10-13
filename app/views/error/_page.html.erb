@@ -35,11 +35,14 @@
 
 <body>
 
-  <% avatars = Avatar.names.shuffle -%>
+  <%= render :partial => 'dojo/title',
+     :locals => { :title =>  message } -%>
+
+  <% avatars = Avatar.less_names.shuffle -%>
   <% size = 150 -%>
 
   <div id="center">
-    <h1>CyberDojo</h1>
+    
     <table align="center">
       <tr>
         <td><%= avatar_image(avatars[0],size) -%></td>
@@ -48,9 +51,7 @@
       </tr>
       <tr>
         <td><%= avatar_image(avatars[3],size) -%></td>
-        <td>
-	  <%= message -%>
-	</td>
+        <td>Sorry</td>
         <td><%= avatar_image(avatars[4],size) -%></td>
       </tr>
       <tr>
