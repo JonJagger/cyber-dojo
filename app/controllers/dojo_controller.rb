@@ -51,8 +51,7 @@ class DojoController < ApplicationController
                   :dojo_name => dojo_name
                   
     elsif params[:start]
-      redirect_to :controller => :kata, 
-                  :action => :enter, 
+      redirect_to :action => :start, 
                   :dojo_name => dojo_name
                   
     elsif params[:resume]
@@ -71,19 +70,75 @@ class DojoController < ApplicationController
     end
   end
 
+  #---------------------
+  # Players pick their own avatar animal on entering a dojo.
+  # This helps interaction, and it also helps players to know what
+  # the animal stands for.
+
+  def start
+    board_config(params)
+    @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }.sort
+    @all_avatar_names = Avatar.names
+    @notice = start_choose_your_avatar_message
+  end
+
+  def start_heartbeat
+    board_config(params)
+    @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }.sort
+    @all_avatar_names = Avatar.names    
+    @notice = start_choose_your_avatar_message
+    respond_to do |format|
+      format.js if request.xhr?
+    end    
+  end
+  
+  def start_avatar
+    board_config(params)
+    @started = @dojo.create_new_avatar_folder(params[:avatar])
+    respond_to do |format|
+      format.js { render(:partial => 'start_avatar') }
+    end
+  end
+
+  def start_choose_your_avatar_message
+    if params[:notice]
+      flashed(params[:notice])
+    elsif @live_avatar_names == @all_avatar_names
+      flashed('Sorry, the dojo is full')
+    else
+      'Click an avatar to start'
+    end
+  end
+  
+  #---------------------
+
   def resume
     board_config(params)
     @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }
-    @all_avatar_names = Avatar.less_names
+    @all_avatar_names = Avatar.names
+    @notice = resume_choose_your_avatar_message
   end
   
   def resume_heartbeat
     board_config(params)
     @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }
-    @all_avatar_names = Avatar.less_names    
+    @all_avatar_names = Avatar.names    
+    @notice = resume_choose_your_avatar_message
     respond_to do |format|
       format.js if request.xhr?
     end    
+  end
+
+  def resume_choose_your_avatar_message
+    if @live_avatar_names == [ ] 
+      flashed('No-one has started yet')
+    else
+      'Click an avatar to resume it'
+    end
+  end
+
+  def flashed(message)
+    '<span style="font-weight:bold;color:red;">' + message + "</span>"
   end
   
   def ifaq
@@ -93,15 +148,15 @@ class DojoController < ApplicationController
   end
   
   def render_404
-    render :file => RAILS_ROOT + '/' + 'public' +'/' + '404.html'
+    render :file => RAILS_ROOT + '/public/404.html'
   end
   
   def render_422
-    render :file => RAILS_ROOT + '/' + 'public' +'/' + '422.html'
+    render :file => RAILS_ROOT + '/public/422.html'
   end
   
   def render_500
-    render :file => RAILS_ROOT + '/' + 'public' +'/' + '500.html'
+    render :file => RAILS_ROOT + '/public/500.html'
   end
-     
+
 end

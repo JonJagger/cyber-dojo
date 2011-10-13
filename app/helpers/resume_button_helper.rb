@@ -5,7 +5,9 @@ module ResumeButtonHelper
       "<input type='hidden' name='dojo_name' id='dojo_name' value='#{dojo_name}'/>" +
       "<input type='hidden' name='avatar' id='avatar' value='#{avatar_name}' />" +    
       "<input type='image'" +
+              "class='avatar_image'" +
               "src='/images/avatars/#{avatar_name}.jpg'" +
+              "title='#{avatar_name.humanize}'" +
               "width='#{size}'" +
               "height='#{size}'" + "/>" +
     "</form>"    

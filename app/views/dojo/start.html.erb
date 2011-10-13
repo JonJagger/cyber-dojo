@@ -1,0 +1,12 @@
+
+<%= render :partial => 'dojo/title',
+           :locals => { :title => 'Start Coding' } -%>
+
+<%= render :partial => 'banner' -%>
+
+<%= render :partial => 'start_grid' -%>
+
+<%= periodically_call_remote :url => { :action => :start_heartbeat,
+                                       :dojo_name => @dojo.name
+                                     }, 
+                             :frequency => 10 -%>

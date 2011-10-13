@@ -10,7 +10,7 @@ module AvatarImageHelper
     end
 
     image_tag "avatars/#{one}.#{ext}",
-      :title => "#{one.humanize}",
+      :title => one.humanize,
       :width => size,
       :height => size,
       :class => "avatar_image"
@@ -19,7 +19,7 @@ module AvatarImageHelper
   def bw_avatar_image(name, size)
     name = name.downcase
     image_tag "avatars/bw/#{name}.jpg",
-      :title => "#{name.humanize}",
+      :title => name.humanize,
       :width => size,
       :height => size,
       :class => "avatar_image"    

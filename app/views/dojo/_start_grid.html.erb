@@ -1,0 +1,82 @@
+
+<script language="javascript" type="text/javascript"><!--
+
+function humanize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1);
+}
+
+function start(dojo_name, avatar_name) {
+  $j.get(
+    '/dojo/start_avatar',
+    { dojo_name: dojo_name,
+         avatar: avatar_name
+    },
+    function(first_in) {
+      if (first_in === 'true') {
+        // Important main run-tests page does not have back-button
+        // so open new tab using target='_blank'
+        var form = $j("<form>");
+        form.attr('action', '/kata/edit');
+        form.attr('method', 'POST');
+        form.attr('target', '_blank');
+
+        var addParam = function(paramName, paramValue) {
+            var input = $j('<input type="hidden">');
+            input.attr({ id:     paramName,
+                         name:   paramName,
+                         value:  paramValue });
+            form.append(input);
+        };
+
+        addParam('dojo_name', dojo_name);
+        addParam('avatar', avatar_name);
+        
+        form.appendTo(document.body);
+        form.submit();
+        return false;
+      } else {
+        var notice = 'Sorry, another computer clicked the ' + humanize(avatar_name) + ' just before you!';
+        window.location = 'start' +
+          '?' + 'dojo_name=' + dojo_name +
+          '&' + 'avatar=' + avatar_name +
+          '&' + 'notice=' + notice;
+      }
+    },
+    'html'
+  );
+}
+
+//--></script>
+
+<div id="start_grid">
+  
+  <table align="center"
+        class="panel">
+    <% index = 0 -%>
+    <% (1..4).each do |_| -%>
+    <tr>
+      <% (1..4).each do |_| -%>
+      <td>
+        <% avatar_name = @all_avatar_names[index] -%>
+        <% if @live_avatar_names.include?(avatar_name) -%>
+          <%= bw_avatar_image(avatar_name, 100) -%>          
+        <% else -%>
+          <input type="image"
+                 src="/images/avatars/<%=avatar_name-%>.jpg" 
+                 width="100"
+                 height="100"
+                 title="<%=avatar_name.humanize-%>"
+                 onclick="start('<%=@dojo.name-%>','<%=avatar_name-%>');"
+                 class="avatar_image" />
+          
+        <% end -%>      
+        <% index += 1 -%>
+      </td>
+      <% end -%>     
+    </tr>
+    <% end -%>
+  </table>
+
+  <div id="notice">&nbsp;<%=@notice-%></div>
+
+</div>

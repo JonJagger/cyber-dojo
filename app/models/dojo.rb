@@ -92,18 +92,17 @@ class Dojo
     @name
   end
   
-  def create_avatar()
-    avatar = nil
+  def create_new_avatar_folder(avatar_name)
+    @created = false
     io_lock(folder) do
-      unused_avatars = Avatar::less_names.select { |name| !exists? name }
-      if unused_avatars == []
-        nil
-      else
-        avatar = Avatar.new(self, unused_avatars.shuffle[0])
+      avatar_folder = folder + '/' + avatar_name
+      if !File.exists? avatar_folder
+        Avatar.new(self, avatar_name)
+        @created = true
+        post_message(avatar_name, "#{avatar_name} has joined the dojo")
       end
     end
-    post_message(avatar.name, "#{avatar.name} has joined") if avatar
-    avatar
+    @created
   end
   
   def avatars

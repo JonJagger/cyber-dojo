@@ -1,6 +1,6 @@
 
 <%= render :partial => 'dojo/title',
-           :locals => { :title => 'Resume' } -%>
+           :locals => { :title => 'Resume Coding' } -%>
 
 <%= render :partial => 'banner' -%>
 
@@ -8,5 +8,5 @@
 
 <%= periodically_call_remote :url => { :action => :resume_heartbeat,
                                        :dojo_name => @dojo.name
-                                    }, 
-                             :frequency => @dojo.seconds_per_heartbeat -%>
+                                     }, 
+                             :frequency => 5 -%>
