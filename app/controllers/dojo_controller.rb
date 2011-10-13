@@ -77,6 +77,15 @@ class DojoController < ApplicationController
     @all_avatar_names = Avatar.less_names
   end
   
+  def resume_heartbeat
+    board_config(params)
+    @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }
+    @all_avatar_names = Avatar.less_names    
+    respond_to do |format|
+      format.js if request.xhr?
+    end    
+  end
+  
   def ifaq
   end
 

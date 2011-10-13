@@ -4,26 +4,9 @@
 
 <%= render :partial => 'banner' -%>
 
-<table align="center"
-      class="panel">
-  <% index = 0 -%>
-  <% (1..4).each do |_| -%>
-  <tr>
-    <% (1..4).each do |_| -%>
-    <td>
-      <% avatar_name = @all_avatar_names[index] -%>
-      <% if @live_avatar_names.include?(avatar_name) -%>
-        
-        <%= resume_button(@dojo.name, avatar_name, 100) -%>
-        
-      <% else -%>
-        <%= bw_avatar_image(avatar_name, 100) -%>
-      <% end -%>      
-      <% index += 1 -%>
-    </td>
-    <% end -%>     
-  </tr>
-  <% end -%>
-</table>
-  
+<%= render :partial => 'resume_grid' -%>
 
+<%= periodically_call_remote :url => { :action => :resume_heartbeat,
+                                       :dojo_name => @dojo.name
+                                    }, 
+                             :frequency => @dojo.seconds_per_heartbeat -%>

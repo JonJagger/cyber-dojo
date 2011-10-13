@@ -1,0 +1,4 @@
+
+page.replace 'resume_grid', :partial => 'resume_grid'
+
+
