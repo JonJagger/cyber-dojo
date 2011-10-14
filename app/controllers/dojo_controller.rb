@@ -3,6 +3,7 @@ class DojoController < ApplicationController
     
   def index
     # offers new, start, resume, dashboard, messages
+    @title = 'Deliberate Software' + '<br/>' + 'Team Practice'
     configure(params)
     @dojo_name = dojo_name
   end
