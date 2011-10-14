@@ -1,4 +1,0 @@
-
-page.replace 'start_grid', :partial => 'start_grid'
-
-

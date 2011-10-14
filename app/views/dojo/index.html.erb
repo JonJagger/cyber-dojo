@@ -22,7 +22,7 @@
             <input type="submit"
                    class="main button"
                    id="new_button"
-                  name="new"
+                   name="new"
                    value="Configure It" />
             <% if flash[:new_notice] -%>
               <div class="notice"><%= flash[:new_notice] -%></div>
@@ -43,7 +43,7 @@
       
       <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->
       
-      <form action="/dojo/enter?r=" target="_blank" method="post"  onsubmit="this.action=this.action+'1'">
+      <form action="/dojo/enter?r=" target="_blank" method="post" onsubmit="this.action=this.action+'1'">
       
         <table>
             <tr>

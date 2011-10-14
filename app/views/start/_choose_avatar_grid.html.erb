@@ -7,9 +7,9 @@ function humanize(string) {
 
 function start(dojo_name, avatar_name) {
   $j.get(
-    '/dojo/start_avatar',
+    '/start/start_avatar',
     { dojo_name: dojo_name,
-         avatar: avatar_name
+      avatar: avatar_name
     },
     function(first_in) {
       if (first_in === 'true') {
@@ -36,7 +36,7 @@ function start(dojo_name, avatar_name) {
         return false;
       } else {
         var notice = 'Sorry, another computer clicked the ' + humanize(avatar_name) + ' just before you!';
-        window.location = 'start' +
+        window.location = 'choose_avatar' +
           '?' + 'dojo_name=' + dojo_name +
           '&' + 'avatar=' + avatar_name +
           '&' + 'notice=' + notice;
@@ -48,7 +48,7 @@ function start(dojo_name, avatar_name) {
 
 //--></script>
 
-<div id="start_grid">
+<div id="choose_avatar_grid">
   
   <table align="center"
         class="panel">

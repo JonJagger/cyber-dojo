@@ -51,11 +51,13 @@ class DojoController < ApplicationController
                   :dojo_name => dojo_name
                   
     elsif params[:start]
-      redirect_to :action => :start, 
+      redirect_to :controller => :start,
+                  :action => :choose_avatar, 
                   :dojo_name => dojo_name
                   
     elsif params[:resume]
-      redirect_to :action => :resume, 
+      redirect_to :controller => :resume,
+                  :action => :choose_avatar, 
                   :dojo_name => dojo_name
                   
     elsif params[:dashboard]
