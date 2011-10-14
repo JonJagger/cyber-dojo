@@ -19,7 +19,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
-      'kata' => 'Prime Factors (*)'
+      'kata' => 'Prime Factors'
     }
   end
 
@@ -35,7 +35,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
     assert Dojo::create(params)
     assert Dojo::configure(params)
     dojo = Dojo.new(params)
-    avatar = dojo.create_avatar    
+    avatar = Avatar.new(dojo, Avatar.names.shuffle[0])
     manifest = avatar.manifest
     avatar.run_tests(manifest)
     output = manifest[:output]

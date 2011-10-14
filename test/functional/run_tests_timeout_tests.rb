@@ -18,7 +18,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => 'C',
-      'kata' => 'Unsplice (*)',
+      'kata' => 'Unsplice',
       :browser => 'None (test)'
     }
   end
@@ -34,7 +34,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
     Dojo.configure(params)
     dojo = Dojo.new(params)
     filename = 'untitled.c'
-    avatar = dojo.create_avatar    
+    avatar_name = Avatar::names.shuffle[0]
+    avatar = Avatar.new(dojo, avatar_name)
     manifest = avatar.manifest
     code = manifest[:visible_files][filename][:content]
     manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')
@@ -54,7 +55,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
     Dojo.configure(params)
     dojo = Dojo.new(params)
     filename = 'untitled.c'
-    avatar = dojo.create_avatar    
+    avatar_name = Avatar::names.shuffle[0]
+    avatar = Avatar.new(dojo, avatar_name)
     manifest = avatar.manifest
     code = manifest[:visible_files][filename][:content]
     manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')

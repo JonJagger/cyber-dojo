@@ -32,7 +32,7 @@ module TrafficLightHelper
     traffic_light_div('unlinked ', make_light(inc))
   end
   
-  def traffic_light_div(extra,html)
+  def traffic_light_div(extra, html)
     "<div class='#{extra}traffic_light'>" + html + "</div>"
   end
   

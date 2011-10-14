@@ -28,37 +28,33 @@ class TrafficLightTests < ActionController::TestCase
     assert_equal :off, on_off(:not_same, :same)
   end
   
+  class FakeDojo
+    def created; Time.now; end
+    def name; "wibble"; end
+  end
+  
   def test_make_red_traffic_light
-    inc = { :outcome => :failed }
-    extra = ''
-    expected = "<div class='traffic_light'>" +
+    expected = 
       "<span class='failed bulb'></span>" +
       "<span class='off bulb'></span>" +
-      "<span class='off bulb'></span>" +
-      "</div>"
-    assert_equal expected, make_light(inc, extra) 
+      "<span class='off bulb'></span>"
+    assert_equal expected, make_light({ :outcome => :failed }) 
   end
   
   def test_make_amber_traffic_light
-    inc = { :outcome => :error }
-    extra = ''
-    expected = "<div class='traffic_light'>" +
+    expected = 
       "<span class='off bulb'></span>" +
       "<span class='error bulb'></span>" +
-      "<span class='off bulb'></span>" +
-      "</div>"
-    assert_equal expected, make_light(inc, extra) 
+      "<span class='off bulb'></span>"
+    assert_equal expected, make_light({ :outcome => :error }) 
   end
   
   def test_make_green_traffic_light
-    inc = { :outcome => :passed }
-    extra = ''
-    expected = "<div class='traffic_light'>" +
+    expected = 
       "<span class='off bulb'></span>" +
       "<span class='off bulb'></span>" +
-      "<span class='passed bulb'></span>" +
-      "</div>"
-    assert_equal expected, make_light(inc, extra) 
+      "<span class='passed bulb'></span>"
+    assert_equal expected, make_light({ :outcome => :passed }) 
   end
   
   def test_tool_tip_when_minutes_not_1

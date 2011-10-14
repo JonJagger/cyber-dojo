@@ -21,7 +21,7 @@ class GitDiffViewTests < ActionController::TestCase
     { :dojo_name => DOJO_NAME, 
       :dojo_root => ROOT_TEST_FOLDER,
       :filesets_root => RAILS_ROOT + '/filesets',
-      'kata' => 'Unsplice (*)',
+      'kata' => 'Unsplice',
       'language' => 'Ruby'
     }
   end

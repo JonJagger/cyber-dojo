@@ -16,7 +16,7 @@ class SimulatedFullDojoTests < ActionController::TestCase
     { :dojo_name => 'Jon Jagger', 
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
-      'kata' => 'Unsplice (*)',
+      'kata' => 'Unsplice',
       'language' => language,
       :browser => 'None (test)'
     }
@@ -49,7 +49,7 @@ class SimulatedFullDojoTests < ActionController::TestCase
     avatars = []
     
     avatar_count.times do |n|
-      avatar = dojo.create_avatar
+      avatar = Avatar.new(dojo, Avatar.names[n])
       manifests[avatar.name] = avatar.manifest
       avatars << avatar
     end

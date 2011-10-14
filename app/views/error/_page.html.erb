@@ -38,7 +38,7 @@
   <%= render :partial => 'dojo/title',
      :locals => { :title =>  message } -%>
 
-  <% avatars = Avatar.less_names.shuffle -%>
+  <% avatars = Avatar.names.shuffle -%>
   <% size = 150 -%>
 
   <div id="center">

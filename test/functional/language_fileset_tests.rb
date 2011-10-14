@@ -16,7 +16,7 @@ class LanguageFileSetTests < ActionController::TestCase
       :dojo_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
-      'kata' => 'Prime Factors (*)',
+      'kata' => 'Prime Factors',
       :browser => 'None (test)'
     }
   end
@@ -40,7 +40,8 @@ class LanguageFileSetTests < ActionController::TestCase
       assert Dojo::create(params)
       assert Dojo::configure(params)
       dojo = Dojo.new(params)
-      avatar = dojo.create_avatar    
+      avatar_name = Avatar::names.shuffle[0]
+      avatar = Avatar.new(dojo, avatar_name)
       manifest = avatar.manifest
       avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
@@ -56,7 +57,8 @@ class LanguageFileSetTests < ActionController::TestCase
       assert Dojo::create(params)
       assert Dojo::configure(params)
       dojo = Dojo.new(params)
-      avatar = dojo.create_avatar    
+      avatar_name = Avatar::names.shuffle[0]
+      avatar = Avatar.new(dojo, avatar_name)
       manifest = avatar.manifest
         test_code = manifest[:visible_files][filename][:content]
         manifest[:visible_files][filename][:content] = test_code.sub('42', '54')
@@ -74,7 +76,8 @@ class LanguageFileSetTests < ActionController::TestCase
       assert Dojo::create(params)
       assert Dojo::configure(params)
       dojo = Dojo.new(params)
-      avatar = dojo.create_avatar    
+      avatar_name = Avatar::names.shuffle[0]
+      avatar = Avatar.new(dojo, avatar_name)
       manifest = avatar.manifest
         test_code = manifest[:visible_files][filename][:content]
         manifest[:visible_files][filename][:content] = test_code.sub('42', '4typo2')
