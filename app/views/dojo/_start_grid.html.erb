@@ -13,7 +13,7 @@ function start(dojo_name, avatar_name) {
     },
     function(first_in) {
       if (first_in === 'true') {
-        // Important main run-tests page does not have back-button
+        // Important that main run-tests page does not have back-button
         // so open new tab using target='_blank'
         var form = $j("<form>");
         form.attr('action', '/kata/edit');
@@ -53,22 +53,23 @@ function start(dojo_name, avatar_name) {
   <table align="center"
         class="panel">
     <% index = 0 -%>
+    <% size = 100 -%>
     <% (1..4).each do |_| -%>
     <tr>
       <% (1..4).each do |_| -%>
       <td>
         <% avatar_name = @all_avatar_names[index] -%>
         <% if @live_avatar_names.include?(avatar_name) -%>
-          <%= bw_avatar_image(avatar_name, 100) -%>          
+          <%= bw_avatar_image(avatar_name, size) -%>          
         <% else -%>
-          <input type="image"
-                 src="/images/avatars/<%=avatar_name-%>.jpg" 
-                 width="100"
-                 height="100"
-                 title="<%=avatar_name.humanize-%>"
-                 onclick="start('<%=@dojo.name-%>','<%=avatar_name-%>');"
-                 class="avatar_image" />
-          
+          <div onclick="start('<%=@dojo.name-%>','<%=avatar_name-%>');">
+            <input type="image"
+                   src="/images/avatars/<%=avatar_name-%>.jpg" 
+                   width="<%=size-%>"
+                   height="<%=size-%>"
+                   title="<%=avatar_name.humanize-%>"
+                   class="avatar_image" />
+          </div>          
         <% end -%>      
         <% index += 1 -%>
       </td>

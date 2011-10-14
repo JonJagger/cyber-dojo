@@ -97,6 +97,7 @@ class Dojo
     io_lock(folder) do
       avatar_folder = folder + '/' + avatar_name
       if !File.exists? avatar_folder
+        # TODO: one-time setup of avatar can be pulled into here...
         Avatar.new(self, avatar_name)
         @created = true
         post_message(avatar_name, "#{avatar_name} has joined the dojo")
