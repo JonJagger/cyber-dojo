@@ -1,1 +1,1 @@
-ruby test_untitled.rb
+ruby test_calc_stats.rb
