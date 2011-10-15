@@ -18,13 +18,13 @@ function dojoName() {
 
 var currentLanguage = "<%=@current_language-%>";
 var currentKata = "<%=@current_kata-%>";
-var currentLanguage = "<%=@current_filename-%>"
+var currentFilename = "<%=@current_filename-%>"
 
 function rePost() {
   postTo('choose_name_language_kata', {
     current_language: currentLanguage,
     current_kata: currentKata,
-    current_language: currentLanguage
+    current_filename: currentFilename
   });
 }
 

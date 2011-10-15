@@ -34,7 +34,7 @@ class ConfigureController < ApplicationController
     # TODO: if params['current_filename'] is in current language+kata then use it
     #       else if instructions is in it, use that, e
     #       else choose random
-    @current_filename = params['current_filename'] || instructions_else_random(@starting_filenames)
+    @current_filename = instructions_else_random(@starting_filenames)
   end
 
 private
