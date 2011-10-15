@@ -8,7 +8,7 @@ class GitDiffMostChangedTests < ActionController::TestCase
   include GitDiff
 
   
-  def test_when_no_diffs_at_an_id_is_returned_if_no_output_is_present
+  def test_when_no_diffs_an_id_is_returned_if_no_output_is_present
     diffs = []
     diffs << {
       :deleted_line_count => 0,

@@ -61,10 +61,10 @@ class Dojo
       file_write(dojo.manifest_filename, info)
       
       index_filename = root_folder + '/' + Dojo::Index_filename
-      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : []       
+      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]       
       file_write(index_filename, index << info)      
 
-      file_write(dojo.messages_filename, [])
+      file_write(dojo.messages_filename, [ ])
     end    
   end
 
@@ -97,7 +97,6 @@ class Dojo
     io_lock(folder) do
       avatar_folder = folder + '/' + avatar_name
       if !File.exists? avatar_folder
-        # TODO: one-time setup of avatar can be pulled into here...
         Avatar.new(self, avatar_name)
         @created = true
         post_message(avatar_name, "#{avatar_name} has joined the dojo")
@@ -125,7 +124,7 @@ class Dojo
   end
 
   def post_message(sender_name, text, type = :notification)
-    messages = []
+    messages = [ ]
     io_lock(messages_filename) do
       messages = eval IO.read(messages_filename)
       text = text.strip
