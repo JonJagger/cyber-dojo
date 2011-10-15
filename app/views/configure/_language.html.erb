@@ -1,0 +1,17 @@
+      
+<td>
+  &nbsp;&nbsp;Language?
+  <% @languages.each_with_index do |language,index| -%>
+    <div class="mid_tone fileset" 
+         onclick='selectLanguage("<%=language-%>", <%=index-%>);' >
+      <input id="language_<%=index-%>" 
+             type="radio" 
+             name="language"
+             <% if language==@language -%>
+             checked="checked"
+             <% end -%>
+             value="<%=language-%>" />
+      <label><%= language -%></label>
+    </div>
+   <% end -%>
+</td>

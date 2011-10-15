@@ -1,0 +1,17 @@
+
+<td>
+  &nbsp;&nbsp;Kata?
+  <% @katas.each_with_index do |kata,index| -%>
+    <div class="mid_tone fileset" 
+         onclick='selectKata("<%=kata-%>", <%=index-%>);' >
+      <input id="kata_<%=index-%>" 
+             type="radio" 
+             name="kata"
+             <% if kata==@kata -%>
+             checked="checked"
+             <% end -%>
+             value="<%=kata-%>" />
+      <label><%= kata -%></label>
+    </div>    
+  <% end -%>
+</td>

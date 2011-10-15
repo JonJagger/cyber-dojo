@@ -1,0 +1,35 @@
+
+<table>
+  <tr valign="top">
+    <td>
+      <% @starting_filenames.each_with_index do |filename,index| -%>
+        <div class="mid_tone fileset"
+             onclick="selectFilename(<%=index-%>);">
+          <input id="file_<%=index-%>" 
+                 type="radio" 
+                 name="file"
+                <% if filename==@current_filename -%>
+                checked="checked"
+                <% end -%>
+                 value="<%=filename-%>" />
+          <label><%= filename -%></label>
+        </div>
+      <% end -%>
+    </td>
+    <td style="width:50em;">
+      <textarea name="editor_without_line_numbers" 
+                id="editor_without_line_numbers"
+                wrap="off"
+                readonly="true"
+                rows="25"><%=@starting_files[@current_filename]-%></textarea>
+    </td>
+  </tr>
+</table>
+
+<% @starting_filenames.each_with_index do |filename,index| -%>
+  <input type="hidden"
+         name="file_content_<%=index-%>"
+         id="file_content_<%=index-%>"
+         value="<%=h @starting_files[filename]-%>"/>
+<% end -%>
+
