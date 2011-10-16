@@ -16,7 +16,7 @@
   </tr>
 </table>
 
-<%= periodically_call_remote :url => { :action => :heartbeat,
+<%= periodically_call_remote :url => { :action => :inflated_heartbeat,
                                        :dojo_name => @dojo.name
                                      }, 
                              :with => "{ secs_per_col: Field.getValue('secs_per_col')," +

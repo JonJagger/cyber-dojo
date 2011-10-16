@@ -15,6 +15,7 @@ function start(dojo_name, avatar_name) {
       if (first_in === 'true') {
         // Important that main run-tests page does not have back-button
         // so open new tab using target='_blank'
+        // This causes a popup in Opera and Safari... need to fix that
         var form = $j("<form>");
         form.attr('action', '/kata/edit');
         form.attr('method', 'POST');
