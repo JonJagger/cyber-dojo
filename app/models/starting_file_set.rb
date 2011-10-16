@@ -1,7 +1,15 @@
 
 #require 'Folders'
 
-class StartingFileSet # Rename as simply Manifest? Single folder only.
+class StartingFileSet
+  # Rename as simply Manifest?
+  # Idea is that this is a single folder only version of file_set.
+  # I'd like to be able to create a new named starting fileset from
+  # the files associated with any traffic-light. This would allow
+  # any player (or the same player) to continue where another player
+  # finished off. This could also be done without creating a named
+  # fileset. This also leads nicely into a session timing out
+  # after 60 minutes.
 
   #include Folders
   

@@ -13,6 +13,9 @@ class StartController < ApplicationController
     @notice = choose_your_avatar_message
   end
 
+  # This leaves a heartbeat running after the avatar has
+  # been selected. Need to fix that...
+
   def choose_avatar_heartbeat
     board_config(params)
     @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }.sort
