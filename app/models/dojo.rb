@@ -105,8 +105,12 @@ class Dojo
     @created
   end
   
+  def avatar_names
+    Avatar.names.select { |name| exists? name }
+  end
+  
   def avatars
-    Avatar.names.select { |name| exists? name }.map { |name| Avatar.new(self, name) }
+    avatar_names.map { |name| Avatar.new(self, name) }
   end
 
   def all_increments

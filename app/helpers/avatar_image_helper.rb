@@ -16,10 +16,10 @@ module AvatarImageHelper
       :class => "avatar_image"
   end
 
-  def bw_avatar_image(name, size)
+  def bw_avatar_image(name, size, title)
     name = name.downcase
     image_tag "avatars/bw/#{name}.jpg",
-      :title => name.humanize,
+      :title => name.humanize + ' ' + title,
       :width => size,
       :height => size,
       :class => "avatar_image"    

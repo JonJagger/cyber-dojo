@@ -1,0 +1,14 @@
+
+<%= render :partial => 'dojo/title',
+           :locals => { :title => 'Start Coding' } -%>
+
+<h2>Dojo: <%=@dojo.name-%></h2>
+
+<div class="panel">
+  <h2>Another laptop chose the <%=@avatar_name-%> <i>just</i> before you.</h2>
+  <h2>Please close this window and try again.</h2>
+</div>
+
+<span class="main button">
+<a href="javascript:window.close();">close</a>
+</span>
