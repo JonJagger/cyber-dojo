@@ -7,7 +7,7 @@ class StartController < ApplicationController
   # know what the animal stands for.
 
   # TODO: Dojo is full message on Start Coding page
-  # TODO: Dojo is empty message on Start Coding page
+  # TODO: Dojo is empty message on Resume Coding page
   # TODO: create avatar_name method same way as dojo_name in application_controller
   # TODO: appearance of close button in pipped page.
   # TODO: better tooltips for b&w and colour images for start and resume pages
@@ -31,7 +31,7 @@ class StartController < ApplicationController
   def chosen_avatar
     board_config(params)
     avatar_name = params[:avatar]
-    started = false #@dojo.create_new_avatar_folder(avatar_name)
+    started = @dojo.create_new_avatar_folder(avatar_name)
     if started
       redirect_to :controller => :kata,
                   :action => :edit, 
