@@ -30,9 +30,8 @@ function loadFile(filename)
   var editor = $j('#editor');
   editor.val(code);
   editor.caretPos(caret_pos);
-  editor
-    .scrollTop(scroll_top)
-    .scrollLeft(scroll_left);
+  editor.scrollTop(scroll_top);
+  editor.scrollLeft(scroll_left);
   
   selectFileInFileList(filename);
 }

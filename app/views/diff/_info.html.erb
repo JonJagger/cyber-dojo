@@ -3,34 +3,23 @@
 
 <table>
   <tr>
-    <td colspan="2">
-      <span class="small_title">
+    <td>
+      <%= avatar_image(@avatar.name, 50) -%>
+    </td>
+    <td>
+      <span class="small_title">Dojo:
         <%= link_to elided_name(@dojo.name, 20), 
              { :controller => :dashboard, 
                :action => :show_inflated, 
                :dojo_name => @dojo.name 
              }, 
              { :class => "title",
-               :title => @dojo.name,
-               :target => "_blank" 
+               :title => @dojo.name
              } 
         -%>
-      </span>            
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <% if tag_number != 0-%>
-        <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
-      <% end -%>
-    </td>
-    <td>
-      <%= avatar_image(@avatar.name, 50) -%>
-    </td>
-    <td>
-      <span class="small_title"><%= @avatar.name.humanize -%></span>      
-      <span class="small_title"><%= @avatar.language -%></span>
-      <span class="small_title"><%= @avatar.kata_name -%></span>
+      </span>                  
+      <span class="small_title">Language: <%= @avatar.language -%></span>
+      <span class="small_title">Kata: <%= @avatar.kata_name -%></span>
     </td>
   </tr>
 </table>

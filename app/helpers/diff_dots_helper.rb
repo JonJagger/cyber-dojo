@@ -8,9 +8,9 @@ module DiffDotsHelper
     if kind == 'deleted'
       if n <= max_dots
         (max_dots - n).times { html += td_dot('spacer') }
-        html += '<td><diff_dots class="off"></diff_dots></td>'
+        html += '<td><span class="diff_dots off"></span></td>'
       else
-        html += '<td><diff_dots class="on"></diff_dots></td>'
+        html += '<td><span class="diff_dots on"></span></td>'
       end
     end
 
@@ -19,9 +19,9 @@ module DiffDotsHelper
     if kind == 'added'
       if n <= max_dots
         (max_dots - n).times { html += td_dot('spacer') }
-        html += '<td><diff_dots class="off"></diff_dots></td>'
+        html += '<td><span class="diff_dots off"></span></td>'
       else
-        html += '<td><diff_dots class="on"></diff_dots></td>'
+        html += '<td><span class="diff_dots on"></span></td>'
       end
     end
 

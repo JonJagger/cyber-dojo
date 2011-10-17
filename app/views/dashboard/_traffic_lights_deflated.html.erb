@@ -25,15 +25,15 @@
         <%= avatar_image(avatar_name, 43) -%>
       </td>
       
-      <td>
-        <%= render :partial => 'avatar_summary',
-                   :locals => { :avatar_name => avatar_name } -%>
-      </td>
-    
       <td align="right">
          <%= render :partial => 'traffic_lights_summary', 
                     :locals => { :avatar_name => avatar_name, 
                                  :lights => lights } -%> 
+      </td>
+    
+      <td>
+        <%= render :partial => 'avatar_summary',
+                   :locals => { :avatar_name => avatar_name } -%>
       </td>
     
     </tr>    

@@ -20,6 +20,8 @@ function preRunTests() {
     
   $j('#run_tests').hide();
   $j('#spinner').show();
+  // prefill output so if connection is lost this
+  // is what will be copied into the editor.
   $j('#output').val('CyberDojo client could not connect to server\n(have you lost your internet connection?)');
 }
 

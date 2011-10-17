@@ -63,13 +63,13 @@
       <% end -%>
       
       <td>
+        <%= avatar_image(@avatar.name, 43) -%>
+      </td>
+
+      <td>
          <%= render :partial => 'dashboard/traffic_lights_summary', 
                     :locals => { :avatar_name => @avatar.name, 
                                  :lights => lights } -%> 
-      </td>
-      
-      <td>
-        <%= avatar_image(@avatar.name, 43) -%>
       </td>
       
       <td>
