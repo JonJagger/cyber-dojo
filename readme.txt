@@ -40,10 +40,10 @@ o) your kata (eg Prime Factors)
 
 Entering a CyberDojo
 ====================
-The CyberDojo server will choose your animal avatar (eg Panda). The avatar 
-provides identity for each laptop participating in the kata. You can re-enter
-at any time by choosing the avatar. This is handy if a laptop has to retire 
-as a new laptop can easily and instantly replace it.
+The CyberDojo server will ask you to choose your animal avatar (eg Panda).
+The avatar provides identity for each laptop participating in the kata. You
+can re-enter at any time by choosing the avatar. This is handy if a laptop has
+to retire as a new laptop can easily and instantly replace it.
 
 
 Traffic Lights
@@ -66,7 +66,7 @@ all the computers in the dojo.
 Diff-view
 =========
 Clicking on a traffic light opens a new page showing the diffs for that increment. 
-The diff-view page does not work in Internet Explorer 8.
+The diff-view page does not work properly in Internet Explorer 8.
 
 
 Messages
@@ -110,6 +110,7 @@ Issues
    When this happens it is best to reboot the server and then get each laptop to resume
    coding as their avatar.
 2. Occasionally the run-tests output text somehow overwrites the contents of a source file.
+   I would like to track this down. 
 
    
 Building your own CyberDojo from scratch
