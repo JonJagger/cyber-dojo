@@ -162,10 +162,10 @@ class TrapDiffBugTests < ActionController::TestCase
     builder = GitDiffBuilder.new()
     view = builder.build(diff, split_up)
     nils = view.select { |one| one[:line] == nil }
-    assert_not_equal [], nils
+    assert_not_equal [ ], nils
     
     # OK. And after all that the problem is the split.
-    assert_equal [], "\n\n".split("\n")
+    assert_equal [ ], "\n\n".split("\n")
 
     # that's not what I want
     # I want "\n\n" --> [ "", "" ]

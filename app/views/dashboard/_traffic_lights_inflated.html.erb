@@ -49,14 +49,6 @@
           </td>          
         <% end -%>
         
-        <% lights = all_lights[avatar_name] -%>
-           
-        <td>
-           <%= render :partial => 'traffic_lights_summary', 
-                      :locals => { :avatar_name => avatar_name, 
-                                   :lights => lights } -%> 
-        </td>
-        
         <td>
           <%= avatar_image(avatar_name, 43) -%>
         </td>
@@ -64,6 +56,12 @@
         <td>
           <%= render :partial => 'avatar_summary',
                      :locals => { :avatar_name => avatar_name } -%>
+        </td>
+        
+        <td>
+           <%= render :partial => 'traffic_lights_summary', 
+                      :locals => { :avatar_name => avatar_name, 
+                                   :lights => all_lights[avatar_name] } -%> 
         </td>
         
       </tr>    
