@@ -7,11 +7,9 @@ class StartController < ApplicationController
   # know what the animal stands for.
 
   # TODO: Dojo is full message on Start Coding page
-  # TODO: Dojo is empty message on Resume Coding page
+  # TODO: Dojo is empty message on Resume Coding page?
   # TODO: create avatar_name method same way as dojo_name in application_controller
-  # TODO: appearance of close button in pipped page.
   # TODO: better tooltips for b&w and colour images for start and resume pages
-  # TODO: appearance of filenames in diff-view. Use plain black and green pen.
   
   def choose_avatar
     board_config(params)

@@ -5,10 +5,17 @@
 <h2>Dojo: <%=@dojo.name-%></h2>
 
 <div class="panel">
-  <h2>Another laptop chose the <%=@avatar_name-%> <i>just</i> before you.</h2>
+  <h2>Another laptop chose <%=@avatar_name-%> a split second before you.</h2>
   <h2>Please close this window and try again.</h2>
-</div>
 
-<span class="main button">
-<a href="javascript:window.close();">close</a>
-</span>
+<h2>
+<%= tag( :input, 
+    { 
+      :type => :button,
+      :class => :button,
+      :onclick => "window.close();",
+      :value => :Close,
+      :title => "Close this window" 
+    }) -%>
+<h2>
+</div>
