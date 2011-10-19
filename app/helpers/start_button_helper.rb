@@ -7,7 +7,7 @@ module StartButtonHelper
       "<input type='image'" +
               "class='avatar_image'" +
               "src='/images/avatars/#{avatar_name}.jpg'" +
-              "title='#{avatar_name.humanize} is still available'" +
+              "title='Start #{avatar_name.humanize}'" +
               "width='#{size}'" +
               "height='#{size}'" + "/>" +
     "</form>"    

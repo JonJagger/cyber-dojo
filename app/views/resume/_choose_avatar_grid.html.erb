@@ -27,7 +27,7 @@ $j(document).ready(function() {
         <% if @live_avatar_names.include?(avatar_name) -%>
           <%= resume_button(@dojo.name, avatar_name, size) -%>
         <% else -%>
-          <%= bw_avatar_image(avatar_name, size, 'is not practising') -%>
+          <%= bw_avatar_image(avatar_name, size) -%>
         <% end -%>      
         <% index += 1 -%>
       </td>

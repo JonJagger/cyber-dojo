@@ -25,7 +25,7 @@ $j(document).ready(function() {
       <td>
         <% avatar_name = @all_avatar_names[index] -%>
         <% if @live_avatar_names.include?(avatar_name) -%>
-          <%= bw_avatar_image(avatar_name, size, 'has gone') -%>          
+          <%= bw_avatar_image(avatar_name, size) -%>          
         <% else -%>
           <%= start_button(@dojo.name, avatar_name, size) -%>
         <% end -%>      

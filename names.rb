@@ -22,24 +22,33 @@ names.each do |name|
   sha1 = Digest::SHA1.hexdigest(name)
   inner = sha1[0..1]   
   outer = sha1[2..-1]
+
+  print ' ' + inner + '/' + outer[0..6] + '...' + ' ' + name
+  
   path = "dojos/#{inner}/#{outer}"
-  manifest = eval IO.popen("cat #{path}/manifest.rb").read
-  created = Time.mktime(*manifest[:created])
-
-  inc_lengths = []
-  avatars.each do |avatar|
-    if File.directory? path + '/' + avatar
-      incs = eval IO.popen("cat #{path}/#{avatar}/increments.rb").read
-      inc_lengths << incs.length
+  begin
+    manifest = eval IO.popen("cat #{path}/manifest.rb").read
+    #created = Time.mktime(*manifest[:created])
+    #print created.strftime('%b %d %H:%M')
+    
+    inc_lengths = []
+    avatars.each do |avatar|
+      if File.directory? path + '/' + avatar
+        begin
+          incs = eval IO.popen("cat #{path}/#{avatar}/increments.rb").read
+          inc_lengths << incs.length
+          print ' ' + '[' + inc_lengths.sort.join(',') + '] -> ' + inc_lengths.reduce(:+).to_s +
+                ' ' + (manifest[:browser] || "") +
+                "\n"
+        rescue SyntaxError => boom
+          p "increments.rb...." + boom
+        end
+      end
     end
+  
+  rescue SyntaxError => boom
+      p "#{path}/manifest.rb..." + boom
   end
-
-  print created.strftime('%b %d %H:%M') + 
-    ' ' + inner + '/' + outer[0..6] + '...' + 
-    ' ' + name +
-    ' ' + '[' + inc_lengths.sort.join(',') + '] -> ' + inc_lengths.reduce(:+).to_s +
-    ' ' + (manifest[:browser] || "") +
-    "\n"
 
 end
 
