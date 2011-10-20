@@ -18,7 +18,7 @@ class DashboardController < ApplicationController
   def show_inflated
     board_config(params)
     @secs_per_col = 30
-    @max_cols = 60
+    @max_cols = 40
     @tab_title = 'Dashboard'
   end
 
