@@ -1,6 +1,7 @@
 
 require 'digest/sha1'
 require 'make_time_helper.rb'
+require 'traffic_light_helper.rb'
 require 'Locking'
 require 'Files'
 
@@ -10,6 +11,8 @@ class Dojo
   extend Locking  
   include MakeTimeHelper
   extend MakeTimeHelper
+  include TrafficLightHelper
+  extend TrafficLightHelper
   include Files
   extend Files
   
@@ -176,6 +179,10 @@ class Dojo
   
   def created
     Time.mktime(*manifest[:created])
+  end
+
+  def age_in_minutes  
+    duration_in_minutes(created, Time.now)
   end
   
   def manifest
