@@ -169,7 +169,7 @@ private
       '     (o) red   - the tests ran but one or more failed',
       '     (o) amber - the tests could not be run',
       '     (o) green - the tests ran and all passed',
-      '  Click any traffic light to view its diff.',
+      '  Click any traffic light to view a diff of its files.',
       '',
       "  Click a filename (left) to edit it here.",
       '',
