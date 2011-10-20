@@ -1,6 +1,6 @@
 #include "untitled.h"
 
-int answer(void)
+int hhg(void)
 {
     return 42;
 }

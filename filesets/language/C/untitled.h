@@ -1,7 +1,7 @@
 #ifndef UNTITLED_INCLUDED
 #define UNTITLED_INCLUDED
 
-int answer(void);
+int hhg(void);
 
 #endif
 

@@ -1,6 +1,6 @@
 #include "untitled.hpp"
 
-int answer()
+int hhg()
 {
     return 42;
 }
