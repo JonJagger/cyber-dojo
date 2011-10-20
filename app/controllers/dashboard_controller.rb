@@ -19,6 +19,7 @@ class DashboardController < ApplicationController
     board_config(params)
     @secs_per_col = 30
     @max_cols = 60
+    @tab_title = 'Dashboard'
   end
 
   def inflated_heartbeat
@@ -32,6 +33,7 @@ class DashboardController < ApplicationController
   
   def show_deflated
     board_config(params)
+    @tab_title = 'Dashboard'
   end  
   
 end

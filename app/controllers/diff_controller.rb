@@ -16,6 +16,7 @@ class DiffController < ApplicationController
     diffed_files = git_diff_view(@avatar, tag)    
     @diffs = git_diff_prepare(diffed_files)    
     @current_filename_id = most_changed_lines_file_id(@diffs)
+    @tab_title = 'Diff View'
   end
    
 end

@@ -6,6 +6,7 @@ class DojoController < ApplicationController
     @title = 'Deliberate Software' + '<br/>' + 'Team Practice'
     configure(params)
     @dojo_name = dojo_name
+    @tab_title = 'Home Page'
   end
  
   def new
@@ -31,7 +32,8 @@ class DojoController < ApplicationController
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
       @kata_info[name] = IO.read(path)
-    end        
+    end
+    @tab_title = 'Configure'
   end
   
   def save

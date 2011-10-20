@@ -10,6 +10,7 @@ class KataController < ApplicationController
     @manifest = @avatar.manifest
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
+    @tab_title = 'Run Tests'
   end
 
   def run_tests

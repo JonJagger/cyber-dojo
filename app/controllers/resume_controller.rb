@@ -6,6 +6,7 @@ class ResumeController < ApplicationController
     @live_avatar_names = @dojo.avatars.map {|avatar| avatar.name }
     @all_avatar_names = Avatar.names
     @notice = choose_your_avatar_message
+    @tab_title = 'Resume Coding'
   end
   
   def choose_avatar_heartbeat

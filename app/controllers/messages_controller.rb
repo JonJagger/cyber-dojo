@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   def show_some
     board_config(params)
     @messages = @dojo.messages
+    @tab_title = 'Messages'
   end
 
   def heartbeat
@@ -17,6 +18,7 @@ class MessagesController < ApplicationController
   def show_all
     board_config(params)
     @messages = @dojo.messages
+    @tab_title = 'Messages'
   end 
   
   def post

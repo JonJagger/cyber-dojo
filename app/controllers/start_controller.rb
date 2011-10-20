@@ -15,6 +15,7 @@ class StartController < ApplicationController
     board_config(params)
     @live_avatar_names = @dojo.avatar_names
     @all_avatar_names = Avatar.names
+    @tab_title = 'Start Coding'
   end
 
   def choose_avatar_heartbeat
