@@ -61,7 +61,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   overflow-y: auto;
   font-family: monospace;
   font-size: 12pt;
-  color: green;
+  color: black;
   background-color: CornSilk;
   border: 1px dashed lightgray;
   padding: 5px;
@@ -83,12 +83,14 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   color: green;
 }
 
-.select_all_clear_all { padding-bottom: 0.5em; }
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
-input[type="radio"]:checked+label, 
-input[type="checkbox"]:checked+label { color: green; font-weight: normal; }
+input[type="radio"]:checked+label,
+input[type="checkbox"]:checked+label
+{
+  color: black;
+}
+
 input+label { cursor: pointer; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -127,7 +129,7 @@ div[class~="filename"],
   margin: 0.25em;
   padding-right: 0.5em;
   padding-bottom: 2px;  
-  color: #383838; 
+  color: #888888;
   font-size: 15pt;
   cursor: pointer;
   white-space: nowrap;
@@ -273,8 +275,8 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .traffic_light .bulb.passed { background-color: #0F0; /* green */ }
 .traffic_light .bulb.off    { background-color: #D8D8D8; /* gray;*/ }
 
-.traffic_light_number,
 .traffic_light_ellision { color: #686868; font-size: 0.8em; }
+.traffic_light_number   { color: black; font-size: 1.3em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -334,7 +336,7 @@ pre.diffed_code ln
 .dot { display: inline-block; width: 9px; height: 9px; }
 .dot:after { content: "\00a0"; } /* non breaking space */
 
-.added.dot   { background-color: #CEF6CE; border: 1px dotted #0F0; }  
+.added.dot   { background-color: #CEF6CE; border: 1px solid  #0F0; }  
 .deleted.dot { background-color: #F6CECE; border: 1px dotted #F00; }
 .spacer.dot  { background-color: #FFECCB; border: 1px dotted #FFECCB; } /* same as background */
 

@@ -41,10 +41,17 @@ function selectFileInFileList(filename)
   $('radio_' + filename).checked = true;
   $('current_filename').setAttribute('value', filename);
   current_filename = filename;
-  if (filename === 'output')
-    $j('#editor').attr('readonly', 'true');
-  else
-    $j('#editor').removeAttr('readonly');
+  var editor = $j('#editor');
+
+  
+  if (filename === 'output') {
+    // I'd like to also set the wrap to on
+    // but this does not appear to be possible...
+    editor.attr('readonly', 'true');
+  }
+  else {
+    editor.removeAttr('readonly');
+  }
   
   if (filename === 'output' || filename === 'cyberdojo.sh')
   {
