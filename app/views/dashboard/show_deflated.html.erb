@@ -20,3 +20,8 @@
   </tr>
 </table>
 
+<%= periodically_call_remote :url => { :action => :deflated_heartbeat,
+                                       :dojo_name => @dojo.name
+                                     }, 
+                             :frequency => 10 -%>
+

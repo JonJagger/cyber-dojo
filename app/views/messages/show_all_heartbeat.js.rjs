@@ -1,0 +1,4 @@
+
+page.replace 'banner',   :partial => 'dojo/banner'
+
+

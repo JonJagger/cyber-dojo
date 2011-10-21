@@ -222,9 +222,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#secs_per_col_panel, #max_cols_panel { font-size: 0.8em; }
+#seconds_per_column_panel, #maximum_columns_panel { font-size: 0.8em; }
 
-#secs_per_col, #max_cols 
+#seconds_per_column, #maximum_columns 
 { 
   font-size: 0.8em; 
   width: 3em; 

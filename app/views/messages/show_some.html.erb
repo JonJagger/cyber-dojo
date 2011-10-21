@@ -20,7 +20,7 @@
   </table>
 </div>
 
-<%= periodically_call_remote :url => { :action => :heartbeat,
+<%= periodically_call_remote :url => { :action => :show_some_heartbeat,
                                        :dojo_name => @dojo.name
                                      }, 
                              :frequency => 10 -%>

@@ -17,15 +17,15 @@ class DashboardController < ApplicationController
 
   def show_inflated
     board_config(params)
-    @secs_per_col = 30
-    @max_cols = 40
+    @seconds_per_column = 30
+    @maximum_columns = 40
     @tab_title = 'Dashboard'
   end
 
   def inflated_heartbeat
     board_config(params)
-    @secs_per_col = params[:secs_per_col].to_i
-    @max_cols = params[:max_cols].to_i
+    @seconds_per_column = params[:seconds_per_column].to_i
+    @maximum_columns = params[:maximum_columns].to_i
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -36,4 +36,11 @@ class DashboardController < ApplicationController
     @tab_title = 'Dashboard'
   end  
   
+  def deflated_heartbeat
+    board_config(params)
+    respond_to do |format|
+      format.js if request.xhr?
+    end
+  end
+
 end

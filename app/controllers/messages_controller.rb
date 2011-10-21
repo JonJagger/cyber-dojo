@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
     @tab_title = 'Messages'
   end
 
-  def heartbeat
+  def show_some_heartbeat
     board_config(params)
     @messages = @dojo.messages
     respond_to do |format|
@@ -21,6 +21,14 @@ class MessagesController < ApplicationController
     @tab_title = 'Messages'
   end 
   
+  def show_all_heartbeat
+    board_config(params)
+    @messages = @dojo.messages
+    respond_to do |format|
+      format.js if request.xhr?
+    end
+  end
+
   def post
     board_config(params)
     @messages = @dojo.post_message(params[:poster], params[:message])

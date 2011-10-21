@@ -4,10 +4,10 @@
 
   <table>
   
-    <% seconds_per_td = @secs_per_col -%>
-    <% max_cols = @max_cols -%>
-    <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
-    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
+    <% seconds_per_td = @seconds_per_column -%>
+    <% maximum_columns = @maximum_columns -%>
+    <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns -%>
+    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, maximum_seconds_uncollapsed) -%>
     <% all_lights = @dojo.all_increments -%>
     <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%> 
     
@@ -16,7 +16,7 @@
       <tr class="<%=parity(index)-%> traffic_light_row">
         
         <% all_td_nos = td_map.keys.sort -%>
-        <% recent_td_nos = recent(all_td_nos, max_cols) -%>
+        <% recent_td_nos = recent(all_td_nos, maximum_columns) -%>
         
         <% if recent_td_nos.length < all_td_nos.length -%>
           <td>

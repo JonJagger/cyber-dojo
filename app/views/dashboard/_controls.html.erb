@@ -6,12 +6,12 @@ $j(document).ready(function() {
   var minimum = 10;
   var initial = 30;
   var maximum = 120;  
-  $j('#secs_per_col').updown(minimum, maximum, initial);
+  $j('#seconds_per_column').updown(minimum, maximum, initial);
   
   var minimum = 10;
   var initial = 40;
   var maximum = 120;
-  $j('#max_cols').updown(minimum, maximum, initial);
+  $j('#maximum_columns').updown(minimum, maximum, initial);
   
   // minimum time period =  10 seconds *  10 columns =  100 seconds
   // initial time period =  30 seconds *  60 columns =   30 minutes
@@ -22,14 +22,14 @@ $j(document).ready(function() {
 
 
 <table>
-  <tr id="secs_per_col_panel">
+  <tr id="seconds_per_column_panel">
     <td>
       secs/col
     </td>
     <td>
       <input type="text" 
-             name="secs_per_col" 
-             id="secs_per_col" 
+             name="seconds_per_column" 
+             id="seconds_per_column" 
              readonly/>
     </td>
   </tr>
@@ -62,14 +62,14 @@ $j(document).ready(function() {
     </td>
   </tr>
 
-  <tr id="max_cols_panel">
+  <tr id="maximum_columns_panel">
     <td>
       max cols 
     </td>
     <td>
       <input type="text" 
-             name="max_cols" 
-             id="max_cols" 
+             name="maximum_columns" 
+             id="maximum_columns" 
              readonly/>
     </td>
   </tr>
