@@ -1,5 +1,6 @@
 
-body, #editor_line_numbers { background-color: GhostWhite; }
+body,
+#editor_line_numbers { background-color: GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
 
@@ -146,7 +147,8 @@ div[class~="filename"]:hover,
   border-right:  1px solid #555555;   
 }
 
-.button[disabled]:hover, .file_op[disabled]:hover
+.button[disabled]:hover,
+.file_op[disabled]:hover
 {
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8;   
@@ -157,14 +159,18 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#editor, #editor_line_numbers, #editor_without_line_numbers
+#editor,
+#editor_line_numbers,
+#editor_without_line_numbers
 {
   font-size: 14pt;
   border: 0;
   margin: 0;
 }
 
-#editor, #output, #editor_without_line_numbers
+#editor,
+#output,
+#editor_without_line_numbers
 { 
   width: 100%;
   background: CornSilk;
@@ -177,7 +183,8 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #editor { font-family: monospace; }
 
-#editor, #output
+#editor,
+#output
 {
   margin-left: 30px; /* enough for line-numbers */  
 }
@@ -196,9 +203,10 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #messages { width: 20em; }
 
-#all_messages  { width: 20em; height: 40em; overflow: auto; }
+#all_messages { width: 20em; height: 40em; overflow: auto; }
 
-#message_text_input, #message_text, #messages
+#message_text_input,
+#message_text, #messages
 {
   font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   font-size: 0.8em;
@@ -222,18 +230,22 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#seconds_per_column_panel, #maximum_columns_panel { font-size: 0.8em; }
+#seconds_per_column_panel,
+#maximum_columns_panel { font-size: 0.8em; }
 
-#seconds_per_column, #maximum_columns 
+#seconds_per_column,
+#maximum_columns 
 { 
   font-size: 0.8em; 
   width: 3em; 
   text-align: center; 
 }
 
-.inflate.button, .deflate.button { font-size: 0.8em; }
+.inflate.button,
+.deflate.button { font-size: 0.8em; }
 
-.updown_up, .updown_down 
+.updown_up,
+.updown_down 
 { 
   text-align: center; 
   font-size: 1.3em; 

@@ -1,4 +1,4 @@
-require 'Utils.rb'
+require 'Utils'
 
 module GitDiff
 

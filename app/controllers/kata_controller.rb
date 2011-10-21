@@ -1,6 +1,6 @@
 
 class KataController < ApplicationController
-
+  
   def edit
     configure(params)
     @dojo = Dojo.new(params)
