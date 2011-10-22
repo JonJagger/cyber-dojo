@@ -1,4 +1,47 @@
 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+  $j('#tag_number').keyup(function(event) {
+    tagNumber(event);
+  });
+});
+
+var dojo_name = "<%=@dojo.name-%>";
+var avatar_name = "<%=@avatar.name-%>";
+var tag = "<%=@traffic_lights_to_tag.length-%>";  
+
+function rePost() {
+  postTo('show', {
+    dojo_name: dojo_name,
+    avatar: avatar_name,
+    tag: tag
+  });
+}
+
+var min_tag = 0;
+var max_tag = "<%=@all_traffic_lights.length-%>";
+
+function tagNumber(event)
+{
+  event.preventDefault();  
+  if (event.keyCode == 13) {
+    var input = $j('#tag_number');
+    var newValue = parseInt(input.attr('value'));
+    if (!isNaN(newValue)) {
+      tag = newValue;
+      if (tag < min_tag) tag = min_tag;
+      if (tag > max_tag) tag = max_tag;
+      rePost();
+    } else {
+      input.attr('value', tag);
+    }
+  }
+}
+
+//--></script>
+
 <% tag_number = @traffic_lights_to_tag.length -%>
 
 <table align="center">
@@ -23,15 +66,15 @@
     </td>
     
     <td>
-      <span class="traffic_light_number"><%= tag_number -%></span>
+      <input type="text"
+	     class="traffic_light_number"
+ 	     size="3"
+	     id="tag_number"
+	     name="tag_number"
+	     value="<%=tag_number-%>" />
+
     </td>   
-    
-    <td>
-      <% if tag_number != 0-%>
-        <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
-      <% end -%>
-    </td>
-    
+        
     <td>
       <%= render :partial => 'next_button' -%>                      
     </td>
