@@ -3,37 +3,71 @@
         type="text/javascript"><!--
 
 $j(document).ready(function() {
-  var minimum = 10;
-  var initial = 30;
-  var maximum = 120;  
-  $j('#seconds_per_column').updown(minimum, maximum, initial);
-  
-  var minimum = 10;
-  var initial = 40;
-  var maximum = 120;
-  $j('#maximum_columns').updown(minimum, maximum, initial);
-  
-  // minimum time period =  10 seconds *  10 columns =  100 seconds
-  // initial time period =  30 seconds *  60 columns =   30 minutes
-  // maximum time period = 120 seconds * 120 columns =    4 hours
+  $j('#seconds_per_column').keyup(function(event) {
+    secondsPerColumn(event);
+  });
+  $j('#maximum_columns').keyup(function(event) {
+    maximumColumns(event);
+  });  
 });
-        
+
+var dojo_name = "<%=@dojo.name-%>";
+var seconds_per_column = "<%=@seconds_per_column-%>";  
+var maximum_columns = "<%=@maximum_columns-%>";  
+
+function rePost() {
+  postTo('show_inflated', {
+    dojo_name: dojo_name,
+    seconds_per_column: seconds_per_column,
+    maximum_columns: maximum_columns
+  });
+}
+
+function secondsPerColumn(event)
+{
+  event.preventDefault();  
+  if (event.keyCode == 13) {
+    var input = $j('#seconds_per_column');
+    var newValue = parseInt(input.attr('value'));
+    if (!isNaN(newValue)) {
+      seconds_per_column = newValue;
+      rePost();
+    } else {
+      input.attr('value', seconds_per_column);
+    }
+  }
+}
+
+function maximumColumns(event)
+{
+  event.preventDefault();  
+  if (event.keyCode == 13) {
+    var input = $j('#maximum_columns');
+    var newValue = parseInt(input.attr('value'));
+    if (!isNaN(newValue)) {
+      maximum_columns = newValue;
+      rePost();
+    } else {
+      input.attr('value', maximum_columns);
+    }
+  }
+}
+  
 //--></script>
 
-
 <table>
-  <tr id="seconds_per_column_panel">
+  <tr>
     <td>
-      secs/col
-    </td>
-    <td>
-      <input type="text" 
+      <span class="small_title">
+        secs/col
+      </span>
+      <input type="text"
              name="seconds_per_column" 
-             id="seconds_per_column" 
-             readonly/>
+             id="seconds_per_column"
+             value="<%=@seconds_per_column-%>"/>      
     </td>
   </tr>
-
+  
   <tr>
     <td>
       &nbsp;
@@ -51,9 +85,6 @@ $j(document).ready(function() {
           { :title => "Deflate time gaps" }
       -%>
     </td>
-    <td>
-      &nbsp;
-    </td>
   </tr>
   
   <tr>
@@ -61,18 +92,19 @@ $j(document).ready(function() {
       &nbsp;
     </td>
   </tr>
-
-  <tr id="maximum_columns_panel">
+  
+  <tr>
     <td>
-      max cols 
-    </td>
-    <td>
+      <span class="small_title">
+        max cols
+      </span>
       <input type="text" 
              name="maximum_columns" 
-             id="maximum_columns" 
-             readonly/>
+             id="maximum_columns"
+             value="<%=@maximum_columns-%>"/>
     </td>
   </tr>
+
 </table>
 
 

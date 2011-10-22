@@ -1,12 +1,6 @@
 
 class DashboardController < ApplicationController
    
-  # TODO: replace updown control this with simple control to enter the
-  #       value you'd like together with a refresh/redraw button.
-  # secs/col [input]
-  #    REDRAW
-  # max cols [input]
-
   # I'd like the dashboard for a finished dojo to be pure client side.
   # Create all diffs for all increments for all animals, together with
   # a client-side dashboard in a single html file.
@@ -17,15 +11,15 @@ class DashboardController < ApplicationController
 
   def show_inflated
     board_config(params)
-    @seconds_per_column = 30
-    @maximum_columns = 40
+    @seconds_per_column = seconds_per_column
+    @maximum_columns = maximum_columns
     @tab_title = 'Dashboard'
   end
 
   def inflated_heartbeat
     board_config(params)
-    @seconds_per_column = params[:seconds_per_column].to_i
-    @maximum_columns = params[:maximum_columns].to_i
+    @seconds_per_column = seconds_per_column
+    @maximum_columns = maximum_columns
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -41,6 +35,15 @@ class DashboardController < ApplicationController
     respond_to do |format|
       format.js if request.xhr?
     end
+  end
+
+  def seconds_per_column
+    spc = (params[:seconds_per_column] || 30).to_i
+    spc != 0 ? spc : 30
+  end
+  
+  def maximum_columns
+    (params[:maximum_columns] || 40).to_i
   end
 
 end

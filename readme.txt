@@ -106,7 +106,8 @@ These were the steps I took...
 
 Issues
 ======
-1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout.
+1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout
+   when they press the run-tests button.
    When this happens it is best to reboot the server and then get each laptop to resume
    coding as their avatar.
 2. Occasionally the run-tests output text somehow overwrites the contents of a source file.

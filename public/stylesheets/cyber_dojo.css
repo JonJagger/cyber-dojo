@@ -230,9 +230,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#seconds_per_column_panel,
-#maximum_columns_panel { font-size: 0.8em; }
-
 #seconds_per_column,
 #maximum_columns 
 { 
