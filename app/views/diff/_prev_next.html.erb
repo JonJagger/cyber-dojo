@@ -47,19 +47,21 @@ function tagNumber(event)
 <table align="center">
   <tr>
   
-    <% if tag_number != 0 -%>
     <td>
       <span class="traffic_light_number">
-        <%= link_to 0, 
-        { :controller => :diff, 
-          :action => :show,
-          :dojo_name => @dojo.name,
-          :avatar => @avatar.name,
-          :tag => 0 
-        } -%>
+        <% if tag_number == 0 -%>
+	  0
+	<% else -%>
+	  <%= link_to 0, 
+	  { :controller => :diff, 
+	    :action => :show,
+	    :dojo_name => @dojo.name,
+	    :avatar => @avatar.name,
+	    :tag => 0 
+	  } -%>
+        <% end -%>
       </span>
     </td>                
-    <% end -%>
     
     <td>
       <%= render :partial => 'prev_button' -%>
@@ -79,19 +81,21 @@ function tagNumber(event)
       <%= render :partial => 'next_button' -%>                      
     </td>
     
-    <% if tag_number < @all_traffic_lights.length -%>
     <td>
       <span class="traffic_light_number">
-        <%= link_to @all_traffic_lights.length, 
-        { :controller => :diff, 
-          :action => :show,
-          :dojo_name => @dojo.name,
-          :avatar => @avatar.name,
-          :tag => @all_traffic_lights.length 
-        } -%>
+        <% if tag_number < @all_traffic_lights.length -%>
+	  <%= link_to @all_traffic_lights.length, 
+	  { :controller => :diff, 
+	    :action => :show,
+	    :dojo_name => @dojo.name,
+	    :avatar => @avatar.name,
+	    :tag => @all_traffic_lights.length 
+	  } -%>
+	<% else -%>
+	  <%= tag_number -%>
+        <% end -%>
       </span>
     </td>                
-    <% end -%>
     
   </tr>
 </table>      
