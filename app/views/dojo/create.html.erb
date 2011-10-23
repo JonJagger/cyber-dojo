@@ -5,36 +5,36 @@
 var languageCount = <%=@languages.length-%>;
 var kataCount = <%=@katas.length-%>;
 
-function showKata(choice) {
-  $('kata_info').value = choice + '\n\n' + $('kata[' + choice + ']').value;
+function showKata(index, choice) {
+  var info = choice + '\n\n' + $j('#kata_info_' + index).val();
+  $j('#kata_info').val(info);
 }
 
 function makeSelection(name, index, choice) { 
-  var selection = $(name + '_' + index); 
-  selection.checked = true;   
+  var selection = $j('#' + name + '_' + index); 
+  selection.attr('checked', true);
   if (name === 'kata') {   
-    showKata(choice);  
+    showKata(index, choice);  
   }
   setSaveButtonState();
 }
 
 function setSaveButtonState() {
-  $('save_button').disabled = !languageSelected() || !kataSelected();
+  $j('#save_button').attr('disabled', !languageSelected() || !kataSelected());
 }
 
 function languageSelected() {
   for (var at = 0; at !== languageCount; at += 1) {
-    if ($('language_' + at).checked) {
+    if ($j('#language_' + at).attr('checked')) {
       return true;
     }
   }
   return false;
 }
 
-function kataSelected()
-{
+function kataSelected() {
   for (var at = 0; at !== kataCount; at += 1) {
-    if ($('kata_' + at).checked) {
+    if ($j('#kata_' + at).attr('checked')) {
       return true;
     }
   }
@@ -128,10 +128,10 @@ function kataSelected()
 
 </form>
 
-<% @katas.each do |choice| -%>
+<% @katas.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 
-             name="kata[<%=choice-%>]"
-             id="kata[<%=choice-%>]"><%=h @kata_info[choice] -%></textarea>
+             name="kata_info_<%=index-%>"
+             id="kata_info_<%=index-%>"><%=h @kata_info[choice] -%></textarea>
 <% end -%>      
 
 
