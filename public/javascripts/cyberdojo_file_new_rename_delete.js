@@ -41,13 +41,13 @@ function newFileContent(filename, content, caret_pos, scroll_top, scroll_left)
 {
   // Create new hidden input elements to store new file content
   // and its caret and scroll positions (to save to before submitting form)
-  $('visible_files_container').appendChild(
+  $j('#visible_files_container').append(
     createHiddenInput(filename, 'content', content));
-  $('visible_files_container').appendChild(
+  $j('#visible_files_container').append(
     createHiddenInput(filename, 'caret_pos', caret_pos));
-  $('visible_files_container').appendChild(
+  $j('#visible_files_container').append(
     createHiddenInput(filename, 'scroll_top', scroll_top));
-  $('visible_files_container').appendChild(
+  $j('#visible_files_container').append(
     createHiddenInput(filename, 'scroll_left', scroll_left));
 
   rebuildFilenameList();
@@ -164,11 +164,11 @@ function refreshLineNumbering()
 
 function createHiddenInput(filename, aspect, value)
 {
-  var input = new Element('input');
-  input.setAttribute('type', 'hidden');
-  input.setAttribute('name', 'file_' + aspect + "['" + filename + "']");
-  input.setAttribute('id', 'file_' + aspect + '_for_' + filename);
-  input.setAttribute('value', value);
+  var input = $j("<input>");
+  input.attr('type', 'hidden');
+  input.attr('name', 'file_' + aspect + "['" + filename + "']");
+  input.attr('id', 'file_' + aspect + '_for_' + filename);
+  input.attr('value', value);
   return input;
 }
 
