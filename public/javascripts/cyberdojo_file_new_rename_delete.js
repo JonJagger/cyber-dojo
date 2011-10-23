@@ -164,7 +164,7 @@ function makeFileListEntry(filename)
 
   div.click(function() {
     saveCurrentFile();
-    loadFile(filename);        
+    loadFile(filename);
   });
   
   div.append($j("<input>", {
@@ -195,18 +195,21 @@ function allFilenames()
 
 function fileAlreadyExists(filename) 
 {
-  return allFilenames().indexOf(filename) !== -1;
+  return $j.inArray(filename, allFilenames()) !== -1;
 }
 
-function random3() 
+function rand(n)
+{
+  return Math.floor(Math.random() * n);
+}
+function randomChar()
 {
   var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
-  var str = '';
-  $j.map([1,2,3], function() {
-      var pos = Math.floor(Math.random() * alphabet.length);
-      str += alphabet.charAt(pos);    
-  });
-  return str;
+  return alphabet.charAt(rand(alphabet.length));
+}
+function random3() 
+{
+  return randomChar() + randomChar() + randomChar();
 }
 
 

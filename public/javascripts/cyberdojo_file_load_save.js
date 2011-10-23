@@ -98,9 +98,8 @@ function loadNextFile()
 {
   var filenames = sortedFilenames();
   var index = $j.inArray(current_filename, filenames);   
-  var nextIndex = (index === filenames.length - 1) ? 0 : index + 1;
   saveCurrentFile();
-  loadFile(filenames[nextIndex]);  
+  loadFile(filenames[(index + 1) % filenames.length]);  
 }
 
 
