@@ -196,13 +196,11 @@ function allFilenames()
 {
   var prefix = 'file_content_for_';
   filenames = [ ]
-  var all = $$('input[id^="' + prefix + '"]');
-  for(var at = 0; at < all.length; at++) 
-  {
-    var att = all[at].getAttribute('id');
-    var filename = att.substr(prefix.length, att.length - prefix.length);
+  $j('input[id^="' + prefix + '"]').each(function(index) {
+    var id = $j(this).attr('id');
+    var filename = id.substr(prefix.length, id.length - prefix.length);
     filenames.push(filename);
-  }
+  });
   return filenames;
 }
 

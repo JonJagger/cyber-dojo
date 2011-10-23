@@ -14,15 +14,14 @@ function preRunTests() {
   tests_running = true;  
   selectFileInFileList('output');
   $j('#file_op_new').attr('disabled', true);
-  $j('#editor')
-    .attr('class', 'waiting')
-    .val('Running tests...');
-    
+  $j('#editor').val('Running tests...');
   $j('#run_tests').hide();
   $j('#spinner').show();
   // prefill output so if connection is lost this
   // is what will be copied into the editor.
-  $j('#output').val('CyberDojo client could not connect to server\n(have you lost your internet connection?)');
+  $j('#output').val(
+    'CyberDojo client could not connect to server\n' +
+    '(have you lost/switched your network connection?)');
 }
 
 function postRunTests() { 
