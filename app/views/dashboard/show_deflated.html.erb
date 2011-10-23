@@ -1,6 +1,15 @@
 
 <%= render :partial => 'dojo/banner' -%>
 
+<input type="hidden"
+       name="seconds_per_column" 
+       id="seconds_per_column"
+       value="<%=@seconds_per_column-%>"/>      
+
+<input type="hidden"
+       name="maximum_columns" 
+       id="maximum_columns"
+       value="<%=@maximum_column-%>"/>      
 <table>
   <tr>
     <td>
@@ -8,7 +17,9 @@
           { 
             :controller => :dashboard, 
             :action => :show_inflated,
-            :dojo_name => @dojo.name 
+            :dojo_name => @dojo.name,
+            :seconds_per_column => @seconds_per_column,
+            :maximum_columns => @maximum_columns
           }, 
           { :title => "Inflate time gaps" }
       -%>        

@@ -2,18 +2,51 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$j(document).ready(function() {
-  $j('#seconds_per_column').keyup(function(event) {
-    secondsPerColumn(event);
-  });
-  $j('#maximum_columns').keyup(function(event) {
-    maximumColumns(event);
-  });  
-});
-
 var dojo_name = "<%=@dojo.name-%>";
 var seconds_per_column = "<%=@seconds_per_column-%>";  
 var maximum_columns = "<%=@maximum_columns-%>";  
+
+$j(document).ready(function() {
+  $j('#seconds_per_column').keyup(function(event) {
+    reParse(event);
+  });
+  $j('#maximum_columns').keyup(function(event) {
+    reParse(event);
+  });  
+});
+
+function reParse(event) {
+  event.preventDefault();
+  if (event.keyCode == 13) {
+    parseSecondsPerColumn();
+    parseMaximumColumns();
+    rePost();
+  }
+}
+  
+function parseSecondsPerColumn() {
+  var input = $j('#seconds_per_column');
+  var value = input.attr('value');
+  var newValue = parseInt(value);
+  if (!isNaN(newValue)) {
+    seconds_per_column = newValue;
+  } else {
+    input.attr('value', seconds_per_column);
+  }
+  return seconds_per_column;
+}
+
+function parseMaximumColumns() {
+  var input = $j('#maximum_columns');
+  var value = input.attr('value');
+  var newValue = parseInt(value);
+  if (!isNaN(newValue)) {
+    maximum_columns = newValue;
+  } else {
+    input.attr('value', maximum_columns);
+  }
+  return maximum_columns;
+}
 
 function rePost() {
   postTo('show_inflated', {
@@ -23,36 +56,6 @@ function rePost() {
   });
 }
 
-function secondsPerColumn(event)
-{
-  event.preventDefault();  
-  if (event.keyCode == 13) {
-    var input = $j('#seconds_per_column');
-    var newValue = parseInt(input.attr('value'));
-    if (!isNaN(newValue)) {
-      seconds_per_column = newValue;
-      rePost();
-    } else {
-      input.attr('value', seconds_per_column);
-    }
-  }
-}
-
-function maximumColumns(event)
-{
-  event.preventDefault();  
-  if (event.keyCode == 13) {
-    var input = $j('#maximum_columns');
-    var newValue = parseInt(input.attr('value'));
-    if (!isNaN(newValue)) {
-      maximum_columns = newValue;
-      rePost();
-    } else {
-      input.attr('value', maximum_columns);
-    }
-  }
-}
-  
 //--></script>
 
 <table>
@@ -80,7 +83,9 @@ function maximumColumns(event)
           { 
             :controller => :dashboard, 
             :action => :show_deflated,
-            :dojo_name => @dojo.name 
+            :dojo_name => @dojo.name,
+            :seconds_per_column => @seconds_per_column,
+            :maximum_columns => @maximum_columns
           }, 
           { :title => "Deflate time gaps" }
       -%>

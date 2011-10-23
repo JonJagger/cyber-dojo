@@ -1,5 +1,6 @@
   
 # See test/functional/sameify_tests.rb
+
 def sameify(source)
   result = [ ]
   line_split(source).each_with_index do |line,number|

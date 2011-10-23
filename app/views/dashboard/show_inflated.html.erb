@@ -16,8 +16,8 @@
 <%= periodically_call_remote :url => { :action => :inflated_heartbeat,
                                        :dojo_name => @dojo.name
                                      }, 
-                             :with => "{ seconds_per_column: Field.getValue('seconds_per_column')," +
-                                      "  maximum_columns: Field.getValue('maximum_columns')" +
+                             :with => "{ seconds_per_column: parseSecondsPerColumn()," +
+                                      "  maximum_columns: parseMaximumColumns()" +
                                       "}",                                     
                              :frequency => 10 -%>
 

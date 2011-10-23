@@ -27,6 +27,8 @@ class DashboardController < ApplicationController
   
   def show_deflated
     board_config(params)
+    @seconds_per_column = seconds_per_column
+    @maximum_columns = maximum_columns
     @tab_title = 'Dashboard'
   end  
   
