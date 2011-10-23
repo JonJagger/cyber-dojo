@@ -71,17 +71,10 @@ function deleteFilePrompt(ask)
   
   if (ask && !confirm("Delete " + current_filename + " ?")) return; // Cancelled
 
-  var fc = fileContent(current_filename);
-  fc.parentNode.removeChild(fc);
-  
-  var fcp = fileCaretPos(current_filename);
-  fcp.parentNode.removeChild(fcp);
-  
-  var fst = fileScrollTop(current_filename);
-  fst.parentNode.removeChild(fst);
-  
-  var fsl = fileScrollLeft(current_filename);
-  fsl.parentNode.removeChild(fsl);
+  fileContent(current_filename).remove();  
+  fileCaretPos(current_filename).remove();
+  fileScrollTop(current_filename).remove();  
+  fileScrollLeft(current_filename).remove();
 
   rebuildFilenameList();
   var filenames = allFilenames();

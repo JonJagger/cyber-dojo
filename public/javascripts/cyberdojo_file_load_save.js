@@ -10,10 +10,10 @@ function saveCurrentFile()
   if (current_filename) 
   {
     var editor = $j('#editor');
-    fileContent(current_filename).setAttribute('value', editor.val());
-    fileCaretPos(current_filename).setAttribute('value', editor.caretPos());
-    fileScrollLeft(current_filename).setAttribute('value', editor.scrollLeft());
-    fileScrollTop(current_filename).setAttribute('value', editor.scrollTop());
+    fileContent(current_filename).attr('value', editor.val());
+    fileCaretPos(current_filename).attr('value', editor.caretPos());
+    fileScrollLeft(current_filename).attr('value', editor.scrollLeft());
+    fileScrollTop(current_filename).attr('value', editor.scrollTop());
   }
 }
 
@@ -22,10 +22,10 @@ function loadFile(filename)
   if (tests_running)
     return;
   
-  var caret_pos = fileCaretPos(filename).getAttribute('value');
-  var scroll_top  = fileScrollTop(filename).getAttribute('value');
-  var scroll_left = fileScrollLeft(filename).getAttribute('value');
-  var code = fileContent(filename).getAttribute('value');
+  var caret_pos = fileCaretPos(filename).attr('value');
+  var scroll_top  = fileScrollTop(filename).attr('value');
+  var scroll_left = fileScrollLeft(filename).attr('value');
+  var code = fileContent(filename).attr('value');
 
   var editor = $j('#editor');
   editor.val(code);
@@ -41,8 +41,8 @@ function selectFileInFileList(filename)
   // can't do $j('radio_' + filename) because filename
   // could contain characters that aren't strictly legal
   // characters in a dom node id
-  // NB: This fails if the filename contains a single quote
-  $j("[id='radio_" + filename + "']").attr('checked', 'checked');
+  // NB: This fails if the filename contains a double quote
+  $j('[id="radio_' + filename + '"]').attr('checked', 'checked');
   $j('#current_filename').attr('value', filename);
   
   current_filename = filename;
@@ -69,22 +69,22 @@ function selectFileInFileList(filename)
 
 function fileContent(filename) 
 {
-  return $('file_content_for_' + filename);
+  return $j("[id='file_content_for_" + filename + "']");
 }
 
 function fileCaretPos(filename) 
 {
-  return $('file_caret_pos_for_' + filename);
+  return $j("[id='file_caret_pos_for_" + filename + "']");
 }
 
 function fileScrollLeft(filename)
 {
-  return $('file_scroll_left_for_' + filename);
+  return $j("[id='file_scroll_left_for_" + filename + "']");
 }
 
 function fileScrollTop(filename)
 {
-  return $('file_scroll_top_for_' + filename);
+  return $j("[id='file_scroll_top_for_" + filename + "']");
 }
 
 function sortedFilenames()
