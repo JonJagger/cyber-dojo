@@ -2,43 +2,18 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var languageCount = <%=@languages.length-%>;
-var kataCount = <%=@katas.length-%>;
+$j(document).ready(function() {
+  selectKata("<%=@kata_index-%>");
+});
 
-function showKata(index, choice) {
-  var info = choice + '\n\n' + $j('#kata_info_' + index).val();
+function selectKata(index) {
+  var info = $j('#kata_info_' + index).val();
   $j('#kata_info').val(info);
+  $j('#kata_' + index).attr('checked', 'checked');
 }
 
-function makeSelection(name, index, choice) { 
-  var selection = $j('#' + name + '_' + index); 
-  selection.attr('checked', true);
-  if (name === 'kata') {   
-    showKata(index, choice);  
-  }
-  setSaveButtonState();
-}
-
-function setSaveButtonState() {
-  $j('#save_button').attr('disabled', !languageSelected() || !kataSelected());
-}
-
-function languageSelected() {
-  for (var at = 0; at !== languageCount; at += 1) {
-    if ($j('#language_' + at).attr('checked')) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function kataSelected() {
-  for (var at = 0; at !== kataCount; at += 1) {
-    if ($j('#kata_' + at).attr('checked')) {
-      return true;
-    }
-  }
-  return false;
+function selectLanguage(index) {
+  $j('#language_' + index).attr('checked', 'checked');
 }
 
 //--></script>
@@ -66,10 +41,13 @@ function kataSelected() {
             
             <% @katas.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset" 
-                   onclick='makeSelection("kata", <%=index-%>, "<%=choice-%>");' >
+                   onclick='selectKata(<%=index-%>);' >
                 <input id="kata_<%=index-%>" 
-                       type="radio" 
-                       onclick='makeSelection("kata", <%=index-%>, "<%=choice-%>");'                      
+                       type="radio"
+                       <% if @kata_index==index -%>
+                       checked="checked"
+                       <% end -%>
+                       onclick='selectKata(<%=index-%>);'                      
                        name="kata" 
                        value="<%=choice-%>" />
                 <label><%= choice -%></label>
@@ -82,7 +60,7 @@ function kataSelected() {
             <textarea name="kata_info" 
                       id="kata_info"
                       cols="62" 
-                      rows="24">
+                      rows="24">              
             </textarea>
           </td>          
         </tr>
@@ -97,12 +75,15 @@ function kataSelected() {
 
             <% @languages.each_with_index do |choice,index| -%>
               <div class="mid_tone fileset"
-                   onclick='makeSelection("language", <%=index-%>, "<%=choice-%>");'>
+                   onclick='selectLanguage(<%=index-%>);' >
                 <input id="language_<%=index-%>" 
-                       type="radio" 
-                       onclick='makeSelection("language", <%=index-%>, "<%=choice-%>");'
+                       type="radio"
+                       <% if @language_index==index -%>
+                       checked="checked"
+                       <% end -%>
+                       onclick='selectLanguage(<%=index-%>);'                      
                        name="language" 
-                      value="<%=choice-%>" />
+                       value="<%=choice-%>" />
                 <label><%= choice -%></label>
               </div>    
             <% end -%>    
@@ -117,8 +98,7 @@ function kataSelected() {
                    class="main button"
                    type="submit" 
                    value="Save Config" 
-                   name="save"
-                   disabled/>
+                   name="save" />
           </td>
         </tr>
       </table>        

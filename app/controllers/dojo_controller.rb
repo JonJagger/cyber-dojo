@@ -27,7 +27,9 @@ class DojoController < ApplicationController
     configure(params) 
     @dojo = Dojo.new(params)
     @katas = FileSet.new(@dojo.filesets_root, 'kata').choices
+    @kata_index = rand(@katas.length)
     @languages = FileSet.new(@dojo.filesets_root, 'language').choices
+    @language_index = rand(@languages.length)
     @kata_info = {}
     @katas.each do |name|
       path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
