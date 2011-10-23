@@ -12,29 +12,29 @@ var line_numbers = function() {
 
 function createLineNumbersForEditor()
 {         
-  var jta = $j('#editor');
-  var tel = $j("<textarea>");
+  var editor = $j('#editor');
+  var tel = $j('<textarea>');
   
   tel.attr('readonly', 'true');  
   tel.attr('id', 'editor_line_numbers');
-  tel.css('height', (jta.height() - 3) + "px");
+  tel.css('height', (editor.height() - 3) + 'px');
   tel.css('position', 'absolute');
   tel.css('overflow', 'hidden');
   tel.css('text-align', 'right');  
   tel.css('width', '40px');  
   tel.html(line_numbers);  
   tel.css('z-index', 0);
-  jta.css('z-index', 1);
-  jta.css('position', 'relative');
+  editor.css('z-index', 1);
+  editor.css('position', 'relative');
   
-  tel.insertBefore(jta);
+  tel.insertBefore(editor);
   
   setLine();
-  jta.focus();
+  editor.focus();
        
   var move = false;
   
-  $j('#editor').bind({
+  editor.bind({
     scroll:     function(ev) { setLine(); },
     mousewheel: function(ev) { setLine(); }, // needed for Opera
     keydown:    function(ev) { setLine(); },
@@ -45,8 +45,8 @@ function createLineNumbersForEditor()
              
   function setLine() 
   {
-    tel.scrollTop(jta.scrollTop());   
-    tel.css('top', jta.offset().top + "px");
-    tel.css('left', (jta.offset().left - 44) + "px");
+    tel.scrollTop(editor.scrollTop());   
+    tel.css('top', editor.offset().top + 'px');
+    tel.css('left', (editor.offset().left - 44) + 'px');
   }
 }

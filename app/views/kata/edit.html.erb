@@ -8,9 +8,18 @@ $j(document).ready(function() {
   rebuildFilenameList();
   loadFile("<%=@current_file-%>"); 
 
-  editor.bind('keydown', 'Alt+r', runTests);
-  editor.bind('keydown', 'Alt+p', loadPreviousFile);
-  editor.bind('keydown', 'Alt+n', loadNextFile);
+  editor.bind('keydown', 'Alt+r', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    runTests();
+    return false;
+  });
+  editor.bind('keydown', 'Alt+f', function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    loadNextFile();
+    return false;
+  });
 });
 
 //--></script>

@@ -1,4 +1,18 @@
 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+  $j('#message_text_input').keyup(function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13) {
+      $j('#post_message_button').click();
+    }  
+  });
+});
+
+//--></script>
+
 <textarea cols="19" 
           rows="2" 
           name="message_text_input" 
