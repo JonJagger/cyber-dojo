@@ -38,13 +38,12 @@ function loadFile(filename)
 
 function selectFileInFileList(filename) 
 {
-  // jQuery is much stricter than prototype in what it allows
-  // as characters in an id. If a filename has a . in it for
-  // example, then prototype works and jQuery does not.
-  // One solution to this is to use sha1(filename) as the id
-  // of a filename...
-  $('radio_' + filename).checked = true;
-  $('current_filename').setAttribute('value', filename);
+  // can't do $j('radio_' + filename) because filename
+  // could contain characters that aren't strictly legal
+  // characters in a dom node id
+  // NB: This fails if the filename contains a single quote
+  $j("[id='radio_" + filename + "']").attr('checked', 'checked');
+  $j('#current_filename').attr('value', filename);
   
   current_filename = filename;
   var editor = $j('#editor');
