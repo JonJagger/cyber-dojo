@@ -19,13 +19,10 @@ function rebuildFilenameList()
 
   var filename_list = $j('#filename_list');
   filename_list.empty();
-  for (var at = 0; at < filenames.length; at++) 
-  {
-    filename_list.append(makeFileListEntry(filenames[at]));
-  }
+  $j.each(filenames, function(n,filename) {
+    filename_list.append(makeFileListEntry(filename));
+  });
 }
-
-//====================== NEW FILE =======================
 
 function newFile() 
 {
@@ -56,8 +53,6 @@ function newFileContent(filename, content, caret_pos, scroll_top, scroll_left)
   loadFile(filename);
 }
 
-//====================== DELETE FILE =======================
-
 function deleteFile() 
 {
   deleteFilePrompt(true);
@@ -82,8 +77,6 @@ function deleteFilePrompt(ask)
   loadFile(filenames[0]);
   refreshLineNumbering();
 }
-
-//====================== RENAME FILE =======================
 
 function renameFailure(current_filename, new_filename, because)
 {
@@ -149,12 +142,12 @@ function refreshLineNumbering()
 
 function createHiddenInput(filename, aspect, value)
 {
-  var input = $j("<input>");
-  input.attr('type', 'hidden');
-  input.attr('name', 'file_' + aspect + "['" + filename + "']");
-  input.attr('id', 'file_' + aspect + '_for_' + filename);
-  input.attr('value', value);
-  return input;
+  return $j("<input>", {
+    type: 'hidden',
+    name: 'file_' + aspect + "['" + filename + "']",
+    id: 'file_' + aspect + '_for_' + filename,
+    value: value
+  });
 }
 
 function trim(s)
@@ -165,23 +158,26 @@ function trim(s)
 
 function makeFileListEntry(filename) 
 {
-  var div = $j("<div>");
-  div.attr('class', 'mid_tone filename');
-  div.click( function() {
+  var div = $j("<div>", {
+    class: 'mid_tone filename'
+  });
+
+  div.click(function() {
     saveCurrentFile();
-    loadFile(filename);    
+    loadFile(filename);        
   });
   
-  var inp = $j("<input>");
-  inp.attr('id', 'radio_' + filename);
-  inp.attr('name', 'filename');
-  inp.attr('type', 'radio');
-  inp.attr('value', filename);
+  div.append($j("<input>", {
+    id: 'radio_' + filename,
+    name: 'filename',
+    type: 'radio',
+    value: filename   
+  }));
   
-  var label = $j("<label>", { text: ' ' + filename } );
+  div.append($j("<label>", {
+    text: ' ' + filename
+  }));
   
-  div.append(inp);
-  div.append(label);
   return div;
 }
 
@@ -204,14 +200,13 @@ function fileAlreadyExists(filename)
 
 function random3() 
 {
-    var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
-    var str = '';
-    for (var at = 0; at < 3; at++) 
-    {
-        var pos = Math.floor(Math.random() * alphabet.length);
-        str += alphabet.charAt(pos);
-    }
-    return str;
+  var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
+  var str = '';
+  $j.map([1,2,3], function() {
+      var pos = Math.floor(Math.random() * alphabet.length);
+      str += alphabet.charAt(pos);    
+  });
+  return str;
 }
 
 

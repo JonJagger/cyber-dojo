@@ -4,7 +4,8 @@ function runTests()
   $j('#run_tests_button').click();
 }
 
-function preRunTests() {
+function preRunTests()
+{
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
@@ -24,7 +25,8 @@ function preRunTests() {
     '(have you lost/switched your network connection?)');
 }
 
-function postRunTests() { 
+function postRunTests()
+{ 
   // app/views/kata/edit.html.erb
   // form_remote_tag :url => {...}, 
   //                 :complete => "postRunTests();"
