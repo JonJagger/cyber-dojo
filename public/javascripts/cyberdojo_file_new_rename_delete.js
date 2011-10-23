@@ -85,16 +85,9 @@ function deleteFilePrompt(ask)
 
   rebuildFilenameList();
   var filenames = allFilenames();
-  if (filenames.length !== 0) 
-  {
-    loadFile(filenames[0]);
-    refreshLineNumbering();
-  } 
-  else 
-  {
-    current_filename = false;
-    $('editor').value = '';
-  }
+  // output cannot be deleted so always at least one file
+  loadFile(filenames[0]);
+  refreshLineNumbering();
 }
 
 //====================== RENAME FILE =======================
@@ -157,8 +150,7 @@ function refreshLineNumbering()
 {
   // Ensure line-numbers repositions by removing and re-adding
   // (renaming a file can alter the filename-list panel width)
-  var old = $('editor_line_numbers');
-  old.parentNode.removeChild(old);
+  $j('#editor_line_numbers').remove();
   createLineNumbersForEditor();
 }
 
