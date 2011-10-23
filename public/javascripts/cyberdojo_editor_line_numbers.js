@@ -12,29 +12,25 @@ var line_numbers = function() {
 
 function createLineNumbersForEditor()
 {         
-  var ta = document.getElementById('editor');
-  var el = document.createElement('textarea'); // line-numbers textarea
+  var jta = $j('#editor');
+  var tel = $j("<textarea>");
   
-  el.setAttribute('readonly', 'true');  
-  el.id = 'editor_line_numbers';
-  el.style.height   = (ta.offsetHeight - 3) + "px";
+  tel.attr('readonly', 'true');  
+  tel.attr('id', 'editor_line_numbers');
+  tel.css('height', (jta.height() - 3) + "px");
+  tel.css('position', 'absolute');
+  tel.css('overflow', 'hidden');
+  tel.css('text-align', 'right');  
+  tel.css('width', '40px');  
+  tel.html(line_numbers);  
+  tel.css('z-index', 0);
+  jta.css('z-index', 1);
+  jta.css('position', 'relative');
   
-  el.style.position = 'absolute';
-  el.style.overflow = 'hidden';
-  el.style.textAlign = 'right';
+  tel.insertBefore(jta);
   
-  el.style.width    = '40px';
-  
-  el.innerHTML      = line_numbers;  // Firefox renders \n linebreak
-  el.innerText      = line_numbers;  // IE6 renders \n line break
-  el.value          = line_numbers;  // Safari
-  
-  el.style.zIndex   = 0; 
-  ta.style.zIndex   = 1;
-  ta.style.position = 'relative';
-  ta.parentNode.insertBefore(el, ta.nextSibling);
   setLine();
-  ta.focus();
+  jta.focus();
        
   var move = false;
   
@@ -49,10 +45,8 @@ function createLineNumbersForEditor()
              
   function setLine() 
   {
-    el.scrollTop  = ta.scrollTop;
-    el.style.top  = (ta.offsetTop) + "px";
-    el.style.left = (ta.offsetLeft - 44) + "px";
+    tel.scrollTop(jta.scrollTop());   
+    tel.css('top', jta.offset().top + "px");
+    tel.css('left', (jta.offset().left - 44) + "px");
   }
 }
-
-
