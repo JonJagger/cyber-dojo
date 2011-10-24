@@ -201,7 +201,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#messages { width: 20em; }
+#messages { width: 18em; }
 
 #all_messages { width: 20em; height: 40em; overflow: auto; }
 
@@ -216,7 +216,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
 {
   border-color: Gray;
   background-color: CornSilk;
-  color: Green;
+  color: green;
+  height: 3em;
+  width: 13em;
 }
   
 .message_container { display: block; margin-top: 0.2em; }

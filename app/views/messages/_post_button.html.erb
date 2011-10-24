@@ -14,9 +14,10 @@
       :type => :button,
       :class => :button,
       :name => :post_message,
-      :onclick => "#{remote_function(post_message_options)};$j('#message_text_input').val('');",
+      :onclick => "#{remote_function(post_message_options)};resetMessageInput();",
       :id => :post_message_button,
       :value => :Post,
-      :title => "Post a message to everyone in the dojo" 
+      :title => "Post a message to everyone in the dojo",
+      :disabled => true
     }) -%>
 

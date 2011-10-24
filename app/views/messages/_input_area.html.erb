@@ -5,17 +5,25 @@
 $j(document).ready(function() {
   $j('#message_text_input').keyup(function(event) {
     event.preventDefault();
+    var message = $j('#message_text_input').val();
+    var disabled = $j.trim(message) === "";
+    $j('#post_message_button').attr('disabled', disabled);
     if (event.keyCode == 13) {
-      $j('#post_message_button').click();
+      if (!disabled)
+        $j('#post_message_button').click();
+      else
+        resetMessageInput();
     }  
   });
 });
 
+function resetMessageInput() {
+  $j('#message_text_input').val('');
+  $j('#post_message_button').attr('disabled', true);  
+}
 //--></script>
 
-<textarea cols="19" 
-          rows="2" 
-          name="message_text_input" 
+<textarea name="message_text_input" 
           id="message_text_input">
 </textarea>
 

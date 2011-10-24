@@ -1,9 +1,13 @@
 
-<span class="small_title">
-  Dojo: <%= elided_name(@dojo.name, 20) -%>
-  <br/>
-  Language: <%= @avatar.language -%>
-  <br/>
-  Kata: <%= @avatar.kata_name -%>
-</span>
-
+  <%= link_to elided_name(@dojo.name, 20), 
+       { :controller => :dashboard, 
+         :action => :show_inflated, 
+         :dojo_name => @dojo.name 
+       }, 
+       { :class => "title",
+         :title => "View dashboard",
+         :target => "_blank" 
+       }
+  -%>
+<span class="small_title"><%= elided_name(@avatar.language,20) -%></span>
+<span class="small_title"><%= elided_name(@avatar.kata_name, 20) -%></span>
