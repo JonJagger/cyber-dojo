@@ -8,19 +8,19 @@ module TrafficLightHelper
     (finished - started).to_i / 60
   end
   
-  def traffic_light(dojo, avatar_name, inc)
-    dojo_name = dojo.name
+  def traffic_light(dojo, avatar_name, inc, in_new_window)
     minutes = duration_in_minutes(dojo.created, Time.mktime(*inc[:time]))
+    new_window = in_new_window ? { :target => '_blank' } : {}
     a_href = link_to make_light(inc), 
     {   :controller => :diff, 
         :action => :show,
-        :dojo_name => dojo_name,
+        :dojo_name => dojo.name,
         :avatar => avatar_name,
         :tag => inc[:number] 
     }, 
     { :title => tool_tip(avatar_name, inc[:number], minutes),
-      :target => '_blank' 
-    }
+    }.merge(new_window)
+    
     traffic_light_div('', a_href)
   end
 

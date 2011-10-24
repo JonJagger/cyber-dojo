@@ -14,7 +14,8 @@
           <tr>
             <% lights.each do |light| -%>
               <td>
-                <%= traffic_light(@dojo, avatar_name, light) -%>
+                <%  in_new_window = false -%>
+                <%= traffic_light(@dojo, avatar_name, light, in_new_window) -%>
               </td>
             <% end -%>
           </tr>
@@ -28,7 +29,9 @@
       <td align="right">
          <%= render :partial => 'traffic_lights_summary', 
                     :locals => { :avatar_name => avatar_name, 
-                                 :lights => lights } -%> 
+                                 :lights => lights,
+                                 :new_window => false
+                               } -%> 
       </td>
     
       <td>
