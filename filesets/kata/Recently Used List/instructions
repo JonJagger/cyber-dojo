@@ -1,4 +1,3 @@
-
 Develop a recently-used-list class to hold strings 
 uniquely in Last-In-First-Out order.
 
@@ -14,7 +13,7 @@ o) A recently-used-list is initially empty.
 
 Optional extras
 
-o) Null insertions are not allowed.
+o) Null insertions (empty strings) are not allowed.
 
 o) A bounded capacity can be specified, so there is an upper
    limit to the number of items contained, with the least
