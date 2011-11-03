@@ -50,6 +50,15 @@ function selectKata(kata, index) {
   rePost();
 }
 
+// The Name? panel seems to have variable size
+// If you pick Ruby, there are lots of katas so name
+// shrinks and takes up a lot of space. But if you pick
+// C (for example) there are fewer katas and the name
+// panel expands and takes up much more space. It needs to
+// not vary in size like this.
+// Also, yahtzee instructions lines are too wide. I need
+// to clip them so there is no horizontal scroll bar.
+
 //--></script>
 
 <%= render :partial => 'dojo/title',
