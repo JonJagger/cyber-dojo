@@ -1,7 +1,10 @@
-run.tests.output : run.tests
-	./run.tests
+CC=gcc
+CFLAGS=-std=c99 -Wall -Werror -O
 
-run.tests : *.c 
-	gcc -Wall -Werror -O -std=c99 *.c -o run.tests
+test.specification : specification.tests
+	./specification.tests
+
+specification.tests : *.c 
+	$(CC) $(CFLAGS) -o $@ $^
 
 

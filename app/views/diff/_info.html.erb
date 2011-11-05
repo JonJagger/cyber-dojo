@@ -12,7 +12,6 @@
       <% end -%>
     </td>
     <td>
-      <span class="small_title">Dojo:
         <%= link_to elided_name(@dojo.name, 20), 
              { :controller => :dashboard, 
                :action => :show_inflated, 
@@ -22,9 +21,8 @@
                :title => @dojo.name
              } 
         -%>
-      </span>                  
-      <span class="small_title">Language: <%= @avatar.language -%></span>
-      <span class="small_title">Kata: <%= @avatar.kata_name -%></span>
+      <span class="small_title"><%= @avatar.language -%></span>
+      <span class="small_title"><%= @avatar.kata_name -%></span>
     </td>
   </tr>
 </table>

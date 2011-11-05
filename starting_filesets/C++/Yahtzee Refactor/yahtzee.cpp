@@ -13,9 +13,9 @@ int yahtzee::chance(int d1, int d2, int d3, int d4, int d5)
 
 int yahtzee::Yahtzee(int d1, int d2, int d3, int d4, int d5)
 {
-	int counts[6] = { 0,0,0,0,0,0 };
-	int dice[] = { d1, d2, d3, d4, d5 };
-	for (int i = 0; i !=6; i++)
+    int counts[6] = { 0,0,0,0,0,0 };
+    int dice[] = { d1, d2, d3, d4, d5 };
+    for (int i = 0; i != 5; i++)
         counts[dice[i]-1]++;
     for (int i = 0; i != 6; i++)
         if (counts[i] == 5)
@@ -101,7 +101,7 @@ int yahtzee::sixes()
 
 int yahtzee::score_pair(int d1, int d2, int d3, int d4, int d5)
 {
-	int counts[6] = {0,0,0,0,0,0};
+    int counts[6] = {0,0,0,0,0,0};
     counts[d1-1]++;
     counts[d2-1]++;
     counts[d3-1]++;
@@ -116,7 +116,7 @@ int yahtzee::score_pair(int d1, int d2, int d3, int d4, int d5)
 
 int yahtzee::two_pair(int d1, int d2, int d3, int d4, int d5)
 {
-	int counts[6] = {0,0,0,0,0,0};
+    int counts[6] = {0,0,0,0,0,0};
     counts[d1-1]++;
     counts[d2-1]++;
     counts[d3-1]++;
@@ -125,10 +125,10 @@ int yahtzee::two_pair(int d1, int d2, int d3, int d4, int d5)
     int n = 0;
     int score = 0;
     for (int i = 0; i < 6; i += 1)
-        if (counts[6-i-1] == 2) {
-            n++;
-            score += (6-i);
-        }        
+	if (counts[6-i-1] == 2) {
+	    n++;
+	    score += (6-i);
+	}        
     if (n == 2)
         return score * 2;
     else
@@ -137,7 +137,7 @@ int yahtzee::two_pair(int d1, int d2, int d3, int d4, int d5)
 
 int yahtzee::four_of_a_kind(int _1, int _2, int d3, int d4, int d5)
 {
-	int tallies[6] = {0,0,0,0,0,0};
+    int tallies[6] = {0,0,0,0,0,0};
     tallies[_1-1]++;
     tallies[_2-1]++;
     tallies[d3-1]++;
