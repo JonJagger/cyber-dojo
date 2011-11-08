@@ -1,10 +1,10 @@
 CC=gcc
 CFLAGS=-std=c99 -Wall -Werror -O
 
-test.specification : specification.tests
-	./specification.tests
+run.tests.output : run.tests
+	./run.tests
 
-specification.tests : *.c 
+run.tests : *.c 
 	$(CC) $(CFLAGS) -o $@ $^
 
 

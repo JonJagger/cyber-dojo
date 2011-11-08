@@ -1,13 +1,11 @@
+require 'duration_helper'
 require 'plural_helper'
 
 module TrafficLightHelper
 
+  include DurationHelper
   include PluralHelper
 
-  def duration_in_minutes(started, finished)
-    (finished - started).to_i / 60
-  end
-  
   def traffic_light(dojo, avatar_name, inc, in_new_window)
     minutes = duration_in_minutes(dojo.created, Time.mktime(*inc[:time]))
     new_window = in_new_window ? { :target => '_blank' } : {}

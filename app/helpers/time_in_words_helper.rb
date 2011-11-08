@@ -4,29 +4,28 @@ module TimeInWordsHelper
 
   include PluralHelper
 
-  # Something akin to git log --relative-date option  
-  # currently unused - I planned to use this (or something built on this)
-  # to show a tool-tip for ... ellision on the dashboard
-  # However, my current plan is to limit each dojo to 60 minutes
-  # (to control server load in preparation for moving to cloud)
-  # in which case this won't be needed...
+  # Something akin to git log --relative-date option
+  # Used on dashboard
   
   def time_in_words(seconds)
     years,days,hours,minutes,seconds = time_split(seconds)
-  
-    if years > 0
-      t = plural(years, 'year')
-    elsif days > 0
-      t = plural(days, 'day')
-    elsif hours > 0
-      t = plural(hours, 'hour')
-    elsif minutes > 0
-      t = plural(minutes, 'min')
-    else  
-      t = plural(seconds, 'sec')
-    end
     
-    '>' + t   
+    if years > 0
+      t = 'about ' + plural(years, 'year')
+      t = t + ' ' + plural(days, 'day') if days > 0
+    elsif days > 0
+      t = 'about ' + plural(days, 'day')
+      t = t + ' ' + plural(hours, 'hour') if hours > 0
+    elsif hours > 0
+      t = 'about ' + plural(hours, 'hour')
+      t = t + ' ' + plural(minutes, 'minute') if minutes > 0
+    elsif minutes > 0
+      t = plural(minutes, 'minute')
+      t = t + ' ' + plural(seconds, 'second') if seconds > 0
+    else  
+      t = plural(seconds, 'second')
+    end
+    t
   end
   
   def time_split(seconds)

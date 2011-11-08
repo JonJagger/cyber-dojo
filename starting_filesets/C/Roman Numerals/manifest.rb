@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( roman_numerals.c roman_numerals.h makefile specification.tests.c cyberdojo.sh specification.txt),
+  :visible_filenames => %w( roman_numerals.c roman_numerals.h makefile roman_numerals.tests.c cyberdojo.sh instructions),
 
   :unit_test_framework => 'cassert',
 }

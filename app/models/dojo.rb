@@ -180,9 +180,9 @@ class Dojo
   def created
     Time.mktime(*manifest[:created])
   end
-
-  def age_in_minutes  
-    duration_in_minutes(created, Time.now)
+  
+  def age_in_seconds
+    duration_in_seconds(created, Time.now)
   end
   
   def manifest

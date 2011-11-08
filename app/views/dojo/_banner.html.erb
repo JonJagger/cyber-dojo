@@ -7,7 +7,7 @@
   <h4> 
     <%= @dojo.language -%>,
     <%= @dojo.kata_name -%>,
-    started <%= pluralize(@dojo.age_in_minutes, 'minute') %> ago
+    started <%= time_in_words(@dojo.age_in_seconds) %> ago
   </h4>
 </div>
 
