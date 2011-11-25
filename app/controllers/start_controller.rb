@@ -12,10 +12,10 @@ class StartController < ApplicationController
   # TODO: better tooltips for b&w and colour images for start and resume pages
   
   def choose_avatar
+    @tab_title = 'Start Coding'
     board_config(params)
     @live_avatar_names = @dojo.avatar_names
     @all_avatar_names = Avatar.names
-    @tab_title = 'Start Coding'
   end
 
   def choose_avatar_heartbeat

@@ -51,10 +51,46 @@ class IoLockTests < Test::Unit::TestCase
         inner_run = true
       end
     end
-    assert_equal outer_run, true
-    assert_equal inner_run, false
+    assert outer_run
+    assert !inner_run
     `rm #{filename}`
   end
+  
+  def test_lock_can_be_acquired_on_an_existing_folder
+    folder = 'new_folder'
+    `mkdir #{folder}`
+    begin
+      run = false
+      result = io_lock(folder) {|_| run = true }
+      assert run
+      assert result
+    ensure
+      `rmdir #{folder}`      
+    end
+  end
+  
+  def test_holding_lock_on_parent_folder_does_not_prevent_acquisition_of_lock_on_child_folder
+    parent = 'parent'
+    child = "#{parent}/child"
+    `mkdir #{parent}`
+    `mkdir #{child}`
+    begin
+      parent_run = false
+      child_run = false
+      io_lock(parent) do
+        parent_run = true
+        io_lock(child) do
+          child_run = true
+        end
+      end
+      assert parent_run
+      assert child_run
+    ensure
+      `rmdir #{child}`
+      `rmdir #{parent}`
+    end
+  end
+  
   
 end
 

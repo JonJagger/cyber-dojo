@@ -10,10 +10,10 @@ class DashboardController < ApplicationController
   # you can start a new dojo from any traffic-light.
 
   def show_inflated
+    @tab_title = 'Dashboard'
     board_config(params)
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
-    @tab_title = 'Dashboard'
   end
 
   def inflated_heartbeat
