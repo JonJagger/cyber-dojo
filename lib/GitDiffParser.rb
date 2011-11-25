@@ -43,22 +43,22 @@ module GitDiff
         :now_filename => parse_now_filename,
         :chunks => parse_chunk_all
       }
-      check_for_unchanged_rename(one)
+      check_for_unchanged_rename_or_copy(one)
       check_for_deleted_file(one)
       one
     end
 
-    RENAME_FROM_RE = /^rename from (.*)/
-    RENAME_TO_RE   = /^rename to (.*)/
+    RENAME_OR_COPY_FROM_RE = /^(rename|copy) from (.*)/
+    RENAME_OR_COPY_TO_RE   = /^(rename|copy) to (.*)/
     
-    def check_for_unchanged_rename(one)
+    def check_for_unchanged_rename_or_copy(one)
       prefix = one[:prefix_lines]
       if prefix.length == 4 and prefix[1] == 'similarity index 100%'
-        one[:was_filename] = 'a/' + unescaped(RENAME_FROM_RE.match(prefix[2])[1])
-        one[:now_filename] = 'b/' + unescaped(RENAME_TO_RE.match(prefix[3])[1])
+        one[:was_filename] = 'a/' + unescaped(RENAME_OR_COPY_FROM_RE.match(prefix[2])[2])
+        one[:now_filename] = 'b/' + unescaped(RENAME_OR_COPY_TO_RE.match(prefix[3])[2])
       end      
     end
-      
+            
     DIFF_GIT_RE = /^diff --git (.*)/
     
     def check_for_deleted_file(one)

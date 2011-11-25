@@ -7,6 +7,39 @@ class TrapDiffBugTests < ActionController::TestCase
   
   include GitDiff
   
+  def test_another_specific_real_dojo_that_fails_diff    
+    bad_diff_lines =
+    [
+      "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
+      "similarity index 100%",
+      "copy from sandbox/recently_used_list.cpp",
+      "copy to sandbox/was_recently_used_list.test.cpp",
+    ].join("\n")
+    
+    diff = GitDiffParser.new(bad_diff_lines).parse_all
+
+    expected_diff = 
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
+            "similarity index 100%",
+            "copy from sandbox/recently_used_list.cpp",
+            "copy to sandbox/was_recently_used_list.test.cpp",
+          ],
+        :was_filename => 'a/sandbox/recently_used_list.cpp',
+        :now_filename => 'b/sandbox/was_recently_used_list.test.cpp',
+        :chunks =>
+          [
+          ] # chunks
+    }
+    expected = {
+      "b/sandbox/was_recently_used_list.test.cpp" => expected_diff
+    }
+    assert_equal expected, diff
+    
+  end
+  
   def test_specific_real_dojo_that_fails_diff_show_narrowing
 
     manifest = { :visible_files => {} }
@@ -178,7 +211,7 @@ class TrapDiffBugTests < ActionController::TestCase
     builder = GitDiffBuilder.new()
     view = builder.build(diff, split_up)
     nils = view.select { |one| one[:line] == "\n" }
-    assert_equal [], nils
+    assert_equal [ ], nils
 
   end
 
