@@ -42,6 +42,22 @@ function bind_line_numbers(editor, n)
 $j(document).ready(function() {
   bind_line_numbers($j('#editor'), $j('#editor_line_numbers'));
   bind_line_numbers($j('#output'), $j('#output_line_numbers'));
+  
+  $j('#editor_tabs').bind('tabsselect', function(event, tab) {
+    var outputIndex = 1;
+    if (tab.index === outputIndex) {
+      // About to switch to output tab but haven't switched yet...
+      saveCurrentFile();
+    }  
+    return true;  
+  });
+  
+  $j('#editor_tabs').bind('tabsshow', function(event, tab) {
+    var editorIndex = 0;
+    if (tab.index == editorIndex) {
+      loadFile(current_filename);
+    }
+  });
 });
 
 //--></script>

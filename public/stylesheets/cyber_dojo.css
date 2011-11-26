@@ -172,10 +172,10 @@ div[class~="filename"]:after  { content: "\00a0";  }
   margin: 0;
   padding: 0;
   height: 34em;  
-  border: 1px dashed LightGray;
+  xborder: 1px dashed LightGray;
   color: #383838;
   overflow: auto;
-  margin-top: 3px;
+  margin-top: 0px;
 }
 
 #editor_line_numbers, #output_line_numbers
@@ -185,7 +185,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
   display: block;
   color: #B0B0B0;
   font-weight: normal;
- background-color: GhostWhite;
+  background-color: Cornsilk; /*GhostWhite;*/
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */

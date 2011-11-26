@@ -3,19 +3,25 @@ var current_filename = false;
 
 function saveCurrentFile() 
 {
-  if (current_filename) 
-  {
-    var editor = $j('#editor');
-    fileContent(current_filename).attr('value', editor.val());
-    fileCaretPos(current_filename).attr('value', editor.caretPos());
-    fileScrollLeft(current_filename).attr('value', editor.scrollLeft());
-    fileScrollTop(current_filename).attr('value', editor.scrollTop());
-  }
+  // Important to make sure Editor tab is visible to ensure caretPos() works properly.
+  // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
+  var editorTab = 0;
+  $j('#editor_tabs').tabs('select', editorTab);
+
+  var editor = $j('#editor');
+  
+  fileContent(current_filename).attr('value', editor.val());
+  fileCaretPos(current_filename).attr('value', editor.caretPos());
+  fileScrollLeft(current_filename).attr('value', editor.scrollLeft());
+  fileScrollTop(current_filename).attr('value', editor.scrollTop());
 }
 
 function loadFile(filename) 
 {
-  $j('#editor_tabs').tabs('select', 0);
+  // Important to make sure Editor tab is visible to ensure caretPos() works properly.
+  // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
+  var editorTab = 0;
+  $j('#editor_tabs').tabs('select', editorTab);
   
   var caret_pos = fileCaretPos(filename).attr('value');
   var scroll_top  = fileScrollTop(filename).attr('value');
@@ -24,6 +30,7 @@ function loadFile(filename)
 
   var editor = $j('#editor');
   editor.val(code);
+  
   editor.caretPos(caret_pos);
   editor.scrollTop(scroll_top);
   editor.scrollLeft(scroll_left);
@@ -85,7 +92,8 @@ function sortedFilenames()
 function loadNextFile()
 {
   var filenames = sortedFilenames();
-  var index = $j.inArray(current_filename, filenames);   
+  var index = $j.inArray(current_filename, filenames);
+  
   saveCurrentFile();
   loadFile(filenames[(index + 1) % filenames.length]);  
 }

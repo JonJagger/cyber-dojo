@@ -238,6 +238,8 @@ function makeFileListEntry(filename)
   });
 
   div.click(function() {
+    // Important to make Editor tab visible to ensure caretPos() works properly.
+    // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
     saveCurrentFile();
     loadFile(filename);
   });

@@ -10,6 +10,9 @@ function preRunTests()
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
 
+  // This switches to the editor tab. Not ideal but
+  // I can't see a way round this because of the caretPos()
+  // issue when the textarea is hidden.
   saveCurrentFile();
   $j('#run_tests').hide();
   $j('#spinner').show();

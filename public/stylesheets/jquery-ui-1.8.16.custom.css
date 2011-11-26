@@ -387,12 +387,14 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-widget,
 .ui-widget-content,
 .ui-widget-header {
-    border: 1px solid Cornsilk;
     background: #FFECCB;
+    border: 0;
+    padding: 0;
+    margin: 0;
 }
 
 /* minimal padding around tab content */
-.ui-tabs .ui-tabs-panel { padding: 0; }
+.ui-tabs .ui-tabs-panel { padding: 0;}
 
 /* minimal padding around tab label */
 .ui-tabs .ui-tabs-nav li a { padding: .25em 0.75em; }
@@ -414,3 +416,4 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
   font-style: normal;
   font-weight: bold;
 }
+
