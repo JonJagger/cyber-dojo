@@ -1,6 +1,2 @@
 
-The colour of the title in the jQuery UI dialog boxes needs to be black not white.
-
 In Opera the the editor_line_numbers textarea is scrollable. It should not be.
-
-Does prev/next shortcuts work when Output tab is selected?

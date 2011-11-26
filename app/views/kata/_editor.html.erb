@@ -55,6 +55,7 @@ $j(document).ready(function() {
   $j('#editor_tabs').bind('tabsshow', function(event, tab) {
     var editorIndex = 0;
     if (tab.index == editorIndex) {
+      // Have already switched to editor tab...
       loadFile(current_filename);
     }
   });
@@ -64,11 +65,11 @@ $j(document).ready(function() {
 
 <div id="editor_tabs">
   <ul>
-    <li><a href="#tab_editor">Editor</a></li>
-    <li><a href="#tab_output">Output</a></li>
+    <li><a href="#tab_editor">&laquo;editor&raquo;</a></li>
+    <li><a href="#tab_output">&laquo;output&raquo;</a></li>
   </ul>
   <div id="tab_editor">
-    <table>
+    <table cellspacing="0" cellpadding="0">
       <tr>
         <td>
           <textarea name="editor_line_numbers"
@@ -87,7 +88,7 @@ $j(document).ready(function() {
     </table>
   </div>
   <div id="tab_output">
-    <table>
+    <table cellspacing="0" cellpadding="0">
       <tr>
         <td>
           <textarea name="output_line_numbers"

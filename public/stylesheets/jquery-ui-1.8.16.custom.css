@@ -387,25 +387,26 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-widget,
 .ui-widget-content,
 .ui-widget-header {
-    background: #FFECCB;
+    background: GhostWhite;
     border: 0;
     padding: 0;
     margin: 0;
+    color: black;
 }
 
 /* minimal padding around tab content */
 .ui-tabs .ui-tabs-panel { padding: 0;}
 
 /* minimal padding around tab label */
-.ui-tabs .ui-tabs-nav li a { padding: .25em 0.75em; }
+.ui-tabs .ui-tabs-nav li a { padding: .15em 0.75em; font-size: 1.0em; }
 
 /* non-selected tab: match filename radiolist colour */
 .ui-tabs .ui-tabs-nav li a
 {
   color: #888888;
   background: Cornsilk;
-  font-style: italic;
-  font-weight: lighter;
+  font-style: normal;
+  font-weight: 100;
 }
 
 /* selected tab: match filename radiolist colour */

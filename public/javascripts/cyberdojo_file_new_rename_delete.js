@@ -68,7 +68,7 @@ function deleteFilePrompt(ask)
 	title: "Delete?",
 	modal: true,
 	buttons: {
-	  Delete: function() {
+	  Ok: function() {
 	    doDelete();
 	    $j(this).dialog('close');
 	  },
