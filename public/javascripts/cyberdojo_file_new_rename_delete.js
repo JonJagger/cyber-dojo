@@ -64,8 +64,32 @@ function deleteFilePrompt(ask)
   if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
   
-  if (ask && !confirm("Delete " + current_filename + " ?")) return; // Cancelled
+  var deleter =
+    $j("<div>")
+      .html(current_filename)
+      .dialog({
+	autoOpen: false,
+	title: "Delete?",
+	modal: true,
+	buttons: {
+	  Delete: function() {
+	    doDelete();
+	    $j(this).dialog('close');
+	  },
+	  Cancel: function() {
+	    $j(this).dialog('close');
+	  }
+	}
+      });
+  
+  if (ask)
+    deleter.dialog('open');
+  else
+    doDelete();
+}
 
+function doDelete()
+{
   fileContent(current_filename).remove();  
   fileCaretPos(current_filename).remove();
   fileScrollTop(current_filename).remove();  
@@ -73,20 +97,42 @@ function deleteFilePrompt(ask)
 
   rebuildFilenameList();
   var filenames = allFilenames();
-  // output cannot be deleted so always at least one file
+  // cyberdojo.sh cannot be deleted so always at least one file
   loadFile(filenames[0]);
-  refreshLineNumbering();
+  refreshLineNumbering();	  
 }
 
-function renameFailure(current_filename, new_filename, because)
+function renameFailure(current_filename, new_filename, reason)
 {
-  alert("CyberDojo cannot rename\n" +
-	 "\n" +
-	 "    " + current_filename + "\n" +
-	 "to\n" + 
-	 "    " + new_filename + "\n" +
-	 "\n" +
-	"because " + because + ".");  
+  var space = "&nbsp;";
+  var tab = space + space + space + space;
+  var br = "<br/>"
+  var why = "CyberDojo could not rename" + br +
+	 br +
+	 tab + current_filename + br +
+	 "to" + br + 
+	 tab + new_filename + br +
+	 br +
+	"because " + reason + ".";
+	
+  jQueryAlert(why);
+}
+
+function jQueryAlert(message)
+{
+  $j('<div>')
+    .html(message)
+    .dialog({
+      autoOpen: false,
+      title: "Alert!",
+      modal: true,
+      buttons: {
+	Ok: function() {
+	  $j(this).dialog('close');
+	}
+      }
+    })
+    .dialog('open');  
 }
 
 function renameFile() 
@@ -95,24 +141,68 @@ function renameFile()
   if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
 
-  var new_filename = prompt("Rename " + current_filename + " ?", 
-                            "was_" + current_filename);
-  var new_filename = trim(new_filename);
-  if (new_filename === null) return; // Cancelled
-  if (new_filename === "") { alert("No filename entered\n" +
-                             "Rename " + current_filename + " abandoned"); return; }
-  if (new_filename === current_filename) return; // Same name; nothing to do
+  var input = $j('<input>', {
+    type: 'text',
+    id: 'renamer',
+    name: 'renamer',
+    value: "was_" + current_filename
+  });
+  
+  var renamer = $j('<div>')
+    .html(input)
+    .dialog({
+      autoOpen: false,
+      title: "Rename to...",
+      modal: true,
+      buttons: {
+	Ok: function() {
+	  $j(this).dialog('close');
+	  var new_filename = trim(input.val());
+	  renameFileTo(new_filename);
+	},
+	Cancel: function() {
+	  $j(this).dialog('close');
+	}
+      }
+    });
+    
+  input.keyup(function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13) {
+      var new_filename = trim(input.val());
+      renamer.dialog('close');
+      renameFileTo(new_filename);
+    }  
+  });
+
+  renamer.dialog('open');
+}
+
+function renameFileTo(new_filename)
+{
+  if (new_filename === "") {
+    var message = "No filename entered" + "<br/>" +
+          "Rename " + current_filename + " abandoned";
+    jQueryAlert(message);
+    return;
+  }
+  if (new_filename === current_filename) {
+    var message = "Same filename entered" + "<br/>" +
+          "Rename " + current_filename + " abandoned";
+    jQueryAlert(message);
+    return;
+  }
   if (fileAlreadyExists(new_filename))
   {
     renameFailure(current_filename, new_filename,
 		  "a file called " + new_filename + " already exists");
-    return; // Cancelled
+    return;
   }
   if (new_filename.indexOf("/") !== -1)
   {
     renameFailure(current_filename, new_filename,
 		  new_filename + " contains a forward slash");
-    return; // Cancelled
+    return;
   }
   
   // OK. Now do it...

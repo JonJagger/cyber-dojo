@@ -52,7 +52,7 @@ module GitDiff
       # + changed line
       # It would be nice to add some checking here to work out
       # if showing the + before the - in the first case would
-      # result in a nice diff-view.
+      # result in a nicer diff-view.
  
       line_number = fill_all(result, :deleted, section[:deleted_lines], line_number)
       line_number = fill_all(result, :added, section[:added_lines], line_number)
@@ -60,7 +60,7 @@ module GitDiff
     end
   
     def fill_all(result, type, lines, line_number)
-      lines ||= [ ] # Don't think this is needed
+      lines ||= [ ] 
       fill(result, type, lines, 0, lines.length, line_number)
     end
     

@@ -65,7 +65,7 @@ module GitDiff
   #-----------------------------------------------------------  
   
   def git_diff_prepare(diffed_files)
-    diffs = []
+    diffs = [ ]
     generate = IdGenerator.new("jj")
     diffed_files.sort.each do |name,diff|
       id = generate.id      
