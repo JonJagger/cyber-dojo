@@ -1,6 +1,5 @@
 
-body,
-#editor_line_numbers { background-color: GhostWhite; }
+body { background-color: GhostWhite; }
 
 #cyber_dojo_page { text-align: left; color: Green; }
 
@@ -159,45 +158,35 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#editor,
-#editor_line_numbers,
-#editor_without_line_numbers
+#editor, #output
 {
+  background: CornSilk;
+  width: 50em;
+}
+
+#editor, #editor_line_numbers, #output, #output_line_numbers
+{
+  font-family: monospace;
   font-size: 14pt;
   border: 0;
   margin: 0;
-}
-
-#editor,
-#output,
-#editor_without_line_numbers
-{ 
-  width: 100%;
-  background: CornSilk;
-  margin-top: 5px;
+  padding: 0;
+  height: 34em;  
   border: 1px dashed LightGray;
-  color: #383838;;
+  color: #383838;
   overflow: auto;
-  padding-left: 3px;
+  margin-top: 3px;
 }
 
-#editor { font-family: monospace; }
-
-#editor,
-#output
+#editor_line_numbers, #output_line_numbers
 {
-  margin-left: 30px; /* enough for line-numbers */  
-}
-
-#editor_line_numbers
-{
-  border-top: 1px dashed LightGray;
+  overflow: hidden;
+  text-align: right;
   display: block;
   color: #B0B0B0;
   font-weight: normal;
+ background-color: GhostWhite;
 }
-
-#output { display: none; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 

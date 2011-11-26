@@ -4,7 +4,6 @@
 $j(document).ready(function() {
   var editor = $j('#editor');
   editor.tabby({ tabString: editor.attr('tab') });
-  createLineNumbersForEditor();
   rebuildFilenameList();
   loadFile("<%=@current_file-%>"); 
 
@@ -20,6 +19,7 @@ $j(document).ready(function() {
     loadNextFile();
     return false;
   });
+  $j('#editor_tabs').tabs();
 });
 
 //--></script>
@@ -52,9 +52,8 @@ $j(document).ready(function() {
         </div>
       </td>
       
-      <td style="width:50em;">
+      <td>
         <%= render :partial => 'editor' -%>
-        <%= render :partial => 'output' -%>
       </td>
       
     </tr>

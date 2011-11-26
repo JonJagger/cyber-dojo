@@ -26,9 +26,6 @@ function rebuildFilenameList()
 
 function newFile() 
 {
-  if (tests_running)
-    return;
-  
   // Append three random chars to the end of the filename.
   // This is so there is NO excuse not to rename it!
   newFileContent('newfile_' + random3(), 'Please rename me!', 0, 0, 0);
@@ -61,7 +58,6 @@ function deleteFile()
 function deleteFilePrompt(ask) 
 {
   if (!current_filename) return;
-  if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
   
   var deleter =
@@ -99,7 +95,6 @@ function doDelete()
   var filenames = allFilenames();
   // cyberdojo.sh cannot be deleted so always at least one file
   loadFile(filenames[0]);
-  refreshLineNumbering();	  
 }
 
 function renameFailure(current_filename, new_filename, reason)
@@ -138,7 +133,6 @@ function jQueryAlert(message)
 function renameFile() 
 {
   if (!current_filename) return;
-  if (current_filename === 'output') return;
   if (current_filename === 'cyberdojo.sh') return;
 
   var input = $j('<input>', {
@@ -218,16 +212,7 @@ function renameFileTo(new_filename)
   newFileContent(new_filename, content, caret_pos, scroll_top, scroll_left);
 
   rebuildFilenameList();
-  refreshLineNumbering();
   selectFileInFileList(new_filename);
-}
-
-function refreshLineNumbering() 
-{
-  // Ensure line-numbers repositions by removing and re-adding
-  // (renaming a file can alter the filename-list panel width)
-  $j('#editor_line_numbers').remove();
-  createLineNumbersForEditor();
 }
 
 function createHiddenInput(filename, aspect, value)
@@ -292,11 +277,13 @@ function rand(n)
 {
   return Math.floor(Math.random() * n);
 }
+
 function randomChar()
 {
   var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
   return alphabet.charAt(rand(alphabet.length));
 }
+
 function random3() 
 {
   return randomChar() + randomChar() + randomChar();

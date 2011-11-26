@@ -1,8 +1,88 @@
 
-<textarea name="editor" 
-          id="editor"
-          tab="<%=@tab-%>"
-          wrap="off"
-          rows="30">
-</textarea>
+<script language="javascript" type="text/javascript"><!--
+
+var line_numbers = function() {
+  var string = '';
+  var crlf = '';
+  for (var no = 1; no < 999; no++) 
+  {
+    string += crlf + no;
+    crlf = '\r\n';
+  }
+  return string;  
+}();
+
+function bind_line_numbers(editor, n)
+{
+  n.attr('readonly', 'true');
+  // Width is enough for 3 digits (up to 999) in 14pt as set in css file
+  var width = 40;
+  n.css('width', width + 'px');
+  n.val(line_numbers);
+  
+  var move = false;
+  
+  editor.bind({
+    scroll:     function(ev) { setLine(); },
+    mousewheel: function(ev) { setLine(); }, // needed for Opera
+    keydown:    function(ev) { setLine(); },
+    mousedown:  function(ev) { setLine(); move = true; },
+    mouseup:    function(ev) { setLine(); move = false; },
+    mousemove:  function(ev) { if (move) { setLine(); }}
+  });
+             
+  function setLine() 
+  {
+    n.scrollTop(editor.scrollTop());   
+    n.css('top', editor.offset().top + 'px');
+    n.css('left', (editor.offset().left - width) + 'px');
+  }  
+}
+
+$j(document).ready(function() {
+  bind_line_numbers($j('#editor'), $j('#editor_line_numbers'));
+  bind_line_numbers($j('#output'), $j('#output_line_numbers'));
+});
+
+//--></script>
+
+<div id="editor_tabs">
+  <ul>
+    <li><a href="#tab_editor">Editor</a></li>
+    <li><a href="#tab_output">Output</a></li>
+  </ul>
+  <div id="tab_editor">
+    <table>
+      <tr>
+        <td>
+          <textarea name="editor_line_numbers"
+                    id="editor_line_numbers">
+          </textarea>
+        </td>
+        <td>
+          <textarea name="editor" 
+                    id="editor"
+                    tab="<%=@tab-%>"
+                    wrap="off"
+                    rows="30">
+          </textarea>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="tab_output">
+    <table>
+      <tr>
+        <td>
+          <textarea name="output_line_numbers"
+                    id="output_line_numbers">
+          </textarea>
+        </td>
+        <td>
+          <%= render :partial => 'output' -%>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
 

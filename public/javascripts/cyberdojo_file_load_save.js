@@ -1,12 +1,8 @@
 
 var current_filename = false;
-var tests_running = false;
 
 function saveCurrentFile() 
 {
-  if (tests_running)
-    return;
-  
   if (current_filename) 
   {
     var editor = $j('#editor');
@@ -19,8 +15,7 @@ function saveCurrentFile()
 
 function loadFile(filename) 
 {
-  if (tests_running)
-    return;
+  $j('#editor_tabs').tabs('select', 0);
   
   var caret_pos = fileCaretPos(filename).attr('value');
   var scroll_top  = fileScrollTop(filename).attr('value');
@@ -47,15 +42,8 @@ function selectFileInFileList(filename)
   
   current_filename = filename;
   var editor = $j('#editor');
-
-  if (filename === 'output') {
-    editor.attr('readonly', 'true');
-  }
-  else {
-    editor.removeAttr('readonly');
-  }
   
-  if (filename === 'output' || filename === 'cyberdojo.sh')
+  if (filename === 'cyberdojo.sh')
   {
     $j('#file_op_rename').attr('disabled', true);
     $j('#file_op_delete').attr('disabled', true);

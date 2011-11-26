@@ -11,11 +11,6 @@ function preRunTests()
   //                 :before => "preRunTests();",
 
   saveCurrentFile();
-  // Make sure filenames cannot be used to change file selection
-  tests_running = true;  
-  selectFileInFileList('output');
-  $j('#file_op_new').attr('disabled', true);
-  $j('#editor').val('Running tests...');
   $j('#run_tests').hide();
   $j('#spinner').show();
   // prefill output so if connection is lost this
@@ -33,14 +28,6 @@ function postRunTests()
 
   $j('#spinner').hide();
   $j('#run_tests').show();
-
-  selectFileInFileList('output');
-  $j('#editor').val($j('#output').val())
-               .scrollTop(0)
-               .scrollLeft(0);
-  $j('#file_op_new').removeAttr('disabled');
-  tests_running = false;
-  // new increment could affect layout
-  refreshLineNumbering();  
+  $j('#editor_tabs').tabs('select', 1);
 }
 

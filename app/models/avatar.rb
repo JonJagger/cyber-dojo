@@ -39,14 +39,7 @@ class Avatar
         save_file(sandbox, filename, file)
       end
 
-      kata.manifest[:visible_files]['output'] = 
-        {
-          :content => initial_output_text,
-          :caret_pos => 0,
-          :scroll_top => 0,
-          :scroll_left => 0
-        }
-      kata.manifest[:current_filename] = 'output'
+      kata.manifest[:current_filename] = 'instructions'
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)
@@ -102,7 +95,7 @@ class Avatar
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
       manifest[:output] = output
-      manifest[:visible_files]['output'][:content] = output
+      #manifest[:visible_files]['output'][:content] = output
       save_run_tests_outcomes(incs, manifest)
     end
   end
