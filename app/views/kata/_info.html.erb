@@ -1,13 +1,25 @@
 
-  <%= link_to elided_name(@dojo.name, 20), 
-       { :controller => :dashboard, 
-         :action => :show_inflated, 
-         :dojo_name => @dojo.name 
-       }, 
-       { :class => "title",
-         :title => "View dashboard",
-         :target => "_blank" 
-       }
-  -%>
-<span class="small_title"><%= elided_name(@avatar.language,20) -%></span>
-<span class="small_title"><%= elided_name(@avatar.kata_name, 20) -%></span>
+<table>
+  <tr>
+    <td>
+      <input type='image'
+       class='avatar_image'
+       src='/images/dojo-home.png'
+       title='Dojo Home'
+       width='40'
+       height='40'/>
+    </td>
+    <td>
+       <%= elided_name(@dojo.name, 20) -%>
+    </td>
+    
+    <td>
+      <%= avatar_image(@avatar.name, 40) -%>
+    </td>
+    
+    <td>
+      <%= @avatar.name.humanize -%>
+    </td>
+
+  </tr>
+</table>

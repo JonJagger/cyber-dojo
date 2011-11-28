@@ -35,15 +35,20 @@ $j(document).ready(function() {
 
   <table>
     <tr valign="top">
-
-      <td colspan="2" class="panel">
+      
+      <td class="panel">
+        <%= render :partial => 'info' -%>
+      </td>
+        
+      <td class="panel">
         <%= render :partial => 'traffic_lights' -%>
-      </td>    
+      </td>
+      
     </tr>
     
     <tr valign="top">
     
-      <td>         
+      <td>
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>

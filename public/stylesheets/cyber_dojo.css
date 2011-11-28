@@ -17,7 +17,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
 .panel 
 { 
   border: 5px solid GhostWhite; 
-  padding: 0.7em; 
+  padding: 0.5em; 
   background-color: #FFECCB; 
 }
 
@@ -70,14 +70,6 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   padding: 5px;
 }
 
-.choose_title
-{
-  text-align: left;
-  font-size: 1.3em;
-  margin-left: 0.3em;
-  margin-bottom: 0.3em;
-}
-
 .small_title
 {
   display: block;
@@ -92,7 +84,6 @@ input[type="radio"]:checked+label,
 input[type="checkbox"]:checked+label
 {
   color: black;
-  font-weight: bold;
 }
 
 input+label
@@ -198,9 +189,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#messages { width: 18em; }
-
-#all_messages { width: 20em; height: 40em; overflow: auto; }
+#all_messages { height: 40em; overflow: auto; }
 
 #message_text, #messages { font-size: 0.8em; }
 
@@ -210,7 +199,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
   background-color: CornSilk;
   color: green;
   height: 3em;
-  width: 13em;
   font-size: 1em;
 }
   
@@ -279,10 +267,12 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .traffic_light .bulb.passed { background-color: #0F0; /* green */ }
 .traffic_light .bulb.off    { background-color: #D8D8D8; /* gray;*/ }
 
-.traffic_light_ellision { color: #686868; font-size: 0.8em; }
-.traffic_light_number   { color: black; font-size: 1.3em; }
+.traffic_light_ellision { font-size: 0.8em; }
+.traffic_light_number   { font-size: 0.9em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
+
+#tag_number { text-align: center; }
 
 pre.diffed_code { margin: 0; }
 

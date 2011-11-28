@@ -1,7 +1,7 @@
 module ResumeButtonHelper
 
   def resume_button(dojo_name, avatar_name, size)
-    "<form class='resume' action='/kata/edit' target='_blank'>" +
+    "<form class='resume' action='/kata/edit'>" +
       "<input type='hidden' name='dojo_name' id='dojo_name' value='#{dojo_name}'/>" +
       "<input type='hidden' name='avatar' id='avatar' value='#{avatar_name}' />" +    
       "<input type='image'" +

@@ -65,14 +65,14 @@ function deleteFilePrompt(ask)
       .html(current_filename)
       .dialog({
 	autoOpen: false,
-	title: "Delete",
+	title: "delete file",
 	modal: true,
 	buttons: {
-	  Ok: function() {
+	  ok: function() {
 	    doDelete();
 	    $j(this).dialog('close');
 	  },
-	  Cancel: function() {
+	  cancel: function() {
 	    $j(this).dialog('close');
 	  }
 	}
@@ -119,10 +119,10 @@ function jQueryAlert(message)
     .html(message)
     .dialog({
       autoOpen: false,
-      title: "Alert",
+      title: "alert",
       modal: true,
       buttons: {
-	Ok: function() {
+	ok: function() {
 	  $j(this).dialog('close');
 	}
       }
@@ -146,15 +146,15 @@ function renameFile()
     .html(input)
     .dialog({
       autoOpen: false,
-      title: "Rename",
+      title: "rename file to",
       modal: true,
       buttons: {
-	Ok: function() {
+	ok: function() {
 	  $j(this).dialog('close');
 	  var new_filename = trim(input.val());
 	  renameFileTo(new_filename);
 	},
-	Cancel: function() {
+	cancel: function() {
 	  $j(this).dialog('close');
 	}
       }

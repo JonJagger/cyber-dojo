@@ -4,28 +4,27 @@
 <table>
   <tr>
     <td>
-      <%= avatar_image(@avatar.name, 50) -%>
+      <input type='image'
+       class='avatar_image'
+       src='/images/dojo-home.png'
+       title='Dojo Home'
+       width='40'
+       height='40'/>
     </td>
     <td>
-      <span class="small_title"><%= @avatar.name.humanize -%></span>        
+       <%= elided_name(@dojo.name, 20) -%>
+    </td>
+    
+    <td>
+      <%= avatar_image(@avatar.name, 40) -%>
+    </td>
+    <td>
+      <%= @avatar.name.humanize -%>
     </td>
     <td>
       <% if tag_number != 0-%>
         <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
-    </td>
-    <td>
-        <%= link_to elided_name(@dojo.name, 20), 
-             { :controller => :dashboard, 
-               :action => :show_inflated, 
-               :dojo_name => @dojo.name 
-             }, 
-             { :class => "title",
-               :title => @dojo.name
-             } 
-        -%>
-      <span class="small_title"><%= @avatar.language -%></span>
-      <span class="small_title"><%= @avatar.kata_name -%></span>
     </td>
   </tr>
 </table>

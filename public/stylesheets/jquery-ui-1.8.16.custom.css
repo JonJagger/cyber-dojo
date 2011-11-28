@@ -406,7 +406,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
   color: #888888;
   background: Cornsilk;
   font-style: normal;
-  font-weight: 100;
 }
 
 /* selected tab: match filename radiolist colour */
@@ -415,6 +414,5 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
   color: black;
   background: Cornsilk;
   font-style: normal;
-  font-weight: bold;
 }
 

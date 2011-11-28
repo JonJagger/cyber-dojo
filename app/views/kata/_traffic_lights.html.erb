@@ -2,7 +2,7 @@
 <div id="traffic_lights">
 
   <table>
-
+    
     <% seconds_per_td = 10 -%>
     <% max_cols = 45 -%>
     <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
@@ -14,11 +14,7 @@
     <% td_map = gapped[@avatar.name] -%>    
     
     <tr class="even traffic_light_row">
-
-      <td>
-        <%= render :partial => 'info' -%>       
-      </td>
-
+      
       <% all_td_nos = td_map.keys.sort -%>
       <% recent_td_nos = recent(all_td_nos, max_cols) -%>
       
@@ -54,22 +50,12 @@
         </td>          
       <% end -%>
       
-      <td>
-        <%= avatar_image(@avatar.name, 43) -%>
+      <td>    
+        <span class="traffic_light_number">
+         <%= @avatar.increments.length -%>
+       </span>
       </td>
-
-      <td>
-        <span class="small_title"><%= @avatar.name.humanize -%></span>        
-      </td>
-      
-      <td>
-         <%= render :partial => 'dashboard/traffic_lights_summary', 
-                    :locals => { :avatar_name => @avatar.name, 
-                                 :lights => lights,
-                                 :new_window => true
-                               } -%> 
-      </td>
-      
+   
       <td>
         <%= render :partial => 'run_tests' -%>
       </td>    

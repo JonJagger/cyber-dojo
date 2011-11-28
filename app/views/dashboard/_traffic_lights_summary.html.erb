@@ -1,11 +1,6 @@
           
 <table align="right">
  <tr>
-   <td>
-     <span class="traffic_light_number">
-       <%= lights.length -%>
-     </span>
-   </td>
    <td>             
      <% if lights != [ ] -%>
        <% inc = lights.last -%>
@@ -13,6 +8,11 @@
        <% inc = { :number => 0, :time => @dojo.manifest[:created] } -%>
      <% end -%>
      <%=  traffic_light(@dojo, avatar_name, inc, new_window) -%>
+   </td>
+   <td>
+     <span class="traffic_light_number">
+       <%= lights.length -%>
+     </span>
    </td>
  </tr>
 </table>
