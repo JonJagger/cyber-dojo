@@ -19,7 +19,10 @@ $j(document).ready(function() {
     loadNextFile();
     return false;
   });
+  
   $j('#editor_tabs').tabs();
+  var outputTab = 1;
+  $j('#editor_tabs').tabs('select', outputTab);
 });
 
 //--></script>

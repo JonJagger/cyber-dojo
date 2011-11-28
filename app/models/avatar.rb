@@ -38,7 +38,8 @@ class Avatar
       kata.visible_files.each do |filename,file|
         save_file(sandbox, filename, file)
       end
-
+      
+      kata.manifest[:output] = initial_output_text
       kata.manifest[:current_filename] = 'instructions'
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
@@ -157,14 +158,16 @@ private
   def initial_output_text
     [ 
       '',
-      '  Click the Run Tests button (above). The output will appear here.',
+      '',
+      '  Click a filename (left) to edit it.',
+      '',
+      '  Click the Run Tests button (top). The test output will appear here.',
       '  A traffic-light will also appear:',
       '     (o) red   - the tests ran but one or more failed',
       '     (o) amber - the tests could not be run',
       '     (o) green - the tests ran and all passed',
-      '  Click any traffic light to view a diff of its files.',
       '',
-      "  Click a filename (left) to edit it here.",
+      '  Click any traffic light to view a diff of its files.',
       '',
       '  Click the Post button (left) to send a message to everyone.'
     ].join("\n")
