@@ -28,7 +28,7 @@ class GitDiffHtmlTests < ActionController::TestCase
         "<same><ln> 1</ln>once</same>",
         "<same><ln> 2</ln>upon a</same>",
         "<same><ln> 3</ln>time</same>",
-        "<deleted><ln>  </ln>IN</deleted>",
+        "<deleted><ln> -</ln>IN</deleted>",
         "<added><ln> 4</ln>in</added>",
         "<same><ln> 5</ln>the west</same>",
         "<same><ln> 6</ln>Charles Bronson</same>",
@@ -59,7 +59,7 @@ class GitDiffHtmlTests < ActionController::TestCase
         "<same><ln>1</ln>once</same>",
         "<same><ln>2</ln>upon a</same>",
         "<same><ln>3</ln>time</same>",
-        "<deleted><ln> </ln>IN</deleted>",
+        "<deleted><ln>-</ln>IN</deleted>",
         "<added><ln>4</ln>in</added>",
         "<same><ln>5</ln>the west</same>",
     ].join("\n")

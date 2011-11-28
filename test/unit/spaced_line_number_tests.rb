@@ -27,10 +27,10 @@ class SpacedLineNumberTests < ActionController::TestCase
     (1000..1234).each {|n| assert_equal '' +    n.to_s, spaced_line_number(n, max_digits) }    
   end
 
-  def test_max_digits_nil
-    assert_equal ' ', spaced_line_number(nil, 1)
-    assert_equal '  ', spaced_line_number(nil, 2)
-    assert_equal '   ', spaced_line_number(nil, 3)
+  def test_max_digits_nils_for_deleted_lines
+    assert_equal '-', spaced_line_number(nil, 1)
+    assert_equal ' -', spaced_line_number(nil, 2)
+    assert_equal '  -', spaced_line_number(nil, 3)
   end
   
 end
