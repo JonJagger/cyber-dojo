@@ -39,7 +39,6 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   -moz-border-radius: 6px;
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
-  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
   cursor: pointer;
   padding: 4px;
   background-color: CornSilk;
@@ -203,12 +202,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #all_messages { width: 20em; height: 40em; overflow: auto; }
 
-#message_text_input,
-#message_text, #messages
-{
-  font-family: Verdana, Arial, Helv, Helvetica, sans-serif;  
-  font-size: 0.8em;
-}
+#message_text, #messages { font-size: 0.8em; }
 
 #message_text_input
 {
@@ -217,6 +211,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
   color: green;
   height: 3em;
   width: 13em;
+  font-size: 1em;
 }
   
 .message_container { display: block; margin-top: 0.2em; }
