@@ -10,17 +10,13 @@ function preRunTests()
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
 
-  // This switches to the editor tab. Not ideal but
-  // I can't see a way round this because of the caretPos()
-  // issue when the textarea is hidden.
-  saveCurrentFile();
+  if (currentTabIndex === EDITOR_TAB_INDEX) {
+    saveCurrentFile();
+    $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
+  }
+  $j('#output').val('Running tests...');
   $j('#run_tests').hide();
   $j('#spinner').show();
-  // prefill output so if connection is lost this
-  // is what will be copied into the editor.
-  $j('#output').val(
-    'CyberDojo client could not connect to server\n' +
-    '(have you lost/switched your network connection?)');
 }
 
 function postRunTests()
@@ -31,6 +27,6 @@ function postRunTests()
 
   $j('#spinner').hide();
   $j('#run_tests').show();
-  $j('#editor_tabs').tabs('select', 1);
+  $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
 }
 

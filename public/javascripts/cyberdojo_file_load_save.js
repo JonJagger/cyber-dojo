@@ -5,8 +5,7 @@ function saveCurrentFile()
 {
   // Important to make sure Editor tab is visible to ensure caretPos() works properly.
   // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-  var editorTab = 0;
-  $j('#editor_tabs').tabs('select', editorTab);
+  $j('#editor_tabs').tabs('select', EDITOR_TAB_INDEX);
 
   var editor = $j('#editor');
   
@@ -20,8 +19,7 @@ function loadFile(filename)
 {
   // Important to make sure Editor tab is visible to ensure caretPos() works properly.
   // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-  var editorTab = 0;
-  $j('#editor_tabs').tabs('select', editorTab);
+  $j('#editor_tabs').tabs('select', EDITOR_TAB_INDEX);
   
   var caret_pos = fileCaretPos(filename).attr('value');
   var scroll_top  = fileScrollTop(filename).attr('value');
