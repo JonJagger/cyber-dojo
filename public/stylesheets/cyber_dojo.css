@@ -309,22 +309,17 @@ div[class~="filename"]:after  { content: "\00a0";  }
   border: 1px dashed #E6E6E6;
 }
 
-pre.diffed_code same    { padding-left: 3px; background-color: Cornsilk; }
-pre.diffed_code added   { padding-left: 3px; background-color: #CEF6CE; }
-pre.diffed_code deleted { padding-left: 3px; background-color: #F6CECE; }
-
-pre.diffed_code    same:before { content: " "; background-color: White; padding-right: 3px; }
-pre.diffed_code   added:before { content: "+";     color: #BDBDBD;      padding-right: 3px; }
-pre.diffed_code deleted:before { content: "\2013"; color: #ADADAD;      padding-right: 3px; }
-/* \2013 is the en-dash, a slightly wider minus */
+pre.diffed_code same    { background-color: Cornsilk; }
+pre.diffed_code added   { background-color: #CEF6CE; }
+pre.diffed_code deleted { background-color: #F6CECE; }
 
 pre.diffed_code ln 
 { 
-  background-color: White;
-  color: #BDBDBD; 
   margin-right: 3px;
   padding-left: 2px;
   padding-right: 2px;
+  color: #B0B0B0;
+  font-weight: normal;
 }
 
 #diff_output 

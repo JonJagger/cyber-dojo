@@ -110,17 +110,19 @@ module GitDiff
   #-----------------------------------------------------------
   
   def diff_htmlify(n, max_digits)
-      "<#{n[:type]}>" +
-         '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
-         CGI.escapeHTML(n[:line]) + 
-      "</#{n[:type]}>"
+    "<#{n[:type]}>" +
+       '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
+       CGI.escapeHTML(n[:line]) + 
+    "</#{n[:type]}>"
   end
   
   #-----------------------------------------------------------
     
   def spaced_line_number(n, max_digits)
-      digit_count = n.to_s.length
-      ' ' * (max_digits - digit_count) + n.to_s 
+    n = n.to_s
+    n = '-' if n == '' 
+    digit_count = n.length
+    ' ' * (max_digits - digit_count) + n
   end
   
 end
