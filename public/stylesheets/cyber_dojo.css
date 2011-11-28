@@ -166,20 +166,20 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#editor, #output
+#editor, #output, #diff_sheet
 {
   background: CornSilk;
-  width: 50em;
+  width: 45em;
 }
 
-#editor, #editor_line_numbers, #output, #output_line_numbers
+#editor, #editor_line_numbers, #output, #output_line_numbers, #diff_sheet
 {
   font-family: monospace;
   font-size: 15pt;
   border: 0;
   margin: 0;
   padding: 0;
-  height: 34em;  
+  height: 32em;  
   color: #383838;
   overflow: auto;
   border-top: 10px solid Cornsilk;
@@ -289,25 +289,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.diffed_code 
-{ 
-  margin-top: 5px;
-  font-size: 15pt;
-  margin-bottom: 1em;
-  background-color: White;
-  margin-left: 0;
-  padding-left: 0;
-  border-left: 0;
-}
-
-#diff_sheet
-{
-  background: Cornsilk;
-  color: #383838;;
-  height: 34em;
-  overflow: auto;
-  border: 1px dashed #E6E6E6;
-}
+pre.diffed_code { margin: 0; }
 
 pre.diffed_code same    { background-color: Cornsilk; }
 pre.diffed_code added   { background-color: #CEF6CE; }
@@ -321,21 +303,6 @@ pre.diffed_code ln
   color: #B0B0B0;
   font-weight: normal;
 }
-
-#diff_output 
-{ 
-  font-weight: normal;
-  width: 100%;
-  background: CornSilk;
-  border: 1px dashed LightGray;
-  color: #383838;
-  overflow: auto;
-  padding: 0em;
-  margin: 0em;
-}
-#diff_output.failed { border: 1px dashed #F00; } /* red */
-#diff_output.error  { border: 1px dashed #FC3; } /* amber */
-#diff_output.passed { border: 1px dashed #0F0; } /* green */
 
 .dot { display: inline-block; width: 9px; height: 9px; }
 .dot:after { content: "\00a0"; } /* non breaking space */

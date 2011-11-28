@@ -1,25 +1,28 @@
 
 function build_diff_filenames(diffs) 
 {
-  var view = $j('#diff_sheet');
+  var diff_sheet = $j('#diff_sheet');
+  var EDITOR_TAB_INDEX = 0;
+  var diff_tabs = $j('#diff_tabs');
 
-  view.save = function() { };
+  diff_sheet.save = function() { };
 
   var load_from = function(filename, diffed_lines, save) {
     return function() {
-      view.save();
-      view.html(diffed_lines);
-      view.scrollTop(filename.attr('scroll_top'));
-      view.scrollLeft(filename.attr('scroll_left'));
-      view.save = save;
+      diff_sheet.save();
+      diff_tabs.tabs('select', EDITOR_TAB_INDEX);
+      diff_sheet.html(diffed_lines);
+      diff_sheet.scrollTop(filename.attr('scroll_top'));
+      diff_sheet.scrollLeft(filename.attr('scroll_left'));
+      diff_sheet.save = save;
       filename.toggleClass('selected');
     };
   };
 
   var save_to = function(filename) {
     return function() {
-      filename.attr('scroll_top', view.scrollTop());
-      filename.attr('scroll_left', view.scrollLeft());
+      filename.attr('scroll_top', diff_sheet.scrollTop());
+      filename.attr('scroll_left', diff_sheet.scrollLeft());
       filename.toggleClass('selected');
     };
   };

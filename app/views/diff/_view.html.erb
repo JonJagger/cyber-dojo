@@ -1,3 +1,45 @@
+<script language="javascript" type="text/javascript"><!--
 
-<pre class="diffed_code"><div id="diff_sheet"></div></pre>
+$j(document).ready(function() {
+  bind_line_numbers($j('#output'), $j('#output_line_numbers'));
+  $j('#diff_tabs').tabs();
+});
+
+//--></script>
+
+<div id="diff_tabs">
+  <ul>
+    <li><a href="#tab_editor">&laquo;editor&raquo;</a></li>
+    <li><a href="#tab_output">&laquo;output&raquo;</a></li>
+  </ul>
+  
+  <div id="tab_editor">
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+          <pre class="diffed_code"><div id="diff_sheet"></div></pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="tab_output">
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+          <textarea name="output_line_numbers"
+                    id="output_line_numbers">
+          </textarea>
+        </td>
+        <td>
+          <textarea name="output" 
+                    id="output"
+                    readonly="readonly"
+                    wrap="on"><%=h @output -%>
+          </textarea>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+</div>
 

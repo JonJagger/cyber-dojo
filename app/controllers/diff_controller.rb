@@ -12,9 +12,11 @@ class DiffController < ApplicationController
     @avatar = Avatar.new(@dojo, params[:avatar])
     tag = params[:tag].to_i
     @traffic_lights_to_tag = @avatar.increments(tag)
-    @all_traffic_lights = @avatar.increments   
-    diffed_files = git_diff_view(@avatar, tag)    
-    @diffs = git_diff_prepare(diffed_files)    
+    @all_traffic_lights = @avatar.increments
+    manifest = @avatar.manifest(tag)
+    diffed_files = git_diff_view(@avatar, tag, manifest)    
+    @diffs = git_diff_prepare(diffed_files)
+    @output = manifest[:output]
     @current_filename_id = most_changed_lines_file_id(@diffs)
     @tab_title = 'Diff View'
   end

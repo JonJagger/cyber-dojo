@@ -12,18 +12,16 @@ module GitDiff
   # for a given tag.
   # See, test/functional/git_diff_view_tests.rb
   
-  def git_diff_view(avatar, tag)
+  def git_diff_view(avatar, tag, manifest = nil)
       builder = GitDiffBuilder.new()
-    
-      cmd  = "cd #{avatar.folder};"
-      cmd += "git show #{tag}:manifest.rb;"
-      manifest = eval popen_read(cmd)
+
+      manifest ||= avatar.manifest(tag)      
       visible_files = manifest[:visible_files]
-      
+
       cmd  = "cd #{avatar.folder};"
       cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
       diff_lines = popen_read(cmd)
-        
+  
       view = {}      
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        
@@ -39,14 +37,6 @@ module GitDiff
       # other files have not changed...      
       visible_files.each do |name,file|
         view[name] = sameify(file[:content])
-      end
-
-      # output of run tests is not stored as an actual file and
-      # so is not in the diffs. It's also not in the visible_files.
-      # tag zero is the initial commit done at start-coding before
-      # the run-tests button has been pressed.
-      if tag != 0
-        view['output'] = sameify(manifest[:output])
       end
       
       view
@@ -119,6 +109,7 @@ module GitDiff
   #-----------------------------------------------------------
     
   def spaced_line_number(n, max_digits)
+    max_digits = [max_digits,2].max
     n = n.to_s
     n = '-' if n == '' 
     digit_count = n.length
