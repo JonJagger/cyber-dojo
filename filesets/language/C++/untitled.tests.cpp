@@ -1,5 +1,6 @@
 #include "untitled.hpp"
-#include <assert.h>
+#include <cassert>
+#include <cstddef>
 
 static void example()
 {
@@ -15,7 +16,7 @@ static test * tests[] =
 
 int main()
 {
-    for (int at = 0; at != sizeof tests / sizeof tests[0]; at++)
+    for (size_t at = 0; at != sizeof tests / sizeof tests[0]; at++)
         tests[at]();
     return 0;
 }

@@ -1,5 +1,6 @@
 #include "untitled.h"
 #include <assert.h>
+#include <stddef.h>
 
 static void example(void)
 {
@@ -15,7 +16,7 @@ static test * tests[] =
 
 int main(void)
 {
-    for (int at = 0; at != sizeof tests / sizeof tests[0]; at++)
+    for (size_t at = 0; at != sizeof tests / sizeof tests[0]; at++)
         tests[at]();
     return 0;
 }
