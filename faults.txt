@@ -1,9 +1,16 @@
 
+
+If the editor tab is selected and you hit Alt-R to run the tests
+then the "Running tests..." message does not appear on the output tab.
+
+If the output tab is clicked on so the output textarea does not
+have the focus then the Alt-R shortcut does not work.
+
 When configuring, if you choose a name that has already been taken you get
-a new tab. Need to correct that.
+a new browser tab. Needs to stay on the same browser tab.
 
 When starting/resuming/etc, if you choose a name that does not exist you get
-a new tab. Need to correct that.
+a new browser tab. Need to stay on the same browser tab.
 
 In Opera, the line number scrolling does not synchronize.
 
