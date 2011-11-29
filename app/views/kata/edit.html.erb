@@ -1,24 +1,35 @@
 
 <script language="javascript" type="text/javascript"><!--
 
+function bindRunTests(event)
+{
+  event.stopPropagation();
+  event.preventDefault();
+  runTests();
+  return false;    
+}
+
+function bindLoadNextFile(event)
+{
+  event.stopPropagation();
+  event.preventDefault();
+  loadNextFile();
+  return false;
+}
+
 $j(document).ready(function() {
   var editor = $j('#editor');
+  var output = $j('#output');
+
+  editor.bind('keydown', 'Alt+r', bindRunTests);
+  output.bind('keydown', 'Alt+r', bindRunTests);
+  
+  editor.bind('keydown', 'Alt+f', bindLoadNextFile);
+  output.bind('keydown', 'Alt+f', bindLoadNextFile);
+  
   editor.tabby({ tabString: editor.attr('tab') });
   rebuildFilenameList();
-  loadFile("<%=@current_file-%>"); 
-
-  editor.bind('keydown', 'Alt+r', function(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    runTests();
-    return false;
-  });
-  editor.bind('keydown', 'Alt+f', function(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    loadNextFile();
-    return false;
-  });
+  loadFile("<%=@current_file-%>");
   
   $j('#editor_tabs').tabs();
   $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);

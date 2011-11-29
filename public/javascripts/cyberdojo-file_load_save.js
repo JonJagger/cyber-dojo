@@ -1,18 +1,20 @@
 
-var current_filename = false;
+function currentFilename()
+{
+  return $j("input[name='filename']:checked").val();
+}
 
-function saveCurrentFile() 
+function saveFile(filename)
 {
   // Important to make sure Editor tab is visible to ensure caretPos() works properly.
   // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
   $j('#editor_tabs').tabs('select', EDITOR_TAB_INDEX);
 
   var editor = $j('#editor');
-  
-  fileContent(current_filename).attr('value', editor.val());
-  fileCaretPos(current_filename).attr('value', editor.caretPos());
-  fileScrollLeft(current_filename).attr('value', editor.scrollLeft());
-  fileScrollTop(current_filename).attr('value', editor.scrollTop());
+  fileContent(filename).attr('value', editor.val());
+  fileCaretPos(filename).attr('value', editor.caretPos());
+  fileScrollLeft(filename).attr('value', editor.scrollLeft());
+  fileScrollTop(filename).attr('value', editor.scrollTop());
 }
 
 function loadFile(filename) 
@@ -28,7 +30,6 @@ function loadFile(filename)
 
   var editor = $j('#editor');
   editor.val(code);
-  
   editor.caretPos(caretPos);
   editor.scrollTop(scrollTop);
   editor.scrollLeft(scrollLeft);
@@ -38,23 +39,19 @@ function loadFile(filename)
 
 function selectFileInFileList(filename) 
 {
-  // can't do $j('radio_' + filename) because filename
+  // Can't do $j('radio_' + filename) because filename
   // could contain characters that aren't strictly legal
   // characters in a dom node id
   // NB: This fails if the filename contains a double quote
   $j('[id="radio_' + filename + '"]').attr('checked', 'checked');
   $j('#current_filename').attr('value', filename);
   
-  current_filename = filename;
   var editor = $j('#editor');
   
-  if (filename === 'cyberdojo.sh')
-  {
+  if (filename === 'cyberdojo.sh') {
     $j('#file_op_rename').attr('disabled', true);
     $j('#file_op_delete').attr('disabled', true);
-  }
-  else
-  {
+  } else {
     $j('#file_op_rename').removeAttr('disabled');
     $j('#file_op_delete').removeAttr('disabled');
   }
@@ -82,18 +79,19 @@ function fileScrollTop(filename)
 
 function sortedFilenames()
 {
-  filenames = allFilenames();
+  var filenames = allFilenames();
   sortFilenames(filenames);
   return filenames;
 }
 
 function loadNextFile()
 {
+  var previousFilename = currentFilename();
   var filenames = sortedFilenames();
-  var index = $j.inArray(current_filename, filenames);
-  
-  saveCurrentFile();
-  loadFile(filenames[(index + 1) % filenames.length]);  
+  var index = $j.inArray(previousFilename, filenames);
+  var nextFilename = filenames[(index + 1) % filenames.length];
+  saveFile(previousFilename);
+  loadFile(nextFilename);  
 }
 
 

@@ -11,7 +11,7 @@ function preRunTests()
   //                 :before => "preRunTests();",
 
   if (currentTabIndex === EDITOR_TAB_INDEX) {
-    saveCurrentFile();
+    saveFile(currentFilename());
     $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
   }
   $j('#output').val('Running tests...');
@@ -28,5 +28,6 @@ function postRunTests()
   $j('#spinner').hide();
   $j('#run_tests').show();
   $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
+  $j('#output').focus();
 }
 

@@ -12,7 +12,7 @@ $j(document).ready(function() {
   $j('#editor_tabs').bind('tabsselect', function(event, tab) {
     if (tab.index === OUTPUT_TAB_INDEX) {
       // About to switch to output tab but haven't switched yet...
-      saveCurrentFile();
+      saveFile(currentFilename());
     }
     return true;  
   });
@@ -20,7 +20,7 @@ $j(document).ready(function() {
   $j('#editor_tabs').bind('tabsshow', function(event, tab) {
     if (tab.index === EDITOR_TAB_INDEX) {
       // Have already switched to editor tab...
-      loadFile(current_filename);
+      loadFile(currentFilename());
     }
     currentTabIndex = tab.index;
   });

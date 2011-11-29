@@ -27,7 +27,7 @@ function rebuildFilenameList()
 function newFile() 
 {
   // Append three random chars to the end of the filename.
-  // This is so there is NO excuse not to rename it!
+  // This is so there is no excuse not to rename it!
   newFileContent('newfile_' + random3(), 'Please rename me!', 0, 0, 0);
 }
 
@@ -43,10 +43,13 @@ function newFileContent(filename, content, caretPos, scrollTop, scrollLeft)
     createHiddenInput(filename, 'scroll_top', scrollTop));
   $j('#visible_files_container').append(
     createHiddenInput(filename, 'scroll_left', scrollLeft));
+  //TODO: 4 appends (lose 3 $j's) ?
 
+  // Do save _before_ rebulding filename list so as not to
+  // lose latest edit
+  saveFile(currentFilename());
   rebuildFilenameList();
   // Select it so you can immediately rename it
-  saveCurrentFile();
   loadFile(filename);
 }
 
@@ -57,19 +60,18 @@ function deleteFile()
 
 function deleteFilePrompt(ask) 
 {
-  if (!current_filename) return;
-  if (current_filename === 'cyberdojo.sh') return;
+  var filename = currentFilename();
   
   var deleter =
     $j("<div>")
-      .html(current_filename)
+      .html(filename)
       .dialog({
 	autoOpen: false,
 	title: "delete file",
 	modal: true,
 	buttons: {
 	  ok: function() {
-	    doDelete();
+	    doDelete(filename);
 	    $j(this).dialog('close');
 	  },
 	  cancel: function() {
@@ -81,15 +83,15 @@ function deleteFilePrompt(ask)
   if (ask)
     deleter.dialog('open');
   else
-    doDelete();
+    doDelete(filename);
 }
 
-function doDelete()
+function doDelete(filename)
 {
-  fileContent(current_filename).remove();  
-  fileCaretPos(current_filename).remove();
-  fileScrollTop(current_filename).remove();  
-  fileScrollLeft(current_filename).remove();
+  fileContent(filename).remove();  
+  fileCaretPos(filename).remove();
+  fileScrollTop(filename).remove();  
+  fileScrollLeft(filename).remove();
 
   rebuildFilenameList();
   var filenames = allFilenames();
@@ -97,14 +99,14 @@ function doDelete()
   loadFile(filenames[0]);
 }
 
-function renameFailure(currentFilename, newFilename, reason)
+function renameFailure(oldFilename, newFilename, reason)
 {
   var space = "&nbsp;";
   var tab = space + space + space + space;
   var br = "<br/>"
   var why = "CyberDojo could not rename" + br +
 	 br +
-	 tab + currentFilename + br +
+	 tab + oldFilename + br +
 	 "to" + br + 
 	 tab + newFilename + br +
 	 br +
@@ -132,14 +134,13 @@ function jQueryAlert(message)
 
 function renameFile() 
 {
-  if (!current_filename) return;
-  if (current_filename === 'cyberdojo.sh') return;
+  var oldFilename = currentFilename();
 
   var input = $j('<input>', {
     type: 'text',
     id: 'renamer',
     name: 'renamer',
-    value: "was_" + current_filename
+    value: "was_" + oldFilename
   });
   
   var renamer = $j('<div>')
@@ -152,7 +153,7 @@ function renameFile()
 	ok: function() {
 	  $j(this).dialog('close');
 	  var newFilename = trim(input.val());
-	  renameFileTo(newFilename);
+	  renameFileFromTo(oldFilename, newFilename);
 	},
 	cancel: function() {
 	  $j(this).dialog('close');
@@ -166,36 +167,36 @@ function renameFile()
     if (event.keyCode == CARRIAGE_RETURN) {
       var newFilename = trim(input.val());
       renamer.dialog('close');
-      renameFileTo(newFilename);
+      renameFileFromTo(oldFilename, newFilename);
     }  
   });
 
   renamer.dialog('open');
 }
 
-function renameFileTo(newFilename)
+function renameFileFromTo(oldFilename, newFilename)
 {
   if (newFilename === "") {
     var message = "No filename entered" + "<br/>" +
-          "Rename " + current_filename + " abandoned";
+          "Rename " + oldFilename + " abandoned";
     jQueryAlert(message);
     return;
   }
-  if (newFilename === current_filename) {
-    var message = "Same filename entered" + "<br/>" +
-          "Rename " + current_filename + " abandoned";
+  if (newFilename === oldFilename) {
+    var message = "Same filename entered." + "<br/>" +
+          oldFilename + " is unchanged";
     jQueryAlert(message);
     return;
   }
   if (fileAlreadyExists(newFilename))
   {
-    renameFailure(current_filename, newFilename,
+    renameFailure(oldFilename, newFilename,
 		  "a file called " + newFilename + " already exists");
     return;
   }
   if (newFilename.indexOf("/") !== -1)
   {
-    renameFailure(current_filename, newFilename,
+    renameFailure(oldFilename, newFilename,
 		  newFilename + " contains a forward slash");
     return;
   }
@@ -241,7 +242,7 @@ function makeFileListEntry(filename)
   div.click(function() {
     // Important to make Editor tab visible to ensure caretPos() works properly.
     // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-    saveCurrentFile();
+    saveFile(currentFilename());
     loadFile(filename);
   });
   
