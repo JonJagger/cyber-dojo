@@ -3,7 +3,7 @@
      class="panel">
 
   <table>
-  
+    
     <% seconds_per_td = @seconds_per_column -%>
     <% maximum_columns = @maximum_columns -%>
     <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns -%>
@@ -59,13 +59,11 @@
                      :locals => { :avatar_name => avatar_name } -%>
         </td>
         
-        <td>
            <%= render :partial => 'traffic_lights_summary', 
                       :locals => { :avatar_name => avatar_name, 
                                    :lights => all_lights[avatar_name],
                                    :new_window => false
                                  } -%> 
-        </td>
         
       </tr>    
     <% end -%>

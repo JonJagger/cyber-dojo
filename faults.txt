@@ -1,2 +1,4 @@
 
-In Opera the the editor_line_numbers textarea is scrollable. It should not be.
+In Opera, the line number scrolling does not synchronize.
+
+In Opera, the the editor_line_numbers textarea is scrollable. It should not be.

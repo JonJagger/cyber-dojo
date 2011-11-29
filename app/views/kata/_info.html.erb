@@ -2,21 +2,26 @@
 <table>
   <tr>
     <td>
-      <input type='image'
-       class='avatar_image'
-       src='/images/dojo-home.png'
-       title='Dojo Home'
-       width='40'
-       height='40'/>
+      <% size = 40 -%>
+      <%= link_to image_tag("/images/dojo-home.png",
+          :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
+          {
+            :controller => :dojo,
+            :action => :index,
+            :dojo_name => @dojo.name 
+          },
+            :target => '_blank'
+      %>
     </td>
+
     <td>
        <%= elided_name(@dojo.name, 20) -%>
     </td>
-    
+  
     <td>
-      <%= avatar_image(@avatar.name, 40) -%>
+      <%= avatar_image(@avatar.name, size) -%>
     </td>
-    
+  
     <td>
       <%= @avatar.name.humanize -%>
     </td>

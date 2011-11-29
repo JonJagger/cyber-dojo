@@ -3,9 +3,9 @@
 
   <table>
     
-    <% seconds_per_td = 10 -%>
-    <% max_cols = 45 -%>
-    <% max_seconds_uncollapsed = seconds_per_td * max_cols -%>
+    <% seconds_per_td = 20 -%>
+    <% max_cols = 30 -%>
+    <% max_seconds_uncollapsed = 5*60 -%>
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
     
     <% lights = @avatar.increments -%> 

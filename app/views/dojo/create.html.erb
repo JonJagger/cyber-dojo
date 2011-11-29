@@ -25,7 +25,10 @@ function selectLanguage(index) {
        id="dojo_name" 
        value="<%=@dojo.name%>" />
 
-<h1 title="<%= @dojo.name%>">   
+<h1 title="<%= @dojo.name%>">
+  <% size = 40 -%>
+  <%= image_tag("/images/dojo-home.png",
+      :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
   <%= elided_name(@dojo.name, 40) %>
 </h1>
 

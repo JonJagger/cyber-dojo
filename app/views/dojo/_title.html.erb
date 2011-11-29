@@ -1,5 +1,11 @@
 
 <br/>
-<h1><%= title -%></h1>
+<h1>
+  <% size = 40 -%>
+  <%= image_tag("/images/dojo-home.png",
+      :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
+
+  <%= title -%>
+</h1>
 
 
