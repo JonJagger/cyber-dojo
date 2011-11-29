@@ -1,7 +1,7 @@
 
 function sortFilenames(filenames) 
 {
-  filenames.sort(function(lhs,rhs) 
+  filenames.sort(function(lhs, rhs) 
     {
       if (lhs < rhs)
 	return -1;
@@ -19,7 +19,7 @@ function rebuildFilenameList()
 
   var filename_list = $j('#filename_list');
   filename_list.empty();
-  $j.each(filenames, function(n,filename) {
+  $j.each(filenames, function(n, filename) {
     filename_list.append(makeFileListEntry(filename));
   });
 }
@@ -31,18 +31,18 @@ function newFile()
   newFileContent('newfile_' + random3(), 'Please rename me!', 0, 0, 0);
 }
 
-function newFileContent(filename, content, caret_pos, scroll_top, scroll_left) 
+function newFileContent(filename, content, caretPos, scrollTop, scrollLeft) 
 {
   // Create new hidden input elements to store new file content
   // and its caret and scroll positions (to save to before submitting form)
   $j('#visible_files_container').append(
     createHiddenInput(filename, 'content', content));
   $j('#visible_files_container').append(
-    createHiddenInput(filename, 'caret_pos', caret_pos));
+    createHiddenInput(filename, 'caret_pos', caretPos));
   $j('#visible_files_container').append(
-    createHiddenInput(filename, 'scroll_top', scroll_top));
+    createHiddenInput(filename, 'scroll_top', scrollTop));
   $j('#visible_files_container').append(
-    createHiddenInput(filename, 'scroll_left', scroll_left));
+    createHiddenInput(filename, 'scroll_left', scrollLeft));
 
   rebuildFilenameList();
   // Select it so you can immediately rename it
@@ -97,16 +97,16 @@ function doDelete()
   loadFile(filenames[0]);
 }
 
-function renameFailure(current_filename, new_filename, reason)
+function renameFailure(currentFilename, newFilename, reason)
 {
   var space = "&nbsp;";
   var tab = space + space + space + space;
   var br = "<br/>"
   var why = "CyberDojo could not rename" + br +
 	 br +
-	 tab + current_filename + br +
+	 tab + currentFilename + br +
 	 "to" + br + 
-	 tab + new_filename + br +
+	 tab + newFilename + br +
 	 br +
 	"because " + reason + ".";
 	
@@ -151,8 +151,8 @@ function renameFile()
       buttons: {
 	ok: function() {
 	  $j(this).dialog('close');
-	  var new_filename = trim(input.val());
-	  renameFileTo(new_filename);
+	  var newFilename = trim(input.val());
+	  renameFileTo(newFilename);
 	},
 	cancel: function() {
 	  $j(this).dialog('close');
@@ -162,40 +162,41 @@ function renameFile()
     
   input.keyup(function(event) {
     event.preventDefault();
-    if (event.keyCode == 13) {
-      var new_filename = trim(input.val());
+    var CARRIAGE_RETURN = 13;
+    if (event.keyCode == CARRIAGE_RETURN) {
+      var newFilename = trim(input.val());
       renamer.dialog('close');
-      renameFileTo(new_filename);
+      renameFileTo(newFilename);
     }  
   });
 
   renamer.dialog('open');
 }
 
-function renameFileTo(new_filename)
+function renameFileTo(newFilename)
 {
-  if (new_filename === "") {
+  if (newFilename === "") {
     var message = "No filename entered" + "<br/>" +
           "Rename " + current_filename + " abandoned";
     jQueryAlert(message);
     return;
   }
-  if (new_filename === current_filename) {
+  if (newFilename === current_filename) {
     var message = "Same filename entered" + "<br/>" +
           "Rename " + current_filename + " abandoned";
     jQueryAlert(message);
     return;
   }
-  if (fileAlreadyExists(new_filename))
+  if (fileAlreadyExists(newFilename))
   {
-    renameFailure(current_filename, new_filename,
-		  "a file called " + new_filename + " already exists");
+    renameFailure(current_filename, newFilename,
+		  "a file called " + newFilename + " already exists");
     return;
   }
-  if (new_filename.indexOf("/") !== -1)
+  if (newFilename.indexOf("/") !== -1)
   {
-    renameFailure(current_filename, new_filename,
-		  new_filename + " contains a forward slash");
+    renameFailure(current_filename, newFilename,
+		  newFilename + " contains a forward slash");
     return;
   }
   
@@ -204,15 +205,15 @@ function renameFileTo(new_filename)
   
   var editor = $j('#editor');
   var content = editor.val();
-  var caret_pos = editor.caretPos();
-  var scroll_top = editor.scrollTop();
-  var scroll_left = editor.scrollLeft();
+  var caretPos = editor.caretPos();
+  var scrollTop = editor.scrollTop();
+  var scrollLeft = editor.scrollLeft();
   
   deleteFilePrompt(false);
-  newFileContent(new_filename, content, caret_pos, scroll_top, scroll_left);
+  newFileContent(newFilename, content, caretPos, scrollTop, scrollLeft);
 
   rebuildFilenameList();
-  selectFileInFileList(new_filename);
+  selectFileInFileList(newFilename);
 }
 
 function createHiddenInput(filename, aspect, value)
@@ -261,7 +262,7 @@ function makeFileListEntry(filename)
 function allFilenames() 
 {
   var prefix = 'file_content_for_';
-  filenames = [ ]
+  var filenames = [ ]
   $j('input[id^="' + prefix + '"]').each(function(index) {
     var id = $j(this).attr('id');
     var filename = id.substr(prefix.length, id.length - prefix.length);

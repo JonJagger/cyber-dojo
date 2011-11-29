@@ -1,4 +1,10 @@
 
+When configuring, if you choose a name that has already been taken you get
+a new tab. Need to correct that.
+
+When starting/resuming/etc, if you choose a name that does not exist you get
+a new tab. Need to correct that.
+
 In Opera, the line number scrolling does not synchronize.
 
 In Opera, the the editor_line_numbers textarea is scrollable. It should not be.

@@ -1,5 +1,5 @@
 
-var line_numbers = function() {
+var lineNumbers = function() {
   var string = '';
   var crlf = '';
   for (var no = 1; no < 999; no++) 
@@ -10,13 +10,13 @@ var line_numbers = function() {
   return string;  
 }();
 
-function bind_line_numbers(editor, n)
+function bindLineNumbers(editor, n)
 {
   n.attr('readonly', 'true');
   // Width is enough for 3 digits (up to 999) in 14pt as set in css file
   var width = 40;
   n.css('width', width + 'px');
-  n.val(line_numbers);
+  n.val(lineNumbers);
   
   var move = false;
   

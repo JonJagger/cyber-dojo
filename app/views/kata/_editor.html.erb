@@ -6,8 +6,8 @@ var EDITOR_TAB_INDEX = 0;
 var OUTPUT_TAB_INDEX = 1;
 
 $j(document).ready(function() {
-  bind_line_numbers($j('#editor'), $j('#editor_line_numbers'));
-  bind_line_numbers($j('#output'), $j('#output_line_numbers'));
+  bindLineNumbers($j('#editor'), $j('#editor_line_numbers'));
+  bindLineNumbers($j('#output'), $j('#output_line_numbers'));
   
   $j('#editor_tabs').bind('tabsselect', function(event, tab) {
     if (tab.index === OUTPUT_TAB_INDEX) {

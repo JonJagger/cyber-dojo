@@ -21,17 +21,17 @@ function loadFile(filename)
   // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
   $j('#editor_tabs').tabs('select', EDITOR_TAB_INDEX);
   
-  var caret_pos = fileCaretPos(filename).attr('value');
-  var scroll_top  = fileScrollTop(filename).attr('value');
-  var scroll_left = fileScrollLeft(filename).attr('value');
+  var caretPos = fileCaretPos(filename).attr('value');
+  var scrollTop  = fileScrollTop(filename).attr('value');
+  var scrollLeft = fileScrollLeft(filename).attr('value');
   var code = fileContent(filename).attr('value');
 
   var editor = $j('#editor');
   editor.val(code);
   
-  editor.caretPos(caret_pos);
-  editor.scrollTop(scroll_top);
-  editor.scrollLeft(scroll_left);
+  editor.caretPos(caretPos);
+  editor.scrollTop(scrollTop);
+  editor.scrollLeft(scrollLeft);
   
   selectFileInFileList(filename);
 }
