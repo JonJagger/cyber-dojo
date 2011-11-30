@@ -10,29 +10,21 @@ var lineNumbers = function() {
   return string;  
 }();
 
-function bindLineNumbers(editor, n)
+function bindLineNumbers(editor, numbers)
 {
-  n.attr('readonly', 'true');
-  // Width is enough for 3 digits (up to 999) in 14pt as set in css file
-  var width = 40;
-  n.css('width', width + 'px');
-  n.val(lineNumbers);
-  
-  var move = false;
+  numbers.attr('readonly', 'true');
+  numbers.val(lineNumbers);
   
   editor.bind({
-    scroll:     function(ev) { setLine(); },
-    mousewheel: function(ev) { setLine(); }, // needed for Opera
-    keydown:    function(ev) { setLine(); },
-    mousedown:  function(ev) { setLine(); move = true; },
-    mouseup:    function(ev) { setLine(); move = false; },
-    mousemove:  function(ev) { if (move) { setLine(); }}
-  });
-             
-  function setLine() 
-  {
-    n.scrollTop(editor.scrollTop());   
-    n.css('top', editor.offset().top + 'px');
-    n.css('left', (editor.offset().left - width) + 'px');
+      scroll:     function(ev) { setLine(); },
+      mousewheel: function(ev) { setLine(); },
+      keydown:    function(ev) { setLine(); },
+      mousedown:  function(ev) { setLine(); },
+      mouseup:    function(ev) { setLine(); },
+      mousemove:  function(ev) { setLine(); }
+    });
+  
+  function setLine() {
+    numbers.scrollTop(editor.scrollTop());   
   }  
 }

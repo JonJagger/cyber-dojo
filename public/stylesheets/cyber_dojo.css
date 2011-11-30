@@ -185,6 +185,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
   font-weight: normal;
   background: Cornsilk;
   padding-right: 2px;
+  width: 2em;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
