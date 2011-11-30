@@ -1,17 +1,14 @@
 
 var lineNumbers = function() {
-  var string = '';
-  var crlf = '';
-  for (var no = 1; no < 999; no++) 
-  {
-    string += crlf + no;
-    crlf = '\r\n';
+  var lines = '1';
+  for (var number = 2; number < 999; number++) {
+    lines += '\r\n' + number;
   }
-  return string;  
+  return lines;  
 }();
 
 function bindLineNumbers(editor, numbers)
-{
+{  
   numbers.attr('readonly', 'true');
   numbers.val(lineNumbers);
   

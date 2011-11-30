@@ -33,16 +33,14 @@ function newFile()
 
 function newFileContent(filename, content, caretPos, scrollTop, scrollLeft) 
 {
-  // Create new hidden input elements to store new file content
-  // and its caret and scroll positions (to save to before submitting form)
   $j('#visible_files_container')
     .append(createHiddenInput(filename, 'content', content))
     .append(createHiddenInput(filename, 'caret_pos', caretPos))
     .append(createHiddenInput(filename, 'scroll_top', scrollTop))
     .append(createHiddenInput(filename, 'scroll_left', scrollLeft));
 
-  // Do save _before_ rebulding filename list so as not to
-  // lose latest edit
+  // Save _before_ rebulding filename list so as
+  // not to lose latest edit
   saveFile(currentFilename());
   rebuildFilenameList();
   // Select it so you can immediately rename it
@@ -236,8 +234,6 @@ function makeFileListEntry(filename)
   });
 
   div.click(function() {
-    // Important to make Editor tab visible to ensure caretPos() works properly.
-    // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
     saveFile(currentFilename());
     loadFile(filename);
   });
