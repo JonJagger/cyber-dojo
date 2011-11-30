@@ -17,7 +17,7 @@ class KataController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])   
-    manifest = load_visible_files_from_page
+    manifest = load_manifest_from_page()
     @avatar.run_tests(manifest)
     @avatar.post_run_test_messages()
     @output = manifest[:output]
@@ -47,7 +47,7 @@ private
     return filename[1..-2] 
   end
 
-  def load_visible_files_from_page
+  def load_manifest_from_page
     manifest = { :visible_files => {} }
 
     (params[:file_content] || {}).each do |filename,content|
@@ -57,23 +57,21 @@ private
       manifest[:visible_files][filename][:content] = content.gsub(/\r\n/, "\n")  
     end
  
-    (params[:file_caret_pos] || {}).each do |filename,caret_pos|
-      filename = dequote(filename)
-      manifest[:visible_files][filename][:caret_pos] = caret_pos
-    end
-
-    (params[:file_scroll_top] || {}).each do |filename,scroll_top|
-      filename = dequote(filename)
-      manifest[:visible_files][filename][:scroll_top] = scroll_top
-    end
-    (params[:file_scroll_left] || {}).each do |filename,scroll_left|
-      filename = dequote(filename)
-      manifest[:visible_files][filename][:scroll_left] = scroll_left
-    end
+    load_file_aspect(manifest, :caret_pos)
+    load_file_aspect(manifest, :scroll_top)
+    load_file_aspect(manifest, :scroll_left)
     
     manifest[:current_filename] = params['current_filename']
 
     manifest
+  end
+
+  def load_file_aspect(manifest, aspect)
+    id = ('file_' + aspect.to_s).to_sym
+    (params[id] || {}).each do |filename,value|
+      filename = dequote(filename)
+      manifest[:visible_files][filename][aspect] = value
+    end    
   end
 
 end

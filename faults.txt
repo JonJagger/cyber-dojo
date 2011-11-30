@@ -1,4 +1,6 @@
 
+In the diff-view, the editor and the output tabs have different line-number widths
+and this causes a jump when switching between the two. 
 
 If the editor tab is selected and you hit Alt-R to run the tests
 then the "Running tests..." message does not appear on the output tab.
@@ -14,4 +16,5 @@ a new browser tab. Need to stay on the same browser tab.
 
 In Opera, the line number scrolling does not synchronize.
 
-In Opera, the the editor_line_numbers textarea is scrollable. It should not be.
+In Opera, the editor_line_numbers textarea is scrollable. It should not be.
+Or rather, if it does scroll it should bind to the editor and scroll that.
