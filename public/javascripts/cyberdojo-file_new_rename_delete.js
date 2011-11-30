@@ -35,15 +35,11 @@ function newFileContent(filename, content, caretPos, scrollTop, scrollLeft)
 {
   // Create new hidden input elements to store new file content
   // and its caret and scroll positions (to save to before submitting form)
-  $j('#visible_files_container').append(
-    createHiddenInput(filename, 'content', content));
-  $j('#visible_files_container').append(
-    createHiddenInput(filename, 'caret_pos', caretPos));
-  $j('#visible_files_container').append(
-    createHiddenInput(filename, 'scroll_top', scrollTop));
-  $j('#visible_files_container').append(
-    createHiddenInput(filename, 'scroll_left', scrollLeft));
-  //TODO: 4 appends (lose 3 $j's) ?
+  $j('#visible_files_container')
+    .append(createHiddenInput(filename, 'content', content))
+    .append(createHiddenInput(filename, 'caret_pos', caretPos))
+    .append(createHiddenInput(filename, 'scroll_top', scrollTop))
+    .append(createHiddenInput(filename, 'scroll_left', scrollLeft));
 
   // Do save _before_ rebulding filename list so as not to
   // lose latest edit

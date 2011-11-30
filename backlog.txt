@@ -1,4 +1,7 @@
 
+Ordered
+=======
+-------------------------------------------
 Simplify the messages. Messages come from avatar events, not the server.
 Senders avatar image is shown. Traffic light also shown.
 -------------------------------------------
@@ -28,3 +31,38 @@ Each entry shows
   name, when(ago), language, kata, mini image for each avatar
 Click on the name to open its dashboard.
 -------------------------------------------
+Diff-view of older dojos filters out output as a pseudo filename
+-------------------------------------------
+
+
+
+Unordered
+=========
+-------------------------------------------
+Diff view has up/down buttons to jump between red/green diff sections
+and avoid having to manually scroll.
+-------------------------------------------
+Diff-view shows red/green line that differs only in single char by
+bolding the single char.
+-------------------------------------------
+Diff-view has Alt-F to move between files as you can do in main edit page.
+-------------------------------------------
+Diff-view has button to open file in plain-text. That is, without the
+line numbers or the removed lines. Easy to paste from.
+-------------------------------------------
+Download entire git repo for a dojo as a .zip file
+-------------------------------------------
+Load entire dashboard and diff-data for all avatars in a dojo into
+a single html page that can then be perused without having to go back
+to the server, not even for css.
+-------------------------------------------
+Store and use caretPos, scrollTop, scrollLeft for output
+-------------------------------------------
+Each kata comes in three forms. Completely empty, started (eg 2 tests), done but poorly
+and needs refactoring.
+-------------------------------------------
+Ability to start a new dojo session from any diff-view traffic-light
+-------------------------------------------
+Ability to create a new starting fileset from any diff-view traffic-light
+-------------------------------------------
+
