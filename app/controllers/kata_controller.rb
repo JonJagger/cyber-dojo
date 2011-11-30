@@ -57,16 +57,16 @@ private
       manifest[:visible_files][filename][:content] = content.gsub(/\r\n/, "\n")  
     end
  
-    load_file_aspect(manifest, :caret_pos)
-    load_file_aspect(manifest, :scroll_top)
-    load_file_aspect(manifest, :scroll_left)
+    load_files_aspect(manifest, :caret_pos)
+    load_files_aspect(manifest, :scroll_top)
+    load_files_aspect(manifest, :scroll_left)
     
     manifest[:current_filename] = params['current_filename']
 
     manifest
   end
 
-  def load_file_aspect(manifest, aspect)
+  def load_files_aspect(manifest, aspect)
     id = ('file_' + aspect.to_s).to_sym
     (params[id] || {}).each do |filename,value|
       filename = dequote(filename)

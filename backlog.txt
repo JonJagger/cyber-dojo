@@ -1,0 +1,30 @@
+
+Simplify the messages. Messages come from avatar events, not the server.
+Senders avatar image is shown. Traffic light also shown.
+-------------------------------------------
+Dojo times out after 60 minutes.
+-------------------------------------------
+Dojo has 4 coloured rooms and you do not need to know its name to enter.
+Instead there are 4 config files, one for each room. The name of the
+current dojo is stored in the config file. Config file resets when the dojo times-out.
+-------------------------------------------
+Dojo creation page offers option to time-out after 15 mins, 30 mins, 45 mins, 60 mins.
+-------------------------------------------
+Dojo times out after specified duration.
+-------------------------------------------
+Dojo must be named, but name is "salted in some way" to create sha1 folder id.
+This means the name the user chooses is always acceptable.
+This means index.rb will contain two kinds of entries, ones whose
+name is not salted, and ones that are.
+But during a session I don't want to have to load the entire index.rb file to retrieve
+the dojos salt. So the salt information will be stored in the rooms config file
+as well as in the index.rb file.
+-------------------------------------------
+Page to list previous dojos.
+Dojos with no increments are not shown.
+Does not auto refresh.
+Instead has a refresh button?
+Each entry shows
+  name, when(ago), language, kata, mini image for each avatar
+Click on the name to open its dashboard.
+-------------------------------------------
