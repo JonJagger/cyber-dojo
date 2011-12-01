@@ -40,7 +40,7 @@
     
     var control = this[0];
     if (pos !== undefined)
-      setCaretPos(control,pos);
+      setCaretPos(control, pos);
     else
       return getCaretPos(control);    
   };

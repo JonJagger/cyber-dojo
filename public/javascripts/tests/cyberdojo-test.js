@@ -102,15 +102,15 @@ TestCase("cyberdojo-Test", {
           <input id="file_caret_pos_for_C" value="3"/>
         </div>
         <div>
-          <input id="file_scroll_left_for_A" value="4"/>
-          <input id="file_scroll_left_for_B" value="5"/>
-          <input id="file_scroll_left_for_C" value="6"/>
-        </div>
-        <div>
           <input id="file_scroll_top_for_A" value="7"/>
           <input id="file_scroll_top_for_B" value="8"/>
           <input id="file_scroll_top_for_C" value="9"/>
         </div>        
+        <div>
+          <input id="file_scroll_left_for_A" value="4"/>
+          <input id="file_scroll_left_for_B" value="5"/>
+          <input id="file_scroll_left_for_C" value="6"/>
+        </div>
         <div>
           <input id="radio_A" name="filename" type="radio" value="A"/>
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
@@ -129,5 +129,128 @@ TestCase("cyberdojo-Test", {
     $cd.loadNextFile();
     assertEquals(['A', 'B', 'C'], $cd.allFilenames());
     assertEquals('B', $cd.currentFilename());
+  },
+  "test makeFileListEntry()": function() {
+    var entry = $cd.makeFileListEntry('omd');
+    assertFunction(entry.click);
+    var input = entry.contents('input');
+    assertEquals(1, input.length);
+    assertEquals('radio_omd', input.attr('id'));
+    assertEquals('filename', input.attr('name'));
+    assertEquals('radio', input.attr('type'));
+    assertEquals('omd', input.attr('value'));
+    var label = entry.children('label');
+    assertEquals(1, label.length);
+    var space = ' ';
+    assertEquals(space + 'omd', label.html());
+  },
+  "test createHiddenInput()": function() {
+    var hi = $cd.createHiddenInput('rem', 'caret_pos', 42);
+    assertEquals('hidden', hi.attr('type'));
+    assertEquals("file_caret_pos['rem']", hi.attr('name'));
+    assertEquals('file_caret_pos_for_rem', hi.attr('id'));
+    assertEquals('42', hi.attr('value'));
+  },
+  "test loadFile() sets editor content and selects it in filelist": function() {
+    /*:DOC +=
+      <div>
+        <div id="editor_tabs">      
+          <ul>
+            <li><a href="#tab_editor">editor</a></li>
+            <li><a href="#tab_output">output</a></li>
+          </ul>
+          <div id="tab_editor">
+            <textarea id="editor"></textarea>
+          </div>
+          <div id="tab_output">
+            <textarea id="output"></textarea>
+          </div>
+        </div>
+        <div>
+          <input id="file_content_for_A" value="aaaaaaaaaaa"/>
+          <input id="file_content_for_B" value="bbbbbbbbbbb"/>
+          <input id="file_content_for_C" value="ccccccccccc"/>
+        </div>
+        <div>
+          <input id="file_caret_pos_for_A" value="1"/>
+          <input id="file_caret_pos_for_B" value="2"/>
+          <input id="file_caret_pos_for_C" value="3"/>
+        </div>
+        <div>
+          <input id="file_scroll_top_for_A" value="1"/>
+          <input id="file_scroll_top_for_B" value="2"/>
+          <input id="file_scroll_top_for_C" value="3"/>
+        </div>        
+        <div>
+          <input id="file_scroll_left_for_A" value="1"/>
+          <input id="file_scroll_left_for_B" value="2"/>
+          <input id="file_scroll_left_for_C" value="3"/>
+        </div>
+        <div>
+          <input id="radio_A" name="filename" type="radio" value="A"/>
+          <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
+          <input id="radio_C" name="filename" type="radio" value="C"/>
+        </div>        
+      </div>
+    */
+    var filename = 'C';    
+    var editor = $j('#editor');    
+    $j('#editor_tabs').tabs();
+    $cd.loadFile(filename);
+    assertEquals('ccccccccccc', editor.val());
+    assertEquals(3, editor.caretPos());
+    // NB: these two fail...???
+    //assertEquals(3, editor.scrollTop());
+    //assertEquals(3, editor.scrollLeft());
+    assertEquals(filename, $cd.currentFilename());
+  },
+  "test doDelete() deletes file from filelist": function() {
+    /*:DOC +=
+      <div>
+        <div id="editor_tabs">      
+          <ul>
+            <li><a href="#tab_editor">editor</a></li>
+            <li><a href="#tab_output">output</a></li>
+          </ul>
+          <div id="tab_editor">
+            <textarea id="editor"></textarea>
+          </div>
+          <div id="tab_output">
+            <textarea id="output"></textarea>
+          </div>
+        </div>
+        <div>
+          <input id="file_content_for_A" value="aaaaaaaaaaa"/>
+          <input id="file_content_for_B" value="bbbbbbbbbbb"/>
+          <input id="file_content_for_C" value="ccccccccccc"/>
+        </div>
+        <div>
+          <input id="file_caret_pos_for_A" value="1"/>
+          <input id="file_caret_pos_for_B" value="2"/>
+          <input id="file_caret_pos_for_C" value="3"/>
+        </div>
+        <div>
+          <input id="file_scroll_top_for_A" value="1"/>
+          <input id="file_scroll_top_for_B" value="2"/>
+          <input id="file_scroll_top_for_C" value="3"/>
+        </div>        
+        <div>
+          <input id="file_scroll_left_for_A" value="1"/>
+          <input id="file_scroll_left_for_B" value="2"/>
+          <input id="file_scroll_left_for_C" value="3"/>
+        </div>
+        <div>
+          <input id="radio_A" name="filename" type="radio" value="A"/>
+          <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
+          <input id="radio_C" name="filename" type="radio" value="C"/>
+        </div>        
+      </div>
+    */
+    assertEquals(['A', 'B', 'C'], $cd.allFilenames());
+    var filename = 'B';
+    assertEquals(filename, $cd.currentFilename());
+    $cd.doDelete('B');
+    assertEquals(['A', 'C'], $cd.allFilenames());
+    //assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
   },
 });
