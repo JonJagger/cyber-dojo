@@ -13,7 +13,7 @@ var avatar_name = "<%=@avatar.name-%>";
 var tag = "<%=@traffic_lights_to_tag.length-%>";  
 
 function rePost() {
-  postTo('show', {
+  $cd.postTo('show', {
     dojo_name: dojo_name,
     avatar: avatar_name,
     tag: tag

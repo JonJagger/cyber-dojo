@@ -1,6 +1,7 @@
 
-function postTo(url, params)
-{
+var cyberDojo = (function($cd) {
+
+  $cd.postTo = function(url, params) {
     var form = $j('<form>');
     form.attr('action', url);
     form.attr('method', 'POST');
@@ -19,4 +20,7 @@ function postTo(url, params)
 
     form.appendTo(document.body);
     form.submit();
-}
+  };
+
+  return $cd;
+})(cyberDojo || {});

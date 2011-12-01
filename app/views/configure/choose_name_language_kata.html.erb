@@ -13,7 +13,7 @@ function setSaveButtonState() {
 }
 
 function dojoName() {
-  return trim($j('#dojo_name').val());
+  return $cd.trim($j('#dojo_name').val());
 }
 
 var currentLanguage = "<%=@current_language-%>";
@@ -21,7 +21,7 @@ var currentKata = "<%=@current_kata-%>";
 var currentFilename = "<%=@current_filename-%>"
 
 function rePost() {
-  postTo('choose_name_language_kata', {
+  $cd.postTo('choose_name_language_kata', {
     current_language: currentLanguage,
     current_kata: currentKata,
     current_filename: currentFilename
