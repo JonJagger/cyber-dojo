@@ -86,21 +86,25 @@ var cyberDojo = (function($cd) {
   };
   
   $cd.fileContent = function(filename) {
-    return $j("[id='file_content_for_" + filename + "']");
+    return $cd.fileAspect(filename, 'content');
   };
-
+  
   $cd.fileCaretPos = function(filename) {
-    return $j("[id='file_caret_pos_for_" + filename + "']");
+    return $cd.fileAspect(filename, 'caret_pos');    
   };
 
   $cd.fileScrollTop = function(filename) {
-    return $j("[id='file_scroll_top_for_" + filename + "']");
+    return $cd.fileAspect(filename, 'scroll_top');    
   };
 
   $cd.fileScrollLeft = function(filename) {
-    return $j("[id='file_scroll_left_for_" + filename + "']");
+    return $cd.fileAspect(filename, 'scroll_left');    
   };
 
+  $cd.fileAspect = function(filename, aspect) {
+    return $j("[id='file_" + aspect + "_for_" + filename + "']");    
+  };
+  
   return $cd;
 })(cyberDojo || {});
 
