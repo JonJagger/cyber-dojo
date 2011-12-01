@@ -1,33 +1,36 @@
 
-function runTests()
-{
-  $j('#run_tests_button').click();
-}
+var cyberDojo = (function($cd) {
 
-function preRunTests()
-{
-  // app/views/kata/edit.html.erb
-  // form_remote_tag :url => {...}, 
-  //                 :before => "preRunTests();",
+  $cd.runTests = function() {
+    $j('#run_tests_button').click();
+  };
 
-  if (currentTabIndex === cyberDojo.EDITOR_TAB_INDEX) {
-    saveFile(cyberDojo.currentFilename());
-    $j('#editor_tabs').tabs('select', cyberDojo.OUTPUT_TAB_INDEX);
-  }
-  $j('#output').val('Running tests...');
-  $j('#run_tests').hide();
-  $j('#spinner').show();
-}
+  $cd.preRunTests = function() {
+    // app/views/kata/edit.html.erb
+    // form_remote_tag :url => {...}, 
+    //                 :before => "preRunTests();",
+  
+    if ($cd.currentTabIndex === $cd.EDITOR_TAB_INDEX) {
+      $cd.saveFile($cd.currentFilename());
+      $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
+    }
+    $j('#output').val('Running tests...');
+    $j('#run_tests').hide();
+    $j('#spinner').show();
+  };
 
-function postRunTests()
-{ 
-  // app/views/kata/edit.html.erb
-  // form_remote_tag :url => {...}, 
-  //                 :complete => "postRunTests();"
+  $cd.postRunTests = function() { 
+    // app/views/kata/edit.html.erb
+    // form_remote_tag :url => {...}, 
+    //                 :complete => "postRunTests();"
+  
+    $j('#spinner').hide();
+    $j('#run_tests').show();
+    $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
+    $j('#output').focus();
+  };
 
-  $j('#spinner').hide();
-  $j('#run_tests').show();
-  $j('#editor_tabs').tabs('select', cyberDojo.OUTPUT_TAB_INDEX);
-  $j('#output').focus();
-}
+  return $cd;
+})(cyberDojo || {});
+
 

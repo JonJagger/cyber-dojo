@@ -5,7 +5,7 @@ function bindRunTests(event)
 {
   event.stopPropagation();
   event.preventDefault();
-  runTests();
+  $cd.runTests();
   return false;    
 }
 
@@ -28,8 +28,8 @@ $j(document).ready(function() {
   output.bind('keydown', 'Alt+f', bindLoadNextFile);
   
   editor.tabby({ tabString: editor.attr('tab') });
-  rebuildFilenameList();
-  loadFile("<%=@current_file-%>");
+  $cd.rebuildFilenameList();
+  $cd.loadFile("<%=@current_file-%>");
   
   $j('#editor_tabs').tabs();
   $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
@@ -42,39 +42,31 @@ $j(document).ready(function() {
                               :dojo_name => @dojo.name,
                               :avatar => @avatar.name
                             }, 
-                   :before   => 'preRunTests();',
-                   :complete => 'postRunTests();' do -%> 
+                   :before   => '$cd.preRunTests();',
+                   :complete => '$cd.postRunTests();' do -%> 
 
   <table cellpadding="0" cellspacing="0">
     <tr valign="top">
-      
       <td class="panel">
         <%= render :partial => 'info' -%>
       </td>
-        
       <td class="panel">
         <%= render :partial => 'traffic_lights' -%>
       </td>
-      
-    </tr>
-    
+    </tr>    
     <tr valign="top">
-    
       <td>
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
         </div>
-        
         <div class="panel">
           <%= render :partial => 'messages' -%>
         </div>
       </td>
-      
       <td>
         <%= render :partial => 'editor' -%>
       </td>
-      
     </tr>
   </table>
   

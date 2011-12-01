@@ -1,8 +1,6 @@
 
 <script language="javascript" type="text/javascript"><!--
 
-var currentTabIndex = false;
-
 $j(document).ready(function() {
   bindLineNumbers($j('#editor'), $j('#editor_line_numbers'));
   bindLineNumbers($j('#output'), $j('#output_line_numbers'));
@@ -10,7 +8,7 @@ $j(document).ready(function() {
   $j('#editor_tabs').bind('tabsselect', function(event, tab) {
     if (tab.index === $cd.OUTPUT_TAB_INDEX) {
       // About to switch to output tab but haven't switched yet...
-      saveFile($cd.currentFilename());
+      $cd.saveFile($cd.currentFilename());
     }
     return true;  
   });
@@ -18,9 +16,9 @@ $j(document).ready(function() {
   $j('#editor_tabs').bind('tabsshow', function(event, tab) {
     if (tab.index === $cd.EDITOR_TAB_INDEX) {
       // Have already switched to editor tab...
-      loadFile($cd.currentFilename());
+      $cd.loadFile($cd.currentFilename());
     }
-    currentTabIndex = tab.index;
+    $cd.currentTabIndex = tab.index;
   });
 });
 
