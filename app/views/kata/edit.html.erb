@@ -13,7 +13,7 @@ function bindLoadNextFile(event)
 {
   event.stopPropagation();
   event.preventDefault();
-  loadNextFile();
+  $cd.loadNextFile();
   return false;
 }
 
@@ -32,7 +32,7 @@ $j(document).ready(function() {
   loadFile("<%=@current_file-%>");
   
   $j('#editor_tabs').tabs();
-  $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
+  $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
   output.focus();
 });
 

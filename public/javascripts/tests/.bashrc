@@ -1,0 +1,1 @@
+export JSTESTDRIVER_HOME=/Users/jonjagger/Desktop/cyberdojo/public/javascripts/tests

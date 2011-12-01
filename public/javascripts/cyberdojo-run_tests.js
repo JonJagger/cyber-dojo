@@ -10,9 +10,9 @@ function preRunTests()
   // form_remote_tag :url => {...}, 
   //                 :before => "preRunTests();",
 
-  if (currentTabIndex === EDITOR_TAB_INDEX) {
-    saveFile(currentFilename());
-    $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
+  if (currentTabIndex === cyberDojo.EDITOR_TAB_INDEX) {
+    saveFile(cyberDojo.currentFilename());
+    $j('#editor_tabs').tabs('select', cyberDojo.OUTPUT_TAB_INDEX);
   }
   $j('#output').val('Running tests...');
   $j('#run_tests').hide();
@@ -27,7 +27,7 @@ function postRunTests()
 
   $j('#spinner').hide();
   $j('#run_tests').show();
-  $j('#editor_tabs').tabs('select', OUTPUT_TAB_INDEX);
+  $j('#editor_tabs').tabs('select', cyberDojo.OUTPUT_TAB_INDEX);
   $j('#output').focus();
 }
 

@@ -1,21 +1,8 @@
 
-function sortFilenames(filenames) 
-{
-  filenames.sort(function(lhs, rhs) 
-    {
-      if (lhs < rhs)
-	return -1;
-      else if (lhs > rhs)
-	return 1;
-      else
-	return 0; // Should never happen (implies two files with same name)
-    });
-}
-
 function rebuildFilenameList() 
 {
-  var filenames = allFilenames();
-  sortFilenames(filenames);
+  var filenames = $cd.allFilenames();
+  $cd.sortFilenames(filenames);
 
   var filename_list = $j('#filename_list');
   filename_list.empty();
@@ -28,7 +15,7 @@ function newFile()
 {
   // Append three random chars to the end of the filename.
   // This is so there is no excuse not to rename it!
-  newFileContent('newfile_' + random3(), 'Please rename me!', 0, 0, 0);
+  newFileContent('newfile_' + $cd.random3(), 'Please rename me!', 0, 0, 0);
 }
 
 function newFileContent(filename, content, caretPos, scrollTop, scrollLeft) 
@@ -41,7 +28,7 @@ function newFileContent(filename, content, caretPos, scrollTop, scrollLeft)
 
   // Save _before_ rebulding filename list so as
   // not to lose latest edit
-  saveFile(currentFilename());
+  saveFile($cd.currentFilename());
   rebuildFilenameList();
   // Select it so you can immediately rename it
   loadFile(filename);
@@ -54,7 +41,7 @@ function deleteFile()
 
 function deleteFilePrompt(ask) 
 {
-  var filename = currentFilename();
+  var filename = $cd.currentFilename();
   
   var deleter =
     $j("<div>")
@@ -82,13 +69,13 @@ function deleteFilePrompt(ask)
 
 function doDelete(filename)
 {
-  fileContent(filename).remove();  
-  fileCaretPos(filename).remove();
-  fileScrollTop(filename).remove();  
-  fileScrollLeft(filename).remove();
+  $cd.fileContent(filename).remove();  
+  $cd.fileCaretPos(filename).remove();
+  $cd.fileScrollTop(filename).remove();  
+  $cd.fileScrollLeft(filename).remove();
 
   rebuildFilenameList();
-  var filenames = allFilenames();
+  var filenames = $cd.allFilenames();
   // cyberdojo.sh cannot be deleted so always at least one file
   loadFile(filenames[0]);
 }
@@ -128,7 +115,7 @@ function jQueryAlert(message)
 
 function renameFile() 
 {
-  var oldFilename = currentFilename();
+  var oldFilename = $cd.currentFilename();
 
   var input = $j('<input>', {
     type: 'text',
@@ -182,7 +169,7 @@ function renameFileFromTo(oldFilename, newFilename)
     jQueryAlert(message);
     return;
   }
-  if (fileAlreadyExists(newFilename))
+  if ($cd.fileAlreadyExists(newFilename))
   {
     renameFailure(oldFilename, newFilename,
 		  "a file called " + newFilename + " already exists");
@@ -234,7 +221,7 @@ function makeFileListEntry(filename)
   });
 
   div.click(function() {
-    saveFile(currentFilename());
+    saveFile($cd.currentFilename());
     loadFile(filename);
   });
   
@@ -252,37 +239,43 @@ function makeFileListEntry(filename)
   return div;
 }
 
-function allFilenames() 
-{
-  var prefix = 'file_content_for_';
-  var filenames = [ ]
-  $j('input[id^="' + prefix + '"]').each(function(index) {
-    var id = $j(this).attr('id');
-    var filename = id.substr(prefix.length, id.length - prefix.length);
-    filenames.push(filename);
-  });
-  return filenames;
-}
 
-function fileAlreadyExists(filename) 
-{
-  return $j.inArray(filename, allFilenames()) !== -1;
-}
+var cyberDojo = (function(cd) {
 
-function rand(n)
-{
-  return Math.floor(Math.random() * n);
-}
+  cd.fileAlreadyExists = function(filename) {
+    return $j.inArray(filename, $cd.allFilenames()) !== -1;
+  };
 
-function randomChar()
-{
-  var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';
-  return alphabet.charAt(rand(alphabet.length));
-}
+  cd.allFilenames = function() {  
+    var prefix = 'file_content_for_';
+    var filenames = [ ]
+    $j('input[id^="' + prefix + '"]').each(function(index) {
+      var id = $j(this).attr('id');
+      var filename = id.substr(prefix.length, id.length - prefix.length);
+      filenames.push(filename);
+    });
+    return filenames;
+  };
 
-function random3() 
-{
-  return randomChar() + randomChar() + randomChar();
-}
+  cd.rand = function(n) {
+    return Math.floor(Math.random() * n);
+  };
+
+  cd.randomAlphabet = function() {
+    return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';  
+  };
+
+  cd.randomChar = function() {
+    var alphabet = cd.randomAlphabet();
+    return alphabet.charAt(cd.rand(alphabet.length));
+  };
+    
+  cd.random3 = function() {
+    return cd.randomChar() + cd.randomChar() + cd.randomChar();
+  };
+  
+  return cd;
+})(cyberDojo || {});
+
 
 

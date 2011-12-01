@@ -1,32 +1,69 @@
 
-function currentFilename()
-{
-  return $j("input[name='filename']:checked").val();
-}
+var cyberDojo = (function(cd) {
 
-function saveFile(filename)
-{
-  // Important to make sure Editor tab is visible to ensure caretPos() works properly.
-  // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-  $j('#editor_tabs').tabs('select', EDITOR_TAB_INDEX);
+  cd.EDITOR_TAB_INDEX = 0;
+  cd.OUTPUT_TAB_INDEX = 1;
 
-  var editor = $j('#editor');
-  fileContent(filename).attr('value', editor.val());
-  fileCaretPos(filename).attr('value', editor.caretPos());
-  fileScrollLeft(filename).attr('value', editor.scrollLeft());
-  fileScrollTop(filename).attr('value', editor.scrollTop());
-}
+  cd.currentFilename = function() {
+    return $j("input[name='filename']:checked").val();
+  };
+
+  cd.loadNextFile = function() {
+    var previousFilename = cd.currentFilename();
+    var filenames = cd.sortedFilenames();
+    var index = $j.inArray(previousFilename, filenames);
+    var nextFilename = filenames[(index + 1) % filenames.length];
+    saveFile(previousFilename);
+    loadFile(nextFilename);  
+  };
+  
+  cd.sortFilenames = function(filenames) {
+    filenames.sort(function(lhs, rhs) 
+      {
+	if (lhs < rhs)
+	  return -1;
+	else if (lhs > rhs)
+	  return 1;
+	else
+	  return 0; // Should never happen (implies two files with same name)
+      });
+  };
+
+  cd.sortedFilenames = function() {
+    var filenames = $cd.allFilenames();
+    cd.sortFilenames(filenames);
+    return filenames;
+  };
+  
+  cd.fileContent = function(filename) {
+    return $j("[id='file_content_for_" + filename + "']");
+  };
+
+  cd.fileCaretPos = function(filename) {
+    return $j("[id='file_caret_pos_for_" + filename + "']");
+  };
+
+  cd.fileScrollTop = function(filename) {
+    return $j("[id='file_scroll_top_for_" + filename + "']");
+  };
+
+  cd.fileScrollLeft = function(filename) {
+    return $j("[id='file_scroll_left_for_" + filename + "']");
+  };
+
+  return cd;
+})(cyberDojo || {});
 
 function loadFile(filename) 
 {
   // Important to make sure Editor tab is visible to ensure caretPos() works properly.
   // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-  $j('#editor_tabs').tabs('select', EDITOR_TAB_INDEX);
+  $j('#editor_tabs').tabs('select', $cd.EDITOR_TAB_INDEX);
   
-  var caretPos = fileCaretPos(filename).attr('value');
-  var scrollTop  = fileScrollTop(filename).attr('value');
-  var scrollLeft = fileScrollLeft(filename).attr('value');
-  var code = fileContent(filename).attr('value');
+  var caretPos = $cd.fileCaretPos(filename).attr('value');
+  var scrollTop  = $cd.fileScrollTop(filename).attr('value');
+  var scrollLeft = $cd.fileScrollLeft(filename).attr('value');
+  var code = $cd.fileContent(filename).attr('value');
 
   var editor = $j('#editor');
   editor.val(code);
@@ -35,6 +72,19 @@ function loadFile(filename)
   editor.scrollLeft(scrollLeft);
   
   selectFileInFileList(filename);
+}
+
+function saveFile(filename)
+{
+  // Important to make sure Editor tab is visible to ensure caretPos() works properly.
+  // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
+  $j('#editor_tabs').tabs('select', cyberDojo.EDITOR_TAB_INDEX);
+
+  var editor = $j('#editor');
+  $cd.fileContent(filename).attr('value', editor.val());
+  $cd.fileCaretPos(filename).attr('value', editor.caretPos());
+  $cd.fileScrollTop(filename).attr('value', editor.scrollTop());
+  $cd.fileScrollLeft(filename).attr('value', editor.scrollLeft());
 }
 
 function selectFileInFileList(filename) 
@@ -57,41 +107,7 @@ function selectFileInFileList(filename)
   }
 }
 
-function fileContent(filename) 
-{
-  return $j("[id='file_content_for_" + filename + "']");
-}
 
-function fileCaretPos(filename) 
-{
-  return $j("[id='file_caret_pos_for_" + filename + "']");
-}
 
-function fileScrollLeft(filename)
-{
-  return $j("[id='file_scroll_left_for_" + filename + "']");
-}
-
-function fileScrollTop(filename)
-{
-  return $j("[id='file_scroll_top_for_" + filename + "']");
-}
-
-function sortedFilenames()
-{
-  var filenames = allFilenames();
-  sortFilenames(filenames);
-  return filenames;
-}
-
-function loadNextFile()
-{
-  var previousFilename = currentFilename();
-  var filenames = sortedFilenames();
-  var index = $j.inArray(previousFilename, filenames);
-  var nextFilename = filenames[(index + 1) % filenames.length];
-  saveFile(previousFilename);
-  loadFile(nextFilename);  
-}
 
 
