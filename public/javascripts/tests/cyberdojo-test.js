@@ -26,7 +26,7 @@ TestCase("cyberdojo-Test", {
         <input id="file_content_for_instructions"/>
       </div>
     */
-    assertEquals(['cyberdojo.sh', 'instructions'], $cd.allFilenames());
+    assertEquals(['cyberdojo.sh', 'instructions'], $cd.filenames());
   },
   "test fileAlreadyExists() returns true when it does and false when it doesn't": function() {
     /*:DOC +=
@@ -41,7 +41,7 @@ TestCase("cyberdojo-Test", {
   
   "test sortFilenames() sorts filenames into ascending order": function() {
     var filenames = [ 'a', 'z', 's']
-    $cd.sortFilenames(filenames);
+    filenames.sort();
     var expected = [ 'a', 's', 'z' ]
     assertEquals(expected, filenames);
   },
@@ -118,16 +118,16 @@ TestCase("cyberdojo-Test", {
         </div>        
       </div>
     */
-    assertEquals(['A', 'B', 'C'], $cd.allFilenames());
+    assertEquals(['A', 'B', 'C'], $cd.filenames());
     assertEquals('B', $cd.currentFilename());
     $cd.loadNextFile();
-    assertEquals(['A', 'B', 'C'], $cd.allFilenames());
+    assertEquals(['A', 'B', 'C'], $cd.filenames());
     assertEquals('C', $cd.currentFilename());
     $cd.loadNextFile();
-    assertEquals(['A', 'B', 'C'], $cd.allFilenames());
+    assertEquals(['A', 'B', 'C'], $cd.filenames());
     assertEquals('A', $cd.currentFilename());
     $cd.loadNextFile();
-    assertEquals(['A', 'B', 'C'], $cd.allFilenames());
+    assertEquals(['A', 'B', 'C'], $cd.filenames());
     assertEquals('B', $cd.currentFilename());
   },
   "test makeFileListEntry()": function() {
@@ -246,11 +246,11 @@ TestCase("cyberdojo-Test", {
         </div>        
       </div>
     */
-    assertEquals(['A', 'B', 'C'], $cd.allFilenames());
+    assertEquals(['A', 'B', 'C'], $cd.filenames());
     var filename = 'B';
     assertEquals(filename, $cd.currentFilename());
     $cd.doDelete('B');
-    assertEquals(['A', 'C'], $cd.allFilenames());
-    //assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
+    assertEquals(['A', 'C'], $cd.filenames());
+    assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
   },
 });

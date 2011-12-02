@@ -60,31 +60,13 @@ var cyberDojo = (function($cd) {
 
   $cd.loadNextFile = function() {
     var previousFilename = $cd.currentFilename();
-    var filenames = $cd.sortedFilenames();
+    var filenames = $cd.filenames().sort();
     var index = $j.inArray(previousFilename, filenames);
     var nextFilename = filenames[(index + 1) % filenames.length];
     $cd.saveFile(previousFilename);
     $cd.loadFile(nextFilename);  
   };
-  
-  $cd.sortFilenames = function(filenames) {
-    filenames.sort(function(lhs, rhs) 
-      {
-	if (lhs < rhs)
-	  return -1;
-	else if (lhs > rhs)
-	  return 1;
-	else
-	  return 0; // Should never happen (implies two files with same name)
-      });
-  };
-
-  $cd.sortedFilenames = function() {
-    var filenames = $cd.allFilenames();
-    $cd.sortFilenames(filenames);
-    return filenames;
-  };
-  
+    
   $cd.fileContent = function(filename) {
     return $cd.fileAspect(filename, 'content');
   };

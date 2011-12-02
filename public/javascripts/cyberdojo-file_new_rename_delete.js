@@ -100,8 +100,7 @@ var cyberDojo = (function($cd) {
     $cd.fileScrollTop(filename).remove();  
     $cd.fileScrollLeft(filename).remove();
   
-    $cd.rebuildFilenameList();
-    var filenames = $cd.allFilenames();
+    var filenames = $cd.rebuildFilenameList();
     // cyberdojo.sh cannot be deleted so always at least one file
     $cd.loadFile(filenames[0]);
   };
@@ -122,14 +121,13 @@ var cyberDojo = (function($cd) {
   };
 
   $cd.rebuildFilenameList = function() {
-    var filenames = $cd.allFilenames();
-    $cd.sortFilenames(filenames);
-  
-    var filename_list = $j('#filename_list');
-    filename_list.empty();
+    var filenameList = $j('#filename_list');
+    filenameList.empty();
+    var filenames = $cd.filenames().sort();
     $j.each(filenames, function(n, filename) {
-      filename_list.append($cd.makeFileListEntry(filename));
+      filenameList.append($cd.makeFileListEntry(filename));
     });
+    return filenames;
   };
   
   $cd.jQueryAlert = function(message) {
@@ -190,7 +188,7 @@ var cyberDojo = (function($cd) {
   };
 
   $cd.fileAlreadyExists = function(filename) {
-    return $j.inArray(filename, $cd.allFilenames()) !== -1;
+    return $j.inArray(filename, $cd.filenames()) !== -1;
   };
   $cd.createHiddenInput = function(filename, aspect, value) {
     return $j("<input>", {
@@ -201,7 +199,7 @@ var cyberDojo = (function($cd) {
     });
   };
 
-  $cd.allFilenames = function() {  
+  $cd.filenames = function() {  
     var prefix = 'file_content_for_';
     var filenames = [ ]
     $j('input[id^="' + prefix + '"]').each(function(index) {
@@ -235,10 +233,6 @@ var cyberDojo = (function($cd) {
     
     return div;
   };
-  $cd.rand = function(n) {
-    return Math.floor(Math.random() * n);
-  };
-
   $cd.randomAlphabet = function() {
     return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';  
   };
@@ -252,6 +246,10 @@ var cyberDojo = (function($cd) {
     return $cd.randomChar() + $cd.randomChar() + $cd.randomChar();
   };
   
+  $cd.rand = function(n) {
+    return Math.floor(Math.random() * n);
+  };
+
   $cd.trim = function(s) {
     return s === null ? null : s.replace(/^\s+|\s+$/g,"");
     // $j.trim(s); fails in IE8

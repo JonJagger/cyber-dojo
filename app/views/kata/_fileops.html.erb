@@ -1,4 +1,20 @@
 
+<script language="javascript" type="text/javascript"><!--
+
+$j(document).ready(function() {
+  $j('#file_op_new').click(function() {
+    $cd.newFile(); 
+  });
+  $j('#file_op_rename').click(function() {
+    $cd.renameFile();
+  });
+  $j('#file_op_delete').click(function() {
+    $cd.deleteFile();
+  });  
+});
+
+//--></script>
+
 <% size=25 -%>
 
 <div>
@@ -6,8 +22,7 @@
     <tr>
       <td class="file_op"
           id="file_op_new"
-          title="create a new file"
-          onclick="$cd.newFile();" >
+          title="create a new file">
         <div class="file_op_name">new</div>
         <img src="/images/file-new-icon.png"
              alt="new"
@@ -16,8 +31,7 @@
       </td>
       <td class="file_op"
           id="file_op_rename"
-          title="rename the current file"
-          onclick="$cd.renameFile();" >
+          title="rename the current file">
         <div class="file_op_name">rename</div>
         <img src="/images/file-rename-icon.png"
              alt="rename"
@@ -26,8 +40,7 @@
       </td>
       <td class="file_op"
           id="file_op_delete"
-          title="delete the current file"
-          onclick="$cd.deleteFile();" >
+          title="delete the current file">
         <div class="file_op_name">delete</div>
         <img src="/images/file-delete-icon.png"
              alt="delete"
