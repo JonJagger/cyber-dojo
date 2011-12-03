@@ -40,10 +40,10 @@ class TdGapper
       :td_nos => [ 0, number({:time => now}) ]
     }
     all_incs.each do |avatar_name, incs|
-      an = obj[:avatars][avatar_name] = {}
+      an = obj[:avatars][avatar_name] = { }
       incs.each do |inc|
         tdn = number(inc)
-        an[tdn] ||= [] 
+        an[tdn] ||= [ ] 
         an[tdn] << inc
         obj[:td_nos] << tdn 
       end
@@ -55,14 +55,14 @@ class TdGapper
   def vertical_bleed(s)
     s[:td_nos].each do |n|
       s[:avatars].each do |name,td_map|
-        td_map[n] ||= []
+        td_map[n] ||= [ ]
       end
     end
   end
   
   def collapsed_table(td_nos)
     max_uncollapsed_tds = @max_seconds_uncollapsed / @seconds_per_td
-    obj = {}
+    obj = { }
     td_nos.each_cons(2) do |p|
       diff = p[1] - p[0]
       key = diff < max_uncollapsed_tds ? :tds : :collapsed
@@ -78,7 +78,7 @@ class TdGapper
       count = gi[1]
       s[:avatars].each do |name,td_map|
         if gi[0] == :tds # short gap, show all td's
-          count.times {|n| td_map[td+n+1] = [] }
+          count.times {|n| td_map[td+n+1] = [ ] }
         end
         if gi[0] == :collapsed # long gap, collapse to one td
           td_map[td+1] = { :collapsed => count }
@@ -88,5 +88,14 @@ class TdGapper
     s[:avatars] 
   end
 
+  def traffic_light_count(avatar_gapped)
+    count = 0
+    avatar_gapped.each do |number,content|
+      if content.class == Array
+        count += content.length
+      end
+    end
+    count
+  end
 end
 

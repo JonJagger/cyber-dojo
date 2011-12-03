@@ -6,40 +6,41 @@
 
     <% all_lights = @dojo.all_increments -%>
     <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
-    <% lights = all_lights[avatar_name] -%>    
-    <tr class="<%=parity(index)-%> traffic_light_row">
-    
-      <td>
-        <table>
-          <tr>
-            <% lights.each do |light| -%>
-              <td>
-                <%  in_new_window = false -%>
-                <%= traffic_light(@dojo, avatar_name, light, in_new_window) -%>
-              </td>
-            <% end -%>
-          </tr>
-        </table>
-      </td>
-    
-      <td>
-        <%= avatar_image(avatar_name, 43) -%>
-      </td>
-      
-      <td>
-        <%= render :partial => 'avatar_summary',
-                   :locals => { :avatar_name => avatar_name } -%>
-      </td>
-    
-         <%= render :partial => 'traffic_lights_summary', 
-                    :locals => { :avatar_name => avatar_name, 
-                                 :lights => lights,
-                                 :new_window => false
-                               } -%> 
-    
-    </tr>    
+      <% lights = all_lights[avatar_name] -%>  
+      <% if lights.length > 0 -%>
+        <tr class="<%=parity(index)-%> traffic_light_row">
+        
+          <td>
+            <table>
+              <tr>
+                <% lights.each do |light| -%>
+                  <td>
+                    <%  in_new_window = false -%>
+                    <%= traffic_light(@dojo, avatar_name, light, in_new_window) -%>
+                  </td>
+                <% end -%>
+              </tr>
+            </table>
+          </td>
+        
+          <td>
+            <%= avatar_image(avatar_name, 43) -%>
+          </td>
+          
+          <td>
+            <%= render :partial => 'avatar_summary',
+                       :locals => { :avatar_name => avatar_name } -%>
+          </td>
+        
+             <%= render :partial => 'traffic_lights_summary', 
+                        :locals => { :avatar_name => avatar_name, 
+                                     :lights => lights,
+                                     :new_window => false
+                                   } -%> 
+        </tr>    
+      <% end -%>
     <% end -%>
-  
+ 
   </table>
 </div>
 

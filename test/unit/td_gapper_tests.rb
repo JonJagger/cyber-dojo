@@ -86,9 +86,9 @@ class TdGapperTests < ActionController::TestCase
     }
     expected = 
     {
-      :hippo => { 0 => [], 1 => [ t1 ], 4 => [ t2 ],    5 => [],     7 => [] },
-      :lion  => { 0 => [], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [],     7 => [] },
-      :panda => { 0 => [], 1 => [],     4 => [],        5 => [ t6 ], 7 => [] }
+      :hippo => { 0 => [ ], 1 => [ t1 ], 4 => [ t2 ],    5 => [ ],    7 => [ ] },
+      :lion  => { 0 => [ ], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [ ],    7 => [ ] },
+      :panda => { 0 => [ ], 1 => [ ],    4 => [ ],       5 => [ t6 ], 7 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     s = gapper.stats(all_incs, now)
@@ -132,10 +132,10 @@ class TdGapperTests < ActionController::TestCase
     now = [year,month,day+1,hour,32,23] #td 4327
     max_seconds_uncollapsed = 30 * 60
     seconds_per_td = 20
-    all_incs = {}
+    all_incs = { }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     actual = gapper.fully_gapped(all_incs, now)
-    expected = {}
+    expected = { }
     assert_equal expected, actual    
   end
   
@@ -159,15 +159,47 @@ class TdGapperTests < ActionController::TestCase
     }
     expected = 
     {
-      :hippo => { 0 => [], 1 => [ t1 ], 2 => [], 3 => [], 4 => [ t2 ],    5 => [],     6 => { :collapsed => 4321}, 4327 => [] },
-      :lion  => { 0 => [], 1 => [ t3 ], 2 => [], 3 => [], 4 => [ t4,t5 ], 5 => [],     6 => { :collapsed => 4321}, 4327 => [] },
-      :panda => { 0 => [], 1 => [],     2 => [], 3 => [], 4 => [],        5 => [ t6 ], 6 => { :collapsed => 4321}, 4327 => [] }
+      :hippo => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2 ],    5 => [ ],    6 => { :collapsed => 4321}, 4327 => [ ] },
+      :lion  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [ ],    6 => { :collapsed => 4321}, 4327 => [ ] },
+      :panda => { 0 => [ ], 1 => [ ],    2 => [ ], 3 => [ ], 4 => [ ],       5 => [ t6 ], 6 => { :collapsed => 4321}, 4327 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     actual = gapper.fully_gapped(all_incs, now)
     assert_equal expected, actual
   end
   
+  def test_fully_gapped_traffic_light_count_for_one_avatar
+    year = 2011; month = 5; day = 18; hour = 2;
+    start = Time.mktime(*[year,month,day,hour,30,0])
+    now = [year,month,day+1,hour,32,23] #td 4327
+    max_seconds_uncollapsed = 30 * 60
+    seconds_per_td = 20
+    all_incs =
+    {
+      :hippo => [ t1={ :time => [year,month,day,hour,30,21] }, # 1
+                  t2={ :time => [year,month,day,hour,31,33] }, # 4
+                ],
+      :lion =>  [ t3={ :time => [year,month,day,hour,30,25] }, # 1
+                  t4={ :time => [year,month,day,hour,31,37] }, # 4
+                  t5={ :time => [year,month,day,hour,31,39] }, # 4
+                ],
+      :panda => [ ]
+    }
+    expected = 
+    {
+      :hippo => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2 ],    5 => { :collapsed => 4322}, 4327 => [ ] },
+      :lion  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => { :collapsed => 4322}, 4327 => [ ] },
+      :panda => { 0 => [ ], 1 => [ ],    2 => [ ], 3 => [ ], 4 => [ ],       5 => { :collapsed => 4322}, 4327 => [ ] }
+    }
+    gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
+    actual = gapper.fully_gapped(all_incs, now)
+    assert_equal expected, actual
+    
+    assert_equal 2, gapper.traffic_light_count(actual[:hippo])
+    assert_equal 3, gapper.traffic_light_count(actual[:lion])
+    assert_equal 0, gapper.traffic_light_count(actual[:panda])
+  end
+
 end
 
 # collapsed_table
