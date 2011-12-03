@@ -1,9 +1,7 @@
 
-Ordered
-=======
+====Ordered====
 -------------------------------------------
-Simplify the messages. Messages come from avatar events, not the server.
-Senders avatar image is shown. Traffic light also shown.
+Dashboard does not show a row for an avatar until it has at least 1 traffic light.
 -------------------------------------------
 Dojo times out after 60 minutes.
 -------------------------------------------
@@ -28,7 +26,7 @@ Dojos with no increments are not shown.
 Does not auto refresh.
 Instead has a refresh button?
 Each entry shows
-  name, when(ago), language, kata, mini image for each avatar
+  name, when(ago), language, kata, mini image of each avatar + its number of traffic lights
 Click on the name to open its dashboard.
 -------------------------------------------
 Diff-view of older dojos filters out output as a pseudo filename
@@ -36,8 +34,10 @@ Diff-view of older dojos filters out output as a pseudo filename
 
 
 
-Unordered
-=========
+====Unordered====
+-------------------------------------------
+Simplify the messages. Messages come from avatar events, not the server.
+Senders avatar image is shown. Traffic light also shown.
 -------------------------------------------
 Diff view has up/down buttons to jump between red/green diff sections
 and avoid having to manually scroll.

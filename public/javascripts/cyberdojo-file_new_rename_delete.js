@@ -42,7 +42,7 @@ var cyberDojo = (function($cd) {
     input.keyup(function(event) {
       event.preventDefault();
       var CARRIAGE_RETURN = 13;
-      if (event.keyCode == CARRIAGE_RETURN) {
+      if (event.keyCode === CARRIAGE_RETURN) {
 	var newFilename = $cd.trim(input.val());
 	renamer.dialog('close');
 	$cd.renameFileFromTo(oldFilename, newFilename);
@@ -88,10 +88,11 @@ var cyberDojo = (function($cd) {
 	  }
 	});
     
-    if (ask)
+    if (ask) {
       deleter.dialog('open');
-    else
+    } else {
       $cd.doDelete(filename);
+    }
   };
 
   $cd.doDelete = function(filename) {
@@ -108,7 +109,7 @@ var cyberDojo = (function($cd) {
   $cd.renameFailure = function(oldFilename, newFilename, reason) {
     var space = "&nbsp;";
     var tab = space + space + space + space;
-    var br = "<br/>"
+    var br = "<br/>";
     var why = "CyberDojo could not rename" + br +
 	   br +
 	   tab + oldFilename + br +
@@ -117,7 +118,7 @@ var cyberDojo = (function($cd) {
 	   br +
 	  "because " + reason + ".";
 	  
-    $cd.jQueryAlert(why);
+    $cd.alert(why);
   };
 
   $cd.rebuildFilenameList = function() {
@@ -130,7 +131,7 @@ var cyberDojo = (function($cd) {
     return filenames;
   };
   
-  $cd.jQueryAlert = function(message) {
+  $cd.alert = function(message) {
     $j('<div>')
       .html(message)
       .dialog({
@@ -147,16 +148,17 @@ var cyberDojo = (function($cd) {
   };
 
   $cd.renameFileFromTo = function(oldFilename, newFilename) {
+    var message;
     if (newFilename === "") {
-      var message = "No filename entered" + "<br/>" +
+      message = "No filename entered" + "<br/>" +
 	    "Rename " + oldFilename + " abandoned";
-      $cd.jQueryAlert(message);
+      $cd.alert(message);
       return;
     }
     if (newFilename === oldFilename) {
-      var message = "Same filename entered." + "<br/>" +
+      message = "Same filename entered." + "<br/>" +
 	    oldFilename + " is unchanged";
-      $cd.jQueryAlert(message);
+      $cd.alert(message);
       return;
     }
     if ($cd.fileAlreadyExists(newFilename))
@@ -201,7 +203,7 @@ var cyberDojo = (function($cd) {
 
   $cd.filenames = function() {  
     var prefix = 'file_content_for_';
-    var filenames = [ ]
+    var filenames = [ ];
     $j('input[id^="' + prefix + '"]').each(function(index) {
       var id = $j(this).attr('id');
       var filename = id.substr(prefix.length, id.length - prefix.length);
@@ -212,7 +214,7 @@ var cyberDojo = (function($cd) {
 
   $cd.makeFileListEntry = function(filename) {
     var div = $j("<div>", {
-      class: 'mid_tone filename'
+      'class': 'mid_tone filename'
     });
   
     div.click(function() {
