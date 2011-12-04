@@ -1,8 +1,6 @@
 
 ====Ordered====
 -------------------------------------------
-Dashboard does not show a row for an avatar until it has at least 1 traffic light.
--------------------------------------------
 Dojo times out after 60 minutes.
 -------------------------------------------
 Dojo has 4 coloured rooms and you do not need to know its name to enter.

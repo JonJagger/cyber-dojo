@@ -13,10 +13,10 @@
     
     <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
     
-      <% td_map = gapped[avatar_name] -%>    
-      <% if gapper.traffic_light_count(td_map) != 0-%>      
+      <% if all_lights[avatar_name].length != 0 -%>
         <tr class="<%=parity(index)-%> traffic_light_row">
           
+          <% td_map = gapped[avatar_name] -%>    
           <% all_td_nos = td_map.keys.sort -%>
           <% recent_td_nos = recent(all_td_nos, maximum_columns) -%>
           

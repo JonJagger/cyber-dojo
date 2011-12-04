@@ -88,14 +88,5 @@ class TdGapper
     s[:avatars] 
   end
 
-  def traffic_light_count(avatar_gapped)
-    count = 0
-    avatar_gapped.each do |number,content|
-      if content.class == Array
-        count += content.length
-      end
-    end
-    count
-  end
 end
 
