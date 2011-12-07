@@ -25,6 +25,7 @@ class LanguageFileSetTests < ActionController::TestCase
     'C' => 'untitled.c',
     'C#' => 'Untitled.cs',
     'C++' => 'untitled.cpp',
+    'Erlang' => 'untitled.erl',
     'Java' => 'Untitled.java',
     'Javascript' => 'untitled.js',
     'Perl' => 'untitled.perl',

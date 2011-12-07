@@ -63,6 +63,18 @@ module RunTestsOutputParserHelper
     end
   end
 
+  def parse_eunit(output) 
+    failed_pattern = Regexp.new('Failed: ')
+    passed_pattern = Regexp.new('passed.')
+    if failed_pattern.match(output)
+	    :failed
+    elsif passed_pattern.match(output)
+	    :passed
+    else
+	    :error
+    end
+  end
+	
   def parse_python_unittest(output) 
     failed_pattern = Regexp.new('FAILED \(failures=')
     passed_pattern = Regexp.new('OK')
