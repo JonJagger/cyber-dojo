@@ -166,7 +166,7 @@ I installed support for PHP as follows
 >sudo pear install phpunit/PHPUnit
 >sudo pear install phpunit/PHP_CodeCoverage
 I installed support for Javascript using node. I followed the instructions
-at https://github.com/joyent/node/wiki/Installation  as follows
+at https://github.com/joyent/node/wiki/Installation as follows
 >git clone git://github.com/joyent/node.git
 >cd node
 >git checkout v0.4.11
@@ -175,6 +175,10 @@ at https://github.com/joyent/node/wiki/Installation  as follows
 >[sudo] make install
 >If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
 >need https://github.com/kennethreitz/osx-gcc-installer/downloads
+>Kalervo Kujala added support for Erlang as follows
+>sudo apt-get install erlang
+>sudo apt-get install erlang-eunit
+
 
 
 Adding a new language
