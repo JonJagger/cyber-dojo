@@ -1,15 +1,19 @@
 
 ====Ordered====
 -------------------------------------------
+Page to list previous dojos.
+Dojos with no increments are not shown.
+Does not auto refresh.
+Instead has a refresh button?
+Each entry shows
+  name, when(ago), language, kata, mini image of each avatar + its number of traffic lights
+Click on the name to open its dashboard.
+-------------------------------------------
 Dojo times out after 60 minutes.
 -------------------------------------------
-Dojo has 4 coloured rooms and you do not need to know its name to enter.
+Dojo has 4? coloured rooms and you do not need to know its name to enter.
 Instead there are 4 config files, one for each room. The name of the
 current dojo is stored in the config file. Config file resets when the dojo times-out.
--------------------------------------------
-Dojo creation page offers option to time-out after 15 mins, 30 mins, 45 mins, 60 mins.
--------------------------------------------
-Dojo times out after specified duration.
 -------------------------------------------
 Dojo must be named, but name is "salted in some way" to create sha1 folder id.
 This means the name the user chooses is always acceptable.
@@ -19,13 +23,9 @@ But during a session I don't want to have to load the entire index.rb file to re
 the dojos salt. So the salt information will be stored in the rooms config file
 as well as in the index.rb file.
 -------------------------------------------
-Page to list previous dojos.
-Dojos with no increments are not shown.
-Does not auto refresh.
-Instead has a refresh button?
-Each entry shows
-  name, when(ago), language, kata, mini image of each avatar + its number of traffic lights
-Click on the name to open its dashboard.
+Dojo creation page offers option to time-out after 15 mins, 30 mins, 45 mins, 60 mins.
+-------------------------------------------
+Dojo times out after specified duration.
 -------------------------------------------
 Diff-view of older dojos filters out output as a pseudo filename
 -------------------------------------------
@@ -33,6 +33,13 @@ Diff-view of older dojos filters out output as a pseudo filename
 
 
 ====Unordered====
+-------------------------------------------
+Diff-view for editor-tab display does not work in IE8.
+Perhaps replace the div with a textarea?
+-------------------------------------------
+Ability to start a new dojo session from any diff-view traffic-light
+-------------------------------------------
+Ability to create a new starting fileset from any diff-view traffic-light
 -------------------------------------------
 Simplify the messages. Messages come from avatar events, not the server.
 Senders avatar image is shown. Traffic light also shown.
@@ -58,9 +65,5 @@ Store and use caretPos, scrollTop, scrollLeft for output
 -------------------------------------------
 Each kata comes in three forms. Completely empty, started (eg 2 tests), done but poorly
 and needs refactoring.
--------------------------------------------
-Ability to start a new dojo session from any diff-view traffic-light
--------------------------------------------
-Ability to create a new starting fileset from any diff-view traffic-light
 -------------------------------------------
 
