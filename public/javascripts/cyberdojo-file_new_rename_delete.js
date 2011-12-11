@@ -70,25 +70,24 @@ var cyberDojo = (function($cd, $j) {
   $cd.deleteFilePrompt = function(ask) {
     var filename = $cd.currentFilename();
     
-    var deleter =
-      $j("<div>")
-	.html(filename)
-	.dialog({
-	  autoOpen: false,
-	  title: "delete file",
-	  modal: true,
-	  buttons: {
-	    ok: function() {
-	      $cd.doDelete(filename);
-	      $j(this).dialog('close');
-	    },
-	    cancel: function() {
-	      $j(this).dialog('close');
-	    }
-	  }
-	});
-    
     if (ask) {
+      var deleter =
+	$j("<div>")
+	  .html(filename)
+	  .dialog({
+	    autoOpen: false,
+	    title: "delete file",
+	    modal: true,
+	    buttons: {
+	      ok: function() {
+		$cd.doDelete(filename);
+		$j(this).dialog('close');
+	      },
+	      cancel: function() {
+		$j(this).dialog('close');
+	      }
+	    }
+	  });    
       deleter.dialog('open');
     } else {
       $cd.doDelete(filename);

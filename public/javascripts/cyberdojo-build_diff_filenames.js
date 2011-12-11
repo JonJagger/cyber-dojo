@@ -27,7 +27,7 @@ var cyberDojo = (function($cd, $j) {
       };
     };
     
-    $j.each(diffs, function(n,diff) {
+    $j.each(diffs, function(n, diff) {
       var filename = $j('#' + diff.id);
       filename.click( loadFrom(filename, diff.content, saveTo(filename)) );
       filename.attr('scrollTop', 0);
