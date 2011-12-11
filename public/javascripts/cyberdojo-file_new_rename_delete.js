@@ -1,5 +1,5 @@
 
-var cyberDojo = (function($cd) {
+var cyberDojo = (function($cd, $j) {
   //public
   $cd.newFile = function() {
     // Append three random chars to the end of the filename.
@@ -254,7 +254,7 @@ var cyberDojo = (function($cd) {
   };
 
   return $cd;
-})(cyberDojo || {});
+})(cyberDojo || {}, $j);
 
 
 

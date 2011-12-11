@@ -1,5 +1,5 @@
 
-var cyberDojo = (function($cd) {
+var cyberDojo = (function($cd, $j) {
 
   $cd.buildDiffFilenames = function(diffs) {
     var diffSheet = $j('#diff_sheet');
@@ -36,5 +36,5 @@ var cyberDojo = (function($cd) {
   };
 
   return $cd;
-})(cyberDojo || {});
+})(cyberDojo || {}, $j);
 

@@ -1,5 +1,5 @@
 
-var cyberDojo = (function($cd) {
+var cyberDojo = (function($cd, $j) {
 
   $cd.postTo = function(url, params) {
     var form = $j('<form>');
@@ -23,4 +23,4 @@ var cyberDojo = (function($cd) {
   };
 
   return $cd;
-})(cyberDojo || {});
+})(cyberDojo || {}, $j);

@@ -1,5 +1,5 @@
 
-var cyberDojo = (function($cd) {
+var cyberDojo = (function($cd, $j) {
 
   $cd.runTests = function() {
     $j('#run_tests_button').click();
@@ -31,6 +31,6 @@ var cyberDojo = (function($cd) {
   };
 
   return $cd;
-})(cyberDojo || {});
+})(cyberDojo || {}, $j);
 
 

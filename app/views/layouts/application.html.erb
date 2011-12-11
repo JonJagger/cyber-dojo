@@ -8,9 +8,25 @@
     <meta name="keywords" content="Free Online Coding Dojo Kata Deliberate Software Team Practice" />
     <meta name="author" content="Jon Jagger" />
     <title>CyberDojo <%=@tab_title-%></title>  
-    <%= stylesheet_link_tag :all -%> 
-    <%= javascript_include_tag :all -%>    
+    
+    <link href="/stylesheets/jquery-ui-1.8.16.custom.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/cyber_dojo.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <script src="/javascripts/prototype.js" type="text/javascript"></script>
+    
+    <script src="/javascripts/jquery-1.6.4.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery-caret_pos.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery-hotkeys.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery-tabby.js" type="text/javascript"></script>
+    <script src="/javascripts/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
     <script type="text/javascript">var $j = jQuery.noConflict();</script>
+    
+    <script src="/javascripts/cyberdojo-bind_line_numbers.js" type="text/javascript"></script>
+    <script src="/javascripts/cyberdojo-build_diff_filenames.js" type="text/javascript"></script>
+    <script src="/javascripts/cyberdojo-file_load_save.js" type="text/javascript"></script>
+    <script src="/javascripts/cyberdojo-file_new_rename_delete.js" type="text/javascript"></script>
+    <script src="/javascripts/cyberdojo-post_to.js" type="text/javascript"></script>
+    <script src="/javascripts/cyberdojo-run_tests.js" type="text/javascript"></script>    
     <script type="text/javascript">var $cd = cyberDojo;</script>    
   </head>
   

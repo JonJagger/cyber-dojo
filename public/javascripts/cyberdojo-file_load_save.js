@@ -1,5 +1,5 @@
 
-var cyberDojo = (function($cd) {
+var cyberDojo = (function($cd, $j) {
 
   $cd.EDITOR_TAB_INDEX = 0;
   $cd.OUTPUT_TAB_INDEX = 1;
@@ -45,12 +45,15 @@ var cyberDojo = (function($cd) {
     $j('[id="radio_' + filename + '"]').attr('checked', 'checked');
     $j('#current_filename').attr('value', filename);
     
+    var file_op_rename = $j('#file_op_rename');
+    var file_op_delete = $j('#file_op_delete');
+    
     if (filename === 'cyberdojo.sh') {
-      $j('#file_op_rename').attr('disabled', true);
-      $j('#file_op_delete').attr('disabled', true);
+      file_op_rename.attr('disabled', true);
+      file_op_delete.attr('disabled', true);
     } else {
-      $j('#file_op_rename').removeAttr('disabled');
-      $j('#file_op_delete').removeAttr('disabled');
+      file_op_rename.removeAttr('disabled');
+      file_op_delete.removeAttr('disabled');
     }
   };
 
@@ -88,5 +91,5 @@ var cyberDojo = (function($cd) {
   };
   
   return $cd;
-})(cyberDojo || {});
+})(cyberDojo || {}, $j);
 

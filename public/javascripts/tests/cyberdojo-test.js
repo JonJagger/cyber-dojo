@@ -304,5 +304,4 @@ TestCase("cyberdojo-Test", {
     assertEquals(['A', 'C'], $cd.filenames());
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');    
   },
-
 });
