@@ -30,7 +30,7 @@ var cyberDojo = (function($cd) {
 	buttons: {
 	  ok: function() {
 	    $j(this).dialog('close');
-	    var newFilename = $cd.trim(input.val());
+	    var newFilename = $j.trim(input.val());
 	    $cd.renameFileFromTo(oldFilename, newFilename);
 	  },
 	  cancel: function() {
@@ -43,7 +43,7 @@ var cyberDojo = (function($cd) {
       event.preventDefault();
       var CARRIAGE_RETURN = 13;
       if (event.keyCode === CARRIAGE_RETURN) {
-	var newFilename = $cd.trim(input.val());
+	var newFilename = $j.trim(input.val());
 	renamer.dialog('close');
 	$cd.renameFileFromTo(oldFilename, newFilename);
       }  
@@ -192,6 +192,7 @@ var cyberDojo = (function($cd) {
   $cd.fileAlreadyExists = function(filename) {
     return $j.inArray(filename, $cd.filenames()) !== -1;
   };
+  
   $cd.createHiddenInput = function(filename, aspect, value) {
     return $j("<input>", {
       type: 'hidden',
@@ -250,11 +251,6 @@ var cyberDojo = (function($cd) {
   
   $cd.rand = function(n) {
     return Math.floor(Math.random() * n);
-  };
-
-  $cd.trim = function(s) {
-    return s === null ? null : s.replace(/^\s+|\s+$/g,"");
-    // $j.trim(s); fails in IE8
   };
 
   return $cd;

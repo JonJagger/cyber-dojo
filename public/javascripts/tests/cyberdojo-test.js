@@ -19,7 +19,7 @@ TestCase("cyberdojo-Test", {
         assertNotEquals(-1, generated.indexOf(ch,0));
     }
   },
-  "test allFilenames() finds all filenames": function() {
+  "test filenames() finds all filenames": function() {
     /*:DOC +=
       <div>
         <input id="file_content_for_cyberdojo.sh"/>
@@ -254,4 +254,55 @@ TestCase("cyberdojo-Test", {
     assertEquals(['A', 'C'], $cd.filenames());
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
   },
+  
+  "test deleteFilePrompt(false)": function() {
+    /*:DOC +=
+      <div>
+        <div id="editor_tabs">      
+          <ul>
+            <li><a href="#tab_editor">editor</a></li>
+            <li><a href="#tab_output">output</a></li>
+          </ul>
+          <div id="tab_editor">
+            <textarea id="editor"></textarea>
+          </div>
+          <div id="tab_output">
+            <textarea id="output"></textarea>
+          </div>
+        </div>
+        <div>
+          <input id="file_content_for_A" value="aaaaaaaaaaa"/>
+          <input id="file_content_for_B" value="bbbbbbbbbbb"/>
+          <input id="file_content_for_C" value="ccccccccccc"/>
+        </div>
+        <div>
+          <input id="file_caret_pos_for_A" value="1"/>
+          <input id="file_caret_pos_for_B" value="2"/>
+          <input id="file_caret_pos_for_C" value="3"/>
+        </div>
+        <div>
+          <input id="file_scroll_top_for_A" value="1"/>
+          <input id="file_scroll_top_for_B" value="2"/>
+          <input id="file_scroll_top_for_C" value="3"/>
+        </div>        
+        <div>
+          <input id="file_scroll_left_for_A" value="1"/>
+          <input id="file_scroll_left_for_B" value="2"/>
+          <input id="file_scroll_left_for_C" value="3"/>
+        </div>
+        <div>
+          <input id="radio_A" name="filename" type="radio" value="A"/>
+          <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
+          <input id="radio_C" name="filename" type="radio" value="C"/>
+        </div>        
+      </div>
+    */
+    assertEquals(['A', 'B', 'C'], $cd.filenames());
+    var filename = 'B';
+    assertEquals(filename, $cd.currentFilename());
+    $cd.deleteFilePrompt(false);
+    assertEquals(['A', 'C'], $cd.filenames());
+    assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');    
+  },
+
 });
