@@ -157,6 +157,15 @@ module RunTestsOutputParserHelper
     end
   end
 
+  def parse_jasmine(output)
+     jasmine_pattern = /(\d+) test, (\d+) assertion, (\d+) failure/
+     if jasmine_pattern.match(output)
+        return $3 == "0" ? :passed : :failed
+     else
+        :error
+     end
+  end
+
 end
 
 
