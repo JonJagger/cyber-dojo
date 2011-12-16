@@ -152,12 +152,15 @@ Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself. 
+-----Java
 I installed support for Java as follows
 >sudo apt-get install default-jdk
 (if asked, press tab to select ok, and hit enter to continue)
+-----C#
 I installed support for C# as follows
 >sudo apt-get install mono-gmcs
 >sudo apt-get install nunit-console
+-----PHP
 I installed support for PHP as follows
 >sudo apt-get install php-pear
 >sudo pear channel-discover pear.phpunit.de
@@ -165,6 +168,7 @@ I installed support for PHP as follows
 >sudo pear install PEAR
 >sudo pear install phpunit/PHPUnit
 >sudo pear install phpunit/PHP_CodeCoverage
+-----Javascript
 I installed support for Javascript using node. I followed the instructions
 at https://github.com/joyent/node/wiki/Installation as follows
 >git clone git://github.com/joyent/node.git
@@ -173,12 +177,21 @@ at https://github.com/joyent/node/wiki/Installation as follows
 >./configure
 >make -j2
 >[sudo] make install
+-----C/C++
 >If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
 >need https://github.com/kennethreitz/osx-gcc-installer/downloads
+-----Erlang
 >Kalervo Kujala added support for Erlang as follows
 >sudo apt-get install erlang
 >sudo apt-get install erlang-eunit
-
+-----CoffeeScript
+>Johannes Brodwall added support for CoffeeScript as follows
+>Download node.js from http://nodejs.org/ (http://nodejs.org/dist/v0.6.6/node-v0.6.6.tar.gz)
+> ./configure; make; make install
+> (The rest is a hack because of my imperfect understanding of npm)
+> npm install jasmine-node
+> mv ...../node_modules/jasmine-node /usr/local/lib/node_modules
+> ln -s /usr/local/lib/node_modules/jasmine-node/bin/jasmine-node /usr/local/bin
 
 
 Adding a new language
