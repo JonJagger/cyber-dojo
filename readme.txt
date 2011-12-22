@@ -186,12 +186,8 @@ at https://github.com/joyent/node/wiki/Installation as follows
 >sudo apt-get install erlang-eunit
 -----CoffeeScript
 >Johannes Brodwall added support for CoffeeScript as follows
->Download node.js from http://nodejs.org/ (http://nodejs.org/dist/v0.6.6/node-v0.6.6.tar.gz)
-> ./configure; make; make install
-> (The rest is a hack because of my imperfect understanding of npm)
-> npm install jasmine-node
-> mv ...../node_modules/jasmine-node /usr/local/lib/node_modules
-> ln -s /usr/local/lib/node_modules/jasmine-node/bin/jasmine-node /usr/local/bin
+> install node as per Javascript support
+> sudo npm install --global jasmine-node
 
 
 Adding a new language
