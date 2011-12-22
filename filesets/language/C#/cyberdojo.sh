@@ -1,8 +1,6 @@
-gmcs -t:library Untitled.cs
+gmcs -t:library -r:nunit.framework.dll -out:RunTests.dll *.cs
 if [ $? -eq 0 ]; then
-  gmcs -t:library -r:Untitled.dll -r:nunit.framework.dll UntitledTest.cs
-  if [ $? -eq 0 ]; then
-    nunit-console -nologo UntitledTest.dll
-  fi
+  nunit-console -nologo RunTests.dll
 fi
+
 

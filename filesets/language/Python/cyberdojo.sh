@@ -1,1 +1,1 @@
-python test_untitled.py
+python *test*.py
