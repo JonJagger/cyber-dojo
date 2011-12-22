@@ -16,14 +16,15 @@ module RunTestsOutputParserHelper
   end
 
   def parse_node(output)
-    failed_pattern = Regexp.new('AssertionError')
-    error_pattern = Regexp.new('Error')
-    if failed_pattern.match(output)
-      :failed
-    elsif error_pattern.match(output)
-      :error
-    else
+    failed_pattern = /AssertionError/
+    error_pattern = /Error/
+    success_pattern = /^All tests passed/
+    if output =~ success_pattern
       :passed
+    elsif output =~ failed_pattern
+      :failed
+    else
+      :error
     end
   end
 
