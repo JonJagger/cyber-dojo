@@ -159,6 +159,14 @@ module RunTestsOutputParserHelper
     end
   end
 
+  def parse_scalatest(output)
+    if output =~ /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
+      return $2.to_i == 0 ? :passed : :failed
+    else
+      :error
+    end
+  end
+
   def parse_jasmine(output)
      jasmine_pattern = /(\d+) test, (\d+) assertion, (\d+) failure/
      if jasmine_pattern.match(output)
