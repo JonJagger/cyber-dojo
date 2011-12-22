@@ -146,18 +146,21 @@ Rails version             2.3.8
 
 Installing Languages
 ====================
-Initial filesets for ten languages are provided: C, C++, C#, Objective C, 
-Java, Javascript, Python, Perl, PHP, and Ruby. 
+Initial filesets for twelve languages are provided: C, C++, C#, CoffeeScript,
+Erlang, Java, Javascript, Objective C, Python, Perl, PHP, and Ruby. 
 Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself. 
+-----Java
 I installed support for Java as follows
 >sudo apt-get install default-jdk
 (if asked, press tab to select ok, and hit enter to continue)
+-----C#
 I installed support for C# as follows
 >sudo apt-get install mono-gmcs
 >sudo apt-get install nunit-console
+-----PHP
 I installed support for PHP as follows
 >sudo apt-get install php-pear
 >sudo pear channel-discover pear.phpunit.de
@@ -165,6 +168,7 @@ I installed support for PHP as follows
 >sudo pear install PEAR
 >sudo pear install phpunit/PHPUnit
 >sudo pear install phpunit/PHP_CodeCoverage
+-----Javascript
 I installed support for Javascript using node. I followed the instructions
 at https://github.com/joyent/node/wiki/Installation as follows
 >git clone git://github.com/joyent/node.git
@@ -173,12 +177,19 @@ at https://github.com/joyent/node/wiki/Installation as follows
 >./configure
 >make -j2
 >[sudo] make install
+-----C/C++
 >If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
 >need https://github.com/kennethreitz/osx-gcc-installer/downloads
+-----Erlang
 >Kalervo Kujala added support for Erlang as follows
 >sudo apt-get install erlang
 >sudo apt-get install erlang-eunit
-
+-----CoffeeScript
+>Johannes Brodwall added support for CoffeeScript as follows
+> install node as per Javascript support
+> sudo npm install --global jasmine-node
+-----Scala
+> sudo apt-get install scala
 
 
 Adding a new language

@@ -1,1 +1,1 @@
-node answerTest.js
+node *Test*.js

@@ -16,14 +16,15 @@ module RunTestsOutputParserHelper
   end
 
   def parse_node(output)
-    failed_pattern = Regexp.new('AssertionError')
-    error_pattern = Regexp.new('Error')
-    if failed_pattern.match(output)
-      :failed
-    elsif error_pattern.match(output)
-      :error
-    else
+    failed_pattern = /AssertionError/
+    error_pattern = /Error/
+    success_pattern = /^All tests passed/
+    if output =~ success_pattern
       :passed
+    elsif output =~ failed_pattern
+      :failed
+    else
+      :error
     end
   end
 
@@ -127,9 +128,10 @@ module RunTestsOutputParserHelper
   end
 
   def parse_nunit(output)
-    nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d*)')
-    if match = nunit_pattern.match(output)
-      if match[2] == "0"
+    nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+)), Failures: (\d*)/
+    if output =~ nunit_pattern
+      puts "nunit $2 = #$2, $3 = #$3, $4 = #$4"
+      if $4 == "0" and ($3.blank? or $3 == "0")
         :passed
       else
         :failed
@@ -155,6 +157,23 @@ module RunTestsOutputParserHelper
         :error
       end
     end
+  end
+
+  def parse_scalatest(output)
+    if output =~ /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
+      return $2.to_i == 0 ? :passed : :failed
+    else
+      :error
+    end
+  end
+
+  def parse_jasmine(output)
+     jasmine_pattern = /(\d+) test, (\d+) assertion, (\d+) failure/
+     if jasmine_pattern.match(output)
+        return $3 == "0" ? :passed : :failed
+     else
+        :error
+     end
   end
 
 end
