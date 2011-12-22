@@ -1,1 +1,1 @@
-perl -MTest::Harness -wle 'runtests @ARGV' untitled.t
+perl -MTest::Harness -wle 'runtests @ARGV' *.t

@@ -1,1 +1,2 @@
-ruby test_untitled.rb
+ruby *test*.rb
+

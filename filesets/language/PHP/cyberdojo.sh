@@ -1,1 +1,1 @@
-phpunit --verbose UntitledTest
+phpunit --verbose *Test*
