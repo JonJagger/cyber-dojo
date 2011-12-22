@@ -16,7 +16,7 @@ var cyberDojo = (function($cd) {
     
     function setLine() {
       numbers.scrollTop(editor.scrollTop());   
-    }  
+    }
   };
 
   $cd.lineNumbers = function() {

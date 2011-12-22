@@ -34,6 +34,10 @@ Diff-view of older dojos filters out output as a pseudo filename
 
 ====Unordered====
 -------------------------------------------
+Messages posted by the server will need to change after 60 minute
+limit is live. Drop "reluctant to..." messages. Use simpler messages
+related to actual avatar events.
+-------------------------------------------
 Diff-view for editor-tab display does not work in IE8.
 Perhaps replace the div with a textarea?
 -------------------------------------------

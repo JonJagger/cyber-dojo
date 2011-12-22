@@ -1,6 +1,6 @@
 #include "untitled.hpp"
 #include <cassert>
-#include <cstddef>
+#include <iostream>
 
 static void example()
 {
@@ -16,8 +16,12 @@ static test * tests[] =
 
 int main()
 {
-    for (size_t at = 0; at != sizeof tests / sizeof tests[0]; at++)
+    size_t at;
+    for (at = 0; at != sizeof tests / sizeof tests[0]; at++)
+    {
         tests[at]();
+        std::cout << '.';
+    }
+    std::cout << std::endl << at << " tests passed" << std::endl;
     return 0;
 }
-
