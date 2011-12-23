@@ -400,19 +400,14 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 /* minimal padding around tab label */
 .ui-tabs .ui-tabs-nav li a { padding: .15em 0.75em; font-size: 1.0em; }
 
-/* non-selected tab: match filename radiolist colour */
-.ui-tabs .ui-tabs-nav li a
+.ui-tabs .ui-tabs-nav li a,
+.ui-tabs li.ui-tabs-selected a
 {
-  color: #888888;
+  color: black; 
   background: Cornsilk;
   font-style: normal;
 }
 
-/* selected tab: match filename radiolist colour */
-.ui-tabs li.ui-tabs-selected a
-{
-  color: black;
-  background: Cornsilk;
-  font-style: normal;
-}
+
+
 

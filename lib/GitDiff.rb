@@ -109,7 +109,7 @@ module GitDiff
   #-----------------------------------------------------------
     
   def spaced_line_number(n, max_digits)
-    max_digits = [max_digits,2].max
+    max_digits = [max_digits,3].max
     n = n.to_s
     n = '-' if n == '' 
     digit_count = n.length

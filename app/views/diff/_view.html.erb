@@ -4,6 +4,7 @@
 $j(document).ready(function() {
   $cd.bindLineNumbers($j('#output'), $j('#output_line_numbers'));
   $j('#diff_tabs').tabs();
+  $cd.setOutputTabColourFromMostRecentOutcome();
 });
 
 //--></script>
@@ -11,7 +12,7 @@ $j(document).ready(function() {
 <div id="diff_tabs">
   <ul>
     <li><a href="#tab_editor">editor</a></li>
-    <li><a href="#tab_output">output</a></li>
+    <li id="tab_output_li"><a href="#tab_output">output</a></li>
   </ul>
   
   <div id="tab_editor">

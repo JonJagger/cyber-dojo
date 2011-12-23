@@ -1,38 +1,48 @@
 
 <script language="javascript" type="text/javascript"><!--
 
-function bindRunTests(event)
-{
-  event.stopPropagation();
-  event.preventDefault();
-  $cd.runTests();
-  return false;    
-}
+var cyberDojo = (function($cd, $j) {
 
-function bindLoadNextFile(event)
-{
-  event.stopPropagation();
-  event.preventDefault();
-  $cd.loadNextFile();
-  return false;
-}
+  $cd.bindRunTests = function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    $cd.runTests();
+    return false;    
+  };
+  
+  $cd.bindLoadNextFile = function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    $cd.loadNextFile();
+    return false;
+  };
+  
+  $cd.rebindHotKeys = function(event) {
+    var editor = $j('#editor');
+    var output = $j('#output');
+    
+    var runTestsHotKey = 'Alt+r';
+    var loadNextFileHotKey = 'Alt+f';
+    
+    editor.bind('keydown', runTestsHotKey, $cd.bindRunTests);
+    output.bind('keydown', runTestsHotKey, $cd.bindRunTests);
+    editor.bind('keydown', loadNextFileHotKey, $cd.bindLoadNextFile);
+    output.bind('keydown', loadNextFileHotKey, $cd.bindLoadNextFile);    
+  };
+  
+  return $cd;
+})(cyberDojo || {}, $j);
 
 $j(document).ready(function() {
   var editor = $j('#editor');
   var output = $j('#output');
-
-  editor.bind('keydown', 'Alt+r', bindRunTests);
-  output.bind('keydown', 'Alt+r', bindRunTests);
-  
-  editor.bind('keydown', 'Alt+f', bindLoadNextFile);
-  output.bind('keydown', 'Alt+f', bindLoadNextFile);
-  
+  $cd.rebindHotKeys();  
   editor.tabby({ tabString: editor.attr('tab') });
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
-  
   $j('#editor_tabs').tabs();
   $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
+  $cd.setOutputTabColourFromMostRecentOutcome();
   output.focus();
 });
 
@@ -58,6 +68,7 @@ $j(document).ready(function() {
       <td>
         <div class="panel">
           <%= render :partial => 'fileops' -%>
+          <%= render :partial => 'run_tests' -%>
           <%= render :partial => 'filenames' -%>
         </div>
         <div class="panel">

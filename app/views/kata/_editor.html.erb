@@ -26,8 +26,12 @@ $j(document).ready(function() {
 
 <div id="editor_tabs">
   <ul>
-    <li><a href="#tab_editor">editor</a></li>
-    <li><a href="#tab_output">output</a></li>
+    <li>
+      <a href="#tab_editor">editor</a>
+    </li>
+    <li id="tab_output_li">
+      <a href="#tab_output">output</a>
+    </li>
   </ul>
   <div id="tab_editor">
     <table cellspacing="0" cellpadding="0">
@@ -57,6 +61,7 @@ $j(document).ready(function() {
         </td>
         <td>
           <%= render :partial => 'output' -%>
+          <%= render :partial => 'outcome' -%>
         </td>
       </tr>
     </table>

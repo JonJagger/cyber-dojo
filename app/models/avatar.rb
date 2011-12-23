@@ -87,6 +87,7 @@ class Avatar
     
   def run_tests(manifest, the_kata = @dojo.kata)
     # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
+    incs = [ ]
     io_lock(folder) do
       output = avatar_run_tests(self, the_kata, manifest)      
       test_info = parse(self, the_kata, output)
@@ -96,9 +97,9 @@ class Avatar
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
       manifest[:output] = output
-      #manifest[:visible_files]['output'][:content] = output
       save_run_tests_outcomes(incs, manifest)
     end
+    incs
   end
 
   def folder

@@ -17,6 +17,7 @@ class DiffController < ApplicationController
     diffed_files = git_diff_view(@avatar, tag, manifest)    
     @diffs = git_diff_prepare(diffed_files)
     @output = manifest[:output]
+    @outcome = @traffic_lights_to_tag.last[:outcome]
     @current_filename_id = most_changed_lines_file_id(@diffs)
     @tab_title = 'Diff View'
   end

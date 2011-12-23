@@ -188,6 +188,10 @@ at https://github.com/joyent/node/wiki/Installation as follows
 >Johannes Brodwall added support for CoffeeScript as follows
 > install node as per Javascript support
 > sudo npm install --global jasmine-node
+If you need to install npm
+>curl http://npmjs.org/install.sh | sudo sh
+>If you need to install curl
+>sudo apt-get install curl
 -----Scala
 > sudo apt-get install scala
 

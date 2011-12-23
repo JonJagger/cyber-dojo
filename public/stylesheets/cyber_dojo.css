@@ -190,6 +190,28 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+/* #0F0 green, pen colour ok */
+/* #FC3 amber, pen colour ok */
+/* #F00 red, pen color: #B0B0B0; better */
+  
+#outcome { display: none; }
+
+#output.failed { border-top: 10px solid #F00; background: #F00; }
+#output.error  { border-top: 10px solid #FC3; background: #FC3; }
+#output.passed { border-top: 10px solid #0F0; background: #0F0; }
+
+.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a{ background: #F00; }
+
+.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a.failed { background: #F00; }
+.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a.error  { background: #FC3; }
+.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a.passed { background: #0F0; }
+
+#output_line_numbers.failed { border-top: 10px solid #F00; background: #F00; }
+#output_line_numbers.error  { border-top: 10px solid #FC3; background: #FC3; }
+#output_line_numbers.passed { border-top: 10px solid #0F0; background: #0F0; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
 #all_messages { height: 40em; overflow: auto; }
 
 #message_text, #messages { font-size: 0.8em; }
@@ -288,6 +310,7 @@ pre.diffed_code ln
   padding-right: 2px;
   color: #B0B0B0;
   font-weight: normal;
+  white-space: pre;
 }
 
 .dot { display: inline-block; width: 9px; height: 9px; }
