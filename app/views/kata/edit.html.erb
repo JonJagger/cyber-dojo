@@ -9,9 +9,9 @@ $j(document).ready(function() {
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
   $j('#editor_tabs').tabs();
-  $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
+  $j('#editor_tabs').tabs('select', $cd.EDITOR_TAB_INDEX);
   $cd.setOutputTabColourFromMostRecentOutcome();
-  output.focus();
+  $cd.help("<%=@avatar.name-%>");
 });
 
 //--></script>

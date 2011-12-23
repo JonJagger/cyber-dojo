@@ -25,6 +25,15 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
 
 .avatar_image { margin: 0.2em; }
 
+.floating_avatar_image
+{
+  float: left;
+  margin: 0.2em;
+}
+
+#run_tests { font-size: 1.5em; }
+#post_message_button { font-size: 1.5em; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .name_input { font-size: 1.15em; }
@@ -190,9 +199,13 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-/* #0F0 green, pen colour ok */
-/* #FC3 amber, pen colour ok */
-/* #F00 red, pen color: #B0B0B0; better */
+/* #0F0 green */
+/* #FC3 amber */
+/* #F00 red */
+
+.failed { background: #F00; }
+.error  { background: #FC3; }
+.passed { background: #0F0; }
   
 #outcome { display: none; }
 

@@ -39,7 +39,7 @@ class Avatar
         save_file(sandbox, filename, file)
       end
       
-      kata.manifest[:output] = initial_output_text
+      kata.manifest[:output] = ''
       kata.manifest[:current_filename] = 'instructions'
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
@@ -155,24 +155,6 @@ private
   Increments_filename = 'increments.rb'
   
   Manifest_filename = 'manifest.rb'
-
-  def initial_output_text
-    [ 
-      '',
-      '',
-      '  Click a filename (left) to edit it.',
-      '',
-      '  Click the Run Tests button (top). The test output will appear here.',
-      '  A traffic-light will also appear:',
-      '     (o) red   - the tests ran but one or more failed',
-      '     (o) amber - the tests could not be run',
-      '     (o) green - the tests ran and all passed',
-      '',
-      '  Click any traffic light to view a diff of its files.',
-      '',
-      '  Click the Post button (left) to send a message to everyone.'
-    ].join("\n")
-  end
 
   def most_recent_tag
     command  = "cd #{folder};" +

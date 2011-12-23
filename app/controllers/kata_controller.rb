@@ -11,7 +11,11 @@ class KataController < ApplicationController
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
     increments = @avatar.increments
-    @outcome = increments.last[:outcome] unless increments.empty?
+    if increments.empty?
+      @outcome = 'error'
+    else
+      @outcome = increments.last[:outcome]
+    end
     @tab_title = 'Run Tests'
   end
 
