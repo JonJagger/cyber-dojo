@@ -34,6 +34,22 @@ Diff-view of older dojos filters out output as a pseudo filename
 
 ====Unordered====
 -------------------------------------------
+Hash the all file content (and the file names).
+Store the hash of the most recent run-tests fileset
+on the client. At server recalculate the hash and if
+nothing has changed do not do a commit and do not
+create a traffic light.
+-------------------------------------------
+At dojo creation salt the name provided so it is always ok.
+-------------------------------------------
+At dojo creation add option to name the player and their location.
+-------------------------------------------
+Push current fileset to gist and tweet its location.
+-------------------------------------------
+Add hotkey to switch tabs.
+-------------------------------------------
+Kata of the day.
+-------------------------------------------
 Messages posted by the server will need to change after 60 minute
 limit is live. Drop "reluctant to..." messages. Use simpler messages
 related to actual avatar events.
