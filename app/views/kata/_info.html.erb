@@ -1,31 +1,33 @@
 
-<table>
-  <tr>
-    <td>
-      <% size = 40 -%>
-      <%= link_to image_tag("/images/dojo-home.png",
-          :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
-          {
-            :controller => :dojo,
-            :action => :index,
-            :dojo_name => @dojo.name 
-          },
-            :target => '_blank'
-      %>
-    </td>
-
-    <td>
-       <%= elided_name(@dojo.name, 20) -%>
-    </td>
+<div id="info">
+  <table>
+    <tr>
+      <td>
+        <% size = 40 -%>
+        <%= link_to image_tag("/images/dojo-home.png",
+            :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
+            {
+              :controller => :dojo,
+              :action => :index,
+              :dojo_name => @dojo.name 
+            },
+              :target => '_blank'
+        %>
+      </td>
   
-    <td>
-      <%= avatar_image(@avatar.name, size) -%>
-    </td>
+      <td>
+         <%= elided_name(@dojo.name, 20) -%>
+      </td>
+    
+      <td>
+        <%= avatar_image(@avatar.name, size) -%>
+      </td>
+    
+      <td>
+        <%= @avatar.name.humanize -%>:
+        <%= @avatar.increments.length -%>
+      </td>   
   
-    <td>
-      <%= @avatar.name.humanize -%>:
-      <%= @avatar.increments.length -%>
-    </td>   
-
-  </tr>
-</table>
+    </tr>
+  </table>
+</div>
