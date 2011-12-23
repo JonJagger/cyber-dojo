@@ -1,5 +1,10 @@
 
+require 'Locking'
+
 class DojoController < ApplicationController
+    
+  include Locking
+  extend Locking  
     
   def index
     # offers new, start, resume, dashboard, messages
@@ -56,10 +61,22 @@ class DojoController < ApplicationController
                   :dojo_name => dojo_name
                   
     elsif params[:start]
-      redirect_to :controller => :start,
-                  :action => :choose_avatar, 
-                  :dojo_name => dojo_name
-                  
+      dojo = Dojo.new(params)
+      io_lock(dojo.folder) do
+        available_avatar_names = Avatar.names - dojo.avatar_names
+        if available_avatar_names != [ ]
+          avatar_name = available_avatar_names.shuffle[0]
+          dojo.create_new_avatar_folder(avatar_name)
+          redirect_to :controller => :kata,
+              :action => :edit, 
+              :dojo_name => dojo_name,
+              :avatar => avatar_name
+        else
+          redirect_to :controller => :dojo,
+              :action => :full,
+              :dojo_name => dojo_name
+        end
+      end                  
     elsif params[:resume]
       redirect_to :controller => :resume,
                   :action => :choose_avatar, 
@@ -75,6 +92,12 @@ class DojoController < ApplicationController
                   :action => :show_some, 
                   :dojo_name => dojo_name
     end
+  end
+  
+  def full
+    configure(params)
+    @dojo = Dojo.new(params)
+    @all_avatar_names = Avatar.names
   end
   
   def ifaq

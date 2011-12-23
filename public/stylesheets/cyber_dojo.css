@@ -167,7 +167,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #editor, #output, #diff_sheet
 {
-  background: CornSilk;
+  background-color: CornSilk;
   width: 45em;
 }
 
@@ -192,7 +192,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
   display: block;
   color: #B0B0B0;
   font-weight: normal;
-  background: Cornsilk;
+  background-color: Cornsilk;
   padding-right: 2px;
   width: 2em;
 }

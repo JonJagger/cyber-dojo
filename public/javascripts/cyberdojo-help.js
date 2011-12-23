@@ -2,7 +2,7 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.help = function(avatar) {
-    var imageSize = 40;
+    var imageSize = 50;
     var avatarImageHtml =
         '<img alt="' + avatar + '" class="floating_avatar_image"' +
         'width="' + imageSize + '"' +
@@ -15,11 +15,11 @@ var cyberDojo = (function($cd, $j) {
         '<ul>' +
         li + 'Clicking a filename (on the left) opens it in the editor tab.</li>' +
         li + 'Clicking the Run-Tests button (above the filenames) runs the tests ' +
-            'and displays the result in the output tab:' +
+            'and displays the result in the output tab in...' +
             '<ul>' +
-              li + '<span class="failed">red - the tests ran but one or more failed</span></li>' +
-              li + '<span class="error">amber - the tests could not be run</span></li>' +
-              li + '<span class="passed">green - the tests ran and all passed</span></li>' +
+              li + '<span class="failed">&nbsp;red if the tests ran but one or more failed&nbsp;</span></li>' +
+              li + '<span class="error">&nbsp;amber if the tests could not be run&nbsp;</span></li>' +
+              li + '<span class="passed">&nbsp;green if the tests ran and all passed&nbsp;</span></li>' +
             '</ul>' +
             'A traffic-light will also appear (at the top).<br/>' +
             'Clicking a traffic-light opens a diff-view of its files.' +
@@ -29,7 +29,7 @@ var cyberDojo = (function($cd, $j) {
         '</li>' +
         li + avatarImageHtml + 
           'The avatar for this computer is the ' + avatar + '.<br/>' +
-          'If you need to Resume-Coding please select the ' + avatar + '.' +
+          'If you need to Resume-Coding (from the home page) please select the ' + avatar + '.' +
         '</li>' +
         '</ul>'; 
     
@@ -38,7 +38,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 600,
-        title: "Help",
+        title: "help",
         modal: true,
         buttons: {
           ok: function() {

@@ -81,9 +81,19 @@ Load entire dashboard and diff-data for all avatars in a dojo into
 a single html page that can then be perused without having to go back
 to the server, not even for css.
 -------------------------------------------
-Store and use caretPos, scrollTop, scrollLeft for output
+Store and use caretPos, scrollTop, scrollLeft for output?
 -------------------------------------------
-Each kata comes in three forms. Completely empty, started (eg 2 tests), done but poorly
-and needs refactoring.
+Each kata comes in four forms. Completely empty, started (eg 2 tests), done but poorly
+and needs refactoring, with hidden test-suite.
 -------------------------------------------
+
+
+====Bugs====
+-------------------------------------------
+Occasionally the server becomes non-responsive and all avatars report a 10 second timeout
+when they press the run-tests button.
+When this happens it is best to reboot the server and then get each laptop to resume
+coding as their avatar.
+-------------------------------------------
+
 

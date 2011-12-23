@@ -11,11 +11,12 @@ $j(document).ready(function() {
   $j('#file_op_delete').click(function() {
     $cd.deleteFile();
   });  
+  $j('#file_op_help').click(function() {
+    $cd.help("<%=@avatar.name-%>");
+  });  
 });
 
 //--></script>
-
-<% size=25 -%>
 
 <div>
   <table>
@@ -34,6 +35,11 @@ $j(document).ready(function() {
           id="file_op_delete"
           title="delete the current file">
         <div class="file_op_name">delete<br/>file</div>
+      </td>
+      <td class="file_op"
+          id="file_op_help"
+          title="Show help">
+        <div class="file_op_name">help</div>
       </td>      
     </tr>
   </table>

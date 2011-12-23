@@ -103,14 +103,6 @@ These were the steps I took...
 20. >umount /dev/sdb1
 21. shut down the VBox image
 
-
-Issues
-======
-1. Occasionally the server becomes non-responsive and all avatars report a 10 second timeout
-   when they press the run-tests button.
-   When this happens it is best to reboot the server and then get each laptop to resume
-   coding as their avatar.
-
    
 Building your own CyberDojo from scratch
 ========================================
@@ -323,17 +315,18 @@ To turn it off (and avoid annoying red underlines the code editor)
 Misc Notes
 ==========
 o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in 
-   Ruby in an earlier version of CyberDojo
+   Ruby in a very early version of CyberDojo
 o) http://vimeo.com/8630305 has a video of an even earlier version of CyberDojo
    I submitted as a proposal to the Software Craftsmanship conference 2010.
 o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. 
    Some of what you find is likely to be non-idiomatic. Caveat emptor!
-o) I have worked hard to _remove_ features from CyberDojo. My idea is that the 
+o) I have worked hard to <em>remove</em> features from CyberDojo. My idea is that the 
    simpler the environment the more players will concentrate on the practice and
    the more they will need to collaborate with each other. 
-   Remember the aim of a CyberDojo is _not_ to ship something, it is to 
+   Remember the aim of a CyberDojo is <em>not</em> to ship something, it is to 
    deliberately practice developing software collaboratively.
-o) Olve Maudal and Mike Long have been enthusiastic about CyberDojo from the very early days.
-   Olve and Mike - I really appreciate all your encouragement.
+o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
+   CyberDojo from the very early days.
+   Olve, Mike and Johannes - I really appreciate all your help and encouragement.
