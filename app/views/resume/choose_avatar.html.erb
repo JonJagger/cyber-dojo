@@ -1,9 +1,48 @@
 
+<script language="javascript" type="text/javascript"><!--
+
+function resume(avatar_name) {
+    $cd.postTo('/kata/edit', {
+      dojo_name: "<%=@dojo.name-%>",
+      avatar: avatar_name
+    }, '_blank');
+    
+  setTimeout(function() {
+    window.close();
+  }, 0);
+}
+
+//--></script>
+
 <%= render :partial => 'dojo/banner' -%>
 
-<%= render :partial => 'choose_avatar_grid' -%>
+<div id="choose_avatar_grid">
+  <table align="center"
+         class="panel">
+    <% index = 0 -%>
+    <% size = 100 -%>
+    <% (1..4).each do |_| -%>
+    <tr>
+      <% (1..4).each do |_| -%>
+      <td>
+        <% avatar_name = @all_avatar_names[index] -%>
+        <% if @live_avatar_names.include?(avatar_name) -%>
+          <input type='image'
+                 onclick='resume("<%=avatar_name-%>")'
+                 class='avatar_image'
+                 src="/images/avatars/<%=avatar_name-%>.jpg"
+                 title="Resume <%=avatar_name.humanize-%>"
+                 width="<%=size-%>"
+                 height="<%=size-%>" />          
+        <% else -%>
+          <%= bw_avatar_image(avatar_name, size) -%>
+        <% end -%>      
+        <% index += 1 -%>
+      </td>
+      <% end -%>     
+    </tr>
+    <% end -%>
+  </table>
+  &nbsp;&nbsp;Choose an avatar, click it to resume coding.
+</div>
 
-<%= periodically_call_remote :url => { :action => :choose_avatar_heartbeat,
-                                       :dojo_name => @dojo.name
-                                     }, 
-                             :frequency => 3 -%>

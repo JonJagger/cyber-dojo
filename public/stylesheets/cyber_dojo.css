@@ -49,7 +49,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   -khtml-border-radius: 6px;
   -webkit-border-radius: 6px;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
   background-color: CornSilk;
   text-decoration: none;
   font-weight: normal;

@@ -95,7 +95,6 @@ class Dojo
     @name
   end
   
-  # Called only from start page where player selects their avatar
   def create_new_avatar_folder(avatar_name)
     @created = false
     io_lock(folder) do

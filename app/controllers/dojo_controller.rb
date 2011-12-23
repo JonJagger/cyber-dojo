@@ -48,7 +48,7 @@ class DojoController < ApplicationController
     Dojo.configure(params)
     redirect_to :action => :index, 
                 :dojo_name => dojo_name
-  end
+  end  
   
   def enter
     configure(params)

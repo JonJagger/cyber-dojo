@@ -1,5 +1,0 @@
-
-page.replace 'banner',             :partial => 'dojo/banner'
-page.replace 'choose_avatar_grid', :partial => 'choose_avatar_grid'
-
-
