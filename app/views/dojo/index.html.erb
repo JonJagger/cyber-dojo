@@ -32,13 +32,12 @@ $j(document).ready(function() {
       showMessages(dojo_name, data);
     })
   });
-  
 });
 
 function run(name_input, method, func) {
   var dojo_name = $j('#' + name_input).attr('value');
   if ($j.trim(dojo_name) === '') {
-    $cd.alert("You must enter a name for you CyberDojo.", "");
+    $cd.alert("<h3>You must enter a name.</h3>", "");
   } else {
     $j.getJSON('dojo/' + method + '?dojo_name=' + dojo_name, function(data) {
       func(dojo_name, data);
@@ -48,7 +47,7 @@ function run(name_input, method, func) {
 
 function configureIt(dojo_name, data) {
   if (data.exists) {
-    $cd.alert("A dojo called " + dojo_name + " already exists.", "");
+    $cd.alert("<h3>There is already a dojo called</h3><h2>" + dojo_name + "</h2>", "");  
   } else {    
     $cd.postTo('/dojo/create', { dojo_name: dojo_name });    
   }
@@ -56,9 +55,11 @@ function configureIt(dojo_name, data) {
 
 function startCoding(dojo_name, data) {
   if (data.avatar === "!exists?") {
-    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+    cantFind(dojo_name);
   } else if (data.avatar === "full") {
-    $cd.alert("The dojo called " + dojo_name + " is full.")
+    $cd.alert("<h3>Sorry, but</h3>" +
+              "<h2>" + dojo_name + "</h2>" +
+              "<h3>is full.</h3>", "")
   } else {
     $cd.postTo('/kata/edit', {
       dojo_name: dojo_name,
@@ -69,15 +70,15 @@ function startCoding(dojo_name, data) {
 
 function resumeCoding(dojo_name, data) {
   if (!data.exists) {
-    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+    cantFind(dojo_name);
   } else {
     var grid = $j('<div>');
     grid.load('dojo/resume_avatar_grid?dojo_name=' + dojo_name, function() {
-      var resumer = $j('<div id="resume_dialog">')
+      var resumer = $j('<div id="resume_coding_dialog">')
         .html(grid.html())
         .dialog({
           autoOpen: false,
-          title: "Resume-Coding - click your animal",
+          title: "",
           width: 600,
           modal: true,
           buttons: { cancel: function() { $j(this).dialog('close'); } }
@@ -89,7 +90,7 @@ function resumeCoding(dojo_name, data) {
 
 function showDashboard(dojo_name, data) {
   if (!data.exists) {
-    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+    cantFind(dojo_name);
   } else {
     $cd.postTo('/dashboard/show_inflated', { dojo_name: dojo_name });  
   }
@@ -97,10 +98,14 @@ function showDashboard(dojo_name, data) {
 
 function showMessages(dojo_name, data) {
   if (!data.exists) {
-    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+    cantFind(dojo_name);  
   } else {
     $cd.postTo('/messages/show_some', { dojo_name: dojo_name });  
   }
+}
+
+function cantFind(dojo_name) {
+  $cd.alert("<h3>I can't find a dojo called</h3><h2>" + dojo_name + "</h2>", "");  
 }
 
 //--></script>

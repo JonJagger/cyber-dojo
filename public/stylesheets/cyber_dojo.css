@@ -7,10 +7,10 @@ body
 
 #cyber_dojo_page { text-align: left; color: Green; }
 
-h1 { font-size: 3em;  }
-h2 { font-size: 2em;  }
-h3 { font-size: 1.3em; }
-h1, h2, h3, h4 { text-align: center; margin: 0; }
+h1, h2, h3, h4 { color: Green; text-align: center; margin: 0; }
+h1 { font-size: 3.0em; }
+h2 { font-size: 2.0em;  }
+h3 { font-size: 1.3em;  }
 
 .mid_tone { background-color: CornSilk; }
 
@@ -20,8 +20,6 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   padding: 0.5em; 
   background-color: #FFECCB; 
 }
-
-.notice { color: Red; }
 
 .avatar_image { margin: 0.2em; }
 
@@ -75,7 +73,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   font-size: 12pt;
   color: black;
   background-color: CornSilk;
-  border: 1px dashed lightgray;
+  border: 1px dashed LightGray;
   padding: 5px;
 }
 
@@ -84,7 +82,7 @@ h1, h2, h3, h4 { text-align: center; margin: 0; }
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
   font-size: 0.8em;
-  color: green;
+  color: Green;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -122,7 +120,7 @@ div[class~="filename"],
 .file_op[disabled]
 {
   cursor: default;
-  background-color: lightgray;
+  background-color: LightGray;
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8;     
 }
