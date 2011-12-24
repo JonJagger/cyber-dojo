@@ -4,6 +4,6 @@ describe 'jasmine-node', ->
 
   it 'should pass', ->
     untitled = new imports.Untitled()
-    expect(untitled.answer()).toEqual 42
+    expect(untitled.answer()).toEqual 6*9
 
 

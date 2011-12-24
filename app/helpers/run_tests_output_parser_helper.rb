@@ -15,6 +15,14 @@ module RunTestsOutputParserHelper
     inc
   end
 
+  def parse_scalatest(output)
+    if output =~ /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
+      return $2.to_i == 0 ? :passed : :failed
+    else
+      :error
+    end
+  end
+
   def parse_node(output)
     failed_pattern = /AssertionError/
     error_pattern = /Error/

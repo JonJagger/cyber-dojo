@@ -130,12 +130,12 @@ var cyberDojo = (function($cd, $j) {
     return filenames;
   };
   
-  $cd.alert = function(message) {
+  $cd.alert = function(message, title) {
     $j('<div>')
       .html(message)
       .dialog({
 	autoOpen: false,
-	title: "alert",
+	title: typeof(title) !== 'undefined' ? title : "alert",
 	modal: true,
 	buttons: {
 	  ok: function() {
