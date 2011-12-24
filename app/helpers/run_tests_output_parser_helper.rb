@@ -1,4 +1,10 @@
 
+# If a player creates a cyberdojo.sh file which runs two
+# test files then it's possible the first one will pass and
+# the second one will have a failure. Because of this the
+# regex's below should test for failed/error before passing.
+# TODO: Some of them don't do that.
+
 module RunTestsOutputParserHelper
 
   #  :failed - this means the tests ran but at least one failed
@@ -112,15 +118,6 @@ module RunTestsOutputParserHelper
   end
 
   def parse_ruby_test_unit(output)
-    # If a player creates a cyberdojo.sh file with two lines
-    # ruby test_gapper.rb
-    # ruby test_git_diff.rb
-    # then it's possible the first one will pass and the second
-    # one will have a failure. The regex below won't detect that.
-    # Not sure if this is a bug or not. In a dojo should you be
-    # doing a simple small kata which should only have one test 
-    # class?
-
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
       if match[4] != "0"
@@ -148,6 +145,20 @@ module RunTestsOutputParserHelper
     end
   end
 
+  def parse_nunit_2_5(output)
+    nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+)), Failures: (\d*)/
+    if output =~ nunit_pattern
+      puts "nunit $2 = #$2, $3 = #$3, $4 = #$4"
+      if $4 == "0" and ($3.blank? or $3 == "0")
+        :passed
+      else
+        :failed
+      end
+    else
+      :error
+    end
+  end
+  
   def parse_junit(output)
     junit_pass_pattern = Regexp.new('^OK \((\d*) test')
     if match = junit_pass_pattern.match(output)
