@@ -1,7 +1,112 @@
 
+<script language="javascript" type="text/javascript"><!--
+
+$j(document).ready(function() {
+
+  $j('#configure_it').click(function() {
+    run('config_name_input', "exists_json", function(dojo_name, data) {
+      configureIt(dojo_name, data);
+    })
+  });
+  
+  $j('#start_coding').click(function() {
+    run('configured_name_input', "start_choose_avatar_json", function(dojo_name, data) {
+      startCoding(dojo_name, data);
+    })
+  });
+  
+  $j('#resume_coding').click(function() {
+    run('configured_name_input', "exists_json", function(dojo_name, data) {
+      resumeCoding(dojo_name, data);
+    })
+  });
+  
+  $j('#show_dashboard').click(function() {
+    run('configured_name_input', "exists_json", function(dojo_name, data) {
+      showDashboard(dojo_name, data);
+    })
+  });
+  
+  $j('#show_messages').click(function() {
+    run('configured_name_input', "exists_json", function(dojo_name, data) {
+      showMessages(dojo_name, data);
+    })
+  });
+  
+});
+
+function run(name_input, method, func) {
+  var dojo_name = $j('#' + name_input).attr('value');
+  if ($j.trim(dojo_name) === '') {
+    $cd.alert("You must enter a name for you CyberDojo.", "");
+  } else {
+    $j.getJSON('dojo/' + method + '?dojo_name=' + dojo_name, function(data) {
+      func(dojo_name, data);
+    });
+  }
+}
+
+function configureIt(dojo_name, data) {
+  if (data.exists) {
+    $cd.alert("A dojo called " + dojo_name + " already exists.", "");
+  } else {    
+    $cd.postTo('/dojo/create', { dojo_name: dojo_name });    
+  }
+}
+
+function startCoding(dojo_name, data) {
+  if (data.avatar === "!exists?") {
+    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+  } else if (data.avatar === "full") {
+    $cd.alert("The dojo called " + dojo_name + " is full.")
+  } else {
+    $cd.postTo('/kata/edit', {
+      dojo_name: dojo_name,
+      avatar: data.avatar
+    }, '_blank');
+  }
+}
+
+function resumeCoding(dojo_name, data) {
+  if (!data.exists) {
+    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+  } else {
+    var grid = $j('<div>');
+    grid.load('dojo/resume_avatar_grid?dojo_name=' + dojo_name, function() {
+      var resumer = $j('<div id="resume_dialog">')
+        .html(grid.html())
+        .dialog({
+          autoOpen: false,
+          title: "Resume-Coding - click your animal",
+          width: 600,
+          modal: true,
+          buttons: { cancel: function() { $j(this).dialog('close'); } }
+        });
+      resumer.dialog('open');
+    });
+  }
+}
+
+function showDashboard(dojo_name, data) {
+  if (!data.exists) {
+    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+  } else {
+    $cd.postTo('/dashboard/show_inflated', { dojo_name: dojo_name });  
+  }
+}
+
+function showMessages(dojo_name, data) {
+  if (!data.exists) {
+    $cd.alert("There is no dojo called " + dojo_name + ".", "");
+  } else {
+    $cd.postTo('/messages/show_some', { dojo_name: dojo_name });  
+  }
+}
+
+//--></script>
+
 <%= render :partial => 'dojo/title',
            :locals => { :title => @title } -%>
-
 <table>
   <tr>
     <td>
@@ -12,152 +117,85 @@
     <td>
       &nbsp;First, on <em>one</em> computer, choose your CyberDojo's name:
       <div class="panel">
-        <form action="/dojo/new">
-          <div>
-            <input type="text"
-                   class="name_input"
-                   name="dojo_name"
-                   size="15"
-                   value="" />
-            and
-            <input type="submit"
-                   class="main button"
-                   id="new_button"
-                   name="new"
-                   value="Configure-It" />
-            <% if flash[:new_notice] -%>
-              <div class="notice"><%= flash[:new_notice] -%></div>
-            <% end -%>
-          </div>
-        </form>
+        <table>
+          <tr>
+            <td>
+              <input type="text"
+                     class="name_input"
+                     id="config_name_input"
+                     size="15"
+                     value="" />
+            </td>
+            <td>and</td>
+            <td>
+              <input type="button"
+                     class="main button"
+                     id="configure_it"
+                     value="Configure-It" />
+            </td>
+          </tr>
+        </table>
       </div>
     </td>
   </tr>
   
   <tr>
     <td>
-    
       &nbsp;Then, on <em>each</em> computer, type in your CyberDojo's name:
-      
-    <div class="panel">
-
-      <!-- Chrome has a bug whereby only the first form submit actually submits. This is a work-around -->      
-      <form action="/dojo/enter?r="
-            method="post" onsubmit="this.action=this.action+'1'"
-            target="_blank">
-      
+      <div class="panel">
         <table>
-            <tr>
-              <td>
-          <input type="text"
-                 class="name_input"
-                 name="dojo_name"
-                 size="15"
-                 value="<%=@dojo_name-%>" />
-               </td>
-               <td>and</td>
-          <td>         
-          <input type="submit"
-                 class="main button"
-                 name="start"
-                 id="start_button"
-                 value="Start-Coding" />
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>or</td>
-          <td>
-          <input type="submit"
-                 class="main button"
-                 name="resume"
-                 id="resume_button"
-                 value="Resume-Coding" />
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>or</td>
-          <td>
-          <input type="submit"
-                 class="main button"
-                 name="dashboard"
-                 id="dashboard_button"
-                 value="Show-Dashboard" />
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>or</td>
-          <td>
-          <input type="submit"
-                 class="main button"
-                 name="messages"
-                 id="messages_button"
-                 value="Show-Messages" />
-          </td>
-        </tr>
-      </table>
-                 
-          <% if flash[:notice] -%>
-            <div class="notice"><%= flash[:notice] -%></div>
-          <% end -%>
-        </form>
+          <tr>
+            <td>
+              <input type="text"
+                     class="name_input"
+                     id="configured_name_input"
+                     size="15"
+                     value="<%=@dojo_name-%>" />
+            </td>
+            <td>and</td>
+            <td>         
+              <input type="button"
+                     class="main button"
+                     id="start_coding"
+                     value="Start-Coding" />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>or</td>
+            <td>
+              <input type="button"
+                     class="main button"
+                     id="resume_coding"
+                     value="Resume-Coding" />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>or</td>
+            <td>
+              <input type="button"
+                     class="main button"
+                     id="show_dashboard"
+                     value="Show-Dashboard" />
+            </td>
+          </tr>          
+          <tr>
+            <td></td>
+            <td>or</td>
+            <td>
+              <input type="button"
+                     class="main button"
+                     id="show_messages"
+                     value="Show-Messages" />
+            </td>
+          </tr>          
+        </table>
       </div>
-
-    </td>
+    <td>
   </tr>
 
-  <tr>
-    <td align="center">
-      <a href="http://jonjagger.blogspot.com/p/cyberdojo.html">CyberDojo</a> 
-      <a href="http://www.virtualbox.org/">VirtualBox</a>      
-      <a href="http://www.turnkeylinux.org/">TurnKey Linux</a>
-      <a href="http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova/">image download</a>
-    </td>
-  </tr>
-  
-  <tr>
-    <td align="center">
-      <%= link_to 'Conceived', 
-        { :controller => :dojo, :action => :conceived }
-      -%>
-      and implemented by 
-      <a href="http://jonjagger.blogspot.com/">Jon Jagger</a>
-    </td>
-  </tr>
-  
-  <tr>
-    <td align="center">
-      <a href="https://github.com/JonJagger/cyberdojo">Gihthub source</a>
-      
-      <%= link_to 'Tips', 
-        { :controller => :dojo, :action => :tips }
-      -%>
-      
-      <%= link_to 'inFrequently Asked Questions', 
-        { :controller => :dojo, :action => :ifaq }
-      -%>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      <a href="http://www.accu.org">
-        <img src="/images/accu_button.gif" 
-             style="border:none;" 
-             width="100"
-             height="50" 
-             title="ACCU is an organisation of programmers who care about professionalism in programming and are dedicated to raising the standard of programming. "/>
-      </a>
-    </td>
-  </tr>
-  
-  <tr>
-    <td align="center">
-      <a href="http://www.MasteringAgilePractice.com">http://www.MasteringAgilePractice.com</a> 
-    </td>
-  </tr>
+  <%= render :partial => 'links' -%>
 
 </table>
 
