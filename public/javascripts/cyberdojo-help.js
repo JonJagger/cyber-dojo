@@ -9,36 +9,95 @@ var cyberDojo = (function($cd, $j) {
         'height="' + imageSize + '"' +
         'src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
         
-    var li = '<li style="margin: .5em 0;">';
+    var br = '<br/>';
     
-    var welcomeHtml =
-        '<ul>' +
-        li + 'Clicking the Run-Tests button runs the tests ' +
-            'and displays the result in the output tab in...' +
-            '<ul>' +
-              li + '<span class="failed">&nbsp;red if the tests ran but one or more failed&nbsp;</span></li>' +
-              li + '<span class="error">&nbsp;amber if the tests could not be run&nbsp;</span></li>' +
-              li + '<span class="passed">&nbsp;green if the tests ran and all passed&nbsp;</span></li>' +
-            '</ul>' +
-            'A traffic-light will also appear (along the top).<br/>' +
-            'Clicking a traffic-light opens a diff-view of its files.' +
-        '</li>' +
-        li + 'Clicking a filename opens it in the editor tab.</li>' +
-        li + 'Clicking the Post button sends a message ' +
-             'to everyone else in this dojo.' +
-        '</li>' +
-        li + avatarImageHtml + 
-          'The avatar for this computer is the ' + avatar + '.<br/>' +
-          'If you need to Resume-Coding (from the home page) please select the ' + avatar + '.' +
-        '</li>' +
-        '</ul>'; 
+    var welcomeHtml = ''
+      + '<div>'
+        + '<input type="button" class="button" value="Run-Tests"/>'
+        + ' to create a new traffic-light and display the'
+        + ' test result in the output tab in '
+        +   '<span class="failed">&nbsp;red&nbsp;</span> if the tests ran but one or more failed,</li>'
+        +   '<span class="error">&nbsp;amber&nbsp;</span> if the tests could not be run, </li>'
+        +   '<span class="passed">&nbsp;green&nbsp;</span> if the tests ran and all passed.</li>'
+      + '</div>'
+      
+      + br
+      
+      + '<div>'
+        + '<table>'
+          + '<tr>'
+            + '<td>'
+              + '<div class="mid_tone filename">'
+              +   '<input type="radio"'
+              +          'name="filename"'
+              +          'value="filename"/>'
+              +   '<label>filename</label>'
+              + '</div>'
+            + '</td>'
+            + '<td>to open a file for editing.</td>'
+          + '</tr>'
+        + '</table>'
+      + '</div>'
+              
+      + br
+      
+      + '<div>'
+        + '<table>'
+        + '<tr>'
+        + '<td>'
+        +   '<div class="traffic_light">'
+        +     '<span class="failed bulb"></span>'
+        +     '<span class="off bulb"></span>'
+        +     '<span class="off bulb"></span>'
+        +   '</div>'
+        + '</td>'
+        + '<td>'
+        +   '<div class="traffic_light">'
+        +     '<span class="off bulb"></span>'
+        +     '<span class="error bulb"></span>'
+        +     '<span class="off bulb"></span>'
+        +   '</div>'
+        + '</td>'
+        + '<td>'
+        +   '<div class="traffic_light">'
+        +     '<span class="off bulb"></span>'
+        +     '<span class="off bulb"></span>'
+        +     '<span class="passed bulb"></span>'
+        +   '</div>'
+        + '</td>'
+        + '<td>to view a diff.</td>'
+        + '</tr>'
+        + '</table>'
+      + '</div>'
+      
+      + '<br/>'
+      
+      + '<div>'
+        + '<input type="button" class="button" value="Post"/>'
+        + ' to send a message to everyone doing the kata.</li>'
+      + '</div>'
+        
+      + br
+      
+      + '<div>'
+        + '<img width="40" height="40" src="/images/dojo-home.png"/>'
+        + '  to go to the home page.'
+      + '</div>'
+      
+      + br
+        
+      + avatarImageHtml
+      + 'If you need to '
+      + '<input type="button" class="button" value="Resume-Coding"/>'
+      + ' please remember that this computer is the ' + avatar + '.'
+      + '';
     
     var welcome = $j('<div>')
       .html(welcomeHtml)
       .dialog({
         autoOpen: false,
         width: 600,
-        title: "help",
+        title: "Click...",
         modal: true,
         buttons: {
           ok: function() {

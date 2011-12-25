@@ -1,4 +1,17 @@
 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var dojo_name = "<%=@dojo.name-%>";
+
+$j(document).ready(function() {
+  $j('#message_elision').click(function() {
+    $cd.postTo('/messages/show_all', { dojo_name: dojo_name }, "_blank");
+  });
+});
+
+//--></script>
+
 <div id="messages">
   <% max_messages = 9 -%>
   <% some = recent(@messages, max_messages) -%>  
@@ -16,19 +29,11 @@
   <% end -%>
   
   <% if @messages.length > max_messages -%>
-      <div class="message_elision">      
-        <%= link_to "<span class='button'>...</span>", 
-            { 
-              :controller => :messages, 
-              :action => :show_all,
-              :dojo_name => @dojo.name 
-            }, 
-            {
-              :title => "Show all messages",
-              :target => "_blank"
-            }
-        -%>
-      </div>
+    <input type="button"
+           class="button"
+           id="message_elision"
+           title="Show all messages"
+           value="..."/>
   <% end -%>
 </div>
 

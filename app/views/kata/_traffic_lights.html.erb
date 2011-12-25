@@ -50,6 +50,20 @@
         </td>          
       <% end -%>
       
+      <td>
+        <%= avatar_image(@avatar.name, 40) -%>
+      </td>
+      
+      <td>
+        <%= @avatar.name.humanize -%>
+      </td>   
+      
+      <td>
+        <div class="traffic_light_number">
+          <%= @avatar.increments.length -%>
+        </div>
+      </td>
+      
     </tr>      
   </table>
 </div>

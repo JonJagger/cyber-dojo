@@ -11,7 +11,7 @@ $j(document).ready(function() {
   $j('#file_op_delete').click(function() {
     $cd.deleteFile();
   });  
-  $j('#file_op_help').click(function() {
+  $j('#help').click(function() {
     $cd.help("<%=@avatar.name-%>");
   });  
 });
@@ -40,9 +40,9 @@ $j(document).ready(function() {
         &nbsp;&nbsp;
       </td>
       <td class="file_op"
-          id="file_op_help"
+          id="help"
           title="Show help">
-        <div class="file_op_name">help</div>
+        <div class="file_op_name">?</div>
       </td>      
     </tr>
   </table>

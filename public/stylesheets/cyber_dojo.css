@@ -142,7 +142,7 @@ div[class~="filename"],
   border-radius: 20px;
   -moz-border-radius: 20px;
   -khtml-border-radius: 20px;
-  -webkit-border-radius: 20px;  
+  -webkit-border-radius: 20px;
 }
 
    *[class~="fileset"]:hover, 
@@ -207,7 +207,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .failed { background: #F00; }
 .error  { background: #FC3; }
 .passed { background: #0F0; }
-  
+
 #outcome { display: none; }
 
 #output.failed { border-top: 10px solid #F00; background: #F00; }
@@ -254,8 +254,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 .message_text { vertical-align: middle; }
 
-.message_elision { margin-top: 1em; text-align: right; }
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
 #seconds_per_column,
@@ -283,7 +281,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .traffic_light
 {
   background: LightGray;
-  padding: 1px;
+  padding: 2px;
   border-radius: 8px;
   -moz-border-radius: 8px;
   -khtml-border-radius: 8px;
@@ -315,13 +313,30 @@ div[class~="filename"]:after  { content: "\00a0";  }
   -webkit-border-radius: 20px;
 }
 
-.traffic_light .bulb.failed { background-color: #F00; /* red   */ }
-.traffic_light .bulb.error  { background-color: #FC3; /* amber */ }
-.traffic_light .bulb.passed { background-color: #0F0; /* green */ }
-.traffic_light .bulb.off    { background-color: #E8E8E8; /* light grayish;*/ }
+.traffic_light .bulb.failed
+{
+  background-color: #F00; /* red   */
+  border: 1px solid #F00;
+}
+.traffic_light .bulb.error
+{
+  background-color: #FC3; /* amber */
+  border: 1px solid #FC3;
+}
+.traffic_light .bulb.passed
+{
+  background-color: #0F0; /* green */
+  border: 1px solid #0F0;
+}
+
+.traffic_light .bulb.off
+{
+  background-color: GhostWhite; /* #FFC */
+  border: 1px solid GhostWhite;
+}
 
 .traffic_light_ellision { font-size: 0.8em; }
-.traffic_light_number   { font-size: 0.9em; text-align: center; display: block; }
+.traffic_light_number   { font-size: 1.5em; text-align: center; display: block; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -353,6 +368,4 @@ pre.diffed_code ln
 .diff_dots { color: #383838; font-size: 0.7em; }
 
 .diff_dots.on:after  { content: '...'; }
-.diff_dots.off:after { content: '\00a0\00a0\00a0'; } /* \00a0 is a retained space */
-
-
+.diff_dots.off:after { content: '\00a0\00a0\00a0'; }
