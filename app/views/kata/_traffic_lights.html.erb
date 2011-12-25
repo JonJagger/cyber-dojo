@@ -35,8 +35,8 @@
               <tr>
                 <% td.each do |light| -%>
                   <td>
-                    <%  in_new_window = true -%>
-                    <%= traffic_light(@dojo, @avatar.name, light, in_new_window) -%>
+                    <%  in_new_page = true -%>
+                    <%= traffic_light(@dojo, @avatar.name, light, in_new_page) -%>
                   </td>
                 <% end -%>
               </tr>

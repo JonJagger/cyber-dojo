@@ -239,7 +239,15 @@ div[class~="filename"]:after  { content: "\00a0";  }
   font-size: 1em;
 }
   
-.message_container { display: block; margin-top: 0.2em; }
+.message_container
+{
+  display: block;
+  margin-top: 0.2em;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
 
 .message_container.even { background-color: Ivory; }
 .message_container.odd  { background-color: CornSilk; }
@@ -258,10 +266,29 @@ div[class~="filename"]:after  { content: "\00a0";  }
   text-align: center; 
 }
 
-.traffic_light_row.even { background-color: #FFC; }
-.traffic_light_row.odd  { background-color: Ivory; }
-
 /* - - - - - - - - - - - - - - - - - - - - */
+
+.traffic_light_row td
+{
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  -webkit-border-radius: 8px;  
+}
+
+.traffic_light_row.even td { background-color: #FFC; }
+
+.traffic_light_row.odd td  { background-color: Ivory; }
+
+.traffic_light
+{
+  background: LightGray;
+  padding: 1px;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -khtml-border-radius: 8px;
+  -webkit-border-radius: 8px;
+}
 
 .traffic_light:hover 
 { 
@@ -291,7 +318,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .traffic_light .bulb.failed { background-color: #F00; /* red   */ }
 .traffic_light .bulb.error  { background-color: #FC3; /* amber */ }
 .traffic_light .bulb.passed { background-color: #0F0; /* green */ }
-.traffic_light .bulb.off    { background-color: #D8D8D8; /* gray;*/ }
+.traffic_light .bulb.off    { background-color: #E8E8E8; /* light grayish;*/ }
 
 .traffic_light_ellision { font-size: 0.8em; }
 .traffic_light_number   { font-size: 0.9em; }
