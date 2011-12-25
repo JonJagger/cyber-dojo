@@ -321,7 +321,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .traffic_light .bulb.off    { background-color: #E8E8E8; /* light grayish;*/ }
 
 .traffic_light_ellision { font-size: 0.8em; }
-.traffic_light_number   { font-size: 0.9em; }
+.traffic_light_number   { font-size: 0.9em; text-align: center; display: block; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
