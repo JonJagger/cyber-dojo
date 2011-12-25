@@ -39,7 +39,7 @@ function selectLanguage(index) {
         <tr>
           <td>
             <div>
-              <span class="choose_title">Katas</span>
+              <span class="choose_title">Exercises</span>
             </div>
             
             <% @katas.each_with_index do |choice,index| -%>
@@ -94,13 +94,13 @@ function selectLanguage(index) {
         </tr>
       </table>
       
-      <table>
+      <table class="panel">
         <tr>
           <td valign="top">
             <input id="save_button" 
                    class="main button"
                    type="submit" 
-                   value="Save Config" 
+                   value="Save" 
                    name="save" />
           </td>
         </tr>
