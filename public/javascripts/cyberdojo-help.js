@@ -80,7 +80,7 @@ var cyberDojo = (function($cd, $j) {
       + br
       
       + '<div>'
-        + '<img width="40" height="40" src="/images/dojo-home.png"/>'
+        + '<img width="40" height="40" src="/images/avatars/cyber-dojo.png"/>'
         + '  to go to the home page.'
       + '</div>'
       
