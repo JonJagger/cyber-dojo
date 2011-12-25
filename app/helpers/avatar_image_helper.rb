@@ -3,7 +3,7 @@ module AvatarImageHelper
   def avatar_image(one, size)
 
     one = one.downcase
-    if one == 'compass'
+    if one == 'cyber-dojo'
       ext = 'png'
     else
       ext = 'jpg'

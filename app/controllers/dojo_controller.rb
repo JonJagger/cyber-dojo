@@ -47,7 +47,7 @@ class DojoController < ApplicationController
   
   def index
     # offers configure, start, resume, dashboard, messages
-    @title = 'Deliberate Software' + '<br/>' + 'Team Practice'
+    @title = 'CyberDojo' #'Deliberate Software' + '<br/>' + 'Team Practice'
     configure(params)
     @dojo_name = dojo_name
     @tab_title = 'Home Page'
