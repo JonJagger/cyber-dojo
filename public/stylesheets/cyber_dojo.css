@@ -18,7 +18,7 @@ h3 { font-size: 1.3em;  }
 { 
   border: 5px solid GhostWhite; 
   padding: 0.5em; 
-  background-color: #FFECCB; 
+  background-color: #FFECCB;
 }
 
 .avatar_image { margin: 0.2em; }
@@ -42,10 +42,10 @@ h3 { font-size: 1.3em;  }
 
 .button
 {
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  -webkit-border-radius: 6px;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  -webkit-border-radius: 20px;
   cursor: pointer;
   padding: 6px;
   background-color: CornSilk;
@@ -105,16 +105,17 @@ input+label
 div[class~="filename"], 
   *[class~="fileset"]
 { 
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  -webkit-border-radius: 6px;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  -webkit-border-radius: 20px;
 }
 
 .file_op 
 { 
   padding: 4px; 
   background-color: CornSilk;
+  padding: 0 0.5em 0 0.5em; /* Top Right Bottom Left */
 } 
 
 .file_op[disabled]
@@ -132,14 +133,16 @@ div[class~="filename"],
   *[class~="fileset"]
 {
   margin: 0.25em;
-  padding-right: 0.5em;
-  padding-bottom: 2px;  
   color: #888888;
   font-size: 15pt;
   cursor: pointer;
   white-space: nowrap;
   border-bottom: 1px solid #A8A8A8;
-  border-right:  1px solid #A8A8A8; 
+  border-right:  1px solid #A8A8A8;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  -webkit-border-radius: 20px;  
 }
 
    *[class~="fileset"]:hover, 
@@ -250,20 +253,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
 #seconds_per_column,
 #maximum_columns 
 { 
-  font-size: 0.8em; 
+  font-size: 1em; 
   width: 3em; 
   text-align: center; 
-}
-
-.inflate.button,
-.deflate.button { font-size: 0.8em; }
-
-.updown_up,
-.updown_down 
-{ 
-  text-align: center; 
-  font-size: 1.3em; 
-  font-family: monospace; 
 }
 
 .traffic_light_row.even { background-color: #FFC; }

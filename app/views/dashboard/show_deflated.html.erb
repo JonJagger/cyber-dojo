@@ -1,28 +1,33 @@
 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var dojo_name = "<%=@dojo.name-%>";
+var seconds_per_column = "<%=@seconds_per_column-%>";  
+var maximum_columns = "<%=@maximum_columns-%>";  
+
+$j(document).ready(function() {
+  $j('#inflate_time_gaps').click(function() {
+    $cd.postTo('show_inflated', {
+      dojo_name: dojo_name,
+      seconds_per_column: seconds_per_column,
+      maximum_columns: maximum_columns
+    });
+  });
+});
+
+//--></script>
+
 <%= render :partial => 'dojo/banner' -%>
 
-<input type="hidden"
-       name="seconds_per_column" 
-       id="seconds_per_column"
-       value="<%=@seconds_per_column-%>"/>      
-
-<input type="hidden"
-       name="maximum_columns" 
-       id="maximum_columns"
-       value="<%=@maximum_column-%>"/>      
 <table>
   <tr>
     <td>
-      <%= link_to "<span class='inflate button'>Inflate</span>", 
-          { 
-            :controller => :dashboard, 
-            :action => :show_inflated,
-            :dojo_name => @dojo.name,
-            :seconds_per_column => @seconds_per_column,
-            :maximum_columns => @maximum_columns
-          }, 
-          { :title => "Inflate time gaps" }
-      -%>        
+      <input type="button"
+             class="button"
+             id="inflate_time_gaps"
+             title="Inflate time gaps"
+             value="Inflate"/>
     </td>
     <td>
       <%= render :partial => 'click_info' -%>      

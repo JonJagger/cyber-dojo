@@ -12,7 +12,14 @@ $j(document).ready(function() {
   });
   $j('#maximum_columns').keyup(function(event) {
     reParse(event);
-  });  
+  });
+  $j('#deflate_time_gaps').click(function() {
+    $cd.postTo('show_deflated', {
+      dojo_name: dojo_name,
+      seconds_per_column: seconds_per_column,
+      maximum_columns: maximum_columns
+    });
+  });
 });
 
 function reParse(event) {
@@ -79,16 +86,11 @@ function rePost() {
   
   <tr>
     <td>
-      <%= link_to "<span class='deflate button'>Deflate</span>", 
-          { 
-            :controller => :dashboard, 
-            :action => :show_deflated,
-            :dojo_name => @dojo.name,
-            :seconds_per_column => @seconds_per_column,
-            :maximum_columns => @maximum_columns
-          }, 
-          { :title => "Deflate time gaps" }
-      -%>
+      <input type="button"
+             class="button"
+             id="deflate_time_gaps"
+             title="Deflate time gaps"
+             value="Deflate"/>
     </td>
   </tr>
   

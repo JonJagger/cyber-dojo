@@ -13,18 +13,18 @@ var cyberDojo = (function($cd, $j) {
     
     var welcomeHtml =
         '<ul>' +
-        li + 'Clicking a filename (on the left) opens it in the editor tab.</li>' +
-        li + 'Clicking the Run-Tests button (above the filenames) runs the tests ' +
+        li + 'Clicking the Run-Tests button runs the tests ' +
             'and displays the result in the output tab in...' +
             '<ul>' +
               li + '<span class="failed">&nbsp;red if the tests ran but one or more failed&nbsp;</span></li>' +
               li + '<span class="error">&nbsp;amber if the tests could not be run&nbsp;</span></li>' +
               li + '<span class="passed">&nbsp;green if the tests ran and all passed&nbsp;</span></li>' +
             '</ul>' +
-            'A traffic-light will also appear (at the top).<br/>' +
+            'A traffic-light will also appear (along the top).<br/>' +
             'Clicking a traffic-light opens a diff-view of its files.' +
         '</li>' +
-        li + 'Clicking the Post button (below the filenames) sends a message ' +
+        li + 'Clicking a filename opens it in the editor tab.</li>' +
+        li + 'Clicking the Post button sends a message ' +
              'to everyone else in this dojo.' +
         '</li>' +
         li + avatarImageHtml + 

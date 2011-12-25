@@ -35,9 +35,12 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
-          <%= render :partial => 'fileops' -%>
           <%= render :partial => 'run_tests' -%>
+        </div>
+        <div class="panel">
           <%= render :partial => 'filenames' -%>
+          <br/>
+          <%= render :partial => 'fileops' -%>
         </div>
         <div class="panel">
           <%= render :partial => 'messages' -%>
