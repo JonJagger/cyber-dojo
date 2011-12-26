@@ -27,7 +27,7 @@ function selectLanguage(index) {
 
 <h1 title="<%= @dojo.name%>">
   <% size = 40 -%>
-  <%= image_tag("/images/dojo-home.png",
+  <%= image_tag("/images/avatars/cyber-dojo.png",
       :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
   <%= elided_name(@dojo.name, 40) %>
 </h1>
@@ -43,7 +43,7 @@ function selectLanguage(index) {
             </div>
             
             <% @katas.each_with_index do |choice,index| -%>
-              <div class="mid_tone fileset" 
+              <div class="mid_tone filename" 
                    onclick='selectKata(<%=index-%>);' >
                 <input id="kata_<%=index-%>" 
                        type="radio"
@@ -77,7 +77,7 @@ function selectLanguage(index) {
             <div class="choose_title">Languages</div>
 
             <% @languages.each_with_index do |choice,index| -%>
-              <div class="mid_tone fileset"
+              <div class="mid_tone filename"
                    onclick='selectLanguage(<%=index-%>);' >
                 <input id="language_<%=index-%>" 
                        type="radio"

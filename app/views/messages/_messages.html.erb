@@ -13,7 +13,7 @@ $j(document).ready(function() {
 //--></script>
 
 <div id="messages">
-  <% max_messages = 9 -%>
+  <% max_messages = 3 -%>
   <% some = recent(@messages, max_messages) -%>  
   <% some.reverse.each_with_index do |message,index| -%>
      <table class="<%=parity(index)-%> message_container">

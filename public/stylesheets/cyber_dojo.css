@@ -16,8 +16,8 @@ h3 { font-size: 1.3em;  }
 
 .panel 
 { 
-  border: 5px solid GhostWhite; 
-  padding: 0.5em; 
+  border: 4px solid GhostWhite; 
+  padding: 0.2em; 
   background-color: #FFECCB;
 }
 
@@ -100,10 +100,7 @@ input+label
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.file_op, 
-.panel, 
-div[class~="filename"], 
-  *[class~="fileset"]
+.file_op, .panel, div[class~="filename"]
 { 
   border-radius: 20px;
   -moz-border-radius: 20px;
@@ -128,9 +125,7 @@ div[class~="filename"],
 
 .file_op_name { font-size: 10pt; color: black; }
 
-.file_op,
-div[class~="filename"], 
-  *[class~="fileset"]
+.file_op, div[class~="filename"]
 {
   margin: 0.25em;
   color: #888888;
@@ -145,7 +140,6 @@ div[class~="filename"],
   -webkit-border-radius: 20px;
 }
 
-   *[class~="fileset"]:hover, 
 div[class~="filename"]:hover, 
               .file_op:hover, 
                .button:hover
@@ -243,6 +237,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 {
   display: block;
   margin-top: 0.2em;
+  margin-bottom: 0.2em;
   border-radius: 8px;
   -moz-border-radius: 8px;
   -khtml-border-radius: 8px;
