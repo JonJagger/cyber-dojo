@@ -7,6 +7,12 @@ $j(document).ready(function() {
     $cd.help("<%=@avatar.name-%>");
   });
   
+  $j('.avatar_image').click(function() {
+    $cd.postTo('/dashboard/show_inflated', {
+      dojo_name: "<%=@dojo.name-%>"
+    }, "_blank");
+  });
+  
   var editor = $j('#editor');
   var output = $j('#output');
   $cd.bindHotKeys();  

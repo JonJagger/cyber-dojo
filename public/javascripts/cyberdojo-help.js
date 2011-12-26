@@ -4,7 +4,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.help = function(avatar) {
     var imageSize = 50;
     var avatarImageHtml =
-        '<img alt="' + avatar + '" class="floating_avatar_image"' +
+        '<img alt="' + avatar + '" class="avatar_image"' +
         'width="' + imageSize + '"' +
         'height="' + imageSize + '"' +
         'src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
@@ -70,23 +70,29 @@ var cyberDojo = (function($cd, $j) {
         + '</table>'
       + '</div>'
       
-      + '<br/>'
+      + br
       
       + '<div>'
         + '<input type="button" class="button" value="Post"/>'
-        + ' to send a message to everyone doing the kata.</li>'
+        + ' to send a message to everyone.</li>'
       + '</div>'
         
       + br
       
       + '<div>'
         + '<img width="40" height="40" src="/images/avatars/cyber-dojo.png"/>'
-        + '  to go to the home page.'
+        + ' to open a home page.'
       + '</div>'
       
       + br
         
+      + '<div>'
       + avatarImageHtml
+      + ' to open a dashboard page.'
+      + '</div>'
+      
+      + br
+      
       + 'If you need to '
       + '<input type="button" class="button" value="Resume-Coding"/>'
       + ' please remember that this computer is the ' + avatar + '.'

@@ -25,12 +25,10 @@ h3 { font-size: 1.3em;  }
   background-color: #FFECCB;
 }
 
-.cyber_dojo_image, .avatar_image { margin: 0.2em; }
-
-.floating_avatar_image
+.cyber_dojo_image, .avatar_image
 {
-  float: left;
   margin: 0.2em;
+  cursor: pointer;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
