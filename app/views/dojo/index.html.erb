@@ -32,6 +32,23 @@ $j(document).ready(function() {
       showMessages(dojo_name, data);
     })
   });
+
+  $j('#why').click(function() {
+    $cd.postTo('/dojo/why', { });    
+  });
+  
+  $j('#tips').click(function() {
+    $cd.postTo('/dojo/tips', { });    
+  });
+  
+  $j('#ifaqs').click(function() {
+    $cd.postTo('/dojo/ifaqs', { });    
+  });
+  
+  $j('#links').click(function() {
+    $cd.postTo('/dojo/links', { });    
+  });
+  
 });
 
 function run(name_input, method, func) {
@@ -201,7 +218,25 @@ function cantFind(dojo_name) {
     <td>
   </tr>
 
-  <%= render :partial => 'links' -%>
-
 </table>
+
+<input type="button"
+       class="button"
+       id="why"
+       value="why"/>
+
+<input type="button"
+       class="button"
+       id="tips"
+       value="tips"/>
+
+<input type="button"
+       class="button"
+       id="ifaqs"
+       value="ifaqs"/>
+
+<input type="button"
+       class="button"
+       id="links"
+       value="links"/>
 
