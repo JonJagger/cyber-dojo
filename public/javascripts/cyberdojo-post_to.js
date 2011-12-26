@@ -17,8 +17,10 @@ var cyberDojo = (function($cd, $j) {
       form.append(input);
     };
 
-    for (var key in params) {
-      addParam(key, params[key]);
+    if (typeof(params) !== 'undefined') {
+      for (var key in params) {
+        addParam(key, params[key]);
+      }
     }
 
     form.appendTo(document.body);

@@ -33,20 +33,10 @@ $j(document).ready(function() {
     })
   });
 
-  $j('#why').click(function() {
-    $cd.postTo('/dojo/why', { });    
-  });
-  
-  $j('#tips').click(function() {
-    $cd.postTo('/dojo/tips', { });    
-  });
-  
-  $j('#ifaqs').click(function() {
-    $cd.postTo('/dojo/ifaqs', { });    
-  });
-  
-  $j('#links').click(function() {
-    $cd.postTo('/dojo/links', { });    
+  $j.each(['why', 'tips', 'ifaqs', 'links'], function(i,name) {
+    $j('#' + name).click(function() {
+      $cd.postTo('/dojo/' + name);
+    });
   });
   
 });
@@ -129,7 +119,9 @@ function cantFind(dojo_name) {
 
 <%= render :partial => 'dojo/title',
            :locals => { :title => @title } -%>
+           
 <h4>Deliberate Software Team Practice</h4>
+
 <table>
   <tr>
     <td>
@@ -220,23 +212,11 @@ function cantFind(dojo_name) {
 
 </table>
 
-<input type="button"
-       class="button"
-       id="why"
-       value="why"/>
-
-<input type="button"
-       class="button"
-       id="tips"
-       value="tips"/>
-
-<input type="button"
-       class="button"
-       id="ifaqs"
-       value="ifaqs"/>
-
-<input type="button"
-       class="button"
-       id="links"
-       value="links"/>
-
+<div class="panel">
+  <% [ 'why', 'tips', 'ifaqs', 'links' ].each do |name| -%>
+    <input type="button"
+           class="small button"
+           id="<%=name-%>"
+           value="<%=name-%>"/>
+  <% end -%>
+</div>
