@@ -22,21 +22,12 @@
               </tr>
             </table>
           </td>
-        
-          <td>
-            <%= avatar_image(avatar_name, 43) -%>
-          </td>
-          
-          <td>
-            <%= render :partial => 'avatar_summary',
-                       :locals => { :avatar_name => avatar_name } -%>
-          </td>
-        
-             <%= render :partial => 'traffic_lights_summary', 
-                        :locals => { :avatar_name => avatar_name, 
-                                     :lights => lights,
-                                     :new_window => false
-                                   } -%> 
+            
+         <%= render :partial => 'traffic_lights_summary', 
+                    :locals => { :avatar_name => avatar_name, 
+                                 :lights => lights,
+                                 :new_window => false
+                               } -%> 
         </tr>    
       <% end -%>
     <% end -%>

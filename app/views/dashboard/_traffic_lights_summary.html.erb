@@ -1,13 +1,18 @@
           
-   <td>             
-     <% if lights != [ ] -%>
-       <% inc = lights.last -%>
-     <% else -%>
-       <% inc = { :number => 0, :time => @dojo.manifest[:created] } -%>
-     <% end -%>
-     <%=  traffic_light(@dojo, avatar_name, inc, new_window) -%>
+   <td class="summary">
+     <%= avatar_image(avatar_name, 43) -%>
    </td>
-   <td>
+             
+   <td class="summary">
+     <%= render :partial => 'avatar_summary',
+                :locals => { :avatar_name => avatar_name } -%>
+   </td>
+          
+   <td class="summary">             
+     <%=  traffic_light(@dojo, avatar_name, lights.last, new_window) -%>
+   </td>
+   
+   <td class="summary">
      <span class="traffic_light_number">
        <%= lights.length -%>
      </span>

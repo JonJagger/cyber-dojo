@@ -50,7 +50,9 @@
       <% end -%>
       
       <td>
-        <%= render :partial => 'tag_number' -%>
+        <div class="traffic_light_number">
+          <%= @avatar.increments.length -%>
+        </div>
       </td>   
       
     </tr>      

@@ -33,8 +33,6 @@ h3 { font-size: 1.3em;  }
   margin: 0.2em;
 }
 
-#tag_number { font-size: 1em; }
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .name_input { font-size: 1.15em; }
@@ -85,7 +83,7 @@ h3 { font-size: 1.3em;  }
 {
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
-  font-size: 0.8em;
+  font-size: 0.7em;
   color: Green;
 }
 
@@ -271,6 +269,8 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 .traffic_light_row.odd td  { background-color: Ivory; }
 
+.traffic_light_row td.summary  { background-color: #FFECCB; }
+
 .traffic_light
 {
   background: LightGray;
@@ -297,7 +297,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 {
   display: block;
   margin: 1px 0px 0px 0px; /* vertical bulb separation */
-  padding: 1px; /* bulb diameter */
+  padding: 0px; /* affects bulb diameter */
   width: 8px;
   height: 8px;
   border-radius: 20px;
@@ -324,12 +324,18 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 .traffic_light .bulb.off
 {
-  background-color: GhostWhite; /* #FFC */
+  background-color: GhostWhite;
   border: 1px solid GhostWhite;
 }
 
 .traffic_light_ellision { font-size: 0.8em; }
-.traffic_light_number   { font-size: 1.5em; text-align: center; display: block; }
+
+.traffic_light_number
+{
+  font-size: 1.5em;
+  text-align: center; /* for diff and dashboard */
+  display: block; /* for dashboard */
+}
 
 /* - - - - - - - - - - - - - - - - - - - - */
 

@@ -13,7 +13,7 @@
     
     <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
     
-      <% if all_lights[avatar_name].length != 0 -%>
+      <% if all_lights[avatar_name].length > 0 -%>
         <tr class="<%=parity(index)-%> traffic_light_row">
           
           <% td_map = gapped[avatar_name] -%>    
@@ -51,21 +51,12 @@
             <% end -%>          
             </td>          
           <% end -%>
-          
-          <td>
-            <%= avatar_image(avatar_name, 43) -%>
-          </td>
-          
-          <td>
-            <%= render :partial => 'avatar_summary',
-                       :locals => { :avatar_name => avatar_name } -%>
-          </td>
-          
-             <%= render :partial => 'traffic_lights_summary', 
-                        :locals => { :avatar_name => avatar_name, 
-                                     :lights => all_lights[avatar_name],
-                                     :new_window => false
-                                   } -%> 
+                    
+          <%= render :partial => 'traffic_lights_summary', 
+                     :locals => { :avatar_name => avatar_name, 
+                                  :lights => all_lights[avatar_name],
+                                  :new_window => false
+                                } -%> 
         </tr>
       <% end -%>
     <% end -%>
