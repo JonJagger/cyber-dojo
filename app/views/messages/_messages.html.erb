@@ -13,7 +13,7 @@ $j(document).ready(function() {
 //--></script>
 
 <div id="messages">
-  <% max_messages = 3 -%>
+  <% max_messages = 5 -%>
   <% some = recent(@messages, max_messages) -%>  
   <% some.reverse.each_with_index do |message,index| -%>
      <table class="<%=parity(index)-%> message_container">
@@ -27,13 +27,15 @@ $j(document).ready(function() {
        </tr>
      </table>
   <% end -%>
-  
+
   <% if @messages.length > max_messages -%>
-    <input type="button"
-           class="button"
-           id="message_elision"
-           title="Show all messages"
-           value="..."/>
+    <div style="float: right;">
+      <input type="button"
+             class="button"
+             id="message_elision"
+             title="Show all messages"
+             value="..."/>
+    </div>
   <% end -%>
 </div>
 

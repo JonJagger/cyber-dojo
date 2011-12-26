@@ -11,21 +11,18 @@
             :action => :index,
             :dojo_name => @dojo.name %>
     </td>
-    
-    <td>
-       <%= elided_name(@dojo.name, 20) -%>
-    </td>
-    
     <td>
       <%= avatar_image(@avatar.name, size) -%>
-    </td>
-    <td>
-      <%= @avatar.name.humanize -%>
     </td>
     <td>
       <% if tag_number != 0-%>
         <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
+    </td>    
+    <td class="small_title">
+       kata: <%= elided_name(@dojo.name, 15) -%><br/>
+       language: <%= @dojo.language -%></br>
+       exercise: <%= @dojo.kata_name -%>
     </td>
   </tr>
 </table>

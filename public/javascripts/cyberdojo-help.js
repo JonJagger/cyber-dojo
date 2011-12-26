@@ -97,7 +97,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 600,
-        title: "Click...",
+        title: "<h2>Click...</h2>",
         modal: true,
         buttons: {
           ok: function() {

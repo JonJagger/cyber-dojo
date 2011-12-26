@@ -1,6 +1,5 @@
 
 <div id="traffic_lights">
-
   <table>
     
     <% seconds_per_td = 20 -%>
@@ -51,18 +50,8 @@
       <% end -%>
       
       <td>
-        <%= avatar_image(@avatar.name, 40) -%>
-      </td>
-      
-      <td>
-        <%= @avatar.name.humanize -%>
+        <%= render :partial => 'tag_number' -%>
       </td>   
-      
-      <td>
-        <div class="traffic_light_number">
-          <%= @avatar.increments.length -%>
-        </div>
-      </td>
       
     </tr>      
   </table>

@@ -5,7 +5,11 @@ body
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
 }
 
-#cyber_dojo_page { text-align: left; color: Green; }
+#cyber_dojo_page
+{
+  text-align: left;
+  color: Green;
+}
 
 h1, h2, h3, h4 { color: Green; text-align: center; margin: 0; }
 h1 { font-size: 3.0em; }
@@ -21,7 +25,7 @@ h3 { font-size: 1.3em;  }
   background-color: #FFECCB;
 }
 
-.avatar_image { margin: 0.2em; }
+.cyber_dojo_image, .avatar_image { margin: 0.2em; }
 
 .floating_avatar_image
 {
@@ -29,8 +33,7 @@ h3 { font-size: 1.3em;  }
   margin: 0.2em;
 }
 
-#run_tests { font-size: 1.5em; }
-#post_message_button { font-size: 1.5em; }
+#tag_number { font-size: 1em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -45,7 +48,7 @@ h3 { font-size: 1.3em;  }
   -khtml-border-radius: 20px;
   -webkit-border-radius: 20px;
   cursor: pointer;
-  padding: 6px;
+  padding: 2px 8px 2px 8px;
   background-color: CornSilk;
   text-decoration: none;
   font-weight: normal;
@@ -57,7 +60,7 @@ h3 { font-size: 1.3em;  }
 }
 
 .small.button { font-size: 0.8em; }
-.main.button { font-size: 1.35em; }
+.large.button { font-size: 1.35em; }
 
 .button[disabled]
 {
@@ -88,16 +91,9 @@ h3 { font-size: 1.3em;  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-input[type="radio"]:checked+label,
-input[type="checkbox"]:checked+label
-{
-  color: black;
-}
+input[type="radio"]:checked+label { color: black; }
 
-input+label
-{
-  cursor: pointer;
-}
+input+label { cursor: pointer; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -237,6 +233,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .message_container
 {
   display: block;
+  width: 20em;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   border-radius: 8px;
@@ -300,7 +297,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 {
   display: block;
   margin: 1px 0px 0px 0px; /* vertical bulb separation */
-  padding: 2px; /* bulb diameter */
+  padding: 1px; /* bulb diameter */
   width: 8px;
   height: 8px;
   border-radius: 20px;
@@ -335,8 +332,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
 .traffic_light_number   { font-size: 1.5em; text-align: center; display: block; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
-
-#tag_number { text-align: center; }
 
 pre.diffed_code { margin: 0; }
 

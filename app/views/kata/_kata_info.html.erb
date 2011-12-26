@@ -1,0 +1,31 @@
+
+<div id="info">
+  <table>
+    <tr>
+      <td>
+        <% size = 40 -%>
+        <%= link_to image_tag("/images/avatars/cyber-dojo.png",
+            :border => 0,
+            :size => "#{size}x#{size}",
+            :title => 'Home page',
+            :class => 'cyber_dojo_image'),
+            {
+              :controller => :dojo,
+              :action => :index,
+              :dojo_name => @dojo.name 
+            },
+              :target => '_blank'
+        %>
+      </td>
+      <td>
+        <%= avatar_image(@avatar.name, 40) -%>
+      </td>      
+      <td class="small_title">
+         kata: <%= elided_name(@dojo.name, 15) -%><br/>
+         language: <%= @dojo.language -%></br>
+         exercise: <%= @dojo.kata_name -%>
+      </td>
+    </tr>
+  </table>
+</div>
+
