@@ -62,8 +62,8 @@ var cyberDojo = (function($cd, $j) {
       .append($cd.createHiddenInput(filename, 'scroll_top', scrollTop))
       .append($cd.createHiddenInput(filename, 'scroll_left', scrollLeft));
   
-    // Save _before_ rebulding filename list so as
-    // not to lose latest edit
+    // Save _before_ rebulding filename list
+    // so as not to lose latest edit
     $cd.saveFile($cd.currentFilename());
     $cd.rebuildFilenameList();
     // Select it so you can immediately rename it

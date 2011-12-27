@@ -98,7 +98,7 @@ var cyberDojo = (function($cd, $j) {
       + ' please remember that this computer is the ' + avatar + '.'
       + '';
     
-    var welcome = $j('<div>')
+    var clickHelp = $j('<div>')
       .html(welcomeHtml)
       .dialog({
         autoOpen: false,
@@ -108,10 +108,11 @@ var cyberDojo = (function($cd, $j) {
         buttons: {
           ok: function() {
             $j(this).dialog('close');
+            $j('#editor').focus();
           }
         }
       });
-    welcome.dialog('open');  
+    clickHelp.dialog('open');  
   };
 
   return $cd;
