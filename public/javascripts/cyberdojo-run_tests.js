@@ -20,6 +20,7 @@ var cyberDojo = (function($cd, $j) {
     $j('#run_tests').show();
     $cd.setOutputColourFromOutcome();
     $cd.loadFile('output');
+    $j('#output').focus();
   };
 
   $cd.setOutputColourFromOutcome = function() {

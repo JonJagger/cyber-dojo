@@ -12,7 +12,7 @@ class KataController < ApplicationController
     @output = @manifest[:output]
     increments = @avatar.increments
     if increments.empty?
-      @outcome = 'error'
+      @outcome = ''
     else
       @outcome = increments.last[:outcome]
     end
