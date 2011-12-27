@@ -5,6 +5,7 @@ $j(document).ready(function() {
   var output = $j('#output');
   $cd.unbindHotKeys(output);
   $cd.bindHotKeys(output);
+  $cd.bindLineNumbers(output, $j('#output_line_numbers'));    
 });
 
 //--></script>
