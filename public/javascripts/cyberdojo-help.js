@@ -65,7 +65,7 @@ var cyberDojo = (function($cd, $j) {
         +     '<span class="passed bulb"></span>'
         +   '</div>'
         + '</td>'
-        + '<td>to view a diff.</td>'
+        + '<td>to open a diff page.</td>'
         + '</tr>'
         + '</table>'
       + '</div>'

@@ -5,7 +5,7 @@
 var dojo_name = "<%=@dojo.name-%>";
 
 $j(document).ready(function() {
-  $j('#message_elision').click(function() {
+  $j('#message_omission').click(function() {
     $cd.postTo('/messages/show_all', { dojo_name: dojo_name }, "_blank");
   });
 });
@@ -32,7 +32,7 @@ $j(document).ready(function() {
     <div style="float: right;">
       <input type="button"
              class="button"
-             id="message_elision"
+             id="message_omission"
              title="Show all messages"
              value="..."/>
     </div>
