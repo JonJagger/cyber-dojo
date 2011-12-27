@@ -31,7 +31,7 @@ class KataController < ApplicationController
     @messages = @dojo.messages
     respond_to do |format|
       format.js if request.xhr?
-    end
+    end        
   end
    
   def heartbeat

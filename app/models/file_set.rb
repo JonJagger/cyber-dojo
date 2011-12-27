@@ -26,7 +26,13 @@ class FileSet
       else
         manifest[key] = value
       end
-    end    
+    end
+    manifest[:visible_files]['output'] =
+        { :content => '',
+          :caret_pos => 0,
+          :scroll_top => 0,
+          :scroll_left => 0
+        }
   end
   
 private
@@ -36,7 +42,7 @@ private
   end
 
   def self.read_visible(file_set_folder, filenames)
-    visible_files = {}
+    visible_files = { }
     filenames.each do |filename|
       visible_files[filename] = 
         { :content => IO.read(file_set_folder + '/' + filename),
@@ -49,7 +55,7 @@ private
   end
 
   def self.read_hidden_pathnames(file_set_folder, filenames)
-    pathed = []
+    pathed = [ ]
     filenames.each do |filename|
       pathed << file_set_folder + '/' + filename
     end

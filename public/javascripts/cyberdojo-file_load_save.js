@@ -2,25 +2,29 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.loadFile = function(filename) {
+    var caretPos = $cd.fileCaretPos(filename).attr('value');
+    var scrollTop  = $cd.fileScrollTop(filename).attr('value');
+    var scrollLeft = $cd.fileScrollLeft(filename).attr('value');
+    var code = $cd.fileContent(filename).attr('value');
+    
+    $cd.selectFileInFileList(filename);
+    
     if (filename === 'output') {
       $j('#editor_div').hide();
       $j('#output_div').show();
+      var output = $j('#output');
+      output.caretPos(caretPos);
+      output.scrollTop(scrollTop);
+      output.scrollLeft(scrollLeft);
     } else {
       $j('#output_div').hide();      
       $j('#editor_div').show();
-      var caretPos = $cd.fileCaretPos(filename).attr('value');
-      var scrollTop  = $cd.fileScrollTop(filename).attr('value');
-      var scrollLeft = $cd.fileScrollLeft(filename).attr('value');
-      var code = $cd.fileContent(filename).attr('value');
-    
       var editor = $j('#editor');
       editor.val(code);
       editor.caretPos(caretPos);
       editor.scrollTop(scrollTop);
       editor.scrollLeft(scrollLeft);
-    }
-    
-    $cd.selectFileInFileList(filename);
+    }     
   };
 
   $cd.saveFile = function(filename) {

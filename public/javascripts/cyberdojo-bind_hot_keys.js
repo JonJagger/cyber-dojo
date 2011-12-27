@@ -4,7 +4,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.bindRunTests = function(event) {
     event.stopPropagation();
     event.preventDefault();
-    $cd.runTests();
+    $j('#run_tests_button').closest("form").submit();
     return false;    
   };
   
@@ -14,18 +14,23 @@ var cyberDojo = (function($cd, $j) {
     $cd.loadNextFile();
     return false;
   };
+
+  $cd.runTestsHotKey = function() {
+    return 'Alt+r';
+  };
   
-  $cd.bindHotKeys = function(event) {
-    var editor = $j('#editor');
-    var output = $j('#output');
-    
-    var runTestsHotKey = 'Alt+r';
-    var loadNextFileHotKey = 'Alt+f';
-    
-    editor.bind('keydown', runTestsHotKey, $cd.bindRunTests);
-    output.bind('keydown', runTestsHotKey, $cd.bindRunTests);
-    editor.bind('keydown', loadNextFileHotKey, $cd.bindLoadNextFile);
-    output.bind('keydown', loadNextFileHotKey, $cd.bindLoadNextFile);    
+  $cd.loadNextFileHotKey = function() {
+    return 'Alt+f';
+  };
+  
+  $cd.bindHotKeys = function(node) {
+    node.bind('keydown', $cd.runTestsHotKey(), $cd.bindRunTests);
+    node.bind('keydown', $cd.loadNextFileHotKey(), $cd.bindLoadNextFile);
+  };
+  
+  $cd.unbindHotKeys = function(node) {
+    node.unbind('keydown', $cd.runTestsHotKey());
+    node.unbind('keydown', $cd.loadNextFileHotKey());
   };
   
   return $cd;

@@ -1,10 +1,6 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.runTests = function() {
-    $j('#run_tests_button').click();
-  };
-
   $cd.preRunTests = function() {
     // app/views/kata/edit.html.erb
     // form_remote_tag :url => {...}, 
@@ -22,16 +18,14 @@ var cyberDojo = (function($cd, $j) {
   
     $j('#spinner').hide();
     $j('#run_tests').show();
-    
-    $j('#output_line_numbers, #output')
-      .removeClass('failed error passed')
-      .addClass($j('#outcome').html());
-      
-    $j('input[id="radio_output"]+label').parent()
-      .removeClass('failed error passed')
-      .addClass($j('#outcome').html());      
-      
+    $cd.setOutputColourFromOutcome();
     $cd.loadFile('output');
+  };
+
+  $cd.setOutputColourFromOutcome = function() {
+    $j('#output')
+      .removeClass('failed error passed')
+      .addClass($j('#outcome').html());    
   };
 
   return $cd;

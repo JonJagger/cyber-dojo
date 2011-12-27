@@ -128,12 +128,8 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.rebuildFilenameList = function() {
-    var filenames = $cd.filenames();
-    if (!$cd.fileAlreadyExists('output')) {
-      filenames.push('output');
-    }
-    filenames = filenames.sort();
-
+    var filenames = $cd.filenames();    
+    filenames.sort();
     var filenameList = $j('#filename_list');
     filenameList.empty();
     $j.each(filenames, function(n, filename) {

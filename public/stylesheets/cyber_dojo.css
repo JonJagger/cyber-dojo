@@ -93,6 +93,8 @@ input[type="radio"]:checked+label { color: black; }
 
 input+label { cursor: pointer; }
 
+input[id="radio_output"]+label { font-style: italic; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .file_op, .panel, div[class~="filename"]
@@ -171,7 +173,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
   height: 32em;  
   color: #383838;
   overflow: auto;
-  border-top: 10px solid Cornsilk;
   padding-left: 2px;
 }
 
@@ -182,7 +183,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
   display: block;
   color: #B0B0B0;
   font-weight: normal;
-  background-color: Cornsilk;
+  background-color: #FFECCB;
   padding-right: 2px;
   width: 2em;
 }
@@ -199,19 +200,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #outcome { display: none; }
 
-#output.failed { border-top: 10px solid #F00; background: #F00; }
-#output.error  { border-top: 10px solid #FC3; background: #FC3; }
-#output.passed { border-top: 10px solid #0F0; background: #0F0; }
-
-.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a{ background: #F00; }
-
-.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a.failed { background: #F00; }
-.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a.error  { background: #FC3; }
-.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a.passed { background: #0F0; }
-
-#output_line_numbers.failed { border-top: 10px solid #F00; background: #F00; }
-#output_line_numbers.error  { border-top: 10px solid #FC3; background: #FC3; }
-#output_line_numbers.passed { border-top: 10px solid #0F0; background: #0F0; }
+#output.failed { background: #F00; }
+#output.error  { background: #FC3; }
+#output.passed { background: #0F0; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -307,12 +298,10 @@ div[class~="filename"]:after  { content: "\00a0";  }
   -webkit-border-radius: 20px;
 }
 
-.traffic_light .bulb.failed { background-color: #F00; } /* red */ 
-.traffic_light .bulb.error  { background-color: #FC3; } /* amber */
-.traffic_light .bulb.passed { background-color: #0F0; } /* green */
 .traffic_light .bulb.off    { background-color: GhostWhite; }
 
 .traffic_light_omission { font-size: 0.8em; color: LightGray; }
+
 .traffic_light_omission:after { content: "\2026"; /* ellipsis ... */ }
 
 .traffic_light_number

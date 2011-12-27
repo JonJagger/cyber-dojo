@@ -16,13 +16,12 @@ $j(document).ready(function() {
   });
   
   var editor = $j('#editor');
-  var output = $j('#output');
-  $cd.bindHotKeys();  
+  $cd.bindHotKeys(editor);  
   editor.tabby({ tabString: editor.attr('tab') });
+  
+  $cd.setOutputColourFromOutcome();  
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
-  //$cd.setOutputTabColourFromMostRecentOutcome();
-  $j('#output_div').hide();
   $cd.help("<%=@avatar.name-%>");
 });
 
