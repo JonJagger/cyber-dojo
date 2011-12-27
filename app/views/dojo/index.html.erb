@@ -21,6 +21,12 @@ $j(document).ready(function() {
     })
   });
   
+  $cd.registerCloseResumeDialog = function(resumer) {
+    $cd.closeResumeDialog = function() {
+      resumer.dialog('close');
+    };
+  };
+  
   $j('#show_dashboard').click(function() {
     run('configured_name_input', "exists_json", function(dojo_name, data) {
       showDashboard(dojo_name, data);
@@ -88,8 +94,13 @@ function resumeCoding(dojo_name, data) {
           title: "",
           width: 600,
           modal: true,
-          buttons: { cancel: function() { $j(this).dialog('close'); } }
+          buttons: {
+            cancel: function() {
+              $j(this).dialog('close');
+            }
+          }
         });
+      $cd.registerCloseResumeDialog(resumer);
       resumer.dialog('open');
     });
   }

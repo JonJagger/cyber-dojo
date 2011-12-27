@@ -5,9 +5,9 @@ function resume(avatar_name) {
   $cd.postTo('/kata/edit', {
     dojo_name: "<%=@dojo.name-%>",
     avatar: avatar_name
-  }, '_blank');
-  
-  $j('#resume_coding_dialog').dialog('close');
+  }, '_blank');  
+  $cd.closeResumeDialog();
+  return false;
 }
 
 //--></script>
@@ -25,7 +25,7 @@ function resume(avatar_name) {
       <% avatar_name = @all_avatar_names[index] -%>
       <% if @live_avatar_names.include?(avatar_name) -%>
         <input type='image'
-               onclick='resume("<%=avatar_name-%>")'
+               onclick='return resume("<%=avatar_name-%>");'
                class='avatar_image'
                src="/images/avatars/<%=avatar_name-%>.jpg"
                title="Resume <%=avatar_name.humanize-%>"
