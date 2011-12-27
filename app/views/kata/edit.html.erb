@@ -21,10 +21,9 @@ $j(document).ready(function() {
   editor.tabby({ tabString: editor.attr('tab') });
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
-  $j('#editor_tabs').tabs();
-  $j('#editor_tabs').tabs('select', $cd.EDITOR_TAB_INDEX);
-  $cd.setOutputTabColourFromMostRecentOutcome();
-  $cd.help("<%=@avatar.name-%>");  
+  //$cd.setOutputTabColourFromMostRecentOutcome();
+  $j('#output_div').hide();
+  $cd.help("<%=@avatar.name-%>");
 });
 
 //--></script>

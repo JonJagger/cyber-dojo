@@ -1,42 +1,42 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.EDITOR_TAB_INDEX = 0;
-  $cd.OUTPUT_TAB_INDEX = 1;
-
-  $cd.currentTabIndex = false;
-
   $cd.loadFile = function(filename) {
-    // Important to make sure Editor tab is visible to ensure caretPos() works properly.
-    // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-    $j('#editor_tabs').tabs('select', $cd.EDITOR_TAB_INDEX);
+    if (filename === 'output') {
+      $j('#editor_div').hide();
+      $j('#output_div').show();
+    } else {
+      $j('#output_div').hide();      
+      $j('#editor_div').show();
+      var caretPos = $cd.fileCaretPos(filename).attr('value');
+      var scrollTop  = $cd.fileScrollTop(filename).attr('value');
+      var scrollLeft = $cd.fileScrollLeft(filename).attr('value');
+      var code = $cd.fileContent(filename).attr('value');
     
-    var caretPos = $cd.fileCaretPos(filename).attr('value');
-    var scrollTop  = $cd.fileScrollTop(filename).attr('value');
-    var scrollLeft = $cd.fileScrollLeft(filename).attr('value');
-    var code = $cd.fileContent(filename).attr('value');
-  
-    var editor = $j('#editor');
-    editor.val(code);
-    editor.caretPos(caretPos);
-    editor.scrollTop(scrollTop);
-    editor.scrollLeft(scrollLeft);
+      var editor = $j('#editor');
+      editor.val(code);
+      editor.caretPos(caretPos);
+      editor.scrollTop(scrollTop);
+      editor.scrollLeft(scrollLeft);
+    }
     
     $cd.selectFileInFileList(filename);
   };
 
   $cd.saveFile = function(filename) {
-    // Important to make sure Editor tab is visible to ensure caretPos() works properly.
-    // See http://stackoverflow.com/questions/1516297/how-to-hide-wmd-editor-initially
-    $j('#editor_tabs').tabs('select', $cd.EDITOR_TAB_INDEX);
-  
-    var editor = $j('#editor');
-    $cd.fileContent(filename).attr('value', editor.val());
-    $cd.fileCaretPos(filename).attr('value', editor.caretPos());
-    $cd.fileScrollTop(filename).attr('value', editor.scrollTop());
-    $cd.fileScrollLeft(filename).attr('value', editor.scrollLeft());
+    if (filename !== 'output') {
+      var editor = $j('#editor');
+      $cd.fileContent(filename).attr('value', editor.val());
+      $cd.fileCaretPos(filename).attr('value', editor.caretPos());
+      $cd.fileScrollTop(filename).attr('value', editor.scrollTop());
+      $cd.fileScrollLeft(filename).attr('value', editor.scrollLeft());
+    }
   };
 
+  $cd.specialFile = function(filename) {
+    return filename === 'cyberdojo.sh' || filename === 'output';  
+  };
+  
   $cd.selectFileInFileList = function(filename) {
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
@@ -48,7 +48,7 @@ var cyberDojo = (function($cd, $j) {
     var file_op_rename = $j('#file_op_rename');
     var file_op_delete = $j('#file_op_delete');
     
-    if (filename === 'cyberdojo.sh') {
+    if ($cd.specialFile(filename)) {
       file_op_rename.attr('disabled', true);
       file_op_delete.attr('disabled', true);
     } else {

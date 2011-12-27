@@ -3,6 +3,8 @@ body
 {
   background: GhostWhite;
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 #cyber_dojo_page

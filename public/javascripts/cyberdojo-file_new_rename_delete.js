@@ -14,7 +14,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.renameFile = function () {
     var oldFilename = $cd.currentFilename();
     
-    if (oldFilename === 'cyberdojo.sh') return;
+    if ($cd.specialFile(oldFilename))
+      return;
   
     var input = $j('<input>', {
       type: 'text',
@@ -72,7 +73,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.deleteFilePrompt = function(ask) {
     var filename = $cd.currentFilename();
     
-    if (filename === 'cyberdojo.sh') return;
+    if ($cd.specialFile(filename))
+      return;
     
     if (ask) {
       var deleter =
@@ -105,7 +107,8 @@ var cyberDojo = (function($cd, $j) {
     $cd.fileScrollLeft(filename).remove();
   
     var filenames = $cd.rebuildFilenameList();
-    // cyberdojo.sh cannot be deleted so always at least one file
+    // cyberdojo.sh & output cannot be deleted so
+    // always at least one file
     $cd.loadFile(filenames[0]);
   };
 
@@ -125,9 +128,14 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.rebuildFilenameList = function() {
+    var filenames = $cd.filenames();
+    if (!$cd.fileAlreadyExists('output')) {
+      filenames.push('output');
+    }
+    filenames = filenames.sort();
+
     var filenameList = $j('#filename_list');
     filenameList.empty();
-    var filenames = $cd.filenames().sort();
     $j.each(filenames, function(n, filename) {
       filenameList.append($cd.makeFileListEntry(filename));
     });

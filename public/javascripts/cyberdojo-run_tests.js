@@ -10,9 +10,7 @@ var cyberDojo = (function($cd, $j) {
     // form_remote_tag :url => {...}, 
     //                 :before => "preRunTests();",
   
-    if ($cd.currentTabIndex === $cd.EDITOR_TAB_INDEX) {
-      $cd.saveFile($cd.currentFilename());
-    }
+    $cd.saveFile($cd.currentFilename());
     $j('#run_tests').hide();
     $j('#spinner').show();
   };
@@ -24,16 +22,16 @@ var cyberDojo = (function($cd, $j) {
   
     $j('#spinner').hide();
     $j('#run_tests').show();
-    $cd.setOutputTabColourFromMostRecentOutcome();    
-
-    $j('#editor_tabs').tabs('select', $cd.OUTPUT_TAB_INDEX);
-    $j('#output').focus();
-  };
-  
-  $cd.setOutputTabColourFromMostRecentOutcome = function() {
-    $j('.ui-tabs .ui-tabs-nav li[id="tab_output_li"] a, #output_line_numbers, #output')
+    
+    $j('#output_line_numbers, #output')
       .removeClass('failed error passed')
-      .addClass($j('#outcome').html());    
+      .addClass($j('#outcome').html());
+      
+    $j('input[id="radio_output"]+label').parent()
+      .removeClass('failed error passed')
+      .addClass($j('#outcome').html());      
+      
+    $cd.loadFile('output');
   };
 
   return $cd;

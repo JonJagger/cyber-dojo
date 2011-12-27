@@ -3,37 +3,13 @@
 
 $j(document).ready(function() {
   $cd.bindLineNumbers($j('#editor'), $j('#editor_line_numbers'));
-  $cd.bindLineNumbers($j('#output'), $j('#output_line_numbers'));
-  
-  $j('#editor_tabs').bind('tabsselect', function(event, tab) {
-    if (tab.index === $cd.OUTPUT_TAB_INDEX) {
-      // About to switch to output tab but haven't switched yet...
-      $cd.saveFile($cd.currentFilename());
-    }
-    return true;  
-  });
-  
-  $j('#editor_tabs').bind('tabsshow', function(event, tab) {
-    if (tab.index === $cd.EDITOR_TAB_INDEX) {
-      // Have already switched to editor tab...
-      $cd.loadFile($cd.currentFilename());
-    }
-    $cd.currentTabIndex = tab.index;
-  });
+  $cd.bindLineNumbers($j('#output'), $j('#output_line_numbers'));  
 });
 
 //--></script>
 
-<div id="editor_tabs">
-  <ul>
-    <li>
-      <a href="#tab_editor">editor</a>
-    </li>
-    <li id="tab_output_li">
-      <a href="#tab_output">output</a>
-    </li>
-  </ul>
-  <div id="tab_editor">
+<div class="panel">
+  <div id="editor_div">
     <table cellspacing="0" cellpadding="0">
       <tr>
         <td>
@@ -51,7 +27,7 @@ $j(document).ready(function() {
       </tr>
     </table>
   </div>
-  <div id="tab_output">
+  <div id="output_div">
     <table cellspacing="0" cellpadding="0">
       <tr>
         <td>
