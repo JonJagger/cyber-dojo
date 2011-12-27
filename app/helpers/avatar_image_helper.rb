@@ -1,16 +1,10 @@
 module AvatarImageHelper
   
-  def avatar_image(one, size)
-
-    one = one.downcase
-    if one == 'cyber-dojo'
-      ext = 'png'
-    else
-      ext = 'jpg'
-    end
-
-    image_tag "avatars/#{one}.#{ext}",
-      :title => one.humanize,
+  def avatar_image(name, size)
+    name = name.downcase
+    ext = (name == 'cyber-dojo') ? 'png' : 'jpg'
+    image_tag "avatars/#{name}.#{ext}",
+      :title => name.humanize,
       :width => size,
       :height => size,
       :class => "avatar_image"
