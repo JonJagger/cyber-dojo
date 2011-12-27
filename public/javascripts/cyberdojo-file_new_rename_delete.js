@@ -13,6 +13,8 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.renameFile = function () {
     var oldFilename = $cd.currentFilename();
+    
+    if (oldFilename === 'cyberdojo.sh') return;
   
     var input = $j('<input>', {
       type: 'text',
@@ -69,6 +71,8 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.deleteFilePrompt = function(ask) {
     var filename = $cd.currentFilename();
+    
+    if (filename === 'cyberdojo.sh') return;
     
     if (ask) {
       var deleter =

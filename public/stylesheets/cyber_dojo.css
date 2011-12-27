@@ -27,7 +27,7 @@ h3 { font-size: 1.3em;  }
 
 .cyber_dojo_image, .avatar_image
 {
-  margin: 0.2em;
+  margin: 0.1em;
   cursor: pointer;
 }
 
@@ -81,7 +81,7 @@ h3 { font-size: 1.3em;  }
 {
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
-  font-size: 0.7em;
+  font-size: 0.6em;
   color: Green;
 }
 
@@ -257,6 +257,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 .traffic_light_row td
 {
+  padding: 0.05em;
   border-radius: 8px;
   -moz-border-radius: 8px;
   -khtml-border-radius: 8px;
@@ -304,33 +305,17 @@ div[class~="filename"]:after  { content: "\00a0";  }
   -webkit-border-radius: 20px;
 }
 
-.traffic_light .bulb.failed
-{
-  background-color: #F00; /* red   */
-  border: 1px solid #F00;
-}
-.traffic_light .bulb.error
-{
-  background-color: #FC3; /* amber */
-  border: 1px solid #FC3;
-}
-.traffic_light .bulb.passed
-{
-  background-color: #0F0; /* green */
-  border: 1px solid #0F0;
-}
+.traffic_light .bulb.failed { background-color: #F00; } /* red */ 
+.traffic_light .bulb.error  { background-color: #FC3; } /* amber */
+.traffic_light .bulb.passed { background-color: #0F0; } /* green */
+.traffic_light .bulb.off    { background-color: GhostWhite; }
 
-.traffic_light .bulb.off
-{
-  background-color: GhostWhite;
-  border: 1px solid GhostWhite;
-}
-
-.traffic_light_ellision { font-size: 0.8em; }
+.traffic_light_omission { font-size: 0.8em; color: LightGray; }
+.traffic_light_omission:after { content: "\2026"; /* ellipsis ... */ }
 
 .traffic_light_number
 {
-  font-size: 1.5em;
+  font-size: 1em;
   text-align: center; /* for diff and dashboard */
   display: block; /* for dashboard */
 }

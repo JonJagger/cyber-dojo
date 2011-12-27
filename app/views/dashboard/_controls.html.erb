@@ -67,14 +67,14 @@ function rePost() {
 
 <table>
   <tr>
-    <td>
-      <span class="small_title">
-        secs/col
-      </span>
+    <td class="panel">
       <input type="text"
              name="seconds_per_column" 
              id="seconds_per_column"
              value="<%=@seconds_per_column-%>"/>      
+      <span class="small_title">
+        seconds per<br/>column
+      </span>
     </td>
   </tr>
   
@@ -101,14 +101,14 @@ function rePost() {
   </tr>
   
   <tr>
-    <td>
-      <span class="small_title">
-        max cols
-      </span>
+    <td class="panel">
       <input type="text" 
              name="maximum_columns" 
              id="maximum_columns"
              value="<%=@maximum_columns-%>"/>
+      <span class="small_title">
+        columns<br/>maximum
+      </span>
     </td>
   </tr>
 
