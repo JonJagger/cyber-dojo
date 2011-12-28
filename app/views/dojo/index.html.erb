@@ -118,7 +118,7 @@ function showMessages(dojo_name, data) {
   if (!data.exists) {
     cantFind(dojo_name);  
   } else {
-    $cd.postTo('/messages/show_some', { dojo_name: dojo_name });  
+    $cd.postTo('/messages/show_all', { dojo_name: dojo_name });  
   }
 }
 
@@ -157,7 +157,7 @@ function cantFind(dojo_name) {
               <input type="button"
                      class="large button"
                      id="configure_it"
-                     value="Configure-It" />
+                     value="configure-it" />
             </td>
           </tr>
         </table>
@@ -183,7 +183,7 @@ function cantFind(dojo_name) {
               <input type="button"
                      class="large button"
                      id="start_coding"
-                     value="Start-Coding" />
+                     value="start-coding" />
             </td>
           </tr>
           <tr>
@@ -193,7 +193,7 @@ function cantFind(dojo_name) {
               <input type="button"
                      class="large button"
                      id="resume_coding"
-                     value="Resume-Coding" />
+                     value="resume-coding" />
             </td>
           </tr>
           <tr>
@@ -203,7 +203,7 @@ function cantFind(dojo_name) {
               <input type="button"
                      class="large button"
                      id="show_dashboard"
-                     value="Show-Dashboard" />
+                     value="show-dashboard" />
             </td>
           </tr>          
           <tr>
@@ -213,7 +213,7 @@ function cantFind(dojo_name) {
               <input type="button"
                      class="large button"
                      id="show_messages"
-                     value="Show-Messages" />
+                     value="show-messages" />
             </td>
           </tr>          
         </table>

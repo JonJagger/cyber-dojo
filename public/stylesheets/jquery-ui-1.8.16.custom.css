@@ -394,20 +394,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
     color: black;
 }
 
-/* minimal padding around tab content */
-.ui-tabs .ui-tabs-panel { padding: 0;}
-
-/* minimal padding around tab label */
-.ui-tabs .ui-tabs-nav li a { padding: .15em 0.75em; font-size: 1.0em; }
-
-.ui-tabs .ui-tabs-nav li a,
-.ui-tabs li.ui-tabs-selected a
-{
-  color: black; 
-  background: Cornsilk;
-  font-style: normal;
-}
-
 
 
 

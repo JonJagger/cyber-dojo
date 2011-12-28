@@ -11,14 +11,59 @@ var cyberDojo = (function($cd, $j) {
         
     var br = '<br/>';
     
+    var fakeFilenameButton = function(filename) {
+      return ''
+        + '<div class="mid_tone filename">'
+        +   '<input type="radio"'
+        +          'name="filename"'
+        +          'value="filename"/>'
+        +   '<label>' + filename + '</label>'
+        + '</div>'
+    };
+    
+    var tdTrafficLight = function(red,amber,green) {
+      return ''
+        + '<td>'
+        +   '<div class="traffic_light">'
+        +     '<span class="' + red   + ' bulb"></span>'
+        +     '<span class="' + amber + ' bulb"></span>'
+        +     '<span class="' + green + ' bulb"></span>'
+        +   '</div>'
+        + '</td>';
+    };
+    
+    var space = '&nbsp;';
+    
+    var spaces = space + space + space + space;
+    
+    var coloured = function(property, color) {
+      return  '<span class="' + property + '">' + space + color + space + '</span>';
+    };
+    
     var welcomeHtml = ''
       + '<div>'
-        + '<input type="button" class="button" value="Run-Tests"/>'
-        + ' to create a new traffic-light and display the'
-        + ' test result in the output tab in '
-        +   '<span class="failed">&nbsp;red&nbsp;</span> if the tests ran but one or more failed,</li>'
-        +   '<span class="error">&nbsp;amber&nbsp;</span> if the tests could not be run, </li>'
-        +   '<span class="passed">&nbsp;green&nbsp;</span> if the tests ran and all passed.</li>'
+        + '<table>'
+          +  '<tr>'
+            +  '<td>'
+              + '<input type="button" class="large button" value="run-tests"/>'
+            + '</td>'
+            + '<td>'
+              + ' displays the test result in the '
+            + '</td>'
+            + '<td>'
+              + fakeFilenameButton('output')
+            + '</td>'
+            + '<td>'
+              + ' file in '
+            + '</td>'
+          + '</tr>'
+        + '</table>'
+        + br + spaces + coloured('failed','red')
+                      + ' - tests ran but one or more failed,'
+        + br + spaces + coloured('error', 'amber')
+                      + ' - tests could not be run,'
+        + br + spaces + coloured('passed', 'green')
+                      + ' - tests ran and all passed.'
       + '</div>'
       
       + br
@@ -27,14 +72,11 @@ var cyberDojo = (function($cd, $j) {
         + '<table>'
           + '<tr>'
             + '<td>'
-              + '<div class="mid_tone filename">'
-              +   '<input type="radio"'
-              +          'name="filename"'
-              +          'value="filename"/>'
-              +   '<label>filename</label>'
-              + '</div>'
+              + fakeFilenameButton('filename')
             + '</td>'
-            + '<td>to open a file for editing.</td>'
+            + '<td>'
+            +   'opens a file for editing.'
+            + '</td>'
           + '</tr>'
         + '</table>'
       + '</div>'
@@ -43,67 +85,49 @@ var cyberDojo = (function($cd, $j) {
       
       + '<div>'
         + '<table>'
-        + '<tr>'
-        + '<td>'
-        +   '<div class="traffic_light">'
-        +     '<span class="failed bulb"></span>'
-        +     '<span class="off bulb"></span>'
-        +     '<span class="off bulb"></span>'
-        +   '</div>'
-        + '</td>'
-        + '<td>'
-        +   '<div class="traffic_light">'
-        +     '<span class="off bulb"></span>'
-        +     '<span class="error bulb"></span>'
-        +     '<span class="off bulb"></span>'
-        +   '</div>'
-        + '</td>'
-        + '<td>'
-        +   '<div class="traffic_light">'
-        +     '<span class="off bulb"></span>'
-        +     '<span class="off bulb"></span>'
-        +     '<span class="passed bulb"></span>'
-        +   '</div>'
-        + '</td>'
-        + '<td>to open a diff page.</td>'
-        + '</tr>'
+          + '<tr>'
+            + tdTrafficLight('failed', 'off', 'off')
+            + tdTrafficLight('off', 'error', 'off')
+            + tdTrafficLight('off', 'off', 'passed')
+            + '<td>opens a diff page.</td>'
+          + '</tr>'
         + '</table>'
       + '</div>'
       
       + br
       
       + '<div>'
-        + '<input type="button" class="button" value="Post"/>'
-        + ' to send a message to everyone.</li>'
+        + '<input type="button" class="large button" value="post"/>'
+        + ' sends a message to everyone.</li>'
       + '</div>'
         
       + br
       
       + '<div>'
         + '<img width="40" height="40" src="/images/avatars/cyber-dojo.png"/>'
-        + ' to open a home page.'
+        + ' opens a home page.'
       + '</div>'
       
       + br
         
       + '<div>'
       + avatarImageHtml
-      + ' to open a dashboard page.'
+      + ' opens a dashboard page.'
       + '</div>'
       
       + br
       
       + 'If you need to '
-      + '<input type="button" class="button" value="Resume-Coding"/>'
+      + '<input type="button" class="large button" value="resume-coding"/>'
       + ' please remember that this computer is the ' + avatar + '.'
       + '';
     
-    var clickHelp = $j('<div>')
+    var help = $j('<div>')
       .html(welcomeHtml)
       .dialog({
         autoOpen: false,
         width: 600,
-        title: "<h2>Click...</h2>",
+        title: "<h2>help</h2>",
         modal: true,
         buttons: {
           ok: function() {
@@ -116,7 +140,7 @@ var cyberDojo = (function($cd, $j) {
           }
         }
       });
-    clickHelp.dialog('open');  
+    help.dialog('open');  
   };
 
   return $cd;
