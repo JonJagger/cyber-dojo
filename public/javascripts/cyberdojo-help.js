@@ -2,12 +2,23 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.help = function(avatar) {
+    
     var imageSize = 50;
-    var avatarImageHtml =
-        '<img alt="' + avatar + '" class="avatar_image"' +
-        'width="' + imageSize + '"' +
-        'height="' + imageSize + '"' +
-        'src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
+
+    var homePageImage = ''    
+      + '<img'
+      +     ' width="' + imageSize + '"'
+      +     ' height="' + imageSize + '"'
+      +     ' style="float: left; padding: 2px;"'
+      +     ' src="/images/avatars/cyber-dojo.png"/>';
+    
+    var avatarImage = ''
+      + '<img alt="' + avatar + '"'
+      +     ' class="avatar_image"'
+      +     ' width="' + imageSize + '"'
+      +     ' height="' + imageSize + '"'
+      +     ' style="float: left; padding: 2px;"'
+      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
         
     var br = '<br/>';
     
@@ -33,100 +44,84 @@ var cyberDojo = (function($cd, $j) {
     };
     
     var space = '&nbsp;';
-    
-    var spaces = space + space + space + space;
+    var spaces = Array.prototype.join.call({length:4}, space);
     
     var coloured = function(property, color) {
       return  '<span class="' + property + '">' + space + color + space + '</span>';
     };
     
-    var welcomeHtml = ''
-      + '<div>'
-        + '<table>'
-          +  '<tr>'
-            +  '<td>'
-              + '<input type="button" class="large button" value="run-tests"/>'
-            + '</td>'
-            + '<td>'
-              + ' displays the test result in the '
-            + '</td>'
-            + '<td>'
-              + fakeFilenameButton('output')
-            + '</td>'
-            + '<td>'
-              + ' file in '
-            + '</td>'
-          + '</tr>'
-        + '</table>'
-        + br + spaces + coloured('failed','red')
-                      + ' - tests ran but one or more failed,'
-        + br + spaces + coloured('error', 'amber')
-                      + ' - tests could not be run,'
-        + br + spaces + coloured('passed', 'green')
-                      + ' - tests ran and all passed.'
+    var makeTable = function() {
+      var makeTd = function(arg) {
+        return '<td>' + arg + '</td>';
+      };    
+      var i;
+      var table = '<table><tr>';
+      for (i = 0; i < arguments.length; i += 1) {
+        table += makeTd(arguments[i]);
+      }
+      table += '</tr></table>';
+      return table;
+    };
+    
+    var welcomeHtml = ''      
+      + '<table>'
+      +   '<tr>'
+      +     '<td class="panel">'
+      +        makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
+      +     '</td>'
+      +     '<td class="panel">'
+      +         makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
+      +     '</td>'      
+      +     '<td class="panel">'            
+      +       '<table>'
+      +         '<tr>'
+      +             tdTrafficLight('failed', 'off', 'off')
+      +             tdTrafficLight('off', 'error', 'off')
+      +             tdTrafficLight('off', 'off', 'passed')
+      +           '<td>'
+      +              'opens a' + br + 'diff' + br + 'page'
+      +           '</td>'
+      +         '</tr>'
+      +       '</table>'
+      +     '</td>'
+      +   '</tr>'
+      + '</table>'
+      
+      + '<div class="panel">'
+      +   makeTable(
+            '<input type="button" class="large button" value="run-tests"/>',
+            ' displays the test result')
+        + '</div>'
+        
+      + '<div class="panel">'        
+        + spaces + coloured('failed',space)
+        + ' red means the tests ran but one or more failed'
+        + br + spaces + coloured('error', space)
+        + ' amber means the tests could not be run'
+        + br + spaces + coloured('passed', space)
+        + ' green means the tests ran and all passed'
       + '</div>'
-      
-      + br
-      
-      + '<div>'
-        + '<table>'
-          + '<tr>'
-            + '<td>'
-              + fakeFilenameButton('filename')
-            + '</td>'
-            + '<td>'
-            +   'opens a file for editing.'
-            + '</td>'
-          + '</tr>'
-        + '</table>'
+            
+      + '<div class="panel">'
+      +    makeTable(fakeFilenameButton('filename'), 'opens a file for editing')
       + '</div>'
               
-      + br
-      
-      + '<div>'
-        + '<table>'
-          + '<tr>'
-            + tdTrafficLight('failed', 'off', 'off')
-            + tdTrafficLight('off', 'error', 'off')
-            + tdTrafficLight('off', 'off', 'passed')
-            + '<td>opens a diff page.</td>'
-          + '</tr>'
-        + '</table>'
-      + '</div>'
-      
-      + br
-      
-      + '<div>'
+      + '<div class="panel">'
         + '<input type="button" class="large button" value="post"/>'
-        + ' sends a message to everyone.</li>'
+        + ' sends a message to everyone</li>'
       + '</div>'
-        
-      + br
+                    
+      + '<div class="panel">'
+      +   'If you need to '
+      +   '<input type="button" class="large button" value="resume-coding"/>'
+      +   br + ' please remember that this computer is the ' + avatar
+      + '</div>';
       
-      + '<div>'
-        + '<img width="40" height="40" src="/images/avatars/cyber-dojo.png"/>'
-        + ' opens a home page.'
-      + '</div>'
-      
-      + br
-        
-      + '<div>'
-      + avatarImageHtml
-      + ' opens a dashboard page.'
-      + '</div>'
-      
-      + br
-      
-      + 'If you need to '
-      + '<input type="button" class="large button" value="resume-coding"/>'
-      + ' please remember that this computer is the ' + avatar + '.'
-      + '';
-    
     var help = $j('<div>')
-      .html(welcomeHtml)
+      .html('<div style="font-size: 0.8em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
-        width: 600,
+        width: 450,
         title: "<h2>help</h2>",
         modal: true,
         buttons: {
