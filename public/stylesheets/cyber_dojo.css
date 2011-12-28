@@ -22,7 +22,7 @@ h3 { font-size: 1.3em;  }
 
 .panel 
 { 
-  border: 4px solid GhostWhite; 
+  border: 2px solid GhostWhite;
   padding: 0.3em; 
   background-color: #FFECCB;
 }
@@ -208,7 +208,14 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #all_messages { height: 40em; overflow: auto; }
 
-#message_text, #messages { font-size: 0.8em; }
+.message_text, #messages { font-size: 0.8em; }
+.message_text
+{
+  margin: 0em;
+  padding: 0.4em;
+  vertical-align: middle;
+}
+
 
 #message_text_input
 {
@@ -216,13 +223,16 @@ div[class~="filename"]:after  { content: "\00a0";  }
   background-color: CornSilk;
   color: green;
   height: 3em;
+  width: 10em;
   font-size: 1em;
 }
   
 .message_container
 {
   display: block;
-  width: 20em;
+  width: 17em;
+  overflow-y: auto;
+  overflow-x: hidden;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   border-radius: 8px;
@@ -233,8 +243,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 .message_container.even { background-color: Ivory; }
 .message_container.odd  { background-color: CornSilk; }
-
-.message_text { vertical-align: middle; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -313,20 +321,30 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-pre.diffed_code { margin: 0; }
+#diff_sheet
+{
+  margin: 0;
+  padding: 0;
+}
+pre.diffed_code { margin: 0; padding: 0; }
 
 pre.diffed_code same    { background-color: Cornsilk; }
 pre.diffed_code added   { background-color: #CEF6CE; }
 pre.diffed_code deleted { background-color: #F6CECE; }
 
 pre.diffed_code ln 
-{ 
-  margin-right: 3px;
+{
   padding-left: 2px;
+  margin-right: 3px;
   padding-right: 2px;
   color: #B0B0B0;
   font-weight: normal;
   white-space: pre;
+}
+
+pre.diffed_code same ln
+{
+  background-color: #FFECCB;
 }
 
 .dot { display: inline-block; width: 9px; height: 9px; }
