@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'Sameify'
 
 # > ruby test/functional/line_split_tests.rb
 

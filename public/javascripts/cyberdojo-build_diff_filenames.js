@@ -3,14 +3,12 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.buildDiffFilenames = function(diffs) {
     var diffSheet = $j('#diff_sheet');
-    var diffTabs = $j('#diff_tabs');
   
     diffSheet.save = function() { };
   
     var loadFrom = function(filename, diffedLines, save) {
       return function() {
         diffSheet.save();
-        diffTabs.tabs('select', $cd.EDITOR_TAB_INDEX);
         diffSheet.html(diffedLines);
         diffSheet.scrollTop(filename.attr('scrollTop'));
         diffSheet.scrollLeft(filename.attr('scrollLeft'));

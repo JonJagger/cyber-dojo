@@ -1,5 +1,4 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Utils'
 
 # > ruby test/functional/render_error_tests.rb
 

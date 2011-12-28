@@ -93,7 +93,11 @@ input[type="radio"]:checked+label { color: black; }
 
 input+label { cursor: pointer; }
 
-input[id="radio_output"]+label { font-style: italic; }
+input[id="radio_output"]+label, /* from edit-page */
+input[value="output"]+label     /* from diff-page */
+{
+  font-style: italic;
+}
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
