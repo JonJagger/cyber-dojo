@@ -28,13 +28,11 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.saveFile = function(filename) {
-    if (filename !== 'output') {
-      var editor = $j('#editor');
-      $cd.fileContent(filename).attr('value', editor.val());
-      $cd.fileCaretPos(filename).attr('value', editor.caretPos());
-      $cd.fileScrollTop(filename).attr('value', editor.scrollTop());
-      $cd.fileScrollLeft(filename).attr('value', editor.scrollLeft());
-    }
+    var file = (filename === 'output') ? $j('#output'): $j('#editor');
+    $cd.fileContent(filename).attr('value', file.val());
+    $cd.fileCaretPos(filename).attr('value', file.caretPos());
+    $cd.fileScrollTop(filename).attr('value', file.scrollTop());
+    $cd.fileScrollLeft(filename).attr('value', file.scrollLeft());
   };
 
   $cd.specialFile = function(filename) {

@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Sameify'
+require 'Utils'
 
 # > ruby test/functional/sameify_tests.rb
 

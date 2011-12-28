@@ -1,4 +1,4 @@
-require 'LineSplit'
+require 'Utils'
 
 module GitDiff
 
