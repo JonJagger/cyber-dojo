@@ -223,7 +223,7 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.makeFileListEntry = function(filename) {
     var div = $j("<div>", {
-      'class': 'mid_tone filename'
+      'class': 'filename'
     });
   
     div.click(function() {
