@@ -4,16 +4,29 @@
 
 $j(document).ready(function() {
   selectKata("<%=@kata_index-%>");
+  selectLanguage("<%=@language_index-%>");
 });
 
 function selectKata(index) {
   var info = $j('#kata_info_' + index).val();
   $j('#kata_info').val(info);
-  $j('#kata_' + index).attr('checked', 'checked');
+  
+  $j('input[name="kata"]').each(function() {
+    $j(this).parent().attr('current_file', 'false');
+  });
+  var selected = $j('#kata_' + index);
+  selected.parent().attr('current_file', 'true');
+  selected.attr('checked', 'checked');
 }
 
 function selectLanguage(index) {
-  $j('#language_' + index).attr('checked', 'checked');
+  $j('input[name="language"]').each(function() {
+    $j(this).parent().attr('current_file', 'false');
+  });
+
+  var selected = $j('#language_' + index);
+  selected.parent().attr('current_file', 'true');
+  selected.attr('checked', 'checked');
 }
 
 //--></script>
@@ -43,7 +56,7 @@ function selectLanguage(index) {
             </div>
             
             <% @katas.each_with_index do |choice,index| -%>
-              <div class="mid_tone filename" 
+              <div class="filename" 
                    onclick='selectKata(<%=index-%>);' >
                 <input id="kata_<%=index-%>" 
                        type="radio"
@@ -77,7 +90,12 @@ function selectLanguage(index) {
             <div class="choose_title">Languages</div>
 
             <% @languages.each_with_index do |choice,index| -%>
-              <div class="mid_tone filename"
+              <div class="filename"
+                  <% if @language_index == index -%>
+                  current_file = "true"
+                  <% else -%>
+                  current_file = "false"                
+                  <% end -%>
                    onclick='selectLanguage(<%=index-%>);' >
                 <input id="language_<%=index-%>" 
                        type="radio"
