@@ -150,7 +150,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #editor, #output, #diff_sheet
 {
-  background: Ivory;
+  background: CornSilk; /*Ivory;*/
   color: Black;
   width: 45em;
 }
@@ -354,4 +354,7 @@ body   { background: #FFECCB; }
 #editor_line_numbers, #output_line_numbers, pre.diffed_code ln { color: #888; }
 
 #editor, #output, #diff_sheet { color: #383838; }
+
+div[current_file="false"] { background: #96D7E4; }
+div[current_file="true"] { background: CornSilk; }
 
