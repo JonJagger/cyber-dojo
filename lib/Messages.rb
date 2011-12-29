@@ -13,11 +13,6 @@ module Messages
     end
     
     def post_heartbeat_messages()
-      all_incs = Increment.all(@avatar.increments)
-      if reluctant_to_run_tests?(all_incs, dojo.messages)
-        dojo.post_message(name, "looks like #{name} is reluctant to run tests", :test_reluctance)
-      else
-      end
     end
 
     #----------------------------------------
@@ -42,17 +37,7 @@ module Messages
       end
       streak_count != 0 && streak_count % 5 == 0
     end
-    
-    def reluctant_to_run_tests?(increments, messages)
-      relevant_messages = messages.select do |message|
-        message[:type] == :test_reluctance && 
-          message[:sender] == name &&
-            DateTime.new(*message[:created]) > 10.minutes.ago
-      end
-      return false unless relevant_messages.empty?
-      !increments.empty? and increments.last.old?
-    end
-    
+        
   end
   
 end

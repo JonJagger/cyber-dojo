@@ -17,6 +17,7 @@ h1, h2, h3, h4
 {
   text-align: center;
   margin: 0;
+  color: DarkGreen;
 }
 h1 { font-size: 3.0em; }
 h2 { font-size: 2.0em;  }
@@ -316,7 +317,7 @@ pre.diffed_code ln
 
 .added.dot   { background: #CEF6CE; border: 1px dotted Green; }  
 .deleted.dot { background: #F6CECE; border: 1px dotted #F00; }
-.spacer.dot  { background: #88D2E0; border: 1px dotted #88D2E0; } /* same as background */
+.spacer.dot  { background: #96D7E4; border: 1px dotted #96D7E4; } /* same as background */
 
 .diff_dots { color: #383838; font-size: 0.7em; }
 
@@ -334,10 +335,10 @@ div[class~="filename"],
 .traffic_light_row td.summary,
 pre.diffed_code same ln
 {
-  background:  #88D2E0;
+  background: #96D7E4;
 }
 
-body   { background:       #FFECCB; }
+body   { background: #FFECCB; }
 .panel { border: 2px solid #FFECCB; }
 
 #editor_line_numbers, #output_line_numbers, pre.diffed_code ln { color: #888; }
