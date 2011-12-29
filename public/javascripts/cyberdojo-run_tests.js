@@ -18,15 +18,8 @@ var cyberDojo = (function($cd, $j) {
   
     $j('#spinner').hide();
     $j('#run_tests').show();
-    $cd.setOutputColourFromOutcome();
     $cd.loadFile('output');
     $j('#output').focus();
-  };
-
-  $cd.setOutputColourFromOutcome = function() {
-    $j('#output')
-      .removeClass('failed error passed')
-      .addClass($j('#outcome').html());    
   };
 
   return $cd;

@@ -44,7 +44,6 @@ class Avatar
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)
-      #kata.manifest[:visible_files].delete('output')
       
       command  = "cd '#{folder}';" +
                  "git init --quiet;" +

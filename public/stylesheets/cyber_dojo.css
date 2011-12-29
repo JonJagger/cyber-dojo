@@ -1,30 +1,33 @@
 
 body
 {
-  background: GhostWhite;
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   padding: 0;
   margin: 0;
+  margin-top: 0.5em;
 }
 
 #cyber_dojo_page
 {
   text-align: left;
-  color: Green;
+  color: DarkGreen;
 }
 
-h1, h2, h3, h4 { color: Green; text-align: center; margin: 0; }
+h1, h2, h3, h4
+{
+  text-align: center;
+  margin: 0;
+}
 h1 { font-size: 3.0em; }
 h2 { font-size: 2.0em;  }
 h3 { font-size: 1.3em;  }
 
-.mid_tone { background-color: CornSilk; }
+.mid_tone { background: CornSilk; }
 
 .panel 
 { 
-  border: 2px solid GhostWhite;
-  padding: 0.3em; 
-  background-color: #FFECCB;
+  margin: 0px;
+  padding: 0.3em;
 }
 
 .cyber_dojo_image, .avatar_image
@@ -39,18 +42,13 @@ h3 { font-size: 1.3em;  }
 
 .button
 {
-  color: black;
+  background: CornSilk;
+  color: #383838;
   font-size: 1em;
-  border-radius: 20px;
-  -moz-border-radius: 20px;
-  -khtml-border-radius: 20px;
-  -webkit-border-radius: 20px;
   cursor: pointer;
   padding: 2px 8px 2px 8px;
-  background-color: CornSilk;
   text-decoration: none;
   font-weight: normal;
-  color: #383838;
   border-top: none;
   border-left: none;
   border-right:  1px solid #A8A8A8; 
@@ -63,18 +61,18 @@ h3 { font-size: 1.3em;  }
 .button[disabled]
 {
   cursor: default;
-  background-color: lightgray;
+  background: lightgray;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
 #kata_info
 {
+  background-color: CornSilk;
+  color: black;
   overflow-y: auto;
   font-family: monospace;
   font-size: 12pt;
-  color: black;
-  background-color: CornSilk;
   border: 1px dashed LightGray;
   padding: 5px;
 }
@@ -84,12 +82,12 @@ h3 { font-size: 1.3em;  }
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
   font-size: 0.6em;
-  color: Green;
+  color: DarkGreen;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-input[type="radio"]:checked+label { color: black; }
+input[type="radio"]:checked+label { color: #444; }
 
 input+label { cursor: pointer; }
 
@@ -101,25 +99,17 @@ input[value="output"]+label     /* from diff-page */
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.file_op, .panel, div[class~="filename"]
-{ 
-  border-radius: 15px;
-  -moz-border-radius: 15px;
-  -khtml-border-radius: 15px;
-  -webkit-border-radius: 15px;
-}
-
 .file_op 
-{ 
+{
   padding: 4px; 
-  background-color: CornSilk;
+  background: CornSilk;
   padding: 0 0.5em 0 0.5em; /* Top Right Bottom Left */
 } 
 
 .file_op[disabled]
 {
   cursor: default;
-  background-color: LightGray;
+  background: LightGray;
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8;     
 }
@@ -129,16 +119,12 @@ input[value="output"]+label     /* from diff-page */
 .file_op, div[class~="filename"]
 {
   margin: 0.25em;
-  color: #888888;
-  font-size: 15pt;
+  color: #777;
+  font-size: 14pt;
   cursor: pointer;
   white-space: nowrap;
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8;
-  border-radius: 15px;
-  -moz-border-radius: 15px;
-  -khtml-border-radius: 15px;
-  -webkit-border-radius: 15px;
 }
 
 div[class~="filename"]:hover, 
@@ -163,19 +149,23 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #editor, #output, #diff_sheet
 {
-  background-color: CornSilk;
+  background: Ivory;
+  color: Black;
   width: 45em;
+}
+
+#editor, #editor_line_numbers, #output, #output_line_numbers
+{
+  height: 40em;    
 }
 
 #editor, #editor_line_numbers, #output, #output_line_numbers, #diff_sheet
 {
   font-family: monospace;
-  font-size: 15pt;
+  font-size: 12pt;
   border: 0;
   margin: 0;
   padding: 0;
-  height: 32em;  
-  color: #383838;
   overflow: auto;
   padding-left: 2px;
 }
@@ -185,28 +175,12 @@ div[class~="filename"]:after  { content: "\00a0";  }
   overflow: hidden;
   text-align: right;
   display: block;
-  color: #B0B0B0;
   font-weight: normal;
-  background-color: #FFECCB;
   padding-right: 2px;
   width: 2em;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - */
-
-/* #0F0 green */
-/* #FC3 amber */
-/* #F00 red */
-
-.failed { background: #F00; }
-.error  { background: #FC3; }
-.passed { background: #0F0; }
-
 #outcome { display: none; }
-
-#output.failed { background: #F00; }
-#output.error  { background: #FC3; }
-#output.passed { background: #0F0; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -220,14 +194,13 @@ div[class~="filename"]:after  { content: "\00a0";  }
   vertical-align: middle;
 }
 
-
 #message_text_input
 {
   border-color: Gray;
-  background-color: CornSilk;
-  color: green;
+  background: CornSilk;
+  color: Green;
   height: 3em;
-  width: 10em;
+  width: 8em;
   font-size: 1em;
 }
   
@@ -239,14 +212,10 @@ div[class~="filename"]:after  { content: "\00a0";  }
   overflow-x: hidden;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  -webkit-border-radius: 8px;
 }
 
-.message_container.even { background-color: Ivory; }
-.message_container.odd  { background-color: CornSilk; }
+.message_container.even { background: Ivory; }
+.message_container.odd  { background: Ivory; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -260,24 +229,19 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.traffic_light_row td
-{
-  padding: 0.05em;
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  -webkit-border-radius: 8px;  
-}
+.failed { background: #F00; /* red   */ }
+.error  { background: #FC3; /* amber */ }
+.passed { background: #0F0; /* green */ }
 
-.traffic_light_row.even td { background-color: #FFC; }
+.traffic_light_row td { padding: 0.05em; margin: 0; }
 
-.traffic_light_row.odd td  { background-color: Ivory; }
+.traffic_light_row.even td { background: #FFC; }
 
-.traffic_light_row td.summary  { background-color: #FFECCB; }
+.traffic_light_row.odd td  { background: Ivory; }
 
 .traffic_light
 {
-  background: LightGray;
+  background: Gray;
   padding: 2px;
   border-radius: 8px;
   -moz-border-radius: 8px;
@@ -287,21 +251,21 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 .traffic_light:hover 
 { 
-  background-color: #6E6E6E; 
+  background: LightGray;
   cursor: pointer; 
 }
 
 .unlinked.traffic_light:hover  
 { 
-  background-color: #FFECCB; 
+  background: #FFECCB; 
   cursor: default; 
 }
 
 .traffic_light .bulb
 {
   display: block;
-  margin: 1px 0px 0px 0px; /* vertical bulb separation */
-  padding: 0px; /* affects bulb diameter */
+  margin: 2px 0px 0px 0px; /* vertical bulb separation */
+  padding: 1px; /* affects bulb diameter */
   width: 8px;
   height: 8px;
   border-radius: 20px;
@@ -310,9 +274,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
   -webkit-border-radius: 20px;
 }
 
-.traffic_light .bulb.off    { background-color: GhostWhite; }
+.traffic_light .bulb.off    { background: GhostWhite; }
 
-.traffic_light_omission { font-size: 0.8em; color: LightGray; }
+.traffic_light_omission { font-size: 0.8em; color: Gray; }
 
 .traffic_light_omission:after { content: "\2026"; /* ellipsis ... */ }
 
@@ -321,6 +285,7 @@ div[class~="filename"]:after  { content: "\00a0";  }
   font-size: 1em;
   text-align: center; /* for diff and dashboard */
   display: block; /* for dashboard */
+  color: Gray;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -332,9 +297,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
 }
 pre.diffed_code { margin: 0; padding: 0; }
 
-pre.diffed_code same    { background-color: Cornsilk; }
-pre.diffed_code added   { background-color: #CEF6CE; }
-pre.diffed_code deleted { background-color: #F6CECE; }
+pre.diffed_code same    { background: Cornsilk; }
+pre.diffed_code added   { background: #CEF6CE; }
+pre.diffed_code deleted { background: #F6CECE; }
 
 pre.diffed_code ln 
 {
@@ -346,19 +311,38 @@ pre.diffed_code ln
   white-space: pre;
 }
 
-pre.diffed_code same ln
-{
-  background-color: #FFECCB;
-}
-
 .dot { display: inline-block; width: 9px; height: 9px; }
 .dot:after { content: "\00a0"; } /* non breaking space */
 
-.added.dot   { background-color: #CEF6CE; border: 1px solid  #0F0; }  
-.deleted.dot { background-color: #F6CECE; border: 1px dotted #F00; }
-.spacer.dot  { background-color: #FFECCB; border: 1px dotted #FFECCB; } /* same as background */
+.added.dot   { background: #CEF6CE; border: 1px dotted Green; }  
+.deleted.dot { background: #F6CECE; border: 1px dotted #F00; }
+.spacer.dot  { background: #88D2E0; border: 1px dotted #88D2E0; } /* same as background */
 
 .diff_dots { color: #383838; font-size: 0.7em; }
 
 .diff_dots.on:after  { content: '...'; }
 .diff_dots.off:after { content: '\00a0\00a0\00a0'; }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+/* Main Colour Scheme */
+
+div[class~="filename"],
+#editor_line_numbers,
+#output_line_numbers,
+.panel,
+.traffic_light_number,
+.traffic_light_row td.summary,
+pre.diffed_code same ln
+{
+  background:  #88D2E0;
+}
+
+body   { background:       #FFECCB; }
+.panel { border: 2px solid #FFECCB; }
+
+#editor_line_numbers, #output_line_numbers, pre.diffed_code ln { color: #888; }
+
+#editor, #output, #diff_sheet { color: #383838; }
+
+
+

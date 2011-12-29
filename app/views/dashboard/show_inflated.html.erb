@@ -1,11 +1,17 @@
 
-<%= render :partial => 'dojo/banner' -%>
-
 <table>
   <tr>
     <td>
       <%= render :partial => 'controls' -%>
     </td>
+    <td class="panel">
+     <%= render :partial => 'dojo/banner' -%>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
     <td>
       <%= render :partial => 'click_info' -%>      
       <%= render :partial => 'traffic_lights_inflated' -%>

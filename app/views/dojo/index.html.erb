@@ -128,106 +128,102 @@ function cantFind(dojo_name) {
 
 //--></script>
 
-<%= render :partial => 'dojo/title',
-           :locals => { :title => @title } -%>
-           
-<h4>Deliberate Software Team Practice</h4>
 
 <table>
   <tr>
-    <td>
-      &nbsp;
+    <td class="panel">
+      <%= render :partial => 'dojo/title',
+                 :locals => { :title => @title } -%>
+                 
+      <h4>Deliberate Software Team Practice</h4>
     </td>
   </tr>
   <tr>
-    <td>
+    <td class="panel">
       &nbsp;First, on <em>one</em> computer, choose a name for your practice:
-      <div class="panel">
-        <table>
-          <tr>
-            <td>
-              <input type="text"
-                     class="name_input"
-                     id="config_name_input"
-                     size="15"
-                     value="" />
-            </td>
-            <td>and</td>
-            <td>
-              <input type="button"
-                     class="large button"
-                     id="configure_it"
-                     value="configure-it" />
-            </td>
-          </tr>
-        </table>
-      </div>
+      <table>
+        <tr>
+          <td>
+            <input type="text"
+                   class="name_input"
+                   id="config_name_input"
+                   size="15"
+                   value="" />
+          </td>
+          <td>and</td>
+          <td>
+            <input type="button"
+                   class="large button"
+                   id="configure_it"
+                   value="configure-it" />
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
   
   <tr>
-    <td>
+    <td class="panel">
       &nbsp;Then, on <em>each</em> computer, type in the name:
-      <div class="panel">
-        <table>
-          <tr>
-            <td>
-              <input type="text"
-                     class="name_input"
-                     id="configured_name_input"
-                     size="15"
-                     value="<%=@dojo_name-%>" />
-            </td>
-            <td>and</td>
-            <td>         
-              <input type="button"
-                     class="large button"
-                     id="start_coding"
-                     value="start-coding" />
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>or</td>
-            <td>
-              <input type="button"
-                     class="large button"
-                     id="resume_coding"
-                     value="resume-coding" />
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>or</td>
-            <td>
-              <input type="button"
-                     class="large button"
-                     id="show_dashboard"
-                     value="show-dashboard" />
-            </td>
-          </tr>          
-          <tr>
-            <td></td>
-            <td>or</td>
-            <td>
-              <input type="button"
-                     class="large button"
-                     id="show_messages"
-                     value="show-messages" />
-            </td>
-          </tr>          
-        </table>
-      </div>
+      <table>
+        <tr>
+          <td>
+            <input type="text"
+                   class="name_input"
+                   id="configured_name_input"
+                   size="15"
+                   value="<%=@dojo_name-%>" />
+          </td>
+          <td>and</td>
+          <td>         
+            <input type="button"
+                   class="large button"
+                   id="start_coding"
+                   value="start-coding" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
+            <input type="button"
+                   class="large button"
+                   id="resume_coding"
+                   value="resume-coding" />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
+            <input type="button"
+                   class="large button"
+                   id="show_dashboard"
+                   value="show-dashboard" />
+          </td>
+        </tr>          
+        <tr>
+          <td></td>
+          <td>or</td>
+          <td>
+            <input type="button"
+                   class="large button"
+                   id="show_messages"
+                   value="show-messages" />
+          </td>
+        </tr>          
+      </table>
     <td>
   </tr>
-
+  
+  <tr>
+    <td>
+      <% [ 'ifaqs', 'links', 'tips', 'why' ].each do |name| -%>
+        <input type="button"
+               class="small button"
+               id="<%=name-%>"
+               value="<%=name-%>"/>
+      <% end -%>
+    </td>
+  </tr>
 </table>
-
-<div class="panel">
-  <% [ 'ifaqs', 'links', 'tips', 'why' ].each do |name| -%>
-    <input type="button"
-           class="small button"
-           id="<%=name-%>"
-           value="<%=name-%>"/>
-  <% end -%>
-</div>

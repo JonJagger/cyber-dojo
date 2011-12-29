@@ -28,7 +28,7 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.saveFile = function(filename) {
-    var file = (filename === 'output') ? $j('#output'): $j('#editor');
+    var file = (filename === 'output') ? $j('#output') : $j('#editor');
     $cd.fileContent(filename).attr('value', file.val());
     $cd.fileCaretPos(filename).attr('value', file.caretPos());
     $cd.fileScrollTop(filename).attr('value', file.scrollTop());

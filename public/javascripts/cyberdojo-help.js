@@ -93,13 +93,11 @@ var cyberDojo = (function($cd, $j) {
             ' displays the test result')
         + '</div>'
         
-      + '<div class="panel">'        
-        + spaces + coloured('failed',space)
-        + ' red means the tests ran but one or more failed'
-        + br + spaces + coloured('error', space)
-        + ' amber means the tests could not be run'
-        + br + spaces + coloured('passed', space)
-        + ' green means the tests ran and all passed'
+      + '<div class="panel">'
+      +   makeTable(tdTrafficLight('failed', 'error', 'passed'),
+            ' red means the tests ran but one or more failed' + br +
+            ' amber means the tests could not be run' + br +
+            ' green means the tests ran and all passed')
       + '</div>'
             
       + '<div class="panel">'
@@ -118,7 +116,7 @@ var cyberDojo = (function($cd, $j) {
       + '</div>';
       
     var help = $j('<div>')
-      .html('<div style="font-size: 0.8em;">' + welcomeHtml + '</div>')
+      .html('<div style="font-size: 0.7em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
         width: 450,

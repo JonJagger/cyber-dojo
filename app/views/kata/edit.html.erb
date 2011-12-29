@@ -22,7 +22,6 @@ $j(document).ready(function() {
   $cd.bindLineNumbers(editor, $j('#editor_line_numbers'));
   $cd.bindLineNumbers($j('#output'), $j('#output_line_numbers'));  
   
-  $cd.setOutputColourFromOutcome();  
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
   $cd.help("<%=@avatar.name-%>");

@@ -18,8 +18,6 @@ $j(document).ready(function() {
 
 //--></script>
 
-<%= render :partial => 'dojo/banner' -%>
-
 <table>
   <tr>
     <td>
@@ -29,6 +27,14 @@ $j(document).ready(function() {
              title="Inflate time gaps"
              value="inflate"/>
     </td>
+    <td class="panel">
+      <%= render :partial => 'dojo/banner' -%>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
     <td>
       <%= render :partial => 'click_info' -%>      
       <%= render :partial => 'traffic_lights_deflated' -%>

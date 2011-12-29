@@ -5,9 +5,11 @@
   <table class="panel">  
 
     <% all_lights = @dojo.all_increments -%>
-    <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
+    <% index = 0 -%>
+    <% all_lights.keys.sort.each do |avatar_name| -%>
       <% lights = all_lights[avatar_name] -%>  
       <% if lights.length > 0 -%>
+        <% index += 1 -%>
         <tr class="<%=parity(index)-%> traffic_light_row">
         
           <td>

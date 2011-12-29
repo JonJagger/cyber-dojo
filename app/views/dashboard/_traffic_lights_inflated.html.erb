@@ -10,10 +10,11 @@
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, maximum_seconds_uncollapsed) -%>
     <% all_lights = @dojo.all_increments -%>
     <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%> 
-    
-    <% all_lights.keys.sort.each_with_index do |avatar_name,index| -%>
+    <% index = 0 -%>
+    <% all_lights.keys.sort.each do |avatar_name| -%>
     
       <% if all_lights[avatar_name].length > 0 -%>
+        <% index += 1 -%>
         <tr class="<%=parity(index)-%> traffic_light_row">
           
           <% td_map = gapped[avatar_name] -%>    
