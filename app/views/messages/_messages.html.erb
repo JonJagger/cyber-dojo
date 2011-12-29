@@ -1,12 +1,9 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-
-var dojo_name = "<%=@dojo.name-%>";
+<script language="javascript" type="text/javascript"><!--
 
 $j(document).ready(function() {
-  $j('#message_omission').click(function() {
-    $cd.postTo('/messages/show_all', { dojo_name: dojo_name }, "_blank");
+  $j('.message_container').click(function() {
+    $cd.postTo('/messages/show_all', { dojo_name: "<%=@dojo.name-%>" }, '_blank');
   });
 });
 
@@ -15,27 +12,18 @@ $j(document).ready(function() {
 <div id="messages">
   <% max_messages = 5 -%>
   <% some = recent(@messages, max_messages) -%>  
-  <% some.reverse.each_with_index do |message,index| -%>
-     <table class="<%=parity(index)-%> message_container">
+  <% some.reverse.each do |message| -%>
+     <table class="message_container"
+            title="Show all messages">
        <tr>
          <td>
-           <%= avatar_image(message[:sender].to_s, 35) -%>
+           <%= avatar_image(message[:sender].to_s, 30) -%>
          </td>
          <td class="message_text">
            <%= message[:text] -%>
          </td>
        </tr>
      </table>
-  <% end -%>
-
-  <% if @messages.length > max_messages -%>
-    <div style="float: right;">
-      <input type="button"
-             class="button"
-             id="message_omission"
-             title="Show all messages"
-             value="..."/>
-    </div>
   <% end -%>
 </div>
 

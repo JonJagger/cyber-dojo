@@ -146,9 +146,9 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#editor, #output, #diff_sheet
+#editor, #output
 {
-  background: CornSilk; /*Ivory;*/
+  background: CornSilk;
   color: Black;
   width: 45em;
 }
@@ -211,10 +211,20 @@ div[class~="filename"]:after  { content: "\00a0";  }
   overflow-x: hidden;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
+  cursor: pointer;
 }
 
-.message_container.even { background: Ivory; }
-.message_container.odd  { background: Ivory; }
+.message_container
+{
+  border-bottom: 1px solid #A8A8A8;
+  border-right:  1px solid #A8A8A8;
+}
+
+.message_container:hover
+{
+  border-bottom: 1px solid #555555;
+  border-right:  1px solid #555555;     
+}
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -225,8 +235,6 @@ div[class~="filename"]:after  { content: "\00a0";  }
   width: 3em; 
   text-align: center; 
 }
-
-/* - - - - - - - - - - - - - - - - - - - - */
 
 .failed { background: #F00; /* red   */ }
 .error  { background: #FC3; /* amber */ }
@@ -298,9 +306,11 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 #diff_sheet
 {
+  background: Ivory;
   margin: 0;
   padding: 0;
 }
+
 pre.diffed_code { margin: 0; padding: 0; }
 
 pre.diffed_code same    { background: Cornsilk; }
@@ -317,17 +327,17 @@ pre.diffed_code ln
   white-space: pre;
 }
 
+.diff_dots { color: #383838; font-size: 0.7em; }
+
+.diff_dots.on:after  { content: '...'; }
+.diff_dots.off:after { content: '\00a0\00a0\00a0'; }
+
 .dot { display: inline-block; width: 9px; height: 9px; }
 .dot:after { content: "\00a0"; } /* non breaking space */
 
 .added.dot   { background: #CEF6CE; border: 1px dotted Green; }  
 .deleted.dot { background: #F6CECE; border: 1px dotted #F00; }
-.spacer.dot  { background: #96D7E4; border: 1px dotted #96D7E4; } /* same as background */
-
-.diff_dots { color: #383838; font-size: 0.7em; }
-
-.diff_dots.on:after  { content: '...'; }
-.diff_dots.off:after { content: '\00a0\00a0\00a0'; }
+.spacer.dot  { background: #B2EFEF; border: 1px dotted #B2EFEF; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 /* Main Colour Scheme */
@@ -338,21 +348,25 @@ div[class~="filename"],
 .panel,
 .traffic_light_number,
 .traffic_light_row td.summary,
-pre.diffed_code same ln
+pre.diffed_code same ln,
+.message_container
 {
-  background: #96D7E4;
+  background: #B2EFEF;
 }
+
+/* - - - - - - - - - - - - - - - - - - - - */
+
+div[current_file="false"] { background: #B2EFEF; }
+div[current_file="true"] { background: CornSilk; }
 
 .ui-dialog,
 .ui-dialog .ui-dialog-titlebar,
 .ui-dialog .ui-dialog-buttonpane,
 body   { background: #FFECCB; }
-.panel { border: 2px solid #FFECCB; }
+.panel { border: 3px solid #FFECCB; }
 
 #editor_line_numbers, #output_line_numbers, pre.diffed_code ln { color: #888; }
 
 #editor, #output, #diff_sheet { color: #383838; }
 
-div[current_file="false"] { background: #96D7E4; }
-div[current_file="true"] { background: CornSilk; }
 

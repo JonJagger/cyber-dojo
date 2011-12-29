@@ -101,7 +101,7 @@ var cyberDojo = (function($cd, $j) {
       + '</div>'
             
       + '<div class="panel">'
-      +    makeTable(fakeFilenameButton('filename'), 'opens a file for editing')
+      +    makeTable(fakeFilenameButton('filename.ext'), 'opens a file for editing')
       + '</div>'
               
       + '<div class="panel">'
