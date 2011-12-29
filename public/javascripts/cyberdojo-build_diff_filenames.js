@@ -13,6 +13,10 @@ var cyberDojo = (function($cd, $j) {
         diffSheet.scrollTop(filename.attr('scrollTop'));
         diffSheet.scrollLeft(filename.attr('scrollLeft'));
         diffSheet.save = save;
+        $j('div[class="filename"]').each(function() {
+          $j(this).attr('current_file', 'false');
+        });
+        filename.attr('current_file', 'true');
         filename.toggleClass('selected');
       };
     };

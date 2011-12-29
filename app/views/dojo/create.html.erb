@@ -11,20 +11,19 @@ function selectKata(index) {
   var info = $j('#kata_info_' + index).val();
   $j('#kata_info').val(info);
   
-  $j('input[name="kata"]').each(function() {
-    $j(this).parent().attr('current_file', 'false');
-  });
   var selected = $j('#kata_' + index);
+  selected.parent().siblings().each(function() {
+    $j(this).attr('current_file', 'false');
+  });
   selected.parent().attr('current_file', 'true');
   selected.attr('checked', 'checked');
 }
 
 function selectLanguage(index) {
-  $j('input[name="language"]').each(function() {
-    $j(this).parent().attr('current_file', 'false');
-  });
-
   var selected = $j('#language_' + index);
+  selected.parent().siblings().each(function() {
+    $j(this).attr('current_file', 'false');
+  });
   selected.parent().attr('current_file', 'true');
   selected.attr('checked', 'checked');
 }

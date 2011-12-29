@@ -20,7 +20,7 @@ function selectFile(id) {
         <%= diff_dots(n_deleted, 'deleted') -%>
       </td>      
       <td align="left">        
-        <div class="mid_tone filename"
+        <div class="filename"
              id="<%= file[:id] -%>"
              onclick='selectFile("<%=file[:id]-%>");'
              title="<%= diff_tip(n_deleted, n_added) -%>" >

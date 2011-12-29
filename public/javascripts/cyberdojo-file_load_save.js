@@ -45,12 +45,12 @@ var cyberDojo = (function($cd, $j) {
     // characters in a dom node id
     // NB: This fails if the filename contains a double quote
     
-    $j('input[name="filename"]').each(function() {
-      $j(this).parent().attr('current_file', 'false');
-    });
     var selected = $j('[id="radio_' + filename + '"]');
+    selected.parent().siblings().each(function() {
+      $j(this).attr('current_file', 'false');      
+    });
+    selected.parent().attr('current_file', 'true');    
     selected.attr('checked', 'checked');
-    selected.parent().attr('current_file', 'true');
     $j('#current_filename').attr('value', filename);
     
     var file_op_rename = $j('#file_op_rename');
