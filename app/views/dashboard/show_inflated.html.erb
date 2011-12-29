@@ -1,11 +1,99 @@
 
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var dojo_name = "<%=@dojo.name-%>";
+var seconds_per_column = "<%=@seconds_per_column-%>";  
+var maximum_columns = "<%=@maximum_columns-%>";  
+
+$j(document).ready(function() {
+  $j('#seconds_per_column').keyup(function(event) {
+    reParse(event);
+  });
+  $j('#maximum_columns').keyup(function(event) {
+    reParse(event);
+  });
+  $j('#deflate_time_gaps').click(function() {
+    $cd.postTo('show_deflated', {
+      dojo_name: dojo_name,
+      seconds_per_column: seconds_per_column,
+      maximum_columns: maximum_columns
+    });
+  });
+});
+
+function reParse(event) {
+  event.preventDefault();
+  if (event.keyCode == 13) {
+    parseSecondsPerColumn();
+    parseMaximumColumns();
+    rePost();
+  }
+}
+  
+function parseSecondsPerColumn() {
+  var input = $j('#seconds_per_column');
+  var value = input.attr('value');
+  var newValue = parseInt(value);
+  if (!isNaN(newValue)) {
+    seconds_per_column = newValue;
+  } else {
+    input.attr('value', seconds_per_column);
+  }
+  return seconds_per_column;
+}
+
+function parseMaximumColumns() {
+  var input = $j('#maximum_columns');
+  var value = input.attr('value');
+  var newValue = parseInt(value);
+  if (!isNaN(newValue)) {
+    maximum_columns = newValue;
+  } else {
+    input.attr('value', maximum_columns);
+  }
+  return maximum_columns;
+}
+
+function rePost() {
+  $cd.postTo('show_inflated', {
+    dojo_name: dojo_name,
+    seconds_per_column: seconds_per_column,
+    maximum_columns: maximum_columns
+  });
+}
+
+//--></script>
+
 <table>
   <tr>
-    <td>
-      <%= render :partial => 'controls' -%>
-    </td>
     <td class="panel">
      <%= render :partial => 'dojo/banner' -%>
+    </td>
+    <td class="panel">
+      <input type="text"
+             name="seconds_per_column" 
+             id="seconds_per_column"
+             value="<%=@seconds_per_column-%>"/>      
+      <span class="small_title">
+        seconds per<br/>column
+      </span>
+    </td>
+    <td class="panel">
+      <input type="text" 
+             name="maximum_columns" 
+             id="maximum_columns"
+             value="<%=@maximum_columns-%>"/>
+      <span class="small_title">
+        columns<br/>maximum
+      </span>
+    </td>
+    <td>
+      <input type="button"
+             class="button"
+             id="deflate_time_gaps"
+             title="Deflate time gaps"
+             value="deflate"/>
     </td>
   </tr>
 </table>

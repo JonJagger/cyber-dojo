@@ -112,14 +112,15 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +   'If you need to '
       +   '<input type="button" class="large button" value="resume-coding"/>'
-      +   br + ' please remember that this computer is the ' + avatar
+      +   ' please' + br
+      +   'remember that this computer is the ' + avatar
       + '</div>';
       
     var help = $j('<div>')
-      .html('<div style="font-size: 0.7em;">' + welcomeHtml + '</div>')
+      .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
-        width: 450,
+        width: 475,
         title: "<h2>help</h2>",
         modal: true,
         buttons: {

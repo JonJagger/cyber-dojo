@@ -119,8 +119,8 @@ input[value="output"]+label     /* from diff-page */
 
 .file_op, div[class~="filename"]
 {
-  margin: 0.25em;
   color: #777;
+  margin: 0.25em;
   font-size: 14pt;
   cursor: pointer;
   white-space: nowrap;
@@ -291,6 +291,13 @@ div[class~="filename"]:after  { content: "\00a0";  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#diff_panel
+{
+  overflow: auto;
+  height: 40em;
+  width: 48em;
+}
+
 #diff_sheet
 {
   margin: 0;
@@ -338,12 +345,13 @@ pre.diffed_code same ln
   background: #96D7E4;
 }
 
+.ui-dialog,
+.ui-dialog .ui-dialog-titlebar,
+.ui-dialog .ui-dialog-buttonpane,
 body   { background: #FFECCB; }
 .panel { border: 2px solid #FFECCB; }
 
 #editor_line_numbers, #output_line_numbers, pre.diffed_code ln { color: #888; }
 
 #editor, #output, #diff_sheet { color: #383838; }
-
-
 

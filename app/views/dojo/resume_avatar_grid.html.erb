@@ -14,31 +14,31 @@ function resume(avatar_name) {
 
 <%= render :partial => 'dojo/banner' -%>
 
-<table align="center"
-       class="panel">
-  <% index = 0 -%>
-  <% size = 100 -%>
-  <% (1..4).each do |_| -%>
-  <tr>
+<div align="center">
+  <table class="panel">
+    <% index = 0 -%>
+    <% size = 100 -%>
     <% (1..4).each do |_| -%>
-    <td>
-      <% avatar_name = @all_avatar_names[index] -%>
-      <% if @live_avatar_names.include?(avatar_name) -%>
-        <input type='image'
-               onclick='return resume("<%=avatar_name-%>");'
-               class='avatar_image'
-               src="/images/avatars/<%=avatar_name-%>.jpg"
-               title="Resume <%=avatar_name.humanize-%>"
-               width="<%=size-%>"
-               height="<%=size-%>" />          
-      <% else -%>
-        <%= bw_avatar_image(avatar_name, size) -%>
-      <% end -%>      
-      <% index += 1 -%>
-    </td>
-    <% end -%>     
-  </tr>
-  <% end -%>
-</table>
-
-<h3>Clicking your animal to Resume-Coding</h3>
+    <tr>
+      <% (1..4).each do |_| -%>
+      <td>
+        <% avatar_name = @all_avatar_names[index] -%>
+        <% if @live_avatar_names.include?(avatar_name) -%>
+          <input type='image'
+                 onclick='return resume("<%=avatar_name-%>");'
+                 class='avatar_image'
+                 src="/images/avatars/<%=avatar_name-%>.jpg"
+                 title="Resume <%=avatar_name.humanize-%>"
+                 width="<%=size-%>"
+                 height="<%=size-%>" />          
+        <% else -%>
+          <%= bw_avatar_image(avatar_name, size) -%>
+        <% end -%>      
+        <% index += 1 -%>
+      </td>
+      <% end -%>     
+    </tr>
+    <% end -%>
+  </table>
+  <h3>Click your animal to Resume-Coding</h3>
+</div>
