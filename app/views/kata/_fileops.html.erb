@@ -2,36 +2,32 @@
 <script language="javascript" type="text/javascript"><!--
 
 $j(document).ready(function() {
-  $j('#file_op_new').click(function() {
+  var fileButtons =  $j('#file_operation_buttons');
+  fileButtons.find('#new').click(function() {
     $cd.newFile(); 
   });
-  $j('#file_op_rename').click(function() {
+  fileButtons.find('#rename').click(function() {
     $cd.renameFile();
   });
-  $j('#file_op_delete').click(function() {
+  fileButtons.find('#delete').click(function() {
     $cd.deleteFile();
   });  
 });
 
 //--></script>
 
-<div>
+<div id="file_operation_buttons">
   <table>
     <tr>
-      <td class="file_op"
-          id="file_op_new"
-          title="Create a new file">
-        <div class="file_op_name">new</div>
+      <td class="small button"
+          id="new"
+          title="Create a new file">new
       </td>
-      <td class="file_op"
-          id="file_op_rename"
-          title="Rename the current file">
-        <div class="file_op_name">rename</div>
+      <td class="small button"
+          id="rename">rename
       </td>
-      <td class="file_op"
-          id="file_op_delete"
-          title="Delete the current file">
-        <div class="file_op_name">delete</div>
+      <td class="small button"
+          id="delete">delete
       </td>
     </tr>
   </table>

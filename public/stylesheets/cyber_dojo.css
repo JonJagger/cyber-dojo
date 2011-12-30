@@ -54,7 +54,13 @@ h3 { font-size: 1.3em;  }
   border-bottom: 1px solid #A8A8A8;
 }
 
-.small.button { font-size: 0.8em; }
+.small.button
+{
+  color: black; 
+  font-size: 0.7em;
+  padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */
+}
+
 .large.button { font-size: 1.35em; }
 
 .button[disabled]
@@ -96,26 +102,14 @@ input[value="output"]+label     /* from diff-page */
   font-style: italic;
 }
 
+input[id="help"] { margin-top: 0.5em; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.file_op 
-{
-  padding: 4px; 
-  background: CornSilk;
-  padding: 0 0.5em 0 0.5em; /* Top Right Bottom Left */
-} 
+div[class~="filename"]:before { content: "\00a0";  } /* \00a0 is a retained space */
+div[class~="filename"]:after  { content: "\00a0";  } 
 
-.file_op[disabled]
-{
-  cursor: default;
-  background: LightGray;
-  border-bottom: 1px solid #A8A8A8;
-  border-right:  1px solid #A8A8A8;     
-}
-
-.file_op_name { font-size: 0.7em; color: black; }
-
-.file_op, div[class~="filename"]
+div[class~="filename"]
 {
   color: #777;
   margin: 0.25em;
@@ -126,23 +120,17 @@ input[value="output"]+label     /* from diff-page */
   border-right:  1px solid #A8A8A8;
 }
 
-div[class~="filename"]:hover, 
-              .file_op:hover, 
-               .button:hover
+div[class~="filename"]:hover, .button:hover
 {
   border-bottom: 1px solid #555555;
   border-right:  1px solid #555555;   
 }
 
-.button[disabled]:hover,
-.file_op[disabled]:hover
+.button[disabled]:hover
 {
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8;   
 }
-
-div[class~="filename"]:before { content: "\00a0";  } /* \00a0 is a retained space */
-div[class~="filename"]:after  { content: "\00a0";  } 
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -357,13 +345,13 @@ pre.diffed_code same ln,
 /* - - - - - - - - - - - - - - - - - - - - */
 
 div[current_file="false"] { background: #B2EFEF; }
-div[current_file="true"] { background: CornSilk; }
+div[current_file="true"]  { background: CornSilk; }
 
 .ui-dialog,
 .ui-dialog .ui-dialog-titlebar,
 .ui-dialog .ui-dialog-buttonpane,
 body   { background: #FFECCB; }
-.panel { border: 3px solid #FFECCB; }
+.panel { border: 2px solid #FFECCB; }
 
 #editor_line_numbers, #output_line_numbers, pre.diffed_code ln { color: #888; }
 

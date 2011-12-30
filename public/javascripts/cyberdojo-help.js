@@ -90,7 +90,9 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +   makeTable(
             '<input type="button" class="large button" value="run-tests"/>',
-            ' displays the test result')
+            'results go to the',
+            fakeFilenameButton('<i>output</i>'),
+            'file')
         + '</div>'
         
       + '<div class="panel">'
