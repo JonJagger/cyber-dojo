@@ -9,13 +9,13 @@
     <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns -%>
     <% gapper = TdGapper.new(@dojo.created, seconds_per_td, maximum_seconds_uncollapsed) -%>
     <% all_lights = @dojo.all_increments -%>
-    <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%> 
+    <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%>
     <% index = 0 -%>
     <% all_lights.keys.sort.each do |avatar_name| -%>
     
       <% if all_lights[avatar_name].length > 0 -%>
         <% index += 1 -%>
-        <tr class="<%=parity(index)-%> traffic_light_row">
+        <tr class="<%=parity(index)-%> row">
           
           <% td_map = gapped[avatar_name] -%>    
           <% all_td_nos = td_map.keys.sort -%>
@@ -23,7 +23,7 @@
           
           <% if recent_td_nos.length < all_td_nos.length -%>
             <td>
-              <span class="traffic_light_omission"></span>
+              <span class="omission"></span>
             </td>
           <% end -%>
           
@@ -32,7 +32,7 @@
             <td>
             <% if td.class == Array -%>
               <% if td.length == 0 -%>
-                &nbsp;
+                <div class="gap">.</div>
               <% else -%>
                 <table>
                   <tr>
@@ -48,7 +48,7 @@
             <% end -%>
             
             <% if td.class == Hash -%>
-              <span class="traffic_light_omission"></span>         
+              <span class="omission"></span>         
             <% end -%>          
             </td>          
           <% end -%>

@@ -12,14 +12,14 @@
     <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%>     
     <% td_map = gapped[@avatar.name] -%>    
     
-    <tr class="traffic_light_row">
+    <tr class="row">
       
       <% all_td_nos = td_map.keys.sort -%>
       <% recent_td_nos = recent(all_td_nos, max_cols) -%>
       
       <% if recent_td_nos.length < all_td_nos.length -%>
         <td>
-          <span class="traffic_light_omission"></span>
+          <span class="omission"></span>
         </td>
       <% end -%>
       
@@ -28,7 +28,7 @@
         <td>
         <% if td.class == Array -%>
           <% if td.length == 0 -%>
-            &nbsp;
+            <div class="gap">.</div>
           <% else -%>
             <table>
               <tr>
@@ -44,13 +44,13 @@
         <% end -%>
         
         <% if td.class == Hash -%>
-          <span class="traffic_light_omission"></span>         
+          <span class="omission"></span>         
         <% end -%>          
         </td>          
       <% end -%>
       
       <td>
-        <div class="traffic_light_number">
+        <div class="number">
           <%= @avatar.increments.length -%>
         </div>
       </td>   

@@ -48,8 +48,7 @@ h3 { font-size: 1.3em;  }
   padding: 2px 8px 2px 8px;
   text-decoration: none;
   font-weight: normal;
-  border-top: none;
-  border-left: none;
+  border: none;
   border-right:  1px solid #A8A8A8; 
   border-bottom: 1px solid #A8A8A8;
 }
@@ -228,11 +227,19 @@ div[class~="filename"]:hover, .button:hover
 .error  { background: #FC3; /* amber */ }
 .passed { background: #0F0; /* green */ }
 
-.traffic_light_row td { padding: 0.05em; margin: 0; }
-
-.traffic_light_row.even td { background: #FFC; }
-
-.traffic_light_row.odd td  { background: Ivory; }
+#traffic_lights .row td { padding: 0.05em; margin: 0; }
+#traffic_lights .row.odd td  { background: CornSilk; }
+#traffic_lights .row.odd td.summary  { background: #B2EFEF; }
+#traffic_lights .omission { font-size: 0.7em; color: Gray; }
+#traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
+#traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
+#traffic_lights .number
+{
+  font-size: 1em;
+  text-align: center; /* for diff and dashboard */
+  display: block; /* for dashboard */
+  color: Gray;
+}
 
 .traffic_light
 {
@@ -250,7 +257,7 @@ div[class~="filename"]:hover, .button:hover
   cursor: pointer; 
 }
 
-.unlinked.traffic_light:hover  
+.traffic_light.unlinked:hover  
 { 
   background: #FFECCB; 
   cursor: default; 
@@ -270,18 +277,6 @@ div[class~="filename"]:hover, .button:hover
 }
 
 .traffic_light .bulb.off    { background: GhostWhite; }
-
-.traffic_light_omission { font-size: 0.8em; color: Gray; }
-
-.traffic_light_omission:after { content: "\2026"; /* ellipsis ... */ }
-
-.traffic_light_number
-{
-  font-size: 1em;
-  text-align: center; /* for diff and dashboard */
-  display: block; /* for dashboard */
-  color: Gray;
-}
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
