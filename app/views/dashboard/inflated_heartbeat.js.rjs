@@ -1,5 +1,0 @@
-
-page.replace 'banner',         :partial => 'dojo/banner'
-page.replace 'traffic_lights', :partial => 'traffic_lights_inflated'
-
-

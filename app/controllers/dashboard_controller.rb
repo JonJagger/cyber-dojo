@@ -9,14 +9,14 @@ class DashboardController < ApplicationController
   # after 60 minutes. I plan to introduce the fixed timeout only when
   # you can start a new dojo from any traffic-light.
 
-  def show_inflated
+  def show
     @tab_title = 'Dashboard'
     board_config(params)
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
   end
 
-  def inflated_heartbeat
+  def heartbeat
     board_config(params)
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
@@ -25,20 +25,6 @@ class DashboardController < ApplicationController
     end
   end
   
-  def show_deflated
-    board_config(params)
-    @seconds_per_column = seconds_per_column
-    @maximum_columns = maximum_columns
-    @tab_title = 'Dashboard'
-  end  
-  
-  def deflated_heartbeat
-    board_config(params)
-    respond_to do |format|
-      format.js if request.xhr?
-    end
-  end
-
   def seconds_per_column
     spc = (params[:seconds_per_column] || 30).to_i
     spc != 0 ? spc : 30

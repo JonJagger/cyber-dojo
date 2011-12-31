@@ -110,7 +110,7 @@ function showDashboard(dojo_name, data) {
   if (!data.exists) {
     cantFind(dojo_name);
   } else {
-    $cd.postTo('/dashboard/show_inflated', { dojo_name: dojo_name });  
+    $cd.postTo('/dashboard/show', { dojo_name: dojo_name });  
   }
 }
 

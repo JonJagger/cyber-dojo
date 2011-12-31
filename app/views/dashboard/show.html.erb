@@ -13,13 +13,6 @@ $j(document).ready(function() {
   $j('#maximum_columns').keyup(function(event) {
     reParse(event);
   });
-  $j('#deflate_time_gaps').click(function() {
-    $cd.postTo('show_deflated', {
-      dojo_name: dojo_name,
-      seconds_per_column: seconds_per_column,
-      maximum_columns: maximum_columns
-    });
-  });
 });
 
 function reParse(event) {
@@ -56,7 +49,7 @@ function parseMaximumColumns() {
 }
 
 function rePost() {
-  $cd.postTo('show_inflated', {
+  $cd.postTo('/dashboard/show', {
     dojo_name: dojo_name,
     seconds_per_column: seconds_per_column,
     maximum_columns: maximum_columns
@@ -88,13 +81,6 @@ function rePost() {
         columns<br/>maximum
       </span>
     </td>
-    <td>
-      <input type="button"
-             class="button"
-             id="deflate_time_gaps"
-             title="Deflate time gaps"
-             value="deflate"/>
-    </td>
   </tr>
 </table>
 
@@ -102,12 +88,12 @@ function rePost() {
   <tr>
     <td>
       <%= render :partial => 'click_info' -%>      
-      <%= render :partial => 'traffic_lights_inflated' -%>
+      <%= render :partial => 'traffic_lights' -%>
     </td>
   </tr>
 </table>
 
-<%= periodically_call_remote :url => { :action => :inflated_heartbeat,
+<%= periodically_call_remote :url => { :action => :heartbeat,
                                        :dojo_name => @dojo.name
                                      }, 
                              :with => "{ seconds_per_column: parseSecondsPerColumn()," +
