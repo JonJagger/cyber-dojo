@@ -52,7 +52,7 @@ function run(name_input, method, func) {
   if ($j.trim(dojo_name) === '') {
     $cd.alert("<h3>You must enter a name.</h3>", "");
   } else {
-    $j.getJSON('dojo/' + method + '?dojo_name=' + dojo_name, function(data) {
+    $j.getJSON('/dojo/' + method, { dojo_name: dojo_name }, function(data) {
       func(dojo_name, data);
     });
   }
@@ -86,7 +86,7 @@ function resumeCoding(dojo_name, data) {
     cantFind(dojo_name);
   } else {
     var grid = $j('<div>');
-    grid.load('dojo/resume_avatar_grid?dojo_name=' + dojo_name, function() {
+    grid.load('/dojo/resume_avatar_grid', { dojo_name: dojo_name }, function() {
       var resumer = $j('<div id="resume_coding_dialog">')
         .html(grid.html())
         .dialog({
