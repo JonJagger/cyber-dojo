@@ -1,5 +1,5 @@
 
-page.replace 'banner',         :partial => 'dojo/banner'
+page.replace 'info',           :partial => 'info'
 page.replace 'traffic_lights', :partial => 'traffic_lights'
 
 

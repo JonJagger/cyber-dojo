@@ -142,7 +142,7 @@ div[class~="filename"]:hover, .button:hover
 
 #editor, #editor_line_numbers, #output, #output_line_numbers
 {
-  height: 40em;    
+  height: 38em;    
 }
 
 #editor, #editor_line_numbers, #output, #output_line_numbers, #diff_sheet

@@ -10,14 +10,15 @@ module TimeInWordsHelper
   def time_in_words(seconds)
     years,days,hours,minutes,seconds = time_split(seconds)
     
+    about = '~ '
     if years > 0
-      t = 'about ' + plural(years, 'year')
+      t = about + plural(years, 'year')
       t = t + ' ' + plural(days, 'day') if days > 0
     elsif days > 0
-      t = 'about ' + plural(days, 'day')
+      t = about + plural(days, 'day')
       t = t + ' ' + plural(hours, 'hour') if hours > 0
     elsif hours > 0
-      t = 'about ' + plural(hours, 'hour')
+      t = about + plural(hours, 'hour')
       t = t + ' ' + plural(minutes, 'minute') if minutes > 0
     elsif minutes > 0
       t = plural(minutes, 'minute')

@@ -74,6 +74,7 @@ function startCoding(dojo_name, data) {
               "<h2>" + dojo_name + "</h2>" +
               "<h3>is full.</h3>", "")
   } else {
+    // This post is failing in Safari...?
     $cd.postTo('/kata/edit', {
       dojo_name: dojo_name,
       avatar: data.avatar
