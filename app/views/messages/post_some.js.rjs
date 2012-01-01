@@ -1,0 +1,3 @@
+
+page.replace 'some_messages', :partial => 'some_messages'
+

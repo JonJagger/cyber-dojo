@@ -10,9 +10,8 @@ $j(document).ready(function() {
   });
   
   $j('#start_coding').click(function() {
-    run('configured_name_input', "start_choose_avatar_json", function(dojo_name, data) {
-      startCoding(dojo_name, data);
-    })
+    var dojo_name = $j('#configured_name_input').attr('value');
+    $cd.postTo('/dojo/start', { dojo_name: dojo_name }, '_blank');    
   });
   
   $j('#resume_coding').click(function() {
@@ -41,7 +40,7 @@ $j(document).ready(function() {
 
   $j.each(['why', 'tips', 'ifaqs', 'links'], function(i,name) {
     $j('#' + name).click(function() {
-      $cd.postTo('/dojo/' + name);
+      $cd.postTo('/dojo/' + name, {}, '_blank');
     });
   });
   
@@ -63,22 +62,6 @@ function configureIt(dojo_name, data) {
     $cd.alert("<h3>There is already a dojo called</h3><h2>" + dojo_name + "</h2>", "");  
   } else {    
     $cd.postTo('/dojo/create', { dojo_name: dojo_name });    
-  }
-}
-
-function startCoding(dojo_name, data) {
-  if (data.avatar === "!exists?") {
-    cantFind(dojo_name);
-  } else if (data.avatar === "full") {
-    $cd.alert("<h3>Sorry, but</h3>" +
-              "<h2>" + dojo_name + "</h2>" +
-              "<h3>is full.</h3>", "")
-  } else {
-    // This post is failing in Safari...?
-    $cd.postTo('/kata/edit', {
-      dojo_name: dojo_name,
-      avatar: data.avatar
-    }, '_blank');
   }
 }
 
@@ -111,7 +94,7 @@ function showDashboard(dojo_name, data) {
   if (!data.exists) {
     cantFind(dojo_name);
   } else {
-    $cd.postTo('/dashboard/show', { dojo_name: dojo_name });  
+    $cd.postTo('/dashboard/show', { dojo_name: dojo_name }, '_blank');  
   }
 }
 
@@ -119,12 +102,12 @@ function showMessages(dojo_name, data) {
   if (!data.exists) {
     cantFind(dojo_name);  
   } else {
-    $cd.postTo('/messages/show_all', { dojo_name: dojo_name });  
+    $cd.postTo('/messages/show', { dojo_name: dojo_name }, '_blank');  
   }
 }
 
 function cantFind(dojo_name) {
-  $cd.alert("<h3>I can't find a dojo called</h3><h2>" + dojo_name + "</h2>", "");  
+  $cd.alert("<h3>There is no dojo called</h3><h2>" + dojo_name + "</h2>", "");  
 }
 
 //--></script>

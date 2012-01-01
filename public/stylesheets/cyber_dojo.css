@@ -35,6 +35,12 @@ h3 { font-size: 1.3em;  }
   cursor: pointer;
 }
 
+#index
+{
+  height: 30em;
+  overflow-y: auto;
+}
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .name_input { font-size: 1.15em; }
@@ -170,7 +176,7 @@ div[class~="filename"]:hover, .button:hover
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#all_messages { height: 40em; overflow: auto; }
+#all_messages { height: 30em; width: 19em; overflow-y: auto; }
 
 .message_text, #messages { font-size: 0.8em; }
 .message_text

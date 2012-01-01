@@ -1,0 +1,18 @@
+
+<div id="some_messages">
+  <% max_messages = 5 -%>
+  <% some = recent(@messages, max_messages) -%>  
+  <% some.reverse.each do |message| -%>  
+     <table class="message_container">
+       <tr>
+         <td>
+           <%= avatar_image(message[:sender].to_s, 30) -%>
+         </td>
+         <td class="message_text">
+           <%= message[:text] -%>
+         </td>
+       </tr>
+     </table>
+  <% end -%>
+</div>
+

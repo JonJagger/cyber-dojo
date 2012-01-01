@@ -58,8 +58,9 @@
           </td>
                     
           <td class="summary">
-            <%= render :partial => 'avatar_summary',
-                       :locals => { :avatar_name => avatar_name } -%>
+            <span class="small_title">
+              <%= avatar_name.humanize -%>
+            </span>
           </td>
                  
           <td class="summary">             

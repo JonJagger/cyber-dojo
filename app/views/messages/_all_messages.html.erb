@@ -1,0 +1,16 @@
+
+<div id="all_messages">
+  <% @messages.reverse.each do |message| -%>  
+     <table class="message_container">
+       <tr>
+         <td>
+           <%= avatar_image(message[:sender].to_s, 30) -%>
+         </td>
+         <td class="message_text">
+           <%= message[:text] -%>
+         </td>
+       </tr>
+     </table>
+  <% end -%>
+</div>
+
