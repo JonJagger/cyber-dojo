@@ -94,7 +94,7 @@ function showDashboard(dojo_name, data) {
   if (!data.exists) {
     cantFind(dojo_name);
   } else {
-    $cd.postTo('/dashboard/show', { dojo_name: dojo_name }, '_blank');  
+    $cd.postTo('/dashboard/show', { dojo_name: dojo_name });  
   }
 }
 
@@ -102,7 +102,7 @@ function showMessages(dojo_name, data) {
   if (!data.exists) {
     cantFind(dojo_name);  
   } else {
-    $cd.postTo('/messages/show', { dojo_name: dojo_name }, '_blank');  
+    $cd.postTo('/messages/show', { dojo_name: dojo_name });  
   }
 }
 
