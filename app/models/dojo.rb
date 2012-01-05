@@ -26,14 +26,6 @@ class Dojo
     File.directory? inner and File.directory? outer
   end
 
-  def self.find(params) # TODO: DROP
-    name = params[:dojo_name]
-    root_folder = params[:dojo_root]    
-    inner = root_folder + '/' + Dojo::inner_folder(name)
-    outer = inner + '/' + Dojo::outer_folder(name)
-    File.directory? inner and File.directory? outer
-  end
-
   def self.create(params)
     name = params[:dojo_name]
     root_folder = params[:dojo_root]    

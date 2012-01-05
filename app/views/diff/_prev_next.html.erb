@@ -6,6 +6,12 @@ $j(document).ready(function() {
   $j('#tag_number').keyup(function(event) {
     tagNumber(event);
   });
+  $j('#toggle_deleted_lines').click(function() {
+    $j('deleted').toggleClass('invisible');
+  });
+  $j('#toggle_added_lines').click(function() {
+    $j('added').toggleClass('invisible');
+  });
 });
 
 var dojo_name = "<%=@dojo.name-%>";
@@ -48,7 +54,7 @@ function tagNumber(event)
   <tr>
   
     <td>
-      <span class="traffic_light_number">
+      <span>
         <% if tag_number == 0 -%>
 	  0
 	<% else -%>
@@ -69,12 +75,10 @@ function tagNumber(event)
     
     <td>
       <input type="text"
-	     class="traffic_light_number"
  	     size="3"
 	     id="tag_number"
 	     name="tag_number"
 	     value="<%=tag_number-%>" />
-
     </td>   
         
     <td>
@@ -82,7 +86,7 @@ function tagNumber(event)
     </td>
     
     <td>
-      <span class="traffic_light_number">
+      <span>
         <% if tag_number < @all_traffic_lights.length -%>
 	  <%= link_to @all_traffic_lights.length, 
 	  { :controller => :diff, 
@@ -100,3 +104,19 @@ function tagNumber(event)
   </tr>
 </table>      
 
+<table align="center">
+  <tr>
+    <td>
+      <input type="button"
+	     class="button"
+	     id="toggle_deleted_lines"
+	     value="-"/>
+    </td>
+    <td>
+      <input type="button"
+	     class="button"
+	     id="toggle_added_lines"
+	     value="+"/>
+    </td>
+  </tr>
+</table>

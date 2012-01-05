@@ -41,6 +41,8 @@ h3 { font-size: 1.3em;  }
   overflow-y: auto;
 }
 
+.invisible { display: none; }
+
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .name_input { font-size: 1.15em; }
@@ -192,7 +194,7 @@ div[class~="filename"]:hover, .button:hover
   background: CornSilk;
   color: Green;
   height: 3em;
-  width: 8em;
+  width: 12em;
   font-size: 1em;
 }
   
@@ -239,7 +241,7 @@ div[class~="filename"]:hover, .button:hover
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
-#traffic_lights .number
+#traffic_lights .number, .traffic_light .number
 {
   font-size: 1em;
   text-align: center; /* for diff and dashboard */
@@ -286,6 +288,8 @@ div[class~="filename"]:hover, .button:hover
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
+#tag_number { font-size: 1em; }
+
 #diff_panel
 {
   overflow: auto;
@@ -303,8 +307,8 @@ div[class~="filename"]:hover, .button:hover
 pre.diffed_code { margin: 0; padding: 0; }
 
 pre.diffed_code same    { background: Cornsilk; }
-pre.diffed_code added   { background: #CEF6CE; }
-pre.diffed_code deleted { background: #F6CECE; }
+pre.diffed_code added,   #toggle_added_lines   { background: #CEF6CE; }
+pre.diffed_code deleted, #toggle_deleted_lines { background: #F6CECE; }
 
 pre.diffed_code ln 
 {
@@ -335,8 +339,6 @@ div[class~="filename"],
 #editor_line_numbers,
 #output_line_numbers,
 .panel,
-.traffic_light_number,
-.traffic_light_row td.summary,
 pre.diffed_code same ln,
 .message_container
 {
