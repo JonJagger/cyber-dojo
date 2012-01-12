@@ -1,33 +1,22 @@
-
 ====Ordered====
 -------------------------------------------
-Page to list previous dojos.
-Dojos with no increments are not shown.
-Does not auto refresh.
-Instead has a refresh button?
-Each entry shows
-  name, when(ago), language, kata, mini image of each avatar + its number of traffic lights
-Click on the name to open its dashboard.
+Ability to start a new dojo session from any diff-view traffic-light
 -------------------------------------------
 Dojo times out after 60 minutes.
+Main index page shows names of live dojos which can be joined
+Main index page shows names of finished dojos which can be viewed (avatars with no increments are not shown).
+Main index page does not auto refresh, instead has a refresh button.
+Each entry shows
+  name, when(ago), language, kata, mini image of each avatar + its number of traffic lights
 -------------------------------------------
-Dojo has 4? coloured rooms and you do not need to know its name to enter.
-Instead there are 4 config files, one for each room. The name of the
-current dojo is stored in the config file. Config file resets when the dojo times-out.
+If it proves necessary, limit the number of live dojos to N.
 -------------------------------------------
-Dojo must be named, but name is "salted in some way" to create sha1 folder id.
+Dojo must be named, but name is "salted" in some way to create sha1 folder id.
 This means the name the user chooses is always acceptable.
 This means index.rb will contain two kinds of entries, ones whose
-name is not salted, and ones that are.
-But during a session I don't want to have to load the entire index.rb file to retrieve
-the dojos salt. So the salt information will be stored in the rooms config file
-as well as in the index.rb file.
+name is not salted, and ones that are. 
 -------------------------------------------
 Dojo creation page offers option to time-out after 15 mins, 30 mins, 45 mins, 60 mins.
--------------------------------------------
-Dojo times out after specified duration.
--------------------------------------------
-Diff-view of older dojos filters out output as a pseudo filename
 -------------------------------------------
 
 
@@ -40,26 +29,18 @@ on the client. At server recalculate the hash and if
 nothing has changed do not do a commit and do not
 create a traffic light.
 -------------------------------------------
-At dojo creation salt the name provided so it is always ok.
--------------------------------------------
 At dojo creation add option to name the player and their location.
 -------------------------------------------
 Push current fileset to gist and tweet its location.
 -------------------------------------------
-Add hotkey to switch tabs.
--------------------------------------------
 Kata of the day.
 -------------------------------------------
-Messages posted by the server will need to change after 60 minute
-limit is live. Drop "reluctant to..." messages. Use simpler messages
-related to actual avatar events.
+Diff-view of older dojos filters out output as a pseudo filename
+-------------------------------------------
+Use simpler messages related to actual avatar events.
 -------------------------------------------
 Diff-view for editor-tab display does not work in IE8.
 Perhaps replace the div with a textarea?
--------------------------------------------
-Ability to start a new dojo session from any diff-view traffic-light
--------------------------------------------
-Ability to create a new starting fileset from any diff-view traffic-light
 -------------------------------------------
 Simplify the messages. Messages come from avatar events, not the server.
 Senders avatar image is shown. Traffic light also shown.
@@ -90,8 +71,8 @@ and needs refactoring, with hidden test-suite.
 
 ====Bugs====
 -------------------------------------------
-Occasionally the server becomes non-responsive and all avatars report a 10 second timeout
-when they press the run-tests button.
+Occasionally the server in the VirtualBox image becomes non-responsive and all avatars 
+report a 10 second timeout when they press the run-tests button.
 When this happens it is best to reboot the server and then get each laptop to resume
 coding as their avatar.
 -------------------------------------------
