@@ -12,7 +12,8 @@ o) a virtual box.
 Running your own VirtualBox TurnKey Linux CyberDojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
-Download the TurnKey Linux image from http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova
+Download the TurnKey Linux image from
+http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova (478 MB)
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
 The TurnKey image screen will tell you its IP address, eg 192.168.2.13
