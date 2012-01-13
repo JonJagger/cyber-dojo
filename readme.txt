@@ -1,5 +1,6 @@
 ===========================================================
-   VERY VERY IMPORTANT - VERY VERY IMPORTANT
+   VERY VERY IMPORTANT
+   VERY VERY IMPORTANT
 ===========================================================
 CyberDojo clients have full rights on the CyberDojo server. If you 
 setup your own server you are strongly advised to consider using
@@ -40,9 +41,9 @@ o) your kata (eg Prime Factors)
 
 Entering a CyberDojo
 ====================
-The CyberDojo server will ask you to choose your animal avatar (eg Panda).
+The CyberDojo server will assign you an avatar (eg Panda).
 The avatar provides identity for each laptop participating in the kata. You
-can re-enter at any time by choosing the avatar. This is handy if a laptop has
+can resume coding at any time by choosing the avatar. This is handy if a laptop has
 to retire as a new laptop can easily and instantly replace it.
 
 
@@ -60,7 +61,9 @@ This means you can still read the display if you are colour blind.
 Dashboard
 =========
 Shows a periodically updating display of all traffic lights for 
-all the computers in the dojo. 
+all the computers in the dojo.
+If you want to collapse the horizontal time gaps simply enter
+a very large value for the seconds_per_column value.
 
 
 Diff-view
@@ -184,8 +187,6 @@ If you need to install npm
 >curl http://npmjs.org/install.sh | sudo sh
 >If you need to install curl
 >sudo apt-get install curl
------Scala
-> sudo apt-get install scala
 
 
 Adding a new language
