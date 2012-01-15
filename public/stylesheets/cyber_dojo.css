@@ -64,8 +64,9 @@ h3 { font-size: 1.3em;  }
 .small.button
 {
   color: black; 
-  font-size: 0.7em;
+  font-size: 0.9em;
   padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */
+  cursor: help;
 }
 
 .large.button { font-size: 1.35em; }
