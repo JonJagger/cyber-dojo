@@ -42,16 +42,17 @@ o) your kata (eg Prime Factors)
 
 Entering a CyberDojo
 ====================
-The CyberDojo server will assign you an avatar (eg Panda).
-The avatar provides identity for each laptop participating in the kata. You
-can resume coding at any time by choosing the avatar. This is handy if a laptop has
-to retire as a new laptop can easily and instantly replace it.
+The CyberDojo server will assign you an animal avatar (eg Panda).
+The avatar provides identity for each laptop participating in the kata. 
+You can resume coding at any time by choosing the avatar. 
+This is handy if a laptop has to retire as a new laptop can easily and 
+instantly replace it.
 
 
 Traffic Lights
 ==============
-The display of each run-tests increment uses a traffic light, with meanings for
-the three colours as follows:
+The display of each run-tests increment uses a traffic light, with meanings 
+for the three colours as follows:
   o) red   - tests ran but at least one failed
   o) amber - syntax error somewhere, tests not run
   o) green - tests ran and all passed
@@ -69,7 +70,8 @@ a very large value for the seconds_per_column value.
 
 Diff-view
 =========
-Clicking on a traffic light opens a new page showing the diffs for that increment. 
+Clicking on a traffic light opens a new page showing the diffs for that increment
+together with < and > buttons to step backwards and  forwards through the diffs.
 The diff-view page does not work properly in Internet Explorer 8.
 
 
@@ -77,28 +79,28 @@ Messages
 ========
 Each computer can post tweet like messages which appear on the lower
 left hand side. I encourage players to use this to work together, 
-particularly when running the dojo with the aim of getting working solutions 
+particularly when running a dojo with the aim of getting working solutions 
 on _all_ laptops (eg in The Average Time To Green Game).
 
 
 Getting files off the VirtualBox TurnKey Linux server
 =====================================================
 These were the steps I took...
- 0. Don't boot the Virtual Box TurnKey Linux server yet
+ 0. don't boot the Virtual Box TurnKey Linux server yet
  1. insert a USB stick
- 2. In Virtual Box add a filter for the USB stick
- 3. Remove the USB stick
+ 2. in Virtual Box add a filter for the USB stick
+ 3. remove the USB stick
  4. boot the Virtual Box server and note its IP address (eg 192.168.61.25)
  5. open a browser page to the Virtual Box server (eg 192.168.61.25:12320)
- 6. login (you need username and password for this, see below)
- 7. Insert the USB stick
- 8. Find the name of the USB device, eg sdb1
+ 6. login (you need username and password for this, see above)
+ 7. insert the USB stick
+ 8. find the name of the USB device, eg sdb1
  9. >tail /var/log/messages
-10. Mount the usb device
+10. mount the usb device
 11. >mkdir /root/usbdrive
 12. >mount -t vfat /dev/sdb1 /root/usbdrive
 13. >cd /var/www/cyberdojo
-14. Find the folder you want
+14. find the folder you want
 15. >ruby names.rb    
 16. eg suppose the folder is dojos/82/b583c11…..
 17. cd to that folder, then
