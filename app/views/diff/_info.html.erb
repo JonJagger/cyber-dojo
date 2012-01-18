@@ -19,10 +19,15 @@
         <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
     </td>    
-    <td class="small_title">
-       kata: <%= elided_name(@dojo.name, 15) -%><br/>
-       language: <%= @dojo.language -%></br>
-       exercise: <%= @dojo.kata_name -%>
+    <td style="text-align: right;">
+       <div>language =</div>
+       <div>exercise =</div>
+       <div>kata =</div>
+    </td>
+    <td style="text-align: left;">
+       <div><%= @dojo.language -%></div>
+       <div><%= @dojo.kata_name -%></div>
+       <div><%= elided_name(@dojo.name, 15) -%></div>
     </td>
   </tr>
 </table>
