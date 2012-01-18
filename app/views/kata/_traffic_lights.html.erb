@@ -54,7 +54,16 @@
           <%= @avatar.increments.length -%>
         </div>
       </td>   
-      
+      <% size = 63 -%>
+      <td>
+        <%= avatar_image(@avatar.name, size) -%>
+      </td>
+      <td class="summary">
+        <span>
+          <%= @avatar.name.humanize -%>
+        </span>
+      </td>
+            
     </tr>      
   </table>
 </div>
