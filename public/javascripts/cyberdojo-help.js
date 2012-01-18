@@ -1,6 +1,55 @@
 
 var cyberDojo = (function($cd, $j) {
+  
+  $cd.makeTable = function() {
+    var makeTd = function(arg) {
+      return '<td>' + arg + '</td>';
+    };    
+    var i;
+    var table = '<table><tr>';
+    for (i = 0; i < arguments.length; i += 1) {
+      table += makeTd(arguments[i]);
+    }
+    table += '</tr></table>';
+    return table;
+  };
+  
 
+  $cd.whoAmI = function(avatar) {
+    
+    var imageSize = 300;
+    var avatarImage = ''
+      + '<img alt="' + avatar + '"'
+      +     ' class="avatar_image"'
+      +     ' width="' + imageSize + '"'
+      +     ' height="' + imageSize + '"'
+      +     ' style="float: left; padding: 2px;"'
+      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
+      
+    var welcomeHtml = ''
+      + '<div class="panel">'
+      +   $cd.makeTable(avatarImage,
+            'This is the '
+            + '<span style="font-size: 2.0em;">' + avatar + '</span>'
+            + ' computer.')
+      + '</div>';
+    
+    var whoAmI = $j('<div>')
+      .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
+      .dialog({
+        autoOpen: false,
+        width: 475,
+        title: "<h2>Welcome</h2>",
+        modal: true,
+        buttons: {
+          ok: function() {
+            $j(this).dialog('close');
+          }
+        }
+      });
+    whoAmI.dialog('open');  
+  };
+  
   $cd.help = function(avatar) {
     
     var imageSize = 50;
@@ -50,27 +99,14 @@ var cyberDojo = (function($cd, $j) {
       return  '<span class="' + property + '">' + space + color + space + '</span>';
     };
     
-    var makeTable = function() {
-      var makeTd = function(arg) {
-        return '<td>' + arg + '</td>';
-      };    
-      var i;
-      var table = '<table><tr>';
-      for (i = 0; i < arguments.length; i += 1) {
-        table += makeTd(arguments[i]);
-      }
-      table += '</tr></table>';
-      return table;
-    };
-    
     var welcomeHtml = ''      
       + '<table>'
       +   '<tr>'
       +     '<td class="panel">'
-      +        makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
+      +        $cd.makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
       +     '</td>'
       +     '<td class="panel">'
-      +         makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
+      +         $cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
       +     '</td>'      
       +     '<td class="panel">'            
       +       '<table>'
@@ -88,7 +124,7 @@ var cyberDojo = (function($cd, $j) {
       + '</table>'
       
       + '<div class="panel">'
-      +   makeTable(
+      +   $cd.makeTable(
             '<input type="button" class="large button" value="run-tests"/>',
             'results go to the',
             fakeFilenameButton('<i>output</i>'),
@@ -96,14 +132,14 @@ var cyberDojo = (function($cd, $j) {
         + '</div>'
         
       + '<div class="panel">'
-      +   makeTable(tdTrafficLight('failed', 'error', 'passed'),
+      +   $cd.makeTable(tdTrafficLight('failed', 'error', 'passed'),
             ' red means the tests ran but one or more failed' + br +
             ' amber means the tests could not be run' + br +
             ' green means the tests ran and all passed')
       + '</div>'
             
       + '<div class="panel">'
-      +    makeTable(fakeFilenameButton('filename.ext'), 'opens a file for editing')
+      +    $cd.makeTable(fakeFilenameButton('filename.ext'), 'opens a file for editing')
       + '</div>'
               
       + '<div class="panel">'
@@ -115,7 +151,7 @@ var cyberDojo = (function($cd, $j) {
       +   'If you need to '
       +   '<input type="button" class="large button" value="resume-coding"/>'
       +   ' please' + br
-      +   'remember that this computer is the ' + avatar
+      +   'remember - this is the ' + avatar + ' computer.'
       + '</div>';
       
     var help = $j('<div>')

@@ -94,7 +94,7 @@ h3 { font-size: 1.3em;  }
 {
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
-  font-size: 0.6em;
+  font-size: 1em;
   color: DarkGreen;
 }
 
@@ -157,7 +157,7 @@ div[class~="filename"]:hover, .button:hover
 #editor, #editor_line_numbers, #output, #output_line_numbers, #diff_sheet
 {
   font-family: monospace;
-  font-size: 12pt;
+  font-size: 14pt;
   border: 0;
   margin: 0;
   padding: 0;
@@ -253,11 +253,11 @@ div[class~="filename"]:hover, .button:hover
 .traffic_light
 {
   background: Gray;
-  padding: 2px;
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -khtml-border-radius: 8px;
-  -webkit-border-radius: 8px;
+  padding: 3px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
 }
 
 .traffic_light:hover 
@@ -275,10 +275,10 @@ div[class~="filename"]:hover, .button:hover
 .traffic_light .bulb
 {
   display: block;
-  margin: 2px 0px 0px 0px; /* vertical bulb separation */
-  padding: 1px; /* affects bulb diameter */
-  width: 8px;
-  height: 8px;
+  margin: 3px 0px 0px 0px; /* vertical bulb separation */
+  padding: 3px; /* affects bulb diameter */
+  width: 10px;
+  height: 10px;
   border-radius: 20px;
   -moz-border-radius: 20px;
   -khtml-border-radius: 20px;
