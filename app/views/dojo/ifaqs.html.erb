@@ -9,10 +9,22 @@ $j(document).ready(function() {
 
 //--></script>
 
-<%= render :partial => 'dojo/title',
-           :locals => { :title => 'iFAQs' } -%>
-
-<h4>(inFrequently Asked Questions)</h4>
+<table align="center">
+  <tr>
+    <td>
+      <% size = 60 -%>
+      <%= image_tag("/images/avatars/cyber-dojo.png",
+          :border => 0, :size => "#{size}x#{size}", :title => 'Home page') %>              
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <h1>iFAQs</h1>
+      <h4>(inFrequently Asked Questions)</h4>
+    </td>
+  </tr>
+</table>
 
 <table>
   <tr>

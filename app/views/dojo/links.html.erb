@@ -8,9 +8,25 @@ $j(document).ready(function() {
 
 //--></script>
 
-<%= render :partial => 'dojo/title',
-           :locals => { :title => 'Links' } -%>
+<table align="center">
+  <tr>
+    <td>
+      <% size = 60 -%>
+      <%= image_tag("/images/avatars/cyber-dojo.png",
+          :border => 0, :size => "#{size}x#{size}", :title => 'Home page') %>              
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <h1>Links</h1>
+    </td>
+  </tr>
+</table>
 
+<table width="35%" align="center">
+<tr>
+<td>
 <div class="panel">
   <a href="http://vimeo.com/15104374">Video of the Roman Numerals kata in Ruby</a>
 </div>
@@ -25,23 +41,18 @@ $j(document).ready(function() {
 
 <div class="panel">
   http://www.cyber-dojo.com has an unreliable
-  <br/>
   link to the internet. Why not build your own
-  <br/>
   server using this
   <a href="http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova">CyberDojo image</a>
   (478 MB)
-  <br/>
   which was built from
   <a href="http://www.turnkeylinux.org/">TurnKey Linux</a>
-  <br/>
   and runs in
   <a href="http://www.virtualbox.org/">VirtualBox</a>      
 </div>
 
 <div class="panel">
   Conceived, designed and implemented by
-  <br/>
   <a href="http://jonjagger.blogspot.com/">Jon Jagger</a>
 </div>
 
@@ -63,6 +74,8 @@ $j(document).ready(function() {
        class="button"
        id="close"
        value="Close"/>
-
+</td>
+</tr>
+</table>
 
 
