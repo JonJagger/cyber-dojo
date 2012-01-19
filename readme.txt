@@ -42,9 +42,9 @@ o) your kata (eg Prime Factors)
 
 Entering a CyberDojo
 ====================
-The CyberDojo server will assign you an animal avatar (eg Panda).
-The avatar provides identity for each laptop participating in the kata. 
-You can resume coding at any time by choosing the avatar. 
+The CyberDojo server will assign you an animal 'avatar' (eg Panda).
+The animal provides identity for each codebase participating in the kata. 
+You can resume coding at any time by choosing the animal. 
 This is handy if a laptop has to retire as a new laptop can easily and 
 instantly replace it.
 
