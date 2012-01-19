@@ -56,12 +56,22 @@
       </td>   
       <% size = 63 -%>
       <td>
-        <%= avatar_image(@avatar.name, size) -%>
+        
+        <%= link_to image_tag("/images/avatars/#{@avatar.name}.jpg",
+            :border => 0,
+            :size => "#{size}x#{size}",
+            :title => 'Open a dashboard page',
+            :class => 'cyber_dojo_image'),
+            {
+              :controller => :dashboard,
+              :action => :show,
+              :dojo_name => @dojo.name 
+            },
+              :target => '_blank'
+        %>
       </td>
-      <td class="summary">
-        <span>
-          <%= @avatar.name.humanize -%>
-        </span>
+      <td>
+        <%= @avatar.name.humanize -%>
       </td>
             
     </tr>      

@@ -15,9 +15,9 @@ var cyberDojo = (function($cd, $j) {
   };
   
 
-  $cd.whoAmI = function(avatar) {
+  $cd.welcome = function(avatar) {
     
-    var imageSize = 300;
+    var imageSize = 400;
     var avatarImage = ''
       + '<img alt="' + avatar + '"'
       +     ' class="avatar_image"'
@@ -28,17 +28,30 @@ var cyberDojo = (function($cd, $j) {
       
     var welcomeHtml = ''
       + '<div class="panel">'
+      +   '<-- Click <input type="button" class="small button" value="help"/>'
+      +   ' for help.'
+      +   '</br>'
+      +   '<-- Click <input type="button" class="small button" value="welcome"/>'
+      +   ' for this.'
+      + '</div>'
+
+      + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
             'This is the '
             + '<span style="font-size: 2.0em;">' + avatar + '</span>'
             + ' computer.')
+      + '</div>'
+            
+      + '<div class="panel">'
+      +    "The twitter tag for CyberDojo is @CyberDojo"
       + '</div>';
+      
     
-    var whoAmI = $j('<div>')
+    var welcome = $j('<div>')
       .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
-        width: 475,
+        width: 575,
         title: "<h2>Welcome</h2>",
         modal: true,
         buttons: {
@@ -47,12 +60,12 @@ var cyberDojo = (function($cd, $j) {
           }
         }
       });
-    whoAmI.dialog('open');  
+    welcome.dialog('open');  
   };
   
   $cd.help = function(avatar) {
     
-    var imageSize = 50;
+    var imageSize = 70;
 
     var homePageImage = ''    
       + '<img'
@@ -105,9 +118,6 @@ var cyberDojo = (function($cd, $j) {
       +     '<td class="panel">'
       +        $cd.makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
       +     '</td>'
-      +     '<td class="panel">'
-      +         $cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
-      +     '</td>'      
       +     '<td class="panel">'            
       +       '<table>'
       +         '<tr>'
@@ -117,6 +127,9 @@ var cyberDojo = (function($cd, $j) {
       +           '<td>'
       +              'opens a' + br + 'diff' + br + 'page'
       +           '</td>'
+      +           '<td>'
+      +              $cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
+      +           '</td>'      
       +         '</tr>'
       +       '</table>'
       +     '</td>'
@@ -129,8 +142,8 @@ var cyberDojo = (function($cd, $j) {
             'results go to the',
             fakeFilenameButton('<i>output</i>'),
             'file')
-        + '</div>'
-        
+      + '</div>'
+      
       + '<div class="panel">'
       +   $cd.makeTable(tdTrafficLight('failed', 'error', 'passed'),
             ' red means the tests ran but one or more failed' + br +
@@ -141,10 +154,10 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +    $cd.makeTable(fakeFilenameButton('filename.ext'), 'opens a file for editing')
       + '</div>'
-              
+                                  
       + '<div class="panel">'
-        + '<input type="button" class="large button" value="post"/>'
-        + ' sends a message to everyone</li>'
+      +   '<input type="button" class="large button" value="post"/>'
+      +   ' sends a message to everyone'
       + '</div>'
                     
       + '<div class="panel">'
@@ -158,7 +171,7 @@ var cyberDojo = (function($cd, $j) {
       .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
-        width: 475,
+        width: 575,
         title: "<h2>help</h2>",
         modal: true,
         buttons: {

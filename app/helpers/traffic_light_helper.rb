@@ -23,7 +23,8 @@ module TrafficLightHelper
   end
 
   def tool_tip(avatar_name, inc_number, minutes)
-     "View #{avatar_name.humanize} diff #{inc_number} : #{plural(minutes, 'minute')}"
+    #TODO: use minutes as year/month/day/hour/min?
+     "Open a diff page (#{inc_number})"
   end
   
   def unlinked_traffic_light(inc)

@@ -3,18 +3,6 @@
 
 $j(document).ready(function() {
 
-  $j('#help').click(function() {
-    $cd.help("<%=@avatar.name-%>");
-  });
-  
-  $j('#info .avatar_image').attr('title', 'Open dashboard page');
-  
-  $j('.avatar_image').click(function() {
-    $cd.postTo('/dashboard/show', {
-      dojo_name: "<%=@dojo.name-%>"
-    }, "_blank");
-  });
-  
   var editor = $j('#editor');
   $cd.bindHotKeys(editor);  
   editor.tabby({ tabString: editor.attr('tab') });
@@ -24,7 +12,7 @@ $j(document).ready(function() {
   
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
-  $cd.whoAmI("<%=@avatar.name-%>");  
+  $cd.welcome("<%=@avatar.name-%>");  
 });
 
 //--></script>
@@ -48,12 +36,14 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
+          <%= render :partial => 'help' -%>
+        </div>
+        <div class="panel">
           <%= render :partial => 'run_tests' -%>
         </div>
         <div class="panel">
           <%= render :partial => 'fileops' -%>
           <%= render :partial => 'filenames' -%>
-          <%= render :partial => 'help' -%>
         </div>
         <div class="panel">
           <%= render :partial => 'messages' -%>
