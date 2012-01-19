@@ -16,7 +16,7 @@ $j(document).ready(function() {
   <% max_messages = 5 -%>
   <% some = recent(@messages, max_messages) -%>  
   <% some.reverse.each do |message| -%>  
-     <table class="message_container">
+     <table class="message_container" title="Open message page">
        <tr>
          <td>
            <%= avatar_image(message[:sender].to_s, 40) -%>
@@ -26,6 +26,9 @@ $j(document).ready(function() {
          </td>
        </tr>
      </table>
+  <% end -%>
+  <% if @messages.length > max_messages -%>
+    &nbsp;&nbsp;...
   <% end -%>
 </div>
 

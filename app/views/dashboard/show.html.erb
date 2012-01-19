@@ -58,23 +58,13 @@ function rePost() {
 
 //--></script>
 
-<table>
+<table align="center">
   <tr>
-    <td class="panel">
-      <h1>
-        <% size = 40 -%>
-        <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-            :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
-              :controller => :dojo,
-              :action => :index,
-              :dojo_name => @dojo.name %>
-  
-        <%= elided_name(@dojo.name, 25) -%>
-      </h1>
-    </td>
-    <td class="panel">
+    
+    <td>
       <%= render :partial => 'info' -%>
     </td>
+    
     <td class="panel">
       <input type="text"
              name="seconds_per_column" 
@@ -99,7 +89,11 @@ function rePost() {
 <table>
   <tr>
     <td>
-        Click any traffic light to view its diff.
+      <%= render :partial => 'age' -%>      
+    </td>
+  </tr>
+  <tr>
+    <td>
       <%= render :partial => 'traffic_lights' -%>
     </td>
   </tr>

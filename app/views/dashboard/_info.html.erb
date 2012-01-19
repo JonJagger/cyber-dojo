@@ -1,6 +1,26 @@
- 
-<div id="info" class="small_title">      
-  Language: <%= @dojo.language -%><br/>
-  Exercise: <%= @dojo.kata_name -%><br/>
-  Started-: <%= time_in_words(@dojo.age_in_seconds) %> ago      
-</div>
+
+<table>
+  <tr>
+    <td>
+      <% size = 60 -%>
+      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
+          :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
+            :controller => :dojo,
+            :action => :index,
+            :dojo_name => @dojo.name %>              
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td style="text-align: right;">
+      <div>kata =</div>
+      <div>language =</div>
+      <div>exercise =</div>
+    </td>
+    <td style="text-align: left;">
+      <div><%= elided_name(@dojo.name, 15) -%></div>
+      <div><%= @dojo.language -%></div>
+      <div><%= @dojo.kata_name -%></div>
+    </td>
+  </tr>
+</table>

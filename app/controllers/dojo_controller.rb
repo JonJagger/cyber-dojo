@@ -25,7 +25,7 @@ class DojoController < ApplicationController
   
   def index
     # offers configure, start, resume, dashboard, messages
-    @title = 'CyberDojo'
+    @title = '@CyberDojo'
     configure(params)
     @dojo_name = dojo_name
     @tab_title = 'Home Page'

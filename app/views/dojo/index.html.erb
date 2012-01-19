@@ -113,15 +113,24 @@ function cantFind(dojo_name) {
 //--></script>
 
 
-<table>
+<table align="center">
   <tr>
-    <td class="panel">
-      <%= render :partial => 'dojo/title',
-                 :locals => { :title => @title } -%>
-                 
-      <h4>Deliberate Software Team Practice</h4>
+    <td>      
+      <% size = 60 -%>
+      <%= image_tag("/images/avatars/cyber-dojo.png",
+          :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <h1><%= @title -%></h1>                
+      <h4>doing Deliberate Practice, as a Team</h4>      
     </td>
   </tr>
+</table>
+
+<table>
   <tr>
     <td class="panel">
       &nbsp;First, on <em>one</em> computer, choose a name for your practice:
@@ -151,7 +160,7 @@ function cantFind(dojo_name) {
       &nbsp;Then, on <em>each</em> computer, type in the name:
       <table>
         <tr>
-          <td>
+         <td>
             <input type="text"
                    class="name_input"
                    id="configured_name_input"
@@ -199,7 +208,7 @@ function cantFind(dojo_name) {
       </table>
     <td>
   </tr>
-  
+
   <tr>
     <td>
       <% [ 'ifaqs', 'links', 'tips', 'why' ].each do |name| -%>
@@ -210,4 +219,5 @@ function cantFind(dojo_name) {
       <% end -%>
     </td>
   </tr>
+  
 </table>

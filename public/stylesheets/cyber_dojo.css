@@ -69,6 +69,7 @@ h3 { font-size: 1.3em;  }
 }
 
 .large.button { font-size: 1.35em; }
+.larger.button { font-size: 1.60em; }
 
 .button[disabled]
 {

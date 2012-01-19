@@ -26,32 +26,24 @@ var cyberDojo = (function($cd, $j) {
       +     ' style="float: left; padding: 2px;"'
       +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
       
-    var welcomeHtml = ''
-      + '<div class="panel">'
-      +   '<-- Click <input type="button" class="small button" value="help"/>'
-      +   ' for help.'
-      +   '</br>'
-      +   '<-- Click <input type="button" class="small button" value="welcome"/>'
-      +   ' for this.'
-      + '</div>'
-
+    var welcomeHtml = ''    
       + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
             'This is the '
-            + '<span style="font-size: 2.0em;">' + avatar + '</span>'
-            + ' computer.')
+            + '<span style="font-size: 3.0em;">' + avatar + "'s" + '</span>'
+            + ' code.')
       + '</div>'
-            
+      
       + '<div class="panel">'
-      +    "The twitter tag for CyberDojo is @CyberDojo"
+      +   'Click <input type="button" class="small button" value="help"/>'
+      +   ' for help, '
       + '</div>';
       
-    
     var welcome = $j('<div>')
       .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
-        width: 575,
+        width: 850,
         title: "<h2>Welcome</h2>",
         modal: true,
         buttons: {
@@ -138,7 +130,7 @@ var cyberDojo = (function($cd, $j) {
       
       + '<div class="panel">'
       +   $cd.makeTable(
-            '<input type="button" class="large button" value="run-tests"/>',
+            '<input type="button" class="larger button" value="run-tests"/>',
             'results go to the',
             fakeFilenameButton('<i>output</i>'),
             'file')
@@ -158,15 +150,8 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +   '<input type="button" class="large button" value="post"/>'
       +   ' sends a message to everyone'
-      + '</div>'
-                    
-      + '<div class="panel">'
-      +   'If you need to '
-      +   '<input type="button" class="large button" value="resume-coding"/>'
-      +   ' please' + br
-      +   'remember - this is the ' + avatar + ' computer.'
       + '</div>';
-      
+                          
     var help = $j('<div>')
       .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
