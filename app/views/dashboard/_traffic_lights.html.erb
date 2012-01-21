@@ -63,8 +63,9 @@
             </span>
           </td>
                  
-          <td class="summary">             
-            <%=  traffic_light(@dojo, avatar_name, all_lights[avatar_name].last, false) -%>
+          <td class="summary">
+            <%  in_new_window = false -%>            
+            <%=  traffic_light(@dojo, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
           </td>
           
           <td class="summary">

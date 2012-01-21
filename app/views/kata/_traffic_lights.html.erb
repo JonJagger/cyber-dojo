@@ -68,6 +68,16 @@
         <%= @avatar.name.humanize -%>
       </td>
 
+      <td class="summary">
+        <% in_new_window = false -%>
+        <% if lights.empty? -%>
+          <% light = { :time => Time.now, :number => 0, :outcome => :none } -%>
+        <% else -%>
+          <% light = lights.last -%>
+        <% end -%>
+        <%= traffic_light(@dojo, @avatar.name, light, in_new_window) -%>
+      </td>
+
       <td>
         <div class="number">
           <%= @avatar.increments.length -%>
