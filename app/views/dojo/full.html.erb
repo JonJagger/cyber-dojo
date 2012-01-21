@@ -9,15 +9,28 @@ $j(document).ready(function() {
 
 //--></script>
 
-
-<%= render :partial => 'dojo/title',
-           :locals => { :title => 'CyberDojo' } -%>
+<table align="center">
+  <tr>
+    <td>      
+      <% size = 60 -%>
+      <%= image_tag("/images/avatars/cyber-dojo.png",
+          :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <h1 title="Twitter tag == @CyberDojo">@CyberDojo</h1>                
+    </td>
+  </tr>
+</table>
 
 <table class="panel">
   <tr>
     <td style="font-size: 2em;">
-    <%=@dojo_name-%><br/>
-    is full (16 participants).</td>
+      Sorry, <%=@dojo_name-%>
+      is full.
+    </td>
   </tr>
 </table>
 

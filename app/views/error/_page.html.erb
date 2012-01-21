@@ -35,9 +35,22 @@
 
 <body>
 
-  <%= render :partial => 'dojo/title',
-             :locals => { :title =>  message } -%>
-
+  <table align="center">
+    <tr>
+      <td>      
+	<% size = 40 -%>
+	<%= image_tag("/images/avatars/cyber-dojo.png",
+	    :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
+      </td>
+      <td>
+	&nbsp;&nbsp;
+      </td>
+      <td>
+	<h1 title="Twitter tag == @CyberDojo">@CyberDojo</h1>                
+      </td>
+    </tr>
+  </table>
+	     
   <% avatars = Avatar.names.shuffle -%>
   <% size = 150 -%>
 

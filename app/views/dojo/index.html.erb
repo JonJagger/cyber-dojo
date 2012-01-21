@@ -59,7 +59,7 @@ function run(name_input, method, func) {
 
 function configureIt(dojo_name, data) {
   if (data.exists) {
-    $cd.alert("<h3>There is already a dojo called</h3><h2>" + dojo_name + "</h2>", "");  
+    $cd.alert("<h3>There is already a kata called</h3><h2>" + dojo_name + "</h2>", "");  
   } else {    
     $cd.postTo('/dojo/create', { dojo_name: dojo_name });    
   }
@@ -107,7 +107,7 @@ function showMessages(dojo_name, data) {
 }
 
 function cantFind(dojo_name) {
-  $cd.alert("<h3>There is no dojo called</h3><h2>" + dojo_name + "</h2>", "");  
+  $cd.alert("<h3>There is no kata called</h3><h2>" + dojo_name + "</h2>", "");  
 }
 
 //--></script>
@@ -116,7 +116,7 @@ function cantFind(dojo_name) {
 <table align="center">
   <tr>
     <td>      
-      <% size = 60 -%>
+      <% size = 80 -%>
       <%= image_tag("/images/avatars/cyber-dojo.png",
           :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
     </td>
@@ -125,7 +125,7 @@ function cantFind(dojo_name) {
     </td>
     <td>
       <h1 title="Twitter tag == @CyberDojo"><%= @title -%></h1>                
-      <h4>doing Deliberate Practice, as a Team</h4>      
+      <h4>a place for Software Teams<br/>to do Deliberate Practice</h4>      
     </td>
   </tr>
 </table>
@@ -133,7 +133,7 @@ function cantFind(dojo_name) {
 <table>
   <tr>
     <td class="panel">
-      &nbsp;First, on <em>one</em> computer, choose a name for your practice:
+      &nbsp;First, on <em>one</em> computer, choose a name for your practice-kata:
       <table>
         <tr>
           <td>
@@ -157,7 +157,7 @@ function cantFind(dojo_name) {
   
   <tr>
     <td class="panel">
-      &nbsp;Then, on <em>each</em> computer, type in the name:
+      &nbsp;Then, on <em>each</em> computer, type in your kata's name:
       <table>
         <tr>
          <td>
