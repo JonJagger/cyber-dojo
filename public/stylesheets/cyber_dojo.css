@@ -151,13 +151,13 @@ div[class~="filename"]:hover, .button:hover
 
 #editor, #editor_line_numbers, #output, #output_line_numbers
 {
-  height: 38em;    
+  height: 33em;    
 }
 
 #editor, #editor_line_numbers, #output, #output_line_numbers, #diff_sheet
 {
   font-family: monospace;
-  font-size: 14pt;
+  font-size: 16pt;
   border: 0;
   margin: 0;
   padding: 0;
