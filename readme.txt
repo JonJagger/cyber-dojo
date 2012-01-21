@@ -144,8 +144,8 @@ Rails version             2.3.8
 
 Installing Languages
 ====================
-Initial filesets for thirteen languages are provided: C, C++, C#, CoffeeScript,
-Erlang, Haskell, Java, Javascript, Objective C, Python, Perl, PHP, and Ruby. 
+Initial filesets for twelve languages are provided: C, C++, C#, CoffeeScript,
+Erlang, Haskell, Java, Javascript, Python, Perl, PHP, and Ruby. 
 Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
 your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
