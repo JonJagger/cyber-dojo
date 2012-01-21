@@ -24,7 +24,7 @@ var cyberDojo = (function($cd, $j) {
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
+      +     ' src="/images/avatars/big/' + avatar + '.jpg" title="' + avatar + '" />';
       
     var welcomeHtml = ''    
       + '<div class="panel">'

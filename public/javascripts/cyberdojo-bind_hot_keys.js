@@ -16,7 +16,7 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.runTestsHotKey = function() {
-    return 'Alt+r';
+    return 'Alt+t';
   };
   
   $cd.loadNextFileHotKey = function() {

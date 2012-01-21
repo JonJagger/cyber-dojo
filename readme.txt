@@ -53,9 +53,9 @@ Traffic Lights
 ==============
 The display of each run-tests increment uses a traffic light, with meanings 
 for the three colours as follows:
-  o) red   - tests ran but at least one failed
-  o) amber - syntax error somewhere, tests not run
-  o) green - tests ran and all passed
+  (o) red   - tests ran but at least one failed
+  (o) amber - syntax error somewhere, tests not run
+  (o) green - tests ran and all passed
 The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind.
 
