@@ -12,7 +12,8 @@ function resume(avatar_name) {
 
 //--></script>
 
-      <h1>Resume-Coding</h1>
+<h1>Resume-Coding</h1>
+
 <table align="center">
   <tr>
     <td>
@@ -23,12 +24,12 @@ function resume(avatar_name) {
             :action => :index,
             :dojo_name => @dojo.name %>      
     </td>
-    <td style="text-align: right;">
+    <td style="text-align: right; color: DarkGreen;">
        <div>kata =</div>
        <div>language =</div>
        <div>exercise =</div>
     </td>
-    <td style="text-align: left;">
+    <td style="text-align: left; color: DarkGreen;">
        <div><%= elided_name(@dojo.name, 15) -%></div>
        <div><%= @dojo.language -%></div>
        <div><%= @dojo.kata_name -%></div>
@@ -54,12 +55,18 @@ function resume(avatar_name) {
                  title="Resume <%=avatar_name.humanize-%>"
                  width="<%=size-%>"
                  height="<%=size-%>" />          
+          <br/>
+          <span style="color: DarkGreen;">
+            <%= avatar_name -%>
+          </span>
         <% else -%>
           <%= bw_avatar_image(avatar_name, size) -%>
+          <br/>
+          <span style="color: Gray;">
+            <%= avatar_name -%>
+          </span>
         <% end -%>      
         <% index += 1 -%>
-        <br/>
-        <%= avatar_name -%>
       </td>
       <% end -%>     
     </tr>

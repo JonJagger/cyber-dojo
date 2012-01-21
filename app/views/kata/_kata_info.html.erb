@@ -21,14 +21,14 @@
         &nbsp;&nbsp;
       </td>
       <td style="text-align: right;">
+        <div>kata =</div>
         <div>language =</div>
         <div>exercise =</div>
-        <div>kata =</div>
       </td>
       <td style="text-align: left;">
+        <div><%= elided_name(@dojo.name, 15) -%></div>
         <div><%= @dojo.language -%></div>
         <div><%= @dojo.kata_name -%></div>
-        <div><%= elided_name(@dojo.name, 15) -%></div>
       </td>      
     </tr>
   </table>
