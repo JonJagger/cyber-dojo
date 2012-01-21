@@ -182,7 +182,6 @@ module RunTestsOutputParserHelper
   end
 
   def parse_hunit(output)
-    puts output
     if output =~ /Counts \{cases = (\d+), tried = (\d+), errors = (\d+), failures = (\d+)\}/
       if $3.to_i != 0
         :error
