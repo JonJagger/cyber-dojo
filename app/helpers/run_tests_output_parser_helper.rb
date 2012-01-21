@@ -181,6 +181,20 @@ module RunTestsOutputParserHelper
      end
   end
 
-end
+  def parse_hunit(output)
+    puts output
+    if output =~ /Counts \{cases = (\d+), tried = (\d+), errors = (\d+), failures = (\d+)\}/
+      if $3.to_i != 0
+        :error
+      elsif $4.to_i != 0
+        :failed
+      else
+        :passed
+      end
+    else
+      :error
+    end
+  end
 
+end
 
