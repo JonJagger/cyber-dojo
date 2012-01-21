@@ -49,14 +49,8 @@
         </td>          
       <% end -%>
       
-      <td>
-        <div class="number">
-          <%= @avatar.increments.length -%>
-        </div>
-      </td>   
-      <% size = 63 -%>
-      <td>
-        
+      <td>  
+        <% size = 63 -%>
         <%= link_to image_tag("/images/avatars/#{@avatar.name}.jpg",
             :border => 0,
             :size => "#{size}x#{size}",
@@ -73,7 +67,13 @@
       <td>
         <%= @avatar.name.humanize -%>
       </td>
-            
+
+      <td>
+        <div class="number">
+          <%= @avatar.increments.length -%>
+        </div>
+      </td>
+      
     </tr>      
   </table>
 </div>

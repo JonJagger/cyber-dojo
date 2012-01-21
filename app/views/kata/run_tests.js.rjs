@@ -2,4 +2,4 @@
 page.replace 'traffic_lights', :partial => 'traffic_lights'
 page.replace 'output',         :partial => 'output'
 page.replace 'outcome',        :partial => 'outcome'
-page.replace 'some_messages',  :partial => 'messages/some_messages'
+page.replace 'some_messages',  :partial => 'some_messages'
