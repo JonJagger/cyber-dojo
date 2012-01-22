@@ -1,7 +1,15 @@
 
 var cyberDojo = (function($cd) {
 
-  $cd.bindLineNumbers = function(editor, numbers) {  
+  $cd.unbindLineNumbers = function(name) {
+    var numbers = $j('[id="' + name + '_line_numbers"]');
+    numbers.val("");    
+  };
+  
+  $cd.bindLineNumbers = function(name) {
+    var editor = $j('#' + name);
+    var numbers = $j('[id="' + name + '_line_numbers"]');
+    
     numbers.attr('readonly', 'true');
     numbers.val($cd.lineNumbers);
     
