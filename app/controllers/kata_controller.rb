@@ -56,7 +56,11 @@ private
 
   def load_manifest_from_page
     manifest = { :visible_files => {} }
-
+    
+    load_files_aspect(manifest, :caret_pos)
+    load_files_aspect(manifest, :scroll_top)
+    filenames = load_files_aspect(manifest, :scroll_left)
+    
     (params[:file_content] || {}).each do |filename,content|
       filename = dequote(filename)
       manifest[:visible_files][filename] ||= {}
@@ -64,21 +68,21 @@ private
       manifest[:visible_files][filename][:content] = content.gsub(/\r\n/, "\n")  
     end
  
-    load_files_aspect(manifest, :caret_pos)
-    load_files_aspect(manifest, :scroll_top)
-    load_files_aspect(manifest, :scroll_left)
-    
     manifest[:current_filename] = params['current_filename']
 
     manifest
   end
 
   def load_files_aspect(manifest, aspect)
+    filenames = [ ]
     id = ('file_' + aspect.to_s).to_sym
     (params[id] || {}).each do |filename,value|
       filename = dequote(filename)
+      filenames << filename
+      manifest[:visible_files][filename] ||= {}
       manifest[:visible_files][filename][aspect] = value
-    end    
+    end
+    filenames
   end
 
 end

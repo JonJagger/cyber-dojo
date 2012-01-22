@@ -25,8 +25,8 @@ var cyberDojo = (function($cd, $j) {
     $j('#spinner').show();
     
     // Reduce bandwidth by not sending line-numbers.
-    $j('#editor_line_numbers').val("");
-    $j('#output_line_numbers').val("");
+    $j('[id="editor_line_numbers"]').val("");
+    $j('[id="output_line_numbers"]').val("");
   };
 
   $cd.postRunTests = function() { 
@@ -35,8 +35,8 @@ var cyberDojo = (function($cd, $j) {
     //                 :complete => "postRunTests();"
 
     // Restore line-numbers.
-    $j('#editor_line_numbers').val($cd.lineNumbers);
-    $j('#output_line_numbers').val($cd.lineNumbers);
+    $j('[id="editor_line_numbers"]').val($cd.lineNumbers);
+    $j('[id="output_line_numbers"]').val($cd.lineNumbers);
   
     $j('#spinner').hide();
     $j('#run_tests').show();
