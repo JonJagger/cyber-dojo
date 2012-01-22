@@ -6,27 +6,37 @@ var cyberDojo = (function($cd, $j) {
     // form_remote_tag :url => {...}, 
     //                 :before => "preRunTests();",
   
-    // There is a race condition somewhere.
+    // There is a race condition error somewhere. The contents of one file
+    // are copied into another file. This is something to do with the
+    // saveFile() loadFile() interaction. 
     //
     // I'm starting to think that the way to solve this is to simply give EVERY
     // file its own textarea in its own div. Then no movement of content is
     // required at all. Instead switching from one file to another hides all
     // the editor divs and shows the one selected. YES.
-    // Googling seems to suggest that the contents of a textarea are submitted
-    // when inside a form. So I think this is the way to go.
-    // It's just possible that this will mean the cursorPos and scrollPos
-    // values will not need to be stored...Could b a major simplification.
+    // Googling suggests that the contents of a textarea are submitted
+    // when inside a form. The cursorPos and scrollPos values will still
+    // need to be stored, so the positions can be restored when a player
+    // resumes coding.
     
     $cd.saveFile($cd.currentFilename());
     
     $j('#run_tests').hide();
     $j('#spinner').show();
+    
+    // Reduce bandwidth by not sending line-numbers.
+    $j('#editor_line_numbers').val("");
+    $j('#output_line_numbers').val("");
   };
 
   $cd.postRunTests = function() { 
     // app/views/kata/edit.html.erb
     // form_remote_tag :url => {...}, 
     //                 :complete => "postRunTests();"
+
+    // Restore line-numbers.
+    $j('#editor_line_numbers').val($cd.lineNumbers);
+    $j('#output_line_numbers').val($cd.lineNumbers);
   
     $j('#spinner').hide();
     $j('#run_tests').show();
