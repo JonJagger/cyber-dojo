@@ -175,8 +175,6 @@ div[class~="filename"]:hover, .button:hover
   width: 2em;
 }
 
-#outcome { display: none; }
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
 #all_messages { height: 30em; width: 19em; overflow-y: auto; }
