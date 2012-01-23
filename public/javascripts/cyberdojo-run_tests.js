@@ -41,7 +41,12 @@ var cyberDojo = (function($cd, $j) {
     $j('#spinner').hide();
     $j('#run_tests').show();
     $cd.loadFile('output');
-    $j('#output').focus();
+    
+    var output = $j('#output');
+
+    output.focus();
+    $cd.unbindHotKeys(output);
+    $cd.bindHotKeys(output);    
   };
 
   return $cd;

@@ -1,41 +1,34 @@
 
 <div class="panel">
   
-  <div id="editor_div">
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td>
-          <textarea class="line_numbers"
-                    name="editor_line_numbers"
-                    id="editor_line_numbers">
-          </textarea>
-        </td>
-        <td>
-          <textarea name="editor" 
-                    id="editor"
-                    tab="<%=@tab-%>"
-                    wrap="off">
-          </textarea>
-        </td>
-      </tr>
-    </table>
-  </div>
+  <% filenames = [ 'editor', 'output'] -%>
+  <% filenames.each do |filename| -%>
   
-  <div id="output_div">
-    <table cellspacing="0" cellpadding="0">
-      <tr>
-        <td>
-          <textarea class="line_numbers"
-                    name="output_line_numbers"
-                    id="output_line_numbers">
-          </textarea>
-        </td>
-        <td>
-          <%= render :partial => 'output' -%>
-        </td>
-      </tr>
-    </table>
-  </div>
+    <div id="<%=filename-%>_div">
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td>
+            <textarea class="line_numbers"
+                      name="<%=filename-%>_line_numbers"
+                      id="<%=filename-%>_line_numbers">
+            </textarea>
+          </td>
+          <td>
+            <% if filename != 'output'-%>
+              <textarea name="<%=filename-%>" 
+                        id="<%=filename-%>"
+                        wrap="off"
+                        tab="<%=@tab-%>">
+              </textarea>                                     
+            <% else -%>            
+              <%= render :partial => 'output' -%>        
+            <% end -%>
+          </td>
+        </tr>
+      </table>
+    </div>
+  
+  <% end -%>
   
 </div>
 
