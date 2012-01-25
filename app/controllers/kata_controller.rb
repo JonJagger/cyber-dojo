@@ -10,12 +10,6 @@ class KataController < ApplicationController
     @manifest = @avatar.manifest
     @current_file = @manifest[:current_filename]
     @output = @manifest[:output]
-    increments = @avatar.increments
-    if increments.empty?
-      @outcome = ''
-    else
-      @outcome = increments.last[:outcome]
-    end
     @tab_title = 'Run Tests'
   end
 
@@ -24,10 +18,9 @@ class KataController < ApplicationController
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])   
     manifest = load_manifest_from_page()
-    increments = @avatar.run_tests(manifest)
-    @avatar.post_run_test_messages()
+    @avatar.run_tests(manifest)
     @output = manifest[:output]
-    @outcome = increments.last[:outcome]
+    @avatar.post_run_test_messages()
     @messages = @dojo.messages
     respond_to do |format|
       format.js if request.xhr?

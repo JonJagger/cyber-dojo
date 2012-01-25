@@ -1,10 +1,11 @@
 
-<div class="panel">
+<div id="visible_files_container"
+     class="panel">
   
-  <% filenames = [ 'editor', 'output'] -%>
-  <% filenames.each do |filename| -%>
-  
-    <div id="<%=filename-%>_div">
+  <% @manifest[:visible_files].each do |filename,file| -%>
+    <div class="filename_div"
+         name="<%=filename-%>"
+         id="<%=filename-%>_div">
       <table cellspacing="0" cellpadding="0">
         <tr>
           <td>
@@ -15,10 +16,11 @@
           </td>
           <td>
             <% if filename != 'output'-%>
-              <textarea name="<%=filename-%>" 
-                        id="<%=filename-%>"
+              <textarea class="file_content"
+                        name="file_content['<%=filename-%>']"
+                        id="file_content_for_<%=filename-%>"
                         wrap="off"
-                        tab="<%=@tab-%>">
+                        tab="<%=@tab-%>"><%=h file[:content]-%>
               </textarea>                                     
             <% else -%>            
               <%= render :partial => 'output' -%>        
@@ -27,8 +29,26 @@
         </tr>
       </table>
     </div>
-  
+
+    <input type="hidden"
+           name="file_caret_pos['<%=filename-%>']"
+           id="file_caret_pos_for_<%=filename-%>"
+           value="<%=h file[:caret_pos]-%>"/>         
+    <input type="hidden"
+           name="file_scroll_top['<%=filename-%>']"
+           id="file_scroll_top_for_<%=filename-%>"
+           value="<%=h file[:scroll_top]-%>"/>
+    <input type="hidden"
+           name="file_scroll_left['<%=filename-%>']"
+           id="file_scroll_left_for_<%=filename-%>"
+           value="<%=h file[:scroll_left]-%>"/>         
   <% end -%>
   
 </div>
+
+<input type="hidden"
+       name="current_filename"
+       id="current_filename"
+       value="<%=@manifest[:current_filename]-%>"/>
+
 

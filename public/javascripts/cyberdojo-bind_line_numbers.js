@@ -1,19 +1,42 @@
 
 var cyberDojo = (function($cd) {
 
-  $cd.unbindLineNumbers = function(name) {
-    var numbers = $j('[id="' + name + '_line_numbers"]');
-    numbers.val("");    
+  $cd.id = function(name) {
+    return $j('[id="' + name + '"]');
   };
   
-  $cd.bindLineNumbers = function(name) {
-    var editor = $j('#' + name);
-    var numbers = $j('[id="' + name + '_line_numbers"]');
+  $cd.fileContentFor = function(filename) {
+    return $cd.id('file_content_for_' + filename);
+  };
+  
+  $cd.lineNumbersFor = function(filename) {
+    return $cd.id(filename + '_line_numbers');  
+  };
+  
+  $cd.unbindAllLineNumbers = function() {
+    $j.each( $cd.filenames(), function(i,filename) {
+      $cd.unbindLineNumbers(filename);
+    });    
+  };
+  
+  $cd.unbindLineNumbers = function(filename) {
+    $cd.lineNumbersFor(filename).val("");
+  };
+  
+  $cd.bindAllLineNumbers = function() {
+    $j.each( $cd.filenames(), function(i,filename) {
+      $cd.bindLineNumbers(filename);
+    });
+  };
+  
+  $cd.bindLineNumbers = function(filename) {
+    var content = $cd.fileContentFor(filename);
+    var numbers = $cd.lineNumbersFor(filename);
     
     numbers.attr('readonly', 'true');
     numbers.val($cd.lineNumbers);
     
-    editor.bind({
+    content.bind({
         scroll:     function(ev) { setLine(); },
         mousewheel: function(ev) { setLine(); },
         keydown:    function(ev) { setLine(); },
@@ -23,7 +46,7 @@ var cyberDojo = (function($cd) {
       });
     
     function setLine() {
-      numbers.scrollTop(editor.scrollTop());   
+      numbers.scrollTop(content.scrollTop());   
     }
   };
 

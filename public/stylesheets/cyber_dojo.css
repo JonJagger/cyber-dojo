@@ -41,7 +41,7 @@ h3 { font-size: 1.3em;  }
   overflow-y: auto;
 }
 
-.invisible { display: none; }
+.invisible { display: none; } /* USED? */
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -142,19 +142,21 @@ div[class~="filename"]:hover, .button:hover
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#editor, #output
+.filename_div { display: none; }
+
+.file_content
 {
   background: CornSilk;
   color: Black;
   width: 45em;
 }
 
-#editor, .line_numbers, #output
+.line_numbers, .file_content
 {
   height: 33em;    
 }
 
-#editor, .line_numbers, #output, #diff_sheet
+.line_numbers, #diff_sheet, .file_content
 {
   font-family: monospace;
   font-size: 16pt;
@@ -356,6 +358,6 @@ body   { background: #FFECCB; }
 
 .line_numbers, pre.diffed_code ln { color: #888; }
 
-#editor, #output, #diff_sheet { color: #383838; }
+#diff_sheet, .file_content { color: #383838; }
 
 

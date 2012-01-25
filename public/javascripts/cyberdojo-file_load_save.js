@@ -1,38 +1,28 @@
 
 var cyberDojo = (function($cd, $j) {
 
+  $cd.fileDiv = function(filename) {
+    return $cd.id(filename + '_div');
+  };
+  
   $cd.loadFile = function(filename) {
     var caretPos = $cd.fileCaretPos(filename).attr('value');
     var scrollTop  = $cd.fileScrollTop(filename).attr('value');
     var scrollLeft = $cd.fileScrollLeft(filename).attr('value');
-    var code = $cd.fileContent(filename).attr('value');
-    
     $cd.selectFileInFileList(filename);
-    
-    if (filename === 'output') {
-      $j('#editor_div').hide();
-      $j('#output_div').show();
-      var output = $j('#output');
-      output.caretPos(caretPos);
-      output.scrollTop(scrollTop);
-      output.scrollLeft(scrollLeft);
-    } else {
-      $j('#output_div').hide();      
-      $j('#editor_div').show();
-      var editor = $j('#editor');
-      editor.val(code);
-      editor.caretPos(caretPos);
-      editor.scrollTop(scrollTop);
-      editor.scrollLeft(scrollLeft);
-    }     
+    $cd.fileDiv(filename).show();
+    var editor = $cd.fileContentFor(filename);
+    editor.caretPos(caretPos);
+    editor.scrollTop(scrollTop);
+    editor.scrollLeft(scrollLeft);
   };
 
   $cd.saveFile = function(filename) {
-    var file = (filename === 'output') ? $j('#output') : $j('#editor');
-    $cd.fileContent(filename).attr('value', file.val());
+    var file = $cd.fileContentFor(filename);
     $cd.fileCaretPos(filename).attr('value', file.caretPos());
     $cd.fileScrollTop(filename).attr('value', file.scrollTop());
     $cd.fileScrollLeft(filename).attr('value', file.scrollLeft());
+    $cd.fileDiv(filename).hide();
   };
 
   $cd.specialFile = function(filename) {
