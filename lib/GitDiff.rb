@@ -72,22 +72,22 @@ module GitDiff
 
   #-----------------------------------------------------------
   
-  def most_changed_lines_file_id(diffs)    
-    output = diffs.find {|diff| diff[:name] == 'output'}
-    # early dojos will have diffs that don't include output
-    # because they were created before output became a 
-    # pseudo filename
-    id = (output != nil) ? output[:id] : diffs[0][:id]
-    id_changed_line_count = 0
-    
+  def most_changed_lines_file_id(diffs)        
+    most_changed_diff = diffs[0]
     diffs.each do |diff|
-      changed_line_count = diff[:deleted_line_count] + diff[:added_line_count]
-      if changed_line_count > id_changed_line_count
-        id_changed_line_count = changed_line_count
-        id = diff[:id]
+      if most_changed_diff[:name] == 'output' && change_count(diff) > 0
+          most_changed_diff = diff
+      elsif diff[:name] != 'output' && change_count(diff) > change_count(most_changed_diff)
+        most_changed_diff = diff
       end
     end
-    id
+    most_changed_diff[:id]
+  end
+  
+  #-----------------------------------------------------------
+  
+  def change_count(diff)
+    diff[:deleted_line_count] + diff[:added_line_count]
   end
   
   #-----------------------------------------------------------

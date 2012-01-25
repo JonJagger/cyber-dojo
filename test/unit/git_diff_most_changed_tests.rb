@@ -29,28 +29,7 @@ class GitDiffMostChangedTests < ActionController::TestCase
   end
 
   #------------------------------------------------------------------
-  
-  def test_when_no_diffs_at_all_output_id_is_returned_if_output_is_present
-    diffs = []
-    diffs << {
-      :deleted_line_count => 0,
-      :id => 'jj23',          
-      :name => 'abc',
-      :added_line_count => 0,
-      :content => '',      
-    }
-    diffs << {
-      :deleted_line_count => 0,
-      :id => 'jj24',          
-      :name => 'output',
-      :added_line_count => 0,
-      :content => '',      
-    }
-    assert_equal 'jj24', most_changed_lines_file_id(diffs)     
-  end
-
-  #------------------------------------------------------------------
-  
+    
   def test_when_some_diffs_most_changed_lines_file_id_is_returned
     diffs = []
     diffs << {
@@ -70,4 +49,32 @@ class GitDiffMostChangedTests < ActionController::TestCase
     assert_equal 'jj23', most_changed_lines_file_id(diffs)     
   end
   
+  #------------------------------------------------------------------
+  
+  def test_when_non_output_file_has_diffs_it_is_preferred_to_output
+    diffs = []
+    diffs << {
+      :deleted_line_count => 1,
+      :id => 'jj23',          
+      :name => 'abc',
+      :added_line_count => 0,
+      :content => '',      
+    }
+    diffs << {
+      :deleted_line_count => 4,
+      :id => 'jj24',          
+      :name => 'def',
+      :added_line_count => 1,
+      :content => '',      
+    }    
+    diffs << {
+      :deleted_line_count => 5,
+      :id => 'jj25',          
+      :name => 'output',
+      :added_line_count => 2,
+      :content => '',      
+    }
+    assert_equal 'jj24', most_changed_lines_file_id(diffs)     
+  end
+
 end
