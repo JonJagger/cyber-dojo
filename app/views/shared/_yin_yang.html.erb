@@ -1,0 +1,13 @@
+
+<% size = 63 -%>
+<%= link_to image_tag("/images/avatars/cyber-dojo.png",
+      :border => 0,
+      :size => "#{size}x#{size}",
+      :title => 'Home page'),
+      {
+        :controller => :dojo,
+        :action => :index,
+        :dojo_name => @dojo.name
+      },
+      :target => defined? target ? target : ""
+%>              

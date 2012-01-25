@@ -3,38 +3,13 @@
   <table>
     <tr>
       <td>
-        <% size = 63 -%>
-        <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-            :border => 0,
-            :size => "#{size}x#{size}",
-            :title => 'Open a home page',
-            :class => 'cyber_dojo_image'),
-            {
-              :controller => :dojo,
-              :action => :index,
-              :dojo_name => @dojo.name 
-            },
-              :target => '_blank'
-        %>
+      <%= render :partial => 'shared/yin_yang', 
+                 :locals => { :target => '_blank' } -%>  
       </td>
       <td>
         &nbsp;&nbsp;
       </td>
-      <td style="text-align: right;">
-        <div>kata</div>
-        <div>language</div>
-        <div>exercise</div>
-      </td>
-      <td style="text-align: center;">
-        <div>=</div>
-        <div>=</div>
-        <div>=</div>
-      </td>      
-      <td style="text-align: left;">
-        <div><%= elided_name(@dojo.name, 15) -%></div>
-        <div><%= @dojo.language -%></div>
-        <div><%= @dojo.kata_name -%></div>
-      </td>      
+      <%= render :partial => 'shared/names' -%>
     </tr>
   </table>
 </div>

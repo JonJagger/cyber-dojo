@@ -4,36 +4,17 @@
 <table>
   <tr>
     <td>
-      <% size = 63 -%>
-      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-          :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
-            :controller => :dojo,
-            :action => :index,
-            :dojo_name => @dojo.name %>
+    <%= render :partial => 'shared/yin_yang' -%>
     </td>
     <td>
-      <%= avatar_image(@avatar.name, size) -%>
+      <%= avatar_image(@avatar.name, 63) -%>
     </td>
     <td>
       <% if tag_number != 0-%>
         <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
-    </td>    
-    <td style="text-align: right;">
-       <div>language</div>
-       <div>exercise</div>
-       <div>kata</div>
     </td>
-    <td style="text-align: center;">
-       <div>=</div>
-       <div>=</div>
-       <div>=</div>
-    </td>
-    <td style="text-align: left;">
-       <div><%= @dojo.language -%></div>
-       <div><%= @dojo.kata_name -%></div>
-       <div><%= elided_name(@dojo.name, 15) -%></div>
-    </td>
+    <%= render :partial => 'shared/names' -%>
   </tr>
 </table>
 
