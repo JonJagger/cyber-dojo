@@ -20,8 +20,7 @@
                         name="file_content['<%=filename-%>']"
                         id="file_content_for_<%=filename-%>"
                         wrap="off"
-                        tab="<%=@tab-%>"><%=h file[:content]-%>
-              </textarea>                                     
+                        tab="<%=@tab-%>"><%=h file[:content]-%></textarea>                                     
             <% else -%>            
               <%= render :partial => 'output' -%>        
             <% end -%>
@@ -33,6 +32,4 @@
   <% end -%>
   
 </div>
-
-
 

@@ -3,17 +3,13 @@
 
 $j(document).ready(function() {
 
-  //var filenames = <%= @manifest[:visible_files].keys.to_json() -%> ;
-  //for (var i = 0; i < filenames.length; i++) {
-  //  var filename = filenames[i];
-    
-    //var editor = $j('[id="visible_files[' + filename + '][:content]"]');
-    //var editor = $j('#' + filename);
-    //$cd.bindLineNumbers(filename);
-    
-    //$cd.bindHotKeys(editor);  //TODO
-    //editor.tabby({ tabString: editor.attr('tab') }); //TODO
-  //}
+  var filenames = $cd.filenames();
+  for (var i = 0; i < filenames.length; i++) {
+    var filename = filenames[i];
+    var file = $cd.fileContentFor(filename);
+    $cd.bindHotKeys(file);
+    //file.tabby({ tabString: file.attr('tab') }); //TODO
+  }
   
   $cd.bindAllLineNumbers();
   

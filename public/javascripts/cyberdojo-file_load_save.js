@@ -8,7 +8,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.loadFile = function(filename) {
     $cd.fileDiv($cd.currentFilename()).hide();
     $cd.selectFileInFileList(filename);
-    $cd.fileDiv($cd.currentFilename()).show();
+    $cd.fileDiv(filename).show();
+    $cd.fileContentFor(filename).focus();
   };
 
   $cd.specialFile = function(filename) {
@@ -27,9 +28,6 @@ var cyberDojo = (function($cd, $j) {
     });
     selected.parent().attr('current_file', 'true');    
     selected.attr('checked', 'checked');
-    
-    //UNNEEDED?
-    //$j('#current_filename').attr('value', filename);
     
     var file_ops = $j('#file_operation_buttons');
     var renameFile = file_ops.find('#rename');

@@ -2,35 +2,21 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.preRunTests = function() {
-    // app/views/kata/edit.html.erb
-    // form_remote_tag :url => {...}, 
-    //                 :before => "preRunTests();",
-  
-    $cd.saveFile($cd.currentFilename());
-    
     $j('#run_tests').hide();
     $j('#spinner').show();
-    
-    // Reduce bandwidth by not sending line-numbers.
-    $cd.unbindAllLineNumbers();
+    $cd.unbindAllLineNumbers(); // to reduce network bandwidth
   };
 
   $cd.postRunTests = function() { 
-    // app/views/kata/edit.html.erb
-    // form_remote_tag :url => {...}, 
-    //                 :complete => "postRunTests();"
-
-    // Restore line-numbers.
     $cd.bindAllLineNumbers();
-      
     $j('#spinner').hide();
     $j('#run_tests').show();
+    // when rjs replaces output shortcuts are lost
+    // so need to rebind them    
+    var output = $cd.fileContentFor('output');
+    $cd.unbindHotKeys(output);
+    $cd.bindHotKeys(output);        
     $cd.loadFile('output');
-    
-    //var output = $j('[id="file_content_for_output"]');
-    //output.focus();
-    //$cd.unbindHotKeys(output);
-    //$cd.bindHotKeys(output);    
   };
 
   return $cd;
