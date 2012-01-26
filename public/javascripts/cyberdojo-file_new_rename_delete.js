@@ -249,14 +249,16 @@ var cyberDojo = (function($cd, $j) {
       id: 'file_content_for_' + filename,
       wrap: 'off'
     });
-    text.val(content);
-    $cd.tabber(text);
+    text.val(content);        
     td1.append(lines);
     tr.append(td1);
     td2.append(text);
     tr.append(td2);
     table.append(tr);
     div.append(table);
+
+    $cd.bindHotKeys(text);
+    $cd.tabber(text);
     
     return div;
   };
