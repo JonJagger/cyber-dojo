@@ -16,7 +16,7 @@ class KataController < ApplicationController
   def run_tests
     configure(params)
     @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])   
+    @avatar = Avatar.new(@dojo, params[:avatar])
     manifest = load_manifest_from_page()
     @avatar.run_tests(manifest)
     @output = manifest[:output]

@@ -4,7 +4,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.newFile = function() {
     // Append three random chars to the end of the filename.
     // This is so there is no excuse not to rename it!
-    $cd.newFileContent('newfile_' + $cd.random3(), 'Please rename me!', 0, 0, 0);
+    $cd.newFileContent('newfile_' + $cd.random3(), 'Please rename me!');
   };
 
   $cd.deleteFile = function() {
@@ -54,20 +54,21 @@ var cyberDojo = (function($cd, $j) {
   
     renamer.dialog('open');
   };
-  //private
-  $cd.newFileContent = function(filename, content, caretPos, scrollTop, scrollLeft) {
-    $j('#visible_files_container')
-      .append($cd.createHiddenInput(filename, 'content', content))
-      .append($cd.createHiddenInput(filename, 'caret_pos', caretPos))
-      .append($cd.createHiddenInput(filename, 'scroll_top', scrollTop))
-      .append($cd.createHiddenInput(filename, 'scroll_left', scrollLeft));
   
-    // Save _before_ rebulding filename list
-    // so as not to lose latest edit
-    $cd.saveFile($cd.currentFilename());
+  
+  //private
+  $cd.newFileContent = function(filename, content) {    
+    $j('#visible_files_container')
+      .append($cd.makeNewFile(filename, content));
+      
+    $cd.bindLineNumbers(filename);      
+  
+    var current = $cd.currentFilename();
     $cd.rebuildFilenameList();
-    // Select it so you can immediately rename it
-    $cd.loadFile(filename);
+    
+    $cd.fileDiv(current).hide();
+    $cd.selectFileInFileList(filename);
+    $cd.fileDiv($cd.currentFilename()).show();
   };
 
   $cd.deleteFilePrompt = function(ask) {
@@ -101,11 +102,7 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.doDelete = function(filename) {
-    $cd.fileContent(filename).remove();  
-    $cd.fileCaretPos(filename).remove();
-    $cd.fileScrollTop(filename).remove();  
-    $cd.fileScrollLeft(filename).remove();
-  
+    $cd.fileDiv(filename).remove();    
     var filenames = $cd.rebuildFilenameList();
     // cyberdojo.sh & output cannot be deleted so
     // always at least one file
@@ -127,17 +124,6 @@ var cyberDojo = (function($cd, $j) {
     $cd.alert(why);
   };
 
-  $cd.rebuildFilenameList = function() {
-    var filenames = $cd.filenames();    
-    filenames.sort();
-    var filenameList = $j('#filename_list');
-    filenameList.empty();
-    $j.each(filenames, function(n, filename) {
-      filenameList.append($cd.makeFileListEntry(filename));
-    });
-    return filenames;
-  };
-  
   $cd.alert = function(message, title) {
     $j('<div>')
       .html(message)
@@ -183,16 +169,11 @@ var cyberDojo = (function($cd, $j) {
     }
     
     // OK. Now do it...
-    // Rename by deleting and recreating with previous content
-    
-    var editor = $j('#editor');
-    var content = editor.val();
-    var caretPos = editor.caretPos();
-    var scrollTop = editor.scrollTop();
-    var scrollLeft = editor.scrollLeft();
+    var file = $j('textarea[id="file_content_for_' + oldFilename + '"]');
+    var content = file.val();
     
     $cd.deleteFilePrompt(false);
-    $cd.newFileContent(newFilename, content, caretPos, scrollTop, scrollLeft);
+    $cd.newFileContent(newFilename, content);
     $cd.rebuildFilenameList();
     $cd.selectFileInFileList(newFilename);
   };
@@ -200,20 +181,22 @@ var cyberDojo = (function($cd, $j) {
   $cd.fileAlreadyExists = function(filename) {
     return $j.inArray(filename, $cd.filenames()) !== -1;
   };
-  
-  $cd.createHiddenInput = function(filename, aspect, value) {
-    return $j("<input>", {
-      type: 'hidden',
-      name: 'file_' + aspect + "['" + filename + "']",
-      id: 'file_' + aspect + '_for_' + filename,
-      value: value
+    
+  $cd.rebuildFilenameList = function() {
+    var filenames = $cd.filenames();    
+    filenames.sort();
+    var filenameList = $j('#filename_list');
+    filenameList.empty();
+    $j.each(filenames, function(n, filename) {
+      filenameList.append($cd.makeFileListEntry(filename));
     });
+    return filenames;
   };
-
+  
   $cd.filenames = function() {  
     var prefix = 'file_content_for_';
     var filenames = [ ];
-    $j('input[id^="' + prefix + '"]').each(function(index) {
+    $j('textarea[id^="' + prefix + '"]').each(function(index) {
       var id = $j(this).attr('id');
       var filename = id.substr(prefix.length, id.length - prefix.length);
       filenames.push(filename);
@@ -222,28 +205,65 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.makeFileListEntry = function(filename) {
-    var div = $j("<div>", {
+    var div = $j('<div>', {
       'class': 'filename'
     });
   
     div.click(function() {
-      $cd.saveFile($cd.currentFilename());
       $cd.loadFile(filename);
     });
     
-    div.append($j("<input>", {
+    div.append($j('<input>', {
       id: 'radio_' + filename,
       name: 'filename',
       type: 'radio',
       value: filename   
     }));
     
-    div.append($j("<label>", {
+    div.append($j('<label>', {
       text: ' ' + filename
     }));
     
     return div;
   };
+  
+  $cd.makeNewFile = function(filename, content) {
+    var div = $j('<div>', {
+      'class': 'filename_div',
+      name: filename,
+      id: filename + '_div'
+    });
+    var table = $j('<table>', {
+      cellspacing: '0',
+      cellpadding: '0'
+    });
+    var tr = $j('<tr>');
+    var td1 = $j('<td>');
+    var lines = $j('<textarea>', {
+      'class': 'line_numbers',
+      name: filename + '_line_numbers',
+      id: filename + '_line_numbers'
+    });
+    var td2 = $j('<td>');
+    //TODO: add tab to this...
+    var text = $j('<textarea>', {
+      'class': 'file_content',
+      name: "file_content['" + filename + "']",
+      id: 'file_content_for_' + filename,
+      wrap: 'off'
+    });
+    text.val(content);
+    
+    td1.append(lines);
+    tr.append(td1);
+    td2.append(text);
+    tr.append(td2);
+    table.append(tr);
+    div.append(table);
+    
+    return div;
+  };
+
   $cd.randomAlphabet = function() {
     return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ';  
   };

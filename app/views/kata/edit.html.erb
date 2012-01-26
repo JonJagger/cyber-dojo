@@ -3,17 +3,17 @@
 
 $j(document).ready(function() {
 
-  var filenames = <%= @manifest[:visible_files].keys.to_json() -%> ;
-  for (var i = 0; i < filenames.length; i++) {
-    var filename = filenames[i];
+  //var filenames = <%= @manifest[:visible_files].keys.to_json() -%> ;
+  //for (var i = 0; i < filenames.length; i++) {
+  //  var filename = filenames[i];
     
     //var editor = $j('[id="visible_files[' + filename + '][:content]"]');
     //var editor = $j('#' + filename);
     //$cd.bindLineNumbers(filename);
     
     //$cd.bindHotKeys(editor);  //TODO
-    //editor.tabby({ tabString: editor.attr('tab') });
-  }
+    //editor.tabby({ tabString: editor.attr('tab') }); //TODO
+  //}
   
   $cd.bindAllLineNumbers();
   
@@ -66,16 +66,6 @@ $j(document).ready(function() {
                                          :dojo_name => @dojo.name,
                                          :avatar => @avatar.name
                                        }, 
-                               :frequency => @dojo.seconds_per_heartbeat -%>
-                   
-  <%= render :partial => 'hidden_file_contents' -%>
-
+                               :frequency => @dojo.seconds_per_heartbeat -%>                   
 <% end -%>
-
-<input type="hidden"
-       name="current_filename"
-       id="current_filename"
-       value="<%=@manifest[:current_filename]-%>"/>
-
-
 
