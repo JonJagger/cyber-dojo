@@ -27,12 +27,7 @@ class FileSet
         manifest[key] = value
       end
     end
-    manifest[:visible_files]['output'] =
-        { :content => '',
-          :caret_pos => 0,
-          :scroll_top => 0,
-          :scroll_left => 0
-        }
+    manifest[:visible_files]['output'] = { :content => '' }
   end
   
 private
@@ -44,12 +39,7 @@ private
   def self.read_visible(file_set_folder, filenames)
     visible_files = { }
     filenames.each do |filename|
-      visible_files[filename] = 
-        { :content => IO.read(file_set_folder + '/' + filename),
-          :caret_pos => 0,
-          :scroll_top => 0,
-          :scroll_left => 0
-        }
+      visible_files[filename] = { :content => IO.read(file_set_folder + '/' + filename) }
     end
     visible_files
   end

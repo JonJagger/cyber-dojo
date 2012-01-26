@@ -1,9 +1,9 @@
 
 var cyberDojo = (function($cd, $j) {
-  //public
+  
   $cd.newFile = function() {
     // Append three random chars to the end of the filename.
-    // This is so there is no excuse not to rename it!
+    // There is no excuse not to rename it!
     $cd.newFileContent('newfile_' + $cd.random3(), 'Please rename me!');
   };
 
@@ -55,8 +55,6 @@ var cyberDojo = (function($cd, $j) {
     renamer.dialog('open');
   };
   
-  
-  //private
   $cd.newFileContent = function(filename, content) {    
     $j('#visible_files_container')
       .append($cd.makeNewFile(filename, content));
@@ -169,7 +167,7 @@ var cyberDojo = (function($cd, $j) {
     }
     
     // OK. Now do it...
-    var file = $j('textarea[id="file_content_for_' + oldFilename + '"]');
+    var file = $cd.fileContentFor(oldFilename);
     var content = file.val();
     
     $cd.deleteFilePrompt(false);
@@ -245,7 +243,6 @@ var cyberDojo = (function($cd, $j) {
       id: filename + '_line_numbers'
     });
     var td2 = $j('<td>');
-    //TODO: add tab to this...
     var text = $j('<textarea>', {
       'class': 'file_content',
       name: "file_content['" + filename + "']",
@@ -253,7 +250,7 @@ var cyberDojo = (function($cd, $j) {
       wrap: 'off'
     });
     text.val(content);
-    
+    $cd.tabber(text);
     td1.append(lines);
     tr.append(td1);
     td2.append(text);

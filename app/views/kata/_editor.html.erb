@@ -19,8 +19,7 @@
               <textarea class="file_content"
                         name="file_content['<%=filename-%>']"
                         id="file_content_for_<%=filename-%>"
-                        wrap="off"
-                        tab="<%=@tab-%>"><%=h file[:content]-%></textarea>                                     
+                        wrap="off"><%=h file[:content]-%></textarea>                                     
             <% else -%>            
               <%= render :partial => 'output' -%>        
             <% end -%>

@@ -162,11 +162,6 @@ var cyberDojo = (function($cd, $j) {
         buttons: {
           ok: function() {
             $j(this).dialog('close');
-            // Ensure Hot-keys are live
-            if ($cd.currentFilename() === 'output')
-              $j('#output').focus();
-            else
-              $j('#editor').focus();
           }
         }
       });

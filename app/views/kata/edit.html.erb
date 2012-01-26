@@ -3,16 +3,19 @@
 
 $j(document).ready(function() {
 
+  $cd.tabExpansion = function() { return "<%=@tab-%>"; };
+
   var filenames = $cd.filenames();
   for (var i = 0; i < filenames.length; i++) {
     var filename = filenames[i];
     var file = $cd.fileContentFor(filename);
     $cd.bindHotKeys(file);
-    //file.tabby({ tabString: file.attr('tab') }); //TODO
+    if (filename !== 'output') {
+      $cd.tabber(file);
+    }
   }
   
   $cd.bindAllLineNumbers();
-  
   $cd.rebuildFilenameList();
   $cd.loadFile("<%=@current_file-%>");
   $cd.welcome("<%=@avatar.name-%>");  

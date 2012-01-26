@@ -42,18 +42,13 @@ private
 
   def dequote(filename)
     # <input name="file_content['wibble.h']" ...>
-    # means filename has a leading ' and trailing ']
+    # means filename has a leading ' and trailing '
     # which need to be stripped off
     return filename[1..-2] 
   end
 
   def load_manifest_from_page
     manifest = { :visible_files => {} }
-    
-    load_files_aspect(manifest, :caret_pos)
-    load_files_aspect(manifest, :scroll_top)
-    filenames = load_files_aspect(manifest, :scroll_left)
-    
     (params[:file_content] || {}).each do |filename,content|
       filename = dequote(filename)
       manifest[:visible_files][filename] ||= {}
@@ -64,18 +59,6 @@ private
     manifest[:current_filename] = params['current_filename']
 
     manifest
-  end
-
-  def load_files_aspect(manifest, aspect)
-    filenames = [ ]
-    id = ('file_' + aspect.to_s).to_sym
-    (params[id] || {}).each do |filename,value|
-      filename = dequote(filename)
-      filenames << filename
-      manifest[:visible_files][filename] ||= {}
-      manifest[:visible_files][filename][aspect] = value
-    end
-    filenames
   end
 
 end
