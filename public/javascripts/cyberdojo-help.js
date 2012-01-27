@@ -13,7 +13,6 @@ var cyberDojo = (function($cd, $j) {
     table += '</tr></table>';
     return table;
   };
-  
 
   $cd.welcome = function(avatar) {
     

@@ -1,10 +1,10 @@
 module Locking
 
-  # Note: fd.flock() is not available on Windows
-  
-  # io locking uses non-blocking call.
-  # If I used blocking and there was a problem then the thread
-  # could get blocked indefinitely. Better to surface the problem.
+  # io locking uses non-blocking call and currently
+  # everything calls io_lock to lock. This is not right.
+  # For example, when a player is start-coding then
+  # the controller needs to wait to acquire a lock on
+  # the dojo folder before choosing an avatar.
   
   def io_lock(path, &block)
     result = nil

@@ -153,7 +153,7 @@ div[class~="filename"]:hover, .button:hover
 
 .line_numbers, .file_content
 {
-  height: 33em;    
+  height: 31em;    
 }
 
 .line_numbers, #diff_sheet, .file_content

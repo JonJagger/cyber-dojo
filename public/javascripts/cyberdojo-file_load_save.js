@@ -8,14 +8,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.loadFile = function(filename) {
     $cd.fileDiv($cd.currentFilename()).hide();
     $cd.selectFileInFileList(filename);
-    $cd.fileDiv(filename).show();
-    $cd.fileContentFor(filename).focus();
   };
 
-  $cd.specialFile = function(filename) {
-    return filename === 'cyberdojo.sh' || filename === 'output';  
-  };
-  
   $cd.selectFileInFileList = function(filename) {
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
@@ -33,7 +27,7 @@ var cyberDojo = (function($cd, $j) {
     var renameFile = file_ops.find('#rename');
     var deleteFile = file_ops.find('#delete');
     
-    if ($cd.specialFile(filename)) {
+    if ($cd.cantBeRenamedOrDeleted(filename)) {
       renameFile.attr('disabled', true);
       renameFile.removeAttr('title');
       deleteFile.attr('disabled', true);
@@ -44,16 +38,19 @@ var cyberDojo = (function($cd, $j) {
       deleteFile.removeAttr('disabled');
       deleteFile.attr('title', 'Delete the current file');
     }
+    
+    $cd.fileDiv(filename).show();
+    $cd.fileContentFor(filename).focus();
+    $j('#current_filename').val(filename);    
   };
 
-  $cd.currentFilename = function() {
-    return $j("input[name='filename']:checked").val();
+  $cd.cantBeRenamedOrDeleted = function(filename) {
+    return filename === 'cyberdojo.sh' || filename === 'output';  
   };
-
+  
   $cd.loadNextFile = function() {
-    var previousFilename = $cd.currentFilename();
     var filenames = $cd.filenames().sort();
-    var index = $j.inArray(previousFilename, filenames);
+    var index = $j.inArray($cd.currentFilename(), filenames);
     var nextFilename = filenames[(index + 1) % filenames.length];
     $cd.loadFile(nextFilename);  
   };

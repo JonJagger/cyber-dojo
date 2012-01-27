@@ -14,7 +14,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.renameFile = function () {
     var oldFilename = $cd.currentFilename();
     
-    if ($cd.specialFile(oldFilename))
+    if ($cd.cantBeRenamedOrDeleted(oldFilename))
       return;
   
     var input = $j('<input>', {
@@ -72,7 +72,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.deleteFilePrompt = function(ask) {
     var filename = $cd.currentFilename();
     
-    if ($cd.specialFile(filename))
+    if ($cd.cantBeRenamedOrDeleted(filename))
       return;
     
     if (ask) {
@@ -153,14 +153,12 @@ var cyberDojo = (function($cd, $j) {
       $cd.alert(message);
       return;
     }
-    if ($cd.fileAlreadyExists(newFilename))
-    {
+    if ($cd.fileAlreadyExists(newFilename)) {
       $cd.renameFailure(oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
       return;
     }
-    if (newFilename.indexOf("/") !== -1)
-    {
+    if (newFilename.indexOf("/") !== -1) {
       $cd.renameFailure(oldFilename, newFilename,
 		    newFilename + " contains a forward slash");
       return;
@@ -174,6 +172,10 @@ var cyberDojo = (function($cd, $j) {
     $cd.newFileContent(newFilename, content);
     $cd.rebuildFilenameList();
     $cd.selectFileInFileList(newFilename);
+  };
+
+  $cd.currentFilename = function() {
+    return $j('#current_filename').val();
   };
 
   $cd.fileAlreadyExists = function(filename) {

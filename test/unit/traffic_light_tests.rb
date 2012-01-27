@@ -58,11 +58,11 @@ class TrafficLightTests < ActionController::TestCase
   end
   
   def test_tool_tip_when_minutes_not_1
-    assert_equal 'View Gorilla diff 2 : 13 minutes', tool_tip('gorilla', 2, 13)
+    assert_equal 'Open a diff page (2)', tool_tip('gorilla', 2, 13)
   end
   
   def test_tool_tip_when_minutes_is_1
-    assert_equal 'View Gorilla diff 2 : 1 minute', tool_tip('gorilla', 2, 1)
+    assert_equal 'Open a diff page (2)', tool_tip('gorilla', 2, 1)
   end
   
 end
