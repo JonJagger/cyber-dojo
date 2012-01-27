@@ -16,7 +16,7 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.welcome = function(avatar) {
     
-    var imageSize = 300;
+    var imageSize = 200;
     var avatarImage = ''
       + '<img alt="' + avatar + '"'
       +     ' class="avatar_image"'
@@ -35,14 +35,14 @@ var cyberDojo = (function($cd, $j) {
       
       + '<div class="panel">'
       +   'Click <input type="button" class="small button" value="help"/>'
-      +   ' for help, '
+      +   ' for help'
       + '</div>';
       
     var welcome = $j('<div>')
       .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
         autoOpen: false,
-        width: 850,
+        width: 700,
         title: "<h2>Welcome</h2>",
         modal: true,
         buttons: {
@@ -144,6 +144,11 @@ var cyberDojo = (function($cd, $j) {
             
       + '<div class="panel">'
       +    $cd.makeTable(fakeFilenameButton('filename.ext'), 'opens a file for editing')
+      + '</div>'
+      
+      + '<div class="panel">'
+      +    space + '<b>Alt-t</b> runs the <b><u>t</u></b>ests' + br 
+      +    space + '<b>Alt-f</b> cycles through the <b><u>f</u></b>iles'
       + '</div>'
                                   
       + '<div class="panel">'
