@@ -16,7 +16,7 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.welcome = function(avatar) {
     
-    var imageSize = 400;
+    var imageSize = 300;
     var avatarImage = ''
       + '<img alt="' + avatar + '"'
       +     ' class="avatar_image"'
