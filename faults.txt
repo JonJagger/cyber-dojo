@@ -1,21 +1,7 @@
 
-Sometimes, after pressing run-tests, the contents of one file overwrite a
-different file. Rather than fixing this I plan to rework the design so that
-each file has its own textarea and selecting a file simply hides the current
-textarea and shows the next textarea (like it already does when switching
-between the output and editor). 
-
-The line numbers are held in a textarea. This presumably means they are
-sent to the server every time the form is submitted. That's wasteful.
 
 In the diff-view, the editor and the output tabs have different line-number widths
 and this causes a jump when switching between the two. 
-
-If the editor tab is selected and you hit Alt-T to run the tests
-then the "Running tests..." message does not appear on the output tab.
-
-If the output tab is clicked on so the output textarea does not
-have the focus then the Alt-T shortcut does not work.
 
 When configuring, if you choose a name that has already been taken you get
 a new browser tab. Needs to stay on the same browser tab. (Will be
