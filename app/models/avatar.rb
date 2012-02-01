@@ -28,7 +28,7 @@ class Avatar
 
     if !File.exists? folder
       Dir::mkdir(folder)
-      file_write(pathed(Increments_filename), [])
+      file_write(pathed(Increments_filename), [ ])
    
       Dir::mkdir(sandbox)
       kata = @dojo.kata
