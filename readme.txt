@@ -43,8 +43,8 @@ o) your kata (eg Prime Factors)
 Entering a CyberDojo
 ====================
 The CyberDojo server will assign you an animal 'avatar' (eg Panda).
-The animal provides identity for each codebase participating in the kata. 
-You can resume coding at any time by choosing the animal. 
+The animal provides identity for each codebase participating in the
+practice-kata. You can resume coding at any time by choosing the animal. 
 This is handy if a laptop has to retire as a new laptop can easily and 
 instantly replace it.
 
@@ -63,7 +63,7 @@ This means you can still read the display if you are colour blind.
 Dashboard
 =========
 Shows a periodically updating display of all traffic lights for 
-all the computers in the dojo.
+all the computers in the practice-kata.
 If you want to collapse the horizontal time gaps simply enter
 a very large value for the seconds_per_column value.
 
@@ -79,7 +79,7 @@ Messages
 ========
 Each computer can post tweet like messages which appear on the lower
 left hand side. I encourage players to use this to work together, 
-particularly when running a dojo with the aim of getting working solutions 
+particularly when running a practice-kata with the aim of getting working solutions 
 on _all_ laptops (eg in The Average Time To Green Game).
 
 
@@ -246,25 +246,27 @@ manifest.rb Parameters
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
   name of the ruby function (in the CyberDojo server) used to parse the 
-  run-tests output (to see if the increment passes or fails). For example, if 
-  the value is 'cassert' then app/helpers/run_tests_output_parser.rb must 
-  contain a method called parse_cassert() and will be called to parse the output 
-  of running the tests via the cyberdojo.sh shell file.
+  run-tests output (to see if the increment generates a red/green/amber
+  traffic light). For example, if the value is 'cassert' then
+      app/helpers/run_tests_output_parser.rb
+  must contain a method called parse_cassert() and will be called to parse the
+  output of running the tests via the cyberdojo.sh shell file.
 
 There are two more parameters that can be specified in a manifest.rb
 file as part of the inspected ruby object:
 
 {
-  :max_run_tests_duration => 20,
+  :max_run_tests_duration => 5,
   :tab_size => 2,
 }
 
 :max_run_tests_duration
   This is the maximum number of seconds the CyberDojo server allows an increment 
   to run in (the time starts after all that increments' files have been copied
-  to the sandbox folder).  This allows players to continue if they accidentally 
-  code an infinite loop for example. Reloaded on each increment so it can be
-  modified mid-kata if necessary. Defaults to 10 seconds.
+  to the sandbox folder).  This ensures a run-tests submission finished even if
+  the code accidentally contains an infinite loop (for example).
+  Reloaded on each increment so it can be modified mid-kata if necessary.
+Defaults to 10 seconds.
 
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
@@ -333,8 +335,8 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
 o) I have worked hard to <em>remove</em> features from CyberDojo. My idea is that the 
    simpler the environment the more players will concentrate on the practice and
    the more they will need to collaborate with each other. 
-   Remember the aim of a CyberDojo is <em>not</em> to ship something, it is to 
-   deliberately practice developing software collaboratively.
+   Remember the aim of a CyberDojo is <em>not</em> to ship something!
+   The aim of CyberDojo is to  deliberately practice developing software collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    CyberDojo from the very early days.
    Olve, Mike and Johannes - I really appreciate all your help and encouragement.
