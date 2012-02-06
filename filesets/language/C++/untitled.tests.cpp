@@ -18,7 +18,7 @@ static test * tests[ ] =
 int main()
 {
     size_t at = 0;
-    while (tests[0])
+    while (tests[at])
     {
         tests[at++]();
         std::cout << '.';
