@@ -9,17 +9,18 @@ static void example(void)
 
 typedef void test(void);
 
-static test * tests[] =
+static test * tests[ ] =
 {
     example,
+    (test*)0,
 };
 
 int main(void)
 {
-    size_t at;
-    for (at = 0; at != sizeof tests / sizeof tests[0]; at++)
+    size_t at = 0;
+    while (tests[0])
     {
-        tests[at]();
+        tests[at++]();
         putchar('.');
     }
     printf("\n%zd tests passed", at);

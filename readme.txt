@@ -332,11 +332,11 @@ o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. 
    Some of what you find is likely to be non-idiomatic. Caveat emptor!
-o) I have worked hard to <em>remove</em> features from CyberDojo. My idea is that the 
-   simpler the environment the more players will concentrate on the practice and
-   the more they will need to collaborate with each other. 
-   Remember the aim of a CyberDojo is <em>not</em> to ship something!
-   The aim of CyberDojo is to  deliberately practice developing software collaboratively.
+o) I have worked hard to <em>remove</em> features from CyberDojo. My idea is that
+   the simpler the environment the more players will concentrate on the practice
+   and the more they will need to collaborate with each other. Remember the aim
+   of a CyberDojo is <em>not</em> to ship something. The aim of CyberDojo is to
+   deliberately practice developing software collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    CyberDojo from the very early days.
    Olve, Mike and Johannes - I really appreciate all your help and encouragement.
