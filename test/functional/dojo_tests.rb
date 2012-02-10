@@ -101,4 +101,26 @@ class DojoTests < ActionController::TestCase
     assert !dojo.create_new_avatar_folder(avatar_name)
   end
 
+  def test_avatar_names
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    Dojo::configure(params)    
+    dojo = Dojo.new(params)
+    Avatar.new(dojo, 'lion')
+    Avatar.new(dojo, 'hippo')
+    assert_equal ['hippo', 'lion'], dojo.avatar_names.sort
+  end
+  
+  def test_all_increments
+    root_test_folder_reset
+    params = make_params
+    assert Dojo::create(params)
+    Dojo::configure(params)    
+    dojo = Dojo.new(params)
+    Avatar.new(dojo, 'lion')
+    Avatar.new(dojo, 'hippo')
+    expected = { "hippo" => [ ], "lion" => [ ] }
+    assert_equal expected, dojo.all_increments
+  end
 end

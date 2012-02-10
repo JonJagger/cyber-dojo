@@ -16,14 +16,13 @@ class InitialFileSet
       system("ln #{@dir}/#{hidden_filename} #{folder}/#{hidden_filename}")
     end
   end
-  
+
   def visible_files
-    result = { }
-    @manifest[:visible_filenames].each do |visible_filename|
-      result[visible_filename] = IO.read("#{@dir}/#{visible_filename}")
+    @manifest[:visible_filenames].inject({}) do |result,filename|
+      result.merge( { filename, IO.read("#{@dir}/#{filename}") } )
     end
-    result
   end
+  
 end
 
 class InitialFileSetTests < ActionController::TestCase

@@ -117,9 +117,9 @@ class Dojo
   end
 
   def all_increments
-    all = {}
-    avatars.each { |avatar| all[avatar.name] = avatar.increments }
-    all
+    avatars.inject({}) do |result,avatar|
+      result.merge( { avatar.name, avatar.increments } )
+    end
   end
   
   def seconds_per_heartbeat
