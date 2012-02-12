@@ -59,7 +59,7 @@ module TestRunnerHelper
 
   def makefile_filter(name, content)
     if name.downcase == 'makefile'
-      lines = []
+      lines = [ ]
       newline = Regexp.new('[\r]?[\n]')
       content.split(newline).each do |line|
         if stripped = line.lstrip!

@@ -27,9 +27,7 @@ class Avatar
     @name = name
 
     if !File.exists? folder
-      Dir::mkdir(folder)
-      file_write(pathed(Increments_filename), [ ])
-   
+      Dir::mkdir(folder)   
       Dir::mkdir(sandbox)
       kata = @dojo.kata
       kata.hidden_pathnames.each do |hidden_pathname|
@@ -44,6 +42,7 @@ class Avatar
       kata.manifest.delete(:hidden_filenames)
       kata.manifest.delete(:hidden_pathnames)
       file_write(pathed(Manifest_filename), kata.manifest)
+      file_write(pathed(Increments_filename), [ ])
       
       command  = "cd '#{folder}';" +
                  "git init --quiet;" +
