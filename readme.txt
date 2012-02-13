@@ -252,7 +252,7 @@ manifest.rb Parameters
   must contain a method called parse_cassert() and will be called to parse the
   output of running the tests via the cyberdojo.sh shell file.
 
-There is one parameter that can be specified in a manifest.rb
+There is one more parameter that can be specified in a manifest.rb
 file as part of the inspected ruby object:
 
 {

@@ -11,7 +11,7 @@ module TestRunnerHelper
                "./cyberdojo.sh"
     max_run_tests_duration = 10
     output = popen_read(command, max_run_tests_duration)
-    save_file(avatar_sandbox, 'output', { :content => output })
+    save_file(avatar_sandbox, 'output', output )
     output
   end
 
@@ -28,11 +28,11 @@ module TestRunnerHelper
     system(command)
   end
 
-  def save_file(foldername, filename, file)
+  def save_file(foldername, filename, content)
     path = foldername + '/' + filename
     # No need to lock when writing these files. They are write-once-only
     File.open(path, 'w') do |fd|
-      filtered = makefile_filter(filename, file[:content])
+      filtered = makefile_filter(filename, content)
       fd.write(filtered)
     end
     # .sh files (eg cyberdojo.sh) need execute permissions

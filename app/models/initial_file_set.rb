@@ -16,7 +16,7 @@ class InitialFileSet
 
   def visible_files
     @manifest[:visible_filenames].inject({}) do |result,filename|
-      result.merge( { filename, IO.read("#{@dir}/#{filename}") } )
+      result.merge( { filename => IO.read("#{@dir}/#{filename}") } )
     end
   end
   

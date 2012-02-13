@@ -31,8 +31,8 @@ class Avatar
       Dir::mkdir(sandbox)
       kata = @dojo.kata
       
-      kata.visible_files.each do |filename,file|
-        save_file(sandbox, filename, file)
+      kata.visible_files.each do |filename,content|
+        save_file(sandbox, filename, content)
       end
       
       kata.manifest[:output] = ''
@@ -106,25 +106,6 @@ class Avatar
     pathed('sandbox')
   end
 
-  # Older dojos have fileset.rb file per avatar, the contents of
-  # this file are { 'language' => 'C', ... }
-  # Newer dojos (since the switch to a single kata.language per dojo)
-  # do not have a fileset.rb file per avatar but they do have a 
-  # manifest.rb file at the dojo folder level, the contents of
-  # this file are { :language => 'C', ... }
-  def language
-    filesets_manifest[:language] || filesets_manifest['language']
-  end
-
-  def kata_name
-    filesets_manifest[:kata] || filesets_manifest['kata']  
-  end
-  
-  def tab
-    tab_manifest = eval IO.read(@dojo.filesets_root + '/language/' + language + '/manifest.rb')
-    " " * (tab_manifest[:tab_size] || 4)
-  end
-  
 private
   
   def save_run_tests_outcomes(increments, manifest)
@@ -147,10 +128,6 @@ private
   def pathed(filename)
     folder + '/' + filename
   end
-
-  Increments_filename = 'increments.rb'
-  
-  Manifest_filename = 'manifest.rb'
 
   def most_recent_tag
     command  = "cd #{folder};" +
@@ -177,6 +154,9 @@ private
       eval popen_read(command)
     end
   end
+
+  Increments_filename = 'increments.rb'  
+  Manifest_filename = 'manifest.rb'
 
 end
 

@@ -124,7 +124,7 @@ class Dojo
 
   def all_increments
     avatars.inject({}) do |result,avatar|
-      result.merge( { avatar.name, avatar.increments } )
+      result.merge( { avatar.name => avatar.increments } )
     end
   end
   
@@ -154,18 +154,23 @@ class Dojo
     messages
   end
   
+  def tab
+    tab_manifest = eval IO.read(filesets_root + '/language/' + language + '/manifest.rb')
+    " " * (tab_manifest[:tab_size] || 4)
+  end
+  
   def language
     manifest[:language]
   end
   
-  def kata_name
-    manifest[:kata]
+  def exercise
+    manifest[:kata]    
   end
-  
+    
   def kata
     filesets =
     {
-      :kata => kata_name,
+      :kata => exercise,
       :language => language
     }
     Kata.new(filesets_root, filesets)

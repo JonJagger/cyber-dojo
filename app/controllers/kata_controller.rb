@@ -5,7 +5,7 @@ class KataController < ApplicationController
     configure(params)
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, params[:avatar])
-    @tab = @avatar.tab    
+    @tab = @dojo.tab    
     @messages = @dojo.messages
     @manifest = @avatar.manifest
     @current_file = @manifest[:current_filename]
@@ -51,9 +51,8 @@ private
     manifest = { :visible_files => {} }
     (params[:file_content] || {}).each do |filename,content|
       filename = dequote(filename)
-      manifest[:visible_files][filename] ||= {}
       # Cater for windows line endings from windows browser
-      manifest[:visible_files][filename][:content] = content.gsub(/\r\n/, "\n")  
+      manifest[:visible_files][filename] = content.gsub(/\r\n/, "\n")  
     end
  
     manifest[:current_filename] = params['current_filename']

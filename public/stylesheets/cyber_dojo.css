@@ -41,8 +41,6 @@ h3 { font-size: 1.3em;  }
   overflow-y: auto;
 }
 
-.invisible { display: none; } /* USED? */
-
 /* - - - - - - - - - - - - - - - - - - - - */
 
 .name_input { font-size: 1.15em; }
@@ -304,6 +302,8 @@ div[class~="filename"]:hover, .button:hover
   margin: 0;
   padding: 0;
 }
+
+.invisible { display: none; } 
 
 pre.diffed_code { margin: 0; padding: 0; }
 

@@ -28,15 +28,15 @@ module GitDiff
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
         if !deleted_file?(md[1])
           name = md[2]
-          file = visible_files[name]
-          view[name] = builder.build(diff, line_split(file[:content]))
+          file_content = visible_files[name]
+          view[name] = builder.build(diff, line_split(file_content))
           visible_files.delete(name)
         end
       end
 
       # other files have not changed...      
-      visible_files.each do |name,file|
-        view[name] = sameify(file[:content])
+      visible_files.each do |filename,content|
+        view[filename] = sameify(content)
       end
       
       view
