@@ -29,21 +29,17 @@ class TrapOutputRefreshTests < ActionController::TestCase
   
   def test_output_is_correct_after_refresh
     language = 'C'
-    filename = 'untitled.c'
     root_test_folder_reset
     params = make_params(language)
     assert Dojo::create(params)
     assert Dojo::configure(params)
     dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, Avatar.names.shuffle[0])
-    manifest = avatar.manifest
-    avatar.run_tests(manifest)
-    output = manifest[:output]
+    avatar = Avatar.new(dojo, 'lion')
+    output = avatar.run_tests(avatar.visible_files)
     # now refresh
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, avatar.name)
-    @manifest = @avatar.manifest
-    assert_equal output, @manifest[:output]
+    dojo = Dojo.new(params)
+    avatar = Avatar.new(dojo, 'lion')
+    assert_equal output, avatar.visible_files['output']
   end    
       
 end

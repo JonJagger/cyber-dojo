@@ -4,7 +4,7 @@ class Kata
   def initialize(filesets_root, filesets)
     @filesets = filesets
     @manifest = {
-      :visible_files => { },
+      :visible_files => { 'output' => '' },
       :hidden_filenames => [ ],
       :hidden_pathnames => [ ]
     }
@@ -25,6 +25,7 @@ class Kata
     @filesets[:language]
   end
   
+  # TODO: USED?
   def name
     @filesets[:kata]
   end

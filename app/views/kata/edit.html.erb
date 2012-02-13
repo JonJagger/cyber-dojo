@@ -17,7 +17,7 @@ $j(document).ready(function() {
   
   $cd.bindAllLineNumbers();
   $cd.rebuildFilenameList();
-  $cd.loadFile("<%=@current_file-%>");
+  $cd.loadFile("instructions"); //TODO: something a bit better
   $cd.welcome("<%=@avatar.name-%>");  
 });
 
@@ -50,7 +50,7 @@ $j(document).ready(function() {
         <div class="panel">
           <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'filename_list' -%>
-          <%= render :partial => 'current_filename' -%>
+          <%= render :partial => 'current_filename' -%>          
         </div>
         <div class="panel">
           <%= render :partial => 'messages' -%>

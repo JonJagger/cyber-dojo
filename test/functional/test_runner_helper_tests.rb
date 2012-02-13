@@ -36,7 +36,7 @@ class TestRunnerHelperTests < ActionController::TestCase
     assert_equal true, File.exists?(avatar.sandbox + '/junit-4.7.jar'), "linked hidden file created"
   end    
 
-  def test_when_filename_not_makefile
+  def test_makefile_filter_when_filename_not_makefile
      name     = 'not_makefile'
      content  = "    abc"
      actual   = makefile_filter(name, content)
@@ -44,7 +44,7 @@ class TestRunnerHelperTests < ActionController::TestCase
      assert_equal expected, actual
   end
 
-  def test_when_filename_is_makefile
+  def test_makefile_filter_when_filename_is_makefile
      name     = 'makefile'
      content  = "    abc"
      actual   = makefile_filter(name, content)
@@ -52,7 +52,7 @@ class TestRunnerHelperTests < ActionController::TestCase
      assert_equal expected, actual
   end
 
-  def test_when_filename_is_Makefile_with_uppercase_M
+  def test_makefile_filter_when_filename_is_Makefile_with_uppercase_M
      name     = 'Makefile'
      content  = "    abc"
      actual   = makefile_filter(name, content)

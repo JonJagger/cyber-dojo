@@ -1,11 +1,11 @@
 
-# > ruby test/functional/initial_file_set_tests.rb
+# > ruby test/functional/language_file_set_tests.rb
 
-class InitialFileSet
+class LanguageFileSet
   
-  def initialize(manifest_pathname)
-    @manifest = eval IO.read(manifest_pathname)
-    @dir = File.dirname(manifest_pathname)
+  def initialize(dir)
+    @dir = dir
+    @manifest = eval IO.read(dir + '/manifest.rb')
   end
   
   def copy_hidden_files_to(folder)
@@ -18,6 +18,14 @@ class InitialFileSet
     @manifest[:visible_filenames].inject({}) do |result,filename|
       result.merge( { filename => IO.read("#{@dir}/#{filename}") } )
     end
+  end
+  
+  def tab_size
+    @manifest[:tab_size] || 4
+  end
+  
+  def unit_test_framework
+    @manifest[:unit_test_framework]  
   end
   
 private

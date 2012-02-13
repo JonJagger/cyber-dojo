@@ -12,17 +12,16 @@ module GitDiff
   # for a given tag.
   # See, test/functional/git_diff_view_tests.rb
   
-  def git_diff_view(avatar, tag, manifest = nil)
+  def git_diff_view(avatar, tag, visible_files = nil)
       builder = GitDiffBuilder.new()
 
-      manifest ||= avatar.manifest(tag)      
-      visible_files = manifest[:visible_files]
+      visible_files ||= avatar.visible_files(tag)      
 
       cmd  = "cd #{avatar.folder};"
       cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
       diff_lines = popen_read(cmd)
   
-      view = {}      
+      view = { }      
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)

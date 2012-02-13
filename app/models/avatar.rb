@@ -35,11 +35,11 @@ class Avatar
         save_file(sandbox, filename, content)
       end
       
-      kata.manifest[:output] = ''
-      kata.manifest[:current_filename] = 'instructions'
-      kata.manifest.delete(:hidden_filenames)
-      kata.manifest.delete(:hidden_pathnames)
-      file_write(pathed(Manifest_filename), kata.manifest)
+      #kata.manifest.delete(:hidden_filenames) # TODO: DROP
+      #kata.manifest.delete(:hidden_pathnames) # TODO: DROP
+      #TODO: should write kata.visible_files
+      #file_write(pathed(Manifest_filename), kata.manifest)
+      file_write(pathed(Manifest_filename), kata.visible_files)      
       file_write(pathed(Increments_filename), [ ])
       
       command  = "cd '#{folder}';" +
@@ -64,7 +64,7 @@ class Avatar
     io_lock(folder) { locked_increments(tag) }
   end
   
-  def manifest(tag = nil)
+  def visible_files(tag = nil)
     io_lock(folder) do
       tag ||= most_recent_tag      
       command  = "cd #{folder};" +
@@ -81,21 +81,20 @@ class Avatar
     MessageAutoPoster.new(self).post_heartbeat_messages()
   end
     
-  def run_tests(manifest, the_kata = @dojo.kata)
-    # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
-    incs = [ ]
+  def run_tests(visible_files)
+    output = ''
     io_lock(folder) do
-      output = avatar_run_tests(sandbox, manifest[:visible_files])      
-      test_info = parse(self, the_kata, output)
+      output = avatar_run_tests(sandbox, visible_files)
+      test_info = parse(@dojo.unit_test_framework, output)
       
       incs = locked_increments     
       incs << test_info
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
-      manifest[:output] = output
-      save_run_tests_outcomes(incs, manifest)
+      visible_files['output'] = output
+      save_run_tests_outcomes(incs, visible_files)
     end
-    incs
+    output
   end
 
   def folder
@@ -108,14 +107,15 @@ class Avatar
 
 private
   
-  def save_run_tests_outcomes(increments, manifest)
+  def save_run_tests_outcomes(increments, visible_files)
     file_write(pathed(Increments_filename), increments)
-    file_write(pathed(Manifest_filename), manifest)
+    file_write(pathed(Manifest_filename), visible_files)
     tag = increments.length
-    git_commit_tag(manifest[:visible_files], tag)
+    git_commit_tag(visible_files, tag)
   end
   
   def filesets_manifest
+    # TODO: DROP assumption below
     # Have to allow resumption of dojos before dojos were
     # single kata x language. 
     filename = folder + '/filesets.rb'
@@ -156,7 +156,7 @@ private
   end
 
   Increments_filename = 'increments.rb'  
-  Manifest_filename = 'manifest.rb'
+  Manifest_filename = 'manifest.rb' # TODO: rename
 
 end
 

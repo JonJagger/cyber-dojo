@@ -11,12 +11,12 @@ module RunTestsOutputParserHelper
   #  :error  - this means the tests could not be run (eg syntax error)
   #  :passed - this means the tests ran and all passed
   
-  def parse(avatar, kata, output)
+  def parse(unit_test_framework, output)
     inc = { :run_tests_output => output }
     if Regexp.new("Terminated by the CyberDojo server after").match(output)
       inc[:outcome] = :error
     else
-      inc[:outcome] = eval "parse_#{kata.unit_test_framework}(output)"
+      inc[:outcome] = eval "parse_#{unit_test_framework}(output)"
     end
     inc
   end

@@ -13,10 +13,9 @@ class DiffController < ApplicationController
     tag = params[:tag].to_i
     @traffic_lights_to_tag = @avatar.increments(tag)
     @all_traffic_lights = @avatar.increments
-    manifest = @avatar.manifest(tag)
-    diffed_files = git_diff_view(@avatar, tag, manifest)    
+    visible_files = @avatar.visible_files(tag)
+    diffed_files = git_diff_view(@avatar, tag, visible_files)    
     @diffs = git_diff_prepare(diffed_files)
-    @output = manifest[:output]
     if @traffic_lights_to_tag == [ ]
       @outcome = ''
       @current_filename_id = @diffs.find {|diff| diff[:name] == 'instructions'}[:id]

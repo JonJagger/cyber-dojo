@@ -36,16 +36,16 @@ class RunTestsTimeOutTests < ActionController::TestCase
     filename = 'untitled.c'
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(dojo, avatar_name)
-    manifest = avatar.manifest
-    code = manifest[:visible_files][filename]
-    manifest[:visible_files][filename] = code.sub('return 42;', 'for(;;);')
+    visible_files = avatar.visible_files
+    code = visible_files[filename]
+    visible_files[filename] = code.sub('return 42;', 'for(;;);')
     
     ps_count_before = ps_count
-    avatar.run_tests(manifest)
+    output = avatar.run_tests(visible_files)
     ps_count_after = ps_count
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
-    assert_not_nil manifest[:output] =~ /Terminated by the CyberDojo server after 10 seconds/, manifest[:output]
+    assert_not_nil output =~ /Terminated by the CyberDojo server after 10 seconds/
   end
   
 end

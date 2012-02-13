@@ -71,9 +71,8 @@ class Dojo
       
       sandbox = dojo.folder + '/sandbox' 
       make_dir(sandbox)
-      manifest_pathname = params[:filesets_root] + '/language/' + params['language'] + '/manifest.rb'
-      initial_fileset = InitialFileSet.new(manifest_pathname)
-      initial_fileset.copy_hidden_files_to(sandbox)
+      fileset = LanguageFileSet.new(params[:filesets_root] + '/language/' + params['language'])
+      fileset.copy_hidden_files_to(sandbox)
     end    
   end
 
@@ -155,8 +154,13 @@ class Dojo
   end
   
   def tab
-    tab_manifest = eval IO.read(filesets_root + '/language/' + language + '/manifest.rb')
-    " " * (tab_manifest[:tab_size] || 4)
+    fileset = LanguageFileSet.new(filesets_root + '/language/' + language)
+    " " * fileset.tab_size
+  end
+  
+  def unit_test_framework
+    fileset = LanguageFileSet.new(filesets_root + '/language/' + language)
+    fileset.unit_test_framework
   end
   
   def language
@@ -166,7 +170,8 @@ class Dojo
   def exercise
     manifest[:kata]    
   end
-    
+      
+  # TODO: aiming to drop...
   def kata
     filesets =
     {

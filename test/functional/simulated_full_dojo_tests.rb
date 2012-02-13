@@ -45,26 +45,26 @@ class SimulatedFullDojoTests < ActionController::TestCase
   def run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes(language, avatar_count=8, run_tests_count=10)
     dojo = create_dojo(language)
 
-    manifests = {}
-    avatars = []
+    visible_files_set = { }
+    avatars = [ ]
     
     avatar_count.times do |n|
       avatar = Avatar.new(dojo, Avatar.names[n])
-      manifests[avatar.name] = avatar.manifest
+      visible_files_set[avatar.name] = avatar.visible_files
       avatars << avatar
     end
 
     run_tests_count.times do |n|
       avatars.each do |avatar|
-        manifest = manifests[avatar.name]
+        visible_files = visible_files_set[avatar.name]
         
         defunct_before = defunct_count
-        avatar.run_tests(manifest)
+        output = avatar.run_tests(visible_files)
         defunct_after = defunct_count
-        assert_equal defunct_before, defunct_after, 'avatar.run_tests(manifest)' 
+        assert_equal defunct_before, defunct_after, 'avatar.run_tests(visible_files)' 
         
         info = avatar.name + ', red'
-        assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + manifest[:output]
+        assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + output
         print '.'
       end
     end

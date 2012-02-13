@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/language_fileset_tests.rb
+# > ruby test/functional/language_file_set_red_amber_green_tests.rb
 
-class LanguageFileSetTests < ActionController::TestCase
+class LanguageFileSetRedAmberGreenTests < ActionController::TestCase
 
   Root_test_folder = RAILS_ROOT + '/test/test_dojos'
 
@@ -22,26 +22,20 @@ class LanguageFileSetTests < ActionController::TestCase
   end
 
   Code_files = { 
-    'Java' => 'Untitled.java',
     'C' => 'untitled.c',
     'C++' => 'untitled.cpp',
+    'Java' => 'Untitled.java',
     'Perl' => 'untitled.perl',
     'Python' => 'untitled.py',
     'Ruby' => 'untitled.rb'    
   }
 
-  XCode_files = { 
-    'C' => 'untitled.c',
+  XCode_files = {  # not installed on my MacBook...
     'C#' => 'Untitled.cs',
-    'C++' => 'untitled.cpp',
     'Erlang' => 'untitled.erl',
     'Haskell' => 'Untitled.hs',
-    'Java' => 'Untitled.java',
     'Javascript' => 'untitled.js',
-    'Perl' => 'untitled.perl',
     'PHP' => 'Untitled.php',
-    'Python' => 'untitled.py',
-    'Ruby' => 'untitled.rb'    
   }
   
   def test_that_initial_fileset_for_all_languages_is_red_failed
@@ -53,10 +47,10 @@ class LanguageFileSetTests < ActionController::TestCase
       dojo = Dojo.new(params)
       avatar_name = Avatar::names.shuffle[0]
       avatar = Avatar.new(dojo, avatar_name)
-      manifest = avatar.manifest
-      avatar.run_tests(manifest)
+      visible_files = avatar.visible_files      
+      output = avatar.run_tests(visible_files)
       info = avatar.name + ', ' + language
-      assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + manifest[:output]
+      assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + output
       print '.'      
     end    
   end    
@@ -70,12 +64,12 @@ class LanguageFileSetTests < ActionController::TestCase
       dojo = Dojo.new(params)
       avatar_name = Avatar::names.shuffle[0]
       avatar = Avatar.new(dojo, avatar_name)
-      manifest = avatar.manifest
-        test_code = manifest[:visible_files][filename]
-        manifest[:visible_files][filename] = test_code.sub('42', '54')
-      avatar.run_tests(manifest)
+      visible_files = avatar.visible_files
+      test_code = visible_files[filename]
+      visible_files[filename] = test_code.sub('42', '54')
+      output = avatar.run_tests(visible_files)
       info = avatar.name + ', ' + language
-      assert_equal :passed, avatar.increments.last[:outcome], info  + ', green,' + manifest[:output]
+      assert_equal :passed, avatar.increments.last[:outcome], info  + ', green,' + output
       print '.'      
     end    
   end    
@@ -89,12 +83,12 @@ class LanguageFileSetTests < ActionController::TestCase
       dojo = Dojo.new(params)
       avatar_name = Avatar::names.shuffle[0]
       avatar = Avatar.new(dojo, avatar_name)
-      manifest = avatar.manifest
-        test_code = manifest[:visible_files][filename]
-        manifest[:visible_files][filename] = test_code.sub('42', '4typo2')
-      avatar.run_tests(manifest)
+      visible_files = avatar.visible_files
+      test_code = visible_files[filename]
+      visible_files[filename] = test_code.sub('42', '4typo2')
+      output = avatar.run_tests(visible_files)
       info = avatar.name + ', ' + language
-      assert_equal :error, avatar.increments.last[:outcome], info  + ', amber,' + manifest[:output]
+      assert_equal :error, avatar.increments.last[:outcome], info  + ', amber,' + output
       print '.'      
     end    
   end
