@@ -30,9 +30,7 @@ class Avatar
       Dir::mkdir(folder)   
       Dir::mkdir(sandbox)
       kata = @dojo.kata
-      kata.hidden_pathnames.each do |hidden_pathname|
-        system("cp '#{hidden_pathname}' '#{sandbox}'") 
-      end
+      
       kata.visible_files.each do |filename,file|
         save_file(sandbox, filename, file)
       end
@@ -87,7 +85,7 @@ class Avatar
     # parameter 2 is needed only for test/functional/run_tests_timeout_tests.rb
     incs = [ ]
     io_lock(folder) do
-      output = avatar_run_tests(self, the_kata, manifest)      
+      output = avatar_run_tests(sandbox, manifest[:visible_files])      
       test_info = parse(self, the_kata, output)
       
       incs = locked_increments     

@@ -1,44 +1,32 @@
 
 module TestRunnerHelper
 
-  def avatar_run_tests(avatar, kata, manifest)
-    sandbox = avatar.sandbox
-    # Reset sandbox to contain just hidden files
-    remove_all_but(sandbox, kata.hidden_filenames)
-    # Copy in visible files from this increment
-    manifest[:visible_files].each do |filename,file|
-      save_file(sandbox, filename, file)
+  def avatar_run_tests(avatar_sandbox, visible_files)
+    recreate_new(avatar_sandbox)
+    visible_files.each do |filename,file|
+      save_file(avatar_sandbox, filename, file)
     end
    
     command  = "cd '#{sandbox}';" +
                "./cyberdojo.sh"
-    output = popen_read(command, kata.max_run_tests_duration)
-    save_file(sandbox, 'output', { :content => output })
+    max_run_tests_duration = 10
+    output = popen_read(command, max_run_tests_duration)
+    save_file(avatar_sandbox, 'output', { :content => output })
     output
   end
 
-  # Remove all files from the sandbox except the hidden files
-  # specified in the manifest. For example, if the
-  # the kata is a java kata and :hidden_files => [ 'junit-4.7.jar' ]
-  # then this function will execute the following system command
-  #   find sandbox ( ! -samefile "." ! -samefile 'junit-4.7.jar' ) -print0 | xargs -0 rm -f
-  # with appropriate backslashes. This finds all the files in sandbox that are _not_
-  # the . file or junit-4.7.jar file and pipes them to rm. 
-  #
-  # The reason I do this rather than delete and recreate the entire sandbox
-  # every increment is an optimization: jar files and assembly files can get
-  # quite large (junit-4.7.jar is over 200K for example) and if a whole room
-  # is all doing a java kata this can slow things down on the server.
-
-  def remove_all_but(sandbox, these)
-    s = "\\! -samefile \".\" "
-    s += "\\! -samefile '#{sandbox}' "
-    these.each {|n| s += "\\! -samefile '#{sandbox}/#{n}' " }
-    cmd = "find '#{sandbox}' \\( " + s + " \\) -print0 | xargs -0 rm -f"
-    system(cmd)
+  def recreate_new(sandbox)
+    command = ''
+    command += "rm -f #{sandbox}/*;"
+    command += "rmdir #{sandbox};"
+    command += "mkdir #{sandbox};"
+    # sandbox were copying from may have no hidden files but
+    # we don't care about that so pipe diagnostic
+    #   ln .../sandbox/*: No such file or directory
+    # to dev/null so tests run clean
+    command += "ln #{sandbox}/../../sandbox/* #{sandbox} >& /dev/null;"
+    system(command)
   end
-
-
 
   def save_file(foldername, filename, file)
     path = foldername + '/' + filename
@@ -50,7 +38,6 @@ module TestRunnerHelper
     # .sh files (eg cyberdojo.sh) need execute permissions
     File.chmod(0755, path) if filename =~ /\.sh/    
   end
-
 
   # makefiles are tab sensitive...
   # The CyberDojo editor intercepts tab keys and replaces them with spaces.

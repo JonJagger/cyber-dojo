@@ -69,6 +69,18 @@ class DojoTests < ActionController::TestCase
     assert !Dojo::create(params)    
   end
   
+  def test_that_configuring_a_new_dojo_creates_a_sandbox_folder_containing_hidden_files
+    root_test_folder_reset
+    params = make_params
+    params['language'] = 'Java'
+    assert Dojo::create(params)
+    Dojo::configure(params)    
+    dojo = Dojo.new(params)
+    sandbox = dojo.folder + '/sandbox'
+    assert File.exists?(sandbox), 'inner/outer/sandbox folder created'
+    assert File.exists?(sandbox + '/junit-4.7.jar')
+  end
+  
   def test_that_configuring_a_new_dojo_creates_two_core_files
     root_test_folder_reset
     params = make_params
@@ -123,4 +135,5 @@ class DojoTests < ActionController::TestCase
     expected = { "hippo" => [ ], "lion" => [ ] }
     assert_equal expected, dojo.all_increments
   end
+  
 end

@@ -176,24 +176,24 @@ at https://github.com/joyent/node/wiki/Installation as follows
 >make -j2
 >[sudo] make install
 -----C/C++
->If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
->need https://github.com/kennethreitz/osx-gcc-installer/downloads
+If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
+need https://github.com/kennethreitz/osx-gcc-installer/downloads
 -----Erlang
->Kalervo Kujala added support for Erlang as follows
+Kalervo Kujala added support for Erlang as follows
 >sudo apt-get install erlang
 >sudo apt-get install erlang-eunit
 -----CoffeeScript
->Johannes Brodwall added support for CoffeeScript as follows
-> install node as per Javascript support
-> sudo npm install --global jasmine-node
+Johannes Brodwall added support for CoffeeScript as follows
+>...install node as per Javascript support....
+>sudo npm install --global jasmine-node
 If you need to install npm
 >curl http://npmjs.org/install.sh | sudo sh
->If you need to install curl
+If you need to install curl
 >sudo apt-get install curl
 ------Haskell
->Miika-Petteri Matikainen added support for Haskell as follows
-> sudo apt-get install ghc
-> sudo apt-get install libghc6-unit-dev
+Miika-Petteri Matikainen added support for Haskell as follows
+>sudo apt-get install ghc
+>sudo apt-get install libghc6-unit-dev
 
 
 Adding a new language
@@ -202,8 +202,8 @@ Create a new subfolder under cyberdojo/filesets/language/
 Create a manifest.rb file in this folder (see manifest.rb below).
 
 
-Adding a new kata
-=================
+Adding a new kata/exercise
+==========================
 Create a new subfolder under cyberdojo/filesets/kata/
 Create a manifest.rb file in this folder (see manifest.rb below). 
 
@@ -217,7 +217,7 @@ Example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
   :hidden_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
 }
-Example: cyberdojo/filesets/kata/Prime Factors (*)/manifest.rb looks like this:
+Example: cyberdojo/filesets/kata/Prime Factors/manifest.rb looks like this:
 {
   :visible_filenames => %w( instructions ),
 }
@@ -252,21 +252,12 @@ manifest.rb Parameters
   must contain a method called parse_cassert() and will be called to parse the
   output of running the tests via the cyberdojo.sh shell file.
 
-There are two more parameters that can be specified in a manifest.rb
+There is one parameter that can be specified in a manifest.rb
 file as part of the inspected ruby object:
 
 {
-  :max_run_tests_duration => 5,
   :tab_size => 2,
 }
-
-:max_run_tests_duration
-  This is the maximum number of seconds the CyberDojo server allows an increment 
-  to run in (the time starts after all that increments' files have been copied
-  to the sandbox folder).  This ensures a run-tests submission finished even if
-  the code accidentally contains an infinite loop (for example).
-  Reloaded on each increment so it can be modified mid-kata if necessary.
-Defaults to 10 seconds.
 
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
@@ -312,7 +303,7 @@ How to Turn off Chrome Spell-Checking in Chrome
 To turn it off (and avoid annoying red underlines the code editor)
 1. Right click in the editor
 2. Under Spell-checker Options>
-3. Deselect 'Check Spelling in this Field
+3. Deselect 'Check Spelling in this Field'
 
 
 How to Turn off Spell-checking in Opera/Firefox

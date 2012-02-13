@@ -22,6 +22,15 @@ class LanguageFileSetTests < ActionController::TestCase
   end
 
   Code_files = { 
+    'Java' => 'Untitled.java',
+    'C' => 'untitled.c',
+    'C++' => 'untitled.cpp',
+    'Perl' => 'untitled.perl',
+    'Python' => 'untitled.py',
+    'Ruby' => 'untitled.rb'    
+  }
+
+  XCode_files = { 
     'C' => 'untitled.c',
     'C#' => 'Untitled.cs',
     'C++' => 'untitled.cpp',

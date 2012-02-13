@@ -3,28 +3,6 @@ require 'Files'
 
 # > ruby test/functional/initial_fileset_tests.rb
 
-
-class InitialFileSet
-  
-  def initialize(manifest_pathname)
-    @manifest = eval IO.read(manifest_pathname)
-    @dir = File.dirname(manifest_pathname)
-  end
-  
-  def copy_hidden_files_to(folder)
-    @manifest[:hidden_filenames].each do |hidden_filename|
-      system("ln #{@dir}/#{hidden_filename} #{folder}/#{hidden_filename}")
-    end
-  end
-
-  def visible_files
-    @manifest[:visible_filenames].inject({}) do |result,filename|
-      result.merge( { filename, IO.read("#{@dir}/#{filename}") } )
-    end
-  end
-  
-end
-
 class InitialFileSetTests < ActionController::TestCase
 
   Root_test_folder = RAILS_ROOT + '/test/test_dojos'
@@ -48,6 +26,15 @@ class InitialFileSetTests < ActionController::TestCase
     fileset = InitialFileSet.new(params[:filesets_root] + '/language/Java/manifest.rb')
     fileset.copy_hidden_files_to(sandbox)
     assert File.exists?(sandbox + '/junit-4.7.jar'), 'junit-4.7.jar file created'
+  end
+  
+  def test_copy_hidden_files_to_target_folder_does_nothing_beningly_if_no_hidden_files
+    root_test_folder_reset
+    params = make_params
+    sandbox = Root_test_folder + '/sandbox'
+    Dir::mkdir(sandbox)
+    fileset = InitialFileSet.new(params[:filesets_root] + '/language/C++/manifest.rb')
+    fileset.copy_hidden_files_to(sandbox)
   end
   
   def test_read_visible_files

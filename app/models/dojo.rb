@@ -68,6 +68,12 @@ class Dojo
       file_write(index_filename, index << info)      
 
       file_write(dojo.messages_filename, [ ])
+      
+      sandbox = dojo.folder + '/sandbox' 
+      make_dir(sandbox)
+      manifest_pathname = params[:filesets_root] + '/language/' + params['language'] + '/manifest.rb'
+      initial_fileset = InitialFileSet.new(manifest_pathname)
+      initial_fileset.copy_hidden_files_to(sandbox)
     end    
   end
 
