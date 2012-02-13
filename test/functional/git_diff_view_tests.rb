@@ -41,10 +41,10 @@ class GitDiffViewTests < ActionController::TestCase
     {
       :visible_files =>
       {
-        'cyberdojo.sh'     => { :content => cyberdojo_sh },
-        'untitled.rb'      => { :content => untitled_rb },
-        'test_untitled.rb' => { :content => test_untitled_rb },
-        'output'           => { :content => '' }
+        'cyberdojo.sh'     => cyberdojo_sh,
+        'untitled.rb'      => untitled_rb,
+        'test_untitled.rb' => test_untitled_rb,
+        'output'           => '' 
       }
     }
 
@@ -53,7 +53,7 @@ class GitDiffViewTests < ActionController::TestCase
     assert_equal :failed, avatar.increments.last[:outcome]
 
     # create tag 2 in the repo 
-    manifest[:visible_files]['untitled.rb'][:content] = untitled_rb.sub('42', '54')
+    manifest[:visible_files]['untitled.rb'] = untitled_rb.sub('42', '54')
     avatar.run_tests(manifest)
     assert_equal :passed, avatar.increments.last[:outcome]
     

@@ -43,7 +43,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
     @dojo = Dojo.new(params)
     @avatar = Avatar.new(@dojo, avatar.name)
     @manifest = @avatar.manifest
-    assert_equal @manifest[:visible_files]['output'][:content], output    
+    assert_equal output, @manifest[:output]
   end    
       
 end

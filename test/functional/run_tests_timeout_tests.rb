@@ -37,8 +37,8 @@ class RunTestsTimeOutTests < ActionController::TestCase
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(dojo, avatar_name)
     manifest = avatar.manifest
-    code = manifest[:visible_files][filename][:content]
-    manifest[:visible_files][filename][:content] = code.sub('return 42;', 'for(;;);')
+    code = manifest[:visible_files][filename]
+    manifest[:visible_files][filename] = code.sub('return 42;', 'for(;;);')
     
     ps_count_before = ps_count
     avatar.run_tests(manifest)

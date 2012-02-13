@@ -4,9 +4,9 @@ class Kata
   def initialize(filesets_root, filesets)
     @filesets = filesets
     @manifest = {
-      :visible_files => {},
-      :hidden_filenames => [],
-      :hidden_pathnames => []
+      :visible_files => { },
+      :hidden_filenames => [ ],
+      :hidden_pathnames => [ ]
     }
     filesets.each do |name,choice|
       FileSet.new(filesets_root, name.to_s).read_into(@manifest, choice)

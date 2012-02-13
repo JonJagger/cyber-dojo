@@ -71,8 +71,8 @@ class LanguageFileSetTests < ActionController::TestCase
       avatar_name = Avatar::names.shuffle[0]
       avatar = Avatar.new(dojo, avatar_name)
       manifest = avatar.manifest
-        test_code = manifest[:visible_files][filename][:content]
-        manifest[:visible_files][filename][:content] = test_code.sub('42', '54')
+        test_code = manifest[:visible_files][filename]
+        manifest[:visible_files][filename] = test_code.sub('42', '54')
       avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
       assert_equal :passed, avatar.increments.last[:outcome], info  + ', green,' + manifest[:output]
@@ -90,8 +90,8 @@ class LanguageFileSetTests < ActionController::TestCase
       avatar_name = Avatar::names.shuffle[0]
       avatar = Avatar.new(dojo, avatar_name)
       manifest = avatar.manifest
-        test_code = manifest[:visible_files][filename][:content]
-        manifest[:visible_files][filename][:content] = test_code.sub('42', '4typo2')
+        test_code = manifest[:visible_files][filename]
+        manifest[:visible_files][filename] = test_code.sub('42', '4typo2')
       avatar.run_tests(manifest)
       info = avatar.name + ', ' + language
       assert_equal :error, avatar.increments.last[:outcome], info  + ', amber,' + manifest[:output]
