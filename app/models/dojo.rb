@@ -32,6 +32,7 @@ class Dojo
     inner = root_folder + '/' + Dojo::inner_folder(name)
     outer = inner + '/' + Dojo::outer_folder(name)
     
+    # TODO: this could move outside...?
     if !File.directory? root_folder
       make_dir(root_folder)
     end
@@ -40,6 +41,10 @@ class Dojo
       if File.directory? inner and File.directory? outer
         false
       else
+        # TODO: I could pre-mkdir all the inner folders 00 01 02 ff ??
+        #       git init; does not do this...
+        # Two players could make the same dir concurrently.
+        # Does that need to be locked?
         make_dir(inner)
         make_dir(outer)
         true
@@ -53,26 +58,47 @@ class Dojo
     io_lock(root_folder) do
       dojo = Dojo.new(params)
       
+      sandbox = dojo.folder + '/sandbox' 
+      make_dir(sandbox)
+      language_dir = params[:filesets_root] + '/language/' + params['language']
+      language_fileset = LanguageFileSet.new(language_dir)
+      language_fileset.copy_hidden_files_to(sandbox)
+      visible_files = language_fileset.visible_files
+      
+      exercise_dir = params[:filesets_root] + '/exercise/' + params['kata'] #TODO s/kata/exercise
+      exercise_fileset = ExerciseFileSet.new(exercise_dir)
+      visible_files['instructions'] = exercise_fileset.instructions
+      visible_files['output'] = ''
+      
+      # Idea is that incoming params is refactored into a parameter object
+      # that we can pull the following 3 things from
+      #   1. hidden_files
+      #   2. visible_files
+      #   3. parameters (tab_size, created, etc)
+      # These are then used to do the setup.
+      # To create a new dojo from a traffic light I will
+      # simply need to create a new object that supports the
+      # the three sets of information
       info = { 
         :name => name, 
         :created => make_time(Time.now),
-        :kata => params['kata'],
-        :language => params['language'],
-        :browser => params[:browser]
+        :kata => params['kata'], #TODO from language_fileset
+        :language => params['language'], #TODO from language_fileset
+        :browser => params[:browser],
+        :visible_files => visible_files,
+        :unit_test_framework => language_fileset.unit_test_framework,
+        :tab_size => language_fileset.tab_size,
+        #:uuid?
       }
       
       file_write(dojo.manifest_filename, info)
-      
-      index_filename = root_folder + '/' + Dojo::Index_filename
-      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]       
-      file_write(index_filename, index << info)      
-
       file_write(dojo.messages_filename, [ ])
       
-      sandbox = dojo.folder + '/sandbox' 
-      make_dir(sandbox)
-      fileset = LanguageFileSet.new(params[:filesets_root] + '/language/' + params['language'])
-      fileset.copy_hidden_files_to(sandbox)
+      #TODO: this should move outside?
+      index_filename = root_folder + '/' + Dojo::Index_filename
+      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
+      #TODO: don't want visible_files in main index. Will get too large...
+      file_write(index_filename, index << info)      
     end    
   end
 
@@ -153,14 +179,16 @@ class Dojo
     messages
   end
   
+  def visible_files
+    manifest[:visible_files]
+  end
+  
   def tab
-    fileset = LanguageFileSet.new(filesets_root + '/language/' + language)
-    " " * fileset.tab_size
+    " " * manifest[:tab_size]
   end
   
   def unit_test_framework
-    fileset = LanguageFileSet.new(filesets_root + '/language/' + language)
-    fileset.unit_test_framework
+    manifest[:unit_test_framework]
   end
   
   def language
@@ -171,28 +199,6 @@ class Dojo
     manifest[:kata]    
   end
       
-  # TODO: aiming to drop...
-  def kata
-    filesets =
-    {
-      :kata => exercise,
-      :language => language
-    }
-    Kata.new(filesets_root, filesets)
-  end
-  
-  def folder
-    @dojo_root + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
-  end
-
-  def manifest_filename
-    folder + '/' + 'manifest.rb'
-  end
-
-  def messages_filename
-    folder + '/' + 'messages.rb'
-  end
-  
   def created
     Time.mktime(*manifest[:created])
   end
@@ -201,15 +207,29 @@ class Dojo
     duration_in_seconds(created, Time.now)
   end
   
-  def manifest
-    eval IO.read(manifest_filename)
+  #TODO: rename to dir?  to match Dir::mkdir for example?
+  def folder
+    @dojo_root + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
   end
 
+  #TODO: does this need to be here? public?
   def filesets_root
     @filesets_root
   end
   
+  def manifest_filename
+    folder + '/' + 'manifest.rb'
+  end
+
+  def messages_filename
+    folder + '/' + 'messages.rb'
+  end
+  
 private
+
+  def manifest
+    eval IO.read(manifest_filename)
+  end
 
   def exists?(name)
     File.exists? folder + '/' + name

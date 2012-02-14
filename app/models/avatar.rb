@@ -22,6 +22,7 @@ class Avatar
     )
   end
 
+  # TODO: refactor so kata is passed in not dojo
   def initialize(dojo, name) 
     @dojo = dojo
     @name = name
@@ -29,17 +30,13 @@ class Avatar
     if !File.exists? folder
       Dir::mkdir(folder)   
       Dir::mkdir(sandbox)
-      kata = @dojo.kata
       
-      kata.visible_files.each do |filename,content|
+      visible_files = @dojo.visible_files
+      visible_files.each do |filename,content|
         save_file(sandbox, filename, content)
       end
       
-      #kata.manifest.delete(:hidden_filenames) # TODO: DROP
-      #kata.manifest.delete(:hidden_pathnames) # TODO: DROP
-      #TODO: should write kata.visible_files
-      #file_write(pathed(Manifest_filename), kata.manifest)
-      file_write(pathed(Manifest_filename), kata.visible_files)      
+      file_write(pathed(Manifest_filename), visible_files)
       file_write(pathed(Increments_filename), [ ])
       
       command  = "cd '#{folder}';" +
@@ -48,7 +45,7 @@ class Avatar
                  "git add '#{Increments_filename}';"
       system(command)
       tag = 0
-      git_commit_tag(kata.visible_files, tag)
+      git_commit_tag(visible_files, tag)
     end
   end
   
@@ -65,12 +62,14 @@ class Avatar
   end
   
   def visible_files(tag = nil)
+    seen = ''
     io_lock(folder) do
       tag ||= most_recent_tag      
       command  = "cd #{folder};" +
                  "git show #{tag}:#{Manifest_filename}"
-      eval popen_read(command) 
+      seen = popen_read(command) 
     end
+    eval seen
   end
   
   def post_run_test_messages()
@@ -114,17 +113,6 @@ private
     git_commit_tag(visible_files, tag)
   end
   
-  def filesets_manifest
-    # TODO: DROP assumption below
-    # Have to allow resumption of dojos before dojos were
-    # single kata x language. 
-    filename = folder + '/filesets.rb'
-    if !File.exists? filename 
-      filename = @dojo.folder + '/manifest.rb'
-    end
-    eval IO.read(filename)    
-  end
-
   def pathed(filename)
     folder + '/' + filename
   end
@@ -156,7 +144,7 @@ private
   end
 
   Increments_filename = 'increments.rb'  
-  Manifest_filename = 'manifest.rb' # TODO: rename
+  Manifest_filename = 'manifest.rb'
 
 end
 

@@ -10,6 +10,8 @@ class LanguageFileSet
   
   def copy_hidden_files_to(folder)
     hidden_filenames.each do |hidden_filename|
+      # Use ln here and not cp - no need to create multiple
+      # copies of files that are not going to be edited.
       system("ln '#{@dir}/#{hidden_filename}' '#{folder}/#{hidden_filename}'")
     end
   end
