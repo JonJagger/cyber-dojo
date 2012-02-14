@@ -2,5 +2,6 @@
 log/*
 tmp/**/*
 dojos/*
+katas/*
 test/test_dojos/
 

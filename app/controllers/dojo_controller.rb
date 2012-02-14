@@ -8,7 +8,7 @@ class DojoController < ApplicationController
     
   def exists_json
     configure(params)
-    @exists = Dojo.exists?(params)
+    @exists = Kata.exists?(params)
     respond_to do |format|
       format.json { render :json => { :exists => @exists, :message => 'Hello' } }
     end    
@@ -16,7 +16,7 @@ class DojoController < ApplicationController
     
   def resume_avatar_grid
     board_config(params)
-    @live_avatar_names = @dojo.avatar_names
+    @live_avatar_names = @kata.avatar_names
     @all_avatar_names = Avatar.names    
     respond_to do |format|
       format.html { render :layout => false }
@@ -27,57 +27,59 @@ class DojoController < ApplicationController
     # offers configure, start, resume, dashboard, messages
     @title = '@CyberDojo'
     configure(params)
-    @dojo_name = dojo_name
+    @kata_name = kata_name
     @tab_title = 'Home Page'
   end
    
   def create
     configure(params)
-    Dojo.create(params)
-    @dojo = Dojo.new(params)
-    @katas = FileSet.new(@dojo.filesets_root, 'kata').choices
-    @kata_index = rand(@katas.length)
-    @languages = FileSet.new(@dojo.filesets_root, 'language').choices
+    Kata.create(params)
+    @kata = Kata.new(params)
+    
+    @languages = FileSet.new(@kata.filesets_root, 'language').choices
     @language_index = rand(@languages.length)
-    @kata_info = {}
-    @katas.each do |name|
-      path = @dojo.filesets_root + '/' + 'kata' + '/' + name + '/' + 'instructions'
-      @kata_info[name] = IO.read(path)
+    @exercise_info = { }
+    @exercises = FileSet.new(@kata.filesets_root, 'exercise').choices
+    @exercise_index = rand(@exercises.length)
+    @exercises.each do |name|
+      path = @kata.filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
+      @exercise_info[name] = IO.read(path)
     end
     @tab_title = 'Configure'
   end
   
   def save
     configure(params)
-    Dojo.configure(params)
+    Kata.configure(params)
     redirect_to :action => :index, 
-                :dojo_name => dojo_name
+                :kata_name => kata_name
   end  
     
   #------------------------------------------------
+  
   def start
     configure(params)
-    if !Dojo.exists?(params)
-      redirect_to "/dojo/cant_find?dojo_name=#{dojo_name}"
+    if !Kata.exists?(params)
+      redirect_to "/dojo/cant_find?kata_name=#{kata_name}"
     else
-      dojo = Dojo.new(params)      
-      avatar = choose_avatar(dojo)
+      kata = Kata.new(params)      
+      avatar = start_avatar(kata)
       if avatar == nil
-        redirect_to "/dojo/full?dojo_name=#{dojo.name}"
+        redirect_to "/dojo/full?kata_name=#{kata.name}"
       else
-        redirect_to "/kata/edit?dojo_name=#{dojo.name}&avatar=#{avatar}"
+        redirect_to "/kata/edit?kata_name=#{kata.name}&avatar=#{avatar}"
       end
     end    
   end
 
   def cant_find
     configure(params)
-    @dojo_name = dojo_name
+    @kata_name = kata_name
   end
   
   def full
     configure(params)
-    @dojo_name = dojo_name
+    @kata_name = kata_name
   end
     
   #------------------------------------------------
@@ -92,15 +94,16 @@ class DojoController < ApplicationController
     render :file => RAILS_ROOT + '/public/' + params[:n] + '.html'    
   end
 
-  def choose_avatar(dojo)
-    io_lock(dojo.folder) do
-      available_avatar_names = Avatar.names - dojo.avatar_names
+  def start_avatar(kata)
+    io_lock(kata.folder) do
+      available_avatar_names = Avatar.names - kata.avatar_names
       if available_avatar_names == [ ]
-        avatar = nil
+        avatar_name = nil
       else          
-        avatar = available_avatar_names.shuffle[0]
-        dojo.create_new_avatar_folder(avatar)
-        avatar
+        avatar_name = available_avatar_names.shuffle[0]
+        Avatar.new(kata, avatar_name)
+        kata.post_message(avatar_name, "#{avatar_name} has joined the practice-kata")
+        avatar_name
       end        
     end      
   end

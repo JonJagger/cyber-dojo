@@ -3,22 +3,22 @@ class KataController < ApplicationController
   
   def edit
     configure(params)
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
-    @tab = @dojo.tab    
-    @messages = @dojo.messages
+    @kata = Kata.new(params)
+    @avatar = Avatar.new(@kata, params[:avatar])
+    @tab = @kata.tab    
+    @messages = @kata.messages
     @visible_files = @avatar.visible_files
     @output = @visible_files['output']
-    @tab_title = 'Run Tests'
+    @tab_title = 'Run Tests' #TODO: rename page_title? title?
   end
 
   def run_tests
     configure(params)
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
+    @kata = Kata.new(params)
+    @avatar = Avatar.new(@kata, params[:avatar])
     @output = @avatar.run_tests(visible_files)
     @avatar.post_run_test_messages()
-    @messages = @dojo.messages
+    @messages = @kata.messages
     respond_to do |format|
       format.js if request.xhr?
     end        
@@ -26,10 +26,10 @@ class KataController < ApplicationController
    
   def heartbeat
     configure(params)
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
+    @kata = Kata.new(params)
+    @avatar = Avatar.new(@kata, params[:avatar])
     @avatar.post_heartbeat_messages()
-    @messages = @dojo.messages
+    @messages = @kata.messages
     respond_to do |format|
       format.js if request.xhr?
     end

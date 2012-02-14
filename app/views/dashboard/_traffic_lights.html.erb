@@ -7,8 +7,8 @@
     <% seconds_per_td = @seconds_per_column -%>
     <% maximum_columns = @maximum_columns -%>
     <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns -%>
-    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, maximum_seconds_uncollapsed) -%>
-    <% all_lights = @dojo.all_increments -%>
+    <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) -%>
+    <% all_lights = @kata.all_increments -%>
     <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%>
     <% index = 0 -%>
     <% all_lights.keys.sort.each do |avatar_name| -%>
@@ -39,7 +39,7 @@
                     <% td.each do |light| -%>
                       <td>
                         <%  in_new_window = false -%>
-                        <%= traffic_light(@dojo, avatar_name, light, in_new_window) -%>
+                        <%= traffic_light(@kata, avatar_name, light, in_new_window) -%>
                       </td>
                     <% end -%>
                   </tr>
@@ -65,7 +65,7 @@
                  
           <td class="summary">
             <%  in_new_window = false -%>            
-            <%= traffic_light(@dojo, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
+            <%= traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
           </td>
           
           <td class="summary">

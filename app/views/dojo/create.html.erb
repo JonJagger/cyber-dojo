@@ -3,15 +3,15 @@
         type="text/javascript"><!--
 
 $j(document).ready(function() {
-  selectKata("<%=@kata_index-%>");
+  selectExercise("<%=@exercise_index-%>");
   selectLanguage("<%=@language_index-%>");
 });
 
-function selectKata(index) {
-  var info = $j('#kata_info_' + index).val();
-  $j('#kata_info').val(info);
+function selectExercise(index) {
+  var info = $j('#exercise_info_' + index).val();
+  $j('#exercise_info').val(info);
   
-  var selected = $j('#kata_' + index);
+  var selected = $j('#exercise_' + index);
   selected.parent().siblings().each(function() {
     $j(this).attr('current_file', 'false');
   });
@@ -33,15 +33,17 @@ function selectLanguage(index) {
 <form action="/dojo/save">
 
 <input type="hidden"
-       name="dojo_name" 
-       id="dojo_name" 
-       value="<%=@dojo.name%>" />
+       name="kata_name" 
+       id="kata_name" 
+       value="<%=@kata.name%>" />
 
-<h1 title="<%= @dojo.name%>">
+<h1 title="<%= @kata.name%>">
   <% size = 40 -%>
   <%= image_tag("/images/avatars/cyber-dojo.png",
-      :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
-  <%= elided_name(@dojo.name, 40) %>
+      :border => 0,
+      :size => "#{size}x#{size}",
+      :title => 'Home page') -%>
+  <%= elided_name(@kata.name, 40) %>
 </h1>
 
 <table align="center">
@@ -54,16 +56,16 @@ function selectLanguage(index) {
               <span class="choose_title">Exercises</span>
             </div>
             
-            <% @katas.each_with_index do |choice,index| -%>
+            <% @exercises.each_with_index do |choice,index| -%>
               <div class="filename" 
-                   onclick='selectKata(<%=index-%>);' >
-                <input id="kata_<%=index-%>" 
+                   onclick='selectExercise(<%=index-%>);' >
+                <input id="exercise_<%=index-%>" 
                        type="radio"
-                       <% if @kata_index==index -%>
+                       <% if @exercise_index==index -%>
                        checked="checked"
                        <% end -%>
-                       onclick='selectKata(<%=index-%>);'                      
-                       name="kata" 
+                       onclick='selectExercise(<%=index-%>);'                      
+                       name="exercise" 
                        value="<%=choice-%>" />
                 <label><%= choice -%></label>
               </div>    
@@ -72,8 +74,8 @@ function selectLanguage(index) {
           </td>
           <td>&nbsp;</rd>
           <td>
-            <textarea name="kata_info" 
-                      id="kata_info"
+            <textarea name="exercise_info" 
+                      id="exercise_info"
                       cols="62" 
                       rows="24">              
             </textarea>
@@ -115,7 +117,7 @@ function selectLanguage(index) {
         <tr>
           <td valign="top">
             <input id="save_button" 
-                   class="large button"
+                   class="larger button"
                    type="submit" 
                    value="save" 
                    name="save" />
@@ -128,10 +130,10 @@ function selectLanguage(index) {
 
 </form>
 
-<% @katas.each_with_index do |choice,index| -%>
+<% @exercises.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 
-             name="kata_info_<%=index-%>"
-             id="kata_info_<%=index-%>"><%=h @kata_info[choice] -%></textarea>
+             name="exercise_info_<%=index-%>"
+             id="exercise_info_<%=index-%>"><%=h @exercise_info[choice] -%></textarea>
 <% end -%>      
 
 

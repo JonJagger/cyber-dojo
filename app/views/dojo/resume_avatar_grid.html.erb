@@ -3,7 +3,7 @@
 
 function resume(avatar_name) {
   $cd.postTo('/kata/edit', {
-    dojo_name: "<%=@dojo.name-%>",
+    kata_name: "<%=@kata.name-%>",
     avatar: avatar_name
   }, '_blank');  
   $cd.closeResumeDialog();
@@ -20,9 +20,9 @@ function resume(avatar_name) {
       <% size = 60 -%>
       <%= link_to image_tag("/images/avatars/cyber-dojo.png",
           :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
-            :controller => :dojo,
+            :controller => :kata,
             :action => :index,
-            :dojo_name => @dojo.name %>      
+            :kata_name => @kata.name %>      
     </td>
     <td style="text-align: right; color: DarkGreen;">
        <div>kata =</div>
@@ -30,9 +30,9 @@ function resume(avatar_name) {
        <div>exercise =</div>
     </td>
     <td style="text-align: left; color: DarkGreen;">
-       <div><%= elided_name(@dojo.name, 15) -%></div>
-       <div><%= @dojo.language -%></div>
-       <div><%= @dojo.exercise -%></div>
+       <div><%= elided_name(@kata.name, 15) -%></div>
+       <div><%= @kata.language -%></div>
+       <div><%= @kata.exercise -%></div>
     </td>
   </tr>
 </table>

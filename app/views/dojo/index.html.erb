@@ -4,19 +4,19 @@
 $j(document).ready(function() {
 
   $j('#configure_it').click(function() {
-    run('config_name_input', "exists_json", function(dojo_name, data) {
-      configureIt(dojo_name, data);
+    run('config_name_input', "exists_json", function(kata_name, data) {
+      configureIt(kata_name, data);
     })
   });
   
   $j('#start_coding').click(function() {
-    var dojo_name = $j('#configured_name_input').attr('value');
-    $cd.postTo('/dojo/start', { dojo_name: dojo_name }, '_blank');    
+    var kata_name = $j('#configured_name_input').attr('value');
+    $cd.postTo('/dojo/start', { kata_name: kata_name }, '_blank');    
   });
   
   $j('#resume_coding').click(function() {
-    run('configured_name_input', "exists_json", function(dojo_name, data) {
-      resumeCoding(dojo_name, data);
+    run('configured_name_input', "exists_json", function(kata_name, data) {
+      resumeCoding(kata_name, data);
     })
   });
   
@@ -27,50 +27,50 @@ $j(document).ready(function() {
   };
   
   $j('#show_dashboard').click(function() {
-    run('configured_name_input', "exists_json", function(dojo_name, data) {
-      showDashboard(dojo_name, data);
+    run('configured_name_input', "exists_json", function(kata_name, data) {
+      showDashboard(kata_name, data);
     })
   });
   
   $j('#show_messages').click(function() {
-    run('configured_name_input', "exists_json", function(dojo_name, data) {
-      showMessages(dojo_name, data);
+    run('configured_name_input', "exists_json", function(kata_name, data) {
+      showMessages(kata_name, data);
     })
   });
 
   $j.each(['why', 'tips', 'ifaqs', 'links'], function(i,name) {
     $j('#' + name).click(function() {
-      $cd.postTo('/dojo/' + name, {}, '_blank');
+      $cd.postTo('/dojo/' + name, { }, '_blank');
     });
   });
   
 });
 
 function run(name_input, method, func) {
-  var dojo_name = $j('#' + name_input).attr('value');
-  if ($j.trim(dojo_name) === '') {
+  var kata_name = $j('#' + name_input).attr('value');
+  if ($j.trim(kata_name) === '') {
     $cd.alert("<h3>You must enter a name.</h3>", "");
   } else {
-    $j.getJSON('/dojo/' + method, { dojo_name: dojo_name }, function(data) {
-      func(dojo_name, data);
+    $j.getJSON('/dojo/' + method, { kata_name: kata_name }, function(data) {
+      func(kata_name, data);
     });
   }
 }
 
-function configureIt(dojo_name, data) {
+function configureIt(kata_name, data) {
   if (data.exists) {
-    $cd.alert("<h3>There is already a kata called</h3><h2>" + dojo_name + "</h2>", "");  
+    $cd.alert("<h3>There is already a kata called</h3><h2>" + kata_name + "</h2>", "");  
   } else {    
-    $cd.postTo('/dojo/create', { dojo_name: dojo_name });    
+    $cd.postTo('/dojo/create', { kata_name: kata_name });    
   }
 }
 
-function resumeCoding(dojo_name, data) {
+function resumeCoding(kata_name, data) {
   if (!data.exists) {
-    cantFind(dojo_name);
+    cantFind(kata_name);
   } else {
     var grid = $j('<div>');
-    grid.load('/dojo/resume_avatar_grid', { dojo_name: dojo_name }, function() {
+    grid.load('/dojo/resume_avatar_grid', { kata_name: kata_name }, function() {
       var resumer = $j('<div id="resume_coding_dialog">')
         .html(grid.html())
         .dialog({
@@ -90,24 +90,24 @@ function resumeCoding(dojo_name, data) {
   }
 }
 
-function showDashboard(dojo_name, data) {
+function showDashboard(kata_name, data) {
   if (!data.exists) {
-    cantFind(dojo_name);
+    cantFind(kata_name);
   } else {
-    $cd.postTo('/dashboard/show', { dojo_name: dojo_name });  
+    $cd.postTo('/dashboard/show', { kata_name: kata_name });  
   }
 }
 
-function showMessages(dojo_name, data) {
+function showMessages(kata_name, data) {
   if (!data.exists) {
-    cantFind(dojo_name);  
+    cantFind(kata_name);  
   } else {
-    $cd.postTo('/messages/show', { dojo_name: dojo_name });  
+    $cd.postTo('/messages/show', { kata_name: kata_name });  
   }
 }
 
-function cantFind(dojo_name) {
-  $cd.alert("<h3>There is no kata called</h3><h2>" + dojo_name + "</h2>", "");  
+function cantFind(kata_name) {
+  $cd.alert("<h3>There is no kata called</h3><h2>" + kata_name + "</h2>", "");  
 }
 
 //--></script>
@@ -118,7 +118,9 @@ function cantFind(dojo_name) {
     <td>      
       <% size = 80 -%>
       <%= image_tag("/images/avatars/cyber-dojo.png",
-          :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
+          :border => 0,
+          :size => "#{size}x#{size}",
+          :title => 'Home page') -%>
     </td>
     <td>
       &nbsp;&nbsp;
@@ -165,7 +167,7 @@ function cantFind(dojo_name) {
                    class="name_input"
                    id="configured_name_input"
                    size="15"
-                   value="<%=@dojo_name-%>" />
+                   value="<%=@kata_name-%>" />
           </td>
           <td>and</td>
           <td>         

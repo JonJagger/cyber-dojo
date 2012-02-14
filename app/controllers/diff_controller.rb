@@ -8,8 +8,8 @@ class DiffController < ApplicationController
   
   def show
     configure(params)
-    @dojo = Dojo.new(params)
-    @avatar = Avatar.new(@dojo, params[:avatar])
+    @kata = Kata.new(params)
+    @avatar = Avatar.new(@kata, params[:avatar])
     tag = params[:tag].to_i
     @traffic_lights_to_tag = @avatar.increments(tag)
     @all_traffic_lights = @avatar.increments

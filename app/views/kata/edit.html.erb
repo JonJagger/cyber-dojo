@@ -17,14 +17,14 @@ $j(document).ready(function() {
   
   $cd.bindAllLineNumbers();
   $cd.rebuildFilenameList();
-  $cd.loadFile("instructions"); //TODO: something a bit better
+  $cd.loadFile("instructions"); //TODO: refine
   $cd.welcome("<%=@avatar.name-%>");  
 });
 
 //--></script>
 
 <% form_remote_tag :url  => { :action => :run_tests,
-                              :dojo_name => @dojo.name,
+                              :kata_name => @kata.name,
                               :avatar => @avatar.name
                             }, 
                    :before   => '$cd.preRunTests();',
@@ -63,9 +63,9 @@ $j(document).ready(function() {
   </table>
   
   <%= periodically_call_remote :url => { :action => :heartbeat,
-                                         :dojo_name => @dojo.name,
+                                         :kata_name => @kata.name,
                                          :avatar => @avatar.name
                                        }, 
-                               :frequency => @dojo.seconds_per_heartbeat -%>                   
+                               :frequency => @kata.seconds_per_heartbeat -%>                   
 <% end -%>
 

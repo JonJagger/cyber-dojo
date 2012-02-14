@@ -14,13 +14,13 @@ $j(document).ready(function() {
   });
 });
 
-var dojo_name = "<%=@dojo.name-%>";
+var kata_name = "<%=@kata.name-%>";
 var avatar_name = "<%=@avatar.name-%>";
 var tag = "<%=@traffic_lights_to_tag.length-%>";  
 
 function rePost() {
   $cd.postTo('show', {
-    dojo_name: dojo_name,
+    kata_name: kata_name,
     avatar: avatar_name,
     tag: tag
   });
@@ -61,7 +61,7 @@ function tagNumber(event)
 	  <%= link_to 0, 
 	  { :controller => :diff, 
 	    :action => :show,
-	    :dojo_name => @dojo.name,
+	    :kata_name => @kata.name,
 	    :avatar => @avatar.name,
 	    :tag => 0 
 	  } -%>
@@ -91,7 +91,7 @@ function tagNumber(event)
 	  <%= link_to @all_traffic_lights.length, 
 	  { :controller => :diff, 
 	    :action => :show,
-	    :dojo_name => @dojo.name,
+	    :kata_name => @kata.name,
 	    :avatar => @avatar.name,
 	    :tag => @all_traffic_lights.length 
 	  } -%>

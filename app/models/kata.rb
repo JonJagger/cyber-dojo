@@ -5,7 +5,7 @@ require 'traffic_light_helper.rb'
 require 'Locking'
 require 'Files'
 
-class Dojo
+class Kata
   
   include Locking
   extend Locking  
@@ -19,18 +19,18 @@ class Dojo
   Index_filename = 'index.rb' 
 
   def self.exists?(params)
-    name = params[:dojo_name]
-    root_folder = params[:dojo_root]    
-    inner = root_folder + '/' + Dojo::inner_folder(name)
-    outer = inner + '/' + Dojo::outer_folder(name)
+    name = params[:kata_name]
+    root_folder = params[:kata_root]    
+    inner = root_folder + '/' + Kata::inner_folder(name)
+    outer = inner + '/' + Kata::outer_folder(name)
     File.directory? inner and File.directory? outer
   end
 
   def self.create(params)
-    name = params[:dojo_name]
-    root_folder = params[:dojo_root]    
-    inner = root_folder + '/' + Dojo::inner_folder(name)
-    outer = inner + '/' + Dojo::outer_folder(name)
+    name = params[:kata_name]
+    root_folder = params[:kata_root]    
+    inner = root_folder + '/' +Kata::inner_folder(name)
+    outer = inner + '/' + Kata::outer_folder(name)
     
     # TODO: this could move outside...?
     if !File.directory? root_folder
@@ -53,19 +53,20 @@ class Dojo
   end
   
   def self.configure(params)
-    name = params[:dojo_name]
-    root_folder = params[:dojo_root]
+    name = params[:kata_name]
+    root_folder = params[:kata_root]
     io_lock(root_folder) do
-      dojo = Dojo.new(params)
+      kata = Kata.new(params)
       
-      sandbox = dojo.folder + '/sandbox' 
+      sandbox = kata.folder + '/sandbox' 
       make_dir(sandbox)
+      
       language_dir = params[:filesets_root] + '/language/' + params['language']
       language_fileset = LanguageFileSet.new(language_dir)
       language_fileset.copy_hidden_files_to(sandbox)
       visible_files = language_fileset.visible_files
       
-      exercise_dir = params[:filesets_root] + '/exercise/' + params['kata'] #TODO s/kata/exercise
+      exercise_dir = params[:filesets_root] + '/exercise/' + params['exercise']
       exercise_fileset = ExerciseFileSet.new(exercise_dir)
       visible_files['instructions'] = exercise_fileset.instructions
       visible_files['output'] = ''
@@ -76,13 +77,13 @@ class Dojo
       #   2. visible_files
       #   3. parameters (tab_size, created, etc)
       # These are then used to do the setup.
-      # To create a new dojo from a traffic light I will
+      # To create a new kata from a traffic light I will
       # simply need to create a new object that supports the
       # the three sets of information
       info = { 
         :name => name, 
         :created => make_time(Time.now),
-        :kata => params['kata'], #TODO from language_fileset
+        :exercise => params['exercise'], #TODO from language_fileset
         :language => params['language'], #TODO from language_fileset
         :browser => params[:browser],
         :visible_files => visible_files,
@@ -91,11 +92,11 @@ class Dojo
         #:uuid?
       }
       
-      file_write(dojo.manifest_filename, info)
-      file_write(dojo.messages_filename, [ ])
+      file_write(kata.manifest_filename, info)
+      file_write(kata.messages_filename, [ ])
       
       #TODO: this should move outside?
-      index_filename = root_folder + '/' + Dojo::Index_filename
+      index_filename = root_folder + '/' + Kata::Index_filename
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
       #TODO: don't want visible_files in main index. Will get too large...
       file_write(index_filename, index << info)      
@@ -103,11 +104,11 @@ class Dojo
   end
 
   def self.inner_folder(name)
-    Dojo::sha1(name)[0..1] # ala git    
+    Kata::sha1(name)[0..1] # ala git    
   end
 
   def self.outer_folder(name)
-    Dojo::sha1(name)[2..-1] # ala git
+    Kata::sha1(name)[2..-1] # ala git
   end
 
   def self.sha1(name)
@@ -117,28 +118,15 @@ class Dojo
   #---------------------------------
 
   def initialize(params)
-    @name = params[:dojo_name]
-    @dojo_root = params[:dojo_root]
+    @name = params[:kata_name]
+    @kata_root = params[:kata_root]
     @filesets_root = params[:filesets_root]
   end
 
   def name
     @name
   end
-  
-  def create_new_avatar_folder(avatar_name)
-    @created = false
-    io_lock(folder) do
-      avatar_folder = folder + '/' + avatar_name
-      if !File.exists? avatar_folder
-        Avatar.new(self, avatar_name)
-        @created = true
-        post_message(avatar_name, "#{avatar_name} has joined the dojo")
-      end
-    end
-    @created
-  end
-  
+    
   def avatar_names
     Avatar.names.select { |name| exists? name }
   end
@@ -196,7 +184,7 @@ class Dojo
   end
   
   def exercise
-    manifest[:kata]    
+    manifest[:exercise]    
   end
       
   def created
@@ -209,10 +197,10 @@ class Dojo
   
   #TODO: rename to dir?  to match Dir::mkdir for example?
   def folder
-    @dojo_root + '/' + Dojo::inner_folder(name) + '/' + Dojo::outer_folder(name)
+    @kata_root + '/' + Kata::inner_folder(name) + '/' + Kata::outer_folder(name)
   end
 
-  #TODO: does this need to be here? public?
+  #TODO: does this need to be here? public? why not static?
   def filesets_root
     @filesets_root
   end

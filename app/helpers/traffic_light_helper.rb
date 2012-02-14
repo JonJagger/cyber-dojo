@@ -6,13 +6,13 @@ module TrafficLightHelper
   include DurationHelper
   include PluralHelper
 
-  def traffic_light(dojo, avatar_name, inc, in_new_window)
-    minutes = duration_in_minutes(dojo.created, Time.mktime(*inc[:time]))
+  def traffic_light(kata, avatar_name, inc, in_new_window)
+    minutes = duration_in_minutes(kata.created, Time.mktime(*inc[:time]))
     new_window = in_new_window ? { :target => '_blank' } : {}
     a_href = link_to make_light(inc), 
     {   :controller => :diff, 
         :action => :show,
-        :dojo_name => dojo.name,
+        :kata_name => kata.name,
         :avatar => avatar_name,
         :tag => inc[:number] 
     }, 
@@ -24,7 +24,7 @@ module TrafficLightHelper
 
   def tool_tip(avatar_name, inc_number, minutes)
     #TODO: use minutes as year/month/day/hour/min?
-     "Open a diff page (#{inc_number})"
+    "Open a diff page (#{inc_number})"
   end
   
   def unlinked_traffic_light(inc)

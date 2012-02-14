@@ -2,7 +2,7 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var dojo_name = "<%=@dojo.name-%>";
+var kata_name = "<%=@kata.name-%>";
 var seconds_per_column = "<%=@seconds_per_column-%>";  
 var maximum_columns = "<%=@maximum_columns-%>";  
 
@@ -50,7 +50,7 @@ function parseMaximumColumns() {
 
 function rePost() {
   $cd.postTo('/dashboard/show', {
-    dojo_name: dojo_name,
+    kata_name: kata_name,
     seconds_per_column: seconds_per_column,
     maximum_columns: maximum_columns
   });
@@ -100,7 +100,7 @@ function rePost() {
 </table>
 
 <%= periodically_call_remote :url => { :action => :heartbeat,
-                                       :dojo_name => @dojo.name
+                                       :kata_name => @kata.name
                                      }, 
                              :with => "{ seconds_per_column: parseSecondsPerColumn()," +
                                       "  maximum_columns: parseMaximumColumns()" +

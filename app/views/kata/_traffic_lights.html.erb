@@ -5,7 +5,7 @@
     <% seconds_per_td = 20 -%>
     <% max_cols = 30 -%>
     <% max_seconds_uncollapsed = 5*60 -%>
-    <% gapper = TdGapper.new(@dojo.created, seconds_per_td, max_seconds_uncollapsed) -%>
+    <% gapper = TdGapper.new(@kata.created, seconds_per_td, max_seconds_uncollapsed) -%>
     
     <% lights = @avatar.increments -%> 
     <% all_lights = { @avatar.name =>  lights } -%>    
@@ -35,7 +35,7 @@
                 <% td.each do |light| -%>
                   <td>
                     <%  in_new_page = true -%>
-                    <%= traffic_light(@dojo, @avatar.name, light, in_new_page) -%>
+                    <%= traffic_light(@kata, @avatar.name, light, in_new_page) -%>
                   </td>
                 <% end -%>
               </tr>
@@ -64,7 +64,7 @@
         <% else -%>
           <% light = lights.last -%>
         <% end -%>
-        <%= traffic_light(@dojo, @avatar.name, light, in_new_window) -%>
+        <%= traffic_light(@kata, @avatar.name, light, in_new_window) -%>
       </td>
 
       <td>

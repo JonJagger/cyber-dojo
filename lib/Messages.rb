@@ -8,8 +8,8 @@ module Messages
     
     def post_run_test_messages()
       all_incs = Increment.all(@avatar.increments)
-      dojo.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
-      dojo.post_message(name, "looks like #{name} is on a hot refactoring streak!") if refactoring_streak?(all_incs)      
+      kata.post_message(name, "#{name} just passed their first test") if just_passed_first_test?(all_incs)
+      kata.post_message(name, "looks like #{name} is on a hot refactoring streak!") if refactoring_streak?(all_incs)      
     end
     
     def post_heartbeat_messages()
@@ -17,8 +17,8 @@ module Messages
 
     #----------------------------------------
     
-    def dojo
-      @avatar.dojo
+    def kata
+      @avatar.kata
     end
     
     def name

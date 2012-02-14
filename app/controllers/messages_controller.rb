@@ -4,12 +4,12 @@ class MessagesController < ApplicationController
   def show
     @tab_title = 'Messages'
     board_config(params)
-    @messages = @dojo.messages
+    @messages = @kata.messages
   end 
   
   def post
     board_config(params)
-    @messages = @dojo.post_message(params[:poster], params[:message])
+    @messages = @kata.post_message(params[:poster], params[:message])
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
   
   def post_some
     board_config(params)
-    @messages = @dojo.post_message(params[:poster], params[:message])
+    @messages = @kata.post_message(params[:poster], params[:message])
     respond_to do |format|
       format.js if request.xhr?
     end

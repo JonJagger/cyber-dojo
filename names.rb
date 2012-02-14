@@ -15,7 +15,7 @@ def avatars
       gopher koala squirrel moose bear bat camel lemur panda gorilla deer kangaroo )
 end
 
-index = eval IO.popen('cat dojos/index.rb').read
+index = eval IO.popen('cat katas/index.rb').read
 show = (ARGV[0] || "32").to_i
 names = recent(index, show).map{|e| e[:name]}
 names.each do |name|

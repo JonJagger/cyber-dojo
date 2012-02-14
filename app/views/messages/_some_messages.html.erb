@@ -4,7 +4,7 @@
 $j(document).ready(function() {
   $j('.message_container').click(function() {
     $cd.postTo('/messages/show', {
-      dojo_name: "<%=@dojo.name-%>"
+      kata_name: "<%=@kata.name-%>"
     }, "_blank");
   });
 });

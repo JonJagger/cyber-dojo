@@ -22,16 +22,15 @@ class Avatar
     )
   end
 
-  # TODO: refactor so kata is passed in not dojo
-  def initialize(dojo, name) 
-    @dojo = dojo
+  def initialize(kata, name) 
+    @kata = kata
     @name = name
 
     if !File.exists? folder
       Dir::mkdir(folder)   
       Dir::mkdir(sandbox)
       
-      visible_files = @dojo.visible_files
+      visible_files = @kata.visible_files
       visible_files.each do |filename,content|
         save_file(sandbox, filename, content)
       end
@@ -49,8 +48,8 @@ class Avatar
     end
   end
   
-  def dojo
-    @dojo
+  def kata
+    @kata
   end
   
   def name
@@ -84,20 +83,20 @@ class Avatar
     output = ''
     io_lock(folder) do
       output = avatar_run_tests(sandbox, visible_files)
-      test_info = parse(@dojo.unit_test_framework, output)
+      visible_files['output'] = output
+      test_info = parse(@kata.unit_test_framework, output)
       
       incs = locked_increments     
       incs << test_info
       test_info[:time] = make_time(Time::now)
       test_info[:number] = incs.length
-      visible_files['output'] = output
       save_run_tests_outcomes(incs, visible_files)
     end
     output
   end
 
   def folder
-    @dojo.folder + '/' + name
+    @kata.folder + '/' + name
   end
   
   def sandbox
