@@ -5,7 +5,7 @@ require 'Files'
 
 class LanguageFileSetTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
+  Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
@@ -20,7 +20,7 @@ class LanguageFileSetTests < ActionController::TestCase
     root_test_folder_reset
     sandbox = Root_test_folder + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = LanguageFileSet.new(filesets_root + '/language/Java')
+    fileset = LanguageFileSet.new(filesets_root, 'Java')
     fileset.copy_hidden_files_to(sandbox)
     assert File.exists?(sandbox + '/junit-4.7.jar'), 'junit-4.7.jar file created'
   end
@@ -29,12 +29,12 @@ class LanguageFileSetTests < ActionController::TestCase
     root_test_folder_reset
     sandbox = Root_test_folder + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = LanguageFileSet.new(filesets_root + '/language/C++')
+    fileset = LanguageFileSet.new(filesets_root, 'C++')
     fileset.copy_hidden_files_to(sandbox)
   end
   
   def test_read_visible_files
-    fileset = LanguageFileSet.new(filesets_root + '/language/Java')
+    fileset = LanguageFileSet.new(filesets_root, 'Java')
     visible_files = fileset.visible_files
     code = visible_files['UntitledTest.java']
     assert code != nil
@@ -42,18 +42,23 @@ class LanguageFileSetTests < ActionController::TestCase
   end
 
   def test_tab_default
-    fileset = LanguageFileSet.new(filesets_root + '/language/Java')
+    fileset = LanguageFileSet.new(filesets_root, 'Java')
     assert_equal 4, fileset.tab_size
   end
   
   def test_tab_not_default
-    fileset = LanguageFileSet.new(filesets_root + '/language/Ruby')
+    fileset = LanguageFileSet.new(filesets_root, 'Ruby')
     assert_equal 2, fileset.tab_size
   end
   
   def test_unit_test_framework
-    fileset = LanguageFileSet.new(filesets_root + '/language/Ruby')
+    fileset = LanguageFileSet.new(filesets_root, 'Ruby')
     assert_equal 'ruby_test_unit', fileset.unit_test_framework
   end
 
+  def test_language
+    fileset = LanguageFileSet.new(filesets_root, 'Ruby')
+    assert_equal 'Ruby', fileset.language
+  end
+  
 end

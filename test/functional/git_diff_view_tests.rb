@@ -7,9 +7,9 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  ROOT_TEST_FOLDER = RAILS_ROOT + '/test/test_dojos'
-  DOJO_NAME = 'Jon Jagger'
-  # the test_dojos sub-folder for 'Jon Jagger' is
+  ROOT_TEST_FOLDER = RAILS_ROOT + '/test/test_katas'
+  KATA_NAME = 'Jon Jagger'
+  # the test_katas sub-folder for 'Jon Jagger' is
   # 38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
 
   def root_test_folder_reset
@@ -18,10 +18,10 @@ class GitDiffViewTests < ActionController::TestCase
   end
 
   def make_params
-    { :dojo_name => DOJO_NAME, 
-      :dojo_root => ROOT_TEST_FOLDER,
+    { :kata_name => KATA_NAME, 
+      :kata_root => ROOT_TEST_FOLDER,
       :filesets_root => RAILS_ROOT + '/filesets',
-      'kata' => 'Unsplice',
+      'exercise' => 'Unsplice',
       'language' => 'Ruby'
     }
   end
@@ -31,10 +31,10 @@ class GitDiffViewTests < ActionController::TestCase
   def test_building_diff_view_from_git_repo
     root_test_folder_reset
     params = make_params
-    assert Dojo::create(params)
-    Dojo::configure(params)
-    dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'wolf')    
+    assert Kata::create(params)
+    Kata::configure(params)
+    kata = Kata.new(params)
+    avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
 
     visible_files =

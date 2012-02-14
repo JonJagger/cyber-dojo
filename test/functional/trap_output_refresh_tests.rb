@@ -7,7 +7,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
   # If you click run-tests and then so a browser refresh
   # the output is not restored correctly
   
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
+  Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
@@ -15,11 +15,11 @@ class TrapOutputRefreshTests < ActionController::TestCase
   end
 
   def make_params(language)
-    { :dojo_name => language, 
-      :dojo_root => Root_test_folder,
+    { :kata_name => language, 
+      :kata_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
-      'kata' => 'Prime Factors'
+      'exercise' => 'Prime Factors'
     }
   end
 
@@ -31,14 +31,14 @@ class TrapOutputRefreshTests < ActionController::TestCase
     language = 'C'
     root_test_folder_reset
     params = make_params(language)
-    assert Dojo::create(params)
-    assert Dojo::configure(params)
-    dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'lion')
+    assert Kata::create(params)
+    assert Kata::configure(params)
+    kata = Kata.new(params)
+    avatar = Avatar.new(kata, 'lion')
     output = avatar.run_tests(avatar.visible_files)
     # now refresh
-    dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'lion')
+    kata = Kata.new(params)
+    avatar = Avatar.new(kata, 'lion')
     assert_equal output, avatar.visible_files['output']
   end    
       

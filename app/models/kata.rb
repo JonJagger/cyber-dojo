@@ -61,13 +61,11 @@ class Kata
       sandbox = kata.folder + '/sandbox' 
       make_dir(sandbox)
       
-      language_dir = params[:filesets_root] + '/language/' + params['language']
-      language_fileset = LanguageFileSet.new(language_dir)
+      language_fileset = LanguageFileSet.new(params[:filesets_root], params['language'])
       language_fileset.copy_hidden_files_to(sandbox)
       visible_files = language_fileset.visible_files
       
-      exercise_dir = params[:filesets_root] + '/exercise/' + params['exercise']
-      exercise_fileset = ExerciseFileSet.new(exercise_dir)
+      exercise_fileset = ExerciseFileSet.new(params[:filesets_root], params['exercise'])
       visible_files['instructions'] = exercise_fileset.instructions
       visible_files['output'] = ''
       
@@ -83,8 +81,8 @@ class Kata
       info = { 
         :name => name, 
         :created => make_time(Time.now),
-        :exercise => params['exercise'], #TODO from language_fileset
-        :language => params['language'], #TODO from language_fileset
+        :exercise => exercise_fileset.exercise,
+        :language => language_fileset.language,
         :browser => params[:browser],
         :visible_files => visible_files,
         :unit_test_framework => language_fileset.unit_test_framework,

@@ -26,13 +26,16 @@ class DashboardController < ApplicationController
   end
   
   def seconds_per_column
-    value = params[:seconds_per_column].to_i
-    value > 0 ? value : 30
+    positive(:seconds_per_column, 30)
   end
   
   def maximum_columns
-    value = params[:maximum_columns].to_i
-    value > 0 ? value : 40
+    positive(:maximum_columns, 40)
   end
 
+  def positive(symbol, default)
+    value = params[symbol].to_i
+    value > 0 ? value : default    
+  end
+  
 end

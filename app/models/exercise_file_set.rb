@@ -3,12 +3,17 @@
 
 class ExerciseFileSet
   
-  def initialize(dir)
-    @dir = dir
+  def initialize(dir, exercise)
+    @exercise = exercise
+    @dir = dir + '/exercise/' + exercise
   end
   
   def instructions
     IO.read(@dir + '/instructions')
   end
 
+  def exercise
+    @exercise
+  end
+  
 end

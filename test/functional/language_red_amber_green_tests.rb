@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class LanguageFileSetRedAmberGreenTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
+  Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
@@ -12,11 +12,11 @@ class LanguageFileSetRedAmberGreenTests < ActionController::TestCase
   end
 
   def make_params_name(language)
-    { :dojo_name => language, 
-      :dojo_root => Root_test_folder,
+    { :kata_name => language, 
+      :kata_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
-      'kata' => 'Prime Factors',
+      'exercise' => 'Prime Factors',
       :browser => 'None (test)'
     }
   end
@@ -42,11 +42,11 @@ class LanguageFileSetRedAmberGreenTests < ActionController::TestCase
     Code_files.each do |language,filename|
       root_test_folder_reset
       params = make_params_name(language)
-      assert Dojo::create(params)
-      assert Dojo::configure(params)
-      dojo = Dojo.new(params)
+      assert Kata::create(params)
+      assert Kata::configure(params)
+      kata = Kata.new(params)
       avatar_name = Avatar::names.shuffle[0]
-      avatar = Avatar.new(dojo, avatar_name)
+      avatar = Avatar.new(kata, avatar_name)
       visible_files = avatar.visible_files      
       output = avatar.run_tests(visible_files)
       info = avatar.name + ', ' + language
@@ -59,11 +59,11 @@ class LanguageFileSetRedAmberGreenTests < ActionController::TestCase
     Code_files.each do |language,filename|
       root_test_folder_reset
       params = make_params_name(language)
-      assert Dojo::create(params)
-      assert Dojo::configure(params)
-      dojo = Dojo.new(params)
+      assert Kata::create(params)
+      assert Kata::configure(params)
+      kata = Kata.new(params)
       avatar_name = Avatar::names.shuffle[0]
-      avatar = Avatar.new(dojo, avatar_name)
+      avatar = Avatar.new(kata, avatar_name)
       visible_files = avatar.visible_files
       test_code = visible_files[filename]
       visible_files[filename] = test_code.sub('42', '54')
@@ -78,11 +78,11 @@ class LanguageFileSetRedAmberGreenTests < ActionController::TestCase
     Code_files.each do |language,filename|
       root_test_folder_reset
       params = make_params_name(language)
-      assert Dojo::create(params)
-      assert Dojo::configure(params)
-      dojo = Dojo.new(params)
+      assert Kata::create(params)
+      assert Kata::configure(params)
+      kata = Kata.new(params)
       avatar_name = Avatar::names.shuffle[0]
-      avatar = Avatar.new(dojo, avatar_name)
+      avatar = Avatar.new(kata, avatar_name)
       visible_files = avatar.visible_files
       test_code = visible_files[filename]
       visible_files[filename] = test_code.sub('42', '4typo2')

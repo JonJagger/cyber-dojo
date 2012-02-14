@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class RunTestsTimeOutTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
+  Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
@@ -14,11 +14,11 @@ class RunTestsTimeOutTests < ActionController::TestCase
   # Relies on gcc and make being installed
 
   def make_params
-    { :dojo_name => 'Jon Jagger', 
-      :dojo_root => Root_test_folder,
+    { :kata_name => 'Jon Jagger', 
+      :kata_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => 'C',
-      'kata' => 'Unsplice',
+      'exercise' => 'Unsplice',
       :browser => 'None (test)'
     }
   end
@@ -30,12 +30,12 @@ class RunTestsTimeOutTests < ActionController::TestCase
   def test_that_code_with_infinite_loop_times_out_and_doesnt_leak_processes
     root_test_folder_reset
     params = make_params
-    assert Dojo::create(params)
-    Dojo.configure(params)
-    dojo = Dojo.new(params)
+    assert Kata::create(params)
+    assert Kata.configure(params)
+    kata = Kata.new(params)
     filename = 'untitled.c'
     avatar_name = Avatar::names.shuffle[0]
-    avatar = Avatar.new(dojo, avatar_name)
+    avatar = Avatar.new(kata, avatar_name)
     visible_files = avatar.visible_files
     code = visible_files[filename]
     visible_files[filename] = code.sub('return 42;', 'for(;;);')

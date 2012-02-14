@@ -7,7 +7,7 @@ class TestRunnerHelperTests < ActionController::TestCase
 
   include TestRunnerHelper
 
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
+  Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
@@ -15,11 +15,11 @@ class TestRunnerHelperTests < ActionController::TestCase
   end
 
   def make_params_name(language)
-    { :dojo_name => language, 
-      :dojo_root => Root_test_folder,
+    { :kata_name => language, 
+      :kata_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
-      'kata' => 'Prime Factors',
+      'exercise' => 'Prime Factors',
       :browser => 'None (test)'
     }
   end
@@ -27,10 +27,10 @@ class TestRunnerHelperTests < ActionController::TestCase
   def test_recreate_new_sandbox
     root_test_folder_reset
     params = make_params_name('Java')
-    assert Dojo::create(params)
-    assert Dojo::configure(params)
-    dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'frog')
+    assert Kata::create(params)
+    assert Kata::configure(params)
+    kata = Kata.new(params)
+    avatar = Avatar.new(kata, 'frog')
     recreate_new(avatar.sandbox)
     assert_equal true, File.exists?(avatar.sandbox), "sandbox created"
     assert_equal true, File.exists?(avatar.sandbox + '/junit-4.7.jar'), "linked hidden file created"

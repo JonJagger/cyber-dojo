@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 # > cd cyberdojo/test
-# > ruby functional/simulated_full_dojo_tests.rb
+# > ruby functional/simulated_full_kata_tests.rb
 
-class SimulatedFullDojoTests < ActionController::TestCase
+class SimulatedFullKataTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_dojos'
+  Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
@@ -13,20 +13,20 @@ class SimulatedFullDojoTests < ActionController::TestCase
   end
 
   def params?(language)
-    { :dojo_name => 'Jon Jagger', 
-      :dojo_root => Root_test_folder,
+    { :kata_name => 'Jon Jagger', 
+      :kata_root => Root_test_folder,
       :filesets_root => RAILS_ROOT + '/filesets',
-      'kata' => 'Unsplice',
+      'exercise' => 'Unsplice',
       'language' => language,
       :browser => 'None (test)'
     }
   end
   
-  def create_dojo(language)
+  def create_kata(language)
     root_test_folder_reset    
-    assert Dojo::create(params?(language))
-    Dojo.configure(params?(language))
-    Dojo.new(params?(language))
+    assert Kata::create(params?(language))
+    Kata.configure(params?(language))
+    Kata.new(params?(language))
   end
   
   def defunct_count
@@ -43,13 +43,13 @@ class SimulatedFullDojoTests < ActionController::TestCase
   end
   
   def run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes(language, avatar_count=8, run_tests_count=10)
-    dojo = create_dojo(language)
+    kata = create_kata(language)
 
     visible_files_set = { }
     avatars = [ ]
     
     avatar_count.times do |n|
-      avatar = Avatar.new(dojo, Avatar.names[n])
+      avatar = Avatar.new(kata, Avatar.names[n])
       visible_files_set[avatar.name] = avatar.visible_files
       avatars << avatar
     end
