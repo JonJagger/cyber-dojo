@@ -2,7 +2,7 @@
 class MessagesController < ApplicationController
   
   def show
-    @tab_title = 'Messages'
+    @title = 'Messages'
     board_config(params)
     @messages = @kata.messages
   end 

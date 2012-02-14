@@ -9,7 +9,7 @@ class KataController < ApplicationController
     @messages = @kata.messages
     @visible_files = @avatar.visible_files
     @output = @visible_files['output']
-    @tab_title = 'Run Tests' #TODO: rename page_title? title?
+    @title = 'Run Tests'
   end
 
   def run_tests

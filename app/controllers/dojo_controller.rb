@@ -28,7 +28,7 @@ class DojoController < ApplicationController
     @title = '@CyberDojo'
     configure(params)
     @kata_name = kata_name
-    @tab_title = 'Home Page'
+    @title = 'Home Page'
   end
    
   def create
@@ -45,7 +45,7 @@ class DojoController < ApplicationController
       path = @kata.filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
       @exercise_info[name] = IO.read(path)
     end
-    @tab_title = 'Configure'
+    @title = 'Configure'
   end
   
   def save

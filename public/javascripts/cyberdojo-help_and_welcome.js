@@ -43,7 +43,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 700,
-        title: "<h2>Welcome</h2>",
+        title: "<h2>welcome</h2>",
         modal: true,
         buttons: {
           ok: function() {

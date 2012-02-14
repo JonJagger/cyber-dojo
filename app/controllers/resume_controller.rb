@@ -2,7 +2,7 @@
 class ResumeController < ApplicationController
 
   def choose_avatar
-    @tab_title = 'Resume Coding'
+    @title = 'Resume Coding'
     board_config(params)
     @live_avatar_names = @dojo.avatar_names
     @all_avatar_names = Avatar.names

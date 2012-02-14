@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
   
   def configure(params)
     params[:kata_root] = RAILS_ROOT + '/' + 'katas'
-    params[:starting_filesets_root] = RAILS_ROOT + '/' + 'starting_filesets'
     params[:filesets_root] = RAILS_ROOT + '/' + 'filesets'
     params[:browser] = request.env['HTTP_USER_AGENT'] 
   end
