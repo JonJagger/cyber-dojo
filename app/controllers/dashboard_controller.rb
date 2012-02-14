@@ -26,12 +26,13 @@ class DashboardController < ApplicationController
   end
   
   def seconds_per_column
-    spc = (params[:seconds_per_column] || 30).to_i
-    spc != 0 ? spc : 30
+    value = params[:seconds_per_column].to_i
+    value > 0 ? value : 30
   end
   
   def maximum_columns
-    (params[:maximum_columns] || 40).to_i
+    value = params[:maximum_columns].to_i
+    value > 0 ? value : 40
   end
 
 end

@@ -28,7 +28,6 @@ class DojoController < ApplicationController
     @title = '@CyberDojo'
     configure(params)
     @kata_name = kata_name
-    @title = 'Home Page'
   end
    
   def create
