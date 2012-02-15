@@ -43,8 +43,7 @@ h3 { font-size: 1.3em;  }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-.name_input { font-size: 1.15em; } /*needed?*/
-.kata_name { font-size: 1.15em; }
+input { font-size: 1.15em; }
 
 .button
 {

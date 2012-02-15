@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
     @kata = Kata.new(params)
   end
   
-  def kata_name
-    params[:kata_name]
+  def id
+    params[:id]
   end
     
 end

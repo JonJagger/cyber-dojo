@@ -20,7 +20,7 @@ end
 
 index = eval IO.popen('cat katas/index.rb').read
 show = (ARGV[0] || "32").to_i
-ids = recent(index, show).map{|e| e[:uuid]}
+ids = recent(index, show).map{ |entry| entry[:id] }
 ids.each do |id|
   inner_dir = id[0..1]   
   outer_dir = id[2..9]

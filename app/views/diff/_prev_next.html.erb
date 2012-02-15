@@ -14,13 +14,13 @@ $j(document).ready(function() {
   });
 });
 
-var kata_name = "<%=@kata.name-%>";
+var id = "<%=@kata.id-%>";
 var avatar_name = "<%=@avatar.name-%>";
 var tag = "<%=@traffic_lights_to_tag.length-%>";  
 
 function rePost() {
-  $cd.postTo('show', {
-    kata_name: kata_name,
+  $cd.postTo('/diff/show', {
+    id: id,
     avatar: avatar_name,
     tag: tag
   });
@@ -61,7 +61,7 @@ function tagNumber(event)
 	  <%= link_to 0, 
 	  { :controller => :diff, 
 	    :action => :show,
-	    :kata_name => @kata.name,
+	    :id => @kata.id,
 	    :avatar => @avatar.name,
 	    :tag => 0 
 	  } -%>
@@ -91,7 +91,7 @@ function tagNumber(event)
 	  <%= link_to @all_traffic_lights.length, 
 	  { :controller => :diff, 
 	    :action => :show,
-	    :kata_name => @kata.name,
+	    :id => @kata.id,
 	    :avatar => @avatar.name,
 	    :tag => @all_traffic_lights.length 
 	  } -%>

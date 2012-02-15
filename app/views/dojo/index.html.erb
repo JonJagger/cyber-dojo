@@ -8,14 +8,14 @@ $j(document).ready(function() {
   });
   
   $j('#start_coding').click(function() {
-    var kata_name = $j('#configured_name_input').attr('value');
-    $cd.postTo('/dojo/start', { kata_name: kata_name }, '_blank');    
+    var id = $j('#kata_id_input').attr('value');
+    $cd.postTo('/dojo/start', { id: id }, '_blank');    
   });
   
   $j('#resume_coding').click(function() {
-    run('configured_name_input', "exists_json", function(kata_name, data) {
-      resumeCoding(kata_name, data);
-    })
+    run('exists_json', function(id, data) {
+      resumeCoding(id, data);
+    });
   });
   
   $cd.registerCloseResumeDialog = function(resumer) {
@@ -25,15 +25,15 @@ $j(document).ready(function() {
   };
   
   $j('#show_dashboard').click(function() {
-    run('configured_name_input', "exists_json", function(kata_name, data) {
-      showDashboard(kata_name, data);
-    })
+    run('exists_json', function(id, data) {
+      showDashboard(id, data);
+    });
   });
   
   $j('#show_messages').click(function() {
-    run('configured_name_input', "exists_json", function(kata_name, data) {
-      showMessages(kata_name, data);
-    })
+    run('exists_json', function(id, data) {
+      showMessages(id, data);
+    });
   });
 
   $j.each(['why', 'tips', 'ifaqs', 'links'], function(i,name) {
@@ -44,31 +44,23 @@ $j(document).ready(function() {
   
 });
 
-function run(name_input, method, func) {
-  var kata_name = $j('#' + name_input).attr('value');
-  if ($j.trim(kata_name) === '') {
-    $cd.alert("<h3>You must enter a name.</h3>", "");
+function run(method, func) {
+  var id = $j('#kata_id_input').attr('value');
+  if ($j.trim(id) === '') {
+    $cd.alert("<h3>You must enter an id.</h3>", "");
   } else {
-    $j.getJSON('/dojo/' + method, { kata_name: kata_name }, function(data) {
-      func(kata_name, data);
+    $j.getJSON('/dojo/' + method, { id: id }, function(data) {
+      func(id, data);
     });
   }
 }
 
-function configureIt(kata_name, data) {
-  if (data.exists) {
-    $cd.alert("<h3>There is already a kata called</h3><h2>" + kata_name + "</h2>", "");  
-  } else {    
-    $cd.postTo('/dojo/create', { kata_name: kata_name });    
-  }
-}
-
-function resumeCoding(kata_name, data) {
+function resumeCoding(id, data) {
   if (!data.exists) {
-    cantFind(kata_name);
+    cantFind(id);
   } else {
     var grid = $j('<div>');
-    grid.load('/dojo/resume_avatar_grid', { kata_name: kata_name }, function() {
+    grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
       var resumer = $j('<div id="resume_coding_dialog">')
         .html(grid.html())
         .dialog({
@@ -88,24 +80,24 @@ function resumeCoding(kata_name, data) {
   }
 }
 
-function showDashboard(kata_name, data) {
+function showDashboard(id, data) {
   if (!data.exists) {
-    cantFind(kata_name);
+    cantFind(id);
   } else {
-    $cd.postTo('/dashboard/show', { kata_name: kata_name });  
+    $cd.postTo('/dashboard/show', { id: id });  
   }
 }
 
-function showMessages(kata_name, data) {
+function showMessages(id, data) {
   if (!data.exists) {
-    cantFind(kata_name);  
+    cantFind(id);  
   } else {
-    $cd.postTo('/messages/show', { kata_name: kata_name });  
+    $cd.postTo('/messages/show', { id: id });  
   }
 }
 
-function cantFind(kata_name) {
-  $cd.alert("<h3>There is no kata with an id of </h3><h2>" + kata_name + "</h2>", "");  
+function cantFind(id) {
+  $cd.alert("<h3>There is no kata with an id of </h3><h2>" + id + "</h2>", "");  
 }
 
 //--></script>
@@ -133,25 +125,24 @@ function cantFind(kata_name) {
 <table>
   <tr>
     <td class="panel">
-      &nbsp;First, on <em>one</em> computer
+      &nbsp;First, on <em>one</em> computer, create a
       <input type="button"
              class="large button"
              id="configure_it"
-             value="configure-your-kata" />
+             value="new-practice" />
     </td>
   </tr>
   
   <tr>
     <td class="panel">
-      &nbsp;Then, on <em>each</em> computer, type in your kata's id:
+      &nbsp;Then, on <em>each</em> computer, type in your practice's id:
       <table>
         <tr>
          <td>
             <input type="text"
-                   class="name_input"
-                   id="configured_name_input"
+                   id="kata_id_input"
                    size="15"
-                   value="<%=@kata_name-%>" />
+                   value="<%=@id-%>" />
           </td>
           <td>and</td>
           <td>         

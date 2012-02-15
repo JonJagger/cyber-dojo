@@ -12,7 +12,7 @@ module TrafficLightHelper
     a_href = link_to make_light(inc), 
     {   :controller => :diff, 
         :action => :show,
-        :kata_name => kata.id,
+        :id => kata.id,
         :avatar => avatar_name,
         :tag => inc[:number] 
     }, 

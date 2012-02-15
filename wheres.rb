@@ -1,7 +1,7 @@
 
 find = ARGV[0]
 index = eval IO.popen('cat katas/index.rb').read
-ids = index.map{|e| e[:uuid]}
+ids = index.map{|e| e[:id]}
 ids.each do |id|
   inner_dir = id[0..1]   
   outer_dir = id[2..9]

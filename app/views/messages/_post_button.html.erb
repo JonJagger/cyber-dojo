@@ -3,7 +3,7 @@
    {
      :url => { :controller => :messages,
                :action => action,
-               :kata_name => @kata.name,
+               :id => @kata.id,
                :poster => poster
              },
      :with => "{ message: Field.getValue('message_text_input') }"

@@ -28,7 +28,7 @@ class TestRunnerHelperTests < ActionController::TestCase
     params = make_params(language)
     fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
     info = Kata::create_new(fileset, params)
-    params[:kata_name] = info[:uuid]
+    params[:id] = info[:id]
     Kata.new(params)    
   end
 

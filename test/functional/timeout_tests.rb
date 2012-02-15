@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 # > ruby test/functional/timeout_tests.rb
 
-class RunTestsTimeOutTests < ActionController::TestCase
+class TimeOutTests < ActionController::TestCase
 
   Root_test_dir = RAILS_ROOT + '/test/katas'
 
@@ -27,7 +27,7 @@ class RunTestsTimeOutTests < ActionController::TestCase
     params = make_params
     fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
     info = Kata::create_new(fileset, params)
-    params[:kata_name] = info[:uuid]
+    params[:id] = info[:id]
     Kata.new(params)    
   end
 

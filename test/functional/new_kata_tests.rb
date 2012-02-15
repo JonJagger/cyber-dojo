@@ -34,9 +34,9 @@ class NewKataTests < ActionController::TestCase
     params = make_params
     fileset = make_fileset(params)
     info = Kata::create_new(fileset, params)
-    uuid = info[:uuid]
-    assert_equal 10, uuid.length
-    kata_dir = params[:kata_root] + '/' + uuid[0..1] + '/' + uuid[2..9]
+    id = info[:id]
+    assert_equal 10, id.length
+    kata_dir = params[:kata_root] + '/' + id[0..1] + '/' + id[2..9]
     assert File.directory?(kata_dir), "File.directory?(#{kata_dir})"
     
     messages_rb = kata_dir + '/messages.rb'
@@ -52,7 +52,7 @@ class NewKataTests < ActionController::TestCase
     assert_equal 'Java', info[:language]
     assert_equal 'Jon Jagger', manifest[:name]
     assert_equal 'Jon Jagger', info[:name]
-    assert_equal info[:uuid], manifest[:uuid]
+    assert_equal info[:id], manifest[:id]
     assert info.has_key?(:created), "info.has_key?(:created)"
     assert manifest.has_key?(:created), "manifest.has_key?(:created)"
     assert_equal info[:created], manifest[:created]

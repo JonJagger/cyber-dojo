@@ -3,8 +3,9 @@ class MessagesController < ApplicationController
   
   def show
     @title = 'Messages'
-    board_config(params)
+    board_config(params) # TODO: needed?
     @messages = @kata.messages
+    @id = id
   end 
   
   def post

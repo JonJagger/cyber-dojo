@@ -32,8 +32,7 @@ class DojoController < ApplicationController
   def index
     # offers configure, start, resume, dashboard, messages
     @title = '@CyberDojo'
-    configure(params)
-    @kata_name = kata_name
+    @id = id
   end
    
   def create
@@ -50,7 +49,7 @@ class DojoController < ApplicationController
       path = filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
       @instructions[name] = IO.read(path)
     end
-    @title = 'configure'
+    @title = 'new-practice'
   end
   
   def save
@@ -73,7 +72,7 @@ class DojoController < ApplicationController
     end
     
     redirect_to :action => :index, 
-                :kata_name => info[:uuid]
+                :id => info[:id]
   end  
     
   #------------------------------------------------
@@ -81,26 +80,26 @@ class DojoController < ApplicationController
   def start
     configure(params)
     if !Kata.exists?(params)
-      redirect_to "/dojo/cant_find?kata_name=#{kata_name}"
+      redirect_to "/dojo/cant_find?id=#{id}"
     else
       kata = Kata.new(params)      
       avatar = start_avatar(kata)
       if avatar == nil
-        redirect_to "/dojo/full?kata_name=#{kata.id}"
+        redirect_to "/dojo/full?id=#{id}"
       else
-        redirect_to "/kata/edit?kata_name=#{kata.id}&avatar=#{avatar}"
+        redirect_to "/kata/edit?id=#{id}&avatar=#{avatar}"
       end
     end    
   end
 
   def cant_find
     configure(params)
-    @kata_name = kata_name
+    @id = id
   end
   
   def full
-    configure(params)
-    @kata_name = kata_name
+    board_config(params)
+    @id = id
   end
     
   #------------------------------------------------
@@ -123,7 +122,7 @@ class DojoController < ApplicationController
       else          
         avatar_name = random(available_avatar_names)
         Avatar.new(kata, avatar_name)
-        kata.post_message(avatar_name, "#{avatar_name} has joined the practice-kata")
+        kata.post_message(avatar_name, "#{avatar_name} has joined the practice")
         avatar_name
       end        
     end      

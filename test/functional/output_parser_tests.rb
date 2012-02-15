@@ -3,7 +3,7 @@ require 'run_tests_output_parser_helper'
 
 # > ruby test/functional/output_parser_tests.rb
 
-class RunTestsOutputParserTests < ActionController::TestCase
+class OutputParserTests < ActionController::TestCase
   
   include RunTestsOutputParserHelper
   

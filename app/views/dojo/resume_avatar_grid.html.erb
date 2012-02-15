@@ -3,7 +3,7 @@
 
 function resume(avatar_name) {
   $cd.postTo('/kata/edit', {
-    kata_name: "<%=@kata.id-%>",
+    id: "<%=@kata.id-%>",
     avatar: avatar_name
   }, '_blank');  
   $cd.closeResumeDialog();
@@ -22,7 +22,7 @@ function resume(avatar_name) {
           :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
             :controller => :kata,
             :action => :index,
-            :kata_name => @kata.id %>      
+            :id => @kata.id %>      
     </td>
     <td style="text-align: right; color: DarkGreen;">
        <div>kata =</div>
