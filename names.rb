@@ -4,8 +4,6 @@
 # Columns are: Date, Time, Folder, Name, Language, Exercise
 #             [Increments per avatar], Total Number of Increments, Browser
 
-require 'digest/sha1'
-
 def recent(array, max_length)
   len = [array.length, max_length].min
   array[-len,len]
