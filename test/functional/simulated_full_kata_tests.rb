@@ -5,16 +5,16 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SimulatedFullKataTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_katas'
+  Root_test_dir = RAILS_ROOT + '/test/katas'
 
-  def root_test_folder_reset
-    system("rm -rf #{Root_test_folder}")
-    Dir.mkdir Root_test_folder
+  def root_test_dir_reset
+    system("rm -rf #{Root_test_dir}")
+    Dir.mkdir Root_test_dir
   end
 
-  def params?(language)
+  def make_params(language)
     { :kata_name => 'Jon Jagger', 
-      :kata_root => Root_test_folder,
+      :kata_root => Root_test_dir,
       :filesets_root => RAILS_ROOT + '/filesets',
       'exercise' => 'Unsplice',
       'language' => language,
@@ -22,13 +22,14 @@ class SimulatedFullKataTests < ActionController::TestCase
     }
   end
   
-  def create_kata(language)
-    root_test_folder_reset    
-    assert Kata::create(params?(language))
-    Kata.configure(params?(language))
-    Kata.new(params?(language))
+  def make_kata(language)
+    params = make_params(language)
+    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
+    info = Kata::create_new(fileset, params)
+    params[:kata_name] = info[:uuid]
+    Kata.new(params)    
   end
-  
+
   def defunct_count
     # See comments in app/lib/Files.rb
     `ps`.scan(/<defunct>/).length
@@ -43,7 +44,7 @@ class SimulatedFullKataTests < ActionController::TestCase
   end
   
   def run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes(language, avatar_count=8, run_tests_count=10)
-    kata = create_kata(language)
+    kata = make_kata(language)
 
     visible_files_set = { }
     avatars = [ ]

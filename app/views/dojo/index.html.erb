@@ -4,9 +4,7 @@
 $j(document).ready(function() {
 
   $j('#configure_it').click(function() {
-    run('config_name_input', "exists_json", function(kata_name, data) {
-      configureIt(kata_name, data);
-    })
+    $cd.postTo('/dojo/create');
   });
   
   $j('#start_coding').click(function() {
@@ -107,7 +105,7 @@ function showMessages(kata_name, data) {
 }
 
 function cantFind(kata_name) {
-  $cd.alert("<h3>There is no kata called</h3><h2>" + kata_name + "</h2>", "");  
+  $cd.alert("<h3>There is no kata with an id of </h3><h2>" + kata_name + "</h2>", "");  
 }
 
 //--></script>
@@ -135,31 +133,17 @@ function cantFind(kata_name) {
 <table>
   <tr>
     <td class="panel">
-      &nbsp;First, on <em>one</em> computer, choose a name for your practice-kata:
-      <table>
-        <tr>
-          <td>
-            <input type="text"
-                   class="name_input"
-                   id="config_name_input"
-                   size="15"
-                   value="" />
-          </td>
-          <td>and</td>
-          <td>
-            <input type="button"
-                   class="large button"
-                   id="configure_it"
-                   value="configure-it" />
-          </td>
-        </tr>
-      </table>
+      &nbsp;First, on <em>one</em> computer
+      <input type="button"
+             class="large button"
+             id="configure_it"
+             value="configure-your-kata" />
     </td>
   </tr>
   
   <tr>
     <td class="panel">
-      &nbsp;Then, on <em>each</em> computer, type in your kata's name:
+      &nbsp;Then, on <em>each</em> computer, type in your kata's id:
       <table>
         <tr>
          <td>

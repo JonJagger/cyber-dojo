@@ -24,7 +24,7 @@ $j(document).ready(function() {
 //--></script>
 
 <% form_remote_tag :url  => { :action => :run_tests,
-                              :kata_name => @kata.name,
+                              :kata_name => @kata.id,
                               :avatar => @avatar.name
                             }, 
                    :before   => '$cd.preRunTests();',
@@ -63,7 +63,7 @@ $j(document).ready(function() {
   </table>
   
   <%= periodically_call_remote :url => { :action => :heartbeat,
-                                         :kata_name => @kata.name,
+                                         :kata_name => @kata.id,
                                          :avatar => @avatar.name
                                        }, 
                                :frequency => @kata.seconds_per_heartbeat -%>                   

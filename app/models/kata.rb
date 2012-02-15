@@ -1,5 +1,4 @@
 
-require 'digest/sha1'
 require 'make_time_helper.rb'
 require 'traffic_light_helper.rb'
 require 'Locking'
@@ -16,6 +15,14 @@ class Kata
   include Files
   extend Files
   
+  def self.inner_dir(uuid)
+    uuid[0..1]
+  end
+  
+  def self.outer_dir(uuid)
+    uuid[2..9]
+  end
+  
   def self.create_new(fileset, params)
     info = { 
       :name => params[:kata_name], 
@@ -31,9 +38,9 @@ class Kata
     }
     katas_dir = params[:kata_root]    
     uuid = info[:uuid]
-    inner_dir = katas_dir + '/' + uuid[0..1]
+    inner_dir = katas_dir + '/' + Kata::inner_dir(uuid)
     Dir.mkdir inner_dir
-    outer_dir = inner_dir + '/' + uuid[2..9]
+    outer_dir = inner_dir + '/' + Kata::outer_dir(uuid)
     Dir.mkdir outer_dir
     file_write(outer_dir + '/messages.rb', [ ])    
     file_write(outer_dir + '/manifest.rb', info)
@@ -49,11 +56,7 @@ class Kata
     info
   end
   
-  
-  
-  
-  Index_filename = 'index.rb' 
-
+  #TODO: only needed temporarily...
   def self.exists?(params)
     name = params[:kata_name]
     root_dir = params[:kata_root]    
@@ -62,100 +65,21 @@ class Kata
     File.directory? inner_dir and File.directory? outer_dir
   end
 
-  def self.create(params)
-    name = params[:kata_name]
-    katas_dir = params[:kata_root]    
-    inner_dir = katas_dir + '/' +Kata::inner_dir(name)
-    outer_dir = inner_dir + '/' + Kata::outer_dir(name)
-    
-    # TODO: this could move outside...?
-    if !File.directory? katas_dir
-      make_dir(katas_dir)
-    end
-
-    io_lock(katas_dir) do
-      if File.directory? inner_dir and File.directory? outer_dir
-        false
-      else
-        # TODO: I could pre-mkdir all the inner folders 00 01 02 ff ??
-        #       git init; does not do this...
-        # Two players could make the same dir concurrently.
-        # Does that need to be locked?
-        make_dir(inner_dir)
-        make_dir(outer_dir)
-        true
-      end
-    end
-  end
-  
-  def self.configure(params)
-    
-    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
-          
-    info = { 
-      :name => params[:kata_name], 
-      :created => make_time(Time.now),
-      :exercise => fileset.exercise,
-      :language => fileset.language,
-      :uuid => `uuidgen`.strip.delete('-')[0..9],      
-      :browser => params[:browser],
-      
-      :visible_files => fileset.visible_files,
-      :unit_test_framework => fileset.unit_test_framework,
-      :tab_size => fileset.tab_size,
-    }
-    
-    
-    katas_dir = params[:kata_root]
-    io_lock(katas_dir) do
-      kata = Kata.new(params)
-      
-      sandbox_dir = kata.dir + '/sandbox' 
-      make_dir(sandbox_dir)
-      
-      fileset.copy_hidden_files_to(sandbox_dir)
-      
-      file_write(kata.dir + '/manifest.rb', info)
-      file_write(kata.dir + '/messages.rb', [ ])
-      
-      #TODO: this should move outside?
-      #      yes, make this return info
-      index_filename = katas_dir + '/' + Kata::Index_filename
-      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      
-      [:visible_files, :unit_test_framework, :tab_size].each do |cut|
-        info.delete(cut)  
-      end
-      
-      file_write(index_filename, index << info)      
-    end    
-  end
-
-  def self.inner_dir(name)
-    Kata::sha1(name)[0..1] # ala git    
-  end
-
-  def self.outer_dir(name)
-    Kata::sha1(name)[2..-1] # ala git
-  end
-
-  def self.sha1(name)
-    Digest::SHA1.hexdigest(name)
-  end
+  Index_filename = 'index.rb' 
   
   #---------------------------------
 
   def initialize(params)
-    @name = params[:kata_name]
+    @id = params[:kata_name]
     @katas_dir = params[:kata_root]
   end
 
   def name
-    @name
+    manifest[:name]
   end
     
   def avatar_names
-    Avatar.names.select { |name| exists? name }
+    Avatar.names.select { |name| File.exists? dir + '/' + name }
   end
   
   def avatars
@@ -223,7 +147,11 @@ class Kata
   end
   
   def dir
-    @katas_dir + '/' + Kata::inner_dir(name) + '/' + Kata::outer_dir(name)
+    @katas_dir + '/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)
+  end
+  
+  def id
+    @id
   end
   
 private
@@ -238,16 +166,6 @@ private
   
   def manifest
     eval IO.read(manifest_filename)
-  end
-
-  def exists?(name)
-    File.exists? dir + '/' + name
-  end
-  
-  def self.make_dir(name)
-    if !File.directory? name
-      Dir.mkdir name
-    end
   end
   
 end

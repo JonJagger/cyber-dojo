@@ -5,6 +5,27 @@
 $j(document).ready(function() {
   selectExercise("<%=@exercise_index-%>");
   selectLanguage("<%=@language_index-%>");
+  
+  $j('#save_button').attr('disabled', true);
+  
+  $j('#kata_name').keyup(function(event) {
+    event.preventDefault();
+    var message = $j('#kata_name').val();
+    var disabled = $j.trim(message) === "";
+    $j('#save_button').attr('disabled', disabled);
+  });
+  
+  $j('#save_button').click(function() {
+    $cd.postTo('/dojo/save', {
+      kata_name: $j('#kata_name').attr('value'),
+      exercise: $j('input[name="exercise"]:checked').val(),
+      language: $j('input[name="language"]:checked').val()
+    });    
+  });
+  
+  $j('#cancel_button').click(function() {
+    $cd.postTo('/dojo/index');
+  });
 });
 
 function selectExercise(index) {
@@ -30,30 +51,40 @@ function selectLanguage(index) {
 
 //--></script>
 
-<form action="/dojo/save">
-
-<input type="hidden"
-       name="kata_name" 
-       id="kata_name" 
-       value="<%=@kata.name%>" />
-
-<h1 title="<%= @kata.name%>">
+<h1>
   <% size = 40 -%>
   <%= image_tag("/images/avatars/cyber-dojo.png",
       :border => 0,
       :size => "#{size}x#{size}",
       :title => 'Home page') -%>
-  <%= elided_name(@kata.name, 40) %>
+  <%= @title %>
 </h1>
 
 <table align="center">
+  <tr>
+    <td>
+      <table class="panel">
+        <tr>
+          <td>
+            <span class="choose_title">name?</span>
+            <input type="text"
+                   class="kata_name"
+                   id="kata_name"
+                   size="20"
+                   value="" />            
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  
   <tr>
     <td valign="top">
       <table class="panel">
         <tr>
           <td>
             <div>
-              <span class="choose_title">Exercises</span>
+              <span class="choose_title">exercise?</span>
             </div>
             
             <% @exercises.each_with_index do |choice,index| -%>
@@ -77,7 +108,7 @@ function selectLanguage(index) {
             <textarea name="instructions" 
                       id="instructions"
                       cols="62" 
-                      rows="24">              
+                      rows="26">              
             </textarea>
           </td>          
         </tr>
@@ -88,7 +119,7 @@ function selectLanguage(index) {
       <table class="panel">
         <tr>
           <td>
-            <div class="choose_title">Languages</div>
+            <div class="choose_title">language?</div>
 
             <% @languages.each_with_index do |choice,index| -%>
               <div class="filename"
@@ -123,12 +154,18 @@ function selectLanguage(index) {
                    name="save" />
           </td>
         </tr>
+        <tr>
+          <td valign="top">
+            <input id="cancel_button" 
+                   class="larger button"
+                   type="button" 
+                   value="cancel" 
+                   name="cancel" />
+          </td>
       </table>        
     </td>
   </tr>
 </table>
-
-</form>
 
 <% @exercises.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 

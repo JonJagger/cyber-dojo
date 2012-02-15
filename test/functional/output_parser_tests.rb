@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'run_tests_output_parser_helper'
 
-# > ruby test/functional/run_tests_output_parser_tests.rb
+# > ruby test/functional/output_parser_tests.rb
 
 class RunTestsOutputParserTests < ActionController::TestCase
   

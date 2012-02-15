@@ -7,10 +7,8 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  ROOT_TEST_DIR = RAILS_ROOT + '/test/test_katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
   KATA_NAME = 'Jon Jagger'
-  # the test_katas sub-dir for 'Jon Jagger' is
-  # 38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
 
   def root_test_dir_reset
     system("rm -rf #{ROOT_TEST_DIR}")
@@ -26,14 +24,19 @@ class GitDiffViewTests < ActionController::TestCase
     }
   end
 
+  def make_kata
+    params = make_params
+    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
+    info = Kata::create_new(fileset, params)
+    params[:kata_name] = info[:uuid]
+    Kata.new(params)    
+  end
+  
   #-----------------------------------------------
 
-  def test_building_diff_view_from_git_repo
+  def test_building_diff_view_from_git_repo    
     root_test_dir_reset
-    params = make_params
-    assert Kata::create(params)
-    Kata::configure(params)
-    kata = Kata.new(params)
+    kata = make_kata
     avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
 

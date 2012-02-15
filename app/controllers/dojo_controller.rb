@@ -35,8 +35,6 @@ class DojoController < ApplicationController
    
   def create
     configure(params)
-    Kata.create(params)
-    @kata = Kata.new(params) # needed for @kata.name in view
     
     filesets_root = params[:filesets_root]
     @languages = folders_in(filesets_root + '/language').sort
@@ -49,14 +47,24 @@ class DojoController < ApplicationController
       path = filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
       @instructions[name] = IO.read(path)
     end
-    @title = 'Configure'
+    @title = 'configure'
   end
   
   def save
     configure(params)
-    Kata.configure(params)
+    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
+    info = Kata.create_new(fileset, params)
+    
+    #TODO: add info to index.rb
+    #katas_dir = params[:kata_root]
+    #io_lock(katas_dir) do    
+    #  index_filename = katas_dir + '/' + Kata::Index_filename
+    #  index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
+    #  file_write(index_filename, index << info)
+    #end
+    
     redirect_to :action => :index, 
-                :kata_name => kata_name
+                :kata_name => info[:uuid]
   end  
     
   #------------------------------------------------
@@ -69,9 +77,9 @@ class DojoController < ApplicationController
       kata = Kata.new(params)      
       avatar = start_avatar(kata)
       if avatar == nil
-        redirect_to "/dojo/full?kata_name=#{kata.name}"
+        redirect_to "/dojo/full?kata_name=#{kata.id}"
       else
-        redirect_to "/kata/edit?kata_name=#{kata.name}&avatar=#{avatar}"
+        redirect_to "/kata/edit?kata_name=#{kata.id}&avatar=#{avatar}"
       end
     end    
   end

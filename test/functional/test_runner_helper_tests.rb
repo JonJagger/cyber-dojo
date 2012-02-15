@@ -7,16 +7,16 @@ class TestRunnerHelperTests < ActionController::TestCase
 
   include TestRunnerHelper
 
-  Root_test_folder = RAILS_ROOT + '/test/test_katas'
+  Root_test_dir = RAILS_ROOT + '/test/katas'
 
-  def root_test_folder_reset
-    system("rm -rf #{Root_test_folder}")
-    Dir.mkdir Root_test_folder
+  def root_test_dir_reset
+    system("rm -rf #{Root_test_dir}")
+    Dir.mkdir Root_test_dir
   end
 
-  def make_params_name(language)
+  def make_params(language)
     { :kata_name => language, 
-      :kata_root => Root_test_folder,
+      :kata_root => Root_test_dir,
       :filesets_root => RAILS_ROOT + '/filesets',
       'language' => language,
       'exercise' => 'Prime Factors',
@@ -24,12 +24,17 @@ class TestRunnerHelperTests < ActionController::TestCase
     }
   end
 
+  def make_kata(language)
+    params = make_params(language)
+    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
+    info = Kata::create_new(fileset, params)
+    params[:kata_name] = info[:uuid]
+    Kata.new(params)    
+  end
+
   def test_recreate_new_sandbox
-    root_test_folder_reset
-    params = make_params_name('Java')
-    assert Kata::create(params)
-    assert Kata::configure(params)
-    kata = Kata.new(params)
+    root_test_dir_reset
+    kata = make_kata('Java')
     avatar = Avatar.new(kata, 'frog')
     recreate_new(avatar.sandbox)
     assert_equal true, File.exists?(avatar.sandbox), "sandbox created"

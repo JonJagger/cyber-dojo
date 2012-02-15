@@ -5,7 +5,7 @@ require 'Files'
 
 class InitialFileSetTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/test_katas'
+  Root_test_folder = RAILS_ROOT + '/test/katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
