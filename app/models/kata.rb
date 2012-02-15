@@ -82,7 +82,7 @@ class Kata
       #TODO: this should move outside?
       index_filename = root_folder + '/' + Kata::Index_filename
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      #TODO: don't want visible_files in main index. Will get too large...
+      info.delete(:visible_files)
       file_write(index_filename, index << info)      
     end    
   end
