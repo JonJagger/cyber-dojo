@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
-# > ruby test/functional/language_file_set_tests.rb
+# > ruby test/functional/initial_file_set_tests.rb
 
-class LanguageFileSetTests < ActionController::TestCase
+class InitialFileSetTests < ActionController::TestCase
 
   Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
@@ -16,11 +16,15 @@ class LanguageFileSetTests < ActionController::TestCase
     RAILS_ROOT +  '/filesets'
   end
   
+  def exercise
+    'Yahtzee'
+  end
+  
   def test_copy_hidden_files_to_target_folder  
     root_test_folder_reset
     sandbox = Root_test_folder + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = LanguageFileSet.new(filesets_root, 'Java')
+    fileset = InitialFileSet.new(filesets_root, 'Java', exercise)
     fileset.copy_hidden_files_to(sandbox)
     assert File.exists?(sandbox + '/junit-4.7.jar'), 'junit-4.7.jar file created'
   end
@@ -29,36 +33,41 @@ class LanguageFileSetTests < ActionController::TestCase
     root_test_folder_reset
     sandbox = Root_test_folder + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = LanguageFileSet.new(filesets_root, 'C++')
+    fileset = InitialFileSet.new(filesets_root, 'C++', exercise)
     fileset.copy_hidden_files_to(sandbox)
   end
   
-  def test_read_visible_files
-    fileset = LanguageFileSet.new(filesets_root, 'Java')
+  def test_language_visible_files_plus_output_plus_instructions
+    fileset = InitialFileSet.new(filesets_root, 'Java', exercise)
     visible_files = fileset.visible_files
-    code = visible_files['UntitledTest.java']
-    assert code != nil
-    assert code.start_with? "\nimport org.junit.*;"
+    assert visible_files['UntitledTest.java'].start_with? "\nimport org.junit.*;"
+    assert_equal '', visible_files['output']
+    assert visible_files['instructions'].start_with? "The game of yahtzee"
   end
 
-  def test_tab_default
-    fileset = LanguageFileSet.new(filesets_root, 'Java')
+  def test_tab_defaults_to_4
+    fileset = InitialFileSet.new(filesets_root, 'Java', exercise)
     assert_equal 4, fileset.tab_size
   end
   
-  def test_tab_not_default
-    fileset = LanguageFileSet.new(filesets_root, 'Ruby')
+  def test_tab_when_not_defaulted
+    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
     assert_equal 2, fileset.tab_size
   end
   
   def test_unit_test_framework
-    fileset = LanguageFileSet.new(filesets_root, 'Ruby')
+    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
     assert_equal 'ruby_test_unit', fileset.unit_test_framework
   end
 
   def test_language
-    fileset = LanguageFileSet.new(filesets_root, 'Ruby')
+    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
     assert_equal 'Ruby', fileset.language
+  end
+  
+  def test_exercise
+    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
+    assert_equal exercise, fileset.exercise
   end
   
 end

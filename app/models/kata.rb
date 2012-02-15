@@ -61,32 +61,18 @@ class Kata
       sandbox = kata.folder + '/sandbox' 
       make_dir(sandbox)
       
-      language_fileset = LanguageFileSet.new(params[:filesets_root], params['language'])
-      language_fileset.copy_hidden_files_to(sandbox)
-      visible_files = language_fileset.visible_files
-      
-      exercise_fileset = ExerciseFileSet.new(params[:filesets_root], params['exercise'])
-      visible_files['instructions'] = exercise_fileset.instructions
-      visible_files['output'] = ''
-      
-      # Idea is that incoming params is refactored into a parameter object
-      # that we can pull the following 3 things from
-      #   1. hidden_files
-      #   2. visible_files
-      #   3. parameters (tab_size, created, etc)
-      # These are then used to do the setup.
-      # To create a new kata from a traffic light I will
-      # simply need to create a new object that supports the
-      # the three sets of information
+      fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
+      fileset.copy_hidden_files_to(sandbox)
+            
       info = { 
         :name => name, 
         :created => make_time(Time.now),
-        :exercise => exercise_fileset.exercise,
-        :language => language_fileset.language,
+        :exercise => fileset.exercise,
+        :language => fileset.language,
         :browser => params[:browser],
-        :visible_files => visible_files,
-        :unit_test_framework => language_fileset.unit_test_framework,
-        :tab_size => language_fileset.tab_size,
+        :visible_files => fileset.visible_files,
+        :unit_test_framework => fileset.unit_test_framework,
+        :tab_size => fileset.tab_size,
         #:uuid?
       }
       

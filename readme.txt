@@ -26,7 +26,7 @@ Add port 12320 to the URL you put into your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
-CyberDojo lives in the folder /var/www/cyberdojo 
+CyberDojo lives in the directory /var/www/cyberdojo 
 Pull the latest CyberDojo source code from github onto your TurnKey image
 >git pull origin master
 
@@ -35,9 +35,11 @@ Configuring a CyberDojo
 =======================
 The CyberDojo server will ask you to choose
 o) your language (eg C++)
-   Each language corresponds to a subfolder of cyberdojo/filesets/language/
-o) your kata (eg Prime Factors)
-   Each kata corresponds to a subfolder of cyberdojo/filesets/kata/
+   Each language corresponds to a sub-directory of cyberdojo/filesets/language/
+   (see below)
+o) your exercise (eg Prime Factors)
+   Each exercise corresponds to a sub-directory of cyberdojo/filesets/exercise/
+   (see below)
 
 
 Entering a CyberDojo
@@ -100,10 +102,10 @@ These were the steps I took...
 11. >mkdir /root/usbdrive
 12. >mount -t vfat /dev/sdb1 /root/usbdrive
 13. >cd /var/www/cyberdojo
-14. find the folder you want
+14. find the directory you want
 15. >ruby names.rb    
-16. eg suppose the folder is dojos/82/b583c11…..
-17. cd to that folder, then
+16. eg suppose the directory is katas/82/b583c11…..
+17. cd to that directory, then
 18. >tar -zcvf name.tar.gz .
 19. >mv name.tar.gz /root/usbdrive
 20. >umount /dev/sdb1
@@ -196,38 +198,34 @@ Miika-Petteri Matikainen added support for Haskell as follows
 >sudo apt-get install libghc6-unit-dev
 
 
+Adding a new exercise
+==========================
+Create a new sub-directory under cyberdojo/filesets/exercise/
+  For example: cyberdojo/filesets/exercise/FizzBuzz
+Create a text file called instructions in this directory.
+  For example: cyberdojo/filesets/exercise/FizzBuzz/instructions
+
+
 Adding a new language
 =====================
-Create a new subfolder under cyberdojo/filesets/language/
-Create a manifest.rb file in this folder (see manifest.rb below).
-
-
-Adding a new kata/exercise
-==========================
-Create a new subfolder under cyberdojo/filesets/kata/
-Create a manifest.rb file in this folder (see manifest.rb below). 
-
-
-manifest.rb
-===========
+Create a new subdirectory under cyberdojo/filesets/language/
+  For example: cyberdojo/filesets/language/Lisp
+Create a manifest.rb file in this directory.
+  For example: cyberdojo/filesets/language/Lisp/manifest.rb
 Each manifest.rb file contains an inspected ruby object. 
 Example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java cyberdojo.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
+  :tab_size => 4
 }
-Example: cyberdojo/filesets/kata/Prime Factors/manifest.rb looks like this:
-{
-  :visible_filenames => %w( instructions ),
-}
-
 
 manifest.rb Parameters
 ======================
 :visible_filenames
   The names of files that will be visible in the editor in the browser at 
-  startup. Each of these files must exist in the folder.
+  startup. Each of these files must exist in the directory.
   The filename cyberdojo.sh should be present (visible or hidden) in one of the 
   manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
   assumed by the ruby code (in the CyberDojo server) to be the start point for  
@@ -239,8 +237,8 @@ manifest.rb Parameters
 
 :hidden_filenames
   The names of necessary and/or supporting files that are NOT visible in the 
-  editor in the browser. Each of these files must exist in the folder. For 
-  example, a junit jar file or nunit assemblies. Not needed if you do not need 
+  editor in the browser. Each of these files must exist in the directory. For 
+  example, a junit jar file or nunit assemblies. Not required if you do not need 
   hidden files.
   
 :unit_test_framework
@@ -248,53 +246,46 @@ manifest.rb Parameters
   name of the ruby function (in the CyberDojo server) used to parse the 
   run-tests output (to see if the increment generates a red/green/amber
   traffic light). For example, if the value is 'cassert' then
-      app/helpers/run_tests_output_parser.rb
+      cyberdojo/app/helpers/run_tests_output_parser.rb
   must contain a method called parse_cassert() and will be called to parse the
   output of running the tests via the cyberdojo.sh shell file.
 
-There is one more parameter that can be specified in a manifest.rb
-file as part of the inspected ruby object:
-
-{
-  :tab_size => 2,
-}
-
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
-  Defaults to 4 spaces.
+  Not required and defaults to 4 spaces.
 
 
-Dojo Folder Structure
+Kata Directory Structure
 =====================
 The rails code does NOT use a database.
-Instead I use a git-like folder structure based
-on the sha1 hexdigest of the dojo's name. For example, a CyberDojo called 
+Instead I use a git-like directory structure based
+on the sha1 hexdigest of the kata's name. For example, a kata called 
 'Jon Jagger' (without the quotes) has a sha1 hexdigest of, wait for it,
   381fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab 
-so the root folder for the CyberDojo called 'Jon Jagger' is
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
-Each started avatar has a subfolder underneath this, for example
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf
+so the root directory for the kata called 'Jon Jagger' is
+  cyberdojo/katas/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
+Each started avatar has a sub-directory underneath this, for example
+  cyberdojo/katas/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf
   
 
 Git Repositories
 ================
 Each started animal avatar has its own git respository, eg
-  cyberdojo/dojos/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
+  cyberdojo/katas/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
 The starting files (as loaded via the manifests.rb's :visible_filenames) form
 tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
 message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses the run-tests button causes
 >git commit -a -m '4'
 >git tag -m '4' 4 HEAD
-From an avatar's folder you can issue the following commands:
+From an avatar's directory you can issue the following commands:
 To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
-To find the folder from the cyberdojo folder
+To find the directory issue the following from the cyberdojo/ directory 
 >ruby names.rb
-Which will provide the sha1 based folder name for recent dojos.
+Which will provide the sha1 based directory names for recent katas.
 It's much easier and more informative to just click on a traffic light.
   
 
@@ -315,8 +306,8 @@ To turn it off (and avoid annoying red underlines the code editor)
 
 Misc Notes
 ==========
-o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals kata in 
-   Ruby in a very early version of CyberDojo
+o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals
+   exercise in Ruby in a very early version of CyberDojo
 o) http://vimeo.com/8630305 has a video of an even earlier version of CyberDojo
    I submitted as a proposal to the Software Craftsmanship conference 2010.
 o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
