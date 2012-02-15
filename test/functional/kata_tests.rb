@@ -5,11 +5,15 @@ require 'Files'
 
 class KataTests < ActionController::TestCase
 
+  include Files
+  extend Files
+  
   Root_test_folder = RAILS_ROOT + '/test/test_katas'
 
   def root_test_folder_reset
     system("rm -rf #{Root_test_folder}")
     Dir.mkdir Root_test_folder
+    #file_write(Root_test_folder + '/index.rb', [ ])
   end
 
   def make_params
@@ -21,6 +25,47 @@ class KataTests < ActionController::TestCase
       :browser => 'None (test)'
     }
   end
+  
+  def test_create_new_using_uuid
+    root_test_folder_reset
+    params = make_params
+    params['language'] = 'Java'    
+    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
+    info = Kata::create_new(fileset, params)
+    uuid = info[:uuid]
+    assert_equal 10, uuid.length
+    kata_dir = params[:kata_root] + '/' + uuid[0..1] + '/' + uuid[2..9]
+    assert File.directory?(kata_dir), "File.directory?(#{kata_dir})"
+    
+    messages_rb = kata_dir + '/messages.rb'
+    assert File.exists?(messages_rb), "File.exists?(#{messages_rb})"
+    assert_equal [ ], eval(IO.read(messages_rb))
+    
+    manifest_rb = kata_dir + '/manifest.rb'
+    assert File.exists?(manifest_rb), "File.exists?(#{manifest_rb})"
+    manifest = eval(IO.read(manifest_rb))
+    assert_equal 'Unsplice', manifest[:exercise]
+    assert_equal 'Unsplice', info[:exercise]
+    assert_equal 'Java', manifest[:language]
+    assert_equal 'Java', info[:language]
+    assert_equal 'Jon Jagger', manifest[:name]
+    assert_equal 'Jon Jagger', info[:name]
+    assert_equal info[:uuid], manifest[:uuid]
+    assert info.has_key?(:created), "info.has_key?(:created)"
+    assert manifest.has_key?(:created), "manifest.has_key?(:created)"
+    assert_equal info[:created], manifest[:created]
+    
+    sandbox = kata_dir + '/sandbox'
+    assert File.directory?(sandbox), "File.Directory?(#{sandbox})"
+    hidden_file = sandbox + '/junit-4.7.jar'    
+    assert File.exists?(hidden_file), "File.exists?(#{hidden_file})"
+
+    assert !info.has_key?(:visible_files), "!info.has_key?(:visible_files)"
+    assert !info.has_key?(:unit_test_framework), "!info.has_key?(:unit_test_framework)"
+    assert !info.has_key?(:tab_size), "!info.has_key?(:tab_size)"
+  end
+  
+  
   
   def test_that_root_katas_folder_initially_does_not_contain_index_file
     root_test_folder_reset
@@ -59,7 +104,7 @@ class KataTests < ActionController::TestCase
     params = make_params
     assert Kata::create(params)
     kata = Kata.new(params)
-    assert File.exists?(kata.folder), 'inner/outer folder created'
+    assert File.exists?(kata.dir), 'inner/outer dir created'
   end
   
   def test_that_trying_to_create_an_existing_kata_fails
@@ -76,7 +121,7 @@ class KataTests < ActionController::TestCase
     assert Kata::create(params)
     Kata::configure(params)    
     kata = Kata.new(params)
-    sandbox = kata.folder + '/sandbox'
+    sandbox = kata.dir + '/sandbox'
     assert File.exists?(sandbox), 'inner/outer/sandbox folder created'
     assert File.exists?(sandbox + '/junit-4.7.jar')
   end
@@ -87,8 +132,8 @@ class KataTests < ActionController::TestCase
     assert Kata::create(params)
     Kata::configure(params)
     kata = Kata.new(params)
-    assert File.exists?(kata.messages_filename), 'messages.rb created'
-    assert File.exists?(kata.manifest_filename), 'manifest.rb created'
+    assert File.exists?(kata.dir + '/messages.rb'), 'messages.rb created'
+    assert File.exists?(kata.dir + '/manifest.rb'), 'manifest.rb created'
   end
 
   def test_that_you_can_create_an_avatar_in_a_kata

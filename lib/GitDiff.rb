@@ -17,7 +17,7 @@ module GitDiff
 
       visible_files ||= avatar.visible_files(tag)      
 
-      cmd  = "cd #{avatar.folder};"
+      cmd  = "cd #{avatar.dir};"
       cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
       diff_lines = popen_read(cmd)
   

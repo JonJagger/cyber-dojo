@@ -36,7 +36,7 @@ class DojoController < ApplicationController
   def create
     configure(params)
     Kata.create(params)
-    @kata = Kata.new(params)
+    @kata = Kata.new(params) # needed for @kata.name in view
     
     filesets_root = params[:filesets_root]
     @languages = folders_in(filesets_root + '/language').sort
@@ -46,7 +46,7 @@ class DojoController < ApplicationController
     @exercise_index = rand(@exercises.length)
     @instructions = { }
     @exercises.each do |name|
-      path = @kata.filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
+      path = filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
       @instructions[name] = IO.read(path)
     end
     @title = 'Configure'
@@ -99,17 +99,21 @@ class DojoController < ApplicationController
   end
 
   def start_avatar(kata)
-    io_lock(kata.folder) do
+    io_lock(kata.dir) do
       available_avatar_names = Avatar.names - kata.avatar_names
       if available_avatar_names == [ ]
         avatar_name = nil
       else          
-        avatar_name = available_avatar_names.shuffle[0]
+        avatar_name = random(available_avatar_names)
         Avatar.new(kata, avatar_name)
         kata.post_message(avatar_name, "#{avatar_name} has joined the practice-kata")
         avatar_name
       end        
     end      
+  end
+  
+  def random(array)
+    array.shuffle[0]
   end
   
 end

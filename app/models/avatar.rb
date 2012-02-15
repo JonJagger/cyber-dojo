@@ -26,8 +26,8 @@ class Avatar
     @kata = kata
     @name = name
 
-    if !File.exists? folder
-      Dir::mkdir(folder)   
+    if !File.exists? dir
+      Dir::mkdir(dir)   
       Dir::mkdir(sandbox)
       
       visible_files = @kata.visible_files
@@ -38,7 +38,7 @@ class Avatar
       file_write(pathed(Manifest_filename), visible_files)
       file_write(pathed(Increments_filename), [ ])
       
-      command  = "cd '#{folder}';" +
+      command  = "cd '#{dir}';" +
                  "git init --quiet;" +
                  "git add '#{Manifest_filename}';" +
                  "git add '#{Increments_filename}';"
@@ -57,14 +57,14 @@ class Avatar
   end
 
   def increments(tag = nil)
-    io_lock(folder) { locked_increments(tag) }
+    io_lock(dir) { locked_increments(tag) }
   end
   
   def visible_files(tag = nil)
     seen = ''
-    io_lock(folder) do
+    io_lock(dir) do
       tag ||= most_recent_tag      
-      command  = "cd #{folder};" +
+      command  = "cd #{dir};" +
                  "git show #{tag}:#{Manifest_filename}"
       seen = popen_read(command) 
     end
@@ -81,7 +81,7 @@ class Avatar
     
   def run_tests(visible_files)
     output = ''
-    io_lock(folder) do
+    io_lock(dir) do
       output = avatar_run_tests(sandbox, visible_files)
       visible_files['output'] = output
       test_info = parse(@kata.unit_test_framework, output)
@@ -95,8 +95,8 @@ class Avatar
     output
   end
 
-  def folder
-    @kata.folder + '/' + name
+  def dir
+    @kata.dir + '/' + name
   end
   
   def sandbox
@@ -113,17 +113,17 @@ private
   end
   
   def pathed(filename)
-    folder + '/' + filename
+    dir + '/' + filename
   end
 
   def most_recent_tag
-    command  = "cd #{folder};" +
+    command  = "cd #{dir};" +
                "git tag|sort -g"
     eval popen_read(command)    
   end
   
   def git_commit_tag(visible_files, n)
-    command = "cd '#{folder}';"
+    command = "cd '#{dir}';"
     visible_files.each do |filename,|
       command += "git add '#{sandbox}/#{filename}';"
     end
@@ -136,7 +136,7 @@ private
     if tag == nil
       eval IO.read(pathed(Increments_filename))
     else
-      command  = "cd #{folder};" +
+      command  = "cd #{dir};" +
                  "git show #{tag}:#{Increments_filename}"
       eval popen_read(command)
     end
