@@ -39,7 +39,11 @@ class Kata
     katas_dir = params[:kata_root]    
     uuid = info[:uuid]
     inner_dir = katas_dir + '/' + Kata::inner_dir(uuid)
-    Dir.mkdir inner_dir
+    
+    if !File.directory? inner_dir
+      Dir.mkdir inner_dir
+    end
+    
     outer_dir = inner_dir + '/' + Kata::outer_dir(uuid)
     Dir.mkdir outer_dir
     file_write(outer_dir + '/messages.rb', [ ])    
@@ -56,7 +60,7 @@ class Kata
     info
   end
   
-  #TODO: only needed temporarily...
+  #TODO: only needed temporarily...drop when each button embeds its own kata.id
   def self.exists?(params)
     name = params[:kata_name]
     root_dir = params[:kata_root]    

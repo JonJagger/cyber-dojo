@@ -1,13 +1,16 @@
 
-require 'Locking'
+require 'Files'
 require 'Folders'
+require 'Locking'
 
 class DojoController < ApplicationController
     
-  include Locking
-  extend Locking
+  include Files
+  extend Files 
   include Folders
   extend Folders  
+  include Locking
+  extend Locking
     
   def exists_json
     configure(params)
@@ -52,16 +55,22 @@ class DojoController < ApplicationController
   
   def save
     configure(params)
+    
+    katas_dir = params[:kata_root]
+    io_lock(RAILS_ROOT) do      
+      if !File.directory? katas_dir
+        Dir.mkdir katas_dir
+      end
+    end
+    
     fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
     info = Kata.create_new(fileset, params)
     
-    #TODO: add info to index.rb
-    #katas_dir = params[:kata_root]
-    #io_lock(katas_dir) do    
-    #  index_filename = katas_dir + '/' + Kata::Index_filename
-    #  index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-    #  file_write(index_filename, index << info)
-    #end
+    io_lock(katas_dir) do    
+      index_filename = katas_dir + '/' + Kata::Index_filename
+      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
+      file_write(index_filename, index << info)
+    end
     
     redirect_to :action => :index, 
                 :kata_name => info[:uuid]
