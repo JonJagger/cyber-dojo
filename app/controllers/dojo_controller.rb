@@ -1,10 +1,13 @@
 
 require 'Locking'
+require 'Folders'
 
 class DojoController < ApplicationController
     
   include Locking
-  extend Locking  
+  extend Locking
+  include Folders
+  extend Folders  
     
   def exists_json
     configure(params)
@@ -35,14 +38,16 @@ class DojoController < ApplicationController
     Kata.create(params)
     @kata = Kata.new(params)
     
-    @languages = FileSet.new(@kata.filesets_root, 'language').choices
+    filesets_root = params[:filesets_root]
+    @languages = folders_in(filesets_root + '/language').sort
     @language_index = rand(@languages.length)
-    @exercise_info = { }
-    @exercises = FileSet.new(@kata.filesets_root, 'exercise').choices
+    
+    @exercises = folders_in(filesets_root + '/exercise').sort
     @exercise_index = rand(@exercises.length)
+    @instructions = { }
     @exercises.each do |name|
       path = @kata.filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
-      @exercise_info[name] = IO.read(path)
+      @instructions[name] = IO.read(path)
     end
     @title = 'Configure'
   end

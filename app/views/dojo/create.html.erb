@@ -8,8 +8,8 @@ $j(document).ready(function() {
 });
 
 function selectExercise(index) {
-  var info = $j('#exercise_info_' + index).val();
-  $j('#exercise_info').val(info);
+  var instructions = $j('#instructions_' + index).val();
+  $j('#instructions').val(instructions);
   
   var selected = $j('#exercise_' + index);
   selected.parent().siblings().each(function() {
@@ -74,8 +74,8 @@ function selectLanguage(index) {
           </td>
           <td>&nbsp;</rd>
           <td>
-            <textarea name="exercise_info" 
-                      id="exercise_info"
+            <textarea name="instructions" 
+                      id="instructions"
                       cols="62" 
                       rows="24">              
             </textarea>
@@ -132,8 +132,8 @@ function selectLanguage(index) {
 
 <% @exercises.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 
-             name="exercise_info_<%=index-%>"
-             id="exercise_info_<%=index-%>"><%=h @exercise_info[choice] -%></textarea>
+             name="instructions_<%=index-%>"
+             id="instructions_<%=index-%>"><%=h @instructions[choice] -%></textarea>
 <% end -%>      
 
 
