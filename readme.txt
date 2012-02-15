@@ -31,9 +31,10 @@ Pull the latest CyberDojo source code from github onto your TurnKey image
 >git pull origin master
 
 
-Configuring a CyberDojo
-=======================
-The CyberDojo server will ask you to choose
+Configuring a practice-kata
+===========================
+The server will ask you to choose
+o) a name for your session
 o) your language (eg C++)
    Each language corresponds to a sub-directory of cyberdojo/filesets/language/
    (see below)
@@ -42,11 +43,11 @@ o) your exercise (eg Prime Factors)
    (see below)
 
 
-Entering a CyberDojo
-====================
-The CyberDojo server will assign you an animal 'avatar' (eg Panda).
-The animal provides identity for each codebase participating in the
-practice-kata. You can resume coding at any time by choosing the animal. 
+Entering a practice-kata
+========================
+The server will assign you an animal 'avatar' (eg Panda).
+The animal provides identity for each codebase.
+You can resume coding at any time by choosing the animal. 
 This is handy if a laptop has to retire as a new laptop can easily and 
 instantly replace it.
 
@@ -104,7 +105,7 @@ These were the steps I took...
 13. >cd /var/www/cyberdojo
 14. find the directory you want
 15. >ruby names.rb    
-16. eg suppose the directory is katas/82/b583c11…..
+16. eg suppose the directory is katas/82/B583C115
 17. cd to that directory, then
 18. >tar -zcvf name.tar.gz .
 19. >mv name.tar.gz /root/usbdrive
@@ -112,8 +113,8 @@ These were the steps I took...
 21. shut down the VBox image
 
    
-Building your own CyberDojo from scratch
-========================================
+Building your own server from scratch
+=====================================
 Requirements: ruby, rails, git
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
@@ -127,7 +128,7 @@ my Ubuntu server:
 >sudo gem update
 
 Then 
->cd cyberdojo directory
+>cd cyberdojo
 >script/server 
 Open http://localhost:3000 in your browser and your CyberDojo should be running. 
 There are no requirements on the clients (except of course a browser). I also 
@@ -150,7 +151,7 @@ Initial filesets for twelve languages are provided: C, C++, C#, CoffeeScript,
 Erlang, Haskell, Java, Javascript, Python, Perl, PHP, and Ruby. 
 Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed on 
-your CyberDojo server or not. Ubuntu comes with built-in support for C, C++, 
+your server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself. 
 -----Java
 I installed support for Java as follows
@@ -200,10 +201,10 @@ Miika-Petteri Matikainen added support for Haskell as follows
 
 Adding a new exercise
 ==========================
-Create a new sub-directory under cyberdojo/filesets/exercise/
-  For example: cyberdojo/filesets/exercise/FizzBuzz
-Create a text file called instructions in this directory.
-  For example: cyberdojo/filesets/exercise/FizzBuzz/instructions
+1. Create a new sub-directory under cyberdojo/filesets/exercise/
+  Example: cyberdojo/filesets/exercise/FizzBuzz
+2. Create a text file called instructions in this directory.
+  Example: cyberdojo/filesets/exercise/FizzBuzz/instructions
 
 
 Adding a new language
@@ -228,10 +229,10 @@ manifest.rb Parameters
   startup. Each of these files must exist in the directory.
   The filename cyberdojo.sh should be present (visible or hidden) in one of the 
   manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
-  assumed by the ruby code (in the CyberDojo server) to be the start point for  
-  running an increment. You can write any actions in the cyberdojo.sh file but 
-  clearly any programs it tries to run must be installed on the CyberDojo 
-  server. For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
+  assumed by the ruby code (in the server) to be the start point for running
+  an increment. You can write any actions in the cyberdojo.sh file but clearly
+  any programs it tries to run must be installed on the server.
+  For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
   to be installed. If cyberdojo.sh runs javac to compile java files then javac 
   has to be installed.
 
@@ -255,24 +256,21 @@ manifest.rb Parameters
   Not required and defaults to 4 spaces.
 
 
-Kata Directory Structure
+Katas Directory Structure
 =====================
 The rails code does NOT use a database.
-Instead I use a git-like directory structure based
-on the sha1 hexdigest of the kata's name. For example, a kata called 
-'Jon Jagger' (without the quotes) has a sha1 hexdigest of, wait for it,
-  381fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab 
-so the root directory for the kata called 'Jon Jagger' is
-  cyberdojo/katas/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab
+Instead each kata lives in a git-like directory structure based
+on the first 10 characters of a uuidgen. For example
+  cyberdojo/katas/82/B583C115
 Each started avatar has a sub-directory underneath this, for example
-  cyberdojo/katas/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf
+  cyberdojo/katas/82/B583C115/wolf
   
 
 Git Repositories
 ================
 Each started animal avatar has its own git respository, eg
-  cyberdojo/katas/38/1fa3eaa1a1352eb4bd6b537abbfc4fd57f07ab/wolf/.git
-The starting files (as loaded via the manifests.rb's :visible_filenames) form
+  cyberdojo/katas/82/B583C115/wolf/.git
+The starting files (as loaded from the wolf/manifests.rb file) form
 tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
 message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses the run-tests button causes
@@ -285,7 +283,7 @@ To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
 To find the directory issue the following from the cyberdojo/ directory 
 >ruby names.rb
-Which will provide the sha1 based directory names for recent katas.
+Which will provide the uuidgen based directory names for recent katas.
 It's much easier and more informative to just click on a traffic light.
   
 
