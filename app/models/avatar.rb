@@ -15,11 +15,11 @@ class Avatar
   
   def self.names
     %w(
-      alligator buffalo cheetah deer
-      elephant frog gorilla hippo
-      koala lion moose panda
-      raccoon snake wolf zebra
-    )
+        alligator buffalo cheetah deer
+        elephant frog gorilla hippo
+        koala lion moose panda
+        raccoon snake wolf zebra
+      )
   end
 
   def initialize(kata, name) 
