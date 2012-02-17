@@ -3,51 +3,9 @@
         type="text/javascript"><!--
 
 $j(document).ready(function() {
-  selectExercise("<%=@exercise_index-%>");
-  selectLanguage("<%=@language_index-%>");
-  
-  $j('#save_button').attr('disabled', true);
-  
-  $j('#name').keyup(function(event) {
-    event.preventDefault();
-    var name = $j('#name').val();
-    var disabled = $j.trim(name) === "";
-    $j('#save_button').attr('disabled', disabled);
-  });
-  
-  $j('#save_button').click(function() {
-    $cd.postTo('/dojo/save', {
-      name: $j('#name').attr('value'),
-      exercise: $j('input[name="exercise"]:checked').val(),
-      language: $j('input[name="language"]:checked').val()
-    });    
-  });
-  
-  $j('#cancel_button').click(function() {
-    $cd.postTo('/dojo/index');
-  });
+  chooseExercise("<%=@exercise_index-%>");
+  chooseLanguage("<%=@language_index-%>");
 });
-
-function selectExercise(index) {
-  var instructions = $j('#instructions_' + index).val();
-  $j('#instructions').val(instructions);
-  
-  var selected = $j('#exercise_' + index);
-  selected.parent().siblings().each(function() {
-    $j(this).attr('current_file', 'false');
-  });
-  selected.parent().attr('current_file', 'true');
-  selected.attr('checked', 'checked');
-}
-
-function selectLanguage(index) {
-  var selected = $j('#language_' + index);
-  selected.parent().siblings().each(function() {
-    $j(this).attr('current_file', 'false');
-  });
-  selected.parent().attr('current_file', 'true');
-  selected.attr('checked', 'checked');
-}
 
 //--></script>
 
@@ -63,113 +21,26 @@ function selectLanguage(index) {
 <table align="center">
   <tr>
     <td>
-      <table class="panel">
-        <tr>
-          <td>
-            <span class="choose_title">name?</span>
-            <input type="text"
-                   id="name"
-                   size="20"
-                   value="" />            
-          </td>
-        </tr>
-      </table>
-    </td>
+      <%= render :partial => 'name_save_cancel' -%>      
+    </td>      
   </tr>
   
   <tr>
-    <td valign="top">
-      <table class="panel">
-        <tr>
-          <td>
-            <div>
-              <span class="choose_title">exercise?</span>
-            </div>
-            
-            <% @exercises.each_with_index do |choice,index| -%>
-              <div class="filename" 
-                   onclick='selectExercise(<%=index-%>);' >
-                <input id="exercise_<%=index-%>" 
-                       type="radio"
-                       <% if @exercise_index==index -%>
-                       checked="checked"
-                       <% end -%>
-                       onclick='selectExercise(<%=index-%>);'                      
-                       name="exercise" 
-                       value="<%=choice-%>" />
-                <label><%= choice -%></label>
-              </div>    
-            <% end -%>    
-            
+    <td>
+      <table>
+        <tr>    
+          <td valign="top">
+            <%= render :partial => 'choose_language' -%>      
           </td>
-          <td>&nbsp;</rd>
-          <td>
-            <textarea name="instructions" 
-                      id="instructions"
-                      cols="62" 
-                      rows="26">              
-            </textarea>
-          </td>          
+          
+          <td valign="top">
+            <%= render :partial => 'choose_exercise' -%>      
+          </td>             
         </tr>
       </table>
-      
     </td>
-    <td valign="top">
-      <table class="panel">
-        <tr>
-          <td>
-            <div class="choose_title">language?</div>
-
-            <% @languages.each_with_index do |choice,index| -%>
-              <div class="filename"
-                  <% if @language_index == index -%>
-                  current_file = "true"
-                  <% else -%>
-                  current_file = "false"                
-                  <% end -%>
-                   onclick='selectLanguage(<%=index-%>);' >
-                <input id="language_<%=index-%>" 
-                       type="radio"
-                       <% if @language_index==index -%>
-                       checked="checked"
-                       <% end -%>
-                       onclick='selectLanguage(<%=index-%>);'                      
-                       name="language" 
-                       value="<%=choice-%>" />
-                <label><%= choice -%></label>
-              </div>    
-            <% end -%>    
-          </td>
-        </tr>
-      </table>
-      
-      <table class="panel">
-        <tr>
-          <td valign="top">
-            <input id="save_button" 
-                   class="larger button"
-                   type="submit" 
-                   value="save" 
-                   name="save" />
-          </td>
-        </tr>
-        <tr>
-          <td valign="top">
-            <input id="cancel_button" 
-                   class="larger button"
-                   type="button" 
-                   value="cancel" 
-                   name="cancel" />
-          </td>
-      </table>        
-    </td>
+              
   </tr>
 </table>
-
-<% @exercises.each_with_index do |choice,index| -%>
-   <textarea style="display:none;" 
-             name="instructions_<%=index-%>"
-             id="instructions_<%=index-%>"><%=h @instructions[choice] -%></textarea>
-<% end -%>      
 
 

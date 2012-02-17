@@ -1,0 +1,42 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+function chooseLanguage(index) {
+  var selected = $j('#language_' + index);
+  selected.parent().siblings().each(function() {
+    $j(this).attr('current_file', 'false');
+  });
+  selected.parent().attr('current_file', 'true');
+  selected.attr('checked', 'checked');
+}
+
+//--></script>
+
+<table class="panel">
+  <tr>
+    <td>
+      <div class="choose_title">language?</div>
+
+      <% @languages.each_with_index do |choice,index| -%>
+        <div class="filename"
+            <% if @language_index == index -%>
+            current_file = "true"
+            <% else -%>
+            current_file = "false"                
+            <% end -%>
+             onclick='chooseLanguage(<%=index-%>);' >
+          <input id="language_<%=index-%>" 
+                 type="radio"
+                 <% if @language_index==index -%>
+                 checked="checked"
+                 <% end -%>
+                 onclick='chooseLanguage(<%=index-%>);'                      
+                 name="language" 
+                 value="<%=choice-%>" />
+          <label><%= choice -%></label>
+        </div>    
+      <% end -%>    
+    </td>
+  </tr>
+</table>

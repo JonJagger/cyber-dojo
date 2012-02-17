@@ -1,0 +1,59 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+function chooseExercise(index) {
+  var instructions = $j('#instructions_' + index).val();
+  $j('#instructions').val(instructions);
+  
+  var selected = $j('#exercise_' + index);
+  selected.parent().siblings().each(function() {
+    $j(this).attr('current_file', 'false');
+  });
+  selected.parent().attr('current_file', 'true');
+  selected.attr('checked', 'checked');
+}
+
+//--></script>
+      
+<table class="panel">
+  <tr>
+    <td>
+      <div>
+        <span class="choose_title">exercise?</span>
+      </div>
+      
+      <% @exercises.each_with_index do |choice,index| -%>
+        <div class="filename" 
+             onclick='chooseExercise(<%=index-%>);' >
+          <input id="exercise_<%=index-%>" 
+                 type="radio"
+                 <% if @exercise_index==index -%>
+                 checked="checked"
+                 <% end -%>
+                 onclick='chooseExercise(<%=index-%>);'                      
+                 name="exercise" 
+                 value="<%=choice-%>" />
+          <label><%= choice -%></label>
+        </div>    
+      <% end -%>    
+      
+    </td>
+    <td>&nbsp;</rd>
+    <td>
+      <textarea name="instructions" 
+                id="instructions"
+                cols="62" 
+                rows="26">              
+      </textarea>
+    </td>          
+  </tr>
+</table>
+
+<% @exercises.each_with_index do |choice,index| -%>
+   <textarea style="display:none;" 
+             name="instructions_<%=index-%>"
+             id="instructions_<%=index-%>"><%=h @instructions[choice] -%></textarea>
+<% end -%>      
+
+

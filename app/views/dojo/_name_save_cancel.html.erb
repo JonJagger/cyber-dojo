@@ -1,0 +1,55 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+  
+  $j('#name').keyup(function(event) {
+    event.preventDefault();
+    var name = $j('#name').val();
+    var disabled = $j.trim(name) === "";
+    $j('#save_button').attr('disabled', disabled);
+  });
+  
+  $j('#save_button').attr('disabled', true);
+  
+  $j('#save_button').click(function() {
+    $cd.postTo('/dojo/save', {
+      name: $j('#name').attr('value'),
+      exercise: $j('input[name="exercise"]:checked').val(),
+      language: $j('input[name="language"]:checked').val()
+    });    
+  });
+  
+  $j('#cancel_button').click(function() {
+    $cd.postTo('/dojo/index');
+  });
+});
+
+//--></script>
+
+<table>
+  <tr>          
+    <td class="panel">
+      <span class="choose_title">name?</span>
+      <input type="text"
+             id="name"
+             size="20"
+             value="" />            
+    </td>
+    <td>
+      <input id="save_button" 
+             class="larger button"
+             type="submit" 
+             value="save" 
+             name="save" />
+    
+      <input id="cancel_button" 
+             class="larger button"
+             type="button" 
+             value="cancel" 
+             name="cancel" />
+    </td>
+  </tr>
+</table>
+
