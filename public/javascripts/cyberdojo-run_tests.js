@@ -2,7 +2,7 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.preRunTests = function() {
-    $j('#run_tests').hide();
+    $j('#run_tests_button').attr('disabled', true);
     $j('#spinner').show();
     $cd.unbindAllLineNumbers(); // to reduce network bandwidth
   };
@@ -10,7 +10,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.postRunTests = function() { 
     $cd.bindAllLineNumbers();
     $j('#spinner').hide();
-    $j('#run_tests').show();
+    $j('#run_tests_button').attr('disabled', false);
     // when rjs replaces output shortcuts are lost
     // so need to rebind them    
     var output = $cd.fileContentFor('output');

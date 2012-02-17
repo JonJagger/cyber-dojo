@@ -200,7 +200,7 @@ Miika-Petteri Matikainen added support for Haskell as follows
 
 
 Adding a new exercise
-==========================
+=====================
 1. Create a new sub-directory under cyberdojo/filesets/exercise/
   Example: cyberdojo/filesets/exercise/FizzBuzz
 2. Create a text file called instructions in this directory.
@@ -257,7 +257,7 @@ manifest.rb Parameters
 
 
 Katas Directory Structure
-=====================
+=========================
 The rails code does NOT use a database.
 Instead each kata lives in a git-like directory structure based
 on the first 10 characters of a uuidgen. For example
