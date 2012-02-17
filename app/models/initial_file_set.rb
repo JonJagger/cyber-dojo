@@ -3,8 +3,8 @@
 
 class InitialFileSet
   
-  def initialize(dir, language, exercise)
-    @dir, @language, @exercise = dir, language, exercise
+  def initialize(params)
+    @params = params
   end
   
   def copy_hidden_files_to(dir)
@@ -27,11 +27,15 @@ class InitialFileSet
   end
   
   def language
-    @language
+    @params['language']
   end
   
   def exercise
-    @exercise
+    @params['exercise']
+  end
+  
+  def name
+    @params['name']
   end
   
   def tab_size
@@ -42,6 +46,14 @@ class InitialFileSet
     manifest[:unit_test_framework]  
   end
   
+  def browser
+    @params[:browser]
+  end
+  
+  def kata_root_dir
+    @params[:kata_root]
+  end
+  
 private
 
   def hidden_filenames
@@ -49,15 +61,19 @@ private
   end
 
   def language_dir
-    @dir + '/language/' + language
+    dir + '/language/' + language
   end
   
   def exercise_dir
-    @dir + '/exercise/' + exercise
+    dir + '/exercise/' + exercise
   end
   
   def manifest
     @manifest ||= eval IO.read(language_dir + '/manifest.rb')
+  end
+  
+  def dir
+    @params[:filesets_root]  
   end
   
 end

@@ -23,22 +23,22 @@ class Kata
     id[2..9]
   end
   
-  def self.create_new(fileset, params)
+  def self.create_new(fileset)
     info = { 
-      :name => params[:kata_name], #TODO: :name, and get from fileset
+      :name => fileset.name,
       :created => make_time(Time.now),
       :exercise => fileset.exercise,
       :language => fileset.language,
       :id => `uuidgen`.strip.delete('-')[0..9],      
-      :browser => params[:browser], #TODO: get from fileset
-      
+      :browser => fileset.browser,      
       :visible_files => fileset.visible_files,
       :unit_test_framework => fileset.unit_test_framework,
       :tab_size => fileset.tab_size,
     }
-    katas_dir = params[:kata_root]    
+    
+    kata_root_dir = fileset.kata_root_dir
     id = info[:id]
-    inner_dir = katas_dir + '/' + Kata::inner_dir(id)
+    inner_dir = kata_root_dir + '/' + Kata::inner_dir(id)
     
     if !File.directory? inner_dir
       Dir.mkdir inner_dir

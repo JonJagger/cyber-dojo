@@ -20,11 +20,35 @@ class InitialFileSetTests < ActionController::TestCase
     'Yahtzee'
   end
   
+  def name
+    'Bertie-Bassett'
+  end
+  
+  def browser
+    'Firefox'
+  end
+  
+  def kata_root_dir
+    'dummy'
+  end
+  
+  def make_fileset(language)
+    params = {
+      :kata_root => kata_root_dir,
+      :filesets_root => RAILS_ROOT +  '/filesets',
+      :browser => browser,
+      'language' => language,
+      'exercise' => 'Yahtzee',
+      'name' => name
+    }
+    InitialFileSet.new(params)
+  end
+  
   def test_copy_hidden_files_to_target_folder  
     root_test_folder_reset
     sandbox = Root_test_folder + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = InitialFileSet.new(filesets_root, 'Java', exercise)
+    fileset = make_fileset('Java')
     fileset.copy_hidden_files_to(sandbox)
     assert File.exists?(sandbox + '/junit-4.7.jar'), 'junit-4.7.jar file created'
   end
@@ -33,12 +57,12 @@ class InitialFileSetTests < ActionController::TestCase
     root_test_folder_reset
     sandbox = Root_test_folder + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = InitialFileSet.new(filesets_root, 'C++', exercise)
+    fileset = make_fileset('C++')    
     fileset.copy_hidden_files_to(sandbox)
   end
   
   def test_language_visible_files_plus_output_plus_instructions
-    fileset = InitialFileSet.new(filesets_root, 'Java', exercise)
+    fileset = make_fileset('Java')    
     visible_files = fileset.visible_files
     assert visible_files['UntitledTest.java'].start_with? "\nimport org.junit.*;"
     assert_equal '', visible_files['output']
@@ -46,28 +70,43 @@ class InitialFileSetTests < ActionController::TestCase
   end
 
   def test_tab_defaults_to_4
-    fileset = InitialFileSet.new(filesets_root, 'Java', exercise)
+    fileset = make_fileset('Java')    
     assert_equal 4, fileset.tab_size
   end
   
   def test_tab_when_not_defaulted
-    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
+    fileset = make_fileset('Ruby')    
     assert_equal 2, fileset.tab_size
   end
   
   def test_unit_test_framework
-    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
+    fileset = make_fileset('Ruby')    
     assert_equal 'ruby_test_unit', fileset.unit_test_framework
   end
 
   def test_language
-    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
+    fileset = make_fileset('Ruby')        
     assert_equal 'Ruby', fileset.language
   end
   
   def test_exercise
-    fileset = InitialFileSet.new(filesets_root, 'Ruby', exercise)
+    fileset = make_fileset('Ruby')        
     assert_equal exercise, fileset.exercise
+  end
+  
+  def test_name
+    fileset = make_fileset('Ruby')        
+    assert_equal name, fileset.name
+  end
+  
+  def test_browser
+    fileset = make_fileset('Ruby')
+    assert_equal browser, fileset.browser
+  end
+  
+  def test_kata_root
+    fileset = make_fileset('Ruby')
+    assert_equal kata_root_dir, fileset.kata_root_dir
   end
   
 end

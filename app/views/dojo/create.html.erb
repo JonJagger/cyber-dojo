@@ -8,16 +8,16 @@ $j(document).ready(function() {
   
   $j('#save_button').attr('disabled', true);
   
-  $j('#kata_name').keyup(function(event) {
+  $j('#name').keyup(function(event) {
     event.preventDefault();
-    var message = $j('#kata_name').val();
-    var disabled = $j.trim(message) === "";
+    var name = $j('#name').val();
+    var disabled = $j.trim(name) === "";
     $j('#save_button').attr('disabled', disabled);
   });
   
   $j('#save_button').click(function() {
     $cd.postTo('/dojo/save', {
-      kata_name: $j('#kata_name').attr('value'),
+      name: $j('#name').attr('value'),
       exercise: $j('input[name="exercise"]:checked').val(),
       language: $j('input[name="language"]:checked').val()
     });    
@@ -68,7 +68,7 @@ function selectLanguage(index) {
           <td>
             <span class="choose_title">name?</span>
             <input type="text"
-                   id="kata_name"
+                   id="name"
                    size="20"
                    value="" />            
           </td>

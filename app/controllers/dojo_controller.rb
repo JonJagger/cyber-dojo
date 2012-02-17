@@ -62,8 +62,7 @@ class DojoController < ApplicationController
       end
     end
     
-    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
-    info = Kata.create_new(fileset, params)
+    info = Kata.create_new(InitialFileSet.new(params))
     
     io_lock(katas_dir) do    
       index_filename = katas_dir + '/' + Kata::Index_filename
