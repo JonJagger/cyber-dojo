@@ -36,9 +36,9 @@ class Kata
       :tab_size => fileset.tab_size,
     }
     
-    kata_root_dir = fileset.kata_root_dir
+    katas_root_dir = fileset.katas_root_dir
     id = info[:id]
-    inner_dir = kata_root_dir + '/' + Kata::inner_dir(id)
+    inner_dir = katas_root_dir + '/' + Kata::inner_dir(id)
     
     if !File.directory? inner_dir
       Dir.mkdir inner_dir
@@ -63,8 +63,7 @@ class Kata
   #TODO: only needed temporarily...drop when each button embeds its own kata.id
   def self.exists?(params)
     id = params[:id]
-    root_dir = params[:kata_root]    
-    inner_dir = root_dir + '/' + Kata::inner_dir(id)
+    inner_dir = params[:katas_root_dir] + '/' + Kata::inner_dir(id)
     outer_dir = inner_dir + '/' + Kata::outer_dir(id)
     File.directory? inner_dir and File.directory? outer_dir
   end
@@ -74,8 +73,7 @@ class Kata
   #---------------------------------
 
   def initialize(params)
-    @id = params[:id]
-    @katas_dir = params[:kata_root]
+    @params = params
   end
 
   def name
@@ -150,12 +148,12 @@ class Kata
     duration_in_seconds(created, Time.now)
   end
   
-  def dir
-    @katas_dir + '/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)
+  def dir    
+    @params[:katas_root_dir] + '/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)
   end
   
   def id
-    @id
+    @params[:id]
   end
   
 private

@@ -38,16 +38,16 @@ class DojoController < ApplicationController
   def create
     configure(params)
     
-    filesets_root = params[:filesets_root]
-    @languages = folders_in(filesets_root + '/language').sort
+    filesets_root_dir = params[:filesets_root_dir]
+    @languages = folders_in(filesets_root_dir + '/language').sort
     @language_index = rand(@languages.length)
     
-    @exercises = folders_in(filesets_root + '/exercise').sort
+    @exercises = folders_in(filesets_root_dir + '/exercise').sort
     @exercise_index = rand(@exercises.length)
     @instructions = { }
-    @exercises.each do |name|
-      path = filesets_root + '/' + 'exercise' + '/' + name + '/' + 'instructions'
-      @instructions[name] = IO.read(path)
+    @exercises.each do |exercise|
+      path = filesets_root_dir + '/' + 'exercise' + '/' + exercise + '/' + 'instructions'
+      @instructions[exercise] = IO.read(path)
     end
     @title = 'new-practice'
   end
@@ -55,17 +55,17 @@ class DojoController < ApplicationController
   def save
     configure(params)
     
-    katas_dir = params[:kata_root]
+    katas_root_dir = params[:katas_root_dir]
     io_lock(RAILS_ROOT) do      
-      if !File.directory? katas_dir
-        Dir.mkdir katas_dir
+      if !File.directory? katas_root_dir
+        Dir.mkdir katas_root_dir
       end
     end
     
     info = Kata.create_new(InitialFileSet.new(params))
     
-    io_lock(katas_dir) do    
-      index_filename = katas_dir + '/' + Kata::Index_filename
+    io_lock(katas_root_dir) do    
+      index_filename = katas_root_dir + '/' + Kata::Index_filename
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
       file_write(index_filename, index << info)
     end

@@ -12,10 +12,14 @@ class InitialFileSetTests < ActionController::TestCase
     Dir.mkdir Root_test_folder
   end
 
-  def filesets_root
+  def filesets_root_dir
     RAILS_ROOT +  '/filesets'
   end
-  
+
+  def katas_root_dir
+    RAILS_ROOT +  '/katas'
+  end
+ 
   def exercise
     'Yahtzee'
   end
@@ -26,16 +30,12 @@ class InitialFileSetTests < ActionController::TestCase
   
   def browser
     'Firefox'
-  end
-  
-  def kata_root_dir
-    'dummy'
-  end
+  end  
   
   def make_fileset(language)
     params = {
-      :kata_root => kata_root_dir,
-      :filesets_root => RAILS_ROOT +  '/filesets',
+      :katas_root_dir => katas_root_dir,
+      :filesets_root_dir => filesets_root_dir,
       :browser => browser,
       'language' => language,
       'exercise' => 'Yahtzee',
@@ -104,9 +104,9 @@ class InitialFileSetTests < ActionController::TestCase
     assert_equal browser, fileset.browser
   end
   
-  def test_kata_root
+  def test_kata_root_dir
     fileset = make_fileset('Ruby')
-    assert_equal kata_root_dir, fileset.kata_root_dir
+    assert_equal katas_root_dir, fileset.katas_root_dir
   end
   
 end

@@ -50,8 +50,8 @@ class InitialFileSet
     @params[:browser]
   end
   
-  def kata_root_dir
-    @params[:kata_root]
+  def katas_root_dir
+    @params[:katas_root_dir]
   end
   
 private
@@ -73,7 +73,7 @@ private
   end
   
   def dir
-    @params[:filesets_root]  
+    @params[:filesets_root_dir]  
   end
   
 end
