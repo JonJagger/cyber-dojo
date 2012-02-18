@@ -12,7 +12,7 @@ module RunTestsOutputParserHelper
   #  :passed - this means the tests ran and all passed
   
   def parse(unit_test_framework, output)
-    inc = { :run_tests_output => output }
+    inc = { }
     if Regexp.new("Terminated by the CyberDojo server after").match(output)
       inc[:outcome] = :error
     else
