@@ -7,27 +7,29 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
   KATA_NAME = 'Jon Jagger'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
   def root_test_dir_reset
     system("rm -rf #{ROOT_TEST_DIR}")
     Dir.mkdir ROOT_TEST_DIR
   end
 
-  def make_params
-    { :kata_name => KATA_NAME, 
-      :kata_root => ROOT_TEST_DIR,
-      :filesets_root => RAILS_ROOT + '/filesets',
-      'exercise' => 'Unsplice',
-      'language' => 'Ruby'
+  def make_params(language)
+    params = {
+      :katas_root_dir => ROOT_TEST_DIR,
+      :filesets_root_dir => RAILS_ROOT +  '/filesets',
+      :browser => 'Firefox',
+      'language' => language,
+      'exercise' => 'Yahtzee',
+      'name' => 'Jon Jagger'
     }
   end
 
-  def make_kata
-    params = make_params
-    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
-    info = Kata::create_new(fileset, params)
+  def make_kata(language = 'Ruby') 
+    params = make_params(language)
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
     params[:id] = info[:id]
     Kata.new(params)    
   end
@@ -50,7 +52,7 @@ class GitDiffViewTests < ActionController::TestCase
 
     # create tag 1 in the repo
     avatar.run_tests(visible_files)
-    assert_equal :failed, avatar.increments.last[:outcome]
+    assert_equal :failed, avatar.increments.last[:outcome] # FAILS
 
     # create tag 2 in the repo 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')

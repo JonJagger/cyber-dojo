@@ -8,27 +8,28 @@ class KataTests < ActionController::TestCase
   include Files
   extend Files
   
-  Root_test_dir = RAILS_ROOT + '/test/katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
   def root_test_dir_reset
-    system("rm -rf #{Root_test_dir}")
-    Dir.mkdir Root_test_dir
+    system("rm -rf #{ROOT_TEST_DIR}")
+    Dir.mkdir ROOT_TEST_DIR
   end
 
-  def make_params
-    { :kata_name => 'Jon Jagger', 
-      :kata_root => Root_test_dir,
-      :filesets_root => RAILS_ROOT +  '/filesets',
-      'exercise' => 'Unsplice',
-      'language' => 'Java',
-      :browser => 'None (test)'
+  def make_params(language)
+    params = {
+      :katas_root_dir => ROOT_TEST_DIR,
+      :filesets_root_dir => RAILS_ROOT +  '/filesets',
+      :browser => 'Firefox',
+      'language' => language,
+      'exercise' => 'Yahtzee',
+      'name' => 'Valentine'
     }
   end
-    
-  def make_kata
-    params = make_params
-    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
-    info = Kata::create_new(fileset, params)
+
+  def make_kata(language = 'Ruby')
+    params = make_params(language)
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
     params[:id] = info[:id]
     Kata.new(params)    
   end
@@ -37,7 +38,7 @@ class KataTests < ActionController::TestCase
   
   def test_that_root_katas_dir_initially_does_not_contain_index_file
     root_test_dir_reset
-    assert !File.exists?(Root_test_dir + '/index.rb');
+    assert !File.exists?(ROOT_TEST_DIR + '/index.rb');
   end
   
   def Xtest_that_creating_and_configuring_a_new_kata_creates_index_file_in_root_katas_dir
@@ -81,7 +82,7 @@ class KataTests < ActionController::TestCase
   
   def test_that_configuring_a_new_kata_creates_a_sandbox_folder_containing_hidden_files
     root_test_dir_reset
-    kata = make_kata
+    kata = make_kata('Java')
     sandbox = kata.dir + '/sandbox'
     assert File.exists?(sandbox), 'inner/outer/sandbox folder created'
     assert File.exists?(sandbox + '/junit-4.7.jar')

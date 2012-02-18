@@ -5,11 +5,11 @@ require 'Files'
 
 class InitialFileSetTests < ActionController::TestCase
 
-  Root_test_folder = RAILS_ROOT + '/test/katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
-  def root_test_folder_reset
-    system("rm -rf #{Root_test_folder}")
-    Dir.mkdir Root_test_folder
+  def root_test_dir_reset
+    system("rm -rf #{ROOT_TEST_DIR}")
+    Dir.mkdir ROOT_TEST_DIR
   end
 
   def filesets_root_dir
@@ -17,7 +17,7 @@ class InitialFileSetTests < ActionController::TestCase
   end
 
   def katas_root_dir
-    RAILS_ROOT +  '/katas'
+    ROOT_TEST_DIR
   end
  
   def exercise
@@ -45,8 +45,8 @@ class InitialFileSetTests < ActionController::TestCase
   end
   
   def test_copy_hidden_files_to_target_folder  
-    root_test_folder_reset
-    sandbox = Root_test_folder + '/sandbox'
+    root_test_dir_reset
+    sandbox = ROOT_TEST_DIR + '/sandbox'
     Dir::mkdir(sandbox)
     fileset = make_fileset('Java')
     fileset.copy_hidden_files_to(sandbox)
@@ -54,8 +54,8 @@ class InitialFileSetTests < ActionController::TestCase
   end
   
   def test_copy_hidden_files_to_target_folder_does_nothing_beningly_if_no_hidden_files
-    root_test_folder_reset
-    sandbox = Root_test_folder + '/sandbox'
+    root_test_dir_reset
+    sandbox = ROOT_TEST_DIR + '/sandbox'
     Dir::mkdir(sandbox)
     fileset = make_fileset('C++')    
     fileset.copy_hidden_files_to(sandbox)

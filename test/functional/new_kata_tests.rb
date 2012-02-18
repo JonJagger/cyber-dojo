@@ -8,35 +8,32 @@ class NewKataTests < ActionController::TestCase
   include Files
   extend Files
   
-  Root_test_dir = RAILS_ROOT + '/test/katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
   def root_test_dir_reset
-    system("rm -rf #{Root_test_dir}")
-    Dir.mkdir Root_test_dir
+    system("rm -rf #{ROOT_TEST_DIR}")
+    Dir.mkdir ROOT_TEST_DIR
   end
 
-  def make_params
-    { :kata_name => 'Jon Jagger', 
-      :kata_root => Root_test_dir,
-      :filesets_root => RAILS_ROOT +  '/filesets',
-      'exercise' => 'Unsplice',
-      'language' => 'Java',
-      :browser => 'None (test)'
+  def make_params(language)
+    params = {
+      :katas_root_dir => ROOT_TEST_DIR,
+      :filesets_root_dir => RAILS_ROOT +  '/filesets',
+      :browser => 'Firefox',
+      'language' => language,
+      'exercise' => 'Yahtzee',
+      'name' => 'Jon Jagger'
     }
-  end
-  
-  def make_fileset(params)
-    InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
   end
   
   def test_create_new_using_uuid
     root_test_dir_reset
-    params = make_params
-    fileset = make_fileset(params)
-    info = Kata::create_new(fileset, params)
+    params = make_params('Java')
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
     id = info[:id]
     assert_equal 10, id.length
-    kata_dir = params[:kata_root] + '/' + id[0..1] + '/' + id[2..9]
+    kata_dir = params[:katas_root_dir] + '/' + id[0..1] + '/' + id[2..9]
     assert File.directory?(kata_dir), "File.directory?(#{kata_dir})"
     
     messages_rb = kata_dir + '/messages.rb'
@@ -46,8 +43,8 @@ class NewKataTests < ActionController::TestCase
     manifest_rb = kata_dir + '/manifest.rb'
     assert File.exists?(manifest_rb), "File.exists?(#{manifest_rb})"
     manifest = eval(IO.read(manifest_rb))
-    assert_equal 'Unsplice', manifest[:exercise]
-    assert_equal 'Unsplice', info[:exercise]
+    assert_equal 'Yahtzee', manifest[:exercise]
+    assert_equal 'Yahtzee', info[:exercise]
     assert_equal 'Java', manifest[:language]
     assert_equal 'Java', info[:language]
     assert_equal 'Jon Jagger', manifest[:name]

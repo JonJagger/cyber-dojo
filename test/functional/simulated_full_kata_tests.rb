@@ -5,27 +5,28 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SimulatedFullKataTests < ActionController::TestCase
 
-  Root_test_dir = RAILS_ROOT + '/test/katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
   def root_test_dir_reset
-    system("rm -rf #{Root_test_dir}")
-    Dir.mkdir Root_test_dir
+    system("rm -rf #{ROOT_TEST_DIR}")
+    Dir.mkdir ROOT_TEST_DIR
   end
 
   def make_params(language)
-    { :kata_name => 'Jon Jagger', 
-      :kata_root => Root_test_dir,
-      :filesets_root => RAILS_ROOT + '/filesets',
-      'exercise' => 'Unsplice',
+    params = {
+      :katas_root_dir => ROOT_TEST_DIR,
+      :filesets_root_dir => RAILS_ROOT +  '/filesets',
+      :browser => 'Firefox',
       'language' => language,
-      :browser => 'None (test)'
+      'exercise' => 'Yahtzee',
+      'name' => 'Valentine'
     }
   end
-  
+
   def make_kata(language)
     params = make_params(language)
-    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
-    info = Kata::create_new(fileset, params)
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
     params[:id] = info[:id]
     Kata.new(params)    
   end

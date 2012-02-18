@@ -4,29 +4,28 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TimeOutTests < ActionController::TestCase
 
-  Root_test_dir = RAILS_ROOT + '/test/katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
   def root_test_dir_reset
-    system("rm -rf #{Root_test_dir}")
-    Dir.mkdir Root_test_dir
+    system("rm -rf #{ROOT_TEST_DIR}")
+    Dir.mkdir ROOT_TEST_DIR
   end
 
-  # Relies on gcc and make being installed
-
-  def make_params
-    { :kata_name => 'Jon Jagger', 
-      :kata_root => Root_test_dir,
-      :filesets_root => RAILS_ROOT + '/filesets',
-      'language' => 'C',
-      'exercise' => 'Unsplice',
-      :browser => 'None (test)'
+  def make_params(language)
+    params = {
+      :katas_root_dir => ROOT_TEST_DIR,
+      :filesets_root_dir => RAILS_ROOT +  '/filesets',
+      :browser => 'Firefox',
+      'language' => language,
+      'exercise' => 'Yahtzee',
+      'name' => 'Jon Jagger'
     }
   end
-  
-  def make_kata
-    params = make_params
-    fileset = InitialFileSet.new(params[:filesets_root], params['language'], params['exercise'])
-    info = Kata::create_new(fileset, params)
+
+  def make_kata(language = 'Ruby')
+    params = make_params(language)
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
     params[:id] = info[:id]
     Kata.new(params)    
   end
@@ -37,7 +36,7 @@ class TimeOutTests < ActionController::TestCase
   
   def test_that_code_with_infinite_loop_times_out_and_doesnt_leak_processes
     root_test_dir_reset
-    kata = make_kata
+    kata = make_kata('C')
     filename = 'untitled.c'
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(kata, avatar_name)
