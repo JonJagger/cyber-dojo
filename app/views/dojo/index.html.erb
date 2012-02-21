@@ -125,17 +125,17 @@ function cantFind(id) {
 <table>
   <tr>
     <td class="panel">
-      &nbsp;First, on <em>one</em> computer, configure a
       <input type="button"
              class="large button"
              id="configure_it"
-             value="new-practice" />
+             value="create" />
+      a new coding-practice
     </td>
   </tr>
   
   <tr>
     <td class="panel">
-      &nbsp;Then, on <em>each</em> computer, type in your practice's id:
+      Enter a current coding-practice id:
       <table>
         <tr>
          <td>
@@ -149,41 +149,38 @@ function cantFind(id) {
             <input type="button"
                    class="large button"
                    id="start_coding"
-                   value="start-coding" />
+                   value="start" />
           </td>
-        </tr>
-        <tr>
-          <td></td>
           <td>or</td>
           <td>
             <input type="button"
                    class="large button"
                    id="resume_coding"
-                   value="resume-coding" />
+                   value="resume" />
           </td>
         </tr>
         <tr>
           <td></td>
-          <td>or</td>
-          <td>
+          <td>then</td>
+          <td colspan="3">
             <input type="button"
                    class="large button"
                    id="show_dashboard"
-                   value="show-dashboard" />
-          </td>
-        </tr>          
-        <tr>
-          <td></td>
-          <td>or</td>
-          <td>
-            <input type="button"
-                   class="large button"
-                   id="show_messages"
-                   value="show-messages" />
+                   value="review" />
           </td>
         </tr>          
       </table>
     <td>
+  </tr>
+
+  <tr>
+    <td class="panel">
+      <input type="button"
+             class="large button"
+             id="configure_it"
+             value="review" />
+      any past coding-practice
+    </td>
   </tr>
 
   <tr>

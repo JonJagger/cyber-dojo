@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
   # you can start a new dojo from any traffic-light.
 
   def show
-    @title = 'Dashboard'
+    @title = 'Review'
     board_config(params)
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns

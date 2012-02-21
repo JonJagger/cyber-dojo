@@ -94,6 +94,19 @@ module RunTestsOutputParserHelper
     end
   end
 	
+  def parse_catch(output)
+    failed_pattern = Regexp.new('\[Testing completed.*failed\]')
+    passed_pattern = Regexp.new('\[Testing completed.*succeeded\]')
+    
+    if failed_pattern.match(output)
+      :failed
+    elsif passed_pattern.match(output)
+      :passed
+    else
+      :error
+    end
+  end
+  
   def parse_cassert(output)
     failed_pattern = Regexp.new('(.*)Assertion(.*)failed.')
     syntax_error_pattern = Regexp.new(':(\d*): error')
@@ -125,10 +138,9 @@ module RunTestsOutputParserHelper
   end
 
   def parse_nunit(output)
-    nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+)), Failures: (\d*)/
+    nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d+)')
     if output =~ nunit_pattern
-      puts "nunit $2 = #$2, $3 = #$3, $4 = #$4"
-      if $4 == "0" and ($3.blank? or $3 == "0")
+      if $2 == "0"
         :passed
       else
         :failed
