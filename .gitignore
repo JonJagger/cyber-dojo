@@ -4,3 +4,5 @@ tmp/**/*
 katas/*
 test/test_katas/
 
+
+.DS_Store
