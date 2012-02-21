@@ -1,0 +1,23 @@
+CATCH is a unit-test framework for C++ written by Phil Nash.
+It comprises a self-contained single header file called catch.hpp
+After including catch.hpp you write your tests as follows:
+
+TEST_CASE("the answer is 42", "description")
+{
+    REQUIRE(hhg() == 6*7);
+}
+
+TEST_CASE("throws 42 exception", "description")
+{
+    REQUIRE_THROWS(throw 42);
+}
+
+The REQUIRE macro is used where you might otherwise
+use an assert but CATCH will decompose both side of the
+relational operator. Each test-name must be unique.
+
+
+You can find it along with help and a tutorial at catch-lib.net
+
+
+
