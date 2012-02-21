@@ -1,4 +1,4 @@
 
 answer = function() {
-  return 6*9;
+  return 42;
 }
