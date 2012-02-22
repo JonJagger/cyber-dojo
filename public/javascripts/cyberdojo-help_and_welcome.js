@@ -149,11 +149,6 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +    space + '<b>Alt-t</b> runs the <b><u>t</u></b>ests' + br 
       +    space + '<b>Alt-f</b> cycles through the <b><u>f</u></b>iles'
-      + '</div>'
-                                  
-      + '<div class="panel">'
-      +   '<input type="button" class="large button" value="post"/>'
-      +   ' sends a message to everyone'
       + '</div>';
                           
     var help = $j('<div>')
