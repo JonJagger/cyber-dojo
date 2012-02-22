@@ -134,6 +134,14 @@ Open http://localhost:3000 in your browser and your CyberDojo should be running.
 There are no requirements on the clients (except of course a browser). I also 
 install and use apache on my CyberDojo server but that is optional.
 
+You can also run a CyberDojo server off a Mac server. Here are
+the commands Phil Nash used to install CyberDojo on his MacBook
+(he already had ruby 1.8.7 and git installed)
+>sudo gem update
+>sudo gem install rails -v 2.3.8 --include-dependencies
+>sudo gem install sqlite3-ruby
+ 
+
 
 Versions
 ========
@@ -147,12 +155,18 @@ Rails version             2.3.8
 
 Installing Languages
 ====================
-Initial filesets for twelve languages are provided: C, C++, C#, CoffeeScript,
-Erlang, Haskell, Java, Javascript, Python, Perl, PHP, and Ruby. 
+Initial filesets for twelve language+test_framework are provided:
+C, C++, C#, CoffeeScript, Erlang, Haskell, Java, Javascript,
+Python, Perl, PHP, and Ruby. 
 Whether you will be able to compile successfully in any of
-these languages of course depends on whether these languages are installed on 
-your server or not. Ubuntu comes with built-in support for C, C++, 
-Python, Perl and you need Ruby for the CyberDojo server itself. 
+these languages of course depends on whether these languages are installed
+and working on your server or not. Ubuntu comes with built-in support for C, C++, 
+Python, Perl and you need Ruby for the CyberDojo server itself.
+Running
+>cd cyberdojo/test/functional
+>ruby installation_test.rb
+Will provide information on what is and isn't installed and working.
+
 -----Java
 I installed support for Java as follows
 >sudo apt-get install default-jdk
@@ -222,12 +236,42 @@ Example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
   :tab_size => 4
 }
 
+You must structure the contents of the :visible_filenames in a
+specific way to ensure the CyberDojo server sees them as being
+correctly installed and working. For each language...
+o) CyberDojo searches through its manifests' :visible_filenames,
+   in sequence, looking for any that contain the string '42'
+o) If it doesn't find any if will not offer that language when
+   you configure a new kata.
+o) If it finds at least one file containing '42' it will pick the
+   first one as "the-42-file"
+o) It will then use the manifest to create a test kata and run the
+   tests three times as follows:
+   1. With the files unchanged.
+   2. With the 42 in the-42-file replaced by 54
+   3. With the 42 replaced by 4typo2
+o) If test-run-1 generates a red traffic-light and
+      test-run-2 generates a green traffic-light and
+      test-run-3 generates an amber traffic-light then
+   the CyberDojo server assumes the language is installed and working
+   and it will offer that language when you configure a new kata.
+o) If the three tests return three amber traffic-lights then
+   the CyberDojo server assumes the language is not installed
+   and it won't offer that language when you configure a new kata.
+o) If the three tests return any other combination of traffic-lights
+   the CyberDojo server assumes the language is installed by not working
+   and it won't offer that language when you configure a new kata.
+   
+
+
+
+
 manifest.rb Parameters
 ======================
 :visible_filenames
   The names of files that will be visible in the editor in the browser at 
   startup. Each of these files must exist in the directory.
-  The filename cyberdojo.sh should be present (visible or hidden) in one of the 
+  The filename cyberdojo.sh must be present (visible or hidden) in one of the 
   manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
   assumed by the ruby code (in the server) to be the start point for running
   an increment. You can write any actions in the cyberdojo.sh file but clearly
