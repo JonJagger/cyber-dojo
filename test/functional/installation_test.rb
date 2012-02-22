@@ -16,17 +16,17 @@ class InstallationTests < ActionController::TestCase
     else
       puts "\nOK. Now determining what's on this CyberDojo server..."
       puts "   (this will take a minute or two)"
-      result = check_languages(RAILS_ROOT + '/filesets')
-      installed_and_working = result[0]
-      cannot_check_because_no_42_file = result[1]
-      not_installed = result[2]
-      installed_but_not_working = result[3]
+      
+      installed_and_working,
+        cannot_check_because_no_42_file,
+          not_installed,
+            installed_but_not_working = check_languages(RAILS_ROOT + '/filesets')
   
       puts "\nSummary...."    
       puts 'not_installed:' + not_installed.inspect
       puts 'installed-and-working:' + installed_and_working.inspect
       puts 'cannot-check-because-no-42-file:' + cannot_check_because_no_42_file.inspect
-      puts 'installed-but-not-working' + installed_but_not_working.inspect
+      puts 'installed-but-not-working:' + installed_but_not_working.inspect
       
       assert_equal [ ], cannot_check_because_no_42_file
       assert_equal [ ], installed_but_not_working
@@ -34,11 +34,10 @@ class InstallationTests < ActionController::TestCase
   end
 
   def check_installed_languages_testing_mechanism
-    result = check_languages(RAILS_ROOT + '/test/functional')
-    installed_and_working = result[0]
-    cannot_check_because_no_42_file = result[1]
-    not_installed = result[2]
-    installed_but_not_working = result[3]
+    installed_and_working,
+      cannot_check_because_no_42_file,
+        not_installed,
+          installed_but_not_working = check_languages(RAILS_ROOT + '/test/functional')
     
     ['Ruby-installed-and-working'] == installed_and_working &&
     ['Ruby-no-42-file'] == cannot_check_because_no_42_file &&
@@ -47,6 +46,7 @@ class InstallationTests < ActionController::TestCase
   end
   
   def check_languages(filesets_root_dir)
+    @filesets_root_dir = filesets_root_dir
     cannot_check_because_no_42_file = [ ]
     installed_and_working = [ ]
     not_installed = [ ]
@@ -57,16 +57,25 @@ class InstallationTests < ActionController::TestCase
     languages.each do |language|
       @language = language
       @language_dir = languages_root_dir + '/' + language
+      @manifest_filename = @language_dir + '/manifest.rb'    
       check_manifest_file_exists
-      @manifest = eval IO.read(@manifest_filename)      
-      check_manifest
+      @manifest = eval IO.read(@manifest_filename)
+      
+      check_required_keys_exist
+      check_no_unknown_keys_exist
+      check_no_duplicates_in_both_visible_and_hidden_filenames
+      check_no_duplications_inside_visible_filenames
+      check_no_duplications_inside_hidden_filenames
+      check_cyberdojo_sh_exists
+      check_named_files_exist(:hidden_filenames)
+      check_named_files_exist(:visible_filenames)      
       filenames42 = get_filenames_42
       
       if filenames42 == [ ]
         cannot_check_because_no_42_file << language
         puts "  #{language} - cannot check because no 42 file"
       else
-        rag = red_amber_green(filesets_root_dir, language, filenames42[0])
+        rag = red_amber_green(filenames42[0])
         if rag == [:red,:amber,:green]
           installed_and_working << language
           puts "  #{language} - #{rag.inspect} - installed and working"
@@ -86,18 +95,8 @@ class InstallationTests < ActionController::TestCase
       installed_but_not_working
     ]
   end
-  
-  def check_manifest
-    check_required_keys_exist
-    check_no_unknown_keys_exist
-    check_no_filenames_are_duplicated
-    check_cyberdojo_sh_exists
-    check_named_files_exist(:hidden_filenames)
-    check_named_files_exist(:visible_filenames)      
-  end
-  
+    
   def check_manifest_file_exists    
-    @manifest_filename = @language_dir + '/manifest.rb'
     if !File.exists? @manifest_filename
       message =
         alert + 
@@ -107,15 +106,15 @@ class InstallationTests < ActionController::TestCase
   end
   
   def check_required_keys_exist
-    required = [ :visible_filenames, :unit_test_framework ]
-    required.each do |key|
+    required_keys = [ :visible_filenames, :unit_test_framework ]
+    required_keys.each do |key|
       if !@manifest.keys.include? key
         message =
           alert + 
           "#{@manifest_filename} must contain key :#{key}"  
         assert false, message
       end
-    end    
+    end
   end
   
   def check_no_unknown_keys_exist
@@ -130,10 +129,7 @@ class InstallationTests < ActionController::TestCase
     end    
   end
   
-  def check_no_filenames_are_duplicated
-    visible_filenames = @manifest[:visible_filenames]
-    hidden_filenames = @manifest[:hidden_filenames] || [ ]
-    
+  def check_no_duplicates_in_both_visible_and_hidden_filenames    
     visible_filenames.each do |filename|
       if hidden_filenames.count(filename) > 0
         message =
@@ -142,8 +138,10 @@ class InstallationTests < ActionController::TestCase
           "  which is also in :hidden_filenames"
         assert false, message        
       end
-    end
-
+    end    
+  end
+  
+  def check_no_duplications_inside_visible_filenames
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
@@ -152,7 +150,9 @@ class InstallationTests < ActionController::TestCase
         assert false, message
       end
     end
-    
+  end
+  
+  def check_no_duplications_inside_hidden_filenames
     hidden_filenames.each do |filename|
       if hidden_filenames.count(filename) > 1
         message =
@@ -162,11 +162,10 @@ class InstallationTests < ActionController::TestCase
       end
     end
   end
-
+  
   def check_named_files_exist(symbol)
     (@manifest[symbol] || [ ]).each do |filename|
-      pathed_filename = @language_dir + '/' + filename
-      if !File.exists?(pathed_filename)
+      if !File.exists?(@language_dir + '/' + filename)
         message =
           alert + 
           "  #{@manifest_filename} contains a :#{symbol} entry [#{filename}]\n" +
@@ -177,8 +176,6 @@ class InstallationTests < ActionController::TestCase
   end
   
   def check_cyberdojo_sh_exists
-    visible_filenames = @manifest[:visible_filenames]
-    hidden_filenames = @manifest[:hidden_filenames] || [ ]
     all_filenames = visible_filenames + hidden_filenames
     if all_filenames.select{|filename| filename == "cyberdojo.sh" } == [ ]
       message =
@@ -189,12 +186,20 @@ class InstallationTests < ActionController::TestCase
     end
   end
   
+  def visible_filenames
+    @manifest[:visible_filenames] || [ ]
+  end
+  
+  def hidden_filenames
+    @manifest[:hidden_filenames] || [ ]     
+  end
+    
   def alert
     "\n>>>>>>>#{@language}<<<<<<<\n"
   end
   
   def get_filenames_42
-    (@manifest[:visible_filenames] || [ ]).select do |visible_filename|
+    visible_filenames.select do |visible_filename|
       IO.read(@language_dir + '/' + visible_filename).include? '42'
     end
   end
@@ -205,17 +210,16 @@ class InstallationTests < ActionController::TestCase
     return :green if outcome == :passed
   end
   
-  def red_amber_green( filesets_root_dir, language, filename )
-    red = language_test(filesets_root_dir, language, filename, '42')
-    amber = language_test(filesets_root_dir, language, filename, '4typo2')
-    green = language_test(filesets_root_dir, language, filename, '54')
+  def red_amber_green(filename)
+      red = language_test(filename, '42')
+    amber = language_test(filename, '4typo2')
+    green = language_test(filename, '54')
     [ red,amber,green ].map{|outcome| traffic_light_map(outcome)}
   end
   
-  def language_test( filesets_root_dir, language, filename , rhs )
-    kata = make_kata(filesets_root_dir, language)
-    avatar_name = 'hippo'
-    avatar = Avatar.new(kata, avatar_name)
+  def language_test(filename, rhs)
+    kata = make_kata
+    avatar = Avatar.new(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]    
     visible_files[filename] = test_code.sub('42', rhs)
@@ -223,20 +227,20 @@ class InstallationTests < ActionController::TestCase
     avatar.increments.last[:outcome]
   end    
 
-  def make_kata(filesets_root_dir, language)
-    params = make_params(filesets_root_dir, language)
+  def make_kata
+    params = make_params
     fileset = InitialFileSet.new(params)
     info = Kata::create_new(fileset)
     params[:id] = info[:id]
     Kata.new(params)    
   end
 
-  def make_params(filesets_root_dir, language)
+  def make_params
     params = {
       :katas_root_dir => KATA_ROOT_DIR,
-      :filesets_root_dir => filesets_root_dir,
+      :filesets_root_dir => @filesets_root_dir,
       :browser => 'Firefox',
-      'language' => language,
+      'language' => @language,
       'exercise' => 'Yahtzee',
       'name' => 'Jon Jagger'
     }
