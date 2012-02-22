@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( answer.js answerTest.js cyberdojo.sh ),
+  :visible_filenames => %w( untitled.js untitledTest.js cyberdojo.sh ),
 
   :unit_test_framework => 'node',
   

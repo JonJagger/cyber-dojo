@@ -17,24 +17,12 @@ class KataController < ApplicationController
     @kata = Kata.new(params)
     @avatar = Avatar.new(@kata, params[:avatar])
     @output = @avatar.run_tests(visible_files)
-    @avatar.post_run_test_messages()
     @messages = @kata.messages
     respond_to do |format|
       format.js if request.xhr?
     end        
   end
-   
-  def heartbeat
-    configure(params)
-    @kata = Kata.new(params)
-    @avatar = Avatar.new(@kata, params[:avatar])
-    @avatar.post_heartbeat_messages()
-    @messages = @kata.messages
-    respond_to do |format|
-      format.js if request.xhr?
-    end
-  end
-   
+      
 private
 
   def visible_files

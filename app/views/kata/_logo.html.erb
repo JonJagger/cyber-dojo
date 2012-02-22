@@ -1,0 +1,19 @@
+
+<div id="info">
+  <table>
+    <tr>
+      <td>
+        <%= render :partial => 'shared/yin_yang', 
+                   :locals => { :target => '_blank' } -%>  
+      </td>
+      <td>
+        <%= render :partial => 'shared/avatar_image',
+                   :locals => { :target => '_blank' } -%>
+      </td>
+      <td>
+        <%= @avatar.name.humanize -%>
+      </td>      
+    </tr>
+  </table>
+</div>
+

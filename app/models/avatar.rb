@@ -70,15 +70,7 @@ class Avatar
     end
     eval seen
   end
-  
-  def post_run_test_messages()
-    MessageAutoPoster.new(self).post_run_test_messages()
-  end
-  
-  def post_heartbeat_messages()
-    MessageAutoPoster.new(self).post_heartbeat_messages()
-  end
-    
+      
   def run_tests(visible_files)
     output = ''
     io_lock(dir) do

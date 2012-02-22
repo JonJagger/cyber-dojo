@@ -1,4 +1,0 @@
-
-page.replace 'traffic_lights', :partial => 'traffic_lights'
-page.replace 'some_messages',  :partial => 'messages/some_messages'
-

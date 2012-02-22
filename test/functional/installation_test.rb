@@ -16,6 +16,8 @@ class InstallationTests < ActionController::TestCase
     
     assert_equal [ ], cannot_check_because_no_42_file
     assert_equal [ ], installed_but_not_working
+    puts "not_installed:" + not_installed.inspect
+    puts "installed-and-working:" + installed_and_working.inspect
   end
 
   def test_installed_languages_testing_mechanism

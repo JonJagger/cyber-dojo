@@ -33,7 +33,7 @@ $j(document).ready(function() {
   <table cellpadding="0" cellspacing="0">
     <tr valign="top">
       <td class="panel">
-        <%= render :partial => 'kata_info' -%>
+        <%= render :partial => 'logo' -%>
       </td>
       <td class="panel">
         <%= render :partial => 'traffic_lights' -%>
@@ -42,18 +42,19 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
-          <%= render :partial => 'help' -%>
+          <%= render :partial => 'kata_info' -%>          
         </div>
         <div class="panel">
           <%= render :partial => 'run_tests' -%>
         </div>
         <div class="panel">
-          <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'filename_list' -%>
+          <br/>
+          <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'current_filename' -%>          
         </div>
-        <div class="panel">
-          <%= render :partial => 'messages' -%>
+        <div class="xpanel">
+          <%= render :partial => 'help' -%>
         </div>
       </td>
       <td>
@@ -62,10 +63,5 @@ $j(document).ready(function() {
     </tr>
   </table>
   
-  <%= periodically_call_remote :url => { :action => :heartbeat,
-                                         :id => @kata.id,
-                                         :avatar => @avatar.name
-                                       }, 
-                               :frequency => @kata.seconds_per_heartbeat -%>                   
 <% end -%>
 

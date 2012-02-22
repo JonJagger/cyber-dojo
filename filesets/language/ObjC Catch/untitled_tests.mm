@@ -1,7 +1,7 @@
 #include "untitled.h"
 #include "catch.hpp"
  
-TEST_CASE( "name", "desc" )
+TEST_CASE( "actual == expected", "description" )
 {
     Untitled * obj = [[Untitled alloc] init];
     int value = [obj answer];

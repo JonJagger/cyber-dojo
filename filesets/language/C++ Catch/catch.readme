@@ -16,7 +16,6 @@ The REQUIRE macro is used where you might otherwise
 use an assert but CATCH will decompose both side of the
 relational operator. Each test-name must be unique.
 
-
 You can find it along with help and a tutorial at catch-lib.net
 
 
