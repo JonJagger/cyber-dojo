@@ -138,9 +138,9 @@ module RunTestsOutputParserHelper
   end
 
   def parse_nunit(output)
-    nunit_pattern = Regexp.new('^Tests run: (\d*), Failures: (\d+)')
+    nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+)), Failures: (\d*)/
     if output =~ nunit_pattern
-      if $2 == "0"
+      if $4 == "0" and ($3.blank? or $3 == "0")
         :passed
       else
         :failed

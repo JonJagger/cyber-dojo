@@ -1,6 +1,6 @@
--module(answer_tests).
+-module(untitled_tests).
 -include_lib("eunit/include/eunit.hrl").
 
 answer_test() ->
-  ?assert(answer:answer() =:= 6*9).
+  ?assert(untitled:answer() =:= 6*9).
 
