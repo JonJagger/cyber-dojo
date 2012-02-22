@@ -11,13 +11,6 @@ Each entry shows
 -------------------------------------------
 If it proves necessary, limit the number of live dojos to N.
 -------------------------------------------
-Dojo must be named, but name is "salted" in some way to create sha1 folder id.
-This means the name the user chooses is always acceptable.
-This means index.rb will contain two kinds of entries, ones whose
-name is not salted, and ones that are. 
--------------------------------------------
-Dojo creation page offers option to time-out after 15 mins, 30 mins, 45 mins, 60 mins.
--------------------------------------------
 
 
 
@@ -37,13 +30,8 @@ Kata of the day.
 -------------------------------------------
 Diff-view of older dojos filters out output as a pseudo filename
 -------------------------------------------
-Use simpler messages related to actual avatar events.
--------------------------------------------
 Diff-view for editor-tab display does not work in IE8.
 Perhaps replace the div with a textarea?
--------------------------------------------
-Simplify the messages. Messages come from avatar events, not the server.
-Senders avatar image is shown. Traffic light also shown.
 -------------------------------------------
 Diff view has up/down buttons to jump between red/green diff sections
 and avoid having to manually scroll.
@@ -61,8 +49,6 @@ Download entire git repo for a dojo as a .zip file
 Load entire dashboard and diff-data for all avatars in a dojo into
 a single html page that can then be perused without having to go back
 to the server, not even for css.
--------------------------------------------
-Store and use caretPos, scrollTop, scrollLeft for output?
 -------------------------------------------
 Each kata comes in four forms. Completely empty, started (eg 2 tests), done but poorly
 and needs refactoring, with hidden test-suite.

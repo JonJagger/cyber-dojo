@@ -245,8 +245,8 @@ o) If it doesn't find any it will not offer that language when
    you configure a new kata.
 o) If it finds at least one file containing '42' it will pick the
    first one as "the-42-file"
-o) It will then use the manifest to create a test kata and run the
-   tests three times as follows:
+o) It will then use the manifest to create a kata and run-the-tests
+   three times as follows:
    1. With the files unchanged.
    2. With the 42 in the-42-file replaced by 54
    3. With the 42 replaced by 4typo2
