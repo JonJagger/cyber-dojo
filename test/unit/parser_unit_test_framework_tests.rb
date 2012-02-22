@@ -38,33 +38,44 @@ HERE
 
   end
 
-  def test_RED_failed_nunit
-    failed_output = 'Tests run: 1, Failures: 1, Not run: 0, Time: 0.079 seconds'
-    assert_equal :failed, parse_nunit(failed_output)
+  def test_nunit_RED_failed
+    # There are two NUnit output formats depending on what
+    # version you're using and possibly whether you're on
+    # a windows box on are running on Mono
+    red_output_1 = 'Tests run: 1, Failures: 1'
+    assert_equal :failed, parse_nunit(red_output_1)
+    red_output_2 = 'Tests run: 3, Errors: 0, Failures: 3'
+    assert_equal :failed, parse_nunit(red_output_2)
   end
 
-  def test_GREEN_passed_nunit
-    passed_output = 'Tests run: 1, Failures: 0, Not run: 0, Time: 0.031 seconds'
-    assert_equal :passed, parse_nunit(passed_output)
+  def test_nunit_GREEN_passed
+    green_output_1 = 'Tests run: 1, Failures: 0'
+    assert_equal :passed, parse_nunit(green_output_1)
+    green_output_2 = 'Tests run: 3, Errors: 0, Failures: 0'
+    assert_equal :passed, parse_nunit(green_output_2)
   end
   
+  def test_nunit_AMBER_error
+    amber_output = 'error CS1525: Unexpected symbol ss'
+    assert_equal :error, parse_nunit(amber_output)
+  end
   
-  def test_RED_failed_catch
+  def test_catch_RED_failed
     red_output = "[Testing completed. All 1 test(s) failed]"
     assert_equal :failed, parse_catch(red_output)
   end
 
-  def test_GREEN_passed_catch
+  def test_catch_GREEN_passed
     green_output = "[Testing completed. All 1 test(s) succeeded]"
     assert_equal :passed, parse_catch(green_output)
   end
   
-  def test_RED_one_pass_one_fail_catch
+  def test_catch_RED_one_pass_one_fail
     red_output = "[Testing completed. 1 test(s) passed but 1 test(s) failed]"
     assert_equal :failed, parse_catch(red_output)
   end
   
-  def test_AMBER_catch
+  def test_catch_AMBER
 amber_output = <<HERE    
 untitled.tests.cpp: In function Ôvoid catch_internal_TestFunction5()Õ:
 untitled.tests.cpp:7: error: ÔtypoÕ was not declared in this scope
