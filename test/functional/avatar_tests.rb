@@ -43,7 +43,7 @@ class AvatarTests < ActionController::TestCase
   
   def test_increments_does_not_contain_output
     root_test_dir_reset
-    params = make_params('C')
+    params = make_params('C Assert')
     fileset = InitialFileSet.new(params)
     info = Kata::create_new(fileset)
     params[:id] = info[:id]

@@ -28,7 +28,7 @@ class NewKataTests < ActionController::TestCase
   
   def test_create_new_using_uuid
     root_test_dir_reset
-    params = make_params('Java')
+    params = make_params('Java JUnit')
     fileset = InitialFileSet.new(params)
     info = Kata::create_new(fileset)
     id = info[:id]
@@ -45,8 +45,8 @@ class NewKataTests < ActionController::TestCase
     manifest = eval(IO.read(manifest_rb))
     assert_equal 'Yahtzee', manifest[:exercise]
     assert_equal 'Yahtzee', info[:exercise]
-    assert_equal 'Java', manifest[:language]
-    assert_equal 'Java', info[:language]
+    assert_equal 'Java JUnit', manifest[:language]
+    assert_equal 'Java JUnit', info[:language]
     assert_equal 'Jon Jagger', manifest[:name]
     assert_equal 'Jon Jagger', info[:name]
     assert_equal info[:id], manifest[:id]

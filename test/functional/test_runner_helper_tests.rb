@@ -35,7 +35,7 @@ class TestRunnerHelperTests < ActionController::TestCase
 
   def test_recreate_new_sandbox
     root_test_dir_reset
-    kata = make_kata('Java')
+    kata = make_kata('Java JUnit')
     avatar = Avatar.new(kata, 'frog')
     recreate_new(avatar.sandbox)
     assert_equal true, File.exists?(avatar.sandbox), "sandbox created"

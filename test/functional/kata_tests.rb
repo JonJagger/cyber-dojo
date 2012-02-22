@@ -82,7 +82,7 @@ class KataTests < ActionController::TestCase
   
   def test_that_configuring_a_new_kata_creates_a_sandbox_folder_containing_hidden_files
     root_test_dir_reset
-    kata = make_kata('Java')
+    kata = make_kata('Java JUnit')
     sandbox = kata.dir + '/sandbox'
     assert File.exists?(sandbox), 'inner/outer/sandbox folder created'
     assert File.exists?(sandbox + '/junit-4.7.jar')

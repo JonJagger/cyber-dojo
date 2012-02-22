@@ -36,7 +36,7 @@ class TimeOutTests < ActionController::TestCase
   
   def test_that_code_with_infinite_loop_times_out_and_doesnt_leak_processes
     root_test_dir_reset
-    kata = make_kata('C')
+    kata = make_kata('C Assert')
     filename = 'untitled.c'
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(kata, avatar_name)

@@ -48,7 +48,7 @@ class InitialFileSetTests < ActionController::TestCase
     root_test_dir_reset
     sandbox = ROOT_TEST_DIR + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = make_fileset('Java')
+    fileset = make_fileset('Java JUnit')
     fileset.copy_hidden_files_to(sandbox)
     assert File.exists?(sandbox + '/junit-4.7.jar'), 'junit-4.7.jar file created'
   end
@@ -57,12 +57,12 @@ class InitialFileSetTests < ActionController::TestCase
     root_test_dir_reset
     sandbox = ROOT_TEST_DIR + '/sandbox'
     Dir::mkdir(sandbox)
-    fileset = make_fileset('C++')    
+    fileset = make_fileset('C++ Assert')    
     fileset.copy_hidden_files_to(sandbox)
   end
   
   def test_language_visible_files_plus_output_plus_instructions
-    fileset = make_fileset('Java')    
+    fileset = make_fileset('Java JUnit')    
     visible_files = fileset.visible_files
     assert visible_files['UntitledTest.java'].start_with? "\nimport org.junit.*;"
     assert_equal '', visible_files['output']
@@ -70,7 +70,7 @@ class InitialFileSetTests < ActionController::TestCase
   end
 
   def test_tab_defaults_to_4
-    fileset = make_fileset('Java')    
+    fileset = make_fileset('Java JUnit')    
     assert_equal 4, fileset.tab_size
   end
   

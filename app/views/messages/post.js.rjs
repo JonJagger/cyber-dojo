@@ -1,3 +1,0 @@
-
-page.replace 'all_messages', :partial => 'all_messages'
-

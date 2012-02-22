@@ -34,7 +34,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
   end
   
   def test_output_is_correct_after_refresh
-    language = 'C'
+    language = 'C Assert'
     root_test_dir_reset
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'lion')

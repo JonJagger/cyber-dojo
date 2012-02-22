@@ -236,12 +236,12 @@ Example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
   :tab_size => 4
 }
 
-You must structure the contents of the :visible_filenames in a
+You must structure the contents of the manifests in a
 specific way to ensure the CyberDojo server sees them as being
 correctly installed and working. For each language...
 o) CyberDojo searches through its manifests' :visible_filenames,
    in sequence, looking for any that contain the string '42'
-o) If it doesn't find any if will not offer that language when
+o) If it doesn't find any it will not offer that language when
    you configure a new kata.
 o) If it finds at least one file containing '42' it will pick the
    first one as "the-42-file"

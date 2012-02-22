@@ -41,7 +41,7 @@ class SimulatedFullKataTests < ActionController::TestCase
   end
   
   def test_no_java_zombies_left_unkilled
-    run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes('Java',3,4)
+    run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes('Java JUnit',3,4)
   end
   
   def run_tests_submissions_do_not_accumulate_zombie_defunct_shell_processes(language, avatar_count=8, run_tests_count=10)
