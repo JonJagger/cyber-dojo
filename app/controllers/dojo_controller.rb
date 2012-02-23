@@ -121,7 +121,6 @@ class DojoController < ApplicationController
       else          
         avatar_name = random(available_avatar_names)
         Avatar.new(kata, avatar_name)
-        kata.post_message(avatar_name, "#{avatar_name} has joined the practice")
         avatar_name
       end        
     end      
