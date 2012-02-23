@@ -1,8 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'parse_run_tests_output_helper'
 
 # > ruby test/functional/timeout_tests.rb
 
 class TimeOutTests < ActionController::TestCase
+
+  include ParseRunTestsOutputHelper
 
   ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
 
@@ -22,21 +25,19 @@ class TimeOutTests < ActionController::TestCase
     }
   end
 
-  def make_kata(language = 'Ruby')
-    params = make_params(language)
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]
-    Kata.new(params)    
-  end
-
   def ps_count
     `ps aux | grep -E "(cyberdojo|make|run\.tests)"`.lines.count
   end
   
-  def test_that_code_with_infinite_loop_times_out_and_doesnt_leak_processes
+  def test_that_code_with_infinite_loop_times_out_to_amber_and_doesnt_leak_processes
     root_test_dir_reset
-    kata = make_kata('C Assert')
+    
+    params = make_params('C Assert')
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
+    params[:id] = info[:id]
+    kata = Kata.new(params)    
+    
     filename = 'untitled.c'
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(kata, avatar_name)
@@ -46,6 +47,8 @@ class TimeOutTests < ActionController::TestCase
     
     ps_count_before = ps_count
     output = avatar.run_tests(visible_files)
+    inc = parse(fileset.unit_test_framework, output)
+    assert_equal inc[:outcome], :amber
     ps_count_after = ps_count
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     

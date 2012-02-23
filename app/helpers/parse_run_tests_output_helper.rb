@@ -14,7 +14,7 @@ module ParseRunTestsOutputHelper
   def parse(unit_test_framework, output)
     inc = { }
     if Regexp.new("Terminated by the CyberDojo server after").match(output)
-      inc[:outcome] = :error
+      inc[:outcome] = :amber
     else
       inc[:outcome] = eval "parse_#{unit_test_framework}(output)"
     end
