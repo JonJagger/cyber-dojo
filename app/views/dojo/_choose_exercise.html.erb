@@ -15,40 +15,36 @@ function chooseExercise(index) {
 }
 
 //--></script>
-      
-<table class="panel">
-  <tr>
-    <td>
-      <div>
-        <span class="choose_title">exercise?</span>
-      </div>
-      
-      <% @exercises.each_with_index do |choice,index| -%>
-        <div class="filename" 
-             onclick='chooseExercise(<%=index-%>);' >
-          <input id="exercise_<%=index-%>" 
-                 type="radio"
-                 <% if @exercise_index==index -%>
-                 checked="checked"
-                 <% end -%>
-                 onclick='chooseExercise(<%=index-%>);'                      
-                 name="exercise" 
-                 value="<%=choice-%>" />
-          <label><%= choice -%></label>
-        </div>    
-      <% end -%>    
-      
-    </td>
-    <td>&nbsp;</rd>
-    <td>
-      <textarea name="instructions" 
-                id="instructions"
-                cols="62" 
-                rows="26">              
-      </textarea>
-    </td>          
-  </tr>
-</table>
+
+
+<td class="panel" valign="top">
+  <div>
+    <span class="choose_title">exercise?</span>
+  </div>
+  
+  <% @exercises.each_with_index do |choice,index| -%>
+    <div class="filename" 
+         onclick='chooseExercise(<%=index-%>);' >
+      <input id="exercise_<%=index-%>" 
+             type="radio"
+             <% if @exercise_index==index -%>
+             checked="checked"
+             <% end -%>
+             onclick='chooseExercise(<%=index-%>);'                      
+             name="exercise" 
+             value="<%=choice-%>" />
+      <label><%= choice -%></label>
+    </div>    
+  <% end -%>    
+</td>
+
+<td class="panel" valign="top">
+  <textarea name="instructions" 
+            id="instructions"
+            cols="62" 
+            rows="26">              
+  </textarea>
+</td>          
 
 <% @exercises.each_with_index do |choice,index| -%>
    <textarea style="display:none;" 

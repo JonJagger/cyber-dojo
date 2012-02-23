@@ -26,7 +26,7 @@ h3 { font-size: 1.3em;  }
 .panel 
 { 
   margin: 0px;
-  padding: 0.3em;
+  padding: 0.5em;
 }
 
 .avatar_image
@@ -85,7 +85,6 @@ input { font-size: 1.15em; }
   font-family: monospace;
   font-size: 16pt;
   border: 1px dashed LightGray;
-  padding: 5px;
 }
 
 .small_title
