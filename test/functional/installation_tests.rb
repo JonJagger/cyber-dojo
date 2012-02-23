@@ -204,17 +204,11 @@ class InstallationTests < ActionController::TestCase
     end
   end
   
-  def traffic_light_map(outcome)
-    return :red if outcome == :failed
-    return :amber if outcome == :error
-    return :green if outcome == :passed
-  end
-  
   def red_amber_green(filename)
       red = language_test(filename, '42')
     amber = language_test(filename, '4typo2')
     green = language_test(filename, '54')
-    [ red,amber,green ].map{|outcome| traffic_light_map(outcome)}
+    [ red,amber,green ]
   end
   
   def language_test(filename, rhs)

@@ -17,9 +17,7 @@ module TrafficLightHelper
   end
   
   def unlinked_traffic_light(inc)
-    bulb = 'red'   if inc[:outcome] == :failed
-    bulb = 'amber' if inc[:outcome] == :error
-    bulb = 'green' if inc[:outcome] == :passed
+    bulb = inc[:outcome].to_s
     "<img src='/images/traffic-light-#{bulb}.png'" +
       " border='0'" +
       " width='23'" +

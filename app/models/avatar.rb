@@ -2,7 +2,6 @@
 require 'test_runner_helper.rb'
 require 'Locking'
 require 'Files'
-require 'Messages'
 
 class Avatar
 
@@ -10,8 +9,7 @@ class Avatar
   include TestRunnerHelper
   include Files
   include Locking
-  include RunTestsOutputParserHelper
-  include Messages
+  include ParseRunTestsOutputHelper
   
   def self.names
     %w(
