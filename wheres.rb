@@ -8,7 +8,9 @@ ids.each do |id|
   kata_dir = "katas/#{inner_dir}/#{outer_dir}"
   manifest = eval IO.popen("cat #{kata_dir}/manifest.rb").read
   if manifest[:name] == find
-    print find + ' --> /katas/' + inner_dir + '/' + outer_dir + "\r\n"
+    print find + ' --> /katas/' + inner_dir + '/' + outer_dir +
+      "\t" + manifest[:language] +
+      ", " + manifest[:exercise] + "\r\n"
   end
 end
 
