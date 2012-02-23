@@ -10,9 +10,11 @@
         </td>
       <% end -%>
       <td>
-        <div class="number">
-          <%= @avatar.increments.length -%>
-        </div>
+        <% if @avatar.increments.length != 0 -%>
+          <div class="number">
+            <%= @avatar.increments.length -%>
+          </div>
+        <% end -%>
       </td>
       <td>      
         <div id="spinner" 
