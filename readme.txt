@@ -78,14 +78,6 @@ together with < and > buttons to step backwards and  forwards through the diffs.
 The diff-view page does not work properly in Internet Explorer 8.
 
 
-Messages
-========
-Each computer can post tweet like messages which appear on the lower
-left hand side. I encourage players to use this to work together, 
-particularly when running a practice-kata with the aim of getting working solutions 
-on _all_ laptops (eg in The Average Time To Green Game).
-
-
 Getting files off the VirtualBox TurnKey Linux server
 =====================================================
 These were the steps I took...
@@ -261,9 +253,15 @@ o) If the three tests return three amber traffic-lights then
 o) If the three tests return any other combination of traffic-lights
    the CyberDojo server assumes the language is installed by not working
    and it won't offer that language when you configure a new kata.
-   
 
-
+You can test if a languages initial fileset is correctly setup as follows
+>cd cyberdojo/test/functional
+>ruby installation_tests.rb
+Sometimes this issues the following error
+   sh: Syntax error: Bad fd number
+which I fixed as follows
+>sudo rm /bin/sh
+>sudo ln -s /bin/bash /bin/sh
 
 
 manifest.rb Parameters
