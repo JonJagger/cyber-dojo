@@ -174,51 +174,6 @@ div[class~="filename"]:hover, .button:hover
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#all_messages { height: 30em; width: 19em; overflow-y: auto; }
-
-.message_text, #messages { font-size: 0.8em; }
-.message_text
-{
-  margin: 0em;
-  padding: 0.4em;
-  vertical-align: middle;
-}
-
-#message_text_input
-{
-  border-color: Gray;
-  background: CornSilk;
-  color: Green;
-  height: 3em;
-  width: 12em;
-  font-size: 1em;
-}
-  
-.message_container
-{
-  display: block;
-  width: 17em;
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
-  cursor: pointer;
-}
-
-.message_container
-{
-  border-bottom: 1px solid #A8A8A8;
-  border-right:  1px solid #A8A8A8;
-}
-
-.message_container:hover
-{
-  border-bottom: 1px solid #555555;
-  border-right:  1px solid #555555;     
-}
-
-/* - - - - - - - - - - - - - - - - - - - - */
-
 #seconds_per_column,
 #maximum_columns 
 { 
@@ -226,10 +181,6 @@ div[class~="filename"]:hover, .button:hover
   width: 3em; 
   text-align: center; 
 }
-
-.failed { background: #F00; /* red   */ }
-.error  { background: #FC3; /* amber */ }
-.passed { background: #0F0; /* green */ }
 
 #traffic_lights .row td { padding: 0.05em; margin: 0; }
 #traffic_lights .row.odd td  { background: CornSilk; }
@@ -244,43 +195,6 @@ div[class~="filename"]:hover, .button:hover
   display: block; /* for dashboard */
   color: Gray;
 }
-
-.traffic_light
-{
-  background: Gray;
-  padding: 3px;
-  border-radius: 10px;
-  -moz-border-radius: 10px;
-  -khtml-border-radius: 10px;
-  -webkit-border-radius: 10px;
-}
-
-.traffic_light:hover 
-{ 
-  background: LightGray;
-  cursor: pointer; 
-}
-
-.traffic_light.unlinked:hover  
-{ 
-  background: #FFECCB; 
-  cursor: default; 
-}
-
-.traffic_light .bulb
-{
-  display: block;
-  margin: 3px 0px 0px 0px; /* vertical bulb separation */
-  padding: 3px; /* affects bulb diameter */
-  width: 10px;
-  height: 10px;
-  border-radius: 20px;
-  -moz-border-radius: 20px;
-  -khtml-border-radius: 20px;
-  -webkit-border-radius: 20px;
-}
-
-.traffic_light .bulb.off    { background: GhostWhite; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
@@ -336,8 +250,7 @@ pre.diffed_code ln
 div[class~="filename"],
 .line_numbers,
 .panel,
-pre.diffed_code same ln,
-.message_container
+pre.diffed_code same ln
 {
   background: #B2EFEF;
 }

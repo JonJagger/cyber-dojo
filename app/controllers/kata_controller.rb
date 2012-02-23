@@ -6,7 +6,6 @@ class KataController < ApplicationController
     @kata = Kata.new(params)
     @avatar = Avatar.new(@kata, params[:avatar])
     @tab = @kata.tab    
-    @messages = @kata.messages
     @visible_files = @avatar.visible_files
     @output = @visible_files['output']
     @title = 'Run Tests'
@@ -17,7 +16,6 @@ class KataController < ApplicationController
     @kata = Kata.new(params)
     @avatar = Avatar.new(@kata, params[:avatar])
     @output = @avatar.run_tests(visible_files)
-    @messages = @kata.messages
     respond_to do |format|
       format.js if request.xhr?
     end        

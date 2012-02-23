@@ -95,14 +95,14 @@ var cyberDojo = (function($cd, $j) {
         + '</div>'
     };
     
-    var tdTrafficLight = function(red,amber,green) {
+    var tdTrafficLights = function() {
+      return tdTrafficLight('red') + tdTrafficLight('amber') + tdTrafficLight('green');  
+    };
+    
+    var tdTrafficLight = function(color) {
       return ''
         + '<td>'
-        +   '<div class="traffic_light">'
-        +     '<span class="' + red   + ' bulb"></span>'
-        +     '<span class="' + amber + ' bulb"></span>'
-        +     '<span class="' + green + ' bulb"></span>'
-        +   '</div>'
+        +   '<img src="/images/traffic-light-' + color + '.png" width="23" height="69"/>'
         + '</td>';
     };
     
@@ -122,9 +122,7 @@ var cyberDojo = (function($cd, $j) {
       +     '<td class="panel">'            
       +       '<table>'
       +         '<tr>'
-      +             tdTrafficLight('failed', 'off', 'off')
-      +             tdTrafficLight('off', 'error', 'off')
-      +             tdTrafficLight('off', 'off', 'passed')
+      +             tdTrafficLights()
       +           '<td>'
       +              'opens a' + br + 'diff' + br + 'page'
       +           '</td>'
@@ -146,7 +144,7 @@ var cyberDojo = (function($cd, $j) {
       + '</div>'
       
       + '<div class="panel">'
-      +   $cd.makeTable(tdTrafficLight('failed', 'error', 'passed'),
+      +   $cd.makeTable(tdTrafficLights(),
             ' red means the tests ran but one or more failed' + br +
             ' amber means the tests could not be run' + br +
             ' green means the tests ran and all passed')

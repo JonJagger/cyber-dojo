@@ -1,4 +1,5 @@
 
+require 'duration_helper.rb'
 require 'make_time_helper.rb'
 require 'traffic_light_helper.rb'
 require 'Locking'
@@ -6,12 +7,14 @@ require 'Files'
 
 class Kata
   
-  include Locking
-  extend Locking  
+  include DurationHelper
+  extend DurationHelper
   include MakeTimeHelper
   extend MakeTimeHelper
   include TrafficLightHelper
   extend TrafficLightHelper
+  include Locking
+  extend Locking  
   include Files
   extend Files
   
@@ -46,7 +49,6 @@ class Kata
     
     outer_dir = inner_dir + '/' + Kata::outer_dir(id)
     Dir.mkdir outer_dir
-    file_write(outer_dir + '/messages.rb', [ ])    
     file_write(outer_dir + '/manifest.rb', info)
 
     sandbox = outer_dir + '/' + 'sandbox'
@@ -98,28 +100,6 @@ class Kata
     10
   end
 
-  def messages
-    io_lock(messages_filename) { eval IO.read(messages_filename) }
-  end
-
-  def post_message(sender_name, text, type = :notification)
-    messages = [ ]
-    io_lock(messages_filename) do
-      messages = eval IO.read(messages_filename)
-      text = text.strip
-      if text != ''
-        messages <<  { 
-          :sender => sender_name, 
-          :text => text,
-          :created => make_time(Time.now),
-          :type => type
-        }
-        file_write(messages_filename, messages)
-      end
-    end
-    messages
-  end
-  
   def visible_files
     manifest[:visible_files]
   end
