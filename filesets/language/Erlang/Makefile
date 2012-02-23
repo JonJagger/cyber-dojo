@@ -1,3 +1,4 @@
+
 SOURCES=$(wildcard *.erl)
 HEADERS=$(wildcard *.hrl)
 OBJECTS=$(SOURCES:%.erl=%.beam)
