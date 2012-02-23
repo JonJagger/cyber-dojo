@@ -89,6 +89,9 @@ function rePost() {
 <table>
   <tr>
     <td>
+      <div class="choose_title">
+        Review - click any traffic light
+      </div>      
       <%= render :partial => 'age' -%>      
     </td>
   </tr>
@@ -100,7 +103,7 @@ function rePost() {
 </table>
 
 <%= periodically_call_remote :url => { :action => :heartbeat,
-                                       :kata_name => @kata.name
+                                       :id => @kata.id
                                      }, 
                              :with => "{ seconds_per_column: parseSecondsPerColumn()," +
                                       "  maximum_columns: parseMaximumColumns()" +

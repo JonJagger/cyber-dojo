@@ -53,21 +53,6 @@ class Avatar
   def name
     @name
   end
-
-  def increments(tag = nil)
-    io_lock(dir) { locked_increments(tag) }
-  end
-  
-  def visible_files(tag = nil)
-    seen = ''
-    io_lock(dir) do
-      tag ||= most_recent_tag      
-      command  = "cd #{dir};" +
-                 "git show #{tag}:#{Manifest_filename}"
-      seen = popen_read(command) 
-    end
-    eval seen
-  end
       
   def run_tests(visible_files)
     output = ''
@@ -85,6 +70,21 @@ class Avatar
     output
   end
 
+  def visible_files(tag = nil)
+    seen = ''
+    io_lock(dir) do
+      tag ||= most_recent_tag      
+      command  = "cd #{dir};" +
+                 "git show #{tag}:#{Manifest_filename}"
+      seen = popen_read(command) 
+    end
+    eval seen
+  end
+
+  def increments(tag = nil)
+    io_lock(dir) { locked_increments(tag) }
+  end
+  
   def dir
     @kata.dir + '/' + name
   end

@@ -61,6 +61,12 @@ class NewKataTests < ActionController::TestCase
     assert 'hippo', avatar.name
   end
   
+  def test_age_in_seconds
+    root_test_dir_reset
+    kata = make_kata    
+    assert_equal 0, kata.age_in_seconds    
+  end
+  
   def test_multiple_avatar_names_in_a_kata
     root_test_dir_reset
     kata = make_kata
