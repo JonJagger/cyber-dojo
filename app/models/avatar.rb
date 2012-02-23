@@ -43,6 +43,10 @@ class Avatar
       system(command)
       tag = 0
       git_commit_tag(visible_files, tag)
+      # I could do a
+      #     run_tests(visible_files) 
+      # here giving a new page an initial traffic-light.
+      # I don't do this because it slows down startup.
     end
   end
   

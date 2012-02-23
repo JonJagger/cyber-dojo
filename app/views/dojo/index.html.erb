@@ -122,7 +122,7 @@ function cantFind(id) {
   </tr>
 </table>
 
-<table>
+<table style="font-size: 2em;">
   <tr>
     <td class="panel">
       <input type="button"
@@ -132,7 +132,9 @@ function cantFind(id) {
       a new coding-practice
     </td>
   </tr>
-  
+</table>
+
+<table style="font-size: 2em;">
   <tr>
     <td class="panel">
       Enter a coding-practice id:
@@ -144,29 +146,38 @@ function cantFind(id) {
                    size="15"
                    value="<%=@id-%>" />
           </td>
-          <td>and</td>
-          <td>         
+          <td>
+            and
+          </td>
+          <td>
             <input type="button"
                    class="large button"
                    id="start_coding"
-                   value="start" />
+                   value="start-coding" />
+            or
           </td>
-          <td>or</td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>
             <input type="button"
                    class="large button"
                    id="resume_coding"
-                   value="resume" />
+                   value="resume-coding" />
+            or
           </td>
         </tr>
         <tr>
           <td></td>
-          <td>or</td>
-          <td colspan="3">
+          <td></td>
+          <td>
             <input type="button"
                    class="large button"
                    id="show_dashboard"
-                   value="review" />
+                   value="review-code" />
           </td>
         </tr>          
       </table>
