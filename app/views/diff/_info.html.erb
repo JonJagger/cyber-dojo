@@ -4,10 +4,10 @@
 <table>
   <tr>
     <td>
-    <%= render :partial => 'shared/yin_yang' -%>
+      <%= render :partial => 'shared/yin_yang' -%>
     </td>
     <td>
-      <%= avatar_image(@avatar.name, 63) -%>
+      <%= render :partial => 'shared/avatar_image' -%>
     </td>
     <td>
       <% if tag_number != 0-%>
