@@ -175,7 +175,7 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.currentFilename = function() {
-    return $j('input:radio[name=filename]:checked').val();
+    return $j('#current_filename').val();
   };
 
   $cd.fileAlreadyExists = function(filename) {
