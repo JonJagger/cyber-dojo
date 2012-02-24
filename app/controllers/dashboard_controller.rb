@@ -9,7 +9,7 @@ class DashboardController < ApplicationController
   # you can start a new kata from any traffic-light.
 
   def show
-    @title = 'Review'
+    @title = 'View Dashboard'
     board_config(params)
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns

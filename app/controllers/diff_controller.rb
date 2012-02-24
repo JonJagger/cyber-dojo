@@ -23,7 +23,7 @@ class DiffController < ApplicationController
       @outcome = @traffic_lights_to_tag.last[:outcome]
       @current_filename_id = most_changed_lines_file_id(@diffs)
     end
-    @title = 'Diff View'
+    @title = 'View Diff'
   end
    
 end

@@ -31,7 +31,7 @@ class DojoController < ApplicationController
   
   def index
     # offers configure, start, resume, dashboard, messages
-    @title = '@CyberDojo'
+    @title = 'Home'
     @id = id
   end
    
