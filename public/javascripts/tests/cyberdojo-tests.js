@@ -56,6 +56,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_A" name="filename" type="radio" value="A"/>
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>
         <div>
           <textarea id="file_content_for_A">a</textarea>
           <textarea id="file_content_for_B">b</textarea>
@@ -84,6 +85,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
           <input id="radio_C" name="filename" type="radio" value="C"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>        
         <div>
           <textarea id="file_content_for_A">a</textarea>
           <textarea id="file_content_for_B">b</textarea>
@@ -134,6 +136,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
           <input id="radio_C" name="filename" type="radio" value="C"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
         <div>
           <div id="A_div">
             <textarea id="file_content_for_A"></textarea>
@@ -163,6 +166,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
           <input id="radio_C" name="filename" type="radio" value="C"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
         <div>
           <div id="A_div">        
             <textarea id="file_content_for_A">aaaaaaaaaaa</textarea>
@@ -192,6 +196,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
           <input id="radio_C" name="filename" type="radio" value="C"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
         <div id="visible_files_container">
           <div id="A_div">        
             <textarea id="file_content_for_A">aaaaaaaaaaa</textarea>
@@ -219,23 +224,28 @@ TestCase("cyberdojo-Test", {
       <div>
         <div id="filename_list">
           <input id="radio_A" name="filename" type="radio" value="A"/>
+          <input id="radio_B" name="filename" type="radio" value="B"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
         <div id="visible_files_container">
           <div id="A_div">
             <textarea id="file_content_for_A">aaaaaaaaaaa</textarea>
           </div>
+          <div id="B_div">
+            <textarea id="file_content_for_B">bbbbbbbbbbb</textarea>
+          </div>
         </div>        
       </div>
     */
-    assertEquals(1, $cd.filenames().length);
+    assertEquals(2, $cd.filenames().length);
     var filenames = $cd.rebuildFilenameList();
     
-    var filename = 'D';
+    var filename = 'C';
     var content = 'dddd';
     $cd.newFileContent(filename,content);
     filenames = $cd.rebuildFilenameList();
-    assertEquals(2, filenames.length);
-    assertEquals(['A','D'], filenames.sort());
+    assertEquals(3, filenames.length);
+    assertEquals(['A','B','C'], filenames.sort());
   },
   
   "test rebuildFilenameList() after removing a filename": function() {
@@ -246,6 +256,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
           <input id="radio_C" name="filename" type="radio" value="C"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
         <div id="visible_files_container">
           <div id="A_div">
             <textarea id="file_content_for_A">aaaaaaaaaaa</textarea>
@@ -276,6 +287,7 @@ TestCase("cyberdojo-Test", {
           <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
           <input id="radio_C" name="filename" type="radio" value="C"/>
         </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
         <div id="visible_files_container">
           <div id="A_div">
             <textarea id="file_content_for_A">aaaaaaaaaaa</textarea>
