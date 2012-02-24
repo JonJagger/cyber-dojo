@@ -10,8 +10,6 @@ var cyberDojo = (function($cd, $j) {
       return function() {
         diffSheet.save();
         diffSheet.html(diffedLines);
-        diffSheet.scrollTop(filename.attr('scrollTop'));
-        diffSheet.scrollLeft(filename.attr('scrollLeft'));
         diffSheet.save = save;
         $j('div[class="filename"]').each(function() {
           $j(this).attr('current_file', 'false');
@@ -23,8 +21,6 @@ var cyberDojo = (function($cd, $j) {
   
     var saveTo = function(filename) {
       return function() {
-        filename.attr('scrollTop', diffSheet.scrollTop());
-        filename.attr('scrollLeft', diffSheet.scrollLeft());
         filename.toggleClass('selected');
       };
     };
@@ -32,8 +28,6 @@ var cyberDojo = (function($cd, $j) {
     $j.each(diffs, function(n, diff) {
       var filename = $j('#' + diff.id);
       filename.click( loadFrom(filename, diff.content, saveTo(filename)) );
-      filename.attr('scrollTop', 0);
-      filename.attr('scrollLeft', 0);  
     });
   };
 
