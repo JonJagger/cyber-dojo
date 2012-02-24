@@ -57,7 +57,7 @@ module GitDiff
     diffs = [ ]
     generate = IdGenerator.new("jj")
     diffed_files.sort.each do |name,diff|
-      id = generate.id      
+      id = generate.id
       diffs << {
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :id => id,          

@@ -42,10 +42,8 @@ class TrapDiffBugTests < ActionController::TestCase
   
   def test_specific_real_dojo_that_fails_diff_show_narrowing
 
-    manifest = { :visible_files => {} }
-    manifest[:visible_files]['gapper.rb'] =    
-    {
-        :content=>
+    visible_files = { } 
+    visible_files['gapper.rb'] =    
           [
             "",
             "def as_time(t)",
@@ -62,11 +60,7 @@ class TrapDiffBugTests < ActionController::TestCase
             "end",
             "",
             ""
-          ].join("\n"),
-        :caret_pos => "245", 
-        :scroll_top => "0", 
-        :scroll_left => "0"
-    }
+          ].join("\n")
 
     diff_lines =
     [
@@ -189,7 +183,7 @@ class TrapDiffBugTests < ActionController::TestCase
     name = md[2]
     assert 'gapper.rb', name   
     
-    source_lines = manifest[:visible_files][name][:content]
+    source_lines = visible_files[name]
     
     split_up = source_lines.split("\n")
     builder = GitDiffBuilder.new()
@@ -216,27 +210,10 @@ class TrapDiffBugTests < ActionController::TestCase
   end
 
   # ---------------------------------------------------------
-  # used once to get hard-wired data in the test above
-  
-  def trap_diff_bug_in_specific_real_dojo
-    params = { 
-      :dojo_name => 'ruby-gapper', 
-      :dojo_root => Dir.getwd + '/../dojos',
-    }
-    dojo = Dojo.new(params)
-    avatar = Avatar.new(dojo, 'elephant')
-    tag = 26
-    diffed_files = git_diff_view(avatar, tag)  
     
-    diffed_files['gapper.rb'].each do |diff|
-      assert_not_equal nil, diff[:line], diff.inspect  # YES. GOT IT
-    end  
-  end
-  
-  # used once to verify the hard-wired data in the test matches
-  # the real data from a real dojo folder
-  
   def verify_hard_wired_data_exactly_matches_real_data(manifest, diff_lines)
+    # used once ages ago to verify the hard-wired data in the test matches
+    # the real data from a real kata folder
     
     params = { 
       :dojo_name => 'ruby-gapper', 

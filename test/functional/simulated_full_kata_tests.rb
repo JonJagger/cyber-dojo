@@ -66,7 +66,7 @@ class SimulatedFullKataTests < ActionController::TestCase
         assert_equal defunct_before, defunct_after, 'avatar.run_tests(visible_files)' 
         
         info = avatar.name + ', red'
-        assert_equal :failed, avatar.increments.last[:outcome], info + ', red,' + output
+        assert_equal :red, avatar.increments.last[:outcome], info + ', red,' + output
         print '.'
       end
     end

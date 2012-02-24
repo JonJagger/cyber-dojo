@@ -105,8 +105,8 @@ These were the steps I took...
 21. shut down the VBox image
 
    
-Building your own server from scratch
-=====================================
+Building your own CyberDojo Linux server from scratch
+=====================================================
 Requirements: ruby, rails, git
 Here are the commands I used to install ruby, rails, and CyberDojo onto 
 my Ubuntu server:
@@ -126,12 +126,37 @@ Open http://localhost:3000 in your browser and your CyberDojo should be running.
 There are no requirements on the clients (except of course a browser). I also 
 install and use apache on my CyberDojo server but that is optional.
 
-You can also run a CyberDojo server off a Mac server. Here are
-the commands Phil Nash used to install CyberDojo on his MacBook
+
+Running a CyberDojo server off a Mac
+====================================
+This works (but see a caveat below)
+Here are the commands Phil Nash used to install CyberDojo on his MacBook
 (he already had ruby 1.8.7 and git installed)
 >sudo gem update
 >sudo gem install rails -v 2.3.8 --include-dependencies
 >sudo gem install sqlite3-ruby
+ 
+The MacOs file system is case insensitive and this causes a file rename problem
+in git. If you start a new kata (as Lion say) and do a run-tests and then
+change the 'instructions' file to 'Instructions' and make a small change to
+its content, and do another run-tests then git diff will not see the difference.
+Specifically, from the Lion's directory
+>git diff --ignore-space-at-eol --find-copies-harder 2 1 sandbox
+will give you an output like this...
+     diff --git a/sandbox/instructions b/sandbox/instructions
+     index b62fac4..4786df1 100644
+     --- a/sandbox/instructions
+     +++ b/sandbox/instructions
+     @@ -8,7 +8,7 @@ or "frames" for the bowler.
+If you look in the Lion's sandbox directory you will see 
+a file called Instructions (with a capital I)
+If you do this
+>irb
+>command = `git show 2:manifest.rb`
+>manifest = eval command
+>manifest.keys
+You will see a file called Instructions.
+But git diff does not see it... 
  
 
 
