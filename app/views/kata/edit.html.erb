@@ -42,9 +42,6 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
-          <%= render :partial => 'kata_info' -%>          
-        </div>
-        <div class="panel">
           <%= render :partial => 'run_tests' -%>
         </div>
         <div class="panel">
@@ -53,8 +50,12 @@ $j(document).ready(function() {
           <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'current_filename' -%>
         </div>
-        <div>
+        <div class="panel">
           <br/>
+          <%= @kata.id -%><br/>
+          &nbsp;&bull;&nbsp;<%= elided_name(@kata.name, 15) -%><br/>
+          &nbsp;&bull;&nbsp;<%= @kata.language -%><br/>
+          &nbsp;&bull;&nbsp;<%= @kata.exercise -%><br/>
           <br/>
           <%= render :partial => 'help' -%>
         </div>

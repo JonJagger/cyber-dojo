@@ -23,12 +23,6 @@ h1 { font-size: 3.0em; }
 h2 { font-size: 2.0em;  }
 h3 { font-size: 1.3em;  }
 
-.panel 
-{ 
-  margin: 0px;
-  padding: 0.5em;
-}
-
 .avatar_image
 {
   margin: 0.1em;
@@ -48,7 +42,7 @@ input { font-size: 1.15em; }
 .button
 {
   background: CornSilk;
-  color: #383838;
+  color: DarkGreen;
   font-size: 1em;
   cursor: pointer;
   padding: 2px 8px 2px 8px;
@@ -61,7 +55,6 @@ input { font-size: 1.15em; }
 
 .small.button
 {
-  color: black; 
   font-size: 1.1em;
   padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */
 }
@@ -72,7 +65,8 @@ input { font-size: 1.15em; }
 .button[disabled]
 {
   cursor: default;
-  background: lightgray;
+  background: LightGray;
+  color: Gray;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - */
@@ -99,7 +93,7 @@ input { font-size: 1.15em; }
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-input[type="radio"]:checked+label { color: #444; }
+input[type="radio"]:checked+label { color: DarkGreen; }
 
 input+label { cursor: pointer; }
 
@@ -259,22 +253,31 @@ pre.diffed_code same ln
 div[current_file="false"] { background: #B2EFEF; }
 div[current_file="true"]  { background: CornSilk; }
 
-.ui-dialog,
-.ui-dialog .ui-dialog-titlebar,
-.ui-dialog .ui-dialog-buttonpane,
-body   { background: #FFECCB; }
-.panel { border: 2px solid #FFECCB; }
-
 .line_numbers, pre.diffed_code ln { color: #888; }
 
 .file_content
 {
-  background: CornSilk; /*Black;*/
-  color: Black; /*White;*/  
+  background: CornSilk;
+  color: Black;
 }
+
 #diff_sheet
 {
   color: #383838;
+}
+
+body { background: #B2EFEF; }
+
+.panel
+{
+  color: DarkGreen; 
+  border-top: 3px dotted Cornsilk;
+  border-left: 3px dotted Cornsilk;
+  border-right: none;
+  border-bottom: none;
+  
+  margin: 0px;
+  padding: 0.5em;  
 }
 
 

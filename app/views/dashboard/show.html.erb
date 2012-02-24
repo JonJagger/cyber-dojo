@@ -2,7 +2,7 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var kata_name = "<%=@kata.name-%>";
+var id = "<%=@kata.id-%>";
 var seconds_per_column = "<%=@seconds_per_column-%>";  
 var maximum_columns = "<%=@maximum_columns-%>";  
 
@@ -50,7 +50,7 @@ function parseMaximumColumns() {
 
 function rePost() {
   $cd.postTo('/dashboard/show', {
-    kata_name: kata_name,
+    id: id,
     seconds_per_column: seconds_per_column,
     maximum_columns: maximum_columns
   });

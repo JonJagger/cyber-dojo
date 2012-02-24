@@ -53,7 +53,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 700,
-        title: "<h2>welcome</h2>",
+        title: "<h1>welcome</h1>",
         modal: true,
         buttons: {
           ok: function() {
@@ -145,9 +145,9 @@ var cyberDojo = (function($cd, $j) {
       
       + '<div class="panel">'
       +   $cd.makeTable(tdTrafficLights(),
-            ' red means the tests ran but one or more failed' + br +
-            ' amber means the tests could not be run' + br +
-            ' green means the tests ran and all passed')
+            '&nbsp;red means the tests ran but one or more failed' + br +
+            '&nbsp;amber means the tests could not be run' + br +
+            '&nbsp;green means the tests ran and all passed')
       + '</div>'
             
       + '<div class="panel">'
@@ -164,7 +164,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 575,
-        title: "<h2>help</h2>",
+        title: "<h1>help</h1>",
         modal: true,
         buttons: {
           ok: function() {

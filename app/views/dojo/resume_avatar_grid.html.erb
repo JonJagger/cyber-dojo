@@ -24,11 +24,6 @@ function resume(avatar_name) {
             :action => :index,
             :id => @kata.id %>      
     </td>
-    <td style="text-align: right; color: DarkGreen;">
-       <div>kata =</div>
-       <div>language =</div>
-       <div>exercise =</div>
-    </td>
     <td style="text-align: left; color: DarkGreen;">
        <div><%= elided_name(@kata.name, 15) -%></div>
        <div><%= @kata.language -%></div>

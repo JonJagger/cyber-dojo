@@ -1,7 +1,7 @@
 
 <% tag_number = @traffic_lights_to_tag.length -%>
 
-<table>
+<table align="center">
   <tr>
     <td>
       <%= render :partial => 'shared/yin_yang' -%>
@@ -14,7 +14,6 @@
         <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
     </td>
-    <%= render :partial => 'shared/names' -%>
   </tr>
 </table>
 
