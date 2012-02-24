@@ -62,9 +62,14 @@ function rePost() {
   <tr>
     
     <td>
-      <%= render :partial => 'info' -%>
+      <%= render :partial => 'shared/yin_yang' -%>
     </td>
-    
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td class="panel">
+      <%= render :partial => 'age' -%>
+    </td>    
     <td class="panel">
       <input type="text"
              name="seconds_per_column" 
@@ -89,10 +94,9 @@ function rePost() {
 <table>
   <tr>
     <td>
-      <div class="choose_title">
-        to review - click any traffic light
+      <div class="choose_title" align="center">
+        Click any traffic light
       </div>      
-      <%= render :partial => 'age' -%>      
     </td>
   </tr>
   <tr>

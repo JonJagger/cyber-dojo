@@ -73,12 +73,12 @@ input { font-size: 1.15em; }
 
 #instructions
 {
-  background-color: CornSilk;
-  color: black;
+  background-color: #888;
+  color: Cornsilk;
   overflow-y: auto;
   font-family: monospace;
   font-size: 16pt;
-  border: 1px dashed LightGray;
+  border: 4px solid #888;
 }
 
 .small_title
@@ -191,18 +191,22 @@ div[class~="filename"]:hover, .button:hover
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-#tag_number { font-size: 1em; }
+#tag_number
+{
+  font-size: 1em; 
+  text-align: center; /* for diff and dashboard */
+}
 
 #diff_panel
 {
   overflow: auto;
   height: 40em;
-  width: 48em;
+  width: 63em;
 }
 
 #diff_sheet
 {
-  background: Ivory;
+  background: #888;
   margin: 0;
   padding: 0;
 }
@@ -211,7 +215,7 @@ div[class~="filename"]:hover, .button:hover
 
 pre.diffed_code { margin: 0; padding: 0; }
 
-pre.diffed_code same    { background: Cornsilk; }
+pre.diffed_code same    { background: #888; color: Cornsilk; }
 pre.diffed_code added,   #toggle_added_lines   { background: #CEF6CE; }
 pre.diffed_code deleted, #toggle_deleted_lines { background: #F6CECE; }
 
@@ -257,8 +261,8 @@ div[current_file="true"]  { background: CornSilk; }
 
 .file_content
 {
-  background: CornSilk;
-  color: Black;
+  background: #888;
+  color: Cornsilk;
 }
 
 #diff_sheet

@@ -3,6 +3,11 @@
   <table>
     <% max_cols = 30 -%>    
     <tr class="row">
+      <% (1..5).each do |spacer| -%>
+        <td>
+          &nbsp;
+        </td>
+      <% end -%>
       <% recent(@avatar.increments, max_cols).each do |light| -%>
         <td>
           <%  in_new_page = true -%>

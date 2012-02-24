@@ -33,9 +33,9 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
               'This is the '
-            + '<span style="font-size: 3em;">' + avatar + "'s" + '</span>'
+            + '<span style="font-size: 1.8em;">' + avatar + "'s" + '</span>'
             + ' code.<br/><br/>'
-            + 'Please remember:'
+            + 'Remember...'
             + '<ul>'
             +   makeBigSpanLi('You are not competing;<br/>you are practising')
             +   makeBigSpanLi("Don't think about completing;<br/>think about improving")
@@ -119,6 +119,9 @@ var cyberDojo = (function($cd, $j) {
       +     '<td class="panel">'
       +        $cd.makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
       +     '</td>'
+      +     '<td class="panel">'
+      +        $cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
+      +     '</td>'
       +     '<td class="panel">'            
       +       '<table>'
       +         '<tr>'
@@ -126,9 +129,6 @@ var cyberDojo = (function($cd, $j) {
       +           '<td>'
       +              'opens a' + br + 'diff' + br + 'page'
       +           '</td>'
-      +           '<td>'
-      +              $cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
-      +           '</td>'      
       +         '</tr>'
       +       '</table>'
       +     '</td>'
