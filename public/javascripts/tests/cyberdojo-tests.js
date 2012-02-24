@@ -313,5 +313,5 @@ TestCase("cyberdojo-Test", {
     assertEquals(['A', newFilename, 'C'], $cd.filenames().sort());
     assertEquals(newFilename, $cd.currentFilename());
   },
-
+  
 });

@@ -9,14 +9,30 @@ $j(document).ready(function() {
 
 //--></script>
 
-<h1>
-  <% size = 40 -%>
-  <%= image_tag("/images/avatars/cyber-dojo.png",
-      :border => 0,
-      :size => "#{size}x#{size}",
-      :title => 'Home page') -%>
-  <%= @title %>
-</h1>
+<table align="center">
+  <tr>
+    <td>
+      <% size = 80 -%>
+      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
+            :border => 0,
+            :size => "#{size}x#{size}",
+            :title => 'Home page'),
+            {
+              :controller => :dojo,
+              :action => :index
+            }
+      %>
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <h1>
+      create a new coding practice
+      </h1>
+    </td>
+  </tr>
+</table>
 
 <table align="center">
   <tr>

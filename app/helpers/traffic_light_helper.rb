@@ -20,8 +20,8 @@ module TrafficLightHelper
     bulb = inc[:outcome].to_s
     "<img src='/images/traffic-light-#{bulb}.png'" +
       " border='0'" +
-      " width='23'" +
-      " height='69'/>"
+      " width='26'" +
+      " height='78'/>"
   end
  
   def tool_tip(inc_number)
