@@ -9,7 +9,11 @@ $j(document).ready(function() {
   
   $j('#start_coding').click(function() {
     var id = $j('#kata_id_input').attr('value');
-    $cd.postTo('/dojo/start', { id: id }, '_blank');    
+    if ($j.trim(id) === '') {
+      $cd.alert("<h3>Please enter an id</h3>", "");
+    } else {
+      $cd.postTo('/dojo/start', { id: id }, '_blank');    
+    }
   });
   
   $j('#resume_coding').click(function() {
@@ -47,7 +51,7 @@ $j(document).ready(function() {
 function run(method, func) {
   var id = $j('#kata_id_input').attr('value');
   if ($j.trim(id) === '') {
-    $cd.alert("<h3>You must enter an id.</h3>", "");
+    $cd.alert("<h3>Please enter an id</h3>", "");
   } else {
     $j.getJSON('/dojo/' + method, { id: id }, function(data) {
       func(id, data);
@@ -97,7 +101,7 @@ function showMessages(id, data) {
 }
 
 function cantFind(id) {
-  $cd.alert("<h3>There is no kata with an id of </h3><h2>" + id + "</h2>", "");  
+  $cd.alert("<h3>Sorry but there is no practice with an id of </h3><h2>" + id + "</h2>", "");  
 }
 
 //--></script>
@@ -138,7 +142,7 @@ function cantFind(id) {
 
   <tr>
     <td class="panel">
-      Enter a coding-practice id:
+      Enter your coding-practice id:
       <table>
         <tr>
          <td>

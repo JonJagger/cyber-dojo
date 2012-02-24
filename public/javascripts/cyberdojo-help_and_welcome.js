@@ -32,19 +32,19 @@ var cyberDojo = (function($cd, $j) {
     var welcomeHtml = ''    
       + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
-              'This is the '
+              'this is the '
             + '<span style="font-size: 1.8em;">' + avatar + "'s" + '</span>'
-            + ' code.<br/><br/>'
-            + 'Remember...'
+            + ' code<br/><br/>'
+            + 'remember...'
             + '<ul>'
-            +   makeBigSpanLi('You are not competing;<br/>you are practising')
-            +   makeBigSpanLi("Don't think about completing;<br/>think about improving")
+            +   makeBigSpanLi('you are not competing;<br/>you are practising')
+            +   makeBigSpanLi("don't think about completing;<br/>think about improving")
             + '</ul>'
             )
       + '</div>'
       
       + '<div class="panel">'
-      +   'Click <input type="button" class="small button" value="help"/>'
+      +   'click <input type="button" class="small button" value="help"/>'
       +   ' for help'
       + '</div>';
       
@@ -155,8 +155,8 @@ var cyberDojo = (function($cd, $j) {
       + '</div>'
       
       + '<div class="panel">'
-      +    space + '<b>Alt-t</b> runs the <b><u>t</u></b>ests' + br 
-      +    space + '<b>Alt-f</b> cycles through the <b><u>f</u></b>iles'
+      +    space + '<b>alt-t</b> runs the <b><u>t</u></b>ests' + br 
+      +    space + '<b>alt-f</b> cycles through the <b><u>f</u></b>iles'
       + '</div>';
                           
     var help = $j('<div>')

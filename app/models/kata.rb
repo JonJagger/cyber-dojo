@@ -19,11 +19,11 @@ class Kata
   extend Files
   
   def self.inner_dir(id)
-    id[0..1]
+    id[0..1] || ""
   end
   
   def self.outer_dir(id)
-    id[2..9]
+    id[2..9] || ""
   end
   
   def self.create_new(fileset)

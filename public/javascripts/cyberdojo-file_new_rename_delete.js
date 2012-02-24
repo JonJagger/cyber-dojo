@@ -129,7 +129,7 @@ var cyberDojo = (function($cd, $j) {
 	autoOpen: false,
 	title: typeof(title) !== 'undefined' ? title : "alert",
 	modal: true,
-	width: 400,
+	width: 600,
 	buttons: {
 	  ok: function() {
 	    $j(this).dialog('close');

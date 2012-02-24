@@ -20,7 +20,7 @@ $j(document).ready(function() {
       <div class="panel">
         <%= render :partial => 'filenames' -%>
       </div>
-      <div class="panel">
+      <div class="panel" style="font-size: 1.2em;color:Gray;">
         <br/>
         <%= @kata.id -%><br/>
         &nbsp;&bull;&nbsp;<%= elided_name(@kata.name, 15) -%><br/>

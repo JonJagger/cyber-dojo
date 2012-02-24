@@ -183,7 +183,7 @@ div[class~="filename"]:hover, .button:hover
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
 #traffic_lights .number, .traffic_light .number
 {
-  font-size: 1em;
+  font-size: 1.8em;
   text-align: center; /* for diff and dashboard */
   display: block; /* for dashboard */
   color: Gray;
@@ -200,7 +200,7 @@ div[class~="filename"]:hover, .button:hover
 #diff_panel
 {
   overflow: auto;
-  height: 40em;
+  height: 48em;
   width: 63em;
 }
 

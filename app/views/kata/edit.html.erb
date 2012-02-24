@@ -50,7 +50,7 @@ $j(document).ready(function() {
           <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'current_filename' -%>
         </div>
-        <div class="panel">
+        <div class="panel" style="font-size: 1.2em;color: Gray;">
           <br/>
           <%= @kata.id -%><br/>
           &nbsp;&bull;&nbsp;<%= elided_name(@kata.name, 15) -%><br/>

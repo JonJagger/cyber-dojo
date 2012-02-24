@@ -14,29 +14,10 @@ function resume(avatar_name) {
 
 <h1>resume-coding</h1>
 
-<table align="center">
-  <tr>
-    <td>
-      <% size = 60 -%>
-      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-          :border => 0, :size => "#{size}x#{size}", :title => 'Home page'),
-            :controller => :kata,
-            :action => :index,
-            :id => @kata.id %>      
-    </td>
-    <td style="text-align: left; color: DarkGreen;">
-       <div><%= elided_name(@kata.name, 15) -%></div>
-       <div><%= @kata.language -%></div>
-       <div><%= @kata.exercise -%></div>
-    </td>
-  </tr>
-</table>
-
-
 <div align="center">
   <table>
     <% index = 0 -%>
-    <% size = 70 -%>
+    <% size = 80 -%>
     <% (1..4).each do |_| -%>
     <tr>
       <% (1..4).each do |_| -%>
