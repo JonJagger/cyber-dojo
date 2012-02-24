@@ -41,7 +41,6 @@ var cyberDojo = (function($cd, $j) {
     
     $cd.fileDiv(filename).show();
     $cd.fileContentFor(filename).focus();
-    $j('#current_filename').val(filename);
   };
 
   $cd.cantBeRenamedOrDeleted = function(filename) {
