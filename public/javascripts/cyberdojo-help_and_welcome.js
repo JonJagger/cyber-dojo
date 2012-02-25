@@ -38,7 +38,7 @@ var cyberDojo = (function($cd, $j) {
             + 'remember...'
             + '<ul>'
             +   makeBigSpanLi('you are not competing;<br/>you are practising')
-            +   makeBigSpanLi("don't think about completing;<br/>think about improving")
+            +   makeBigSpanLi("don't think about completing;<br/>do think about improving")
             + '</ul>'
             )
       + '</div>'
