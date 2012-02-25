@@ -1,0 +1,33 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+var maximum_columns = "<%=@maximum_columns-%>";  
+  
+$j(document).ready(function() {
+  $j('#maximum_columns').keyup(function(event) {
+    reParse(event);
+  });
+});
+  
+function parseMaximumColumns() {
+  var input = $j('#maximum_columns');
+  var value = input.attr('value');
+  var newValue = parseInt(value);
+  if (!isNaN(newValue)) {
+    maximum_columns = newValue;
+  } else {
+    input.attr('value', maximum_columns);
+  }
+  return maximum_columns;
+}
+
+//--></script>
+
+<input type="text" 
+       name="maximum_columns" 
+       id="maximum_columns"
+       value="<%=@maximum_columns-%>"/>
+<span class="small_title">
+  maximum<br/>columns
+</span>
