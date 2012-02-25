@@ -12,9 +12,9 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.selectRadioListEntry = function(node) {
     node.parent().siblings().each(function() {
-      $j(this).attr('current_file', 'false');      
+      $j(this).attr('current', 'false');      
     });
-    node.parent().attr('current_file', 'true');    
+    node.parent().attr('current', 'true');    
     node.attr('checked', 'checked');  
   };
   

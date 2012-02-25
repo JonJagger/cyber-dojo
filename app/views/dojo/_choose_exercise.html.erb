@@ -34,9 +34,6 @@ $j(document).ready(function() {
       <div class="filename" >
         <input id="exercise_<%=index-%>" 
                type="radio"
-               <% if @exercise_index==index -%>
-               checked="checked"
-               <% end -%>
                name="exercise" 
                value="<%=choice-%>" />
         <label><%= choice -%></label>

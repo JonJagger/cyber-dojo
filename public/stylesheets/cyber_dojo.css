@@ -254,8 +254,8 @@ pre.diffed_code same ln
 
 /* - - - - - - - - - - - - - - - - - - - - */
 
-div[current_file="false"] { background: #B2EFEF; }
-div[current_file="true"]  { background: CornSilk; }
+div[current="false"] { background: #B2EFEF; }
+div[current="true"]  { background: CornSilk; }
 
 .line_numbers, pre.diffed_code ln { color: #888; }
 
