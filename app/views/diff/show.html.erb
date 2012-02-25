@@ -20,12 +20,9 @@ $j(document).ready(function() {
       <div class="panel">
         <%= render :partial => 'filenames' -%>
       </div>
-      <div class="panel" style="font-size: 1.2em;color:Gray;">
+      <div class="info panel">
         <br/>
-        <%= @kata.id -%><br/>
-        &nbsp;&bull;&nbsp;<%= elided_name(@kata.name, 15) -%><br/>
-        &nbsp;&bull;&nbsp;<%= @kata.language -%><br/>
-        &nbsp;&bull;&nbsp;<%= @kata.exercise -%><br/>
+        <%= render :partial => 'shared/info' -%>
       </div>
     </td>    
     <td>

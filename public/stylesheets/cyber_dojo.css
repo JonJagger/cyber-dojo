@@ -284,4 +284,8 @@ body { background: #B2EFEF; }
   padding: 0.5em;  
 }
 
-
+.info
+{
+  font-size: 1.2em;
+  color: Gray;
+}

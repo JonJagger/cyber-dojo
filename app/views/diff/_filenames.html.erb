@@ -1,14 +1,4 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-
-function selectFile(id) {
-  var radio = $j('#radio_' + id);
-  radio.attr("checked", true);
-}
-
-//--></script>
-
 <table vertical-align="middle"
        cellpadding="0"
        cellspacing="0">
@@ -22,7 +12,6 @@ function selectFile(id) {
       <td align="left">        
         <div class="filename"
              id="<%= file[:id] -%>"
-             onclick='selectFile("<%=file[:id]-%>");'
              title="<%= diff_tip(n_deleted, n_added) -%>" >
           <input id="radio_<%=file[:id]-%>"
                  name="filename"

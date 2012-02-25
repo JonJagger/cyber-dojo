@@ -12,10 +12,10 @@ var cyberDojo = (function($cd, $j) {
         diffSheet.html(diffedLines);
         diffSheet.save = save;
         $j('div[class="filename"]').each(function() {
-          $j(this).attr('current_file', 'false');
+          $j(this).attr('current', 'false');
         });
-        filename.attr('current_file', 'true');
-        filename.toggleClass('selected');
+        filename.parent().attr('current', 'true');
+        filename.attr('checked', 'checked');
       };
     };
   
@@ -26,8 +26,8 @@ var cyberDojo = (function($cd, $j) {
     };
     
     $j.each(diffs, function(n, diff) {
-      var filename = $j('#' + diff.id);
-      filename.click( loadFrom(filename, diff.content, saveTo(filename)) );
+      var filename = $j('#radio_' + diff.id);
+      filename.parent().click( loadFrom(filename, diff.content, saveTo(filename)) );
     });
   };
 
