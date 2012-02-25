@@ -40,10 +40,8 @@ class DojoController < ApplicationController
     
     filesets_root_dir = params[:filesets_root_dir]
     @languages = folders_in(filesets_root_dir + '/language').sort
-    @language_index = rand(@languages.length)
     
     @exercises = folders_in(filesets_root_dir + '/exercise').sort
-    @exercise_index = rand(@exercises.length)
     @instructions = { }
     @exercises.each do |exercise|
       path = filesets_root_dir + '/' + 'exercise' + '/' + exercise + '/' + 'instructions'

@@ -2,13 +2,25 @@
 <script language="JavaScript"
         type="text/javascript"><!--
         
-function chooseExercise(index) {
-  var selected = $j('[id="exercise_' + index + '"]');
-  $cd.selectRadioListEntry(selected);
+$j(document).ready(function() {
+
+  var exerciseCount = 0;
   
-  var instructions = $j('#instructions_' + index).val();
-  $j('#instructions').val(instructions);
-}
+  $j('[name=exercise]').each(function(index) {
+    exerciseCount = index;
+    var node = $j(this);
+    node.parent().click(function() {
+      $cd.selectRadioListEntry(node);
+      var instructions = $j('#instructions_' + index).val();
+      $j('#instructions').val(instructions);      
+    });
+  });
+
+  var rand = Math.floor(Math.random() * exerciseCount);
+  
+  $j('#exercise_' + rand).parent().click();
+
+});
 
 //--></script>
 
@@ -17,20 +29,20 @@ function chooseExercise(index) {
     <span class="choose_title">exercise?</span>
   </div>
   
-  <% @exercises.each_with_index do |choice,index| -%>
-    <div class="filename" 
-         onclick='chooseExercise(<%=index-%>);' >
-      <input id="exercise_<%=index-%>" 
-             type="radio"
-             <% if @exercise_index==index -%>
-             checked="checked"
-             <% end -%>
-             onclick='chooseExercise(<%=index-%>);'                      
-             name="exercise" 
-             value="<%=choice-%>" />
-      <label><%= choice -%></label>
-    </div>    
-  <% end -%>    
+  <div>
+    <% @exercises.each_with_index do |choice,index| -%>
+      <div class="filename" >
+        <input id="exercise_<%=index-%>" 
+               type="radio"
+               <% if @exercise_index==index -%>
+               checked="checked"
+               <% end -%>
+               name="exercise" 
+               value="<%=choice-%>" />
+        <label><%= choice -%></label>
+      </div>    
+    <% end -%>
+  </div>
 </td>
 
 <td class="panel" valign="top">

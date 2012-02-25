@@ -2,10 +2,22 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-function chooseLanguage(index) {
-  var selected = $j('[id="language_' + index + '"]');
-  $cd.selectRadioListEntry(selected);
-}
+$j(document).ready(function() {
+
+  var languageCount = 0;
+  $j('[name=language]').each(function(index) {
+    languageCount = index;
+    var node = $j(this);
+    node.parent().click(function() {
+      $cd.selectRadioListEntry(node);
+    });
+  });
+  
+  var rand = Math.floor(Math.random() * languageCount);
+  
+  $j('#language_' + rand).parent().click();
+
+});
 
 //--></script>
 
@@ -13,19 +25,12 @@ function chooseLanguage(index) {
   <div class="choose_title">language?</div>
 
   <% @languages.each_with_index do |choice,index| -%>
-    <div class="filename"
-        <% if @language_index == index -%>
-        current_file = "true"
-        <% else -%>
-        current_file = "false"                
-        <% end -%>
-         onclick='chooseLanguage(<%=index-%>);' >
+    <div class="filename" >
       <input id="language_<%=index-%>" 
              type="radio"
              <% if @language_index==index -%>
              checked="checked"
              <% end -%>
-             onclick='chooseLanguage(<%=index-%>);'                      
              name="language" 
              value="<%=choice-%>" />
       <label><%= choice -%></label>
