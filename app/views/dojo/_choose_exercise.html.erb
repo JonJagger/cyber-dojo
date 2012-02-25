@@ -2,22 +2,12 @@
 <script language="JavaScript"
         type="text/javascript"><!--
         
-var previousExerciseIndex = "<%=@exercise_index-%>";
-
-function exercise(index) {
-  return $j('#exercise_' + index);  
-}
-
 function chooseExercise(index) {
-  exercise(previousExerciseIndex).parent().attr('current_file', 'false');
+  var selected = $j('[id="exercise_' + index + '"]');
+  $cd.selectRadioListEntry(selected);
   
   var instructions = $j('#instructions_' + index).val();
   $j('#instructions').val(instructions);
-  
-  var selected = exercise(index);  
-  selected.parent().attr('current_file', 'true');
-  selected.attr('checked', 'checked');
-  previousExerciseIndex = index;
 }
 
 //--></script>

@@ -3,12 +3,8 @@
         type="text/javascript"><!--
 
 function chooseLanguage(index) {
-  var selected = $j('#language_' + index);
-  selected.parent().siblings().each(function() {
-    $j(this).attr('current_file', 'false');
-  });
-  selected.parent().attr('current_file', 'true');
-  selected.attr('checked', 'checked');
+  var selected = $j('[id="language_' + index + '"]');
+  $cd.selectRadioListEntry(selected);
 }
 
 //--></script>

@@ -10,18 +10,21 @@ var cyberDojo = (function($cd, $j) {
     $cd.selectFileInFileList(filename);
   };
 
+  $cd.selectRadioListEntry = function(node) {
+    node.parent().siblings().each(function() {
+      $j(this).attr('current_file', 'false');      
+    });
+    node.parent().attr('current_file', 'true');    
+    node.attr('checked', 'checked');  
+  };
+  
   $cd.selectFileInFileList = function(filename) {
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
     // characters in a dom node id
     // NB: This fails if the filename contains a double quote
-    
-    var selected = $j('[id="radio_' + filename + '"]');
-    selected.parent().siblings().each(function() {
-      $j(this).attr('current_file', 'false');      
-    });
-    selected.parent().attr('current_file', 'true');    
-    selected.attr('checked', 'checked');
+    var node = $j('[id="radio_' + filename + '"]');
+    $cd.selectRadioListEntry(node);
     
     var file_ops = $j('#file_operation_buttons');
     var renameFile = file_ops.find('#rename');
