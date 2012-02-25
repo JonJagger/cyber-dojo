@@ -1,21 +1,26 @@
 
 <script language="JavaScript"
         type="text/javascript"><!--
+        
+var previousExerciseIndex = "<%=@exercise_index-%>";
+
+function exercise(index) {
+  return $j('#exercise_' + index);  
+}
 
 function chooseExercise(index) {
+  exercise(previousExerciseIndex).parent().attr('current_file', 'false');
+  
   var instructions = $j('#instructions_' + index).val();
   $j('#instructions').val(instructions);
   
-  var selected = $j('#exercise_' + index);
-  selected.parent().siblings().each(function() {
-    $j(this).attr('current_file', 'false');
-  });
+  var selected = exercise(index);  
   selected.parent().attr('current_file', 'true');
   selected.attr('checked', 'checked');
+  previousExerciseIndex = index;
 }
 
 //--></script>
-
 
 <td class="panel" valign="top">
   <div>
