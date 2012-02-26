@@ -87,7 +87,7 @@ var cyberDojo = (function($cd, $j) {
     
     var fakeFilenameButton = function(filename) {
       return ''
-        + '<div class="mid_tone filename">'
+        + '<div class="filename">'
         +   '<input type="radio"'
         +          'name="filename"'
         +          'value="filename"/>'

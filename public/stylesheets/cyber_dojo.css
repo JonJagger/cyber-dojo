@@ -10,14 +10,14 @@ body
 #cyber_dojo_page
 {
   text-align: left;
-  color: DarkGreen;
+  color: Black;
 }
 
 h1, h2, h3, h4
 {
   text-align: center;
   margin: 0;
-  color: DarkGreen;
+  color: Black;
 }
 h1 { font-size: 3.0em; }
 h2 { font-size: 2.0em;  }
@@ -41,8 +41,6 @@ input { font-size: 1.15em; }
 
 .button
 {
-  background: CornSilk;
-  color: DarkGreen;
   font-size: 1em;
   cursor: pointer;
   padding: 2px 8px 2px 8px;
@@ -73,12 +71,10 @@ input { font-size: 1.15em; }
 
 #instructions
 {
-  background-color: #888;
-  color: Cornsilk;
   overflow-y: auto;
   font-family: monospace;
   font-size: 16pt;
-  border: 4px solid #888;
+  border: 4px solid Cornsilk;
 }
 
 .small_title
@@ -86,7 +82,7 @@ input { font-size: 1.15em; }
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
   font-size: 1em;
-  color: DarkGreen;
+  color: Black;
 }
 
 .choose_title { font-size: 1.9em; }
@@ -139,7 +135,7 @@ div[class~="filename"]:hover, .button:hover
 
 .line_numbers, .file_content
 {
-  height: 31em;    
+  height: 28em;    
 }
 
 .line_numbers, #diff_sheet, .file_content
@@ -244,8 +240,7 @@ pre.diffed_code ln
 /*    cyberdojo-file_load_save.js radioEntrySwitch()     */
 /*    cyberdojo-build_diff_filenames.js                  */
 
-.panel,
-pre.diffed_code same ln
+.panel, pre.diffed_code same ln
 {
   background: Cornsilk;
 }
@@ -257,13 +252,11 @@ body { background: #B2EFEF; }
 .line_numbers { background: Cornsilk; }
 .file_content
 {
-  background: Cornsilk;
-  color: Black;
   cursor: text;
   font-weight: 500;
 }
 
-#diff_sheet
+#diff_sheet, #instructions, .file_content, .button
 {
   background: Cornsilk;
   color: Black;
@@ -272,7 +265,7 @@ body { background: #B2EFEF; }
 .panel
 {
   background: #B2EFEF;
-  color: DarkGreen; 
+  color: Black;
   border-top: 3px dotted White;
   border-left: 3px dotted White;
   border-right: none;

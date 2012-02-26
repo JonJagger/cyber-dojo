@@ -62,7 +62,7 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.selectRadioEntry = function(node) {
     node.parent().css('background-color', 'Cornsilk');
-    node.parent().css('color', 'DarkGreen');
+    node.parent().css('color', 'Black');
     node.attr('checked', 'checked');        
   };
   
