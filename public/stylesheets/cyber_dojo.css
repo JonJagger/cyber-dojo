@@ -245,7 +245,6 @@ pre.diffed_code ln
 /*    cyberdojo-file_load_save.js radioEntrySwitch()     */
 /*    cyberdojo-build_diff_filenames.js                  */
 
-.line_numbers,
 .panel,
 pre.diffed_code same ln
 {
@@ -256,11 +255,13 @@ body { background: #B2EFEF; }
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 .line_numbers, pre.diffed_code ln { color: #888; }
-
+.line_numbers { background: Cornsilk; }
 .file_content
 {
-  background: #888;
-  color: Cornsilk;
+  background: Cornsilk; /*#B2EFEF;*/
+  color: #333;
+  cursor: text;
+  font-weight: 500;
 }
 
 #diff_sheet
@@ -271,8 +272,8 @@ body { background: #B2EFEF; }
 .panel
 {
   color: DarkGreen; 
-  border-top: 3px dotted Cornsilk;
-  border-left: 3px dotted Cornsilk;
+  border-top: 3px dotted White;
+  border-left: 3px dotted White;
   border-right: none;
   border-bottom: none;
   
@@ -284,4 +285,9 @@ body { background: #B2EFEF; }
 {
   font-size: 1.2em;
   color: Gray;
+}
+
+.editor_margin.panel
+{
+  background: Cornsilk;
 }
