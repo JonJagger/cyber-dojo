@@ -26,7 +26,7 @@ var cyberDojo = (function($cd, $j) {
       +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
       
     var makeBigSpanLi = function(line) {
-      return '<li><span style="font-size: 1.5em;">' + line + '</span></li>'
+      return '<li><span style="font-size: 1.5em;">' + line + '</span></li>';
     };
     
     var welcomeHtml = ''    
@@ -92,7 +92,7 @@ var cyberDojo = (function($cd, $j) {
         +          'name="filename"'
         +          'value="filename"/>'
         +   '<label>' + filename + '</label>'
-        + '</div>'
+        + '</div>';
     };
     
     var tdTrafficLights = function() {

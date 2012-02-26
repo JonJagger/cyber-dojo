@@ -221,6 +221,17 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.makeFileListEntry = function(filename) {
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // Creates a filename entry on the run-tests page. I can't stand
+    // radio-lists that have differing length text and you have to
+    // click exactly on the text rather than on the whitespace after
+    // the text when its one of the shorter texts. So this has extra
+    // structure. The <input type="radio"...> entries are wrapped
+    // inside a <div class="filename"> and it is to the div that the
+    // click handler function is attached. This pattern repeats
+    // in the language and exercise radio-lists in the create-page
+    // and also in the diff-page filename list.
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
     var div = $j('<div>', {
       'class': 'filename'
     });

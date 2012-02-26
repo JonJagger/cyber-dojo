@@ -2,6 +2,8 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
+var previousLanguageIndex = 0;
+
 $j(document).ready(function() {
 
   var languageCount = 0;
@@ -9,13 +11,16 @@ $j(document).ready(function() {
     languageCount = index;
     var node = $j(this);
     node.parent().click(function() {
-      $cd.selectRadioListEntry(node);
+      var previous = $j('[id=language_' + previousLanguageIndex + ']');
+      $cd.radioEntrySwitch(previous, node);
+      previousLanguageIndex = index;
     });
   });
   
   var rand = Math.floor(Math.random() * languageCount);
   
   $j('#language_' + rand).parent().click();
+  previousLanguageIndex = rand;
 
 });
 

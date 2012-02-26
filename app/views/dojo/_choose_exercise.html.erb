@@ -2,6 +2,8 @@
 <script language="JavaScript"
         type="text/javascript"><!--
         
+var previousExerciseIndex = 0;
+
 $j(document).ready(function() {
 
   var exerciseCount = 0;
@@ -10,7 +12,9 @@ $j(document).ready(function() {
     exerciseCount = index;
     var node = $j(this);
     node.parent().click(function() {
-      $cd.selectRadioListEntry(node);
+      var previous = $j('[id=exercise_' + previousExerciseIndex + ']');      
+      $cd.radioEntrySwitch(previous, node);
+      previousExerciseIndex = index;
       var instructions = $j('#instructions_' + index).val();
       $j('#instructions').val(instructions);      
     });
@@ -19,6 +23,7 @@ $j(document).ready(function() {
   var rand = Math.floor(Math.random() * exerciseCount);
   
   $j('#exercise_' + rand).parent().click();
+  previousExerciseIndex = rand;
 
 });
 

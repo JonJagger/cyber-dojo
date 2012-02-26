@@ -10,21 +10,15 @@ var cyberDojo = (function($cd, $j) {
     $cd.selectFileInFileList(filename);
   };
 
-  $cd.selectRadioListEntry = function(node) {
-    node.parent().siblings().each(function() {
-      $j(this).attr('current', 'false');      
-    });
-    node.parent().attr('current', 'true');    
-    node.attr('checked', 'checked');  
-  };
-  
   $cd.selectFileInFileList = function(filename) {
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
     // characters in a dom node id
     // NB: This fails if the filename contains a double quote
     var node = $j('[id="radio_' + filename + '"]');
-    $cd.selectRadioListEntry(node);
+    var previousFilename = $cd.currentFilename();
+    var previous = $j('[id="radio_' + previousFilename + '"]');
+    $cd.radioEntrySwitch(previous, node);
     
     var file_ops = $j('#file_operation_buttons');
     var renameFile = file_ops.find('#rename');
@@ -47,6 +41,23 @@ var cyberDojo = (function($cd, $j) {
     $j('#current_filename').val(filename);
   };
 
+  $cd.radioEntrySwitch = function(previous, current) {
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // This is used by the run-tests-page filename radio-list
+    // and also the create-page languages/exercises radio-lists
+    // See the comment for makeFileListEntry() in
+    // cyberdojo-file_new_rename_delete.js
+    // I colour the radio entry in jQuery rather than in
+    // explicit CSS to try and give better ui apperance to
+    // older browsers.
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    previous.parent().css('background-color', '#B2EFEF');
+    previous.parent().css('color', '#777');
+    current.parent().css('background-color', 'Cornsilk');
+    current.parent().css('color', 'DarkGreen');
+    current.attr('checked', 'checked');    
+  };
+  
   $cd.cantBeRenamedOrDeleted = function(filename) {
     return filename === 'cyberdojo.sh' || filename === 'output';  
   };
