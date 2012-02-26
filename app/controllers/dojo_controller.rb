@@ -101,10 +101,28 @@ class DojoController < ApplicationController
     
   #------------------------------------------------
     
-  def ifaq
+  def faqs
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
   end
 
-  def conceived
+  def links
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
+  end
+  
+  def tips
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
+  end
+  
+  def why
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
   end
   
   def render_error

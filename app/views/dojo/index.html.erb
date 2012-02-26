@@ -28,26 +28,41 @@ $j(document).ready(function() {
     };
   };
   
-  $j('#show_dashboard').click(function() {
-    run('exists_json', function(id, data) {
-      showDashboard(id, data);
-    });
-  });
-  
   $j('#show_messages').click(function() {
     run('exists_json', function(id, data) {
       showMessages(id, data);
     });
   });
 
-  $j.each(['why', 'tips', 'ifaqs', 'links'], function(i,name) {
+  $j.each(['faqs', 'links', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
-      $cd.postTo('/dojo/' + name, { }, '_blank');
+      popup(name);
     });
   });
   
   $j('body').css('background', 'Cornsilk');
 });
+
+
+function popup(name) {
+  var grid = $j('<div>');
+  grid.load('/dojo/' + name, { }, function() {
+    var div = $j('<div>')
+      .html('<div style="font-size: 1.2em;">' + grid.html() + '</div>')    
+      .dialog({
+        autoOpen: false,
+        width: (name === 'faqs' ? 650 : 1200),
+        title: '<h1>' + name + '</h1>',
+        modal: true,
+        buttons: {
+          ok: function() {
+            $j(this).dialog('close');
+          }
+        }
+      });
+    div.dialog('open');        
+  });  
+}
 
 function run(method, func) {
   var id = $j('#kata_id_input').attr('value');
@@ -183,7 +198,7 @@ function cantFind(id) {
             <input type="button"
                    class="large button"
                    id="show_dashboard"
-                   value="review-code" />
+                   value="review-coding" />
           </td>
         </tr>          
       </table>
@@ -192,7 +207,7 @@ function cantFind(id) {
 
   <tr>
     <td class="panel">
-      <% [ 'ifaqs', 'links', 'tips', 'why' ].each do |name| -%>
+      <% [ 'faqs', 'links', 'tips', 'why' ].each do |name| -%>
         <input type="button"
                class="button"
                id="<%=name-%>"
