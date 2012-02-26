@@ -28,12 +28,12 @@ $j(document).ready(function() {
     };
   };
   
-  $j('#show_messages').click(function() {
+  $j('#show_dashboard').click(function() {
     run('exists_json', function(id, data) {
-      showMessages(id, data);
+      showDashboard(id, data);
     });
   });
-
+  
   $j.each(['faqs', 'links', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
       popup(name);
@@ -105,14 +105,6 @@ function showDashboard(id, data) {
     cantFind(id);
   } else {
     $cd.postTo('/dashboard/show', { id: id });  
-  }
-}
-
-function showMessages(id, data) {
-  if (!data.exists) {
-    cantFind(id);  
-  } else {
-    $cd.postTo('/messages/show', { id: id });  
   }
 }
 

@@ -240,7 +240,7 @@ pre.diffed_code ln
 }
 
 #diff_sheet, #instructions, .file_content, .button, .light_margin.panel,
-.line_numbers, .panel, pre.diffed_code same ln, pre.diffed_code same
+.panel, pre.diffed_code same
 {
   background: Cornsilk;
 }
@@ -252,7 +252,7 @@ h1, h2, h3, h4, #cyber_dojo_page, #diff_sheet, #instructions,
   color: #003C00;
 }
 
-body, .panel
+body, .panel, .line_numbers, pre.diffed_code same ln
 {
   background: #B2EFEF;  
 }
