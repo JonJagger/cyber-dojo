@@ -7,17 +7,10 @@ body
   margin-top: 0.5em;
 }
 
-#cyber_dojo_page
-{
-  text-align: left;
-  color: Black;
-}
-
 h1, h2, h3, h4
 {
   text-align: center;
   margin: 0;
-  color: Black;
 }
 h1 { font-size: 3.0em; }
 h2 { font-size: 2.0em;  }
@@ -29,10 +22,14 @@ h3 { font-size: 1.3em;  }
   cursor: pointer;
 }
 
-#index
+.panel
 {
-  height: 30em;
-  overflow-y: auto;
+  border-top: 2px dotted White;
+  border-left: 2px dotted White;
+  border-right: none;
+  border-bottom: none;
+  margin: 0px;
+  padding: 0.5em;  
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -47,8 +44,6 @@ input { font-size: 1.15em; }
   text-decoration: none;
   font-weight: normal;
   border: none;
-  border-right:  1px solid #A8A8A8; 
-  border-bottom: 1px solid #A8A8A8;
 }
 
 .small.button
@@ -82,7 +77,6 @@ input { font-size: 1.15em; }
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
   font-size: 1em;
-  color: Black;
 }
 
 .choose_title { font-size: 1.9em; }
@@ -111,8 +105,6 @@ div[class~="filename"]
   font-size: 17pt;
   cursor: pointer;
   white-space: nowrap;
-  border-bottom: 1px solid #A8A8A8;
-  border-right:  1px solid #A8A8A8;
 }
 
 div[class~="filename"]:hover, .button:hover
@@ -121,7 +113,7 @@ div[class~="filename"]:hover, .button:hover
   border-right:  1px solid #555555;   
 }
 
-.button[disabled]:hover
+div[class~="filename"], .button[disabled]:hover, .button
 {
   border-bottom: 1px solid #A8A8A8;
   border-right:  1px solid #A8A8A8;   
@@ -133,10 +125,7 @@ div[class~="filename"]:hover, .button:hover
 
 .file_content { width: 45em; }
 
-.line_numbers, .file_content
-{
-  height: 28em;    
-}
+.line_numbers, .file_content { height: 28em; }
 
 .line_numbers, #diff_sheet, .file_content
 {
@@ -157,6 +146,7 @@ div[class~="filename"]:hover, .button:hover
   font-weight: normal;
   padding-right: 2px;
   width: 2em;
+  font-weight: 100;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -177,10 +167,9 @@ div[class~="filename"]:hover, .button:hover
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
 #traffic_lights .number, .traffic_light .number
 {
-  font-size: 1.8em;
+  font-size: 1.4em;
   text-align: center; /* for diff and dashboard */
   display: block; /* for dashboard */
-  color: Gray;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -204,11 +193,8 @@ div[class~="filename"]:hover, .button:hover
   padding: 0;
 }
 
-.invisible { display: none; } 
-
 pre.diffed_code { margin: 0; padding: 0; }
 
-pre.diffed_code same    { background: Cornsilk; color: Black; }
 pre.diffed_code added,   #toggle_added_lines   { background: #CEF6CE; }
 pre.diffed_code deleted, #toggle_deleted_lines { background: #F6CECE; }
 
@@ -234,54 +220,42 @@ pre.diffed_code ln
 .deleted.dot { background: #F6CECE; border: 1px dotted #F00; }
 .spacer.dot  { background: #B2EFEF; border: 1px dotted #B2EFEF; }
 
+.invisible { display: none; } /* used to show/hide -+ lines */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.file_content { font-weight: 500; }
+
+.info { font-size: 1.2em; }
+
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* Main Colour Scheme                                    */
 /* See also jQuery CSS'ing in                            */
 /*    cyberdojo-file_load_save.js radioEntrySwitch()     */
 /*    cyberdojo-build_diff_filenames.js                  */
 
-.panel, pre.diffed_code same ln
+.line_numbers, pre.diffed_code ln
+{
+  color: #888;
+}
+
+#diff_sheet, #instructions, .file_content, .button, .light_margin.panel,
+.line_numbers, .panel, pre.diffed_code same ln, pre.diffed_code same
 {
   background: Cornsilk;
 }
-body { background: #B2EFEF; }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-.line_numbers, pre.diffed_code ln { color: #888; }
-.line_numbers { background: Cornsilk; }
-.file_content
+h1, h2, h3, h4, #cyber_dojo_page, #diff_sheet, #instructions,
+.file_content, .button, .panel, .info, .small_title, pre.diffed_code same,
+#traffic_lights .number, .traffic_light .number
 {
-  cursor: text;
-  font-weight: 500;
+  color: #003C00;
 }
 
-#diff_sheet, #instructions, .file_content, .button
+body, .panel
 {
-  background: Cornsilk;
-  color: Black;
+  background: #B2EFEF;  
 }
 
-.panel
-{
-  background: #B2EFEF;
-  color: Black;
-  border-top: 3px dotted White;
-  border-left: 3px dotted White;
-  border-right: none;
-  border-bottom: none;
-  
-  margin: 0px;
-  padding: 0.5em;  
-}
 
-.info
-{
-  font-size: 1.2em;
-  color: Gray;
-}
 
-.light_margin.panel
-{
-  background: Cornsilk;
-}
