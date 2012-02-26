@@ -12,12 +12,9 @@ var cyberDojo = (function($cd, $j) {
         diffSheet.html(diffedLines);
         diffSheet.save = save;
         $j('div[class="filename"]').each(function() {
-          $j(this).css('background-color', '#B2EFEF');
-          $j(this).css('color', '#777');
+          $cd.deselectRadioEntry($j(this));
         });
-        filename.parent().css('background-color', 'Cornsilk');
-        filename.parent().css('color', 'DarkGreen');
-        filename.attr('checked', 'checked');
+        $cd.selectRadioEntry(filename);
       };
     };
   
