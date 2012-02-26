@@ -204,7 +204,6 @@ div[class~="filename"]:hover, .button:hover
 
 #diff_sheet
 {
-  background: #888;
   margin: 0;
   padding: 0;
 }
@@ -213,7 +212,7 @@ div[class~="filename"]:hover, .button:hover
 
 pre.diffed_code { margin: 0; padding: 0; }
 
-pre.diffed_code same    { background: #888; color: Cornsilk; }
+pre.diffed_code same    { background: Cornsilk; color: Black; }
 pre.diffed_code added,   #toggle_added_lines   { background: #CEF6CE; }
 pre.diffed_code deleted, #toggle_deleted_lines { background: #F6CECE; }
 
@@ -248,7 +247,7 @@ pre.diffed_code ln
 .panel,
 pre.diffed_code same ln
 {
-  background: #B2EFEF;
+  background: Cornsilk;
 }
 body { background: #B2EFEF; }
 
@@ -258,19 +257,21 @@ body { background: #B2EFEF; }
 .line_numbers { background: Cornsilk; }
 .file_content
 {
-  background: Cornsilk; /*#B2EFEF;*/
-  color: #333;
+  background: Cornsilk;
+  color: Black;
   cursor: text;
   font-weight: 500;
 }
 
 #diff_sheet
 {
-  color: #383838;
+  background: Cornsilk;
+  color: Black;
 }
 
 .panel
 {
+  background: #B2EFEF;
   color: DarkGreen; 
   border-top: 3px dotted White;
   border-left: 3px dotted White;
@@ -287,7 +288,7 @@ body { background: #B2EFEF; }
   color: Gray;
 }
 
-.editor_margin.panel
+.light_margin.panel
 {
   background: Cornsilk;
 }
