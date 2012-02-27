@@ -18,34 +18,30 @@ var cyberDojo = (function($cd, $j) {
     
     var imageSize = 200;
     var avatarImage = ''
+      + '<table><tr><td>'
       + '<img alt="' + avatar + '"'
       +     ' class="avatar_image"'
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
+      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />'
+      + '</td></tr>'
+      + '<tr><td>'
+      + '<span style="font-size: 1.4em;">' + avatar + "'s" + '</span>  code'
+      + '</td></tr></table>'
       
     var makeBigSpanLi = function(line) {
-      return '<li><span style="font-size: 1.5em;">' + line + '</span></li>';
+      return '<li><span style="font-size: 1.8em;">' + line + '</span></li>';
     };
     
     var welcomeHtml = ''    
       + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
-              'this is the '
-            + '<span style="font-size: 1.8em;">' + avatar + "'s" + '</span>'
-            + ' code<br/><br/>'
-            + 'remember...'
-            + '<ul>'
-            +   makeBigSpanLi('you are practising;<br/>not competing')
-            +   makeBigSpanLi("think about improving;<br/>not finishing")
+              '<ul>'
+            +   makeBigSpanLi("think about improving<br/>not finishing<br/>")
+            +   makeBigSpanLi('you are practising<br/>not competing<br/><br/>')
             + '</ul>'
             )
-      + '</div>'
-      
-      + '<div class="panel">'
-      +   'click <input type="button" class="small button" value="help"/>'
-      +   ' for help'
       + '</div>';
       
     var welcome = $j('<div>')
