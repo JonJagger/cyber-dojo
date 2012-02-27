@@ -37,8 +37,8 @@ var cyberDojo = (function($cd, $j) {
             + ' code<br/><br/>'
             + 'remember...'
             + '<ul>'
-            +   makeBigSpanLi('you are not competing;<br/>you are practising')
-            +   makeBigSpanLi("don't think about finishing;<br/>think about improving")
+            +   makeBigSpanLi('you are practising;<br/>not competing')
+            +   makeBigSpanLi("think about improving;<br/>not finishing")
             + '</ul>'
             )
       + '</div>'
@@ -53,7 +53,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 700,
-        title: "<h1>welcome</h1>",
+        title: $cd.h1('welcome'),
         modal: true,
         buttons: {
           ok: function() {
@@ -62,6 +62,10 @@ var cyberDojo = (function($cd, $j) {
         }
       });
     welcome.dialog('open');  
+  };
+  
+  $cd.h1 = function(title) {
+    return '<h1>' + title + '</h1>';  
   };
   
   $cd.help = function(avatar) {
@@ -84,16 +88,6 @@ var cyberDojo = (function($cd, $j) {
       +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
         
     var br = '<br/>';
-    
-    var fakeFilenameButton = function(filename) {
-      return ''
-        + '<div class="filename">'
-        +   '<input type="radio"'
-        +          'name="filename"'
-        +          'value="filename"/>'
-        +   '<label>' + filename + '</label>'
-        + '</div>';
-    };
     
     var tdTrafficLights = function() {
       return tdTrafficLight('red') + tdTrafficLight('amber') + tdTrafficLight('green');  
@@ -139,7 +133,7 @@ var cyberDojo = (function($cd, $j) {
       +   $cd.makeTable(
             '<input type="button" class="larger button" value="run-the-tests"/>',
             'results go to the',
-            fakeFilenameButton('<i>output</i>'),
+            $cd.fakeFilenameButton('<i>output</i>'),
             'file')
       + '</div>'
       
@@ -151,7 +145,7 @@ var cyberDojo = (function($cd, $j) {
       + '</div>'
             
       + '<div class="panel">'
-      +    $cd.makeTable(fakeFilenameButton('filename.ext'), 'opens a file for editing')
+      +    $cd.makeTable($cd.fakeFilenameButton('filename'), 'opens a file')
       + '</div>'
       
       + '<div class="panel">'
@@ -164,7 +158,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: 575,
-        title: "<h1>help</h1>",
+        title: $cd.h1('help'),
         modal: true,
         buttons: {
           ok: function() {
@@ -174,6 +168,20 @@ var cyberDojo = (function($cd, $j) {
       });
     help.dialog('open');  
   };
+
+  $cd.fakeFilenameButton = function(filename) {
+    return ''
+      + '<table><tr><td>'
+      + '<div class="filename" style="background:Cornsilk;color:#003C00;">'
+      +   '<input type="radio"'
+      +          'name="filename' + filename + '"'
+      +          'checked="checked"'
+      +          'value="filename"/>'
+      +   '<label>' + '&nbsp;' + filename + '</label>'
+      + '</div>'
+      + '</td></tr></table>';
+  };
+  
 
   return $cd;
 })(cyberDojo || {}, $j);

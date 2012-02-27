@@ -26,6 +26,10 @@ h3 { font-size: 1.3em;  }
 {
   border-top: 2px dotted White;
   border-left: 2px dotted White;
+  
+  border-top: 3px solid Cornsilk;
+  border-left: 3px solid Cornsilk;
+  
   border-right: none;
   border-bottom: none;
   margin: 0px;

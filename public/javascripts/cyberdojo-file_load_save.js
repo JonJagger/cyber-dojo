@@ -47,25 +47,11 @@ var cyberDojo = (function($cd, $j) {
     // and also the create-page languages/exercises radio-lists
     // See the comment for makeFileListEntry() in
     // cyberdojo-file_new_rename_delete.js
-    // I colour the radio entry in jQuery rather than in
-    // explicit CSS to try and give better ui appearance in
-    // older browsers.
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     $cd.deselectRadioEntry(previous.parent());
     $cd.selectRadioEntry(current);
   };
-  
-  $cd.deselectRadioEntry = function(node) {  
-    node.css('background-color', '#B2EFEF');
-    node.css('color', '#777');
-  };
-
-  $cd.selectRadioEntry = function(node) {
-    node.parent().css('background-color', 'Cornsilk');
-    node.parent().css('color', '#003C00');
-    node.attr('checked', 'checked');        
-  };
-  
+    
   $cd.cantBeRenamedOrDeleted = function(filename) {
     return filename === 'cyberdojo.sh' || filename === 'output';  
   };

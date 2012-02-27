@@ -17,18 +17,26 @@ var cyberDojo = (function($cd, $j) {
     if ($cd.cantBeRenamedOrDeleted(oldFilename))
       return;
   
+    var div = $j('<div class="panel">', {
+      style: 'font-size: 2.0em;'  
+    });
+
+    div.append('<div>&nbsp;</div>');
     var input = $j('<input>', {
       type: 'text',
       id: 'renamer',
       name: 'renamer',
-      value: "was_" + oldFilename
-    });
+      value: 'was_' + oldFilename
+    });    
+    div.append(input);
+    div.append('<div>&nbsp;</div>');
     
     var renamer = $j('<div>')
-      .html(input)
+      .html(div)
       .dialog({
 	autoOpen: false,
-	title: "rename file to",
+        width: 600,	    	
+	title: $cd.h1('rename'),
 	modal: true,
 	buttons: {
 	  ok: function() {
@@ -69,19 +77,25 @@ var cyberDojo = (function($cd, $j) {
     $cd.fileDiv($cd.currentFilename()).show();
   };
 
+  $cd.htmlPanel = function(content) {
+    return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>'
+  };
+
   $cd.deleteFilePrompt = function(ask) {
     var filename = $cd.currentFilename();
     
-    if ($cd.cantBeRenamedOrDeleted(filename))
+    if ($cd.cantBeRenamedOrDeleted(filename)) {
       return;
+    }
     
     if (ask) {
       var deleter =
 	$j("<div>")
-	  .html(filename)
+	  .html($cd.htmlPanel($cd.fakeFilenameButton(filename)))
 	  .dialog({
 	    autoOpen: false,
-	    title: "delete file",
+            width: 600,	    
+	    title: $cd.h1('delete'),
 	    modal: true,
 	    buttons: {
 	      ok: function() {
@@ -111,7 +125,7 @@ var cyberDojo = (function($cd, $j) {
     var space = "&nbsp;";
     var tab = space + space + space + space;
     var br = "<br/>";
-    var why = "CyberDojo could not rename" + br +
+    var why = "Cannot not rename" + br +
 	   br +
 	   tab + oldFilename + br +
 	   "to" + br + 
@@ -123,11 +137,11 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.alert = function(message, title) {
-    $j('<div>')
-      .html(message)
+    $j('<div>')    
+      .html($cd.htmlPanel(message))
       .dialog({
 	autoOpen: false,
-	title: typeof(title) !== 'undefined' ? title : "alert",
+	title: typeof(title) !== 'undefined' ? $cd.h1(title) : $cd.h1('alert!'),
 	modal: true,
 	width: 600,
 	buttons: {
@@ -161,6 +175,11 @@ var cyberDojo = (function($cd, $j) {
     if (newFilename.indexOf("/") !== -1) {
       $cd.renameFailure(oldFilename, newFilename,
 		    newFilename + " contains a forward slash");
+      return;
+    }
+    if (newFilename.indexOf("\\") !== -1) {
+      $cd.renameFailure(oldFilename, newFilename,
+		    newFilename + " contains a back slash");
       return;
     }
     
@@ -224,7 +243,7 @@ var cyberDojo = (function($cd, $j) {
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Creates a filename entry on the run-tests page. I can't stand
     // radio-lists that have differing length text and you have to
-    // click exactly on the text rather than on the whitespace after
+    // click exactly on the text rather than on the space after
     // the text when its one of the shorter texts. So this has extra
     // structure. The <input type="radio"...> entries are wrapped
     // inside a <div class="filename"> and it is to the div that the
@@ -254,6 +273,26 @@ var cyberDojo = (function($cd, $j) {
     return div;
   };
   
+  $cd.deselectRadioEntry = function(node) {  
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // See makeFileListEntry() above...
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    node.css('background-color', '#B2EFEF');
+    node.css('color', '#777');
+  };
+
+  $cd.selectRadioEntry = function(node) {
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // See makeFileListEntry() above...
+    // I colour the radio entry in jQuery rather than in
+    // explicit CSS to try and give better ui appearance in
+    // older browsers.    
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    node.parent().css('background-color', 'Cornsilk');
+    node.parent().css('color', '#003C00');
+    node.attr('checked', 'checked');        
+  };
+    
   $cd.makeNewFile = function(filename, content) {
     var div = $j('<div>', {
       'class': 'filename_div',
