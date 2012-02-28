@@ -136,9 +136,9 @@ Here are the commands Phil Nash used to install CyberDojo on his MacBook
 >sudo gem install rails -v 2.3.8 --include-dependencies
 >sudo gem install sqlite3-ruby
  
-The MacOs file system is case insensitive and this causes a file rename problem
-in git. If you start a new kata (as Lion say) and do a run-tests and then
-change the 'instructions' file to 'Instructions' and make a small change to
+The MacOs file system can be case insensitive and this could cause git a file
+rename problem. If you start a new kata (as Lion say) and do a run-tests and
+then change the 'instructions' file to 'Instructions' and make a small change to
 its content, and do another run-tests then git diff will not see the difference.
 Specifically, from the Lion's directory
 >git diff --ignore-space-at-eol --find-copies-harder 2 1 sandbox
@@ -157,7 +157,7 @@ If you do this
 >manifest.keys
 You will see a file called Instructions.
 But git diff does not see it... 
- 
+Unlikely to be a major problem.
 
 
 Versions
