@@ -1,3 +1,4 @@
+
 module ParityHelper
 
   def parity(n)

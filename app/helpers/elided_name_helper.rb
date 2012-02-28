@@ -1,3 +1,4 @@
+
 module ElidedNameHelper
   
   def elided_name(name, max_len)

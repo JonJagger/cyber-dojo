@@ -1,8 +1,7 @@
-require 'plural_helper'
 
 module TimeInWordsHelper
 
-  include PluralHelper
+  include ActionView::Helpers::TextHelper
 
   # Something akin to git log --relative-date option
   # Used on dashboard
@@ -11,15 +10,15 @@ module TimeInWordsHelper
     years,days,hours,minutes,seconds = time_split(seconds)
     
     if years > 0
-      plural(years, 'year')
+      pluralize(years, 'year')
     elsif days > 0
-      plural(days, 'day')
+      pluralize(days, 'day')
     elsif hours > 0
-      plural(hours, 'hour')
+      pluralize(hours, 'hour')
     elsif minutes > 0
-      plural(minutes, 'minute')
+      pluralize(minutes, 'minute')
     else  
-      plural(seconds, 'second')
+      pluralize(seconds, 'second')
     end
   end
   

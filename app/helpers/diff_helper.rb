@@ -1,4 +1,9 @@
-module DiffDotsHelper
+
+module DiffHelper
+  
+  def diff_tip(n_deleted, n_added)
+    pluralize(n_deleted, "deletion") + " &amp; " + pluralize(n_added, "addition")
+  end
   
   def diff_dots(n, kind)
     html = '<table>'
@@ -10,6 +15,8 @@ module DiffDotsHelper
     html += '</table>'
   end
     
+private
+  
   def spaced_ellision(n)
     html = ""
     if n <= MaxDots

@@ -1,3 +1,4 @@
+
 module RecentHelper
   
   # There is limited horizontal space to display traffic-lights.

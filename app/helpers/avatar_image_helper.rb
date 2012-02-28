@@ -1,3 +1,4 @@
+
 module AvatarImageHelper
   
   def avatar_image(name, size)

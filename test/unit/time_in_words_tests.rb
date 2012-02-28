@@ -16,13 +16,6 @@ class TimeInWordsTests < ActionController::TestCase
     end    
   end
 
-  def test_plural
-    minute = 'minute'
-    assert_equal '0 minutes', plural(0, minute)
-    assert_equal '1 minute', plural(1, minute)
-    assert_equal '2 minutes', plural(2, minute)    
-  end
-  
   def test_time_split_unsplit
     time_split_unsplit_words([0, 0, 0, 0, 0], 0,  '0 seconds')
     time_split_unsplit_words([0, 0, 0, 0, 1], 1,  '1 second')

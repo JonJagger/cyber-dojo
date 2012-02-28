@@ -87,10 +87,6 @@ class Kata
     end
   end
   
-  def seconds_per_heartbeat
-    10
-  end
-
   def visible_files
     manifest[:visible_files]
   end
