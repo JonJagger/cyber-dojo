@@ -5,8 +5,6 @@ require 'Locking'
 
 class DojoController < ApplicationController
     
-  include Files
-  extend Files 
   include Folders
   extend Folders  
   include Locking
@@ -65,10 +63,9 @@ class DojoController < ApplicationController
     io_lock(katas_root_dir) do    
       index_filename = katas_root_dir + '/' + Kata::Index_filename
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      file_write(index_filename, index << info)
+      Files::file_write(index_filename, index << info)
     end
     
-    # This is not working in IE7, perhaps add :controller => 'dojo'
     redirect_to :action => :index, 
                 :id => info[:id]
   end  

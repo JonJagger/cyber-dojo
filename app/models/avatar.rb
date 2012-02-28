@@ -7,7 +7,6 @@ class Avatar
 
   include MakeTimeHelper
   include TestRunnerHelper
-  include Files
   include Locking
   include ParseRunTestsOutputHelper
   
@@ -33,8 +32,8 @@ class Avatar
         save_file(sandbox, filename, content)
       end
       
-      file_write(pathed(Manifest_filename), visible_files)
-      file_write(pathed(Increments_filename), [ ])
+      Files::file_write(pathed(Manifest_filename), visible_files)
+      Files::file_write(pathed(Increments_filename), [ ])
       
       command  = "cd '#{dir}';" +
                  "git init --quiet;" +
@@ -85,7 +84,7 @@ class Avatar
       tag ||= most_recent_tag      
       command  = "cd #{dir};" +
                  "git show #{tag}:#{Manifest_filename}"
-      seen = popen_read(command) 
+      seen = Files::popen_read(command) 
     end
     eval seen
   end
@@ -113,8 +112,8 @@ class Avatar
 private
   
   def save_run_tests_outcomes(increments, visible_files)
-    file_write(pathed(Increments_filename), increments)
-    file_write(pathed(Manifest_filename), visible_files)
+    Files::file_write(pathed(Increments_filename), increments)
+    Files::file_write(pathed(Manifest_filename), visible_files)
     tag = increments.length
     git_commit_tag(visible_files, tag)
   end
@@ -126,7 +125,7 @@ private
   def most_recent_tag
     command  = "cd #{dir};" +
                "git tag|sort -g"
-    eval popen_read(command)    
+    eval Files::popen_read(command)    
   end
   
   def git_commit_tag(visible_files, n)
@@ -155,7 +154,7 @@ private
     else
       command  = "cd #{dir};" +
                  "git show #{tag}:#{Increments_filename}"
-      eval popen_read(command)
+      eval Files::popen_read(command)
     end
   end
 

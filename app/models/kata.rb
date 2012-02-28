@@ -1,8 +1,6 @@
 
-require 'duration_helper.rb' # USED ANYWHERE ELSE?
+require 'duration_helper.rb'
 require 'make_time_helper.rb'
-require 'traffic_light_helper.rb' # NEEDED?
-require 'Locking' # NEEDED?
 require 'Files'
 
 class Kata
@@ -11,12 +9,6 @@ class Kata
   extend DurationHelper
   include MakeTimeHelper
   extend MakeTimeHelper
-  include TrafficLightHelper # NEEDED?
-  extend TrafficLightHelper  # NEEDED?
-  include Locking # NEEDED?
-  extend Locking  # NEEDED?
-  include Files
-  extend Files
   
   def self.inner_dir(id)
     id[0..1] || ""
@@ -49,7 +41,7 @@ class Kata
     
     outer_dir = inner_dir + '/' + Kata::outer_dir(id)
     Dir.mkdir outer_dir
-    file_write(outer_dir + '/manifest.rb', info)
+    Files::file_write(outer_dir + '/manifest.rb', info)
 
     sandbox = outer_dir + '/' + 'sandbox'
     Dir.mkdir sandbox    

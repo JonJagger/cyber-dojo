@@ -5,8 +5,6 @@ require 'Files'
 
 class PopenReadTests < Test::Unit::TestCase
 
-  include Files
-  
   def expected?
     'Hello World'
   end
@@ -16,15 +14,15 @@ class PopenReadTests < Test::Unit::TestCase
   end
   
   def test_popen_read_without_timeout
-    assert_equal "#{expected?}\n", popen_read(command?)
+    assert_equal "#{expected?}\n", Files::popen_read(command?)
   end
 
   def test_popen_read_with_timeout
-    assert_equal "#{expected?}\n", popen_read(command?, 2)
+    assert_equal "#{expected?}\n", Files::popen_read(command?, 2)
   end
   
   def test_popen_read_when_timeout_times_out
-    output = popen_read('sleep 10000', 1)
+    output = Files::popen_read('sleep 10000', 1)
     assert_not_nil output =~ /Terminated by the CyberDojo server after 1 seconds/, output 
   end
 end

@@ -1,6 +1,6 @@
 module Files
   
-  def file_write(path, object)
+  def self.file_write(path, object)
     # When doing a git diff on a repository that includes files created
     # by this function I found the output contained extra lines thus
     # \ No newline at end of file
@@ -24,7 +24,7 @@ module Files
   # So I have refactored: now the descendent processes are killed outside of
   # an ensure block.
   
-  def popen_read(command, max_seconds = nil)
+  def self.popen_read(command, max_seconds = nil)
     pipe = IO::popen(with_stderr(command))
     
     output = ""
@@ -53,12 +53,12 @@ module Files
   end
   
   
-  def with_stderr(cmd)
+  def self.with_stderr(cmd)
     cmd + " " + "2>&1"
   end
   
   
-  def kill(pids)
+  def self.kill(pids)
     return if pids == []
     begin
       `kill #{pids.join(' ')}`
@@ -67,9 +67,11 @@ module Files
     end
   end
   
-  # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
   
-  def descendant_pids_of(base)
+  def self.descendant_pids_of(base)
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     # Autovivify the hash
     descendants = Hash.new { |ht,k| ht[k] = [k] }
     # Get process parentage information and turn it into a hash  

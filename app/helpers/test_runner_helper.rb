@@ -1,3 +1,4 @@
+require 'Files'
 
 module TestRunnerHelper
 
@@ -10,7 +11,7 @@ module TestRunnerHelper
     command  = "cd '#{sandbox}';" +
                "./cyberdojo.sh"
     max_run_tests_duration = 10
-    output = popen_read(command, max_run_tests_duration)
+    output = Files::popen_read(command, max_run_tests_duration)
     save_file(avatar_sandbox, 'output', output )
     output
   end

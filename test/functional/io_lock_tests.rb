@@ -6,7 +6,6 @@ require 'Locking'
 
 class IoLockTests < Test::Unit::TestCase
   
-  include Files
   include Locking
   
   def test_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil
@@ -28,7 +27,7 @@ class IoLockTests < Test::Unit::TestCase
   def test_if_lock_is_obtained_block_is_executed_and_result_is_result_of_block
     block_run = false
     filename = 'exists.txt'
-    file_write(filename, 'x=[1,2,3]')
+    Files::file_write(filename, 'x=[1,2,3]')
     fd = File.open(filename, 'r')
     begin
       result = io_lock(filename) {|fd| block_run = true; 'Hello' }
@@ -42,7 +41,7 @@ class IoLockTests < Test::Unit::TestCase
   
   def test_inner_iolock_does_not_block_but_returns_false_if_lock_fails
     filename = 'exists.txt'
-    file_write(filename, 'x=[1,2,3]')
+    Files::file_write(filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
     io_lock(filename) do

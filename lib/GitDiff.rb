@@ -4,7 +4,6 @@ require 'Files'
 
 module GitDiff
 
-  include Files
   include Ids
   
   # Top level function used by diff_controller.rb to create data structure
@@ -19,7 +18,7 @@ module GitDiff
 
       cmd  = "cd #{avatar.dir};"
       cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
-      diff_lines = popen_read(cmd)
+      diff_lines = Files::popen_read(cmd)
   
       view = { }      
       diffs = GitDiffParser.new(diff_lines).parse_all           
