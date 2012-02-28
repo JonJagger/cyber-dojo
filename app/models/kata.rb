@@ -109,7 +109,6 @@ class Kata
   end
   
   def age_in_seconds
-    #duration_in_seconds(created, Time.now)
     (created - Time.now).to_i    
   end
   

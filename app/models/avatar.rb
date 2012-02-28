@@ -61,43 +61,32 @@ class Avatar
   def run_tests(visible_files)
     output = ''
     Locking::io_lock(dir) do
-      # These next three lines are the essence of the execution
+      # These next four lines are the essence of the execution
       # They should be refactored into a dedicated class
       # which could then be moved to a dedicated server.
       output = avatar_run_tests(sandbox, visible_files)
       visible_files['output'] = output
       test_info = parse(@kata.unit_test_framework, output)
-      
-      incs = locked_increments     
-      incs << test_info
       test_info[:time] = make_time(Time::now)
+      
+      incs = locked_read(Increments_filename)
+      incs << test_info
       test_info[:number] = incs.length
-      save_run_tests_outcomes(incs, visible_files)
+      Files::file_write(pathed(Increments_filename), incs)
+      Files::file_write(pathed(Manifest_filename), visible_files)
+      tag = incs.length
+      git_commit_tag(visible_files, tag)
+      
     end
     output
   end
 
   def visible_files(tag = nil)
-    seen = ''
-    Locking::io_lock(dir) do
-      tag ||= most_recent_tag      
-      command  = "cd #{dir};" +
-                 "git show #{tag}:#{Manifest_filename}"
-      seen = Files::popen_read(command) 
-    end
-    eval seen
+    unlocked_read(Manifest_filename, tag)
   end
 
   def increments(tag = nil)
-    # I think I could be over-locking here...
-    # if tag is not nil then this runs a
-    #    git show #{tag}:filename
-    # command which does not need locking.
-    # If tag is nil then the tag is retrieved
-    # with the command
-    #   git tag|sort -g
-    # which itself might need to be locked?
-    Locking::io_lock(dir) { locked_increments(tag) }
+    unlocked_read(Increments_filename, tag)
   end
   
   def dir
@@ -109,14 +98,7 @@ class Avatar
   end
 
 private
-  
-  def save_run_tests_outcomes(increments, visible_files)
-    Files::file_write(pathed(Increments_filename), increments)
-    Files::file_write(pathed(Manifest_filename), visible_files)
-    tag = increments.length
-    git_commit_tag(visible_files, tag)
-  end
-  
+    
   def pathed(filename)
     dir + '/' + filename
   end
@@ -127,36 +109,27 @@ private
     eval Files::popen_read(command)    
   end
   
-  def git_commit_tag(visible_files, n)
+  def git_commit_tag(visible_files, tag)
     command = "cd '#{dir}';"
     visible_files.each do |filename,|
       command += "git add '#{sandbox}/#{filename}';"
     end
-    command += "git commit -a -m '#{n}' --quiet;"
-    command += "git tag -m '#{n}' #{n} HEAD;"
+    command += "git commit -a -m '#{tag}' --quiet;"
+    command += "git tag -m '#{tag}' #{tag} HEAD;"
     system(command)   
   end
   
-  def locked_increments(tag = nil)
-    # if tag==nil is it better to instead do
-    # tag = most_recent_tag
-    # and thus avoid accessing the increments_filename
-    # directly? Would this mean I could drop the locking?
-    # I think the answer is yes, but it simply transfers
-    # any potential problem elsewhere. Viz, if there
-    # are two players playing as the same avatar
-    # then they could do a run-tests and interfere
-    # with each other, but they would at least be atomic
-    # because of the io_lock on run_tests.
-    if tag == nil
-      eval IO.read(pathed(Increments_filename))
-    else
-      command  = "cd #{dir};" +
-                 "git show #{tag}:#{Increments_filename}"
-      eval Files::popen_read(command)
-    end
+  def unlocked_read(filename, tag)
+    Locking::io_lock(dir) { locked_read(filename, tag) }
   end
-
+  
+  def locked_read(filename, tag = nil)
+    tag ||= most_recent_tag
+    command  = "cd #{dir};" +
+               "git show #{tag}:#{filename}"
+    eval Files::popen_read(command)     
+  end
+      
   Increments_filename = 'increments.rb'  
   Manifest_filename = 'manifest.rb'
 
