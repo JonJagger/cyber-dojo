@@ -1,12 +1,9 @@
 
-require 'duration_helper.rb'
 require 'make_time_helper.rb'
 require 'Files'
 
 class Kata
   
-  include DurationHelper
-  extend DurationHelper
   include MakeTimeHelper
   extend MakeTimeHelper
   
@@ -112,7 +109,8 @@ class Kata
   end
   
   def age_in_seconds
-    duration_in_seconds(created, Time.now)
+    #duration_in_seconds(created, Time.now)
+    (created - Time.now).to_i    
   end
   
   def dir    

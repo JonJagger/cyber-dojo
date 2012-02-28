@@ -2,7 +2,6 @@
 module TrafficLightHelper
 
   def linked_traffic_light(kata, avatar_name, inc, in_new_window)
-    minutes = duration_in_minutes(kata.created, Time.mktime(*inc[:time]))
     new_window = in_new_window ? { :target => '_blank' } : { }
     
     link_to unlinked_traffic_light(inc), 

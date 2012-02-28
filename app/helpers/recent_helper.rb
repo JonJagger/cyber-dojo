@@ -8,7 +8,7 @@ module RecentHelper
   # elements from array, or if the length of the array is less
   # than max_length, it returns the whole array.
   #
-  # See test/functional/recent_tests.rb
+  # See test/unit/recent_tests.rb
   
   def recent(array, max_length)
     len = [array.length, max_length].min
