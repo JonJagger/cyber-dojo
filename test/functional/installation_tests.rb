@@ -5,8 +5,6 @@ require 'Folders'
 
 class InstallationTests < ActionController::TestCase
 
-  include Folders
-
   def test_actual_installed_languages
     root_test_dir_reset        
     puts "Checking the (red,amber,green) installation testing mechanism..."
@@ -53,7 +51,7 @@ class InstallationTests < ActionController::TestCase
     installed_but_not_working = [ ]
         
     languages_root_dir = filesets_root_dir + '/language'
-    languages = folders_in(languages_root_dir).sort
+    languages = Folders::in(languages_root_dir).sort
     languages.each do |language|
       @language = language
       @language_dir = languages_root_dir + '/' + language

@@ -5,11 +5,6 @@ require 'Locking'
 
 class DojoController < ApplicationController
     
-  include Folders
-  extend Folders  
-  include Locking
-  extend Locking
-    
   def exists_json
     configure(params)
     @exists = Kata.exists?(params)
@@ -37,9 +32,9 @@ class DojoController < ApplicationController
     configure(params)
     
     filesets_root_dir = params[:filesets_root_dir]
-    @languages = folders_in(filesets_root_dir + '/language').sort
+    @languages = Folders::in(filesets_root_dir + '/language').sort
     
-    @exercises = folders_in(filesets_root_dir + '/exercise').sort
+    @exercises = Folders::in(filesets_root_dir + '/exercise').sort
     @instructions = { }
     @exercises.each do |exercise|
       path = filesets_root_dir + '/' + 'exercise' + '/' + exercise + '/' + 'instructions'
@@ -52,7 +47,7 @@ class DojoController < ApplicationController
     configure(params)
     
     katas_root_dir = params[:katas_root_dir]
-    io_lock(RAILS_ROOT) do      
+    Locking::io_lock(RAILS_ROOT) do      
       if !File.directory? katas_root_dir
         Dir.mkdir katas_root_dir
       end
@@ -60,7 +55,7 @@ class DojoController < ApplicationController
     
     info = Kata.create_new(InitialFileSet.new(params))
     
-    io_lock(katas_root_dir) do    
+    Locking::io_lock(katas_root_dir) do    
       index_filename = katas_root_dir + '/' + Kata::Index_filename
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
       Files::file_write(index_filename, index << info)
@@ -128,7 +123,7 @@ class DojoController < ApplicationController
   end
 
   def start_avatar(kata)
-    io_lock(kata.dir) do
+    Locking::io_lock(kata.dir) do
       available_avatar_names = Avatar.names - kata.avatar_names
       if available_avatar_names == [ ]
         avatar_name = nil

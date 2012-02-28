@@ -6,7 +6,7 @@ module Locking
   # the controller needs to wait to acquire a lock on
   # the dojo folder before choosing an avatar.
   
-  def io_lock(path, &block)
+  def self.io_lock(path, &block)
     result = nil
     File.open(path, 'r') do |fd|
       mode = File::LOCK_EX | File::LOCK_NB

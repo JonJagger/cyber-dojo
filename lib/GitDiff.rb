@@ -4,8 +4,6 @@ require 'Files'
 
 module GitDiff
 
-  include Ids
-  
   # Top level function used by diff_controller.rb to create data structure
   # (to build view from) containing diffs for all files, for a given avatar, 
   # for a given tag.
@@ -53,10 +51,11 @@ module GitDiff
   #-----------------------------------------------------------  
   
   def git_diff_prepare(diffed_files)
+    n = 0
     diffs = [ ]
-    generate = IdGenerator.new("jj")
     diffed_files.sort.each do |name,diff|
-      id = generate.id
+      id = 'jj' + n
+      n += 1
       diffs << {
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :id => id,          

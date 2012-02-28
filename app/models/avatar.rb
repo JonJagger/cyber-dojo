@@ -7,7 +7,6 @@ class Avatar
 
   include MakeTimeHelper
   include TestRunnerHelper
-  include Locking
   include ParseRunTestsOutputHelper
   
   def self.names
@@ -61,7 +60,7 @@ class Avatar
       
   def run_tests(visible_files)
     output = ''
-    io_lock(dir) do
+    Locking::io_lock(dir) do
       # These next three lines are the essence of the execution
       # They should be refactored into a dedicated class
       # which could then be moved to a dedicated server.
@@ -80,7 +79,7 @@ class Avatar
 
   def visible_files(tag = nil)
     seen = ''
-    io_lock(dir) do
+    Locking::io_lock(dir) do
       tag ||= most_recent_tag      
       command  = "cd #{dir};" +
                  "git show #{tag}:#{Manifest_filename}"
@@ -98,7 +97,7 @@ class Avatar
     # with the command
     #   git tag|sort -g
     # which itself might need to be locked?
-    io_lock(dir) { locked_increments(tag) }
+    Locking::io_lock(dir) { locked_increments(tag) }
   end
   
   def dir

@@ -6,13 +6,11 @@ require 'Locking'
 
 class IoLockTests < Test::Unit::TestCase
   
-  include Locking
-  
   def test_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil
     block_run = false
     exception_throw = false
     begin
-      result = io_lock('does_not_exist.txt') do |fd|
+      result = Locking::io_lock('does_not_exist.txt') do |fd|
         block_run = true
       end
     rescue
@@ -30,7 +28,7 @@ class IoLockTests < Test::Unit::TestCase
     Files::file_write(filename, 'x=[1,2,3]')
     fd = File.open(filename, 'r')
     begin
-      result = io_lock(filename) {|fd| block_run = true; 'Hello' }
+      result = Locking::io_lock(filename) {|fd| block_run = true; 'Hello' }
       assert block_run, 'block_run'
       assert_equal 'Hello', result
       assert fd.closed?
@@ -44,9 +42,9 @@ class IoLockTests < Test::Unit::TestCase
     Files::file_write(filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
-    io_lock(filename) do
+    Locking::io_lock(filename) do
       outer_run = true
-      io_lock(filename) do
+      Locking::io_lock(filename) do
         inner_run = true
       end
     end
@@ -60,7 +58,7 @@ class IoLockTests < Test::Unit::TestCase
     `mkdir #{folder}`
     begin
       run = false
-      result = io_lock(folder) {|_| run = true }
+      result = Locking::io_lock(folder) {|_| run = true }
       assert run
       assert result
     ensure
@@ -76,9 +74,9 @@ class IoLockTests < Test::Unit::TestCase
     begin
       parent_run = false
       child_run = false
-      io_lock(parent) do
+      Locking::io_lock(parent) do
         parent_run = true
-        io_lock(child) do
+        Locking::io_lock(child) do
           child_run = true
         end
       end

@@ -18,7 +18,6 @@ class TrapDiffTagTests < ActionController::TestCase
   # a while to run over numerous dojos
   
   include RecentHelper
-  include Ids
   include GitDiff
 
   def params
