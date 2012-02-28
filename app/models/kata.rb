@@ -1,8 +1,8 @@
 
-require 'duration_helper.rb'
+require 'duration_helper.rb' # USED ANYWHERE ELSE?
 require 'make_time_helper.rb'
-require 'traffic_light_helper.rb'
-require 'Locking'
+require 'traffic_light_helper.rb' # NEEDED?
+require 'Locking' # NEEDED?
 require 'Files'
 
 class Kata
@@ -11,10 +11,10 @@ class Kata
   extend DurationHelper
   include MakeTimeHelper
   extend MakeTimeHelper
-  include TrafficLightHelper
-  extend TrafficLightHelper
-  include Locking
-  extend Locking  
+  include TrafficLightHelper # NEEDED?
+  extend TrafficLightHelper  # NEEDED?
+  include Locking # NEEDED?
+  extend Locking  # NEEDED?
   include Files
   extend Files
   
@@ -62,7 +62,6 @@ class Kata
     info
   end
   
-  #TODO: only needed temporarily...drop when each button embeds its own kata.id
   def self.exists?(params)
     id = params[:id]
     inner_dir = params[:katas_root_dir] + '/' + Kata::inner_dir(id)
@@ -140,10 +139,6 @@ private
 
   def manifest_filename
     dir + '/' + 'manifest.rb'
-  end
-
-  def messages_filename
-    dir + '/' + 'messages.rb'
   end
   
   def manifest

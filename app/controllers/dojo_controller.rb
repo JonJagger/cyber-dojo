@@ -30,7 +30,7 @@ class DojoController < ApplicationController
   end
   
   def index
-    # offers configure, start, resume, dashboard, messages
+    # offers create, start, resume, dashboard
     @title = 'Home'
     @id = id
   end
@@ -68,6 +68,7 @@ class DojoController < ApplicationController
       file_write(index_filename, index << info)
     end
     
+    # This is not working in IE7, perhaps add :controller => 'dojo'
     redirect_to :action => :index, 
                 :id => info[:id]
   end  
