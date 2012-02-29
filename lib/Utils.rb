@@ -1,5 +1,5 @@
   
-# See test/functional/sameify_tests.rb  
+# See test/unit/sameify_tests.rb
 def sameify(source)
   result = [ ]
   line_split(source).each_with_index do |line,number|
@@ -12,7 +12,7 @@ def sameify(source)
   result
 end
 
-# See test/functional/line_split_tests.rb
+# See test/unit/line_split_tests.rb
 def line_split(source)
   if source == nil
     [ ]

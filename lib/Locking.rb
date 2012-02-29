@@ -1,3 +1,5 @@
+
+
 module Locking
 
   # io locking uses non-blocking call and currently
@@ -6,6 +8,7 @@ module Locking
   # the controller needs to wait to acquire a lock on
   # the dojo folder before choosing an avatar.
   
+  # See test/functional/io_lock_tests.rb
   def self.io_lock(path, &block)
     result = nil
     File.open(path, 'r') do |fd|
