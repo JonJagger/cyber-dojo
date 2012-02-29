@@ -40,10 +40,6 @@ class Kata
     Dir.mkdir outer_dir
     Files::file_write(outer_dir + '/manifest.rb', info)
 
-    sandbox = outer_dir + '/' + 'sandbox'
-    Dir.mkdir sandbox    
-    fileset.copy_hidden_files_to(sandbox)
-
     [:visible_files, :unit_test_framework, :tab_size].each do |cut|
       info.delete(cut)  
     end

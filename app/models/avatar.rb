@@ -1,14 +1,10 @@
 
-require 'test_runner_helper.rb'
-require 'Locking'
+require 'CodeSaver'
 require 'Files'
+require 'Locking'
 
 class Avatar
 
-  include MakeTimeHelper
-  include TestRunnerHelper
-  include ParseRunTestsOutputHelper
-  
   def self.names
     %w(
         alligator buffalo cheetah deer
@@ -43,26 +39,15 @@ class Avatar
     @name
   end
       
-  def run_tests(visible_files)
-    output = ''
+  def save_run_tests(visible_files, inc)
     Locking::io_lock(dir) do
-      # These next four lines are the essence of the execution
-      # They should be refactored into a dedicated class
-      # which could then be moved to a dedicated server.
-      output = avatar_run_tests(sandbox, visible_files)
-      visible_files['output'] = output
-      inc = parse(@kata.unit_test_framework, output)
-      inc[:time] = make_time(Time::now)
-      
       increments = locked_read(Increments_filename)
-      increments << inc
-      inc[:number] = increments.length
-      Files::file_write(pathed(Increments_filename), increments)
+      tag = increments.length + 1
+      inc[:number] = tag
+      Files::file_write(pathed(Increments_filename), increments << inc)
       Files::file_write(pathed(Manifest_filename), visible_files)
-      tag = increments.length
       git_commit_tag(visible_files, tag)
     end
-    output
   end
 
   def visible_files(tag = nil)
@@ -86,7 +71,7 @@ private
   def git_commit_tag(visible_files, tag)
     command = "cd '#{dir}';"
     visible_files.each do |filename,content|
-      save_file(sandbox, filename, content)
+      CodeSaver::save_file(sandbox, filename, content)
       command += "git add '#{sandbox}/#{filename}';"
     end
     command += "git commit -a -m '#{tag}' --quiet;"

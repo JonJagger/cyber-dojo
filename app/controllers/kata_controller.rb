@@ -1,5 +1,11 @@
 
+require 'CodeRunner'
+require 'CodeOutputParser'
+require 'make_time_helper.rb'
+
 class KataController < ApplicationController
+    
+  include MakeTimeHelper
   
   def edit
     configure(params)
@@ -14,8 +20,23 @@ class KataController < ApplicationController
   def run_tests
     configure(params)
     @kata = Kata.new(params)
+        
+    temp_dir = `uuidgen`.strip.delete('-')[0..9]
+    language = @kata.language
+    
+    sandbox_dir = RAILS_ROOT + '/code_runner/' + temp_dir
+    language_dir = RAILS_ROOT +  '/filesets/language/' + language    
+    visible_files = get_visible_files
+    
+    @output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
+    
+    visible_files['output'] = @output
+    inc = CodeOutputParser::parse(@kata.unit_test_framework, @output)
+    inc[:time] = make_time(Time::now)
+    
     @avatar = Avatar.new(@kata, params[:avatar])
-    @output = @avatar.run_tests(visible_files)
+    @avatar.save_run_tests(visible_files, inc)
+    
     respond_to do |format|
       format.js if request.xhr?
     end        
@@ -23,7 +44,7 @@ class KataController < ApplicationController
       
 private
 
-  def visible_files
+  def get_visible_files
     seen = { }
     (params[:file_content] || {}).each do |filename,content|
       # Cater for windows line endings from windows browser
