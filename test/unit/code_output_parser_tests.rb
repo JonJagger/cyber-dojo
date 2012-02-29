@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'parse_run_tests_output_helper'
+require 'CodeOutputParser'
 
 # > ruby test/functional/parse_run_tests_output_tests.rb
 
-class ParseRunTestsOutputTests < ActionController::TestCase
+class CodeOutputParserTests < ActionController::TestCase
   
-  include ParseRunTestsOutputHelper
+  include CodeOutputParser
   
   def test_was_a_red_ruby_case
 
@@ -34,7 +34,7 @@ test_twenty_seven(TestGetDigits) [test_get_digits.rb:95]:
 [[" _ ", " _ "], ["  |", " _|"], ["  |", "|_ "]]
 HERE
 
-    assert_equal :red, parse_ruby_test_unit(output)
+    assert_equal :red, CodeOutputParser::parse_ruby_test_unit(output)
 
   end
 
@@ -43,36 +43,36 @@ HERE
     # version you're using and possibly whether you're on
     # a windows box on are running on Mono
     red_output_1 = 'Tests run: 1, Failures: 1'
-    assert_equal :red, parse_nunit(red_output_1)
+    assert_equal :red, CodeOutputParser::parse_nunit(red_output_1)
     red_output_2 = 'Tests run: 3, Errors: 0, Failures: 3'
-    assert_equal :red, parse_nunit(red_output_2)
+    assert_equal :red, CodeOutputParser::parse_nunit(red_output_2)
   end
 
   def test_nunit_GREEN_passed
     green_output_1 = 'Tests run: 1, Failures: 0'
-    assert_equal :green, parse_nunit(green_output_1)
+    assert_equal :green, CodeOutputParser::parse_nunit(green_output_1)
     green_output_2 = 'Tests run: 3, Errors: 0, Failures: 0'
-    assert_equal :green, parse_nunit(green_output_2)
+    assert_equal :green, CodeOutputParser::parse_nunit(green_output_2)
   end
   
   def test_nunit_AMBER_error
     amber_output = 'error CS1525: Unexpected symbol ss'
-    assert_equal :amber, parse_nunit(amber_output)
+    assert_equal :amber, CodeOutputParser::parse_nunit(amber_output)
   end
   
   def test_catch_RED_failed
     red_output = "[Testing completed. All 1 test(s) failed]"
-    assert_equal :red, parse_catch(red_output)
+    assert_equal :red, CodeOutputParser::parse_catch(red_output)
   end
 
   def test_catch_GREEN_passed
     green_output = "[Testing completed. All 1 test(s) succeeded]"
-    assert_equal :green, parse_catch(green_output)
+    assert_equal :green, CodeOutputParser::parse_catch(green_output)
   end
   
   def test_catch_RED_one_pass_one_fail
     red_output = "[Testing completed. 1 test(s) passed but 1 test(s) failed]"
-    assert_equal :red, parse_catch(red_output)
+    assert_equal :red, CodeOutputParser::parse_catch(red_output)
   end
   
   def test_catch_AMBER
@@ -82,7 +82,7 @@ untitled.tests.cpp:7: error: ÔtypoÕ was not declared in this scope
 untitled.tests.cpp:8: error: expected `;' before Ô}Õ token
 make: *** [run.tests] Error 1
 HERE
-    assert_equal :amber, parse_catch(amber_output)
+    assert_equal :amber, CodeOutputParser::parse_catch(amber_output)
   end
   
 end 
