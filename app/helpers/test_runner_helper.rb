@@ -22,10 +22,13 @@ module TestRunnerHelper
     command += "rmdir #{sandbox};"
     command += "mkdir #{sandbox};"
     # sandbox were copying from may have no hidden files but
-    # we don't care about that so pipe diagnostic
-    #   ln .../sandbox/*: No such file or directory
+    # we don't care about that, so pipe diagnostic
+    #   "ln .../sandbox/*: No such file or directory"
     # to dev/null so tests run clean
     command += "ln #{sandbox}/../../sandbox/* #{sandbox} >& /dev/null;"
+    # Hmmm, that previous command is a virtual duplicate of
+    # initial_file_set.rb::copy_hidden_files_to(dir)
+    #
     system(command)
   end
 

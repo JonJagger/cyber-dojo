@@ -3,6 +3,7 @@ log/*
 tmp/**/*
 katas/*
 test/test_katas/
+test/code_runner/
 
 
 .DS_Store

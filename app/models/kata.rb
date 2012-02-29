@@ -79,9 +79,11 @@ class Kata
   end
 
   def all_increments
-    avatars.inject({}) do |result,avatar|
-      result.merge( { avatar.name => avatar.increments } )
+    all = { }
+    avatars.each do |avatar|
+      all[avatar.name] = avatar.increments
     end
+    all
   end
   
   def visible_files

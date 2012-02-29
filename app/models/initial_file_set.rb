@@ -54,11 +54,11 @@ class InitialFileSet
     @params[:katas_root_dir]
   end
   
-private
-
   def hidden_filenames
     manifest[:hidden_filenames] || [ ]
   end
+
+private
 
   def language_dir
     dir + '/language/' + language
