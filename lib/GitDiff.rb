@@ -1,9 +1,12 @@
+require 'Files'
 require 'GitDiffBuilder'
 require 'GitDiffParser'
-require 'Files'
+require 'LineSplitter'
 
 module GitDiff
 
+  include LineSplitter
+  
   # Top level function used by diff_controller.rb to create data structure
   # (to build view from) containing diffs for all files, for a given avatar, 
   # for a given tag.
@@ -112,5 +115,19 @@ module GitDiff
     digit_count = n.length
     ' ' * (max_digits - digit_count) + n
   end
-  
+
+  #-----------------------------------------------------------
+
+  def sameify(source)
+    result = [ ]
+    line_split(source).each_with_index do |line,number|
+      result << {
+        :line => line,
+        :type => :same,
+        :number => number + 1
+      }
+    end
+    result
+  end
+
 end

@@ -107,7 +107,7 @@ class Kata
   end
   
   def age_in_seconds
-    (created - Time.now).to_i    
+    (Time.now - created).to_i
   end
   
   def dir    

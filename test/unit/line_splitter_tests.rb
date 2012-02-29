@@ -1,10 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Utils'
+require 'LineSplitter'
 
-# > ruby test/functional/line_split_tests.rb
+# > ruby test/unit/line_splitter_tests.rb
 
-class LineSplitTests < Test::Unit::TestCase
+class LineSplitterTests < ActionController::TestCase
 
+  include LineSplitter
+  
   def test_retain_lines_between_newlines
     # regular split doesn't do what I need    
     assert_equal [ ], "\n\n".split("\n")
@@ -29,5 +31,3 @@ class LineSplitTests < Test::Unit::TestCase
   end
   
 end
-
-

@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
-# > ruby test/functional/new_kata_tests.rb
+# > ruby test/functional/kata_tests.rb
 
-class NewKataTests < ActionController::TestCase
+class KataTests < ActionController::TestCase
 
   include Files
   extend Files
