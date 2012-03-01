@@ -45,6 +45,24 @@ class Test::Unit::TestCase
   include MakeTimeHelper
   extend  MakeTimeHelper
   
+  def make_params(language)
+    params = {
+      :root_dir => RAILS_ROOT + '/test/cyberdojo',
+      :browser => 'Firefox',
+      'language' => language,
+      'exercise' => 'Yahtzee',
+      'name' => 'Jon Jagger'
+    }
+  end
+
+  def make_kata(language)
+    params = make_params(language)
+    fileset = InitialFileSet.new(params)
+    info = Kata::create_new(fileset)
+    params[:id] = info[:id]
+    Kata.new(params)    
+  end
+    
   def run_tests(avatar, visible_files)
     temp_dir = `uuidgen`.strip.delete('-')[0..9]
     language = avatar.kata.language

@@ -7,28 +7,8 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  def make_params(language)
-    params = {
-      :root_dir => RAILS_ROOT + '/test/cyberdojo',
-      :browser => 'Firefox',
-      'language' => language,
-      'exercise' => 'Yahtzee',
-      'name' => 'Jon Jagger'
-    }
-  end
-
-  def make_kata(language = 'Ruby-installed-and-working') 
-    params = make_params(language)
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]
-    Kata.new(params)    
-  end
-  
-  #-----------------------------------------------
-
   test "building_diff_view_from_git_repo" do
-    kata = make_kata
+    kata = make_kata('Ruby-installed-and-working')
     avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
 
