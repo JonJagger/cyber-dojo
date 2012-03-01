@@ -5,9 +5,11 @@ require 'CodeSaver'
 
 class CodeSaverTests < ActionController::TestCase
       
+  TEST_ROOT_DIR = RAILS_ROOT + '/test/cyberdojo'
+  
   def setup
     temp_dir = `uuidgen`.strip.delete('-')[0..9]
-    @sandbox_dir = RAILS_ROOT + '/test/cyberdojo/code_runner/' + temp_dir
+    @sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
     Dir.mkdir @sandbox_dir
   end
   

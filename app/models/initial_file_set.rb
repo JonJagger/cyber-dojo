@@ -51,7 +51,7 @@ class InitialFileSet
   end
   
   def katas_root_dir
-    @params[:katas_root_dir]
+    dir + '/katas'
   end
   
   def hidden_filenames
@@ -61,11 +61,11 @@ class InitialFileSet
 private
 
   def language_dir
-    dir + '/language/' + language
+    dir + '/languages/' + language
   end
   
   def exercise_dir
-    dir + '/exercise/' + exercise
+    dir + '/exercises/' + exercise
   end
   
   def manifest
@@ -73,7 +73,7 @@ private
   end
   
   def dir
-    @params[:filesets_root_dir]  
+    @params[:root_dir]  
   end
   
 end

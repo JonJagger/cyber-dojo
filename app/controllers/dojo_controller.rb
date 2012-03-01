@@ -30,14 +30,11 @@ class DojoController < ApplicationController
    
   def create
     configure(params)
-    
-    filesets_root_dir = params[:filesets_root_dir]
-    @languages = Folders::in(filesets_root_dir + '/language').sort
-    
-    @exercises = Folders::in(filesets_root_dir + '/exercise').sort
+    @languages = Folders::in(RAILS_ROOT + '/languages').sort    
+    @exercises = Folders::in(RAILS_ROOT + '/exercises').sort
     @instructions = { }
     @exercises.each do |exercise|
-      path = filesets_root_dir + '/' + 'exercise' + '/' + exercise + '/' + 'instructions'
+      path = RAILS_ROOT + '/exercises/' + exercise + '/' + 'instructions'
       @instructions[exercise] = IO.read(path)
     end
     @title = 'new-practice'
@@ -46,7 +43,7 @@ class DojoController < ApplicationController
   def save
     configure(params)
     
-    katas_root_dir = params[:katas_root_dir]
+    katas_root_dir = params[:root_dir] + '/katas'
     Locking::io_lock(RAILS_ROOT) do      
       if !File.directory? katas_root_dir
         Dir.mkdir katas_root_dir

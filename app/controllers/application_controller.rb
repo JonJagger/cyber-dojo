@@ -15,8 +15,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   def configure(params)
-    params[:katas_root_dir] = RAILS_ROOT + '/' + 'katas'
-    params[:filesets_root_dir] = RAILS_ROOT + '/' + 'filesets'
+    params[:root_dir] = RAILS_ROOT
     params[:browser] = request.env['HTTP_USER_AGENT'] 
   end
   

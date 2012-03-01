@@ -49,7 +49,7 @@ class Kata
   
   def self.exists?(params)
     id = params[:id]
-    inner_dir = params[:katas_root_dir] + '/' + Kata::inner_dir(id)
+    inner_dir = params[:root_dir] + '/katas/' + Kata::inner_dir(id)
     outer_dir = inner_dir + '/' + Kata::outer_dir(id)
     File.directory? inner_dir and File.directory? outer_dir
   end
@@ -111,7 +111,7 @@ class Kata
   end
   
   def dir    
-    @params[:katas_root_dir] + '/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)
+    @params[:root_dir] + '/katas/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)
   end
   
   def id

@@ -8,7 +8,7 @@ class GitDiffViewTests < ActionController::TestCase
   include GitDiff
   
   KATA_NAME = 'Jon Jagger'
-  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
+  ROOT_TEST_DIR = RAILS_ROOT + '/test/cyberdojo/katas'
 
   def root_test_dir_reset
     system("rm -rf #{ROOT_TEST_DIR}")
@@ -36,6 +36,20 @@ class GitDiffViewTests < ActionController::TestCase
   
   #-----------------------------------------------
 
+  def run_tests(avatar, visible_files)
+    temp_dir = `uuidgen`.strip.delete('-')[0..9]
+    language = avatar.kata.language
+    sandbox_dir = RAILS_ROOT + '/test/cyberdojo/code_runner/' + temp_dir
+    language_dir = RAILS_ROOT +  '/test/cyberdojo/languages/' + language        
+    output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
+    
+    visible_files['output'] = output
+    inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
+    inc[:time] = make_time(Time::now)
+    avatar.save_run_tests(visible_files, inc)
+  end
+
+
   def test_building_diff_view_from_git_repo    
     root_test_dir_reset
     kata = make_kata
@@ -50,13 +64,14 @@ class GitDiffViewTests < ActionController::TestCase
         'output'           => '' 
       }
 
+
     # create tag 1 in the repo
-    avatar.run_tests(visible_files)
+    run_tests(avatar, visible_files)
     assert_equal :red, avatar.increments.last[:outcome]
 
     # create tag 2 in the repo 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
-    avatar.run_tests(visible_files)
+    run_tests(avatar, visible_files)
     assert_equal :green, avatar.increments.last[:outcome]
     
     tag = 2    

@@ -20,21 +20,16 @@ class KataController < ApplicationController
   def run_tests
     configure(params)
     @kata = Kata.new(params)
+    @avatar = Avatar.new(@kata, params[:avatar])
         
-    temp_dir = `uuidgen`.strip.delete('-')[0..9]
-    language = @kata.language
-    
-    sandbox_dir = RAILS_ROOT + '/code_runner/' + temp_dir
-    language_dir = RAILS_ROOT +  '/filesets/language/' + language    
+    sandbox_dir = RAILS_ROOT + '/sandboxes/' + `uuidgen`.strip.delete('-')[0..9]
+    language_dir = RAILS_ROOT +  '/languages/' + @kata.language    
     visible_files = get_visible_files
     
     @output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
-    
     visible_files['output'] = @output
     inc = CodeOutputParser::parse(@kata.unit_test_framework, @output)
-    inc[:time] = make_time(Time::now)
-    
-    @avatar = Avatar.new(@kata, params[:avatar])
+    inc[:time] = make_time(Time::now)    
     @avatar.save_run_tests(visible_files, inc)
     
     respond_to do |format|
