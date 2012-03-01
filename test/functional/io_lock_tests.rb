@@ -4,9 +4,9 @@ require 'Locking'
 
 # > ruby test/functional/io_lock_tests.rb
 
-class IoLockTests < Test::Unit::TestCase
+class IoLockTests < ActionController::TestCase
   
-  def test_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil
+  test "if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
     block_run = false
     exception_throw = false
     begin
@@ -19,10 +19,10 @@ class IoLockTests < Test::Unit::TestCase
 
     assert exception_thrown
     assert !block_run
-    assert_equal nil, result
+    assert_nil result
   end
 
-  def test_if_lock_is_obtained_block_is_executed_and_result_is_result_of_block
+  test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
     block_run = false
     filename = 'exists.txt'
     Files::file_write(filename, 'x=[1,2,3]')
@@ -37,7 +37,7 @@ class IoLockTests < Test::Unit::TestCase
     end
   end
   
-  def test_inner_iolock_does_not_block_but_returns_false_if_lock_fails
+  test "inner_iolock_does_not_block_but_returns_false_if_lock_fails" do
     filename = 'exists.txt'
     Files::file_write(filename, 'x=[1,2,3]')
     outer_run = false
@@ -53,20 +53,20 @@ class IoLockTests < Test::Unit::TestCase
     `rm #{filename}`
   end
   
-  def test_lock_can_be_acquired_on_an_existing_folder
-    folder = 'new_folder'
-    `mkdir #{folder}`
+  test "lock_can_be_acquired_on_an_existing_dir" do
+    dir = 'new_dir'
+    `mkdir #{dir}`
     begin
       run = false
-      result = Locking::io_lock(folder) {|_| run = true }
+      result = Locking::io_lock(dir) {|_| run = true }
       assert run
       assert result
     ensure
-      `rmdir #{folder}`      
+      `rmdir #{dir}`      
     end
   end
   
-  def test_holding_lock_on_parent_folder_does_not_prevent_acquisition_of_lock_on_child_folder
+  test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
     parent = 'parent'
     child = "#{parent}/child"
     `mkdir #{parent}`
@@ -87,7 +87,6 @@ class IoLockTests < Test::Unit::TestCase
       `rmdir #{parent}`
     end
   end
-  
   
 end
 

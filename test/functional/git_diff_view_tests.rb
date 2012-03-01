@@ -41,7 +41,7 @@ class GitDiffViewTests < ActionController::TestCase
   end
 
 
-  def test_building_diff_view_from_git_repo    
+  test "building_diff_view_from_git_repo" do
     kata = make_kata
     avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
@@ -121,7 +121,7 @@ HERE
   
   #-----------------------------------------------
 
-  def test_sameify_with_joined_newlines
+  test "sameify_with_joined_newlines" do
     
     expected =
     [
@@ -136,7 +136,7 @@ HERE
     
   end
   
-  def test_sameify
+  test "sameify" do
     expected =
     [
       { :line => "once",        :type => :same, :number => 1 },
