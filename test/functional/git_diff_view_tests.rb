@@ -1,24 +1,16 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
-
+require 'make_time_helper.rb'
 # > ruby test/functional/git_diff_view_tests.rb
 
 class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
+  include MakeTimeHelper
   
-  KATA_NAME = 'Jon Jagger'
-  ROOT_TEST_DIR = RAILS_ROOT + '/test/cyberdojo/katas'
-
-  def root_test_dir_reset
-    system("rm -rf #{ROOT_TEST_DIR}")
-    Dir.mkdir ROOT_TEST_DIR
-  end
-
   def make_params(language)
     params = {
-      :katas_root_dir => ROOT_TEST_DIR,
-      :filesets_root_dir => RAILS_ROOT +  '/filesets',
+      :root_dir => RAILS_ROOT + '/test/cyberdojo',
       :browser => 'Firefox',
       'language' => language,
       'exercise' => 'Yahtzee',
@@ -26,7 +18,7 @@ class GitDiffViewTests < ActionController::TestCase
     }
   end
 
-  def make_kata(language = 'Ruby') 
+  def make_kata(language = 'Ruby-installed-and-working') 
     params = make_params(language)
     fileset = InitialFileSet.new(params)
     info = Kata::create_new(fileset)
@@ -39,10 +31,9 @@ class GitDiffViewTests < ActionController::TestCase
   def run_tests(avatar, visible_files)
     temp_dir = `uuidgen`.strip.delete('-')[0..9]
     language = avatar.kata.language
-    sandbox_dir = RAILS_ROOT + '/test/cyberdojo/code_runner/' + temp_dir
+    sandbox_dir = RAILS_ROOT + '/test/cyberdojo/sandboxes/' + temp_dir
     language_dir = RAILS_ROOT +  '/test/cyberdojo/languages/' + language        
     output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
-    
     visible_files['output'] = output
     inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
     inc[:time] = make_time(Time::now)
@@ -51,7 +42,6 @@ class GitDiffViewTests < ActionController::TestCase
 
 
   def test_building_diff_view_from_git_repo    
-    root_test_dir_reset
     kata = make_kata
     avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
@@ -63,7 +53,6 @@ class GitDiffViewTests < ActionController::TestCase
         'test_untitled.rb' => test_untitled_rb,
         'output'           => '' 
       }
-
 
     # create tag 1 in the repo
     run_tests(avatar, visible_files)
