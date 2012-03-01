@@ -1,12 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
-require 'make_time_helper.rb'
+
 # > ruby test/functional/git_diff_view_tests.rb
 
 class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
-  include MakeTimeHelper
   
   def make_params(language)
     params = {
@@ -27,19 +26,6 @@ class GitDiffViewTests < ActionController::TestCase
   end
   
   #-----------------------------------------------
-
-  def run_tests(avatar, visible_files)
-    temp_dir = `uuidgen`.strip.delete('-')[0..9]
-    language = avatar.kata.language
-    sandbox_dir = RAILS_ROOT + '/test/cyberdojo/sandboxes/' + temp_dir
-    language_dir = RAILS_ROOT +  '/test/cyberdojo/languages/' + language        
-    output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
-    visible_files['output'] = output
-    inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
-    inc[:time] = make_time(Time::now)
-    avatar.save_run_tests(visible_files, inc)
-  end
-
 
   test "building_diff_view_from_git_repo" do
     kata = make_kata
