@@ -2,8 +2,9 @@
 log/*
 tmp/**/*
 katas/*
+code_runner/**/*
 test/test_katas/
-test/code_runner/
+test/cyberdojo/code_runner/**/*
 
 
 .DS_Store

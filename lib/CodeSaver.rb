@@ -12,6 +12,8 @@ module CodeSaver
     File.chmod(0755, path) if filename =~ /\.sh/    
   end
 
+private
+
   def self.makefile_filter(name, content)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     # makefiles are tab sensitive...

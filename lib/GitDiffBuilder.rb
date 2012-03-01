@@ -1,3 +1,4 @@
+
 module GitDiff
 
   # Combines diff and lines to build a data structure that
