@@ -7,14 +7,14 @@ class LineSplitterTests < ActionController::TestCase
 
   include LineSplitter
   
-  def test_retain_lines_between_newlines
+  test "retain lines between newlines" do
     # regular split doesn't do what I need    
     assert_equal [ ], "\n\n".split("\n")
     # So I have to roll my own...
     assert_equal [ "", "" ], line_split("\n\n")
   end
 
-  def test_doesnt_add_extra_split_if_string_ends_in_newline
+  test "doesnt add extra split if string ends in newline" do
     assert_equal ["a"], line_split("a")
     assert_equal ["a"], line_split("a"+"\n")
     
@@ -26,7 +26,7 @@ class LineSplitterTests < ActionController::TestCase
     assert_equal ["",""], line_split("\n"+"\n")
   end
   
-  def test_splits_nil
+  test "splitting nil is an empty array" do
     assert_equal [ ], line_split(nil)  
   end
   

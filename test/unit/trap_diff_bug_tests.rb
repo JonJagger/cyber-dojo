@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiffParser'
 
-# > ruby test/functional/trap_diff_bug_tests.rb
+# > ruby test/unit/trap_diff_bug_tests.rb
 
 class TrapDiffBugTests < ActionController::TestCase
   
   include GitDiff
   
-  def test_another_specific_real_dojo_that_fails_diff    
+  test "another specific real dojo that once_failed a diff" do    
     bad_diff_lines =
     [
       "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
@@ -40,7 +40,7 @@ class TrapDiffBugTests < ActionController::TestCase
     
   end
   
-  def test_specific_real_dojo_that_fails_diff_show_narrowing
+  test "specific real dojo that fails diff show narrowing" do
 
     visible_files = { } 
     visible_files['gapper.rb'] =    

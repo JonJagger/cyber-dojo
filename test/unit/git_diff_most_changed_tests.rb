@@ -1,14 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > ruby test/functional/git_diff_most_changed_tests.rb
+# > ruby test/unit/git_diff_most_changed_tests.rb
 
 class GitDiffMostChangedTests < ActionController::TestCase
 
   include GitDiff
 
-  
-  def test_when_no_diffs_an_id_is_returned_if_no_output_is_present
+  test "when no diffs an id is returned if no output is present" do
     diffs = []
     diffs << {
       :deleted_line_count => 0,
@@ -30,7 +29,7 @@ class GitDiffMostChangedTests < ActionController::TestCase
 
   #------------------------------------------------------------------
     
-  def test_when_some_diffs_most_changed_lines_file_id_is_returned
+  test "when some diffs most changed lines file id is returned" do
     diffs = []
     diffs << {
       :deleted_line_count => 1,
@@ -51,7 +50,7 @@ class GitDiffMostChangedTests < ActionController::TestCase
   
   #------------------------------------------------------------------
   
-  def test_when_non_output_file_has_diffs_it_is_preferred_to_output
+  test "when non output file has diffs it is preferred to output" do
     diffs = []
     diffs << {
       :deleted_line_count => 1,

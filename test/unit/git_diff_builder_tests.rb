@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiffParser'
 
-# > ruby test/functional/git_diff_builder_tests.rb
+# > ruby test/unit/git_diff_builder_tests.rb
 
 class GitDiffBuilderTests < ActionController::TestCase
 
   include GitDiff
   
-  def test_build_chunk_with_space_in_its_filename
+  test "build chunk with space in its filename" do
 
 lines = <<HERE
 diff --git a/sandbox/file with_space b/sandbox/file with_space
@@ -71,7 +71,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -
   
-  def test_build_chunk_with_defaulted_now_line_info
+  test "build chunk with defaulted now line info" do
     
 lines = <<HERE
 diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3
@@ -138,7 +138,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  def test_build_two_chunks_with_leading_and_trailing_same_lines_and_no_newline_at_eof
+  test "build two chunks with leading and trailing same lines and no newline at eof" do
     
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -255,7 +255,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -  
 
-  def test_build_two_chunks_first_and_last_lines_change_and_are_7_lines_apart
+  test "build two chunks first and last lines change and are 7 lines apart" do
     # diffs need to be 7 lines apart not to be merged into contiguous sections in one chunk
     
 diff_lines = <<HERE
@@ -360,7 +360,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -  
   
-  def test_build_one_chunk_with_two_section_each_with_one_line_added_and_one_line_deleted
+  test "build one chunk with two sections each with one line added and one line deleted" do
 
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -450,7 +450,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -  
 
-  def test_build_one_chunk_with_one_section_with_only_lines_added
+  test "build one chunk with one section with only lines added" do
     
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -536,7 +536,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -  
   
-  def test_build_one_chunk_with_one_section_with_only_lines_deleted
+  test "build one chunk with one section with only lines deleted" do
     
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -619,7 +619,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -  
   
-  def test_build_one_chunk_with_one_section_with_more_lines_deleted_than_added
+  test "build one chunk with one section with more lines deleted than added" do
 
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -709,7 +709,7 @@ HERE
   
   #- - - - - - - - - - - - - - - - - - - - - - -
   
-  def test_build_one_chunk_with_one_section_with_more_lines_added_than_deleted
+  test "build one chunk with one section with more lines added than deleted" do
   
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -804,7 +804,7 @@ HERE
 
   #- - - - - - - - - - - - - - - - - - - - - - -
   
-  def test_build_one_chunk_with_one_section_with_one_line_deleted_and_one_line_added
+  test "build one chunk with one section with one line deleted and one line added" do
     
 diff_lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -903,7 +903,7 @@ HERE
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   
-  def test_count_added_and_deleted_lines
+  test "count added and deleted lines" do
     diff =
     [
       { :line => "1", :type => :same, :number => 1 },

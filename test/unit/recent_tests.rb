@@ -1,26 +1,26 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'recent_helper'
 
-# > ruby test/functional/recent_tests.rb
+# > ruby test/unit/recent_tests.rb
 
 class RecentTests < ActionController::TestCase
 
   include RecentHelper
   
-  def test_when_array_is_empty_result_is_empty
+  test "when array is empty result is empty" do
     empty = []
     assert_equal [], recent(empty, 0)
     assert_equal [], recent(empty, 5)
   end
 
-  def test_elements_at_front_of_array_are_dropped_if_n_is_less_than_array_length
+  test "elements at front of array are dropped if n is less than array length" do
     array = [1,2,3,4]
     assert_equal [2,3,4], recent(array, 3)
     assert_equal [  3,4], recent(array, 2)
     assert_equal [    4], recent(array, 1)
   end
 
-  def test_whole_array_is_returned_if_n_is_greater_than_or_equal_to_array_length
+  test "whole array is returned if n is greater than or equal to array length" do
     array = [1,2,3,4]
     assert_equal [1,2,3,4], recent(array, 4)
     assert_equal [1,2,3,4], recent(array, 5)

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/render_error_tests.rb
+# > ruby test/unit/render_error_tests.rb
 
 class RenderErrorTests < ActionController::TestCase
 
@@ -10,18 +10,18 @@ class RenderErrorTests < ActionController::TestCase
     @response   = ActionController::TestResponse.new
   end
   
-  def test_render_error(n, expected)
+  test "render errors 404 422 500" do
+    check_render_error(404, true)
+    check_render_error(422, true)
+    check_render_error(500, true)
+    check_render_error(400, false)
+  end
+    
+  def check_render_error(n, expected)
     html = post :render_error, { :n => n }
     fail = html.body.to_s =~ /Exception caught/
     actual = fail == nil
     assert_equal expected, actual, n.to_s
   end
   
-  def test_render_errors_404_422_500
-    test_render_error(404, true)
-    test_render_error(422, true)
-    test_render_error(500, true)
-    test_render_error(400, false)
-  end
-    
 end

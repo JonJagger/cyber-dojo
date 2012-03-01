@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/td_gapper_tests.rb
+# > ruby test/unit/td_gapper_tests.rb
 
 class TdGapperTests < ActionController::TestCase
 
-  def test_number
+  test "number" do
     year = 2011; month = 5; day = 18; hour = 2;    
     start = Time.mktime(*[year,month,day,hour,30,0])
     max_seconds_uncollapsed = 30 * 60
@@ -23,7 +23,7 @@ class TdGapperTests < ActionController::TestCase
     assert_equal 3, gapper.number({ :time => [year,month,day,hour,31,11] })    
   end
 
-  def test_stats
+  test "stats" do
     year = 2011; month = 5; day = 18; hour = 2;    
     start = Time.mktime(*[year,month,day,hour,30,0])
     now = [year,month,day,hour,32,23] #td 7
@@ -66,7 +66,7 @@ class TdGapperTests < ActionController::TestCase
     assert_equal expected, gapper.stats(all_incs, now)
   end
 
-  def test_vertical_bleed
+  test "vertical bleed" do
     year = 2011; month = 5; day = 18; hour = 2;
     start = Time.mktime(*[year,month,day,hour,30,0])
     now = [year,month,day,hour,32,23] #td 7
@@ -96,7 +96,7 @@ class TdGapperTests < ActionController::TestCase
     assert_equal expected, s[:avatars]
   end
 
-  def test_collapsed_table
+  test "collapsed table" do
     # 30 mins = 30 x 3 x 20 secs = 90 tds
     year = 2011; month = 5; day = 18; hour = 2;
     start = Time.mktime(*[year,month,day,hour,30,0])
@@ -126,7 +126,7 @@ class TdGapperTests < ActionController::TestCase
     assert_equal expected, actual
   end
 
-  def test_fully_gapped_no_increments_yet
+  test "fully gapped no increments yet" do
     year = 2011; month = 5; day = 18; hour = 2;
     start = Time.mktime(*[year,month,day,hour,30,0])
     now = [year,month,day+1,hour,32,23] #td 4327
@@ -139,7 +139,7 @@ class TdGapperTests < ActionController::TestCase
     assert_equal expected, actual    
   end
   
-  def test_fully_gapped
+  test "fully gapped" do
     year = 2011; month = 5; day = 18; hour = 2;
     start = Time.mktime(*[year,month,day,hour,30,0])
     now = [year,month,day+1,hour,32,23] #td 4327

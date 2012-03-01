@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiffParser'
 
-# > ruby test/functional/git_diff_parser_tests.rb
+# > ruby test/unit/git_diff_parser_tests.rb
 
 class GitDiffParserTests < ActionController::TestCase 
 
@@ -9,7 +9,7 @@ class GitDiffParserTests < ActionController::TestCase
 
   #-----------------------------------------------------
    
-  def test_parse_diff_for_filename_ending_in_tab_removes_the_tab
+  test "parse diff for filename ending in tab removes the tab" do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd', 
       GitDiffParser.new(was_line + "\t").parse_was_filename    
@@ -17,7 +17,7 @@ class GitDiffParserTests < ActionController::TestCase
   
   #-----------------------------------------------------
   
-  def test_parse_diff_for_filename_with_space_in_its_name
+  test "parse diff for filename with space in its name" do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd', 
       GitDiffParser.new(was_line).parse_was_filename
@@ -25,7 +25,7 @@ class GitDiffParserTests < ActionController::TestCase
     
   #-----------------------------------------------------
 
-  def test_parse_diff_for_deleted_file
+  test "parse diff for deleted file" do
     was_line =  '--- a/sandbox/xxx'
     assert_equal 'a/sandbox/xxx', 
       GitDiffParser.new(was_line).parse_was_filename
@@ -37,7 +37,7 @@ class GitDiffParserTests < ActionController::TestCase
   
   #-----------------------------------------------------
   
-  def test_parse_diff_for_new_file
+  test "parse diff for new file" do
     was_line =  '--- /dev/null'
     assert_equal '/dev/null', 
       GitDiffParser.new(was_line).parse_was_filename
@@ -49,7 +49,7 @@ class GitDiffParserTests < ActionController::TestCase
   
   #-----------------------------------------------------
   
-  def test_here_processing
+  test "here processing" do
     # backslash characters still have to be escaped in a here string
 line = <<HERE
 "\\\\was"
@@ -65,7 +65,7 @@ HERE
   
   #-----------------------------------------------------
 
-  def test_parse_diff_quoted_filename_with_backslash
+  test "parse diff quoted filename with backslash" do
     filename = "\"\\\\was\""      
     expected = "\\was"
     actual = GitDiffParser.new("").unescaped(filename)
@@ -74,7 +74,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_parse_diff_containing_filename_with_backslash
+  test "parse diff containing filename with backslash" do
 
 lines = <<HERE
 diff --git "a/sandbox/\\\\was_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
@@ -129,7 +129,7 @@ expected =
   
   #-----------------------------------------------------
   
-  def test_parse_diff_deleted_file
+  test "parse diff deleted file" do
     
 lines = <<HERE
 diff --git a/sandbox/original b/sandbox/original
@@ -161,7 +161,7 @@ expected =
   
   #-----------------------------------------------------
 
-  def test_parse_diff_for_renamed_but_unchanged_file_and_newname_is_quoted
+  test "parse diff for renamed but unchanged file and newname is quoted" do
 lines = <<HERE
 diff --git "a/sandbox/was_\\\\wa s_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
 similarity index 100%
@@ -193,7 +193,7 @@ expected =
 
   #-----------------------------------------------------
   
-  def test_parse_diff_for_renamed_but_unchanged_file
+  test "parse diff for renamed but unchanged file" do
     
 lines = <<HERE
 diff --git a/sandbox/oldname b/sandbox/newname
@@ -227,7 +227,7 @@ expected =
     
   #-----------------------------------------------------
   
-  def test_parse_diff_for_renamed_and_changed_file
+  test "parse diff for renamed and changed file" do
     
 lines = <<HERE
 diff --git a/sandbox/instructions b/sandbox/instructions_new
@@ -292,7 +292,7 @@ expected_diff =
   
   #-----------------------------------------------------
   
-  def test_parse_diffs_for_two_files
+  test "parse diffs for two files" do
 
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -397,7 +397,7 @@ HERE
   
   #-----------------------------------------------------
 
-  def test_parse_range_was_and_now_size_defaulted
+  test "parse range was and now size defaulted" do
     lines = "@@ -3 +5 @@ suffix"
     expected = 
     {
@@ -409,7 +409,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_parse_range_was_size_defaulted
+  test "parse range was size defaulted" do
     lines = "@@ -3 +5,9 @@ suffix"
     expected = 
     {
@@ -421,7 +421,7 @@ HERE
   
   #-----------------------------------------------------
 
-  def test_parse_range_now_size_defaulted
+  test "parse range now size defaulted" do
     lines = "@@ -3,4 +5 @@ suffix"
     expected = 
     {
@@ -433,7 +433,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_parse_range_nothing_defaulted
+  test "parse range nothing defaulted" do
     lines = "@@ -3,4 +5,6 @@ suffix"
     expected = 
     {
@@ -445,7 +445,7 @@ HERE
 
   #-----------------------------------------------------
   
-  def test_parse_no_newline_at_eof_false
+  test "parse no newline at eof false" do
     lines = ' No newline at eof'
     parser = GitDiffParser.new(lines)
 
@@ -456,7 +456,7 @@ HERE
   
   #-----------------------------------------------------
 
-  def test_parse_no_newline_at_eof_true
+  test "parse no newline at eof true" do
     lines = '\\ No newline at end of file'
     parser = GitDiffParser.new(lines)
 
@@ -467,7 +467,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_two_chunks_with_no_newline_at_end_of_file
+  test "two chunks with no newline at end of file" do
     
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -544,7 +544,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_diff_one_chunk_one_section
+  test "diff one chunk one section" do
 lines = <<HERE
 @@ -1,4 +1,4 @@
 -1
@@ -578,7 +578,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_diff_one_chunk_two_sections
+  test "diff one chunk two sections" do
 lines = <<HERE
 @@ -1,8 +1,8 @@
  1
@@ -624,7 +624,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_standard_diff
+  test "standard diff" do
 
 lines = <<HERE
 diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb
@@ -694,7 +694,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_find_copies_harder_finds_a_rename
+  test "find copies harder finds a rename" do
 lines = <<HERE
 diff --git a/sandbox/oldname b/sandbox/newname
 similarity index 99%
@@ -717,33 +717,33 @@ HERE
   
   #-----------------------------------------------------
 
-  def test_no_deleted_line
+  test "no deleted line" do
 lines = <<HERE
 +p Timw.now
 +p Time.now
 HERE
 
-    expected = []
+    expected = [ ]
     assert_equal expected,
       GitDiffParser.new(lines).parse_deleted_lines      
   end
 
   #-----------------------------------------------------
 
-  def test_no_added_line
+  test "no added line" do
 lines = <<HERE
  p Timw.now
  p Time.now
 HERE
 
-    expected = []
+    expected = [ ]
     assert_equal expected,
       GitDiffParser.new(lines).parse_added_lines      
   end
 
   #-----------------------------------------------------
 
-  def test_single_deleted_line
+  test "single deleted line" do
 lines = <<HERE
 -p Timw.now
 +p Time.now
@@ -759,7 +759,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_single_added_line
+  test "single added line" do
 lines = <<HERE
 +p Time.now
  common line
@@ -775,7 +775,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_single_deleted_line_with_following_newline_at_eof
+  test "single deleted line with following newline at eof" do
 lines = <<HERE
 -p Timw.now
 \\ No newline at end of file'
@@ -791,7 +791,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_single_added_line_with_following_newline_at_eof
+  test "single added line with following newline at eof" do
 lines = <<HERE
 +p Timw.now
 \\ No newline at end of file'
@@ -807,7 +807,7 @@ HERE
 
   #-----------------------------------------------------
   
-  def test_two_deleted_lines
+  test "two deleted lines" do
 lines = <<HERE
 -p Timw.now
 -p Time.now
@@ -824,7 +824,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_two_added_lines
+  test "two added lines" do
 lines = <<HERE
 +p Timw.now
 +p Time.now
@@ -841,7 +841,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_two_deleted_lines_with_following_newline_at_eof
+  test "two deleted lines with following newline at eof" do
 lines = <<HERE
 -p Timw.now
 -p Time.now
@@ -859,7 +859,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_two_added_lines_with_following_newline_at_eof
+  test "two added lines with following newline at eof" do
 lines = <<HERE
 +p Timw.now
 +p Time.now
@@ -877,7 +877,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_diff_two_chunks
+  test "diff two chunks" do
 
 lines = <<HERE
 diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb
@@ -943,7 +943,7 @@ HERE
 
   #-----------------------------------------------------
   
-  def test_when_diffs_are_one_line_apart
+  test "when diffs are one line apart" do
 
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -1004,7 +1004,7 @@ HERE
 
   #-----------------------------------------------------
   
-  def test_when_diffs_are_2_lines_apart
+  test "when diffs are 2 lines apart" do
     
 lines = <<HERE
 diff --git a/sandbox/lines b/sandbox/lines
@@ -1066,7 +1066,7 @@ HERE
 
   #-----------------------------------------------------
 
-  def test_when_diffs_are_6_lines_apart
+  test "when diffs are 6 lines apart" do
     # when there is 1..6 unchanged lines between 2 lines they are merged into one chunk
     
 lines = <<HERE
@@ -1131,7 +1131,7 @@ HERE
   
   #-----------------------------------------------------
   
-  def test_when_diffs_are_seven_lines_apart
+  test "when diffs are seven lines apart" do
     # viz 7 unchanged lines between two changes lines
     # this creates two chunks.
     

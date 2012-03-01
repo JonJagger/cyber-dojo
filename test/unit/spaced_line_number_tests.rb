@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > ruby test/functional/spaced_line_number_tests.rb
+# > ruby test/unit/spaced_line_number_tests.rb
 
 class SpacedLineNumberTests < ActionController::TestCase
 
   include GitDiff
   
-  def test_max_digits_1_2_3_4
+  test "max digits 1 2 3 4" do
     max_digits = 1
     (0..9).each {|n| assert_equal '  '+ n.to_s, spaced_line_number(n, max_digits), 0 }
     
@@ -27,7 +27,7 @@ class SpacedLineNumberTests < ActionController::TestCase
     (1000..1234).each {|n| assert_equal '' +    n.to_s, spaced_line_number(n, max_digits), 9}    
   end
 
-  def test_max_digits_nils_for_deleted_lines
+  test "max digits nils for deleted lines" do
     assert_equal '  -', spaced_line_number(nil, 1), '1'
     assert_equal '  -', spaced_line_number(nil, 2), '2'
     assert_equal '  -', spaced_line_number(nil, 3), '3'

@@ -1,22 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'time_in_words_helper'
 
-# > ruby test/functional/time_in_words_tests.rb
+# > ruby test/unit/time_in_words_tests.rb
 
 class TimeInWordsTests < ActionController::TestCase
 
   include TimeInWordsHelper
   
-  def time_split_unsplit_words(ydhms, total_seconds, words=nil)
-    assert_equal total_seconds, time_unsplit(*ydhms)
-    assert_equal ydhms, time_split(total_seconds)
-
-    if words != nil
-      assert_equal words, time_in_words(total_seconds)
-    end    
-  end
-
-  def test_time_split_unsplit
+  test "time split unsplit" do
     time_split_unsplit_words([0, 0, 0, 0, 0], 0,  '0 seconds')
     time_split_unsplit_words([0, 0, 0, 0, 1], 1,  '1 second')
     time_split_unsplit_words([0, 0, 0, 0, 2], 2,  '2 seconds')
@@ -59,6 +50,15 @@ class TimeInWordsTests < ActionController::TestCase
     time_split_unsplit_words([2, 0, 0, 0, 0], 63072000, '2 years')    
     time_split_unsplit_words([2, 0, 0, 0, 2], 63072002, '2 years')    
     time_split_unsplit_words([2,56, 0, 0, 2], 67910402, '2 years')    
+  end
+   
+  def time_split_unsplit_words(ydhms, total_seconds, words=nil)
+    assert_equal total_seconds, time_unsplit(*ydhms)
+    assert_equal ydhms, time_split(total_seconds)
+
+    if words != nil
+      assert_equal words, time_in_words(total_seconds)
+    end    
   end
    
 end

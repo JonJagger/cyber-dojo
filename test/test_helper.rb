@@ -45,9 +45,11 @@ class Test::Unit::TestCase
   include MakeTimeHelper
   extend  MakeTimeHelper
   
+  TEST_ROOT_DIR = RAILS_ROOT + '/test/cyberdojo'
+  
   def make_params(language)
     params = {
-      :root_dir => RAILS_ROOT + '/test/cyberdojo',
+      :root_dir => TEST_ROOT_DIR,
       :browser => 'Firefox',
       'language' => language,
       'exercise' => 'Yahtzee',
@@ -66,8 +68,8 @@ class Test::Unit::TestCase
   def run_tests(avatar, visible_files)
     temp_dir = `uuidgen`.strip.delete('-')[0..9]
     language = avatar.kata.language
-    sandbox_dir = RAILS_ROOT + '/test/cyberdojo/sandboxes/' + temp_dir
-    language_dir = RAILS_ROOT +  '/test/cyberdojo/languages/' + language        
+    sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
+    language_dir = TEST_ROOT_DIR +  '/languages/' + language        
     output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
     visible_files['output'] = output
     inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)

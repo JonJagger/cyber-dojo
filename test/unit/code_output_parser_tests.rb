@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'CodeOutputParser'
 
-# > ruby test/functional/parse_run_tests_output_tests.rb
+# > ruby test/unit/code_output_parser_tests.rb
 
 class CodeOutputParserTests < ActionController::TestCase
   
   include CodeOutputParser
   
-  def test_was_a_red_ruby_case
+  test "was a red ruby case" do
 
 output = <<HERE
 Loaded suite test_get_digits
@@ -38,7 +38,7 @@ HERE
 
   end
 
-  def test_nunit_RED_failed
+  test "nunit RED" do
     # There are two NUnit output formats depending on what
     # version you're using and possibly whether you're on
     # a windows box on are running on Mono
@@ -48,34 +48,34 @@ HERE
     assert_equal :red, CodeOutputParser::parse_nunit(red_output_2)
   end
 
-  def test_nunit_GREEN_passed
+  test "nunit GREEN" do
     green_output_1 = 'Tests run: 1, Failures: 0'
     assert_equal :green, CodeOutputParser::parse_nunit(green_output_1)
     green_output_2 = 'Tests run: 3, Errors: 0, Failures: 0'
     assert_equal :green, CodeOutputParser::parse_nunit(green_output_2)
   end
   
-  def test_nunit_AMBER_error
+  test "nunit AMBER" do
     amber_output = 'error CS1525: Unexpected symbol ss'
     assert_equal :amber, CodeOutputParser::parse_nunit(amber_output)
   end
   
-  def test_catch_RED_failed
+  test "catch RED" do
     red_output = "[Testing completed. All 1 test(s) failed]"
     assert_equal :red, CodeOutputParser::parse_catch(red_output)
   end
 
-  def test_catch_GREEN_passed
+  test "catch GREEN" do
     green_output = "[Testing completed. All 1 test(s) succeeded]"
     assert_equal :green, CodeOutputParser::parse_catch(green_output)
   end
   
-  def test_catch_RED_one_pass_one_fail
+  test "catch RED one pass one fail" do
     red_output = "[Testing completed. 1 test(s) passed but 1 test(s) failed]"
     assert_equal :red, CodeOutputParser::parse_catch(red_output)
   end
   
-  def test_catch_AMBER
+  test "catch AMBER" do
 amber_output = <<HERE    
 untitled.tests.cpp: In function Ôvoid catch_internal_TestFunction5()Õ:
 untitled.tests.cpp:7: error: ÔtypoÕ was not declared in this scope

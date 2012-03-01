@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > ruby test/functional/git_diff_html_tests.rb
+# > ruby test/unit/git_diff_html_tests.rb
 
 class GitDiffHtmlTests < ActionController::TestCase
 
   include GitDiff
   
-  def test_mixture_with_more_than_9_lines
+  test "mixture with more than 9 lines" do
     diffed =
     [
       { :line => "once",              :type => :same,    :number => 1 },
@@ -44,7 +44,7 @@ class GitDiffHtmlTests < ActionController::TestCase
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
   
-  def test_some_lines_same_some_lines_added_some_lines_deleted
+  test "some lines same some lines added some lines deleted" do
     diffed =
     [
       { :line => "once",     :type => :same,    :number => 1 },
@@ -69,7 +69,7 @@ class GitDiffHtmlTests < ActionController::TestCase
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def test_some_lines_same_some_lines_added
+  test "some lines same some lines added" do
     diffed =
     [
       { :line => "once",     :type => :same, :number => 1 },
@@ -92,7 +92,7 @@ class GitDiffHtmlTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
   
-  def test_all_lines_same
+  test "all lines same" do
     diffed =
     [
       { :line => "once",        :type => :same, :number => 1 },
