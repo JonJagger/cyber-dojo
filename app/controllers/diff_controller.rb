@@ -5,8 +5,7 @@ class DiffController < ApplicationController
   include GitDiff
   
   def show
-    configure(params)
-    @kata = Kata.new(params)
+    @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
     tag = params[:tag].to_i
     @traffic_lights_to_tag = @avatar.increments(tag)

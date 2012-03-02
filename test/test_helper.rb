@@ -2,6 +2,8 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
+require 'make_time_helper'
+
 class Test::Unit::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -39,27 +41,34 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   
-  def make_params(language)
-    params = {
-      :root_dir => root_dir,
+  include MakeTimeHelper
+  
+  def make_info(language_name, exercise_name = 'Yahtzee')
+    language = Language.new(root_dir, language_name)
+    exercise = Exercise.new(root_dir, exercise_name)
+    { 
+      :name => 'Jon Jagger',
+      :created => make_time(Time.now),
+      :id => `uuidgen`.strip.delete('-')[0..9],      
       :browser => 'Firefox',
-      'language' => language,
-      'exercise' => 'Yahtzee',
-      'name' => 'Jon Jagger'
+      :language => language.name,
+      :exercise => exercise.name,
+      :visible_files => language.visible_files,
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
     }
   end
-
-  def make_kata(language)
-    params = make_params(language)
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]
-    Kata.new(params)    
+  
+  def make_kata(language_name, exercise_name = 'Yahtzee')
+    info = make_info(language_name, exercise_name)
+    Kata.create_new(root_dir, info)
+    Kata.new(root_dir, info[:id])
   end
     
   def run_tests(avatar, visible_files)
-    @language = avatar.kata.language
-    output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
+    language_name = avatar.kata.language
+    language = Language.new(root_dir, language_name)
+    output = CodeRunner::run(sandbox_dir, language, visible_files)
     inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
     avatar.save_run_tests(visible_files, output, inc)
     output
@@ -69,10 +78,6 @@ class Test::Unit::TestCase
     root_dir + '/sandboxes/' + `uuidgen`.strip.delete('-')[0..9]
   end
   
-  def language_dir
-    root_dir + '/languages/' + @language 
-  end
-    
   def root_dir
     @root_dir || RAILS_ROOT + '/test/cyberdojo'
   end

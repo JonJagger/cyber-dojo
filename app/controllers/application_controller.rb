@@ -14,18 +14,16 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
-  def configure(params)
-    params[:root_dir] = RAILS_ROOT
-    params[:browser] = request.env['HTTP_USER_AGENT'] 
-  end
-  
-  def board_config(params)
-    configure(params)
-    @kata = Kata.new(params)
+  def root_dir
+    RAILS_ROOT
   end
   
   def id
     params[:id]
+  end
+    
+  def browser
+    request.env['HTTP_USER_AGENT']
   end
     
 end

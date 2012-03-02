@@ -8,34 +8,29 @@ class KataTests < ActionController::TestCase
   include Files
   extend Files
   
-  test "create new using uuid" do
-    params = make_params('Dummy')
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]    
-    kata = Kata.new(params)
+  test "create new kata creates manifest with required properies" do    
+    info = make_info('Dummy', 'Yahtzee')
+    Kata.create_new(root_dir, info)
+    kata = Kata.new(root_dir, info[:id])
+    
     assert File.directory?(kata.dir), "File.directory?(#{kata.dir})"
         
     manifest_rb = kata.dir + '/manifest.rb'
     assert File.exists?(manifest_rb), "File.exists?(#{manifest_rb})"
     manifest = eval(IO.read(manifest_rb))
+    
     assert_equal 'Yahtzee', manifest[:exercise]
-    assert_equal 'Yahtzee', info[:exercise]
     assert_equal 'Dummy', manifest[:language]
-    assert_equal 'Dummy', info[:language]
     assert_equal 'Jon Jagger', manifest[:name]
-    assert_equal 'Jon Jagger', info[:name]
     assert_equal info[:id], manifest[:id]
-    assert info.has_key?(:created), "info.has_key?(:created)"
-    assert manifest.has_key?(:created), "manifest.has_key?(:created)"
     assert_equal info[:created], manifest[:created]
     
-    assert !info.has_key?(:visible_files),
-          "!info.has_key?(:visible_files)"
-    assert !info.has_key?(:unit_test_framework),
-          "!info.has_key?(:unit_test_framework)"
-    assert !info.has_key?(:tab_size),
-          "!info.has_key?(:tab_size)"
+    assert manifest.has_key?(:visible_files),
+          "manifest.has_key?(:visible_files)"
+    assert manifest.has_key?(:unit_test_framework),
+          "manifest.has_key?(:unit_test_framework)"
+    assert manifest.has_key?(:tab_size),
+          "manifest.has_key?(:tab_size)"
   end
   
   test "root katas dir initially does not contain an index file" do

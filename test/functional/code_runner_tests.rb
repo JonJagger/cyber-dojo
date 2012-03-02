@@ -16,10 +16,9 @@ class CodeRunnerTests < ActionController::TestCase
   end
 
   test "visible and hidden files are copied to sandbox and output is generated" do
-    @language = 'Dummy'
-    fileset = LanguageFileSet.new(language_dir)
-    visible_files = fileset.visible_files    
-    output = CodeRunner::inner_run(@sandbox_dir, language_dir, visible_files)
+    language = Language.new(root_dir, 'Dummy')
+    visible_files = language.visible_files    
+    output = CodeRunner::inner_run(@sandbox_dir, language, visible_files)
     
     assert File.exists?(@sandbox_dir), "sandbox dir created"
     
@@ -28,7 +27,7 @@ class CodeRunnerTests < ActionController::TestCase
             "File.exists?(#{@sandbox_dir}/#{filename})"
     end
     
-    fileset.hidden_filenames.each do |filename|
+    language.hidden_filenames.each do |filename|
       assert File.exists?(@sandbox_dir + '/' + filename),
             "File.exists?(#{@sandbox_dir}/#{filename})"
     end
@@ -39,10 +38,10 @@ class CodeRunnerTests < ActionController::TestCase
       
   test "sandbox dir is deleted after run" do
     `rm -rf #{@sandbox_dir}`
-    @language = 'Dummy'
-    visible_files = LanguageFileSet.new(language_dir).visible_files
-    
-    output = CodeRunner::run(@sandbox_dir, language_dir, visible_files)
+    language = Language.new(root_dir, 'Dummy')    
+    visible_files = language.visible_files
+
+    output = CodeRunner::run(@sandbox_dir, language, visible_files)
     assert_not_nil output, "output != nil"
     assert output.class == String, "output.class == String"
     assert output.include?('<54> expected but was'), "output.include?('<54>...')"

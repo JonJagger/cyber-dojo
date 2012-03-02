@@ -2,11 +2,13 @@
 require 'Files'
 require 'Folders'
 require 'Locking'
+require 'make_time_helper'
 
 class DojoController < ApplicationController
     
+  include MakeTimeHelper
+  
   def exists_json
-    configure(params)
     @exists = Kata.exists?(params)
     respond_to do |format|
       format.json { render :json => { :exists => @exists, :message => 'Hello' } }
@@ -14,7 +16,7 @@ class DojoController < ApplicationController
   end
     
   def resume_avatar_grid
-    board_config(params)
+    @kata = Kata.new(root_dir, id)    
     @live_avatar_names = @kata.avatar_names
     @all_avatar_names = Avatar.names    
     respond_to do |format|
@@ -29,47 +31,63 @@ class DojoController < ApplicationController
   end
    
   def create
-    configure(params)
-    @languages = Folders::in(RAILS_ROOT + '/languages').sort    
-    @exercises = Folders::in(RAILS_ROOT + '/exercises').sort
+    @languages = Folders::in(root_dir + '/languages').sort    
+    @exercises = Folders::in(root_dir + '/exercises').sort
     @instructions = { }
     @exercises.each do |exercise|
-      path = RAILS_ROOT + '/exercises/' + exercise + '/' + 'instructions'
+      # TODO: refactor to use Exercise class
+      path = root_dir + '/exercises/' + exercise + '/' + 'instructions'
       @instructions[exercise] = IO.read(path)
     end
     @title = 'new-practice'
   end
   
   def save
-    configure(params)
-    
-    katas_root_dir = params[:root_dir] + '/katas'
-    Locking::io_lock(RAILS_ROOT) do      
+    katas_root_dir = root_dir + '/katas'
+    Locking::io_lock(root_dir) do      
       if !File.directory? katas_root_dir
         Dir.mkdir katas_root_dir
       end
     end
     
-    info = Kata.create_new(InitialFileSet.new(params))
+    language = Language.new(root_dir, params['language'])    
+    exercise = Exercise.new(root_dir, params['exercise'])
+    
+    index_info = { 
+      :name => params['name'],
+      :created => make_time(Time.now),
+      :id => `uuidgen`.strip.delete('-')[0..9],      
+      :browser => browser,
+      :language => language.name,
+      :exercise => exercise.name,
+    }
+    
+    kata_info = index_info.clone
+    kata_info[:visible_files] = language.visible_files
+    kata_info[:visible_files]['output'] = ''
+    kata_info[:visible_files]['instructions'] = exercise.instructions
+    kata_info[:unit_test_framework] = language.unit_test_framework
+    kata_info[:tab_size] = language.tab_size
+    
+    Kata.create_new(root_dir, kata_info)
     
     Locking::io_lock(katas_root_dir) do    
       index_filename = katas_root_dir + '/' + Kata::Index_filename
       index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      Files::file_write(index_filename, index << info)
+      Files::file_write(index_filename, index << index_info)
     end
     
     redirect_to :action => :index, 
-                :id => info[:id]
+                :id => index_info[:id]
   end  
     
   #------------------------------------------------
   
   def start
-    configure(params)
-    if !Kata.exists?(params)
+    if !Kata.exists?(root_dir, id)
       redirect_to "/dojo/cant_find?id=#{id}"
     else
-      kata = Kata.new(params)      
+      kata = Kata.new(root_dir, id)      
       avatar = start_avatar(kata)
       if avatar == nil
         redirect_to "/dojo/full?id=#{id}"
@@ -80,12 +98,10 @@ class DojoController < ApplicationController
   end
 
   def cant_find
-    configure(params)
     @id = id
   end
   
   def full
-    board_config(params)
     @id = id
   end
     

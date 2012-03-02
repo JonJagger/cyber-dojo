@@ -5,12 +5,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class TimeOutTests < ActionController::TestCase
 
   test "that_code_with_infinite_loop_times_out_to_amber_and_doesnt_leak_processes" do
-    params = make_params('C assert')
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]
-    kata = Kata.new(params)    
-    
+    kata = make_kata('C assert', 'Dummy')
     filename = 'untitled.c'
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(kata, avatar_name)
@@ -24,7 +19,10 @@ class TimeOutTests < ActionController::TestCase
     output = run_tests(avatar, visible_files)
     assert_equal :amber, avatar.increments.last[:outcome]
     ps_count_after = ps_count
+    
+    # This next text sometimes fails and I haven't yet determined why...
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
+    
     assert_match(/Terminated by the CyberDojo server after 10 seconds/, output)
   end
   

@@ -10,13 +10,13 @@ class DashboardController < ApplicationController
 
   def show
     @title = 'View Dashboard'
-    board_config(params)
+    @kata = Kata.new(root_dir, id)    
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
   end
 
   def heartbeat
-    board_config(params)
+    @kata = Kata.new(root_dir, id)    
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
     respond_to do |format|
