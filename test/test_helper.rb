@@ -2,9 +2,6 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
-require 'CodeOutputParser'
-require 'make_time_helper'
-
 class Test::Unit::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
@@ -42,9 +39,6 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   
-  include MakeTimeHelper
-  extend  MakeTimeHelper
-  
   TEST_ROOT_DIR = RAILS_ROOT + '/test/cyberdojo'
   
   def make_params(language)
@@ -71,10 +65,8 @@ class Test::Unit::TestCase
     sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
     language_dir = TEST_ROOT_DIR +  '/languages/' + language        
     output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
-    visible_files['output'] = output
     inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
-    inc[:time] = make_time(Time.now)
-    avatar.save_run_tests(visible_files, inc)
+    avatar.save_run_tests(visible_files, output, inc)
     output
   end
 

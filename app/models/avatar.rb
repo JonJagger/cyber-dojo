@@ -2,9 +2,12 @@
 require 'CodeSaver'
 require 'Files'
 require 'Locking'
+require 'make_time_helper'
 
 class Avatar
 
+  include MakeTimeHelper
+  
   def self.names
     %w(
         alligator buffalo cheetah deer
@@ -39,12 +42,14 @@ class Avatar
     @name
   end
       
-  def save_run_tests(visible_files, inc)
+  def save_run_tests(visible_files, output, inc)
     Locking::io_lock(dir) do
+      inc[:time] = make_time(Time.now)
       increments = locked_read(Increments_filename)
       tag = increments.length + 1
       inc[:number] = tag
       Files::file_write(pathed(Increments_filename), increments << inc)
+      visible_files['output'] = output
       Files::file_write(pathed(Manifest_filename), visible_files)
       git_commit_tag(visible_files, tag)
     end
