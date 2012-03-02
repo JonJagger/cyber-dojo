@@ -7,14 +7,6 @@ class InitialFileSet
     @params = params
   end
   
-  def copy_hidden_files_to(dir)
-    # Use ln here and not cp - no need to create multiple
-    # copies of files that are not going to be edited.
-    hidden_filenames.each do |hidden_filename|
-      system("ln '#{language_dir}/#{hidden_filename}' '#{dir}/#{hidden_filename}'")
-    end
-  end
-
   def visible_files
     seen = 
       { 'instructions' => IO.read(exercise_dir + '/instructions'),
@@ -24,6 +16,10 @@ class InitialFileSet
       seen[filename] = IO.read("#{language_dir}/#{filename}") 
     end
     seen
+  end
+  
+  def hidden_filenames
+    manifest[:hidden_filenames] || [ ]
   end
   
   def language
@@ -54,10 +50,6 @@ class InitialFileSet
     dir + '/katas'
   end
   
-  def hidden_filenames
-    manifest[:hidden_filenames] || [ ]
-  end
-
 private
 
   def language_dir
