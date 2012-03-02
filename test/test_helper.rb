@@ -39,11 +39,9 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   
-  TEST_ROOT_DIR = RAILS_ROOT + '/test/cyberdojo'
-  
   def make_params(language)
     params = {
-      :root_dir => TEST_ROOT_DIR,
+      :root_dir => root_dir,
       :browser => 'Firefox',
       'language' => language,
       'exercise' => 'Yahtzee',
@@ -60,14 +58,23 @@ class Test::Unit::TestCase
   end
     
   def run_tests(avatar, visible_files)
-    temp_dir = `uuidgen`.strip.delete('-')[0..9]
-    language = avatar.kata.language
-    sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
-    language_dir = TEST_ROOT_DIR +  '/languages/' + language        
+    @language = avatar.kata.language
     output = CodeRunner::run(sandbox_dir, language_dir, visible_files)
     inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
     avatar.save_run_tests(visible_files, output, inc)
     output
   end
 
+  def sandbox_dir
+    root_dir + '/sandboxes/' + `uuidgen`.strip.delete('-')[0..9]
+  end
+  
+  def language_dir
+    root_dir + '/languages/' + @language 
+  end
+    
+  def root_dir
+    @root_dir || RAILS_ROOT + '/test/cyberdojo'
+  end
+  
 end

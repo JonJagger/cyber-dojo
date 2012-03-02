@@ -42,14 +42,14 @@ class InstallationTests < ActionController::TestCase
     ['Ruby-installed-but-not-working'] == installed_but_not_working
   end
   
-  def check_languages(filesets_root_dir)
-    @filesets_root_dir = filesets_root_dir
+  def check_languages(root_dir)
+    @root_dir = root_dir
     cannot_check_because_no_42_file = [ ]
     installed_and_working = [ ]
     not_installed = [ ]
     installed_but_not_working = [ ]
         
-    languages_root_dir = filesets_root_dir + '/languages'
+    languages_root_dir = root_dir + '/languages'
     languages = Folders::in(languages_root_dir).sort
     languages.each do |language|
       @language = language

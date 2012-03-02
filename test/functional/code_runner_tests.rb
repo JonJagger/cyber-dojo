@@ -5,11 +5,8 @@ require 'CodeRunner'
 
 class CodeRunnerTests < ActionController::TestCase
 
-  TEST_ROOT_DIR = RAILS_ROOT + '/test/cyberdojo'
-  
   def setup
-    temp_dir = `uuidgen`.strip.delete('-')[0..9]
-    @sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
+    @sandbox_dir = sandbox_dir
     Dir.mkdir @sandbox_dir
   end
   
@@ -19,7 +16,7 @@ class CodeRunnerTests < ActionController::TestCase
   end
 
   test "visible and hidden files are copied to sandbox and output is generated" do
-    language_dir = TEST_ROOT_DIR +  '/languages/Dummy'
+    @language = 'Dummy'
     fileset = LanguageFileSet.new(language_dir)
     visible_files = fileset.visible_files    
     output = CodeRunner::inner_run(@sandbox_dir, language_dir, visible_files)
@@ -42,7 +39,7 @@ class CodeRunnerTests < ActionController::TestCase
       
   test "sandbox dir is deleted after run" do
     `rm -rf #{@sandbox_dir}`
-    language_dir = TEST_ROOT_DIR +  '/languages/Dummy'    
+    @language = 'Dummy'
     visible_files = LanguageFileSet.new(language_dir).visible_files
     
     output = CodeRunner::run(@sandbox_dir, language_dir, visible_files)

@@ -39,7 +39,7 @@ class KataTests < ActionController::TestCase
   end
   
   test "root katas dir initially does not contain an index file" do
-    assert !File.exists?(TEST_ROOT_DIR + '/katas/index.rb');
+    assert !File.exists?(root_dir + '/katas/index.rb');
   end
     
   test "creating a new kata succeeds and creates katas root dir" do
