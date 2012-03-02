@@ -5,63 +5,26 @@ require 'Files'
 
 class InitialFileSetTests < ActionController::TestCase
 
-  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
-
-  def root_test_dir_reset
-    system("rm -rf #{ROOT_TEST_DIR}")
-    Dir.mkdir ROOT_TEST_DIR
-  end
-
-  def filesets_root_dir
-    RAILS_ROOT +  '/filesets'
-  end
-
-  def katas_root_dir
-    ROOT_TEST_DIR
-  end
- 
-  def exercise
-    'Yahtzee'
-  end
-  
-  def name
-    'Bertie-Bassett'
-  end
-  
-  def browser
-    'Firefox'
-  end  
-  
-  def make_fileset(language)
-    params = {
-      :katas_root_dir => katas_root_dir,
-      :filesets_root_dir => filesets_root_dir,
-      :browser => browser,
-      'language' => language,
-      'exercise' => 'Yahtzee',
-      'name' => name
-    }
-    InitialFileSet.new(params)
-  end
-  
-  def test_copy_hidden_files_to_target_folder  
-    root_test_dir_reset
-    sandbox = ROOT_TEST_DIR + '/sandbox'
-    Dir::mkdir(sandbox)
+  test "copy hidden files to target folder" do
+    temp_dir = `uuidgen`.strip.delete('-')[0..9]
+    sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
+    
     fileset = make_fileset('Java JUnit')
-    fileset.copy_hidden_files_to(sandbox)
+    fileset.copy_hidden_files_to(sandbox_dir)
     assert File.exists?(sandbox + '/junit-4.7.jar'), 'junit-4.7.jar file created'
   end
   
-  def test_copy_hidden_files_to_target_folder_does_nothing_beningly_if_no_hidden_files
-    root_test_dir_reset
-    sandbox = ROOT_TEST_DIR + '/sandbox'
-    Dir::mkdir(sandbox)
+  test "copy hidden files to target folder does nothing beningly if no hidden files" do
+    temp_dir = `uuidgen`.strip.delete('-')[0..9]
+    sandbox_dir = TEST_ROOT_DIR + '/sandboxes/' + temp_dir
+    
     fileset = make_fileset('C++ Assert')    
-    fileset.copy_hidden_files_to(sandbox)
+    fileset.copy_hidden_files_to(sandbox_dir)
   end
   
-  def test_language_visible_files_plus_output_plus_instructions
+  #TODO: capture sandbox_dir as a method  
+  
+  test "language visible files plus output plus instructions" do
     fileset = make_fileset('Java JUnit')    
     visible_files = fileset.visible_files
     assert visible_files['UntitledTest.java'].start_with? "\nimport org.junit.*;"
@@ -69,44 +32,43 @@ class InitialFileSetTests < ActionController::TestCase
     assert visible_files['instructions'].start_with? "The game of yahtzee"
   end
 
-  def test_tab_defaults_to_4
+  test "tab defaults to 4" do
     fileset = make_fileset('Java JUnit')    
     assert_equal 4, fileset.tab_size
   end
   
-  def test_tab_when_not_defaulted
+  test "tab when not defaulted" do
     fileset = make_fileset('Ruby')    
     assert_equal 2, fileset.tab_size
   end
   
-  def test_unit_test_framework
-    fileset = make_fileset('Ruby')    
-    assert_equal 'ruby_test_unit', fileset.unit_test_framework
+  test "unit test framework" do
+    fileset = make_fileset('C assert')    
+    assert_equal 'cassert', fileset.unit_test_framework
   end
 
-  def test_language
-    fileset = make_fileset('Ruby')        
-    assert_equal 'Ruby', fileset.language
+  test "language" do
+    fileset = make_fileset('C assert')        
+    assert_equal 'C assert', fileset.language
   end
   
-  def test_exercise
-    fileset = make_fileset('Ruby')        
-    assert_equal exercise, fileset.exercise
+  test "exercise" do
+    fileset = make_fileset('C assert')        
+    assert_equal 'Yahtzee', fileset.exercise
   end
   
-  def test_name
+  test "name" do
     fileset = make_fileset('Ruby')        
-    assert_equal name, fileset.name
+    assert_equal 'Jon Jagger', fileset.name
   end
   
-  def test_browser
+  test "browser" do
     fileset = make_fileset('Ruby')
-    assert_equal browser, fileset.browser
+    assert_equal 'Firefox', fileset.browser
   end
   
-  def test_kata_root_dir
-    fileset = make_fileset('Ruby')
-    assert_equal katas_root_dir, fileset.katas_root_dir
+  def make_fileset(language)
+    InitialFileSet.new(make_params(language))
   end
-  
+    
 end

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TrapOutputRefreshTests < ActionController::TestCase
   
-  test "output_is_correct_after_refresh" do
+  test "output is correct after refresh" do
     language = 'C assert'
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'lion')

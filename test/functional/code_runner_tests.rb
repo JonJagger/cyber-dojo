@@ -18,7 +18,7 @@ class CodeRunnerTests < ActionController::TestCase
     @sandbox_dir = nil
   end
 
-  test "visible_and_hidden_files_are_copied_to_sandbox_and_output_is_generated" do
+  test "visible and hidden files are copied to sandbox and output is generated" do
     language_dir = TEST_ROOT_DIR +  '/languages/Dummy'
     fileset = LanguageFileSet.new(language_dir)
     visible_files = fileset.visible_files    
@@ -40,7 +40,7 @@ class CodeRunnerTests < ActionController::TestCase
     assert output.include?('<54> expected but was'), "output.include?('<54>...')"
   end    
       
-  test "sandbox_dir_is_deleted_after_run" do
+  test "sandbox dir is deleted after run" do
     `rm -rf #{@sandbox_dir}`
     language_dir = TEST_ROOT_DIR +  '/languages/Dummy'    
     visible_files = LanguageFileSet.new(language_dir).visible_files

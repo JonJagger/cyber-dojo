@@ -7,7 +7,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  test "building_diff_view_from_git_repo" do
+  test "building diff view from git repo" do
     kata = make_kata('Ruby-installed-and-working')
     avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
@@ -87,7 +87,7 @@ HERE
   
   #-----------------------------------------------
 
-  test "sameify_with_joined_newlines" do
+  test "sameify with joined newlines" do
     
     expected =
     [

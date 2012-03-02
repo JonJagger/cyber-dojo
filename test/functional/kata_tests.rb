@@ -8,23 +8,21 @@ class KataTests < ActionController::TestCase
   include Files
   extend Files
   
-  def test_create_new_using_uuid
-    root_test_dir_reset
-    params = make_params('Java JUnit')
+  test "create new using uuid" do
+    params = make_params('Dummy')
     fileset = InitialFileSet.new(params)
     info = Kata::create_new(fileset)
-    id = info[:id]
-    assert_equal 10, id.length
-    kata_dir = params[:katas_root_dir] + '/' + id[0..1] + '/' + id[2..9]
-    assert File.directory?(kata_dir), "File.directory?(#{kata_dir})"
+    params[:id] = info[:id]    
+    kata = Kata.new(params)
+    assert File.directory?(kata.dir), "File.directory?(#{kata.dir})"
         
-    manifest_rb = kata_dir + '/manifest.rb'
+    manifest_rb = kata.dir + '/manifest.rb'
     assert File.exists?(manifest_rb), "File.exists?(#{manifest_rb})"
     manifest = eval(IO.read(manifest_rb))
     assert_equal 'Yahtzee', manifest[:exercise]
     assert_equal 'Yahtzee', info[:exercise]
-    assert_equal 'Java JUnit', manifest[:language]
-    assert_equal 'Java JUnit', info[:language]
+    assert_equal 'Dummy', manifest[:language]
+    assert_equal 'Dummy', info[:language]
     assert_equal 'Jon Jagger', manifest[:name]
     assert_equal 'Jon Jagger', info[:name]
     assert_equal info[:id], manifest[:id]
@@ -32,82 +30,48 @@ class KataTests < ActionController::TestCase
     assert manifest.has_key?(:created), "manifest.has_key?(:created)"
     assert_equal info[:created], manifest[:created]
     
-    sandbox = kata_dir + '/sandbox'
-    assert File.directory?(sandbox), "File.Directory?(#{sandbox})"
-    hidden_file = sandbox + '/junit-4.7.jar'    
-    assert File.exists?(hidden_file), "File.exists?(#{hidden_file})"
-
-    assert !info.has_key?(:visible_files), "!info.has_key?(:visible_files)"
-    assert !info.has_key?(:unit_test_framework), "!info.has_key?(:unit_test_framework)"
-    assert !info.has_key?(:tab_size), "!info.has_key?(:tab_size)"
+    assert !info.has_key?(:visible_files),
+          "!info.has_key?(:visible_files)"
+    assert !info.has_key?(:unit_test_framework),
+          "!info.has_key?(:unit_test_framework)"
+    assert !info.has_key?(:tab_size),
+          "!info.has_key?(:tab_size)"
   end
   
-  def test_that_root_katas_dir_initially_does_not_contain_index_file
-    root_test_dir_reset
-    assert !File.exists?(ROOT_TEST_DIR + '/index.rb');
+  test "root katas dir initially does not contain an index file" do
+    assert !File.exists?(TEST_ROOT_DIR + '/katas/index.rb');
   end
     
-  def test_that_creating_a_new_kata_succeeds_and_creates_root_dir
-    root_test_dir_reset
-    kata = make_kata
+  test "creating a new kata succeeds and creates katas root dir" do
+    kata = make_kata('Dummy')
     assert File.exists?(kata.dir), 'inner/outer dir created'
   end
     
-  def test_that_you_can_create_an_avatar_in_a_kata
-    root_test_dir_reset
-    kata = make_kata    
+  test "you can create an avatar in a kata" do
+    kata = make_kata('Dummy') 
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)
     assert 'hippo', avatar.name
   end
   
-  def test_age_in_seconds
-    root_test_dir_reset
-    kata = make_kata    
+  test "age in seconds" do
+    kata = make_kata('Dummy') 
     assert_equal 0, kata.age_in_seconds    
   end
   
-  def test_multiple_avatar_names_in_a_kata
-    root_test_dir_reset
-    kata = make_kata
+  test "multiple avatar names in a kata" do
+    kata = make_kata('Dummy')
     Avatar.new(kata, 'lion')
     Avatar.new(kata, 'hippo')
     assert_equal ['hippo', 'lion'], kata.avatar_names.sort
   end
   
-  def test_all_increments_initially_empty
-    root_test_dir_reset
-    kata = make_kata
+  test "all increments initially empty" do
+    kata = make_kata('Dummy')
     Avatar.new(kata, 'lion')
     Avatar.new(kata, 'hippo')
     expected = { "hippo" => [ ], "lion" => [ ] }
     assert_equal expected, kata.all_increments
   end
-  
-  ROOT_TEST_DIR = RAILS_ROOT + '/test/katas'
-
-  def root_test_dir_reset
-    system("rm -rf #{ROOT_TEST_DIR}")
-    Dir.mkdir ROOT_TEST_DIR
-  end
-
-  def make_params(language)
-    params = {
-      :katas_root_dir => ROOT_TEST_DIR,
-      :filesets_root_dir => RAILS_ROOT +  '/filesets',
-      :browser => 'Firefox',
-      'language' => language,
-      'exercise' => 'Yahtzee',
-      'name' => 'Jon Jagger'
-    }
-  end
-  
-  def make_kata(language = 'Ruby')
-    params = make_params(language)
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]
-    Kata.new(params)    
-  end
-    
+      
 end

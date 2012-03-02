@@ -5,8 +5,7 @@ require 'Folders'
 
 class InstallationTests < ActionController::TestCase
 
-  def test_actual_installed_languages
-    root_test_dir_reset        
+  test "actual installed languages" do
     puts "Checking the (red,amber,green) installation testing mechanism..."
     ok = check_installed_languages_testing_mechanism
     if !ok
@@ -18,7 +17,7 @@ class InstallationTests < ActionController::TestCase
       installed_and_working,
         cannot_check_because_no_42_file,
           not_installed,
-            installed_but_not_working = check_languages(RAILS_ROOT + '/filesets')
+            installed_but_not_working = check_languages(RAILS_ROOT)
   
       puts "\nSummary...."    
       puts 'not_installed:' + not_installed.inspect
@@ -35,9 +34,9 @@ class InstallationTests < ActionController::TestCase
     installed_and_working,
       cannot_check_because_no_42_file,
         not_installed,
-          installed_but_not_working = check_languages(RAILS_ROOT + '/test/functional')
+          installed_but_not_working = check_languages(RAILS_ROOT + '/test/cyberdojo')
     
-    ['Ruby-installed-and-working'] == installed_and_working &&
+    ['C assert', 'Dummy', 'Ruby-installed-and-working'] == installed_and_working &&
     ['Ruby-no-42-file'] == cannot_check_because_no_42_file &&
     ['Ruby-not-installed'] == not_installed &&
     ['Ruby-installed-but-not-working'] == installed_but_not_working
@@ -50,7 +49,7 @@ class InstallationTests < ActionController::TestCase
     not_installed = [ ]
     installed_but_not_working = [ ]
         
-    languages_root_dir = filesets_root_dir + '/language'
+    languages_root_dir = filesets_root_dir + '/languages'
     languages = Folders::in(languages_root_dir).sort
     languages.each do |language|
       @language = language
@@ -210,39 +209,13 @@ class InstallationTests < ActionController::TestCase
   end
   
   def language_test(filename, rhs)
-    kata = make_kata
+    kata = make_kata(@language)
     avatar = Avatar.new(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]    
     visible_files[filename] = test_code.sub('42', rhs)
-    avatar.run_tests(visible_files)
+    run_tests(avatar, visible_files)
     avatar.increments.last[:outcome]
   end    
-
-  def make_kata
-    params = make_params
-    fileset = InitialFileSet.new(params)
-    info = Kata::create_new(fileset)
-    params[:id] = info[:id]
-    Kata.new(params)    
-  end
-
-  def make_params
-    params = {
-      :katas_root_dir => KATA_ROOT_DIR,
-      :filesets_root_dir => @filesets_root_dir,
-      :browser => 'Firefox',
-      'language' => @language,
-      'exercise' => 'Yahtzee',
-      'name' => 'Jon Jagger'
-    }
-  end
-
-  def root_test_dir_reset
-    system("rm -rf #{KATA_ROOT_DIR}")
-    Dir.mkdir KATA_ROOT_DIR
-  end
-  
-  KATA_ROOT_DIR = RAILS_ROOT + '/test/katas'
 
 end
