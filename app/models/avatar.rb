@@ -1,5 +1,4 @@
 
-require 'CodeSaver'
 require 'Files'
 require 'Locking'
 require 'make_time_helper'
@@ -76,8 +75,9 @@ private
   def git_commit_tag(visible_files, tag)
     command = "cd '#{dir}';"
     visible_files.each do |filename,content|
-      CodeSaver::save_file(sandbox, filename, content)
-      command += "git add '#{sandbox}/#{filename}';"
+      pathed_filename = sandbox + '/' + filename
+      File.open(pathed_filename, 'w') { |file| file.write content }      
+      command += "git add '#{pathed_filename}';"
     end
     command += "git commit -a -m '#{tag}' --quiet;"
     command += "git tag -m '#{tag}' #{tag} HEAD;"

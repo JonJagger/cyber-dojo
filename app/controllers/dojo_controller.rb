@@ -9,7 +9,7 @@ class DojoController < ApplicationController
   include MakeTimeHelper
   
   def exists_json
-    @exists = Kata.exists?(params)
+    @exists = Kata.exists?(root_dir, id)
     respond_to do |format|
       format.json { render :json => { :exists => @exists, :message => 'Hello' } }
     end    

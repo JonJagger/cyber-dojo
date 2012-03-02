@@ -1,5 +1,4 @@
 
-require 'CodeRunner'
 require 'CodeOutputParser'
 
 class KataController < ApplicationController
@@ -17,11 +16,9 @@ class KataController < ApplicationController
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
         
-    sandbox_dir = root_dir + '/sandboxes/' + `uuidgen`.strip.delete('-')[0..9]    
-    #language_dir = root_dir +  '/languages/' + @kata.language
     language = Language.new(root_dir, @kata.language)
-    
-    @output = CodeRunner::run(sandbox_dir, language, visible_files)
+    sandbox = Sandbox.new(root_dir)
+    @output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(@kata.unit_test_framework, @output)
     @avatar.save_run_tests(visible_files, @output, inc)
     

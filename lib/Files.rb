@@ -52,12 +52,10 @@ module Files
     
     output
   end
-  
-  
+    
   def self.with_stderr(cmd)
     cmd + " " + "2>&1"
   end
-  
   
   def self.kill(pids)
     return if pids == []
@@ -67,7 +65,6 @@ module Files
       # Could happen if the OS/GC reclaims the process? 
     end
   end
-  
   
   def self.descendant_pids_of(base)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

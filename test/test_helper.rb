@@ -68,16 +68,13 @@ class Test::Unit::TestCase
   def run_tests(avatar, visible_files)
     language_name = avatar.kata.language
     language = Language.new(root_dir, language_name)
-    output = CodeRunner::run(sandbox_dir, language, visible_files)
+    sandbox = Sandbox.new(root_dir)
+    output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
     avatar.save_run_tests(visible_files, output, inc)
     output
   end
 
-  def sandbox_dir
-    root_dir + '/sandboxes/' + `uuidgen`.strip.delete('-')[0..9]
-  end
-  
   def root_dir
     @root_dir || RAILS_ROOT + '/test/cyberdojo'
   end

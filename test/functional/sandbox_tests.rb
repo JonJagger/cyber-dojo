@@ -1,29 +1,67 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeSaver'
 
-# > ruby test/functional/code_saver_tests.rb
+# > ruby test/functional/sandbox_tests.rb
 
-class CodeSaverTests < ActionController::TestCase
-      
+class SandboxTests < ActionController::TestCase
+
   def setup
-    @sandbox_dir = sandbox_dir
-    Dir.mkdir @sandbox_dir
+    @sandbox = Sandbox.new(root_dir)
   end
   
   def teardown
-    `rm -rf #{@sandbox_dir}`
-    @sandbox_dir = nil
+    if File.exists? @sandbox.dir
+      `rm -rf #{@sandbox.dir}`
+    end
+    @sandbox = nil
   end
+
+  test "visible and hidden files are copied to sandbox and output is generated" do
+    language = Language.new(root_dir, 'Dummy')
+    visible_files = language.visible_files
+
+    @sandbox.make_dir
+    output = @sandbox.inner_run(language, visible_files)
+    assert File.exists?(@sandbox.dir), "sandbox dir created"
+    
+    visible_files.each do |filename,content|
+      assert File.exists?(@sandbox.dir + '/' + filename),
+            "File.exists?(#{@sandbox.dir}/#{filename})"
+    end
+    
+    language.hidden_filenames.each do |filename|
+      assert File.exists?(@sandbox.dir + '/' + filename),
+            "File.exists?(#{@sandbox.dir}/#{filename})"
+    end
+    
+    assert_not_nil output, "output != nil"
+    assert output.include?('<54> expected but was'), "output.include?('<54>...')"
+  end    
+      
+  test "sandbox dir is deleted after run" do
+    language = Language.new(root_dir, 'Dummy')        
+    visible_files = language.visible_files
+    output = @sandbox.run(language, visible_files)
+    assert_not_nil output, "output != nil"
+    assert output.class == String, "output.class == String"
+    assert output.include?('<54> expected but was'), "output.include?('<54>...')"
+    assert !File.exists?(@sandbox.dir),
+          "!File.exists?(#{@sandbox.dir})"
+  end
+      
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "save file for non executable file" do
+    @sandbox.make_dir    
     check_save_file('file.a', 'content', 'content', false)
   end
   
   test "save file for executable file" do
+    @sandbox.make_dir    
     check_save_file('file.sh', 'ls', 'ls', true)
   end
   
   test "save file for makefile converts all leading whitespace on a line to a single tab" do
+    @sandbox.make_dir    
     check_save_makefile("            abc", "\tabc")
     check_save_makefile("        abc", "\tabc")
     check_save_makefile("    abc", "\tabc")
@@ -31,6 +69,7 @@ class CodeSaverTests < ActionController::TestCase
   end
   
   test "save file for Makefile converts all leading whitespace on a line to a single tab" do
+    @sandbox.make_dir    
     check_save_file('Makefile', "            abc", "\tabc", false)
     check_save_file('Makefile', "        abc", "\tabc", false)
     check_save_file('Makefile', "    abc", "\tabc", false)
@@ -38,6 +77,7 @@ class CodeSaverTests < ActionController::TestCase
   end
   
   test "save file for makefile converts all leading whitespace to single tab for all lines in any line format" do
+    @sandbox.make_dir    
     check_save_makefile("123\n456", "123\n456")
     check_save_makefile("123\r\n456", "123\n456")
     
@@ -56,19 +96,19 @@ class CodeSaverTests < ActionController::TestCase
     check_save_makefile("    123\r\n456\r\n   789", "\t123\n456\n\t789")    
   end
   
-  def check_save_makefile(content, expected_content)
+  def check_save_makefile(content, expected_content)    
     check_save_file('makefile', content, expected_content, false)
   end
       
   def check_save_file(filename, content, expected_content, executable)
-    CodeSaver::save_file(@sandbox_dir, filename, content)
-    pathed_filename = @sandbox_dir + '/' + filename
+    @sandbox.save_file(filename, content)
+    pathed_filename = @sandbox.dir + '/' + filename
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)
     assert_equal executable, File.executable?(pathed_filename),
-                            "File.executable?(pathed_filename)"                      
+                            "File.executable?(pathed_filename)"
   end
-  
+      
 end
 
