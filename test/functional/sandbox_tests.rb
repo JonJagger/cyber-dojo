@@ -15,6 +15,14 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
 
+  test "sandbox name is 10 hex chars long" do
+    assert_equal 10, @sandbox.name.length
+    assert @sandbox.name.class == String
+    @sandbox.name.chars.each do |char|
+      assert "0123456789ABCDEF".include?(char)
+    end
+  end
+  
   test "visible and hidden files are copied to sandbox and output is generated" do
     language = Language.new(root_dir, 'Dummy')
     visible_files = language.visible_files

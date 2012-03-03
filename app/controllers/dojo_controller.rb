@@ -2,6 +2,7 @@
 require 'Files'
 require 'Folders'
 require 'Locking'
+require 'Uuid'
 require 'make_time_helper'
 
 class DojoController < ApplicationController
@@ -56,7 +57,7 @@ class DojoController < ApplicationController
     index_info = { 
       :name => params['name'],
       :created => make_time(Time.now),
-      :id => `uuidgen`.strip.delete('-')[0..9],      
+      :id => Uuid.gen,
       :browser => browser,
       :language => language.name,
       :exercise => exercise.name,

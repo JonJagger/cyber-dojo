@@ -1,22 +1,27 @@
 
 require 'Files'
+require 'Uuid'
 
 class Sandbox
   
   def initialize(root_dir)
-    @root_dir,@name = root_dir,`uuidgen`.strip.delete('-')[0..9]
+    @root_dir, @name = root_dir, Uuid.gen
   end
      
+  def dir
+    @root_dir + '/sandboxes/' + @name
+  end
+    
+  def name
+    @name
+  end
+  
   def make_dir
     if !File.exists? dir
       Dir.mkdir dir        
     end
   end
   
-  def dir
-    @root_dir + '/sandboxes/' + @name
-  end
-    
   def run(language, visible_files)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # visible_files  are the code files from the browser (or test)
