@@ -1,36 +1,44 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Files'
 
 # > ruby test/functional/kata_tests.rb
 
 class KataTests < ActionController::TestCase
-
-  include Files
-  extend Files
   
-  test "create new kata creates manifest with required properies" do    
-    info = make_info('Dummy', 'Yahtzee')
+  test "create new kata creates manifest with required properies" do
+    id = 'ABCDABCD34'
+    now = [2012,3,3,10,6,12]
+    info = make_info('Dummy', 'Yahtzee', id, now)
     Kata.create_new(root_dir, info)
     kata = Kata.new(root_dir, info[:id])
     
+    assert_equal root_dir + '/katas/AB/CDABCD34', kata.dir
     assert File.directory?(kata.dir), "File.directory?(#{kata.dir})"
         
     manifest_rb = kata.dir + '/manifest.rb'
     assert File.exists?(manifest_rb), "File.exists?(#{manifest_rb})"
     manifest = eval(IO.read(manifest_rb))
-    
-    assert_equal 'Yahtzee', manifest[:exercise]
-    assert_equal 'Dummy', manifest[:language]
-    assert_equal 'Jon Jagger', manifest[:name]
-    assert_equal info[:id], manifest[:id]
-    assert_equal info[:created], manifest[:created]
-    
     assert manifest.has_key?(:visible_files),
           "manifest.has_key?(:visible_files)"
-    assert manifest.has_key?(:unit_test_framework),
-          "manifest.has_key?(:unit_test_framework)"
-    assert manifest.has_key?(:tab_size),
-          "manifest.has_key?(:tab_size)"
+    
+    assert_equal manifest[:visible_files], kata.visible_files
+    assert_equal 'Yahtzee', kata.exercise
+    assert_equal 'Dummy', kata.language
+    assert_equal 'Jon Jagger', kata.name
+    assert_equal id, kata.id
+    assert_equal Time.mktime(*now), kata.created
+    assert_equal 'ruby_test_unit', kata.unit_test_framework
+    assert_equal " " * 2, kata.tab
+    seconds = 5
+    now = now[0...-1] + [now.last + seconds ]
+    assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))
+  end
+    
+  test "Kata.exists? returns false before kata is created and true after kata is created" do
+    id = 'AABBCCDDEE'
+    info = make_info('Dummy', 'Yahtzee', id)
+    assert !Kata.exists?(root_dir, id)
+    Kata.create_new(root_dir, info)
+    assert Kata.exists?(root_dir, id)
   end
   
   test "root katas dir initially does not contain an index file" do
@@ -49,12 +57,7 @@ class KataTests < ActionController::TestCase
     assert 'hippo', avatar.name
   end
   
-  test "age in seconds" do
-    kata = make_kata('Dummy') 
-    assert_equal 0, kata.age_in_seconds    
-  end
-  
-  test "multiple avatar names in a kata" do
+  test "multiple avatar_names in a kata" do
     kata = make_kata('Dummy')
     Avatar.new(kata, 'lion')
     Avatar.new(kata, 'hippo')

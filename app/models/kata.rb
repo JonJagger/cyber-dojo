@@ -32,8 +32,7 @@ class Kata
   def self.exists?(root_dir, id)
     inner_dir = root_dir + '/katas/' + Kata::inner_dir(id)
     outer_dir = inner_dir + '/' + Kata::outer_dir(id)
-    # can I just do outer_dir check here?
-    File.directory? inner_dir and File.directory? outer_dir
+    File.directory? outer_dir
   end
 
   Index_filename = 'index.rb' 
@@ -88,8 +87,8 @@ class Kata
     Time.mktime(*manifest[:created])
   end
   
-  def age_in_seconds
-    (Time.now - created).to_i
+  def age_in_seconds( now = Time.now )
+    (now - created).to_i
   end
   
   def dir    

@@ -43,13 +43,13 @@ class Test::Unit::TestCase
   
   include MakeTimeHelper
   
-  def make_info(language_name, exercise_name = 'Yahtzee')
+  def make_info( language_name, exercise_name = 'Yahtzee', id = Uuid.gen, now = make_time(Time.now) )
     language = Language.new(root_dir, language_name)
     exercise = Exercise.new(root_dir, exercise_name)
     { 
       :name => 'Jon Jagger',
-      :created => make_time(Time.now),
-      :id => `uuidgen`.strip.delete('-')[0..9],      
+      :created => now,
+      :id => id,
       :browser => 'Firefox',
       :language => language.name,
       :exercise => exercise.name,
