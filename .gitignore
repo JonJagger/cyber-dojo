@@ -1,9 +1,5 @@
 *~
 log/*
 tmp/**/*
-katas/*
-sandboxes/**/*
-test/cyberdojo/katas/*
-test/cyberdojo/sandboxes/**/*
 
 .DS_Store
