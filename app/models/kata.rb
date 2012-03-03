@@ -15,7 +15,7 @@ class Kata
     id[2..9] || ""
   end
   
-  #TODO create_new(root_dir, id, info) (info has everything except id)
+  #TODO ? create_new(root_dir, id, info) (info has everything except id)
   def self.create_new(root_dir, info)    
     katas_root_dir = root_dir + '/katas'
     inner_dir = katas_root_dir + '/' + Kata::inner_dir(info[:id])

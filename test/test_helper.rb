@@ -79,4 +79,8 @@ class Test::Unit::TestCase
     @root_dir || RAILS_ROOT + '/test/cyberdojo'
   end
   
+  def teardown
+    system("rm -rf #{root_dir}/katas/*")
+  end
+  
 end

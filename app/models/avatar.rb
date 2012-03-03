@@ -42,13 +42,13 @@ class Avatar
   end
       
   def save_run_tests(visible_files, output, inc)
+    inc[:time] = make_time(Time.now)
+    visible_files['output'] = output
     Locking::io_lock(dir) do
-      inc[:time] = make_time(Time.now)
       increments = locked_read(Increments_filename)
       tag = increments.length + 1
       inc[:number] = tag
       Files::file_write(pathed(Increments_filename), increments << inc)
-      visible_files['output'] = output
       Files::file_write(pathed(Manifest_filename), visible_files)
       git_commit_tag(visible_files, tag)
     end
