@@ -36,10 +36,10 @@ Configuring a practice-kata
 The server will ask you to choose
 o) a name for your session
 o) your language (eg C++)
-   Each language corresponds to a sub-directory of cyberdojo/filesets/language/
+   Each language corresponds to a sub-directory of cyberdojo/languages/
    (see below)
 o) your exercise (eg Prime Factors)
-   Each exercise corresponds to a sub-directory of cyberdojo/filesets/exercise/
+   Each exercise corresponds to a sub-directory of cyberdojo/exercises/
    (see below)
 
 
@@ -232,20 +232,20 @@ Miika-Petteri Matikainen added support for Haskell as follows
 
 Adding a new exercise
 =====================
-1. Create a new sub-directory under cyberdojo/filesets/exercise/
-  Example: cyberdojo/filesets/exercise/FizzBuzz
+1. Create a new sub-directory under cyberdojo/exercises/
+  Example: cyberdojo/exercises/FizzBuzz
 2. Create a text file called instructions in this directory.
-  Example: cyberdojo/filesets/exercise/FizzBuzz/instructions
+  Example: cyberdojo/exercises/FizzBuzz/instructions
 
 
 Adding a new language
 =====================
-Create a new subdirectory under cyberdojo/filesets/language/
-  For example: cyberdojo/filesets/language/Lisp
+Create a new sub-directory under cyberdojo/languages/
+  For example: cyberdojo/languages/Lisp
 Create a manifest.rb file in this directory.
-  For example: cyberdojo/filesets/language/Lisp/manifest.rb
+  For example: cyberdojo/languages/Lisp/manifest.rb
 Each manifest.rb file contains an inspected ruby object. 
-Example: cyberdojo/filesets/language/Java/manifest.rb looks like this:
+Example: cyberdojo/languages/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java cyberdojo.sh ),
   :hidden_filenames => %w( junit-4.7.jar ),
@@ -264,27 +264,27 @@ o) If it finds at least one file containing '42' it will pick the
    first one as "the-42-file"
 o) It will then use the manifest to create a kata and run-the-tests
    three times as follows:
-   1. With the files unchanged.
-   2. With the 42 in the-42-file replaced by 54
-   3. With the 42 replaced by 4typo2
-o) If test-run-1 generates a red traffic-light and
-      test-run-2 generates a green traffic-light and
-      test-run-3 generates an amber traffic-light then
-   the CyberDojo server assumes the language is installed and working
-   and it will offer that language when you configure a new kata.
+   test-1 - with the files unchanged.
+   test-2 - with the 42 in the-42-file replaced by 54
+   test-3 - with the 42 replaced by 4typo2
+o) If test-1 generates a red traffic-light and
+      test-2 generates a green traffic-light and
+      test-3 generates an amber traffic-light then
+   then the CyberDojo server assumes the language is installed and working
+   and it will offer that language when you create a new kata.
 o) If the three tests return three amber traffic-lights then
    the CyberDojo server assumes the language is not installed
    and it won't offer that language when you configure a new kata.
 o) If the three tests return any other combination of traffic-lights
-   the CyberDojo server assumes the language is installed by not working
-   and it won't offer that language when you configure a new kata.
+   the CyberDojo server assumes the language is installed but not working
+   and it (soon) won't offer that language when you create a new kata.
 
-You can test if a languages initial fileset is correctly setup as follows
+You can test if a languages' initial fileset is correctly setup as follows
 >cd cyberdojo/test/functional
 >ruby installation_tests.rb
-Sometimes this issues the following error
+Note: this may issue the following error
    sh: Syntax error: Bad fd number
-which I fixed as follows
+when this happened to me I fixed it as follows
 >sudo rm /bin/sh
 >sudo ln -s /bin/bash /bin/sh
 
@@ -306,17 +306,18 @@ manifest.rb Parameters
 :hidden_filenames
   The names of necessary and/or supporting files that are NOT visible in the 
   editor in the browser. Each of these files must exist in the directory. For 
-  example, a junit jar file or nunit assemblies. Not required if you do not need 
-  hidden files.
+  example, a junit jar file or nunit assemblies.
+  Not required if you do not need hidden files.
   
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
   name of the ruby function (in the CyberDojo server) used to parse the 
   run-tests output (to see if the increment generates a red/green/amber
   traffic light). For example, if the value is 'cassert' then
-      cyberdojo/app/helpers/run_tests_output_parser.rb
+      cyberdojo/lib/CodeOutputParser.rb
   must contain a method called parse_cassert() and will be called to parse the
   output of running the tests via the cyberdojo.sh shell file.
+  Required. No default.
 
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
@@ -353,6 +354,21 @@ To find the directory issue the following from the cyberdojo/ directory
 Which will provide the uuidgen based directory names for recent katas.
 It's much easier and more informative to just click on a traffic light.
   
+
+Sandboxes
+=========
+It used to be the case that a run-tests event would cause all the browser's
+visible files to be saved into the avatar's sandbox folder along with the
+language's hidden files and then the cyberdojo.sh file would be run on those files.
+This is no longer the case. Now, the browser's visible files and the language's
+hidden files are saved to a temporary dir under cyberdojo/sandboxes/ and the
+cyberdojo.sh file is run from there. This run generates output which is captured
+and parsed to determine if the run-tests is a red, amber, or green traffic light.
+Then, the visible files (with the output added to it) and the red/amber/green status
+is saved in the avatar's sandbox folder and git committed.
+Running the tests is deliberately separated out to its own folder. This separation
+offers an easy route to running dedicated servers just to run the tests.
+
 
 How to Turn off Chrome Spell-Checking in Chrome
 ===============================================
