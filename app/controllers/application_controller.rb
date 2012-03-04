@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   def root_dir
-    RAILS_ROOT
+    params[:root_dir] || RAILS_ROOT
   end
   
   def id

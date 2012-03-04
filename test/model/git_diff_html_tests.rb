@@ -3,7 +3,7 @@ require 'GitDiff'
 
 # > ruby test/unit/git_diff_html_tests.rb
 
-class GitDiffHtmlTests < ActionController::TestCase
+class GitDiffHtmlTests <  ActiveSupport::TestCase
 
   include GitDiff
   
