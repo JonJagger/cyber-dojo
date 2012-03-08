@@ -34,6 +34,8 @@ correct rights
 >cd /var/www
 >chgrp -R www-data cyberdojo
 >chown -R www-data cyberdojo
+And don't forget to reboot apache
+>apache2ctl restart
 
 
 Configuring a practice-kata
