@@ -17,7 +17,7 @@ class SandboxTests < ActionController::TestCase
     assert_equal 10, @sandbox.name.length
     assert @sandbox.name.class == String
     @sandbox.name.chars.each do |char|
-      assert "0123456789ABCDEF".include?(char)
+      assert "23456789ABCDEF".include?(char)
     end
   end
   
