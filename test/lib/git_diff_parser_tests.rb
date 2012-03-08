@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiffParser'
 
-# > ruby test/unit/git_diff_parser_tests.rb
-
 class GitDiffParserTests < ActionController::TestCase 
 
   include GitDiff

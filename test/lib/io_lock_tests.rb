@@ -2,8 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 require 'Locking'
 
-# > ruby test/functional/io_lock_tests.rb
-
 class IoLockTests < ActionController::TestCase
   
   test "if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do

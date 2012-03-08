@@ -1,9 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > ruby test/unit/spaced_line_number_tests.rb
-
-class SpacedLineNumberTests < ActionController::TestCase
+class GitDiffSpacedLineNumberTests < ActionController::TestCase
 
   include GitDiff
   

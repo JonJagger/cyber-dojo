@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/unit/td_gapper_tests.rb
-
 class TdGapperTests < ActionController::TestCase
 
   test "number" do

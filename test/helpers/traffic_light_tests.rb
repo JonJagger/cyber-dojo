@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'traffic_light_helper'
 
-# > ruby test/unit/traffic_light_tests.rb
-
 class TrafficLightTests < ActionController::TestCase
 
   include TrafficLightHelper

@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'time_in_words_helper'
 
-# > ruby test/unit/time_in_words_tests.rb
-
 class TimeInWordsTests < ActionController::TestCase
 
   include TimeInWordsHelper

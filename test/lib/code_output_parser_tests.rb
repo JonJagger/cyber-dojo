@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'CodeOutputParser'
 
-# > ruby test/unit/code_output_parser_tests.rb
-
 class CodeOutputParserTests < ActionController::TestCase
   
   include CodeOutputParser

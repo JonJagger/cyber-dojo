@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > ruby test/unit/git_diff_html_tests.rb
-
 class GitDiffHtmlTests <  ActiveSupport::TestCase
 
   include GitDiff

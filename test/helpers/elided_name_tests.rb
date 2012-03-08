@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'elided_name_helper'
 
-# > ruby test/unit/elides_name_tests.rb
-
 class ElidedNameTests < ActionController::TestCase
 
   include ElidedNameHelper

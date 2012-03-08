@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'LineSplitter'
 
-# > ruby test/unit/line_splitter_tests.rb
-
 class LineSplitterTests < ActionController::TestCase
 
   include LineSplitter

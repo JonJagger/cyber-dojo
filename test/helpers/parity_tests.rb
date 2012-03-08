@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'parity_helper'
 
-# > ruby test/unit/parity_tests.rb
-
 class ParityTests < ActionController::TestCase
 
   include ParityHelper

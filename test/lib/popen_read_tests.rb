@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
-# > ruby test/functional/popen_read_tests.rb
-
 class PopenReadTests < ActionController::TestCase
 
   test "popen_without_timeout_that_completes_returns_command_output" do

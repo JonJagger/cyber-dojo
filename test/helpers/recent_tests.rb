@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'recent_helper'
 
-# > ruby test/unit/recent_tests.rb
-
 class RecentTests < ActionController::TestCase
 
   include RecentHelper

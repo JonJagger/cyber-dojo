@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Uuid'
 
-# > ruby test/functional/uuid_tests.rb
-
 class UuidTests < ActionController::TestCase
 
   test "uuid is 10 chars long" do

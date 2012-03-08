@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'GitDiff'
 
-# > ruby test/unit/git_diff_most_changed_tests.rb
-
 class GitDiffMostChangedTests < ActionController::TestCase
 
   include GitDiff
