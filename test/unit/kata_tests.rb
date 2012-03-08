@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/kata_tests.rb
-
 class KataTests < ActionController::TestCase
   
   test "create new kata creates manifest with required properies" do

@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/trap_output_refresh_tests.rb
-
 class TrapOutputRefreshTests < ActionController::TestCase
   
   test "output is correct after refresh" do

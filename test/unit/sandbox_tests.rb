@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/sandbox_tests.rb
-
 class SandboxTests < ActionController::TestCase
 
   def setup

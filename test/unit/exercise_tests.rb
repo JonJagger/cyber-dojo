@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
-# > ruby test/functional/exercise_tests.rb
-
 class ExerciseTests < ActionController::TestCase
 
   test "name" do

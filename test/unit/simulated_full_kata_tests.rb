@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/simulated_full_kata_tests.rb
-
 class SimulatedFullKataTests < ActionController::TestCase
 
   def defunct_count

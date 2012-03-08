@@ -8,7 +8,7 @@ echo HELPERS
 cd ../helpers
 ./run_all.sh
 echo FUNCTIONAL
-cd ../functional
-./run_all.sh
 cd ..
+ruby functional/dojo_tests.rb
+ruby functional/render_error_tests.rb
 

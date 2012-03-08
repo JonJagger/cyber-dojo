@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/avatar_tests.rb
-
 class AvatarTests < ActionController::TestCase
 
   test "there are no increments before first test run" do

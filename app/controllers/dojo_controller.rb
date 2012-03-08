@@ -98,6 +98,14 @@ class DojoController < ApplicationController
     end    
   end
 
+  def show_dashboard
+    redirect_to "/dashboard/show?id=#{id}"    
+  end
+
+  def show_diff
+    redirect_to "/diff/show?id=#{id}"
+  end
+  
   def cant_find
     @id = id
   end

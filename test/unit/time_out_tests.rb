@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/functional/timeout_tests.rb
-
 class TimeOutTests < ActionController::TestCase
 
   test "that_code_with_infinite_loop_times_out_to_amber_and_doesnt_leak_processes" do

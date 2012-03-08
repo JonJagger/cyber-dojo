@@ -1,7 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-# > ruby test/unit/render_error_tests.rb
-
 class RenderErrorTests < ActionController::TestCase
 
   def setup

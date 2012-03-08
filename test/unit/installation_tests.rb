@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Folders'
 
-# > ruby test/functional/installation_tests.rb
-
 class InstallationTests < ActionController::TestCase
 
   test "actual installed languages" do

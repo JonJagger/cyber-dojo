@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class DojoControllerTest  < ActionController::TestCase
 
-  def test_index
+  test "index" do
     get :index
     assert_response :success
   end
@@ -38,6 +38,32 @@ class DojoControllerTest  < ActionController::TestCase
     end
     post :start, rooted({ :id => id })
     assert_redirected_to "/dojo/full?id=#{id}"
+  end
+  
+  test "show empty dashboard" do
+    id = checked_save_id
+    get "show_dashboard", { :id => id }
+    assert_redirected_to "/dashboard/show?id=#{id}"    
+  end
+  
+  test "show non-empty dashboard" do
+    id = checked_save_id
+    (1..4).each do |n|
+      post :start, rooted({ :id => id })
+      avatar = avatar_from_response
+      assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"      
+    end
+    get "show_dashboard", { :id => id }    
+    assert_redirected_to "/dashboard/show?id=#{id}"    
+  end  
+  
+  test "show diff" do
+    id = checked_save_id
+    post :start, rooted({ :id => id })
+    avatar = avatar_from_response
+    assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"
+    get "show_diff", { :id => id }
+    assert_redirected_to "/diff/show?id=#{id}"        
   end
   
   test "faqs,links,tips,why" do
