@@ -29,6 +29,11 @@ I will happily tell you these if you email me: jon@jaggersoft.com
 CyberDojo lives in the directory /var/www/cyberdojo 
 Pull the latest CyberDojo source code from github onto your TurnKey image
 >git pull origin master
+Occasionally this will pull new directories. You must ensure these have the
+correct rights
+>cd /var/www
+>chgrp -R www-data cyberdojo
+>chown -R www-data cyberdojo
 
 
 Configuring a practice-kata
