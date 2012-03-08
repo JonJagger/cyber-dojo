@@ -1,5 +1,15 @@
 
 <%= @kata.id -%><br/>
-&nbsp;&bull;&nbsp;<%= @kata.language -%><br/>
-&nbsp;&bull;&nbsp;<%= @kata.exercise -%><br/>
-&nbsp;&bull;&nbsp;<%= elided_name(@kata.name, 15) -%><br/>
+&bull;&nbsp; <%= @kata.language -%><br/>
+&bull;&nbsp; <%= @kata.exercise -%><br/>
+&bull;&nbsp;
+<% if @kata.diff -%>
+<a href="/diff/show/<%=@kata.diff.id-%>?avatar=<%=@kata.diff.avatar-%>&tag=<%=@kata.diff.tag-%>"
+   title="This kata-practice was forked from a traffic-light diff"
+   target="_blank">
+<%= @kata.diff.id -%>-<%= @kata.diff.avatar -%>-<%= @kata.diff.tag -%>
+</a>
+<% else -%>
+<%= @kata.name -%>  
+<% end -%>
+<br/>  

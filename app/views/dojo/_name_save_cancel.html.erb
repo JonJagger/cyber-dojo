@@ -2,16 +2,20 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
+var save_button_disable = function() {
+  var name = $j('#name').val();
+  var disabled = $j.trim(name) === "";
+  $j('#save_button').attr('disabled', disabled);    
+};
+
 $j(document).ready(function() {
   
   $j('#name').keyup(function(event) {
     event.preventDefault();
-    var name = $j('#name').val();
-    var disabled = $j.trim(name) === "";
-    $j('#save_button').attr('disabled', disabled);
+    save_button_disable();
   });
   
-  $j('#save_button').attr('disabled', true);
+  save_button_disable();
   
   $j('#save_button').click(function() {
     $cd.postTo('/dojo/save', {
@@ -24,6 +28,7 @@ $j(document).ready(function() {
   $j('#cancel_button').click(function() {
     $cd.postTo('/dojo/index');
   });
+  
 });
 
 //--></script>
@@ -52,4 +57,3 @@ $j(document).ready(function() {
     </td>
   </tr>
 </table>
-

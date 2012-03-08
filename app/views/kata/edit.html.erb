@@ -17,7 +17,10 @@ $j(document).ready(function() {
   
   $cd.bindAllLineNumbers();
   $cd.rebuildFilenameList();
-  $cd.loadFile("instructions"); //TODO: refine
+  
+  var rand = Math.floor(Math.random() * filenames.length);
+  $cd.loadFile(filenames[rand]);
+  
   $cd.welcome("<%=@avatar.name-%>");  
 });
 

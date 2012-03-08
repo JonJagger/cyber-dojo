@@ -47,7 +47,6 @@ class Test::Unit::TestCase
     language = Language.new(root_dir, language_name)
     exercise = Exercise.new(root_dir, exercise_name)
     { 
-      :name => 'Jon Jagger',
       :created => now,
       :id => id,
       :browser => 'Firefox',

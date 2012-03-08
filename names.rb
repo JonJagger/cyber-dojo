@@ -18,6 +18,10 @@ def avatars
     )
 end
 
+def name_or_diff_from(manifest)
+  manifest[:name] || "#{manifest[:diff_id]}-#{manifest[:diff_avatar]}-#{manifest[:diff_tag]}"
+end
+
 index = eval IO.popen('cat katas/index.rb').read
 show = (ARGV[0] || "32").to_i
 ids = recent(index, show).map{ |entry| entry[:id] }
@@ -38,7 +42,7 @@ ids.each do |id|
 
   print created.strftime('%b %d %H:%M') + 
     ' ' + inner_dir + '/' + outer_dir + 
-    ' ' + manifest[:name] + ', ' +
+    ' ' + '{' + name_or_diff_from(manifest) + '}, ' +
     ' ' + manifest[:language] + ', ' +
     ' ' + manifest[:exercise] + ', ' +
     ' ' + '[' + inc_lengths.sort.join(',') + '] -> ' + inc_lengths.reduce(:+).to_s +

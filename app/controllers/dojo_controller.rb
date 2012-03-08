@@ -54,7 +54,7 @@ class DojoController < ApplicationController
     language = Language.new(root_dir, params['language'])    
     exercise = Exercise.new(root_dir, params['exercise'])
     
-    index_info = { 
+    index_info = {
       :name => params['name'],
       :created => make_time(Time.now),
       :id => Uuid.gen,
@@ -85,11 +85,13 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def diff_save
-    id =params['id']
-    language = params['language']
-    exercise = params['exercise']
-    avatar = params['avatar']
-    tag = params['tag']
+    diff = {
+      :diff_id => params['id'],
+      :diff_language => params['language'],
+      :diff_exercise => params['exercise'],
+      :diff_avatar => params['avatar'],
+      :diff_tag => params['tag']      
+    }
     
     katas_root_dir = root_dir + '/katas'
     Locking::io_lock(root_dir) do      
@@ -98,11 +100,10 @@ class DojoController < ApplicationController
       end
     end
     
-    language = Language.new(root_dir, params['language'])    
-    exercise = Exercise.new(root_dir, params['exercise'])
+    language = Language.new(root_dir, diff[:diff_language])    
+    exercise = Exercise.new(root_dir, diff[:diff_exercise])
     
     index_info = { 
-      :name => "#{id}:#{avatar}:#{tag}",
       :created => make_time(Time.now),
       :id => Uuid.gen,
       :browser => browser,
@@ -113,13 +114,14 @@ class DojoController < ApplicationController
     kata_info = index_info.clone
     
     #get visible_files from tag
-    kata = Kata.new(root_dir, id)
-    avatar = Avatar.new(kata, avatar)
-    kata_info[:visible_files] = avatar.visible_files(tag)
+    kata = Kata.new(root_dir, diff[:diff_id])
+    avatar = Avatar.new(kata, diff[:diff_avatar])
+    kata_info[:visible_files] = avatar.visible_files(diff[:diff_tag])
     
     kata_info[:unit_test_framework] = language.unit_test_framework
     kata_info[:tab_size] = language.tab_size
     
+    kata_info.merge!(diff)
     Kata.create_new(root_dir, kata_info)
     
     Locking::io_lock(katas_root_dir) do    

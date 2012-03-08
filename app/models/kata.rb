@@ -46,7 +46,15 @@ class Kata
   def name
     manifest[:name]
   end
-    
+  
+  def diff
+    if manifest[:diff_id]
+      Diff.new(manifest)
+    else
+      nil
+    end
+  end
+  
   def avatar_names
     Avatar.names.select { |name| File.exists? dir + '/' + name }
   end
@@ -63,6 +71,10 @@ class Kata
     all
   end
   
+  def language    # TODO: forward to Language.new(...) ?
+    manifest[:language]
+  end
+  
   def visible_files
     manifest[:visible_files]
   end
@@ -73,10 +85,6 @@ class Kata
   
   def unit_test_framework
     manifest[:unit_test_framework]
-  end
-  
-  def language    # TODO: forward to Language.new(...) ?
-    manifest[:language]
   end
   
   def exercise    # TODO: forward to Exercise.new(...) ?
@@ -115,4 +123,22 @@ private
   
 end
 
-
+class Diff
+  
+  def initialize(manifest)
+    @manifest = manifest
+  end
+  
+  def id
+    @manifest[:diff_id]
+  end
+  
+  def avatar
+    @manifest[:diff_avatar]
+  end
+  
+  def tag
+    @manifest[:diff_tag]
+  end
+  
+end
