@@ -84,6 +84,56 @@ class DojoController < ApplicationController
     
   #------------------------------------------------
   
+  def diff_save
+    id =params['id']
+    language = params['language']
+    exercise = params['exercise']
+    avatar = params['avatar']
+    tag = params['tag']
+    
+    katas_root_dir = root_dir + '/katas'
+    Locking::io_lock(root_dir) do      
+      if !File.directory? katas_root_dir
+        Dir.mkdir katas_root_dir
+      end
+    end
+    
+    language = Language.new(root_dir, params['language'])    
+    exercise = Exercise.new(root_dir, params['exercise'])
+    
+    index_info = { 
+      :name => "#{id}:#{avatar}:#{tag}",
+      :created => make_time(Time.now),
+      :id => Uuid.gen,
+      :browser => browser,
+      :language => language.name,
+      :exercise => exercise.name,
+    }
+    
+    kata_info = index_info.clone
+    
+    #get visible_files from tag
+    kata = Kata.new(root_dir, id)
+    avatar = Avatar.new(kata, avatar)
+    kata_info[:visible_files] = avatar.visible_files(tag)
+    
+    kata_info[:unit_test_framework] = language.unit_test_framework
+    kata_info[:tab_size] = language.tab_size
+    
+    Kata.create_new(root_dir, kata_info)
+    
+    Locking::io_lock(katas_root_dir) do    
+      index_filename = katas_root_dir + '/' + Kata::Index_filename
+      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
+      Files::file_write(index_filename, index << index_info)
+    end
+    
+    redirect_to :action => :start, 
+                :id => index_info[:id]
+  end
+  
+  #------------------------------------------------
+  
   def start
     if !Kata.exists?(root_dir, id)
       redirect_to "/dojo/cant_find?id=#{id}"

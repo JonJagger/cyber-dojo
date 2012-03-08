@@ -4,6 +4,16 @@
 $j(document).ready(function() {
   $cd.buildDiffFilenames(<%= @diffs.to_json -%>);
   $j('#' + '<%=@current_filename_id-%>').click();
+  
+  $j('#start_new_kata_from_here').click(function() {
+      $cd.postTo('/dojo/diff_save', {
+        id: "<%= @kata.id -%>",
+        language: "<%= @kata.language -%>",
+        exercise: "<%= @kata.exercise -%>",
+        avatar: "<%= @avatar.name -%>",
+        tag: "<%= @traffic_lights_to_tag.length -%>"
+      });
+    });  
 });
 
 //--></script>
@@ -23,6 +33,11 @@ $j(document).ready(function() {
       <div class="info panel">
         <br/>
         <%= render :partial => 'shared/info' -%>
+        <br/>
+        <input type="button"
+               class="small button"
+               id="start_new_kata_from_here"
+               value="start-new-kata-from-here" />
       </div>
     </td>    
     <td>
