@@ -24,7 +24,7 @@ class Sandbox
   
   def run(language, visible_files)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # visible_files  are the code files from the browser (or test)
+    # visible_files  are the code/test files from the browser
     # language       the language object (associated with
     #                the visible_files), which may provide hidden_files
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

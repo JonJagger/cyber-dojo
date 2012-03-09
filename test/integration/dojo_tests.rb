@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class DojoControllerTest  < ActionController::TestCase
+class DojoControllerTest  < ActionController::IntegrationTest
 
   test "index" do
-    get :index
+    get 'dojo/index'
     assert_response :success
   end
   
   test "create" do
-    get :create
+    get 'dojo/create'
     assert_response :success
   end
 
@@ -16,70 +16,45 @@ class DojoControllerTest  < ActionController::TestCase
     checked_save_id
   end
   
-  test "cant start coding if given kata-id does not exist" do
+  test "start-coding redirects to cant-find for invalid kata-id" do
     bad_id = 'ab00ab11ab'
-    post :start, rooted({ :id => bad_id })
+    post 'dojo/start', rooted({ :id => bad_id })
     assert_redirected_to "/dojo/cant_find?id=#{bad_id}"
   end
 
-  test "start coding succeeds" do
+  test "start-coding succeeds for valid kata-id" do
     id = checked_save_id
-    post :start, rooted({ :id => id })
+    post 'dojo/start', rooted({ :id => id })
     avatar = avatar_from_response
     assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"
   end
     
-  test "start coding succeeds once for each avatar name, then dojo is full" do
+  test "start-coding succeeds once for each avatar name, then dojo is full" do
     id = checked_save_id
     (1..Avatar.names.length).each do |n|
-      post :start, rooted({ :id => id })
+      post 'dojo/start', rooted({ :id => id })
       avatar = avatar_from_response
       assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"      
     end
-    post :start, rooted({ :id => id })
+    post 'dojo/start', rooted({ :id => id })
     assert_redirected_to "/dojo/full?id=#{id}"
   end
-  
-  test "show empty dashboard" do
-    id = checked_save_id
-    get "show_dashboard", { :id => id }
-    assert_redirected_to "/dashboard/show?id=#{id}"    
-  end
-  
-  test "show non-empty dashboard" do
-    id = checked_save_id
-    (1..4).each do |n|
-      post :start, rooted({ :id => id })
-      avatar = avatar_from_response
-      assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"      
-    end
-    get "show_dashboard", { :id => id }    
-    assert_redirected_to "/dashboard/show?id=#{id}"    
-  end  
-  
-  test "show diff" do
-    id = checked_save_id
-    post :start, rooted({ :id => id })
-    avatar = avatar_from_response
-    assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"
-    get "show_diff", { :id => id }
-    assert_redirected_to "/diff/show?id=#{id}"        
-  end
-  
+    
   test "faqs,links,tips,why" do
-    post :faqs
+    post 'dojo/faqs'
     assert_response :success
-    post :links
+    post 'dojo/links'
     assert_response :success
-    post :tips
+    post 'dojo/tips'
     assert_response :success
-    post :why
+    post 'dojo/why'
     assert_response :success
   end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def checked_save_id
-    post :save, rooted({
-      :root_dir => RAILS_ROOT + '/test/cyberdojo',
+    post 'dojo/save', rooted({
       :name => 'jj-101',
       :language => 'C assert',
       :exercise => 'Yahtzee'

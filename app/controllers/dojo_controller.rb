@@ -135,15 +135,7 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
-  
-  def show_dashboard
-    redirect_to "/dashboard/show?id=#{id}"    
-  end
-
-  def show_diff
-    redirect_to "/diff/show?id=#{id}"
-  end
-    
+      
   def render_error
     render :file => RAILS_ROOT + '/public/' + params[:n] + '.html'    
   end

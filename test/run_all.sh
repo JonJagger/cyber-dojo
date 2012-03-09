@@ -7,8 +7,7 @@ echo LIB
 echo HELPERS
 cd ../helpers
 ./run_all.sh
-echo FUNCTIONAL
-cd ..
-ruby functional/dojo_tests.rb
-ruby functional/render_error_tests.rb
+echo INTEGRATION
+cd ../integration
+./run_all.sh
 
