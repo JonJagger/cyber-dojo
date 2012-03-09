@@ -65,11 +65,10 @@ class Test::Unit::TestCase
   end
     
   def run_tests(avatar, visible_files)
-    language_name = avatar.kata.language
-    language = Language.new(root_dir, language_name)
+    language = avatar.kata.language
     sandbox = Sandbox.new(root_dir)
     output = sandbox.run(language, visible_files)
-    inc = CodeOutputParser::parse(avatar.kata.unit_test_framework, output)
+    inc = CodeOutputParser::parse(language.unit_test_framework, output)
     avatar.save_run_tests(visible_files, output, inc)
     output
   end

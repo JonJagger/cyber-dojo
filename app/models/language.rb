@@ -29,6 +29,10 @@ class Language
     manifest[:unit_test_framework]      
   end
   
+  def tab
+    " " * tab_size
+  end
+  
   def tab_size
     manifest[:tab_size] || 4
   end

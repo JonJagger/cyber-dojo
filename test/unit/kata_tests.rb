@@ -37,13 +37,13 @@ class KataTests < ActionController::TestCase
           "manifest.has_key?(:visible_files)"
     
     assert_equal info[:name], kata.name
-    assert_equal manifest[:visible_files], kata.visible_files
-    assert_equal 'Yahtzee', kata.exercise
-    assert_equal 'Dummy', kata.language
+    assert_equal manifest[:visible_files], kata.language.visible_files
+    assert_equal 'Yahtzee', kata.exercise.name
+    assert_equal 'Dummy', kata.language.name
     assert_equal id, kata.id
     assert_equal Time.mktime(*now), kata.created
-    assert_equal 'ruby_test_unit', kata.unit_test_framework
-    assert_equal " " * 2, kata.tab
+    assert_equal 'ruby_test_unit', kata.language.unit_test_framework
+    assert_equal " " * 2, kata.language.tab
     seconds = 5
     now = now[0...-1] + [now.last + seconds ]
     assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))

@@ -71,24 +71,19 @@ class Kata
     all
   end
   
-  def language    # TODO: forward to Language.new(...) ?
-    manifest[:language]
+  def language
+    Language.new(@root_dir, manifest[:language])
   end
   
+  def exercise
+    Exercise.new(@root_dir, manifest[:exercise])
+  end
+
   def visible_files
+    # language.visible_files != visible_files
+    # this is because kata.visible_files has the
+    # instructions and output 'pseudo' files mixed in
     manifest[:visible_files]
-  end
-  
-  def tab
-    " " * manifest[:tab_size]
-  end
-  
-  def unit_test_framework
-    manifest[:unit_test_framework]
-  end
-  
-  def exercise    # TODO: forward to Exercise.new(...) ?
-    manifest[:exercise]    
   end
       
   def created
@@ -122,6 +117,8 @@ private
   end
   
 end
+
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 class Diff
   

@@ -6,7 +6,7 @@ class KataController < ApplicationController
   def edit
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
-    @tab = @kata.tab    
+    @tab = @kata.language.tab    
     @visible_files = @avatar.visible_files
     @output = @visible_files['output']
     @title = 'Run Tests'
@@ -15,11 +15,10 @@ class KataController < ApplicationController
   def run_tests
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
-        
-    language = Language.new(root_dir, @kata.language)
+    language = @kata.language
     sandbox = Sandbox.new(root_dir)
     @output = sandbox.run(language, visible_files)
-    inc = CodeOutputParser::parse(@kata.unit_test_framework, @output)
+    inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     @avatar.save_run_tests(visible_files, @output, inc)
     
     respond_to do |format|

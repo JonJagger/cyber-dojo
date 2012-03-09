@@ -9,21 +9,7 @@ class DojoController < ApplicationController
     
   include MakeTimeHelper
   
-  def exists_json
-    @exists = Kata.exists?(root_dir, id)
-    respond_to do |format|
-      format.json { render :json => { :exists => @exists, :message => 'Hello' } }
-    end    
-  end
-    
-  def resume_avatar_grid
-    @kata = Kata.new(root_dir, id)    
-    @live_avatar_names = @kata.avatar_names
-    @all_avatar_names = Avatar.names    
-    respond_to do |format|
-      format.html { render :layout => false }
-    end
-  end
+  #------------------------------------------------
   
   def index
     @title = 'Home'
@@ -37,9 +23,7 @@ class DojoController < ApplicationController
     @exercises = Folders::in(root_dir + '/exercises').sort
     @instructions = { }
     @exercises.each do |exercise|
-      # TODO: refactor to use Exercise class
-      path = root_dir + '/exercises/' + exercise + '/' + 'instructions'
-      @instructions[exercise] = IO.read(path)
+      @instructions[exercise] = Exercise.new(root_dir, exercise).instructions
     end
     @title = 'new-practice'
   end
@@ -96,13 +80,7 @@ class DojoController < ApplicationController
     end    
   end
 
-  def show_dashboard
-    redirect_to "/dashboard/show?id=#{id}"    
-  end
-
-  def show_diff
-    redirect_to "/diff/show?id=#{id}"
-  end
+  #------------------------------------------------
   
   def cant_find
     @id = id
@@ -139,11 +117,39 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
+
+  def exists_json
+    @exists = Kata.exists?(root_dir, id)
+    respond_to do |format|
+      format.json { render :json => { :exists => @exists, :message => 'Hello' } }
+    end    
+  end
+    
+  def resume_avatar_grid
+    @kata = Kata.new(root_dir, id)    
+    @live_avatar_names = @kata.avatar_names
+    @all_avatar_names = Avatar.names    
+    respond_to do |format|
+      format.html { render :layout => false }
+    end
+  end
   
+  #------------------------------------------------
+  
+  def show_dashboard
+    redirect_to "/dashboard/show?id=#{id}"    
+  end
+
+  def show_diff
+    redirect_to "/diff/show?id=#{id}"
+  end
+    
   def render_error
     render :file => RAILS_ROOT + '/public/' + params[:n] + '.html'    
   end
 
+  #------------------------------------------------
+  
   def start_avatar(kata)
     Locking::io_lock(kata.dir) do
       available_avatar_names = Avatar.names - kata.avatar_names
@@ -156,6 +162,8 @@ class DojoController < ApplicationController
       end        
     end      
   end
+  
+  #------------------------------------------------
   
   def save_to_index
     katas_root_dir = root_dir + '/katas'
@@ -174,6 +182,7 @@ class DojoController < ApplicationController
       :language => language.name,
       :exercise => params['exercise']
     }
+    
     info[:name]= params['name'] if params['name']
     
     Locking::io_lock(katas_root_dir) do    
@@ -186,6 +195,8 @@ class DojoController < ApplicationController
     info[:tab_size] = language.tab_size
     info
   end
+  
+  #------------------------------------------------
   
   def random(array)
     array.shuffle[0]
