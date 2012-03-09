@@ -26,11 +26,12 @@ class DojoController < ApplicationController
   end
   
   def index
-    # offers create, start, resume, dashboard
     @title = 'Home'
     @id = id
   end
    
+  #------------------------------------------------
+
   def create
     @languages = Folders::in(root_dir + '/languages').sort    
     @exercises = Folders::in(root_dir + '/exercises').sort
@@ -42,96 +43,41 @@ class DojoController < ApplicationController
     end
     @title = 'new-practice'
   end
-  
+    
+  #------------------------------------------------
+
   def save
-    katas_root_dir = root_dir + '/katas'
-    Locking::io_lock(root_dir) do      
-      if !File.directory? katas_root_dir
-        Dir.mkdir katas_root_dir
-      end
-    end
+    info = save_to_index
+    language = Language.new(root_dir, info[:language])
+    exercise = Exercise.new(root_dir, info[:exercise])
+    info[:visible_files] = language.visible_files
+    info[:visible_files]['output'] = ''
+    info[:visible_files]['instructions'] = exercise.instructions
     
-    language = Language.new(root_dir, params['language'])    
-    exercise = Exercise.new(root_dir, params['exercise'])
-    
-    index_info = {
-      :name => params['name'],
-      :created => make_time(Time.now),
-      :id => Uuid.gen,
-      :browser => browser,
-      :language => language.name,
-      :exercise => exercise.name,
-    }
-    
-    kata_info = index_info.clone
-    kata_info[:visible_files] = language.visible_files
-    kata_info[:visible_files]['output'] = ''
-    kata_info[:visible_files]['instructions'] = exercise.instructions
-    kata_info[:unit_test_framework] = language.unit_test_framework
-    kata_info[:tab_size] = language.tab_size
-    
-    Kata.create_new(root_dir, kata_info)
-    
-    Locking::io_lock(katas_root_dir) do    
-      index_filename = katas_root_dir + '/' + Kata::Index_filename
-      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      Files::file_write(index_filename, index << index_info)
-    end
+    Kata.create_new(root_dir, info)
     
     redirect_to :action => :index, 
-                :id => index_info[:id]
+                :id => info[:id]
   end  
     
   #------------------------------------------------
-  
+    
   def diff_save
-    diff = {
-      :diff_id => params['id'],
-      :diff_language => params['language'],
-      :diff_exercise => params['exercise'],
-      :diff_avatar => params['avatar'],
-      :diff_tag => params['tag']      
-    }
+    info = save_to_index
+    info[:diff_id] = params['id']
+    info[:diff_language] = params['language']
+    info[:diff_exercise] = params['exercise']
+    info[:diff_avatar] = params['avatar']
+    info[:diff_tag] = params['tag']      
+        
+    kata = Kata.new(root_dir, info[:diff_id])
+    avatar = Avatar.new(kata, info[:diff_avatar])
+    info[:visible_files] = avatar.visible_files(info[:diff_tag])
     
-    katas_root_dir = root_dir + '/katas'
-    Locking::io_lock(root_dir) do      
-      if !File.directory? katas_root_dir
-        Dir.mkdir katas_root_dir
-      end
-    end
-    
-    language = Language.new(root_dir, diff[:diff_language])    
-    exercise = Exercise.new(root_dir, diff[:diff_exercise])
-    
-    index_info = { 
-      :created => make_time(Time.now),
-      :id => Uuid.gen,
-      :browser => browser,
-      :language => language.name,
-      :exercise => exercise.name,
-    }
-    
-    kata_info = index_info.clone
-    
-    #get visible_files from tag
-    kata = Kata.new(root_dir, diff[:diff_id])
-    avatar = Avatar.new(kata, diff[:diff_avatar])
-    kata_info[:visible_files] = avatar.visible_files(diff[:diff_tag])
-    
-    kata_info[:unit_test_framework] = language.unit_test_framework
-    kata_info[:tab_size] = language.tab_size
-    
-    kata_info.merge!(diff)
-    Kata.create_new(root_dir, kata_info)
-    
-    Locking::io_lock(katas_root_dir) do    
-      index_filename = katas_root_dir + '/' + Kata::Index_filename
-      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      Files::file_write(index_filename, index << index_info)
-    end
+    Kata.create_new(root_dir, info)
     
     redirect_to :action => :start, 
-                :id => index_info[:id]
+                :id => info[:id]
   end
   
   #------------------------------------------------
@@ -192,6 +138,8 @@ class DojoController < ApplicationController
     end
   end
   
+  #------------------------------------------------
+  
   def render_error
     render :file => RAILS_ROOT + '/public/' + params[:n] + '.html'    
   end
@@ -207,6 +155,36 @@ class DojoController < ApplicationController
         avatar_name
       end        
     end      
+  end
+  
+  def save_to_index
+    katas_root_dir = root_dir + '/katas'
+    Locking::io_lock(root_dir) do      
+      if !File.directory? katas_root_dir
+        Dir.mkdir katas_root_dir
+      end
+    end
+    
+    language = Language.new(root_dir, params['language'])    
+    
+    info = {
+      :created => make_time(Time.now),
+      :id => Uuid.gen,
+      :browser => browser,
+      :language => language.name,
+      :exercise => params['exercise']
+    }
+    info[:name]= params['name'] if params['name']
+    
+    Locking::io_lock(katas_root_dir) do    
+      index_filename = katas_root_dir + '/' + Kata::Index_filename
+      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
+      Files::file_write(index_filename, index << info)
+    end
+    
+    info[:unit_test_framework] = language.unit_test_framework
+    info[:tab_size] = language.tab_size
+    info
   end
   
   def random(array)
