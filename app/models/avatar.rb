@@ -24,11 +24,10 @@ class Avatar
       Dir::mkdir(sandbox)
       Files::file_write(pathed(Manifest_filename), @kata.visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
-      command  = "cd '#{dir}';" +
-                 "git init --quiet;" +
-                 "git add '#{Manifest_filename}';" +
-                 "git add '#{Increments_filename}';"
-      system(command)
+      command = "git init --quiet;" +
+                "git add '#{Manifest_filename}';" +
+                "git add '#{Increments_filename}';"
+      system(cd_dir(command))
       git_commit_tag(@kata.visible_files, tag = 0)
     end
   end
@@ -61,19 +60,28 @@ class Avatar
   def increments(tag = nil)
     unlocked_read(Increments_filename, tag)
   end
-  
-  def dir
-    @kata.dir + '/' + name
+
+  def diff_lines(tag)
+    command = cd_dir("git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;")
+    Files::popen_read(command)
   end
   
+private
+
   def sandbox
     pathed('sandbox')
   end
 
-private
-    
+  def pathed(filename)
+    dir + '/' + filename
+  end
+      
+  def dir
+    @kata.dir + '/' + name
+  end
+  
   def git_commit_tag(visible_files, tag)
-    command = "cd '#{dir}';"
+    command = ""
     visible_files.each do |filename,content|
       pathed_filename = sandbox + '/' + filename
       File.open(pathed_filename, 'w') { |file| file.write content }      
@@ -81,7 +89,7 @@ private
     end
     command += "git commit -a -m '#{tag}' --quiet;"
     command += "git tag -m '#{tag}' #{tag} HEAD;"
-    system(command)   
+    system(cd_dir(command))
   end
   
   def unlocked_read(filename, tag)
@@ -90,21 +98,19 @@ private
   
   def locked_read(filename, tag = nil)
     tag ||= most_recent_tag
-    command  = "cd #{dir};" +
-               "git show #{tag}:#{filename}"
+    command = cd_dir("git show #{tag}:#{filename}")
     eval Files::popen_read(command)     
   end
      
   def most_recent_tag
-    command  = "cd #{dir};" +
-               "git tag|sort -g"
+    command = cd_dir("git tag|sort -g")
     eval Files::popen_read(command)    
   end
   
-  def pathed(filename)
-    dir + '/' + filename
+  def cd_dir(command)
+    "cd #{dir};" + command
   end
-      
+  
   Increments_filename = 'increments.rb'  
   Manifest_filename = 'manifest.rb'
 

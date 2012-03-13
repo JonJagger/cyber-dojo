@@ -1,4 +1,4 @@
-require 'Files'
+#require 'Files'
 require 'GitDiffBuilder'
 require 'GitDiffParser'
 require 'LineSplitter'
@@ -10,17 +10,12 @@ module GitDiff
   # Top level function used by diff_controller.rb to create data structure
   # (to build view from) containing diffs for all files, for a given avatar, 
   # for a given tag.
-  # See, test/functional/git_diff_view_tests.rb
   
   def git_diff_view(avatar, tag, visible_files = nil)
       builder = GitDiffBuilder.new()
 
       visible_files ||= avatar.visible_files(tag)      
-
-      cmd  = "cd #{avatar.dir};"
-      cmd += "git diff --ignore-space-at-eol --find-copies-harder #{tag-1} #{tag} sandbox;"   
-      diff_lines = Files::popen_read(cmd)
-  
+      diff_lines = avatar.diff_lines(tag)
       view = { }      
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        
