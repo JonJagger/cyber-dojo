@@ -26,11 +26,11 @@ Add port 12320 to the URL you put into your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
-CyberDojo lives in the directory /var/www/cyberdojo 
 Pull the latest CyberDojo source code from github onto your TurnKey image
+>cd /var/www/cyberdojo 
 >git pull origin master
-Occasionally this will pull new directories. You must ensure these have the
-correct rights
+Occasionally this will pull new directories. You must ensure these
+have the correct rights
 >cd /var/www
 >chgrp -R www-data cyberdojo
 >chown -R www-data cyberdojo
@@ -336,19 +336,19 @@ Katas Directory Structure
 The rails code does NOT use a database.
 Instead each kata lives in a git-like directory structure based
 on the first 10 characters of a uuidgen. For example
-  cyberdojo/katas/82/B583C115
+  cyberdojo/katas/82/B583C347
 Each started avatar has a sub-directory underneath this, for example
-  cyberdojo/katas/82/B583C115/wolf
+  cyberdojo/katas/82/B583C347/wolf
   
 
 Git Repositories
 ================
 Each started animal avatar has its own git respository, eg
-  cyberdojo/katas/82/B583C115/wolf/.git
+  cyberdojo/katas/82/B583C347/wolf/.git
 The starting files (as loaded from the wolf/manifests.rb file) form
-tag 0 (zero). Each run-tests event causes a new git commit and tag, with a 
+tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a 
 message and tag which is simply the increment number. For example, the fourth
-time the wolf computer presses the run-tests button causes
+time the wolf computer presses the run-the-tests button causes
 >git commit -a -m '4'
 >git tag -m '4' 4 HEAD
 From an avatar's directory you can issue the following commands:
@@ -364,17 +364,18 @@ It's much easier and more informative to just click on a traffic light.
 
 Sandboxes
 =========
-It used to be the case that a run-tests event would cause all the browser's
+It used to be the case that a run-the-tests event would cause all the browser's
 visible files to be saved into the avatar's sandbox folder along with the
-language's hidden files and then the cyberdojo.sh file would be run on those files.
-This is no longer the case. Now, the browser's visible files and the language's
-hidden files are saved to a temporary dir under cyberdojo/sandboxes/ and the
-cyberdojo.sh file is run from there. This run generates output which is captured
-and parsed to determine if the run-tests is a red, amber, or green traffic light.
-Then, the visible files (with the output added to it) and the red/amber/green status
-is saved in the avatar's sandbox folder and git committed.
-Running the tests is deliberately separated out to its own folder. This separation
-offers an easy route to running dedicated servers just to run the tests.
+language's hidden files and then the cyberdojo.sh file would be run on those
+files. This is no longer the case. Now, the browser's visible files and the
+language's hidden files are saved to a temporary dir under cyberdojo/sandboxes/
+and the cyberdojo.sh file is run from there. This run generates output which is
+captured and parsed to determine the appropriate traffic-light colour (red,
+amber, or green). Then, the visible files (with the output added to it) and the
+red/amber/green status is saved in the avatar's sandbox folder and git
+committed. Running the tests is deliberately separated out to its own folder.
+This separation offers an easy future route to running dedicated servers just
+to run the tests.
 
 
 How to Turn off Chrome Spell-Checking in Chrome
