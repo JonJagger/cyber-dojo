@@ -1,7 +1,7 @@
 
 <%= @kata.id -%><br/>
-&bull;&nbsp; <%= @kata.language -%><br/>
-&bull;&nbsp; <%= @kata.exercise -%><br/>
+&bull;&nbsp; <%= @kata.language.name -%><br/>
+&bull;&nbsp; <%= @kata.exercise.name -%><br/>
 &bull;&nbsp;
 <% if @kata.diff -%>
 <a href="/diff/show/<%=@kata.diff.id-%>?avatar=<%=@kata.diff.avatar-%>&tag=<%=@kata.diff.tag-%>"
