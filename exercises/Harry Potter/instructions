@@ -30,5 +30,26 @@ For example, how much does this basket of books cost?
 1 copy of the fourth book
 1 copy of the fifth book
 
-Answer: 51.20 EUR
+One way of group these 8 books is:
+ 1 group of 5 --> 25% discount (1st,2nd,3rd,4th,5th)
++1 group of 3 --> 10% discount (1st,2nd,3rd)
+This would give a total of
+ 5 books at a 25% discount
++3 books at a 10% discount
+Giving
+ 5 x (8 - 2.00) == 5 x 6.00 == 30.00
++3 x (8 - 0.80) == 3 x 7.20 == 21.60
+For a total of 51.60
 
+However, a different way to group these 8 books is:
+ 1 group of 4 books --> 20% discount  (1st,2nd,3rd,4th)
++1 group of 4 books --> 20% discount  (1st,2nd,3rd,5th)
+This would give a total of
+ 4 books at a 20% discount
++4 books at a 20% discount
+Giving
+ 4 x (8-1.60) == 4 x 6.40 == 25.60
++4 x (8-1.60) == 4 x 6.40 == 25.60
+For a total of 51.20
+
+And 51.20 is the price with the biggest discount.

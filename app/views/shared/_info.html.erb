@@ -1,7 +1,11 @@
 
-<%= @kata.id -%><br/>
-&bull;&nbsp; <%= @kata.language.name -%><br/>
-&bull;&nbsp; <%= @kata.exercise.name -%><br/>
+<span title="The id of this practice-kata is <%=@kata.id-%>">
+  <%= @kata.id -%>
+</span><br/>
+&bull;&nbsp;<span title="The language of this practice-kata is <%=@kata.language.name-%>">
+<%= @kata.language.name -%></span><br/>
+&bull;&nbsp;<span title="The exercise of this practice-kata is <%=@kata.exercise.name-%>">
+<%= @kata.exercise.name -%></span><br/>
 &bull;&nbsp;
 <% if @kata.diff -%>
 <a href="/diff/show/<%=@kata.diff.id-%>?avatar=<%=@kata.diff.avatar-%>&tag=<%=@kata.diff.tag-%>"
@@ -10,6 +14,8 @@
 <%= @kata.diff.id -%>-<%= @kata.diff.avatar -%>-<%= @kata.diff.tag -%>
 </a>
 <% else -%>
-<%= @kata.name -%>  
+<span title="The name of this kata-practice is <%=@kata.name-%>">
+  <%= @kata.name -%>
+</span>
 <% end -%>
 <br/>  
