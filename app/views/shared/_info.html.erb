@@ -1,20 +1,20 @@
 
-<span title="The id of this practice-kata is <%=@kata.id-%>">
+<span title="Coding-practice ID: <%=@kata.id-%>">
   <%= @kata.id -%>
 </span><br/>
-&bull;&nbsp;<span title="The language of this practice-kata is <%=@kata.language.name-%>">
+&bull;&nbsp;<span title="Coding-practice language: <%=@kata.language.name-%>">
 <%= @kata.language.name -%></span><br/>
-&bull;&nbsp;<span title="The exercise of this practice-kata is <%=@kata.exercise.name-%>">
+&bull;&nbsp;<span title="Coding-practice exercise: <%=@kata.exercise.name-%>">
 <%= @kata.exercise.name -%></span><br/>
 &bull;&nbsp;
 <% if @kata.diff -%>
 <a href="/diff/show/<%=@kata.diff.id-%>?avatar=<%=@kata.diff.avatar-%>&tag=<%=@kata.diff.tag-%>"
-   title="This kata-practice was forked from a traffic-light diff"
+   title="This coding-practice was forked from a traffic-light diff"
    target="_blank">
 <%= @kata.diff.id -%>-<%= @kata.diff.avatar -%>-<%= @kata.diff.tag -%>
 </a>
 <% else -%>
-<span title="The name of this kata-practice is <%=@kata.name-%>">
+<span title="Coding-practice name: <%=@kata.name-%>">
   <%= @kata.name -%>
 </span>
 <% end -%>

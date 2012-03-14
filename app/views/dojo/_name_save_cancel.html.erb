@@ -2,12 +2,12 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var name = function() {
+var kata_name = function() {
   return $j.trim($j('#name').val());
 };
 
 var save_button_disable = function() {
-  $j('#save_button').attr('disabled', name() === "");    
+  $j('#save_button').attr('disabled', kata_name() === "");    
 };
 
 $j(document).ready(function() {
@@ -21,7 +21,7 @@ $j(document).ready(function() {
   
   $j('#save_button').click(function() {
     $cd.postTo('/dojo/save', {
-      name: name(),
+      name: kata_name(),
       exercise: $j('input[name="exercise"]:checked').val(),
       language: $j('input[name="language"]:checked').val()
     });    
