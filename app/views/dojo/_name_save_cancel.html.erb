@@ -2,16 +2,16 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var kata_name = function() {
-  return $j.trim($j('#name').val());
-};
-
-var save_button_disable = function() {
-  $j('#save_button').attr('disabled', kata_name() === "");    
-};
-
 $j(document).ready(function() {
   
+  var save_button_disable = function() {
+    $j('#save_button').attr('disabled', kata_name() === "");    
+  };
+    
+  var kata_name = function() {
+    return $j.trim($j('#name').val());
+  };
+
   $j('#name').keyup(function(event) {
     event.preventDefault();
     save_button_disable();
