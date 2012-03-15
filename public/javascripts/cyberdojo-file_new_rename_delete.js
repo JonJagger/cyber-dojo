@@ -115,7 +115,7 @@ var cyberDojo = (function($cd, $j) {
     if (ask) {
       var deleter =
 	$j("<div>")
-	  .html(div) //$cd.htmlPanel($cd.fakeFilenameButton(filename)))
+	  .html(div)
 	  .dialog({
 	    autoOpen: false,
             width: 350,	    
