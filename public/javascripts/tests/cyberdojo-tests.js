@@ -158,7 +158,7 @@ TestCase("cyberdojo-Test", {
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
   },
   
-  "test deleteFilePrompt(false)": function() {
+  "test deleteFilePrompt(avatar_name,false)": function() {
     /*:DOC +=
       <div>
         <div>
@@ -183,7 +183,7 @@ TestCase("cyberdojo-Test", {
     assertEquals(['A', 'B', 'C'], $cd.filenames());
     var filename = 'B';
     assertEquals(filename, $cd.currentFilename());
-    $cd.deleteFilePrompt(false);
+    $cd.deleteFilePrompt('snake', false);
     assertEquals(['A', 'C'], $cd.filenames());
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');    
   },

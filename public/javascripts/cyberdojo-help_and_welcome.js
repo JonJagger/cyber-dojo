@@ -28,7 +28,7 @@ var cyberDojo = (function($cd, $j) {
       + '</td></tr>'
       + '<tr><td>'
       + '<span style="font-size: 1.4em;">' + avatar + "'s" + '</span>  code'
-      + '</td></tr></table>'
+      + '</td></tr></table>';
       
     var makeBigSpanLi = function(line) {
       return '<li><span style="font-size: 1.8em;">' + line + '</span></li>';

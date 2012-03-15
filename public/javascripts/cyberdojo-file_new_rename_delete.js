@@ -7,11 +7,31 @@ var cyberDojo = (function($cd, $j) {
     $cd.newFileContent('newfile_' + $cd.random3(), 'Please rename me!');
   };
 
-  $cd.deleteFile = function() {
-    $cd.deleteFilePrompt(true);
+  $cd.deleteFile = function(avatar_name) {
+    $cd.deleteFilePrompt(avatar_name, true);
   };
 
-  $cd.renameFile = function () {
+  $cd.centeredDiv = function(node) {
+    var div = $j('<div>', {
+     align: 'center' 
+    });
+    div.append(node);
+    return div;
+  };
+  
+  $cd.avatarImage = function(avatar_name) {
+    var imageSize = 150;
+    return $j('<img>', {
+       alt: avatar_name,
+      'class': "avatar_image",
+      'height': imageSize,
+      'width': imageSize,
+       src: "/images/avatars/" + avatar_name + ".jpg",
+       title: avatar_name
+    });
+  };
+
+  $cd.renameFile = function(avatar_name) {
     var oldFilename = $cd.currentFilename();
     
     if ($cd.cantBeRenamedOrDeleted(oldFilename))
@@ -20,7 +40,7 @@ var cyberDojo = (function($cd, $j) {
     var div = $j('<div class="panel">', {
       style: 'font-size: 2.0em;'  
     });
-
+    div.append($cd.centeredDiv($cd.avatarImage(avatar_name)));
     div.append('<div>&nbsp;</div>');
     var input = $j('<input>', {
       type: 'text',
@@ -28,14 +48,12 @@ var cyberDojo = (function($cd, $j) {
       name: 'renamer',
       value: 'was_' + oldFilename
     });    
-    div.append(input);
-    div.append('<div>&nbsp;</div>');
-    
+    div.append($cd.centeredDiv(input));
     var renamer = $j('<div>')
       .html(div)
       .dialog({
 	autoOpen: false,
-        width: 600,	    	
+        width: 350,	    	
 	title: $cd.h1('rename'),
 	modal: true,
 	buttons: {
@@ -81,20 +99,26 @@ var cyberDojo = (function($cd, $j) {
     return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>'
   };
 
-  $cd.deleteFilePrompt = function(ask) {
+  $cd.deleteFilePrompt = function(avatar_name, ask) {
     var filename = $cd.currentFilename();
     
     if ($cd.cantBeRenamedOrDeleted(filename)) {
       return;
     }
     
+    var div = $j('<div class="panel">', {
+      style: 'font-size: 2.0em;'  
+    });
+    div.append($cd.centeredDiv($cd.avatarImage(avatar_name)));
+    div.append('<div>&nbsp;</div>');
+    div.append($cd.centeredDiv($cd.fakeFilenameButton(filename)));
     if (ask) {
       var deleter =
 	$j("<div>")
-	  .html($cd.htmlPanel($cd.fakeFilenameButton(filename)))
+	  .html(div) //$cd.htmlPanel($cd.fakeFilenameButton(filename)))
 	  .dialog({
 	    autoOpen: false,
-            width: 600,	    
+            width: 350,	    
 	    title: $cd.h1('delete'),
 	    modal: true,
 	    buttons: {
