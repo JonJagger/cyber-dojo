@@ -6,10 +6,6 @@ var cyberDojo = (function($cd, $j) {
     $cd.selectFileInFileList(filename);
   };
 
-  $cd.fileDiv = function(filename) {
-    return $cd.id(filename + '_div');
-  };
-  
   $cd.selectFileInFileList = function(filename) {
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal

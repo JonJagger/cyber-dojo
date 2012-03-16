@@ -27,10 +27,6 @@ var cyberDojo = (function($cd, $j) {
            $cd.inArray(filename, $cd.hidden_filenames());	   
   };
     
-  $cd.inArray = function(find, array) {
-    return $j.inArray(find, array) !== -1;    
-  };
-  
   $cd.rebuildFilenameList = function() {
     var filenames = $cd.filenames();    
     filenames.sort();

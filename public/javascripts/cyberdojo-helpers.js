@@ -1,6 +1,14 @@
 
 var cyberDojo = (function($cd, $j) {
   
+  $cd.fileDiv = function(filename) {
+    return $cd.id(filename + '_div');
+  };
+    
+  $cd.inArray = function(find, array) {
+    return $j.inArray(find, array) !== -1;    
+  };
+    
   $cd.makeTable = function() {
     var makeTd = function(arg) {
       return '<td>' + arg + '</td>';
