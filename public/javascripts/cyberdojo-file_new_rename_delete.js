@@ -126,7 +126,7 @@ var cyberDojo = (function($cd, $j) {
       $cd.alert(avatar_name, message);
       return;
     }
-    if ($cd.fileAlreadyExists(newFilename)) {
+    if ($cd.filenameAlreadyExists(newFilename)) {
       $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
       return;

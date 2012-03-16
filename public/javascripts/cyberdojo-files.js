@@ -21,7 +21,7 @@ var cyberDojo = (function($cd, $j) {
     return $j('#current_filename').val();
   };
 
-  $cd.fileAlreadyExists = function(filename) {
+  $cd.filenameAlreadyExists = function(filename) {
     return $cd.inArray(filename, $cd.filenames()) ||
            $cd.inArray(filename, $cd.support_filenames()) ||
            $cd.inArray(filename, $cd.hidden_filenames());	   

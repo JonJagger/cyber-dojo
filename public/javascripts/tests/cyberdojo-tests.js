@@ -13,7 +13,7 @@ TestCase("cyberdojo-Test", {
     assertEquals(['cyberdojo.sh', 'instructions'], $cd.filenames());
   },
   
-  "test fileAlreadyExists(file) returns true when visible filename exists": function() {
+  "test filenameAlreadyExists() returns true when visible filename exists": function() {
     /*:DOC +=
       <div>
         <textarea id="file_content_for_cyberdojo.sh"></textarea>
@@ -22,10 +22,10 @@ TestCase("cyberdojo-Test", {
     */
     $cd.support_filenames = function() { return [ ] };
     $cd.hidden_filenames = function() { return [ ] };    
-    assert($cd.fileAlreadyExists('cyberdojo.sh'));    
+    assert($cd.filenameAlreadyExists('cyberdojo.sh'));    
   },
   
-  "test fileAlreadyExists(file) returns true when hidden filename exists": function() {
+  "test filenameAlreadyExists() returns true when hidden filename exists": function() {
     /*:DOC +=
       <div>
         <textarea id="file_content_for_cyberdojo.sh"></textarea>
@@ -35,10 +35,10 @@ TestCase("cyberdojo-Test", {
     $cd.support_filenames = function() { return [ ] };
     var hidden_filename = 'catch.hpp';
     $cd.hidden_filenames = function() { return [ hidden_filename ] };    
-    assert($cd.fileAlreadyExists(hidden_filename));    
+    assert($cd.filenameAlreadyExists(hidden_filename));    
   },
   
-  "test fileAlreadyExists(file) returns true when support filename exists": function() {
+  "test filenameAlreadyExists() returns true when support filename exists": function() {
     /*:DOC +=
       <div>
         <textarea id="file_content_for_cyberdojo.sh"></textarea>
@@ -48,10 +48,10 @@ TestCase("cyberdojo-Test", {
     var support_filename = 'nunit.core.dll';
     $cd.support_filenames = function() { return [ support_filename ] };
     $cd.hidden_filenames = function() { return [ ] };    
-    assert($cd.fileAlreadyExists(support_filename));    
+    assert($cd.filenameAlreadyExists(support_filename));    
   },
 
-  "test fileAlreadyExists(file) returns false when filename doesn't exist": function() {
+  "test filenameAlreadyExists() returns false when filename doesn't exist": function() {
     /*:DOC +=
       <div>
         <textarea id="file_content_for_cyberdojo.sh"></textarea>
@@ -60,7 +60,7 @@ TestCase("cyberdojo-Test", {
     */
     $cd.support_filenames = function() { return [ ] };
     $cd.hidden_filenames = function() { return [ ] };    
-    assert(!$cd.fileAlreadyExists('not.present'));    
+    assert(!$cd.filenameAlreadyExists('not.present'));    
   },
 
   "test sortFilenames() sorts filenames into ascending order": function() {
