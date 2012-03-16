@@ -3,24 +3,6 @@ var $cd = cyberDojo;
 
 TestCase("cyberdojo-Test", {
   
-  "test random3() returns 3 char string": function() {
-    var target = $cd.random3();
-    assert(typeof target === 'string');
-    assertEquals(3, target.length);
-  },
-  
-  "test randomChar() returns all chars from alphabet": function() {
-    var generated = '';
-    for (var n = 0; n != 1000; n++) {
-        generated += $cd.randomChar();
-    }
-    var alphabet = $cd.randomAlphabet();
-    for (var n = 0; n != alphabet.length; n++) {
-        var ch = alphabet.charAt(n);
-        assertNotEquals(-1, generated.indexOf(ch,0));
-    }
-  },
-  
   "test filenames() finds all filenames": function() {
     /*:DOC +=
       <div>
@@ -31,17 +13,56 @@ TestCase("cyberdojo-Test", {
     assertEquals(['cyberdojo.sh', 'instructions'], $cd.filenames());
   },
   
-  "test fileAlreadyExists(file) returns true when file exists and false when file doesn't": function() {
+  "test fileAlreadyExists(file) returns true when visible filename exists": function() {
     /*:DOC +=
       <div>
         <textarea id="file_content_for_cyberdojo.sh"></textarea>
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
+    $cd.support_filenames = function() { return [ ] };
+    $cd.hidden_filenames = function() { return [ ] };    
     assert($cd.fileAlreadyExists('cyberdojo.sh'));    
-    assert(!$cd.fileAlreadyExists('not.present'));    
   },
   
+  "test fileAlreadyExists(file) returns true when hidden filename exists": function() {
+    /*:DOC +=
+      <div>
+        <textarea id="file_content_for_cyberdojo.sh"></textarea>
+        <textarea id="file_content_for_instructions"></textarea>
+      </div>
+    */
+    $cd.support_filenames = function() { return [ ] };
+    var hidden_filename = 'catch.hpp';
+    $cd.hidden_filenames = function() { return [ hidden_filename ] };    
+    assert($cd.fileAlreadyExists(hidden_filename));    
+  },
+  
+  "test fileAlreadyExists(file) returns true when support filename exists": function() {
+    /*:DOC +=
+      <div>
+        <textarea id="file_content_for_cyberdojo.sh"></textarea>
+        <textarea id="file_content_for_instructions"></textarea>
+      </div>
+    */
+    var support_filename = 'nunit.core.dll';
+    $cd.support_filenames = function() { return [ support_filename ] };
+    $cd.hidden_filenames = function() { return [ ] };    
+    assert($cd.fileAlreadyExists(support_filename));    
+  },
+
+  "test fileAlreadyExists(file) returns false when filename doesn't exist": function() {
+    /*:DOC +=
+      <div>
+        <textarea id="file_content_for_cyberdojo.sh"></textarea>
+        <textarea id="file_content_for_instructions"></textarea>
+      </div>
+    */
+    $cd.support_filenames = function() { return [ ] };
+    $cd.hidden_filenames = function() { return [ ] };    
+    assert(!$cd.fileAlreadyExists('not.present'));    
+  },
+
   "test sortFilenames() sorts filenames into ascending order": function() {
     var filenames = [ 'a', 'z', 's']
     filenames.sort();
@@ -122,6 +143,7 @@ TestCase("cyberdojo-Test", {
   },
   
   "test makeNewFile()": function() {
+    $cd.tabExpansion = function() { return "  "; };
     var hi = $cd.makeNewFile('its.name', 'its.content');
     assertEquals('filename_div', hi.attr('class'));
     assertEquals('its.name', hi.attr('name'));
@@ -210,6 +232,7 @@ TestCase("cyberdojo-Test", {
         </div>        
       </div>
     */
+    $cd.tabExpansion = function() { return "  "; };    
     assertEquals(['A', 'B', 'C'], $cd.filenames());
 
     var filename = 'D';
@@ -237,6 +260,7 @@ TestCase("cyberdojo-Test", {
         </div>        
       </div>
     */
+    $cd.tabExpansion = function() { return "  "; };    
     assertEquals(2, $cd.filenames().length);
     var filenames = $cd.rebuildFilenameList();
     
@@ -301,6 +325,7 @@ TestCase("cyberdojo-Test", {
         </div>        
       </div>
     */
+    $cd.tabExpansion = function() { return "  "; };    
     var oldFilename = 'B';
     var oldContent = $cd.fileContentFor(oldFilename);
     assertEquals(['A', oldFilename, 'C'], $cd.filenames());

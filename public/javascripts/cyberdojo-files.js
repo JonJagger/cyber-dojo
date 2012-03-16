@@ -22,9 +22,15 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.fileAlreadyExists = function(filename) {
-    return $j.inArray(filename, $cd.filenames()) !== -1;
+    return $cd.inArray(filename, $cd.filenames()) ||
+           $cd.inArray(filename, $cd.support_filenames()) ||
+           $cd.inArray(filename, $cd.hidden_filenames());	   
   };
     
+  $cd.inArray = function(find, array) {
+    return $j.inArray(find, array) !== -1;    
+  };
+  
   $cd.rebuildFilenameList = function() {
     var filenames = $cd.filenames();    
     filenames.sort();

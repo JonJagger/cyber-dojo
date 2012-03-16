@@ -57,7 +57,7 @@ var cyberDojo = (function($cd, $j) {
     
   $cd.cantBeRenamedOrDeleted = function(filename) {
     var filenames = [ 'cyberdojo.sh', 'output' ];
-    return $j.inArray(filename, filenames) !== -1;
+    return $cd.inArray(filename, filenames);
   };
   
   $cd.loadNextFile = function() {
