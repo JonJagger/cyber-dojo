@@ -126,11 +126,22 @@ var cyberDojo = (function($cd, $j) {
       $cd.alert(avatar_name, message);
       return;
     }
+    // TODO: refactor these three checks into fileAlreadyExists() function
     if ($cd.fileAlreadyExists(newFilename)) {
       $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
       return;
     }
+    if ($j.inArray(newFilename, $cd.support_filenames()) !== -1) {
+      $cd.renameFailure(avatar_name, oldFilename, newFilename,
+    		   "a file called " + newFilename + " already exists");
+      return;            
+    }
+    if ($j.inArray(newFilename, $cd.hidden_filenames()) !== -1) {
+      $cd.renameFailure(avatar_name, oldFilename, newFilename,
+    		   "a file called " + newFilename + " already exists");
+      return;            
+    }    
     if (newFilename.indexOf("/") !== -1) {
       $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    newFilename + " contains a forward slash");

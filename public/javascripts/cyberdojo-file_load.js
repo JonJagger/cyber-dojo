@@ -56,7 +56,8 @@ var cyberDojo = (function($cd, $j) {
   };
     
   $cd.cantBeRenamedOrDeleted = function(filename) {
-    return filename === 'cyberdojo.sh' || filename === 'output';  
+    var filenames = [ 'cyberdojo.sh', 'output' ];
+    return $j.inArray(filename, filenames) !== -1;
   };
   
   $cd.loadNextFile = function() {

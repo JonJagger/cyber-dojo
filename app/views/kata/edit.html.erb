@@ -2,26 +2,31 @@
 <script language="javascript" type="text/javascript"><!--
 
 $j(document).ready(function() {
-
-  $cd.tabExpansion = function() { return "<%=@tab-%>"; };
-
   var filenames = $cd.filenames();
-  for (var i = 0; i < filenames.length; i++) {
-    var filename = filenames[i];
-    var file = $cd.fileContentFor(filename);
+  var filename, file, i, max = filenames.length;
+  
+  $cd.tabExpansion = function() {
+    return "<%=@tab-%>";
+  };
+  $cd.support_filenames = function() {
+    return eval('<%=@kata.language.support_filenames.inspect-%>');
+  };
+  $cd.hidden_filenames = function() {
+    return eval('<%=@kata.language.hidden_filenames.inspect-%>');
+  };  
+
+  for (i = 0; i < max; i += 1) {
+    filename = filenames[i];
+    file = $cd.fileContentFor(filename);
     $cd.bindHotKeys(file);
     if (filename !== 'output') {
       $cd.tabber(file);
     }
   }
-  
   $cd.bindAllLineNumbers();
   $cd.rebuildFilenameList();
-  
-  var rand = Math.floor(Math.random() * filenames.length);
-  $cd.loadFile(filenames[rand]);
-  
-  $cd.welcome("<%=@avatar.name-%>");  
+  $cd.loadFile(filenames[$cd.rand(max)]);
+  $cd.welcome("<%=@avatar.name-%>");
 });
 
 //--></script>
