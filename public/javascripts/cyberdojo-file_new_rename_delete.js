@@ -11,26 +11,6 @@ var cyberDojo = (function($cd, $j) {
     $cd.deleteFilePrompt(avatar_name, true);
   };
 
-  $cd.centeredDiv = function(node) {
-    var div = $j('<div>', {
-     align: 'center' 
-    });
-    div.append(node);
-    return div;
-  };
-  
-  $cd.avatarImage = function(avatar_name) {
-    var imageSize = 150;
-    return $j('<img>', {
-       alt: avatar_name,
-      'class': "avatar_image",
-      'height': imageSize,
-      'width': imageSize,
-       src: "/images/avatars/" + avatar_name + ".jpg",
-       title: avatar_name
-    });
-  };
-
   $cd.renameFile = function(avatar_name) {
     var oldFilename = $cd.currentFilename();
     
@@ -40,7 +20,7 @@ var cyberDojo = (function($cd, $j) {
     var div = $j('<div class="panel">', {
       style: 'font-size: 2.0em;'  
     });
-    div.append($cd.centeredDiv($cd.avatarImage(avatar_name)));
+    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 150)));
     div.append('<div>&nbsp;</div>');
     var input = $j('<input>', {
       type: 'text',
@@ -82,34 +62,24 @@ var cyberDojo = (function($cd, $j) {
   };
   
   $cd.newFileContent = function(filename, content) {    
-    $j('#visible_files_container')
-      .append($cd.makeNewFile(filename, content));
-      
+    $j('#visible_files_container').append($cd.makeNewFile(filename, content));
     $cd.bindLineNumbers(filename);      
-  
     var current = $cd.currentFilename();
     $cd.rebuildFilenameList();
-    
     $cd.fileDiv(current).hide();
     $cd.selectFileInFileList(filename);
     $cd.fileDiv($cd.currentFilename()).show();
   };
 
-  $cd.htmlPanel = function(content) {
-    return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>'
-  };
-
   $cd.deleteFilePrompt = function(avatar_name, ask) {
     var filename = $cd.currentFilename();
-    
     if ($cd.cantBeRenamedOrDeleted(filename)) {
       return;
     }
-    
     var div = $j('<div class="panel">', {
       style: 'font-size: 2.0em;'  
     });
-    div.append($cd.centeredDiv($cd.avatarImage(avatar_name)));
+    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 150)));
     div.append('<div>&nbsp;</div>');
     div.append($cd.centeredDiv($cd.fakeFilenameButton(filename)));
     if (ask) {
@@ -160,23 +130,6 @@ var cyberDojo = (function($cd, $j) {
     $cd.alert(why);
   };
 
-  $cd.alert = function(message, title) {
-    $j('<div>')    
-      .html($cd.htmlPanel(message))
-      .dialog({
-	autoOpen: false,
-	title: typeof(title) !== 'undefined' ? $cd.h1(title) : $cd.h1('alert!'),
-	modal: true,
-	width: 600,
-	buttons: {
-	  ok: function() {
-	    $j(this).dialog('close');
-	  }
-	}
-      })
-      .dialog('open');  
-  };
-
   $cd.renameFileFromTo = function(oldFilename, newFilename) {
     var message;
     if (newFilename === "") {
@@ -206,11 +159,9 @@ var cyberDojo = (function($cd, $j) {
 		    newFilename + " contains a back slash");
       return;
     }
-    
     // OK. Now do it...
     var file = $cd.fileContentFor(oldFilename);
     var content = file.val();
-    
     $cd.deleteFilePrompt(false);
     $cd.newFileContent(newFilename, content);
     $cd.rebuildFilenameList();
@@ -278,22 +229,18 @@ var cyberDojo = (function($cd, $j) {
     var div = $j('<div>', {
       'class': 'filename'
     });
-  
     div.click(function() {
       $cd.loadFile(filename);
     });
-    
     div.append($j('<input>', {
       id: 'radio_' + filename,
       name: 'filename',
       type: 'radio',
       value: filename   
     }));
-    
     div.append($j('<label>', {
       text: ' ' + filename
     }));
-    
     return div;
   };
   
@@ -348,10 +295,8 @@ var cyberDojo = (function($cd, $j) {
     tr.append(td2);
     table.append(tr);
     div.append(table);
-
     $cd.bindHotKeys(text);
     $cd.tabber(text);
-    
     return div;
   };
 
