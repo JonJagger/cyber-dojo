@@ -5,9 +5,9 @@ var cyberDojo = (function($cd, $j) {
     var makeTd = function(arg) {
       return '<td>' + arg + '</td>';
     };    
-    var i;
+    var i, max;
     var table = '<table><tr>';
-    for (i = 0; i < arguments.length; i += 1) {
+    for (i = 0, max = arguments.length; i < max; i += 1) {
       table += makeTd(arguments[i]);
     }
     table += '</tr></table>';
@@ -15,35 +15,32 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.welcome = function(avatar) {
-    
     var imageSize = 200;
-    var avatarImage = ''
-      + '<table><tr><td>'
-      + '<img alt="' + avatar + '"'
+    var imageHtml =
+        '<img alt="' + avatar + '"'
       +     ' class="avatar_image"'
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />'
-      + '</td></tr>'
-      + '<tr><td>'
-      + '<span style="font-size: 1.4em;">' + avatar + "'s" + '</span>  code'
-      + '</td></tr></table>';
-      
+      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
+    var imageLabel = '<span style="font-size: 1.4em;">' + avatar + "'s" + '</span>  code';
+    var avatarImage =
+        '<table>'
+      +   '<tr><td>' + imageHtml + '</td></tr>'
+      +   '<tr><td>' + imageLabel + '</td></tr>'
+      + '</table>';
     var makeBigSpanLi = function(line) {
-      return '<li><span style="font-size: 1.8em;">' + line + '</span></li>';
+      return '<li><span style="font-size: 1.6em;">' + line + '</span></li>';
     };
-    
     var welcomeHtml = ''    
       + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
               '<ul>'
-            +   makeBigSpanLi("think about improving<br/>not finishing<br/>")
-            +   makeBigSpanLi('you are practising<br/>not competing<br/><br/>')
+            +   makeBigSpanLi("think about improving,<br/>not finishing<br/>")
+            +   makeBigSpanLi('you are practising,<br/>not competing<br/><br/>')
             + '</ul>'
             )
       + '</div>';
-      
     var welcome = $j('<div>')
       .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
       .dialog({
@@ -60,49 +57,37 @@ var cyberDojo = (function($cd, $j) {
     welcome.dialog('open');  
   };
   
-  $cd.h1 = function(title) {
-    return '<h1>' + title + '</h1>';  
-  };
-  
-  $cd.help = function(avatar) {
-    
+  $cd.help = function(avatar) {    
     var imageSize = 70;
-
     var homePageImage = ''    
       + '<img'
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
       +     ' src="/images/avatars/cyber-dojo.png"/>';
-    
     var avatarImage = ''
       + '<img alt="' + avatar + '"'
       +     ' class="avatar_image"'
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
-        
+      +     ' src="/images/avatars/' + avatar + '.jpg"'
+      +     ' title="' + avatar + '" />';
     var br = '<br/>';
-    
     var tdTrafficLights = function() {
       return tdTrafficLight('red') + tdTrafficLight('amber') + tdTrafficLight('green');  
     };
-    
     var tdTrafficLight = function(color) {
       return ''
         + '<td>'
         +   '<img src="/images/traffic-light-' + color + '.png" width="23" height="69"/>'
         + '</td>';
     };
-    
     var space = '&nbsp;';
     var spaces = Array.prototype.join.call({length:4}, space);
-    
     var coloured = function(property, color) {
       return  '<span class="' + property + '">' + space + color + space + '</span>';
     };
-    
     var welcomeHtml = ''      
       + '<table>'
       +   '<tr>'
@@ -124,7 +109,7 @@ var cyberDojo = (function($cd, $j) {
       +     '</td>'
       +   '</tr>'
       + '</table>'
-      
+      + ''
       + '<div class="panel">'
       +   $cd.makeTable(
             '<input type="button" class="larger button" value="run-the-tests"/>',
@@ -132,18 +117,18 @@ var cyberDojo = (function($cd, $j) {
             $cd.fakeFilenameButton('<i>output</i>'),
             'file')
       + '</div>'
-      
+      + ''
       + '<div class="panel">'
       +   $cd.makeTable(tdTrafficLights(),
             '&nbsp;red means the tests ran but one or more failed' + br +
             '&nbsp;amber means the tests could not be run' + br +
             '&nbsp;green means the tests ran and all passed')
       + '</div>'
-            
+      + ''      
       + '<div class="panel">'
       +    $cd.makeTable($cd.fakeFilenameButton('filename'), 'opens a file')
       + '</div>'
-      
+      + ''
       + '<div class="panel">'
       +    space + '<b>alt-t</b> runs the <b><u>t</u></b>ests' + br 
       +    space + '<b>alt-f</b> cycles through the <b><u>f</u></b>iles'
@@ -164,20 +149,6 @@ var cyberDojo = (function($cd, $j) {
       });
     help.dialog('open');  
   };
-
-  $cd.fakeFilenameButton = function(filename) {
-    return ''
-      + '<table><tr><td>'
-      + '<div class="filename" style="background:Cornsilk;color:#003C00;">'
-      +   '<input type="radio"'
-      +          'name="filename' + filename + '"'
-      +          'checked="checked"'
-      +          'value="filename"/>'
-      +   '<label>' + '&nbsp;' + filename + '</label>'
-      + '</div>'
-      + '</td></tr></table>';
-  };
-  
 
   return $cd;
 })(cyberDojo || {}, $j);
