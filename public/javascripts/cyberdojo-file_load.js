@@ -1,15 +1,15 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.fileDiv = function(filename) {
-    return $cd.id(filename + '_div');
-  };
-  
   $cd.loadFile = function(filename) {
     $cd.fileDiv($cd.currentFilename()).hide();
     $cd.selectFileInFileList(filename);
   };
 
+  $cd.fileDiv = function(filename) {
+    return $cd.id(filename + '_div');
+  };
+  
   $cd.selectFileInFileList = function(filename) {
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
@@ -38,7 +38,7 @@ var cyberDojo = (function($cd, $j) {
     
     $cd.fileDiv(filename).show();
     // Resetting the focus here allows you to carry straight on typing
-    // at the point the left off in Firefox. However you
+    // at the point the cursor left off in Firefox. However you
     // lose the position of the cursor in IE7/8/9 :-(
     $cd.fileContentFor(filename).focus();
     $j('#current_filename').val(filename);

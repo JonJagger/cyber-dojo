@@ -1,19 +1,6 @@
 
 var cyberDojo = (function($cd, $j) {
   
-  $cd.makeTable = function() {
-    var makeTd = function(arg) {
-      return '<td>' + arg + '</td>';
-    };    
-    var i, max;
-    var table = '<table><tr>';
-    for (i = 0, max = arguments.length; i < max; i += 1) {
-      table += makeTd(arguments[i]);
-    }
-    table += '</tr></table>';
-    return table;
-  };
-
   $cd.welcome = function(avatar) {
     var imageSize = 200;
     var imageHtml =
