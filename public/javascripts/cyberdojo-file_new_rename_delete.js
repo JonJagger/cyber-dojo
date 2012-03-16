@@ -39,7 +39,7 @@ var cyberDojo = (function($cd, $j) {
 	  ok: function() {
 	    $j(this).dialog('close');
 	    var newFilename = $j.trim(input.val());
-	    $cd.renameFileFromTo(oldFilename, newFilename);
+	    $cd.renameFileFromTo(avatar_name, oldFilename, newFilename);
 	  },
 	  cancel: function() {
 	    $j(this).dialog('close');
@@ -52,7 +52,7 @@ var cyberDojo = (function($cd, $j) {
       if (event.keyCode === CARRIAGE_RETURN) {
 	var newFilename = $j.trim(input.val());
 	renamer.dialog('close');
-	$cd.renameFileFromTo(oldFilename, newFilename);
+	$cd.renameFileFromTo(avatar_name, oldFilename, newFilename);
       }  
     });
     renamer.dialog('open');
@@ -112,46 +112,32 @@ var cyberDojo = (function($cd, $j) {
     $cd.loadFile(filenames[0]);
   };
 
-  $cd.renameFailure = function(oldFilename, newFilename, reason) {
-    var space = "&nbsp;";
-    var tab = space + space + space + space;
-    var br = "<br/>";
-    var why = "Cannot not rename" + br +
-	   br +
-	   tab + oldFilename + br +
-	   "to" + br + 
-	   tab + newFilename + br +
-	   br +
-	  "because " + reason + ".";
-    $cd.alert(why);
-  };
-
-  $cd.renameFileFromTo = function(oldFilename, newFilename) {
+  $cd.renameFileFromTo = function(avatar_name, oldFilename, newFilename) {
     var message;
     if (newFilename === "") {
       message = "No filename entered" + "<br/>" +
 	    "Rename " + oldFilename + " abandoned";
-      $cd.alert(message);
+      $cd.alert(avatar_name, message);
       return;
     }
     if (newFilename === oldFilename) {
       message = "Same filename entered." + "<br/>" +
 	    oldFilename + " is unchanged";
-      $cd.alert(message);
+      $cd.alert(avatar_name, message);
       return;
     }
     if ($cd.fileAlreadyExists(newFilename)) {
-      $cd.renameFailure(oldFilename, newFilename,
+      $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
       return;
     }
     if (newFilename.indexOf("/") !== -1) {
-      $cd.renameFailure(oldFilename, newFilename,
+      $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    newFilename + " contains a forward slash");
       return;
     }
     if (newFilename.indexOf("\\") !== -1) {
-      $cd.renameFailure(oldFilename, newFilename,
+      $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    newFilename + " contains a back slash");
       return;
     }
@@ -162,6 +148,18 @@ var cyberDojo = (function($cd, $j) {
     $cd.newFileContent(newFilename, content);
     $cd.rebuildFilenameList();
     $cd.selectFileInFileList(newFilename);
+  };
+
+  $cd.renameFailure = function(avatar_name, oldFilename, newFilename, reason) {
+    var space = "&nbsp;";
+    var tab = space + space + space + space;
+    var br = "<br/>";
+    var why = "Cannot rename" + br +
+	   tab + oldFilename + br +
+	   "to" + br + 
+	   tab + newFilename + br +
+	  "because " + reason + ".";
+    $cd.alert(avatar_name, why);
   };
 
   return $cd;

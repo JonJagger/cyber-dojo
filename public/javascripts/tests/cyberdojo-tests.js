@@ -306,7 +306,7 @@ TestCase("cyberdojo-Test", {
     assertEquals(['A', oldFilename, 'C'], $cd.filenames());
     assertEquals(oldFilename, $cd.currentFilename());
     var newFilename = 'BB';
-    $cd.renameFileFromTo(oldFilename, newFilename);
+    $cd.renameFileFromTo('frog', oldFilename, newFilename);
     assertEquals(['A', newFilename, 'C'], $cd.filenames().sort());
     assertEquals(newFilename, $cd.currentFilename());
   },

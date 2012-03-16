@@ -36,7 +36,6 @@ var cyberDojo = (function($cd, $j) {
       deleteFile.attr('title', 'Delete the current file');
     }
     
-    
     $cd.fileDiv(filename).show();
     // Resetting the focus here allows you to carry straight on typing
     // at the point the left off in Firefox. However you
@@ -50,7 +49,7 @@ var cyberDojo = (function($cd, $j) {
     // This is used by the run-tests-page filename radio-list
     // and also the create-page languages/exercises radio-lists
     // See the comment for makeFileListEntry() in
-    // cyberdojo-file_new_rename_delete.js
+    // cyberdojo-files.js
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     $cd.deselectRadioEntry(previous.parent());
     $cd.selectRadioEntry(current);
