@@ -88,12 +88,12 @@ The diff-view page does not work properly in Internet Explorer 8.
 Getting files off the VirtualBox TurnKey Linux server
 =====================================================
 These were the steps I took...
- 0. don't boot the Virtual Box TurnKey Linux server yet
+ 0. don't boot the VirtualBox TurnKey Linux server yet
  1. insert a USB stick
- 2. in Virtual Box add a filter for the USB stick
+ 2. in VirtualBox add a filter for the USB stick
  3. remove the USB stick
- 4. boot the Virtual Box server and note its IP address (eg 192.168.61.25)
- 5. open a browser page to the Virtual Box server (eg 192.168.61.25:12320)
+ 4. boot the VirtualBox server and note its IP address (eg 192.168.61.25)
+ 5. open a browser page to the VirtualBox server (eg 192.168.61.25:12320)
  6. login (you need username and password for this, see above)
  7. insert the USB stick
  8. find the name of the USB device, eg sdb1
@@ -109,7 +109,7 @@ These were the steps I took...
 18. >tar -zcvf name.tar.gz .
 19. >mv name.tar.gz /root/usbdrive
 20. >umount /dev/sdb1
-21. shut down the VBox image
+21. shut down the VirtualBox image
 
    
 Building your own CyberDojo Linux server from scratch
@@ -187,7 +187,7 @@ these languages of course depends on whether these languages are installed
 and working on your server or not. Ubuntu comes with built-in support for C, C++, 
 Python, Perl and you need Ruby for the CyberDojo server itself.
 Running
->cd cyberdojo/test/functional
+>cd cyberdojo/test/unit
 >ruby installation_test.rb
 Will provide information on what is and isn't installed and working.
 
@@ -255,7 +255,7 @@ Each manifest.rb file contains an inspected ruby object.
 Example: cyberdojo/languages/Java/manifest.rb looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java cyberdojo.sh ),
-  :hidden_filenames => %w( junit-4.7.jar ),
+  :support_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
   :tab_size => 4
 }
@@ -287,7 +287,7 @@ o) If the three tests return any other combination of traffic-lights
    and it (soon) won't offer that language when you create a new kata.
 
 You can test if a languages' initial fileset is correctly setup as follows
->cd cyberdojo/test/functional
+>cd cyberdojo/test/unit
 >ruby installation_tests.rb
 Note: this may issue the following error
    sh: Syntax error: Bad fd number
@@ -299,22 +299,28 @@ when this happened to me I fixed it as follows
 manifest.rb Parameters
 ======================
 :visible_filenames
-  The names of files that will be visible in the editor in the browser at 
-  startup. Each of these files must exist in the directory.
-  The filename cyberdojo.sh must be present (visible or hidden) in one of the 
-  manifest.rb files. This is because cyberdojo.sh is the name of the shell file 
+  The names of the text files that will be visible in the browser's editor
+  at startup. Each of these files must exist in the directory.
+  The filename cyberdojo.sh must be present, either as a visible filename or a
+  hidden filename. This is because cyberdojo.sh is the name of the shell file 
   assumed by the ruby code (in the server) to be the start point for running
-  an increment. You can write any actions in the cyberdojo.sh file but clearly
+  the tests. You can write any actions in the cyberdojo.sh file but clearly
   any programs it tries to run must be installed on the server.
   For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
   to be installed. If cyberdojo.sh runs javac to compile java files then javac 
   has to be installed.
 
 :hidden_filenames
-  The names of necessary and/or supporting files that are NOT visible in the 
-  editor in the browser. Each of these files must exist in the directory. For 
-  example, a junit jar file or nunit assemblies.
+  The names of text files that are not visible in the browser's editor but
+  which will nonetheless be available each time the player runs their tests.
+  Each of these files must exist in the directory.
+  For example, test framework library code.
   Not required if you do not need hidden files.
+  
+:support_filenames
+  The names of necessary supporting non-text files. Each of these files must
+  exist in the directory. For example, junit jar files or nunit assemblies.
+  Not required if you do not need support files.
   
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
@@ -328,7 +334,7 @@ manifest.rb Parameters
 
 :tab_size
   This is the number of spaces a tab character expands to in the editor textarea.
-  Not required and defaults to 4 spaces.
+  Not required. Defaults to 4 spaces.
 
 
 Katas Directory Structure

@@ -38,9 +38,8 @@ class Sandbox
     visible_files.each do |filename,content|
       save_file(filename, content)
     end
-    language.hidden_filenames.each do |hidden_filename|
-      system("ln '#{language.dir}/#{hidden_filename}' '#{dir}/#{hidden_filename}'")
-    end
+    link_files(language.dir, language.support_filenames)
+    link_files(language.dir, language.hidden_filenames)
     command  = "cd '#{dir}';" +
                "./cyberdojo.sh"
     max_run_tests_duration = 10
@@ -60,6 +59,12 @@ class Sandbox
 
 private
 
+  def link_files(link_dir, link_filenames)
+    link_filenames.each do |filename|
+      system("ln '#{link_dir}/#{filename}' '#{dir}/#{filename}'")
+    end    
+  end
+  
   def makefile_filter(name, content)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     # makefiles are tab sensitive...

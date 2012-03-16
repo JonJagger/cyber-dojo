@@ -25,6 +25,10 @@ class Language
     manifest[:hidden_filenames] || [ ]
   end
   
+  def support_filenames
+    manifest[:support_filenames] || [ ]
+  end
+  
   def unit_test_framework
     manifest[:unit_test_framework]      
   end

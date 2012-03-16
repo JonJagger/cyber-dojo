@@ -113,7 +113,12 @@ class InstallationTests < ActionController::TestCase
   end
   
   def check_no_unknown_keys_exist
-    known = [ :visible_filenames, :hidden_filenames, :unit_test_framework, :tab_size ]
+    known = [ :visible_filenames,
+              :hidden_filenames,
+              :support_filenames,
+              :unit_test_framework,
+              :tab_size
+            ]
     @manifest.keys.each do |key|
       if !known.include? key
         message =
