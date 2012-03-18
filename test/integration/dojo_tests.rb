@@ -8,6 +8,18 @@ class DojoControllerTest  < IntegrationTest
     assert_response :success
   end
   
+  test "dojo full" do
+    id = checked_save_id
+    post 'dojo/full', rooted({ :id => id })    
+    assert_response :success, @response.body
+  end
+  
+  test "dojo cant find kata from id" do
+    bad_id = 'ab00ab11ab'
+    post 'dojo/cant_find', rooted({ :id => bad_id })    
+    assert_response :success, @response.body
+  end
+  
   test "create" do
     get 'dojo/create'
     assert_response :success
@@ -21,6 +33,7 @@ class DojoControllerTest  < IntegrationTest
     bad_id = 'ab00ab11ab'
     post 'dojo/start', rooted({ :id => bad_id })
     assert_redirected_to "/dojo/cant_find?id=#{bad_id}"
+    #assert_response :success    
   end
 
   test "start-coding succeeds for valid kata-id" do
@@ -29,7 +42,7 @@ class DojoControllerTest  < IntegrationTest
     avatar = avatar_from_response
     assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"
   end
-    
+   
   test "start-coding succeeds once for each avatar name, then dojo is full" do
     id = checked_save_id
     (1..Avatar.names.length).each do |n|
@@ -40,6 +53,7 @@ class DojoControllerTest  < IntegrationTest
     post 'dojo/start', rooted({ :id => id })
     assert_redirected_to "/dojo/full?id=#{id}"
   end
+    
     
   test "faqs,links,tips,why" do
     post 'dojo/faqs'
