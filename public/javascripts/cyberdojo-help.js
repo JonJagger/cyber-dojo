@@ -1,3 +1,4 @@
+/*jsl:option explicit*/
 
 var cyberDojo = (function($cd, $j) {
     
