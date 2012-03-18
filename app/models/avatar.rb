@@ -99,12 +99,12 @@ private
   def locked_read(filename, tag = nil)
     tag ||= most_recent_tag
     command = cd_dir("git show #{tag}:#{filename}")
-    eval Files::popen_read(command)     
+    eval Files::popen_read(command)
   end
      
   def most_recent_tag
     command = cd_dir("git tag|sort -g")
-    eval Files::popen_read(command)    
+    eval Files::popen_read(command)
   end
   
   def cd_dir(command)

@@ -87,7 +87,7 @@ class DojoController < ApplicationController
   end
   
   def full
-    @id = id
+    @kata = Kata.new(root_dir, id)    
   end
     
   #------------------------------------------------
