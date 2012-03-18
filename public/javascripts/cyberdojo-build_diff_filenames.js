@@ -5,13 +5,13 @@ var cyberDojo = (function($cd, $j) {
   $cd.buildDiffFilenames = function(diffs) {
     var diffSheet = $j('#diff_sheet');
   
-    diffSheet.save = function() { };
+    diffSheet.toggle = function() { };
   
-    var loadFrom = function(filename, diffedLines, save) {
+    var loadFrom = function(filename, diffedLines, toggle) {
       return function() {
-        diffSheet.save();
+        diffSheet.toggle();
         diffSheet.html(diffedLines);
-        diffSheet.save = save;
+        diffSheet.toggle = toggle;
         $j('div[class="filename"]').each(function() {
           $cd.deselectRadioEntry($j(this));
         });
@@ -19,7 +19,7 @@ var cyberDojo = (function($cd, $j) {
       };
     };
   
-    var saveTo = function(filename) {
+    var toggleSelected = function(filename) {
       return function() {
         filename.toggleClass('selected');
       };
@@ -27,7 +27,7 @@ var cyberDojo = (function($cd, $j) {
     
     $j.each(diffs, function(n, diff) {
       var filename = $j('#radio_' + diff.id);
-      filename.parent().click( loadFrom(filename, diff.content, saveTo(filename)) );
+      filename.parent().click( loadFrom(filename, diff.content, toggleSelected(filename)) );
     });
   };
 
