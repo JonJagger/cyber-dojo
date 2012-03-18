@@ -7,6 +7,7 @@ class SimulatedFullKataTests < ActionController::TestCase
     `ps`.scan(/<defunct>/).length
   end
   
+  # These tests feel like they should be in test/lib/popen_read_tests.rb
   test "no ruby zombie processes left unkilled" do
     @language = 'Ruby-installed-and-working'
     @avatar_count = 6

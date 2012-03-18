@@ -42,7 +42,7 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.htmlPanel = function(content) {
-    return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>'
+    return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>';
   };
 
   $cd.alert = function(avatar_name, message, title) {

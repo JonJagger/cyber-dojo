@@ -38,6 +38,13 @@ module Files
       timed_out = (result == nil)
     end
     
+    # Is this overkill... Can't I just do this...
+    #   `kill -9 -#{pipe.pid}`
+    # or do I need...
+    #   `kill -9 -#{Process.getpgid(pipe.pid)}`
+    # or even better...
+    #   `kill -9 -#{pipe.gid}`
+    
     kill(descendant_pids_of(pipe.pid))
     
     if sandbox_thread != nil
