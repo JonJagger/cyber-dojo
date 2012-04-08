@@ -237,7 +237,7 @@ Miika-Petteri Matikainen added support for Haskell as follows
 >sudo apt-get install libghc6-unit-dev
 ------C++ Catch
 the catch.hpp file lives at https://github.com/philsquared/Catch
-------C++ GTest (GooleTest)
+------C++ GTest (GoogleTest)
 Following Hrafnkell Eiriksson's lead I downloaded gtest-1.6.0.gzip
 from http://code.google.com/p/googletest/downloads/list   then
 >unzip gtest-1.6.0.zip
