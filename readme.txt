@@ -240,13 +240,14 @@ the catch.hpp file lives at https://github.com/philsquared/Catch
 ------C++ GTest (GooleTest)
 Following Hrafnkell Eiriksson's lead I downloaded gtest-1.6.0.gzip
 from http://code.google.com/p/googletest/downloads/list   then
->unzip gtest-1.6.0.gzip
+>unzip gtest-1.6.0.zip
 >cd gtest-1.6.0
 >cd make
 >make
 this created the gtest_main.a that I needed to link with the makefile
+>cp gtest_main.a  ...../cyberdojo/languages/C++\ GTest
 then I added -I../../languages/C++\ GTest to the makefile
-
+I also found I need to specify -pthread and not -lpthread in the makefile
 
 
 Adding a new exercise

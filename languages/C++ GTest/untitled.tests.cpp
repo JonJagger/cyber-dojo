@@ -4,6 +4,6 @@
 
 TEST(example_test_group_name, example_test)
 {
-    ASSERT_EQ(9*6, hhg());
+    ASSERT_EQ(6*9, hhg());
 }
 
