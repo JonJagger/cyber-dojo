@@ -190,5 +190,20 @@ module CodeOutputParser
     end
   end
 
+  def self.parse_googletest(output)
+     failed_pattern = Regexp.new('(.*)FAILED(.*)')
+     syntax_error_pattern = Regexp.new(':(\d*): error')
+     make_error_pattern = Regexp.new('^make:')
+     if failed_pattern.match(output)
+       :red
+     elsif make_error_pattern.match(output)
+       :amber
+     elsif syntax_error_pattern.match(output)
+       :amber
+     else
+       :green
+     end
+  end
+ 
 end
 

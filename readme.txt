@@ -235,6 +235,18 @@ If you need to install curl
 Miika-Petteri Matikainen added support for Haskell as follows
 >sudo apt-get install ghc
 >sudo apt-get install libghc6-unit-dev
+------C++ Catch
+the catch.hpp file lives at https://github.com/philsquared/Catch
+------C++ GTest (GooleTest)
+Following Hrafnkell Eiriksson's lead I downloaded gtest-1.6.0.gzip
+from http://code.google.com/p/googletest/downloads/list   then
+>unzip gtest-1.6.0.gzip
+>cd gtest-1.6.0
+>cd make
+>make
+this created the gtest_main.a that I needed to link with the makefile
+then I added -I../../languages/C++\ GTest to the makefile
+
 
 
 Adding a new exercise
