@@ -239,12 +239,13 @@ Miika-Petteri Matikainen added support for Haskell as follows
 the catch.hpp file lives at https://github.com/philsquared/Catch
 ------C++ GTest (GoogleTest)
 Following Hrafnkell Eiriksson's lead I downloaded gtest-1.6.0.gzip
-from http://code.google.com/p/googletest/downloads/list   then
+from http://code.google.com/p/googletest/downloads/list
+>wget http://googletest.googlecode.com/files/gtest-1.6.0.zip
 >unzip gtest-1.6.0.zip
 >cd gtest-1.6.0
 >cd make
 >make
-this created the gtest_main.a that I needed to link with the makefile
+this created the gtest_main.a that I needed to link with in the makefile
 >cp gtest_main.a  ...../cyberdojo/languages/C++\ GTest
 then I added -I../../languages/C++\ GTest to the makefile
 I also found I need to specify -pthread and not -lpthread in the makefile
