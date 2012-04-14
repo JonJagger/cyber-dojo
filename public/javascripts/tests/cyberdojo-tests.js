@@ -138,8 +138,7 @@ TestCase("cyberdojo-Test", {
     assertEquals('omd', input.attr('value'));
     var label = entry.children('label');
     assertEquals(1, label.length);
-    var space = ' ';
-    assertEquals(space + 'omd', label.html());
+    assertEquals('omd', label.html());
   },
   
   "test makeNewFile()": function() {
