@@ -83,5 +83,17 @@ HERE
     assert_equal :amber, CodeOutputParser::parse_catch(amber_output)
   end
   
+  test "go build failed is amber" do
+    assert_equal :amber, CodeOutputParser::parse_go_testing("[build failed]")  
+  end
+  test "go ran but failed is green" do
+    assert_equal :red, CodeOutputParser::parse_go_testing("FAIL")
+  end
+  test "go ran and passed is red" do
+    assert_equal :green, CodeOutputParser::parse_go_testing("PASS")
+  end
+  test "go anything else is amber" do
+    assert_equal :amber, CodeOutputParser::parse_go_testing("anything else")
+  end
 end 
 

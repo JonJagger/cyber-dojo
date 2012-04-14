@@ -205,5 +205,20 @@ module CodeOutputParser
      end
   end
  
+  def self.parse_go_testing(output)
+    didnt_build_pattern = /\[build failed\]/
+    failed_pattern = /FAIL/
+    passed_pattern = /PASS/
+    if didnt_build_pattern.match(output)
+      :amber
+    elsif failed_pattern.match(output)
+      :red
+    elsif passed_pattern.match(output)
+      :green
+    else
+      :amber  
+    end
+  end
+  
 end
 
