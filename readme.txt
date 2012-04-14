@@ -35,7 +35,7 @@ have the correct rights
 >chgrp -R www-data cyberdojo
 >chown -R www-data cyberdojo
 And don't forget to reboot apache
->apache2ctl restart
+>service apache2 restart
 
 
 Configuring a practice-kata
@@ -83,33 +83,6 @@ Diff-view
 Clicking on a traffic light opens a new page showing the diffs for that increment
 together with < and > buttons to step backwards and  forwards through the diffs.
 The diff-view page does not work properly in Internet Explorer 8.
-
-
-Getting files off the VirtualBox TurnKey Linux server
-=====================================================
-These were the steps I took...
- 0. don't boot the VirtualBox TurnKey Linux server yet
- 1. insert a USB stick
- 2. in VirtualBox add a filter for the USB stick
- 3. remove the USB stick
- 4. boot the VirtualBox server and note its IP address (eg 192.168.61.25)
- 5. open a browser page to the VirtualBox server (eg 192.168.61.25:12320)
- 6. login (you need username and password for this, see above)
- 7. insert the USB stick
- 8. find the name of the USB device, eg sdb1
- 9. >tail /var/log/messages
-10. mount the usb device
-11. >mkdir /root/usbdrive
-12. >mount -t vfat /dev/sdb1 /root/usbdrive
-13. >cd /var/www/cyberdojo
-14. find the directory you want
-15. >ruby names.rb    
-16. eg suppose the directory is katas/82/B583C115
-17. cd to that directory, then
-18. >tar -zcvf name.tar.gz .
-19. >mv name.tar.gz /root/usbdrive
-20. >umount /dev/sdb1
-21. shut down the VirtualBox image
 
    
 Building your own CyberDojo Linux server from scratch
@@ -249,6 +222,12 @@ this created the gtest_main.a that I needed to link with in the makefile
 >cp gtest_main.a  ...../cyberdojo/languages/C++\ GTest
 then I added -I../../languages/C++\ GTest to the makefile
 I also found I need to specify -pthread and not -lpthread in the makefile
+------Go
+>wget http://go.googlecode.com/files/go.go1.linux-386.tar.gz
+>tar -C /usr/local -xzf go.go1.linux-386.tar.gz
+>rm go.go1.linux-386.tar.gz
+I then had to add the following line to /etc/apache2/envvars/
+export PATH=$PATH:/usr/local/go/bin
 
 
 Adding a new exercise
@@ -396,6 +375,33 @@ red/amber/green status is saved in the avatar's sandbox folder and git
 committed. Running the tests is deliberately separated out to its own folder.
 This separation offers an easy future route to running dedicated servers just
 to run the tests.
+
+
+Getting files off the VirtualBox TurnKey Linux server
+=====================================================
+These were the steps I took...
+ 0. don't boot the VirtualBox TurnKey Linux server yet
+ 1. insert a USB stick
+ 2. in VirtualBox add a filter for the USB stick
+ 3. remove the USB stick
+ 4. boot the VirtualBox server and note its IP address (eg 192.168.61.25)
+ 5. open a browser page to the VirtualBox server (eg 192.168.61.25:12320)
+ 6. login (you need username and password for this, see above)
+ 7. insert the USB stick
+ 8. find the name of the USB device, eg sdb1
+ 9. >tail /var/log/messages
+10. mount the usb device
+11. >mkdir /root/usbdrive
+12. >mount -t vfat /dev/sdb1 /root/usbdrive
+13. >cd /var/www/cyberdojo
+14. find the directory you want
+15. >ruby names.rb    
+16. eg suppose the directory is katas/82/B583C115
+17. cd to that directory, then
+18. >tar -zcvf name.tar.gz .
+19. >mv name.tar.gz /root/usbdrive
+20. >umount /dev/sdb1
+21. shut down the VirtualBox image
 
 
 How to Turn off Chrome Spell-Checking in Chrome
