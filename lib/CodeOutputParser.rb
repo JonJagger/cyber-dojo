@@ -167,7 +167,7 @@ module CodeOutputParser
   end
 
   def self.parse_jasmine(output)
-     jasmine_pattern = /(\d+) test[s], (\d+) assertion[s], (\d+) failure[s]/
+     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
      if jasmine_pattern.match(output)
         return $3 == "0" ? :green : :red
      else
