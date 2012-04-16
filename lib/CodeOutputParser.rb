@@ -1,4 +1,3 @@
-
 # If a player creates a cyberdojo.sh file which runs two
 # test files then it's possible the first one will pass and
 # the second one will have a failure. Because of this the
@@ -168,7 +167,7 @@ module CodeOutputParser
   end
 
   def self.parse_jasmine(output)
-     jasmine_pattern = /(\d+) test, (\d+) assertion, (\d+) failure/
+     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
      if jasmine_pattern.match(output)
         return $3 == "0" ? :green : :red
      else
