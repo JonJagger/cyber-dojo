@@ -152,8 +152,8 @@ Rails version             2.3.8
 
 Installing Languages
 ====================
-Initial filesets for twelve language+test_framework are provided:
-C, C++, C#, CoffeeScript, Erlang, Haskell, Java, Javascript,
+Initial filesets for thirteen language+test_framework are provided:
+C, C++, C#, CoffeeScript, Erlang, Go, Haskell, Java, Javascript,
 Python, Perl, PHP, and Ruby. 
 Whether you will be able to compile successfully in any of
 these languages of course depends on whether these languages are installed
