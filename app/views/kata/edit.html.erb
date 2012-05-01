@@ -9,10 +9,10 @@ $j(document).ready(function() {
     return "<%=@tab-%>";
   };
   $cd.support_filenames = function() {
-    return $j.parseJSON('<%=@kata.language.support_filenames.inspect-%>');
+    return $j.parseJSON('<%=@kata.language.support_filenames.inspect.html_safe %>');
   };
   $cd.hidden_filenames = function() {
-    return $j.parseJSON('<%=@kata.language.hidden_filenames.inspect-%>');
+    return $j.parseJSON('<%=@kata.language.hidden_filenames.inspect.html_safe %>');
   };  
 
   for (i = 0, max = filenames.length; i < max; i += 1) {

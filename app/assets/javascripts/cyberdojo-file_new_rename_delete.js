@@ -57,6 +57,8 @@ var cyberDojo = (function($cd, $j) {
       }  
     });
     renamer.dialog('open');
+    input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'))
+
   };
   
   $cd.newFileContent = function(filename, content) {    
