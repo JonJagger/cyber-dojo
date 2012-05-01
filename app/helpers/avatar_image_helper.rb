@@ -13,7 +13,7 @@ module AvatarImageHelper
 
   def bw_avatar_image(name, size)
     name = name.downcase
-    image_tag "avatars/bw/#{name}.jpg",
+    image_tag "/images/avatars/bw/#{name}.jpg",
       :title => name.humanize,
       :width => size,
       :height => size,
