@@ -333,6 +333,6 @@ TestCase("cyberdojo-Test", {
     $cd.renameFileFromTo('frog', oldFilename, newFilename);
     assertEquals(['A', newFilename, 'C'], $cd.filenames().sort());
     assertEquals(newFilename, $cd.currentFilename());
-  },
+  }
   
 });
