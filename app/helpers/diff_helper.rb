@@ -2,17 +2,19 @@
 module DiffHelper
   
   def diff_tip(n_deleted, n_added)
-    pluralize(n_deleted, "deletion") + " &amp; " + pluralize(n_added, "addition")
+    tip = pluralize(n_deleted, "deletion") + " &amp; " + pluralize(n_added, "addition")
+    tip.html_safe
   end
   
   def diff_dots(n, kind)
-    html = '<table>'
-    html += '<tr>'
-    html +=   spaced_ellision(n) if kind == 'deleted'    
-                [MaxDots,n].min.times { html += td_dot(kind) }    
-    html +=   spaced_ellision(n) if kind == 'added'
-    html += '</tr>'
-    html += '</table>'
+    dots = '<table>'
+    dots += '<tr>'
+    dots +=   spaced_ellision(n) if kind == 'deleted'    
+                [MaxDots,n].min.times { dots += td_dot(kind) }    
+    dots +=   spaced_ellision(n) if kind == 'added'
+    dots += '</tr>'
+    dots += '</table>'
+    dots.html_safe
   end
     
 private

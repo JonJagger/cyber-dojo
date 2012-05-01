@@ -22,6 +22,18 @@ function rePost() {
   });
 }
 
+function refreshDashboard() {
+  $j.ajax({
+    url: "<%= url_for :action => 'heartbeat', :id => @kata.id %>",
+    data: { seconds_per_column: parseSecondsPerColumn(), maximum_columns: parseMaximumColumns() },
+    dataType: "script" })
+  .fail(function() { console.log("uh oh"); });
+};
+
+$j(function() {
+  setInterval(refreshDashboard, 10000);
+});
+
 //--></script>
 
 <table align="center">
@@ -34,14 +46,20 @@ function rePost() {
       &nbsp;&nbsp;
     </td>
     <td class="panel">
-      <%= render :partial => 'age' -%>
-    </td>    
+      <div id="age" class="info">
+        <%= render :partial => 'age' -%>
+      </div>
+        
+    </td>
+    <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
+
     <td class="panel">
       <%= render :partial => 'seconds_per_column' -%>      
     </td>
     <td class="panel">
       <%= render :partial => 'maximum_columns' -%>
     </td>
+  <% end %>
   </tr>
 </table>
 
@@ -55,16 +73,12 @@ function rePost() {
   </tr>
   <tr>
     <td>
-      <%= render :partial => 'traffic_lights' -%>
+      <div id="traffic_lights" 
+          class="panel">
+        <%= render :partial => 'traffic_lights' -%>
+      </div>
     </td>
   </tr>
 </table>
 
-<%= periodically_call_remote :url => { :action => :heartbeat,
-                                       :id => @kata.id
-                                     }, 
-                             :with => "{ seconds_per_column: parseSecondsPerColumn()," +
-                                      "  maximum_columns: parseMaximumColumns()" +
-                                      "}",                                     
-                             :frequency => 10 -%>
 

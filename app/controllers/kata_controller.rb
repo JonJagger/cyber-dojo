@@ -23,7 +23,7 @@ class KataController < ApplicationController
     
     respond_to do |format|
       format.js if request.xhr?
-    end        
+    end      
   end
       
 private

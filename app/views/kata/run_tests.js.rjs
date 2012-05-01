@@ -1,3 +1,0 @@
-
-page.replace 'traffic_lights', :partial => 'traffic_lights'
-page.replace 'output',         :partial => 'output'

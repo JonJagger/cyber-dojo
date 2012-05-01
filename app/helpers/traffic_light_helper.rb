@@ -17,10 +17,10 @@ module TrafficLightHelper
   
   def unlinked_traffic_light(inc)
     bulb = inc[:outcome].to_s
-    "<img src='/images/traffic-light-#{bulb}.png'" +
+    ("<img src='/images/traffic-light-#{bulb}.png'" +
       " border='0'" +
       " width='26'" +
-      " height='78'/>"
+      " height='78'/>").html_safe
   end
  
   def tool_tip(inc_number)

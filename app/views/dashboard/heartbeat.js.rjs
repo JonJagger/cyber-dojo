@@ -1,5 +1,0 @@
-
-page.replace 'age',            :partial => 'age'
-page.replace 'traffic_lights', :partial => 'traffic_lights'
-
-

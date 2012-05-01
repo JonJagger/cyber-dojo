@@ -75,7 +75,10 @@ class DojoController < ApplicationController
       if avatar == nil
         redirect_to "/dojo/full?id=#{id}"
       else
-        redirect_to "/kata/edit?id=#{id}&avatar=#{avatar}"
+        redirect_to :controller => 'kata',
+                    :action => 'edit',
+                    :id => "#{id}",
+                    :avatar => "#{avatar}"
       end
     end    
   end
@@ -91,6 +94,18 @@ class DojoController < ApplicationController
   end
     
   #------------------------------------------------
+
+  def about
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
+  end
+  
+  def basics
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
+  end
     
   def faqs
     respond_to do |format|    

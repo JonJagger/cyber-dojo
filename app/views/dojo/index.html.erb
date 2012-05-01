@@ -34,7 +34,7 @@ $j(document).ready(function() {
     });
   });
   
-  $j.each(['faqs', 'links', 'tips', 'why' ], function(i,name) {
+  $j.each(['about', 'basics', 'faqs', 'links', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
       popup(name);
     });
@@ -51,7 +51,7 @@ function popup(name) {
       .html('<div style="font-size: 1.2em;">' + grid.html() + '</div>')    
       .dialog({
         autoOpen: false,
-        width: (name === 'faqs' ? 650 : 1200),
+        width: (name === 'why' ? 1100 : 650),
         title: '<h1>' + name + '</h1>',
         modal: true,
         buttons: {
@@ -200,7 +200,7 @@ function cantFind(id) {
 
   <tr>
     <td class="panel">
-      <% [ 'faqs', 'links', 'tips', 'why' ].each do |name| -%>
+      <% [ 'about', 'basics', 'faqs', 'links', 'tips', 'why' ].each do |name| -%>
         <input type="button"
                class="button"
                id="<%=name-%>"

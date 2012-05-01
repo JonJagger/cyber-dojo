@@ -2,24 +2,21 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var maximum_columns = "<%=@maximum_columns-%>";  
-  
 $j(document).ready(function() {
-  $j('#maximum_columns').keyup(function(event) {
-    reParse(event);
-  });
+  $j('#maximum_columns').data('validated-value', $j('#maximum_columns').val());
+  $j('#maximum_columns').change(refreshDashboard);
 });
   
 function parseMaximumColumns() {
   var input = $j('#maximum_columns');
-  var value = input.attr('value');
+  var value = input.val();
   var newValue = parseInt(value);
   if (!isNaN(newValue)) {
-    maximum_columns = newValue;
+    input.data('validated-value', newValue);
   } else {
-    input.attr('value', maximum_columns);
+    input.val(input.data('validated-value'));
   }
-  return maximum_columns;
+  return input.val();
 }
 
 //--></script>

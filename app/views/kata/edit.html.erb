@@ -3,7 +3,7 @@
 
 $j(document).ready(function() {
   var filenames = $cd.filenames();
-  var filename, file, i, max = filenames.length;
+  var filename, file, i, max;
   
   $cd.tabExpansion = function() {
     return "<%=@tab-%>";
@@ -15,7 +15,7 @@ $j(document).ready(function() {
     return $j.parseJSON('<%=@kata.language.hidden_filenames.inspect-%>');
   };  
 
-  for (i = 0; i < max; i += 1) {
+  for (i = 0, max = filenames.length; i < max; i += 1) {
     filename = filenames[i];
     file = $cd.fileContentFor(filename);
     $cd.bindHotKeys(file);
@@ -27,16 +27,22 @@ $j(document).ready(function() {
   $cd.rebuildFilenameList();
   $cd.loadFile(filenames[$cd.rand(max)]);
   $cd.welcome("<%=@avatar.name-%>");
+
+  $j('form').bind('ajax:before', function(evt, data, status, xhr){
+    $cd.preRunTests();
+  });
+  
+  $j('form').bind('ajax:complete', function(evt, data, status, xhr){
+    $cd.postRunTests();
+  });
+  
 });
+
 
 //--></script>
 
-<% form_remote_tag :url  => { :action => :run_tests,
-                              :id => @kata.id,
-                              :avatar => @avatar.name
-                            }, 
-                   :before   => '$cd.preRunTests();',
-                   :complete => '$cd.postRunTests();' do -%> 
+<%= form_tag( { :action => 'run_tests', :id => @kata.id, :avatar => @avatar.name },
+                :remote => true ) do %>  
 
   <table cellpadding="0" cellspacing="0">
     <tr valign="top">
@@ -71,5 +77,5 @@ $j(document).ready(function() {
     </tr>
   </table>
   
-<% end -%>
+<% end %>
 
