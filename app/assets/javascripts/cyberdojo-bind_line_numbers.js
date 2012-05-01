@@ -14,16 +14,6 @@ var cyberDojo = (function($cd) {
     return $cd.id(filename + '_line_numbers');  
   };
   
-  $cd.unbindAllLineNumbers = function() {
-    $j.each( $cd.filenames(), function(i,filename) {
-      $cd.unbindLineNumbers(filename);
-    });    
-  };
-  
-  $cd.unbindLineNumbers = function(filename) {
-    $cd.lineNumbersFor(filename).val("");
-  };
-  
   $cd.bindAllLineNumbers = function() {
     $j.each( $cd.filenames(), function(i,filename) {
       $cd.bindLineNumbers(filename);

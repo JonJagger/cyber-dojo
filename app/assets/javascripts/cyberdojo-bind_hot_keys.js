@@ -29,10 +29,5 @@ var cyberDojo = (function($cd, $j) {
     node.bind('keydown', $cd.loadNextFileHotKey(), $cd.bindLoadNextFile);
   };
   
-  $cd.unbindHotKeys = function(node) {
-    node.unbind('keydown', $cd.runTestsHotKey());
-    node.unbind('keydown', $cd.loadNextFileHotKey());
-  };
-  
   return $cd;
 })(cyberDojo || {}, $);
