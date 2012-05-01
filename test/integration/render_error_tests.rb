@@ -12,7 +12,6 @@ class RenderErrorTests < ActionController::TestCase
     check_render_error(404, true)
     check_render_error(422, true)
     check_render_error(500, true)
-    check_render_error(400, false)
   end
     
   def check_render_error(n, expected)

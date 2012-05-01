@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'integration_test'
+require './integration_test'
 
 class DashboardControllerTest < IntegrationTest
 
@@ -14,7 +14,7 @@ class DashboardControllerTest < IntegrationTest
     (1..4).each do |n|
       post '/dojo/start', rooted({ :id => id })
       avatar = avatar_from_response
-      assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"      
+      assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
     end
     get "dashboard/show", rooted({ :id => id })
     assert_response :success    
@@ -25,7 +25,7 @@ class DashboardControllerTest < IntegrationTest
     (1..3).each do |n|
       post '/dojo/start', rooted({ :id => id })
       avatar = avatar_from_response
-      assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"
+      assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
       (1..2).each do |m|
         post 'kata/run_tests', rooted(
           :id => id,

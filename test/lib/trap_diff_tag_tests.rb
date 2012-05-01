@@ -21,8 +21,8 @@ class TrapDiffTagTests < ActionController::TestCase
   def params
     { 
       :dojo_name => 'diff-ok', 
-      :dojo_root => RAILS_ROOT + '/dojos',
-      :filesets_root => RAILS_ROOT + '/filesets'
+      :dojo_root => Rails.root + 'dojos',
+      :filesets_root => Rails.root + 'filesets'
     }      
   end
   

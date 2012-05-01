@@ -8,17 +8,14 @@ class IntegrationTest  < ActionController::IntegrationTest
       :language => 'C assert',
       :exercise => 'Yahtzee'
     })
-    redirect =  @response.redirected_to
-    assert_not_nil redirect
-    assert_equal Hash, redirect.class
-    id = redirect[:id]
-    assert_not_nil id
-    assert_redirected_to "/dojo/index/#{id}"
-    id
+    assert_match @response.redirect_url, /^#{url_for :action => 'index', :controller => 'dojo'}/
+    @response.redirect_url =~ /id=(.+)/ or fail "Unexpected #{@response.redirect_url}"
+    $1
   end
   
   def avatar_from_response
-    raw_redirect = @response.header["Location"]    
+    raw_redirect = @response.header["Location"]
+    assert_match raw_redirect, /avatar=.../
     pattern = Regexp.new('avatar=(.*)')
     pattern.match(raw_redirect)[1]
   end
@@ -29,7 +26,7 @@ class IntegrationTest  < ActionController::IntegrationTest
   end
   
   def root_dir
-    RAILS_ROOT + '/test/cyberdojo'
+    Rails.root + 'test/cyberdojo'
   end
   
 end

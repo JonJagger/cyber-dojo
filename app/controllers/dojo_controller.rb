@@ -152,7 +152,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
       
   def render_error
-    render :file => RAILS_ROOT + '/public/' + params[:n] + '.html'    
+    render "error/#{params[:n]}"
   end
 
   #------------------------------------------------

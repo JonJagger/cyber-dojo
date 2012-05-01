@@ -15,7 +15,7 @@ class InstallationTests < ActionController::TestCase
       installed_and_working,
         cannot_check_because_no_42_file,
           not_installed,
-            installed_but_not_working = check_languages(RAILS_ROOT)
+            installed_but_not_working = check_languages(Rails.root)
   
       puts "\nSummary...."    
       puts 'not_installed:' + not_installed.inspect
@@ -32,7 +32,7 @@ class InstallationTests < ActionController::TestCase
     installed_and_working,
       cannot_check_because_no_42_file,
         not_installed,
-          installed_but_not_working = check_languages(RAILS_ROOT + '/test/cyberdojo')
+          installed_but_not_working = check_languages(Rails.root + 'test/cyberdojo')
     
     ['C assert', 'Dummy', 'Ruby-installed-and-working'] == installed_and_working &&
     ['Ruby-no-42-file'] == cannot_check_because_no_42_file &&

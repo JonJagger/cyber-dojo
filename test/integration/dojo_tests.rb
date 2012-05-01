@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'integration_test'
+require './integration_test'
 
 class DojoControllerTest  < IntegrationTest
 
@@ -40,7 +40,7 @@ class DojoControllerTest  < IntegrationTest
     id = checked_save_id
     post 'dojo/start', rooted({ :id => id })
     avatar = avatar_from_response
-    assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"
+    assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
   end
    
   test "start-coding succeeds once for each avatar name, then dojo is full" do
@@ -48,7 +48,7 @@ class DojoControllerTest  < IntegrationTest
     (1..Avatar.names.length).each do |n|
       post 'dojo/start', rooted({ :id => id })
       avatar = avatar_from_response
-      assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"      
+      assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
     end
     post 'dojo/start', rooted({ :id => id })
     assert_redirected_to "/dojo/full?id=#{id}"

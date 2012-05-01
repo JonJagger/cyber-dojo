@@ -1,5 +1,6 @@
 *~
 log/*
+db/*.sqlite3
 tmp/**/*
 
 .DS_Store

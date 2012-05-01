@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'integration_test'
+require './integration_test'
 
 class DiffControllerTest < IntegrationTest
 
@@ -7,7 +7,7 @@ class DiffControllerTest < IntegrationTest
     id = checked_save_id
     post 'dojo/start', rooted({ :id => id })
     avatar = avatar_from_response
-    assert_redirected_to "/kata/edit?id=#{id}&avatar=#{avatar}"    
+    assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
     post 'kata/run_tests', rooted(
       :id => id,
       :avatar => avatar,
