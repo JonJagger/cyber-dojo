@@ -1,4 +1,4 @@
-require 'untitled'
+require './untitled'
 require 'test/unit'
 
 class TestUntitled < Test::Unit::TestCase

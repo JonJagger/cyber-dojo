@@ -20,7 +20,7 @@ class GitDiffViewTests < ActionController::TestCase
 
     # create tag 1 in the repo
     run_tests(avatar, visible_files)
-    assert_equal :red, avatar.increments.last[:outcome]
+    assert_equal :red, avatar.increments.last[:outcome], avatar.visible_files["output"]
 
     # create tag 2 in the repo 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
@@ -60,7 +60,7 @@ HERE
   
   def test_untitled_rb 
 <<HERE
-require 'untitled'
+require './untitled'
 require 'test/unit'
 
 class TestUntitled < Test::Unit::TestCase

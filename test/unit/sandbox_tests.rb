@@ -39,8 +39,7 @@ class SandboxTests < ActionController::TestCase
             "File.exists?(#{@sandbox.dir}/#{filename})"
     end
     
-    assert_not_nil output, "output != nil"
-    assert output.include?('<54> expected but was'), "output.include?('<54>...')"
+    assert_match output, /\<54\> expected but was/
   end    
       
   test "sandbox dir is deleted after run" do
@@ -49,7 +48,7 @@ class SandboxTests < ActionController::TestCase
     output = @sandbox.run(language, visible_files)
     assert_not_nil output, "output != nil"
     assert output.class == String, "output.class == String"
-    assert output.include?('<54> expected but was'), "output.include?('<54>...')"
+    assert_match output, /\<54\> expected but was/
     assert !File.exists?(@sandbox.dir),
           "!File.exists?(#{@sandbox.dir})"
   end

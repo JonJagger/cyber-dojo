@@ -3,6 +3,7 @@ require 'Files'
 require 'Uuid'
 
 class Sandbox
+  attr_accessor :test_timeout
   
   def initialize(root_dir)
     @root_dir, @name = root_dir, Uuid.gen
@@ -42,7 +43,7 @@ class Sandbox
     link_files(language.dir, language.hidden_filenames)
     command  = "cd '#{dir}';" +
                "./cyberdojo.sh"
-    max_run_tests_duration = 10
+    max_run_tests_duration = (test_timeout || 10)
     Files::popen_read(command, max_run_tests_duration)
   end
   

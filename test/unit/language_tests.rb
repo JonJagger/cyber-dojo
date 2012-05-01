@@ -17,7 +17,7 @@ class LanguageTests < ActionController::TestCase
   test "visible files are loaded but not output and not instructions" do
     language = make_language('Dummy')    
     visible_files = language.visible_files
-    assert visible_files['test_untitled.rb'].start_with? "require 'untitled'"
+    assert_match visible_files['test_untitled.rb'], /^require '\.\/untitled'/ 
     assert_nil visible_files['output']
     assert_nil visible_files['instructions']
   end

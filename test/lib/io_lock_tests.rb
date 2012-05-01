@@ -29,7 +29,6 @@ class IoLockTests < ActionController::TestCase
       result = Locking::io_lock(filename) {|fd| block_run = true; 'Hello' }
       assert block_run, 'block_run'
       assert_equal 'Hello', result
-      assert fd.closed?
     ensure
       File.delete(filename)
     end

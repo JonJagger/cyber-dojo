@@ -39,6 +39,7 @@ class ActiveSupport::TestCase
   def run_tests(avatar, visible_files)
     language = avatar.kata.language
     sandbox = Sandbox.new(root_dir)
+    sandbox.test_timeout = 1
     output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, output)
     avatar.save_run_tests(visible_files, output, inc)
@@ -46,7 +47,7 @@ class ActiveSupport::TestCase
   end
 
   def root_dir
-    @root_dir || Rails.root + 'test/cyberdojo'
+    (@root_dir || Rails.root + 'test/cyberdojo').to_s
   end
   
   def teardown

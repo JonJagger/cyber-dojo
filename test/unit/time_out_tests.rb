@@ -9,7 +9,7 @@ class TimeOutTests < ActionController::TestCase
     avatar = Avatar.new(kata, avatar_name)
     visible_files = avatar.visible_files
     code = visible_files[filename]
-    visible_files[filename] = code.sub('return 42;', 'for(;;);')
+    visible_files[filename] = code.sub('return 42;', 'for(;;); return 4;')
     
     ps_count_before = ps_count
     print 't'
@@ -21,7 +21,7 @@ class TimeOutTests < ActionController::TestCase
     # This next text sometimes fails and I haven't yet determined why...
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
-    assert_match(/Terminated by the CyberDojo server after 10 seconds/, output)
+    assert_match(/Terminated by the CyberDojo server after \d+ seconds?/, output)
   end
   
   def ps_count

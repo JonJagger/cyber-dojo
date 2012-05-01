@@ -1,3 +1,4 @@
+# encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
 require 'CodeOutputParser'
 
