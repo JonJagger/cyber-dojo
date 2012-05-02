@@ -20,8 +20,8 @@ The TurnKey image screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
 
 
-Pulling the latest github source onto your server
-=================================================
+Pulling the latest github source onto your Turnkey server
+=========================================================
 Add port 12320 to the URL you put into your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
@@ -36,6 +36,14 @@ have the correct rights
 >chown -R www-data cyberdojo
 And don't forget to reboot apache
 >service apache2 restart
+- - - - - - - - - - - - - - - - - - - - - -
+NOTE NOTE NOTE NOTE
+The Turnkey server uses rails 2 where as the github repository
+has been ported to rails 3. I will create an upgraded Turnkey linux
+server image when I can but for now the last rails 2 commit is
+>git checkout ba19f785bb20
+- - - - - - - - - - - - - - - - - - - - - -
+
 
 
 Configuring a practice-kata
