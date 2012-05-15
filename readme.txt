@@ -13,7 +13,7 @@ Running your own VirtualBox TurnKey Linux CyberDojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
-...ADD URL WHEN IMAGE READY...   (817MB)
+...ADD URL WHEN IMAGE UPLOADED...   (817MB)
 This image supports 13 languages (C, C++, C#, Coffeescript, Erlang, Go, Haskell,
 Java, Javascript, Perl, PHP, Python, Ruby).
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
@@ -39,8 +39,6 @@ have the correct rights
 >chown -R www-data cyberdojo
 And don't forget to reboot apache
 >service apache2 restart
-Then open http://localhost:3000 in your browser and your CyberDojo should be running. 
-There are no requirements on the clients (except of course a browser).
 
 
 
@@ -105,7 +103,7 @@ JavaScript Runtime        therubyracer (V8)
 Installing Languages
 ====================
 The base rails3 image is available here (417MB)
-....ADD URL WHEN IMAGE READY...
+....ADD URL WHEN IMAGE UPLOADED...
 (see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 for details on how I built it) and has built-in support for C, C++,
 Python, Perl and Ruby. I installed the other 8 languages onto this baseline
