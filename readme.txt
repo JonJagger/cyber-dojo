@@ -4,26 +4,29 @@
 ===========================================================
 CyberDojo clients have full rights on the CyberDojo server. If you 
 setup your own server you are strongly advised to consider using
-o) a dedicated network segment
 o) a dedicated server
 o) a virtual box.
+o) a dedicated network segment
 
 
 Running your own VirtualBox TurnKey Linux CyberDojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
-http://dl.dropbox.com/u/22404698/TurnKey-CyberDojo-20110610.ova (478 MB)
+...ADD URL WHEN IMAGE READY...   (817MB)
+This image supports 13 languages (C, C++, C#, Coffeescript, Erlang, Go, Haskell,
+Java, Javascript, Perl, PHP, Python, Ruby).
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
 The TurnKey image screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
 
 
+
 Pulling the latest github source onto your Turnkey server
 =========================================================
 Add port 12320 to the URL you put into your browser above, eg
-192.168.2.13:12320
+192.168.56.101:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 Pull the latest CyberDojo source code from github onto your TurnKey image
@@ -36,13 +39,8 @@ have the correct rights
 >chown -R www-data cyberdojo
 And don't forget to reboot apache
 >service apache2 restart
-- - - - - - - - - - - - - - - - - - - - - -
-NOTE NOTE NOTE NOTE
-The Turnkey server uses rails 2 where as the github repository
-has been ported to rails 3. I will create an upgraded Turnkey linux
-server image when I can but for now the last rails 2 commit is
->git checkout ba19f785bb20
-- - - - - - - - - - - - - - - - - - - - - -
+Then open http://localhost:3000 in your browser and your CyberDojo should be running. 
+There are no requirements on the clients (except of course a browser).
 
 
 
@@ -93,149 +91,72 @@ together with < and > buttons to step backwards and  forwards through the diffs.
 The diff-view page does not work properly in Internet Explorer 8.
 
    
-Building your own CyberDojo Linux server from scratch
-=====================================================
-Requirements: ruby, rails, git
-Here are the commands I used to install ruby, rails, and CyberDojo onto 
-my Ubuntu server:
->sudo apt-get install git-core
->git clone http://github.com/JonJagger/cyberdojo.git
->sudo aptitude install ruby build-essential libopenssl-ruby ruby1.8-dev
->sudo apt-get install rubygems
->sudo gem install rails 
->sudo apt-get install libsqlite3-dev
->sudo gem install sqlite3-ruby
->sudo gem update
-
-Then 
->cd cyberdojo
->script/server 
-Open http://localhost:3000 in your browser and your CyberDojo should be running. 
-There are no requirements on the clients (except of course a browser). I also 
-install and use apache on my CyberDojo server but that is optional.
-
-
-Running a CyberDojo server off a Mac
-====================================
-This works (but see a caveat below)
-Here are the commands Phil Nash used to install CyberDojo on his MacBook
-(he already had ruby 1.8.7 and git installed)
->sudo gem update
->sudo gem install rails -v 2.3.8 --include-dependencies
->sudo gem install sqlite3-ruby
- 
-The MacOs file system can be case insensitive and this could cause git a file
-rename problem. If you start a new kata (as Lion say) and do a run-tests and
-then change the 'instructions' file to 'Instructions' and make a small change to
-its content, and do another run-tests then git diff will not see the difference.
-Specifically, from the Lion's directory
->git diff --ignore-space-at-eol --find-copies-harder 2 1 sandbox
-will give you an output like this...
-     diff --git a/sandbox/instructions b/sandbox/instructions
-     index b62fac4..4786df1 100644
-     --- a/sandbox/instructions
-     +++ b/sandbox/instructions
-     @@ -8,7 +8,7 @@ or "frames" for the bowler.
-If you look in the Lion's sandbox directory you will see 
-a file called Instructions (with a capital I)
-If you do this
->irb
->command = `git show 2:manifest.rb`
->manifest = eval command
->manifest.keys
-You will see a file called Instructions.
-But git diff does not see it... 
-Unlikely to be a major problem.
-
-
 Versions
 ========
-After Mike Long's sterling upgrade work my server reports...
->script/about
-Ruby version              1.8.7 (x86_64-linux)
-RubyGems version          1.3.7
-Rack version              1.1.2
-Rails version             2.3.8
+After Johannes Brodwall's sterling upgrade work my server reports...
+>rake about
+Ruby version              1.9.3 (i686-linux)
+RubyGems version          1.8.24
+Rack version              1.4
+Rails version             3.2.3
+JavaScript Runtime        therubyracer (V8)
 
 
 Installing Languages
 ====================
-Initial filesets for thirteen language+test_framework are provided:
-C, C++, C#, CoffeeScript, Erlang, Go, Haskell, Java, Javascript,
-Python, Perl, PHP, and Ruby. 
-Whether you will be able to compile successfully in any of
-these languages of course depends on whether these languages are installed
-and working on your server or not. Ubuntu comes with built-in support for C, C++, 
-Python, Perl and you need Ruby for the CyberDojo server itself.
-Running
->cd cyberdojo/test/unit
->ruby installation_test.rb
-Will provide information on what is and isn't installed and working.
+The base rails3 image is available here (417MB)
+....ADD URL WHEN IMAGE READY...
+(see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
+for details on how I built it) and has built-in support for C, C++,
+Python, Perl and Ruby. I installed the other 8 languages onto this baseline
+rails 3 image as follows...
 
------Java
-I installed support for Java as follows
->sudo apt-get install default-jdk
-(if asked, press tab to select ok, and hit enter to continue)
------C#
-I installed support for C# as follows
->sudo apt-get install mono-gmcs
->sudo apt-get install nunit-console
------PHP
-I installed support for PHP as follows
->sudo apt-get install php-pear
->sudo pear channel-discover pear.phpunit.de
->sudo pear channel-discover components.ez.no
->sudo pear install PEAR
->sudo pear install phpunit/PHPUnit
->sudo pear install phpunit/PHP_CodeCoverage
------Javascript
-I installed support for Javascript using node. I followed the instructions
-at https://github.com/joyent/node/wiki/Installation as follows
->git clone git://github.com/joyent/node.git
->cd node
->git checkout v0.4.11
->./configure
->make -j2
->[sudo] make install
------C/C++
-If you want to run C or C++ directly on a mac and don't want to install Xcode you'll
-need https://github.com/kennethreitz/osx-gcc-installer/downloads
------Erlang
-Kalervo Kujala added support for Erlang as follows
->sudo apt-get install erlang
->sudo apt-get install erlang-eunit
------CoffeeScript
-Johannes Brodwall added support for CoffeeScript as follows
->...install node as per Javascript support....
->sudo npm install --global jasmine-node
-If you need to install npm
->curl http://npmjs.org/install.sh | sudo sh
-If you need to install curl
->sudo apt-get install curl
-------Haskell
-Miika-Petteri Matikainen added support for Haskell as follows
->sudo apt-get install ghc
->sudo apt-get install libghc6-unit-dev
-------C++ Catch
-the catch.hpp file lives at https://github.com/philsquared/Catch
-------C++ GTest (GoogleTest)
-Following Hrafnkell Eiriksson's lead I downloaded gtest-1.6.0.gzip
-from http://code.google.com/p/googletest/downloads/list
->wget http://googletest.googlecode.com/files/gtest-1.6.0.zip
->unzip gtest-1.6.0.zip
->cd gtest-1.6.0
->cd make
->make
-this created the gtest_main.a that I needed to link with in the makefile
->cp gtest_main.a  ...../cyberdojo/languages/C++\ GTest
-then I added -I../../languages/C++\ GTest to the makefile
-I also found I need to specify -pthread and not -lpthread in the makefile
-------Go
->wget http://go.googlecode.com/files/go.go1.linux-386.tar.gz
->tar -C /usr/local -xzf go.go1.linux-386.tar.gz
->rm go.go1.linux-386.tar.gz
+#apt-get update
+-----Java (125MB)
+>apt-get install default-jdk
+-------C# (27MB)
+#apt-get install mono-gmcs
+#apt-get install nunit-console
+#cd /var/www/cyberdojo/languages/C#
+#rm *.dll
+#cp /usr/lib/cli/nunit.framework-2.4/nunit.framework.dll .
+I edited the /var/www/cyberdojo/languages/C#/manifest.rb file this
+   :support_filenames => %w( nunit.framework.dll )
+There was a permission issue. Using strace suggested the following
+which fixed the problem
+#mkdir /var/www/.mono
+#chgrp www-data .mono
+#chown www-data .mono
+-------Erlang(26MB)
+#apt-get install erlang
+(thanks to Kalervo Kujala)
+------Haskell (111MB)
+#apt-get install libghc6-hunit-dev
+(thanks to Miika-Petteri Matikainen)
+------Go (44MB)
+#cd ~
+#wget http://go.googlecode.com/files/go.go1.linux-386.tar.gz
+#tar -C /usr/local -xzf go.go1.linux-386.tar.gz
+#rm go.go1.linux-386.tar.gz
 I then had to add the following line to /etc/apache2/envvars/
-export PATH=$PATH:/usr/local/go/bin
+#export PATH=$PATH:/usr/local/go/bin
+-----Javascript (63MB)
+#cd ~
+#git clone git://github.com/joyent/node.git
+#cd node
+#git checkout v0.6.17
+#./configure
+#make
+#make install
+#cd ~
+#rm -r node
+(see https://github.com/joyent/node/wiki/Installation)
+-----CoffeeScript (3MB)
+#npm install --global jasmine-node
+(thanks to Johannes Brodwall)
+(ensure JavaScript node is installed first as per instructions above)
+-----PHP (3MB)
+#apt-get install phpunit
 
 
 Adding a new exercise
@@ -261,9 +182,9 @@ Example: cyberdojo/languages/Java/manifest.rb looks like this:
   :tab_size => 4
 }
 
-You must structure the contents of the manifests in a
-specific way to ensure the CyberDojo server sees them as being
-correctly installed and working. For each language...
+The intention is to use a specific structure for the contents of the
+manifests to enable an automated check to see what is correctly installed
+and working... For each language...
 o) CyberDojo searches through its manifests' :visible_filenames,
    in sequence, looking for any that contain the string '42'
 o) If it doesn't find any it will not offer that language when
@@ -284,12 +205,12 @@ o) If the three tests return three amber traffic-lights then
    the CyberDojo server assumes the language is not installed
    and it won't offer that language when you configure a new kata.
 o) If the three tests return any other combination of traffic-lights
-   the CyberDojo server assumes the language is installed but not working
-   and it (soon) won't offer that language when you create a new kata.
-
+   the CyberDojo server assumes the language is installed but not working.
+   
 You can test if a languages' initial fileset is correctly setup as follows
 >cd cyberdojo/test/unit
 >ruby installation_tests.rb
+(NB this is out of date and needs reworking after the rails 3 upgrade.)
 Note: this may issue the following error
    sh: Syntax error: Bad fd number
 when this happened to me I fixed it as follows
@@ -412,6 +333,7 @@ These were the steps I took...
 21. shut down the VirtualBox image
 
 
+
 How to Turn off Chrome Spell-Checking in Chrome
 ===============================================
 To turn it off (and avoid annoying red underlines the code editor)
@@ -443,5 +365,5 @@ o) I have worked hard to <em>remove</em> features from CyberDojo. My idea is tha
    of a CyberDojo is <em>not</em> to ship something. The aim of CyberDojo is to
    deliberately practice developing software collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
-   CyberDojo from the very early days.
+   CyberDojo and have provided lots of help right from the very early days.
    Olve, Mike and Johannes - I really appreciate all your help and encouragement.
