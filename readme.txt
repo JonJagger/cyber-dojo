@@ -13,14 +13,13 @@ Running your own VirtualBox TurnKey Linux CyberDojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
-...ADD URL WHEN IMAGE UPLOADED...   (817MB)
+http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova (817MB)
 This image supports 13 languages (C, C++, C#, Coffeescript, Erlang, Go, Haskell,
 Java, Javascript, Perl, PHP, Python, Ruby).
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
 The TurnKey image screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
-
 
 
 Pulling the latest github source onto your Turnkey server
