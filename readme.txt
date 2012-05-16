@@ -181,7 +181,11 @@ Example: cyberdojo/languages/Java/manifest.rb looks like this:
 
 The intention is to use a specific structure for the contents of the
 manifests to enable an automated check to see what is correctly installed
-and working... For each language...
+and working, and to only offer installed and working languages when you
+configure a new practice-kata. However at the moment when you configure a
+new practice-kata all language/ subfolders are offered.
+
+For each language...
 o) CyberDojo searches through its manifests' :visible_filenames,
    in sequence, looking for any that contain the string '42'
 o) If it doesn't find any it will not offer that language when
