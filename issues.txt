@@ -1,0 +1,11 @@
+
+
+The code to ensure cyberdojo.sh cleans up any processes it spawns
+could do with some attention. Instead of trying to find children by
+walking pid/ppid hierarchy it would be better to use pgid - process group.
+
+The intention with the installation tests is that they are used to determine
+what languages are installed and to only offer those languages. But at the
+moment all the languages are being offered.
+
+The javascript tests need some TLC.

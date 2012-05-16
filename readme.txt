@@ -18,14 +18,14 @@ This image supports 13 languages (C, C++, C#, Coffeescript, Erlang, Go, Haskell,
 Java, Javascript, Perl, PHP, Python, Ruby).
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
-The TurnKey image screen will tell you its IP address, eg 192.168.2.13
+The Virtual Box screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
 
 
 Pulling the latest github source onto your Turnkey server
 =========================================================
 Add port 12320 to the URL you put into your browser above, eg
-192.168.56.101:12320
+192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 Pull the latest CyberDojo source code from github onto your TurnKey image
