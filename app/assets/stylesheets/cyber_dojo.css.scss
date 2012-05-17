@@ -30,15 +30,12 @@ h3 { font-size: 1.3em;  }
 {
   background: $background-color;
   color: $main-color;  
-
-  border-top: 2px dotted White;
-  border-left: 2px dotted White;
   
-  border-top: 3px solid $light-background-color;
-  border-left: 3px solid $light-background-color;
-  
+  border-top: 2px solid $light-background-color;
+  border-left: 2px solid $light-background-color;
   border-right: none;
   border-bottom: none;
+  
   margin: 0px;
   padding: 0.5em;  
 }
