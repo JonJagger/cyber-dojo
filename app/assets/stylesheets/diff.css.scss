@@ -1,0 +1,57 @@
+
+#tag_number
+{
+  font-size: 1em; 
+  text-align: center; /* for diff and dashboard */
+}
+
+#diff_panel
+{
+  overflow: auto;
+  height: 48em;
+  width: 63em;
+}
+
+#diff_sheet
+{
+  margin: 0;
+  padding: 0;
+}
+
+pre.diffed_code { margin: 0; padding: 0; }
+
+pre.diffed_code added,   #toggle_added_lines   { background: #CEF6CE; }
+pre.diffed_code deleted, #toggle_deleted_lines { background: #F6CECE; }
+
+pre.diffed_code ln 
+{
+  padding-left: 2px;
+  margin-right: 3px;
+  padding-right: 2px;
+  color: #B0B0B0;
+  font-weight: normal;
+  white-space: pre;
+}
+
+pre.diffed_code same
+{
+  color: $main-color;
+  background: Cornsilk;
+}
+
+pre.diffed_code same ln { background: $background-color;  }
+
+.diff_dots { color: #383838; font-size: 0.7em; }
+
+.diff_dots.on:after  { content: '...'; }
+.diff_dots.off:after { content: '\00a0\00a0\00a0'; }
+
+.dot { display: inline-block; width: 9px; height: 9px; }
+.dot:after { content: "\00a0"; } /* non breaking space */
+
+.added.dot   { background: #CEF6CE; border: 1px dotted Green; }  
+.deleted.dot { background: #F6CECE; border: 1px dotted #F00; }
+.spacer.dot  { background: #B2EFEF; border: 1px dotted #B2EFEF; }
+
+.invisible { display: none; } /* used to show/hide -+ lines */
+
