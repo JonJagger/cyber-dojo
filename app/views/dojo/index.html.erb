@@ -122,7 +122,7 @@ function cantFind(id) {
       <%= image_tag("/images/avatars/cyber-dojo.png",
           :border => 0,
           :size => "#{size}x#{size}",
-          :title => 'CyberDojo') -%>
+          :title => 'cyber-dojo') -%>
     </td>
     <td>
       &nbsp;&nbsp;
@@ -172,7 +172,7 @@ function cantFind(id) {
           </td>
         </tr>
         <tr>
-          <td>
+          <td>            
           </td>
           <td>
           </td>
@@ -185,8 +185,10 @@ function cantFind(id) {
           </td>
         </tr>
         <tr>
-          <td></td>
-          <td></td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>
             <input type="button"
                    class="large button"
@@ -208,11 +210,22 @@ function cantFind(id) {
       <% end -%>
     </td>
   </tr>
-  
+
   <tr>
-    <td style="font-size: 0.6em;">
-      Internet Explorer 6/7 support is mostly untested.
+    <td>
+      <table>
+        <tr>
+          <td>
+           <%= render :partial => 'donate' -%>
+          </td>
+          <td>
+            <span class="small_text">
+              All donations<br/>go towards<br/>cloud hosting.
+            </span>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
-      
+        
 </table>
