@@ -1,5 +1,10 @@
 
 
+public/stylesheets/cyber_dojo.css could be with being converted to use sass.
+
+the various uses of eval in the code could do with being replaced with
+a json parse.
+
 The code to ensure cyberdojo.sh cleans up any processes it spawns
 could do with some attention. Instead of trying to find children by
 walking pid/ppid hierarchy it would be better to use pgid - process group.
