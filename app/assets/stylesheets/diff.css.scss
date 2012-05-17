@@ -46,17 +46,27 @@ pre.diffed_code same
 
 pre.diffed_code same ln { background: $background-color;  }
 
-.diff_dots { color: #383838; font-size: 0.7em; }
-
-.diff_dots.on:after  { content: '...'; }
-.diff_dots.off:after { content: '\00a0\00a0\00a0'; }
-
-.dot { display: inline-block; width: 9px; height: 9px; }
-.dot:after { content: "\00a0"; } /* non breaking space */
-
-.added.dot   { background: $diff-added-color;   border: 1px dotted Green;   }  
-.deleted.dot { background: $diff-deleted-color; border: 1px dotted $diff-deleted-color; }
-.spacer.dot  { background: $background-color;   border: 1px dotted $background-color;   }
-
 .invisible { display: none; } /* used to show/hide -+ lines */
 
+@mixin diff-added
+{
+  text-align:center;
+  margin: 0px;
+  padding: 3px;
+}
+
+.diff-added-line-count
+{
+  background: $diff-added-color;
+  color: $line-number-color;
+  border: 1px dotted darken($diff-added-color,30%);
+  @include diff-added;
+}
+
+.diff-deleted-line-count
+{
+  background: $diff-deleted-color;
+  color: $line-number-color;
+  border: 1px dotted darken($diff-deleted-color,10%);
+  @include diff-added;
+}

@@ -14,11 +14,3 @@ what languages are installed and to only offer those languages. But at the
 moment all the languages are being offered.
 
 The javascript tests need some TLC.
-
-the diff-view needs simplifying.
-Instead of varying number red/green squares with/without dots
-and the number lines added/deleted as a tool-top simply have
-o) the-number-of-deleted-lines one-red-square
-   to the left of the filename (if it has any deleted lines)
-o) the-number-of-added-lines   one-green-square
-   to the right of the filename (if it has any added lines)
