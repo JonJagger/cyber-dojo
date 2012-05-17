@@ -14,21 +14,26 @@
 
 #diff_sheet
 {
+  background: $light-background-color;
+  color: $main-color;
   margin: 0;
   padding: 0;
 }
 
 pre.diffed_code { margin: 0; padding: 0; }
 
-pre.diffed_code added,   #toggle_added_lines   { background: #CEF6CE; }
-pre.diffed_code deleted, #toggle_deleted_lines { background: #F6CECE; }
+$diff-added-color: #CEF6CE;
+$diff-deleted-color: #F6CECE;
+
+pre.diffed_code added,   #toggle_added_lines   { background: $diff-added-color; }
+pre.diffed_code deleted, #toggle_deleted_lines { background: $diff-deleted-color; }
 
 pre.diffed_code ln 
 {
   padding-left: 2px;
   margin-right: 3px;
   padding-right: 2px;
-  color: #B0B0B0;
+  color: $line-number-color;
   font-weight: normal;
   white-space: pre;
 }
@@ -36,7 +41,7 @@ pre.diffed_code ln
 pre.diffed_code same
 {
   color: $main-color;
-  background: Cornsilk;
+  background: $light-background-color;
 }
 
 pre.diffed_code same ln { background: $background-color;  }
@@ -49,9 +54,9 @@ pre.diffed_code same ln { background: $background-color;  }
 .dot { display: inline-block; width: 9px; height: 9px; }
 .dot:after { content: "\00a0"; } /* non breaking space */
 
-.added.dot   { background: #CEF6CE; border: 1px dotted Green; }  
-.deleted.dot { background: #F6CECE; border: 1px dotted #F00; }
-.spacer.dot  { background: #B2EFEF; border: 1px dotted #B2EFEF; }
+.added.dot   { background: $diff-added-color;   border: 1px dotted Green;   }  
+.deleted.dot { background: $diff-deleted-color; border: 1px dotted $diff-deleted-color; }
+.spacer.dot  { background: $background-color;   border: 1px dotted $background-color;   }
 
 .invisible { display: none; } /* used to show/hide -+ lines */
 

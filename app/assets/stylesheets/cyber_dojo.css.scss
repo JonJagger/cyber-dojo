@@ -1,4 +1,6 @@
 
+#cyber_dojo_page { color: $main-color; }
+
 body
 {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -32,14 +34,16 @@ h3 { font-size: 1.3em;  }
   border-top: 2px dotted White;
   border-left: 2px dotted White;
   
-  border-top: 3px solid Cornsilk;
-  border-left: 3px solid Cornsilk;
+  border-top: 3px solid $light-background-color;
+  border-left: 3px solid $light-background-color;
   
   border-right: none;
   border-bottom: none;
   margin: 0px;
   padding: 0.5em;  
 }
+
+.light_margin.panel { background: $light-background-color; }
 
 .small_text { font-size: 0.4em; }
 
@@ -49,6 +53,8 @@ input { font-size: 1.15em; }
 
 .button
 {
+  background: $light-background-color;
+  color: $main-color;
   font-size: 0.8em;
   cursor: pointer;
   padding: 2px 8px 2px 8px;
@@ -77,14 +83,17 @@ input { font-size: 1.15em; }
 
 #instructions
 {
+  background: $light-background-color;
+  border: 4px solid $light-background-color;
+  color: $main-color;
   overflow-y: auto;
   font-family: monospace;
   font-size: 16pt;
-  border: 4px solid Cornsilk;
 }
 
 .small_title
 {
+  color: $main-color;
   display: block;
   margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
   font-size: 1em;
@@ -108,8 +117,8 @@ input[id="help"] { margin-top: 0.5em; }
 
 $retained-space: "\00a0";
 
-div[class~="filename"]:before { content: retained-space;  }
-div[class~="filename"]:after  { content: retained-space;  } 
+div[class~="filename"]:before { content: $retained-space;  }
+div[class~="filename"]:after  { content: $retained-space;  } 
 
 div[class~="filename"]
 {
@@ -139,7 +148,13 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .filename_div { display: none; }
 
-.file_content { width: 45em; }
+.file_content
+{
+  background: $light-background-color;
+  color: $main-color;
+  width: 45em;
+  font-weight: 500; 
+}
 
 .line_numbers, .file_content { height: 28em; }
 
@@ -156,7 +171,8 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .line_numbers
 {
-  background: $background-color;  
+  background: $background-color;
+  color: $line-number-color;
   overflow: hidden;
   text-align: right;
   display: block;
@@ -168,30 +184,10 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-.file_content { font-weight: 500; }
-
-.info { font-size: 1.2em; }
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-/* Main Colour Scheme                                    */
-/* See also jQuery CSS'ing in                            */
-/*    cyberdojo-file_load_save.js radioEntrySwitch()     */
-/*    cyberdojo-build_diff_filenames.js                  */
-
-.line_numbers, pre.diffed_code ln
-{
-  color: #888;
-}
-
-#diff_sheet, #instructions, .file_content, .button, .light_margin.panel
-{
-  background: Cornsilk;
-}
-
-#cyber_dojo_page, #diff_sheet, #instructions,
-.file_content, .button, .info, .small_title
+.info
 {
   color: $main-color;
+  font-size: 1.2em;
 }
 
 

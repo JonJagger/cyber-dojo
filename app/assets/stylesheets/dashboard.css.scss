@@ -8,7 +8,7 @@
 }
 
 #traffic_lights .row td { padding: 0.05em; margin: 0; }
-#traffic_lights .row.odd td  { background: CornSilk; }
+#traffic_lights .row.odd td  { background: $light-background-color; }
 #traffic_lights .row.odd td.summary  { background: #B2EFEF; }
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
