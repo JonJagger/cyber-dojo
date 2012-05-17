@@ -10,7 +10,7 @@ $j(document).ready(function() {
   $j('#start_coding').click(function() {
     var id = $j('#kata_id_input').attr('value');
     if ($j.trim(id) === '') {
-      $cd.alert("<h3>Please enter an id</h3>", "");
+      $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
     } else {
       $cd.postTo('/dojo/start', { id: id }, '_blank');    
     }
@@ -67,7 +67,7 @@ function popup(name) {
 function run(method, func) {
   var id = $j('#kata_id_input').attr('value');
   if ($j.trim(id) === '') {
-    $cd.alert("<h3>Please enter an id</h3>", "");
+    $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
   } else {
     $j.getJSON('/dojo/' + method, { id: id }, function(data) {
       func(id, data);
@@ -109,7 +109,7 @@ function showDashboard(id, data) {
 }
 
 function cantFind(id) {
-  $cd.alert("<h3>Sorry but there is no practice with an id of </h3><h2>" + id + "</h2>", "");  
+  $cd.alert("cyber-dojo", "<h3>Sorry but there is no practice with an id of </h3><h2>" + id + "</h2>", "");  
 }
 
 //--></script>

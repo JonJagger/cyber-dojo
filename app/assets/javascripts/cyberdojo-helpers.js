@@ -47,6 +47,7 @@ var cyberDojo = (function($cd, $j) {
   };
 
   $cd.alert = function(avatar_name, message, title) {
+    var ext = avatar_name == "cyber-dojo" ? "png" : "jpg";
     var imageSize = 200;
     var imageHtml =
         '<img alt="' + avatar_name + '"'
@@ -54,7 +55,7 @@ var cyberDojo = (function($cd, $j) {
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar_name + '.jpg" title="' + avatar_name + '" />';
+      +     ' src="/images/avatars/' + avatar_name + '.'  + ext + '"' + ' title="' + avatar_name + '" />';
     var alertHtml = ''    
       + '<div class="panel">'
       +   $cd.makeTable(imageHtml, message)
