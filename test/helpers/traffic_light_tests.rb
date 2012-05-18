@@ -25,7 +25,7 @@ class TrafficLightTests < ActionController::TestCase
   
   test "tool tip" do
     inc_number = 2
-    assert_equal 'Open a diff page (2)', tool_tip(inc_number)
+    assert_equal 'Show the diff of traffic-light #2', tool_tip(inc_number)
   end
   
   def width

@@ -41,6 +41,15 @@ $j(document).ready(function() {
   });
   
   $j('body').css('background', 'Cornsilk');
+  
+  var ua = $j.browser;
+  if (ua.msie && ua.version.slice(0,3) === "6.0") {
+    $cd.alert(
+      "cyber-dojo",
+      "Sorry, Internet Explorer 6.0 is not supported",
+      "");
+  }
+  
 });
 
 

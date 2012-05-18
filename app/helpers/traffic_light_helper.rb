@@ -24,7 +24,7 @@ module TrafficLightHelper
   end
  
   def tool_tip(inc_number)
-    "Open a diff page (#{inc_number})"
+    "Show the diff of traffic-light ##{inc_number}"
   end
     
 end
