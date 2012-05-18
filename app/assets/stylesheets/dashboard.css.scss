@@ -1,0 +1,24 @@
+
+#seconds_per_column,
+#maximum_columns 
+{ 
+  font-size: 1em; 
+  width: 3em; 
+  text-align: center; 
+}
+
+#traffic_lights .row td { padding: 0.05em; margin: 0; }
+#traffic_lights .row.odd td  { background: $light-background-color; }
+#traffic_lights .row.odd td.summary  { background: #B2EFEF; }
+#traffic_lights .omission { font-size: 0.7em; color: Gray; }
+#traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
+#traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
+
+#traffic_lights .number, .traffic_light .number
+{
+  color: $main-color;
+  font-size: 1.4em;
+  text-align: center; /* for diff and dashboard */
+  display: block; /* for dashboard */
+}
+

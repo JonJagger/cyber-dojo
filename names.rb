@@ -49,13 +49,13 @@ end
 
 index = eval IO.popen('cat katas/index.rb').read
 show = (ARGV[0] || "32").to_i
-ids = recent(index, show).map{ |entry| entry[:id] }
-ids.each do |id|
+recent(index,show).each do |entry|
+  id = entry[:id]
   print "\n"
   begin
     show_one(id)
   rescue
-    print "Exception raised for ID:#{id}\n"
+    print "---->Exception raised for ID:#{id}, browser:#{entry[:browser]}\n"
   end
 end
 print "\n"

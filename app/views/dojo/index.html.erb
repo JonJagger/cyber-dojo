@@ -10,7 +10,7 @@ $j(document).ready(function() {
   $j('#start_coding').click(function() {
     var id = $j('#kata_id_input').attr('value');
     if ($j.trim(id) === '') {
-      $cd.alert("<h3>Please enter an id</h3>", "");
+      $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
     } else {
       $cd.postTo('/dojo/start', { id: id }, '_blank');    
     }
@@ -41,6 +41,15 @@ $j(document).ready(function() {
   });
   
   $j('body').css('background', 'Cornsilk');
+  
+  var ua = $j.browser;
+  if (ua.msie && ua.version.slice(0,3) === "6.0") {
+    $cd.alert(
+      "cyber-dojo",
+      "Sorry, Internet Explorer 6.0 is not supported",
+      "");
+  }
+  
 });
 
 
@@ -67,7 +76,7 @@ function popup(name) {
 function run(method, func) {
   var id = $j('#kata_id_input').attr('value');
   if ($j.trim(id) === '') {
-    $cd.alert("<h3>Please enter an id</h3>", "");
+    $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
   } else {
     $j.getJSON('/dojo/' + method, { id: id }, function(data) {
       func(id, data);
@@ -109,7 +118,7 @@ function showDashboard(id, data) {
 }
 
 function cantFind(id) {
-  $cd.alert("<h3>Sorry but there is no practice with an id of </h3><h2>" + id + "</h2>", "");  
+  $cd.alert("cyber-dojo", "<h3>Sorry but there is no practice with an id of </h3><h2>" + id + "</h2>", "");  
 }
 
 //--></script>
@@ -122,7 +131,7 @@ function cantFind(id) {
       <%= image_tag("/images/avatars/cyber-dojo.png",
           :border => 0,
           :size => "#{size}x#{size}",
-          :title => 'CyberDojo') -%>
+          :title => 'cyber-dojo') -%>
     </td>
     <td>
       &nbsp;&nbsp;
@@ -172,7 +181,7 @@ function cantFind(id) {
           </td>
         </tr>
         <tr>
-          <td>
+          <td>            
           </td>
           <td>
           </td>
@@ -185,8 +194,10 @@ function cantFind(id) {
           </td>
         </tr>
         <tr>
-          <td></td>
-          <td></td>
+          <td>
+          </td>
+          <td>
+          </td>
           <td>
             <input type="button"
                    class="large button"
@@ -208,11 +219,22 @@ function cantFind(id) {
       <% end -%>
     </td>
   </tr>
-  
+
   <tr>
-    <td style="font-size: 0.6em;">
-      Internet Explorer 6/7 support is mostly untested.
+    <td>
+      <table>
+        <tr>
+          <td>
+           <%= render :partial => 'donate' -%>
+          </td>
+          <td>
+            <span class="small_text">
+              All donations<br/>go towards<br/>cloud hosting.
+            </span>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>
-      
+        
 </table>

@@ -7,12 +7,15 @@
     <% n_added   = file[:added_line_count]   -%>
     <tr>
       <td align="right">
-        <%= diff_dots(n_deleted, 'deleted') -%>
-      </td>      
+        <% if n_deleted > 0 -%>
+          <div class="diff-deleted-line-count">
+            <%= n_deleted -%>
+          </div>
+        <% end -%>
+      </td>
       <td align="left">        
         <div class="filename"
-             id="<%= file[:id] -%>"
-             title="<%= diff_tip(n_deleted, n_added) -%>" >
+             id="<%= file[:id] -%>" >
           <input id="radio_<%=file[:id]-%>"
                  name="filename"
                  type="radio"
@@ -22,8 +25,12 @@
         </div>
       </td>    
       <td align="left">
-        <%= diff_dots(n_added, 'added') -%>
-      </td>    
+        <% if n_added > 0 -%>
+          <div class="diff-added-line-count">
+            <%= n_added -%>
+          </div>
+        <% end -%>
+      </td>
     </tr>
   <% end -%>
 </table>

@@ -13,20 +13,19 @@ Running your own VirtualBox TurnKey Linux CyberDojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
-...ADD URL WHEN IMAGE UPLOADED...   (817MB)
+http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova (817MB)
 This image supports 13 languages (C, C++, C#, Coffeescript, Erlang, Go, Haskell,
 Java, Javascript, Perl, PHP, Python, Ruby).
 Run the ova file in VirtualBox. Mike Long has written some instructions for this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
-The TurnKey image screen will tell you its IP address, eg 192.168.2.13
+The Virtual Box screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
-
 
 
 Pulling the latest github source onto your Turnkey server
 =========================================================
 Add port 12320 to the URL you put into your browser above, eg
-192.168.56.101:12320
+192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 Pull the latest CyberDojo source code from github onto your TurnKey image
@@ -182,7 +181,11 @@ Example: cyberdojo/languages/Java/manifest.rb looks like this:
 
 The intention is to use a specific structure for the contents of the
 manifests to enable an automated check to see what is correctly installed
-and working... For each language...
+and working, and to only offer installed and working languages when you
+configure a new practice-kata. However at the moment when you configure a
+new practice-kata all language/ subfolders are offered.
+
+For each language...
 o) CyberDojo searches through its manifests' :visible_filenames,
    in sequence, looking for any that contain the string '42'
 o) If it doesn't find any it will not offer that language when

@@ -1,0 +1,192 @@
+
+#cyber_dojo_page { color: $main-color; }
+
+body
+{
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  padding: 0;
+  margin: 0;
+  margin-top: 0.5em;
+  background: $background-color;  
+}
+
+h1, h2, h3, h4
+{
+  color: $main-color;
+  text-align: center;
+  margin: 0;
+}
+h1 { font-size: 3.0em; }
+h2 { font-size: 2.0em;  }
+h3 { font-size: 1.3em;  }
+
+.avatar_image
+{
+  margin: 0.1em;
+  cursor: pointer;
+}
+
+.panel
+{
+  background: $background-color;
+  color: $main-color;  
+  
+  border-top: 2px solid $light-background-color;
+  border-left: 2px solid $light-background-color;
+  border-right: none;
+  border-bottom: none;
+  
+  margin: 0px;
+  padding: 0.5em;  
+}
+
+.light_margin.panel { background: $light-background-color; }
+
+.small_text { font-size: 0.4em; }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+input { font-size: 1.15em; }
+
+.button
+{
+  background: $light-background-color;
+  color: $main-color;
+  font-size: 0.8em;
+  cursor: pointer;
+  padding: 2px 8px 2px 8px;
+  text-decoration: none;
+  font-weight: normal;
+  border: none;
+}
+
+.small.button
+{
+  font-size: 1.1em;
+  padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */
+}
+
+.large.button { font-size: 1.35em; }
+.larger.button { font-size: 1.85em; }
+
+.button[disabled]
+{
+  cursor: default;
+  background: LightGray;
+  color: Gray;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#instructions
+{
+  background: $light-background-color;
+  border: 4px solid $light-background-color;
+  color: $main-color;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 16pt;
+}
+
+.small_title
+{
+  color: $main-color;
+  display: block;
+  margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
+  font-size: 1em;
+}
+
+.choose_title { font-size: 1.9em; }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+input+label { cursor: pointer; }
+
+input[id="radio_output"]+label, /* from edit-page */
+input[value="output"]+label     /* from diff-page */
+{
+  font-style: italic;
+}
+
+input[id="help"] { margin-top: 0.5em; }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+$retained-space: "\00a0";
+
+div[class~="filename"]:before { content: $retained-space;  }
+div[class~="filename"]:after  { content: $retained-space;  } 
+
+div[class~="filename"]
+{
+  color: #777;
+  margin: 0.25em;
+  font-size: 17pt;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+$bottom-right-edge: #A8A8A8;
+$bottom-right-edge-highlight: #555555;
+
+div[class~="filename"]:hover, .button:hover
+{
+  border-bottom: 1px solid $bottom-right-edge-highlight;
+  border-right:  1px solid $bottom-right-edge-highlight;   
+}
+
+div[class~="filename"], .button[disabled]:hover, .button
+{
+  border-bottom: 1px solid $bottom-right-edge;
+  border-right:  1px solid $bottom-right-edge;   
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.filename_div { display: none; }
+
+.file_content
+{
+  background: $light-background-color;
+  color: $main-color;
+  width: 45em;
+  font-weight: 500; 
+}
+
+.line_numbers, .file_content { height: 28em; }
+
+.line_numbers, #diff_sheet, .file_content
+{
+  font-family: monospace;
+  font-size: 17pt;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  padding-left: 2px;
+}
+
+.line_numbers
+{
+  background: $background-color;
+  color: $line-number-color;
+  overflow: hidden;
+  text-align: right;
+  display: block;
+  font-weight: normal;
+  padding-right: 2px;
+  width: 2em;
+  font-weight: 100;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.info
+{
+  color: $main-color;
+  font-size: 1.2em;
+}
+
+
+
+
