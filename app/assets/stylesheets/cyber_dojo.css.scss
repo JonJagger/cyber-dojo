@@ -96,13 +96,10 @@ input { font-size: 1.15em; }
   font-size: 1em;
 }
 
-$retained-space: "\00a0";
-
 .choose_title
 {
-  font-size: 2.0em;
+  font-size: 1.2em;
   font-weight: bold;
-  &:before { content: $retained-space; }
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -118,6 +115,8 @@ input[value="output"]+label     /* from diff-page */
 input[id="help"] { margin-top: 0.5em; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+$retained-space: "\00a0";
 
 div[class~="filename"]:before { content: $retained-space;  }
 div[class~="filename"]:after  { content: $retained-space;  } 

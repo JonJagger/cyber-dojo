@@ -20,19 +20,17 @@ $j(document).ready(function() {
 
 //--></script>
 
-<table>
+<table style="font-size: 2em;">
   <tr>
-    <td colspan="2">
-      <input id="create_button" 
-             class="larger button"
-             type="button" 
-             value="create" 
-             name="create" />      
-      <input id="cancel_button" 
-             class="larger button"
-             type="button" 
-             value="cancel" 
-             name="cancel" />
+    <td class="panel" colspan="2">
+      <input type="button"
+             class="large button"
+             id="create_button" 
+             value="create" />      
+      <input type="button"
+             class="large button"
+             id="cancel_button" 
+             value="cancel" />
     </td>
     <td class="light_margin panel" valign="top" rowspan="2">
       <%= render :partial => 'instructions' -%>      
