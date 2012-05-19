@@ -102,11 +102,11 @@ JavaScript Runtime        therubyracer (V8)
 Installing Languages
 ====================
 The base rails3 image is available here (417MB)
-....ADD URL WHEN IMAGE UPLOADED...
+http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.base.ova
 (see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
-for details on how I built it) and has built-in support for C, C++,
+for details on how I built it) and supports for C, C++,
 Python, Perl and Ruby. I installed the other 8 languages onto this baseline
-rails 3 image as follows...
+rails 3 image (to create the larger 817MB ova file above) as follows...
 
 #apt-get update
 -----Java (125MB)
