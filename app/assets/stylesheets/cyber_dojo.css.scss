@@ -83,7 +83,7 @@ input { font-size: 1.15em; }
   background: $light-background-color;
   border: 4px solid $light-background-color;
   color: $main-color;
-  soverflow-y: auto;
+  overflow-y: auto;
   font-family: monospace;
   font-size: 16pt;
 }
@@ -135,14 +135,14 @@ $bottom-right-edge-highlight: #555555;
 
 div[class~="filename"]:hover, .button:hover
 {
-  border-bottom: 1px solid $bottom-right-edge-highlight;
-  border-right:  1px solid $bottom-right-edge-highlight;   
+  border-bottom: 2px solid $bottom-right-edge-highlight;
+  border-right:  2px solid $bottom-right-edge-highlight;   
 }
 
 div[class~="filename"], .button[disabled]:hover, .button
 {
-  border-bottom: 1px solid $bottom-right-edge;
-  border-right:  1px solid $bottom-right-edge;   
+  border-bottom: 2px solid $bottom-right-edge;
+  border-right:  2px solid $bottom-right-edge;   
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
