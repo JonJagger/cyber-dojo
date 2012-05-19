@@ -1,0 +1,15 @@
+
+<textarea name="instructions" 
+          id="instructions"
+          cols="62" 
+          rows="26">              
+</textarea>
+
+<% @exercises.each_with_index do |choice,index| -%>
+   <textarea style="display:none;" 
+             name="instructions_<%=index-%>"
+             id="instructions_<%=index-%>"><%=h @instructions[choice] -%></textarea>
+<% end -%>      
+
+
+

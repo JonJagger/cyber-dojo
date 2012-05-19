@@ -1,45 +1,51 @@
 
-<table align="center">
-  <tr>
-    <td>
-      <% size = 80 -%>
-      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-            :border => 0,
-            :size => "#{size}x#{size}",
-            :title => 'Home page'),
-            {
-              :controller => :dojo,
-              :action => :index
-            }
-      %>
-    </td>
-    <td>
-      &nbsp;&nbsp;
-    </td>
-    <td>
-      <h1>
-      create a new coding practice
-      </h1>
-    </td>
-  </tr>
-</table>
+<script language="JavaScript"
+        type="text/javascript"><!--
 
-<table align="center">
+$j(document).ready(function() {
+  
+  $j('#create_button').click(function() {
+    $cd.postTo('/dojo/save', {
+      name: "no-name",
+      exercise: $j('input[name="exercise"]:checked').val(),
+      language: $j('input[name="language"]:checked').val()
+    });    
+  });
+  
+  $j('#cancel_button').click(function() {
+    $cd.postTo('/dojo/index');
+  });
+  
+});
+
+//--></script>
+
+<table>
   <tr>
-    <td>
-      <%= render :partial => 'name_save_cancel' -%>      
-    </td>      
+    <td colspan="2">
+      <input id="create_button" 
+             class="larger button"
+             type="button" 
+             value="create" 
+             name="create" />      
+      <input id="cancel_button" 
+             class="larger button"
+             type="button" 
+             value="cancel" 
+             name="cancel" />
+    </td>
+    <td class="light_margin panel" valign="top" rowspan="2">
+      <%= render :partial => 'instructions' -%>      
+    </td>              
   </tr>
   
   <tr>
-    <td>
-      <table>
-        <tr>    
-            <%= render :partial => 'choose_language' -%>      
-            <%= render :partial => 'choose_exercise' -%>      
-        </tr>
-      </table>
-    </td>              
+    <td class="panel" valign="top">
+      <%= render :partial => 'choose_language' -%>      
+    </td>
+    <td class="panel" valign="top">
+      <%= render :partial => 'choose_exercise' -%>      
+    </td>
   </tr>
 </table>
 

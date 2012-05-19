@@ -89,7 +89,7 @@ var cyberDojo = (function($cd, $j) {
       +         ' name="filename' + filename + '"'
       +         ' checked="checked"'
       +         ' value="filename"/>'
-      +   '<label>' + '&nbsp;' + filename + '</label>'
+      +   '<label>' + filename + '</label>'
       + '</div>');
   };
   
