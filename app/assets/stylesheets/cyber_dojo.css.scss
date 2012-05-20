@@ -1,9 +1,5 @@
 
-/* I'm not using mixin this because it doesn't work on the cyber-dojo server */
-/* It's fine on my mac dev machine localhost using thin */
-/* but on the turnkey server under apache2 - no */
-
-@mixin rounded-corner($radius)
+@mixin rounded-corner($radius: 6px)
 {
   -moz-border-radius: $radius;
   -webkit-border-radius: $radius;
@@ -68,11 +64,7 @@ input { font-size: 1.15em; }
   text-decoration: none;
   font-weight: normal;
   border: none;
-
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  border-radius: 6px;
+  @include rounded-corner;
 }
 
 .small.button
@@ -144,11 +136,7 @@ div[class~="filename"]
   font-size: 17pt;
   cursor: pointer;
   white-space: nowrap;
-  
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
-  -khtml-border-radius: 6px;
-  border-radius: 6px;  
+  @include rounded-corner;
 }
 
 $bottom-right-edge: #A8A8A8;
