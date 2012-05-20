@@ -38,7 +38,7 @@ def show_one(id)
   end
   
   print created.strftime('%b %d %H:%M') + 
-    ' ' + inner_dir + '/' + outer_dir + 
+    ' ' + inner_dir + outer_dir + 
     ' ' + '{' + name_or_diff_from(manifest) + '}, ' +
     ' ' + manifest[:language] + ', ' +
     ' ' + manifest[:exercise] + ', ' +
