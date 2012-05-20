@@ -46,6 +46,14 @@ h3 { font-size: 1.3em;  }
 
 input { font-size: 1.15em; }
 
+@mixin rounded-corner($radius: 6px)
+{
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -khtml-border-radius: $radius;
+  border-radius: $radius;  
+}
+
 .button
 {
   background: $light-background-color;
@@ -56,6 +64,7 @@ input { font-size: 1.15em; }
   text-decoration: none;
   font-weight: normal;
   border: none;
+  @include rounded-corner;
 }
 
 .small.button
@@ -128,6 +137,7 @@ div[class~="filename"]
   font-size: 17pt;
   cursor: pointer;
   white-space: nowrap;
+  @include rounded-corner;
 }
 
 $bottom-right-edge: #A8A8A8;
@@ -157,7 +167,7 @@ div[class~="filename"], .button[disabled]:hover, .button
   font-weight: 500; 
 }
 
-.line_numbers, .file_content { height: 28em; }
+.line_numbers, .file_content { height: 27em; }
 
 .line_numbers, #diff_sheet, .file_content
 {
