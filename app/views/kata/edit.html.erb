@@ -26,7 +26,10 @@ $j(document).ready(function() {
   $cd.bindAllLineNumbers();
   $cd.rebuildFilenameList();
   $cd.loadFile(filenames[$cd.rand(max)]);
-  $cd.welcome("<%=@avatar.name-%>");
+  
+  if (<%= @avatar.increments.length-%> == 0) {
+    $cd.welcome("<%=@avatar.name-%>");
+  }
 
   $j('form').bind('ajax:before', function(evt, data, status, xhr){
     $cd.preRunTests();

@@ -15,7 +15,7 @@ page). But at the moment all the languages are being offered.
 
 The javascript tests need some TLC.
 
-The error handling at the front page is a bit mesy. You get different
+The error handling at the front page is a bit messy. You get different
 style popups if you enter a wrong ID compared to entering no ID.
 And you also get different style popup for a wrong ID when you
 click start-coding compared to resume-coding or review-coding.
