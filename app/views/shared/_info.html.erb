@@ -1,21 +1,15 @@
 
-<span title="Coding-practice ID: <%=@kata.id-%>">
+<span title="language: <%=@kata.language.name-%>">
+<%= @kata.language.name -%></span><br/>
+<span title="exercise: <%=@kata.exercise.name-%>">
+<%= @kata.exercise.name -%></span><br/>
+<span title="id: <%=@kata.id-%>">
   <%= @kata.id -%>
 </span><br/>
-&bull;&nbsp;<span title="Coding-practice language: <%=@kata.language.name-%>">
-<%= @kata.language.name -%></span><br/>
-&bull;&nbsp;<span title="Coding-practice exercise: <%=@kata.exercise.name-%>">
-<%= @kata.exercise.name -%></span><br/>
-&bull;&nbsp;
 <% if @kata.diff -%>
 <a href="/diff/show/<%=@kata.diff.id-%>?avatar=<%=@kata.diff.avatar-%>&tag=<%=@kata.diff.tag-%>"
    title="This coding-practice was forked from a traffic-light diff"
    target="_blank">
 <%= @kata.diff.id -%>-<%= @kata.diff.avatar -%>-<%= @kata.diff.tag -%>
 </a>
-<% else -%>
-<span title="Coding-practice name: <%=@kata.name-%>">
-  <%= @kata.name -%>
-</span>
 <% end -%>
-<br/>  

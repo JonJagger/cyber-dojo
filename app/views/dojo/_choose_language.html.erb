@@ -27,16 +27,16 @@ $j(document).ready(function() {
 
 //--></script>
 
-<td class="panel" valign="top">
-  <div class="choose_title">language?</div>
+<div class="choose_title">
+ language?
+</div>
 
-  <% @languages.each_with_index do |choice,index| -%>
-    <div class="filename" >
-      <input id="language_<%=index-%>" 
-             type="radio"
-             name="language" 
-             value="<%=choice-%>" />
-      <label><%= choice -%></label>
-    </div>    
-  <% end -%>    
-</td>
+<% @languages.each_with_index do |choice,index| -%>
+  <div class="filename" >
+    <input id="language_<%=index-%>" 
+           type="radio"
+           name="language" 
+           value="<%=choice-%>" />
+    <label><%= choice -%></label>
+  </div>    
+<% end -%>    

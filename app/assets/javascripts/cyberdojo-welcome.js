@@ -11,7 +11,7 @@ var cyberDojo = (function($cd, $j) {
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
       +     ' src="/images/avatars/' + avatar + '.jpg" title="' + avatar + '" />';
-    var imageLabel = '<span style="font-size: 1.4em;">' + avatar + "'s" + '</span>  code';
+    var imageLabel = '<span style="font-size: 1.2em;">' + avatar + '</span>';
     var avatarImage =
         '<table>'
       +   '<tr><td>' + imageHtml + '</td></tr>'
@@ -24,8 +24,8 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +   $cd.makeTable(avatarImage,
               '<ul>'
-            +   makeBigSpanLi("think about improving,<br/>not finishing<br/>")
-            +   makeBigSpanLi('you are practising,<br/>not competing<br/><br/>')
+            +   makeBigSpanLi("think about improving<br/>not finishing<br/>")
+            +   makeBigSpanLi('you are practising<br/>not competing<br/><br/>')
             + '</ul>'
             )
       + '</div>';

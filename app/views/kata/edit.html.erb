@@ -26,7 +26,10 @@ $j(document).ready(function() {
   $cd.bindAllLineNumbers();
   $cd.rebuildFilenameList();
   $cd.loadFile(filenames[$cd.rand(max)]);
-  $cd.welcome("<%=@avatar.name-%>");
+  
+  if (<%= @avatar.increments.length-%> == 0) {
+    $cd.welcome("<%=@avatar.name-%>");
+  }
 
   $j('form').bind('ajax:before', function(evt, data, status, xhr){
     $cd.preRunTests();
@@ -63,11 +66,11 @@ $j(document).ready(function() {
           <br/>
           <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'current_filename' -%>
-          <br/>
         </div>
         <div class="info panel">
           <%= render :partial => 'shared/info' -%>
-          <br/>
+        </div>
+        <div class="panel">
           <%= render :partial => 'help' -%>
         </div>
       </td>
