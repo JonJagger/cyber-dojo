@@ -4,9 +4,9 @@
 ===========================================================
 CyberDojo clients have full rights on the CyberDojo server. If you 
 setup your own server you are strongly advised to consider using
-o) a dedicated server
+o) a dedicated server.
 o) a virtual box.
-o) a dedicated network segment
+o) a dedicated network segment.
 
 
 Running your own VirtualBox TurnKey Linux CyberDojo server
