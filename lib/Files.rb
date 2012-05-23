@@ -65,7 +65,7 @@ module Files
   end
   
   def self.kill(pids)
-    return if pids == []
+    return if pids == [ ]
     begin
       `kill #{pids.join(' ')}`
     rescue

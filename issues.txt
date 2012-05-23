@@ -1,10 +1,22 @@
 
+MAJOR
+-----
+Ensuring cyberdojo.sh cleans up any processes it spawns does not
+always work. Instead of trying to find children by walking
+pid/ppid hierarchy it would be better to use pgid - process group.
+See lib/Files.rb
+
+There is an error somewhere in the code for the server picking an
+animal for you when you first start. As a result sometimes the animal
+the server chooses becomes unavailable. So you can easily end up only
+haveing 12/16 animals actually available in a dojo.
+See lib/Locking.rb
+
+
+MINOR
+-----
 the various uses of eval in the code could do with being replaced with
 a json parse.
-
-The code to ensure cyberdojo.sh cleans up any processes it spawns
-could do with some attention. Instead of trying to find children by
-walking pid/ppid hierarchy it would be better to use pgid - process group.
 
 now that the ruby code is 1.9.3 it should be possible to get coverage
 stats from the ruby tests.
