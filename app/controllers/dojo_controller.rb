@@ -47,6 +47,9 @@ class DojoController < ApplicationController
   #------------------------------------------------
     
   def diff_save
+    kata = Kata.new(root_dir, params['id'])
+    params['language'] = kata.language.name
+    params['exercise'] = kata.exercise.name
     info = save_to_index
     info[:diff_id] = params['id']
     info[:diff_language] = params['language']
@@ -190,7 +193,7 @@ class DojoController < ApplicationController
       :exercise => params['exercise']
     }
     
-    info[:name]= params['name'] if params['name']
+    info[:name] = params['name'] if params['name']
     
     Locking::io_lock(katas_root_dir) do    
       index_filename = katas_root_dir + '/' + Kata::Index_filename

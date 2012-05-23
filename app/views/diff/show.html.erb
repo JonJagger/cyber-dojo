@@ -8,8 +8,6 @@ $j(document).ready(function() {
   $j('#start_a_kata_from_here').click(function() {
       $cd.postTo('/dojo/diff_save', {
         id: "<%= @kata.id -%>",
-        language: "<%= @kata.language.name -%>",
-        exercise: "<%= @kata.exercise.name -%>",
         avatar: "<%= @avatar.name -%>",
         tag: "<%= @traffic_lights_to_tag.length -%>"
       }, '_blank');
