@@ -34,7 +34,7 @@ $j(document).ready(function() {
     });
   });
   
-  $j.each(['about', 'basics', 'faqs', 'links', 'tips', 'why' ], function(i,name) {
+  $j.each(['about', 'basics', 'dashboard', 'faqs', 'links', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
       popup(name);
     });
@@ -60,7 +60,7 @@ function popup(name) {
       .html('<div style="font-size: 1.2em;">' + grid.html() + '</div>')    
       .dialog({
         autoOpen: false,
-        width: (name === 'why' ? 1100 : 650),
+        width: (name === 'why' ? 1100 : 850),
         title: '<h1>' + name + '</h1>',
         modal: true,
         buttons: {
@@ -162,11 +162,14 @@ function cantFind(id) {
   <tr>
     <td class="panel">
       <span class="plain_text">
-        on <em>each</em> computer enter your coding-practice id<br/>
+        on <em>each</em> computer enter your coding-practice<br/>
       </span>
       <table>
         <tr>
          <td>
+          <span class="plain_text">
+            &nbsp;id
+          </span>
             <input type="text"
                    id="kata_id_input"
                    size="15"
@@ -211,7 +214,7 @@ function cantFind(id) {
             <input type="button"
                    class="large button"
                    id="show_dashboard"
-                   value="review-coding" />
+                   value="view-dashboard" />
           </td>
         </tr>          
       </table>
@@ -220,7 +223,7 @@ function cantFind(id) {
 
   <tr>
     <td class="panel">
-      <% [ 'about', 'basics', 'faqs', 'links', 'tips', 'why' ].each do |name| -%>
+      <% [ 'about', 'basics', 'dashboard', 'faqs', 'links', 'tips', 'why' ].each do |name| -%>
         <input type="button"
                class="button"
                id="<%=name-%>"
