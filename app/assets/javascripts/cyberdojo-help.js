@@ -30,9 +30,6 @@ var cyberDojo = (function($cd, $j) {
     };
     var space = '&nbsp;';
     var spaces = Array.prototype.join.call({length:4}, space);
-    var coloured = function(property, color) {
-      return  '<span class="' + property + '">' + space + color + space + '</span>';
-    };
     var welcomeHtml = ''      
       + '<table>'
       +   '<tr>'
@@ -65,9 +62,9 @@ var cyberDojo = (function($cd, $j) {
       + ''
       + '<div class="panel">'
       +   $cd.makeTable(tdTrafficLights(),
-            '&nbsp;red means the tests ran but one or more failed' + br +
-            '&nbsp;amber means the tests could not be run' + br +
-            '&nbsp;green means the tests ran and all passed')
+            space + 'red means the tests ran but one or more failed' + br +
+            space + 'amber means the tests could not be run' + br +
+            space + 'green means the tests ran and all passed')
       + '</div>'
       + ''      
       + '<div class="panel">'
@@ -77,6 +74,11 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +    space + '<b>alt-t</b> runs the <b><u>t</u></b>ests' + br 
       +    space + '<b>alt-f</b> cycles through the <b><u>f</u></b>iles'
+      + '</div>'
+      + ''
+      + '<div class="panel">'
+      +   space + 'think about improving, not finishing' + br
+      +   space + 'you are practising, not competing'
       + '</div>';
                           
     var help = $j('<div>')
