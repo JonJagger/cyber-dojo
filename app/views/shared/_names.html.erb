@@ -1,7 +1,6 @@
 
 <td style="text-align: left;">
-  <div><%= elided_name(@kata.name, 15) -%></div>
   <div><%= @kata.language -%></div>
-  <div><%= @kata.exercise -%></div>
+  <div><%= @kata.exercise.gsub('_', ' ') -%></div>
 </td>      
 

@@ -40,7 +40,7 @@ $j(document).ready(function() {
              type="radio"
              name="exercise" 
              value="<%=choice-%>" />
-      <label><%= choice -%></label>
+      <label><%= choice.gsub("_", " ") -%></label>
     </div>    
   <% end -%>
 </div>

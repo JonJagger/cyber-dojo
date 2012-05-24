@@ -2,7 +2,7 @@
 <span title="language: <%=@kata.language.name-%>">
 <%= @kata.language.name -%></span><br/>
 <span title="exercise: <%=@kata.exercise.name-%>">
-<%= @kata.exercise.name -%></span><br/>
+<%= @kata.exercise.name.gsub('_', ' ') -%></span><br/>
 <span title="id: <%=@kata.id-%>">
   <%= @kata.id -%>
 </span><br/>
