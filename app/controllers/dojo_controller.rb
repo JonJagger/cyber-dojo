@@ -12,7 +12,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def index
-    @title = 'Home'
+    @title = 'home'
     @id = id
   end
    
@@ -25,7 +25,7 @@ class DojoController < ApplicationController
     @exercises.each do |exercise|
       @instructions[exercise] = Exercise.new(root_dir, exercise).instructions
     end
-    @title = 'new-practice'
+    @title = 'configure'
   end
     
   #------------------------------------------------
