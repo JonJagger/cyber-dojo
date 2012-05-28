@@ -51,15 +51,16 @@ $j(function() {
       </div>
         
     </td>
+    
     <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
-
-    <td class="panel">
-      <%= render :partial => 'seconds_per_column' -%>      
-    </td>
-    <td class="panel">
-      <%= render :partial => 'maximum_columns' -%>
-    </td>
-  <% end %>
+      <td class="panel">
+        <%= render :partial => 'seconds_per_column' -%>      
+      </td>
+      <td class="panel">
+        <%= render :partial => 'maximum_columns' -%>
+      </td>
+    <% end %>
+    
   </tr>
 </table>
 

@@ -2,8 +2,7 @@
 
 module Locking
 
-  # io locking uses non-blocking call and currently
-  # everything calls io_lock to lock. This is not right.
+  # io locking uses blocking call.
   # For example, when a player is start-coding then
   # the controller needs to wait to acquire a lock on
   # the dojo folder before choosing an avatar.
@@ -12,7 +11,7 @@ module Locking
   def self.io_lock(path, &block)
     result = nil
     File.open(path, 'r') do |fd|
-      mode = File::LOCK_EX | File::LOCK_NB
+      mode = File::LOCK_EX   # | File::LOCK_NB
       if fd.flock(mode)
         begin
           result = block.call(fd)

@@ -34,15 +34,24 @@ class IoLockTests < ActionController::TestCase
     end
   end
   
-  test "inner_iolock_does_not_block_but_returns_false_if_lock_fails" do
+  test "outer_iolock_is_blocking_so_inner_iolock_blocks" do
     filename = 'exists.txt'
     Files::file_write(filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
     Locking::io_lock(filename) do
       outer_run = true
-      Locking::io_lock(filename) do
-        inner_run = true
+      
+      inner_thread = Thread.new {
+        Locking::io_lock(filename) do
+          inner_run = true
+        end
+      }
+      max_seconds = 2
+      result = inner_thread.join(max_seconds);
+      timed_out = (result == nil)
+      if inner_thread != nil
+        Thread.kill(inner_thread)
       end
     end
     assert outer_run
