@@ -116,7 +116,6 @@ var cyberDojo = (function($cd, $j) {
     var td1 = $j('<td>');
     var lines = $j('<textarea>', {
       'class': 'line_numbers',
-      name: filename + '_line_numbers',
       id: filename + '_line_numbers'
     });
     var td2 = $j('<td>');
