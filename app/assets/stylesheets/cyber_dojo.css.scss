@@ -133,7 +133,7 @@ div[class~="filename"]:after  { content: $retained-space;  }
 
 div[class~="filename"]
 {
-  color: #777;
+  color: $line-number-color;
   margin: 0.25em;
   font-size: 17pt;
   cursor: pointer;
