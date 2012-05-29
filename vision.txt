@@ -18,12 +18,6 @@ I'd like the entire session to be viewable as a single stand-alone html file.
 I'd also like a small control which automatically scrolls the diff-view of
 the selected file to the next -red+green diff-section.
 
-Branching from any traffic light
---------------------------------
-I want a button which starts a new kata (without creating a new named starting 
-fileset) from the state of the files at that traffic light. This will allow you 
-to create a new exploratory "branch" for any new variations. 
-
 
 Creating new kata filesets
 --------------------------
@@ -32,10 +26,6 @@ to become a new named starting fileset. This would be a good way to create
 a "flying start" for a kata. So I want a button to automatically create a 
 new named fileset starting point from the state of the current files.
 
-Reliable Servers
-----------------
-http://www.cyber-dojo.com has an unreliable connection to the internet and sometimes
-goes down. I would like to host the server on a cloud provider, eg via Amazon.
 
 Federated CyberDojos 
 --------------------
