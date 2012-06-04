@@ -1,6 +1,8 @@
+# A ruby script to display details about recent katas
+#
 # ruby names.rb
-# >June 19 15:17 CA/CFEFD714 php-caret [4,9,13] -> 26 
-# >June 29 19:05 F6/89352E7A dojo-name [0,1,3] -> 4
+# >June 19 15:17 CACFEFD714 ... [4,9,13] -> 26 ...
+# >June 29 19:05 F689352E7A ... [0,1,3] -> 4 ...
 # Columns are: Date, Time, Folder, Name, Language, Exercise
 #             [Increments per avatar], Total Number of Increments, Browser
 

@@ -6,12 +6,7 @@ always work. Instead of trying to find children by walking
 pid/ppid hierarchy it would be better to use pgid - process group.
 See lib/Files.rb
 
-There is an error somewhere in the code for the server picking an
-animal for you when you first start. As a result sometimes the animal
-the server chooses becomes unavailable. So you can easily end up only
-haveing 12/16 animals actually available in a dojo.
-See lib/Locking.rb
-
+The Diff view doesn't work properly in IE8.
 
 MINOR
 -----

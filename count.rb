@@ -1,6 +1,9 @@
+# A ruby script to display the count of katas per day
+#
 # ruby count.rb
-# [2012, 5,17, "Tue"] 4
-# [2012, 5,18, "Wed"] 6
+# [2012,5,17, "Tue"] 14
+# [2012,5,18, "Wed"] 26
+# [2012,5,19, "Thu"] 32
 
 def recent(array, max_length)
   len = [array.length, max_length].min

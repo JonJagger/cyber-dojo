@@ -13,3 +13,12 @@ E       E
   C   C
    B B
     A
+
+For example: print-diamond 'C' prints
+
+  A
+ B B
+C   C
+ B B
+  C
+  
