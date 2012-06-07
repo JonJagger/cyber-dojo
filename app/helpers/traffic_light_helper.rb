@@ -11,20 +11,24 @@ module TrafficLightHelper
         :avatar => avatar_name,
         :tag => inc[:number] 
     }, 
-    { :title => tool_tip(inc[:number]),
+    { :title => tool_tip(inc),
     }.merge(new_window)
   end
   
   def unlinked_traffic_light(inc)
     bulb = inc[:outcome].to_s
-    ("<img src='/images/traffic-light-#{bulb}.png'" +
+    ("<span title='#{at(inc)}'><img src='/images/traffic-light-#{bulb}.png'" +
       " border='0'" +
       " width='26'" +
-      " height='78'/>").html_safe
+      " height='78'/></span>").html_safe
   end
  
-  def tool_tip(inc_number)
-    "Show the diff of traffic-light ##{inc_number}"
+  def tool_tip(inc)
+    "Show the diff of traffic-light ##{inc[:number]} (#{at(inc)})"
   end
     
+  def at(inc)
+    Time.mktime(*inc[:time]).strftime("%Y %b %-d, %H:%M:%S")    
+  end
+  
 end
