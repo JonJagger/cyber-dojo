@@ -44,7 +44,6 @@ And don't forget to reboot apache
 Configuring a practice-kata
 ===========================
 The server will ask you to choose
-o) a name for your session
 o) your language (eg C++)
    Each language corresponds to a sub-directory of cyberdojo/languages/
    (see below)
@@ -53,8 +52,8 @@ o) your exercise (eg Prime Factors)
    (see below)
 
 
-Entering a practice-kata
-========================
+Entering a practice-kata (Start Coding)
+=======================================
 The server will assign you an animal 'avatar' (eg Panda).
 The animal provides identity for each codebase.
 You can resume coding at any time by choosing the animal. 
@@ -73,9 +72,9 @@ The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind.
 
 
-Dashboard
-=========
-Shows a periodically updating display of all traffic lights for 
+View-Dashboard
+==============
+The dashboard shows a periodically updating display of all traffic lights for 
 all the computers in the practice-kata.
 If you want to collapse the horizontal time gaps simply enter
 a very large value for the seconds_per_column value.
