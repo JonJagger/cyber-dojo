@@ -4,7 +4,7 @@ module TrafficLightHelper
   def linked_traffic_light(kata, avatar_name, inc, in_new_window)
     new_window = in_new_window ? { :target => '_blank' } : { }
     
-    link_to unlinked_traffic_light(inc), 
+    link_to untitled_unlinked_traffic_light(inc), 
     {   :controller => :diff, 
         :action => :show,
         :id => kata.id,
@@ -15,12 +15,19 @@ module TrafficLightHelper
     }.merge(new_window)
   end
   
-  def unlinked_traffic_light(inc)
+  def untitled_unlinked_traffic_light(inc)
     bulb = inc[:outcome].to_s
-    ("<span title='#{at(inc)}'><img src='/images/traffic-light-#{bulb}.png'" +
+    ("<img src='/images/traffic-light-#{bulb}.png'" +
       " border='0'" +
       " width='26'" +
-      " height='78'/></span>").html_safe
+      " height='78'/>").html_safe    
+  end
+  
+  def unlinked_traffic_light(inc)
+    bulb = inc[:outcome].to_s
+    ("<span title='#{at(inc)}'>" +
+     untitled_unlinked_traffic_light(inc) +
+     "</span>").html_safe
   end
  
   def tool_tip(inc)
