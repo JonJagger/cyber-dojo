@@ -19,6 +19,14 @@
   color: $main-color;
   font-size: 1.4em;
   text-align: center; /* for diff and dashboard */
-  display: block; /* for dashboard */
 }
 
+.micro_number
+{
+  background-color: LightGrey;
+  font-size: 0.8em;
+  padding: 0.3em;
+}
+.micro_number .red   { padding-bottom: 0.6em; color: Red;    }
+.micro_number .amber { color: Yellow; }
+.micro_number .green { padding-top: 0.6em; color: Green;  }

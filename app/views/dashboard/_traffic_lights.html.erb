@@ -72,7 +72,17 @@
              &nbsp;<%= avatar_name -%>&nbsp;
            </span>
          </td>
-                
+                                   
+        <td class="summary">
+          <div class="micro_number">
+            <% [:red,:amber,:green].each do |bulb| -%>
+            <div class="<%=bulb-%>">
+              <%= all_lights[avatar_name].select{|light| light[:outcome]==bulb}.length -%>
+            </div>       
+            <% end -%>
+          </div>
+         </td>
+         
          <td class="summary">
            <%  in_new_window = false -%>            
            <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
