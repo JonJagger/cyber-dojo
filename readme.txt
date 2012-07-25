@@ -109,7 +109,7 @@ rails 3 image (to create the larger 817MB ova file above) as follows...
 
 #apt-get update
 -----Java (125MB)
->apt-get install default-jdk
+#apt-get install default-jdk
 -------C# (27MB)
 #apt-get install mono-gmcs
 #apt-get install nunit-console
