@@ -6,13 +6,6 @@
     <% n_deleted = file[:deleted_line_count] -%>
     <% n_added   = file[:added_line_count]   -%>
     <tr>
-      <td align="right">
-        <% if n_deleted > 0 -%>
-          <div class="diff-deleted-line-count">
-            <%= n_deleted -%>
-          </div>
-        <% end -%>
-      </td>
       <td align="left">        
         <div class="filename"
              id="<%= file[:id] -%>" >
@@ -25,10 +18,15 @@
         </div>
       </td>    
       <td align="left">
-        <% if n_added > 0 -%>
-          <div class="diff-added-line-count">
+        <% if (n_deleted > 0) || (n_deleted == 0 && n_added > 0) -%>
+          <span class="diff-deleted-line-count">
+            <%= n_deleted -%>
+          </span>
+        <% end -%>
+        <% if (n_added > 0) || (n_added == 0 && n_deleted > 0) -%>
+          <span class="diff-added-line-count">
             <%= n_added -%>
-          </div>
+          </span>
         <% end -%>
       </td>
     </tr>
