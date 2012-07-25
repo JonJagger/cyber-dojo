@@ -2,14 +2,14 @@
    VERY VERY IMPORTANT
    VERY VERY IMPORTANT
 ===========================================================
-CyberDojo clients have full rights on the CyberDojo server. If you 
+Cyber-Dojo clients have full rights on the Cyber-Dojo server. If you 
 setup your own server you are strongly advised to consider using
 o) a dedicated server.
 o) a virtual box.
 o) a dedicated network segment.
 
 
-Running your own VirtualBox TurnKey Linux CyberDojo server
+Running your own VirtualBox TurnKey Linux Cyber-Dojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
@@ -28,7 +28,7 @@ Add port 12320 to the URL you put into your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
-Pull the latest CyberDojo source code from github onto your TurnKey image
+Pull the latest Cyber-Dojo source code from github onto your TurnKey image
 >cd /var/www/cyberdojo 
 >git pull origin master
 Occasionally this will pull new directories. You must ensure these
@@ -185,7 +185,7 @@ configure a new practice-kata. However at the moment when you configure a
 new practice-kata all language/ subfolders are offered.
 
 For each language...
-o) CyberDojo searches through its manifests' :visible_filenames,
+o) Cyber-Dojo searches through its manifests' :visible_filenames,
    in sequence, looking for any that contain the string '42'
 o) If it doesn't find any it will not offer that language when
    you configure a new kata.
@@ -199,13 +199,13 @@ o) It will then use the manifest to create a kata and run-the-tests
 o) If test-1 generates a red traffic-light and
       test-2 generates a green traffic-light and
       test-3 generates an amber traffic-light then
-   then the CyberDojo server assumes the language is installed and working
+   then the Cyber-Dojo server assumes the language is installed and working
    and it will offer that language when you create a new kata.
 o) If the three tests return three amber traffic-lights then
-   the CyberDojo server assumes the language is not installed
+   the Cyber-Dojo server assumes the language is not installed
    and it won't offer that language when you configure a new kata.
 o) If the three tests return any other combination of traffic-lights
-   the CyberDojo server assumes the language is installed but not working.
+   the Cyber-Dojo server assumes the language is installed but not working.
    
 You can test if a languages' initial fileset is correctly setup as follows
 >cd cyberdojo/test/unit
@@ -246,7 +246,7 @@ manifest.rb Parameters
   
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
-  name of the ruby function (in the CyberDojo server) used to parse the 
+  name of the ruby function (in the Cyber-Dojo server) used to parse the 
   run-tests output (to see if the increment generates a red/green/amber
   traffic light). For example, if the value is 'cassert' then
       cyberdojo/lib/CodeOutputParser.rb
@@ -352,18 +352,18 @@ To turn it off (and avoid annoying red underlines the code editor)
 Misc Notes
 ==========
 o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals
-   exercise in Ruby in a very early version of CyberDojo
-o) http://vimeo.com/8630305 has a video of an even earlier version of CyberDojo
+   exercise in Ruby in a very early version of Cyber-Dojo
+o) http://vimeo.com/8630305 has a video of an even earlier version of Cyber-Dojo
    I submitted as a proposal to the Software Craftsmanship conference 2010.
-o) When I started CyberDojo I didn't know any ruby, any rails, or any javascript
+o) When I started Cyber-Dojo I didn't know any ruby, any rails, or any javascript
    (and not much css or html either). I'm self employed so I've have no-one to 
    pair with (except google) while developing this in my limited spare time. 
    Some of what you find is likely to be non-idiomatic. Caveat emptor!
-o) I have worked hard to <em>remove</em> features from CyberDojo. My idea is that
+o) I have worked hard to <em>remove</em> features from Cyber-Dojo. My idea is that
    the simpler the environment the more players will concentrate on the practice
    and the more they will need to collaborate with each other. Remember the aim
-   of a CyberDojo is <em>not</em> to ship something. The aim of CyberDojo is to
+   of a Cyber-Dojo is <em>not</em> to ship something. The aim of Cyber-Dojo is to
    deliberately practice developing software collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
-   CyberDojo and have provided lots of help right from the very early days.
+   Cyber-Dojo and have provided lots of help right from the very early days.
    Olve, Mike and Johannes - I really appreciate all your help and encouragement.
