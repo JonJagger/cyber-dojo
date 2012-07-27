@@ -36,6 +36,7 @@ class GitDiffViewTests < ActionController::TestCase
       'untitled.rb' =>
       [
         { :line => "def answer", :type => :same,  :number => 1 },
+        { :type => :section, :index => 0 },        
         { :line => "  42",       :type => :deleted             },
         { :line => "  54",       :type => :added, :number => 2 },
         { :line => "end",        :type => :same,  :number => 3 },

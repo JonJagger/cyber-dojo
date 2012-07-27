@@ -60,7 +60,8 @@ HERE
     
     expected_source_diff =
     [
-      { :line => "Please rename me!", :type => :added, :number => 1 },
+      { :type => :section, :index => 0},
+      { :type => :added,   :line => "Please rename me!", :number => 1 },
     ]
     
     assert_equal expected_source_diff, source_diff
@@ -127,7 +128,8 @@ HERE
     
     expected_source_diff =
     [
-      { :line => "a", :type => :added, :number => 1 },
+      { :type => :section, :index => 0 },
+      { :type => :added,   :line => "a", :number => 1 },
     ]
     
     assert_equal expected_source_diff, source_diff
@@ -231,6 +233,7 @@ HERE
     expected_source_diff =
     [
       { :line => "1", :type => :same, :number => 1 },
+      { :type => :section, :index => 0 },
       { :line => "2", :type => :deleted },
       { :line => "2a", :type => :added, :number => 2 },      
       { :line => "3", :type => :same, :number => 3 },
@@ -240,7 +243,8 @@ HERE
       { :line => "7", :type => :same, :number => 7 },
       { :line => "8", :type => :same, :number => 8 },
       { :line => "9", :type => :same, :number => 9 },
-      { :line => "10", :type => :same, :number => 10 },      
+      { :line => "10", :type => :same, :number => 10 },
+      { :type => :section, :index => 1 },      
       { :line => "11", :type => :deleted },
       { :line => "11a", :type => :added, :number => 11 },
       { :line => "12", :type => :same, :number => 12 },
@@ -339,6 +343,7 @@ HERE
     
     expected_source_diff =
     [
+      { :type => :section, :index => 0 },     
       { :line => "1", :type => :deleted },
       { :line => "1a", :type => :added, :number => 1 },        
       { :line => "2", :type => :same, :number => 2 },
@@ -348,6 +353,7 @@ HERE
       { :line => "6", :type => :same, :number => 6 },
       { :line => "7", :type => :same, :number => 7 },
       { :line => "8", :type => :same, :number => 8 },
+      { :type => :section, :index => 1 },      
       { :line => "9", :type => :deleted },
       { :line => "9a", :type => :added, :number => 9 },      
     ]
@@ -432,9 +438,11 @@ HERE
     [
       { :line => "1", :type => :same, :number => 1 },
       { :line => "2", :type => :same, :number => 2 },
+      { :type => :section, :index => 0 },
       { :line => "3", :type => :deleted },
       { :line => "3a", :type => :added, :number => 3 },      
-      { :line => "4", :type => :same, :number => 4 },  
+      { :line => "4", :type => :same, :number => 4 },
+      { :type => :section, :index => 1 },      
       { :line => "5", :type => :deleted },
       { :line => "5a", :type => :added, :number => 5 },      
       { :line => "6", :type => :same, :number => 6 },
@@ -518,7 +526,8 @@ HERE
     [
       { :line => "1", :type => :same, :number => 1 },
       { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },      
+      { :line => "3", :type => :same, :number => 3 },
+      { :type => :section, :index => 0 },    
       { :line => "3a1", :type => :added, :number => 4 },
       { :line => "3a2", :type => :added, :number => 5 },
       { :line => "3a3", :type => :added, :number => 6 },
@@ -602,7 +611,8 @@ HERE
       { :line => "1", :type => :same, :number => 1 },
       { :line => "2", :type => :same, :number => 2 },
       { :line => "3", :type => :same, :number => 3 },      
-      { :line => "4", :type => :same, :number => 4 },      
+      { :line => "4", :type => :same, :number => 4 },
+      { :type => :section, :index => 0 },      
       { :line => "5", :type => :deleted },
       { :line => "6", :type => :deleted },
       { :line => "7", :type => :same, :number => 5 },
@@ -691,6 +701,7 @@ HERE
       { :line => "3", :type => :same, :number => 3 },
       { :line => "4", :type => :same, :number => 4 },
       { :line => "5", :type => :same, :number => 5 },
+      { :type => :section, :index => 0 },      
       { :line => "6", :type => :deleted },
       { :line => "7", :type => :deleted },
       { :line => "8", :type => :deleted },      
@@ -784,6 +795,7 @@ HERE
       { :line => "3", :type => :same, :number => 3 },
       { :line => "4", :type => :same, :number => 4 },
       { :line => "5", :type => :same, :number => 5 },
+      { :type => :section, :index => 0 },
       { :line => "6", :type => :deleted },
       { :line => "6a", :type => :added, :number => 6 },
       { :line => "6b", :type => :added, :number => 7 },
@@ -886,6 +898,7 @@ HERE
       { :line => "5", :type => :same, :number => 5 },
       { :line => "6", :type => :same, :number => 6 },
       { :line => "7", :type => :same, :number => 7 },
+      { :type => :section, :index => 0 },      
       { :line => "8", :type => :deleted },
       { :line => "8a", :type => :added, :number => 8 },
       { :line => "9", :type => :same, :number => 9 },

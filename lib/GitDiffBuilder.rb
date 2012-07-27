@@ -17,11 +17,14 @@ module GitDiff
     def build(diff, lines)    
       result = [ ]
       line_number = 1    
-      from = 0    
+      from = 0
+      index = 0
       diff[:chunks].each do |chunk|
         to = chunk[:range][:now][:start_line] + chunk[:before_lines].length - 1
         line_number = fill(result, :same, lines, from, to, line_number)
         chunk[:sections].each do |section|
+          result << { :type => :section, :index => index }
+          index += 1
           line_number = build_section(result, section, line_number)
         end
         from = line_number - 1      
@@ -33,28 +36,7 @@ module GitDiff
     
   private
   
-    def build_section(result, section, line_number)
-      # if you make a change to a line and  also insert
-      # some lines after it you get a diff that looks ok.
-      # That is, it shows something like this:
-      # - Changed line
-      # + changed line
-      # + added line 1
-      # + added line 2
-      # + added line 3
-      # However, if you make a change to a line and also
-      # insert some lines _before_ it you get a diff that
-      # doesn't look quite so good. That is, it looks
-      # something like this:
-      # - Changed line
-      # + added line 1
-      # + added line 2
-      # + added line 3
-      # + changed line
-      # It would be nice to add some checking here to work out
-      # if showing the + before the - in the first case would
-      # result in a nicer diff-view.
- 
+    def build_section(result, section, line_number) 
       line_number = fill_all(result, :deleted, section[:deleted_lines], line_number)
       line_number = fill_all(result, :added, section[:added_lines], line_number)
       line_number = fill_all(result, :same, section[:after_lines], line_number)

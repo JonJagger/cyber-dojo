@@ -1,7 +1,7 @@
 
-#tag_number
+#tag_number, .tag_number
 {
-  font-size: 1em; 
+  font-size: 1.3em; 
   text-align: center; /* for diff and dashboard */
 }
 
@@ -10,6 +10,7 @@
   overflow: auto;
   height: 48em;
   width: 63em;
+  position: relative;
 }
 
 #diff_sheet
@@ -20,33 +21,31 @@
   padding: 0;
 }
 
-pre.diffed_code { margin: 0; padding: 0; }
+.diffed_code { margin: 0; padding: 0; }
 
 $diff-added-color: #CEF6CE;
 $diff-deleted-color: #F6CECE;
 
-pre.diffed_code added,   #toggle_added_lines   { background: $diff-added-color; }
-pre.diffed_code deleted, #toggle_deleted_lines { background: $diff-deleted-color; }
+.diffed_code added, .diffed_code deleted, .diffed_code same { white-space: pre; display: block; }
 
-pre.diffed_code ln 
+.diffed_code ln 
 {
   padding-left: 2px;
   margin-right: 3px;
   padding-right: 2px;
   color: $line-number-color;
   font-weight: normal;
-  white-space: pre;
 }
 
-pre.diffed_code same
+.diffed_code added,   #toggle_added_lines   { background: $diff-added-color;  }
+.diffed_code deleted, #toggle_deleted_lines { background: $diff-deleted-color; }
+.diffed_code same
 {
   color: $main-color;
   background: $light-background-color;
 }
 
-pre.diffed_code same ln { background: $background-color;  }
-
-.invisible { display: none; } /* used to show/hide -+ lines */
+.diffed_code same ln { background: $background-color;  }
 
 @mixin diff-added
 {
@@ -55,18 +54,23 @@ pre.diffed_code same ln { background: $background-color;  }
   padding: 3px;
 }
 
-.diff-added-line-count
+.diff-deleted-line-count
 {
-  background: $diff-added-color;
+  background: $diff-deleted-color;
   color: $line-number-color;
   border: 1px dotted darken($diff-added-color,30%);
   @include diff-added;
 }
 
-.diff-deleted-line-count
+.diff-added-line-count
 {
-  background: $diff-deleted-color;
+  background: $diff-added-color;
   color: $line-number-color;
   border: 1px dotted darken($diff-deleted-color,10%);
   @include diff-added;
 }
+
+
+
+
+

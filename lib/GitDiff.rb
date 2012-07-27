@@ -20,7 +20,7 @@ module GitDiff
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
-        if !deleted_file?(md[1])
+        if md && !deleted_file?(md[1])
           name = md[2]
           file_content = visible_files[name]
           view[name] = builder.build(diff, line_split(file_content))
@@ -55,11 +55,12 @@ module GitDiff
       n += 1
       id = 'jj' + n.to_s
       diffs << {
-        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :id => id,          
         :name => name,
+        :section_count => diff.count { |line| line[:type] == :section },
+        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :added_line_count => diff.count { |line| line[:type] == :added },
-        :content => git_diff_html(diff),
+        :content => git_diff_html(name,diff),
       }
     end
     diffs    
@@ -87,18 +88,25 @@ module GitDiff
   
   #-----------------------------------------------------------
   
-  def git_diff_html(diff)
+  def git_diff_html(name,diff)
     max_digits = diff.length.to_s.length
-    lines = diff.map {|n| diff_htmlify(n, max_digits) }.join("\n")
+    lines = diff.map {|n| diff_htmlify(name, n, max_digits) }.join("")
   end
   
   #-----------------------------------------------------------
   
-  def diff_htmlify(n, max_digits)
-    "<#{n[:type]}>" +
-       '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
-       CGI.escapeHTML(n[:line]) + 
-    "</#{n[:type]}>"
+  def diff_htmlify(filename, n, max_digits)
+    result = ""
+    if n[:type] == :section
+      filename = filename.gsub('.', '_')
+      result = "<span id='#{filename}_section_#{n[:index]}'></span>"
+    else
+      result = "<#{n[:type]}>" +
+        '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
+        CGI.escapeHTML(n[:line]) + 
+        "</#{n[:type]}>"
+    end
+    result
   end
   
   #-----------------------------------------------------------

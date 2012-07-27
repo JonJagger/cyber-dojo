@@ -6,12 +6,6 @@ $j(document).ready(function() {
   $j('#tag_number').keyup(function(event) {
     tagNumber(event);
   });
-  $j('#toggle_deleted_lines').click(function() {
-    $j('deleted').toggleClass('invisible');
-  });
-  $j('#toggle_added_lines').click(function() {
-    $j('added').toggleClass('invisible');
-  });
 });
 
 var id = "<%=@kata.id-%>";
@@ -54,7 +48,7 @@ function tagNumber(event)
   <tr>
   
     <td>
-      <span>
+      <span class="tag_number">
         <% if tag_number == 0 -%>
 	  0
 	<% else -%>
@@ -86,7 +80,7 @@ function tagNumber(event)
     </td>
     
     <td>
-      <span>
+      <span class="tag_number">
         <% if tag_number < @all_traffic_lights.length -%>
 	  <%= link_to @all_traffic_lights.length, 
 	  { :controller => :diff, 
@@ -103,22 +97,3 @@ function tagNumber(event)
     
   </tr>
 </table>      
-
-<table align="center">
-  <tr>
-    <td>
-      <input type="button"
-	     class="button"
-	     title="toggle deleted lines on/off"
-	     id="toggle_deleted_lines"
-	     value="-"/>
-    </td>
-    <td>
-      <input type="button"
-	     class="button"
-	     title="toggle added lines on/off"
-	     id="toggle_added_lines"
-	     value="+"/>
-    </td>
-  </tr>
-</table>

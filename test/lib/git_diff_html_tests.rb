@@ -35,9 +35,9 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
         "<same><ln>  9</ln>Claudia Cardinale</same>",
         "<added><ln> 10</ln>Sergio Leone</added>",
         "<same><ln> 11</ln>Ennio Morricone</same>",        
-    ].join("\n")
+    ].join
     
-    assert_equal expected, git_diff_html(diffed)
+    assert_equal expected, git_diff_html('ennio', diffed)
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,9 +60,9 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
         "<deleted><ln>  -</ln>IN</deleted>",
         "<added><ln>  4</ln>in</added>",
         "<same><ln>  5</ln>the west</same>",
-    ].join("\n")
+    ].join
     
-    assert_equal expected, git_diff_html(diffed)
+    assert_equal expected, git_diff_html('ennio', diffed)
   end  
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,9 +83,9 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
         "<same><ln>  3</ln>time</same>",
         "<added><ln>  4</ln>in</added>",
         "<same><ln>  5</ln>the west</same>",
-        ].join("\n")
+        ].join
     
-    assert_equal expected, git_diff_html(diffed)
+    assert_equal expected, git_diff_html('ennio', diffed)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -105,9 +105,9 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
         "<same><ln>  2</ln>upon a</same>",
         "<same><ln>  3</ln>time</same>",
         "<same><ln>  4</ln>in the west</same>"
-    ].join("\n")
+    ].join
     
-    assert_equal expected, git_diff_html(diffed)
+    assert_equal expected, git_diff_html('ennio', diffed)
   end
     
 end
