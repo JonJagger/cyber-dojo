@@ -1,7 +1,5 @@
 /*jsl:option explicit*/
 
-//1. check tests still pass
-
 var cyberDojo = (function($cd, $j) {
 
   $cd.buildDiffFilenames = function(diffs) {

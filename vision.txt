@@ -15,8 +15,6 @@ previous katas.
 Also, the diff-view is not stand alone. Each time you press the previous or
 next buttons on the diff-view there is a new trip to the Cyber-Dojo server.
 I'd like the entire session to be viewable as a single stand-alone html file.
-I'd also like a small control which automatically scrolls the diff-view of
-the selected file to the next -red+green diff-section.
 
 
 Federated Cyber-Dojos 
