@@ -20,5 +20,5 @@ For example: print-diamond 'C' prints
  B B
 C   C
  B B
-  C
+  A
   
