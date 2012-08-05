@@ -70,6 +70,8 @@ for the three colours as follows:
   (o) green - tests ran and all passed
 The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind.
+Note: you will also get an amber traffic light if the tests do not
+complete within 10 seconds.
 
 
 View-Dashboard
@@ -85,6 +87,8 @@ Diff-view
 Clicking on a traffic light opens a new page showing the diffs for that increment
 together with < and > buttons to step backwards and  forwards through the diffs.
 The diff-view page does not work properly in Internet Explorer 8.
+A diff-view will automatically open the file with the most changes.
+Selecting a file in the diff-view auto-scrolls to the first diffed lines.
 
    
 Versions
