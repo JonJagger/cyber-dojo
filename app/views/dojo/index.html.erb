@@ -34,7 +34,7 @@ $j(document).ready(function() {
     });
   });
   
-  $j.each(['about', 'basics', 'dashboard', 'faqs', 'links', 'tips', 'why' ], function(i,name) {
+  $j.each(['about', 'basics', 'dashboard', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
       popup(name);
     });
@@ -223,7 +223,7 @@ function cantFind(id) {
 
   <tr>
     <td class="panel">
-      <% [ 'about', 'basics', 'dashboard', 'faqs', 'links', 'tips', 'why' ].each do |name| -%>
+      <% [ 'about', 'basics', 'dashboard', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ].each do |name| -%>
         <input type="button"
                class="button"
                id="<%=name-%>"
@@ -240,9 +240,9 @@ function cantFind(id) {
            <%= render :partial => 'donate' -%>
           </td>
           <td>
-            <span class="small_text">
-              cyber-dojo is now hosted in the cloud.<br/>
-              your donation will help to pay the hosting fee.<br/>
+            <span class="donate_text">
+              all donations used solely to<br/> 
+              buy <a href="http://www.raspberrypi.org/">raspberry pi</a>'s for schools.<br/>
               thank you. <a href="http://jonjagger.blogspot.co.uk/">Jon Jagger</a>
             </span>
           </td>

@@ -36,7 +36,6 @@ var cyberDojo = (function($cd, $j) {
     $j.each(filenames, function(n, filename) {
       filenameList.append($cd.makeFileListEntry(filename));
     });
-    // remove radio bullets - they are sometimes causing layout weirdness in firefox
     $j('input[type=radio]').hide();
     return filenames;
   };

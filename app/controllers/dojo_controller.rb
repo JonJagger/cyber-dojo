@@ -116,7 +116,19 @@ class DojoController < ApplicationController
     end
   end
 
+  def feedback
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
+  end
+  
   def links
+    respond_to do |format|    
+      format.html { render :layout => false }
+    end
+  end
+  
+  def source
     respond_to do |format|    
       format.html { render :layout => false }
     end
