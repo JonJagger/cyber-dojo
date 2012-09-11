@@ -77,8 +77,7 @@ var cyberDojo = (function($cd, $j) {
       + '</div>'
       + ''
       + '<div class="panel">'
-      +   space + 'think about improving, not finishing' + br
-      +   space + 'you are practising, not competing'
+      +   space + 'think about improving, not finishing'
       + '</div>';
                           
     var help = $j('<div>')
