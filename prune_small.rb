@@ -2,9 +2,9 @@
 # cyber-dojo is very heavy on Inodes so I need to reclaim as many as I can.
 #
 # start by not deleting with min traffic_lights==2 and min days_old==7
-#   ruby prune.rb false 2 7
+#   ruby prune_small.rb false 2 7
 # this will print what will be deleted. Then
-#   ruby prune.rb true 2 7
+#   ruby prune_small.rb true 2 7
 # to actually do the pruning
 
 
