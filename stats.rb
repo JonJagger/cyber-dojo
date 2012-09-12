@@ -1,14 +1,19 @@
 # A ruby script to display the count of dojos by size
 # So the output below means there were 45 dojos with 0 traffic lights
 # and 55 dojos with 1 traffic light, etc.
+# The numbers following inside [ ] are the number of avatars in the dojos
+# So for example
+#    34 2 [5,6] means there were 2 dojos with 34 traffic lights
+#               and those two dojos had 5 and 6 avatars respetively.
 #
 # ruby stats.rb
 # 0 45
-# 1 55
-# 2 42
+# 1 55 [...]
+# 2 42 [...]
 # ...
-# 156 1
-# 194 1
+# 34 2 [5, 6]
+# 156 1 [8]
+# 194 1 [3]
 
 def avatars
   %w(
@@ -20,15 +25,18 @@ def avatars
 end
 
 def traffic_light_count(kata_dir)
-  count = 0
+  tally,count = 0,0
   avatars.each do |avatar|
     inc_filename = "#{kata_dir}/#{avatar}/increments.rb"
     if File.exists? inc_filename
       incs = eval IO.popen("cat #{inc_filename}").read
-      count += incs.length
+      if incs.length > 0
+        tally += 1
+        count += incs.length
+      end
     end
   end
-  count
+  [tally,count]
 end
 
 stats = { }
@@ -44,14 +52,25 @@ index.each do |entry|
     kata_dir = "katas/#{inner_dir}/#{outer_dir}"
     manifest_name = "#{kata_dir}/manifest.rb"
     if File.exists?(manifest_name)
-      count = traffic_light_count(kata_dir)
-      stats[count] ||= 0 
-      stats[count] += 1
+      tally,count = traffic_light_count(kata_dir)
+      stats[count] ||= [ ]
+      stats[count] << tally
     end
   end    
 end
 
-stats.sort.each do |count,tally|
-  printf("%3d %3d\n", count, tally)
+stats.sort.each do |count,tallies|
+  printf("%3d %3d",count, tallies.length)
+  sep = ""
+  if tallies.length <= 20
+    printf(" [")
+    tallies.sort.each do |n|
+      printf("%s%d", sep, n)
+      sep = ", "
+    end
+    printf("]\n")
+  else
+    printf("\n")
+  end
 end
 
