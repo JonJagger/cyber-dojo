@@ -60,17 +60,8 @@ index.each do |entry|
 end
 
 stats.sort.each do |count,tallies|
-  printf("%3d %3d",count, tallies.length)
-  sep = ""
-  if tallies.length <= 20
-    printf(" [")
-    tallies.sort.each do |n|
-      printf("%s%d", sep, n)
-      sep = ", "
-    end
-    printf("]\n")
-  else
-    printf("\n")
-  end
+  printf("%3d %3d ",count, tallies.length)
+  print tallies.sort.inspect if tallies.length <= 20
+  printf("\n")
 end
 
