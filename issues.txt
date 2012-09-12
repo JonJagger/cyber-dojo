@@ -1,10 +1,18 @@
 
 MAJOR
 -----
-Ensuring cyberdojo.sh cleans up any processes it spawns does not
-always work. Instead of trying to find children by walking
-pid/ppid hierarchy it would be better to use pgid - process group.
-See lib/Files.rb
+The design of cyber-dojo is very heavy on inodes. You will
+almost certainly run out of inodes before running out of
+disk space. I need a process that moves dojos that have
+a minimum number of traffic lights and are at least 10 days
+old (say) onto a separate server (or at the very minimum
+into a separate folder on the same server. This ties in with
+making old dojos diff sessions viewable as a stand-alone
+html page (see vision.txt)
+
+Ensuring cyberdojo.sh cleans up any processes is messy. Instead of
+trying to find children by walking pid/ppid hierarchy it would be
+better to use pgid - process group.See lib/Files.rb
 
 The Diff view doesn't work properly in IE8.
 
