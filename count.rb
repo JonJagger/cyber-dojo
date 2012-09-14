@@ -5,26 +5,25 @@
 # [2012,5,18, "Wed"] 26
 # [2012,5,19, "Thu"] 32
 
-def recent(array, max_length)
-  len = [array.length, max_length].min
-  array[-len,len]
-end
+require './script_lib.rb'
 
 stats = { }
-index = eval IO.popen('cat katas/index.rb').read
-show = (ARGV[0] || index.length).to_i
-recent(index,show).each do |entry|
+index('katas') do |kata_dir|
   begin
-    created = Time.mktime(*entry[:created])
-    ymd = [created.year, created.month, created.day, created.strftime('%a')]
-    stats[ymd] ||= 0
-    stats[ymd] += 1
-  rescue
-    print "---->Exception raised for ID:#{entry[:id]}, browser:#{entry[:browser]}\n"
+    manifest_filename = "#{kata_dir}/manifest.rb"
+    if File.exists? manifest_filename
+      manifest = eval IO.popen("cat #{manifest_filename}").read
+      created = Time.mktime(*manifest[:created])
+      ymd = [created.year, created.month, created.day, created.strftime('%a')]
+      stats[ymd] ||= 0
+      stats[ymd] += 1
+    end
+  rescue Exception => e
+    print "---->Exception raised for #{kata_dir}: #{e.message}\n"
   end
 end
 
-stats.each do |ymdw,n|
+stats.sort.each do |ymdw,n|
   print ymdw.inspect + "\t" + n.to_s + "\n"
 end
 
