@@ -231,7 +231,7 @@ function cantFind(id) {
       <% end -%>
     </td>
   </tr>
-
+    
   <tr>
     <td>
       <table>
@@ -240,21 +240,25 @@ function cantFind(id) {
            <%= render :partial => 'donate' -%>
           </td>
           <td>
-            <span class="donate_text">
-              all donations used solely to<br/> 
-              buy <a href="http://www.raspberrypi.org/">raspberry pi</a>'s for schools.<br/>
-              thank you. <a href="http://jonjagger.blogspot.co.uk/">Jon Jagger</a>
-            </span>
-          </td>
-          <td>
             <% size = 80 -%>
             <%= image_tag("/images/raspberry-pi.gif",
                 :border => 0,
-                :size => "100x50") -%>          
-          </td>          
+                :size => "60x60") -%>          
+          </td>
+          <td>
+            &nbsp;
+          </td>
+          <td>
+            <span class="donate_text">
+              If you find cyber-dojo useful please consider making a donation.<br/>
+              All money is used solely to buy 
+              <a href="http://www.raspberrypi.org/">raspberry pi</a> computers for schools.<br/>
+              Thank you.
+            </span>
+          </td>
         </tr>
       </table>
     </td>
   </tr>
-        
+
 </table>
