@@ -310,31 +310,18 @@ This separation offers an easy future route to running dedicated servers just
 to run the tests.
 
 
-Getting files off the VirtualBox TurnKey Linux server
+Getting katas off the VirtualBox TurnKey Linux server
 =====================================================
-These were the steps I took...
- 0. don't boot the VirtualBox TurnKey Linux server yet
- 1. insert a USB stick
- 2. in VirtualBox add a filter for the USB stick
- 3. remove the USB stick
- 4. boot the VirtualBox server and note its IP address (eg 192.168.61.25)
- 5. open a browser page to the VirtualBox server (eg 192.168.61.25:12320)
- 6. login (you need username and password for this, see above)
- 7. insert the USB stick
- 8. find the name of the USB device, eg sdb1
- 9. >tail /var/log/messages
-10. mount the usb device
-11. >mkdir /root/usbdrive
-12. >mount -t vfat /dev/sdb1 /root/usbdrive
-13. >cd /var/www/cyberdojo
-14. find the directory you want
-15. >ruby names.rb    
-16. eg suppose the directory is katas/82/B583C115
-17. cd to that directory, then
-18. >tar -zcvf name.tar.gz .
-19. >mv name.tar.gz /root/usbdrive
-20. >umount /dev/sdb1
-21. shut down the VirtualBox image
+You will need the username and password info to SSH and SFTP.
+I will happily tell you it if you email me: jon@jaggersoft.com
+1. SSH onto the server
+2. cd /var/www/cyberdojo
+3. to create a zip file of all katas
+     #ruby zipup.rb true 0 0
+   will create zipped_dojos.zip
+4. to create a zip file of just one kata, eg 2F725592E3
+     #zip -r zipped_dojo.zip katas/2F/725592E3
+5. SFTP the zip file off the server
 
 
 
