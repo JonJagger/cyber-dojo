@@ -31,7 +31,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
 
   def save
-    info = save_to_index
+    info = gather_info
     language = Language.new(root_dir, info[:language])
     exercise = Exercise.new(root_dir, info[:exercise])
     info[:visible_files] = language.visible_files
@@ -50,7 +50,7 @@ class DojoController < ApplicationController
     kata = Kata.new(root_dir, params['id'])
     params['language'] = kata.language.name
     params['exercise'] = kata.exercise.name
-    info = save_to_index
+    info = gather_info
     info[:diff_id] = params['id']
     info[:diff_language] = params['language']
     info[:diff_exercise] = params['exercise']
@@ -187,14 +187,7 @@ class DojoController < ApplicationController
   
   #------------------------------------------------
   
-  def save_to_index
-    katas_root_dir = root_dir + '/katas'
-    Locking::io_lock(root_dir) do      
-      if !File.directory? katas_root_dir
-        Dir.mkdir katas_root_dir
-      end
-    end
-    
+  def gather_info    
     language = Language.new(root_dir, params['language'])    
     
     info = {
@@ -205,14 +198,7 @@ class DojoController < ApplicationController
       :exercise => params['exercise']
     }
     
-    info[:name] = params['name'] if params['name']
-    
-    Locking::io_lock(katas_root_dir) do    
-      index_filename = katas_root_dir + '/' + Kata::Index_filename
-      index = File.exists?(index_filename) ? eval(IO.read(index_filename)) : [ ]
-      Files::file_write(index_filename, index << info)
-    end
-    
+    info[:name] = params['name'] if params['name']    
     info[:unit_test_framework] = language.unit_test_framework
     info[:tab_size] = language.tab_size
     info

@@ -9,6 +9,9 @@ module Uuid
     # The chance of their being so many 0's and 1's
     # that the resulting id has less than 10 chars is
     # vanishingly small.
+    # The chance of stripping away 0's and 1's resulting
+    # in two identical ids (in the first 10 chars) is
+    # also vanishingly small.
     `uuidgen`.strip.delete('-01')[0..9].upcase
   end
   
