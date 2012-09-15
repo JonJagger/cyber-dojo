@@ -6,7 +6,7 @@ require 'Uuid'
 require 'make_time_helper'
 
 class DojoController < ApplicationController
-    
+  
   include MakeTimeHelper
   
   #------------------------------------------------
@@ -15,7 +15,7 @@ class DojoController < ApplicationController
     @title = 'home'
     @id = id
   end
-   
+ 
   #------------------------------------------------
 
   def create
@@ -27,7 +27,7 @@ class DojoController < ApplicationController
     end
     @title = 'configure'
   end
-    
+  
   #------------------------------------------------
 
   def save
@@ -43,9 +43,9 @@ class DojoController < ApplicationController
     redirect_to :action => :index, 
                 :id => info[:id]
   end  
-    
+  
   #------------------------------------------------
-    
+  
   def diff_save
     kata = Kata.new(root_dir, params['id'])
     params['language'] = kata.language.name
@@ -95,56 +95,6 @@ class DojoController < ApplicationController
   def full
     @kata = Kata.new(root_dir, id)    
   end
-    
-  #------------------------------------------------
-
-  def about
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-  
-  def basics
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-    
-  def faqs
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-
-  def feedback
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-  
-  def links
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-  
-  def source
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-  
-  def tips
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
-  
-  def why
-    respond_to do |format|    
-      format.html { render :layout => false }
-    end
-  end
   
   #------------------------------------------------
 
@@ -154,7 +104,7 @@ class DojoController < ApplicationController
       format.json { render :json => { :exists => @exists, :message => 'Hello' } }
     end    
   end
-    
+  
   def resume_avatar_grid
     @kata = Kata.new(root_dir, id)    
     @live_avatar_names = @kata.avatar_names
@@ -165,7 +115,7 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
-      
+  
   def render_error
     render "error/#{params[:n]}"
   end
