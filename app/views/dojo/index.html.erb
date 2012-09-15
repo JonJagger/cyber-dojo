@@ -241,9 +241,10 @@ function cantFind(id) {
           </td>
           <td>
             <% size = 80 -%>
-            <%= image_tag("/images/raspberry-pi.gif",
-                :border => 0,
-                :size => "60x75") -%>          
+            <%= link_to image_tag("/images/raspberry-pi.gif",
+                                  :border => 0,
+                                  :size => "60x75"
+                                 ), "http://www.raspberrypi.org/" -%>          
           </td>
           <td>
             &nbsp;
