@@ -1,21 +1,21 @@
 # A ruby script to create a zip file of katas whose total number
 # of traffic-lights is greater Parameter-1 and
 # that are at least Parameter-2 days old.
-# This allows the subsequent deletion of said katas.
+# This allows the subsequent deletion of said katas
 # which is important as cyber-dojo is very heavy on inodes.
 #
 # Step 1
-#     ruby zipup.rb false 200 7
+#     >ruby zipup.rb false 200 7
 # if there are a lot of won't and you just want to see the wills
-#     ruby zipup.rb false 200 7 | grep "will"
+#     >ruby zipup.rb false 200 7 | grep "will"
 # then
-#     ruby zipup.rb true 200 7
+#     >ruby zipup.rb true 200 7
 #
 # Step 2 - sftp the zip file off the server.
 #
 # Step 3
-#     ruby prune_large.rb false 200 7
-#     ruby prune_large.rb true  200 7
+#     >ruby prune_large.rb false 200 7
+#     >ruby prune_large.rb true  200 7
 
 require './script_lib.rb'
 
