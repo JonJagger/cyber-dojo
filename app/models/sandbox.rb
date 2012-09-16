@@ -69,8 +69,8 @@ private
   def makefile_filter(name, content)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     # makefiles are tab sensitive...
-    # The CyberDojo editor intercepts tab keys and replaces them with spaces.
-    # Hence this special filter, just for makefiles to convert leading spaces 
+    # The cyber-dojo editor intercepts tab keys and replaces them with spaces.
+    # Hence this special filter, just for makefiles, to convert leading spaces 
     # back to a tab character.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     if name.downcase == 'makefile'

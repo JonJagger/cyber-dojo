@@ -219,7 +219,6 @@ module GitDiff
       end
     end
   
-    # TODO: duplicated in GitDiffParser.rb
     def line_split(source)
       # - - - - - - - - - - - - - - - - -
       # Note that

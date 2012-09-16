@@ -9,27 +9,46 @@ old (say) onto a separate server (or at the very minimum
 into a separate folder on the same server. This ties in with
 making old dojos diff sessions viewable as a stand-alone
 html page (see vision.txt)
-
+-----
 Ensuring cyberdojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group.See lib/Files.rb
-
+-----
 The Diff view doesn't work properly in IE8.
+-----
+
+
 
 MINOR
 -----
+In lib/CodeOutputParser.rb...
+if a player creates a cyberdojo.sh file which runs two
+test files then it's possible the first one will pass and
+the second one will have a failure. Because of this the
+regex's below should test for failed/error before passing.
+But some of them don't do that.
+And CodeOutputParser.rb with its function parse() should be
+renamed based on what it does from the outside rather than
+from the inside - namely it simply determines the traffic
+light colour. Maybe something like
+module TrafficLight
+  def self.colour(unit_test_framework, output)
+    ...
+  end
+end
+-----
 the various uses of eval in the code could do with being replaced with
 a json parse.
-
+-----
 now that the ruby code is 1.9.3 it should be possible to get coverage
 stats from the ruby tests.
-
+-----
 The intention with the installation tests is that they are used to determine
 what languages are installed and to only offer those languages (at the create
 page). But at the moment all the languages are being offered.
-
+-----
 The javascript tests need some TLC.
-
+-----
 The error handling at the front page is a bit messy. You get different
 style popups if you enter a wrong ID compared to entering no ID.
 And you also get different style popup for a wrong ID when you
@@ -38,3 +57,4 @@ There is a reason for this. It's because I want to make absolutely
 sure that the new run-the-tests kata page is in a new tab/window.
 It's important that there is never an operational back-button on
 that page.
+-----
