@@ -63,7 +63,7 @@ class DojoController < ApplicationController
     
     Kata.create_new(root_dir, info)
     
-    redirect_to :action => :start, 
+    redirect_to :action => :index, 
                 :id => info[:id]
   end
   
