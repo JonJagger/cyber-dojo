@@ -10,9 +10,9 @@ software practice in a collaborative way. Hence Cyber-Dojo.
 
 Making all diff-sessions viewable
 ---------------------------------
-At the moment you need to know the hex-id of a kata to enter it and view
+At the moment you need to know the hex-id of a dojo to enter it and view
 it via the dashboard traffic lights and diffs. I want a public (but
-anonymous) readonly view of all previous katas, preferably on a separate server
+anonymous) readonly view of all previous dojos, preferably on a separate server
 (but filtered so dojos with very few traffic-lights are not shown).
 Also, the diff-view is not stand alone. Each time you press the previous or
 next buttons on the diff-view there is a new trip to the Cyber-Dojo server.
@@ -41,8 +41,8 @@ Recruitment
 I can also imagine job applicants being asked to perform some katas
 in Cyber-Dojo (ideally with the team they are hoping to join)
 and the resulting session being used to help the team judge the applicant's
-suitability for the job. (Some companies have told me they are now doing
-exactly this with Cyber-Dojo)
+suitability for the job both technically and socially.
+(Some companies have told me they are now doing exactly this with Cyber-Dojo)
 
 
 
