@@ -23,6 +23,8 @@ do_zip = (ARGV[0] || "false")
 min_traffic_light_count = (ARGV[1] || "2").to_i
 min_days_old = (ARGV[2] || "7").to_i
 
+tally_yes = 0
+tally_no = 0
 stats = { }
 index('katas') do |kata_dir|
   manifest_filename = "#{kata_dir}/manifest.rb"
@@ -32,16 +34,32 @@ index('katas') do |kata_dir|
     days_old = ((Time.now - created) / 60 / 60 / 24).to_i
     tally,count = traffic_light_count(kata_dir)
     zip_cmd = "zip -r zipped_dojos.zip " + kata_dir
-    if count >= min_traffic_light_count and days_old >= min_days_old
+    if count >= min_traffic_light_count and days_old >= min_days_old        
+      tally_yes += 1
       if do_zip == "true"
         system(zip_cmd)
       else
         print "will do: " + zip_cmd + "\n"
       end
     else
+      tally_no += 1
       print "won't do: " + zip_cmd + "\n" if do_zip == "false"
     end
   end
 end
+
+print tally_yes.to_s + " katas "
+if do_zip == "false"
+  print "will be "
+end
+print "zipped\n"
+
+print tally_no.to_s + " katas "
+if do_zip == "false"
+  print "will not be "
+else
+  print "not "
+end
+print "zipped\n"
 
 
