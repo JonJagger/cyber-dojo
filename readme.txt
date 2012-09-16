@@ -288,9 +288,6 @@ To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 3
 >git diff 4 3 sandbox/filename 
-To find the directory issue the following from the cyberdojo/ directory 
->ruby names.rb
-Which will provide the uuidgen based directory names for recent katas.
 It's much easier and more informative to just click on a traffic light.
   
 
@@ -310,16 +307,16 @@ This separation offers an easy future route to running dedicated servers just
 to run the tests.
 
 
-Getting katas off the VirtualBox TurnKey Linux server
+Getting dojos off the VirtualBox TurnKey Linux server
 =====================================================
 You will need the username and password info to SSH and SFTP.
 I will happily tell you it if you email me: jon@jaggersoft.com
 1. SSH onto the server
 2. cd /var/www/cyberdojo
-3. to create a zip file of all katas
+3. to create a zip file of all dojos
      #ruby zipup.rb true 0 0
    will create zipped_dojos.zip
-4. to create a zip file of just one kata, eg 2F725592E3
+4. to create a zip file of just one dojo, eg 2F725592E3
      #zip -r zipped_dojo.zip katas/2F/725592E3
 5. SFTP the zip file off the server
 
