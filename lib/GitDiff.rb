@@ -1,4 +1,3 @@
-#require 'Files'
 require 'GitDiffBuilder'
 require 'GitDiffParser'
 require 'LineSplitter'
@@ -7,7 +6,7 @@ module GitDiff
 
   include LineSplitter
   
-  # Top level function used by diff_controller.rb to create data structure
+  # Top level functions used by diff_controller.rb to create data structure
   # (to build view from) containing diffs for all files, for a given avatar, 
   # for a given tag.
   
@@ -36,26 +35,13 @@ module GitDiff
       view
   end
 
-  #-----------------------------------------------------------
-  
-  def deleted_file?(ch)
-    # GitDiffParser uses names beginning with
-    # a/... to indicate a deleted file 
-    # b/... to indicate a new/modified file
-    # This mirrors the git diff command output
-    ch == 'a'
-  end
-  
   #-----------------------------------------------------------  
   
-  def git_diff_prepare(diffed_files)
-    n = 0
+  def git_diff_prepare(avatar, tag, diffed_files)
     diffs = [ ]
     diffed_files.sort.each do |name,diff|
-      n += 1
-      id = 'jj' + n.to_s
       diffs << {
-        :id => id,          
+        :id => avatar.kata.id + '_' + avatar.name + '_' +  tag.to_s + '_' + name.gsub('.', '_'),
         :name => name,
         :section_count => diff.count { |line| line[:type] == :section },
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
@@ -66,6 +52,17 @@ module GitDiff
     diffs    
   end
 
+  #-----------------------------------------------------------
+  #-----------------------------------------------------------
+  
+  def deleted_file?(ch)
+    # GitDiffParser uses names beginning with
+    # a/... to indicate a deleted file 
+    # b/... to indicate a new/modified file
+    # This mirrors the git diff command output
+    ch == 'a'
+  end
+  
   #-----------------------------------------------------------
   
   def most_changed_lines_file_id(diffs)        

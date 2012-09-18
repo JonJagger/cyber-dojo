@@ -2,7 +2,11 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  // diffs for a given kata-id, given animal-name, and given traffic-light-number
+  // Builds the diff filenames click handlers for a given kata-id,
+  // given animal-name, and given traffic-light number. Clicking
+  // on the filename brings its diff into view by loading it into
+  // the diffSheet.
+  
   $cd.buildDiffFilenames = function(diffs) {
     var diffSheet = $j('#diff_sheet');
     var diffPanel = $j('#diff_panel');
@@ -50,11 +54,11 @@ var cyberDojo = (function($cd, $j) {
     // end
     //
     // A self-contained diff-view of a complete dojo will need a
-    // prefix of (rather than'jj') the kata id (8 hex digits)
+    // prefix (rather than' jj') of the kata id (8 hex digits)
     // concatenated with the animal-name
-    // concatenated with the traffic-light increment-number.
-    // These are the three bits of info gotten from
-    // app/views/diff/show.html.erb
+    // concatenated with the traffic-light increment-number
+    // concatenated with the filename.
+    // See app/views/diff/show.html.erb
     //    id: "<%= @kata.id -%>",
     //    avatar: "<%= @avatar.name -%>",
     //    tag: "<%= @traffic_lights_to_tag.length -%>"

@@ -21,13 +21,19 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+html element IDs are sometimes created using filenames. When this
+happens I currently do this...
+   name.gsub('.', '_')            in GitDiff.rb and
+   diff.name.replace(/\./g, '_')  in cyberdojo-build_diff_filenames.js
+This should be handled more thoroughly to ensure resulting ID is valid.  
+-----
 In lib/CodeOutputParser.rb...
-if a player creates a cyberdojo.sh file which runs two
-test files then it's possible the first one will pass and
-the second one will have a failure. Because of this the
-regex's below should test for failed/error before passing.
-But some of them don't do that.
-And CodeOutputParser.rb with its function parse() should be
+if a player creates a cyberdojo.sh file which runs two or more
+test files then it's possible that the output will contain the
+strings denoting red and green traffic-lights. Because of this the
+regex's should test for a red traffic-light first, and for
+a green traffic-light second.
+Also CodeOutputParser.rb with its function parse() should be
 renamed based on what it does from the outside rather than
 from the inside - namely it simply determines the traffic
 light colour. Maybe something like
