@@ -46,7 +46,7 @@ def prune_stats
   stats = { }
   index('katas') do |kata_dir|
     manifest_filename = "#{kata_dir}/manifest.rb"
-    if File.exists?(manifest_filename)
+    if File.exists? manifest_filename
       tally,count = traffic_light_count(kata_dir)
       manifest = eval IO.popen("cat #{manifest_filename}").read
       created = Time.mktime(*manifest[:created])
@@ -67,7 +67,6 @@ def prune(do_delete)
   prune_stats.sort.each do |traffic_light_count,entries|
     entries.each do |id,days_old|
       if yield traffic_light_count, days_old
-        #traffic_light_count <= max_traffic_light_count and days_old >= min_days_old
         tally_yes += 1
         inner_dir = id[0..1]   
         outer_dir = id[2..9]

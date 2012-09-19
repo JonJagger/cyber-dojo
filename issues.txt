@@ -25,7 +25,11 @@ html element IDs are sometimes created using filenames. When this
 happens I currently do this...
    name.gsub('.', '_')            in GitDiff.rb and
    diff.name.replace(/\./g, '_')  in cyberdojo-build_diff_filenames.js
-This should be handled more thoroughly to ensure resulting ID is valid.  
+This should be handled more thoroughly to ensure resulting ID is valid.
+ID and NAME tokens must begin with a letter ([A-Za-z]) and may be followed
+by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("_"),
+colons (":"), and periods (".").
+However jQuery has problems with ids that contain periods and colons.
 -----
 In lib/CodeOutputParser.rb...
 if a player creates a cyberdojo.sh file which runs two or more
