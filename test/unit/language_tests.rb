@@ -14,6 +14,14 @@ class LanguageTests < ActionController::TestCase
     assert_equal root_dir + '/languages/' + 'Dummy', language.dir
   end
   
+  test "blank opening line of visible starter file is retained" do
+    language = make_language('Dummy')
+    lines = [ "", "def answer", "  42", "end" ]
+    expected = lines.join("\n") + "\n"
+    visible_files = language.visible_files
+    assert_equal expected, visible_files['untitled.rb']
+  end
+  
   test "visible files are loaded but not output and not instructions" do
     language = make_language('Dummy')    
     visible_files = language.visible_files
