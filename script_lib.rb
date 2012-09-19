@@ -62,7 +62,7 @@ def prune(do_delete)
   tally_yes = 0
   tally_no = 0
   if do_delete == "false"
-    print "        " + "kata" + "       " + "rgb" + "\t" + "days-old" + "\n"
+    print "        " + "kata" + "       " + "rags" + "\t" + "days-old" + "\n"
   end
   prune_stats.sort.each do |traffic_light_count,entries|
     entries.each do |id,days_old|
