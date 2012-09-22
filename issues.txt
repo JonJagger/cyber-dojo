@@ -14,12 +14,6 @@ Ensuring cyberdojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group.See lib/Files.rb
 -----
-If you're looking at file X in the textarea editor and you scroll
-so the cursor position goes out of view and then switch to another file,
-when you switch back to file X the textarea auto scrolls to the cursor
-position and not to the scrolled-to position it was last at when
-you switch files. This is annoying.
------
 The Diff view doesn't work properly in IE8.
 -----
 

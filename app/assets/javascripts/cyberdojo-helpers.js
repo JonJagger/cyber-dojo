@@ -2,6 +2,14 @@
 
 var cyberDojo = (function($cd, $j) {
   
+  $cd.id = function(name) {
+    return $j('[id="' + name + '"]');
+  };
+  
+  $cd.fileContentFor = function(filename) {
+    return $cd.id('file_content_for_' + filename);
+  };
+  
   $cd.fileDiv = function(filename) {
     return $cd.id(filename + '_div');
   };
