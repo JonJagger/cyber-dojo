@@ -8,9 +8,13 @@ var cyberDojo = (function($cd, $j) {
     $cd.newFileContent('newfile_' + $cd.random3(), 'Please rename me!');
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.deleteFile = function(avatar_name) {
     $cd.deleteFilePrompt(avatar_name, true);
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.renameFile = function(avatar_name) {
     var oldFilename = $cd.currentFilename();
@@ -60,6 +64,8 @@ var cyberDojo = (function($cd, $j) {
     input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'))
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.newFileContent = function(filename, content) {    
     $j('#visible_files_container').append($cd.makeNewFile(filename, content));
     $cd.bindLineNumbers(filename);      
@@ -67,6 +73,8 @@ var cyberDojo = (function($cd, $j) {
     $cd.rebuildFilenameList();
     $cd.loadFile(filename);
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.deleteFilePrompt = function(avatar_name, ask) {
     var filename = $cd.currentFilename();
@@ -104,6 +112,8 @@ var cyberDojo = (function($cd, $j) {
     }
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.doDelete = function(filename) {
     $cd.fileDiv(filename).remove();    
     var filenames = $cd.rebuildFilenameList();
@@ -111,6 +121,8 @@ var cyberDojo = (function($cd, $j) {
     // always at least one file
     $cd.loadFile(filenames[0]);
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.renameFileFromTo = function(avatar_name, oldFilename, newFilename) {
     var message;
@@ -154,6 +166,8 @@ var cyberDojo = (function($cd, $j) {
     $cd.rebuildFilenameList();
     $cd.loadFile(newFilename);
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.renameFailure = function(avatar_name, oldFilename, newFilename, reason) {
     var space = "&nbsp;";

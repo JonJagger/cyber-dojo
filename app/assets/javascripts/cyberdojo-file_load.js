@@ -7,7 +7,7 @@ var cyberDojo = (function($cd, $j) {
     var fc = $cd.fileContentFor(cf);
     var left = fc.scrollLeft();
     var top = fc.scrollTop();
-    
+
     // I want to
     //    1. restore scrollTop position
     //    2. restore scrollLeft position
@@ -17,11 +17,11 @@ var cyberDojo = (function($cd, $j) {
     // I can set the back _after_ the call to focus()
     fc.data('scrollTop', top);
     fc.data('scrollLeft', left);
-    
+
     $cd.fileDiv($cd.currentFilename()).hide();
     $cd.selectFileInFileList(filename);    
     $cd.fileDiv(filename).show();
-    
+
     // Resetting the focus here allows you to carry on
     // typing at the point the cursor left off.
     fc = $cd.fileContentFor(filename);
@@ -38,6 +38,8 @@ var cyberDojo = (function($cd, $j) {
     $j('#current_filename').val(filename);
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.selectFileInFileList = function(filename) {    
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
@@ -51,11 +53,13 @@ var cyberDojo = (function($cd, $j) {
     $cd.setRenameAndDeleteButtons(filename);
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.setRenameAndDeleteButtons = function(filename) {
     var file_ops = $j('#file_operation_buttons');
     var renameFile = file_ops.find('#rename');
     var deleteFile = file_ops.find('#delete');
-    
+
     if ($cd.cantBeRenamedOrDeleted(filename)) {
       renameFile.attr('disabled', true);
       renameFile.removeAttr('title');
@@ -69,22 +73,26 @@ var cyberDojo = (function($cd, $j) {
     }    
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.cantBeRenamedOrDeleted = function(filename) {
     var filenames = [ 'cyberdojo.sh', 'output' ];
     return $cd.inArray(filename, filenames);
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   $cd.radioEntrySwitch = function(previous, current) {
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // This is used by the run-tests-page filename radio-list
     // and also the create-page languages/exercises radio-lists
     // See the comment for makeFileListEntry() in
     // cyberdojo-files.js
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     $cd.deselectRadioEntry(previous.parent());
     $cd.selectRadioEntry(current);
   };
-    
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.loadNextFile = function() {
     var filenames = $cd.filenames().sort();
     var index = $j.inArray($cd.currentFilename(), filenames);

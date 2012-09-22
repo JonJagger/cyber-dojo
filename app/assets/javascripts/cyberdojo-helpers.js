@@ -5,19 +5,27 @@ var cyberDojo = (function($cd, $j) {
   $cd.id = function(name) {
     return $j('[id="' + name + '"]');
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   $cd.fileContentFor = function(filename) {
     return $cd.id('file_content_for_' + filename);
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   $cd.fileDiv = function(filename) {
     return $cd.id(filename + '_div');
   };
-    
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.inArray = function(find, array) {
     return $j.inArray(find, array) !== -1;    
   };
-    
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.makeTable = function() {
     var makeTd = function(arg) {
       return '<td>' + arg + '</td>';
@@ -30,7 +38,9 @@ var cyberDojo = (function($cd, $j) {
     table += '</tr></table>';
     return table;
   };
-  
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.centeredDiv = function(node) {
     var div = $j('<div>', {
      align: 'center' 
@@ -38,7 +48,9 @@ var cyberDojo = (function($cd, $j) {
     div.append(node);
     return div;
   };
-  
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.avatarImage = function(avatar_name, imageSize) {
     return $j('<img>', {
        alt: avatar_name,
@@ -50,9 +62,13 @@ var cyberDojo = (function($cd, $j) {
     });
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.htmlPanel = function(content) {
     return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>';
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.alert = function(avatar_name, message, title) {
     var ext = avatar_name == "cyber-dojo" ? "png" : "jpg";
@@ -85,10 +101,14 @@ var cyberDojo = (function($cd, $j) {
       .dialog('open');  
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.h1 = function(title) {
     return '<h1>' + title + '</h1>';  
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.fakeFilenameButton = function(filename) {
     return $cd.makeTable(
         '<div class="filename" style="background:Cornsilk;color:#003C00;">'

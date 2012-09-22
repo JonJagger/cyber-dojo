@@ -12,7 +12,7 @@ html page (see vision.txt)
 -----
 Ensuring cyberdojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
-better to use pgid - process group.See lib/Files.rb
+better to use pgid - process group. See lib/Files.rb
 -----
 The Diff view doesn't work properly in IE8.
 -----

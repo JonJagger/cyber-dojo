@@ -8,6 +8,8 @@ var cyberDojo = (function($cd, $j) {
     $j('#spinner').show();
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.postRunTests = function() { 
     $j('#spinner').hide();
     $j('#tags_so_far').show();

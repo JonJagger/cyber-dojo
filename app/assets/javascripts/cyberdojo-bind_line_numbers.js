@@ -5,13 +5,17 @@ var cyberDojo = (function($cd) {
   $cd.lineNumbersFor = function(filename) {
     return $cd.id(filename + '_line_numbers');  
   };
-  
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.bindAllLineNumbers = function() {
     $j.each( $cd.filenames(), function(i,filename) {
       $cd.bindLineNumbers(filename);
     });
   };
-  
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.bindLineNumbers = function(filename) {
     var content = $cd.fileContentFor(filename);
     var numbers = $cd.lineNumbersFor(filename);
@@ -32,6 +36,8 @@ var cyberDojo = (function($cd) {
       numbers.scrollTop(content.scrollTop());   
     }
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.lineNumbers = function() {
     var lines = '1';

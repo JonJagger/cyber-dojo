@@ -18,16 +18,20 @@ var cyberDojo = (function($cd, $j) {
     // the filename _after_ the html input radio selection has
     // taken place. The effect is that the old filename stays
     // open and the new filename is hidden and then reshown!
-    
+
     return $j('#current_filename').val();
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.filenameAlreadyExists = function(filename) {
     return $cd.inArray(filename, $cd.filenames()) ||
            $cd.inArray(filename, $cd.support_filenames()) ||
            $cd.inArray(filename, $cd.hidden_filenames());	   
   };
-    
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   $cd.rebuildFilenameList = function() {
     var filenames = $cd.filenames();    
     filenames.sort();
@@ -40,6 +44,8 @@ var cyberDojo = (function($cd, $j) {
     return filenames;
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   $cd.filenames = function() {  
     var prefix = 'file_content_for_';
     var filenames = [ ];
@@ -51,8 +57,9 @@ var cyberDojo = (function($cd, $j) {
     return filenames;
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.makeFileListEntry = function(filename) {
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // Creates a filename entry on the run-tests page. I can't stand
     // radio-lists that have differing length text and you have to
     // click exactly on the text rather than on the space after
@@ -62,7 +69,6 @@ var cyberDojo = (function($cd, $j) {
     // click handler function is attached. This pattern repeats
     // in the language and exercise radio-lists in the create-page
     // and also in the diff-page filename list.
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
     var div = $j('<div>', {
       'class': 'filename'
     });
@@ -81,26 +87,28 @@ var cyberDojo = (function($cd, $j) {
     return div;
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.deselectRadioEntry = function(node) {  
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // See makeFileListEntry() above...
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     node.css('background-color', '#B2EFEF');
     node.css('color', '#777');
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   $cd.selectRadioEntry = function(node) {
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     // See makeFileListEntry() above...
     // I colour the radio entry in jQuery rather than in
     // explicit CSS to try and give better ui appearance in
     // older browsers.    
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     node.parent().css('background-color', 'Cornsilk');
     node.parent().css('color', '#003C00');
     node.attr('checked', 'checked');        
   };
-    
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.makeNewFile = function(filename, content) {
     var div = $j('<div>', {
       'class': 'filename_div',
