@@ -5,8 +5,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.loadFile = function(filename) {
     var cf = $cd.currentFilename();
     var fc = $cd.fileContentFor(cf);
-    var left = fc.data('scrollLeft') || fc.scrollLeft();
-    var top = fc.data('scrollTop') || fc.scrollTop();
+    var left = fc.scrollLeft();
+    var top = fc.scrollTop();
     
     // I want to
     //    1. restore scrollTop position
