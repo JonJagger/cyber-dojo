@@ -21,6 +21,11 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+When you rename a file you lose the cursor position.
+I could probably work around this by changing the implementation
+of renameFileFromTo() so it changed the attributes of the dom node
+rather than deleting the dom node and recreating it.
+-----
 html element IDs are sometimes created using filenames. When this
 happens I currently do this...
    name.gsub('.', '_')            in GitDiff.rb and

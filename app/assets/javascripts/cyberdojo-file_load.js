@@ -5,8 +5,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.loadFile = function(filename) {
     var cf = $cd.currentFilename();
     var fc = $cd.fileContentFor(cf);
-    var left = fc.scrollLeft();
-    var top = fc.scrollTop();
+    var left = fc.data('scrollLeft') || fc.scrollLeft();
+    var top = fc.data('scrollTop') || fc.scrollTop();
     
     // I want to
     //    1. restore scrollTop position
@@ -15,8 +15,8 @@ var cyberDojo = (function($cd, $j) {
     // Restoring the focus loses the scrollTop/Left
     // positions so I have to save them in the dom so
     // I can set the back _after_ the call to focus()
-    fc.data('scrollTop', fc.scrollTop());
-    fc.data('scrollLeft', fc.scrollLeft());
+    fc.data('scrollTop', top);
+    fc.data('scrollLeft', left);
     
     $cd.fileDiv($cd.currentFilename()).hide();
     $cd.selectFileInFileList(filename);    
@@ -26,16 +26,16 @@ var cyberDojo = (function($cd, $j) {
     // typing at the point the cursor left off.
     fc = $cd.fileContentFor(filename);
     fc.focus();
-    
+
     // Restore the saved scrolLTop/Left positions.
     // Note that doing the seemingly equivalent
     //   fc.scrollTop(top);
     //   fc.scrollLeft(left);
-    // here does _not_ work.    
-    fc.animate({scrollTop : fc.data('scrollTop'),
-                scrollLeft: fc.data('scrollLeft')}, 1);
-    
-    $j('#current_filename').val(filename);    
+    // here does _not_ work. I use animate instead with a very fast duration==1
+    top = fc.data('scrollTop') || 0;
+    left = fc.data('scrollLeft') || 0;
+    fc.animate({scrollTop: top, scrollLeft: left}, 1);
+    $j('#current_filename').val(filename);
   };
 
   $cd.selectFileInFileList = function(filename) {    

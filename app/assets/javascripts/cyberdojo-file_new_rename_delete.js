@@ -58,7 +58,6 @@ var cyberDojo = (function($cd, $j) {
     });
     renamer.dialog('open');
     input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'))
-
   };
   
   $cd.newFileContent = function(filename, content) {    
@@ -66,9 +65,7 @@ var cyberDojo = (function($cd, $j) {
     $cd.bindLineNumbers(filename);      
     var current = $cd.currentFilename();
     $cd.rebuildFilenameList();
-    $cd.fileDiv(current).hide();
-    $cd.selectFileInFileList(filename);
-    $cd.fileDiv($cd.currentFilename()).show();
+    $cd.loadFile(filename);
   };
 
   $cd.deleteFilePrompt = function(avatar_name, ask) {
@@ -147,10 +144,15 @@ var cyberDojo = (function($cd, $j) {
     // OK. Now do it...
     var file = $cd.fileContentFor(oldFilename);
     var content = file.val();
+    var top = file.scrollTop();
+    var left = file.scrollLeft();
     $cd.deleteFilePrompt(false);
     $cd.newFileContent(newFilename, content);
+    file = $cd.fileContentFor(newFilename);
+    file.data('scrollTop', top);
+    file.data('scrollLeft', left);
     $cd.rebuildFilenameList();
-    $cd.selectFileInFileList(newFilename);
+    $cd.loadFile(newFilename);
   };
 
   $cd.renameFailure = function(avatar_name, oldFilename, newFilename, reason) {
