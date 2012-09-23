@@ -3,43 +3,51 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.loadFile = function(filename) {
-    var cf = $cd.currentFilename();
-    var fc = $cd.fileContentFor(cf);
-    var left = fc.scrollLeft();
-    var top = fc.scrollTop();
-
     // I want to
-    //    1. restore scrollTop position
-    //    2. restore scrollLeft position
-    //    3. restore focus (also restores cursor position)
+    //    1. restore scrollTop and scrollLeft positions
+    //    2. restore focus (also restores cursor position)
     // Restoring the focus loses the scrollTop/Left
     // positions so I have to save them in the dom so
     // I can set the back _after_ the call to focus()
-    fc.data('scrollTop', top);
-    fc.data('scrollLeft', left);
-
+    // The call to focus() allows you to carry on
+    // typing at the point the cursor left off.
+    $cd.saveScrollPosition($cd.currentFilename());
     $cd.fileDiv($cd.currentFilename()).hide();
     $cd.selectFileInFileList(filename);    
     $cd.fileDiv(filename).show();
+    $cd.fileContentFor(filename).focus();
+    $cd.restoreScrollPosition(filename);
+    $j('#current_filename').val(filename);
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // Resetting the focus here allows you to carry on
-    // typing at the point the cursor left off.
-    fc = $cd.fileContentFor(filename);
-    fc.focus();
+  $cd.saveScrollPosition = function(filename) {
+    var fc = $cd.fileContentFor(filename);
+    var top = fc.scrollTop();
+    var left = fc.scrollLeft();
+    var div = $cd.fileDiv(filename);
+    div.attr('scrollTop', top);
+    div.attr('scrollLeft', left);
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // Restore the saved scrolLTop/Left positions.
+  $cd.restoreScrollPosition = function(filename) {
+    // Restore the saved scrollTop/Left positions.
     // Note that doing the seemingly equivalent
     //   fc.scrollTop(top);
     //   fc.scrollLeft(left);
     // here does _not_ work. I use animate instead with a very fast duration==1
-    top = fc.data('scrollTop') || 0;
-    left = fc.data('scrollLeft') || 0;
+    var div = $cd.fileDiv(filename);
+    var top = div.attr('scrollTop') || 0;
+    var left = div.attr('scrollLeft') || 0;
+    var fc = $cd.fileContentFor(filename);    
     fc.animate({scrollTop: top, scrollLeft: left}, 1);
-    $j('#current_filename').val(filename);
   };
-
+  
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
   $cd.selectFileInFileList = function(filename) {    
     // Can't do $j('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
@@ -48,7 +56,6 @@ var cyberDojo = (function($cd, $j) {
     var node = $j('[id="radio_' + filename + '"]');
     var previousFilename = $cd.currentFilename();
     var previous = $j('[id="radio_' + previousFilename + '"]');
-    
     $cd.radioEntrySwitch(previous, node);
     $cd.setRenameAndDeleteButtons(filename);
   };

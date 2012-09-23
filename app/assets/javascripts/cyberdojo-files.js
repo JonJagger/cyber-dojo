@@ -1,7 +1,19 @@
 /*jsl:option explicit*/
 
 var cyberDojo = (function($cd, $j) {
-  
+
+   $cd.fileContentFor = function(filename) {
+    return $cd.id('file_content_for_' + filename);
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  $cd.fileDiv = function(filename) {
+    return $cd.id(filename + '_div');
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.currentFilename = function() {
     // I tried changing this to...
     //   return $j('input:radio[name=filename]:checked').val();

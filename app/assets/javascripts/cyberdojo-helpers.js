@@ -8,18 +8,6 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  $cd.fileContentFor = function(filename) {
-    return $cd.id('file_content_for_' + filename);
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  $cd.fileDiv = function(filename) {
-    return $cd.id(filename + '_div');
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   $cd.inArray = function(find, array) {
     return $j.inArray(find, array) !== -1;    
   };
