@@ -7,17 +7,14 @@ var cyberDojo = (function($cd, $j) {
     //   return $j('input:radio[name=filename]:checked').val();
     // (which would remove the need for the file
     //    cyberdojo/app/views/_current_filename.html.erb)
-    // This worked on Firefox but not on Chrome and the issue
-    // in Chrome was in the function
-    //   $cd.loadFile = function(filename) {
-    //      $cd.fileDiv($cd.currentFilename()).hide();
-    //      $cd.selectFileInFileList(filename);
-    //   };
-    // in cyberdojo-file_load_save.js
-    // It seems in Chrome $cd.currentFilename() gets
-    // the filename _after_ the html input radio selection has
-    // taken place. The effect is that the old filename stays
-    // open and the new filename is hidden and then reshown!
+    // This worked on Firefox but not on Chrome.
+    // The problem seems to be that in Chrome the javascript handler
+    // function invoked when the radio button filename is clicked sees
+    //    $j('input:radio[name=filename]:checked')
+    // as having _already_ changed. Thus you cannot retrieve the
+    // old filename. This matters since I need to retrieve and store
+    // the scrollTop and scrollLeft positions of a file when it is
+    // switched out of the editor by a call to hide().
 
     return $j('#current_filename').val();
   };

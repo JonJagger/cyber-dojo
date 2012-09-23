@@ -118,7 +118,7 @@ var cyberDojo = (function($cd, $j) {
     $cd.fileDiv(filename).remove();    
     var filenames = $cd.rebuildFilenameList();
     // cyberdojo.sh & output cannot be deleted so
-    // always at least one file
+    // there is always at least one file
     $cd.loadFile(filenames[0]);
   };
 
