@@ -125,37 +125,58 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.renameFileFromTo = function(avatar_name, oldFilename, newFilename) {
+    $cd.saveScrollPosition(oldFilename);
+    if ($cd.canRenameFileFromTo(avatar_name, oldFilename, newFilename)) {	  
+      $cd.rewireFileFromTo(oldFilename, newFilename);	  
+      $cd.rebuildFilenameList();
+      $cd.loadFile(newFilename);
+    }
+    // else
+    //   the scroll position is still ok but the
+    //   cursor position is now be lost... doing
+    //     $cd.fileContentFor(oldFilename).focus();
+    //     $cd.restoreScrollPosition(oldFilename);
+    //   does not work - there is some interaction between
+    //   jQuery dialog and the textarea cursor...??
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  $cd.canRenameFileFromTo = function(avatar_name, oldFilename, newFilename) {
     var message;
     if (newFilename === "") {
       message = "No filename entered" + "<br/>" +
 	    "Rename " + oldFilename + " abandoned";
       $cd.alert(avatar_name, message);
-      return;
+      return false;
     }
     if (newFilename === oldFilename) {
       message = "Same filename entered." + "<br/>" +
 	    oldFilename + " is unchanged";
       $cd.alert(avatar_name, message);
-      return;
+      return false;
     }
     if ($cd.filenameAlreadyExists(newFilename)) {
       $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
-      return;
+      return false;
     }
     if (newFilename.indexOf("/") !== -1) {
       $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    newFilename + " contains a forward slash");
-      return;
+      return false;
     }
     if (newFilename.indexOf("\\") !== -1) {
       $cd.renameFailure(avatar_name, oldFilename, newFilename,
 		    newFilename + " contains a back slash");
-      return;
+      return false;
     }
-    // OK. Now do it...
-    
-    $cd.saveScrollPosition(oldFilename);
+    return true;    
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  $cd.rewireFileFromTo = function(oldFilename, newFilename) {
     // See ap/views/kata/_editor.html.erb
     //    <div class="filename_div"
     //     name="<%=filename-%>"
@@ -173,9 +194,6 @@ var cyberDojo = (function($cd, $j) {
     var ta = $cd.id('file_content_for_' + oldFilename);
     ta.attr('name', 'file_content[' + newFilename + ']');
     ta.attr('id', 'file_content_for_' + newFilename);
-
-    $cd.rebuildFilenameList();
-    $cd.loadFile(newFilename);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
