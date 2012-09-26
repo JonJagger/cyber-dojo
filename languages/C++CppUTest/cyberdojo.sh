@@ -1,3 +1,3 @@
-export CPPUTEST=../../cpputest
+export CPPUTEST_HOME=../../cpputest
 
 make
