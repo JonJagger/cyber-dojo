@@ -20,6 +20,8 @@ Run the ova file in VirtualBox. Mike Long has written some instructions for this
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
 The Virtual Box screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
+Detailed instructions on building your own Turnkey server from scratch are also here
+http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 
 
 Pulling the latest github source onto your Turnkey server
