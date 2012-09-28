@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
     
-  $cd.help = function(avatar) {    
+  $cd.kataHelp = function(avatar) {    
     var imageSize = 70;
     var homePageImage = ''    
       + '<img'
