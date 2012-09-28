@@ -34,7 +34,7 @@ $j(document).ready(function() {
     });
   });
   
-  $j.each(['about', 'basics', 'dashboard', 'faqs', 'links', 'source', 'tips', 'why' ], function(i,name) {
+  $j.each(['about', 'basics', 'dashboard', 'faqs', 'links', 'source', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
       $cd.popup(name);
     });
@@ -43,6 +43,11 @@ $j(document).ready(function() {
   $j('#feedback').click(function() {
     $cd.feedbackPopup();  
   });
+  
+  $j('#tips').click(function() {
+    $cd.tipsPopup();  
+  });
+  
   
   $j('body').css('background', 'Cornsilk');
   

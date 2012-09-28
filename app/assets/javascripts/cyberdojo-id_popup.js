@@ -5,17 +5,19 @@ var cyberDojo = (function($cd, $j) {
   $cd.idPopup = function(language,exercise,kuid) {
     var grid = $j(
       $cd.makeTable(
-      '<div class="panel">' +
-        '<div>' +
-          'language: ' + language +
-        '</div>' +
-        '<div>' +        
-          'exercise: ' + exercise +
-        '</div>' +
-        '<div>' +        
-          'kuid: ' + kuid +
-        '</div>' +
-      '</div>'));
+        $cd.divPanel(
+          '<div>' +
+            'language: ' + language +
+          '</div>' +
+          '<div>' +        
+            'exercise: ' + exercise +
+          '</div>' +
+          '<div>' +        
+            'kuid: ' + kuid +
+          '</div>'
+        )
+      )
+    );
       
     $cd.dialogPopup(grid.html(), 350, 'id');
   };

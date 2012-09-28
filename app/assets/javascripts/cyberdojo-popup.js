@@ -26,6 +26,10 @@ var cyberDojo = (function($cd, $j) {
     div.dialog('open');            
   };
   
+  $cd.divPanel = function(content) {
+    return '<div class="panel">' + content + '</div>';
+  };
+  
   return $cd;
 })(cyberDojo || {}, $);
 
