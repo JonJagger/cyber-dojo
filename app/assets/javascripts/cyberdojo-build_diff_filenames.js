@@ -40,30 +40,6 @@ var cyberDojo = (function($cd, $j) {
       };
     };
     
-    // The filename list is loaded via
-    // app/views/diff/_filenames.html.erb and starts <% @diffs.each do |file| -%>
-    // relies on file[:id]  with :id created as follows...
-    // (in lib/GitDiff.rb)
-    //
-    // n = 0
-    // diffs = [ ]
-    // diffed_files.sort.each do |name,diff|    
-    //    n += 1
-    //    id = 'jj' + n.to_s
-    //    diffs << {  :id => id }
-    // end
-    //
-    // A self-contained diff-view of a complete dojo will need a
-    // prefix (rather than' jj') of the kata id (8 hex digits)
-    // concatenated with the animal-name
-    // concatenated with the traffic-light increment-number
-    // concatenated with the filename.
-    // See app/views/diff/show.html.erb
-    //    id: "<%= @kata.id -%>",
-    //    avatar: "<%= @avatar.name -%>",
-    //    tag: "<%= @traffic_lights_to_tag.length -%>"
-    //
-
     $j.each(diffs, function(n, diff) {
       // _filenames.html.erb contains an <input type="radio" id="radio_<%=diff[:id]-%>" />
       // for each file in the current diff.

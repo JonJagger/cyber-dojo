@@ -90,7 +90,7 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   $cd.radioEntrySwitch = function(previous, current) {
-    // This is used by the run-tests-page filename radio-list
+    // Used by the run-tests-page filename radio-list
     // and also the create-page languages/exercises radio-lists
     // See the comment for makeFileListEntry() in
     // cyberdojo-files.js
