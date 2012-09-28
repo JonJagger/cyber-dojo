@@ -79,21 +79,8 @@ var cyberDojo = (function($cd, $j) {
       + '<div class="panel">'
       +   space + 'think about improving, not finishing'
       + '</div>';
-                          
-    var help = $j('<div>')
-      .html('<div style="font-size: 1.0em;">' + welcomeHtml + '</div>')
-      .dialog({
-        autoOpen: false,
-        width: 575,
-        title: $cd.h1('help'),
-        modal: true,
-        buttons: {
-          ok: function() {
-            $j(this).dialog('close');
-          }
-        }
-      });
-    help.dialog('open');  
+                  
+    $cd.dialogPopup(welcomeHtml, 625, 'help');
   };
 
   return $cd;

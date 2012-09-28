@@ -17,20 +17,7 @@ var cyberDojo = (function($cd, $j) {
         '</div>' +
       '</div>'));
       
-    var div = $j('<div>')
-      .html('<div style="font-size: 1.2em;">' + grid.html() + '</div>')    
-      .dialog({
-        autoOpen: false,
-        width: 350,
-        title: '<h1>id</h1>',
-        modal: true,
-        buttons: {
-          ok: function() {
-            $j(this).dialog('close');
-          }
-        }
-      });
-    div.dialog('open');                
+    $cd.dialogPopup(grid.html(), 350, 'id');
   };
 
   return $cd;
