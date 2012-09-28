@@ -29,8 +29,7 @@ $j(document).ready(function() {
       <div class="panel">
         <%= render :partial => 'filenames' -%>
       </div>
-      <div class="info panel">
-        <%= render :partial => 'shared/info' -%>        
+      <div class="panel">                
           <table><tr><td>
             <div id="start_a_kata_from_here"
                   class="medium button">
@@ -39,6 +38,10 @@ $j(document).ready(function() {
               from here
             </div>
             </td></tr></table>
+      </div>
+      <div class="panel">        
+        <%= render :partial => 'feedback' -%>
+        <%= render :partial => 'id' -%>
       </div>
     </td>    
     <td>
