@@ -34,10 +34,14 @@ $j(document).ready(function() {
     });
   });
   
-  $j.each(['about', 'basics', 'dashboard', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ], function(i,name) {
+  $j.each(['about', 'basics', 'dashboard', 'faqs', 'links', 'source', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
       $cd.popup(name);
     });
+  });
+  
+  $j('#feedback').click(function() {
+    $cd.feedbackPopup();  
   });
   
   $j('body').css('background', 'Cornsilk');
