@@ -36,7 +36,7 @@ $j(document).ready(function() {
   
   $j.each(['about', 'basics', 'dashboard', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ], function(i,name) {
     $j('#' + name).click(function() {
-      popup(name);
+      $cd.popup(name);
     });
   });
   
@@ -51,27 +51,6 @@ $j(document).ready(function() {
   }
   
 });
-
-
-function popup(name) {
-  var grid = $j('<div>');
-  grid.load('/dojo/' + name, { }, function() {
-    var div = $j('<div>')
-      .html('<div style="font-size: 1.2em;">' + grid.html() + '</div>')    
-      .dialog({
-        autoOpen: false,
-        width: (name === 'why' ? 1100 : 850),
-        title: '<h1>' + name + '</h1>',
-        modal: true,
-        buttons: {
-          ok: function() {
-            $j(this).dialog('close');
-          }
-        }
-      });
-    div.dialog('open');        
-  });  
-}
 
 function run(method, func) {
   var id = $j('#kata_id_input').attr('value');
