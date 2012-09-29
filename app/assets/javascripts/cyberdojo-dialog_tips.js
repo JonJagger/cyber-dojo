@@ -41,8 +41,8 @@ var cyberDojo = (function($cd, $j) {
 
     var recruit =
       $cd.divPanel(
-        'Several companies use cyber-dojo as part of their recruitment. ' +
-        'Why not see how five prospective hires fare technically and socially ' +
+        'Use cyber-dojo as part of your recruitment. ' +
+        'See how five prospective hires fare technically and socially ' +
         "by pairing them with five of the team they're hoping to join in a cyber-dojo! " +
         'Do five iterations swapping partners each time.'
       );
