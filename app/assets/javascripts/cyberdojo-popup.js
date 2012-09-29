@@ -9,6 +9,8 @@ var cyberDojo = (function($cd, $j) {
     });  
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.dialogPopup = function(html,width,name) {
     var div = $j('<div>')
       .html('<div style="font-size: 1.2em;">' + html + '</div>')    
@@ -25,6 +27,8 @@ var cyberDojo = (function($cd, $j) {
       });
     div.dialog('open');            
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   $cd.divPanel = function(content) {
     return '<div class="panel">' + content + '</div>';

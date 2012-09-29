@@ -21,6 +21,9 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+$cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
+popup dialog buttons on front page need refactoring to become client side.
+-----
 When you rename a file you lose the cursor position.
 I could probably work around this by changing the implementation
 of renameFileFromTo() so it changed the attributes of the dom node
