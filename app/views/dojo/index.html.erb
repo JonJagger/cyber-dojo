@@ -34,13 +34,13 @@ $j(document).ready(function() {
     });
   });
   
-  $j.each(['dashboard', 'source', 'why' ], function(i,name) {
+  $j.each(['dashboard', 'source'], function(i,name) {
     $j('#' + name).click(function() {
       $cd.popup(name);
     });
   });
 
-  $j.each(['about','basics','faqs','feedback','links','tips'], function(i,name) {
+  $j.each(['about','basics','faqs','feedback','links','tips','why'], function(i,name) {
     $j('#' + name).click(function() {
       $cd[name + 'Popup']();    
     });
