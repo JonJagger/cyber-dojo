@@ -39,17 +39,11 @@ $j(document).ready(function() {
       $cd.popup(name);
     });
   });
-  
-  $j('#feedback').click(function() {
-    $cd.feedbackPopup();  
-  });
-  
-  $j('#tips').click(function() {
-    $cd.tipsPopup();  
-  });
-  
-  $j('#about').click(function() {
-    $cd.aboutPopup();  
+
+  $j.each(['about','feedback','tips'], function(i,name) {
+    $j('#' + name).click(function() {
+      $cd[name + 'Popup']();    
+    });
   });
   
   $j('body').css('background', 'Cornsilk');
