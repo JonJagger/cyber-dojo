@@ -58,6 +58,12 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  $cd.divPanel = function(content) {
+    return '<div class="panel">' + content + '</div>';
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.alert = function(avatar_name, message, title) {
     var ext = avatar_name == "cyber-dojo" ? "png" : "jpg";
     var imageSize = 200;

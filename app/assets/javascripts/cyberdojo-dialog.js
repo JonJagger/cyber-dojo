@@ -2,16 +2,6 @@
 
 var cyberDojo = (function($cd, $j) {
   
-  //Does anything still use this?
-  $cd.popup = function(name) {
-    var grid = $j('<div>');
-    grid.load('/dojo/' + name, { }, function() {
-      $cd.dialogPopup(grid.html(), (name === 'why' ? 1100 : 850), name);
-    });  
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   $cd.dialog = function(html,width,name) {
     var div = $j('<div>')
       .html('<div style="font-size: 1.2em;">' + html + '</div>')    
@@ -29,12 +19,6 @@ var cyberDojo = (function($cd, $j) {
     div.dialog('open');            
   };
 
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  $cd.divPanel = function(content) {
-    return '<div class="panel">' + content + '</div>';
-  };
-  
   return $cd;
 })(cyberDojo || {}, $);
 
