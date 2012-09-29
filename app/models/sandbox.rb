@@ -42,7 +42,7 @@ class Sandbox
     link_files(language.dir, language.support_filenames)
     link_files(language.dir, language.hidden_filenames)
     command  = "cd '#{dir}';" +
-               "./cyberdojo.sh"
+               "./cyber-dojo.sh"
     max_run_tests_duration = (test_timeout || 10)
     Files::popen_read(command, max_run_tests_duration)
   end

@@ -34,10 +34,11 @@ class DojoController < ApplicationController
     info = gather_info
     language = Language.new(root_dir, info[:language])
     exercise = Exercise.new(root_dir, info[:exercise])
-    info[:visible_files] = language.visible_files
-    info[:visible_files]['output'] = ''
-    info[:visible_files]['instructions'] = exercise.instructions
-    
+    vis = info[:visible_files] = language.visible_files
+    vis['output'] = ''
+    vis['instructions'] = exercise.instructions
+    vis['cyber-dojo.sh'] = vis['cyberdojo.sh']
+    vis.delete('cyberdojo.sh')
     Kata.create_new(root_dir, info)
     
     redirect_to :action => :index, 
