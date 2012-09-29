@@ -1,0 +1,19 @@
+
+<script language="javascript" type="text/javascript"><!--
+
+$j(document).ready(function() {
+
+  $j('#view_dashboard').click(function() {
+    run('exists_json', function(id, data) {
+      showDashboard(id, data);
+    });
+  });
+  
+});
+
+//--></script>
+
+<input type="button"
+       class="large button"
+       id="view_dashboard"
+       value="view-dashboard" />

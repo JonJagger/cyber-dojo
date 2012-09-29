@@ -1,0 +1,22 @@
+
+<script language="javascript" type="text/javascript"><!--
+
+$j(document).ready(function() {
+
+  $j('#start_coding').click(function() {
+    var id = $j('#kata_id_input').attr('value');
+    if ($j.trim(id) === '') {
+      $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
+    } else {
+      $cd.postTo('/dojo/start', { id: id }, '_blank');    
+    }
+  });
+    
+});
+
+//--></script>
+
+<input type="button"
+       class="large button"
+       id="start_coding"
+       value="start-coding" />

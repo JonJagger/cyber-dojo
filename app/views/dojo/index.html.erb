@@ -7,40 +7,11 @@ $j(document).ready(function() {
     $cd.postTo('/dojo/create');
   });
   
-  $j('#start_coding').click(function() {
-    var id = $j('#kata_id_input').attr('value');
-    if ($j.trim(id) === '') {
-      $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
-    } else {
-      $cd.postTo('/dojo/start', { id: id }, '_blank');    
-    }
-  });
-  
-  $j('#resume_coding').click(function() {
-    run('exists_json', function(id, data) {
-      resumeCoding(id, data);
-    });
-  });
-  
   $cd.registerCloseResumeDialog = function(resumer) {
     $cd.closeResumeDialog = function() {
       resumer.dialog('close');
     };
   };
-  
-  $j('#show_dashboard').click(function() {
-    run('exists_json', function(id, data) {
-      showDashboard(id, data);
-    });
-  });
-  
-  $j.each(
-    ['about','basics','dashboard','faqs','feedback','links','source','tips','why'],
-    function(i,name) {
-      $j('#' + name).click(function() {
-        $cd['dialog_' + name]();    
-    });
-  });
   
   $j('body').css('background', 'Cornsilk');
   
@@ -166,10 +137,7 @@ function cantFind(id) {
             </span>
           </td>
           <td>
-            <input type="button"
-                   class="large button"
-                   id="start_coding"
-                   value="start-coding" />
+            <%= render :partial => 'start_coding_button' -%>
           </td>
         </tr>
         <tr>
@@ -181,10 +149,7 @@ function cantFind(id) {
             </span>
           </td>
           <td>
-            <input type="button"
-                   class="large button"
-                   id="resume_coding"
-                   value="resume-coding" />
+            <%= render :partial => 'resume_coding_button' -%>
           </td>
         </tr>
         <tr>
@@ -196,10 +161,7 @@ function cantFind(id) {
             </span>
           </td>
           <td>
-            <input type="button"
-                   class="large button"
-                   id="show_dashboard"
-                   value="view-dashboard" />
+            <%= render :partial => 'view_dashboard_button' -%>            
           </td>
         </tr>          
       </table>
@@ -208,42 +170,13 @@ function cantFind(id) {
 
   <tr>
     <td class="panel">
-      <% [ 'about', 'basics', 'dashboard', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ].each do |name| -%>
-        <input type="button"
-               class="button"
-               id="<%=name-%>"
-               value="<%=name-%>"/>
-      <% end -%>
+      <%= render :partial => 'bottom_buttons' -%>
     </td>
   </tr>
     
   <tr>
     <td>
-      <table>
-        <tr>
-          <td>
-           <%= render :partial => 'donate' -%>
-          </td>
-          <td>
-            <% size = 80 -%>
-            <%= link_to image_tag("/images/raspberry-pi.gif",
-                                  :border => 0,
-                                  :size => "60x75"
-                                 ), "http://www.raspberrypi.org/" -%>          
-          </td>
-          <td>
-            &nbsp;
-          </td>
-          <td>
-            <span class="donate_text">
-              If you find cyber-dojo useful please consider making a donation.<br/>
-              All money is used solely to buy 
-              <a href="http://www.raspberrypi.org/">raspberry pi</a> computers for schools.<br/>
-              Thank you.
-            </span>
-          </td>
-        </tr>
-      </table>
+      <%= render :partial => 'donate' -%>
     </td>
   </tr>
 

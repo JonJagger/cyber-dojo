@@ -1,12 +1,35 @@
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-  <input type="hidden" name="cmd" value="_s-xclick">
-  <input type="hidden" name="hosted_button_id" value="7HAUYJCMFCS8C">
-  <input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"
-         border="0" name="submit" alt="PayPal - The safe, easier way to pay online.">
-  <img alt=""
-       border="0"
-       src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif"
-       width="1" height="1">    
     
-</form>
+<table>
+  <tr>
+    <td>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="7HAUYJCMFCS8C">
+        <input type="image" src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"
+               border="0" name="submit" alt="PayPal - The safe, easier way to pay online.">
+        <img alt=""
+             border="0"
+             src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif"
+             width="1" height="1">    
+          
+      </form>    </td>
+    <td>
+      <% size = 80 -%>
+      <%= link_to image_tag("/images/raspberry-pi.gif",
+                            :border => 0,
+                            :size => "60x75"
+                           ), "http://www.raspberrypi.org/" -%>          
+    </td>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+      <span class="donate_text">
+        If you find cyber-dojo useful please consider making a donation.<br/>
+        All money is used solely to buy 
+        <a href="http://www.raspberrypi.org/">raspberry pi</a> computers for schools.<br/>
+        Thank you.
+      </span>
+    </td>
+  </tr>
+</table>

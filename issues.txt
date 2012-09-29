@@ -22,6 +22,8 @@ The Diff view doesn't work properly in IE8.
 MINOR
 -----
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
+change paypal purpose wording from cyber-dojo and add note that Pies are £30
+wrong ID alert popup font is too large 
 need help button on diff page
 need help button on dashboard page
 make the id button text the actual id, and add start date and age to the popped up info
