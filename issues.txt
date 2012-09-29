@@ -22,7 +22,12 @@ The Diff view doesn't work properly in IE8.
 MINOR
 -----
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
-popup dialog buttons on front page need refactoring to become client side.
+dashboard/source popup dialog buttons on front page need refactoring to become client side.
+rename all x-popup files to dialog-x
+need help button on diff page
+need help button on dashboard page
+make the id button text the actual id, and add start date and age to the popped up info
+reclicking on diff'ed file doesn't seem to cycle correctly...
 -----
 When you rename a file you lose the cursor position.
 I could probably work around this by changing the implementation

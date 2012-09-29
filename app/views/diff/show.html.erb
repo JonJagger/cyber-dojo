@@ -5,7 +5,7 @@ $j(document).ready(function() {
   $cd.buildDiffFilenames(<%= @diffs.to_json.html_safe -%>);
   $j('#' + '<%=@current_filename_id-%>').click();
   
-  $j('#start_a_kata_from_here').click(function() {
+  $j('#create_a_kata_from_here').click(function() {
       $cd.postTo('/dojo/diff_save', {
         id: "<%= @kata.id -%>",
         avatar: "<%= @avatar.name -%>",
@@ -31,11 +31,11 @@ $j(document).ready(function() {
       </div>
       <div class="panel">                
           <table><tr><td>
-            <div id="start_a_kata_from_here"
+            <div id="create_a_kata_from_here"
                   class="medium button">
-              start a new<br/>
-              practice-kata<br/>
-              from here
+              create a new<br/>
+              cyber-dojo<br/>
+              from this fileset
             </div>
             </td></tr></table>
       </div>
