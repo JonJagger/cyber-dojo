@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.linksPopup = function() {
+  $cd.dialog_links = function() {
 
     var ninetySeven =
       $cd.divPanel(
@@ -51,9 +51,9 @@ var cyberDojo = (function($cd, $j) {
         '&nbsp;professionalism in programming.'
       );
       
-    var grid = $j($cd.makeTable(ninetySeven,video,map,accu));
+    var links = $j($cd.makeTable(ninetySeven,video,map,accu));
       
-    $cd.dialogPopup(grid.html(), 650, 'links');
+    $cd.dialog(links.html(), 650, 'links');
   };
 
   return $cd;

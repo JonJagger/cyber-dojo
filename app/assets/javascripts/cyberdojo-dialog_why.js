@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.whyPopup = function() {
+  $cd.dialog_why = function() {
 
     var oslo =
         'Several years ago I took part in a coding dojo in the Scotsman pub in Oslo.<br/>' +
@@ -47,9 +47,9 @@ var cyberDojo = (function($cd, $j) {
         "participants as a single team, with everyone able to see everyone else's code."
     );
       
-    var grid = $j($cd.makeTable(oslo,feel,improve,delay,browser,noCollab,social));
+    var why = $j($cd.makeTable(oslo,feel,improve,delay,browser,noCollab,social));
       
-    $cd.dialogPopup(grid.html(), 950, 'why');
+    $cd.dialog(why.html(), 950, 'why');
   };
 
   return $cd;

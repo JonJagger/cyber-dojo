@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
     
-  $cd.kataHelp = function(avatar) {    
+  $cd.dialog_kata_help = function(avatar) {    
     var imageSize = 70;
     var homePageImage = ''    
       + '<img'
@@ -30,7 +30,7 @@ var cyberDojo = (function($cd, $j) {
     };
     var space = '&nbsp;';
     var spaces = Array.prototype.join.call({length:4}, space);
-    var welcomeHtml = ''      
+    var kataHelp = ''      
       + '<table>'
       +   '<tr>'
       +     '<td class="panel">'
@@ -80,7 +80,7 @@ var cyberDojo = (function($cd, $j) {
       +   space + 'think about improving, not finishing'
       + '</div>';
                   
-    $cd.dialogPopup(welcomeHtml, 625, 'help');
+    $cd.dialog(kataHelp, 625, 'help');
   };
 
   return $cd;

@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
   
-  $cd.feedbackPopup = function() {
+  $cd.dialog_feedback = function() {
     
     var appreciate =
       $cd.divPanel(
@@ -20,9 +20,9 @@ var cyberDojo = (function($cd, $j) {
         ' <a href="http://jonjagger.blogspot.co.uk/2012/09/cyber-dojo-dates.html">cyber-dojo blog page</a>.' 
       );
     
-    var grid = $j($cd.makeTable(appreciate, tellMe));
+    var feedback = $j($cd.makeTable(appreciate, tellMe));
       
-    $cd.dialogPopup(grid.html(), 650, 'feedback');
+    $cd.dialog(feedback.html(), 650, 'feedback');
   };
 
   return $cd;

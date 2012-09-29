@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.faqsPopup = function() {
+  $cd.dialog_faqs = function() {
 
     var noListen =
       $cd.divPanel(
@@ -17,9 +17,9 @@ var cyberDojo = (function($cd, $j) {
     var refactor = add + "simple auto-refactoring ?";
     var any = add + "... ?";
 
-    var grid = $j($cd.makeTable(hilight,noListen,refactor,noListen,any,noListen));
+    var faqs = $j($cd.makeTable(hilight,noListen,refactor,noListen,any,noListen));
       
-    $cd.dialogPopup(grid.html(), 675, 'faqs');
+    $cd.dialog(faqs.html(), 675, 'faqs');
   };
 
   return $cd;

@@ -38,7 +38,7 @@ $j(document).ready(function() {
     ['about','basics','dashboard','faqs','feedback','links','source','tips','why'],
     function(i,name) {
       $j('#' + name).click(function() {
-        $cd[name + 'Popup']();    
+        $cd['dialog_' + name]();    
     });
   });
   

@@ -2,6 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
   
+  //Does anything still use this?
   $cd.popup = function(name) {
     var grid = $j('<div>');
     grid.load('/dojo/' + name, { }, function() {
@@ -11,7 +12,7 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.dialogPopup = function(html,width,name) {
+  $cd.dialog = function(html,width,name) {
     var div = $j('<div>')
       .html('<div style="font-size: 1.2em;">' + html + '</div>')    
       .dialog({

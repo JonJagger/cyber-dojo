@@ -2,8 +2,8 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.tipsPopup = function() {
-    
+  $cd.dialog_tips = function() {
+
     var bellOne =    
       $cd.divPanel(
         'Periodically ring a bell. At the bell the current ' +
@@ -11,7 +11,7 @@ var cyberDojo = (function($cd, $j) {
         'becomes the <em>navigator</em> (this also ' +
         'helps to dampen the effect of some developers dominating the keyboard.)'
       );
-        
+
     var bellTwo =
       $cd.divPanel(
         'Periodically ring a bell. At the bell the current ' +
@@ -27,7 +27,16 @@ var cyberDojo = (function($cd, $j) {
     var average =
       $cd.divPanel(
         'Play the ' +
-        '<a href="http://jonjagger.blogspot.com/2009/06/average-time-to-green-game.html">average-time-to-green-game</a>.'
+        '<a href="http://jonjagger.blogspot.com/2009/06/average-time-to-green-game.html">' +
+        'average-time-to-green-game' +
+        '</a>.'
+      );
+
+    var atGreen =
+      $cd.divPanel(
+        'When everyone is at green set a challenge to either<br/> ' +
+        ' &nbsp;&nbsp;&bull; find some code you can delete and the tests still all pass!<br/>' +
+        ' &nbsp;&nbsp;&bull; find a bug, and write a failing test for it.'
       );
 
     var recruit =
@@ -38,15 +47,9 @@ var cyberDojo = (function($cd, $j) {
         'Do five iterations swapping partners each time.'
       );
 
-    var atGreen =
-      $cd.divPanel(
-        'When everyone is at green set a challenge to either<br/> ' +
-        ' &nbsp;&nbsp;&bull; find some code you can delete and the tests still all pass!<br/>' +
-        ' &nbsp;&nbsp;&bull; find a bug, and write a failing test for it.'
-      );
-    var grid = $j($cd.makeTable(bellOne,bellTwo,average,atGreen,recruit));
-      
-    $cd.dialogPopup(grid.html(), 900, 'tips');
+    var tips = $j($cd.makeTable(bellOne,bellTwo,average,atGreen,recruit));
+  
+    $cd.dialog(tips.html(), 900, 'tips');
   };
 
   return $cd;

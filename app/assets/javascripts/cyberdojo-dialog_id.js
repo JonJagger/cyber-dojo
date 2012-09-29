@@ -2,8 +2,8 @@
 
 var cyberDojo = (function($cd, $j) {
   
-  $cd.idPopup = function(language,exercise,kuid) {
-    var grid = $j(
+  $cd.dialog_id = function(language,exercise,kuid) {
+    var id = $j(
       $cd.makeTable(
         $cd.divPanel(
           '<div>' +
@@ -19,7 +19,7 @@ var cyberDojo = (function($cd, $j) {
       )
     );
       
-    $cd.dialogPopup(grid.html(), 350, 'id');
+    $cd.dialog(id.html(), 350, 'id');
   };
 
   return $cd;

@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.dashboardPopup = function() {
+  $cd.dialog_dashboard = function() {
 
     var redFirst =
       $cd.divPanel(
@@ -31,9 +31,9 @@ var cyberDojo = (function($cd, $j) {
         'progressions as evidence of overly ambitious steps.'
       );
 
-    var grid = $j($cd.makeTable(redFirst,refactor,amber));
+    var dashboard = $j($cd.makeTable(redFirst,refactor,amber));
       
-    $cd.dialogPopup(grid.html(), 450, 'dasboard');
+    $cd.dialog(dashboard.html(), 450, 'dasboard');
   };
 
   return $cd;

@@ -5,9 +5,9 @@ $j(document).ready(function() {
 
   $j('#id').click(function() {
           
-    $cd.idPopup("<%= @kata.language.name -%>",
-                "<%= @kata.exercise.name -%>",
-                "<%= @kata.id -%>");
+    $cd.dialog_id("<%= @kata.language.name -%>",
+                  "<%= @kata.exercise.name -%>",
+                  "<%= @kata.id -%>");
   });
 
 });

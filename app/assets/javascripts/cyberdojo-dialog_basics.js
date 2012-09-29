@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.basicsPopup = function() {
+  $cd.dialog_basics = function() {
 
     var team =
       $cd.divPanel(
@@ -30,9 +30,9 @@ var cyberDojo = (function($cd, $j) {
         'Remember, you are not shipping the code, you are practising!'
       );
       
-    var grid = $j($cd.makeTable(team,practice,retro));
+    var basics = $j($cd.makeTable(team,practice,retro));
       
-    $cd.dialogPopup(grid.html(), 750, 'basics');
+    $cd.dialog(basics.html(), 750, 'basics');
   };
 
   return $cd;

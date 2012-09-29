@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.aboutPopup = function() {
+  $cd.dialog_about = function() {
 
     var nonIde =
       $cd.divPanel(
@@ -25,9 +25,9 @@ var cyberDojo = (function($cd, $j) {
         '<a href="http://jonjagger.blogspot.com/">Jon Jagger</a>'
       );
 
-    var grid = $j($cd.makeTable(nonIde, practice, author));
+    var about = $j($cd.makeTable(nonIde, practice, author));
       
-    $cd.dialogPopup(grid.html(), 450, 'about');
+    $cd.dialog(about.html(), 450, 'about');
   };
 
   return $cd;

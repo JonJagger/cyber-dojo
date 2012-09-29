@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.sourcePopup = function() {
+  $cd.dialog_source = function() {
 
     var github =
       $cd.divPanel(
@@ -37,9 +37,9 @@ var cyberDojo = (function($cd, $j) {
         '</a>.'
       );
 
-    var grid = $j($cd.makeTable(github,ova,turnKey));
+    var source = $j($cd.makeTable(github,ova,turnKey));
       
-    $cd.dialogPopup(grid.html(), 720, 'source');
+    $cd.dialog(source.html(), 720, 'source');
   };
 
   return $cd;
