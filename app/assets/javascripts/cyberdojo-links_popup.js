@@ -39,14 +39,14 @@ var cyberDojo = (function($cd, $j) {
       
     var accu =
       $cd.divPanel(
-        '<a href="http://accu.org/index.php/conferences/accu_conference_2012">' +
+        '<a href="http://accu.org/index.php/conferences/accu_conference_2013">' +
           '<img src="/images/accu_button.gif" ' +
                'style="float:left; border: 3px solid;" ' + 
                'width="150" ' +
                'height="75" ' +
                'title="ACCU"/>' +
         '</a>' +
-        '&nbsp;ACCU is a superb non-profit organisation<br/>' +
+        '&nbsp;<a href="http://accu.org">accu</a> is a superb non-profit organisation<br/>' +
         '&nbsp;of programmers who <em>care</em> about<br/>' +
         '&nbsp;professionalism in programming.'
       );

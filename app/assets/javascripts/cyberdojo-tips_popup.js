@@ -38,9 +38,15 @@ var cyberDojo = (function($cd, $j) {
         'Do five iterations swapping partners each time.'
       );
 
-    var grid = $j($cd.makeTable(bellOne, bellTwo, average, recruit));
+    var atGreen =
+      $cd.divPanel(
+        'When everyone is at green set a challenge to either<br/> ' +
+        ' &nbsp;&nbsp;&bull; find some code you can delete and the tests still all pass!<br/>' +
+        ' &nbsp;&nbsp;&bull; find a bug, and write a failing test for it.'
+      );
+    var grid = $j($cd.makeTable(bellOne,bellTwo,average,atGreen,recruit));
       
-    $cd.dialogPopup(grid.html(), 650, 'tips');
+    $cd.dialogPopup(grid.html(), 900, 'tips');
   };
 
   return $cd;

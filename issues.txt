@@ -22,7 +22,7 @@ The Diff view doesn't work properly in IE8.
 MINOR
 -----
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
-dashboard/source popup dialog buttons on front page need refactoring to become client side.
+dashboard popup dialog buttons on front page need refactoring to become client side.
 rename all x-popup files to dialog-x
 need help button on diff page
 need help button on dashboard page
