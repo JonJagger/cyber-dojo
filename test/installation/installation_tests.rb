@@ -177,10 +177,10 @@ class InstallationTests < ActionController::TestCase
   
   def check_cyberdojo_sh_exists
     all_filenames = visible_filenames + hidden_filenames
-    if all_filenames.select{|filename| filename == "cyberdojo.sh" } == [ ]
+    if all_filenames.select{|filename| filename == "cyber-dojo.sh" } == [ ]
       message =
         alert + 
-        "  #{@manifest_filename} must contain ['cyberdojo.sh'] in either\n" +
+        "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in either\n" +
         "  :visible_filenames or :hidden_filenames"
       assert false, message
     end

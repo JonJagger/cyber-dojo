@@ -54,16 +54,4 @@ class DojoControllerTest  < IntegrationTest
     assert_redirected_to "/dojo/full?id=#{id}"
   end
     
-    
-  test "faqs,links,tips,why" do
-    post 'dojo/faqs'
-    assert_response :success
-    post 'dojo/links'
-    assert_response :success
-    post 'dojo/tips'
-    assert_response :success
-    post 'dojo/why'
-    assert_response :success
-  end
-  
 end

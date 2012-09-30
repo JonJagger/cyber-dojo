@@ -12,7 +12,7 @@ class GitDiffViewTests < ActionController::TestCase
 
     visible_files =
       {
-        'cyberdojo.sh'     => cyberdojo_sh,
+        'cyber-dojo.sh'     => cyberdojo_sh,
         'untitled.rb'      => untitled_rb,
         'test_untitled.rb' => test_untitled_rb,
         'output'           => '' 
@@ -42,7 +42,7 @@ class GitDiffViewTests < ActionController::TestCase
         { :line => "end",        :type => :same,  :number => 3 },
       ],
       'test_untitled.rb' => sameify(test_untitled_rb),
-      'cyberdojo.sh' => sameify(cyberdojo_sh)
+      'cyber-dojo.sh' => sameify(cyberdojo_sh)
     }
     
     assert_equal expected, view

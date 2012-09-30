@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( untitled.rb test_untitled.rb cyberdojo.sh ),
+  :visible_filenames => %w( untitled.rb test_untitled.rb cyber-dojo.sh ),
 
   :hidden_filenames => %w( hidden ),
   

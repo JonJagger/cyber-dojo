@@ -1,5 +1,5 @@
 {
-  :visible_filenames => %w( Untitled.hs test_Untitled.hs cyberdojo.sh ),
+  :visible_filenames => %w( Untitled.hs test_Untitled.hs cyber-dojo.sh ),
 
   :unit_test_framework => 'hunit',
   

@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( Untitled.cs UntitledTest.cs cyberdojo.sh ),
+  :visible_filenames => %w( Untitled.cs UntitledTest.cs cyber-dojo.sh ),
   
   :support_filenames => %w( nunit.framework.dll ),
 

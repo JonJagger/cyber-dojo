@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( Untitled.php UntitledTest.php cyberdojo.sh ),
+  :visible_filenames => %w( Untitled.php UntitledTest.php cyber-dojo.sh ),
 
   :unit_test_framework => 'php_unit',
   

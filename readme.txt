@@ -178,7 +178,7 @@ Create a manifest.rb file in this directory.
 Each manifest.rb file contains an inspected ruby object. 
 Example: cyberdojo/languages/Java/manifest.rb looks like this:
 {
-  :visible_filenames => %w( Untitled.java UntitledTest.java cyberdojo.sh ),
+  :visible_filenames => %w( Untitled.java UntitledTest.java cyber-dojo.sh ),
   :support_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
   :tab_size => 4
@@ -229,13 +229,13 @@ manifest.rb Parameters
 :visible_filenames
   The names of the text files that will be visible in the browser's editor
   at startup. Each of these files must exist in the directory.
-  The filename cyberdojo.sh must be present, either as a visible filename or a
-  hidden filename. This is because cyberdojo.sh is the name of the shell file 
+  The filename cyber-dojo.sh must be present, either as a :visible_filename
+  or a :hidden_filename. This is because cyber-dojo.sh is the name of the shell file 
   assumed by the ruby code (in the server) to be the start point for running
-  the tests. You can write any actions in the cyberdojo.sh file but clearly
+  the tests. You can write any actions in the cyber-dojo.sh file but clearly
   any programs it tries to run must be installed on the server.
-  For example, if cyberdojo.sh runs gcc to compile C files then gcc has 
-  to be installed. If cyberdojo.sh runs javac to compile java files then javac 
+  For example, if cyber-dojo.sh runs gcc to compile C files then gcc has 
+  to be installed. If cyber-dojo.sh runs javac to compile java files then javac 
   has to be installed.
 
 :hidden_filenames
@@ -257,7 +257,7 @@ manifest.rb Parameters
   traffic light). For example, if the value is 'cassert' then
       cyberdojo/lib/CodeOutputParser.rb
   must contain a method called parse_cassert() and will be called to parse the
-  output of running the tests via the cyberdojo.sh shell file.
+  output of running the tests via the cyber-dojo.sh shell file.
   Required. No default.
 
 :tab_size
@@ -297,10 +297,10 @@ Sandboxes
 =========
 It used to be the case that a run-the-tests event would cause all the browser's
 visible files to be saved into the avatar's sandbox folder along with the
-language's hidden files and then the cyberdojo.sh file would be run on those
+language's hidden files and then the cyber-dojo.sh file would be run on those
 files. This is no longer the case. Now, the browser's visible files and the
 language's hidden files are saved to a temporary dir under cyberdojo/sandboxes/
-and the cyberdojo.sh file is run from there. This run generates output which is
+and the cyber-dojo.sh file is run from there. This run generates output which is
 captured and parsed to determine the appropriate traffic-light colour (red,
 amber, or green). Then, the visible files (with the output added to it) and the
 red/amber/green status is saved in the avatar's sandbox folder and git

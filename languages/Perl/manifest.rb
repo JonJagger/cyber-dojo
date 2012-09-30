@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( untitled.perl untitled.t cyberdojo.sh ),
+  :visible_filenames => %w( untitled.perl untitled.t cyber-dojo.sh ),
 
   :unit_test_framework => 'perl_test_simple',
   
