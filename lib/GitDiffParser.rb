@@ -78,7 +78,7 @@ module GitDiff
     end
     
     def parse_chunk_all
-      chunks = []     
+      chunks = [ ]     
       while chunk = parse_chunk_one
         chunks << chunk
       end
@@ -123,9 +123,9 @@ module GitDiff
     DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE = /^[\+\- ]/ 
   
     def parse_sections
-      sections = []
+      parse_newline_at_eof
+      sections = [ ]
       while DELETED_LINE_OR_ADDED_LINE_OR_COMMON_LINE_RE.match(@lines[@n]) do
-               
         deleted_lines = parse_deleted_lines
         parse_newline_at_eof
         
@@ -203,7 +203,7 @@ module GitDiff
     end
     
     def parse_lines(re)
-      lines = []
+      lines = [ ]
       while md = re.match(@lines[@n]) do
         lines << md[1]
         @n += 1

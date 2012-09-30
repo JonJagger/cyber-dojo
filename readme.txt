@@ -288,8 +288,8 @@ time the wolf computer presses the run-the-tests button causes
 From an avatar's directory you can issue the following commands:
 To look at filename for tag 4
 >git show 4:sandbox/filename
-To look at filename's differences between tag 4 and tag 3
->git diff 4 3 sandbox/filename 
+To look at filename's differences between tag 4 and tag 5
+>git diff 4 5 sandbox/filename 
 It's much easier and more informative to just click on a traffic light.
   
 

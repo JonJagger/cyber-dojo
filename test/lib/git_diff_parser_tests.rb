@@ -1207,6 +1207,84 @@ HERE
     
   end
 
+  #-----------------------------------------------------
+  
+  test "no_newline_at_end_of_file line at end of common section is gobbled" do
+    # James Grenning has built his own Cyber-Dojo server
+    # which he uses for training. He noticed that a file
+    # called CircularBufferTests.cpp
+    # changed between two traffic-lights but the diff-view
+    # was not displaying the diff. He sent me a zip of the
+    # avatars git repository and I confirmed that
+    #   git diff 8 9 sandbox/CircularBufferTests.cpp
+    # produced the following output
+    
+lines = <<HERE
+diff --git a/sandbox/CircularBufferTest.cpp b/sandbox/CircularBufferTest.cpp
+index 0ddb952..a397f48 100644
+--- a/sandbox/CircularBufferTest.cpp
++++ b/sandbox/CircularBufferTest.cpp
+@@ -35,3 +35,8 @@ TEST(CircularBuffer, EmptyAfterCreation)
+ {
+     CHECK_TRUE(CircularBuffer_IsEmpty(buffer));
+ }
+\\ No newline at end of file
++
++TEST(CircularBuffer, NotFullAfterCreation)
++{
++    CHECK_FALSE(CircularBuffer_IsFull(buffer));
++}
+\\ No newline at end of file
+HERE
+
+    expected =
+    {
+        :prefix_lines =>  
+          [
+            "diff --git a/sandbox/CircularBufferTest.cpp b/sandbox/CircularBufferTest.cpp",
+            "index 0ddb952..a397f48 100644"
+          ],
+        :was_filename => 'a/sandbox/CircularBufferTest.cpp',
+        :now_filename => 'b/sandbox/CircularBufferTest.cpp',
+        :chunks =>
+          [
+            {
+              :range =>
+              {
+                :was => { :start_line => 35, :size => 3 },
+                :now => { :start_line => 35, :size => 8 },
+              },
+              :before_lines =>
+              [
+                "{",
+                "    CHECK_TRUE(CircularBuffer_IsEmpty(buffer));",
+                "}"
+              ],
+              :sections =>
+              [
+                {
+                  :deleted_lines => [ ],
+                  :added_lines   =>
+                  [
+                    "",
+                    "TEST(CircularBuffer, NotFullAfterCreation)",
+                    "{",
+                    "    CHECK_FALSE(CircularBuffer_IsFull(buffer));",
+                    "}"
+                  ],
+                  :after_lines => [ ]
+                }
+              ]
+            }
+          ] # chunks
+    } # expected
+    
+    
+    assert_equal expected, GitDiffParser.new(lines).parse_one
+    
+  end
+
+
 end
 
 

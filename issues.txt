@@ -30,6 +30,7 @@ need help button on diff page
 need help button on dashboard page
 make the id button text the actual id, and add start-date and age to the popped up info
 reclicking on diff'ed file doesn't seem to cycle correctly...
+the red/green diff counts after the filename on the diff-page need to stay horizontal with one to the left and one to the right. Alter the page size and one moves under the other.
 -----
 When you rename a file you lose the cursor position.
 I could probably work around this by changing the implementation
