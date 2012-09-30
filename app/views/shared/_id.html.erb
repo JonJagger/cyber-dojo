@@ -4,10 +4,32 @@
 $j(document).ready(function() {
 
   $j('#id').click(function() {
+  
+    var daySuffix = function(day) {
+      if (Math.floor(day / 10) === 1) {
+        return "th";
+      } else {
+        switch (day % 10) {
+          case 1 : return "st";
+          case 2 : return "nd";
+          case 3 : return "rd";
+          default: return "th";
+        }
+      }
+    };
+
+    var timeString = function() {
+      var dayName = "<%= @kata.created.strftime("%a ") -%>";
+      var day = <%=@kata.created.day-%>;
+      var monthYearHourMinute = "<%= @kata.created.strftime(" %b %Y - %I:%M%p") -%>";
+      return dayName + day + daySuffix(day) + monthYearHourMinute;
+    };
+  
     var info = {
+            "kuid" : "<%= @kata.id -%>",
         "language" : "<%= @kata.language.name -%>",
         "exercise" : "<%= @kata.exercise.name -%>",
-        "kuid" : "<%= @kata.id -%>",
+         "created" : timeString(),
       <% if @kata.diff -%>
         "diff_id" : "<%= @kata.diff.id -%>",
         "diff_avatar" : "<%= @kata.diff.avatar -%>",

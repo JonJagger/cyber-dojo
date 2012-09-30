@@ -8,7 +8,7 @@ var cyberDojo = (function($cd, $j) {
       if (key.indexOf('diff') != 0) {
         panel += '<tr>';
         panel +=   '<td align="right">' + key + '</td>';
-        panel +=   '<td>=</td>';
+        panel +=   '<td>:</td>';
         panel +=   '<td align="left">' + value + '</td>';
         panel += '</tr>';
       } else {
@@ -21,7 +21,7 @@ var cyberDojo = (function($cd, $j) {
     
     if (fromDiff) {
       var diffPanel = '';
-      diffPanel += 'This cyber-dojo forked from ';
+      diffPanel += 'This cyber-dojo was forked from<br/>';
       diffPanel += '<a href="/diff/show/' + info['diff_id'] +
                     '?avatar=' + info['diff_avatar'] +
                     '&tag=' + info['diff_tag'] + '" ' +
@@ -35,7 +35,7 @@ var cyberDojo = (function($cd, $j) {
       id = $j($cd.makeTable($cd.divPanel(panel)));
     }
     
-    $cd.dialog(id.html(), 350, 'id');    
+    $cd.dialog(id.html(), 450, 'id');    
   };
   
   return $cd;

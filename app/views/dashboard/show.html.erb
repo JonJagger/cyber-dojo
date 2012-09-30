@@ -25,9 +25,10 @@ function rePost() {
 function refreshDashboard() {
   $j.ajax({
     url: "<%= url_for :action => 'heartbeat', :id => @kata.id %>",
-    data: { seconds_per_column: parseSecondsPerColumn(), maximum_columns: parseMaximumColumns() },
-    dataType: "script" })
-  .fail(function() { console.log("uh oh"); });
+    data: { seconds_per_column: parseSecondsPerColumn(),
+               maximum_columns: parseMaximumColumns() },
+    dataType: "script"
+  });
 };
 
 $j(function() {
