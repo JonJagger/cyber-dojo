@@ -43,24 +43,24 @@ $j(function() {
       <%= render :partial => 'shared/yin_yang' -%>
       <br/>
       <%= render :partial => 'shared/id' -%>
+      <br/>
+      <div id="age">
+        <%= render :partial => 'age' -%>
+      </div>
     </td>
     <td>
       &nbsp;&nbsp;
     </td>
     
     <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
-      <td class="panel">
+      <td class="panel" valign="top">
         <%= render :partial => 'seconds_per_column' -%>      
         <%= render :partial => 'maximum_columns' -%>
       </td>
     <% end %>
     
-    <td class="panel">
+    <td class="panel" valign="top">
       <%= render :partial => 'shared/feedback' -%>
-      <br/>
-      <div id="age">
-        <%= render :partial => 'age' -%>
-      </div>
     </td>
   </tr>
 </table>
