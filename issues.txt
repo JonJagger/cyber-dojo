@@ -22,7 +22,7 @@ The Diff view doesn't work properly in IE8.
 MINOR
 -----
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
-upon start-coding the server runs cyberdojo.sh and opens output in the editor.
+upon start-coding the server could run cyber-dojo.sh and open the output file in the editor.
 change paypal purpose wording from cyber-dojo and add note that Pies are £30
 wrong ID alert popup font is too large
 move homepage dashboard button to dashboard page as a tips button
@@ -30,7 +30,6 @@ need help button on diff page
 need help button on dashboard page
 make the id button text the actual id, and add start-date and age to the popped up info
 reclicking on diff'ed file doesn't seem to cycle correctly...
-the red/green diff counts after the filename on the diff-page need to stay horizontal with one to the left and one to the right. Alter the page size and one moves under the other.
 -----
 When you rename a file you lose the cursor position.
 I could probably work around this by changing the implementation

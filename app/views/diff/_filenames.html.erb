@@ -19,14 +19,18 @@
           </label>
         </div>
       </td>    
+      <% show_delete = (n_deleted > 0) || (n_deleted == 0 && n_added > 0) -%>
+      <% show_added  = (n_added > 0) || (n_added == 0 && n_deleted > 0) -%>
       <td align="left">
-        <% show_delete = (n_deleted > 0) || (n_deleted == 0 && n_added > 0) -%>
-        <% show_added  = (n_added > 0) || (n_added == 0 && n_deleted > 0) -%>
-        <% if show_delete || show_added -%>
+        <% if show_delete -%>
             <span class="diff-deleted-line-count" title="<%=n_deleted-%> deleted lines"><%= n_deleted -%></span>
-            <span class="diff-added-line-count"   title="<%=n_added-%> added lines"><%= n_added -%></span>
         <% end -%>
       </td>
+      <td align="left">
+        <% if show_added -%>
+          <span class="diff-added-line-count"   title="<%=n_added-%> added lines"><%= n_added -%></span>
+        <% end -%>
+      </td>      
     </tr>
   <% end -%>
 </table>
