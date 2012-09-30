@@ -60,13 +60,13 @@ $j(document).ready(function() {
         <div class="panel">
           <%= render :partial => 'filename_list' -%>
           <br/>
-          <%= render :partial => 'file_new_rename_delete' -%>
           <%= render :partial => 'current_filename' -%>
+          <%= render :partial => 'file_new_rename_delete' -%>
+          <br/>
         </div>
         <div class="panel">
-          <%= render :partial => 'feedback' -%>
-          <%= render :partial => 'help' -%>
-          <%= render :partial => 'id' -%>        
+          <%= render :partial => 'shared/feedback' -%><br/>
+          <%= render :partial => 'help' -%><br/>
         </div>
       </td>
       <td>

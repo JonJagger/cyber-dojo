@@ -21,10 +21,18 @@ function parseSecondsPerColumn() {
 
 //--></script>
 
-<input type="text"
-       name="seconds_per_column" 
-       id="seconds_per_column"
-       value="<%=@seconds_per_column-%>"/>      
-<span class="small_title">
-  seconds per<br/>column
-</span>
+<table>
+  <tr>
+    <td>
+      <input type="text"
+             name="seconds_per_column" 
+             id="seconds_per_column"
+             value="<%=@seconds_per_column-%>"/>
+    </td>
+    <td>
+      <span class="small_title">
+        seconds per column
+      </span>
+    </td>
+  </tr>
+</table>

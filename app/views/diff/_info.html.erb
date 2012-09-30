@@ -3,14 +3,18 @@
 
 <table align="center">
   <tr>
-    <td>
+    <td align="center">
       <%= render :partial => 'shared/yin_yang' -%>
+      <br/>
+      <%= render :partial => 'shared/id' -%>      
     </td>
-    <td>
+    <td align="center">
       <%= render :partial => 'shared/avatar_image' -%>
+      <br/>
+      <%= @avatar.name -%>
     </td>
     <td>
-      <%= @avatar.name -%>
+      &nbsp;
     </td>
     <td>
       <% if tag_number != 0-%>

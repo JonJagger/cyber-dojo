@@ -109,11 +109,11 @@ expected =
         [
           {
             :deleted_lines => [ "Please rename me!"],
-            :added_lines => [],
-            :after_lines => []
+            :added_lines => [ ],
+            :after_lines => [ ]
           }
         ],
-        :before_lines => []
+        :before_lines => [ ]
       }
     ]
   }
@@ -147,7 +147,7 @@ expected =
     ],
     :was_filename => 'a/sandbox/original',
     :now_filename => '/dev/null',
-    :chunks => []
+    :chunks => [ ]
   }
 }
 
@@ -180,7 +180,7 @@ expected =
     ],
     :was_filename => 'a/sandbox/was_\\wa s_newfile_FIU', # <------ single backslash
     :now_filename => 'b/sandbox/\\was_newfile_FIU', # <------ single backslash
-    :chunks => []
+    :chunks => [ ]
   }
 }
     parser = GitDiffParser.new(lines)    
@@ -213,7 +213,7 @@ expected =
     ],
     :was_filename => 'a/sandbox/oldname',
     :now_filename => 'b/sandbox/newname',
-    :chunks => []
+    :chunks => [ ]
   }
 }
 
@@ -274,7 +274,7 @@ expected_diff =
                 {
                   :deleted_lines => [ "obir obri oibr oirb orbi orib" ],
                   :added_lines   => [ "obir obri oibr oirb orbi oribx" ],
-                  :after_lines => []
+                  :after_lines => [ ]
                 }, # section
               ] # sections
             } # chunk
@@ -908,12 +908,12 @@ HERE
                 :was => { :start_line => 9, :size => 4 },
                 :now => { :start_line => 9, :size => 3 },
               },
-              :before_lines => [],
+              :before_lines => [ ],
               :sections =>
               [
                 { :deleted_lines => [ "p Timw.now" ],
                   :added_lines   => [ "p Time.now" ],
-                  :after_lines => []
+                  :after_lines => [ ]
                 }
               ]
             },
@@ -923,13 +923,13 @@ HERE
                 :was => { :start_line => 19, :size => 4 },
                 :now => { :start_line => 19, :size => 3 },
               },
-              :before_lines => [],
+              :before_lines => [ ],
               :sections =>
               [
                 {
                   :deleted_lines => [ "q Timw.now" ],
                   :added_lines   => [ "q Time.now" ],
-                  :after_lines => []
+                  :after_lines => [ ]
                 }
               ]      
             }

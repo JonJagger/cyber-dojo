@@ -21,10 +21,18 @@ function parseMaximumColumns() {
 
 //--></script>
 
-<input type="text" 
-       name="maximum_columns" 
-       id="maximum_columns"
-       value="<%=@maximum_columns-%>"/>
-<span class="small_title">
-  maximum<br/>columns
-</span>
+<table>
+  <tr>
+    <td>
+      <input type="text" 
+             name="maximum_columns" 
+             id="maximum_columns"
+             value="<%=@maximum_columns-%>"/>
+    </td>
+    <td>
+      <span class="small_title">
+        columns maximum 
+      </span>
+    </td>
+  </tr>
+</table>
