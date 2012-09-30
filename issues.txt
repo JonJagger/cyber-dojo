@@ -23,7 +23,6 @@ MINOR
 -----
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor.
-change paypal purpose wording from cyber-dojo and add note that Pies are £30
 wrong ID alert popup font is too large
 move homepage dashboard button to dashboard page as a tips button
 need help button on diff page
