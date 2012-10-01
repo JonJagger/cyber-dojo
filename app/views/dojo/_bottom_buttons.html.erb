@@ -4,7 +4,7 @@
 $j(document).ready(function() {
   
   $j.each(
-    ['about','basics','dashboard','faqs','feedback','links','source','tips','why'],
+    ['about','basics','faqs','feedback','links','source','tips','why'],
     function(i,name) {
       $j('#' + name).click(function() {
         $cd['dialog_' + name]();    
@@ -15,7 +15,7 @@ $j(document).ready(function() {
 
 //--></script>
 
-<% [ 'about', 'basics', 'dashboard', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ].each do |name| -%>
+<% [ 'about', 'basics', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ].each do |name| -%>
   <input type="button"
          class="tiny button"
          id="<%=name-%>"

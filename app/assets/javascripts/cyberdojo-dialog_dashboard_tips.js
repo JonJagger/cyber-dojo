@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
 
-  $cd.dialog_dashboard = function() {
+  $cd.dialog_dashboard_tips = function() {
 
     var redFirst =
       $cd.divPanel(
@@ -33,7 +33,7 @@ var cyberDojo = (function($cd, $j) {
 
     var dashboard = $j($cd.makeTable(redFirst,refactor,amber));
       
-    $cd.dialog(dashboard.html(), 450, 'dasboard');
+    $cd.dialog(dashboard.html(), 450, 'tips');
   };
 
   return $cd;

@@ -26,7 +26,6 @@ MINOR
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor.
 wrong ID alert popup font is too large
-move homepage dashboard button to dashboard page as part of help button
 add help button on diff page
 add help button on dashboard page
 add donate button to run-tests/dashboard/diff pages
