@@ -12,7 +12,7 @@ var cyberDojo = (function($cd, $j) {
 
     var practice =
       $cd.divPanel(
-        'Practising means repeating the <em>same</em> exercise, in the ' +
+        'Practising deliberately means repeating the <em>same</em> exercise, in the ' +
         '<em>same</em> language, <em>several</em> times. ' +
         'Each repetition is limited to fixed period of time (eg 20/40/60 mins). ' +
         'The repetition might seem strange at first but remember, you are ' +

@@ -17,7 +17,7 @@ var cyberDojo = (function($cd, $j) {
       $cd.divPanel(
         ' Please tell me about your use of cyber-dojo and<br/>' +
         " I'll add it to the" +
-        ' <a href="http://jonjagger.blogspot.co.uk/2012/09/cyber-dojo-dates.html">cyber-dojo blog page</a>.' 
+        ' <a href="http://jonjagger.blogspot.co.uk/2012/09/cyber-dojo-dates.html" target="_blank">cyber-dojo blog page</a>.' 
       );
     
     var feedback = $j($cd.makeTable(appreciate, tellMe));

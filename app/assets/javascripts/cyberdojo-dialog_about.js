@@ -22,7 +22,7 @@ var cyberDojo = (function($cd, $j) {
       $cd.divPanel(
         'cyber-dojo was conceived, designed,<br/>' +
         'and implemented by ' +
-        '<a href="http://jonjagger.blogspot.com/">Jon Jagger</a>'
+        '<a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>'
       );
 
     var about = $j($cd.makeTable(nonIde, practice, author));
