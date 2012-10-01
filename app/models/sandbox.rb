@@ -41,10 +41,29 @@ class Sandbox
     end
     link_files(language.dir, language.support_filenames)
     link_files(language.dir, language.hidden_filenames)
+    
     command  = "cd '#{dir}';" +
-               "./cyber-dojo.sh"
+               "./#{cyberdojo_shell_filename(visible_files)}"
     max_run_tests_duration = (test_timeout || 10)
     Files::popen_read(command, max_run_tests_duration)
+  end
+  
+  def cyberdojo_shell_filename(visible_files)
+    # I have changed the shell filename in the exercises/ folders from
+    # cyberdojo.sh (no hyphen) to cyber-dojo.sh (with a hyphen) to match
+    # the cyber-dojo.com domain name. However, I still need to support old
+    # sessions, particularly the ability to fork from a new session from an
+    # old diff-view, e.g. the refactoring setups in
+    # http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html
+    # See also app/assets/javascripts/cyberdojo-file_load.js
+    # See also app/assets/javascripts/cyberdojo-files.js
+    old_name = 'cyberdojo.sh'
+    new_name = 'cyber-dojo.sh'
+    if visible_files[new_name] != nil
+      return new_name
+    else
+      return old_name
+    end
   end
   
   def save_file(filename, content)

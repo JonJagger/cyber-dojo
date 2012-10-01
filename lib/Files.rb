@@ -9,23 +9,24 @@ module Files
     File.open(path, 'w') { |file| file.write object.inspect + "\n" }
   end
   
-  # Originally I was writing
-  #   eval IO::popen(cmd).read
-  # However, this was leaving many [sh <defunct>] processes.
-  # Googling, reveals that this means that the parent process
-  # had not yet wait()ed for it to finish.
-  # The popen call turned out to be the culprit.
-  #
-  # Furthermore, killing a process does not necessarily kill its child processes. 
-  # So that has to be coded. At first I killed all the descendant processes in 
-  # an ensure block. However this...
-  #   http://blog.headius.com/2008/02/rubys-threadraise-threadkill-timeoutrb.html
-  # says there is a ruby bug in the interaction between Thread.kill and ensure,
-  # and I seemed to be hitting that.
-  # So I have refactored: now the descendent processes are killed outside of
-  # an ensure block.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
   
   def self.popen_read(command, max_seconds = nil)
+    # Originally I was writing
+    #   eval IO::popen(cmd).read
+    # However, this was leaving many [sh <defunct>] processes.
+    # Googling, reveals that this means that the parent process
+    # had not yet wait()ed for it to finish.
+    # The popen call turned out to be the culprit.
+    #
+    # Furthermore, killing a process does not necessarily kill its child processes. 
+    # So that has to be coded. At first I killed all the descendant processes in 
+    # an ensure block. However this...
+    #   http://blog.headius.com/2008/02/rubys-threadraise-threadkill-timeoutrb.html
+    # says there is a ruby bug in the interaction between Thread.kill and ensure,
+    # and I seemed to be hitting that.
+    # So I have refactored: now the descendent processes are killed outside of
+    # an ensure block.
     pipe = IO::popen(with_stderr(command))
     
     output = ""
@@ -59,10 +60,14 @@ module Files
     
     output
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     
   def self.with_stderr(cmd)
     cmd + " " + "2>&1"
   end
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   
   def self.kill(pids)
     return if pids == [ ]
@@ -72,11 +77,11 @@ module Files
       # Could happen if the OS/GC reclaims the process? 
     end
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   
   def self.descendant_pids_of(base)
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     # Autovivify the hash
     descendants = Hash.new { |ht,k| ht[k] = [k] }
     # Get process parentage information and turn it into a hash  
