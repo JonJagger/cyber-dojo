@@ -23,8 +23,7 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-front page button error dialogs should show yin-yang icon in black and white
-$cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog().
+$cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog()
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
 add help button on diff page
 add help button on dashboard page
