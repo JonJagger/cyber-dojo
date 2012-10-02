@@ -1,23 +1,26 @@
 
 <script language="javascript" type="text/javascript"><!--
 
-function resume(avatar_name) {
-  $cd.postTo('/kata/edit', {
-    id: "<%=@kata.id-%>",
-    avatar: avatar_name
-  }, '_blank');  
-  $cd.closeResumeDialog();
-  return false;
-}
+$j(document).ready(function() {
+  
+  $cd.resume = function(id, avatar_name) {
+    $cd.postTo('/kata/edit', {
+      id: id,
+      avatar: avatar_name
+    }, '_blank');  
+    $cd.closeResumeDialog();
+    return false;
+  };
+    
+});
 
 //--></script>
 
-<h1>resume-coding</h1>
-
 <div align="center">
+  <h3>click your animal</h3>  
   <table>
     <% index = 0 -%>
-    <% size = 80 -%>
+    <% size = 70 -%>
     <% (1..4).each do |_| -%>
     <tr>
       <% (1..4).each do |_| -%>
@@ -25,7 +28,7 @@ function resume(avatar_name) {
         <% avatar_name = @all_avatar_names[index] -%>
         <% if @live_avatar_names.include?(avatar_name) -%>
           <input type='image'
-                 onclick='return resume("<%=avatar_name-%>");'
+                 onclick='return $cd.resume("<%=@kata.id-%>","<%=avatar_name-%>");'
                  class='avatar_image'
                  src="/images/avatars/<%=avatar_name-%>.jpg"
                  title="Resume <%=avatar_name.humanize-%>"
@@ -48,5 +51,4 @@ function resume(avatar_name) {
     </tr>
     <% end -%>
   </table>
-  <h3>click your animal</h3>  
 </div>

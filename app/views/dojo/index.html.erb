@@ -3,10 +3,21 @@
 
 $j(document).ready(function() {
 
-  $j('#configure_it').click(function() {
-    $cd.postTo('/dojo/create');
-  });
-  
+  $cd.cantFind = function(title,id) {
+    var html = "<div class='panel'><b>I cannot find a practice with an id of</b> <h3>" + id + "</h3></div>";
+    var width = 500;
+    $cd.dialog(html,width,'!'+title);
+  };
+
+  $cd.run = function(method, func) {
+    var id = $j('#kata_id_input').attr('value');
+    if ($j.trim(id) !== '') {
+      $j.getJSON('/dojo/' + method, { id: id }, function(data) {
+        func(id, data);
+      });
+    }
+  };
+
   $cd.registerCloseResumeDialog = function(resumer) {
     $cd.closeResumeDialog = function() {
       resumer.dialog('close');
@@ -25,56 +36,7 @@ $j(document).ready(function() {
   
 });
 
-function run(method, func) {
-  var id = $j('#kata_id_input').attr('value');
-  if ($j.trim(id) === '') {
-    $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
-  } else {
-    $j.getJSON('/dojo/' + method, { id: id }, function(data) {
-      func(id, data);
-    });
-  }
-}
-
-function resumeCoding(id, data) {
-  if (!data.exists) {
-    cantFind(id);
-  } else {
-    var grid = $j('<div>');
-    grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
-      var resumer = $j('<div id="resume_coding_dialog">')
-        .html(grid.html())
-        .dialog({
-          autoOpen: false,
-          title: "",
-          width: 600,
-          modal: true,
-          buttons: {
-            cancel: function() {
-              $j(this).dialog('close');
-            }
-          }
-        });
-      $cd.registerCloseResumeDialog(resumer);
-      resumer.dialog('open');
-    });
-  }
-}
-
-function showDashboard(id, data) {
-  if (!data.exists) {
-    cantFind(id);
-  } else {
-    $cd.postTo('/dashboard/show', { id: id });  
-  }
-}
-
-function cantFind(id) {
-  $cd.alert("cyber-dojo", "<h3>Sorry but there is no practice with an id of </h3><h2>" + id + "</h2>", "");  
-}
-
 //--></script>
-
 
 <table align="center">
   <tr>
@@ -105,10 +67,7 @@ function cantFind(id) {
 <table style="font-size: 1.5em;">
   <tr>
     <td class="panel">
-      <input type="button"
-             class="large button"
-             id="configure_it"
-             value="setup" />
+      <%= render :partial => 'setup_button' -%>
       <span class="plain_text">
         a new coding-practice&hellip;
       </span>

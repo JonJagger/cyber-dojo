@@ -4,8 +4,12 @@
 $j(document).ready(function() {
 
   $j('#view_dashboard').click(function() {
-    run('exists_json', function(id, data) {
-      showDashboard(id, data);
+    $cd.run('exists_json', function(id, data) {
+      if (!data.exists) {
+        $cd.cantFind('view-dashboard', id);
+      } else {
+        $cd.postTo('/dashboard/show', { id: id }, '_blank');  
+      }
     });
   });
   

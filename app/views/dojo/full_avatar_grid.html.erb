@@ -1,0 +1,28 @@
+
+<div align="center">
+  <h3>Sorry, <%= @id -%> is full!</h3>  
+  <table>
+    <% index = 0 -%>
+    <% size = 70 -%>
+    <% (1..4).each do |_| -%>
+    <tr>
+      <% (1..4).each do |_| -%>
+      <td class="panel">
+        <% avatar_name = @all_avatar_names[index] -%>
+        <input type='image'
+               class='avatar_image'
+               src="/images/avatars/<%=avatar_name-%>.jpg"
+               title="<%=avatar_name.humanize-%> has started"
+               width="<%=size-%>"
+               height="<%=size-%>" />          
+        <br/>
+        <span style="color: DarkGreen;">
+          <%= avatar_name -%>
+        </span>
+        <% index += 1 -%>
+      </td>
+      <% end -%>     
+    </tr>
+    <% end -%>
+  </table>
+</div>

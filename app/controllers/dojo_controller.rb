@@ -67,35 +67,6 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
-  
-  def start
-    if !Kata.exists?(root_dir, id)
-      redirect_to "/dojo/cant_find?id=#{id}"
-    else
-      kata = Kata.new(root_dir, id)      
-      avatar = start_avatar(kata)
-      if avatar == nil
-        redirect_to "/dojo/full?id=#{id}"
-      else
-        redirect_to :controller => 'kata',
-                    :action => 'edit',
-                    :id => "#{id}",
-                    :avatar => "#{avatar}"
-      end
-    end    
-  end
-
-  #------------------------------------------------
-  
-  def cant_find
-    @id = id
-  end
-  
-  def full
-    @kata = Kata.new(root_dir, id)    
-  end
-  
-  #------------------------------------------------
 
   def exists_json
     @exists = Kata.exists?(root_dir, id)
@@ -104,6 +75,28 @@ class DojoController < ApplicationController
     end    
   end
   
+  #------------------------------------------------
+
+  def start_json
+    json = { }
+    if !Kata.exists?(root_dir, id)
+      json = { :exists => false, :message => 'Hello' }
+    else
+      avatar = start_avatar(Kata.new(root_dir, id))
+      if avatar == nil
+        json = { :full => true, :message => 'Hello' }
+      else
+        json = { :exists => true, :full => false, :avatar_name => avatar, :message => 'Hello' }        
+      end              
+    end
+    
+    respond_to do |format|
+      format.json { render :json => json }
+    end
+  end
+  
+  #------------------------------------------------
+  
   def resume_avatar_grid
     @kata = Kata.new(root_dir, id)    
     @live_avatar_names = @kata.avatar_names
@@ -111,6 +104,13 @@ class DojoController < ApplicationController
     respond_to do |format|
       format.html { render :layout => false }
     end
+  end
+  
+  #------------------------------------------------
+
+  def full_avatar_grid
+    @id = id
+    @all_avatar_names = Avatar.names    
   end
   
   #------------------------------------------------

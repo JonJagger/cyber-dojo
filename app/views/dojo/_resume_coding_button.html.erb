@@ -3,9 +3,35 @@
 
 $j(document).ready(function() {
   
+  $cd.resumeCoding = function(id, dojo) {
+    var title = 'resume-coding';
+    if (dojo.exists == false) {
+      $cd.cantFind(title, id);
+    } else {
+      var grid = $j('<div>');
+      grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
+        var resumer = $j('<div id="resume_coding_dialog">')
+          .html(grid.html())
+          .dialog({
+            autoOpen: false,
+            title: $cd.h1(title),
+            width: 600,
+            modal: true,
+            buttons: {
+              cancel: function() {
+                $j(this).dialog('close');
+              }
+            }
+          });
+        $cd.registerCloseResumeDialog(resumer);
+        resumer.dialog('open');
+      });
+    }
+  };
+  
   $j('#resume_coding').click(function() {
-    run('exists_json', function(id, data) {
-      resumeCoding(id, data);
+    $cd.run('exists_json', function(id, dojo) {
+      $cd.resumeCoding(id, dojo);
     });
   });
     

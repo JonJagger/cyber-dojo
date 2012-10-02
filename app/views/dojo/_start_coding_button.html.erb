@@ -2,16 +2,39 @@
 <script language="javascript" type="text/javascript"><!--
 
 $j(document).ready(function() {
-
-  $j('#start_coding').click(function() {
-    var id = $j('#kata_id_input').attr('value');
-    if ($j.trim(id) === '') {
-      $cd.alert("cyber-dojo", "<h3>Please enter an id</h3>", "");
-    } else {
-      $cd.postTo('/dojo/start', { id: id }, '_blank');    
-    }
-  });
+  
+  $cd.full = function(id) {
+    var grid = $j('<div>');
+    grid.load('/dojo/full_avatar_grid', { id: id }, function() {
+      var resumer = $j('<div>')
+        .html(grid.html())
+        .dialog({
+          autoOpen: false,
+          title: $cd.h1('!start-coding'),
+          width: 600,
+          modal: true,
+          buttons: {
+            ok: function() {
+              $j(this).dialog('close');
+            }
+          }
+        });
+      resumer.dialog('open');
+    });
+  };
     
+  $j('#start_coding').click(function() {
+    $cd.run('start_json', function(id, dojo) {
+      if (dojo.exists === false) {
+        $cd.cantFind('start-coding', id);
+      } else if (dojo.full === true) {
+        $cd.full(id);
+      } else {
+        $cd.postTo('/kata/edit', { id: id, avatar: dojo.avatar_name  }, '_blank');
+      }
+    });
+  });
+
 });
 
 //--></script>

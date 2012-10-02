@@ -8,7 +8,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
         autoOpen: false,
         width: width,
-        title: '<h1>' + name + '</h1>',
+        title: $cd.h1(name),
         modal: true,
         buttons: {
           ok: function() {
