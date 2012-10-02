@@ -4,7 +4,23 @@
 $j(document).ready(function() {
 
   $cd.cantFind = function(title,id) {
-    var html = "<div class='panel'><b>I cannot find a practice with an id of</b> <h3>" + id + "</h3></div>";
+    var yinYang = '<img alt="cyber-dojo" border="0" height="80" src="/images/avatars/cyber-dojo.png" title="cyber-dojo" width="80" />';
+    var html = "" +
+      '<div class="panel">' +
+        '<table>' +
+          '<tr>' +
+            '<td>' +
+              yinYang +
+            '</td>' +
+            '<td>' +
+              '&nbsp;&nbsp;&nbsp;' +
+            '</td>' +
+            '<td>' +
+              '<b>cannot find a practice with id</b> <h2>' + id + '</h2>' +
+            '</td>' +
+          '</tr>' +
+        '</table>' +  
+      '</div>';
     var width = 500;
     $cd.dialog(html,width,'!'+title);
   };
