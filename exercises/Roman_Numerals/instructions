@@ -1,25 +1,25 @@
-Given a positive integer number determine its Roman numeral 
-representation. The Roman 'letters' are:
+Given a positive integer number (eg 42) determine its Roman numeral 
+representation as a String (eg "XLII"). The Roman 'letters' are:
 
-   I = 1        X = 10        C = 100       M = 1000
-  II = 2       XX = 20       CC = 200      MM = 2000
- III = 3      XXX = 30      CCC = 300     MMM = 3000
-  IV = 4       XL = 40       CD = 400    MMMM = 4000
-   V = 5        L = 50        D = 500
-  VI = 6       LX = 60       DC = 600
- VII = 7      LXX = 70      DCC = 700
-VIII = 8     LXXX = 80     DCCC = 800
-  IX = 9       XC = 90       CM = 900
+  1 ->    "I"     10 ->    "X"    100 ->    "C"     1000 ->    "M"
+  2 ->   "II"     20 ->   "XX"    200 ->   "CC"     2000 ->   "MM"
+  3 ->  "III"     30 ->  "XXX"    300 ->  "CCC"     3000 ->  "MMM"
+  4 ->   "IV"     40 ->   "XL"    400 ->   "CD"     4000 -> "MMMM"
+  5 ->    "V"     50 ->    "L"    500 ->    "D"
+  6 ->   "VI"     60 ->   "LX"    600 ->   "DC" 
+  7 ->  "VII"     70 ->  "LXX"    700 ->  "DCC" 
+  8 -> "VIII"     80 -> "LXXX"    800 -> "DCCC" 
+  9 ->   "IX"     90 ->   "XC"    900 ->   "CM" 
 
 You cannot write numerals like IM for 999.
-Wikipedia says "Modern Roman numerals are written by expressing
+Wikipedia states "Modern Roman numerals are written by expressing
 each digit separately starting with the leftmost digit and
 skipping any digit with a value of zero."
 
 Examples:
 
-  o) 1990 -> MCMXC    (1000 -> M  + 900 -> CM   + 90 -> XC)
-  o) 2008 -> MMVIII   (2000 -> MM +   8 -> VIII)
-  o)   99 -> XCIX     (  90 -> XC +   9 -> IX)
-  o)   47 -> XLVII    (  40 -> XL +   7 -> VII)
+  o) 1990 -> "MCMXC"    (1000 -> "M"  + 900 -> "CM"   + 90 -> "XC")
+  o) 2008 -> "MMVIII"   (2000 -> "MM" +   8 -> "VIII")
+  o)   99 -> "XCIX"     (  90 -> "XC" +   9 -> "IX")
+  o)   47 -> "XLVII"    (  40 -> "XL" +   7 -> "VII")
 
