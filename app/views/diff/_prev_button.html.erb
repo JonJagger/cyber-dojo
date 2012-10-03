@@ -24,16 +24,16 @@
     }) -%>
     
   <button class="button"
+          id="prev_button"
           <% if tag_number != 0 -%>
           type="submit"
-          id="prev_button"
           title="View previous diff (<%=tag_number-1-%>)" >
           <% else -%>
           type="button"
           disabled>
           <% end -%>
     <img src="/images/left-triangle.gif"
-         width="30" 
+         width="27" 
          height="30" />
   </button>
 </form>

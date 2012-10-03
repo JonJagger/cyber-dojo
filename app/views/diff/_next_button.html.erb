@@ -24,16 +24,16 @@
     }) -%>
   
   <button class="button"
+          id="next_button"
           <% if tag_number < @all_traffic_lights.length -%>
           type="submit"
-          id="next_button"
           title="View next diff (<%=tag_number+1-%>)" >
           <% else -%>
           type="button"
           disabled>
           <% end -%>
     <img src="/images/right-triangle.gif"
-         width="30" 
+         width="27" 
          height="30" />
   </button>
 </form>

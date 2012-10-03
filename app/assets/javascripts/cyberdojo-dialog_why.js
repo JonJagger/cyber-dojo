@@ -29,13 +29,13 @@ var cyberDojo = (function($cd, $j) {
       $cd.divPanel(
         'I wondered what the minimum install could be for a coding dojo. ' +
         'I realized it was <em>nothing</em>. ' +
-        'You could write your code and tests in a ' +
+        'You could write your tests and code in a ' +
         'web browser and run your tests on a server. ' +
-        'The more I thought about this idea the more I liked it. ' +
-        'I really liked the idea of participants using something ' +
+        'The more I thought about it the more I liked ' +
+        'the idea of participants using something ' +
         'that was so obviously <em>not their normal development environment</em>. ' +
-        'I felt this would reinforce the idea that in a dojo ' +
-        'you should <em>not</em> be doing normal development!'
+        'I felt this would reinforce the idea that in a coding dojo ' +
+        'you should <em>not</em> be doing development!'
       );
 
     var noCollab = bullet + 'There very little collaboration.';

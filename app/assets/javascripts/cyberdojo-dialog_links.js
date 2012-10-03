@@ -10,7 +10,7 @@ var cyberDojo = (function($cd, $j) {
         '97 Things Every Programmer Should Know' +
         '</a>' +
         '<br/>' +
-        '#22 ' +
+        '&nbsp;&nbsp;number 22: ' +
         '<a href="http://jonjagger.blogspot.com/2011/02/deliberate-practice.html" target="_blank">' +
         'Do More Deliberate Practice' +
         '</a>'

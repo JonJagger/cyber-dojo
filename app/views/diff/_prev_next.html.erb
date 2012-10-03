@@ -23,10 +23,10 @@ function rePost() {
 var min_tag = 0;
 var max_tag = "<%=@all_traffic_lights.length-%>";
 
-function tagNumber(event)
-{
-  event.preventDefault();  
-  if (event.keyCode == 13) {
+function tagNumber(event) {
+  event.preventDefault();
+  var CARRIAGE_RETURN = 13;
+  if (event.keyCode === CARRIAGE_RETURN) {
     var input = $j('#tag_number');
     var newValue = parseInt(input.attr('value'));
     if (!isNaN(newValue)) {
@@ -69,7 +69,7 @@ function tagNumber(event)
     
     <td>
       <input type="text"
- 	     size="3"
+ 	     size="2"
 	     id="tag_number"
 	     name="tag_number"
 	     value="<%=tag_number-%>" />
