@@ -5,8 +5,7 @@ class DashboardController < ApplicationController
   # Create all diffs for all increments for all animals, together with
   # a client-side dashboard in a single html file.
   # This will allow a replay of a session to happen without any interaction
-  # with the server. I plan to introduce the fixed timeout only when
-  # you can start a new kata from any traffic-light.
+  # with the server. This will also help recover inodes.
 
   def show
     @title = 'View Dashboard'
