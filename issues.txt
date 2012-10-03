@@ -1,10 +1,6 @@
 
 MAJOR
 -----
-view-dashboard button in Opera is blocked by default...
-view-dashboard button in Safari not working at all...
-view-dashboard button being treated as a popup in Chrome...
------
 The design of cyber-dojo is very heavy on inodes. You will
 almost certainly run out of inodes before running out of
 disk space. I need a process that moves dojos that have
@@ -27,6 +23,7 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+dashboard/show URL does not contain the ID
 allow entry of only first 5 characters of ID as long as its unique to that length
 $cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog()
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?

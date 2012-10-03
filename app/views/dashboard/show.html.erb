@@ -41,10 +41,19 @@ $j(function() {
   <tr>
     
     <td class="panel" align="center">
-      <%= render :partial => 'shared/yin_yang' -%>
+      <% size = 60 -%>
+      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
+            :border => 0,
+            :size => "#{size}x#{size}",
+            :title => 'Home page'),
+            {
+              :controller => :dojo,
+              :action => :index,
+              :id => @kata.id
+            }
+      %>                    
       <br/>
       <%= render :partial => 'shared/id' -%>
-      <br/>
       <div id="age">
         <%= render :partial => 'age' -%>
       </div>

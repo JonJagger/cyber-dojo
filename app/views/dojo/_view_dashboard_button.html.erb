@@ -4,11 +4,11 @@
 $j(document).ready(function() {
 
   $j('#view_dashboard').click(function() {
-    $cd.run('exists_json', function(id, data) {
-      if (!data.exists) {
+    $cd.run('exists_json', function(id, dojo) {
+      if (!dojo.exists) {
         $cd.cantFind('view-dashboard', id);
       } else {
-        $cd.postTo('/dashboard/show', { id: id }, '_blank');  
+        $cd.postTo('/dashboard/show', { id: id });
       }
     });
   });
