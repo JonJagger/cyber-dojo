@@ -69,29 +69,24 @@ class DojoController < ApplicationController
   #------------------------------------------------
 
   def exists_json
-    @exists = Kata.exists?(root_dir, id)
     respond_to do |format|
-      format.json { render :json => { :exists => @exists, :message => 'Hello' } }
+      format.json { render :json => { :exists => Kata.exists?(root_dir, id) } }
     end    
   end
   
   #------------------------------------------------
 
   def start_json
-    json = { }
-    if !Kata.exists?(root_dir, id)
-      json = { :exists => false, :message => 'Hello' }
-    else
-      avatar = start_avatar(Kata.new(root_dir, id))
-      if avatar == nil
-        json = { :full => true, :message => 'Hello' }
-      else
-        json = { :exists => true, :full => false, :avatar_name => avatar, :message => 'Hello' }        
-      end              
-    end
-    
+    exists = Kata.exists?(root_dir, id)
+    avatar_name = exists ? start_avatar(Kata.new(root_dir, id)) : nil
+    full = avatar_name == nil
     respond_to do |format|
-      format.json { render :json => json }
+      format.json { render :json => {
+          :exists => exists,
+          :avatar_name => avatar_name,
+          :full => full
+          }
+      }
     end
   end
   
