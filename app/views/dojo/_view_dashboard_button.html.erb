@@ -6,7 +6,7 @@ $j(document).ready(function() {
   $j('#view_dashboard').click(function() {
     $cd.run('exists_json', function(id, dojo) {
       if (!dojo.exists) {
-        $cd.cantFind('view-dashboard', id);
+        $cd.dialog_cantFindDojo('view-dashboard', id);
       } else {
         $cd.postTo('/dashboard/show', { id: id });
       }
