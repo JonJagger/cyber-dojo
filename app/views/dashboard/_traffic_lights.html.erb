@@ -50,7 +50,7 @@
            </td>          
          <% end -%>
                    
-         <td class="summary" align="center">           
+         <td class="summary" align="center" valign="bottom">           
             <% size = 60 -%>
             <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
                 :border => 0,
@@ -80,7 +80,7 @@
           </div>
          </td>
          
-         <td class="summary">
+         <td class="summary" valign="top">
            <%  in_new_window = false -%>            
            <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
          </td>

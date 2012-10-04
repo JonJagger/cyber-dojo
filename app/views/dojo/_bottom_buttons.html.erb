@@ -15,9 +15,14 @@ $j(document).ready(function() {
 
 //--></script>
 
-<% [ 'about', 'basics', 'faqs', 'feedback', 'links', 'source', 'tips', 'why' ].each do |name| -%>
+<% [ 'about', 'basics', 'faqs', 'feedback', 'links', 'source', 'tips' ].each do |name| -%>
   <input type="button"
          class="tiny button"
          id="<%=name-%>"
          value="<%=name-%>"/>
 <% end -%>
+
+  <input type="button"
+         class="tiny button"
+         id="why"
+         value="why?"/>

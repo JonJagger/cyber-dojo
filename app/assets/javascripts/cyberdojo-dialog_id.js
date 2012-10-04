@@ -35,7 +35,7 @@ var cyberDojo = (function($cd, $j) {
       id = $j($cd.makeTable($cd.divPanel(panel)));
     }
     
-    $cd.dialog(id.html(), 450, 'id');    
+    $cd.dialog(id.html(), 450, 'config?');    
   };
   
   return $cd;

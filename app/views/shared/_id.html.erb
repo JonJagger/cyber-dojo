@@ -19,15 +19,17 @@ $j(document).ready(function() {
     };
 
     var timeString = function() {
-      var dayName = "<%= @kata.created.strftime("%a ") -%>";
+      var hourMinute = "<%= @kata.created.strftime("%I:%M%p") -%>";
+      var dayName = "<%= @kata.created.strftime("%a") -%>";
       var day = <%=@kata.created.day-%>;
-      var monthYearHourMinute = "<%= @kata.created.strftime(" %b %Y - %I:%M%p") -%>";
-      return dayName + day + daySuffix(day) + monthYearHourMinute;
+      var monthYear = "<%= @kata.created.strftime("%b %Y") -%>";
+      return hourMinute + ' ' + dayName + ' ' + day + daySuffix(day) + ' ' + monthYear;
     };
   
     var info = {
-            "kuid" : "<%= @kata.id -%>",
+            "  id" : "<%= @kata.id -%>",
         "language" : "<%= @kata.language.name -%>",
+       "unit-test" : "<%= @kata.language.unit_test_framework -%>",
         "exercise" : "<%= @kata.exercise.name -%>",
          "created" : timeString(),
       <% if @kata.diff -%>
@@ -48,4 +50,5 @@ $j(document).ready(function() {
        class="tiny button"
        title="Show id"
        id="id"
-       value="<%=@kata.id-%>"/>
+       value="config?"
+       xvalue="<%=@kata.id[0..5]-%>"/>
