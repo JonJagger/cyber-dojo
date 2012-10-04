@@ -20,7 +20,7 @@ function rePost() {
   });
 }
 
-var min_tag = 0;
+var min_tag = 1;
 var max_tag = "<%=@all_traffic_lights.length-%>";
 
 function tagNumber(event) {
@@ -35,7 +35,7 @@ function tagNumber(event) {
       if (tag > max_tag) tag = max_tag;
       rePost();
     } else {
-      input.attr('value', tag);
+      input.attr('value', '?');
     }
   }
 }
@@ -49,15 +49,15 @@ function tagNumber(event) {
   
     <td>
       <span class="tag_number">
-        <% if tag_number == 0 -%>
-	  0
+        <% if tag_number == 1 -%>
+	  1
 	<% else -%>
-	  <%= link_to 0, 
+	  <%= link_to 1, 
 	  { :controller => :diff, 
 	    :action => :show,
 	    :id => @kata.id,
 	    :avatar => @avatar.name,
-	    :tag => 0 
+	    :tag => 1 
 	  } -%>
         <% end -%>
       </span>
@@ -72,13 +72,13 @@ function tagNumber(event) {
  	     size="2"
 	     id="tag_number"
 	     name="tag_number"
-	     value="<%=tag_number-%>" />
+	     value="?" />
     </td>   
         
     <td>
       <%= render :partial => 'next_button' -%>                      
     </td>
-    
+        
     <td>
       <span class="tag_number">
         <% if tag_number < @all_traffic_lights.length -%>
@@ -93,7 +93,7 @@ function tagNumber(event) {
 	  <%= tag_number -%>
         <% end -%>
       </span>
-    </td>                
-    
+    </td>
+
   </tr>
 </table>      

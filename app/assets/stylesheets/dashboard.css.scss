@@ -15,9 +15,7 @@
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
 
-#current_traffic_light .number,
-#traffic_lights .number,
-.traffic_light .number
+.number
 {
   color: $main-color;
   font-size: 1.4em;

@@ -19,6 +19,15 @@
         <%= unlinked_traffic_light(@traffic_lights_to_tag.last) -%>
       <% end -%>
     </td>
+    <td>
+      <% if tag_number != 0-%>
+        <span class="number"
+              id="tags_so_far">
+          <%= tag_number -%>
+        </span>
+      <% end -%>
+    </td>        
+    
   </tr>
 </table>
 
