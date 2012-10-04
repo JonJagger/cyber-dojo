@@ -12,8 +12,15 @@ $cd.refreshDashboard = function() {
 };
 
 $j(document).ready(function() {
+  var CARRIAGE_RETURN = 13;
   var seconds = 1000;
   setInterval($cd.refreshDashboard, 10*seconds);
+  
+  $j('#seconds_per_column,#maximum_columns').keyup(function(event) {
+    if (event.which === CARRIAGE_RETURN) {
+      $cd.refreshDashboard();
+    }
+  });  
 });
 
 //--></script>
@@ -21,17 +28,7 @@ $j(document).ready(function() {
 <table align="center">
   <tr>
     <td align="center">
-      <% size = 65 -%>
-      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-            :border => 0,
-            :size => "#{size}x#{size}",
-            :title => 'Home page'),
-            {
-              :controller => :dojo,
-              :action => :index,
-              :id => @kata.id
-            }
-      %>
+      <%= render :partial => 'shared/yin_yang' -%>      
       <div id="age">
         <%= render :partial => 'age' -%>
       </div>      
