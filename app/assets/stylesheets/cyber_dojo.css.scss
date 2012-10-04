@@ -74,7 +74,11 @@ input { font-size: 1.15em; }
   @include rounded-corner;
 }
 
-.tiny.button { font-size: 0.7em; }
+.tiny.button
+{
+  font-size: 0.7em;
+  padding: 0 0.2em 0 0.2em;
+}
 .small.button
 {
   font-size: 1.1em;

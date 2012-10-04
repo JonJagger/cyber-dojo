@@ -23,18 +23,19 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-dashboard/show URL does not contain the ID
+make red/green diff-counts on diff-page into buttons that toggle red/green lines on-off
+put current traffic-light to immediate right of avatar image on run-tests page
 allow entry of only first 5 characters of ID as long as its unique to that length
-$cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog()
-upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
+dashboard/show URL does not contain the ID
 add help button on diff page
 add help button on dashboard page
 add donate button to run-tests/dashboard/diff pages
+. . . . . . . 
+$cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog()
+upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
 reclicking on diff'ed file doesn't seem to cycle correctly...
-make red/green diff-counts on diff-page into buttons that toggle red/green lines on-off
 in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
 is app/views/shared/_named.html.erb used anymore?
-put current traffic-light to immediate right of avatar image on run-tests page
 -----
 html element IDs are sometimes created using filenames. When this
 happens I currently do this...

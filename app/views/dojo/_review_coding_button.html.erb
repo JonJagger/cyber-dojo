@@ -3,10 +3,10 @@
 
 $j(document).ready(function() {
 
-  $j('#view_dashboard').click(function() {
+  $j('#review_coding').click(function() {
     $cd.run('exists_json', function(id, dojo) {
       if (!dojo.exists) {
-        $cd.dialog_cantFindDojo('view-dashboard', id);
+        $cd.dialog_cantFindDojo('review', id);
       } else {
         $cd.postTo('/dashboard/show', { id: id });
       }
@@ -19,5 +19,5 @@ $j(document).ready(function() {
 
 <input type="button"
        class="large button"
-       id="view_dashboard"
-       value="view-dashboard" />
+       id="review_coding"
+       value="review" />
