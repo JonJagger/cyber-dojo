@@ -12,7 +12,7 @@ module CodeOutputParser
   
   def self.parse(unit_test_framework, output)
     inc = { }
-    if Regexp.new("Terminated by the CyberDojo server after").match(output)
+    if Regexp.new("Terminated by the cyber-dojo server after").match(output)
       inc[:outcome] = :amber
     else
       inc[:outcome] = eval "parse_#{unit_test_framework}(output)"

@@ -23,7 +23,6 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-terminated-by-the-CyberDojo-server --> cyber-dojo
 make red/green diff-counts on diff-page into buttons that toggle red/green lines on-off
 allow entry of only first 5 characters of ID as long as its unique to that length
 dashboard/show URL does not contain the ID

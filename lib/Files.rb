@@ -55,7 +55,7 @@ module Files
     pipe.close
 
     if timed_out
-      output += "Terminated by the CyberDojo server after #{max_seconds} seconds."
+      output += "Terminated by the cyber-dojo server after #{max_seconds} seconds."
     end
     
     output
