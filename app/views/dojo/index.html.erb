@@ -21,12 +21,16 @@ $j(document).ready(function() {
               '&nbsp;&nbsp;&nbsp;' +
             '</td>' +
             '<td>' +
-              "<b>can't find a dojo whose id is</b> <h2>" + id + '</h2>' +
+              "I can't find a cyber-dojo with an id of" +
+              '<h3>' + id + '</h3>' +
+              "id's are always 10 characters long,<br/>" +
+              "are case sensitive, and contain only<br/>" +
+              "the digits 23456789 and letters ABCDEF"
             '</td>' +
           '</tr>' +
         '</table>' +  
       '</div>';
-    var width = 500;
+    var width = 600;
     $cd.dialog(cantFindDojo, width, '!'+title);
   };
 
