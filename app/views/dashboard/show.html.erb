@@ -38,7 +38,11 @@ $j(document).ready(function() {
       <%= render :partial => 'shared/id' -%>
     </td>
     
-    <td valign="top">
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    
+    <td valign="bottom">
       <%= render :partial => 'shared/feedback' -%>
       <%= render :partial => 'tips' -%>
       <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
