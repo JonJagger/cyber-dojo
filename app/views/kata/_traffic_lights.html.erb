@@ -1,35 +1,15 @@
 
 <div id="traffic_lights">
   <table>
-    <% max_cols = 30 -%>    
+    <% max_cols = 35 -%>    
     <tr class="row">
-      
-      <td>
-        <img src="/images/traffic-light-transparent.png" width="26" height="78" />
-      </td>
-      
+            
       <% recent(@avatar.increments, max_cols).each do |light| -%>
-        <td>
+        <td valign="top">
           <%  in_new_page = true -%>
           <%= linked_traffic_light(@kata, @avatar.name, light, in_new_page) -%>
         </td>
       <% end -%>
-            
-      <td>
-        <% if @avatar.increments.length != 0 -%>
-          <span class="number" id="tags_so_far">
-            &nbsp;<%= @avatar.increments.length -%>
-          </span>
-        <% end -%>
-      </td>
-      
-      <td>      
-        <div id="spinner">
-          <img src="/images/spinner.gif"          
-               width="39" 
-               height="39"/>
-        </div>
-      </td>
             
       <td>
         <div id="tip"

@@ -69,7 +69,12 @@
              <%= avatar_name -%>
            </div>
          </td>
-                   
+         
+        <td class="summary">
+          <%  in_new_window = false -%>            
+          <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
+        </td>
+          
         <td class="summary">
           <div class="micro_number">
             <% [:red,:amber,:green].each do |bulb| -%>
@@ -79,12 +84,7 @@
             <% end -%>
           </div>
          </td>
-         
-         <td class="summary" valign="top">
-           <%  in_new_window = false -%>            
-           <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
-         </td>
-         
+                  
          <td class="summary">
            <span class="number">
              <%= all_lights[avatar_name].length -%>

@@ -87,7 +87,7 @@ input { font-size: 1.15em; }
 
 .medium.button { font-size: 1.35em; }
 .big.button    { font-size: 1.45em; }
-.large.button  { font-size: 1.95em; padding-top: 0em; }
+.large.button  { font-size: 1.95em; padding: -0.5em 1em 0em 1em; }
 
 .button[disabled]
 {
