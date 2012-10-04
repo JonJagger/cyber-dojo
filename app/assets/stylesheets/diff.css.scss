@@ -1,6 +1,7 @@
 
 #tag_number, .tag_number
 {
+  @include font-family;
   font-size: 1.3em; 
   text-align: center; /* for diff and dashboard */
 }

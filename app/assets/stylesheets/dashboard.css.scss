@@ -1,7 +1,8 @@
 
 #seconds_per_column,
 #maximum_columns 
-{ 
+{
+  @include font-family;
   font-size: 0.9em; 
   width: 3em; 
   text-align: center; 
