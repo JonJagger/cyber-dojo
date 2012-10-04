@@ -2,12 +2,7 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$j(document).ready(function() {
-  $j('#seconds_per_column').data('validated-value', $j('#seconds_per_column').val());
-  $j('#seconds_per_column').change(refreshDashboard);
-});
-  
-function parseSecondsPerColumn() {
+$cd.parseSecondsPerColumn = function() {
   var input = $j('#seconds_per_column');
   var value = input.val();
   var newValue = parseInt(value);
@@ -17,7 +12,12 @@ function parseSecondsPerColumn() {
     input.val(input.data('validated-value'));
   }
   return input.val();
-}
+};
+
+$j(document).ready(function() {
+  $j('#seconds_per_column').data('validated-value', $j('#seconds_per_column').val());
+  $j('#seconds_per_column').change($cd.refreshDashboard);
+});
 
 //--></script>
 

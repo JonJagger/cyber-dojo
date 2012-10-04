@@ -2,46 +2,26 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-var id = "<%=@kata.id-%>";
-
-function reParse(event) {
-  event.preventDefault();
-  var carriageReturn = 13;
-  if (event.keyCode == carriageReturn) {
-    parseSecondsPerColumn();
-    parseMaximumColumns();
-    rePost();
-  }
-}
-  
-function rePost() {
-  $cd.postTo('/dashboard/show', {
-    id: id,
-    seconds_per_column: seconds_per_column,
-    maximum_columns: maximum_columns
-  });
-}
-
-function refreshDashboard() {
+$cd.refreshDashboard = function() {
   $j.ajax({
     url: "<%= url_for :action => 'heartbeat', :id => @kata.id %>",
-    data: { seconds_per_column: parseSecondsPerColumn(),
-               maximum_columns: parseMaximumColumns() },
+    data: { seconds_per_column: $cd.parseSecondsPerColumn(),
+               maximum_columns: $cd.parseMaximumColumns() },
     dataType: "script"
   });
 };
 
-$j(function() {
-  setInterval(refreshDashboard, 10000);
+$j(document).ready(function() {
+  var seconds = 1000;
+  setInterval($cd.refreshDashboard, 10*seconds);
 });
 
 //--></script>
 
 <table align="center">
   <tr>
-    
-    <td class="panel" align="center">
-      <% size = 60 -%>
+    <td align="center">
+      <% size = 65 -%>
       <%= link_to image_tag("/images/avatars/cyber-dojo.png",
             :border => 0,
             :size => "#{size}x#{size}",
@@ -51,57 +31,27 @@ $j(function() {
               :action => :index,
               :id => @kata.id
             }
-      %>                    
-      <br/>
-      <%= render :partial => 'shared/id' -%>
+      %>
       <div id="age">
         <%= render :partial => 'age' -%>
-      </div>
-    </td>
-    <td>
-      &nbsp;&nbsp;
-    </td>
-    
-    <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
-      <td class="panel" valign="top">
-        <%= render :partial => 'seconds_per_column' -%>      
-        <%= render :partial => 'maximum_columns' -%>
-      </td>
-    <% end %>
-    
-    <td class="panel" valign="top">
-      <table>
-        <tr>
-          <td>
-            <%= render :partial => 'shared/feedback' -%>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= render :partial => 'tips' -%>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td>
-      <div class="choose_title" align="center">
-        click any traffic light
       </div>      
+      <%= render :partial => 'shared/id' -%>
     </td>
-  </tr>
-  <tr>
-    <td>
-      <div id="traffic_lights" 
-          class="panel">
-        <%= render :partial => 'traffic_lights' -%>
-      </div>
+    
+    <td valign="top">
+      <%= render :partial => 'shared/feedback' -%>
+      <%= render :partial => 'tips' -%>
+      <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
+          <%= render :partial => 'seconds_per_column' -%>      
+          <%= render :partial => 'maximum_columns' -%>
+      <% end %>
     </td>
-  </tr>
+  </tr>  
 </table>
+  
+<div id="traffic_lights" 
+     class="panel">
+  <%= render :partial => 'traffic_lights' -%>
+</div>
 
 

@@ -2,12 +2,7 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$j(document).ready(function() {
-  $j('#maximum_columns').data('validated-value', $j('#maximum_columns').val());
-  $j('#maximum_columns').change(refreshDashboard);
-});
-  
-function parseMaximumColumns() {
+$cd.parseMaximumColumns = function() {
   var input = $j('#maximum_columns');
   var value = input.val();
   var newValue = parseInt(value);
@@ -17,8 +12,13 @@ function parseMaximumColumns() {
     input.val(input.data('validated-value'));
   }
   return input.val();
-}
+};
 
+$j(document).ready(function() {
+  $j('#maximum_columns').data('validated-value', $j('#maximum_columns').val());
+  $j('#maximum_columns').change($cd.refreshDashboard);
+});
+  
 //--></script>
 
 <table>
