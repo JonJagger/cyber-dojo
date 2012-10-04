@@ -3,9 +3,14 @@
 
 $j(document).ready(function() {
 
-  $cd.cantFind = function(title,id) {
-    var yinYang = '<img alt="cyber-dojo" border="0" height="80" src="/images/avatars/bw/cyber-dojo.png" title="cyber-dojo" width="80" />';
-    var html = "" +
+  $cd.dialog_cantFindDojo = function(title,id) {
+    var yinYang = '<img alt="cyber-dojo" ' +
+                       'border="0" ' +
+                       'height="80" ' +
+                       'src="/images/avatars/bw/cyber-dojo.png" ' +
+                       'title="cyber-dojo" ' +
+                       'width="80" />';
+    var cantFindDojo = "" +
       '<div class="panel">' +
         '<table>' +
           '<tr>' +
@@ -16,13 +21,13 @@ $j(document).ready(function() {
               '&nbsp;&nbsp;&nbsp;' +
             '</td>' +
             '<td>' +
-              '<b>cannot find a practice with id</b> <h2>' + id + '</h2>' +
+              "<b>can't find a dojo whose id is</b> <h2>" + id + '</h2>' +
             '</td>' +
           '</tr>' +
         '</table>' +  
       '</div>';
     var width = 500;
-    $cd.dialog(html,width,'!'+title);
+    $cd.dialog(cantFindDojo, width, '!'+title);
   };
 
   $cd.run = function(method, func) {

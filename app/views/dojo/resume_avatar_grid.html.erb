@@ -17,7 +17,7 @@ $j(document).ready(function() {
 //--></script>
 
 <div align="center">
-  <h3>click your animal</h3>  
+  <h2>click your animal</h2>  
   <table>
     <% index = 0 -%>
     <% size = 60 -%>
@@ -34,16 +34,14 @@ $j(document).ready(function() {
                  title="Resume <%=avatar_name.humanize-%>"
                  width="<%=size-%>"
                  height="<%=size-%>" />          
-          <br/>
-          <span style="color: DarkGreen;">
-            <%= avatar_name -%>
-          </span>
+          <div align="center">
+            <b><%= avatar_name -%></b>
+          </div>
         <% else -%>
           <%= bw_avatar_image(avatar_name, size) -%>
-          <br/>
-          <span style="color: Gray;">
+          <div align="center" style="color:Gray;">
             <%= avatar_name -%>
-          </span>
+          </div>
         <% end -%>      
         <% index += 1 -%>
       </td>

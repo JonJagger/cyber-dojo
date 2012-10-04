@@ -6,7 +6,7 @@ $j(document).ready(function() {
   $cd.resumeCoding = function(id, dojo) {
     var title = 'resume-coding';
     if (dojo.exists == false) {
-      $cd.cantFind(title, id);
+      $cd.dialog_cantFindDojo(title, id);
     } else {
       var grid = $j('<div>');
       grid.load('/dojo/resume_avatar_grid', { id: id }, function() {

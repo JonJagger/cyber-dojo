@@ -50,7 +50,7 @@
            </td>          
          <% end -%>
                    
-         <td class="summary">           
+         <td class="summary" align="center">           
             <% size = 60 -%>
             <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
                 :border => 0,
@@ -65,10 +65,9 @@
                   :tag => 1
                 }
             %>
-            <br/>
-           <span>
-             &nbsp;<%= avatar_name -%>&nbsp;
-           </span>
+           <div>
+             <b><%= avatar_name -%></b>
+           </div>
          </td>
                    
         <td class="summary">

@@ -1,4 +1,6 @@
 
+require 'erb'
+
 require 'Files'
 require 'Folders'
 require 'Locking'
@@ -79,15 +81,25 @@ class DojoController < ApplicationController
   def start_json
     exists = Kata.exists?(root_dir, id)
     avatar_name = exists ? start_avatar(Kata.new(root_dir, id)) : nil
-    full = avatar_name == nil
+    full = (avatar_name == nil)
+    start_grid = full ? '' : start_avatar_grid(avatar_name)
     respond_to do |format|
       format.json { render :json => {
           :exists => exists,
           :avatar_name => avatar_name,
-          :full => full
-          }
+          :full => full,
+          :start_grid => start_grid
+        }
       }
     end
+  end
+  
+  #------------------------------------------------
+
+  def start_avatar_grid(avatar_name)
+    @avatar_name = avatar_name
+    filename = root_dir + '/app/views/dojo/start_avatar_grid.html.erb'
+    ERB.new(File.read(filename)).result(binding)
   end
   
   #------------------------------------------------

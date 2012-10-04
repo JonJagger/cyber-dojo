@@ -3,7 +3,26 @@
 
 $j(document).ready(function() {
   
-  $cd.full = function(id) {
+  $cd.startCoding = function(id, avatar_name, start_grid) {
+    var grid = $j('<div>');
+    var starter = $j('<div>')
+      .html(start_grid)
+      .dialog({
+        autoOpen: false,
+        title: $cd.h1('start-coding'),
+        width: 400,
+        modal: true,
+        buttons: {
+          ok: function() {
+            $cd.postTo('/kata/edit', { id: id, avatar: avatar_name  }, '_blank');              
+            $j(this).dialog('close');
+          }
+        }
+      });
+      starter.dialog('open');
+  };
+  
+  $cd.dialog_fullDojo = function(id) {
     var grid = $j('<div>');
     grid.load('/dojo/full_avatar_grid', { id: id }, function() {
       var resumer = $j('<div>')
@@ -26,11 +45,11 @@ $j(document).ready(function() {
   $j('#start_coding').click(function() {
     $cd.run('start_json', function(id, dojo) {
       if (dojo.exists === false) {
-        $cd.cantFind('start-coding', id);
+        $cd.dialog_cantFindDojo('start-coding', id);
       } else if (dojo.full === true) {
-        $cd.full(id);
+        $cd.dialog_fullDojo(id);
       } else {
-        $cd.postTo('/kata/edit', { id: id, avatar: dojo.avatar_name  }, '_blank');
+        $cd.startCoding(id, dojo.avatar_name, dojo.start_grid);
       }
     });
   });
