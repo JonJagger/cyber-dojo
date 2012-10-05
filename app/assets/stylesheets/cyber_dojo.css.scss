@@ -7,16 +7,11 @@
   border-radius: $radius;  
 }
 
-@mixin font-family
-{
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-}
-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 body
 {
-  @include font-family;
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   padding: 0;
   margin: 0;
   margin-top: 0.5em;
@@ -68,7 +63,7 @@ input { font-size: 1.15em; }
   color: $main-color;
   font-size: 0.8em;
   cursor: pointer;
-  padding: 2px 8px 2px 8px;
+  padding: 0.1em 0.2em 0.1em 0.2em;
   text-decoration: none;
   font-weight: normal;
   border: none;
@@ -80,8 +75,6 @@ input { font-size: 1.15em; }
 .button.medium { font-size: 1.35em; }
 .button.big    { font-size: 1.45em; }
 .button.large  { font-size: 1.95em; }
-
-.tiny.button, .small.button { padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */ }
 
 .button[disabled]
 {
@@ -159,7 +152,7 @@ div[class~="filename"], .button[disabled]:hover, .button
   background: $light-background-color;
   color: $main-color;
   width: 45em;
-  font-weight: 500; 
+  font-weight: 500;
 }
 
 .line_numbers, .file_content { height: 27em; }
@@ -203,13 +196,12 @@ div[class~="filename"], .button[disabled]:hover, .button
   border: 4px solid $light-background-color;
   color: $main-color;
   overflow-y: auto;
-  font-family: monospace;
   font-size: 16pt;
 }
 
 #kata_id_input { font-size: 0.9em; }
 
-#test { padding: 0 0.5em 0 0.5em; }
+#test { padding: 0 0.7em 0 0.7em; }
 
 
 
