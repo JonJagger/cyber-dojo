@@ -13,9 +13,12 @@
                    :locals => { :target => '_blank' } -%>
         <%= render :partial => 'shared/avatar_name' -%>
       </td>
-      <td>
+      <td valign="top">
         <%= render :partial => 'current_traffic_light' -%>        
       </td>
+      <td valign="center">
+        <%= render :partial => 'current_traffic_light_number' -%>        
+      </td>      
     </tr>
   </table>
 </div>

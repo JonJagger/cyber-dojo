@@ -1,24 +1,8 @@
 
 <div id="current_traffic_light">
-  <table>
-    <tr class="row">
-
-      <% if @avatar.increments.length != 0 -%>
-        <td>
-          <div valign="top">
-          <%  in_new_page = true -%>
-          <%= linked_traffic_light(@kata, @avatar.name, @avatar.increments.last, in_new_page) -%>
-          </div>
-        </td>
-        
-        <td>
-          <span class="number">
-            <%= @avatar.increments.length -%>
-          </span>
-        </td>        
-      <% end -%>
-      
-    </tr>      
-  </table>
+  <% if @avatar.increments.length != 0 -%>
+    <%  in_new_page = true -%>
+    <%= linked_traffic_light(@kata, @avatar.name, @avatar.increments.last, in_new_page) -%>
+  <% end -%>
 </div>
 
