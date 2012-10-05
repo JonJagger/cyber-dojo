@@ -1,0 +1,23 @@
+
+<table align="center">
+  <tr>
+    <td>      
+      <% size = 57 -%>
+      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
+                                :border => 0,
+                                :size => "#{size}x#{size}",
+                                :title => 'cyber-dojo'),
+                            {
+                              :controller => :dojo,
+                              :action => :index
+                            } -%>
+    </td>
+    <td>
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <div style="font-size: 4em;">cyber-dojo</div>                
+    </td>
+  </tr>
+</table>
+

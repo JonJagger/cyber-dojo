@@ -21,6 +21,3 @@ var cyberDojo = (function($cd, $j) {
 
   return $cd;
 })(cyberDojo || {}, $);
-
-
-

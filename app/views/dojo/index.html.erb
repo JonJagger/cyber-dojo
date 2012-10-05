@@ -3,37 +3,6 @@
 
 $j(document).ready(function() {
 
-  $cd.dialog_cantFindDojo = function(title,id) {
-    var yinYang = '<img alt="cyber-dojo" ' +
-                       'border="0" ' +
-                       'height="80" ' +
-                       'src="/images/avatars/bw/cyber-dojo.png" ' +
-                       'title="cyber-dojo" ' +
-                       'width="80" />';
-    var cantFindDojo = "" +
-      '<div class="panel">' +
-        '<table>' +
-          '<tr>' +
-            '<td>' +
-              yinYang +
-            '</td>' +
-            '<td>' +
-              '&nbsp;&nbsp;&nbsp;' +
-            '</td>' +
-            '<td>' +
-              "I can't find a cyber-dojo with an id of" +
-              '<h3>' + id + '</h3>' +
-              "id's are always 10 characters long,<br/>" +
-              "are case sensitive, and contain only<br/>" +
-              "the digits 23456789 and letters ABCDEF"
-            '</td>' +
-          '</tr>' +
-        '</table>' +  
-      '</div>';
-    var width = 600;
-    $cd.dialog(cantFindDojo, width, '!'+title);
-  };
-
   $cd.run = function(method, func) {
     var id = $j('#kata_id_input').attr('value');
     if ($j.trim(id) !== '') {
@@ -63,45 +32,38 @@ $j(document).ready(function() {
 
 //--></script>
 
-<table align="center">
+
+<table>
+  
   <tr>
-    <td>      
-      <% size = 57 -%>
-      <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-                                :border => 0,
-                                :size => "#{size}x#{size}",
-                                :title => 'cyber-dojo'),
-                            {
-                              :controller => :dojo,
-                              :action => :index
-                            } -%>
-    </td>
     <td>
-      &nbsp;&nbsp;
+      <%= render :partial => 'row_logo_title' -%>      
     </td>
+  </tr>
+
+  <tr>
     <td>
-      <div style="font-size: 4em;">cyber-dojo</div>                
+      <h3>where software teams do
+        <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html" target="_blank">deliberate practice</a>
+      </h3>
+      <br/>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="thin panel" align="left" style="font-size: 1.5em;">
+      <%= render :partial => 'row_code' -%>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="thin" align="center" style="font-size: 0.8em;">
+      <%= render :partial => 'row_donate' -%>
     </td>
   </tr>
 </table>
 
-<h3>where software teams do
-  <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html" target="_blank">deliberate practice</a>
-</h3>      
-
-<br/>
-
-<table align="left">
-  <tr>
-    <td class="thin panel" style="font-size: 1.6em;">
-      <%= render :partial => 'row_code' -%>
-    </td>
-  </tr>
-  <tr>
-    <td align="center">
-      <%= render :partial => 'row_donate' -%>
-    </td>
-  </tr>
+<table align="center">    
   <tr>
     <td class="thin panel">
       <%= render :partial => 'row_buttons' -%>
