@@ -4,7 +4,7 @@ var cyberDojo = (function($cd, $j) {
   
   $cd.dialog = function(html,width,name) {
     var div = $j('<div>')
-      .html('<div style="font-size: 1.2em;">' + html + '</div>')    
+      .html('<div class="dialog">' + html + '</div>')    
       .dialog({
         autoOpen: false,
         width: width,

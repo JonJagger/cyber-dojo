@@ -6,30 +6,39 @@
 
       <table>
         <tr>
+          <td align="right">
+            id&nbsp;
+          </td>
           <td>
-            &nbsp;&nbsp;
-            id <input type="text"
+            <input type="text"
                       id="kata_id_input"
                       size="12"
                       value="<%=@id-%>" />
           </td>
+        </tr>
+
+        <tr>
           <td align="right">
-            &nbsp;and&nbsp;
+            and&nbsp;
           </td>
           <td>
             <%= render :partial => 'start_coding_button' -%>
+            or
+            <%= render :partial => 'resume_coding_button' -%>
+            coding ;
           </td>
         </tr>
+
         <tr>
-          <td>
-          </td>
           <td align="right">
-            or&nbsp;
+            then&nbsp;
           </td>
           <td>
-            <%= render :partial => 'resume_coding_button' -%>;
+            <%= render :partial => 'review_coding_button' -%>
+            your code ;
           </td>
         </tr>
+
       </table>
     </td>
   </tr>

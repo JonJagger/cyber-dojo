@@ -12,11 +12,12 @@ var cyberDojo = (function($cd, $j) {
 
     var practice =
       $cd.divPanel(
-        'Practising deliberately means repeating the <em>same</em> exercise, in the ' +
-        '<em>same</em> language, <em>several</em> times. ' +
-        'Each repetition is limited to fixed period of time (eg 20/40/60 mins). ' +
-        'The repetition might seem strange at first but remember, you are ' +
-        'not shipping the code, you are practising!'
+        'Practising deliberately means repeating the <em>same</em> ' +
+        'exercise in the <em>same</em> language, <em>several</em> times. ' +
+        'Each repetition is limited to fixed period of time ' +
+        '(eg 20/40/60 mins). ' +
+        'The repetition might seem strange at first but remember, you ' +
+        'are not shipping the code, you are practising!'
       );
       
     var retro =
@@ -25,8 +26,8 @@ var cyberDojo = (function($cd, $j) {
         'diff pages to replay the steps. ' +
         'Everyone writes down some things ' +
         'they did well and some things they could improve. ' +
-        "The navigator's job is to focus the next iteration " +
-        'on <em>improvement</em> and <em>not</em> on finishing the exercise. ' +
+        "The navigator's job is to focus the next iteration on " +
+        '<em>improvement</em> and <em>not</em> on finishing the exercise. ' +
         'Remember, you are not shipping the code, you are practising!'
       );
       
