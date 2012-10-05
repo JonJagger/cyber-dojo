@@ -32,7 +32,7 @@ var cyberDojo = (function($cd, $j) {
       
     var basics = $j($cd.makeTable(team,practice,retro));
       
-    $cd.dialog(basics.html(), 750, 'basics');
+    $cd.dialog(basics.html(), 700, 'basics');
   };
 
   return $cd;

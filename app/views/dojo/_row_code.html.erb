@@ -1,0 +1,36 @@
+
+<table valign="top">
+  <tr>
+    <td>
+      on <em>each</em> computer enter your coding-practice
+
+      <table>
+        <tr>
+          <td>
+            id <input type="text"
+                      id="kata_id_input"
+                      size="15"
+                      value="<%=@id-%>" />
+          </td>
+          <td align="right">
+            &nbsp;and&nbsp;
+          </td>
+          <td>
+            <%= render :partial => 'start_coding_button' -%>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td align="right">
+            or&nbsp;
+          </td>
+          <td>
+            <%= render :partial => 'resume_coding_button' -%>;
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+

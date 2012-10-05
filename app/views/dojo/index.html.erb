@@ -85,94 +85,44 @@ $j(document).ready(function() {
   </tr>
 </table>
 
-<h2>where software teams do
+<h3>where software teams do
   <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html" target="_blank">deliberate practice</a>
-</h2>      
+</h3>      
 
 <br/>
 
-<table style="font-size: 1.5em;">
+<table style="font-size: 2em;">
   <tr>
-    <td class="panel">
-      <%= render :partial => 'setup_button' -%>
-      <span class="plain_text">
-        a new coding-practice&hellip;
-      </span>
+    <td class="thin panel">
+      <%= render :partial => 'row_setup' -%>
     </td>
   </tr>
-
   <tr>
-    <td class="panel">
-      <span class="plain_text">
-        &hellip;on <em>each</em> computer enter your coding-practice<br/>
-      </span>
-      <table>
-        <tr>
-         <td>
-          <span class="plain_text">
-            &nbsp;id
-          </span>
-            <input type="text"
-                   id="kata_id_input"
-                   size="15"
-                   value="<%=@id-%>" />
-          </td>
-          <td align="right">
-            <span class="plain_text">
-              &nbsp;and&nbsp;
-            </span>
-          </td>
-          <td>
-            <%= render :partial => 'start_coding_button' -%>
-            <span class="plain_text">
-              coding
-            </span>            
-          </td>
-        </tr>
-        <tr>
-          <td>            
-          </td>
-          <td align="right">
-            <span class="plain_text">
-              or&nbsp;
-            </span>
-          </td>
-          <td>
-            <%= render :partial => 'resume_coding_button' -%>
-            <span class="plain_text">
-              coding
-            </span>            
-          </td>
-        </tr>
-        <tr>
-          <td>
-          </td>
-          <td align="right">
-            <span class="plain_text">            
-              then&nbsp;
-            </span>
-          </td>
-          <td>
-            <%= render :partial => 'review_coding_button' -%>
-            <span class="plain_text">
-              coding
-            </span>                        
-          </td>
-        </tr>          
-      </table>
+    <td class="thin panel">
+      <%= render :partial => 'row_code' -%>
     </td>
   </tr>
-
   <tr>
-    <td class="panel">
-      <%= render :partial => 'bottom_buttons' -%>
+    <td class="thin panel">
+      <%= render :partial => 'row_review' -%>
     </td>
   </tr>
-    
   <tr>
+    <td class="thin panel">
+      goto setup;
+    </td>
+  </tr>
+  <tr align="center">
     <td>
-      <%= render :partial => 'donate' -%>
+      <%= render :partial => 'row_donate' -%>
     </td>
   </tr>
+</table>
 
+<table align="center">
+  <tr>
+    <td class="thin panel">
+      <%= render :partial => 'row_buttons' -%>
+    </td>
+  </tr>
 </table>

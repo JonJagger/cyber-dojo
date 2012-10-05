@@ -12,7 +12,7 @@
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
 }
 
-#cyber_dojo_page { color: $main-color; }
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 body
 {
@@ -50,12 +50,16 @@ h3 { font-size: 1.3em;  }
   border-bottom: none;
   
   margin: 0px;
-  padding: 0.5em;  
+  padding: 0.5em;
+}
+
+.thin.panel
+{
+  @include rounded-corner(10px);
+  padding: 0.2em;
 }
 
 .small_text { font-size: 0.4em; }
-.donate_text{ font-size: 0.6em; }
-.plain_text { font-size: 1.5em; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -74,11 +78,11 @@ input { font-size: 1.15em; }
   @include rounded-corner;
 }
 
-.tiny.button   { font-size: 0.70em; }
-.small.button  { font-size: 1.10em; }
-.medium.button { font-size: 1.35em; }
-.big.button    { font-size: 1.45em; }
-.large.button  { font-size: 1.95em; }
+.button.tiny   { font-size: 0.70em; }
+.button.small  { font-size: 1.10em; }
+.button.medium { font-size: 1.35em; }
+.button.big    { font-size: 1.45em; }
+.button.large  { font-size: 1.95em; }
 
 .tiny.button, .small.button { padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */ }
 
@@ -89,21 +93,9 @@ input { font-size: 1.15em; }
   color: Gray;
 }
 
-#test { padding: 0 2em 0 2em; }
-
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 .light_margin.panel { background: $light-background-color; }
-
-#instructions
-{
-  background: $light-background-color;
-  border: 4px solid $light-background-color;
-  color: $main-color;
-  overflow-y: auto;
-  font-family: monospace;
-  font-size: 16pt;
-}
 
 .small_title
 {
@@ -200,6 +192,25 @@ div[class~="filename"], .button[disabled]:hover, .button
   font-weight: 100;
 }
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#cyber_dojo_page { color: $main-color; }
+
+#donate_text { font-size: 0.5em; }
+
+#instructions
+{
+  background: $light-background-color;
+  border: 4px solid $light-background-color;
+  color: $main-color;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 16pt;
+}
+
+#kata_id_input { font-size: 0.7em; }
+
+#test { padding: 0 0.5em 0 0.5em; }
 
 
 

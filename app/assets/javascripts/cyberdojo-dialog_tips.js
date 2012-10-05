@@ -47,7 +47,7 @@ var cyberDojo = (function($cd, $j) {
 
     var tips = $j($cd.makeTable(bell,average,atGreen,refactor,recruit));
   
-    $cd.dialog(tips.html(), 870, 'tips');
+    $cd.dialog(tips.html(), 800, 'tips');
   };
 
   return $cd;

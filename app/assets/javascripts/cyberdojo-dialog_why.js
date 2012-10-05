@@ -18,8 +18,8 @@ var cyberDojo = (function($cd, $j) {
         'about finishing the task; ' +
         'you should be thinking about <em>improving some aspect of your skill</em>. ' +
         'The practice should be repeated. The repetition frees up mental capacity, ' +
-        'helping you break out of ' +
-        'a completion mindset and into a practice/improvement mindset.' 
+        'helping you break out of a completion mindset' +
+        'and into an improvement mindset.' 
       );
 
     var delay = bullet + 'Several groups took a <em>long</em> time to get ' +
@@ -38,7 +38,7 @@ var cyberDojo = (function($cd, $j) {
         'you should <em>not</em> be doing development!'
       );
 
-    var noCollab = bullet + 'There very little collaboration.';
+    var noCollab = bullet + 'There was very little collaboration.';
     
     var social =
       $cd.divPanel(
@@ -49,7 +49,7 @@ var cyberDojo = (function($cd, $j) {
       
     var why = $j($cd.makeTable(oslo,feel,improve,delay,browser,noCollab,social));
       
-    $cd.dialog(why.html(), 950, 'why?');
+    $cd.dialog(why.html(), 900, 'why?');
   };
 
   return $cd;

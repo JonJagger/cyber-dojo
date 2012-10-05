@@ -40,7 +40,7 @@ var cyberDojo = (function($cd, $j) {
 
     var source = $j($cd.makeTable(github,ova,turnKey));
       
-    $cd.dialog(source.html(), 720, 'source');
+    $cd.dialog(source.html(), 700, 'source');
   };
 
   return $cd;

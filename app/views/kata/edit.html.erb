@@ -57,7 +57,16 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
-          <%= render :partial => 'test' -%>
+          <table>
+            <tr>
+              <td>
+                <%= render :partial => 'test' -%>
+              </td>
+              <td>
+                <%= render :partial => 'spinner' -%>
+              </td>
+            </tr>
+          </table>
         </div>
         <div class="panel">
           <%= render :partial => 'filename_list' -%>

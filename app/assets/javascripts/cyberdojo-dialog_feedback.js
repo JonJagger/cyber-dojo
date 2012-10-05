@@ -22,7 +22,7 @@ var cyberDojo = (function($cd, $j) {
     
     var feedback = $j($cd.makeTable(appreciate, tellMe));
       
-    $cd.dialog(feedback.html(), 650, 'feedback');
+    $cd.dialog(feedback.html(), 620, 'feedback');
   };
 
   return $cd;
