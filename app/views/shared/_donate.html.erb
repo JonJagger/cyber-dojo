@@ -4,7 +4,10 @@
 $j(document).ready(function() {
 
   $j('#donate').click(function() {
-    alert("TODO");
+    $cd.postTo('https://www.paypal.com/cgi-bin/webscr',
+      { cmd: '_s-xclick',
+        hosted_button_id: '7HAUYJCMFCS8C'
+      }, '_blank');                  
   });
 
 });
