@@ -35,8 +35,7 @@ $j(document).ready(function() {
     $cd.postRunTests();
   });
   
-  $j('#spinner_lhs').hide();
-  $j('#spinner_rhs').hide();
+  $j('.spinner').hide();
   $j('#tip').show();
 });
 
@@ -58,19 +57,7 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
-          <table align="center">
-            <tr>
-              <td>
-                <%= render :partial => 'spinner_lhs' -%>
-              </td>
-              <td>
-                <%= render :partial => 'test' -%>
-              </td>
-              <td>
-                <%= render :partial => 'spinner_rhs' -%>
-              </td>
-            </tr>
-          </table>
+          <%= render :partial => 'test' -%>
         </div>
         <div class="panel">
           <%= render :partial => 'filename_list' -%>

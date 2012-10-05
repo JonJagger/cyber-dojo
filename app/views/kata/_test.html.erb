@@ -1,9 +1,23 @@
 
-<div id="run_tests">
-  <input type="submit" 
-         class="large button"
-         id="test"
-         value="test"
-         title="Run the tests and generate a new traffic-light" />
-</div>              
+<table align="center">
+  <tr>
+    <td>
+      <%= render :partial => 'spinner' -%>
+    </td>
+    <td>
+      <div id="run_tests">
+        <input type="submit" 
+               class="large button"
+               id="test"
+               value="test"
+               title="Run the tests and generate a new traffic-light" />
+      </div>              
+    </td>
+    <td>
+      <%= render :partial => 'spinner' -%>
+    </td>
+  </tr>
+</table>
+
+
 
