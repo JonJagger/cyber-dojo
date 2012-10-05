@@ -4,32 +4,22 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.dialog_dashboard_tips = function() {
 
-    var redFirst =
-      $cd.divPanel(
-        'Look for ' +
-        '<img src="/images/traffic-light-red.png" width="20" height="60"/> ' +
-        '&rarr;' +
-        '<img src="/images/traffic-light-green.png" width="20" height="60"/> ' +
-        'progressions as evidence of starting with a failing test.'
-      );
+    var traffic_light = function(colour) {
+        return  '<img src="/images/traffic-light-' +colour + '.png"' +
+                    ' width="20"' +
+                    ' height="60"/> ';
+    };
+    
+    var progression = function(from,to,activity) {
+      return $cd.divPanel(
+        'Look for ' + traffic_light(from) + '&rarr;' + traffic_light(to) +
+        'progressions as evidence of ' + activity + '.'
+      );        
+    };
 
-    var refactor =
-      $cd.divPanel(
-        'Look for ' +
-        '<img src="/images/traffic-light-green.png" width="20" height="60"/> ' +
-        '&rarr;' +
-        '<img src="/images/traffic-light-green.png" width="20" height="60"/> ' +
-        'progressions as evidence of refactoring.'
-      );
-
-    var amber =
-      $cd.divPanel(
-        'Look for ' +
-        '<img src="/images/traffic-light-amber.png" width="20" height="60"/> ' +
-        '&rarr;' +
-        '<img src="/images/traffic-light-amber.png" width="20" height="60"/> ' +
-        'progressions as evidence of overly ambitious steps.'
-      );
+    var redFirst = progression('red',   'green', 'starting with a failing test');
+    var refactor = progression('green', 'green', 'refactoring');
+    var amber    = progression('amber', 'amber', 'overly ambitious steps');
 
     var dashboard = $j($cd.makeTable(redFirst,refactor,amber));
       

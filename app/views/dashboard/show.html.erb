@@ -28,11 +28,11 @@ $j(document).ready(function() {
 <table align="center">
   <tr>
     <td align="center">
-      <%= render :partial => 'shared/yin_yang' -%>      
+      <%= render :partial => 'shared/yin_yang' -%><br/>
+      <%= render :partial => 'shared/config' -%>
       <div id="age">
         <%= render :partial => 'age' -%>
       </div>      
-      <%= render :partial => 'shared/id' -%>
     </td>
     
     <td>
@@ -40,12 +40,26 @@ $j(document).ready(function() {
     </td>
     
     <td valign="bottom">
-      <%= render :partial => 'shared/feedback' -%>
-      <%= render :partial => 'tips' -%>
       <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
           <%= render :partial => 'seconds_per_column' -%>      
           <%= render :partial => 'maximum_columns' -%>
       <% end %>
+    </td>
+    
+    <td valign="middle">
+      <table>
+        <tr>
+          <td>
+            <%= render :partial => 'shared/raspberry_pi_logo' -%>
+          </td>
+          <td>
+            <%= render :partial => 'shared/feedback' -%><br/>
+            <%= render :partial => 'shared/donate' -%><br/>
+            <%= render :partial => 'tips' -%>
+          </td>
+        </tr>
+      </table>
+      
     </td>
   </tr>  
 </table>

@@ -2,7 +2,17 @@
 <table>
   <tr>
     <td>
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+      <%= render :partial => 'shared/raspberry_pi_logo' -%>
+    </td>
+
+    <td>
+      &nbsp;
+    </td>
+    
+    <td>
+      <form action="https://www.paypal.com/cgi-bin/webscr"
+            method="post"
+            target="_blank">
         <input type="hidden"
                name="cmd"
                value="_s-xclick">
@@ -12,6 +22,8 @@
         <input type="image"
                src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif"
                border="0"
+               width="160"
+               height="45"               
                name="submit" alt="PayPal - The safe, easier way to pay online.">
         <img alt=""
              border="0"
@@ -21,16 +33,11 @@
           
       </form>
     </td>
-    <td>
-      <% size = 80 -%>
-      <%= link_to image_tag("/images/raspberry-pi.gif",
-                            :border => 0,
-                            :size => "60x75"
-                           ), "http://www.raspberrypi.org/", { :target => '_blank' } -%>          
-    </td>
+    
     <td>
       &nbsp;
     </td>
+
     <td>
       <span class="donate_text">
         If you find cyber-dojo useful please consider making a donation.<br/>

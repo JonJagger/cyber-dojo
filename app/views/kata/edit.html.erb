@@ -57,7 +57,7 @@ $j(document).ready(function() {
     <tr valign="top">
       <td>
         <div class="panel">
-          <%= render :partial => 'run_the_tests' -%>
+          <%= render :partial => 'test' -%>
         </div>
         <div class="panel">
           <%= render :partial => 'filename_list' -%>
@@ -66,10 +66,22 @@ $j(document).ready(function() {
           <%= render :partial => 'file_new_rename_delete' -%>
           <br/>
         </div>
-        <div class="panel">
-          <%= render :partial => 'shared/feedback' -%><br/>
-          <%= render :partial => 'help' -%><br/>
+        
+        <div class="panel">          
+          <table>
+            <tr>
+              <td>
+                <%= render :partial => 'shared/raspberry_pi_logo' -%>
+              </td>
+              <td>
+                <%= render :partial => 'shared/feedback' -%><br/>
+                <%= render :partial => 'shared/donate' -%><br/>
+                <%= render :partial => 'help' -%><br/>  
+              </td>
+            </tr>
+          </table>
         </div>
+        
       </td>
       <td>
         <%= render :partial => 'editor' -%>

@@ -39,8 +39,18 @@ $j(document).ready(function() {
             </div>
             </td></tr></table>
       </div>
-      <div class="panel">        
-        <%= render :partial => 'shared/feedback' -%><br/>
+      <div class="panel">
+          <table>
+            <tr>
+              <td>
+                <%= render :partial => 'shared/raspberry_pi_logo' -%>
+              </td>
+              <td>
+                <%= render :partial => 'shared/feedback' -%><br/>
+                <%= render :partial => 'shared/donate' -%><br/>
+              </td>
+            </tr>
+          </table>        
       </div>
     </td>    
     <td>

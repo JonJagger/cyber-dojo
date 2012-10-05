@@ -74,20 +74,13 @@ input { font-size: 1.15em; }
   @include rounded-corner;
 }
 
-.tiny.button
-{
-  font-size: 0.7em;
-  padding: 0 0.2em 0 0.2em;
-}
-.small.button
-{
-  font-size: 1.1em;
-  padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */
-}
-
+.tiny.button   { font-size: 0.70em; }
+.small.button  { font-size: 1.10em; }
 .medium.button { font-size: 1.35em; }
 .big.button    { font-size: 1.45em; }
-.large.button  { font-size: 1.95em; padding: -0.5em 1em 0em 1em; }
+.large.button  { font-size: 1.95em; }
+
+.tiny.button, .small.button { padding: 0 0.2em 0 0.2em; /* Top Right Bottom Left */ }
 
 .button[disabled]
 {
@@ -95,6 +88,8 @@ input { font-size: 1.15em; }
   background: LightGray;
   color: Gray;
 }
+
+#test { padding: 0 2em 0 2em; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -133,8 +128,6 @@ input[value="output"]+label     /* from diff-page */
 {
   font-style: italic;
 }
-
-input[id="help"] { margin-top: 0.5em; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
