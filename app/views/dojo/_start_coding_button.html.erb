@@ -3,13 +3,15 @@
 
 $j(document).ready(function() {
   
+  var title = 'start-coding';
+  
   $cd.startCoding = function(id, avatar_name, start_grid) {
     var grid = $j('<div>');
     var starter = $j('<div>')
       .html(start_grid)
       .dialog({
         autoOpen: false,
-        title: $cd.h1('start'),
+        title: $cd.h1(title),
         width: 400,
         modal: true,
         buttons: {
@@ -29,7 +31,7 @@ $j(document).ready(function() {
         .html(grid.html())
         .dialog({
           autoOpen: false,
-          title: $cd.h1('!start'),
+          title: $cd.h1('!' + title),
           width: 600,
           modal: true,
           buttons: {
@@ -45,7 +47,7 @@ $j(document).ready(function() {
   $j('#start_coding').click(function() {
     $cd.run('start_json', function(id, dojo) {
       if (dojo.exists === false) {
-        $cd.dialog_cantFindDojo('start', id);
+        $cd.dialog_cantFindDojo(title, id);
       } else if (dojo.full === true) {
         $cd.dialog_fullDojo(id);
       } else {
@@ -61,4 +63,4 @@ $j(document).ready(function() {
 <input type="button"
        class="medium button"
        id="start_coding"
-       value="start coding" />
+       value="start-coding" />
