@@ -53,11 +53,8 @@ h3 { font-size: 1.3em;  }
   padding: 0.5em;
 }
 
-.thin.panel
-{
-  @include rounded-corner(10px);
-  padding: 0.2em;
-}
+.thin { padding: 0.3em; }
+.thin.panel { @include rounded-corner(10px); }
 
 .small_text { font-size: 0.4em; }
 
