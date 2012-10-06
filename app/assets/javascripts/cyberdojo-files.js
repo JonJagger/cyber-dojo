@@ -112,6 +112,7 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.deselectRadioEntry = function(node) {  
     // See makeFileListEntry() above...
+    // See app/assets/stylesheets/color_scheme.css.scss
     node.css('background-color', '#B2EFEF');
     node.css('color', '#777');
   };
@@ -120,9 +121,7 @@ var cyberDojo = (function($cd, $j) {
   
   $cd.selectRadioEntry = function(node) {
     // See makeFileListEntry() above...
-    // I colour the radio entry in jQuery rather than in
-    // explicit CSS to try and give better ui appearance in
-    // older browsers.    
+    // See app/assets/stylesheets/color_scheme.css.scss
     node.parent().css('background-color', 'Cornsilk');
     node.parent().css('color', '#003C00');
     node.attr('checked', 'checked');        

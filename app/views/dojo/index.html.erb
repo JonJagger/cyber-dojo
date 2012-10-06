@@ -18,8 +18,6 @@ $j(document).ready(function() {
     };
   };
   
-  $j('body').css('background', 'Cornsilk');
-  
   var ua = $j.browser;
   if (ua.msie && ua.version.slice(0,3) === "6.0") {
     $cd.alert(
@@ -57,19 +55,19 @@ $j(document).ready(function() {
 
 <table style="font-size: 1.5em;">
   <tr>
-    <td class="thin panel">
+    <td class="panel">
       <%= render :partial => 'row_setup' -%>
     </td>
   </tr>
 
   <tr>
-    <td class="thin panel">
+    <td class="panel">
       <%= render :partial => 'row_code' -%>
     </td>
   </tr>
 
   <tr>
-    <td class="thin" align="center">
+    <td align="center">
       <%= render :partial => 'row_donate' -%>
     </td>
   </tr>

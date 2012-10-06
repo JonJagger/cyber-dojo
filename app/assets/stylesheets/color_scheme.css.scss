@@ -2,12 +2,18 @@
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /* Main Colour Scheme                                    */
 /* See also jQuery CSS'ing in                            */
-/*    cyberdojo-file_load_save.js radioEntrySwitch()     */
-/*    cyberdojo-build_diff_filenames.js                  */
+/*    cyberdojo-files.js radioEntrySwitch()              */
 
-$background-color: #B2EFEF;
-$main-color: #003C00;
+$background-color: #B2EFEF; /* light blue */
+
+$main-color: #003C00; /* dark green */
 
 $light-background-color: Cornsilk;
 
-$line-number-color: #A8A8A8;
+$line-number-color: #A8A8A8; /* light gray */
+
+$bottom-right-edge-color: #A8A8A8;
+
+$bottom-right-edge-highlight-color: #555555;
+
+$filename-color: #777;

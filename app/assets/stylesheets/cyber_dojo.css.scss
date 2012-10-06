@@ -12,10 +12,10 @@
 body
 {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  background: $background-color;  
   padding: 0;
   margin: 0;
   margin-top: 0.5em;
-  background: $background-color;  
 }
 
 h1, h2, h3, h4
@@ -36,31 +36,32 @@ h3 { font-size: 1.3em;  }
 
 .panel
 {
-  background: $background-color;
   color: $main-color;  
-  
+  background: $background-color;
   border-top: 2px solid $light-background-color;
   border-left: 2px solid $light-background-color;
   border-right: none;
-  border-bottom: none;
-  
+  border-bottom: none;  
   margin: 0px;
   padding: 0.5em;
+  @include rounded-corner(4px);  
 }
 
-.thin { padding: 0.5em; }
-.thin.panel { @include rounded-corner(10px); }
 .edge.panel { padding: 0em; }
 .light_margin.panel { background: $light-background-color; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-input { font-size: 1.15em; }
+input
+{
+  color: $main-color;
+  font-size: 1.15em;
+}
 
 .button
 {
-  background: $light-background-color;
   color: $main-color;
+  background: $light-background-color;
   font-size: 0.8em;
   cursor: pointer;
   padding: 0em 0.2em 0em 0.2em;
@@ -96,7 +97,8 @@ div[class~="filename"]:after  { content: $retained-space;  }
 
 div[class~="filename"]
 {
-  color: #777;
+  color: $filename-color;
+  background: $background-color;
   margin: 0.25em;
   font-size: 17pt;
   cursor: pointer;
@@ -104,19 +106,16 @@ div[class~="filename"]
   @include rounded-corner(4px);
 }
 
-$bottom-right-edge: #A8A8A8;
-$bottom-right-edge-highlight: #555555;
-
 div[class~="filename"]:hover, .button:hover
 {
-  border-bottom: 2px solid $bottom-right-edge-highlight;
-  border-right:  2px solid $bottom-right-edge-highlight;   
+  border-bottom: 2px solid $bottom-right-edge-highlight-color;
+  border-right:  2px solid $bottom-right-edge-highlight-color;   
 }
 
 div[class~="filename"], .button[disabled]:hover, .button
 {
-  border-bottom: 2px solid $bottom-right-edge;
-  border-right:  2px solid $bottom-right-edge;   
+  border-bottom: 2px solid $bottom-right-edge-color;
+  border-right:  2px solid $bottom-right-edge-color;   
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -125,8 +124,8 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .file_content
 {
-  background: $light-background-color;
   color: $main-color;
+  background: $light-background-color;
   width: 45em;
   font-weight: 500;
 }
@@ -147,8 +146,8 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .line_numbers
 {
-  background: $background-color;
   color: $line-number-color;
+  background: $background-color;
   overflow: hidden;
   text-align: right;
   display: block;
@@ -165,9 +164,9 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 #instructions
 {
+  color: $main-color;
   background: $light-background-color;
   border: 4px solid $light-background-color;
-  color: $main-color;
   overflow-y: auto;
   font-size: 16pt;
 }
