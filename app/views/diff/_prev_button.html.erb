@@ -1,40 +1,33 @@
-<% tag_number = @traffic_lights_to_tag.length -%>
 
-<form action='/diff/show'>
- 
-<%= tag( :input, 
-    { 
-      :type => :hidden,
-      :name => :id,
-      :value => @kata.id,      
-    }) -%>
-  
-<%= tag( :input, 
-    { 
-      :type => :hidden,
-      :name => :avatar,
-      :value => @avatar.name,            
-    }) -%>
-    
-<%= tag( :input, 
-    { 
-      :type => :hidden,
-      :name => :tag,
-      :value => tag_number - 1,            
-    }) -%>
-    
-  <button class="button"
-          id="prev_button"
-          <% if tag_number != 0 -%>
-          type="submit"
-          title="View previous diff (<%=tag_number-1-%>)" >
-          <% else -%>
-          type="button"
-          disabled>
-          <% end -%>
-    <img src="/images/left-triangle.gif"
-         width="27" 
-         height="30" />
-  </button>
-</form>
+<% prev_tag_number = @traffic_lights_to_tag.length -%>
+
+<script language="javascript" type="text/javascript"><!--
+
+$j(document).ready(function() {
+
+  $j('#prev_button').click(function() {
+    $cd.postTo('/diff/show', {
+      id: "<%= @kata.id %>",
+      avatar: "<%= @avatar.name %>",
+      tag: "<%= prev_tag_number-1 %>"
+    });  
+  });
+
+});
+
+//--></script>
+
+<button class="button"
+        id="prev_button"
+        <% if prev_tag_number != 0 -%>
+        type="submit"
+        title="View previous diff (<%=prev_tag_number-1-%>)" >
+        <% else -%>
+        type="button"
+        disabled>
+        <% end -%>
+  <img src="/images/left-triangle.gif"
+       width="27" 
+       height="30" />
+</button>
 

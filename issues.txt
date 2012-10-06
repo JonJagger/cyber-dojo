@@ -25,7 +25,6 @@ MINOR
 -----
 make red/green diff-counts on diff-page into buttons that toggle red/green lines on-off
 allow entry of only first 5 characters of ID as long as its unique to that length
-dashboard/show URL does not contain the ID
 add help button on diff page
 add help button on dashboard page
 if run-tests detects no change in files then don't create new traffic-light?
