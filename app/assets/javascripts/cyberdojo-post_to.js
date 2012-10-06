@@ -3,20 +3,20 @@
 var cyberDojo = (function($cd, $j) {
 
   $cd.postTo = function(url, params, target) {
+    var key, sep = '?';
+    var form = $j('<form>');
     
-    if (params && params['id'] !== 'undefined') {
-      url += '/' + params['id'];
+    if (params && params.id !== 'undefined') {
+      url += '/' + params.id;
     }
     
-    var sep = '?';
-    for (var key in params) {
+    for (key in params) {
         if (key !== 'id') {
           url += sep + key + '=' + params[key];
           sep = '&';
         }
     }
     
-    var form = $j('<form>');
     form.attr('action', url);
     form.attr('method', 'POST');
     if (typeof(target) !== 'undefined') {

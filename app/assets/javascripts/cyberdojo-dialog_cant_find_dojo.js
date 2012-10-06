@@ -24,7 +24,7 @@ var cyberDojo = (function($cd, $j) {
               '<h3>' + id + '</h3>' +
               "id's are always 10 characters long,<br/>" +
               "are case sensitive, and contain only<br/>" +
-              "the digits 23456789 and letters ABCDEF"
+              "the digits 23456789 and letters ABCDEF" +
             '</td>' +
           '</tr>' +
         '</table>' +  

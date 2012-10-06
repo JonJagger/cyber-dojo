@@ -10,7 +10,7 @@ into a separate folder on the same server. This ties in with
 making old dojos diff sessions viewable as a stand-alone
 html page (see vision.txt)
 -----
-Ensuring cyberdojo.sh cleans up any processes is messy. Instead of
+Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group. See lib/Files.rb
 Note, if you're running under apache then this never seems to be

@@ -37,7 +37,7 @@ var cyberDojo = (function($cd, $j) {
       .html(div)
       .dialog({
 	autoOpen: false,
-        width: 350,	    	
+	width: 350,
 	title: $cd.h1('rename'),
 	modal: true,
 	buttons: {
@@ -61,7 +61,7 @@ var cyberDojo = (function($cd, $j) {
       }  
     });
     renamer.dialog('open');
-    input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'))
+    input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'));
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -93,7 +93,7 @@ var cyberDojo = (function($cd, $j) {
 	  .html(div)
 	  .dialog({
 	    autoOpen: false,
-            width: 350,	    
+	    width: 350,
 	    title: $cd.h1('delete'),
 	    modal: true,
 	    buttons: {
