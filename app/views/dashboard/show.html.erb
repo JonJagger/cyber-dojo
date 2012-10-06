@@ -12,11 +12,11 @@ $cd.refreshDashboard = function() {
 };
 
 $j(document).ready(function() {
-  var CARRIAGE_RETURN = 13;
   var seconds = 1000;
   setInterval($cd.refreshDashboard, 10*seconds);
   
   $j('#seconds_per_column,#maximum_columns').keyup(function(event) {
+    var CARRIAGE_RETURN = 13;
     if (event.which === CARRIAGE_RETURN) {
       $cd.postTo('/dashboard/show', {
         id: "<%= @kata.id -%>",
