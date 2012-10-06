@@ -18,7 +18,11 @@ $j(document).ready(function() {
   
   $j('#seconds_per_column,#maximum_columns').keyup(function(event) {
     if (event.which === CARRIAGE_RETURN) {
-      $cd.refreshDashboard();
+      $cd.postTo('/dashboard/show', {
+        id: "<%= @kata.id -%>",
+        seconds_per_column: $cd.parseSecondsPerColumn(),
+        maximum_columns: $cd.parseMaximumColumns()        
+      });
     }
   });  
 });
