@@ -2,7 +2,7 @@
 
 var cyberDojo = (function($cd, $j) {
   
-  $cd.dialog_id = function(info) {
+  $cd.dialog_id = function(title,info) {
     var fromDiff = false, panel = '<table>';
     $j.each(info, function(key,value) {
       if (key.indexOf('diff') != 0) {
@@ -35,7 +35,7 @@ var cyberDojo = (function($cd, $j) {
       id = $j($cd.makeTable($cd.divPanel(panel)));
     }
     
-    $cd.dialog(id.html(), 450, 'config?');    
+    $cd.dialog(id.html(), 450, title);    
   };
   
   return $cd;

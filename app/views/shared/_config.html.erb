@@ -27,7 +27,6 @@ $j(document).ready(function() {
     };
   
     var info = {
-            "  id" : "<%= @kata.id -%>",
         "language" : "<%= @kata.language.name -%>",
        "unit-test" : "<%= @kata.language.unit_test_framework -%>",
         "exercise" : "<%= @kata.exercise.name -%>",
@@ -39,7 +38,7 @@ $j(document).ready(function() {
       <% end -%>
     };
     
-    $cd.dialog_id(info);
+    $cd.dialog_id("<%= @kata.id -%>",info);
   });
 
 });
@@ -50,5 +49,4 @@ $j(document).ready(function() {
        class="tiny button"
        title="Show id"
        id="id"
-       value="config?"
-       xvalue="<%=@kata.id[0..5]-%>"/>
+       value="<%=@kata.id[0..5]-%>"/>
