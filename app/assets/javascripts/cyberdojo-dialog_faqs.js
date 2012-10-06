@@ -19,7 +19,7 @@ var cyberDojo = (function($cd, $j) {
 
     var faqs = $j($cd.makeTable(hilight,noListen,refactor,noListen,any,noListen));
       
-    $cd.dialog(faqs.html(), 675, 'faqs');
+    $cd.dialog(faqs.html(), 550, 'faqs');
   };
 
   return $cd;

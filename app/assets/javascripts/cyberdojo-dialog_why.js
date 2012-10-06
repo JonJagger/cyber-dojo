@@ -49,7 +49,7 @@ var cyberDojo = (function($cd, $j) {
       
     var why = $j($cd.makeTable(oslo,feel,improve,delay,browser,noCollab,social));
       
-    $cd.dialog(why.html(), 900, 'why?');
+    $cd.dialog(why.html(), 800, 'why?');
   };
 
   return $cd;

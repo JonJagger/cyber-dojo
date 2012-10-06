@@ -80,7 +80,7 @@ var cyberDojo = (function($cd, $j) {
       +   space + 'think about improving, not finishing'
       + '</div>';
                   
-    $cd.dialog(kataHelp, 625, 'help');
+    $cd.dialog(kataHelp, 565, 'help');
   };
 
   return $cd;
