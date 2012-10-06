@@ -44,10 +44,8 @@ $j(document).ready(function() {
     </td>
     
     <td valign="bottom">
-      <%= form_tag({ :action => 'show', :id => @kata.id }, :method => 'get') do %>
-          <%= render :partial => 'seconds_per_column' -%>      
-          <%= render :partial => 'maximum_columns' -%>
-      <% end %>
+      <%= render :partial => 'seconds_per_column' -%>      
+      <%= render :partial => 'maximum_columns' -%>
     </td>
     
     <td valign="middle">
