@@ -33,42 +33,53 @@ $j(document).ready(function() {
 //--></script>
 
 
-<table>
-  
+<table align="center">
   <tr>
+    <td>      
+      <% size = 80 -%>
+      <%= image_tag("/images/avatars/cyber-dojo.png",
+          :border => 0,
+          :size => "#{size}x#{size}",
+          :title => 'cyber-dojo') -%>
+    </td>
     <td>
-      <%= render :partial => 'row_logo_title' -%>      
+      &nbsp;&nbsp;
+    </td>
+    <td>
+      <div style="font-size: 4em;">cyber-dojo</div>                
+    </td>
+  </tr>
+</table>
+
+<h2>where software teams do <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_8.html">deliberate practice</a></h2>      
+
+<br/>
+
+<table style="font-size: 1.5em;">
+  <tr>
+    <td class="thin panel">
+      <%= render :partial => 'row_setup' -%>
     </td>
   </tr>
 
   <tr>
-    <td>
-      <h3>where software teams do
-        <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html" target="_blank">deliberate practice</a>
-      </h3>
-      <br/>
-    </td>
-  </tr>
-
-  <tr>
-    <td class="thin panel monospace" align="left" style="font-size: 1.7em;">
+    <td class="thin panel">
       <%= render :partial => 'row_code' -%>
     </td>
   </tr>
-  
+
   <tr>
-    <td class="thin" align="center" style="font-size: 0.8em;">
-      <%= render :partial => 'row_donate' -%>
+    <td align="center">
+      <%= render :partial => 'row_buttons' -%>
     </td>
   </tr>
 
+  <tr>
+    <td align="center">
+      <%= render :partial => 'row_donate' -%>
+    </td>
+  </tr>
+        
 </table>
 
-<table align="center">    
-  <tr>
-    <td class="thin panel">
-      <%= render :partial => 'row_buttons' -%>
-    </td>
-  </tr>  
-</table>
 

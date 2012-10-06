@@ -48,10 +48,9 @@ h3 { font-size: 1.3em;  }
   padding: 0.5em;
 }
 
-.thin { padding: 0.3em; }
+.thin { padding: 0.5em; }
 .thin.panel { @include rounded-corner(10px); }
-
-.small_text { font-size: 0.4em; }
+.light_margin.panel { background: $light-background-color; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -63,42 +62,18 @@ input { font-size: 1.15em; }
   color: $main-color;
   font-size: 0.8em;
   cursor: pointer;
-  padding: 0.1em 0.2em 0.1em 0.2em;
+  padding: 0em 0.2em 0em 0.2em;
   text-decoration: none;
   font-weight: normal;
   border: none;
   @include rounded-corner;
 }
 
-.button.tiny   { font-size: 0.80em; }
-.button.small  { font-size: 1.10em; }
-.button.medium { font-size: 1.35em; }
-.button.big    { font-size: 1.45em; }
-.button.large  { font-size: 1.95em; }
-
 .button[disabled]
 {
   cursor: default;
   background: LightGray;
   color: Gray;
-}
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
-
-.light_margin.panel { background: $light-background-color; }
-
-.small_title
-{
-  color: $main-color;
-  display: block;
-  margin: 0.2em 0em 0em 0.2em; /* Top Right Bottom Left */
-  font-size: 1em;
-}
-
-.choose_title
-{
-  font-size: 2em;
-  font-weight: bold;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -188,8 +163,6 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 #cyber_dojo_page { color: $main-color; }
 
-#donate_text { font-size: 0.5em; }
-
 #instructions
 {
   background: $light-background-color;
@@ -199,9 +172,17 @@ div[class~="filename"], .button[disabled]:hover, .button
   font-size: 16pt;
 }
 
-#kata_id_input { font-size: 0.9em; }
-
 #test { padding: 0 0.7em 0 0.7em; }
 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.micro  { font-size: 0.60em; }
+.tiny   { font-size: 0.80em; }
+.small  { font-size: 1.10em; }
+.medium { font-size: 1.35em; }
+.big    { font-size: 1.45em; }
+.large  { font-size: 1.95em; }
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 

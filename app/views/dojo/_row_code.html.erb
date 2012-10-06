@@ -1,67 +1,50 @@
 
+<span class="medium">
+  &hellip;on <em>each</em> computer enter your coding-practice<br/>
+</span>
+
 <table>
-  
   <tr>
+   <td>
+    <span class="medium">
+      &nbsp;id
+    </span>
+      <input type="text"
+             id="kata_id_input"
+             size="11"
+             value="<%=@id-%>" />
+    </td>
+    <td align="right">
+      <span class="medium">
+        &nbsp;and&nbsp;
+      </span>
+    </td>
     <td>
-      <%= render :partial => 'setup_button' -%> a new coding-practice ;      
+      <%= render :partial => 'start_coding_button' -%>
     </td>
   </tr>
-  
   <tr>
+    <td>            
+    </td>
+    <td align="right">
+      <span class="medium">
+        or&nbsp;
+      </span>
+    </td>
     <td>
-            enter your id
-            <input type="text"
-                      id="kata_id_input"
-                      size="12"
-                      value="<%=@id-%>" /> ;
+      <%= render :partial => 'resume_coding_button' -%>            
     </td>
   </tr>
   <tr>
     <td>
-      on <em>each</em> computer {
     </td>
-  </tr>
-  
-  <tr>
+    <td align="right">
+      <span class="medium">            
+        then&nbsp;
+      </span>
+    </td>
     <td>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <%= render :partial => 'start_coding_button' -%>
-            or
-            <%= render :partial => 'resume_coding_button' -%>
-            coding ;
+      <%= render :partial => 'review_coding_button' -%>                        
     </td>
-  </tr>
-
-  <tr>
-    <td>
-      }
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      a while (later) {
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <%= render :partial => 'review_coding_button' -%>
-            the code ;
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-      }
-    </td>
-  </tr>
-  
-  <tr>
-    <td>
-      goto setup ;
-    </td>
-  </tr>
+  </tr>          
 </table>
-

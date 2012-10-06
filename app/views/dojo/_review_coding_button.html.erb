@@ -6,7 +6,7 @@ $j(document).ready(function() {
   $j('#review_coding').click(function() {
     $cd.run('exists_json', function(id, dojo) {
       if (!dojo.exists) {
-        $cd.dialog_cantFindDojo('review', id);
+        $cd.dialog_cantFindDojo('review-coding', id);
       } else {
         $cd.postTo('/dashboard/show', { id: id });
       }
@@ -18,6 +18,6 @@ $j(document).ready(function() {
 //--></script>
 
 <input type="button"
-       class="small button"
+       class="large button"
        id="review_coding"
-       value="review" />
+       value="review-coding" />
