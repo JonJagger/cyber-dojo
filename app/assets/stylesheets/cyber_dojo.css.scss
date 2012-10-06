@@ -50,6 +50,7 @@ h3 { font-size: 1.3em;  }
 
 .thin { padding: 0.5em; }
 .thin.panel { @include rounded-corner(10px); }
+.edge.panel { padding: 0em; }
 .light_margin.panel { background: $light-background-color; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -66,7 +67,7 @@ input { font-size: 1.15em; }
   text-decoration: none;
   font-weight: normal;
   border: none;
-  @include rounded-corner;
+  @include rounded-corner(4px);
 }
 
 .button[disabled]
@@ -100,7 +101,7 @@ div[class~="filename"]
   font-size: 17pt;
   cursor: pointer;
   white-space: nowrap;
-  @include rounded-corner;
+  @include rounded-corner(4px);
 }
 
 $bottom-right-edge: #A8A8A8;
@@ -130,12 +131,12 @@ div[class~="filename"], .button[disabled]:hover, .button
   font-weight: 500;
 }
 
-.line_numbers, .file_content { height: 27em; }
+.line_numbers, .file_content { height: 31em; }
 
 .line_numbers, #diff_sheet, .file_content
 {
   font-family: monospace;
-  font-size: 17pt;
+  font-size: 15pt;
   border: 0;
   margin: 0;
   padding: 0;

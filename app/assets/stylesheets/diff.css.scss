@@ -26,7 +26,11 @@
 $diff-added-color: #CEF6CE;
 $diff-deleted-color: #F6CECE;
 
-.diffed_code added, .diffed_code deleted, .diffed_code same { white-space: pre; display: block; }
+.diffed_code added, .diffed_code deleted, .diffed_code same
+{
+  white-space: pre;
+  display: block;
+}
 
 .diffed_code ln 
 {
