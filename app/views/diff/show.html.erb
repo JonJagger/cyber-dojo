@@ -1,35 +1,36 @@
-
+        
 <table cellpadding="0" cellspacing="0">
   <tr valign="top">
     <td>
       <div class="panel">
-        <%= render :partial => 'info' -%>
+        <%= render :partial => 'info' %>
       </div> 
       <div class="panel">
-        <%= render :partial => 'prev_next' -%>
+        <%= render :partial => 'first_prev_next_last' %>
       </div>      
       <div class="panel">
-        <%= render :partial => 'filenames' -%>
+        <%= render :partial => 'filenames' %>
       </div>
       <div class="panel">
           <table>
             <tr>
               <td>
-                <%= render :partial => 'shared/raspberry_pi_logo' -%>
+                <%= render :partial => 'shared/raspberry_pi_logo' %>
               </td>
               <td>
-                <%= render :partial => 'shared/feedback_button' -%><br/>
-                <%= render :partial => 'shared/donate_button' -%><br/>
+                <%= render :partial => 'shared/feedback_button' %>
+                <br/>
+                <%= render :partial => 'shared/donate_button' %>
               </td>
             </tr>
           </table>        
       </div>
       <div class="panel">
-        <%= render :partial => 'fork_button' -%>        
+        <%= render :partial => 'fork_button' %>        
       </div>
     </td>    
     <td>
-      <%= render :partial => 'view' -%>
+      <%= render :partial => 'view' %>
     </td>
   </tr>
 </table>

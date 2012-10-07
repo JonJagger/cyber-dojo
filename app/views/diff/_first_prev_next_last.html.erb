@@ -1,0 +1,112 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$j(document).ready(function() {
+
+  var minTag = 1;  
+  var currentTag = <%= @traffic_lights_to_tag.length %>;
+  var maxTag = <%= @all_traffic_lights.length %>;
+  
+  var showDiff = function(n) {
+    if (n !== currentTag) {
+      $cd.postTo('/diff/show', {
+	id: "<%= @kata.id %>",
+	avatar: "<%= @avatar.name %>",
+	tag: n
+      });
+    }
+  };
+
+  var getTagNumber = function(event) {
+    var CARRIAGE_RETURN = 13;
+    if (event.keyCode === CARRIAGE_RETURN) {
+      var input = $j('#tag_number');
+      var newTag = parseInt(input.attr('value'));
+      if (!isNaN(newTag)) {
+	if (newTag < minTag) newTag = minTag;
+	if (newTag > maxTag) newTag = maxTag;
+	return newTag;
+      } else {
+	input.attr('value', '?');
+      }
+    }    
+    return currentTag;
+  };
+  
+  $j('#first_button').click(function() { showDiff(minTag); });
+  $j('#prev_button').click(function() { showDiff(currentTag-1); });
+  $j('#tag_number').keyup(function(event) { showDiff(getTagNumber(event)); });
+  $j('#next_button').click(function() { showDiff(currentTag+1); });
+  $j('#last_button ').click(function() { showDiff(maxTag); });
+
+  if (currentTag !== 1) {
+    $j('#first_button').attr('title', 'Goto first diff (1)');
+    $j('#prev_button' ).attr('title', 'Goto previous diff (' + (currentTag-1) + ')');  
+  } else {
+    $j('#first_button').attr('disabled', true);
+    $j('#prev_button' ).attr('disabled', true);    
+  }
+
+  if (currentTag < maxTag) {
+    $j('#next_button').attr('title', 'Goto next diff (' + (currentTag+1) + ')');
+    $j('#last_button').attr('title', 'Goto last diff (' + maxTag + ')');
+  } else {
+    $j('#next_button').attr('disabled', true);
+    $j('#last_button').attr('disabled', true);
+  }
+
+});
+
+//--></script>
+
+<% width  = 18 %>
+<% height = 23 %>
+
+<table>
+  <tr>
+    <td>
+      <button class="button"
+	      id="first_button"
+	      type="button">
+	<img src="/images/triangle_first.gif"
+	     width="<%= width %>" 
+	     height="<%= height+2 %>" />
+      </button>      
+    </td>                
+    <td>
+      <button class="button"
+	      id="prev_button"
+	      type="button">
+	<img src="/images/triangle_prev.gif"
+	     width="<%= width %>" 
+	     height="<%= height %>" />
+      </button>      
+    </td>
+    <td>
+      <input type="text"
+ 	     size="2"
+	     id="tag_number"
+	     name="tag_number"
+	     value="?" />
+    </td>   
+    <td>
+      <button class="button"
+	      id="next_button"
+	      type="button">
+	<img src="/images/triangle_next.gif"
+	     width="<%= width %>" 
+	     height="<%= height %>" />
+      </button>      
+    </td>
+    <td>
+      <button class="button"
+	      id="last_button"
+	      type="button">
+	<img src="/images/triangle_last.gif"
+	     width="<%= width %>" 
+	     height="<%= height+2 %>" />
+      </button>
+    </td>
+  </tr>
+</table>      
