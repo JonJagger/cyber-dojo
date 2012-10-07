@@ -34,6 +34,10 @@ $j(document).ready(function() {
     return currentTag;
   };
   
+  var gotoDiffTitle = function(name,n) {
+    return 'Goto ' + name + ' diff (' + n + ')';  
+  };
+  
   $j('#first_button').click(function() { showDiff(minTag); });
   $j('#prev_button').click(function() { showDiff(currentTag-1); });
   $j('#tag_number').keyup(function(event) { showDiff(getTagNumber(event)); });
@@ -41,16 +45,16 @@ $j(document).ready(function() {
   $j('#last_button ').click(function() { showDiff(maxTag); });
 
   if (currentTag !== 1) {
-    $j('#first_button').attr('title', 'Goto first diff (1)');
-    $j('#prev_button' ).attr('title', 'Goto previous diff (' + (currentTag-1) + ')');  
+    $j('#first_button').attr('title', gotoDiffTitle('first',1));
+    $j('#prev_button' ).attr('title', gotoDiffTitle('previous', currentTag-1));  
   } else {
     $j('#first_button').attr('disabled', true);
     $j('#prev_button' ).attr('disabled', true);    
   }
 
   if (currentTag < maxTag) {
-    $j('#next_button').attr('title', 'Goto next diff (' + (currentTag+1) + ')');
-    $j('#last_button').attr('title', 'Goto last diff (' + maxTag + ')');
+    $j('#next_button').attr('title', gotoDiffTitle('next', currentTag+1));
+    $j('#last_button').attr('title', gotoDiffTitle('last', maxTag));
   } else {
     $j('#next_button').attr('disabled', true);
     $j('#last_button').attr('disabled', true);
@@ -87,4 +91,3 @@ $j(document).ready(function() {
     </td>
   </tr>
 </table>      
-
