@@ -38,11 +38,11 @@ $j(document).ready(function() {
     return 'Goto ' + name + ' diff (' + n + ')';  
   };
   
-  $j('#first_button').click(function() { showDiff(minTag); });
-  $j('#prev_button').click(function() { showDiff(currentTag-1); });
-  $j('#tag_number').keyup(function(event) { showDiff(getTagNumber(event)); });
-  $j('#next_button').click(function() { showDiff(currentTag+1); });
-  $j('#last_button ').click(function() { showDiff(maxTag); });
+  $j('#first_button').click(function()      { showDiff(minTag); });
+  $j('#prev_button' ).click(function()      { showDiff(currentTag-1); });
+  $j('#tag_number'  ).keyup(function(event) { showDiff(getTagNumber(event)); });
+  $j('#next_button' ).click(function()      { showDiff(currentTag+1); });
+  $j('#last_button' ).click(function()      { showDiff(maxTag); });
 
   if (currentTag !== 1) {
     $j('#first_button').attr('title', gotoDiffTitle('first',1));

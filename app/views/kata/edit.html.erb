@@ -7,10 +7,10 @@ $j(document).ready(function() {
     return "<%= @tab %>";
   };
   $cd.support_filenames = function() {
-    return $j.parseJSON('<%=@kata.language.support_filenames.inspect.html_safe %>');
+    return $j.parseJSON('<%= @kata.language.support_filenames.inspect.html_safe %>');
   };
   $cd.hidden_filenames = function() {
-    return $j.parseJSON('<%=@kata.language.hidden_filenames.inspect.html_safe %>');
+    return $j.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
   };  
 
 });
@@ -37,6 +37,7 @@ $j(document).ready(function() {
         <div class="panel">
           <%= render :partial => 'test_button' %>
         </div>
+        
         <div class="panel">
           <%= render :partial => 'filename_list' %>
           <br/>
@@ -58,7 +59,6 @@ $j(document).ready(function() {
             </tr>
           </table>
         </div>
-        
       </td>
       <td>
         <%= render :partial => 'editor' %>
