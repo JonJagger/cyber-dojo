@@ -18,12 +18,12 @@ $j(document).ready(function() {
 <table>
   <tr>
     <td class="thin panel">
-<% [ 'about', 'basics', 'faqs', 'feedback', 'links', 'source', 'tips' ].each do |name| -%>
+<% [ 'about', 'basics', 'faqs', 'feedback', 'links', 'source', 'tips' ].each do |name| %>
   <input type="button"
          class="tiny button"
-         id="<%=name-%>"
-         value="<%=name-%>"/>
-<% end -%>
+         id="<%= name %>"
+         value="<%= name %>"/>
+<% end %>
 
   <input type="button"
          class="tiny button"
@@ -32,5 +32,3 @@ $j(document).ready(function() {
     </td>
   </tr>
 </table>
-
-  

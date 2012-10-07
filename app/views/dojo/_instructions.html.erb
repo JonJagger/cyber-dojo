@@ -6,11 +6,8 @@
           rows="31">              
 </textarea>
 
-<% @exercises.each_with_index do |choice,index| -%>
+<% @exercises.each_with_index do |choice,index| %>
    <textarea style="display:none;" 
-             name="instructions_<%=index-%>"
-             id="instructions_<%=index-%>"><%=h @instructions[choice] -%></textarea>
-<% end -%>      
-
-
-
+             name="instructions_<%= index %>"
+             id="instructions_<% index %>"><%=h @instructions[choice] %></textarea>
+<% end %>      

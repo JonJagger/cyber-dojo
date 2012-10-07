@@ -5,9 +5,9 @@ $j(document).ready(function() {
   
   $j('#fork_button').click(function() {
       $cd.postTo('/dojo/diff_save', {
-        id: "<%= @kata.id -%>",
-        avatar: "<%= @avatar.name -%>",
-        tag: "<%= @traffic_lights_to_tag.length -%>"
+        id: "<%= @kata.id %>",
+        avatar: "<%= @avatar.name %>",
+        tag: "<%= @traffic_lights_to_tag.length %>"
       }, '_blank');
     });
 

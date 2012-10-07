@@ -29,12 +29,12 @@ $j(document).ready(function() {
  language?
 </div>
 
-<% @languages.each_with_index do |choice,index| -%>
+<% @languages.each_with_index do |choice,index| %>
   <div class="filename" >
-    <input id="language_<%=index-%>" 
+    <input id="language_<%= index %>" 
            type="radio"
            name="language" 
-           value="<%=choice-%>" />
-    <label><%= choice -%></label>
+           value="<%= choice %>" />
+    <label><%= choice %></label>
   </div>    
-<% end -%>    
+<% end %>    

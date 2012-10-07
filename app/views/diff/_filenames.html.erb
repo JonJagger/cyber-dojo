@@ -2,8 +2,8 @@
 <script language="javascript" type="text/javascript"><!--
 
 $j(document).ready(function() {
-  $cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe -%>);
-  $j('#' + '<%=@current_filename_id-%>').click();  
+  $cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe %>);
+  $j('#' + '<%= @current_filename_id %>').click();  
   $j('input[type=radio]').hide();
 });
 
@@ -12,37 +12,37 @@ $j(document).ready(function() {
 <table vertical-align="middle"
        cellpadding="0"
        cellspacing="0">
-  <% @diffs.each do |file| -%>
-    <% n_deleted = file[:deleted_line_count] -%>
-    <% n_added   = file[:added_line_count]   -%>
+  <% @diffs.each do |file| %>
+    <% n_deleted = file[:deleted_line_count] %>
+    <% n_added   = file[:added_line_count]   %>
     <tr>
       <td align="left">        
         <div class="filename"
-             id="<%= file[:id] -%>" >
-          <input id="radio_<%=file[:id]-%>"
+             id="<%= file[:id] %>" >
+          <input id="radio_<%= file[:id] %>"
                  name="filename"
                  type="radio"
                  checked="checked"
-                 value="<%=file[:name]-%>"/>
+                 value="<%= file[:name] %>"/>
           <label>
-            <%=file[:name]-%>
+            <%= file[:name] %>
           </label>
         </div>
       </td>    
-      <% show_delete = (n_deleted > 0) || (n_deleted == 0 && n_added > 0) -%>
-      <% show_added  = (n_added > 0) || (n_added == 0 && n_deleted > 0) -%>
+      <% show_delete = (n_deleted > 0) || (n_deleted == 0 && n_added > 0) %>
+      <% show_added  = (n_added > 0) || (n_added == 0 && n_deleted > 0) %>
       <td align="left">
-        <% if show_delete -%>
-            <span class="diff-deleted-line-count" title="<%=n_deleted-%> deleted lines"><%= n_deleted -%></span>
-        <% end -%>
+        <% if show_delete %>
+            <span class="diff-deleted-line-count" title="<%= n_deleted %> deleted lines"><%= n_deleted %></span>
+        <% end %>
       </td>
       <td align="left">
-        <% if show_added -%>
-          <span class="diff-added-line-count"   title="<%=n_added-%> added lines"><%= n_added -%></span>
-        <% end -%>
+        <% if show_added %>
+          <span class="diff-added-line-count"   title="<% n_added %> added lines"><%= n_added %></span>
+        <% end %> 
       </td>      
     </tr>
-  <% end -%>
+  <% end %>
 </table>
 
 

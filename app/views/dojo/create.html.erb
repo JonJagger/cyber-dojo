@@ -29,7 +29,7 @@ $j(document).ready(function() {
       <table>
         <tr>
           <td>
-            <% size = 50 -%>
+            <% size = 50 %>
             <%= link_to image_tag("/images/avatars/cyber-dojo.png",
                                       :border => 0,
                                       :size => "#{size}x#{size}",
@@ -37,7 +37,7 @@ $j(document).ready(function() {
                                   {
                                     :controller => :dojo,
                                     :action => :index
-                                  } -%>
+                                  } %>
           </td>
           <td>&nbsp;</td>
           <td>
@@ -57,18 +57,16 @@ $j(document).ready(function() {
       </table>
     </td>
     <td class="light_margin panel" valign="top" rowspan="2">
-      <%= render :partial => 'instructions' -%>      
+      <%= render :partial => 'instructions' %>      
     </td>              
   </tr>
   
   <tr>
     <td class="panel" valign="top">
-      <%= render :partial => 'choose_language' -%>      
+      <%= render :partial => 'choose_language' %>      
     </td>
     <td class="panel" valign="top">
-      <%= render :partial => 'choose_exercise' -%>      
+      <%= render :partial => 'choose_exercise' %>      
     </td>
   </tr>
 </table>
-
-

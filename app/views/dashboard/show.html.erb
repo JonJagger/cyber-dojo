@@ -20,7 +20,7 @@ $j(document).ready(function() {
     var CARRIAGE_RETURN = 13;
     if (event.which === CARRIAGE_RETURN) {
       $cd.postTo('/dashboard/show', {
-        id: "<%= @kata.id -%>",
+        id: "<%= @kata.id %>",
         seconds_per_column: $cd.parseSecondsPerColumn(),
         maximum_columns: $cd.parseMaximumColumns()        
       });
@@ -33,10 +33,10 @@ $j(document).ready(function() {
 <table align="center">
   <tr>
     <td align="center">
-      <%= render :partial => 'shared/yin_yang' -%><br/>
-      <%= render :partial => 'shared/id_button' -%>
+      <%= render :partial => 'shared/yin_yang' %><br/>
+      <%= render :partial => 'shared/id_button' %>
       <div id="age">
-        <%= render :partial => 'age' -%>
+        <%= render :partial => 'age' %>
       </div>      
     </td>
     
@@ -45,20 +45,20 @@ $j(document).ready(function() {
     </td>
     
     <td valign="center">
-      <%= render :partial => 'seconds_per_column' -%>      
-      <%= render :partial => 'maximum_columns' -%>
+      <%= render :partial => 'seconds_per_column' %>      
+      <%= render :partial => 'maximum_columns' %>
     </td>
     
     <td valign="middle">
       <table>
         <tr>
           <td>
-            <%= render :partial => 'shared/raspberry_pi_logo' -%>
+            <%= render :partial => 'shared/raspberry_pi_logo' %>
           </td>
           <td>
-            <%= render :partial => 'shared/feedback_button' -%><br/>
-            <%= render :partial => 'shared/donate_button' -%><br/>
-            <%= render :partial => 'tips_button' -%>
+            <%= render :partial => 'shared/feedback_button' %><br/>
+            <%= render :partial => 'shared/donate_button' %><br/>
+            <%= render :partial => 'tips_button' %>
           </td>
         </tr>
       </table>
@@ -68,7 +68,7 @@ $j(document).ready(function() {
 </table>
   
 <div id="traffic_lights">
-  <%= render :partial => 'traffic_lights' -%>
+  <%= render :partial => 'traffic_lights' %>
 </div>
 
 

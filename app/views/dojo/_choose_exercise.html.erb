@@ -33,14 +33,14 @@ $j(document).ready(function() {
 </div>
 
 <div>
-  <% @exercises.each_with_index do |choice,index| -%>
+  <% @exercises.each_with_index do |choice,index| %>
     <div class="filename" >
-      <input id="exercise_<%=index-%>" 
+      <input id="exercise_<%= index %>" 
              type="radio"
              name="exercise" 
-             value="<%=choice-%>" />
-      <label><%= choice.gsub("_", " ") -%></label>
+             value="<%= choice %>" />
+      <label><%= choice.gsub("_", " ") %></label>
     </div>    
-  <% end -%>
+  <% end %>
 </div>
 

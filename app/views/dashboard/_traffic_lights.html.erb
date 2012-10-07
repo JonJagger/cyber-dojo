@@ -1,57 +1,57 @@
 
  <table cellspacing="0" cellpadding="0">
    
-   <% seconds_per_td = @seconds_per_column -%>
-   <% maximum_columns = @maximum_columns -%>
-   <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns -%>
-   <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) -%>
-   <% all_lights = @kata.all_increments -%>
-   <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) -%>
-   <% index = 0 -%>
-   <% all_lights.keys.sort.each do |avatar_name| -%>
+   <% seconds_per_td = @seconds_per_column %>
+   <% maximum_columns = @maximum_columns %>
+   <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns %>
+   <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) %>
+   <% all_lights = @kata.all_increments %>
+   <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) %>
+   <% index = 0 %>
+   <% all_lights.keys.sort.each do |avatar_name| %>
    
-     <% if all_lights[avatar_name].length > 0 -%>
-       <% index += 1 -%>
-       <tr class="<%=parity(index)-%> row">
+     <% if all_lights[avatar_name].length > 0 %>
+       <% index += 1 %>
+       <tr class="<%= parity(index) %> row">
          
-         <% td_map = gapped[avatar_name] -%>    
-         <% all_td_nos = td_map.keys.sort -%>
-         <% recent_td_nos = recent(all_td_nos, maximum_columns) -%>
+         <% td_map = gapped[avatar_name] %>    
+         <% all_td_nos = td_map.keys.sort %>
+         <% recent_td_nos = recent(all_td_nos, maximum_columns) %>
          
-         <% if recent_td_nos.length < all_td_nos.length -%>
+         <% if recent_td_nos.length < all_td_nos.length %>
            <td>
              <span class="omission"></span>
            </td>
-         <% end -%>
+         <% end %>
          
-         <% recent_td_nos.each do |td_no| -%>
-           <% td = td_map[td_no] -%>            
+         <% recent_td_nos.each do |td_no| %>
+           <% td = td_map[td_no] %>            
            <td>
-           <% if td.class == Array -%>
-             <% if td.length == 0 -%>
+           <% if td.class == Array %>
+             <% if td.length == 0 %>
                <div class="gap">.</div>
-             <% else -%>
+             <% else %>
                <table>
                  <tr>
-                   <% td.each do |light| -%>
+                   <% td.each do |light| %>
                      <td>
-                       <%  in_new_window = false -%>
-                       <%= linked_traffic_light(@kata, avatar_name, light, in_new_window) -%>
+                       <%  in_new_window = false %>
+                       <%= linked_traffic_light(@kata, avatar_name, light, in_new_window) %>
                      </td>
-                   <% end -%>
+                   <% end %>
                  </tr>
                </table>
-             <% end -%>
-           <% end -%>
+             <% end %>
+           <% end %>
            
-           <% if td.class == Hash -%>
+           <% if td.class == Hash %>
              <span class="omission"></span>         
-           <% end -%>          
+           <% end %>          
            </td>          
-         <% end -%>
+         <% end %>
                    
          <td align="center" valign="center">           
-            <% size = 45 -%>
+            <% size = 45 %>
             <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
                 :border => 0,
                 :size => "#{size}x#{size}",
@@ -66,34 +66,34 @@
                 }
             %>
            <div class="tiny">
-             <%= avatar_name -%>
+             <%= avatar_name %>
            </div>
          </td>
          
         <td>
-          <%  in_new_window = false -%>            
-          <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
+          <%  in_new_window = false %>            
+          <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) %>
         </td>
           
         <td>
           <div class="micro rag_count">
-            <% [:red,:amber,:green].each do |bulb| -%>
-            <div class="<%=bulb-%>">
-              <%= all_lights[avatar_name].select{|light| light[:outcome]==bulb}.length -%>
+            <% [:red,:amber,:green].each do |bulb| %>
+            <div class="<%= bulb %>">
+              <%= all_lights[avatar_name].select{ |light| light[:outcome] == bulb }.length %>
             </div>       
-            <% end -%>
+            <% end %>
           </div>
          </td>
                   
          <td>
            <span class="rag_count">
-             <%= all_lights[avatar_name].length -%>
+             <%= all_lights[avatar_name].length %>
            </span>
          </td>
 
        </tr>
-     <% end -%>
-   <% end -%>
+     <% end %>
+   <% end %>
  
  </table>
 

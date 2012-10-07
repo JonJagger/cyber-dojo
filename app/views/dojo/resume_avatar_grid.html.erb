@@ -19,34 +19,34 @@ $j(document).ready(function() {
 <div align="center">
   <h2>click your animal</h2>  
   <table>
-    <% index = 0 -%>
-    <% size = 60 -%>
-    <% (1..4).each do |_| -%>
+    <% index = 0 %>
+    <% size = 60 %>
+    <% (1..4).each do |_| %>
     <tr>
-      <% (1..4).each do |_| -%>
+      <% (1..4).each do |_| %>
       <td class="panel">
-        <% avatar_name = @all_avatar_names[index] -%>
-        <% if @live_avatar_names.include?(avatar_name) -%>
+        <% avatar_name = @all_avatar_names[index] %>
+        <% if @live_avatar_names.include?(avatar_name) %>
           <input type='image'
-                 onclick='return $cd.resume("<%=@kata.id-%>","<%=avatar_name-%>");'
+                 onclick='return $cd.resume("<%= @kata.id %>","<%= avatar_name %>");'
                  class='avatar_image'
-                 src="/images/avatars/<%=avatar_name-%>.jpg"
-                 title="Resume <%=avatar_name.humanize-%>"
-                 width="<%=size-%>"
-                 height="<%=size-%>" />          
+                 src="/images/avatars/<%= avatar_name %>.jpg"
+                 title="Resume <%= avatar_name.humanize %>"
+                 width="<%= size %>"
+                 height="<%= size %>" />          
           <div align="center">
-            <b><%= avatar_name -%></b>
+            <b><%= avatar_name %></b>
           </div>
-        <% else -%>
-          <%= bw_avatar_image(avatar_name, size) -%>
+        <% else %>
+          <%= bw_avatar_image(avatar_name, size) %>
           <div align="center" style="color:Gray;">
-            <%= avatar_name -%>
+            <%= avatar_name %>
           </div>
-        <% end -%>      
-        <% index += 1 -%>
+        <% end %>      
+        <% index += 1 %>
       </td>
-      <% end -%>     
+      <% end %>     
     </tr>
-    <% end -%>
+    <% end %>
   </table>
 </div>
