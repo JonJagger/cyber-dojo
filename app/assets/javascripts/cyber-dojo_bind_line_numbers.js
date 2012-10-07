@@ -9,7 +9,7 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.bindAllLineNumbers = function() {
-    $j.each( $cd.filenames(), function(i,filename) {
+    $j.each($cd.filenames(), function(i,filename) {
       $cd.bindLineNumbers(filename);
     });
   };

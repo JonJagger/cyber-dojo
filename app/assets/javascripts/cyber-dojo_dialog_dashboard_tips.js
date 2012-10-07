@@ -5,15 +5,15 @@ var cyberDojo = (function($cd, $j) {
   $cd.dialog_dashboard_tips = function() {
 
     var traffic_light = function(colour) {
-        return  '<img src="/images/traffic-light-' +colour + '.png"' +
-                    ' width="20"' +
-                    ' height="60"/> ';
+        return  '<img src="/images/traffic_light_' +colour + '.png"'
+                +   ' width="20"'
+                +   ' height="60"/> ';
     };
     
     var progression = function(from,to,activity) {
       return $cd.divPanel(
-        'Look for ' + traffic_light(from) + '&rarr;' + traffic_light(to) +
-        'progressions as evidence of ' + activity + '.'
+          'Look for ' + traffic_light(from) + '&rarr;&nbsp;' + traffic_light(to)
+        + 'progressions as evidence of ' + activity + '.'
       );        
     };
 

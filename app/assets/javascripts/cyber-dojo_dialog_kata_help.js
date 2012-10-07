@@ -3,7 +3,7 @@
 var cyberDojo = (function($cd, $j) {
     
   $cd.dialog_kata_help = function(avatar) {    
-    var imageSize = 70;
+    var imageSize = 57;
     var homePageImage = ''    
       + '<img'
       +     ' width="' + imageSize + '"'
@@ -25,7 +25,7 @@ var cyberDojo = (function($cd, $j) {
     var tdTrafficLight = function(color) {
       return ''
         + '<td>'
-        +   '<img src="/images/traffic-light-' + color + '.png" width="23" height="69"/>'
+        +   '<img src="/images/traffic_light_' + color + '.png" width="22" height="65"/>'
         + '</td>';
     };
     var space = '&nbsp;';
@@ -54,7 +54,7 @@ var cyberDojo = (function($cd, $j) {
       + ''
       + '<div class="panel">'
       +   $cd.makeTable(
-            '<input type="button" class="big button" value="run-tests"/>',
+            '<input type="submit" class="large button" id="test" value="test"/>',
             'results go to the',
             $cd.fakeFilenameButton('<i>output</i>'),
             'file')
@@ -80,7 +80,7 @@ var cyberDojo = (function($cd, $j) {
       +   space + 'think about improving, not finishing'
       + '</div>';
                   
-    $cd.dialog(kataHelp, 565, 'help');
+    $cd.dialog(kataHelp, 560, 'help');
   };
 
   return $cd;

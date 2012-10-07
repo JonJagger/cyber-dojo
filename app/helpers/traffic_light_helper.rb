@@ -17,7 +17,7 @@ module TrafficLightHelper
   
   def untitled_unlinked_traffic_light(inc)
     bulb = inc[:outcome].to_s
-    ("<img src='/images/traffic-light-#{bulb}.png'" +
+    ("<img src='/images/traffic_light_#{bulb}.png'" +
       " border='0'" +
       " width='22'" +
       " height='65'/>").html_safe    
