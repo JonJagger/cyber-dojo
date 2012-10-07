@@ -41,7 +41,8 @@ var cyberDojo = (function($cd, $j) {
     };
     
     $j.each(diffs, function(n, diff) {
-      // _filenames.html.erb contains an <input type="radio" id="radio_<%=diff[:id]-%>" />
+      // _filenames.html.erb contains an
+      // <input type="radio" id="radio_<%= diff[:id] %>" />
       // for each file in the current diff.
       var filename = $j('#radio_' + diff.id);
       filename.parent().click( loadFrom(filename, diff, toggleSelected(filename)) );
