@@ -16,10 +16,8 @@ $j(document).ready(function() {
       previousLanguageIndex = index;
     });
   });
-  // remove radio bullets - they are sometimes causing layout weirdness in firefox
-  $j('input[type=radio]').hide();  
-  var rand = Math.floor(Math.random() * languageCount);
   
+  var rand = Math.floor(Math.random() * languageCount);
   $j('#language_' + rand).parent().click();
   previousLanguageIndex = rand;
 

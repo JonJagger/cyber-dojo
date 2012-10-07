@@ -12,6 +12,7 @@ $cd.refreshDashboard = function() {
 };
 
 $j(document).ready(function() {
+
   var seconds = 1000;
   setInterval($cd.refreshDashboard, 10*seconds);
   
@@ -33,7 +34,7 @@ $j(document).ready(function() {
   <tr>
     <td align="center">
       <%= render :partial => 'shared/yin_yang' -%><br/>
-      <%= render :partial => 'shared/id' -%>
+      <%= render :partial => 'shared/id_button' -%>
       <div id="age">
         <%= render :partial => 'age' -%>
       </div>      
@@ -55,9 +56,9 @@ $j(document).ready(function() {
             <%= render :partial => 'shared/raspberry_pi_logo' -%>
           </td>
           <td>
-            <%= render :partial => 'shared/feedback' -%><br/>
-            <%= render :partial => 'shared/donate' -%><br/>
-            <%= render :partial => 'tips' -%>
+            <%= render :partial => 'shared/feedback_button' -%><br/>
+            <%= render :partial => 'shared/donate_button' -%><br/>
+            <%= render :partial => 'tips_button' -%>
           </td>
         </tr>
       </table>

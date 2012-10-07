@@ -7,7 +7,7 @@ var cyberDojo = (function($cd, $j) {
   // on the filename brings its diff into view by loading it into
   // the diffSheet.
   
-  $cd.buildDiffFilenames = function(diffs) {
+  $cd.buildDiffFilenameHandlers = function(diffs) {
     var diffSheet = $j('#diff_sheet');
     var diffPanel = $j('#diff_panel');
   

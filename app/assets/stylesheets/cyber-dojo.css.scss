@@ -92,15 +92,15 @@ input[value="output"]+label     /* from diff-page */
 
 $retained-space: "\00a0";
 
-div[class~="filename"]:before { content: $retained-space;  }
-div[class~="filename"]:after  { content: $retained-space;  } 
+div[class~="filename"]:before { content: $retained-space; }
+div[class~="filename"]:after  { content: $retained-space; } 
 
 div[class~="filename"]
 {
   color: $filename-color;
   background: $background-color;
   margin: 0.25em;
-  font-size: 17pt;
+  font-size: 1.2em;
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
@@ -132,10 +132,11 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .line_numbers, .file_content { height: 31em; }
 
+.line_numbers, #diff_sheet, .file_content, #instructions { font-size: 15pt; }
+
 .line_numbers, #diff_sheet, .file_content
 {
   font-family: monospace;
-  font-size: 15pt;
   border: 0;
   margin: 0;
   padding: 0;
@@ -168,7 +169,6 @@ div[class~="filename"], .button[disabled]:hover, .button
   background: $light-background-color;
   border: 4px solid $light-background-color;
   overflow-y: auto;
-  font-size: 16pt;
 }
 
 #test { padding: 0 0.7em 0 0.7em; }
@@ -179,8 +179,7 @@ div[class~="filename"], .button[disabled]:hover, .button
 .tiny   { font-size: 0.80em; }
 .small  { font-size: 1.10em; }
 .medium { font-size: 1.35em; }
-.big    { font-size: 1.45em; }
-.large  { font-size: 1.95em; }
+.large  { font-size: 1.85em; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
