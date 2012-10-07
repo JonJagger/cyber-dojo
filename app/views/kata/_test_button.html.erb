@@ -3,15 +3,24 @@
 
 $j(document).ready(function() {
     
-  $j('form').bind('ajax:before', function(evt, data, status, xhr){
-    $cd.preRunTests();
-  });
-  
-  $j('form').bind('ajax:complete', function(evt, data, status, xhr){
-    $cd.postRunTests();
-  });
-  
   $j('.spinner').hide();
+
+  $j('form').bind('ajax:before', function(evt, data, status, xhr) {
+    $j('#test').attr('disabled', true);
+    $j('.spinner').show();    
+  });
+  
+  $j('form').bind('ajax:complete', function(evt, data, status, xhr) {
+    $j('.spinner').hide();    
+    $j('#tip').hide();
+    $j('#test').attr('disabled', false);
+    // when the ajax replaces output the shortcuts
+    // are lost so need rebinding
+    var output = $cd.fileContentFor('output');
+    $cd.bindHotKeys(output);        
+    $cd.loadFile('output');    
+  });
+  
 });
 
 //--></script>
@@ -22,19 +31,14 @@ $j(document).ready(function() {
       <%= render :partial => 'spinner' -%>
     </td>
     <td>
-      <div id="run_tests">
-        <input type="submit" 
-               class="large button"
-               id="test"
-               value="test"
-               title="Run the tests and generate a new traffic-light" />
-      </div>              
+      <input type="submit" 
+             class="large button"
+             id="test"
+             value="test"
+             title="Run the tests and generate a new traffic-light" />
     </td>
     <td>
       <%= render :partial => 'spinner' -%>
     </td>
   </tr>
 </table>
-
-
-
