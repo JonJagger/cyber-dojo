@@ -5,7 +5,6 @@ var cyberDojo = (function($cd, $j) {
   $cd.preRunTests = function() {
     $j('#test').attr('disabled', true);
     $j('.spinner').show();
-    $j('#tip').hide();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
