@@ -12,20 +12,14 @@
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
 
-.number
+.rag_count /* Red-Amber-Green count */
 {
   color: $main-color;
-  font-size: 1.4em;
-  text-align: center; /* for diff and dashboard */
-}
-
-.micro_number
-{
-  background-color: LightGrey;
-  font-size: 0.7em;
+  font-size: 1.2em;
   padding: 0.3em;
   text-align: right;
 }
-.micro_number .red   { padding-bottom: 0.6em; color: Red;    }
-.micro_number .amber { color: Yellow; }
-.micro_number .green { padding-top: 0.6em; color: Green;  }
+.micro.rag_count { font-size: 0.6em; background-color: LightGrey; }
+.micro.rag_count .red   { padding-bottom: 0.6em; color: Red;    }
+.micro.rag_count .amber { color: Yellow; }
+.micro.rag_count .green { padding-top: 0.6em; color: Green;  }

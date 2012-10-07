@@ -50,8 +50,8 @@
            </td>          
          <% end -%>
                    
-         <td class="summary" align="center" valign="bottom">           
-            <% size = 57 -%>
+         <td align="center" valign="center">           
+            <% size = 45 -%>
             <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
                 :border => 0,
                 :size => "#{size}x#{size}",
@@ -70,13 +70,13 @@
            </div>
          </td>
          
-        <td class="summary">
+        <td>
           <%  in_new_window = false -%>            
           <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) -%>
         </td>
           
-        <td class="summary">
-          <div class="micro_number">
+        <td>
+          <div class="micro rag_count">
             <% [:red,:amber,:green].each do |bulb| -%>
             <div class="<%=bulb-%>">
               <%= all_lights[avatar_name].select{|light| light[:outcome]==bulb}.length -%>
@@ -85,8 +85,8 @@
           </div>
          </td>
                   
-         <td class="summary">
-           <span class="number">
+         <td>
+           <span class="rag_count">
              <%= all_lights[avatar_name].length -%>
            </span>
          </td>

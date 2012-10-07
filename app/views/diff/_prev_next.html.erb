@@ -48,7 +48,7 @@ function tagNumber(event) {
   <tr>
   
     <td>
-      <span class="tag_number">
+      <span class="rag_count">
         <% if tag_number == 1 -%>
 	  1
 	<% else -%>
@@ -80,7 +80,7 @@ function tagNumber(event) {
     </td>
         
     <td>
-      <span class="tag_number">
+      <span class="rag_count">
         <% if tag_number < @all_traffic_lights.length -%>
 	  <%= link_to @all_traffic_lights.length, 
 	  { :controller => :diff, 
