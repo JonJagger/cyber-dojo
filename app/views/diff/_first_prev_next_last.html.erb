@@ -22,10 +22,10 @@ $j(document).ready(function() {
     var CARRIAGE_RETURN = 13;
     if (event.keyCode === CARRIAGE_RETURN) {
       var input = $j('#tag_number');
-      var newTag = parseInt(input.attr('value'));
+      var newTag = parseInt(input.attr('value'),10);
       if (!isNaN(newTag)) {
-	if (newTag < minTag) newTag = minTag;
-	if (newTag > maxTag) newTag = maxTag;
+	if (newTag < minTag) { newTag = minTag; }
+	if (newTag > maxTag) { newTag = maxTag; }
 	return newTag;
       } else {
 	input.attr('value', '?');
@@ -60,28 +60,15 @@ $j(document).ready(function() {
 
 //--></script>
 
-<% width  = 18 %>
-<% height = 23 %>
-
 <table>
   <tr>
-    <td>      
-      <button class="button"
-	      id="first_button"
-	      type="button">
-	<img src="/images/triangle_first.gif"
-	     width="<%= width %>" 
-	     height="<%= height+2 %>" />
-      </button>      
+    <td>
+      <%= render :partial => 'triangle_button',
+                 :locals => { :name => 'first', :delta => 2 } %>
     </td>                
     <td>
-      <button class="button"
-	      id="prev_button"
-	      type="button">
-	<img src="/images/triangle_prev.gif"
-	     width="<%= width %>" 
-	     height="<%= height %>" />
-      </button>      
+      <%= render :partial => 'triangle_button',
+                 :locals => { :name => 'prev', :delta => 0 } %>
     </td>
     <td>
       <input type="text"
@@ -91,22 +78,13 @@ $j(document).ready(function() {
 	     value="?" />
     </td>   
     <td>
-      <button class="button"
-	      id="next_button"
-	      type="button">
-	<img src="/images/triangle_next.gif"
-	     width="<%= width %>" 
-	     height="<%= height %>" />
-      </button>      
+      <%= render :partial => 'triangle_button',
+                 :locals => { :name => 'next', :delta => 0 } %>
     </td>
     <td>
-      <button class="button"
-	      id="last_button"
-	      type="button">
-	<img src="/images/triangle_last.gif"
-	     width="<%= width %>" 
-	     height="<%= height+2 %>" />
-      </button>
+      <%= render :partial => 'triangle_button',
+                 :locals => { :name => 'last', :delta => 2 } %>
     </td>
   </tr>
 </table>      
+
