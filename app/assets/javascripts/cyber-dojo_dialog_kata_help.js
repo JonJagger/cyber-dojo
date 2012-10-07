@@ -30,7 +30,13 @@ var cyberDojo = (function($cd, $j) {
     };
     var space = '&nbsp;';
     var spaces = Array.prototype.join.call({length:4}, space);
-    var kataHelp = ''      
+
+    var fakeTestButton = ''
+      + '<div style="font-size:1.95em;">'
+      +   '<input type="submit" class="large button" id="test" value="test"/>'
+      + '</div>';
+    
+    var kataHelp = ''
       + '<table>'
       +   '<tr>'
       +     '<td class="panel">'
@@ -54,7 +60,7 @@ var cyberDojo = (function($cd, $j) {
       + ''
       + '<div class="panel">'
       +   $cd.makeTable(
-            '<input type="submit" class="large button" id="test" value="test"/>',
+            fakeTestButton,
             'results go to the',
             $cd.fakeFilenameButton('<i>output</i>'),
             'file')
@@ -80,7 +86,7 @@ var cyberDojo = (function($cd, $j) {
       +   space + 'think about improving, not finishing'
       + '</div>';
                   
-    $cd.dialog(kataHelp, 560, 'help');
+    $cd.dialog(kataHelp, 540, 'help');
   };
 
   return $cd;
