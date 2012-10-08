@@ -8,7 +8,7 @@ class DashboardController < ApplicationController
   # with the server. This will also help recover inodes.
 
   def show
-    @title = 'View Dashboard'
+    @title = 'Dashboard'
     @kata = Kata.new(root_dir, id)    
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns

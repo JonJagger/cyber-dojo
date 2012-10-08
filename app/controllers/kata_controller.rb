@@ -9,7 +9,7 @@ class KataController < ApplicationController
     @tab = @kata.language.tab    
     @visible_files = @avatar.visible_files
     @output = @visible_files['output']
-    @title = 'Run Tests'
+    @title = 'Code'
   end
 
   def run_tests
