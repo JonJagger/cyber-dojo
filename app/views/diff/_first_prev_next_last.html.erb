@@ -66,14 +66,14 @@ $j(document).ready(function() {
 //--></script>
 
 <table>
-  <tr>
+  <tr valign="middle">
     <td>
       <%= render :partial => 'triangle_button',
-                 :locals => { :name => 'first', :delta => 2 } %>
+                 :locals => { :name => 'first' } %>
     </td>                
     <td>
       <%= render :partial => 'triangle_button',
-                 :locals => { :name => 'prev', :delta => 0 } %>
+                 :locals => { :name => 'prev' } %>
     </td>
     <td>
       <input type="text"
@@ -84,11 +84,11 @@ $j(document).ready(function() {
     </td>   
     <td>
       <%= render :partial => 'triangle_button',
-                 :locals => { :name => 'next', :delta => 0 } %>
+                 :locals => { :name => 'next' } %>
     </td>
     <td>
       <%= render :partial => 'triangle_button',
-                 :locals => { :name => 'last', :delta => 2 } %>
+                 :locals => { :name => 'last' } %>
     </td>
   </tr>
 </table>      
