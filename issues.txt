@@ -23,16 +23,16 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-make red/green diff-counts on diff-page into buttons that toggle red/green lines on-off
 allow entry of only first 5 characters of ID as long as its unique to that length
 add help button on diff page
 add help button on dashboard page
+make red/green diff-counts on diff-page into buttons that toggle red/green lines on-off?
 if run-tests detects no change in files then don't create new traffic-light?
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
 . . . . . . . 
-$cd.alert() in cyberdojo-helpers.js can be refactored to use $cd.popupDialog()
+$cd.alert() in cyber-dojo-helpers.js can be refactored to use $cd.popupDialog()
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
 reclicking on diff'ed file doesn't seem to cycle correctly...
 in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
@@ -48,7 +48,7 @@ colons (":"), and periods (".").
 However jQuery has problems with ids that contain periods and colons.
 -----
 In lib/CodeOutputParser.rb...
-if a player creates a cyberdojo.sh file which runs two or more
+if a player creates a cyber-dojo.sh file which runs two or more
 test files then it's possible that the output will contain the
 strings denoting red and green traffic-lights. Because of this the
 regex's should test for a red traffic-light first, and for

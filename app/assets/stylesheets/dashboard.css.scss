@@ -12,14 +12,14 @@
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
 
-.rag_count /* Red-Amber-Green count */
+.tag_count
 {
   color: $main-color;
   font-size: 1.2em;
   padding: 0.3em;
   text-align: right;
 }
-.micro.rag_count { font-size: 0.6em; background-color: LightGrey; }
-.micro.rag_count .red   { padding-bottom: 0.6em; color: Red;    }
-.micro.rag_count .amber { color: Yellow; }
-.micro.rag_count .green { padding-top: 0.6em; color: Green;  }
+.micro.tag_count { font-size: 0.6em; background-color: LightGrey; }
+.micro.tag_count .red   { padding-bottom: 0.6em; color: Red; }
+.micro.tag_count .amber { color: Yellow; }
+.micro.tag_count .green { padding-top: 0.6em; color: Green;  }

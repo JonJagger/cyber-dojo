@@ -76,7 +76,7 @@
         </td>
           
         <td>
-          <div class="micro rag_count">
+          <div class="micro tag_count">
             <% [:red,:amber,:green].each do |bulb| %>
             <div class="<%= bulb %>">
               <%= all_lights[avatar_name].select{ |light| light[:outcome] == bulb }.length %>
@@ -86,7 +86,7 @@
          </td>
                   
          <td>
-           <span class="rag_count">
+           <span class="tag_count">
              <%= all_lights[avatar_name].length %>
            </span>
          </td>
