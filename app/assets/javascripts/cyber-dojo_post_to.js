@@ -12,7 +12,7 @@ var cyberDojo = (function($cd, $j) {
     
     for (key in params) {
         if (key !== 'id') {
-          url += sep + key + '=' + params[key];
+          url += sep + key + '=' + encodeURIComponent(params[key]);
           sep = '&';
         }
     }

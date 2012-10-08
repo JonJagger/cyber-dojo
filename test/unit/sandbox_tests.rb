@@ -53,6 +53,25 @@ class SandboxTests < ActionController::TestCase
           "!File.exists?(#{@sandbox.dir})"
   end
       
+  test "C# files link correctly and not as C files" do
+    language = Language.new(root_dir, 'C#')
+    visible_files = language.visible_files
+
+    @sandbox.make_dir
+    output = @sandbox.inner_run(language, visible_files)
+    assert File.exists?(@sandbox.dir), "sandbox dir created"
+    
+    visible_files.each do |filename,content|
+      assert File.exists?(@sandbox.dir + '/' + filename),
+            "File.exists?(#{@sandbox.dir}/#{filename})"
+    end
+    
+    language.hidden_filenames.each do |filename|
+      assert File.exists?(@sandbox.dir + '/' + filename),
+            "File.exists?(#{@sandbox.dir}/#{filename})"
+    end    
+  end
+      
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "save file for non executable file" do

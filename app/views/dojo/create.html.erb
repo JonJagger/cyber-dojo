@@ -5,6 +5,7 @@
 $j(document).ready(function() {
   
   $j('#ok_button').click(function() {
+    
     $cd.postTo('/dojo/save', {
       name: "no-name",
       exercise: $j('input[name="exercise"]:checked').val(),
