@@ -5,7 +5,7 @@ var cyberDojo = (function($cd, $j) {
   $cd.bindRunTests = function(event) {
     event.stopPropagation();
     event.preventDefault();
-    $j('#run_tests_button').closest("form").submit();
+    $j('#test').closest("form").submit();
     return false;    
   };
   

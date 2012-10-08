@@ -106,6 +106,15 @@ div[class~="filename"]
   @include rounded-corner(4px);
 }
 
+/* See app/assets/javascripts/cyber-dojo_files.js */
+/* functions deselectRadioEntry() and selectRadioEntry() */
+
+div[file_selected~="true"]
+{
+  color: $main-color;
+  background-color: $light-background-color;
+}
+
 div[class~="filename"]:hover, .button:hover
 {
   border-bottom: 2px solid $bottom-right-edge-highlight-color;

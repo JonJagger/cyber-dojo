@@ -18,7 +18,7 @@ var cyberDojo = (function($cd, $j) {
     // I tried changing this to...
     //   return $j('input:radio[name=filename]:checked').val();
     // (which would remove the need for the file
-    //    cyberdojo/app/views/_current_filename.html.erb)
+    //    app/views/_current_filename.html.erb)
     // This worked on Firefox but not on Chrome.
     // The problem seems to be that in Chrome the javascript handler
     // function invoked when the radio button filename is clicked sees
@@ -40,7 +40,7 @@ var cyberDojo = (function($cd, $j) {
     // sessions, particularly the ability to fork from a new session from an
     // old diff-view, e.g. the refactoring setups in
     // http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html
-    // See also app/assets/javascripts/cyberdojo-file_load.js
+    // See also app/assets/javascripts/cyber-dojo-file_load.js
     // See also app/models/sandbox.rb
     var oldName = 'cyberdojo.sh';
     var newName = 'cyber-dojo.sh';
@@ -110,20 +110,16 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.deselectRadioEntry = function(node) {  
-    // See makeFileListEntry() above...
-    // See app/assets/stylesheets/color_scheme.css.scss
-    node.css('background-color', '#B2EFEF');
-    node.css('color', '#777');
+  $cd.deselectRadioEntry = function(node) {
+    // See makeFileListEntry() above
+    node.attr('file_selected','false');
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   $cd.selectRadioEntry = function(node) {
-    // See makeFileListEntry() above...
-    // See app/assets/stylesheets/color_scheme.css.scss
-    node.parent().css('background-color', 'Cornsilk');
-    node.parent().css('color', '#003C00');
+    // See makeFileListEntry() above
+    node.parent().attr('file_selected', 'true');
     node.attr('checked', 'checked');        
   };
   
