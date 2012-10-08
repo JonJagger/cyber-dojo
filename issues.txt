@@ -66,9 +66,6 @@ end
 the various uses of eval in the code could do with being replaced with
 a json parse.
 -----
-now that the ruby code is 1.9.3 it should be possible to get coverage
-stats from the ruby tests.
------
 The intention with the installation tests is that they are used to determine
 what languages are installed and to only offer those languages (at the create
 page). But at the moment all the languages are being offered.

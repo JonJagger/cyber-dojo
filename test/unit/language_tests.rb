@@ -55,6 +55,11 @@ class LanguageTests < ActionController::TestCase
     assert_equal 2, language.tab_size
   end
   
+  test "C# is not loaded as C" do
+    language = make_language('C#')
+    assert_not_nil language.visible_files['Untitled.cs'] 
+  end
+  
   def make_language(name)
     Language.new(root_dir, name)
   end
