@@ -141,11 +141,14 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .line_numbers, .file_content { height: 31em; }
 
-.line_numbers, #diff_sheet, .file_content, #instructions { font-size: 15pt; }
+.line_numbers, #diff_sheet, .file_content, #instructions
+{
+  font-size: 15pt;
+  font-family: monospace;  
+}
 
 .line_numbers, #diff_sheet, .file_content
 {
-  font-family: monospace;
   border: 0;
   margin: 0;
   padding: 0;
