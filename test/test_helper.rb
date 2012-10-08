@@ -7,15 +7,17 @@ module SimpleCov::Configuration
   end
 end
 
-SimpleCov.configure do
-  clean_filters
-  load_adapter 'test_frameworks'
-end
-
 SimpleCov.start do
   add_filter "/ruby-1.9.3-p125/"
   add_filter "/cyberdojo/config/"
+  
+  add_group 'app/controllers', 'app/controllers'
+  add_group 'app/models',      'app/models'
+  add_group 'app/helpers',     'app/helpers'
+  add_group 'lib',             'lib'
+  
 end
+SimpleCov.root '/Users/jonjagger/Desktop/Repos/cyberdojo'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
