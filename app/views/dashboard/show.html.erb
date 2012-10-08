@@ -2,30 +2,49 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$cd.refreshDashboard = function() {
-  $j.ajax({
-    url: "<%= url_for :action => 'heartbeat', :id => @kata.id %>",
-    data: { seconds_per_column: $cd.parseSecondsPerColumn(),
-               maximum_columns: $cd.parseMaximumColumns() },
-    dataType: "script"
-  });
-};
-
 $j(document).ready(function() {
 
+  var parseInput = function(name, current_value) {
+    var input = $j('#' + name);
+    var newValue = parseInt(input.val());
+    if (isNaN(newValue)) {
+      input.attr('value', current_value);
+    }
+    return input.val();
+  };
+
+  var secondsPerColumn = function() {
+    return parseInput('seconds_per_column', <%= @seconds_per_column %>);
+  };
+
+  var maximumColumns = function() {
+    return parseInput('maximum_columns', <%= @maximum_columns %>);  
+  };
+
+  var refreshDashboard = function() {
+    $j.ajax({
+      url: "<%= url_for :action => 'heartbeat', :id => @kata.id %>",
+      data: { seconds_per_column: secondsPerColumn(),
+              maximum_columns: maximumColumns()
+            },
+      dataType: "script"
+    });
+  };
+
   var seconds = 1000;
-  setInterval($cd.refreshDashboard, 10*seconds);
+  setInterval(refreshDashboard, 10*seconds);
   
   $j('#seconds_per_column,#maximum_columns').keyup(function(event) {
     var CARRIAGE_RETURN = 13;
-    if (event.which === CARRIAGE_RETURN) {
+    if (event.keyCode === CARRIAGE_RETURN) {
       $cd.postTo('/dashboard/show', {
         id: "<%= @kata.id %>",
-        seconds_per_column: $cd.parseSecondsPerColumn(),
-        maximum_columns: $cd.parseMaximumColumns()        
+        seconds_per_column: secondsPerColumn(),
+        maximum_columns: maximumColumns()        
       });
     }
-  });  
+  });
+  
 });
 
 //--></script>
@@ -50,19 +69,13 @@ $j(document).ready(function() {
     </td>
     
     <td valign="middle">
-      <table>
-        <tr>
-          <td>
-            <%= render :partial => 'shared/raspberry_pi_logo' %>
-          </td>
-          <td>
-            <%= render :partial => 'shared/feedback_button' %><br/>
-            <%= render :partial => 'shared/donate_button' %><br/>
-            <%= render :partial => 'tips_button' %>
-          </td>
-        </tr>
-      </table>
-      
+      <%= render :partial => 'shared/raspberry_pi_logo' %>
+    </td>
+    
+    <td valign="middle">
+      <%= render :partial => 'shared/feedback_button' %><br/>
+      <%= render :partial => 'shared/donate_button' %><br/>
+      <%= render :partial => 'tips_button' %>
     </td>
   </tr>  
 </table>

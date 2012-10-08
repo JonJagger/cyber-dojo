@@ -1,30 +1,8 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-
-$cd.parseMaximumColumns = function() {
-  var input = $j('#maximum_columns');
-  var value = input.val();
-  var newValue = parseInt(value);
-  if (!isNaN(newValue)) {
-    input.data('validated-value', newValue);
-  } else {
-    input.val(input.data('validated-value'));
-  }
-  return input.val();
-};
-
-$j(document).ready(function() {
-  $j('#maximum_columns').data('validated-value', $j('#maximum_columns').val());
-});
-  
-//--></script>
-
 <table>
   <tr>
     <td>
       <input type="text" 
-             name="maximum_columns" 
              id="maximum_columns"
              value="<%= @maximum_columns %>"/>
     </td>

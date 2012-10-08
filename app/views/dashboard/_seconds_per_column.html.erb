@@ -1,30 +1,8 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-
-$cd.parseSecondsPerColumn = function() {
-  var input = $j('#seconds_per_column');
-  var value = input.val();
-  var newValue = parseInt(value);
-  if (!isNaN(newValue)) {
-    input.data('validated-value', newValue);
-  } else {
-    input.val(input.data('validated-value'));
-  }
-  return input.val();
-};
-
-$j(document).ready(function() {
-  $j('#seconds_per_column').data('validated-value', $j('#seconds_per_column').val());
-});
-
-//--></script>
-
 <table>
   <tr>
     <td>
       <input type="text"
-             name="seconds_per_column" 
              id="seconds_per_column"
              value="<%= @seconds_per_column %>"/>
     </td>

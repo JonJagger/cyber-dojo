@@ -18,11 +18,11 @@ $j(document).ready(function() {
     }
   };
 
-  var getTagNumber = function(event) {
+  var tagNumber = function(event) {
     var CARRIAGE_RETURN = 13;
     if (event.keyCode === CARRIAGE_RETURN) {
       var input = $j('#tag_number');
-      var newTag = parseInt(input.attr('value'),10);
+      var newTag = parseInt(input.attr('value'), 10);
       if (!isNaN(newTag)) {
 	if (newTag < minTag) { newTag = minTag; }
 	if (newTag > maxTag) { newTag = maxTag; }
@@ -40,7 +40,7 @@ $j(document).ready(function() {
   
   $j('#first_button').click(function()      { showDiff(minTag); });
   $j('#prev_button' ).click(function()      { showDiff(currentTag-1); });
-  $j('#tag_number'  ).keyup(function(event) { showDiff(getTagNumber(event)); });
+  $j('#tag_number'  ).keyup(function(event) { showDiff(tagNumber(event)); });
   $j('#next_button' ).click(function()      { showDiff(currentTag+1); });
   $j('#last_button' ).click(function()      { showDiff(maxTag); });
 
