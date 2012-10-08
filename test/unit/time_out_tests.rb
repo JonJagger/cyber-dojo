@@ -21,7 +21,7 @@ class TimeOutTests < ActionController::TestCase
     # This next text sometimes fails and I haven't yet determined why...
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
     
-    assert_match(/Terminated by the CyberDojo server after \d+ seconds?/, output)
+    assert_match(/Terminated by the cyber-dojo server after \d+ seconds?/, output)
   end
   
   def ps_count

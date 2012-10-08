@@ -41,3 +41,4 @@ gem 'thin'
 
 gem 'therubyracer'
 
+gem 'simplecov', '>= 0.4.0', :require => false, :group => :test

@@ -13,7 +13,7 @@ class PopenReadTests < ActionController::TestCase
   
   test "popen_with_timeout_that_times_out_returns_temination_output" do
     output = Files::popen_read('sleep 10000', 1)
-    assert_not_nil output =~ /Terminated by the CyberDojo server after 1 seconds/, output 
+    assert_not_nil output =~ /Terminated by the cyber-dojo server after 1 seconds/, output 
   end
 
   def command

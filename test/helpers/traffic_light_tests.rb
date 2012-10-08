@@ -10,7 +10,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:outcome] = :red
     expected =
       "<span title='2012 May 1, 23:20:45'>" +    
-      "<img src='/images/traffic-light-red.png' border='0' width='#{width}' height='#{height}'/>" +
+      "<img src='/images/traffic_light_red.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, unlinked_traffic_light(inc) 
   end
@@ -20,7 +20,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:outcome] = :amber
     expected =
       "<span title='2012 May 1, 23:20:45'>" +    
-      "<img src='/images/traffic-light-amber.png' border='0' width='#{width}' height='#{height}'/>" +
+      "<img src='/images/traffic_light_amber.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, unlinked_traffic_light(inc) 
   end
@@ -30,7 +30,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:outcome] = :green
     expected =
       "<span title='2012 May 1, 23:20:45'>" +
-      "<img src='/images/traffic-light-green.png' border='0' width='#{width}' height='#{height}'/>" +
+      "<img src='/images/traffic_light_green.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, unlinked_traffic_light(inc) 
   end
@@ -40,11 +40,11 @@ class TrafficLightTests < ActionController::TestCase
   end
   
   def width
-    26
+    22
   end
   
   def height
-    78
+    65
   end
   
   def make_inc

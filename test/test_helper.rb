@@ -1,4 +1,22 @@
 ENV["RAILS_ENV"] = "test"
+require 'simplecov'
+
+module SimpleCov::Configuration
+  def clean_filters
+    @filters = [ ]
+  end
+end
+
+SimpleCov.configure do
+  clean_filters
+  load_adapter 'test_frameworks'
+end
+
+SimpleCov.start do
+  add_filter "/ruby-1.9.3-p125/"
+  add_filter "/cyberdojo/config/"
+end
+
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
