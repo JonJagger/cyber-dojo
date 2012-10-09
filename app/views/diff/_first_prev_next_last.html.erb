@@ -66,7 +66,7 @@ $j(document).ready(function() {
 //--></script>
 
 <table cellpadding="1" cellspacing="1">
-  <tr valign="middle">
+  <tr>
     <td>
       <%= render :partial => 'triangle_button', :locals => { :name => 'first' } %>
     </td>                
@@ -74,9 +74,7 @@ $j(document).ready(function() {
       <%= render :partial => 'triangle_button', :locals => { :name => 'prev' } %>
     </td>
     <td>
-      <input type="text"
-	     id="tag_number"
-	     value="" />
+      <input type="text" id="tag_number" value="" />
     </td>   
     <td>
       <%= render :partial => 'triangle_button', :locals => { :name => 'next' } %>
