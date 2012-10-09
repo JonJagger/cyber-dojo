@@ -14,17 +14,20 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  $cd.node = function(name,content) {
+    return '<'+name+'>'
+          +  content
+	  +'</'+name+'>';
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.makeTable = function() {
-    var makeTd = function(arg) {
-      return '<td>' + arg + '</td>';
-    };    
-    var i, max;
-    var table = '<table><tr>';
+    var i, max, content = '';
     for (i = 0, max = arguments.length; i < max; i += 1) {
-      table += makeTd(arguments[i]);
+      content += $cd.node('td', arguments[i]);
     }
-    table += '</tr></table>';
-    return table;
+    return $cd.node('table', $cd.node('tr', content));
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,12 +55,6 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.htmlPanel = function(content) {
-    return '<div class="panel" style="font-size: 2.0em;">' + content + '</div>';
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   $cd.divPanel = function(content) {
     return '<div class="panel">' + content + '</div>';
   };
@@ -65,14 +62,14 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.h1 = function(title) {
-    return '<h1>' + title + '</h1>';  
+    return $cd.node('h1',title);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.fakeFilenameButton = function(filename) {
     return $cd.makeTable(''
-      + '<div class="filename" style="background:Cornsilk;color:#003C00;">'
+      + '<div class="filename" file_selected="true">'
       +   '<input style="display:none;"'
       +         ' type="radio"'
       +         ' name="filename' + filename + '"'
