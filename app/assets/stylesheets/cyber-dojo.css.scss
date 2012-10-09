@@ -7,7 +7,7 @@
   border-radius: $radius;  
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 body
 {
@@ -48,9 +48,10 @@ h3 { font-size: 1.3em;  }
 }
 
 .edgeless.panel { padding: 0em; }
+
 .light_margin.panel { background: $light-background-color; }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 input
 {
@@ -78,17 +79,17 @@ input
   color: Gray;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 input+label { cursor: pointer; }
 
-input[id="radio_output"]+label, /* from edit-page */
-input[value="output"]+label     /* from diff-page */
+input[id="radio_output"]+label, // from edit-page
+input[value="output"]+label     // from diff-page
 {
   font-style: italic;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 $retained-space: "\00a0";
 
@@ -106,11 +107,10 @@ div[class~="filename"]
   @include rounded-corner(4px);
 }
 
-/* See app/assets/javascripts/cyber-dojo_files.js */
-/* functions deselectRadioEntry() and selectRadioEntry() */
-
 div[file_selected~="true"]
 {
+  // See app/assets/javascripts/cyber-dojo_files.js 
+  // functions deselectRadioEntry() and selectRadioEntry() 
   color: $main-color;
   background-color: $light-background-color;
 }
@@ -127,7 +127,7 @@ div[class~="filename"], .button[disabled]:hover, .button
   border-right:  2px solid $bottom-right-edge-color;   
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 .filename_div { display: none; }
 
@@ -171,7 +171,7 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .dialog { font-size: 1em; }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 #cyber_dojo_page { color: $main-color; }
 
@@ -185,7 +185,7 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 #test { padding: 0 0.7em 0 0.7em; }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .micro  { font-size: 0.60em; }
 .tiny   { font-size: 0.80em; }
@@ -193,6 +193,6 @@ div[class~="filename"], .button[disabled]:hover, .button
 .medium { font-size: 1.35em; }
 .large  { font-size: 1.85em; }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
