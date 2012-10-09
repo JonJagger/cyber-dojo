@@ -186,17 +186,17 @@ var cyberDojo = (function($cd, $j) {
     // See ap/views/kata/_editor.html.erb
     //    <div class="filename_div"
     //         name="<%= filename %>"
-    //         id="<% filename %>_div">
+    //         id="<%= filename %>_div">
     var div = $cd.id(oldFilename + '_div');
     div.attr('name', newFilename);
     div.attr('id', newFilename + '_div');
     //        <textarea class="line_numbers"
-    //                  id="<% filename %>_line_numbers">
+    //                  id="<%= filename %>_line_numbers">
     var nos = $cd.id(oldFilename + '_line_numbers');
     nos.attr('id', newFilename + '_line_numbers');
     //        <textarea class="file_content"
-    //                  name="file_content['<% filename %>']"
-    //                  id="file_content_for_<% filename %>"
+    //                  name="file_content['<%= filename %>']"
+    //                  id="file_content_for_<%= filename %>"
     var ta = $cd.id('file_content_for_' + oldFilename);
     ta.attr('name', "file_content['" + newFilename + "']");
     ta.attr('id', 'file_content_for_' + newFilename);

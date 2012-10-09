@@ -47,7 +47,7 @@ h3 { font-size: 1.3em;  }
   @include rounded-corner(4px);  
 }
 
-.edge.panel { padding: 0em; }
+.edgeless.panel { padding: 0em; }
 .light_margin.panel { background: $light-background-color; }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - */
