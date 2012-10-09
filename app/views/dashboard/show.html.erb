@@ -4,7 +4,7 @@
 
 $j(document).ready(function() {
 
-  var parseInput = function(name, current_value) {
+  var parse = function(name, current_value) {
     var input = $j('#' + name);
     var newValue = parseInt(input.val());
     if (isNaN(newValue)) {
@@ -13,20 +13,18 @@ $j(document).ready(function() {
     return input.val();
   };
 
-  var secondsPerColumn = function() {
-    return parseInput('seconds_per_column', <%= @seconds_per_column %>);
+  var params = function() {
+    return {
+      id: "<%= @kata.id %>",
+      seconds_per_column: parse('seconds_per_column', <%= @seconds_per_column %>),
+      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>)
+    };
   };
-
-  var maximumColumns = function() {
-    return parseInput('maximum_columns', <%= @maximum_columns %>);  
-  };
-
+  
   var refreshDashboard = function() {
     $j.ajax({
-      url: "<%= url_for :action => 'heartbeat', :id => @kata.id %>",
-      data: { seconds_per_column: secondsPerColumn(),
-              maximum_columns: maximumColumns()
-            },
+      url: "<%= url_for :action => 'heartbeat' %>",
+      data: params(),
       dataType: "script"
     });
   };
@@ -37,11 +35,7 @@ $j(document).ready(function() {
   $j('#seconds_per_column,#maximum_columns').keyup(function(event) {
     var CARRIAGE_RETURN = 13;
     if (event.keyCode === CARRIAGE_RETURN) {
-      $cd.postTo('/dashboard/show', {
-        id: "<%= @kata.id %>",
-        seconds_per_column: secondsPerColumn(),
-        maximum_columns: maximumColumns()        
-      });
+      $cd.postTo('/dashboard/show', params());
     }
   });
   
