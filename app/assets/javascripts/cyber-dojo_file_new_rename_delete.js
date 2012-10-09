@@ -21,10 +21,10 @@ var cyberDojo = (function($cd, $j) {
     if ($cd.cantBeRenamedOrDeleted(oldFilename)) {
       return;
     }
-    var div = $j('<div class="panel">', {
-      style: 'font-size: 2.0em;'  
+    var div = $j('<div>', {
+      'class': 'panel'
     });
-    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 150)));
+    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 100)));
     div.append('<div>&nbsp;</div>');
     var input = $j('<input>', {
       type: 'text',
@@ -38,7 +38,7 @@ var cyberDojo = (function($cd, $j) {
       .dialog({
 	autoOpen: false,
 	width: 350,
-	title: $cd.h1('rename'),
+	title: $cd.h2('rename'),
 	modal: true,
 	buttons: {
 	  ok: function() {
@@ -81,20 +81,20 @@ var cyberDojo = (function($cd, $j) {
     if ($cd.cantBeRenamedOrDeleted(filename)) {
       return;
     }
-    var div = $j('<div class="panel">', {
-      style: 'font-size: 2.0em;'  
-    });
-    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 150)));
+    var div = $j('<div>', {
+      'class': 'panel'
+    });    
+    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 100)));
     div.append('<div>&nbsp;</div>');
     div.append($cd.centeredDiv($cd.fakeFilenameButton(filename)));
     if (ask) {
       var deleter =
-	$j("<div>")
+	$j('<div>')
 	  .html(div)
 	  .dialog({
 	    autoOpen: false,
 	    width: 350,
-	    title: $cd.h1('delete'),
+	    title: $cd.h2('delete'),
 	    modal: true,
 	    buttons: {
 	      ok: function() {
@@ -177,6 +177,12 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   $cd.rewireFileFromTo = function(oldFilename, newFilename) {
+    // I used to delete the old file and then create
+    // a new one with the deleted file's content.
+    // However, rewiring the existing dom node is better
+    // since it is much easier to retain its cursor
+    // and scroll positions that way.
+    //
     // See ap/views/kata/_editor.html.erb
     //    <div class="filename_div"
     //         name="<%= filename %>"

@@ -67,6 +67,12 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  $cd.h2 = function(title) {
+    return $cd.node('h2',title);
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   $cd.fakeFilenameButton = function(filename) {
     return $cd.makeTable(''
       + '<div class="filename" file_selected="true">'
