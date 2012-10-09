@@ -7,7 +7,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <title>
-    <%= title -%>
+    <%= title %>
   </title>
     <style type="text/css">
       body
@@ -38,9 +38,9 @@
   <table align="center">
     <tr>
       <td>      
-	<% size = 40 -%>
+	<% size = 40 %>
 	<%= image_tag("/images/avatars/cyber-dojo.png",
-	    :border => 0, :size => "#{size}x#{size}", :title => 'Home page') -%>
+	    :border => 0, :size => "#{size}x#{size}", :title => 'Home page') %>
       </td>
       <td>
 	&nbsp;&nbsp;
@@ -51,26 +51,26 @@
     </tr>
   </table>
 	     
-  <% avatars = Avatar.names.shuffle -%>
-  <% size = 150 -%>
+  <% avatars = Avatar.names.shuffle %>
+  <% size = 150 %>
 
   <div id="center">
     
     <table align="center">
       <tr>
-        <td><%= avatar_image(avatars[0],size) -%></td>
-        <td><%= avatar_image(avatars[1],size) -%></td>
-        <td><%= avatar_image(avatars[2],size) -%></td>
+        <td><%= avatar_image(avatars[0],size) %></td>
+        <td><%= avatar_image(avatars[1],size) %></td>
+        <td><%= avatar_image(avatars[2],size) %></td>
       </tr>
       <tr>
-        <td><%= avatar_image(avatars[3],size) -%></td>
+        <td><%= avatar_image(avatars[3],size) %></td>
         <td>Sorry</td>
-        <td><%= avatar_image(avatars[4],size) -%></td>
+        <td><%= avatar_image(avatars[4],size) %></td>
       </tr>
       <tr>
-        <td><%= avatar_image(avatars[5],size) -%></td>
-        <td><%= avatar_image(avatars[6],size) -%></td>
-        <td><%= avatar_image(avatars[7],size) -%></td>
+        <td><%= avatar_image(avatars[5],size) %></td>
+        <td><%= avatar_image(avatars[6],size) %></td>
+        <td><%= avatar_image(avatars[7],size) %></td>
       </tr>
     </table>      
   </div>
