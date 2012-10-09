@@ -7,7 +7,7 @@ $j(document).ready(function() {
     $cd.newFile(); 
   });
   fileButtons.find('#rename').click(function() {
-    $cd.renameFile("<% @avatar.name %>");
+    $cd.renameFile("<%= @avatar.name %>");
   });
   fileButtons.find('#delete').click(function() {
     $cd.deleteFile("<%= @avatar.name %>");

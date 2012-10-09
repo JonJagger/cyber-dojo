@@ -133,7 +133,7 @@ var cyberDojo = (function($cd, $j) {
     }
     // else
     //   the scroll position is still ok but the
-    //   cursor position is now be lost... doing
+    //   cursor position is now lost... doing
     //     $cd.fileContentFor(oldFilename).focus();
     //     $cd.restoreScrollPosition(oldFilename);
     //   does not work - there is some interaction between
@@ -147,13 +147,13 @@ var cyberDojo = (function($cd, $j) {
     if (newFilename === "") {
       message = "No filename entered" + "<br/>" +
 	    "Rename " + oldFilename + " abandoned";
-      $cd.alert(avatar_name, message);
+      $cd.renameAlert(avatar_name, message);
       return false;
     }
     if (newFilename === oldFilename) {
       message = "Same filename entered." + "<br/>" +
 	    oldFilename + " is unchanged";
-      $cd.alert(avatar_name, message);
+      $cd.renameAlert(avatar_name, message);
       return false;
     }
     if ($cd.filenameAlreadyExists(newFilename)) {
@@ -179,8 +179,8 @@ var cyberDojo = (function($cd, $j) {
   $cd.rewireFileFromTo = function(oldFilename, newFilename) {
     // See ap/views/kata/_editor.html.erb
     //    <div class="filename_div"
-    //     name="<%= filename %>"
-    //     id="<% filename %>_div">
+    //         name="<%= filename %>"
+    //         id="<% filename %>_div">
     var div = $cd.id(oldFilename + '_div');
     div.attr('name', newFilename);
     div.attr('id', newFilename + '_div');
@@ -207,7 +207,26 @@ var cyberDojo = (function($cd, $j) {
 	   "to" + br + 
 	   tab + newFilename + br +
 	  "because " + reason + ".";
-    $cd.alert(avatar_name, why);
+    $cd.renameAlert(avatar_name, why);
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  $cd.renameAlert = function(avatar_name, message) {
+    var imageSize = 100;
+    var imageHtml = ''
+      + '<img alt="' + avatar_name + '"'
+      +     ' class="avatar_image"'
+      +     ' width="' + imageSize + '"'
+      +     ' height="' + imageSize + '"'
+      +     ' style="float: left; padding: 2px;"'
+      +     ' src="/images/avatars/' + avatar_name + '.jpg'+ '"'
+      +     ' title="' + avatar_name + '" />';
+    var alertHtml = ''    
+      + '<div class="panel">'
+      +   $cd.makeTable(imageHtml, message)
+      + '</div>';
+    $cd.dialog(alertHtml, 400, '!rename');
   };
 
   return $cd;

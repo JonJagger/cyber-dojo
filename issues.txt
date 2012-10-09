@@ -32,7 +32,6 @@ sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
 . . . . . . . 
-$cd.alert() in cyber-dojo-helpers.js can be refactored to use $cd.popupDialog()
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
 reclicking on diff'ed file doesn't seem to cycle correctly...
 in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
@@ -40,7 +39,7 @@ in firefox clicking on the ova hyperlink in the sources dialog doesn't start a d
 html element IDs are sometimes created using filenames. When this
 happens I currently do this...
    name.gsub('.', '_')            in GitDiff.rb and
-   diff.name.replace(/\./g, '_')  in cyberdojo-build_diff_filenames.js
+   diff.name.replace(/\./g, '_')  in cyber-dojo-build_diff_filenames.js
 This should be handled more thoroughly to ensure resulting ID is valid.
 ID and NAME tokens must begin with a letter ([A-Za-z]) and may be followed
 by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("_"),
@@ -71,13 +70,4 @@ what languages are installed and to only offer those languages (at the create
 page). But at the moment all the languages are being offered.
 -----
 The javascript tests need some TLC.
------
-The error handling at the front page is a bit messy. You get different
-style popups if you enter a wrong ID compared to entering no ID.
-And you also get different style popup for a wrong ID when you
-click start-coding compared to resume-coding or review-coding.
-There is a reason for this. It's because I want to make absolutely
-sure that the new run-the-tests kata page is in a new tab/window.
-It's important that there is never an operational back-button on
-that page.
 -----

@@ -61,39 +61,6 @@ var cyberDojo = (function($cd, $j) {
   $cd.divPanel = function(content) {
     return '<div class="panel">' + content + '</div>';
   };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  $cd.alert = function(avatar_name, message, title) {
-    var ext = avatar_name === "cyber-dojo" ? "png" : "jpg";
-    var imageSize = 200;
-    var imageHtml = ''
-      + '<img alt="' + avatar_name + '"'
-      +     ' class="avatar_image"'
-      +     ' width="' + imageSize + '"'
-      +     ' height="' + imageSize + '"'
-      +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar_name + '.'  + ext + '"' + ' title="' + avatar_name + '" />';
-    var alertHtml = ''    
-      + '<div class="panel">'
-      +   $cd.makeTable(imageHtml, message)
-      + '</div>';
-    
-    $j('<div>')    
-      .html('<div style="font-size: 1.5em;">' + alertHtml + '</div>')
-      .dialog({
-	autoOpen: false,
-	title: typeof(title) !== 'undefined' ? $cd.h1(title) : $cd.h1('alert!'),
-	modal: true,
-	width: 600,
-	buttons: {
-	  ok: function() {
-	    $j(this).dialog('close');
-	  }
-	}
-      })
-      .dialog('open');  
-  };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

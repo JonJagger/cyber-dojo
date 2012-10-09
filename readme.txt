@@ -40,6 +40,10 @@ have the correct rights
 >chown -R www-data cyberdojo
 And don't forget to reboot apache
 >service apache2 restart
+If the server fails to start try
+>rm Gemfile.lock
+>bundle install
+>service apache2 restart
 
 
 
@@ -65,7 +69,7 @@ instantly replace it.
 
 Traffic Lights
 ==============
-The display of each run-tests increment uses a traffic light, with meanings 
+The display of each test increment uses a traffic light, with meanings 
 for the three colours as follows:
   (o) red   - tests ran but at least one failed
   (o) amber - syntax error somewhere, tests not run
@@ -253,7 +257,7 @@ manifest.rb Parameters
 :unit_test_framework
   The name of the unit test framework used. This name partially determines the 
   name of the ruby function (in the Cyber-Dojo server) used to parse the 
-  run-tests output (to see if the increment generates a red/green/amber
+  test output (to see if the increment generates a red/green/amber
   traffic light). For example, if the value is 'cassert' then
       cyberdojo/lib/CodeOutputParser.rb
   must contain a method called parse_cassert() and will be called to parse the
