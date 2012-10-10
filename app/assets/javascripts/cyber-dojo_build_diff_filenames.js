@@ -14,8 +14,8 @@ var cyberDojo = (function($cd, $j) {
     diffSheet.toggle = function() { };
   
     var loadFrom = function(filename, diff, toggle) {
-      var section_index = 0;
-      var section_count = diff.section_count;
+      var sectionIndex = 0;
+      var sectionCount = diff.section_count;
       return function() {
         diffSheet.toggle();
         diffSheet.html(diff.content);
@@ -24,11 +24,11 @@ var cyberDojo = (function($cd, $j) {
           $cd.deselectRadioEntry($j(this));
         });
         $cd.selectRadioEntry(filename);        
-        if (section_count > 0) {
+        if (sectionCount > 0) {
           var id = diff.name.replace(/\./g, '_');
-          var pos = $j('#' + id + '_section_' + section_index).offset();
-          section_index += 1;
-          section_index %= section_count;
+          var pos = $j('#' + id + '_section_' + sectionIndex).offset();
+          sectionIndex += 1;
+          sectionIndex %= sectionCount;
           diffPanel.animate({ scrollTop:  pos.top - 80 }, 500 );
         }        
       };
