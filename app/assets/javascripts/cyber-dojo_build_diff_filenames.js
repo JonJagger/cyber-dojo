@@ -11,15 +11,11 @@ var cyberDojo = (function($cd, $j) {
     var diffSheet = $j('#diff_sheet');
     var diffPanel = $j('#diff_panel');
   
-    diffSheet.toggle = function() { };
-  
-    var loadFrom = function(filename, diff, toggle) {
+    var loadFrom = function(filename, diff) {
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
       return function() {
-        diffSheet.toggle();
         diffSheet.html(diff.content);
-        diffSheet.toggle = toggle;
         $j('div[class="filename"]').each(function() {
           $cd.deselectRadioEntry($j(this));
         });
@@ -33,19 +29,13 @@ var cyberDojo = (function($cd, $j) {
         }        
       };
     };
-  
-    var toggleSelected = function(filename) {
-      return function() {
-        filename.toggleClass('selected');
-      };
-    };
     
     $j.each(diffs, function(n, diff) {
       // _filenames.html.erb contains an
       // <input type="radio" id="radio_<%= diff[:id] %>" />
       // for each file in the current diff.
       var filename = $j('#radio_' + diff.id);
-      filename.parent().click( loadFrom(filename, diff, toggleSelected(filename)) );
+      filename.parent().click( loadFrom(filename, diff));
       if (diff.section_count > 0) {
         filename.parent().attr('title', 'reclick to cycle through diffs');
       }

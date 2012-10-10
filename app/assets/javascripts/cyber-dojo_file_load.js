@@ -112,7 +112,25 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   $cd.deselectRadioEntry = function(node) {
-    // See makeFileListEntry() 
+    // See makeFileListEntry()
+
+    // before loadFile() calls selectRadioEntry it does this...
+    // $j('div[class="filename"]').each(function() {
+    //   $cd.deselectRadioEntry($j(this));
+    // });
+    //Suggesting...selectRadioEntry can just be
+    // 
+    // $j('div[class="filename"]').each(function() {
+    //   $j(this).attr('file_selected','false');
+    // });
+    // node.parent().attr('file_selected', 'true');
+    // node.attr('checked', 'checked');        
+    //
+    // Except it may be better to do it as a class style
+    // rather than file_selected.
+    // build_diff_filename.js has
+    //    filename.toggleClass('selected');
+    
     node.attr('file_selected','false');
   };
 
