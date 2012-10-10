@@ -4,22 +4,21 @@
         
 $j(document).ready(function() {
 
-  var previousExerciseIndex = 0;
   var exercises = $j('[name=exercise]');
+  var rand = Math.floor(Math.random() * exercises.size());   
+  var previousExercise = $j(exercises[rand]);
+  
   exercises.each(function(index) {
+    var instructions = $j('#instructions_' + index).val();
     var node = $j(this);
     node.parent().click(function() {
-      var previous = $j('[id=exercise_' + previousExerciseIndex + ']');      
-      $cd.radioEntrySwitch(previous, node);
-      previousExerciseIndex = index;
-      var instructions = $j('#instructions_' + index).val();
+      $cd.radioEntrySwitch(previousExercise, node);
+      previousExercise = node;
       $j('#instructions').val(instructions);      
     });
   });
 
-  var rand = Math.floor(Math.random() * exercises.size()); 
   $j('#exercise_' + rand).parent().click();
-  previousExerciseIndex = rand;
 
 });
 

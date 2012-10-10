@@ -4,20 +4,19 @@
 
 $j(document).ready(function() {
 
-  var previousLanguageIndex = 0;
   var languages = $j('[name=language]');
+  var rand = Math.floor(Math.random() * languages.size());
+  var previousLanguage = $j(languages[rand]);
+
   languages.each(function(index) {
     var node = $j(this);
     node.parent().click(function() {
-      var previous = $j('[id=language_' + previousLanguageIndex + ']');
-      $cd.radioEntrySwitch(previous, node);
-      previousLanguageIndex = index;
+      $cd.radioEntrySwitch(previousLanguage, node);
+      previousLanguage = node;
     });
   });
   
-  var rand = Math.floor(Math.random() * languages.size());
   $j('#language_' + rand).parent().click();
-  previousLanguageIndex = rand;
 
 });
 
