@@ -5,10 +5,8 @@
 $j(document).ready(function() {
 
   var previousExerciseIndex = 0;
-  var exerciseCount = 0;
-  
-  $j('[name=exercise]').each(function(index) {
-    exerciseCount = index;
+  var exercises = $j('[name=exercise]');
+  exercises.each(function(index) {
     var node = $j(this);
     node.parent().click(function() {
       var previous = $j('[id=exercise_' + previousExerciseIndex + ']');      
@@ -19,7 +17,7 @@ $j(document).ready(function() {
     });
   });
 
-  var rand = Math.floor(Math.random() * exerciseCount); 
+  var rand = Math.floor(Math.random() * exercises.size()); 
   $j('#exercise_' + rand).parent().click();
   previousExerciseIndex = rand;
 

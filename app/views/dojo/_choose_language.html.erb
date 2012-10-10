@@ -5,10 +5,8 @@
 $j(document).ready(function() {
 
   var previousLanguageIndex = 0;
-  var languageCount = 0;
-
-  $j('[name=language]').each(function(index) {
-    languageCount = index;
+  var languages = $j('[name=language]');
+  languages.each(function(index) {
     var node = $j(this);
     node.parent().click(function() {
       var previous = $j('[id=language_' + previousLanguageIndex + ']');
@@ -17,7 +15,7 @@ $j(document).ready(function() {
     });
   });
   
-  var rand = Math.floor(Math.random() * languageCount);
+  var rand = Math.floor(Math.random() * languages.size());
   $j('#language_' + rand).parent().click();
   previousLanguageIndex = rand;
 
