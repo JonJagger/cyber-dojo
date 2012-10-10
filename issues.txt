@@ -23,6 +23,16 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+add comment to deselectRadioEntry() explaining CSS has no ascendant selectors
+in cyber-dojo_build_diff_filenames.js I do this...
+        $j('div[class="filename"]').each(function() {
+          $cd.deselectRadioEntry($j(this));
+        });
+        does that same iteration happen for other calls? If so embed the iteration
+        inside the call to deselectRadioEntry()? Or better still simply do all
+        this inside the selectRadioEntry() call.
+setRenameAndDeleteButtons() has some duplication
+
 $cd.renameAlert() can be refactored to use $cd.avatarImage()
 allow entry of only first 5 characters of ID as long as its unique to that length
 add help button on diff page
@@ -36,12 +46,6 @@ sort filenames so files with the same extension are grouped together?
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
 reclicking on diff'ed file doesn't seem to cycle correctly (somtimes)...
   is this because of the -80 in the call to animate?
-in cyber-dojo_build_diff_filenames.js I do this...
-        $j('div[class="filename"]').each(function() {
-          $cd.deselectRadioEntry($j(this));
-        });
-        does that same iteration happen for other calls? If so embed the iteration
-        inside the call to deselectRadioEntry()?
 in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
 in diff page when you go back to a file with diff it should not cycle to next diff change
   it should only cycle to next diff change if you click the filename when the

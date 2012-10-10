@@ -110,21 +110,6 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.deselectRadioEntry = function(node) {
-    // See makeFileListEntry() above
-    node.attr('file_selected','false');
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  $cd.selectRadioEntry = function(node) {
-    // See makeFileListEntry() above
-    node.parent().attr('file_selected', 'true');
-    node.attr('checked', 'checked');        
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   $cd.makeNewFile = function(filename, content) {
     var div = $j('<div>', {
       'class': 'filename_div',

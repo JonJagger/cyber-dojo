@@ -38,7 +38,8 @@ var cyberDojo = (function($cd, $j) {
     // Note that doing the seemingly equivalent
     //   fc.scrollTop(top);
     //   fc.scrollLeft(left);
-    // here does _not_ work. I use animate instead with a very fast duration==1
+    // here does _not_ work. I use animate instead with a
+    // very fast duration==1
     var div = $cd.fileDiv(filename);
     var top = div.attr('scrollTop') || 0;
     var left = div.attr('scrollLeft') || 0;
@@ -46,20 +47,6 @@ var cyberDojo = (function($cd, $j) {
     fc.animate({scrollTop: top, scrollLeft: left}, 1);
   };
   
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  $cd.selectFileInFileList = function(filename) {    
-    // Can't do $j('radio_' + filename) because filename
-    // could contain characters that aren't strictly legal
-    // characters in a dom node id
-    // NB: This fails if the filename contains a double quote
-    var node = $j('[id="radio_' + filename + '"]');
-    var previousFilename = $cd.currentFilename();
-    var previous = $j('[id="radio_' + previousFilename + '"]');
-    $cd.radioEntrySwitch(previous, node);
-    $cd.setRenameAndDeleteButtons(filename);
-  };
-
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   $cd.setRenameAndDeleteButtons = function(filename) {
@@ -99,6 +86,20 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
+  $cd.selectFileInFileList = function(filename) {    
+    // Can't do $j('radio_' + filename) because filename
+    // could contain characters that aren't strictly legal
+    // characters in a dom node id
+    // NB: This fails if the filename contains a double quote
+    var node = $j('[id="radio_' + filename + '"]');
+    var previousFilename = $cd.currentFilename();
+    var previous = $j('[id="radio_' + previousFilename + '"]');
+    $cd.radioEntrySwitch(previous, node);
+    $cd.setRenameAndDeleteButtons(filename);
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   $cd.radioEntrySwitch = function(previous, current) {
     // Used by the run-tests-page filename radio-list
     // and also the create-page languages/exercises radio-lists
@@ -106,6 +107,21 @@ var cyberDojo = (function($cd, $j) {
     // cyberdojo-files.js
     $cd.deselectRadioEntry(previous.parent());
     $cd.selectRadioEntry(current);
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  $cd.deselectRadioEntry = function(node) {
+    // See makeFileListEntry() 
+    node.attr('file_selected','false');
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  $cd.selectRadioEntry = function(node) {
+    // See makeFileListEntry()
+    node.parent().attr('file_selected', 'true');
+    node.attr('checked', 'checked');        
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
