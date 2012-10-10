@@ -107,43 +107,16 @@ var cyberDojo = (function($cd, $j) {
   $cd.radioEntrySwitch = function(previous, current) {
     // Used by the run-tests-page filename radio-list
     // and also the create-page languages/exercises radio-lists
+    // and the diff page radio lists
     // See the comment for makeFileListEntry() in
     // cyberdojo-files.js
-    $cd.deselectRadioEntry(previous.parent());
-    $cd.selectRadioEntry(current);
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
-  $cd.deselectRadioEntry = function(node) {
-    // See makeFileListEntry()
-
-    // before loadFile() calls selectRadioEntry it does this...
-    // $j('div[class="filename"]').each(function() {
-    //   $cd.deselectRadioEntry($j(this));
-    // });
-    //Suggesting...selectRadioEntry can just be
-    // 
-    // $j('div[class="filename"]').each(function() {
-    //   $j(this).attr('file_selected','false');
-    // });
-    // node.parent().attr('file_selected', 'true');
-    // node.attr('checked', 'checked');        
-    //
-    // Except it may be better to do it as a class style
-    // rather than file_selected.
-    // build_diff_filename.js has
-    //    filename.toggleClass('selected');
+    if (previous !== undefined) {
+      previous.parent().attr('file_selected','false');
+    }
     
-    node.attr('file_selected','false');
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  $cd.selectRadioEntry = function(node) {
-    // See makeFileListEntry()
-    node.parent().attr('file_selected', 'true');
-    node.attr('checked', 'checked');        
+    current.parent().attr('file_selected', 'true');
+    current.attr('checked', 'checked');            
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

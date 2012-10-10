@@ -54,12 +54,13 @@ var cyberDojo = (function($cd, $j) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   $cd.rebuildFilenameList = function() {
-    var filenames = $cd.filenames();    
-    filenames.sort();
     var filenameList = $j('#filename_list');
+    var filenames = $cd.filenames();    
     filenameList.empty();
+    filenames.sort();
     $j.each(filenames, function(n, filename) {
-      filenameList.append($cd.makeFileListEntry(filename));
+      var fileListEntry = $cd.makeFileListEntry(filename);
+      filenameList.append(fileListEntry);
     });
     $j('input[type=radio]').hide();
     return filenames;

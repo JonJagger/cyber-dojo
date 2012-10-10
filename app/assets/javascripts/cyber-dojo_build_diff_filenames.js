@@ -11,15 +11,15 @@ var cyberDojo = (function($cd, $j) {
     var diffSheet = $j('#diff_sheet');
     var diffPanel = $j('#diff_panel');
   
+    var previousFilename;
+    
     var loadFrom = function(filename, diff) {
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
       return function() {
         diffSheet.html(diff.content);
-        $j('div[class="filename"]').each(function() {
-          $cd.deselectRadioEntry($j(this));
-        });
-        $cd.selectRadioEntry(filename);        
+        $cd.radioEntrySwitch(previousFilename, filename);
+        previousFilename = filename;
         if (sectionCount > 0) {
           var id = diff.name.replace(/\./g, '_');
           var pos = $j('#' + id + '_section_' + sectionIndex).offset();
