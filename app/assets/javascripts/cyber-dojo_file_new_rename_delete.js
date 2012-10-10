@@ -10,13 +10,13 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.deleteFile = function(avatar_name) {
-    $cd.deleteFilePrompt(avatar_name, true);
+  $cd.deleteFile = function(avatarName) {
+    $cd.deleteFilePrompt(avatarName, true);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.renameFile = function(avatar_name) {
+  $cd.renameFile = function(avatarName) {
     var oldFilename = $cd.currentFilename();
     if ($cd.cantBeRenamedOrDeleted(oldFilename)) {
       return;
@@ -24,7 +24,7 @@ var cyberDojo = (function($cd, $j) {
     var div = $j('<div>', {
       'class': 'panel'
     });
-    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 100)));
+    div.append($cd.centeredDiv($cd.avatarImage(avatarName, 100)));
     div.append('<div>&nbsp;</div>');
     var input = $j('<input>', {
       type: 'text',
@@ -44,7 +44,7 @@ var cyberDojo = (function($cd, $j) {
 	  ok: function() {
 	    $j(this).dialog('close');
 	    var newFilename = $j.trim(input.val());
-	    $cd.renameFileFromTo(avatar_name, oldFilename, newFilename);
+	    $cd.renameFileFromTo(avatarName, oldFilename, newFilename);
 	  },
 	  cancel: function() {
 	    $j(this).dialog('close');
@@ -57,7 +57,7 @@ var cyberDojo = (function($cd, $j) {
       if (event.keyCode === CARRIAGE_RETURN) {
 	var newFilename = $j.trim(input.val());
 	renamer.dialog('close');
-	$cd.renameFileFromTo(avatar_name, oldFilename, newFilename);
+	$cd.renameFileFromTo(avatarName, oldFilename, newFilename);
       }  
     });
     renamer.dialog('open');
@@ -76,7 +76,7 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.deleteFilePrompt = function(avatar_name, ask) {
+  $cd.deleteFilePrompt = function(avatarName, ask) {
     var filename = $cd.currentFilename();
     if ($cd.cantBeRenamedOrDeleted(filename)) {
       return;
@@ -84,7 +84,7 @@ var cyberDojo = (function($cd, $j) {
     var div = $j('<div>', {
       'class': 'panel'
     });    
-    div.append($cd.centeredDiv($cd.avatarImage(avatar_name, 100)));
+    div.append($cd.centeredDiv($cd.avatarImage(avatarName, 100)));
     div.append('<div>&nbsp;</div>');
     div.append($cd.centeredDiv($cd.fakeFilenameButton(filename)));
     if (ask) {
@@ -124,9 +124,9 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.renameFileFromTo = function(avatar_name, oldFilename, newFilename) {
+  $cd.renameFileFromTo = function(avatarName, oldFilename, newFilename) {
     $cd.saveScrollPosition(oldFilename);
-    if ($cd.canRenameFileFromTo(avatar_name, oldFilename, newFilename)) {	  
+    if ($cd.canRenameFileFromTo(avatarName, oldFilename, newFilename)) {	  
       $cd.rewireFileFromTo(oldFilename, newFilename);	  
       $cd.rebuildFilenameList();
       $cd.loadFile(newFilename);
@@ -142,32 +142,32 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  $cd.canRenameFileFromTo = function(avatar_name, oldFilename, newFilename) {
+  $cd.canRenameFileFromTo = function(avatarName, oldFilename, newFilename) {
     var message;
     if (newFilename === "") {
       message = "No filename entered" + "<br/>" +
 	    "Rename " + oldFilename + " abandoned";
-      $cd.renameAlert(avatar_name, message);
+      $cd.renameAlert(avatarName, message);
       return false;
     }
     if (newFilename === oldFilename) {
       message = "Same filename entered." + "<br/>" +
 	    oldFilename + " is unchanged";
-      $cd.renameAlert(avatar_name, message);
+      $cd.renameAlert(avatarName, message);
       return false;
     }
     if ($cd.filenameAlreadyExists(newFilename)) {
-      $cd.renameFailure(avatar_name, oldFilename, newFilename,
+      $cd.renameFailure(avatarName, oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
       return false;
     }
     if (newFilename.indexOf("/") !== -1) {
-      $cd.renameFailure(avatar_name, oldFilename, newFilename,
+      $cd.renameFailure(avatarName, oldFilename, newFilename,
 		    newFilename + " contains a forward slash");
       return false;
     }
     if (newFilename.indexOf("\\") !== -1) {
-      $cd.renameFailure(avatar_name, oldFilename, newFilename,
+      $cd.renameFailure(avatarName, oldFilename, newFilename,
 		    newFilename + " contains a back slash");
       return false;
     }
@@ -204,7 +204,7 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.renameFailure = function(avatar_name, oldFilename, newFilename, reason) {
+  $cd.renameFailure = function(avatarName, oldFilename, newFilename, reason) {
     var space = "&nbsp;";
     var tab = space + space + space + space;
     var br = "<br/>";
@@ -213,21 +213,21 @@ var cyberDojo = (function($cd, $j) {
 	   "to" + br + 
 	   tab + newFilename + br +
 	  "because " + reason + ".";
-    $cd.renameAlert(avatar_name, why);
+    $cd.renameAlert(avatarName, why);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  $cd.renameAlert = function(avatar_name, message) {
+  $cd.renameAlert = function(avatarName, message) {
     var imageSize = 100;
     var imageHtml = ''
-      + '<img alt="' + avatar_name + '"'
+      + '<img alt="' + avatarName + '"'
       +     ' class="avatar_image"'
       +     ' width="' + imageSize + '"'
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatar_name + '.jpg'+ '"'
-      +     ' title="' + avatar_name + '" />';
+      +     ' src="/images/avatars/' + avatarName + '.jpg'+ '"'
+      +     ' title="' + avatarName + '" />';
     var alertHtml = ''    
       + '<div class="panel">'
       +   $cd.makeTable(imageHtml, message)

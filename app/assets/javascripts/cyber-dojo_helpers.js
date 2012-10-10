@@ -42,14 +42,14 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.avatarImage = function(avatar_name, imageSize) {
+  $cd.avatarImage = function(avatarName, imageSize) {
     return $j('<img>', {
-       alt: avatar_name,
+       alt: avatarName,
       'class': "avatar_image",
       'height': imageSize,
       'width': imageSize,
-       src: "/images/avatars/" + avatar_name + ".jpg",
-       title: avatar_name
+       src: "/images/avatars/" + avatarName + ".jpg",
+       title: avatarName
     });
   };
 
