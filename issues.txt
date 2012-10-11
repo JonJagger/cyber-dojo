@@ -23,16 +23,6 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-add comment to deselectRadioEntry() explaining CSS has no ascendant selectors
-in cyber-dojo_build_diff_filenames.js I do this...
-        $j('div[class="filename"]').each(function() {
-          $cd.deselectRadioEntry($j(this));
-        });
-        does that same iteration happen for other calls? If so embed the iteration
-        inside the call to deselectRadioEntry()? Or better still simply do all
-        this inside the selectRadioEntry() call.
-setRenameAndDeleteButtons() has some duplication
-
 $cd.renameAlert() can be refactored to use $cd.avatarImage()
 allow entry of only first 5 characters of ID as long as its unique to that length
 add help button on diff page
