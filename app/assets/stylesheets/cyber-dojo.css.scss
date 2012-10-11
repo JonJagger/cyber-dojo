@@ -107,10 +107,10 @@ div[class~="filename"]
   @include rounded-corner(4px);
 }
 
-div[file_selected~="true"]
+div[class~="filename"][class~="selected"]
 {
-  // See app/assets/javascripts/cyber-dojo_files.js 
-  // functions deselectRadioEntry() and selectRadioEntry() 
+  // See app/assets/javascripts/cyber-dojo_file_load.js
+  // function radioEntrySwitch()
   color: $main-color;
   background-color: $light-background-color;
 }

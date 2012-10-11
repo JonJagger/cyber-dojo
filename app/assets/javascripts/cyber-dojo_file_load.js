@@ -112,10 +112,9 @@ var cyberDojo = (function($cd, $j) {
     // cyberdojo-files.js
     
     if (previous !== undefined) {
-      previous.parent().attr('file_selected','false');
-    }
-    
-    current.parent().attr('file_selected', 'true');
+      previous.parent().removeClass('selected');
+    }   
+    current.parent().addClass('selected');
     current.attr('checked', 'checked');            
   };
   

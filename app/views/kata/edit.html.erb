@@ -6,10 +6,10 @@ $j(document).ready(function() {
   $cd.tabExpansion = function() {
     return "<%= @tab %>";
   };
-  $cd.support_filenames = function() {
+  $cd.supportFilenames = function() {
     return $j.parseJSON('<%= @kata.language.support_filenames.inspect.html_safe %>');
   };
-  $cd.hidden_filenames = function() {
+  $cd.hiddenFilenames = function() {
     return $j.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
   };  
 

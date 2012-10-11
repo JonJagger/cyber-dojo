@@ -47,8 +47,8 @@ var cyberDojo = (function($cd, $j) {
     return filename === oldName ||
            filename === newName ||
            $cd.inArray(filename, $cd.filenames()) ||
-           $cd.inArray(filename, $cd.support_filenames()) ||
-           $cd.inArray(filename, $cd.hidden_filenames());	   
+           $cd.inArray(filename, $cd.supportFilenames()) ||
+           $cd.inArray(filename, $cd.hiddenFilenames());	   
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
