@@ -5,15 +5,13 @@ $j(document).ready(function() {
 
   $cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe %>);
   
-  $j.fn.onOff = function() {
-    var setTo = this.val() === 'none' ? 'block' : 'none';
-    this.val(setTo);
-    return setTo;
+  var display = function(node,name,value) {
+    if ($j(node).attr('disabled') !== 'disabled') {
+      $j(name).css('display', value);
+    }
   };
-
   var allLineCountButtons = $j('.diff-deleted-line-count, .diff-added-line-count');
   var off = { 'disabled':true, 'title':'' }; 
-  
   var disableAllLineCountButtons = function() {
     allLineCountButtons.attr(off);
   };
@@ -29,19 +27,14 @@ $j(document).ready(function() {
        .attr('title', 'click to toggle added lines on/off');
   });
 
-  $j('.diff-deleted-line-count').click(function() {
-    if ($j(this).attr('disabled') !== 'disabled') {
-      var deleted = $j('deleted');
-      deleted.css('display', deleted.onOff());
-    }
-  });
-  
-  $j('.diff-added-line-count').click(function() {
-    if ($j(this).attr('disabled') !== 'disabled') {
-      var added = $j('added');
-      added.css('display', added.onOff());
-    }
-  });
+  $j('.diff-deleted-line-count').toggle(
+    function() { display(this,'deleted','none' ); },
+    function() { display(this,'deleted','block'); }
+  );
+  $j('.diff-added-line-count').toggle(
+    function() { display(this,'added','none' ); },
+    function() { display(this,'added','block'); }
+  );
   
   disableAllLineCountButtons();
   $j('#' + '<%= @current_filename_id %>').click();  
