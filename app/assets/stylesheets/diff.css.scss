@@ -44,11 +44,7 @@
 
 .diffed_code added   { background: $diff-added-color;  }
 .diffed_code deleted { background: $diff-deleted-color; }
-.diffed_code same
-{
-  color: $main-color;
-  background: $light-background-color;
-}
+.diffed_code same    { background: $light-background-color; }
 
 .diffed_code same ln { background: $background-color;  }
 
@@ -74,7 +70,4 @@
   @include line-count;
 }
 
-.triangle.button
-{
-  padding: 0.2em;
-}
+.triangle.button { padding: 0.2em; }
