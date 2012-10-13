@@ -11,8 +11,6 @@ module GitDiff
   # for a given tag.
   
   def git_diff_view(avatar, tag, visible_files = nil)
-      builder = GitDiffBuilder.new()
-
       visible_files ||= avatar.visible_files(tag)      
       diff_lines = avatar.diff_lines(tag)
       view = { }      
@@ -22,7 +20,7 @@ module GitDiff
         if md && !deleted_file?(md[1])
           name = md[2]
           file_content = visible_files[name]
-          view[name] = builder.build(diff, line_split(file_content))
+          view[name] = GitDiffBuilder.new().build(diff, line_split(file_content))
           visible_files.delete(name)
         end
       end

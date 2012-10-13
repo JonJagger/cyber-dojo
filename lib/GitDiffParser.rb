@@ -21,7 +21,7 @@ module GitDiff
     end
     
     def parse_all
-      all = {}
+      all = { }
       while /^diff/.match(@lines[@n]) do
         one = parse_one
         if one[:now_filename] != '/dev/null'
