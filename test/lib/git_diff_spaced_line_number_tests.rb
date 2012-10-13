@@ -24,12 +24,6 @@ class GitDiffSpacedLineNumberTests < ActionController::TestCase
     (100..999).each   {|n| assert_equal ' ' +   n.to_s, spaced_line_number(n, max_digits), 8 }
     (1000..1234).each {|n| assert_equal '' +    n.to_s, spaced_line_number(n, max_digits), 9}    
   end
-
-  test "max digits nils for deleted lines" do
-    assert_equal '  -', spaced_line_number(nil, 1), '1'
-    assert_equal '  -', spaced_line_number(nil, 2), '2'
-    assert_equal '  -', spaced_line_number(nil, 3), '3'
-  end
   
 end
 

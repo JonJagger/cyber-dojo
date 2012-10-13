@@ -41,7 +41,9 @@ module GitDiff
   private
   
     def build_section(result, section)
+      reset = @line_number
       fill_all(result, :deleted, section[:deleted_lines])
+      @line_number = reset
       fill_all(result, :added, section[:added_lines])
       fill_all(result, :same, section[:after_lines])
     end
@@ -55,12 +57,10 @@ module GitDiff
       (from...to).each do |n|
         line = {
           :type => type,
-          :line => lines[n]        
+          :line => lines[n],
+          :number => @line_number
         }
-        if type != :deleted
-          line[:number] = @line_number
-          @line_number += 1
-        end        
+        @line_number += 1
         into << line
       end
     end
