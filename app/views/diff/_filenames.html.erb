@@ -62,10 +62,8 @@ $j(document).ready(function() {
           </label>
         </div>
       </td>    
-      <% show_delete = (n_deleted > 0) || (n_deleted == 0 && n_added > 0) %>
-      <% show_added  = (n_added > 0) || (n_added == 0 && n_deleted > 0) %>
       <td align="left">
-        <% if show_delete %>
+        <% if n_deleted > 0 %>
             <div class="diff-deleted-line-count small button">
               <%= n_deleted %>
             </div>
@@ -76,7 +74,7 @@ $j(document).ready(function() {
         &nbsp;
       </td>
       <td align="left">
-        <% if show_added %>
+        <% if n_added > 0 %>
           <div class="diff-added-line-count small button">
             <%= n_added %>
           </div>
