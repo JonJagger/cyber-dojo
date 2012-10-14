@@ -16,7 +16,7 @@ var cyberDojo = (function($cd, $j) {
       var sectionCount = diff.section_count;
       var id = diff.name.replace(/\./g, '_');
       if (sectionCount > 0) {
-          filename.parent().attr('title', 'click to scroll to next diff');
+          filename.parent().attr('title', 'Auto-scroll through diffs');
       }
       return function() {
         diffSheet.html(diff.content);

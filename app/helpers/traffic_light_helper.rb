@@ -11,7 +11,7 @@ module TrafficLightHelper
         :avatar => avatar_name,
         :tag => inc[:number] 
     }, 
-    { :title => tool_tip(inc),
+    { :title => tool_tip(avatar_name,inc),
     }.merge(new_window)
   end
   
@@ -30,8 +30,8 @@ module TrafficLightHelper
      "</span>").html_safe
   end
  
-  def tool_tip(inc)
-    "Show the diff of traffic-light ##{inc[:number]} (#{at(inc)})"
+  def tool_tip(avatar_name,inc)
+    "Show the diff of " + avatar_name + " traffic-light ##{inc[:number]} (#{at(inc)})"
   end
     
   def at(inc)

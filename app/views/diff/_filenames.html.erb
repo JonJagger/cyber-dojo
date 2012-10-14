@@ -22,9 +22,9 @@ $j(document).ready(function() {
     var add = tr.find('.diff-added-line-count');
     disableAllLineCountButtons();
     del.attr('disabled', false)
-       .attr('title', 'click to toggle deleted lines on/off');
+       .attr('title', 'Toggle deleted lines on/off');
     add.attr('disabled', false)
-       .attr('title', 'click to toggle added lines on/off');
+       .attr('title', 'Toggle added lines on/off');
   });
 
   $j('.diff-deleted-line-count').toggle(

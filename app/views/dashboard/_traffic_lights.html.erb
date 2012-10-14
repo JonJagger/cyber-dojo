@@ -55,7 +55,7 @@
             <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
                 :border => 0,
                 :size => "#{size}x#{size}",
-                :title => 'Show the diff of traffic-light #1',
+                :title => "Show the diff of #{avatar_name} traffic-light #1",
                 :class => 'cyber_dojo_image'),
                 {
                   :controller => :diff,
@@ -85,7 +85,7 @@
           </div>
          </td>
                   
-         <td>
+         <td align="right">
            <span class="tag_count">
              <%= all_lights[avatar_name].length %>
            </span>
