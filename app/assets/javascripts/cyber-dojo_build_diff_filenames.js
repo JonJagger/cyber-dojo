@@ -9,23 +9,28 @@ var cyberDojo = (function($cd, $j) {
   
   $cd.buildDiffFilenameHandlers = function(diffs) {
     var diffSheet = $j('#diff_sheet');
-    var diffPanel = $j('#diff_panel');
-  
+    var diffPanel = $j('#diff_panel');  
     var previousFilename;
-    
     var loadFrom = function(filename, diff) {
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
+      var id = diff.name.replace(/\./g, '_');
+      if (sectionCount > 0) {
+          filename.parent().attr('title', 'click to scroll to next diff');
+      }
       return function() {
         diffSheet.html(diff.content);
         $cd.radioEntrySwitch(previousFilename, filename);
         previousFilename = filename;
+        // some files have no diffs
         if (sectionCount > 0) {
-          var id = diff.name.replace(/\./g, '_');
-          var pos = $j('#' + id + '_section_' + sectionIndex).offset();
+          var section = $j('#' + id + '_section_' + sectionIndex);           
+          var delta = 100;
+          diffPanel.animate({
+            scrollTop: section.offset().top - diffSheet.offset().top - delta
+            }, 500);
           sectionIndex += 1;
           sectionIndex %= sectionCount;
-          diffPanel.animate({ scrollTop:  pos.top - 80 }, 500 );
         }        
       };
     };
@@ -35,10 +40,7 @@ var cyberDojo = (function($cd, $j) {
       // <input type="radio" id="radio_<%= diff[:id] %>" />
       // for each file in the current diff.
       var filename = $j('#radio_' + diff.id);
-      filename.parent().click( loadFrom(filename, diff));
-      if (diff.section_count > 0) {
-        filename.parent().attr('title', 'reclick to cycle through diffs');
-      }
+      filename.parent().click(loadFrom(filename, diff));
     });
   };
 
