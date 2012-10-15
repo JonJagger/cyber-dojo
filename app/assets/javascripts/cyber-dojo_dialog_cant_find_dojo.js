@@ -1,7 +1,8 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
-  
+  "use strict";
+
   cd.dialog_cantFindDojo = function(title,id) {
     var yinYang =
       '<img alt="cyber-dojo" '

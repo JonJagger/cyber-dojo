@@ -1,7 +1,8 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
-
+  "use strict";
+  
   cd.dialog_about = function() {
 
     var nonIde =

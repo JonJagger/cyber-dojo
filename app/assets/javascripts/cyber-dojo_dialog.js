@@ -1,6 +1,7 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
+  "use strict";
   
   cd.dialog = function(html,width,name) {
     var div = $('<div>')

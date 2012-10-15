@@ -1,7 +1,8 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
-  
+  "use strict";
+
   cd.dialog_id = function(title,info) {
     var fromDiff = false;
     var panel = '<table>';

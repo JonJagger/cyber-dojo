@@ -1,7 +1,8 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
-    
+  "use strict";
+
   cd.dialog_kata_help = function(avatar) {    
     var imageSize = 57;
     var homePageImage = ''    

@@ -1,20 +1,21 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
+  "use strict";
   
-  $cd.id = function(name) {
-    return $j('[id="' + name + '"]');
+  cd.id = function(name) {
+    return $('[id="' + name + '"]');
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  $cd.inArray = function(find, array) {
-    return $j.inArray(find, array) !== -1;    
+  cd.inArray = function(find, array) {
+    return $.inArray(find, array) !== -1;    
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.node = function(name,content) {
+  cd.node = function(name,content) {
     return '<'+name+'>'
           +  content
 	  +'</'+name+'>';
@@ -22,18 +23,18 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.makeTable = function() {
+  cd.makeTable = function() {
     var i, max, content = '';
     for (i = 0, max = arguments.length; i < max; i += 1) {
-      content += $cd.node('td', arguments[i]);
+      content += cd.node('td', arguments[i]);
     }
-    return $cd.node('table', $cd.node('tr', content));
+    return cd.node('table', cd.node('tr', content));
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.centeredDiv = function(node) {
-    var div = $j('<div>', {
+  cd.centeredDiv = function(node) {
+    var div = $('<div>', {
      align: 'center' 
     });
     div.append(node);
@@ -42,8 +43,8 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.avatarImage = function(avatarName, imageSize) {
-    return $j('<img>', {
+  cd.avatarImage = function(avatarName, imageSize) {
+    return $('<img>', {
        alt: avatarName,
       'class': "avatar_image",
       'height': imageSize,
@@ -55,26 +56,26 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.divPanel = function(content) {
+  cd.divPanel = function(content) {
     return '<div class="panel">' + content + '</div>';
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.h1 = function(title) {
-    return $cd.node('h1',title);
+  cd.h1 = function(title) {
+    return cd.node('h1',title);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.h2 = function(title) {
-    return $cd.node('h2',title);
+  cd.h2 = function(title) {
+    return cd.node('h2',title);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.fakeFilenameButton = function(filename) {
-    return $cd.makeTable(''
+  cd.fakeFilenameButton = function(filename) {
+    return cd.makeTable(''
       + '<div class="filename selected">'
       +   '<input style="display:none;"'
       +         ' type="radio"'
@@ -85,7 +86,7 @@ var cyberDojo = (function($cd, $j) {
       + '</div>');
   };
   
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

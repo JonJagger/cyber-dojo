@@ -2,21 +2,21 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$j(document).ready(function() {
+$(document).ready(function() {
 
-  var languages = $j('[name=language]');
+  var languages = $('[name=language]');
   var rand = Math.floor(Math.random() * languages.size());
-  var previousLanguage = $j(languages[rand]);
+  var previousLanguage = $(languages[rand]);
 
   languages.each(function(index) {
-    var node = $j(this);
+    var node = $(this);
     node.parent().click(function() {
-      $cd.radioEntrySwitch(previousLanguage, node);
+      cd.radioEntrySwitch(previousLanguage, node);
       previousLanguage = node;
     });
   });
   
-  $j('#language_' + rand).parent().click();
+  $('#language_' + rand).parent().click();
 
 });
 

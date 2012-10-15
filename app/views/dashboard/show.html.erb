@@ -2,10 +2,10 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$j(document).ready(function() {
+$(document).ready(function() {
 
   var parse = function(name, current_value) {
-    var input = $j('#' + name);
+    var input = $('#' + name);
     var newValue = parseInt(input.val());
     if (isNaN(newValue)) {
       input.attr('value', current_value);
@@ -22,7 +22,7 @@ $j(document).ready(function() {
   };
   
   var refreshDashboard = function() {
-    $j.ajax({
+    $.ajax({
       url: "<%= url_for :action => 'heartbeat' %>",
       data: params(),
       dataType: "script"
@@ -32,10 +32,10 @@ $j(document).ready(function() {
   var seconds = 1000;
   setInterval(refreshDashboard, 10*seconds);
   
-  $j('#seconds_per_column,#maximum_columns').keyup(function(event) {
+  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
     var CARRIAGE_RETURN = 13;
     if (event.keyCode === CARRIAGE_RETURN) {
-      $cd.postTo('/dashboard/show', params());
+      cd.postTo('/dashboard/show', params());
     }
   });
   

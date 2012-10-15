@@ -2,23 +2,23 @@
 <script language="JavaScript"
         type="text/javascript"><!--
 
-$j(document).ready(function() {
+$(document).ready(function() {
   
-  $j('#ok_button').click(function() {
+  $('#ok_button').click(function() {
     
-    $cd.postTo('/dojo/save', {
+    cd.postTo('/dojo/save', {
       name: "no-name",
-      exercise: $j('input[name="exercise"]:checked').val(),
-      language: $j('input[name="language"]:checked').val()
+      exercise: $('input[name="exercise"]:checked').val(),
+      language: $('input[name="language"]:checked').val()
     });    
   });
   
-  $j('#cancel_button').click(function() {
-    $cd.postTo('/dojo/index');
+  $('#cancel_button').click(function() {
+    cd.postTo('/dojo/index');
   });
   
   // remove radio bullets - they are sometimes causing layout weirdness in firefox
-  $j('input[type=radio]').hide();  
+  $('input[type=radio]').hide();  
   
 });
 

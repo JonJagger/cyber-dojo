@@ -1,7 +1,8 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
 var cyberDojo = (function(cd, $) {
-  
+  "use strict";
+
   cd.dialog_feedback = function() {
     
     var mailUrl = 'mailto:jon@jaggersoft.com?subject=cyber-dojo%20feedback';

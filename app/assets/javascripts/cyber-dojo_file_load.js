@@ -1,8 +1,9 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
-var cyberDojo = (function($cd, $j) {
-
-  $cd.loadFile = function(filename) {
+var cyberDojo = (function(cd, $) {
+  "use strict";
+  
+  cd.loadFile = function(filename) {
     // I want to
     //    1. restore scrollTop and scrollLeft positions
     //    2. restore focus (also restores cursor position)
@@ -11,46 +12,46 @@ var cyberDojo = (function($cd, $j) {
     // I can set the back _after_ the call to focus()
     // The call to focus() allows you to carry on
     // typing at the point the cursor left off.
-    $cd.saveScrollPosition($cd.currentFilename());
-    $cd.fileDiv($cd.currentFilename()).hide();
-    $cd.selectFileInFileList(filename);    
-    $cd.fileDiv(filename).show();
-    $cd.fileContentFor(filename).focus();
-    $cd.restoreScrollPosition(filename);
-    $j('#current_filename').val(filename);
+    cd.saveScrollPosition(cd.currentFilename());
+    cd.fileDiv(cd.currentFilename()).hide();
+    cd.selectFileInFileList(filename);    
+    cd.fileDiv(filename).show();
+    cd.fileContentFor(filename).focus();
+    cd.restoreScrollPosition(filename);
+    $('#current_filename').val(filename);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.saveScrollPosition = function(filename) {
-    var fc = $cd.fileContentFor(filename);
+  cd.saveScrollPosition = function(filename) {
+    var fc = cd.fileContentFor(filename);
     var top = fc.scrollTop();
     var left = fc.scrollLeft();
-    var div = $cd.fileDiv(filename);
+    var div = cd.fileDiv(filename);
     div.attr('scrollTop', top);
     div.attr('scrollLeft', left);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.restoreScrollPosition = function(filename) {
+  cd.restoreScrollPosition = function(filename) {
     // Restore the saved scrollTop/Left positions.
     // Note that doing the seemingly equivalent
     //   fc.scrollTop(top);
     //   fc.scrollLeft(left);
     // here does _not_ work. I use animate instead with a
     // very fast duration==1
-    var div = $cd.fileDiv(filename);
+    var div = cd.fileDiv(filename);
     var top = div.attr('scrollTop') || 0;
     var left = div.attr('scrollLeft') || 0;
-    var fc = $cd.fileContentFor(filename);    
+    var fc = cd.fileContentFor(filename);    
     fc.animate({scrollTop: top, scrollLeft: left}, 1);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.setRenameAndDeleteButtons = function(filename) {
-    var file_ops = $j('#file_operation_buttons');
+  cd.setRenameAndDeleteButtons = function(filename) {
+    var file_ops = $('#file_operation_buttons');
     var renameFile = file_ops.find('#rename');
     var deleteFile = file_ops.find('#delete');
     var turnOff = function(node) {
@@ -62,7 +63,7 @@ var cyberDojo = (function($cd, $j) {
       node.attr('title', title);      
     };
 
-    if ($cd.cantBeRenamedOrDeleted(filename)) {
+    if (cd.cantBeRenamedOrDeleted(filename)) {
       turnOff(renameFile);
       turnOff(deleteFile);
     } else {
@@ -73,7 +74,7 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.cantBeRenamedOrDeleted = function(filename) {
+  cd.cantBeRenamedOrDeleted = function(filename) {
     // I have changed the shell filename in the exercises/ folders from
     // cyberdojo.sh (no hyphen) to cyber-dojo.sh (with a hyphen) to match
     // the cyber-dojo.com domain name. However, I still need to support old
@@ -85,26 +86,26 @@ var cyberDojo = (function($cd, $j) {
     var oldName = 'cyberdojo.sh';
     var newName = 'cyber-dojo.sh';
     var filenames = [ oldName, newName, 'output' ];
-    return $cd.inArray(filename, filenames);
+    return cd.inArray(filename, filenames);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  $cd.selectFileInFileList = function(filename) {    
-    // Can't do $j('radio_' + filename) because filename
+  cd.selectFileInFileList = function(filename) {    
+    // Can't do $('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
     // characters in a dom node id
     // NB: This fails if the filename contains a double quote
-    var node = $j('[id="radio_' + filename + '"]');
-    var previousFilename = $cd.currentFilename();
-    var previous = $j('[id="radio_' + previousFilename + '"]');
-    $cd.radioEntrySwitch(previous, node);
-    $cd.setRenameAndDeleteButtons(filename);
+    var node = $('[id="radio_' + filename + '"]');
+    var previousFilename = cd.currentFilename();
+    var previous = $('[id="radio_' + previousFilename + '"]');
+    cd.radioEntrySwitch(previous, node);
+    cd.setRenameAndDeleteButtons(filename);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  $cd.radioEntrySwitch = function(previous, current) {
+  cd.radioEntrySwitch = function(previous, current) {
     // Used by the run-tests-page filename radio-list
     // and also the create-page languages/exercises radio-lists
     // and the diff page radio lists
@@ -120,13 +121,13 @@ var cyberDojo = (function($cd, $j) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.loadNextFile = function() {
-    var filenames = $cd.filenames().sort();
-    var index = $j.inArray($cd.currentFilename(), filenames);
+  cd.loadNextFile = function() {
+    var filenames = cd.filenames().sort();
+    var index = $.inArray(cd.currentFilename(), filenames);
     var nextFilename = filenames[(index + 1) % filenames.length];
-    $cd.loadFile(nextFilename);  
+    cd.loadFile(nextFilename);  
   };
     
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 

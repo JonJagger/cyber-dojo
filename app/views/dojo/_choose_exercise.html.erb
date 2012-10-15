@@ -2,23 +2,23 @@
 <script language="JavaScript"
         type="text/javascript"><!--
         
-$j(document).ready(function() {
+$(document).ready(function() {
 
-  var exercises = $j('[name=exercise]');
+  var exercises = $('[name=exercise]');
   var rand = Math.floor(Math.random() * exercises.size());   
-  var previousExercise = $j(exercises[rand]);
+  var previousExercise = $(exercises[rand]);
   
   exercises.each(function(index) {
-    var instructions = $j('#instructions_' + index).val();
-    var node = $j(this);
+    var instructions = $('#instructions_' + index).val();
+    var node = $(this);
     node.parent().click(function() {
-      $cd.radioEntrySwitch(previousExercise, node);
+      cd.radioEntrySwitch(previousExercise, node);
       previousExercise = node;
-      $j('#instructions').val(instructions);      
+      $('#instructions').val(instructions);      
     });
   });
 
-  $j('#exercise_' + rand).parent().click();
+  $('#exercise_' + rand).parent().click();
 
 });
 

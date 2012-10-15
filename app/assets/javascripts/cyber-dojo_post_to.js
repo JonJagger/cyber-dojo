@@ -1,10 +1,11 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
-var cyberDojo = (function($cd, $j) {
-
-  $cd.postTo = function(url, params, target) {
+var cyberDojo = (function(cd, $) {
+  "use strict";
+  
+  cd.postTo = function(url, params, target) {
     var key, sep = '?';
-    var form = $j('<form>');
+    var form = $('<form>');
     
     if (params && params.id !== 'undefined') {
       url += '/' + params.id;
@@ -27,5 +28,5 @@ var cyberDojo = (function($cd, $j) {
     form.submit();
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
