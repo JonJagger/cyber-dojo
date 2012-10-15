@@ -27,8 +27,8 @@ module GitDiff
           result << { :type => :section, :index => index }
           index += 1
                         fill_all(result, :deleted, section[:deleted_lines], line_number)
-          line_number = fill_all(result, :added, section[:added_lines], line_number)
-          line_number = fill_all(result, :same, section[:after_lines], line_number)
+          line_number = fill_all(result, :added,   section[:added_lines  ], line_number)
+          line_number = fill_all(result, :same,    section[:after_lines  ], line_number)
         end
         from = line_number - 1      
       end    

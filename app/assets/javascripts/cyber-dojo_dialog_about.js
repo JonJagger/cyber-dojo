@@ -12,7 +12,7 @@ var cyberDojo = (function($cd, $j) {
 
     var practice =
       $cd.divPanel(
-          'In a cyber-dojo the team <em>practices</em><br/>'
+          'In a cyber-dojo you <em>practice</em><br/>'
         + 'by going <em>slower</em><br/>'
         + 'and focusing on <em>improving</em><br/>'
         + 'rather than finishing.' 

@@ -1,50 +1,57 @@
 
-<span class="medium">
-  &hellip;on <em>each</em> computer enter your coding-practice<br/>
-</span>
 
 <table>
   <tr>
-   <td>
-    <span class="medium">
-      &nbsp;id
-    </span>
+    <td>
+      <span class="medium">
+        &hellip;enter your id<br/>
+      </span>
+    </td>
+    <td>
       <input type="text"
              id="kata_id_input"
              size="12"
              value="<%= @id %>" />
     </td>
+  </tr>
+  
+  <tr>
     <td align="right">
       <span class="medium">
-        &nbsp;and&nbsp;
+        and
       </span>
     </td>
     <td>
       <%= render :partial => 'start_coding_button' %>
+      <span class="medium">
+        coding
+      </span>
     </td>
   </tr>
   <tr>
-    <td>            
-    </td>
     <td align="right">
       <span class="medium">
-        or&nbsp;
+        or
       </span>
     </td>
     <td>
       <%= render :partial => 'resume_coding_button' %>            
+      <span class="medium">
+        coding
+      </span>
     </td>
   </tr>
   <tr>
-    <td>
-    </td>
     <td align="right">
       <span class="medium">            
-        then&nbsp;
+        then
       </span>
     </td>
     <td>
       <%= render :partial => 'review_coding_button' %>                        
+      <span class="medium">            
+        coding
+      </span>
     </td>
   </tr>          
 </table>
