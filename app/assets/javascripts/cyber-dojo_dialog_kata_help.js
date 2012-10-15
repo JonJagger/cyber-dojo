@@ -1,8 +1,8 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
     
-  $cd.dialog_kata_help = function(avatar) {    
+  cd.dialog_kata_help = function(avatar) {    
     var imageSize = 57;
     var homePageImage = ''    
       + '<img'
@@ -35,15 +35,15 @@ var cyberDojo = (function($cd, $j) {
       + '<div style="font-size:1.95em;">'
       +   '<input type="submit" class="large button" id="test" value="test"/>'
       + '</div>';
-    
+
     var imageButtons = ''
       + '<table>'
       +   '<tr>'
       +     '<td class="panel">'
-      +        $cd.makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
+      +        cd.makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
       +     '</td>'
       +     '<td class="panel">'
-      +        $cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
+      +        cd.makeTable(avatarImage, 'opens a'+ br + 'dashboard' + br +'page')
       +     '</td>'
       +     '<td class="panel">'            
       +       '<table>'
@@ -57,45 +57,45 @@ var cyberDojo = (function($cd, $j) {
       +     '</td>'
       +   '</tr>'
       + '</table>';
-      
+
     var testButton = ''
       + ''
       + '<div class="panel">'
-      +   $cd.makeTable(
+      +   cd.makeTable(
             fakeTestButton,
             'results go to the',
-            $cd.fakeFilenameButton('<i>output</i>'),
+            cd.fakeFilenameButton('<i>output</i>'),
             'file')
       + '</div>'
       + ''
       + '<div class="panel">'
-      +   $cd.makeTable(tdTrafficLights(),
+      +   cd.makeTable(tdTrafficLights(),
             space + 'red means the tests ran but one or more failed' + br +
             space + 'amber means the tests could not be run' + br +
             space + 'green means the tests ran and all passed')
       + '</div>'
       + ''      
       + '<div class="panel">'
-      +    $cd.makeTable($cd.fakeFilenameButton('filename'), 'opens a file')
+      +    cd.makeTable(cd.fakeFilenameButton('filename'), 'opens a file')
       + '</div>';
-      
+
     var hotKeys = ''
       + ''
       + '<div class="panel">'
       +    space + '<b>alt-t</b> runs the <b><u>t</u></b>ests' + br 
       +    space + '<b>alt-f</b> cycles through the <b><u>f</u></b>iles'
       + '</div>';
-      
+
     var improve = ''
       + ''
       + '<div class="panel">'
       +   space + 'think about improving, not finishing'
       + '</div>';
-               
+
     var kataHelp = testButton + imageButtons + hotKeys + improve;
-    
-    $cd.dialog(kataHelp, 540, 'help');
+
+    cd.dialog(kataHelp, 540, 'help');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);

@@ -1,11 +1,11 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
 
-  $cd.dialog_faqs = function() {
+  cd.dialog_faqs = function() {
 
     var noListen =
-      $cd.divPanel(
+      cd.divPanel(
           'No. Listen. Stop trying to go faster, start trying to go <em>slower</em>.<br/>'
         + "Don't think about finishing, think about <em>improving</em>.<br/>"
         + 'Think about <em>practising</em>.<br/>'
@@ -17,12 +17,12 @@ var cyberDojo = (function($cd, $j) {
     var refactor = add + "simple auto-refactoring ?";
     var any = add + "... ?";
 
-    var faqs = $j($cd.makeTable(hilight,noListen,refactor,noListen,any,noListen));
+    var faqs = $(cd.makeTable(hilight,noListen,refactor,noListen,any,noListen));
       
-    $cd.dialog(faqs.html(), 550, 'faqs');
+    cd.dialog(faqs.html(), 550, 'faqs');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

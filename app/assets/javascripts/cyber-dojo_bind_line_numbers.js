@@ -1,27 +1,28 @@
-/*jsl:option explicit*/
+/*global $,cyberDojo*/
 
-var cyberDojo = (function($cd, $j) {
-
-  $cd.lineNumbersFor = function(filename) {
-    return $cd.id(filename + '_line_numbers');  
+var cyberDojo = (function(cd, $) {
+  "use strict";
+  
+  cd.lineNumbersFor = function(filename) {
+    return cd.id(filename + '_line_numbers');  
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.bindAllLineNumbers = function() {
-    $j.each($cd.filenames(), function(i,filename) {
-      $cd.bindLineNumbers(filename);
+  cd.bindAllLineNumbers = function() {
+    $.each(cd.filenames(), function(i,filename) {
+      cd.bindLineNumbers(filename);
     });
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.bindLineNumbers = function(filename) {
-    var content = $cd.fileContentFor(filename);
-    var numbers = $cd.lineNumbersFor(filename);
+  cd.bindLineNumbers = function(filename) {
+    var content = cd.fileContentFor(filename);
+    var numbers = cd.lineNumbersFor(filename);
     
     numbers.attr('readonly', 'true');
-    numbers.val($cd.lineNumbers);
+    numbers.val(cd.lineNumbers);
     
     function setLine() {
       numbers.scrollTop(content.scrollTop());   
@@ -39,7 +40,7 @@ var cyberDojo = (function($cd, $j) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  $cd.lineNumbers = (function() {
+  cd.lineNumbers = (function() {
     var number, lines = '1';
     for (number = 2; number < 999; number += 1) {
       lines += '\r\n' + number;
@@ -47,6 +48,6 @@ var cyberDojo = (function($cd, $j) {
     return lines;  
   })();
   
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 

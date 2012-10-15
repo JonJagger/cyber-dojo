@@ -1,8 +1,8 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
   
-  $cd.dialog_cantFindDojo = function(title,id) {
+  cd.dialog_cantFindDojo = function(title,id) {
     var yinYang =
       '<img alt="cyber-dojo" '
       + 'border="0" '
@@ -31,8 +31,8 @@ var cyberDojo = (function($cd, $j) {
       +  '</table>'
       + '</div>';
     var width = 600;
-    $cd.dialog(cantFindDojo, width, '!'+title);
+    cd.dialog(cantFindDojo, width, '!'+title);
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);

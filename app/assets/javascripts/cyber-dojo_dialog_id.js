@@ -1,11 +1,11 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
   
-  $cd.dialog_id = function(title,info) {
+  cd.dialog_id = function(title,info) {
     var fromDiff = false;
     var panel = '<table>';
-    $j.each(info, function(key,value) {
+    $.each(info, function(key,value) {
       if (key.indexOf('diff') !== 0) {
         panel += '<tr>'
               +    '<td align="right">' + key + '</td>'
@@ -29,17 +29,17 @@ var cyberDojo = (function($cd, $j) {
         +            'target="_blank">'
         +            info.diff_id + '-' + info.diff_avatar + '-' + info.diff_tag
         + '</a>';
-      id = $j($cd.makeTable($cd.divPanel(panel),
-                            $cd.divPanel(diffPanel)));
+      id = $(cd.makeTable(cd.divPanel(panel),
+                          cd.divPanel(diffPanel)));
       
     } else {
-      id = $j($cd.makeTable($cd.divPanel(panel)));
+      id = $(cd.makeTable(cd.divPanel(panel)));
     }
     
-    $cd.dialog(id.html(), 450, title);    
+    cd.dialog(id.html(), 450, title);    
   };
   
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

@@ -1,23 +1,23 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
   
-  $cd.dialog = function(html,width,name) {
-    var div = $j('<div>')
+  cd.dialog = function(html,width,name) {
+    var div = $('<div>')
       .html('<div class="dialog">' + html + '</div>')    
       .dialog({
         autoOpen: false,
         width: width,
-        title: $cd.h2(name),
+        title: cd.h2(name),
         modal: true,
         buttons: {
           ok: function() {
-            $j(this).dialog('close');
+            $(this).dialog('close');
           }
         }
       });
     div.dialog('open');            
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);

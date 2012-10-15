@@ -1,14 +1,14 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
 
-  $cd.dialog_links = function() {
+  cd.dialog_links = function() {
 
     var thingsUrl = 'http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book';
     var blogUrl = 'http://jonjagger.blogspot.com/2011/02/deliberate-practice.html';
     var ninetySeven =
-      $cd.divPanel(
-          '<a href="' + thingsUrl + '" target="_blank">'
+      cd.divPanel(''
+        + '<a href="' + thingsUrl + '" target="_blank">'
         + '97 Things Every Programmer Should Know'
         + '</a>'
         + '<br/>'
@@ -19,19 +19,19 @@ var cyberDojo = (function($cd, $j) {
       );
 
     var video =
-      $cd.divPanel(
-          '<a href="http://vimeo.com/15104374" target="_blank">'
+      cd.divPanel(''
+        + '<a href="http://vimeo.com/15104374" target="_blank">'
         + 'Video of me doing the Roman Numerals kata in Ruby'
         + '</a>'
       );
 
     var mapUrl = 'http://www.MasteringAgilePractice.com';
-    var map = $cd.divPanel('<a href="' + mapUrl + '" target="_blank">' + mapUrl + '</a>');
+    var map = cd.divPanel('<a href="' + mapUrl + '" target="_blank">' + mapUrl + '</a>');
       
     var conferenceUrl = 'http://accu.org/index.php/conferences/accu_conference_2013';
     var accu =
-      $cd.divPanel(
-        '<a href="' + conferenceUrl + '" target="_blank">'
+      cd.divPanel(''
+        + '<a href="' + conferenceUrl + '" target="_blank">'
         + '<img src="/images/accu_button.gif" '
         +       'style="float:left; border: 3px solid;" '
         +       'width="150" '
@@ -43,12 +43,12 @@ var cyberDojo = (function($cd, $j) {
         + '&nbsp;professionalism in programming.'
       );
       
-    var links = $j($cd.makeTable(ninetySeven,video,map,accu));
+    var links = $(cd.makeTable(ninetySeven,video,map,accu));
       
-    $cd.dialog(links.html(), 550, 'links');
+    cd.dialog(links.html(), 550, 'links');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

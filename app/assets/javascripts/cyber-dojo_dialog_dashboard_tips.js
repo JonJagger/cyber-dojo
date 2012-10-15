@@ -1,8 +1,8 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
 
-  $cd.dialog_dashboard_tips = function() {
+  cd.dialog_dashboard_tips = function() {
 
     var traffic_light = function(colour) {
         return  '<img src="/images/traffic_light_' +colour + '.png"'
@@ -11,7 +11,7 @@ var cyberDojo = (function($cd, $j) {
     };
     
     var progression = function(from,to,activity) {
-      return $cd.divPanel(
+      return cd.divPanel(
           'Look for ' + traffic_light(from) + '&rarr;&nbsp;' + traffic_light(to)
         + 'progressions as evidence of ' + activity + '.'
       );        
@@ -21,12 +21,12 @@ var cyberDojo = (function($cd, $j) {
     var refactor = progression('green', 'green', 'refactoring');
     var amber    = progression('amber', 'amber', 'overly ambitious steps');
 
-    var dashboard = $j($cd.makeTable(redFirst,refactor,amber));
+    var dashboard = $(cd.makeTable(redFirst,refactor,amber));
       
-    $cd.dialog(dashboard.html(), 450, 'tips');
+    cd.dialog(dashboard.html(), 450, 'tips');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

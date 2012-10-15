@@ -1,17 +1,17 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
 
-  $cd.dialog_basics = function() {
+  cd.dialog_basics = function() {
     
     var limit =
-      $cd.divPanel(''
+      cd.divPanel(''
         + 'Code for a set amount of time '
         + 'e.g. 20/40/60 minutes.'
       );
       
     var retro =
-      $cd.divPanel(''
+      cd.divPanel(''
         + 'When time is up use the dashboard and '
         + 'diff pages to review what you did. '
         + 'Write down some things '
@@ -19,18 +19,18 @@ var cyberDojo = (function($cd, $j) {
       );
 
     var repeat =
-      $cd.divPanel(''
+      cd.divPanel(''
         + 'Start again, doing '
         + 'the <em>same</em> exercise, '
         + 'and the <em>same</em> language.'
         );
       
-    var basics = $j($cd.makeTable(limit,retro,repeat));
+    var basics = $(cd.makeTable(limit,retro,repeat));
       
-    $cd.dialog(basics.html(), 550, 'basics');
+    cd.dialog(basics.html(), 550, 'basics');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

@@ -1,13 +1,13 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
 
-  $cd.dialog_source = function() {
+  cd.dialog_source = function() {
 
     var readmeUrl = 'https://github.com/JonJagger/cyberdojo/blob/master/readme.txt';
     var github =
-      $cd.divPanel(
-          'The cyber-dojo rails server is open source and '
+      cd.divPanel(''
+        + 'The cyber-dojo rails server is open source and '
         + '<a href="' + readmeUrl +'" '
         + ' target="_blank">'
         + 'lives on github'
@@ -18,8 +18,8 @@ var cyberDojo = (function($cd, $j) {
 
     var dropBoxOvaUrl = 'http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova'; 
     var ova =
-      $cd.divPanel(
-          'Alternatively, you can run your own cyber-dojo server using this 817MB '
+      cd.divPanel(''
+        + 'Alternatively, you can run your own cyber-dojo server using this 817MB '
         + '<a href="' + dropBoxOvaUrl + '">ova image file</a> '
         + 'which has all the language compilers installed. '
         + 'It was built from '
@@ -33,19 +33,19 @@ var cyberDojo = (function($cd, $j) {
       );
 
     var turnKey =
-      $cd.divPanel(
-          'You can also build your own Turnkey Linux server from scratch using '
+      cd.divPanel(''
+        + 'You can also build your own Turnkey Linux server from scratch using '
         + '<a href="http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html" target="_blank">'
         + 'these instructions'
         + '</a>.'
       );
 
-    var source = $j($cd.makeTable(github,ova,turnKey));
+    var source = $(cd.makeTable(github,ova,turnKey));
       
-    $cd.dialog(source.html(), 550, 'source');
+    cd.dialog(source.html(), 550, 'source');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 

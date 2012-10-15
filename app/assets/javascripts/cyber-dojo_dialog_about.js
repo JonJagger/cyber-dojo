@@ -1,17 +1,17 @@
 /*jsl:option explicit*/
 
-var cyberDojo = (function($cd, $j) {
+var cyberDojo = (function(cd, $) {
 
-  $cd.dialog_about = function() {
+  cd.dialog_about = function() {
 
     var nonIde =
-      $cd.divPanel(
+      cd.divPanel(
           "cyber-dojo is the world's simplest<br/>"
         + '<em>non</em>-development environment!'
       );
 
     var practice =
-      $cd.divPanel(
+      cd.divPanel(
           'In a cyber-dojo you <em>practice</em><br/>'
         + 'by going <em>slower</em><br/>'
         + 'and focusing on <em>improving</em><br/>'
@@ -19,18 +19,18 @@ var cyberDojo = (function($cd, $j) {
       );
 
     var author =
-      $cd.divPanel(
+      cd.divPanel(
           'cyber-dojo was conceived, designed,<br/>'
         + 'and implemented by '
         + '<a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>'
       );
 
-    var about = $j($cd.makeTable(nonIde, practice, author));
+    var about = $(cd.makeTable(nonIde, practice, author));
       
-    $cd.dialog(about.html(), 400, 'about');
+    cd.dialog(about.html(), 400, 'about');
   };
 
-  return $cd;
+  return cd;
 })(cyberDojo || {}, $);
 
 
