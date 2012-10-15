@@ -75,7 +75,7 @@ var cyberDojo = (function($cd, $j) {
 
   $cd.fakeFilenameButton = function(filename) {
     return $cd.makeTable(''
-      + '<div class="filename" file_selected="true">'
+      + '<div class="filename selected">'
       +   '<input style="display:none;"'
       +         ' type="radio"'
       +         ' name="filename' + filename + '"'

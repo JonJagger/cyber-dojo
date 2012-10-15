@@ -36,7 +36,7 @@ var cyberDojo = (function($cd, $j) {
       +   '<input type="submit" class="large button" id="test" value="test"/>'
       + '</div>';
     
-    var kataHelp = ''
+    var imageButtons = ''
       + '<table>'
       +   '<tr>'
       +     '<td class="panel">'
@@ -56,7 +56,9 @@ var cyberDojo = (function($cd, $j) {
       +       '</table>'
       +     '</td>'
       +   '</tr>'
-      + '</table>'
+      + '</table>';
+      
+    var testButton = ''
       + ''
       + '<div class="panel">'
       +   $cd.makeTable(
@@ -75,17 +77,23 @@ var cyberDojo = (function($cd, $j) {
       + ''      
       + '<div class="panel">'
       +    $cd.makeTable($cd.fakeFilenameButton('filename'), 'opens a file')
-      + '</div>'
+      + '</div>';
+      
+    var hotKeys = ''
       + ''
       + '<div class="panel">'
       +    space + '<b>alt-t</b> runs the <b><u>t</u></b>ests' + br 
       +    space + '<b>alt-f</b> cycles through the <b><u>f</u></b>iles'
-      + '</div>'
+      + '</div>';
+      
+    var improve = ''
       + ''
       + '<div class="panel">'
       +   space + 'think about improving, not finishing'
       + '</div>';
-                  
+               
+    var kataHelp = testButton + imageButtons + hotKeys + improve;
+    
     $cd.dialog(kataHelp, 540, 'help');
   };
 
