@@ -38,7 +38,7 @@ var cyberDojo = (function(cd, $) {
       + '</div>';
 
     var imageButtons = ''
-      + '<table>'
+      + '<table cellpadding="0" cellspacing="0">'
       +   '<tr>'
       +     '<td class="panel">'
       +        cd.makeTable(homePageImage, 'opens a' + br + 'home' + br + 'page')
@@ -93,7 +93,7 @@ var cyberDojo = (function(cd, $) {
       +   space + 'think about improving, not finishing'
       + '</div>';
 
-    var kataHelp = testButton + imageButtons + hotKeys + improve;
+    var kataHelp = imageButtons + testButton + hotKeys + improve;
 
     cd.dialog(kataHelp, 540, 'help');
   };
