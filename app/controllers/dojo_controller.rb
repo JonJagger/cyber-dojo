@@ -146,18 +146,14 @@ class DojoController < ApplicationController
   def gather_info    
     language = Language.new(root_dir, params['language'])    
     
-    info = {
-      :created => make_time(Time.now),
+    { :created => make_time(Time.now),
       :id => Uuid.gen,
       :browser => browser,
       :language => language.name,
-      :exercise => params['exercise']
+      :exercise => params['exercise'],
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
     }
-    
-    info[:name] = params['name'] if params['name']    
-    info[:unit_test_framework] = language.unit_test_framework
-    info[:tab_size] = language.tab_size
-    info
   end
   
   #------------------------------------------------

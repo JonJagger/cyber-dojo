@@ -7,7 +7,6 @@ $(document).ready(function() {
   $('#ok_button').click(function() {
     
     cd.postTo('/dojo/save', {
-      name: "no-name",
       exercise: $('input[name="exercise"]:checked').val(),
       language: $('input[name="language"]:checked').val()
     });    

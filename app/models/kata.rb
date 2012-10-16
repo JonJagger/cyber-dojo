@@ -83,7 +83,8 @@ class Kata
   def visible_files
     # language.visible_files != visible_files
     # this is because kata.visible_files has the
-    # instructions and output 'pseudo' files mixed in
+    # instructions file and output 'pseudo' file
+    # mixed in
     manifest[:visible_files]
   end
       
