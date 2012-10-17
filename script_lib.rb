@@ -48,11 +48,16 @@ def prune_stats
     manifest_filename = "#{kata_dir}/manifest.rb"
     if File.exists? manifest_filename
       tally,count = traffic_light_count(kata_dir)
-      manifest = eval IO.popen("cat #{manifest_filename}").read
-      created = Time.mktime(*manifest[:created])
-      days_old = ((Time.now - created) / 60 / 60 / 24).to_i
-      stats[count] ||= [ ]    
-      stats[count] << [manifest[:id],days_old]
+      
+      begin
+        manifest = eval IO.popen("cat #{manifest_filename}").read      
+        created = Time.mktime(*manifest[:created])
+        days_old = ((Time.now - created) / 60 / 60 / 24).to_i
+        stats[count] ||= [ ]    
+        stats[count] << [manifest[:id],days_old]
+      rescue Exception => e
+        puts "Exception from #{kata_dir}"
+      end
     end
   end
   stats
