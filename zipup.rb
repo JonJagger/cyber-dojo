@@ -29,21 +29,25 @@ stats = { }
 index('katas') do |kata_dir|
   manifest_filename = "#{kata_dir}/manifest.rb"
   if File.exists?(manifest_filename)
-    manifest = eval IO.popen("cat #{manifest_filename}").read
-    created = Time.mktime(*manifest[:created])
-    days_old = ((Time.now - created) / 60 / 60 / 24).to_i
-    tally,count = traffic_light_count(kata_dir)
-    zip_cmd = "zip -r zipped_dojos.zip " + kata_dir
-    if count >= min_traffic_light_count and days_old >= min_days_old        
-      tally_yes += 1
-      if do_zip == "true"
-        system(zip_cmd)
+    begin
+      manifest = eval IO.popen("cat #{manifest_filename}").read
+      created = Time.mktime(*manifest[:created])
+      days_old = ((Time.now - created) / 60 / 60 / 24).to_i
+      tally,count = traffic_light_count(kata_dir)
+      zip_cmd = "zip -r zipped_dojos.zip " + kata_dir
+      if count >= min_traffic_light_count and days_old >= min_days_old        
+        tally_yes += 1
+        if do_zip == "true"
+          system(zip_cmd)
+        else
+          print "will do: " + zip_cmd + "\n"
+        end
       else
-        print "will do: " + zip_cmd + "\n"
+        tally_no += 1
+        print "won't do: " + zip_cmd + "\n" if do_zip == "false"
       end
-    else
-      tally_no += 1
-      print "won't do: " + zip_cmd + "\n" if do_zip == "false"
+    rescue Exception => e
+        puts "Exception from #{kata_dir}"      
     end
   end
 end
