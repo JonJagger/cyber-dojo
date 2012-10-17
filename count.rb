@@ -12,11 +12,15 @@ index('katas') do |kata_dir|
   begin
     manifest_filename = "#{kata_dir}/manifest.rb"
     if File.exists? manifest_filename
-      manifest = eval IO.popen("cat #{manifest_filename}").read
-      created = Time.mktime(*manifest[:created])
-      ymd = [created.year, created.month, created.day, created.strftime('%a')]
-      stats[ymd] ||= 0
-      stats[ymd] += 1
+      begin
+        manifest = eval IO.popen("cat #{manifest_filename}").read
+        created = Time.mktime(*manifest[:created])
+        ymd = [created.year, created.month, created.day, created.strftime('%a')]
+        stats[ymd] ||= 0
+        stats[ymd] += 1
+      rescue Exception => e
+        puts "Exception from #{kata_dir}"        
+      end
     end
   rescue Exception => e
     print "---->Exception raised for #{kata_dir}: #{e.message}\n"
