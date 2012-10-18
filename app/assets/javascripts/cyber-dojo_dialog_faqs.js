@@ -9,8 +9,8 @@ var cyberDojo = (function(cd, $) {
       cd.divPanel(
           'No. Listen. Stop trying to go faster, start trying to go <em>slower</em>.<br/>'
         + "Don't think about finishing, think about <em>improving</em>.<br/>"
-        + 'Think about <em>practising</em>.<br/>'
-        + "That's what cyber-dojo is for. Nothing else."
+        + 'Think about <em>practising</em> as a <em>team</em>.<br/>'
+        + "That's what cyber-dojo was built for."
       );
 
     var add = "Why don't you add ";
