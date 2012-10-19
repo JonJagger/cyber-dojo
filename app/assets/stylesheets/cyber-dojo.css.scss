@@ -7,24 +7,6 @@
   border-radius: $radius;  
 }
 
-@mixin gradient-lighten($color,$p1,$p2,$p3)
-{
-  background-image: -moz-linear-gradient(top,
-    lighten($color,$p1),
-    lighten($color,$p2),
-    lighten($color, $p3)
-  );  
-}
-
-@mixin gradient-darken($color,$p1,$p2,$p3)
-{
-  background-image: -moz-linear-gradient(top,
-    darken($color,$p1),
-    darken($color,$p2),
-    darken($color, $p3)
-  );  
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 body
