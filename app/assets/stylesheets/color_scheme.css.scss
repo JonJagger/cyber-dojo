@@ -1,18 +1,16 @@
 
-$background-color: #B2EFEF; // light blue
+$black: #000;
+$lightGreen: #CEF6CE;
+$lightRed: #F6CECE;
+$lightGray: #A8A8A8;
 
-$main-color: #003C00; // dark green
+$main-color: Khaki; // see also public/stylesheets/jquery-ui-1.8.16.custom.css
+$background-color: lighten($black,15%);
 
-$light-background-color: Cornsilk;
+$selected-pen-color: $background-color;
+$button-background-color: $main-color;
 
-$line-number-color: #A8A8A8; // light gray
+$line-number-color: $lightGray;
+$diff-added-color: $lightGreen;
+$diff-deleted-color: $lightRed;
 
-$bottom-right-edge-color: #A8A8A8;
-
-$bottom-right-edge-highlight-color: #555555;
-
-$filename-color: #777;
-
-$diff-added-color: #CEF6CE; // light green
-
-$diff-deleted-color: #F6CECE; // light red

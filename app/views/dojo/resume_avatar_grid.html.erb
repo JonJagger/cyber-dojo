@@ -17,7 +17,7 @@ $(document).ready(function() {
 //--></script>
 
 <div align="center">
-  <h2>click your animal</h2>  
+  <div class="medium">click your animal</div>  
   <table>
     <% index = 0 %>
     <% size = 60 %>
@@ -31,7 +31,7 @@ $(document).ready(function() {
                  onclick='return cd.resume("<%= @kata.id %>","<%= avatar_name %>");'
                  class='avatar_image'
                  src="/images/avatars/<%= avatar_name %>.jpg"
-                 title="Resume <%= avatar_name.humanize %>"
+                 title="resume <%= avatar_name %>"
                  width="<%= size %>"
                  height="<%= size %>" />          
           <div align="center">

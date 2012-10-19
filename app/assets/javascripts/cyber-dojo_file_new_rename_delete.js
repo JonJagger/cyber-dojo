@@ -39,7 +39,7 @@ var cyberDojo = (function(cd, $) {
       .dialog({
 	autoOpen: false,
 	width: 350,
-	title: cd.h2('rename'),
+	title: cd.dialogTitle('rename'),
 	modal: true,
 	buttons: {
 	  ok: function() {
@@ -95,7 +95,7 @@ var cyberDojo = (function(cd, $) {
 	  .dialog({
 	    autoOpen: false,
 	    width: 350,
-	    title: cd.h2('delete'),
+	    title: cd.dialogTitle('delete'),
 	    modal: true,
 	    buttons: {
 	      ok: function() {

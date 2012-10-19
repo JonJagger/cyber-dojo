@@ -7,11 +7,11 @@ $(document).ready(function() {
   
   cd.startCoding = function(id, avatar_name, start_grid) {
     var grid = $('<div>');
-    var starter = $('<div>')
+    var starter = $('<div class="dialog">')
       .html(start_grid)
       .dialog({
         autoOpen: false,
-        title: cd.h1(title),
+        title: cd.dialogTitle(title),
         width: 400,
         modal: true,
         buttons: {
@@ -27,11 +27,11 @@ $(document).ready(function() {
   cd.dialog_fullDojo = function(id) {
     var grid = $('<div>');
     grid.load('/dojo/full_avatar_grid', { id: id }, function() {
-      var resumer = $('<div>')
+      var resumer = $('<div class="dialog">')
         .html(grid.html())
         .dialog({
           autoOpen: false,
-          title: cd.h1('!' + title),
+          title: cd.dialogTitle('!' + title),
           width: 600,
           modal: true,
           buttons: {

@@ -67,9 +67,23 @@ $(document).ready(function() {
     </td>
     
     <td valign="center">
-      <%= render :partial => 'shared/feedback_button' %><br/>
-      <%= render :partial => 'shared/donate_button' %><br/>
-      <%= render :partial => 'tips_button' %>
+      <table>
+        <tr>
+          <td>
+            <%= render :partial => 'shared/feedback_button' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= render :partial => 'shared/donate_button' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= render :partial => 'tips_button' %>
+          </td>
+        </tr>
+      </table>
     </td>
   </tr>  
 </table>

@@ -14,8 +14,7 @@ var cyberDojo = (function(cd, $) {
       + 'At the end of the dojo I was struck by a few thoughts:<br/>'
       + '<br/>';
 
-    var bullet = "&nbsp;&bull;&nbsp;" 
-    var feel = bullet + "It didn't " + em('feel') + " like a dojo should feel.";
+    var feel = "It didn't " + em('feel') + " like a dojo should feel.";
     
     var improve =
        cd.divPanel(''
@@ -28,7 +27,6 @@ var cyberDojo = (function(cd, $) {
       );
 
     var delay = ''
-    + bullet
       + 'Several groups took a ' + em('long') + ' time to get '
       + 'started, installing compilers and whatnot.';
 
@@ -46,7 +44,7 @@ var cyberDojo = (function(cd, $) {
         + 'you should ' + em('not') + ' be doing development!'
       );
 
-    var noCollab = bullet + 'There was very little collaboration.';
+    var noCollab = 'There was very little collaboration.';
     
     var social =
       cd.divPanel(''

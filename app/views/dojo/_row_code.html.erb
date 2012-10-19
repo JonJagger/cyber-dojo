@@ -1,57 +1,39 @@
 
 
+<div align="center" class="small">
+  enter your id<br/>
+</div>
+<input type="text"
+       id="kata_id_input"
+       size="12"
+       value="<%= @id %>" />
+<div>&nbsp;</div>
+
 <table>
-  <tr>
-    <td>
-      <span class="medium">
-        &hellip;enter your id&nbsp;<br/>
-      </span>
-    </td>
-    <td>
-      <input type="text"
-             id="kata_id_input"
-             size="12"
-             value="<%= @id %>" />
-    </td>
-  </tr>
-  
-  <tr>
-    <td align="right">
-      <span class="medium">
-        and&nbsp;
-      </span>
-    </td>
+  <tr align="center">
     <td>
       <%= render :partial => 'start_coding_button' %>
-      <span class="medium">
+      <div class="medium">
         coding
-      </span>
+      </div>      
     </td>
-  </tr>
-  <tr>
-    <td align="right">
-      <span class="medium">
-        or&nbsp;
-      </span>
+    <td>
+      &nbsp;&nbsp;
     </td>
     <td>
       <%= render :partial => 'resume_coding_button' %>            
-      <span class="medium">
+      <div class="medium">
         coding
-      </span>
-    </td>
-  </tr>
-  <tr>
-    <td align="right">
-      <span class="medium">            
-        then&nbsp;
-      </span>
+      </div>
     </td>
     <td>
+      &nbsp;&nbsp;
+    </td>    
+    <td>
       <%= render :partial => 'review_coding_button' %>                        
-      <span class="medium">            
+      <div class="medium">            
         coding
-      </span>
+      </div>
     </td>
   </tr>          
 </table>

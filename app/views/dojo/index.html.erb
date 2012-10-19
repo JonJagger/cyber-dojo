@@ -33,25 +33,15 @@ $(document).ready(function() {
 
 <table align="center">
   <tr>
-    <td>      
-      <% size = 80 %>
-      <%= image_tag("/images/avatars/cyber-dojo.png",
-          :border => 0,
-          :size => "#{size}x#{size}",
-          :title => 'cyber-dojo') %>
-    </td>
     <td>
-      &nbsp;&nbsp;
-    </td>
-    <td>
-      <div style="font-size: 4em;">cyber-dojo</div>                
+      <div style="font-size: 5em;">cyber-dojo</div>                
     </td>
   </tr>
 </table>
 
 <h2>
-  a place to <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_8.html">practice</a>
-  programming
+    a place to <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_8.html">practice</a>
+    programming
 </h2>
 <br/>
 
@@ -59,13 +49,13 @@ $(document).ready(function() {
        cellpadding="0"
        cellspacing="0">
   <tr>
-    <td class="panel">
+    <td class="panel" align="center">
       <%= render :partial => 'row_setup' %>
     </td>
   </tr>
 
   <tr>
-    <td class="panel">
+    <td class="panel" align="center">
       <%= render :partial => 'row_code' %>
     </td>
   </tr>

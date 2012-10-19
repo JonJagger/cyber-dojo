@@ -11,10 +11,10 @@ $(document).ready(function() {
       var grid = $('<div>');
       grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
         var resumer = $('<div id="resume_coding_dialog">')
-          .html(grid.html())
+          .html('<div class="dialog">' + grid.html() + '</div>')
           .dialog({
             autoOpen: false,
-            title: cd.h1(title),
+            title: cd.dialogTitle(title),
             width: 600,
             modal: true,
             buttons: {

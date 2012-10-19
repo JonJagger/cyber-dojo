@@ -3,7 +3,9 @@
 {
   font-size: 1.1em; 
   width: 2em; 
-  text-align: center; 
+  text-align: center;
+  background: $main-color;
+  color: $selected-pen-color;
 }
 
 #traffic_lights .row td { padding: 0.05em; }
