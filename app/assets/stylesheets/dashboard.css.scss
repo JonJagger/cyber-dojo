@@ -2,6 +2,7 @@
 #seconds_per_column, #maximum_columns 
 {
   background: $lighter-color;
+  @include gradient-darken($lighter-color,20%,10%,5%);     
   color: $darker-color;
   font-size: 1.1em; 
   width: 2em; 
