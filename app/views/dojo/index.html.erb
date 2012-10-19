@@ -33,42 +33,58 @@ $(document).ready(function() {
 
 <table align="center">
   <tr>
+    <td>      
+     <% size = 57 %>	  	
+     <%= image_tag("/images/avatars/cyber-dojo.png",	  	
+         :border => 0,	  	
+         :size => "#{size}x#{size}",	  	
+         :title => 'cyber-dojo') %>	  	
+    </td>
     <td>
-      <div style="font-size: 5em;">cyber-dojo</div>                
+    </td>
+    <td>
+      <% size = 40 %>	  	
+      <span style="font-size: 5em;">cyber-dojo</span>
     </td>
   </tr>
 </table>
 
-<h2>
+<div align="center" class="medium">
     a place to <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_8.html">practice</a>
     programming
-</h2>
-<br/>
+</div>
 
 <table style="font-size: 1.5em;"
        cellpadding="0"
-       cellspacing="0">
+       cellspacing="15">
   <tr>
-    <td class="panel" align="center">
+    <td align="center">
       <%= render :partial => 'row_setup' %>
     </td>
   </tr>
 
   <tr>
-    <td class="panel" align="center">
+    <td align="center">
+      <%= render :partial => 'row_enter_id' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="center">
       <%= render :partial => 'row_code' %>
     </td>
   </tr>
 
   <tr>
-    <td class="panel" align="center">
+    <td align="center">
+      <%= render :partial => 'row_buttons' %>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="center">
       <%= render :partial => 'row_donate' %>
     </td>
   </tr>
         
-  <tr>
-    <td class="panel" align="center">
-      <%= render :partial => 'row_buttons' %>
-    </td>
-  </tr>
 </table>

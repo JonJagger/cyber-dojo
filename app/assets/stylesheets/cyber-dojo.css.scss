@@ -12,7 +12,7 @@
 body
 {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $background-color;  
+  background: $darker-color;  
   padding: 0;
   margin: 0;
   margin-top: 0.5em;
@@ -20,7 +20,7 @@ body
 
 h1, h2, h3, h4
 {
-  color: $main-color;
+  color: $lighter-color;
   text-align: center;
   margin: 0;
 }
@@ -36,10 +36,10 @@ h3 { font-size: 1.3em;  }
 
 .panel
 {
-  color: $main-color;  
-  background: $background-color;
-  border-top: 2px solid lighten($main-color,10%);
-  border-left: 2px solid lighten($main-color,10%);
+  background: $darker-color;
+  color: $lighter-color;  
+  border-top: 2px solid lighten($lighter-color,10%);
+  border-left: 2px solid lighten($lighter-color,10%);
   border-right: none;
   border-bottom: none;  
   margin: 0px;
@@ -49,20 +49,20 @@ h3 { font-size: 1.3em;  }
 
 .edgeless.panel { padding: 0em; }
 
-.light_margin.panel { background: $main-color; }
+.light_margin.panel { background: $lighter-color; }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 input
 {
-  color: $main-color;
+  color: $lighter-color;
   font-size: 1.15em;
 }
 
 .button
 {
-  color: $background-color;    
-  background: $button-background-color;
+  background: $lighter-color;
+  color: $darker-color;    
   font-size: 0.8em;
   cursor: pointer;
   padding: 0em 0.2em 0em 0.2em;
@@ -98,10 +98,10 @@ div[class~="filename"]:after  { content: $retained-space; }
 
 div[class~="filename"]
 {
-  color: lighten($main-color,10%);
-  background: $background-color;
-  margin: 0.25em;
+  background: $darker-color;
+  color: lighten($lighter-color,10%);
   font-size: 1.2em;
+  margin: 0.25em;
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
@@ -111,20 +111,20 @@ div[class~="filename"][class~="selected"]
 {
   // See app/assets/javascripts/cyber-dojo_file_load.js
   // function radioEntrySwitch()
-  color: $selected-pen-color;
-  background-color: $main-color;
+  background: $lighter-color;
+  color: $darker-color;
 }
 
 div[class~="filename"]:hover, .button:hover
 {
-  border-bottom: 2px solid darken($main-color,0%);
-  border-right:  2px solid darken($main-color,0%);
+  border-bottom: 2px solid darken($lighter-color,0%);
+  border-right:  2px solid darken($lighter-color,0%);
 }
 
 div[class~="filename"], .button[disabled]:hover, .button
 {
-  border-bottom: 2px solid lighten($background-color,20%);
-  border-right:  2px solid lighten($background-color,20%);   
+  border-bottom: 2px solid lighten($darker-color,20%);
+  border-right:  2px solid lighten($darker-color,20%);   
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -133,8 +133,8 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .file_content
 {
-  color: $selected-pen-color;
-  background: $main-color;
+  background: $lighter-color;
+  color: $darker-color;
   width: 45em;
   font-weight: 500;
 }
@@ -159,47 +159,78 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 .line_numbers
 {
-  color: $line-number-color;
-  background: $background-color;
-  overflow: hidden;
+  background: $darker-color;
+  color: lighten($lighter-color,10%);
+  font-weight: 100;
   text-align: right;
+  overflow: hidden;
   display: block;
   padding-right: 2px;
   width: 2em;
-  font-weight: 100;
 }
 
 .dialog
 {
+  background: $lighter-color;
+  color: $darker-color;
   font-size: 1em;
-  color: $selected-pen-color;
-  background-color: $button-background-color;
 }
-.dialog a:link, .dialog a:visited, a:link, a:visited { color: $main-color; }
+.dialog a:link, .dialog a:visited, a:link, a:visited { color: $lighter-color; }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#cyber_dojo_page { color: $main-color; }
+#cyber_dojo_page { color: $lighter-color; }
 
 #instructions
 {
-  color: $main-color;
-  background: $main-color;
-  border: 4px solid $main-color;
+  background: $lighter-color;
+  color: $darker-color;
+  border: 4px solid $lighter-color;
   overflow-y: auto;
 }
 
 #test { padding: 0 0.7em 0 0.7em; }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#setup
+{
+  background: lighten($red,5%);
+  color: darken($darker-color,5%);
+}
+.setup_words
+{
+  color: lighten($red,5%);
+}
+  
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 #kata_id_input
 {
-  color: $selected-pen-color;
-  background-color:  $main-color;
+  background:  lighten($green,20%);
+  color: $darker-color;
+  text-align: center;
+}
+.kata_id_input_words
+{
+  color: lighten($green,20%);
+}
+  
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#start_coding, #resume_coding, #review_coding
+{
+  background: lighten($green,20%);
+  color: darken($darker-color,00%);
+}
+.coding
+{
+  color: lighten($green,20%);
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.micro  { font-size: 0.60em; }
+.micro  { font-size: 0.55em; }
 .tiny   { font-size: 0.80em; }
 .small  { font-size: 1.10em; }
 .medium { font-size: 1.35em; }

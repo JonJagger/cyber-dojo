@@ -3,8 +3,8 @@
 
 #tag_number
 {
-  color: $selected-pen-color;
-  background: $main-color;
+  background: $lighter-color;
+  color: $darker-color;
   font-size: 1.1em; 
   text-align: center;
   width: 2.5em;
@@ -20,7 +20,7 @@
 
 #diff_sheet
 {
-  color: $selected-pen-color;
+  color: $darker-color;
   margin: 0;
   padding: 0;
 }
@@ -38,15 +38,18 @@
   padding-left: 2px;
   margin-right: 3px;
   padding-right: 2px;
-  color: $line-number-color;
   font-weight: normal;
 }
 
 .diffed_code added   { background: $diff-added-color;  }
 .diffed_code deleted { background: $diff-deleted-color; }
-.diffed_code same    { background: $main-color; }
+.diffed_code same    { background: $lighter-color; }
 
-.diffed_code same ln { background: $background-color;  }
+.diffed_code same ln
+{
+  background: $darker-color;
+  color: lighten($lighter-color,10%);
+}
 
 @mixin line-count
 {
@@ -59,14 +62,14 @@
 .diff-deleted-line-count
 {
   background: $diff-deleted-color;
-  color: $selected-pen-color;
+  color: $darker-color;
   @include line-count;
 }
 
 .diff-added-line-count
 {
   background: $diff-added-color;
-  color: $selected-pen-color;
+  color: $darker-color;
   @include line-count;
 }
 

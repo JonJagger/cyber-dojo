@@ -23,16 +23,18 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-$cd.renameAlert() can be refactored to use $cd.avatarImage()
 allow entry of only first 5 characters of ID as long as its unique to that length
 add help button on diff page
 add help button on dashboard page
-if run-tests detects no change in files then don't create new traffic-light?
+allow folder names in created/renamed files. Languages like Haskell have a required
+  correspondence between structure in the code and structure in the folders-files.
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
 . . . . . . . 
+$cd.renameAlert() can be refactored to use $cd.avatarImage()
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
+  certainly I don't want the output file as the one opened at the start and its empty
 diff-filename-click cycles to the next diff but it loses the current red/green toggling states
 in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
 in diff page when you go back to a file with diff it should not cycle to next diff change
