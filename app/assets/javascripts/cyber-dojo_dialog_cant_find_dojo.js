@@ -4,23 +4,10 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_cantFindDojo = function(title,id) {
-    var yinYang =
-      '<img alt="cyber-dojo" '
-      + 'border="0" '
-      + 'width="80"'
-      + 'height="80" '
-      + 'src="/images/avatars/bw/cyber-dojo.png" '
-      + 'title="cyber-dojo" />';
     var cantFindDojo = 
       '<div class="panel">'
       + '<table>'
       +    '<tr>'
-      +      '<td>'
-      +        yinYang
-      +      '</td>'
-      +      '<td>'
-      +        '&nbsp;&nbsp;&nbsp;'
-      +      '</td>'
       +      '<td>'
       +        "I can't find a cyber-dojo with an id of"
       +        '<h3>' + id + '</h3>'
@@ -31,7 +18,7 @@ var cyberDojo = (function(cd, $) {
       +    '</tr>'
       +  '</table>'
       + '</div>';
-    var width = 600;
+    var width = 400;
     cd.dialog(cantFindDojo, width, '!'+title);
   };
 

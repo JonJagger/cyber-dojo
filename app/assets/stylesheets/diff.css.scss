@@ -49,7 +49,7 @@
 .diffed_code same ln
 {
   background: $darker-color;
-  color: lighten($lighter-color,10%);
+  color: lighten($darker-color,30%);  
 }
 
 @mixin line-count

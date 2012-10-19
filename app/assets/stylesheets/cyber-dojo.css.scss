@@ -38,13 +38,13 @@ h3 { font-size: 1.3em;  }
 {
   background: $darker-color;
   color: $lighter-color;  
-  border-top: 2px solid lighten($lighter-color,10%);
-  border-left: 2px solid lighten($lighter-color,10%);
+  border-top: 2px solid lighten($darker-color,20%);
+  border-left: 2px solid lighten($darker-color,20%);
   border-right: none;
   border-bottom: none;  
   margin: 0px;
   padding: 0.5em;
-  @include rounded-corner(4px);  
+  @include rounded-corner(2px);  
 }
 
 .edgeless.panel { padding: 0em; }
@@ -100,12 +100,12 @@ div[class~="filename"]:after  { content: $retained-space; }
 div[class~="filename"]
 {
   background: $darker-color;
-  color: lighten($lighter-color,10%);
+  color: $lighter-color;
   font-size: 1.2em;
   margin: 0.25em;
   cursor: pointer;
   white-space: nowrap;
-  @include rounded-corner(2px);
+  @include rounded-corner(1px);
 }
 
 div[class~="filename"][class~="selected"]
@@ -119,14 +119,16 @@ div[class~="filename"][class~="selected"]
 
 div[class~="filename"]:hover, .button:hover
 {
-  border-bottom: 2px solid darken($lighter-color,0%);
-  border-right:  2px solid darken($lighter-color,0%);
+  border-bottom: 2px solid lighten($darker-color,20%);
+  border-right:  2px solid lighten($darker-color,20%);
 }
 
 div[class~="filename"], .button[disabled]:hover, .button
 {
-  border-bottom: 2px solid lighten($darker-color,20%);
-  border-right:  2px solid lighten($darker-color,20%);   
+  // match the hover settings above so the filenames
+  // retains their vertical position in the list
+  border-bottom: 2px solid $darker-color;
+  border-right:  2px solid $darker-color;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -162,7 +164,7 @@ div[class~="filename"], .button[disabled]:hover, .button
 .line_numbers
 {
   background: $darker-color;
-  color: lighten($lighter-color,10%);
+  color: lighten($darker-color,30%);
   font-weight: 100;
   text-align: right;
   overflow: hidden;
