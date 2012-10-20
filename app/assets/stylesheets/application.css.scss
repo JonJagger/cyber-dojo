@@ -14,6 +14,9 @@
  *= depend_on gradient.css.scss
  *= depend_on color_scheme.css.scss
  *= depend_on cyber-dojo.css.scss
+ *= depend_on home.css.scss
+ *= depend_on setup.css.scss
+ *= depend_on kata.css.scss 
  *= depend_on dashboard.css.scss
  *= depend_on diff.css.scss
  *= depend_on jquery-ui-1.8.16.custom.css.scss
@@ -23,6 +26,9 @@
 @import "gradient.css.scss";
 @import "color_scheme.css.scss";
 @import "cyber-dojo.css.scss";
+@import "home.css.scss";
+@import "setup.css.scss";
+@import "kata.css.scss";
 @import "dashboard.css.scss";
 @import "diff.css.scss";
 @import "jquery-ui-1.8.16.custom.css.scss";

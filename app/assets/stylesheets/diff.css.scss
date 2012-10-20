@@ -1,12 +1,10 @@
 
-#fork_button { display: inline-block; }
-
 #tag_number
 {
   background: $lighter-color;
   @include gradient-darken($lighter-color,20%,10%,5%);     
   color: $darker-color;
-  font-size: 1.1em; 
+  @include font-size-small();
   text-align: center;
   width: 2.5em;
 }
@@ -26,7 +24,11 @@
   padding: 0;
 }
 
-.diffed_code { margin: 0; padding: 0; }
+.diffed_code
+{
+  margin: 0;
+  padding: 0;
+}
 
 .diffed_code added, .diffed_code deleted, .diffed_code same
 {
@@ -57,7 +59,7 @@
   text-align: right;
   margin: 0px;
   padding: 0em 0.2em 0em 0.2em; // to match .button
-  font-size: 1.2em;             // to match class~=filename
+  @include font-size-small();  // to match class~=filename
 }
 
 .diff-deleted-line-count
@@ -74,4 +76,7 @@
   @include line-count;
 }
 
-.triangle.button { padding: 0.2em; }
+.triangle.button
+{
+  padding: 0.2em;
+}

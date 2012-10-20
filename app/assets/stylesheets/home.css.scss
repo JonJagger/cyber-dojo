@@ -1,0 +1,37 @@
+
+#setup
+{
+  background: lighten($red,5%);
+  @include gradient-lighten($red,20%,10%,5%);    
+  color: darken($darker-color,5%);
+}
+
+.setup_words
+{
+  color: lighten($red,5%);
+}
+  
+#kata_id_input, #start_coding, #resume_coding, #review_coding
+{
+  background: lighten($green,20%);
+  @include gradient-lighten($green,30%,20%,10%);    
+  color: $darker-color;
+  text-align: center;
+}
+
+.kata_id_input_words, .coding
+{
+  color: lighten($green,5%);
+}
+
+#cant_find_id
+{
+  text-align: center;
+  @include font-size-large();
+}
+
+#full_dojo
+{
+  color: $darker-color;
+  @include font-size-medium();
+}
