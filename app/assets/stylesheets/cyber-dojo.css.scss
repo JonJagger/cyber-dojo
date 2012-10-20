@@ -40,14 +40,15 @@ body
 .panel
 {
   background: $darker-color;
-  color: $lighter-color;  
-  border-top: 2px solid lighten($darker-color,20%);
-  border-left: 2px solid lighten($darker-color,20%);
+  color: $lighter-color;
+  border-style: dotted;
+  border-width: 2px;
+  border-color: lighten($darker-color,20%);
   border-right: none;
   border-bottom: none;  
   margin: none;
   padding: 0.5em;
-  @include rounded-corner(2px);  
+  @include rounded-corner(0px);  
 }
 
 .edgeless.panel { padding: 0em; }
@@ -98,8 +99,8 @@ div[class~="filename"]
   background: $darker-color;
   color: $lighter-color;
   @include font-size-small();
-  margin: 0;
-  padding: 0;
+  margin: none;
+  padding: none;
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(1px);
