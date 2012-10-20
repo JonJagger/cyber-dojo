@@ -13,7 +13,7 @@ var cyberDojo = (function(cd, $) {
         + ' target="_blank">'
         + 'lives on github'
         + '</a>. '
-        + 'You will still need to install compilers for any languages (eg Java) '
+        + "You'll need to install compilers for any languages (eg Java) "
         + 'you wish to practice.'
       );
 
@@ -35,15 +35,15 @@ var cyberDojo = (function(cd, $) {
 
     var turnKey =
       cd.divPanel(''
-        + 'You can also build your own Turnkey Linux server from scratch using '
+        + 'You can also '
         + '<a href="http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html" target="_blank">'
-        + 'these instructions'
-        + '</a>.'
+        + 'build your own Turnkey Linux server'
+        + '</a> from scratch.'
       );
 
     var source = $(cd.makeTable(github,ova,turnKey));
       
-    cd.dialog(source.html(), 550, 'source');
+    cd.dialog(source.html(), 600, 'source');
   };
 
   return cd;

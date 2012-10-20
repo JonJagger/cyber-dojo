@@ -1,4 +1,8 @@
 
+@mixin font-size-large() { font-size: 1.85em; }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 @mixin rounded-corner($radius: 6px)
 {
   -moz-border-radius: $radius;
@@ -102,7 +106,8 @@ div[class~="filename"]
   background: $darker-color;
   color: $lighter-color;
   font-size: 1.2em;
-  margin: 0.25em;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(1px);
@@ -119,16 +124,14 @@ div[class~="filename"][class~="selected"]
 
 div[class~="filename"]:hover, .button:hover
 {
-  border-bottom: 2px solid lighten($darker-color,20%);
-  border-right:  2px solid lighten($darker-color,20%);
+  border:  2px solid lighten($darker-color,20%);
 }
 
 div[class~="filename"], .button[disabled]:hover, .button
 {
   // match the hover settings above so the filenames
   // retains their vertical position in the list
-  border-bottom: 2px solid $darker-color;
-  border-right:  2px solid $darker-color;
+  border:  2px solid $darker-color;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -225,11 +228,19 @@ div[class~="filename"], .button[disabled]:hover, .button
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+#language_qm, #exercise_qm
+{
+  color: darken($lighter-color,15%);
+  @include font-size-large();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 .micro  { font-size: 0.55em; }
 .tiny   { font-size: 0.80em; }
 .small  { font-size: 1.10em; }
 .medium { font-size: 1.35em; }
-.large  { font-size: 1.85em; }
+.large  { @include font-size-large(); }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
