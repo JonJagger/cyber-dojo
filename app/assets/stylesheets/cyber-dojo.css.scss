@@ -73,7 +73,7 @@ input[value="output"]+label     // from diff-page
   color: $darker-color;    
   @include font-size-tiny();
   cursor: pointer;
-  padding: 0em 0.2em 0em 0.2em;
+  padding: 0em 0.2em 0.1em 0.2em;
   text-decoration: none;
   font-weight: normal;
   border: none;

@@ -1,14 +1,16 @@
 
+$red-top-color: lighten($red,5%);
+
 #setup
 {
-  background: lighten($red,5%);
-  @include gradient-lighten($red,20%,10%,5%);    
+  background: $red-top-color;
+  @include gradient-lighten($red,20%,10%,5%);
   color: darken($darker-color,5%);
 }
 
 .setup_words
 {
-  color: lighten($red,5%);
+  color: $red-top-color;
 }
   
 #kata_id_input
