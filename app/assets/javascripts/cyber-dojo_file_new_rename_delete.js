@@ -32,7 +32,7 @@ var cyberDojo = (function(cd, $) {
       id: 'renamer',
       name: 'renamer',
       value: oldFilename
-    });    
+    });
     div.append(cd.centeredDiv(input));
     var renamer = $('<div>')
       .html(div)

@@ -11,6 +11,11 @@
   color: lighten($red,5%);
 }
   
+#kata_id_input
+{
+  @include font-size-small();
+}
+
 #kata_id_input, #start_coding, #resume_coding, #review_coding
 {
   background: lighten($green,20%);
