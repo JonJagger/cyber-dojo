@@ -1,9 +1,10 @@
 
-@mixin font-size-micro()  { font-size: 0.55em; }
-@mixin font-size-tiny()   { font-size: 0.80em; }
-@mixin font-size-small()  { font-size: 1.20em; }
-@mixin font-size-medium() { font-size: 1.35em; }
-@mixin font-size-large()  { font-size: 1.85em; }
+@mixin font-size-micro()   { font-size: 0.55em; }
+@mixin font-size-tiny()    { font-size: 0.80em; }
+@mixin font-size-small()   { font-size: 1.20em; }
+@mixin font-size-medium()  { font-size: 1.45em; }
+@mixin font-size-large()   { font-size: 1.85em; }
+@mixin font-size-largest() { font-size: 3.50em; }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -187,7 +188,7 @@ div[class~="filename"], .button[disabled]:hover, .button
   color: $darker-color;
 }
 
-.dialog a:link, .dialog a:visited, a:link, a:visited
+.dialog a:link, .dialog a:visited
 {
   color: $lighter-color;
 }

@@ -5,21 +5,41 @@
   padding: 0.4em;
 }
 
+#cyber-dojo
+{
+  color: darken($lighter-color,10%);  
+  @include font-size-largest();
+}
+
+a:link, a:visited
+{
+  color: darken($lighter-color,10%);  
+}
+
+#a_place_to_practice
+{
+  color: darken($lighter-color,10%);  
+  @include font-size-small();
+}
+
 #setup
 {
   background: lighten($red,5%);
   @include gradient-lighten($red,20%,10%,5%);
   color: darken($darker-color,5%);
+  @include font-size-large();
 }
 
-.setup_words
+#a_new_coding_practice
 {
   color: lighten($red,8%);
+  @include font-size-medium();    
 }
   
 #kata_id_input
 {
   @include font-size-small();
+  text-align: center;
 }
 
 #kata_id_input, #start_coding, #resume_coding, #review_coding
@@ -27,12 +47,12 @@
   background: lighten($green,20%);
   @include gradient-lighten($green,30%,20%,10%);    
   color: $darker-color;
-  text-align: center;
 }
 
-.kata_id_input_words, .coding
+#enter_your_id, .coding
 {
   color: lighten($green,15%);
+  @include font-size-medium();  
 }
 
 #cant_find_id
@@ -54,5 +74,6 @@
 
 #please_donate
 {
+  color: darken($lighter-color,10%);  
   @include font-size-micro();
 }
