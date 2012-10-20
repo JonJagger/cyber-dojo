@@ -51,9 +51,10 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.setRenameAndDeleteButtons = function(filename) {
-    var file_ops = $('#file_operation_buttons');
-    var renameFile = file_ops.find('#rename');
-    var deleteFile = file_ops.find('#delete');
+    var fileOps = $('#file_operations');
+    var newFile    = fileOps.find('#new');
+    var renameFile = fileOps.find('#rename');
+    var deleteFile = fileOps.find('#delete');
     var turnOff = function(node) {
       node.attr('disabled', true);
       node.removeAttr('title');      
@@ -63,6 +64,7 @@ var cyberDojo = (function(cd, $) {
       node.attr('title', title);      
     };
 
+    newFile.attr('title', 'Create a new file');
     if (cd.cantBeRenamedOrDeleted(filename)) {
       turnOff(renameFile);
       turnOff(deleteFile);

@@ -1,5 +1,9 @@
 
 #test { padding: 0 0.7em 0 0.7em; }
 
-#fork_button { display: inline-block; }
-
+#file_operations #new,
+#file_operations #rename,
+#file_operations #delete
+{
+  @include font-size-small();
+}

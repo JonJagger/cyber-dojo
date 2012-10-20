@@ -1,4 +1,10 @@
 
+
+.triangle.button
+{
+  padding: 0.2em;
+}
+
 #tag_number
 {
   background: $lighter-color;
@@ -76,7 +82,5 @@
   @include line-count;
 }
 
-.triangle.button
-{
-  padding: 0.2em;
-}
+#fork_button { display: inline-block; }
+

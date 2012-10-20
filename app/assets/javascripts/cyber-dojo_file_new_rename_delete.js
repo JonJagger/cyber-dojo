@@ -82,9 +82,7 @@ var cyberDojo = (function(cd, $) {
     if (cd.cantBeRenamedOrDeleted(filename)) {
       return;
     }
-    var div = $('<div>', {
-      'class': 'panel'
-    });    
+    var div = $(cd.divPanel(''));
     div.append(cd.centeredDiv(cd.avatarImage(avatarName, 100)));
     div.append('<div>&nbsp;</div>');
     div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));

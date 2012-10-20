@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  var fileButtons =  $('#file_operation_buttons');
+  var fileButtons =  $('#file_operations');
   fileButtons.find('#new').click(function() {
     cd.newFile(); 
   });
@@ -18,23 +18,14 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="file_operation_buttons" align="center">
+<div id="file_operations">
   <table>
     <tr>
-      <td class="small button"
-          id="new"
-          title="Create a new file">new
-      </td>
-      <td>
-      </td>
-      <td class="small button"
-          id="rename">rename
-      </td>
-      <td>
-      </td>
-      <td class="small button"
-          id="delete">delete
-      </td>
+      <td class="button" id="new">new</td>
+      <td></td>
+      <td class="button" id="rename">rename</td>
+      <td></td>
+      <td class="button" id="delete">delete</td>
     </tr>
   </table>
 </div>
