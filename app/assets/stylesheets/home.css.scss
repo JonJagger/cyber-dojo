@@ -1,4 +1,10 @@
 
+.row
+{
+  text-align: center;
+  padding: 0.4em;
+}
+
 #setup
 {
   background: lighten($red,5%);
@@ -39,4 +45,14 @@
 {
   color: $darker-color;
   @include font-size-medium();
+}
+
+#about, #basics, #faqs, #feedback, #links, #source, #tips, #why
+{
+  @include font-size-tiny();
+}
+
+#please_donate
+{
+  @include font-size-micro();
 }

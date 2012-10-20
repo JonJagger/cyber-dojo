@@ -3,17 +3,20 @@
 
 $(document).ready(function() {
     
-  $('.spinner').hide();
+  var spinners = $('.spinner');
+  var test = $('#test');
+  
+  spinners.hide();
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
-    $('#test').attr('disabled', true);
-    $('.spinner').show();    
+    test.attr('disabled', true);
+    spinners.show();    
   });
   
   $('form').bind('ajax:complete', function(evt, data, status, xhr) {
-    $('.spinner').hide();    
+    spinners.hide();    
+    test.attr('disabled', false);
     $('#tip').hide();
-    $('#test').attr('disabled', false);
     // when the ajax replaces output the shortcuts
     // are lost so need rebinding
     var output = cd.fileContentFor('output');
@@ -31,8 +34,8 @@ $(document).ready(function() {
       <%= render :partial => 'spinner' %>
     </td>
     <td>
-      <input type="submit" 
-             class="large button"
+      <input type="submit"
+             class="button"
              id="test"
              value="test"
              title="Run the tests and generate a new traffic-light" />

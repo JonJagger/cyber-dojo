@@ -72,7 +72,6 @@ input[value="output"]+label     // from diff-page
   background: $lighter-color;
   @include gradient-darken($lighter-color,20%,10%,5%); 
   color: $darker-color;    
-  @include font-size-tiny();
   cursor: pointer;
   padding: 0em 0.2em 0.1em 0.2em;
   text-decoration: none;

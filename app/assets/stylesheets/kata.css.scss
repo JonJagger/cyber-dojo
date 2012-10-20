@@ -1,6 +1,7 @@
 
 #test
 {
+  @include font-size-large();
   padding-left: 0.7em;
   padding-right: 0.7em;
 }
@@ -10,4 +11,9 @@
 #file_operations #delete
 {
   @include font-size-small();
+}
+
+#id, #donate, #feedback, #help
+{
+  @include font-size-tiny();
 }

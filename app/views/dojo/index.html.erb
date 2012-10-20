@@ -54,37 +54,20 @@ $(document).ready(function() {
     programming
 </div>
 
-<table style="font-size: 1.5em;"
-       cellpadding="0"
-       cellspacing="15">
-  <tr>
-    <td align="center">
-      <%= render :partial => 'row_setup' %>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      <%= render :partial => 'row_enter_id' %>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      <%= render :partial => 'row_code' %>
-    </td>
-  </tr>
-
-  <tr>
-    <td align="center">
-      <%= render :partial => 'row_buttons' %>
-    </td>
-  </tr>
-  
-  <tr>
-    <td align="center">
-      <%= render :partial => 'row_donate' %>
-    </td>
-  </tr>
-        
-</table>
+<div style="font-size: 1.5em;">
+  <div class="row">
+    <%= render :partial => 'row_setup' %>
+  </div>
+  <div class="row">
+    <%= render :partial => 'row_enter_id' %>
+  </div>
+  <div class="row">
+    <%= render :partial => 'row_code' %>
+  </div>  
+  <div class="row">
+    <%= render :partial => 'row_donate' %>
+  </div>
+  <div class="row">
+    <%= render :partial => 'row_buttons' %>
+  </div>
+</div>

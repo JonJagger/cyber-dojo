@@ -33,8 +33,8 @@ var cyberDojo = (function(cd, $) {
     var spaces = Array.prototype.join.call({length:4}, space);
 
     var fakeTestButton = ''
-      + '<div style="font-size:1.95em;">'
-      +   '<input type="submit" class="large button" id="test" value="test"/>'
+      + '<div>'
+      +   '<input type="submit" class="button" id="test" value="test"/>'
       + '</div>';
 
     var imageButtons = ''
