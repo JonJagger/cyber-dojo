@@ -48,9 +48,9 @@ var cyberDojo = (function(cd, $) {
       
     var projector =
       cd.divPanel(''
-        + 'In a browser-based dojo, everyone could see '
+        + 'In a browser-based dojo, everyone can see '
         + "everyone else's code at all times. "
-        + 'Only one computer would need '
+        + 'Only one computer needs '
         + 'to be connected to a projector.'
     );
       
