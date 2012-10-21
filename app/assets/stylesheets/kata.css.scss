@@ -2,16 +2,15 @@
 #test
 {
   @include font-size-large();
-  padding-left: 0.7em;
-  padding-right: 0.7em;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
 }
 
 #file_operations #new,
 #file_operations #rename,
 #file_operations #delete
 {
-  @include font-size-tiny();
-  display: block;
+  @include font-size-small();
 }
 
 #id, #donate, #feedback, #help

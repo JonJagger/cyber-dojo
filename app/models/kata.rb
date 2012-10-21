@@ -15,8 +15,15 @@ class Kata
     id[2..9] || ""
   end
   
-  def self.create_new(root_dir, info)    
-    katas_root_dir = root_dir + '/katas'    
+  def self.create_new(root_dir, info)
+    # I'm running out of inode space on cyber-dojo.com
+    # df -i
+    # Filesystem            Inodes   IUsed   IFree IUse% Mounted on
+    # /dev/sda1             655360  561569   93791   86% /
+    # /dev/sda2            19546112      67 19546045    1% /mnt
+    #
+    # so my plan is to migrate katas to a ln'd folder in /mnt
+    katas_root_dir = root_dir + '/katas2'    
     if !File.directory? katas_root_dir
       Dir.mkdir katas_root_dir
     end
@@ -33,15 +40,18 @@ class Kata
   end
   
   def self.exists?(root_dir, id)
-    inner_dir = root_dir + '/katas/' + Kata::inner_dir(id)
-    outer_dir = inner_dir + '/' + Kata::outer_dir(id)
-    File.directory? outer_dir
+    File.directory? Kata.new(root_dir,id).dir
   end
 
   #---------------------------------
 
   def initialize(root_dir, id)
     @root_dir,@id = root_dir,id
+    if File.directory? pathed_dir('katas2')
+      @katas_folder = 'katas2'
+    else
+      @katas_folder = 'katas'
+    end
   end
 
   def name
@@ -97,7 +107,7 @@ class Kata
   end
   
   def dir    
-    root_dir + '/katas/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)
+    pathed_dir @katas_folder
   end
   
   def id
@@ -110,6 +120,11 @@ private
     @root_dir
   end
   
+  def pathed_dir(katas_folder_name)
+    root_dir + '/' + katas_folder_name +
+      '/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)    
+  end
+
   def manifest_filename
     dir + '/' + 'manifest.rb'
   end

@@ -27,6 +27,8 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+the use of the sandbox folder under the animals folder could probably be dropped
+  now that the execution of cyber-dojo.sh happens in a dedicated separate sandbox folder
 allow entry of only first 5 characters of ID as long as its unique to that length
 add help button on diff page
 add help button on dashboard page
