@@ -10,7 +10,8 @@
 #file_operations #rename,
 #file_operations #delete
 {
-  @include font-size-small();
+  @include font-size-tiny();
+  display: block;
 }
 
 #id, #donate, #feedback, #help
