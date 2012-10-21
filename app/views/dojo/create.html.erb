@@ -4,15 +4,14 @@
 
 $(document).ready(function() {
   
-  $('#ok_button').click(function() {
-    
+  $('#ok').click(function() {    
     cd.postTo('/dojo/save', {
       exercise: $('input[name="exercise"]:checked').val(),
       language: $('input[name="language"]:checked').val()
     });    
   });
   
-  $('#cancel_button').click(function() {
+  $('#cancel').click(function() {
     cd.postTo('/dojo/index');
   });
   
@@ -42,15 +41,15 @@ $(document).ready(function() {
           <td>&nbsp;</td>
           <td>
             <input type="button"
-                   class="large button"
-                   id="ok_button" 
+                   class="button"
+                   id="ok" 
                    value="ok" />
           </td>
           <td>&nbsp;</td>
           <td>
             <input type="button"
-                   class="large button"
-                   id="cancel_button" 
+                   class="button"
+                   id="cancel" 
                    value="cancel" />
           </td>
         </tr>

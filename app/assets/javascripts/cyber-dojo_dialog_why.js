@@ -10,9 +10,25 @@ var cyberDojo = (function(cd, $) {
     };
 
     var oslo = ''
-      + 'Several years ago I took part in a coding dojo in the Scotsman pub in Oslo.<br/>'
-      + 'At the end of the dojo I was struck by a few thoughts:<br/>'
+      + 'Several years ago I took part in a coding dojo in '
+      + 'the Scotsman pub in Oslo...<br/>'
       + '<br/>';
+
+    var startDelay = ''
+      + 'It took a ' + em('long') + ' time to start, '
+      + 'installing compilers and whatnot.';
+
+    var browser =
+       cd.divPanel(''
+        + 'I wondered what the minimum setup could be for a coding dojo. '
+        + 'I realized it was ' + em('nothing') + '. '
+        + 'You could write your tests and code in a '
+        + 'web browser and run your tests on a server. '
+        + 'The more I thought about this, the more I liked '
+        + 'the idea of participants using something '
+        + 'that was so obviously '
+        + em('not their normal development environment') + '.'
+      );
 
     var feel = "It didn't " + em('feel') + " like a dojo should feel.";
     
@@ -21,41 +37,39 @@ var cyberDojo = (function(cd, $) {
         +'In a coding dojo you should ' + em('not') + ' be thinking '
         + 'about finishing the task; '
         + 'you should be thinking about ' + em('improving some aspect of your skill') + '. '
-        + 'The practice should be repeated. The repetition frees up mental capacity, '
-        + 'helping you break out of a completion mindset'
+        + 'The practice should be repeated. Repetition frees up mental capacity, '
+        + 'helping you break out of a completion mindset '
         + 'and into an improvement mindset.' 
       );
 
-    var delay = ''
-      + 'Several groups took a ' + em('long') + ' time to get '
-      + 'started, installing compilers and whatnot.';
-
-    var browser =
-       cd.divPanel(''
-        + 'I wondered what the minimum install could be for a coding dojo. '
-        + 'I realized it was ' + em('nothing') + '. '
-        + 'You could write your tests and code in a '
-        + 'web browser and run your tests on a server. '
-        + 'The more I thought about it the more I liked '
-        + 'the idea of participants using something '
-        + 'that was so obviously '
-        + em('not their normal development environment') + '. '
-        + 'I felt this would reinforce the idea that in a coding dojo '
-        + 'you should ' + em('not') + ' be doing development!'
-      );
-
+    var endDelay = ''
+      + 'It took a ' + em('long') + ' time to '
+      + 'finish, each group struggling to connect to a projector.';
+      
+    var projector =
+      cd.divPanel(''
+        + 'In a browser-based dojo, everyone could see '
+        + 'everyone elses code at all times. '
+        + 'Only one computer would need '
+        + 'to be connected to a projector.'
+    );
+      
     var noCollab = 'There was very little collaboration.';
     
     var social =
       cd.divPanel(''
         + 'I started to sense some of the ' + em('social') + ' possibilities of a '
-        + 'browser-based coding dojo, in particular, the idea of treating all the '
-        + "participants as a single team, with everyone able to see everyone else's code."
+        + 'browser-based coding dojo - in particular, the idea of treating all the '
+        + 'participants as a single team.'
     );
       
-    var why = $(cd.makeTable(oslo,feel,improve,delay,browser,noCollab,social));
+    var why = $(cd.makeTable(oslo,
+                   startDelay,browser,
+                   feel,improve,
+                   endDelay,projector,
+                   noCollab,social));
       
-    cd.dialog(why.html(), 800, 'why?');
+    cd.dialog(why.html(), 850, 'why');
   };
 
   return cd;

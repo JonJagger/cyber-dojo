@@ -32,21 +32,22 @@ a:link, a:visited
 
 #a_coding_practice
 {
-  color: lighten($red,8%);
+  color: lighten($red,5%);
   @include font-size-medium();    
 }
   
-#kata_id_input
-{
-  @include font-size-small();
-  text-align: center;
-}
-
 #kata_id_input, #start_coding, #resume_coding, #review_coding
 {
   background: lighten($green,20%);
   @include gradient-lighten($green,30%,20%,10%);    
   color: $darker-color;
+  @include font-size-large();
+}
+
+#kata_id_input
+{
+  @include font-size-medium();
+  text-align: center;
 }
 
 #enter_your_id, .coding
@@ -76,4 +77,9 @@ a:link, a:visited
 {
   color: darken($lighter-color,10%);  
   @include font-size-micro();
+}
+
+#ok, #cancel
+{
+  @include font-size-large();
 }

@@ -79,6 +79,7 @@ input[value="output"]+label     // from diff-page
   font-weight: normal;
   border: none;
   @include rounded-corner(4px);
+  display: inline-block;
 }
 
 .button[disabled]

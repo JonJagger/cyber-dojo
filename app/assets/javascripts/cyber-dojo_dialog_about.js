@@ -13,22 +13,22 @@ var cyberDojo = (function(cd, $) {
 
     var practice =
       cd.divPanel(
-          'In a cyber-dojo you <em>practice</em><br/>'
+          'In a cyber-dojo you <em>practice</em> '
         + 'by going <em>slower</em><br/>'
-        + 'and focusing on <em>improving</em><br/>'
+        + 'and focusing on <em>improving</em> '
         + 'rather than finishing.' 
       );
 
     var author =
       cd.divPanel(
           'cyber-dojo was conceived, designed,<br/>'
-        + 'and implemented by '
+        + 'and is being implemented by '
         + '<a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>'
       );
 
     var about = $(cd.makeTable(nonIde, practice, author));
       
-    cd.dialog(about.html(), 400, 'about');
+    cd.dialog(about.html(), 450, 'about');
   };
 
   return cd;
