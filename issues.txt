@@ -10,6 +10,10 @@ into a separate folder on the same server. This ties in with
 making old dojos diff sessions viewable as a stand-alone
 html page (see vision.txt)
 -----
+I think there should be a single git repo for each dojo, with
+each animal on a separate branch inside it. Having a git repo
+per animal doesn't seem quite right.
+-----
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group. See lib/Files.rb
