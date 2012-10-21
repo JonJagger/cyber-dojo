@@ -129,7 +129,7 @@ div[class~="filename"][class~="selected"] input+label
 
 div[class~="filename"]:hover, .button:hover
 {
-  border:  2px solid lighten($darker-color,20%);
+  border:  2px dotted lighten($darker-color,20%);
 }
 
 div[class~="filename"], .button[disabled]:hover, .button

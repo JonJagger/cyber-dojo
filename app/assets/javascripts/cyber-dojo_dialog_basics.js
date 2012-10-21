@@ -39,7 +39,7 @@ var cyberDojo = (function(cd, $) {
         + '50. goto 10<br/>'
         + 'Start again, doing '
         + 'the <em>same</em> exercise, '
-        + 'and the <em>same</em> language.'
+        + 'in the <em>same</em> language.'
         );
       
     var basics = $(cd.makeTable(setup,enter,limit,retro,repeat));
