@@ -72,6 +72,7 @@ class ActiveSupport::TestCase
   
   def teardown
     system("rm -rf #{root_dir}/katas/*")
+    system("rm -rf #{root_dir}/katas2/*")
   end
   
 end

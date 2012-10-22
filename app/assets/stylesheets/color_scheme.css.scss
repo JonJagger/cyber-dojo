@@ -1,5 +1,6 @@
 
 $black: #000;
+$blue: #00F;
 $darker-color: lighten($black,35%);
 $lighter-color: lighten(Khaki,10%);
 
@@ -7,6 +8,6 @@ $red: #F00;
 $amber: Yellow;
 $green: #0F0;
 
-$diff-added-color: lighten($green,35%);
-$diff-deleted-color: lighten($red,35%);
+$diff-added-color: lighten($green,25%);
+$diff-deleted-color: lighten($red,25%);
 

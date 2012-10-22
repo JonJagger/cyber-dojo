@@ -19,7 +19,7 @@ module TrafficLightHelper
     bulb = inc[:outcome].to_s
     ("<img src='/images/traffic_light_#{bulb}.png'" +
       " border='0'" +
-      " width='22'" +
+      " width='20'" +
       " height='65'/>").html_safe    
   end
   

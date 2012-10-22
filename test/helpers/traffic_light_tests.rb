@@ -36,11 +36,12 @@ class TrafficLightTests < ActionController::TestCase
   end
   
   test "tool tip" do
-    assert_equal 'Show the diff of traffic-light #2 (2012 May 1, 23:20:45)', tool_tip(make_inc)
+    assert_equal 'Show the diff of hippo traffic-light #2 (2012 May 1, 23:20:45)',
+      tool_tip('hippo',make_inc)
   end
   
   def width
-    22
+    20
   end
   
   def height
