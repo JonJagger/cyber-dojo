@@ -16,32 +16,6 @@ class Kata
   end
   
   def self.create_new(root_dir, info)
-    # I'm running out of inode space on cyber-dojo.com
-    # df -i
-    # Filesystem    Inodes   IUsed     IFree  IUse%  Mounted on
-    # /dev/sda1     655360  561569     93791    86%  /
-    # /dev/sda2   19546112      67  19546045     1%  /mnt
-    #
-    # ...so my plan is to migrate katas to a ln'd folder in /mnt
-    # ...after a week or so (while all new entries will have gone
-    #... into katas2 )clean out katas folder
-    # ruby prune_small true 5 7
-    # ruby zipup.rb 5 7
-    # ruby prune_large true 5 7
-    # ...katas/ should now be empty
-    # rmdir katas
-    # ln -s katas /mnt/katas
-    # chown -R www-data katas
-    # chgrp -R www-daya katas
-    # ...now both katas and katas2 link to /mnt/katas
-    # ...now remove katas2 from code and tests
-    # git pull
-    # service apache2 restart
-    # ...now everything goes to katas again which ln's to /mnt/katas
-    # ...so finally remove the katas2 ln which doesn't need to point
-    # ...to /mnt/katas any more
-    # rm katas2
-    
     katas_root_dir = root_dir + '/katas'    
     if !File.directory? katas_root_dir
       Dir.mkdir katas_root_dir
