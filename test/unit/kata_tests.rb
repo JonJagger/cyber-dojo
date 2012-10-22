@@ -27,7 +27,7 @@ class KataTests < ActionController::TestCase
     
     assert_nil kata.diff
     
-    assert_equal root_dir + '/katas2/AB/CDABCD34', kata.dir
+    assert_equal root_dir + '/katas/AB/CDABCD34', kata.dir
     assert File.directory?(kata.dir), "File.directory?(#{kata.dir})"
         
     manifest_rb = kata.dir + '/manifest.rb'
