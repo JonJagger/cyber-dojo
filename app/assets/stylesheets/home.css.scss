@@ -5,34 +5,36 @@
   padding: 0.4em;
 }
 
+$text-color: darken($lighter-color,10%);
+
 #cyber-dojo
 {
-  color: darken($lighter-color,10%);  
+  color: $text-color;
   @include font-size-largest();
 }
 
 a:link, a:visited
 {
-  color: darken($lighter-color,10%);  
+  color: $text-color;
 }
 
 #a_place_to_practice
 {
-  color: darken($lighter-color,10%);  
+  color: $text-color;
   @include font-size-small();
 }
 
 #setup
 {
-  background: lighten($red,5%);
+  background: lighten($red,10%);
   @include gradient-lighten($red,20%,10%,5%);
-  color: darken($darker-color,5%);
+  color: $text-color;
   @include font-size-large();
 }
 
 #a_coding_practice
 {
-  color: lighten($red,5%);
+  color: $text-color;
   @include font-size-medium();    
 }
   
