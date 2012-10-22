@@ -42,7 +42,7 @@ class Kata
     # ...to /mnt/katas any more
     # rm katas2
     
-    katas_root_dir = root_dir + '/katas2'    
+    katas_root_dir = root_dir + '/katas'    
     if !File.directory? katas_root_dir
       Dir.mkdir katas_root_dir
     end
@@ -66,11 +66,7 @@ class Kata
 
   def initialize(root_dir, id)
     @root_dir,@id = root_dir,id
-    if File.directory? pathed_dir('katas2')
-      @katas_folder = 'katas2'
-    else
-      @katas_folder = 'katas'
-    end
+    @katas_folder = 'katas'
   end
 
   def name
