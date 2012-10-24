@@ -25,7 +25,7 @@ class Sandbox
   
   def run(language, visible_files)
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # visible_files  are the code/test files from the browser
+    # visible_files  the code/test files from the browser
     # language       the language object (associated with
     #                the visible_files), which may provide hidden_files
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -49,6 +49,7 @@ class Sandbox
   end
   
   def cyberdojo_shell_filename(visible_files)
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     # I have changed the shell filename in the exercises/ folders from
     # cyberdojo.sh (no hyphen) to cyber-dojo.sh (with a hyphen) to match
     # the cyber-dojo.com domain name. However, I still need to support old
@@ -57,6 +58,7 @@ class Sandbox
     # http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html
     # See also app/assets/javascripts/cyberdojo-file_load.js
     # See also app/assets/javascripts/cyberdojo-files.js
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     old_name = 'cyberdojo.sh'
     new_name = 'cyber-dojo.sh'
     if visible_files[new_name] != nil
