@@ -12,8 +12,8 @@ var cyberDojo = (function(cd, $) {
       +        "I can't find a cyber-dojo with an id of"
       +        '<div id="cant_find_id">' + id + '</div>'
       +        "id's are always 10 characters long,<br/>"
-      +        "are case sensitive, and contain only<br/>"
-      +        "the digits 23456789 and letters ABCDEF"
+      +        "are case insensitive, and contain only<br/>"
+      +        "the digits 0123456789 and letters ABCDEF"
       +      '</td>'
       +    '</tr>'
       +  '</table>'

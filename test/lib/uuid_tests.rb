@@ -7,15 +7,16 @@ class UuidTests < ActionController::TestCase
     assert_equal 10, Uuid.gen.length
   end    
             
-  test "uuid contains only 2-9 and A-E chars" do
-    # I don't want 0 in the id as it clashes with letter O
-    # I don't want 1 in the id as it clashes with letter l (ell)
-    (0..20).each do |n| 
-      Uuid.gen.chars.each do |char|
-        assert "23456789ABCDEF".include?(char),
-             "\"23456789ABCDEF\".include?(#{char})"
-      end    
-    end
+  test "uuid contains only 0-9 and A-E chars" do
+    (1..10).each do |i|
+      (0..20).each do |n|
+        id = Uuid.gen
+        id.chars.each do |char|
+          assert "0123456789ABCDEF".include?(char),
+               "\"0123456789ABCDEF\".include?(#{char})" + id
+        end    
+      end
+    end    
   end
   
 end

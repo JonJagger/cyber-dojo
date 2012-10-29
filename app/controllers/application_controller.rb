@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   end
   
   def id
-    params[:id]
+    p = params[:id]
+    p != nil ? p.upcase : p
   end
     
   def browser

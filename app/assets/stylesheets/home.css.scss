@@ -78,7 +78,7 @@ a:link, a:visited
 #please_donate
 {
   color: darken($lighter-color,10%);  
-  @include font-size-micro();
+  @include font-size-tiny();
 }
 
 #ok, #cancel

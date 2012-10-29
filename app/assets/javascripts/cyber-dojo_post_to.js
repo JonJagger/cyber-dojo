@@ -3,7 +3,12 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
+  
+  
   cd.postTo = function(url, params, target) {
+    //
+    // cd.postTo('/kata/edit', { id: id, avatar: avatar_name  }, '_blank');
+    //
     var key, sep = '?';
     var form = $('<form>');
     
