@@ -28,7 +28,7 @@ $(document).ready(function() {
   exercise?
 </div>
 
-<div>
+<div id="exercise_list">
   <% @exercises.each_with_index do |choice,index| %>
     <div class="filename" >
       <input id="exercise_<%= index %>" 

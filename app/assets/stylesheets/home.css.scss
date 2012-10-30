@@ -85,3 +85,10 @@ a:link, a:visited
 {
   @include font-size-large();
 }
+
+#exercise_list
+{
+  height: 35em;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
