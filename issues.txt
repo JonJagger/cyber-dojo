@@ -3,12 +3,18 @@ MAJOR
 -----
 The design of cyber-dojo is very heavy on inodes. You will
 almost certainly run out of inodes before running out of
-disk space. I need a process that moves dojos that have
+disk space. I need an automated process that moves dojos that have
 a minimum number of traffic lights and are at least 10 days
 old (say) onto a separate server (or at the very minimum
-into a separate folder on the same server. This ties in with
-making old dojos diff sessions viewable as a stand-alone
-html page (see vision.txt)
+into a separate folder on the same server.
+-----
+Sandboxes could be retained across run-test submissions.
+This would allow, for example, incremental makes.
+I could do this my making the sandboxes/ subfolder be simply the
+dojo id concatenated with the animal name. Of course the sub-folder
+would not be deleted. This would mean I would need to move the sandboxes
+folder onto the large partition on cyber-dojo.com
+I would also need some kind of harvester that reclaimed old sandboxes.
 -----
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
@@ -23,26 +29,40 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-Does Dir::mkdir have a -p option? If so use that instead of the
+allow initial manifest.rb setup of initial exercise/language to
+  contain subfolders.
+-----
+once a dojo has been created it should be independent of the
+  initial exercise and language filesets it was created from.
+  For example, you should be able to rename a languages sub-folder
+  and a dojo created from it before the rename should be ok.
+-----
+does ruby eeyDir::mkdir have a -p option? If so use that instead of the
   lib/Folders.rb make_folder function
 -----
 the use of the sandbox folder under the animals folder could probably be dropped
   now that the execution of cyber-dojo.sh happens in a dedicated separate sandbox folder
-allow entry of only first 5 characters of ID as long as its unique to that length
+-----
 add help button on diff page
+-----
 add help button on dashboard page
+-----
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
-. . . . . . . 
+-----
 $cd.renameAlert() can be refactored to use $cd.avatarImage()
+-----
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
   certainly I don't want the output file as the one opened at the start and its empty
+-----
 diff-filename-click cycles to the next diff but it loses the current red/green toggling states
-in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
+-----
 in diff page when you go back to a file with diff it should not cycle to next diff change
   it should only cycle to next diff change if you click the filename when the
   filename is already selected. 
+-----
+in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
 -----
 In lib/CodeOutputParser.rb...
 if a player creates a cyber-dojo.sh file which runs two or more

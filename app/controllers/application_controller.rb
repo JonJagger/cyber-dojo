@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
   end
   
   def id
-    p = params[:id]
-    p != nil ? p.upcase : p
+    Folders::complete(root_dir, params[:id])
   end
     
   def browser
