@@ -18,7 +18,9 @@ Also, the diff-view is not stand alone. Each time you press the previous or
 next buttons on the diff-view there is a new trip to the Cyber-Dojo server.
 I'd like each entire dojo session to be viewable as a single stand-alone html
 file. This will enable developers to keep their own local copies, and perhaps
-even put them onto their blogs.
+even put them onto their blogs. Having thought about it for a while,
+I'm now not entirely sure I want this. There is something to be said for the
+'emphemeral' nature of genuine practice.
 
 
 Federated Cyber-Dojos 

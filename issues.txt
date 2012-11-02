@@ -31,8 +31,6 @@ the use of the sandbox folder under the animals folder could probably be dropped
 allow entry of only first 5 characters of ID as long as its unique to that length
 add help button on diff page
 add help button on dashboard page
-allow folder names in created/renamed files. Languages like Haskell have a required
-  correspondence between structure in the code and structure in the folders-files.
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
@@ -45,16 +43,6 @@ in firefox clicking on the ova hyperlink in the sources dialog doesn't start a d
 in diff page when you go back to a file with diff it should not cycle to next diff change
   it should only cycle to next diff change if you click the filename when the
   filename is already selected. 
------
-html element IDs are sometimes created using filenames. When this
-happens I currently do this...
-   name.gsub('.', '_')            in GitDiff.rb and
-   diff.name.replace(/\./g, '_')  in cyber-dojo-build_diff_filenames.js
-This should be handled more thoroughly to ensure resulting ID is valid.
-ID and NAME tokens must begin with a letter ([A-Za-z]) and may be followed
-by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("_"),
-colons (":"), and periods (".").
-However jQuery has problems with ids that contain periods and colons.
 -----
 In lib/CodeOutputParser.rb...
 if a player creates a cyber-dojo.sh file which runs two or more
