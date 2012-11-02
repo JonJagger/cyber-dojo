@@ -1,5 +1,6 @@
 
 require 'Files'
+require 'Folders'
 require 'Locking'
 require 'make_time_helper'
 
@@ -84,6 +85,7 @@ private
     command = ""
     visible_files.each do |filename,content|
       pathed_filename = sandbox + '/' + filename
+      Folders::make_folder(pathed_filename)      
       File.open(pathed_filename, 'w') { |file| file.write content }      
       command += "git add '#{pathed_filename}';"
     end

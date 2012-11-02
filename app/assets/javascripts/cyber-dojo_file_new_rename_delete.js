@@ -160,7 +160,7 @@ var cyberDojo = (function(cd, $) {
 		    "a file called " + newFilename + " already exists");
       return false;
     }
-    if (newFilename.indexOf("/") !== -1) {
+    /*if (newFilename.indexOf("/") !== -1) {
       cd.renameFailure(avatarName, oldFilename, newFilename,
 		    newFilename + " contains a forward slash");
       return false;
@@ -169,7 +169,7 @@ var cyberDojo = (function(cd, $) {
       cd.renameFailure(avatarName, oldFilename, newFilename,
 		    newFilename + " contains a back slash");
       return false;
-    }
+    }*/
     return true;    
   };
   

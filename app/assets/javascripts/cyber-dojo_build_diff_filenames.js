@@ -12,10 +12,11 @@ var cyberDojo = (function(cd, $) {
     var diffSheet = $('#diff_sheet');
     var diffPanel = $('#diff_panel');  
     var previousFilename;
+    
     var loadFrom = function(filename, diff) {
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
-      var id = diff.name.replace(/\./g, '_');
+      var id = diff.id
       if (sectionCount > 0) {
           filename.parent().attr('title', 'Auto-scroll through diffs');
       }
@@ -25,7 +26,7 @@ var cyberDojo = (function(cd, $) {
         previousFilename = filename;
         // some files have no diffs
         if (sectionCount > 0) {
-          var section = $('#' + id + '_section_' + sectionIndex);           
+          var section = $('#id_' + id + '_section_' + sectionIndex);           
           var delta = 100;
           diffPanel.animate({
             scrollTop: section.offset().top - diffSheet.offset().top - delta

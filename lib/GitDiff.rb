@@ -1,6 +1,7 @@
 require 'GitDiffBuilder'
 require 'GitDiffParser'
 require 'LineSplitter'
+require 'Uuid'
 
 module GitDiff
 
@@ -38,19 +39,19 @@ module GitDiff
   def git_diff_prepare(avatar, tag, diffed_files)
     diffs = [ ]
     diffed_files.sort.each do |name,diff|
+      id = 'id_' + Uuid.gen
       diffs << {
-        :id => avatar.kata.id + '_' + avatar.name + '_' +  tag.to_s + '_' + name.gsub('.', '_'),
+        :id => id,
         :name => name,
         :section_count => diff.count { |line| line[:type] == :section },
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :added_line_count => diff.count { |line| line[:type] == :added },
-        :content => git_diff_html(name,diff),
+        :content => git_diff_html(id,diff),
       }
     end
     diffs    
   end
 
-  #-----------------------------------------------------------
   #-----------------------------------------------------------
   
   def deleted_file?(ch)
@@ -83,18 +84,17 @@ module GitDiff
   
   #-----------------------------------------------------------
   
-  def git_diff_html(name,diff)
+  def git_diff_html(id,diff)
     max_digits = diff.length.to_s.length
-    lines = diff.map {|n| diff_htmlify(name, n, max_digits) }.join("")
+    lines = diff.map {|n| diff_htmlify(id, n, max_digits) }.join("")
   end
   
   #-----------------------------------------------------------
   
-  def diff_htmlify(filename, n, max_digits)
+  def diff_htmlify(id, n, max_digits)
     result = ""
     if n[:type] == :section
-      filename = filename.gsub('.', '_')
-      result = "<span id='#{filename}_section_#{n[:index]}'></span>"
+      result = "<span id='id_#{id}_section_#{n[:index]}'></span>"
     else
       result = "<#{n[:type]}>" +
         '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +

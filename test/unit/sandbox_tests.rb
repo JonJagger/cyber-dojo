@@ -13,11 +13,21 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
 
+  test "saving a file with a folder creates the subfolder and the file in it" do
+    filename = 'f1/f2/wibble.txt'
+    content = 'Hello world'
+    @sandbox.save_file(filename, content)
+    pathed_filename = @sandbox.dir + '/' + filename
+    assert File.exists?(pathed_filename),
+          "File.exists?(#{pathed_filename})"
+    assert_equal content, IO.read(pathed_filename)          
+  end
+
   test "sandbox name is 10 hex chars long" do
     assert_equal 10, @sandbox.name.length
     assert @sandbox.name.class == String
     @sandbox.name.chars.each do |char|
-      assert "23456789ABCDEF".include?(char)
+      assert "0123456789ABCDEF".include?(char), @sandbox.name
     end
   end
   

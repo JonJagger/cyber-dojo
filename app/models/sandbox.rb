@@ -1,5 +1,6 @@
 
 require 'Files'
+require 'Folders'
 require 'Uuid'
 
 class Sandbox
@@ -70,6 +71,8 @@ class Sandbox
   
   def save_file(filename, content)
     path = dir + '/' + filename
+    # if file is in a folder make the folder
+    Folders::make_folder(path)
     # No need to lock when writing these files.
     # They are write-once-only
     File.open(path, 'w') do |fd|
@@ -88,11 +91,12 @@ private
   end
   
   def makefile_filter(name, content)
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
-    # makefiles are tab sensitive...
-    # The cyber-dojo editor intercepts tab keys and replaces them with spaces.
-    # Hence this special filter, just for makefiles, to convert leading spaces 
-    # back to a tab character.
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # The jquery-tabby.js plugin intercepts tab key presses in the
+    # textarea editor and converts them to spaces for a better
+    # editing experience. However, makefiles are tab sensitive...
+    # Hence this special filter, just for makefiles, to convert
+    # leading spaces back to a tab character.
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
     if name.downcase == 'makefile'
       lines = [ ]
