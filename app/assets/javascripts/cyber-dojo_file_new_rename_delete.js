@@ -160,16 +160,21 @@ var cyberDojo = (function(cd, $) {
 		    "a file called " + newFilename + " already exists");
       return false;
     }
-    /*if (newFilename.indexOf("/") !== -1) {
-      cd.renameFailure(avatarName, oldFilename, newFilename,
-		    newFilename + " contains a forward slash");
-      return false;
-    }
     if (newFilename.indexOf("\\") !== -1) {
       cd.renameFailure(avatarName, oldFilename, newFilename,
 		    newFilename + " contains a back slash");
       return false;
-    }*/
+    }
+    if (newFilename[0] === '/') {
+      cd.renameFailure(avatarName, oldFilename, newFilename,
+		    newFilename + " starts with a forward slash");
+      return false;      
+    }
+    if (newFilename.indexOf("..") !== -1) {
+      cd.renameFailure(avatarName, oldFilename, newFilename,
+		    newFilename + " contains ..");
+      return false;      
+    }
     return true;    
   };
   
@@ -211,7 +216,7 @@ var cyberDojo = (function(cd, $) {
 	   tab + oldFilename + br +
 	   "to" + br + 
 	   tab + newFilename + br +
-	  "because " + reason + ".";
+	  "because " + reason;
     cd.renameAlert(avatarName, why);
   };
 
