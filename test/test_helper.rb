@@ -23,6 +23,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 require 'make_time_helper'
+require 'Uuid'
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -35,7 +36,12 @@ class ActiveSupport::TestCase
   
   include MakeTimeHelper
   
-  def make_info( language_name, exercise_name = 'Yahtzee', id = Uuid.gen, now = make_time(Time.now) )
+  def dojo_id
+    @dojo_id || Uuid.gen #'ABCDE12345'
+  end
+  
+  def make_info( language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
+    @dojo_id = id
     language = Language.new(root_dir, language_name)
     exercise = Exercise.new(root_dir, exercise_name)
     { 
@@ -58,7 +64,7 @@ class ActiveSupport::TestCase
     
   def run_tests(avatar, visible_files)
     language = avatar.kata.language
-    sandbox = Sandbox.new(root_dir)
+    sandbox = Sandbox.new(root_dir, @dojo_id)
     sandbox.test_timeout = 1
     output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, output)

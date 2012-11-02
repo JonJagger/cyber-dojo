@@ -1,27 +1,39 @@
 
 require 'Files'
 require 'Folders'
-require 'Uuid'
 
 class Sandbox
   attr_accessor :test_timeout
   
-  def initialize(root_dir)
-    @root_dir, @name = root_dir, Uuid.gen
+  def initialize(root_dir, id)
+    @root_dir, @id = root_dir, id
   end
      
   def dir
-    @root_dir + '/sandboxes/' + @name
+    @root_dir + '/sandboxes/' + inner_dir + '/' + outer_dir
   end
     
   def name
     @name
   end
   
+  def inner_dir
+    @id[0..1]
+  end
+
+  def outer_dir
+    @id[2..-1]
+  end
+  
   def make_dir
-    if !File.exists? dir
-      Dir.mkdir dir        
+    inner = @root_dir + '/sandboxes/' + inner_dir
+    if !File.exists? inner
+      Dir.mkdir inner
     end
+    outer = inner + '/' + outer_dir
+    if !File.exists? outer
+      Dir.mkdir outer
+    end    
   end
   
   def run(language, visible_files)

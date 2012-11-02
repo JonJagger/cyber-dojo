@@ -3,7 +3,16 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    @sandbox = Sandbox.new(root_dir)
+    @id = 'ABCDE12345'
+    @sandbox = Sandbox.new(root_dir,@id)
+  end
+  
+  def inner_dir
+    @id[0..1]
+  end
+  
+  def outer_dir
+    @id[2..-1]
   end
   
   def teardown
@@ -13,6 +22,21 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
 
+  test "creating a new sandbox creates inner and outer subfolders just like katas" do
+    @sandbox.make_dir
+    inner = root_dir + '/sandboxes/' + inner_dir
+    assert File.exists?(inner),
+          "File.exists?(#{inner})"
+    outer = inner + '/' + outer_dir
+    assert File.exists?(outer),
+          "File.exists?(#{outer})"    
+  end
+
+  test "new sandbox dir reports inner-outer off root_dir-sandboxes" do
+    assert_equal root_dir + '/sandboxes/' + inner_dir + '/' + outer_dir,
+                 @sandbox.dir
+  end
+  
   test "saving a file with a folder creates the subfolder and the file in it" do
     filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
@@ -21,14 +45,6 @@ class SandboxTests < ActionController::TestCase
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal content, IO.read(pathed_filename)          
-  end
-
-  test "sandbox name is 10 hex chars long" do
-    assert_equal 10, @sandbox.name.length
-    assert @sandbox.name.class == String
-    @sandbox.name.chars.each do |char|
-      assert "0123456789ABCDEF".include?(char), @sandbox.name
-    end
   end
   
   test "visible and hidden files are copied to sandbox and output is generated" do

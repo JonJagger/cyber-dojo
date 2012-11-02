@@ -15,6 +15,8 @@ dojo id concatenated with the animal name. Of course the sub-folder
 would not be deleted. This would mean I would need to move the sandboxes
 folder onto the large partition on cyber-dojo.com
 I would also need some kind of harvester that reclaimed old sandboxes.
+However, that would be easy - if sandboxes/X exists but katas/X does
+not (eg because it has been pruned) then I can delete sandboxes/X
 -----
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
@@ -36,9 +38,6 @@ once a dojo has been created it should be independent of the
   initial exercise and language filesets it was created from.
   For example, you should be able to rename a languages sub-folder
   and a dojo created from it before the rename should be ok.
------
-does ruby eeyDir::mkdir have a -p option? If so use that instead of the
-  lib/Folders.rb make_folder function
 -----
 the use of the sandbox folder under the animals folder could probably be dropped
   now that the execution of cyber-dojo.sh happens in a dedicated separate sandbox folder

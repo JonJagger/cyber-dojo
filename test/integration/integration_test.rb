@@ -25,7 +25,7 @@ class IntegrationTest  < ActionController::IntegrationTest
     hash
   end
   
-  def root_dir
+  def xroot_dir
     Rails.root + 'test/cyberdojo'
   end
   
