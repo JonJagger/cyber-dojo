@@ -8,18 +8,6 @@ class DojoControllerTest  < IntegrationTest
     assert_response :success
   end
   
-  test "dojo full" do
-    id = checked_save_id
-    post 'dojo/full', rooted({ :id => id })    
-    assert_response :success, @response.body
-  end
-  
-  test "dojo cant find kata from id" do
-    bad_id = 'ab00ab11ab'
-    post 'dojo/cant_find', rooted({ :id => bad_id })    
-    assert_response :success, @response.body
-  end
-  
   test "create" do
     get 'dojo/create'
     assert_response :success
@@ -29,29 +17,54 @@ class DojoControllerTest  < IntegrationTest
     checked_save_id
   end
   
-  test "start-coding redirects to cant-find for invalid kata-id" do
+  test "id does not exist" do
     bad_id = 'ab00ab11ab'
-    post 'dojo/start', rooted({ :id => bad_id })
-    assert_redirected_to "/dojo/cant_find?id=#{bad_id}"
-    #assert_response :success    
+    get 'dojo/exists_json', {
+        :format => :json,      
+        :id => bad_id
+    }
+    assert_equal({"exists" => false}, json)
+  end
+  
+  test "start_json with id that does not exist" do
+    bad_id = 'ab00ab11ab'
+    get 'dojo/start_json', {
+      :format => :json,
+      :id => bad_id
+    }
+    assert_equal false, json['exists']
+  end
+  
+  test "start_json with id that does exist" do
+    id = checked_save_id
+    get 'dojo/start_json', {
+      :format => :json,
+      :id => id
+    }
+    assert_equal true , json['exists']
+    assert_equal false, json['full']
+    assert_not_nil json['avatar_name']
   end
 
-  test "start-coding succeeds for valid kata-id" do
-    id = checked_save_id
-    post 'dojo/start', rooted({ :id => id })
-    avatar = avatar_from_response
-    assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
-  end
-   
   test "start-coding succeeds once for each avatar name, then dojo is full" do
     id = checked_save_id
-    (1..Avatar.names.length).each do |n|
-      post 'dojo/start', rooted({ :id => id })
-      avatar = avatar_from_response
-      assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
+    Avatar.names.each do |avatar_name|      
+      get '/dojo/start_json', {
+        :format => :json,
+        :id => id
+      }
+      assert_equal true , json['exists']
+      assert_equal false, json['full']
+      assert_not_nil json['avatar_name']
     end
-    post 'dojo/start', rooted({ :id => id })
-    assert_redirected_to "/dojo/full?id=#{id}"
+
+    get '/dojo/start_json', {
+      :format => :json,
+      :id => id
+    }
+    assert_equal true , json['exists']
+    assert_equal true, json['full']
+    assert_nil json['avatar_name']
   end
     
 end

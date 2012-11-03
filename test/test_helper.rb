@@ -37,7 +37,7 @@ class ActiveSupport::TestCase
   include MakeTimeHelper
   
   def dojo_id
-    @dojo_id || Uuid.gen #'ABCDE12345'
+    @dojo_id || Uuid.gen
   end
   
   def make_info( language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
@@ -73,6 +73,7 @@ class ActiveSupport::TestCase
   end
 
   def root_dir
+    #TODO: use ENV like test/integration/integration_test.rb
     (@root_dir || Rails.root + 'test/cyberdojo').to_s
   end
   

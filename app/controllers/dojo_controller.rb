@@ -72,7 +72,9 @@ class DojoController < ApplicationController
 
   def exists_json
     respond_to do |format|
-      format.json { render :json => { :exists => Kata.exists?(root_dir, id) } }
+      format.json {
+        render :json => { :exists => Kata.exists?(root_dir, id) }
+      }
     end    
   end
   
@@ -98,7 +100,7 @@ class DojoController < ApplicationController
 
   def start_avatar_grid(avatar_name)
     @avatar_name = avatar_name
-    filename = root_dir + '/app/views/dojo/start_avatar_grid.html.erb'
+    filename = Rails.root.to_s + '/app/views/dojo/start_avatar_grid.html.erb'
     ERB.new(File.read(filename)).result(binding)
   end
   

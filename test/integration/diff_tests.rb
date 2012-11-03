@@ -6,22 +6,22 @@ class DiffControllerTest < IntegrationTest
   test "show" do
     id = checked_save_id
         
-    post '/kata/edit', rooted({
+    post '/kata/edit', {
       :id => id,
       :avatar => Avatar.names[0]
-    })
+    }
     
-    post 'kata/run_tests', rooted(
+    post 'kata/run_tests', {
       :id => id,
       :avatar => Avatar.names[0],
       :file_content => { }
-    )
+    }
     
-    get "diff/show", rooted({
+    get "diff/show", {
       :id => id,
       :avatar => Avatar.names[0],
       :tag => 1
-    })
+    }
     assert_response :success
   end
   
