@@ -19,12 +19,5 @@ class IntegrationTest  < ActionController::IntegrationTest
     @response.redirect_url =~ /id=(.+)/ or fail "Unexpected #{@response.redirect_url}"
     $1
   end
-  
-  def avatar_from_response
-    raw_redirect = @response.header["Location"]
-    assert_match raw_redirect, /avatar=.../
-    pattern = Regexp.new('avatar=(.*)')
-    pattern.match(raw_redirect)[1]
-  end
     
 end
