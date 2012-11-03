@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
   
   def id
-    Folders::complete(root_dir, params[:id])
+    Folders::id_complete(root_dir, params[:id])
   end
     
   def browser

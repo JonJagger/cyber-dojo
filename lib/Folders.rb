@@ -12,12 +12,12 @@ module Folders
     system(cmd)          
   end
 
-  def self.complete(root_dir, id)
+  def self.id_complete(root_dir, id)
     if id != nil
-      id.upcase!
+      id = id[0..9].upcase
       # if are at least 4 characters of the id are provided
       # provided attempt to do id-completion
-      if id.length >= 4
+      if id.length >= 4 && id.length < 10
         dirs = Dir[root_dir + '/katas/' + id[0..1] + '/' + id[2..-1] + '*']
         if dirs.length == 1
           dir = dirs[0]

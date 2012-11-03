@@ -5,17 +5,21 @@ class DiffControllerTest < IntegrationTest
 
   test "show" do
     id = checked_save_id
-    post 'dojo/start', rooted({ :id => id })
-    avatar = avatar_from_response
-    assert_redirected_to :controller => 'kata', :action => 'edit', :id => id, :avatar => avatar
+        
+    post '/kata/edit', rooted({
+      :id => id,
+      :avatar => Avatar.names[0]
+    })
+    
     post 'kata/run_tests', rooted(
       :id => id,
-      :avatar => avatar,
+      :avatar => Avatar.names[0],
       :file_content => { }
     )
+    
     get "diff/show", rooted({
       :id => id,
-      :avatar => avatar,
+      :avatar => Avatar.names[0],
       :tag => 1
     })
     assert_response :success
