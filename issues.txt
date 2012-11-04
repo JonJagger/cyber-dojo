@@ -31,8 +31,21 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+I'm contemplating changing the coding-page so that clicking
+on a traffic-light reverts you to the files from
+that traffic-light (rather than bringing up a diff page).
+Of course I'd still want to be able to go to the diff page too
+but perhaps that could be from the traffic-light next to the
+animal image. I think revert might be particuarly useful for kids.
+-----
 add help button on diff page
 add help button on dashboard page
+-----
+the diff-view would benefit from showing deleted files.
+Also, if a diff-view file has all new green lines perhaps
+  the filename should appear green in the filelist.
+  Similarly, perhaps the filename of all deleted red lines
+  should appear in red.
 -----
 dojo_controller.diff_save should be in diff_controller
 -----
