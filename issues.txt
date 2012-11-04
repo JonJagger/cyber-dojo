@@ -31,6 +31,9 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+add help button on diff page
+add help button on dashboard page
+-----
 dojo_controller.diff_save should be in diff_controller
 -----
 allow initial manifest.rb setup of initial exercise/language to
@@ -43,10 +46,6 @@ once a dojo has been created it should be independent of the
 -----
 the use of the sandbox folder under the animals folder could probably be dropped
   now that the execution of cyber-dojo.sh happens in a dedicated separate sandbox folder
------
-add help button on diff page
------
-add help button on dashboard page
 -----
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
