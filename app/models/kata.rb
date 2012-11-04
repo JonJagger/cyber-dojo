@@ -17,7 +17,7 @@ class Kata
   end
   
   def self.create_new(root_dir, info)    
-    #info[:id] is a UUid.gen so outer_dir will be unique inside inner_dir
+    # info[:id] is a UUid.gen so outer_dir will be unique inside inner_dir
     id = info[:id]
     dir = root_dir + '/katas' + '/' + Kata::inner_dir(id) + '/' +   Kata::outer_dir(id) 
     Folders::make_folder(dir + '/')    
@@ -33,10 +33,6 @@ class Kata
   def initialize(root_dir, id)
     @root_dir,@id = root_dir,id
     @katas_folder = 'katas'
-  end
-
-  def name
-    manifest[:name]
   end
   
   def diff

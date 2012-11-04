@@ -21,7 +21,6 @@ class KataTests < ActionController::TestCase
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
     info = make_info('Dummy', 'Yahtzee', id, now)
-    info[:name] = 'Jon Jagger'
     Kata.create_new(root_dir, info)
     kata = Kata.new(root_dir, info[:id])
     
@@ -36,7 +35,6 @@ class KataTests < ActionController::TestCase
     assert manifest.has_key?(:visible_files),
           "manifest.has_key?(:visible_files)"
     
-    assert_equal info[:name], kata.name
     assert_equal manifest[:visible_files], kata.language.visible_files
     assert_equal 'Yahtzee', kata.exercise.name
     assert_equal 'Dummy', kata.language.name
