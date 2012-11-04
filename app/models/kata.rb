@@ -1,5 +1,6 @@
 
 require 'Files'
+require 'Folders'
 require 'make_time_helper.rb'
 
 class Kata
@@ -27,8 +28,9 @@ class Kata
     end
     
     outer_dir = inner_dir + '/' + Kata::outer_dir(info[:id])
-    # info[:id] is a UUid.gen so outer_dir will be unique inside inner_dir
+    #info[:id] is a UUid.gen so outer_dir will be unique inside inner_dir
     Dir.mkdir outer_dir
+    
     Files::file_write(outer_dir + '/manifest.rb', info)
   end
   

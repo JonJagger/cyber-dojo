@@ -6,16 +6,18 @@ module Folders
   end
   
   def self.make_folder(path)
-    folder = File.dirname(path)
+    if path[-1] != '/'
+      path = File.dirname(path)
+    end
     # the -p option creates intermediate directories as required
-    cmd = "mkdir -p #{folder}"
-    system(cmd)          
+    cmd = "mkdir -p #{path}"
+    system(cmd)
   end
 
   def self.id_complete(root_dir, id)
     if id != nil
       id = id[0..9].upcase
-      # if are at least 4 characters of the id are provided
+      # if are at least 4 characters of the id are
       # provided attempt to do id-completion
       if id.length >= 4 && id.length < 10
         dirs = Dir[root_dir + '/katas/' + id[0..1] + '/' + id[2..-1] + '*']

@@ -5,35 +5,16 @@ require 'Folders'
 class Sandbox
   attr_accessor :test_timeout
   
-  def initialize(root_dir, id)
-    @root_dir, @id = root_dir, id
+  def initialize(root_dir, id, avatar_name)
+    @root_dir, @id, @avatar_name = root_dir, id, avatar_name
   end
      
   def dir
-    @root_dir + '/sandboxes/' + inner_dir + '/' + outer_dir
+    @root_dir + '/sandboxes/' + inner_dir + '/' + outer_dir + '/' + @avatar_name + '/'
   end
     
-  def name
-    @name
-  end
-  
-  def inner_dir
-    @id[0..1]
-  end
-
-  def outer_dir
-    @id[2..-1]
-  end
-  
   def make_dir
-    inner = @root_dir + '/sandboxes/' + inner_dir
-    if !File.exists? inner
-      Dir.mkdir inner
-    end
-    outer = inner + '/' + outer_dir
-    if !File.exists? outer
-      Dir.mkdir outer
-    end    
+    Folders::make_folder(dir)
   end
   
   def run(language, visible_files)
@@ -95,6 +76,14 @@ class Sandbox
   end
 
 private
+
+  def inner_dir
+    @id[0..1]
+  end
+
+  def outer_dir
+    @id[2..-1]
+  end
 
   def link_files(link_dir, link_filenames)
     link_filenames.each do |filename|

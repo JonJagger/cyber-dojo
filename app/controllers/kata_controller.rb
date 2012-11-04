@@ -16,7 +16,7 @@ class KataController < ApplicationController
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
     language = @kata.language
-    sandbox = Sandbox.new(root_dir, id)
+    sandbox = Sandbox.new(root_dir, id, params[:avatar])
     @output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     @avatar.save_run_tests(visible_files, @output, inc)

@@ -4,39 +4,25 @@ class SandboxTests < ActionController::TestCase
 
   def setup
     @id = 'ABCDE12345'
-    @sandbox = Sandbox.new(root_dir,@id)
-  end
-  
-  def inner_dir
-    @id[0..1]
-  end
-  
-  def outer_dir
-    @id[2..-1]
+    @avatar_name = 'hippo'
+    @sandbox = Sandbox.new(root_dir,@id,@avatar_name)
   end
   
   def teardown
     if File.exists? @sandbox.dir
-      `rm -rf #{@sandbox.dir}`
+      `rm -rf #{root_dir + '/sandboxes/AB'}`
     end
     @sandbox = nil
   end
 
-  test "creating a new sandbox creates inner and outer subfolders just like katas" do
+  test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do
     @sandbox.make_dir
-    inner = root_dir + '/sandboxes/' + inner_dir
-    assert File.exists?(inner),
-          "File.exists?(#{inner})"
-    outer = inner + '/' + outer_dir
-    assert File.exists?(outer),
-          "File.exists?(#{outer})"    
+    dir = root_dir + '/sandboxes/' + @id[0..1] + '/' +@id[2..-1] + '/' + @avatar_name + '/'
+    assert_equal dir, @sandbox.dir
+    assert File.exists?(@sandbox.dir),
+          "File.exists?(#{@sandbox.dir})"
   end
-
-  test "new sandbox dir reports inner-outer off root_dir-sandboxes" do
-    assert_equal root_dir + '/sandboxes/' + inner_dir + '/' + outer_dir,
-                 @sandbox.dir
-  end
-  
+ 
   test "saving a file with a folder creates the subfolder and the file in it" do
     filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
@@ -145,7 +131,7 @@ class SandboxTests < ActionController::TestCase
     check_save_makefile("    123\n456\r\n   789", "\t123\n456\n\t789")    
     check_save_makefile("    123\r\n456\r\n   789", "\t123\n456\n\t789")    
   end
-  
+
   def check_save_makefile(content, expected_content)    
     check_save_file('makefile', content, expected_content, false)
   end
