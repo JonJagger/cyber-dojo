@@ -31,6 +31,8 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+dojo_controller.diff_save should be in diff_controller
+-----
 allow initial manifest.rb setup of initial exercise/language to
   contain subfolders.
 -----

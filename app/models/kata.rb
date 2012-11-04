@@ -16,22 +16,12 @@ class Kata
     id[2..9] || ""
   end
   
-  def self.create_new(root_dir, info)
-    katas_root_dir = root_dir + '/katas'    
-    if !File.directory? katas_root_dir
-      Dir.mkdir katas_root_dir
-    end
-    
-    inner_dir = katas_root_dir + '/' + Kata::inner_dir(info[:id])    
-    if !File.directory? inner_dir
-      Dir.mkdir inner_dir
-    end
-    
-    outer_dir = inner_dir + '/' + Kata::outer_dir(info[:id])
+  def self.create_new(root_dir, info)    
     #info[:id] is a UUid.gen so outer_dir will be unique inside inner_dir
-    Dir.mkdir outer_dir
-    
-    Files::file_write(outer_dir + '/manifest.rb', info)
+    id = info[:id]
+    dir = root_dir + '/katas' + '/' + Kata::inner_dir(id) + '/' +   Kata::outer_dir(id) 
+    Folders::make_folder(dir + '/')    
+    Files::file_write(dir + '/manifest.rb', info)
   end
   
   def self.exists?(root_dir, id)
