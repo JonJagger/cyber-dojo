@@ -62,8 +62,6 @@ sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
 -----
-$cd.renameAlert() can be refactored to use $cd.avatarImage()
------
 upon start-coding the server could run cyber-dojo.sh and open the output file in the editor?
   certainly I don't want the output file as the one opened at the start and its empty
 -----

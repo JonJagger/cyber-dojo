@@ -231,7 +231,7 @@ var cyberDojo = (function(cd, $) {
       +     ' height="' + imageSize + '"'
       +     ' style="float: left; padding: 2px;"'
       +     ' src="/images/avatars/' + avatarName + '.jpg'+ '"'
-      +     ' title="' + avatarName + '" />';
+      +     ' title="' + avatarName + '" />';      
     var alertHtml = ''    
       + '<div class="panel">'
       +   cd.makeTable(imageHtml, message)

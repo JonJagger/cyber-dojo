@@ -35,18 +35,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.filenameAlreadyExists = function(filename) {
-    // I have changed the shell filename in the exercises/ folders from
-    // cyberdojo.sh (no hyphen) to cyber-dojo.sh (with a hyphen) to match
-    // the cyber-dojo.com domain name. However, I still need to support old
-    // sessions, particularly the ability to fork from a new session from an
-    // old diff-view, e.g. the refactoring setups in
-    // http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html
-    // See also app/assets/javascripts/cyber-dojo-file_load.js
-    // See also app/models/sandbox.rb
-    var oldName = 'cyberdojo.sh';
-    var newName = 'cyber-dojo.sh';
-    return filename === oldName ||
-           filename === newName ||
+    return filename === 'cyber-dojo.sh' ||
            cd.inArray(filename, cd.filenames()) ||
            cd.inArray(filename, cd.supportFilenames()) ||
            cd.inArray(filename, cd.hiddenFilenames());	   

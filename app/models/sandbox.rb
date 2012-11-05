@@ -54,7 +54,7 @@ class Sandbox
     File.open(path, 'w') do |fd|
       fd.write(makefile_filter(filename, content))
     end
-    # .sh files (eg cyberdojo.sh) need execute permissions
+    # .sh files (eg cyber-dojo.sh) need execute permissions
     File.chmod(0755, path) if filename =~ /\.sh/    
   end
 
