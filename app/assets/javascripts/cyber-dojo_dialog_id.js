@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
     if (fromDiff) {
       var diffPanel = 
           'This cyber-dojo was forked from<br/>'
-        + '<a href="/diff/show/' + info.diff_id 
+        + '&nbsp;&nbsp;&nbsp;<a href="/diff/show/' + info.diff_id 
         +            '?avatar=' + info.diff_avatar
         +            '&tag=' + info.diff_tag + '" '
         +            'target="_blank">'
