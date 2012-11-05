@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class KataTests < ActionController::TestCase
   
+  test "all increments initially empty" do
+    kata = make_kata('Dummy')
+    Avatar.new(kata, 'lion')
+    Avatar.new(kata, 'hippo')
+    expected = { "hippo" => [ ], "lion" => [ ] }
+    assert_equal expected, kata.all_increments
+  end
+  
   test "create new kata from diff traffic-light extra diff properties are available" do
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
@@ -46,7 +54,11 @@ class KataTests < ActionController::TestCase
     now = now[0...-1] + [now.last + seconds ]
     assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))
   end
-    
+      
+  test "root katas dir initially does not contain an index file" do
+    assert !File.exists?(root_dir + '/katas/index.rb');
+  end
+  
   test "Kata.exists? returns false before kata is created and true after kata is created" do
     id = 'AABBCCDDEE'
     info = make_info('Dummy', 'Yahtzee', id)
@@ -54,11 +66,7 @@ class KataTests < ActionController::TestCase
     Kata.create_new(root_dir, info)
     assert Kata.exists?(root_dir, id)
   end
-  
-  test "root katas dir initially does not contain an index file" do
-    assert !File.exists?(root_dir + '/katas/index.rb');
-  end
-    
+      
   test "creating a new kata succeeds and creates katas root dir" do
     kata = make_kata('Dummy')
     assert File.exists?(kata.dir), 'inner/outer dir created'
@@ -77,13 +85,5 @@ class KataTests < ActionController::TestCase
     Avatar.new(kata, 'hippo')
     assert_equal ['hippo', 'lion'], kata.avatar_names.sort
   end
-  
-  test "all increments initially empty" do
-    kata = make_kata('Dummy')
-    Avatar.new(kata, 'lion')
-    Avatar.new(kata, 'hippo')
-    expected = { "hippo" => [ ], "lion" => [ ] }
-    assert_equal expected, kata.all_increments
-  end
-      
+
 end

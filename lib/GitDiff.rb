@@ -39,7 +39,7 @@ module GitDiff
   def git_diff_prepare(avatar, tag, diffed_files)
     diffs = [ ]
     diffed_files.sort.each do |name,diff|
-      id = 'id_' + Uuid.gen
+      id = 'id_' + Uuid.new.to_s
       diffs << {
         :id => id,
         :name => name,

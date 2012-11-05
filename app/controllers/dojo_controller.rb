@@ -149,7 +149,7 @@ class DojoController < ApplicationController
     language = Language.new(root_dir, params['language'])    
     
     { :created => make_time(Time.now),
-      :id => Uuid.gen,
+      :id => Uuid.new.to_s,
       :browser => browser,
       :language => language.name,
       :exercise => params['exercise'],

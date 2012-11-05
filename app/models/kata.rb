@@ -1,6 +1,7 @@
 
 require 'Files'
 require 'Folders'
+require 'Uuid'
 require 'make_time_helper.rb'
 
 class Kata
@@ -8,19 +9,10 @@ class Kata
   include MakeTimeHelper
   extend MakeTimeHelper
   
-  def self.inner_dir(id)
-    id[0..1] || ""
-  end
-  
-  def self.outer_dir(id)
-    id[2..9] || ""
-  end
-  
   def self.create_new(root_dir, info)    
-    # info[:id] is a UUid.gen so outer_dir will be unique inside inner_dir
-    id = info[:id]
-    dir = root_dir + '/katas' + '/' + Kata::inner_dir(id) + '/' +   Kata::outer_dir(id) 
-    Folders::make_folder(dir + '/')    
+    id = Uuid.new(info[:id])
+    dir = root_dir + '/katas' + '/' + id.inner + '/' +   id.outer 
+    Folders::make_folder(dir + '/')
     Files::file_write(dir + '/manifest.rb', info)
   end
   
@@ -31,8 +23,8 @@ class Kata
   #---------------------------------
 
   def initialize(root_dir, id)
-    @root_dir,@id = root_dir,id
-    @katas_folder = 'katas'
+    @root_dir = root_dir
+    @id = Uuid.new(id)
   end
   
   def diff
@@ -83,24 +75,15 @@ class Kata
     (now - created).to_i
   end
   
-  def dir    
-    pathed_dir @katas_folder
+  def dir
+    @root_dir + '/' + 'katas' + '/' + @id.inner + '/' + @id.outer    
   end
   
   def id
-    @id
+    @id.to_s
   end
   
 private
-
-  def root_dir
-    @root_dir
-  end
-  
-  def pathed_dir(katas_folder_name)
-    root_dir + '/' + katas_folder_name +
-      '/' + Kata::inner_dir(id) + '/' + Kata::outer_dir(id)    
-  end
 
   def manifest_filename
     dir + '/' + 'manifest.rb'

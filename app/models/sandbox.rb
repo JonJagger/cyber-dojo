@@ -1,16 +1,18 @@
 
 require 'Files'
 require 'Folders'
+require 'Uuid'
 
 class Sandbox
   attr_accessor :test_timeout
   
   def initialize(root_dir, id, avatar_name)
-    @root_dir, @id, @avatar_name = root_dir, id, avatar_name
+    @root_dir, @avatar_name = root_dir, avatar_name
+    @id = Uuid.new(id)
   end
      
   def dir
-    @root_dir + '/sandboxes/' + inner_dir + '/' + outer_dir + '/' + @avatar_name + '/'
+    @root_dir + '/sandboxes/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/'
   end
     
   def make_dir
@@ -76,14 +78,6 @@ class Sandbox
   end
 
 private
-
-  def inner_dir
-    @id[0..1]
-  end
-
-  def outer_dir
-    @id[2..-1]
-  end
 
   def link_files(link_dir, link_filenames)
     link_filenames.each do |filename|

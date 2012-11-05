@@ -37,7 +37,7 @@ class ActiveSupport::TestCase
   include MakeTimeHelper
   
   def dojo_id
-    @dojo_id || Uuid.gen
+    @dojo_id || Uuid.new.to_s
   end
   
   def make_info( language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )

@@ -20,14 +20,13 @@ var cyberDojo = (function(cd, $) {
         + '20. At each computer, '
         + 'enter the <span id="kata_id_input">3AF65A28F9</span> id, '
         + 'click <div id="start_coding" class="button">start</div><br/>'
-        + indent + '(tip - the first 5 chars of the id are usually enough)'
+        + indent + '(the first 5 chars of the id are usually enough)'
     );
     var limit =
       cd.divPanel(''
         + '30. Code for a set amount of time '
         + 'e.g. 20/40/60 minutes.'
-      );
-      
+      );      
     var retro =
       cd.divPanel(''
         + '40. When time is up everyone uses the '
@@ -36,15 +35,13 @@ var cyberDojo = (function(cd, $) {
         + indent + 'to review what they did and chooses what aspects to focus '
         + 'on improving.'
       );
-
     var repeat =
       cd.divPanel(''
         + '50. goto 10<br/>'
         + indent + 'Start again, doing '
         + 'the <em>same</em> exercise, '
         + 'in the <em>same</em> language.'
-        );
-      
+        );      
     var basics = $(cd.makeTable(setup,enter,limit,retro,repeat));
       
     cd.dialog(basics.html(), 725, 'basics');
