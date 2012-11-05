@@ -1,6 +1,6 @@
 cd unit
 echo UNIT
-./run_most.sh
+./run_all.sh
 cd ../lib
 echo LIB
 ./run_all.sh

@@ -7,8 +7,9 @@ class Sandbox
   attr_accessor :test_timeout
   
   def initialize(root_dir, id, avatar_name)
-    @root_dir, @avatar_name = root_dir, avatar_name
+    @root_dir = root_dir
     @id = Uuid.new(id)
+    @avatar_name = avatar_name
   end
      
   def dir

@@ -2,7 +2,8 @@
 class Language
   
   def initialize(root_dir, name)
-    @root_dir,@name = root_dir,name
+    @root_dir = root_dir
+    @name = name
   end
      
   def name

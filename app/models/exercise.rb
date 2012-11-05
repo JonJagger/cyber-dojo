@@ -2,7 +2,8 @@
 class Exercise
   
   def initialize(root_dir, name)
-    @root_dir,@name = root_dir,name
+    @root_dir = root_dir
+    @name = name
   end
      
   def name
@@ -10,12 +11,10 @@ class Exercise
   end
   
   def instructions
-    IO.read("#{exercise_dir}/instructions")
+    IO.read("#{dir}/instructions")
   end
           
-private
-  
-  def exercise_dir
+  def dir
     @root_dir + '/exercises/' + name
   end
   
