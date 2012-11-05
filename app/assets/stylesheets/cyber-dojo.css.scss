@@ -104,7 +104,7 @@ div[class~="filename"]
   padding: none;
   cursor: pointer;
   white-space: nowrap;
-  @include rounded-corner(1px);
+  @include rounded-corner(4px);
 }
 
 div[class~="filename"] input+label

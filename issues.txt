@@ -31,12 +31,16 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+for diff/fork drop lengthy text on button and simply use
+"fork a new dojo" with a small fork icon.
+this could go top-left to the right of the traffic-light.
+-----
 I'm contemplating changing the coding-page so that clicking
-on a traffic-light reverts you to the files from
+on a top-row traffic-light reverts you to the files from
 that traffic-light (rather than bringing up a diff page).
-Of course I'd still want to be able to go to the diff page too
-but perhaps that could be from the traffic-light next to the
-animal image. I think revert might be particuarly useful for kids.
+The avatar-icon still takes you to the dashboard, and the
+traffic-lights from the dashboard will still got the diff page.
+I think reverting might be particuarly useful for kids.
 -----
 add help button on diff page
 add help button on dashboard page
