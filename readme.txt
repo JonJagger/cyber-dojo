@@ -1,3 +1,56 @@
+
+Setup a coding practice
+=======================
+o) choose your language (eg C++)
+   Each language corresponds to a sub-directory of cyberdojo/languages/
+   (see below)
+o) choose your exercise (eg Prime Factors)
+   Each exercise corresponds to a sub-directory of cyberdojo/exercises/
+   (see below)
+You will be assigned a 10-character id.
+
+
+Start coding
+============
+Enter the 10-character id on each partcipating computer and click start coding.
+The server will assign each computer an animal 'avatar' (eg Panda).
+The animal provides identity for each computer.
+You can resume coding at any time by choosing the animal. 
+This is handy if a laptop has to retire as a new laptop can
+instantly replace it.
+
+
+Traffic Lights
+==============
+The display of each test increment uses a traffic light, with meanings 
+for the three colours as follows:
+  (o) red   - tests ran but at least one failed
+  (o) amber - syntax error somewhere, tests not run
+  (o) green - tests ran and all passed
+The colours are positional, top red, middle amber, bottom green.
+This means you can still read the display if you are colour blind.
+Note: you will also get an amber traffic light if the tests do not
+complete within 10 seconds.
+
+
+Review-Dashboard
+================
+The dashboard shows a periodically updating display of all traffic lights
+for all the animals in the dojo. If you want to collapse the horizontal time
+gaps simply enter a very large value for the seconds_per_column value.
+
+
+Review-Diff
+===========
+Clicking on a traffic light opens a new page showing the diffs for that increment
+together with < and > buttons to step backwards and  forwards through the diffs.
+The diff page does not work properly in Internet Explorer 8.
+A diff will automatically open the file with the most changes.
+Reclicking a file will auto-scroll to the next diff-chunk in the file.
+Clicking the red no-of-lines-deleted button will toggle the deleted lines on/off.
+Clicking the green no-of-lines-added button will toggle the added lines on/off.
+
+
 ===========================================================
    VERY VERY IMPORTANT
    VERY VERY IMPORTANT
@@ -44,57 +97,6 @@ If the server fails to start try
 >rm Gemfile.lock
 >bundle install
 >service apache2 restart
-
-
-
-Configuring a practice-kata
-===========================
-The server will ask you to choose
-o) your language (eg C++)
-   Each language corresponds to a sub-directory of cyberdojo/languages/
-   (see below)
-o) your exercise (eg Prime Factors)
-   Each exercise corresponds to a sub-directory of cyberdojo/exercises/
-   (see below)
-
-
-Entering a practice-kata (Start Coding)
-=======================================
-The server will assign you an animal 'avatar' (eg Panda).
-The animal provides identity for each codebase.
-You can resume coding at any time by choosing the animal. 
-This is handy if a laptop has to retire as a new laptop can easily and 
-instantly replace it.
-
-
-Traffic Lights
-==============
-The display of each test increment uses a traffic light, with meanings 
-for the three colours as follows:
-  (o) red   - tests ran but at least one failed
-  (o) amber - syntax error somewhere, tests not run
-  (o) green - tests ran and all passed
-The colours are positional, top red, middle amber, bottom green.
-This means you can still read the display if you are colour blind.
-Note: you will also get an amber traffic light if the tests do not
-complete within 10 seconds.
-
-
-View-Dashboard
-==============
-The dashboard shows a periodically updating display of all traffic lights for 
-all the computers in the practice-kata.
-If you want to collapse the horizontal time gaps simply enter
-a very large value for the seconds_per_column value.
-
-
-Diff-view
-=========
-Clicking on a traffic light opens a new page showing the diffs for that increment
-together with < and > buttons to step backwards and  forwards through the diffs.
-The diff-view page does not work properly in Internet Explorer 8.
-A diff-view will automatically open the file with the most changes.
-Selecting a file in the diff-view auto-scrolls to the first diffed lines.
 
    
 Versions
@@ -188,45 +190,6 @@ Example: cyberdojo/languages/Java/manifest.rb looks like this:
   :tab_size => 4
 }
 
-The intention is to use a specific structure for the contents of the
-manifests to enable an automated check to see what is correctly installed
-and working, and to only offer installed and working languages when you
-configure a new practice-kata. However at the moment when you configure a
-new practice-kata all language/ subfolders are offered.
-
-For each language...
-o) Cyber-Dojo searches through its manifests' :visible_filenames,
-   in sequence, looking for any that contain the string '42'
-o) If it doesn't find any it will not offer that language when
-   you configure a new kata.
-o) If it finds at least one file containing '42' it will pick the
-   first one as "the-42-file"
-o) It will then use the manifest to create a kata and run-the-tests
-   three times as follows:
-   test-1 - with the files unchanged.
-   test-2 - with the 42 in the-42-file replaced by 54
-   test-3 - with the 42 replaced by 4typo2
-o) If test-1 generates a red traffic-light and
-      test-2 generates a green traffic-light and
-      test-3 generates an amber traffic-light then
-   then the Cyber-Dojo server assumes the language is installed and working
-   and it will offer that language when you create a new kata.
-o) If the three tests return three amber traffic-lights then
-   the Cyber-Dojo server assumes the language is not installed
-   and it won't offer that language when you configure a new kata.
-o) If the three tests return any other combination of traffic-lights
-   the Cyber-Dojo server assumes the language is installed but not working.
-   
-You can test if a languages' initial fileset is correctly setup as follows
->cd cyberdojo/test/unit
->ruby installation_tests.rb
-(NB this is out of date and needs reworking after the rails 3 upgrade.)
-Note: this may issue the following error
-   sh: Syntax error: Bad fd number
-when this happened to me I fixed it as follows
->sudo rm /bin/sh
->sudo ln -s /bin/bash /bin/sh
-
 
 manifest.rb Parameters
 ======================
@@ -273,7 +236,7 @@ Katas Directory Structure
 =========================
 The rails code does NOT use a database.
 Instead each kata lives in a git-like directory structure based
-on the first 10 characters of a uuidgen. For example
+on its 10 character id. For example
   cyberdojo/katas/82/B583C347
 Each started avatar has a sub-directory underneath this, for example
   cyberdojo/katas/82/B583C347/wolf
@@ -311,6 +274,48 @@ red/amber/green status is saved in the avatar's sandbox folder and git
 committed. Running the tests is deliberately separated out to its own folder.
 This separation offers an easy future route to running dedicated servers just
 to run the tests.
+
+
+Only offering installed languages
+=================================
+The intention is to use a specific structure for the contents of the
+manifests to enable an automated check to see what is correctly installed
+and working, and to only offer installed and working languages when you
+setup a new coding practice. However at the moment when you setup a
+new coding practice all languages/ subfolders are offered.
+
+For each language...
+o) Cyber-Dojo searches through its manifests' :visible_filenames,
+   in sequence, looking for any that contain the string '42'
+o) If it doesn't find any it will not offer that language when
+   you configure a new kata.
+o) If it finds at least one file containing '42' it will pick the
+   first one as "the-42-file"
+o) It will then use the manifest to create a kata and run-the-tests
+   three times as follows:
+   test-1 - with the files unchanged.
+   test-2 - with the 42 in the-42-file replaced by 54
+   test-3 - with the 42 replaced by 4typo2
+o) If test-1 generates a red traffic-light and
+      test-2 generates a green traffic-light and
+      test-3 generates an amber traffic-light then
+   then the Cyber-Dojo server assumes the language is installed and working
+   and it will offer that language when you create a new kata.
+o) If the three tests return three amber traffic-lights then
+   the Cyber-Dojo server assumes the language is not installed
+   and it won't offer that language when you configure a new kata.
+o) If the three tests return any other combination of traffic-lights
+   the Cyber-Dojo server assumes the language is installed but not working.
+   
+You can test if a languages' initial fileset is correctly setup as follows
+>cd cyberdojo/test/unit
+>ruby installation_tests.rb
+(NB this is out of date and needs reworking after the rails 3 upgrade.)
+Note: this may issue the following error
+   sh: Syntax error: Bad fd number
+when this happened to me I fixed it as follows
+>sudo rm /bin/sh
+>sudo ln -s /bin/bash /bin/sh
 
 
 Getting dojos off the VirtualBox TurnKey Linux server

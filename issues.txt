@@ -47,8 +47,6 @@ Also, if a diff-view file has all new green lines perhaps
   Similarly, perhaps the filename of all deleted red lines
   should appear in red.
 -----
-dojo_controller.diff_save should be in diff_controller
------
 allow initial manifest.rb setup of initial exercise/language to
   contain subfolders.
 -----

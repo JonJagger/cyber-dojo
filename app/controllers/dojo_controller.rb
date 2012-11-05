@@ -4,14 +4,8 @@ require 'erb'
 require 'Files'
 require 'Folders'
 require 'Locking'
-require 'Uuid'
-require 'make_time_helper'
 
 class DojoController < ApplicationController
-  
-  include MakeTimeHelper
-  
-  #------------------------------------------------
   
   def index
     @title = 'Home'
@@ -47,29 +41,6 @@ class DojoController < ApplicationController
   
   #------------------------------------------------
   
-  def diff_save
-    kata = Kata.new(root_dir, params['id'])
-    params['language'] = kata.language.name
-    params['exercise'] = kata.exercise.name
-    info = gather_info
-    info[:diff_id] = params['id']
-    info[:diff_language] = params['language']
-    info[:diff_exercise] = params['exercise']
-    info[:diff_avatar] = params['avatar']
-    info[:diff_tag] = params['tag']      
-        
-    kata = Kata.new(root_dir, info[:diff_id])
-    avatar = Avatar.new(kata, info[:diff_avatar])
-    info[:visible_files] = avatar.visible_files(info[:diff_tag])
-    
-    Kata.create_new(root_dir, info)
-    
-    redirect_to :action => :index, 
-                :id => info[:id]
-  end
-  
-  #------------------------------------------------
-
   def exists_json
     respond_to do |format|
       format.json {
@@ -144,22 +115,7 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
-  
-  def gather_info    
-    language = Language.new(root_dir, params['language'])    
-    
-    { :created => make_time(Time.now),
-      :id => Uuid.new.to_s,
-      :browser => browser,
-      :language => language.name,
-      :exercise => params['exercise'],
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
-    }
-  end
-  
-  #------------------------------------------------
-  
+
   def random(array)
     array.shuffle[0]
   end
