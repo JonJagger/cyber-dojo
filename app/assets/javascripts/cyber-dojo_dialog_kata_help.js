@@ -95,7 +95,7 @@ var cyberDojo = (function(cd, $) {
 
     var kataHelp = imageButtons + testButton + hotKeys + improve;
 
-    cd.dialog(kataHelp, 540, 'help');
+    cd.dialog(kataHelp, 540, '?');
   };
 
   return cd;

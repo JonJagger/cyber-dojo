@@ -36,11 +36,14 @@ for diff/fork drop lengthy text on button and simply use
 this could go top-left to the right of the traffic-light.
 -----
 I'm contemplating changing the coding-page so that clicking
-on a top-row traffic-light reverts you to the files from
+on a top-row traffic-light allows you to revert to the files from
 that traffic-light (rather than bringing up a diff page).
 The avatar-icon still takes you to the dashboard, and the
 traffic-lights from the dashboard will still got the diff page.
 I think reverting might be particuarly useful for kids.
+-----
+Also contemplating adding colour syntax in the editor. Again
+I think this might be paricularly good for kids.
 -----
 add help button on diff page
 add help button on dashboard page

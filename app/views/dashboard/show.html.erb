@@ -46,7 +46,8 @@ $(document).ready(function() {
 <table align="center">
   <tr>
     <td align="center">
-      <%= render :partial => 'shared/yin_yang' %><br/>
+      <%= render :partial => 'shared/yin_yang' %>
+      <br/>
       <%= render :partial => 'shared/id_button' %>
       <div id="age">
         <%= render :partial => 'age' %>
@@ -63,27 +64,11 @@ $(document).ready(function() {
     </td>
     
     <td valign="center">
-      <%= render :partial => 'shared/raspberry_pi_logo' %>
-    </td>
-    
-    <td valign="center">
-      <table>
-        <tr>
-          <td>
-            <%= render :partial => 'shared/feedback_button' %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= render :partial => 'shared/donate_button' %>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= render :partial => 'tips_button' %>
-          </td>
-        </tr>
-      </table>
+      <%= render :partial => 'tips_button' %>
+      <br/>
+      <%= render :partial => 'shared/donate_button' %>
+      <br/>
+      <%= render :partial => 'shared/feedback_button' %>
     </td>
   </tr>  
 </table>
