@@ -31,11 +31,6 @@ $(document).ready(function() {
        "unit-test" : "<%= @kata.language.unit_test_framework %>",
         "exercise" : "<%= @kata.exercise.name %>",
          "created" : timeString(),
-      <% if @kata.diff %>
-        "diff_id" : "<%= @kata.diff.id %>",
-        "diff_avatar" : "<%= @kata.diff.avatar %>",
-        "diff_tag" : "<%= @kata.diff.tag %>"
-      <% end %>
     };
     
     cd.dialog_id("<%= @kata.id %>",info);

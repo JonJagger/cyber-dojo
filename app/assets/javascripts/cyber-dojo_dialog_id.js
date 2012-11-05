@@ -17,26 +17,8 @@ var cyberDojo = (function(cd, $) {
         fromDiff = true;
       }
     });
-    panel += '</table>';
-    
-    var id = '';
-    
-    if (fromDiff) {
-      var diffPanel = 
-          'This cyber-dojo was forked from<br/>'
-        + '&nbsp;&nbsp;&nbsp;<a href="/diff/show/' + info.diff_id 
-        +            '?avatar=' + info.diff_avatar
-        +            '&tag=' + info.diff_tag + '" '
-        +            'target="_blank">'
-        +            info.diff_id + '-' + info.diff_avatar + '-' + info.diff_tag
-        + '</a>';
-      id = $(cd.makeTable(cd.divPanel(panel),
-                          cd.divPanel(diffPanel)));
-      
-    } else {
-      id = $(cd.makeTable(cd.divPanel(panel)));
-    }
-    
+    panel += '</table>';    
+    var id = $(cd.makeTable(cd.divPanel(panel)));    
     cd.dialog(id.html(), 450, title);    
   };
   

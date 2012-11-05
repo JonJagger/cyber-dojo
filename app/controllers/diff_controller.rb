@@ -27,17 +27,10 @@ class DiffController < ApplicationController
     kata = Kata.new(root_dir, params['id'])
     params['language'] = kata.language.name
     params['exercise'] = kata.exercise.name
+    avatar = Avatar.new(kata, params['avatar'])
+
     info = gather_info
-    info[:diff_id] = params['id']
-    info[:diff_language] = params['language']
-    info[:diff_exercise] = params['exercise']
-    info[:diff_avatar] = params['avatar']
-    info[:diff_tag] = params['tag']      
-        
-    kata = Kata.new(root_dir, info[:diff_id])
-    avatar = Avatar.new(kata, info[:diff_avatar])
-    info[:visible_files] = avatar.visible_files(info[:diff_tag])
-    
+    info[:visible_files] = avatar.visible_files(info[:tag])    
     Kata.create_new(root_dir, info)
     
     redirect_to :controller => :dojo,

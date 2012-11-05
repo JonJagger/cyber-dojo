@@ -2,16 +2,11 @@
 require 'Files'
 require 'Folders'
 require 'Uuid'
-require 'make_time_helper.rb'
 
 class Kata
   
-  include MakeTimeHelper
-  extend MakeTimeHelper
-  
   def self.create_new(root_dir, info)    
-    id = Uuid.new(info[:id])
-    dir = root_dir + '/katas' + '/' + id.inner + '/' +   id.outer 
+    dir = Kata.new(root_dir, info[:id]).dir    
     Folders::make_folder(dir + '/')
     Files::file_write(dir + '/manifest.rb', info)
   end
@@ -25,14 +20,6 @@ class Kata
   def initialize(root_dir, id)
     @root_dir = root_dir
     @id = Uuid.new(id)
-  end
-  
-  def diff
-    if manifest[:diff_id]
-      Diff.new(manifest)
-    else
-      nil
-    end
   end
   
   def avatar_names
@@ -76,7 +63,7 @@ class Kata
   end
   
   def dir
-    @root_dir + '/' + 'katas' + '/' + @id.inner + '/' + @id.outer    
+    @root_dir + '/katas/' + @id.inner + '/' + @id.outer    
   end
   
   def id
