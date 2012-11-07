@@ -28,7 +28,7 @@ class DashboardController < ApplicationController
   end
   
   def maximum_columns
-    positive(:maximum_columns, 40)
+    positive(:maximum_columns, 30)
   end
 
   def positive(symbol, default)

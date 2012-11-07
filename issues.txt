@@ -44,6 +44,7 @@ I think reverting might be particuarly useful for kids.
 -----
 Also contemplating adding colour syntax in the editor. Again
 I think this might be paricularly good for kids.
+http://codemirror.net/ looks a good choice.
 -----
 add help button on diff page
 add help button on dashboard page
