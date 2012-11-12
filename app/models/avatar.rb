@@ -9,6 +9,7 @@ class Avatar
   include MakeTimeHelper
   
   def self.names
+    # no two animals start with the same letter
     %w(
         alligator buffalo cheetah deer
         elephant frog gorilla hippo

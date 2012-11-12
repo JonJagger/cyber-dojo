@@ -1,8 +1,0 @@
-
-<div id="current_traffic_light">
-  <% if @avatar.increments.length != 0 %>
-    <%  in_new_page = true %>
-    <%= linked_traffic_light(@kata, @avatar.name, @avatar.increments.last, in_new_page) %>
-  <% end %>
-</div>
-

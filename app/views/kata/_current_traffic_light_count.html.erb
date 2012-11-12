@@ -1,7 +1,7 @@
 
 <div id="current_traffic_light_count">
   <% if @avatar.increments.length != 0 %>
-      <span class="tag_count">
+      <span class="tag_count <%=@avatar.increments[-1][:outcome].to_s%>">
         <%= @avatar.increments.length %>
       </span>
     </td>        

@@ -6,7 +6,7 @@ almost certainly run out of inodes before running out of
 disk space. I need an automated process that moves dojos that have
 a minimum number of traffic lights and are at least 10 days
 old (say) onto a separate server (or at the very minimum
-into a separate folder on the same server.
+into a separate folder on the same server. Or simply deletes them.
 -----
 Sandboxes could be retained across run-test submissions.
 This would allow, for example, incremental makes.
@@ -39,7 +39,7 @@ I'm contemplating changing the coding-page so that clicking
 on a top-row traffic-light allows you to revert to the files from
 that traffic-light (rather than bringing up a diff page).
 The avatar-icon still takes you to the dashboard, and the
-traffic-lights from the dashboard will still got the diff page.
+traffic-lights from the dashboard will still go to the diff page.
 I think reverting might be particuarly useful for kids.
 -----
 Also contemplating adding colour syntax in the editor. Again
