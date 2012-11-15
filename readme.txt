@@ -12,13 +12,13 @@ You will be assigned a 10-character id.
 
 Start coding
 ============
-Enter the 10-character (case insensutive, 5 chars are usually enough) id
+Enter the 10-character id (case insensitive, 5 chars are usually enough)
 on each participating computer and click start coding.
 The server will assign each computer an animal 'avatar' (eg Panda).
 The animal provides identity for each computer.
-You can resume coding at any time by choosing the animal. 
-This is handy if a laptop has to retire as a new laptop can
-instantly replace it.
+You can resume coding (from the home page) at any time by choosing
+the animal. This is handy if a participant has to leave and take their
+laptop as a new laptop can instantly replace it.
 
 
 Traffic Lights
