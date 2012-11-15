@@ -31,6 +31,14 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+the diff-view would benefit from showing deleted files.
+-----
+add help button on diff page
+-----
+add help button on dashboard page
+-----
+show labelled horizontal time axis on the dasboard page
+-----
 for diff/fork drop lengthy text on button and simply use
 "fork a new dojo" with a small fork icon.
 this could go top-left to the right of the traffic-light.
@@ -61,18 +69,14 @@ http://codemirror.net/ looks a good choice.
 I think it would do tabbing which would remove the need
 for jquery-tabby plugin and also for the makefile tab nonsense.
 -----
-the diff-view would benefit from showing deleted files.
------
-add help button on diff page
-add help button on dashboard page
------
 Also, if a diff-view file has all new green lines perhaps
   the filename should appear green in the filelist.
   Similarly, perhaps the filename of all deleted red lines
   should appear in red.
 -----
 allow initial manifest.rb setup of initial exercise/language to
-  contain subfolders.
+  contain subfolders. Do I need this? Could it already be done
+  with links? 
 -----
 once a dojo has been created it should be independent of the
   initial exercise and language filesets it was created from.
