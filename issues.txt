@@ -31,6 +31,10 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
+test/installation/installation_tests.rb need some TLC
+-----
+change inc[:outcome] to inc[:color]
+-----
 the diff-view would benefit from showing deleted files.
 -----
 add help button on diff page
@@ -42,8 +46,6 @@ show labelled horizontal time axis on the dasboard page
 for diff/fork drop lengthy text on button and simply use
 "fork a new dojo" with a small fork icon.
 this could go top-left to the right of the traffic-light.
------
-test/installation/installation_tests.rb need some TLC
 -----
 I'm contemplating changing the coding-page so that clicking
 on a top-row traffic-light allows you to revert to the files from

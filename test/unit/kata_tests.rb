@@ -10,29 +10,12 @@ class KataTests < ActionController::TestCase
     assert_equal expected, kata.all_increments
   end
   
-  test "create new kata from diff traffic-light extra diff properties are available" do
-    id = 'ABCDABCD34'
-    now = [2012,3,3,10,6,12]
-    info = make_info('Dummy', 'Yahtzee', id, now)
-    info[:diff_id] = 'ABCDABCD23'
-    info[:diff_avatar] = 'frog'
-    info[:diff_tag] = 23
-    Kata.create_new(root_dir, info)
-    kata = Kata.new(root_dir, info[:id])
-    assert_not_nil kata.diff
-    assert_equal info[:diff_id], kata.diff.id
-    assert_equal info[:diff_avatar], kata.diff.avatar
-    assert_equal info[:diff_tag], kata.diff.tag
-  end
-  
   test "create new named kata creates manifest with required properies" do
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
     info = make_info('Dummy', 'Yahtzee', id, now)
     Kata.create_new(root_dir, info)
     kata = Kata.new(root_dir, info[:id])
-    
-    assert_nil kata.diff
     
     assert_equal root_dir + '/katas/AB/CDABCD34', kata.dir
     assert File.directory?(kata.dir), "File.directory?(#{kata.dir})"

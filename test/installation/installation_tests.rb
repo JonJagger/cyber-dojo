@@ -9,7 +9,7 @@ class InstallationTests < ActionController::TestCase
     if !ok
       puts "Installation check failed!!! not testing actual installed languages"
     else
-      puts "\nOK. Now determining what's on this CyberDojo server..."
+      puts "\nOK. Now determining what's on this Cyber-Dojo server..."
       puts "   (this will take a minute or two)"
       
       installed_and_working,
@@ -36,7 +36,7 @@ class InstallationTests < ActionController::TestCase
     
     ['C assert', 'Dummy', 'Ruby-installed-and-working'] == installed_and_working &&
     ['Ruby-no-42-file'] == cannot_check_because_no_42_file &&
-    ['Ruby-not-installed'] == not_installed &&
+    ['C#','Ruby-not-installed'] == not_installed &&
     ['Ruby-installed-but-not-working'] == installed_but_not_working
   end
   
@@ -212,10 +212,11 @@ class InstallationTests < ActionController::TestCase
   end
   
   def language_test(filename, rhs)
-    kata = make_kata(@language)
+    kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
     avatar = Avatar.new(kata, 'hippo')
     visible_files = avatar.visible_files
-    test_code = visible_files[filename]    
+    test_code = visible_files[filename]
+    assert_not_nil test_code
     visible_files[filename] = test_code.sub('42', rhs)
     run_tests(avatar, visible_files)
     avatar.increments.last[:outcome]

@@ -56,8 +56,8 @@ class ActiveSupport::TestCase
     }
   end
   
-  def make_kata(language_name, exercise_name = 'Yahtzee')
-    info = make_info(language_name, exercise_name)
+  def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
+    info = make_info(language_name, exercise_name, id)
     Kata.create_new(root_dir, info)
     Kata.new(root_dir, info[:id])
   end
