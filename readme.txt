@@ -12,7 +12,8 @@ You will be assigned a 10-character id.
 
 Start coding
 ============
-Enter the 10-character id on each partcipating computer and click start coding.
+Enter the 10-character (case insensutive, 5 chars are usually enough) id
+on each participating computer and click start coding.
 The server will assign each computer an animal 'avatar' (eg Panda).
 The animal provides identity for each computer.
 You can resume coding at any time by choosing the animal. 
@@ -273,7 +274,13 @@ amber, or green). Then, the visible files (with the output added to it) and the
 red/amber/green status is saved in the avatar's sandbox folder and git
 committed. Running the tests is deliberately separated out to its own folder.
 This separation offers an easy future route to running dedicated servers just
-to run the tests.
+to run the tests. The structure of temporary cyberdojo/sandboxes sub-folder
+(where the tests are run from) mirrors the cyberdojo/katas sub-folder. Eg
+  cyberdojo/katas/45/7ED34A21/lion
+  cyberdojo/sandboxes/45/7ED34A21/lion
+This allows for a possible future feature where the sandbox is not deleted
+after each run test event. This could enable, for example, incremental makes.
+
 
 
 Only offering installed languages
@@ -308,7 +315,7 @@ o) If the three tests return any other combination of traffic-lights
    the Cyber-Dojo server assumes the language is installed but not working.
    
 You can test if a languages' initial fileset is correctly setup as follows
->cd cyberdojo/test/unit
+>cd cyberdojo/test/installation
 >ruby installation_tests.rb
 (NB this is out of date and needs reworking after the rails 3 upgrade.)
 Note: this may issue the following error
