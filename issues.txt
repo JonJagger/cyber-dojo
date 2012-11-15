@@ -35,21 +35,37 @@ for diff/fork drop lengthy text on button and simply use
 "fork a new dojo" with a small fork icon.
 this could go top-left to the right of the traffic-light.
 -----
+test/installation/installation_tests.rb need some TLC
+-----
 I'm contemplating changing the coding-page so that clicking
 on a top-row traffic-light allows you to revert to the files from
 that traffic-light (rather than bringing up a diff page).
 The avatar-icon still takes you to the dashboard, and the
 traffic-lights from the dashboard will still go to the diff page.
-I think reverting might be particuarly useful for kids.
+I think reverting might be particularly useful for kids.
+This must not cause the forward/backward button on the browser
+to become enabled. Javascript will attach handler to the traffic-light.
+This will need to do ajax call to get the visible files. These will
+(ultimately) be displayed in a dialog. These files need to
+be placed into the editor in place of those currently in place.
+cyber-dojo.sh and output cannot be deleted though....special case them.
+Should I have forward/backward buttons on the revert dialog? (like
+diff page). I could just have forward/backward buttons on the
+diff pages and you use those to select the traffic-light you
+want to revert to. Either way I need the traffic-light number,
+and the avatar image and the traffic-light in the dialog.
 -----
 Also contemplating adding colour syntax in the editor. Again
 I think this might be paricularly good for kids.
 http://codemirror.net/ looks a good choice.
+I think it would do tabbing which would remove the need
+for jquery-tabby plugin and also for the makefile tab nonsense.
+-----
+the diff-view would benefit from showing deleted files.
 -----
 add help button on diff page
 add help button on dashboard page
 -----
-the diff-view would benefit from showing deleted files.
 Also, if a diff-view file has all new green lines perhaps
   the filename should appear green in the filelist.
   Similarly, perhaps the filename of all deleted red lines
