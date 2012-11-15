@@ -20,12 +20,12 @@ class GitDiffViewTests < ActionController::TestCase
 
     # create tag 1 in the repo
     run_tests(avatar, visible_files)
-    assert_equal :red, avatar.increments.last[:outcome], avatar.visible_files["output"]
+    assert_equal :red, avatar.increments.last[:colour], avatar.visible_files["output"]
 
     # create tag 2 in the repo 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
     run_tests(avatar, visible_files)
-    assert_equal :green, avatar.increments.last[:outcome]
+    assert_equal :green, avatar.increments.last[:colour]
     
     tag = 2    
     view = git_diff_view(avatar, tag)

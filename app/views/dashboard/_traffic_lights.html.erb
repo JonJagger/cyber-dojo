@@ -79,7 +79,7 @@
           <div class="micro tag_count">
             <% [:red,:amber,:green].each do |bulb| %>
             <div class="<%= bulb %>">
-              <%= all_lights[avatar_name].select{ |light| light[:outcome] == bulb }.length %>
+              <%= all_lights[avatar_name].select{ |light| light[:colour] == bulb }.length %>
             </div>       
             <% end %>
           </div>

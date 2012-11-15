@@ -7,7 +7,7 @@ class TrafficLightTests < ActionController::TestCase
 
   test "unlinked traffic light red" do
     inc = make_inc
-    inc[:outcome] = :red
+    inc[:colour] = :red
     expected =
       "<span title='2012 May 1, 23:20:45'>" +    
       "<img src='/images/traffic_light_red.png' border='0' width='#{width}' height='#{height}'/>" +
@@ -17,7 +17,7 @@ class TrafficLightTests < ActionController::TestCase
   
   test "unlinked traffic light amber" do
     inc = make_inc
-    inc[:outcome] = :amber
+    inc[:colour] = :amber
     expected =
       "<span title='2012 May 1, 23:20:45'>" +    
       "<img src='/images/traffic_light_amber.png' border='0' width='#{width}' height='#{height}'/>" +
@@ -27,7 +27,7 @@ class TrafficLightTests < ActionController::TestCase
   
   test "unlinked traffic light green" do
     inc = make_inc
-    inc[:outcome] = :green
+    inc[:colour] = :green
     expected =
       "<span title='2012 May 1, 23:20:45'>" +
       "<img src='/images/traffic_light_green.png' border='0' width='#{width}' height='#{height}'/>" +

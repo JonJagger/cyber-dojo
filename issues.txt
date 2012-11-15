@@ -31,10 +31,6 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-test/installation/installation_tests.rb need some TLC
------
-change inc[:outcome] to inc[:color]
------
 the diff-view would benefit from showing deleted files.
 -----
 add help button on diff page

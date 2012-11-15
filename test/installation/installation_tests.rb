@@ -219,7 +219,7 @@ class InstallationTests < ActionController::TestCase
     assert_not_nil test_code
     visible_files[filename] = test_code.sub('42', rhs)
     run_tests(avatar, visible_files)
-    avatar.increments.last[:outcome]
+    avatar.increments.last[:colour]
   end    
 
 end

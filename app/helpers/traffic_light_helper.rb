@@ -1,6 +1,13 @@
 
 module TrafficLightHelper
 
+  def revert_traffic_light(inc)
+    bulb = inc[:colour].to_s
+    ("<span title='Revert to traffic-light #{inc[:number]} (#{bulb})'>" +
+     untitled_unlinked_traffic_light(inc) +
+     "</span>").html_safe
+  end
+  
   def linked_traffic_light(kata, avatar_name, inc, in_new_window)
     new_window = in_new_window ? { :target => '_blank' } : { }
     
@@ -16,7 +23,7 @@ module TrafficLightHelper
   end
   
   def untitled_unlinked_traffic_light(inc)
-    bulb = inc[:outcome].to_s
+    bulb = inc[:colour].to_s
     ("<img src='/images/traffic_light_#{bulb}.png'" +
       " border='0'" +
       " width='20'" +
@@ -24,7 +31,7 @@ module TrafficLightHelper
   end
   
   def unlinked_traffic_light(inc)
-    bulb = inc[:outcome].to_s
+    bulb = inc[:colour].to_s
     ("<span title='#{at(inc)}'>" +
      untitled_unlinked_traffic_light(inc) +
      "</span>").html_safe
