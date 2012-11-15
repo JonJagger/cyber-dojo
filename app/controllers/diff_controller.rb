@@ -14,10 +14,8 @@ class DiffController < ApplicationController
     diffed_files = git_diff_view(@avatar, tag, visible_files)    
     @diffs = git_diff_prepare(@avatar, tag, diffed_files)
     if @traffic_lights_to_tag == [ ]
-      @outcome = ''
       @current_filename_id = @diffs.find {|diff| diff[:name] == 'instructions'}[:id]
     else
-      @outcome = @traffic_lights_to_tag.last[:outcome]
       @current_filename_id = most_changed_lines_file_id(@diffs)
     end
     @title = 'Diff'
