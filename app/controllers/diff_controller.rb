@@ -18,7 +18,7 @@ class DiffController < ApplicationController
     else
       @current_filename_id = most_changed_lines_file_id(@diffs)
     end
-    @title = 'diff ' + id[0..4] + ' ' + @avatar.name
+    @title = id[0..4] + ' diff ' + @avatar.name
   end
    
   def fork

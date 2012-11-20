@@ -61,12 +61,6 @@ diff pages and you use those to select the traffic-light you
 want to revert to. Either way I need the traffic-light number,
 and the avatar image and the traffic-light in the dialog.
 -----
-Also contemplating adding colour syntax in the editor. Again
-I think this might be paricularly good for kids.
-http://codemirror.net/ looks a good choice.
-I think it would do tabbing which would remove the need
-for jquery-tabby plugin and also for the makefile tab nonsense.
------
 Also, if a diff-view file has all new green lines perhaps
   the filename should appear green in the filelist.
   Similarly, perhaps the filename of all deleted red lines

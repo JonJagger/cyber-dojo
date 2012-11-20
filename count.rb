@@ -43,17 +43,17 @@ stats.sort.each do |ymdw,n|
 end
 
 print "\n"
-print "languages" + "\n"
-print "---------" + "\n"
+print "dojos per language" + "\n"
+print "------------------" + "\n"
 languages.sort.each do |language,n|
-  print language + "\t" + n.to_s + "\n"
+  print n.to_s + "\t" + language + "\n"
 end
 
 print "\n"
-print "exercises" + "\n"
-print "---------" + "\n"
+print "dojos per exercise" + "\n"
+print "------------------" + "\n"
 exercises.sort.each do |exercise,n|
-  print exercise + "\t" + n.to_s + "\n"
+  print n.to_s + "\t" + exercise + "\n"
 end
 
 print "\n"
