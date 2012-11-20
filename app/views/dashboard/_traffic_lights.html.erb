@@ -35,7 +35,7 @@
                  <tr>
                    <% td.each do |light| %>
                      <td>
-                       <%  in_new_window = false %>
+                       <%  in_new_window = true %>
                        <%= linked_traffic_light(@kata, avatar_name, light, in_new_window) %>
                      </td>
                    <% end %>
@@ -63,7 +63,8 @@
                   :id => @kata.id,
                   :avatar => avatar_name,
                   :tag => 1
-                }
+                },
+                :target => '_blank'
             %>
            <div class="tiny">
              <%= avatar_name %>
@@ -71,7 +72,7 @@
          </td>
          
         <td>
-          <%  in_new_window = false %>            
+          <%  in_new_window = true %>            
           <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) %>
         </td>
           
