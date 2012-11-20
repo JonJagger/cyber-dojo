@@ -8,6 +8,8 @@
 require './script_lib.rb'
 
 stats = { }
+exercises = { }
+languages = { }
 index('katas') do |kata_dir|
   begin
     manifest_filename = "#{kata_dir}/manifest.rb"
@@ -18,6 +20,12 @@ index('katas') do |kata_dir|
         ymd = [created.year, created.month, created.day, created.strftime('%a')]
         stats[ymd] ||= 0
         stats[ymd] += 1
+        exercise = manifest[:exercise]
+        exercises[exercise] ||= 0
+        exercises[exercise] += 1
+        language = manifest[:language]
+        languages[language] ||= 0
+        languages[language] += 1
       rescue Exception => e
         puts "Exception from #{kata_dir}"        
       end
@@ -27,7 +35,25 @@ index('katas') do |kata_dir|
   end
 end
 
+print "\n"
+print "dojos per day" + "\n"
+print "-------------" + "\n"
 stats.sort.each do |ymdw,n|
   print ymdw.inspect + "\t" + n.to_s + "\n"
 end
 
+print "\n"
+print "languages" + "\n"
+print "---------" + "\n"
+languages.sort.each do |language,n|
+  print language + "\t" + n.to_s + "\n"
+end
+
+print "\n"
+print "exercises" + "\n"
+print "---------" + "\n"
+exercises.sort.each do |exercise,n|
+  print exercise + "\t" + n.to_s + "\n"
+end
+
+print "\n"
