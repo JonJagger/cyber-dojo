@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
 require 'make_time_helper'
+require 'Uuid'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
