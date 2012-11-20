@@ -8,7 +8,7 @@ $(document).ready(function() {
       if (!dojo.exists) {
         cd.dialog_cantFindDojo('review-coding', id);
       } else {
-        cd.postTo('/dashboard/show', { id: id });
+        cd.postTo('/dashboard/show', { id: id }, '_blank');
       }
     });
   });
