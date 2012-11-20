@@ -70,7 +70,7 @@ a:link, a:visited
   @include font-size-medium();
 }
 
-#about, #basics, #faqs, #feedback, #links, #source, #tips, #why
+#about, #basics, #donations, #faqs, #feedback, #links, #source, #tips, #why
 {
   @include font-size-tiny();
 }
@@ -91,4 +91,9 @@ a:link, a:visited
   height: 35em;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+#thank_you
+{
+  @include font-size-large();
 }

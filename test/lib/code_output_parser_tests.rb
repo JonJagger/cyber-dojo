@@ -96,5 +96,29 @@ HERE
   test "go anything else is amber" do
     assert_equal :amber, CodeOutputParser::parse_go_testing("anything else")
   end
-end 
+  
+  test "was a green C/C++ assert case" do
+amber_output = <<HERE    
+g++ -Wall -Werror -O *.cpp -o run.tests
+./run.tests
+terminate called after throwing an instance of 'std::out_of_range'
+  what():  vector::_M_range_check
+make: *** [run.tests.output] Aborted
+HERE
+    assert_equal :amber, CodeOutputParser::parse_cassert(amber_output)    
+  end
+  
+  test "another green C/C++ assert case" do
+green_output = <<HERE    
+g++ -Wall -Werror -O *.cpp -o run.tests
+./run.tests
+..
+2 tests passed
+HERE
+    assert_equal :green, CodeOutputParser::parse_cassert(green_output)        
+  end
+  
+  
+end
+
 
