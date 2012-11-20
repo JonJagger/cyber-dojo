@@ -1,15 +1,11 @@
-# A ruby script to display the count of katas per day
-#
-# ruby count.rb
-# [2012,5,17, "Tue"] 14
-# [2012,5,18, "Wed"] 26
-# [2012,5,19, "Thu"] 32
+# A ruby script to display the count of
+# dojos per day, dojos per language, and dojos per exercise
 
 require './script_lib.rb'
 
 stats = { }
-exercises = { }
 languages = { }
+exercises = { }
 index('katas') do |kata_dir|
   begin
     manifest_filename = "#{kata_dir}/manifest.rb"
@@ -20,40 +16,40 @@ index('katas') do |kata_dir|
         ymd = [created.year, created.month, created.day, created.strftime('%a')]
         stats[ymd] ||= 0
         stats[ymd] += 1
-        exercise = manifest[:exercise]
-        exercises[exercise] ||= 0
-        exercises[exercise] += 1
         language = manifest[:language]
         languages[language] ||= 0
         languages[language] += 1
+        exercise = manifest[:exercise]
+        exercises[exercise] ||= 0
+        exercises[exercise] += 1
       rescue Exception => e
         puts "Exception from #{kata_dir}"        
       end
     end
   rescue Exception => e
-    print "---->Exception raised for #{kata_dir}: #{e.message}\n"
+    puts "---->Exception raised for #{kata_dir}: #{e.message}"
   end
 end
 
-print "\n"
-print "dojos per day" + "\n"
-print "-------------" + "\n"
+puts ""
+puts "dojos per day"
+puts "-------------"
 stats.sort.each do |ymdw,n|
-  print ymdw.inspect + "\t" + n.to_s + "\n"
+  puts ymdw.inspect + "\t" + n.to_s
 end
 
-print "\n"
-print "dojos per language" + "\n"
-print "------------------" + "\n"
+puts ""
+puts "dojos per language"
+puts "------------------"
 languages.sort.each do |language,n|
-  print n.to_s + "\t" + language + "\n"
+  puts n.to_s + "\t" + language
 end
 
-print "\n"
-print "dojos per exercise" + "\n"
-print "------------------" + "\n"
+puts ""
+puts "dojos per exercise"
+puts "------------------"
 exercises.sort.each do |exercise,n|
-  print n.to_s + "\t" + exercise + "\n"
+  puts n.to_s + "\t" + exercise
 end
 
-print "\n"
+puts ""
