@@ -19,7 +19,7 @@ var cyberDojo = (function(cd, $) {
           "Olve Maudal, Mike Long, Mathieu Baron, "
         + "Steve Coates, Johannes van Tonder, Santeri Vesalainen, "
         + "Alexander Ottesen, Lars Storjord, Anders Schau Knatten, "
-        + "Mike Sutton, James Grenning, Allan Kelly"
+        + "Mike Sutton, James Grenning, Allan Kelly, Randall White"
       );
 
     var thankYou =
