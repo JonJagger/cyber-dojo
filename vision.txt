@@ -48,7 +48,12 @@ They could be specialized to particular areas. For example Mikes Cyber-Dojo
 could be run from Oslo and host just C katas. 
 
 
-
-
-
+Concurrent players as one avatar
+--------------------------------
+Allow multiple computers to enter as the same avatar. Whenever
+a computer presses test-button their files are committed and pushed
+to all other laptops (via ajax). If there is a merge conflict the
+commit is rejected. Or... player A can edit and commit a file before
+player B and thus player B loses his edits as the edited file is
+overwritten be being pushed from the server.
 

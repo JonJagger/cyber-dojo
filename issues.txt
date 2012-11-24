@@ -31,25 +31,20 @@ The Diff view doesn't work properly in IE8.
 
 MINOR
 -----
-old increments.rb files need to have inc[:outcome] translated into inc[:colour]
-so traffic-light images work.
------
 the diff-view would benefit from showing deleted files.
 -----
 add help button on diff page
 -----
 add help button on dashboard page
 -----
-show labelled horizontal time axis on the dasboard page
------
 for diff/fork drop lengthy text on button and simply use
 "fork a new dojo" with a small fork icon.
 this could go top-left to the right of the traffic-light.
 -----
-Also, if a diff-view file has all new green lines perhaps
-  the filename should appear green in the filelist.
-  Similarly, perhaps the filename of all deleted red lines
-  should appear in red.
+I'd like the rightmost column of avatar images on the dashboard
+  to not scroll off screen. But at the same time I'd also like
+  the time-moving traffic-lights to update (to the avatar image's
+  left) every 10 seconds.
 -----
 allow initial manifest.rb setup of initial exercise/language to
   contain subfolders. Do I need this? Could it already be done
@@ -59,6 +54,9 @@ once a dojo has been created it should be independent of the
   initial exercise and language filesets it was created from.
   For example, you should be able to rename a languages sub-folder
   and a dojo created from it before the rename should be ok.
+-----
+old increments.rb files need to have inc[:outcome] translated into inc[:colour]
+so traffic-light images work.
 -----
 the use of the sandbox folder under the animals folder could probably be dropped
   now that the execution of cyber-dojo.sh happens in a dedicated separate sandbox folder
