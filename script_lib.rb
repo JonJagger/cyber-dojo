@@ -29,13 +29,14 @@ def is_dir?(root_dir,sub_dir)
 end
 
 def index(kata_root)
-  Dir.entries(kata_root).each do |outer_dir| 
+  Dir.entries(kata_root).each do |outer_dir|
     if is_dir?(kata_root, outer_dir) 
       outer_path = File.join(kata_root, outer_dir)
       Dir.entries(outer_path).each do |inner_dir|
         if is_dir?(outer_path,inner_dir) 
           inner_path = File.join(outer_path, inner_dir)
-          yield inner_path
+          id = outer_dir + inner_dir
+          yield inner_path, id
         end
       end      
     end

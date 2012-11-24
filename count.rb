@@ -1,12 +1,16 @@
 # A ruby script to display the count of
 # dojos per day, dojos per language, and dojos per exercise
+# to see the ids of all counted dojos (in their catagories)
+# $ruby count.rb true
 
 require './script_lib.rb'
+
+show_ids = (ARGV[0] || "false")
 
 stats = { }
 languages = { }
 exercises = { }
-index('katas') do |kata_dir|
+index('katas') do |kata_dir,id|
   begin
     manifest_filename = "#{kata_dir}/manifest.rb"
     if File.exists? manifest_filename
@@ -17,11 +21,11 @@ index('katas') do |kata_dir|
         stats[ymd] ||= 0
         stats[ymd] += 1
         language = manifest[:language]
-        languages[language] ||= 0
-        languages[language] += 1
+        languages[language] ||= [ ]
+        languages[language] << id
         exercise = manifest[:exercise]
-        exercises[exercise] ||= 0
-        exercises[exercise] += 1
+        exercises[exercise] ||=  [ ]
+        exercises[exercise] << id
       rescue Exception => e
         puts "Exception from #{kata_dir}"        
       end
@@ -42,14 +46,22 @@ puts ""
 puts "dojos per language"
 puts "------------------"
 languages.sort.each do |language,n|
-  puts n.to_s + "\t" + language
+  if show_ids == "true"
+    puts language + "\t" + n.to_s
+  else
+    puts n.length.to_s + "\t" + language
+  end
 end
 
 puts ""
 puts "dojos per exercise"
 puts "------------------"
 exercises.sort.each do |exercise,n|
-  puts n.to_s + "\t" + exercise
+  if show_ids == "true"
+    puts exercise + "\t" + n.to_s
+  else
+    puts n.length.to_s + "\t" + exercise
+  end
 end
 
 puts ""
