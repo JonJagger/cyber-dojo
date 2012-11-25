@@ -166,6 +166,17 @@ I then had to add the following line to /etc/apache2/envvars/
 (ensure JavaScript node is installed first as per instructions above)
 -----PHP (3MB)
 #apt-get install phpunit
+-----C/C++ upgrade (80MB)
+#sudo apt-get install python-software-properties
+#sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+#sudo apt-get update
+#sudo apt-get install gcc-4.7 g-4.7
+#sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.4 60 --slave /usr/bin/g g /usr/bin/g-4.4
+#sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g g /usr/bin/g-4.7
+#sudo update-alternatives --config gcc
+and select 2. Finally (39MB)
+#sudo apt-get install valgrind
+
 
 
 Adding a new exercise
