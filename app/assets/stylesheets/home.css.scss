@@ -52,7 +52,7 @@ a:link, a:visited
   text-align: center;
 }
 
-#enter_your_id
+#enter_your_id, .coding
 {
   color: lighten($green,15%);
   @include font-size-medium();  
