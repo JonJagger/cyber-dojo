@@ -23,7 +23,7 @@ class Avatar
     @name = name
     if !File.exists? dir
       Dir::mkdir(dir)   
-      Dir::mkdir(sandbox)            
+      #Dir::mkdir(sandbox)   #DROP???         
       Files::file_write(pathed(Manifest_filename), @kata.visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
       command = "git init --quiet;" +
@@ -83,6 +83,12 @@ private
   end
   
   def git_commit_tag(visible_files, tag)
+    # recreate new empty sandbox so deleted files
+    # are not in it and so are seen as deleted
+    # by the git diff command above
+    system("rm -rf #{sandbox}")
+    Dir::mkdir(sandbox)
+    
     command = ""
     visible_files.each do |filename,content|
       pathed_filename = sandbox + '/' + filename

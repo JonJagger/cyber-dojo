@@ -2,7 +2,7 @@
 module GitDiff
 
   # Parses the output of 'git diff' command.
-  # Specfically, the one in git_diff_view()
+  # Specfically, the one in GitDiffParser.rb git_diff_view()
   # Also, see test/unit/git_diff_parser_tests.rb
 
   class GitDiffParser 

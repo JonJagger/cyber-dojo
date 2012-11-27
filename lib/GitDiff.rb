@@ -13,16 +13,21 @@ module GitDiff
   
   def git_diff_view(avatar, tag, visible_files = nil)
       visible_files ||= avatar.visible_files(tag)      
-      diff_lines = avatar.diff_lines(tag)
+      diff_lines = avatar.diff_lines(tag)      
       view = { }      
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
-        if md && !deleted_file?(md[1])
-          name = md[2]
-          file_content = visible_files[name]
-          view[name] = GitDiffBuilder.new().build(diff, line_split(file_content))
-          visible_files.delete(name)
+        if md
+          filename = md[2]
+          if deleted_file?(md[1])
+            file_content = diff[:chunks][0][:sections][0][:deleted_lines]
+            view[filename] = deleteify(file_content)            
+          else
+            file_content = visible_files[filename]
+            view[filename] = GitDiffBuilder.new().build(diff, line_split(file_content))
+          end
+          visible_files.delete(filename)
         end
       end
 
@@ -115,11 +120,23 @@ module GitDiff
   #-----------------------------------------------------------
 
   def sameify(source)
+    ify(line_split(source), :same)
+  end
+
+  #-----------------------------------------------------------
+
+  def deleteify(lines)
+    ify(lines, :deleted)
+  end
+
+  #-----------------------------------------------------------
+
+  def ify(lines,type)
     result = [ ]
-    line_split(source).each_with_index do |line,number|
+    lines.each_with_index do |line,number|
       result << {
         :line => line,
-        :type => :same,
+        :type => type,
         :number => number + 1
       }
     end

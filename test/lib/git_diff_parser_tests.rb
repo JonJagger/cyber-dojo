@@ -156,7 +156,80 @@ expected =
     assert_equal expected, actual
 
   end
-  
+
+  #-----------------------------------------------------
+
+  test "parse another diff-form of a deleted file" do
+
+lines = <<HERE
+diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb
+deleted file mode 100644
+index 5c4b3ab..0000000
+--- a/sandbox/untitled.rb
++++ /dev/null
+@@ -1,3 +0,0 @@
+-def answer
+-  42
+-end
+HERE
+
+expected =
+{
+  'a/sandbox/untitled.rb' =>
+  {
+    :prefix_lines => 
+    [
+        "diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb",
+        "deleted file mode 100644",
+        "index 5c4b3ab..0000000",
+    ],
+    :was_filename => 'a/sandbox/untitled.rb',
+    :now_filename => '/dev/null',
+    :chunks => 
+    [
+      {
+        :range =>
+        {
+          :was =>
+          {
+            :start_line => 1,
+            :size => 3
+          },
+          :now =>
+          {
+            :start_line => 0,
+            :size => 0
+          }
+        },
+        :before_lines => [ ],
+        :sections =>
+        [
+          {
+          :deleted_lines => ["def answer", "  42", "end"],
+          :added_lines => [ ],
+          :after_lines => [ ]
+          }
+        ]
+      }
+    ]        
+  }
+}
+
+    parser = GitDiffParser.new(lines)    
+    actual = parser.parse_all
+    assert_equal expected, actual
+
+    assert_equal ["def answer","  42", "end"],
+      actual['a/sandbox/untitled.rb'][:chunks][0][:sections][0][:deleted_lines]
+      
+    md = %r|^(.)/sandbox/(.*)|.match('a/sandbox/untitled.rb')
+    assert_not_nil md
+    assert_equal 'a', md[1]
+    filename = md[2]
+    assert_equal 'untitled.rb', filename
+    
+  end
+
   #-----------------------------------------------------
 
   test "parse diff for renamed but unchanged file and newname is quoted" do

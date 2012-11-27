@@ -12,7 +12,7 @@ class GitDiffViewTests < ActionController::TestCase
 
     visible_files =
       {
-        'cyber-dojo.sh'     => cyberdojo_sh,
+        'cyber-dojo.sh'    => cyberdojo_sh,
         'untitled.rb'      => untitled_rb,
         'test_untitled.rb' => test_untitled_rb,
         'output'           => '' 
@@ -47,6 +47,44 @@ class GitDiffViewTests < ActionController::TestCase
     
     assert_equal expected, view
     
+  end
+
+  #-----------------------------------------------
+
+  test "building git diff view from repo with deleted file" do
+    kata = make_kata('Ruby-installed-and-working')
+    avatar = Avatar.new(kata, 'wolf')    
+    # that will have created tag 0 in the repo
+
+    visible_files =
+      {
+        'cyber-dojo.sh'    => cyberdojo_sh,
+        'untitled.rb'      => untitled_rb,
+        'test_untitled.rb' => test_untitled_rb,
+        'output'           => '' 
+      }
+
+    # create tag 1 in the repo
+    run_tests(avatar, visible_files)
+    assert_equal :red, avatar.increments.last[:colour], avatar.visible_files["output"]
+
+    # create tag 2 in the repo 
+    visible_files.delete('untitled.rb')
+    run_tests(avatar, visible_files)
+    assert_equal :amber, avatar.increments.last[:colour]
+    
+    tag = 2    
+    view = git_diff_view(avatar, tag)
+    view.delete('output')
+
+    expected =
+    {
+      'untitled.rb'      => deleteify(line_split(untitled_rb)),
+      'test_untitled.rb' => sameify(test_untitled_rb),
+      'cyber-dojo.sh'    => sameify(cyberdojo_sh)
+    }
+    
+    assert_equal expected, view
   end
 
   #-----------------------------------------------
@@ -112,6 +150,18 @@ HERE
     assert_equal expected, sameify(great_great_film)
   end
   
+  test "deleteify" do
+    expected =
+    [
+      { :line => "once",        :type => :deleted, :number => 1 },
+      { :line => "upon a",      :type => :deleted, :number => 2 },
+      { :line => "time",        :type => :deleted, :number => 3 },
+      { :line => "in the west", :type => :deleted, :number => 4 },
+    ]
+    assert_equal expected, deleteify(line_split(great_great_film))
+  end
+
+
   def great_great_film 
 <<HERE
 once
