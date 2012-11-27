@@ -1,11 +1,5 @@
 
 class DashboardController < ApplicationController
-   
-  # I'd like the dashboard for a finished kata to be pure client side.
-  # Create all diffs for all increments for all animals, together with
-  # a client-side dashboard in a single html file.
-  # This will allow a replay of a session to happen without any interaction
-  # with the server. This will also help recover inodes.
 
   def show
     @kata = Kata.new(root_dir, id)    

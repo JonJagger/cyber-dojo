@@ -4,7 +4,7 @@
 $(document).ready(function() {
   
   $('#fork_button').click(function() {
-      cd.postTo('/diff/fork', {
+      cd.postTo('/forker/fork', {
         id: "<%= @kata.id %>",
         avatar: "<%= @avatar.name %>",
         tag: "<%= @traffic_lights_to_tag.length %>"
@@ -15,9 +15,14 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="fork_button"
-     class="small button">
-  create a new<br/>
-  cyber-dojo<br/>
-  from these files
+<% size = 40 %>
+
+<div id="fork_button">
+<%= image_tag("/images/fork.png", 
+    :border => 0,
+    :size => "#{size}x#{size}",
+    :title => 'Fork a new cyber-dojo from these files',
+    :class => 'cyber_dojo_image')
+%>
 </div>
+

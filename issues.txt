@@ -33,6 +33,15 @@ MINOR
 -----
 the diff-view would benefit from showing deleted files.
 -----
+option to download the dojo as a zip file
+  def download
+    send_file '/home/railsway/downloads/huge.zip', :type=>"application/zip" 
+  end
+-----
+option to specify old and new tag numbers on diff,eg
+   29 is displayed as 28-29
+   and you can enter 23-45 to see big differences
+-----
 add help button on diff page
 -----
 add help button on dashboard page

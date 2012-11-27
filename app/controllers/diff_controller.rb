@@ -21,21 +21,6 @@ class DiffController < ApplicationController
     @title = id[0..4] + ' diff ' + @avatar.name
   end
    
-  def fork
-    kata = Kata.new(root_dir, params['id'])
-    params['language'] = kata.language.name
-    params['exercise'] = kata.exercise.name
-    avatar = Avatar.new(kata, params['avatar'])
-
-    info = gather_info
-    info[:visible_files] = avatar.visible_files(info[:tag])    
-    Kata.create_new(root_dir, info)
-    
-    redirect_to :controller => :dojo,
-                :action => :index, 
-                :id => info[:id]
-  end
-   
 end
 
 

@@ -1,0 +1,13 @@
+
+<% size = 45 %>
+<%= link_to image_tag("/images/download.png",
+    :border => 0,
+    :size => "#{size}x#{size}",
+    :title => 'Download a zip of the dojo',
+    :class => 'cyber_dojo_image'),
+    {
+      :controller => :zipper,
+      :action => :zip,
+      :id => @kata.id 
+    }
+%>      
