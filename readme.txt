@@ -178,6 +178,14 @@ and select 2. Finally (39MB)
 #sudo apt-get install valgrind
 
 
+Disk space
+==========
+The design of cyber-dojo is very heavy on inodes. You will almost certainly
+run out of inodes before running out of disk space. The folder that eats
+the inodes is katas/ If sandboxes/ is ever changed so it retains its contents
+between run-tests (eg to support incremental makes in C/C++) then that too
+would be a culprit.
+
 
 Adding a new exercise
 =====================

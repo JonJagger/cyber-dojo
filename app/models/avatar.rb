@@ -23,7 +23,6 @@ class Avatar
     @name = name
     if !File.exists? dir
       Dir::mkdir(dir)   
-      #Dir::mkdir(sandbox)   #DROP???         
       Files::file_write(pathed(Manifest_filename), @kata.visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
       command = "git init --quiet;" +
