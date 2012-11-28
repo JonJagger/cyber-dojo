@@ -13,7 +13,7 @@ class ForkerController < ApplicationController
     avatar = Avatar.new(kata, params['avatar'])
 
     info = gather_info
-    info[:visible_files] = avatar.visible_files(info[:tag])    
+    info[:visible_files] = avatar.visible_files(params[:tag])    
     Kata.create_new(root_dir, info)
     
     redirect_to :controller => :dojo,
