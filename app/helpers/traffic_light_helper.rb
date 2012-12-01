@@ -16,7 +16,8 @@ module TrafficLightHelper
         :action => :show,
         :id => kata.id,
         :avatar => avatar_name,
-        :tag => inc[:number] 
+        :from_tag => inc[:number]-1,
+        :to_tag => inc[:number] 
     }, 
     { :title => tool_tip(avatar_name,inc),
     }.merge(new_window)

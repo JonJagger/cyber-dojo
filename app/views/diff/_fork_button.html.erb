@@ -7,7 +7,7 @@ $(document).ready(function() {
       cd.postTo('/forker/fork', {
         id: "<%= @kata.id %>",
         avatar: "<%= @avatar.name %>",
-        tag: "<%= @traffic_lights_to_tag.length %>"
+        tag: "<%= @to_tag %>"
       }, '_blank');
     });
 

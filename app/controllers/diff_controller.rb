@@ -7,12 +7,16 @@ class DiffController < ApplicationController
   def show
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
-    tag = params[:tag].to_i
-    @traffic_lights_to_tag = @avatar.increments(tag)
-    @all_traffic_lights = @avatar.increments
-    visible_files = @avatar.visible_files(tag)
-    diffed_files = git_diff_view(@avatar, tag, visible_files)    
-    @diffs = git_diff_prepare(@avatar, tag, diffed_files)
+    
+    @min_tag = 1
+    @from_tag = params[:from_tag].to_i
+    @to_tag = params[:to_tag].to_i
+    @max_tag = @avatar.increments.length    
+    @traffic_light = @avatar.increments(@to_tag).last
+    
+    visible_files = @avatar.visible_files(@to_tag)
+    diffed_files = git_diff_view(@avatar, @from_tag, @to_tag, visible_files)    
+    @diffs = git_diff_prepare(@avatar, @to_tag, diffed_files)
     if @traffic_lights_to_tag == [ ]
       @current_filename_id = @diffs.find {|diff| diff[:name] == 'instructions'}[:id]
     else

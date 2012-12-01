@@ -11,9 +11,9 @@ module GitDiff
   # (to build view from) containing diffs for all files, for a given avatar, 
   # for a given tag.
   
-  def git_diff_view(avatar, tag, visible_files = nil)
-      visible_files ||= avatar.visible_files(tag)      
-      diff_lines = avatar.diff_lines(tag)      
+  def git_diff_view(avatar, from_tag, to_tag, visible_files = nil)
+      visible_files ||= avatar.visible_files(to_tag)      
+      diff_lines = avatar.diff_lines(from_tag, to_tag)      
       view = { }      
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        

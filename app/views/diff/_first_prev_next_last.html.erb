@@ -4,68 +4,79 @@
 
 $(document).ready(function() {
 
-  var minTag = 1;  
-  var currentTag = <%= @traffic_lights_to_tag.length %>;
-  var maxTag = <%= @all_traffic_lights.length %>;
+  var  minTag = <%= @min_tag %>;
+  var fromTag = <%= @from_tag %>;
+  var   toTag = <%= @to_tag %>;
+  var  maxTag = <%= @max_tag %>;
   
-  var showDiff = function(n) {
-    if (n !== currentTag) {
-      cd.postTo('/diff/show', {
-	id: "<%= @kata.id %>",
-	avatar: "<%= @avatar.name %>",
-	tag: n
-      });
-    }
+  var showDiff = function(from, to) {
+    cd.postTo('/diff/show', {
+      id: "<%= @kata.id %>",
+      avatar: "<%= @avatar.name %>",
+      from_tag: from,
+      to_tag: to
+    });
   };
 
-  var tagNumber = function(event) {
-    var CARRIAGE_RETURN = 13;
+  var gotoDiffTitle = function(name, n) {
+    return 'Show ' + name + ' diff (' + (n-1) + '-' + n + ')';  
+  };
+  
+  var tagEdit = function(event) {
+    var CARRIAGE_RETURN = 13;      
     if (event.keyCode === CARRIAGE_RETURN) {
-      var input = $('#tag_number');
-      var newTag = parseInt(input.attr('value'), 10);
-      if (!isNaN(newTag)) {
-	if (newTag < minTag) { newTag = minTag; }
-	if (newTag > maxTag) { newTag = maxTag; }
-	return newTag;
-      } else {
-	input.attr('value', currentTag);
+      var fromInput = $('#from_tag_number');
+      var newFromTag = parseInt(fromInput.attr('value'), 10);
+      var toInput = $('#to_tag_number');
+      var newToTag = parseInt(toInput.attr('value'), 10);
+      
+      if (isNaN(newFromTag) || newFromTag < minTag ||
+          isNaN(newToTag)   || newToTag > maxTag ||
+	  newFromTag >= newToTag) {
+	newFromTag = fromTag;
+	newToTag = toTag;
       }
-    }    
-    return currentTag;
+      if (newFromTag === fromTag && newToTag === toTag) {
+        fromInput.attr('value', newFromTag);
+	toInput.attr('value', newToTag);
+      } else {
+	showDiff(newFromTag, newToTag);
+      }
+    }        
   };
   
-  var gotoDiffTitle = function(name,n) {
-    return 'Goto ' + name + ' diff (' + n + ')';  
-  };
+  $('#first_button').click(function()      { showDiff(minTag-1, minTag); });
+  $('#prev_button' ).click(function()      { showDiff(toTag-2, toTag-1);  });
   
-  $('#first_button').click(function()      { showDiff(minTag); });
-  $('#prev_button' ).click(function()      { showDiff(currentTag-1); });
-  $('#tag_number'  ).keyup(function(event) { showDiff(tagNumber(event)); });
-  $('#next_button' ).click(function()      { showDiff(currentTag+1); });
-  $('#last_button' ).click(function()      { showDiff(maxTag); });
+  $('#from_tag_number').keyup(function(event) { tagEdit(event); });
+  $('#to_tag_number'  ).keyup(function(event) { tagEdit(event); });
+  
+  $('#next_button' ).click(function()      { showDiff(toTag, toTag+1);  });
+  $('#last_button' ).click(function()      { showDiff(maxTag-1, maxTag);  });
 
-  if (currentTag !== 1) {
-    $('#first_button').attr('title', gotoDiffTitle('first',1));
-    $('#prev_button' ).attr('title', gotoDiffTitle('previous', currentTag-1));  
-  } else {
+  if (fromTag < minTag) {
     $('#first_button').attr('disabled', true);
-    $('#prev_button' ).attr('disabled', true);    
+    $('#prev_button' ).attr('disabled', true);
+  } else {
+    $('#first_button').attr('title', gotoDiffTitle('first', 1));
+    $('#prev_button' ).attr('title', gotoDiffTitle('previous', toTag-1));  
   }
 
-  if (currentTag < maxTag) {
-    $('#next_button').attr('title', gotoDiffTitle('next', currentTag+1));
-    $('#last_button').attr('title', gotoDiffTitle('last', maxTag));
-  } else {
+  if (toTag >= maxTag) {
     $('#next_button').attr('disabled', true);
     $('#last_button').attr('disabled', true);
+  } else {
+    $('#next_button').attr('title', gotoDiffTitle('next', toTag+1));
+    $('#last_button').attr('title', gotoDiffTitle('last', maxTag));
   }
 
-  $('#tag_number').attr('value', currentTag);
+  $('#from_tag_number').attr('value', fromTag);
+  $('#to_tag_number').attr('value', toTag);
 });
 
 //--></script>
 
-<table cellpadding="1" cellspacing="1">
+<table align="center" cellpadding="1" cellspacing="1">
   <tr>
     <td>
       <%= render :partial => 'triangle_button', :locals => { :name => 'first' } %>
@@ -74,8 +85,8 @@ $(document).ready(function() {
       <%= render :partial => 'triangle_button', :locals => { :name => 'prev' } %>
     </td>
     <td>
-      <input type="text" id="tag_number" value="" />
-    </td>   
+      &nbsp;
+    </td>
     <td>
       <%= render :partial => 'triangle_button', :locals => { :name => 'next' } %>
     </td>
@@ -84,3 +95,16 @@ $(document).ready(function() {
     </td>
   </tr>
 </table>      
+
+<table align="center" cellpadding="1" cellspacing="1">
+  <tr>
+    <td>
+      <input type="text" id="from_tag_number" value="" />
+    </td>
+    <td>&rarr;</td>
+    <td>
+      <input type="text" id="to_tag_number" value="" />
+    </td>   
+  </tr>
+</table>
+
