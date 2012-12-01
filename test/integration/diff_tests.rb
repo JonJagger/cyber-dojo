@@ -20,7 +20,8 @@ class DiffControllerTest < IntegrationTest
     get "diff/show", {
       :id => id,
       :avatar => Avatar.names[0],
-      :tag => 1
+      :from_tag => 0,
+      :to_tag => 1
     }
     assert_response :success
   end

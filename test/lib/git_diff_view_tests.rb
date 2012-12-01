@@ -27,8 +27,9 @@ class GitDiffViewTests < ActionController::TestCase
     run_tests(avatar, visible_files)
     assert_equal :green, avatar.increments.last[:colour]
     
-    tag = 2    
-    view = git_diff_view(avatar, tag)
+    from_tag = 1
+    to_tag = 2    
+    view = git_diff_view(avatar, from_tag, to_tag)
     view.delete('output')
     
     expected =
@@ -73,8 +74,9 @@ class GitDiffViewTests < ActionController::TestCase
     run_tests(avatar, visible_files)
     assert_equal :amber, avatar.increments.last[:colour]
     
-    tag = 2    
-    view = git_diff_view(avatar, tag)
+    from_tag = 1
+    to_tag = 2    
+    view = git_diff_view(avatar, from_tag, to_tag)
     view.delete('output')
 
     expected =

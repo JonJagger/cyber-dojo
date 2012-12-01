@@ -42,10 +42,6 @@ check for conflicts?
 
 MINOR
 -----
-option to specify old and new tag numbers on diff,eg
-   29 is displayed as 28-29
-   and you can enter 23-45 to see bigger differences
------
 option to download the dojo as a zip file
   def download
     send_file '/home/railsway/downloads/huge.zip', :type=>"application/zip" 
