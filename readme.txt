@@ -43,9 +43,9 @@ gaps simply enter a very large value for the seconds_per_column value.
 
 Review-Diff
 ===========
-Clicking on a traffic light opens a new page showing the diffs for that increment
-together with < and > buttons to step backwards and  forwards through the diffs.
-The diff page does not work properly in Internet Explorer 8.
+Clicking on a traffic light opens a new page showing the diffs for that
+increment together with < and > buttons to step backwards and  forwards through
+the diffs. The diff page does not work properly in Internet Explorer 8.
 A diff will automatically open the file with the most changes.
 Reclicking a file will auto-scroll to the next diff-chunk in the file.
 Clicking the red no-of-lines-deleted button will toggle the deleted lines on/off.
@@ -67,15 +67,16 @@ Running your own VirtualBox TurnKey Linux Cyber-Dojo server
 ==========================================================
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
-http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova (817MB)
-This image supports 13 languages (C, C++, C#, Coffeescript, Erlang, Go, Haskell,
-Java, Javascript, Perl, PHP, Python, Ruby).
-Run the ova file in VirtualBox. Mike Long has written some instructions for this here
+http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova
+(817MB) This image supports 13 languages (C, C++, C#, Coffeescript, Erlang,
+Go, Haskell, Java, Javascript, Perl, PHP, Python, Ruby).
+Run the ova file in VirtualBox. Mike Long has written some instructions for
+this here
 http://www.jaggersoft.com/CyberDojoTurnKeyLinuxVirtualBoxserverimageInstructions.pdf
 The Virtual Box screen will tell you its IP address, eg 192.168.2.13
 Put the URL into your browser. That's it!
-Detailed instructions on building your own Turnkey server from scratch are also here
-http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
+Detailed instructions on building your own Turnkey server from scratch are also
+here http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 
 
 Pulling the latest github source onto your Turnkey server
@@ -217,13 +218,13 @@ manifest.rb Parameters
   The names of the text files that will be visible in the browser's editor
   at startup. Each of these files must exist in the directory.
   The filename cyber-dojo.sh must be present, either as a :visible_filename
-  or a :hidden_filename. This is because cyber-dojo.sh is the name of the shell file 
-  assumed by the ruby code (in the server) to be the start point for running
-  the tests. You can write any actions in the cyber-dojo.sh file but clearly
-  any programs it tries to run must be installed on the server.
+  or a :hidden_filename. This is because cyber-dojo.sh is the name of the
+  shell file assumed by the ruby code (in the server) to be the start point
+  for running the tests. You can write any actions in the cyber-dojo.sh file
+  but clearly any programs it tries to run must be installed on the server.
   For example, if cyber-dojo.sh runs gcc to compile C files then gcc has 
-  to be installed. If cyber-dojo.sh runs javac to compile java files then javac 
-  has to be installed.
+  to be installed. If cyber-dojo.sh runs javac to compile java files then
+  javac has to be installed.
 
 :hidden_filenames
   The names of text files that are not visible in the browser's editor but
@@ -248,8 +249,8 @@ manifest.rb Parameters
   Required. No default.
 
 :tab_size
-  This is the number of spaces a tab character expands to in the editor textarea.
-  Not required. Defaults to 4 spaces.
+  This is the number of spaces a tab character expands to in the editor
+  textarea. Not required. Defaults to 4 spaces.
 
 
 Katas Directory Structure
@@ -287,8 +288,8 @@ visible files to be saved into the avatar's sandbox folder along with the
 language's hidden files and then the cyber-dojo.sh file would be run on those
 files. This is no longer the case. Now, the browser's visible files and the
 language's hidden files are saved to a temporary dir under cyberdojo/sandboxes/
-and the cyber-dojo.sh file is run from there. This run generates output which is
-captured and parsed to determine the appropriate traffic-light colour (red,
+and the cyber-dojo.sh file is run from there. This run generates output which
+is captured and parsed to determine the appropriate traffic-light colour (red,
 amber, or green). Then, the visible files (with the output added to it) and the
 red/amber/green status is saved in the avatar's sandbox folder and git
 committed. Running the tests is deliberately separated out to its own folder.
@@ -378,17 +379,21 @@ Misc Notes
 ==========
 o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals
    exercise in Ruby in a very early version of Cyber-Dojo
-o) http://vimeo.com/8630305 has a video of an even earlier version of Cyber-Dojo
-   I submitted as a proposal to the Software Craftsmanship conference 2010.
-o) When I started Cyber-Dojo I didn't know any ruby, any rails, or any javascript
-   (and not much css or html either). I'm self employed so I've have no-one to 
-   pair with (except google) while developing this in my limited spare time. 
-   Some of what you find is likely to be non-idiomatic. Caveat emptor!
-o) I have worked hard to <em>remove</em> features from Cyber-Dojo. My idea is that
-   the simpler the environment the more players will concentrate on the practice
-   and the more they will need to collaborate with each other. Remember the aim
-   of a Cyber-Dojo is <em>not</em> to ship something. The aim of Cyber-Dojo is to
-   deliberately practice developing software collaboratively.
+o) http://vimeo.com/8630305 has a video of an even earlier version of
+   Cyber-Dojo I submitted as a proposal to the Software Craftsmanship
+   conference 2010.
+o) When I started Cyber-Dojo I didn't know any ruby, any rails, or any
+   javascript (and not much css or html either). I'm self employed so
+   I've have no-one to pair with (except google) while developing this
+   in my limited spare time. Some of what you find is likely to be
+   non-idiomatic. Caveat emptor!
+o) I have worked hard to <em>remove</em> features from Cyber-Dojo. My idea
+   is that the simpler the environment the more players will concentrate on
+   the practice and the more they will need to collaborate with each other.
+   Remember the aim of a Cyber-Dojo is <em>not</em> to ship something.
+   The aim of Cyber-Dojo is to deliberately practice developing software
+   collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    Cyber-Dojo and have provided lots of help right from the very early days.
-   Olve, Mike and Johannes - I really appreciate all your help and encouragement.
+   Olve, Mike and Johannes - I really appreciate all your help and
+   encouragement.
