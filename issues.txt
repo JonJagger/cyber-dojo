@@ -42,6 +42,9 @@ check for conflicts?
 
 MINOR
 -----
+it might be better if the dialog box showing a players animal
+  appeared after the edit-test page appeared rather than before.
+-----
 option to download the dojo as a zip file
   def download
     send_file '/home/railsway/downloads/huge.zip', :type=>"application/zip" 
