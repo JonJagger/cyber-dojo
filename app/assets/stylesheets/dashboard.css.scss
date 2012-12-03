@@ -9,6 +9,8 @@
   text-align: center;
 }
 
+.traffic_light_tip { @include font-size-tiny(); }
+
 #traffic_lights .row td { padding: 0.05em; }
 #traffic_lights .row.odd td  { background: lighten($darker-color,5%); }
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
@@ -31,3 +33,4 @@
 .micro.tag_count .red   { padding-bottom: 0.6em; color: $red; }
 .micro.tag_count .amber { color: $amber; }
 .micro.tag_count .green { padding-top: 0.6em; color: $green;  }
+

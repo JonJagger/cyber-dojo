@@ -63,6 +63,10 @@ $(document).ready(function() {
       <%= render :partial => 'maximum_columns' %>
     </td>
     
+    <td>
+      <%= render :partial => 'download_button' %>
+    </td>
+    
     <td valign="center">
       <%= render :partial => 'tips_button' %>
       <br/>
@@ -70,9 +74,19 @@ $(document).ready(function() {
       <br/>
       <%= render :partial => 'shared/feedback_button' %>
     </td>
+    
+    <td>
+      <div class="traffic_light_tip">
+              Click any<br/>
+              traffic-light<br/>
+              to open a<br/>
+              diff-view
+      </div>      
+    </td>
+        
   </tr>
   <tr align="center">
-    <td colspan="5">
+    <td colspan="7">
       <%= render :partial => 'axis_label' %>
     </td>
   </tr>

@@ -30,4 +30,18 @@ class DashboardController < ApplicationController
     value > 0 ? value : default    
   end
   
+  def download
+    # an id such as 01FE818E68 corresponds to katas/01/FE818E86
+    # however, I'd like the archive to flatten out this inner/outer
+    # folder structure so the resulting archive is 01FE818E86.tar.gz
+    kata = Kata.new(root_dir, id)
+    uuid = Uuid.new(id)
+    inner = uuid.inner
+    outer = uuid.outer
+    cd_cmd = "cd #{root_dir}/katas/#{inner}"
+    zip_cmd = "find #{outer} -print | xargs tar -s /#{outer}/#{inner}#{outer}/ -cvzf ../../zips/#{id}.tar.gz"
+    system(cd_cmd + ";" + zip_cmd)
+    send_file "#{root_dir}/zips/#{id}.tar.gz", :type=>'application/zip'
+  end
+  
 end
