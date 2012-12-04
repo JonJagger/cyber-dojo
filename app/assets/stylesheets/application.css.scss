@@ -19,6 +19,7 @@
  *= depend_on kata.css.scss 
  *= depend_on dashboard.css.scss
  *= depend_on diff.css.scss
+ *= depend_on reverter.css.scss
  *= depend_on jquery-ui-1.8.16.custom.css.scss
  *= require_self
 */
@@ -30,5 +31,6 @@
 @import "setup.css.scss";
 @import "kata.css.scss";
 @import "dashboard.css.scss";
+@import "reverter.css.scss";
 @import "diff.css.scss";
 @import "jquery-ui-1.8.16.custom.css.scss";

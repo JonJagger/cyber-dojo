@@ -1,0 +1,22 @@
+
+#revert_dialog
+{
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  background: $darker-color;  
+  padding: none;
+  margin: none;
+  margin-top: 0.5em;
+}
+
+#revert_content
+{
+  width: 30em;
+  height: 20em;
+  font-family: monospace;
+  font-size: 1.5em;
+}
+
+#revert_tip
+{
+  @include font-size-tiny();
+}

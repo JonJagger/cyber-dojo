@@ -51,7 +51,7 @@ var cyberDojo = (function(cd, $) {
       +         '<tr>'
       +             tdTrafficLights()
       +           '<td>'
-      +              'opens a' + br + 'diff' + br + 'page'
+      +              'opens a' + br + 'revert' + br + 'dialog'
       +           '</td>'
       +         '</tr>'
       +       '</table>'

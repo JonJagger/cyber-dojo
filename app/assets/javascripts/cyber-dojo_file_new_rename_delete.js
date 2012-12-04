@@ -97,11 +97,11 @@ var cyberDojo = (function(cd, $) {
 	    modal: true,
 	    buttons: {
 	      ok: function() {
-		cd.doDelete(filename);
-		$(this).dialog('close');
+			cd.doDelete(filename);
+			$(this).dialog('close');
 	      },
 	      cancel: function() {
-		$(this).dialog('close');
+			$(this).dialog('close');
 	      }
 	    }
 	  });    
