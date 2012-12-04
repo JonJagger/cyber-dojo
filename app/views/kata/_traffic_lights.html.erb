@@ -130,25 +130,23 @@ $(document).ready(function() {
 
 <div id="traffic_lights">
   <table>
-    <% max_cols = 33 %>    
     <tr class="row">
-            
-      <% recent(@avatar.increments, max_cols).each do |light| %>
+      <% max_lights = 36 %>                
+      <% recent(@avatar.increments, max_lights).each do |light| %>
         <td valign="top">
           <span onclick="cd.revert('<%=@kata.id%>', '<%=@avatar.name%>', <%=light[:number]%>);">
             <%= revert_traffic_light(light) %>
 	      </span>          
         </td>
       <% end %>
-            
+      
       <td>
         <div id="revert_tip">
                 Click any<br/>
                 traffic-light<br/>
                 to revert<br/>
         </div>
-      </td>      
-            
+      </td>                  
     </tr>      
   </table>
 </div>

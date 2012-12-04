@@ -37,30 +37,32 @@ var cyberDojo = (function(cd, $) {
     var renamer = $('<div>')
       .html(div)
       .dialog({
-	autoOpen: false,
-	width: 350,
-	title: cd.dialogTitle('rename'),
-	modal: true,
-	buttons: {
-	  ok: function() {
-	    $(this).dialog('close');
-	    var newFilename = $.trim(input.val());
-	    cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-	  },
-	  cancel: function() {
-	    $(this).dialog('close');
-	  }
-	}
+		autoOpen: false,
+		width: 350,
+		title: cd.dialogTitle('rename'),
+		modal: true,
+		buttons: {
+		  ok: function() {
+			$(this).dialog('close');
+			var newFilename = $.trim(input.val());
+			cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+		  },
+		  cancel: function() {
+			$(this).dialog('close');
+		  }
+		}
       });
-    input.keyup(function(event) {
+    
+	input.keyup(function(event) {
       event.preventDefault();
       var CARRIAGE_RETURN = 13;
       if (event.keyCode === CARRIAGE_RETURN) {
-	var newFilename = $.trim(input.val());
-	renamer.dialog('close');
-	cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+		var newFilename = $.trim(input.val());
+		renamer.dialog('close');
+		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
       }  
     });
+	
     renamer.dialog('open');
     input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'));
   };
@@ -87,24 +89,23 @@ var cyberDojo = (function(cd, $) {
     div.append('<div>&nbsp;</div>');
     div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
     if (ask) {
-      var deleter =
-	$('<div>')
-	  .html(div)
-	  .dialog({
-	    autoOpen: false,
-	    width: 350,
-	    title: cd.dialogTitle('delete'),
-	    modal: true,
-	    buttons: {
-	      ok: function() {
-			cd.doDelete(filename);
-			$(this).dialog('close');
-	      },
-	      cancel: function() {
-			$(this).dialog('close');
-	      }
-	    }
-	  });    
+      var deleter = $('<div>')
+		.html(div)
+		.dialog({
+		  autoOpen: false,
+		  width: 350,
+		  title: cd.dialogTitle('delete'),
+		  modal: true,
+		  buttons: {
+			ok: function() {
+			  cd.doDelete(filename);
+			  $(this).dialog('close');
+			},
+			cancel: function() {
+			  $(this).dialog('close');
+			}
+		  }
+		});    
       deleter.dialog('open');
     } else {
       cd.doDelete(filename);

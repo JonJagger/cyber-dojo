@@ -53,9 +53,6 @@ to tag=N+1 the selected file should stay at F (if it still exists
 at tag N+1). Extra feature would be to detect it has been renamed
 and to move to the renamed file.
 -----
-ability to revert to files from a previous traffic-light by clicking
-  the traffic-light from within the edit-test page.
------
 add help button (screen cast?) for diff page
 -----
 add help button (screen cast?) for dashboard page
