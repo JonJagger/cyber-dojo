@@ -42,6 +42,10 @@ check for conflicts?
 
 MINOR
 -----
+diff-view page could show two traffic-lights, one for the was tag
+  and one for the now tag. The was and now text fields could align
+  with these traffic-lights.
+-----
 it might be better if the dialog box showing a players animal
   appeared after the edit-test page appeared rather than before.
 -----

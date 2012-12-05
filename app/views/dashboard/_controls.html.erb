@@ -1,0 +1,99 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  var parse = function(name, current_value) {
+    var input = $('#' + name);
+    var newValue = parseInt(input.val());
+    if (isNaN(newValue)) {
+      input.attr('value', current_value);
+    }
+    return input.val();
+  };
+
+  var params = function() {
+    return {
+      id: "<%= @kata.id %>",
+      seconds_per_column: parse('seconds_per_column', <%= @seconds_per_column %>),
+      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>)
+    };
+  };
+  
+  var refreshDashboard = function() {
+    if (!auto_refresh_enabled) {
+      $.ajax({
+        url: "<%= url_for :action => 'heartbeat' %>",
+        data: params(),
+        dataType: "script"
+      });
+    }
+  };
+
+  var seconds = 1000;
+  var auto_refresh_enabled = true;  
+  
+  $('#auto_refresh').click(function() {
+    auto_refresh_enabled = !auto_refresh_enabled;
+    if (auto_refresh_enabled) {
+      $(this).text("enable");
+      } else {
+      $(this).text("disable");
+    }
+  });
+  
+  setInterval(refreshDashboard, 10*seconds);
+  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
+    var CARRIAGE_RETURN = 13;
+    if (event.keyCode === CARRIAGE_RETURN) {
+      cd.postTo('/dashboard/show', params());
+    }
+  });
+  
+  $('#auto_refresh').click();
+});
+
+//--></script>
+
+<table cellpadding="1" cellspacing="1">
+  <tr>
+    <td align="right">
+      <input type="text"
+             id="seconds_per_column"
+             value="<%= @seconds_per_column %>"/>
+    </td>
+    <td>
+      <span class="tiny">
+        seconds per column
+      </span>
+    </td>
+  </tr>
+  
+  <tr>
+    <td align="right">
+      <input type="text" 
+             id="maximum_columns"
+             value="<%= @maximum_columns %>"/>
+    </td>
+    <td>
+      <span class="tiny">
+        columns maximum 
+      </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td align="right">
+      <span id="auto_refresh"
+            class="button">
+      </span>
+    </td>
+    <td>
+      <span id="auto_refresh_text">
+        auto refresh
+      </span>
+    </td>
+  </tr>
+  
+</table>

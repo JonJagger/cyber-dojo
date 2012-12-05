@@ -4,12 +4,14 @@
   background: $lighter-color;
   @include gradient-darken($lighter-color,20%,10%,5%);     
   color: $darker-color;
-  font-size: 1.1em; 
-  width: 2em; 
+  width: 3em; 
   text-align: center;
 }
 
-.traffic_light_tip { @include font-size-tiny(); }
+#age, #auto_refresh, #auto_refresh_text, #seconds_per_column, #maximum_columns, .traffic_light_tip
+{
+  @include font-size-tiny();
+}
 
 #traffic_lights .row td { padding: 0.05em; }
 #traffic_lights .row.odd td  { background: lighten($darker-color,5%); }

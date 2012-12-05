@@ -1,48 +1,4 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
-
-$(document).ready(function() {
-
-  var parse = function(name, current_value) {
-    var input = $('#' + name);
-    var newValue = parseInt(input.val());
-    if (isNaN(newValue)) {
-      input.attr('value', current_value);
-    }
-    return input.val();
-  };
-
-  var params = function() {
-    return {
-      id: "<%= @kata.id %>",
-      seconds_per_column: parse('seconds_per_column', <%= @seconds_per_column %>),
-      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>)
-    };
-  };
-  
-  var refreshDashboard = function() {
-    $.ajax({
-      url: "<%= url_for :action => 'heartbeat' %>",
-      data: params(),
-      dataType: "script"
-    });
-  };
-
-  var seconds = 1000;
-  setInterval(refreshDashboard, 10*seconds);
-  
-  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
-    var CARRIAGE_RETURN = 13;
-    if (event.keyCode === CARRIAGE_RETURN) {
-      cd.postTo('/dashboard/show', params());
-    }
-  });
-  
-});
-
-//--></script>
-
 <table align="center">
   <tr>
     <td align="center">
@@ -58,9 +14,17 @@ $(document).ready(function() {
       &nbsp;&nbsp;
     </td>
     
+    <td>
+      <div class="traffic_light_tip">
+              Click any<br/>
+              traffic-light<br/>
+              to open its<br/>
+              diff-view
+      </div>      
+    </td>
+    
     <td valign="center">
-      <%= render :partial => 'seconds_per_column' %>      
-      <%= render :partial => 'maximum_columns' %>
+      <%= render :partial => 'controls' %>      
     </td>
     
     <td>
@@ -75,21 +39,8 @@ $(document).ready(function() {
       <%= render :partial => 'shared/feedback_button' %>
     </td>
     
-    <td>
-      <div class="traffic_light_tip">
-              Click any<br/>
-              traffic-light<br/>
-              to open a<br/>
-              diff-view
-      </div>      
-    </td>
-        
   </tr>
-  <tr align="center">
-    <td colspan="7">
-      <%= render :partial => 'axis_label' %>
-    </td>
-  </tr>
+
 </table>
   
 <div id="traffic_lights">

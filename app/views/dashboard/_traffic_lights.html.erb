@@ -1,5 +1,11 @@
 
  <table cellspacing="0" cellpadding="0">
+
+  <tr align="center">
+    <td colspan="999">
+      <%= render :partial => 'axis_label' %>
+    </td>
+  </tr>
    
    <% seconds_per_td = @seconds_per_column %>
    <% maximum_columns = @maximum_columns %>
@@ -79,16 +85,20 @@
         <td>
           <div class="micro tag_count">
             <% [:red,:amber,:green].each do |bulb| %>
-            <div class="<%= bulb %>">
-              <%= all_lights[avatar_name].count{ |light| light[:colour] == bulb } %>
+            <%  bulb_tally = all_lights[avatar_name].count{ |light| light[:colour] == bulb } %>
+            <div class="<%= bulb %>"
+                 title="<%= avatar_name %> has <%= bulb_tally %> <%= bulb %> traffic-lights so far">
+              <%= bulb_tally %>
             </div>       
             <% end %>
           </div>
          </td>
                   
          <td align="right">
-           <span class="tag_count">
-             <%= all_lights[avatar_name].length %>
+          <% traffic_lights_tally = all_lights[avatar_name].length %>
+           <span class="tag_count"
+                 title="<%= avatar_name %> has <%= traffic_lights_tally %> traffic-lights so far">
+             <%= traffic_lights_tally %>
            </span>
          </td>
 
