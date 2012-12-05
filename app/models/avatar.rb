@@ -62,8 +62,8 @@ class Avatar
     unlocked_read(Increments_filename, tag)
   end
 
-  def diff_lines(from_tag, to_tag)
-    command = cd_dir("git diff --ignore-space-at-eol --find-copies-harder #{from_tag} #{to_tag} sandbox;")
+  def diff_lines(was_tag, now_tag)
+    command = cd_dir("git diff --ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox;")
     Files::popen_read(command)
   end
   

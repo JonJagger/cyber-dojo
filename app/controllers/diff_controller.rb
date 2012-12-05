@@ -7,13 +7,13 @@ class DiffController < ApplicationController
   def show
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
+    traffic_lights = @avatar.increments    
     
     @min_tag = 1
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i
-    @max_tag = @avatar.increments.length
+    @max_tag = traffic_lights.length
     
-    traffic_lights = @avatar.increments
     @was_traffic_light = traffic_lights[@was_tag-1]
     @now_traffic_light = traffic_lights[@now_tag-1]
         
