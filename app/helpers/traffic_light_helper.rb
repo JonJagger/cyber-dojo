@@ -16,25 +16,27 @@ module TrafficLightHelper
         :action => :show,
         :id => kata.id,
         :avatar => avatar_name,
-        :from_tag => inc[:number]-1,
-        :to_tag => inc[:number] 
+        :was_tag => inc[:number]-1,
+        :now_tag => inc[:number] 
     }, 
     { :title => tool_tip(avatar_name,inc),
     }.merge(new_window)
   end
   
-  def untitled_unlinked_traffic_light(inc)
+  def untitled_unlinked_traffic_light(inc, width = nil, height = nil)
+    width ||= 20
+    height ||= 65
     bulb = inc[:colour].to_s
     ("<img src='/images/traffic_light_#{bulb}.png'" +
       " border='0'" +
-      " width='20'" +
-      " height='65'/>").html_safe    
+      " width='#{width}'" +
+      " height='#{height}'/>").html_safe    
   end
   
-  def unlinked_traffic_light(inc)
+  def unlinked_traffic_light(inc, width = nil, height = nil)
     bulb = inc[:colour].to_s
     ("<span title='#{at(inc)}'>" +
-     untitled_unlinked_traffic_light(inc) +
+     untitled_unlinked_traffic_light(inc, width, height) +
      "</span>").html_safe
   end
  

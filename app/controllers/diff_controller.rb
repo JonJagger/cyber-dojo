@@ -9,15 +9,18 @@ class DiffController < ApplicationController
     @avatar = Avatar.new(@kata, params[:avatar])
     
     @min_tag = 1
-    @from_tag = params[:from_tag].to_i
-    @to_tag = params[:to_tag].to_i
-    @max_tag = @avatar.increments.length    
-    @traffic_light = @avatar.increments(@to_tag).last
+    @was_tag = params[:was_tag].to_i
+    @now_tag = params[:now_tag].to_i
+    @max_tag = @avatar.increments.length
     
-    visible_files = @avatar.visible_files(@to_tag)
-    diffed_files = git_diff_view(@avatar, @from_tag, @to_tag, visible_files)    
-    @diffs = git_diff_prepare(@avatar, @to_tag, diffed_files)
-    if @traffic_lights_to_tag == [ ]
+    traffic_lights = @avatar.increments
+    @was_traffic_light = traffic_lights[@was_tag-1]
+    @now_traffic_light = traffic_lights[@now_tag-1]
+        
+    visible_files = @avatar.visible_files(@now_tag)
+    diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)    
+    @diffs = git_diff_prepare(@avatar, @now_tag, diffed_files)
+    if traffic_lights == [ ]
       @current_filename_id = @diffs.find {|diff| diff[:name] == 'instructions'}[:id]
     else
       @current_filename_id = most_changed_lines_file_id(@diffs)

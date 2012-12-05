@@ -4,7 +4,7 @@
   padding: 0.2em;
 }
 
-#from_tag_number, #to_tag_number
+#was_tag_number, #now_tag_number
 {
   background: $lighter-color;
   @include gradient-darken($lighter-color,20%,10%,5%);     

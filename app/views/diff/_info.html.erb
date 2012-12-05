@@ -14,14 +14,38 @@
       &nbsp;
     </td>
     <td valign="top">
-      <%= unlinked_traffic_light(@traffic_light) %>
-    </td>
-    <td>
-      &nbsp;
-    </td>
-    <td>
-      <%= render :partial => 'fork_button' %>
+      
+      <table align="center" cellpadding="1" cellspacing="1">
+        <tr>
+          <td><table><tr>
+          <td>
+            <%= unlinked_traffic_light(@was_traffic_light,15,42) %>
+          </td>
+          <td>
+            &rarr;
+          </td>
+          <td>
+            <%= unlinked_traffic_light(@now_traffic_light,14,42) %>
+          </td>
+          </tr></table></td>
+        </tr>
+        
+        <tr>
+          <td><table><tr>
+          <td>
+            <input type="text" id="was_tag_number" value="" />
+          </td>
+          <td>
+            <input type="text" id="now_tag_number" value="" />
+          </td>
+          </tr></table></td>
+        </tr>
+      </table>
+
     </td>
   </tr>
 </table>
+
+
+
 

@@ -4,17 +4,17 @@
 
 $(document).ready(function() {
 
-  var  minTag = <%= @min_tag %>;
-  var fromTag = <%= @from_tag %>;
-  var   toTag = <%= @to_tag %>;
-  var  maxTag = <%= @max_tag %>;
+  var minTag = <%= @min_tag %>;
+  var wasTag = <%= @was_tag %>;
+  var nowTag = <%= @now_tag %>;
+  var maxTag = <%= @max_tag %>;
   
-  var showDiff = function(from, to) {
+  var showDiff = function(was_tag, now_tag) {
     cd.postTo('/diff/show', {
       id: "<%= @kata.id %>",
       avatar: "<%= @avatar.name %>",
-      from_tag: from,
-      to_tag: to
+      was_tag: was_tag,
+      now_tag: now_tag
     });
   };
 
@@ -25,53 +25,53 @@ $(document).ready(function() {
   var tagEdit = function(event) {
     var CARRIAGE_RETURN = 13;      
     if (event.keyCode === CARRIAGE_RETURN) {
-      var fromInput = $('#from_tag_number');
-      var newFromTag = parseInt(fromInput.attr('value'), 10);
-      var toInput = $('#to_tag_number');
-      var newToTag = parseInt(toInput.attr('value'), 10);
+      var wasInput = $('#was_tag_number');
+      var newWasTag = parseInt(wasInput.attr('value'), 10);
+      var nowInput = $('#now_tag_number');
+      var newNowTag = parseInt(nowInput.attr('value'), 10);
       
-      if (isNaN(newFromTag) || newFromTag < minTag ||
-          isNaN(newToTag)   || newToTag > maxTag ||
-	  newFromTag >= newToTag) {
-	newFromTag = fromTag;
-	newToTag = toTag;
+      if (isNaN(newWasTag) || newWasTag < minTag ||
+          isNaN(newNowTag) || newNowTag > maxTag ||
+		  newWasTag >= newNowTag) {
+			newWasTag = wasTag;
+			newNowTag = nowTag;
       }
-      if (newFromTag === fromTag && newToTag === toTag) {
-        fromInput.attr('value', newFromTag);
-	toInput.attr('value', newToTag);
+      if (newWasTag === wasTag && newNowTag === nowTag) {
+        wasInput.attr('value', newWasTag);
+		nowInput.attr('value', newNowTag);
       } else {
-	showDiff(newFromTag, newToTag);
+		showDiff(newWasTag, newNowTag);
       }
     }        
   };
   
-  $('#first_button').click(function()      { showDiff(minTag-1, minTag); });
-  $('#prev_button' ).click(function()      { showDiff(toTag-2, toTag-1);  });
+  $('#first_button').click(function()      { showDiff(minTag-1, minTag);   });
+  $('#prev_button' ).click(function()      { showDiff(nowTag-2, nowTag-1); });
   
-  $('#from_tag_number').keyup(function(event) { tagEdit(event); });
-  $('#to_tag_number'  ).keyup(function(event) { tagEdit(event); });
+  $('#was_tag_number').keyup(function(event) { tagEdit(event); });
+  $('#now_tag_number').keyup(function(event) { tagEdit(event); });
   
-  $('#next_button' ).click(function()      { showDiff(toTag, toTag+1);  });
-  $('#last_button' ).click(function()      { showDiff(maxTag-1, maxTag);  });
+  $('#next_button' ).click(function()      { showDiff(nowTag, nowTag+1); });
+  $('#last_button' ).click(function()      { showDiff(maxTag-1, maxTag); });
 
-  if (fromTag < minTag) {
+  if (wasTag < minTag) {
     $('#first_button').attr('disabled', true);
     $('#prev_button' ).attr('disabled', true);
   } else {
     $('#first_button').attr('title', gotoDiffTitle('first', 1));
-    $('#prev_button' ).attr('title', gotoDiffTitle('previous', toTag-1));  
+    $('#prev_button' ).attr('title', gotoDiffTitle('previous', nowTag-1));  
   }
 
-  if (toTag >= maxTag) {
+  if (nowTag >= maxTag) {
     $('#next_button').attr('disabled', true);
     $('#last_button').attr('disabled', true);
   } else {
-    $('#next_button').attr('title', gotoDiffTitle('next', toTag+1));
+    $('#next_button').attr('title', gotoDiffTitle('next', nowTag+1));
     $('#last_button').attr('title', gotoDiffTitle('last', maxTag));
   }
 
-  $('#from_tag_number').attr('value', fromTag);
-  $('#to_tag_number').attr('value', toTag);
+  $('#was_tag_number').attr('value', wasTag);
+  $('#now_tag_number').attr('value', nowTag);
 });
 
 //--></script>
@@ -96,15 +96,4 @@ $(document).ready(function() {
   </tr>
 </table>      
 
-<table align="center" cellpadding="1" cellspacing="1">
-  <tr>
-    <td>
-      <input type="text" id="from_tag_number" value="" />
-    </td>
-    <td>&rarr;</td>
-    <td>
-      <input type="text" id="to_tag_number" value="" />
-    </td>   
-  </tr>
-</table>
 
