@@ -35,6 +35,72 @@ class CodeOutputParserTests < ActionController::TestCase
     assert_equal :red, CodeOutputParser::parse_ruby_test_unit(red_output)
   end
 
+  test "ruby one failing test no passing tests is red" do
+    red_output =
+      [
+        "Run options: ",
+        "",
+        "# Running tests:",
+        "",
+        "F",
+        "",
+        "Finished tests in 0.013886s, 72.0150 tests/s, 72.0150 assertions/s.",
+        "",
+        "  1) Failure:",
+        "test_simple(TestUntitled) [test_untitled.rb:7]:",
+        "<54> expected but was",
+        "<42>.",
+        "",
+        "1 tests, 1 assertions, 1 failures, 0 errors, 0 skips"
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_ruby_test_unit(red_output)
+  end
+
+  test "ruby one passing test no failing test is green" do
+    green_output =
+      [
+        "Run options: ",
+        "",
+        "# Running tests:",
+        "",
+        ".",
+        "",
+        "Finished tests in 0.016653s, 60.0492 tests/s, 60.0492 assertions/s.",
+        "",
+        "1 tests, 1 assertions, 0 failures, 0 errors, 0 skips"
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_ruby_test_unit(green_output)    
+  end
+  
+  test "ruby one passing test one failing test is red" do
+    red_output =
+      [
+        "Run options: ",
+        "",
+        "# Running tests:",
+        "",
+        "F.",
+        "",
+        "Finished tests in 0.010978s, 182.1825 tests/s, 182.1825 assertions/s.",
+        "",
+        "  1) Failure:",
+        "test_simple_fail(TestUntitled) [test_untitled.rb:11]:",
+        "<54> expected but was",
+        "<42>.",
+        "",
+        "2 tests, 2 assertions, 1 failures, 0 errors, 0 skips"       
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_ruby_test_unit(red_output)    
+  end
+
+  test "ruby syntax error is amber" do
+    amber_output =
+      [
+        "test_untitled.rb:7: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('"    
+      ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_ruby_test_unit(amber_output)        
+  end
+  
   #--------------------------------------------------------
 
   test "nunit RED" do
@@ -107,7 +173,40 @@ class CodeOutputParserTests < ActionController::TestCase
   
   #--------------------------------------------------------
   
-  test "was a green C/C++ assert case" do
+  test "c_assert failure is red" do
+    red_output =
+      [
+        "gcc -Wall -Werror -O -std=c99 *.c -o run.tests",
+        "./run.tests",
+        "Assertion failed: (hhg() == 6*9), function example, file untitled.tests.c, line 7.",
+        "make: *** [run.tests.output] Abort trap: 6"    
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_cassert(red_output)        
+  end
+  
+  test "c_assert syntax error is amber" do
+    amber_output =
+      [
+        "gcc -Wall -Werror -O -std=c99 *.c -o run.tests",
+        "untitled.tests.c: In function 'example':",
+        "untitled.tests.c:7: error: 'ssss' undeclared (first use in this function)",
+        "untitled.tests.c:7: error: (Each undeclared identifier is reported only once",
+        "untitled.tests.c:7: error: for each function it appears in.)",
+        "untitled.tests.c:8: error: expected ';' before '}' token",
+        "make: *** [run.tests] Error 1"        
+      ].join("\n")    
+    assert_equal :amber, CodeOutputParser::parse_cassert(amber_output)        
+  end
+  
+  test "c_assert makefile error is amber" do
+    amber_output =
+      [
+        "makefile:3: *** missing separator.  Stop."
+      ].join("\n")    
+    assert_equal :amber, CodeOutputParser::parse_cassert(amber_output)            
+  end
+  
+  test "c_assert throws exception so make fails is amber" do
     amber_output =
       [
         "g++ -Wall -Werror -O *.cpp -o run.tests",
@@ -118,10 +217,8 @@ class CodeOutputParserTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, CodeOutputParser::parse_cassert(amber_output)    
   end
-  
-  #--------------------------------------------------------
-  
-  test "another green C/C++ assert case" do
+    
+  test "c_assert two passes is green" do
     green_output =
       [
         "g++ -Wall -Werror -O *.cpp -o run.tests",

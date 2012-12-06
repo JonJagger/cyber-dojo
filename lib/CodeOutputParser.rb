@@ -109,10 +109,13 @@ module CodeOutputParser
     red_pattern = Regexp.new('(.*)Assertion(.*)failed.')
     syntax_error_pattern = Regexp.new(':(\d*): error')
     make_error_pattern = Regexp.new('^make:')
+    makefile_error_pattern = Regexp.new('^makefile:')
     if red_pattern.match(output)
       :red
     elsif make_error_pattern.match(output)
       :amber
+    elsif makefile_error_pattern.match(output)
+	  :amber
     elsif syntax_error_pattern.match(output)
       :amber
     else
