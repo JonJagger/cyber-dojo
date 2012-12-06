@@ -24,7 +24,6 @@ class ReverterControllerTest  < IntegrationTest
       :file_content => { }
     }
 
-    #create kata_tests
     get 'reverter/revert', { 
       :format => :json,
       :id => id,
