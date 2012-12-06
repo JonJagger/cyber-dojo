@@ -29,7 +29,7 @@ class Sandbox
     make_dir
     output = inner_run(language, visible_files)
     system("rm -rf #{dir}")
-    output
+    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
   
   def inner_run(language, visible_files)
