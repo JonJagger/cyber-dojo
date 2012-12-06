@@ -1,6 +1,12 @@
 
 MAJOR
 -----
+Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
+trying to find children by walking pid/ppid hierarchy it would be
+better to use pgid - process group. See lib/Files.rb
+Note, if you're running under apache then this never seems to be
+a problem - does apache auto clean processes?
+-----
 I need an automated process that moves dojos that have
 a minimum number of traffic lights and are at least N days
 old onto a separate server (or at the very minimum
@@ -21,12 +27,6 @@ I would also need some kind of harvester that reclaimed old sandboxes.
 Eg if sandboxes/X exists but katas/X does not (eg because it has been pruned)
 then I can delete sandboxes/X
 -----
-Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
-trying to find children by walking pid/ppid hierarchy it would be
-better to use pgid - process group. See lib/Files.rb
-Note, if you're running under apache then this never seems to be
-a problem - does apache auto clean processes?
------
 The Diff view doesn't work properly in IE8.
 -----
 Do I need to do io_locks? Suppose there is a conflict. Could this
@@ -42,8 +42,9 @@ check for conflicts?
 
 MINOR
 -----
-it might be better if the dialog box showing a players animal
-  appeared after the edit-test page appeared rather than before.
+add help button (screen cast?) for diff page
+-----
+add help button (screen cast?) for dashboard page
 -----
 in the diff view, long lines get truncated rather than bringing up
   a scroll bar
@@ -53,9 +54,10 @@ to tag=N+1 the selected file should stay at F (if it still exists
 at tag N+1). Extra feature would be to detect it has been renamed
 and to move to the renamed file.
 -----
-add help button (screen cast?) for diff page
+lib/LineSplitter.rb is duplicated in lib/GitDiffParser.line_split
 -----
-add help button (screen cast?) for dashboard page
+it might be better if the dialog box showing a players animal
+  appeared after the edit-test page appeared rather than before.
 -----
 I'd like the rightmost column of avatar images on the dashboard
   to not scroll off screen. But at the same time I'd also like
