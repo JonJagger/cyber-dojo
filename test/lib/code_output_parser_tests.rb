@@ -231,6 +231,48 @@ class CodeOutputParserTests < ActionController::TestCase
   
   #--------------------------------------------------------
   
+  test "junit failing test is red" do
+    red_output =
+      [
+        "JUnit version 4.11-SNAPSHOT-20120416-1530",
+        ".E",
+        "Time: 0.008",
+        "There was 1 failure:",
+        "1) hitch_hiker(UntitledTest)",
+        "java.lang.AssertionError: expected:<54> but was:<42>",
+        "...",
+        "",
+        "FAILURES!!!",
+        "Tests run: 1,  Failures: 1"
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_junit(red_output)            
+  end
+
+  test "junit syntax error is amber" do
+    amber_output =
+      [
+        "UntitledTest.java:8: ';' expected",
+        "        int expected = 6 * 7s;",
+        "                            ^",
+        "1 error"        
+      ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_junit(amber_output)                
+  end
+  
+  test "junit passing test is green" do
+    green_output =
+      [
+        "JUnit version 4.11-SNAPSHOT-20120416-1530",
+        ".",
+        "Time: 0.009",
+        "",
+        "OK (1 test)"
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_junit(green_output)                
+  end
+  
+  #--------------------------------------------------------
+  
   test "python failing test is red" do
     red_output = 
       [
