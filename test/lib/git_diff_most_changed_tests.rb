@@ -6,7 +6,7 @@ class GitDiffMostChangedTests < ActionController::TestCase
   include GitDiff
 
   test "when no diffs an id is returned if no output is present" do
-    diffs = []
+    diffs = [ ]
     diffs << {
       :deleted_line_count => 0,
       :id => 'jj23',          
@@ -28,7 +28,7 @@ class GitDiffMostChangedTests < ActionController::TestCase
   #------------------------------------------------------------------
     
   test "when some diffs most changed lines file id is returned" do
-    diffs = []
+    diffs = [ ]
     diffs << {
       :deleted_line_count => 1,
       :id => 'jj23',          
@@ -49,7 +49,14 @@ class GitDiffMostChangedTests < ActionController::TestCase
   #------------------------------------------------------------------
   
   test "when non output file has diffs it is preferred to output" do
-    diffs = []
+    diffs = [ ]
+    diffs << {
+      :deleted_line_count => 5,
+      :id => 'jj25',          
+      :name => 'output',
+      :added_line_count => 2,
+      :content => '',      
+    }
     diffs << {
       :deleted_line_count => 1,
       :id => 'jj23',          
@@ -64,14 +71,8 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :added_line_count => 1,
       :content => '',      
     }    
-    diffs << {
-      :deleted_line_count => 5,
-      :id => 'jj25',          
-      :name => 'output',
-      :added_line_count => 2,
-      :content => '',      
-    }
     assert_equal 'jj24', most_changed_lines_file_id(diffs)     
   end
+
 
 end

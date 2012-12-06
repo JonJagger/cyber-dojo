@@ -19,7 +19,7 @@ class DiffController < ApplicationController
         
     visible_files = @avatar.visible_files(@now_tag)
     diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)    
-    @diffs = git_diff_prepare(@avatar, @now_tag, diffed_files)
+    @diffs = git_diff_prepare(@avatar, diffed_files)
     if traffic_lights == [ ]
       @current_filename_id = @diffs.find {|diff| diff[:name] == 'instructions'}[:id]
     else

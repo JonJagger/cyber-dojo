@@ -27,9 +27,9 @@ class GitDiffViewTests < ActionController::TestCase
     run_tests(avatar, visible_files)
     assert_equal :green, avatar.increments.last[:colour]
     
-    from_tag = 1
-    to_tag = 2    
-    view = git_diff_view(avatar, from_tag, to_tag)
+    was_tag = 1
+    now_tag = 2    
+    view = git_diff_view(avatar, was_tag, now_tag)
     view.delete('output')
     
     expected =
@@ -48,10 +48,80 @@ class GitDiffViewTests < ActionController::TestCase
     
     assert_equal expected, view
     
+    
+    class MockUuidFactory
+      
+      def initialize(mock_uuids)
+        @n = -1
+        @mock_uuids = mock_uuids
+      end
+      
+      def create_uuid
+        @mock_uuids[@n += 1]
+      end
+      
+    end
+    
+    diffs = git_diff_prepare(avatar, view, MockUuidFactory.new(["1","2","3"]))
+    expected_diffs = [
+      {
+        :id => "id_1",
+        :name => "cyber-dojo.sh",
+        :section_count => 0,
+        :deleted_line_count => 0,
+        :added_line_count => 0,
+        :content => "<same><ln>  1</ln>ruby test_untitled.rb</same>"
+      },
+      {
+        :id => "id_2",
+        :name => "test_untitled.rb",
+        :section_count => 0,
+        :deleted_line_count => 0,
+        :added_line_count => 0,
+        :content =>
+        "<same><ln>  1</ln>require './untitled'</same>" +
+        "<same><ln>  2</ln>require 'test/unit'</same>" +
+        "<same><ln>  3</ln></same>" +
+        "<same><ln>  4</ln>class TestUntitled &lt; Test::Unit::TestCase</same>" +
+        "<same><ln>  5</ln></same>" + 
+        "<same><ln>  6</ln>  def test_simple</same>" +
+        "<same><ln>  7</ln>    assert_equal 9 * 6, answer</same>" +
+        "<same><ln>  8</ln>  end</same>" +
+        "<same><ln>  9</ln></same>" +
+        "<same><ln> 10</ln>end</same>"
+      },
+      {
+        :id => "id_3",
+        :name => "untitled.rb",
+        :section_count => 1,
+        :deleted_line_count => 1,
+        :added_line_count => 1,
+        :content =>
+        "<same><ln>  1</ln>def answer</same><span id='id_id_3_section_0'></span>" +
+        "<deleted><ln>  2</ln>  42</deleted><added><ln>  2</ln>  54</added>" +
+        "<same><ln>  3</ln>end</same>"
+      }
+    ]
+
+    assert_equal expected_diffs, diffs
+
   end
 
   #-----------------------------------------------
 
+  test "uuid_factory" do
+    factory = UuidFactory.new
+    (1..5).each { |n|
+      uuid = factory.create_uuid
+      assert_equal 10, uuid.length
+      uuid.chars{ |ch|
+        assert_not_nil "0123456789ABCDEF".index(ch)
+      }
+    }
+  end
+  
+  #-----------------------------------------------
+  
   test "building git diff view from repo with deleted file" do
     kata = make_kata('Ruby-installed-and-working')
     avatar = Avatar.new(kata, 'wolf')    

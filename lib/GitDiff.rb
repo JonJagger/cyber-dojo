@@ -41,17 +41,23 @@ module GitDiff
 
   #-----------------------------------------------------------  
   
-  def git_diff_prepare(avatar, tag, diffed_files)
+  class UuidFactory
+    def create_uuid
+      Uuid.new.to_s
+    end
+  end
+  
+  def git_diff_prepare(avatar, diffed_files, uuid_factory = UuidFactory.new)
     diffs = [ ]
     diffed_files.sort.each do |name,diff|
-      id = 'id_' + Uuid.new.to_s
+      id = 'id_' + uuid_factory.create_uuid
       diffs << {
         :id => id,
         :name => name,
         :section_count => diff.count { |line| line[:type] == :section },
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :added_line_count => diff.count { |line| line[:type] == :added },
-        :content => git_diff_html(id,diff),
+        :content => git_diff_html(id, diff),
       }
     end
     diffs    
@@ -89,7 +95,7 @@ module GitDiff
   
   #-----------------------------------------------------------
   
-  def git_diff_html(id,diff)
+  def git_diff_html(id, diff)
     max_digits = diff.length.to_s.length
     lines = diff.map {|n| diff_htmlify(id, n, max_digits) }.join("")
   end
@@ -131,7 +137,7 @@ module GitDiff
 
   #-----------------------------------------------------------
 
-  def ify(lines,type)
+  def ify(lines, type)
     result = [ ]
     lines.each_with_index do |line,number|
       result << {
