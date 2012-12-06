@@ -37,6 +37,8 @@ HERE
 
   end
 
+  #--------------------------------------------------------
+
   test "nunit RED" do
     # There are two NUnit output formats depending on what
     # version you're using and possibly whether you're on
@@ -59,6 +61,8 @@ HERE
     assert_equal :amber, CodeOutputParser::parse_nunit(amber_output)
   end
   
+  #--------------------------------------------------------
+
   test "catch RED" do
     red_output = "[Testing completed. All 1 test(s) failed]"
     assert_equal :red, CodeOutputParser::parse_catch(red_output)
@@ -84,6 +88,8 @@ HERE
     assert_equal :amber, CodeOutputParser::parse_catch(amber_output)
   end
   
+  #--------------------------------------------------------
+
   test "go build failed is amber" do
     assert_equal :amber, CodeOutputParser::parse_go_testing("[build failed]")  
   end
@@ -97,6 +103,8 @@ HERE
     assert_equal :amber, CodeOutputParser::parse_go_testing("anything else")
   end
   
+  #--------------------------------------------------------
+  
   test "was a green C/C++ assert case" do
 amber_output = <<HERE    
 g++ -Wall -Werror -O *.cpp -o run.tests
@@ -108,6 +116,8 @@ HERE
     assert_equal :amber, CodeOutputParser::parse_cassert(amber_output)    
   end
   
+  #--------------------------------------------------------
+  
   test "another green C/C++ assert case" do
 green_output = <<HERE    
 g++ -Wall -Werror -O *.cpp -o run.tests
@@ -118,6 +128,87 @@ HERE
     assert_equal :green, CodeOutputParser::parse_cassert(green_output)        
   end
   
+  #--------------------------------------------------------
+  
+  test "python failing test is red" do
+    red_output = 
+      [
+        "F",
+        "======================================================================",
+        "FAIL: test_str (__main__.TestUntitled)",
+        "simple example to start you off",
+        "----------------------------------------------------------------------",
+        "Traceback (most recent call last):",
+        '  File "test_untitled.py", line 9, in test_str',
+        "    self.assertEqual(6 * 9, obj.answer())",
+        "AssertionError: 54 != 42",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 1 test in 0.000s",
+        "",
+        "FAILED (failures=1)"
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_python_unittest(red_output)
+  end
+  
+  test "python one test passed and none failing is green" do
+    green_output = 
+      [
+        ".",
+        "----------------------------------------------------------------------",
+        "Ran 1 test in 0.000s",
+        "",
+        "OK"
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_python_unittest(green_output)    
+  end
+  
+  test "python two tests passed and none failing is green" do    
+    green_output = 
+      [
+        "..",
+        "----------------------------------------------------------------------",
+        "Ran 2 tests in 0.000s",
+        "",
+        "OK"
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_python_unittest(green_output)        
+  end
+  
+  test "python one passing test and one failing test is red" do
+    red_output = 
+      [
+        ".F",
+        "======================================================================",
+        "FAIL: test_str2 (__main__.TestUntitled)",
+        "simple example to start you off",
+        "----------------------------------------------------------------------",
+        "Traceback (most recent call last):",
+        '  File "test_untitled.py", line 14, in test_str2',
+        "    self.assertEqual(6 * 9, obj.answer())",
+        "AssertionError: 54 != 42",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 2 tests in 0.000s",
+        "",
+        "FAILED (failures=1)"
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_python_unittest(red_output)            
+  end
+  
+  test "python syntax error is amber" do
+    amber_output =
+    [
+      "Traceback (most recent call last):",
+      '  File "test_untitled.py", line 1, in <module>',
+      "    import untitled",
+      '  File "/Users/jonjagger/Desktop/Repos/cyberdojo/sandboxes/AB/2ED984F2/hippo/untitled.py", line 4',
+      "    return 42sdsdsdsd",
+      "                    ^",
+      "SyntaxError: invalid syntax"      
+    ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_python_unittest(amber_output)                
+  end
   
 end
 
