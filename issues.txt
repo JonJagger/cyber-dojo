@@ -42,6 +42,13 @@ check for conflicts?
 
 MINOR
 -----
+the new line in sandbox.run
+  output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+  seems to be causing some encoding glitches
+  everything still works (as in you get traffic-lights)
+  but the output of gcc when there is a syntax error does not
+  represent the special quotes either side of the erroneous token(s)
+-----
 add help button (screen cast?) for diff page
 -----
 add help button (screen cast?) for dashboard page
