@@ -6,6 +6,52 @@ class GitDiffParserTests < ActionController::TestCase
   include GitDiff
 
   #-----------------------------------------------------
+
+  test "lines passed into ctor are split" do
+lines = <<HERE
+123
+456
+789
+HERE
+   
+    expected = [ "123", "456", "789" ]
+    assert_equal expected, GitDiffParser.new(lines).lines    
+  end
+
+  #-----------------------------------------------------
+  
+  test "line_split of nil is empty array" do
+    ignored = 'xxxx'
+    assert_equal [ ], GitDiffParser.new(ignored).line_split(nil)
+  end
+
+  test "line_split of empty source is empty string in array" do
+    ignored = 'xxxx'
+    assert_equal [ "" ], GitDiffParser.new(ignored).line_split("")  
+  end
+  
+  test "line_split of source with embedded newlines" do
+    ignored = 'xxxx'
+    expected = [ "12", "34" ]
+    source = expected.join("\n")
+    assert_equal expected, GitDiffParser.new(ignored).line_split(source)        
+  end
+  
+  test "line_split of source with embedded newlines and one trailing newline" do
+    ignored = 'xxxx'
+    expected = [ "12", "34" ]
+    source = expected.join("\n") + "\n"
+    assert_equal expected, GitDiffParser.new(ignored).line_split(source)            
+  end
+  
+  test "line_split of source with embedded newlines and two trailing newlines" do
+    ignored = 'xxxx'
+    expected = [ "12", "34" ]
+    source = expected.join("\n") + "\n" + "\n"
+    assert_equal expected << "", GitDiffParser.new(ignored).line_split(source)            
+  end
+  
+  #-----------------------------------------------------
    
   test "parse diff for filename ending in tab removes the tab" do
     was_line =  '--- a/sandbox/ab cd'
@@ -1283,7 +1329,7 @@ HERE
   #-----------------------------------------------------
   
   test "no_newline_at_end_of_file line at end of common section is gobbled" do
-    # James Grenning has built his own Cyber-Dojo server
+    # James Grenning has built his own cyber-dojo server
     # which he uses for training. He noticed that a file
     # called CircularBufferTests.cpp
     # changed between two traffic-lights but the diff-view
@@ -1352,11 +1398,8 @@ HERE
           ] # chunks
     } # expected
     
-    
-    assert_equal expected, GitDiffParser.new(lines).parse_one
-    
+    assert_equal expected, GitDiffParser.new(lines).parse_one    
   end
-
 
 end
 

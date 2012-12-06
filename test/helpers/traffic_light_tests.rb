@@ -5,6 +5,15 @@ class TrafficLightTests < ActionController::TestCase
 
   include TrafficLightHelper
 
+  test "revert traffic light" do
+    inc = make_inc
+    expected =
+      "<span title='Revert to traffic-light 2 (red)'>" +
+        "<img src='/images/traffic_light_red.png' border='0' width='20' height='65'/>" +
+      "</span>"
+    assert_equal expected, revert_traffic_light(inc)
+  end
+    
   test "unlinked traffic light red" do
     inc = make_inc
     inc[:colour] = :red
@@ -49,7 +58,7 @@ class TrafficLightTests < ActionController::TestCase
   end
   
   def make_inc
-    { :number => 2, :time => [2012,5,1,23,20,45] }
+    { :number => 2, :time => [2012,5,1,23,20,45], :colour => :red }
   end
   
 end

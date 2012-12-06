@@ -17,7 +17,7 @@ module Folders
   def self.id_complete(root_dir, id)
     if id != nil
       id = id[0..9].upcase
-      # if are at least 4 characters of the id are
+      # if at least 4 characters of the id are
       # provided attempt to do id-completion
       if id.length >= 4 && id.length < 10
         dirs = Dir[root_dir + '/katas/' + id[0..1] + '/' + id[2..-1] + '*']

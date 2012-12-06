@@ -237,9 +237,7 @@ module GitDiff
         [ "" ]
       else
         lines = source.split(/\n/,-1)
-        if lines.last == ""
-          lines.pop
-        end
+        lines.pop if lines.last == ""
         lines
       end
     end

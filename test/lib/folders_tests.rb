@@ -4,15 +4,45 @@ require 'Folders'
 class FoldersTests < ActionController::TestCase
 
   test "test languages folder contains C#" do
-    folders = Folders.in(root_dir + '/languages')
+    folders = Folders::in(root_dir + '/languages')
     assert_equal 1, folders.count('C#') 
   end    
 
   test "test languages folder doesn't contain . or .." do
-    folders = Folders.in(root_dir + '/languages')
+    folders = Folders::in(root_dir + '/languages')
     assert_equal 0, folders.count('.')
     assert_equal 0, folders.count('..')
   end    
 
+  test "id_complete when id is nil is nil" do
+    assert_equal nil, Folders::id_complete(root_dir, nil)  
+  end
+  
+  test "id_complete when id is less than 4 chars in length is unchanged id" do
+    id = "123"
+    assert_equal id, Folders::id_complete(root_dir, id)
+  end
+  
+  test "id_complete when id is greater than or equal to 10 chars in length is unchanged id" do
+    id = "123456789A"
+    assert_equal id, Folders::id_complete(root_dir, id)
+  end
+  
+  test "id_complete with no matching id is unchanged id" do
+    Folders::make_folder(root_dir + '/katas/12/345ABCDE/wolf')
+    assert_equal '123AEEE', Folders::id_complete(root_dir, '123AEEE')    
+  end
+  
+  test "id_complete with one matching id is found and returned as id" do
+    Folders::make_folder(root_dir + '/katas/12/345ABCDE/wolf')
+    assert_equal '12345ABCDE', Folders::id_complete(root_dir, '1234')
+  end
+  
+  test "id_complete with two matching ids found is unchanged id" do
+    Folders::make_folder(root_dir + '/katas/12/345ABCDE/wolf')
+    Folders::make_folder(root_dir + '/katas/12/346ABCDE/wolf')
+    assert_equal '1234', Folders::id_complete(root_dir, '1234')    
+  end
+  
 end
 
