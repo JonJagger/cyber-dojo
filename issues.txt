@@ -42,9 +42,6 @@ check for conflicts?
 
 MINOR
 -----
-diff was_tag=0, now_tag=1 fails and this is what is requested when
-  you click on the avatar image on the dashboard.
------
 revert should auto-run the tests and also mark the resulting new
   traffic-light in some way. Perhaps simply give it a different
   coloured border.
