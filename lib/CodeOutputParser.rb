@@ -46,11 +46,14 @@ module CodeOutputParser
 
   def self.parse_perl_test_simple(output)
     green_pattern = Regexp.new('All tests successful')
-    amber_pattern = Regexp.new('syntax error')
+    syntax_error_pattern = Regexp.new('syntax error')
+    compilation_aborted_pattern = Regexp.new('aborted due to compilation errors')
     if green_pattern.match(output)
       :green
-    elsif amber_pattern.match(output)
+    elsif syntax_error_pattern.match(output)
       :amber
+    elsif compilation_aborted_pattern.match(output)
+	  :amber
     else
       :red
     end
