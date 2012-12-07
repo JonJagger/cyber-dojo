@@ -4,17 +4,6 @@
 
 $(document).ready(function() {
   
-  $('#ok').click(function() {    
-    cd.postTo('/dojo/save', {
-      exercise: $('input[name="exercise"]:checked').val(),
-      language: $('input[name="language"]:checked').val()
-    });    
-  });
-  
-  $('#cancel').click(function() {
-    cd.postTo('/dojo/index');
-  });
-  
   // remove radio bullets - they are sometimes causing layout weirdness in firefox
   $('input[type=radio]').hide();  
   
@@ -40,17 +29,11 @@ $(document).ready(function() {
           </td>
           <td>&nbsp;</td>
           <td>
-            <input type="button"
-                   class="button"
-                   id="ok" 
-                   value="ok" />
+            <%= render :partial => 'ok_button' %>      
           </td>
           <td>&nbsp;</td>
           <td>
-            <input type="button"
-                   class="button"
-                   id="cancel" 
-                   value="cancel" />
+            <%= render :partial => 'cancel_button' %>      
           </td>
         </tr>
       </table>

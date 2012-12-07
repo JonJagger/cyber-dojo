@@ -1,0 +1,21 @@
+
+<script language="JavaScript"
+        type="text/javascript"><!--
+
+$(document).ready(function() {
+  
+  $('#ok').click(function() {    
+    cd.postTo('/setup/save', {
+      exercise: $('input[name="exercise"]:checked').val(),
+      language: $('input[name="language"]:checked').val()
+    });    
+  });
+  
+});
+
+//--></script>
+
+<input type="button"
+       class="button"
+       id="ok" 
+       value="ok" />
