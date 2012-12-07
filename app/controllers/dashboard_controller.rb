@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
     inner = uuid.inner
     outer = uuid.outer
     cd_cmd = "cd #{root_dir}/katas/#{inner}"
-    zip_cmd = "find #{outer} -print | xargs tar -s /#{outer}/#{inner}#{outer}/ -cvzf ../../zips/#{id}.tar.gz"
+    zip_cmd = "find #{outer} -print | xargs tar -s /#{outer}/#{inner}#{outer}/ -czf ../../zips/#{id}.tar.gz"
     system(cd_cmd + ";" + zip_cmd)
     send_file "#{root_dir}/zips/#{id}.tar.gz", :type=>'application/zip'
   end

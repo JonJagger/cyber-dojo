@@ -41,6 +41,28 @@ class DashboardControllerTest < IntegrationTest
     get "dashboard/show", { :id => id }
     assert_response :success        
   end
+
+  test "download zip of dojo" do
+    id = checked_save_id
+    avatar = Avatar.names[0]
+    get '/kata/edit', {
+      :id => id,
+      :avatar => avatar
+    }
+    assert_response :success        
+    post 'kata/run_tests', {
+      :id => id,
+      :avatar => avatar,
+      :file_content => { }
+    }
+    post 'dashboard/download', {
+      :id => id
+    }
+    assert_response :success
+    root = Rails.root.to_s + '/test/cyberdojo' 
+    zipfile_name = root + "/zips/#{id}.tar.gz"
+    assert File.exists?(zipfile_name), "File.exists?(#{zipfile_name})"    
+  end
   
 end
 
