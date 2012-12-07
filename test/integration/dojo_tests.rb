@@ -57,5 +57,23 @@ class DojoControllerTest  < IntegrationTest
     assert_equal true, json['full']
     assert_nil json['avatar_name']
   end
-    
+
+  test "resume avatar grid" do
+    id = checked_save_id
+    get '/dojo/start_json', {
+      :format => :json,
+      :id => id
+    }
+    post 'dojo/resume_avatar_grid', {
+      :id => id
+    }
+  end
+  
+  test "full avatar grid" do
+    id = checked_save_id
+    post 'dojo/full_avatar_grid', {
+      :id => id
+    }                                                                                                                                                                                        
+  end
+  
 end
