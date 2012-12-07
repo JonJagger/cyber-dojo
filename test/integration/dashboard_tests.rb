@@ -63,6 +63,24 @@ class DashboardControllerTest < IntegrationTest
     zipfile_name = root + "/zips/#{id}.tar.gz"
     assert File.exists?(zipfile_name), "File.exists?(#{zipfile_name})"    
   end
+
+  test "heartbeat" do
+    id = checked_save_id
+    avatar = Avatar.names[0]
+    get '/kata/edit', {
+      :id => id,
+      :avatar => avatar
+    }
+    assert_response :success        
+    post 'kata/run_tests', {
+      :id => id,
+      :avatar => avatar,
+      :file_content => { }
+    }
+    post 'dashboard/heartbeat', {
+      :id => id
+    }
+  end
   
 end
 
