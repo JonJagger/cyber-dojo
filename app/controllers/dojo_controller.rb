@@ -56,13 +56,11 @@ class DojoController < ApplicationController
     exists = Kata.exists?(root_dir, id)
     avatar_name = exists ? start_avatar(Kata.new(root_dir, id)) : nil
     full = (avatar_name == nil)
-    start_grid = full ? '' : start_avatar_grid(avatar_name)
     respond_to do |format|
       format.json { render :json => {
           :exists => exists,
           :avatar_name => avatar_name,
-          :full => full,
-          :start_grid => start_grid
+          :full => full
         }
       }
     end
@@ -70,14 +68,6 @@ class DojoController < ApplicationController
   
   #------------------------------------------------
 
-  def start_avatar_grid(avatar_name)
-    @avatar_name = avatar_name
-    filename = Rails.root.to_s + '/app/views/dojo/start_avatar_grid.html.erb'
-    ERB.new(File.read(filename)).result(binding)
-  end
-  
-  #------------------------------------------------
-  
   def resume_avatar_grid
     @kata = Kata.new(root_dir, id)    
     @live_avatar_names = @kata.avatar_names

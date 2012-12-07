@@ -5,25 +5,6 @@ $(document).ready(function() {
   
   var title = 'start-coding';
   
-  cd.startCoding = function(id, avatar_name, start_grid) {
-    var grid = $('<div>');
-    var starter = $('<div class="dialog">')
-      .html(start_grid)
-      .dialog({
-        autoOpen: false,
-        title: cd.dialogTitle(title),
-        width: 400,
-        modal: true,
-        buttons: {
-          ok: function() {
-            cd.postTo('/kata/edit', { id: id, avatar: avatar_name  }, '_blank');              
-            $(this).dialog('close');
-          }
-        }
-      });
-      starter.dialog('open');
-  };
-  
   cd.dialog_fullDojo = function(id) {
     var grid = $('<div>');
     grid.load('/dojo/full_avatar_grid', { id: id }, function() {
@@ -51,7 +32,7 @@ $(document).ready(function() {
       } else if (dojo.full === true) {
         cd.dialog_fullDojo(id);
       } else {
-        cd.startCoding(id, dojo.avatar_name, dojo.start_grid);
+        cd.postTo('/kata/edit', { id: id, avatar: dojo.avatar_name  }, '_blank');                          
       }
     });
   });

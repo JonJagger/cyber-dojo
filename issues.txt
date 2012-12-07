@@ -42,6 +42,10 @@ check for conflicts?
 
 MINOR
 -----
+revert should auto-run the tests and also mark the resulting new
+  traffic-light in some way. Perhaps simply give it a different
+  coloured border.
+-----
 the new line in sandbox.run
   output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   seems to be causing some encoding glitches
@@ -62,9 +66,6 @@ at tag N+1). Extra feature would be to detect it has been renamed
 and to move to the renamed file.
 -----
 lib/LineSplitter.rb is duplicated in lib/GitDiffParser.line_split
------
-it might be better if the dialog box showing a players animal
-  appeared after the edit-test page appeared rather than before.
 -----
 I'd like the rightmost column of avatar images on the dashboard
   to not scroll off screen. But at the same time I'd also like
