@@ -1,8 +1,4 @@
 
-require 'erb'
-
-require 'Files'
-require 'Folders'
 require 'Locking'
 
 class DojoController < ApplicationController

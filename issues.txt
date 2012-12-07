@@ -42,6 +42,9 @@ check for conflicts?
 
 MINOR
 -----
+diff was_tag=0, now_tag=1 fails and this is what is requested when
+  you click on the avatar image on the dashboard.
+-----
 revert should auto-run the tests and also mark the resulting new
   traffic-light in some way. Perhaps simply give it a different
   coloured border.
@@ -77,7 +80,7 @@ allow initial manifest.rb setup of initial exercise/language to
   with links? 
 -----
 once a dojo has been created it should be independent of the
-  initial exercise and language filesets it was created from.
+  initial language filesets it was created from.
   For example, you should be able to rename a languages sub-folder
   and a dojo created from it before the rename should be ok.
 -----

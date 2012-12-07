@@ -8,15 +8,6 @@ class DojoControllerTest  < IntegrationTest
     assert_response :success
   end
   
-  test "create" do
-    get 'dojo/create'
-    assert_response :success
-  end
-
-  test "save" do
-    checked_save_id
-  end
-  
   test "id does not exist" do
     bad_id = 'ab00ab11ab'
     get 'dojo/exists_json', {

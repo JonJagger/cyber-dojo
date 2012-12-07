@@ -11,7 +11,7 @@ class IntegrationTest  < ActionController::IntegrationTest
   end
 
   def checked_save_id
-    post 'dojo/save', {
+    post 'setup/save', {
       :language => 'C assert',
       :exercise => 'Yahtzee'
     }
