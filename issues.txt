@@ -42,6 +42,9 @@ check for conflicts?
 
 MINOR
 -----
+put a readme.txt file into the kata's root folder explaining
+  how to do diffs on the unzipped zip.
+-----
 revert should auto-run the tests and also mark the resulting new
   traffic-light in some way. Perhaps simply give it a different
   coloured border.

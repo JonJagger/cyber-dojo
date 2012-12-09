@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
 require 'make_time_helper'
+require 'Folders'
 require 'Uuid'
 
 class ApplicationController < ActionController::Base
