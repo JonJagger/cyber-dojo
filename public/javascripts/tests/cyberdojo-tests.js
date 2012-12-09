@@ -70,7 +70,7 @@ TestCase("cyberdojo-Test", {
     assertEquals(expected, filenames);
   },
   
-  "test currentFilename() finds file in filelist that is selected": function() {
+  "test currentFilename() finds file in filelist that is loaded": function() {
     /*:DOC +=
       <div>
         <div>
@@ -85,7 +85,7 @@ TestCase("cyberdojo-Test", {
       </div>
     */
     assertEquals('B', $cd.currentFilename());
-    $cd.selectFileInFileList('A');
+    $cd.loadFile('A');
     assertEquals('A', $cd.currentFilename());
   },
   
