@@ -6,16 +6,25 @@ From the cyberdojo/public/javascripts/tests folder
 Now capture the browsers - localhost:4224. Then to run the tests...
 
 >java -jar $JSTESTDRIVER_HOME/JsTestDriver-1.3.3d.jar --tests all
+If this succeeds you can generate coverage stats
+>./genhtml -o coverage coverage/jsTestDriver.conf-coverage.dat 
+you can do both steps using the
+>./run.sh
+which will create the file
+  cyberdojo/public/javascripts/tests/coverage/index.html
+open this in a browser and click on the
+  javascripts
+link on the lhs to open a page containing coverage of all
+the cyber-dojo*.js files, each one as a hyperlink
 
-The tests run and I get an overall % coverage.
-However...
 
-Issue 1
---------
-I'm not getting coverage files.
+NB: I installed genhtml from  http://ltp.sourceforge.net/coverage/lcov.php
+    and then clicked lcov-1.10.tar.gz and then unzipped it
+    and then grabbed lcov-1.10/bin/gehtml (its a perl file)
 
-Issue 2
--------
+
+Issue
+-----
 I get the following output
 line 217:6 mismatched input 'class' expecting RBRACE
 line 218:5 no viable alternative  at input ')'
