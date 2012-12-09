@@ -41,13 +41,7 @@ class Avatar
     @name
   end
       
-  def save_run_tests(visible_files, output, inc)
-    
-    #inc[:revert_tag] = nil
-    #  means this is a regular run-tests
-    #inc[:revert_tag] = "2"
-    #  means this inc reverted back to increments[2]
-    
+  def save_run_tests(visible_files, output, inc)    
     traffic_lights = nil
     inc[:time] = make_time(Time.now)
     visible_files['output'] = output
