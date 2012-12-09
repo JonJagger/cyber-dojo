@@ -16,7 +16,7 @@ var cyberDojo = (function(cd, $) {
     var loadFrom = function(filename, diff) {
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
-      var id = diff.id
+      var id = diff.id;
       if (sectionCount > 0) {
           filename.parent().attr('title', 'Auto-scroll through diffs');
       }
