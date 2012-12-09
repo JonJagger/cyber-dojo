@@ -37,7 +37,7 @@ $(document).ready(function() {
       modal: true,
       buttons: {
         ok: function() {
-          if (<%= @traffic_lights == [ ] -%>) {
+          if (<%= @traffic_lights == [ ] -%>) {            
             $('#test').closest("form").submit();
           }
           $(this).dialog('close');
@@ -45,7 +45,9 @@ $(document).ready(function() {
       }
     });
   starter.dialog('open');
+
 });
+
 
 //--></script>
 

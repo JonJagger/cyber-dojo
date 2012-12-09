@@ -2,12 +2,16 @@
 module TrafficLightHelper
 
   def revert_traffic_light(inc)
-    bulb = inc[:colour].to_s
-    ("<span title='Revert to traffic-light #{inc[:number]} (#{bulb})'>" +
+    ("<span title='#{revert_tool_tip(inc)}'>" +
      untitled_unlinked_traffic_light(inc) +
      "</span>").html_safe
   end
   
+  def revert_tool_tip(inc)
+    bulb = inc[:colour].to_s
+    "Revert to traffic-light #{inc[:number]} (#{bulb})"
+  end
+
   def linked_traffic_light(kata, avatar_name, inc, in_new_window)
     new_window = in_new_window ? { :target => '_blank' } : { }
     
@@ -19,7 +23,7 @@ module TrafficLightHelper
         :was_tag => inc[:number]-1,
         :now_tag => inc[:number] 
     }, 
-    { :title => tool_tip(avatar_name,inc),
+    { :title => tool_tip(avatar_name, inc),
     }.merge(new_window)
   end
   
@@ -27,7 +31,11 @@ module TrafficLightHelper
     width ||= 20
     height ||= 65
     bulb = inc[:colour].to_s
-    ("<img src='/images/traffic_light_#{bulb}.png'" +
+    filename = "traffic_light_#{bulb}"
+    if inc[:revert_tag]
+      filename += "_revert"
+    end
+    ("<img src='/images/#{filename}.png'" +
       " border='0'" +
       " width='#{width}'" +
       " height='#{height}'/>").html_safe    
@@ -40,7 +48,7 @@ module TrafficLightHelper
      "</span>").html_safe
   end
  
-  def tool_tip(avatar_name,inc)
+  def tool_tip(avatar_name, inc)
     "Show the diff of " + avatar_name + " traffic-light ##{inc[:number]} (#{at(inc)})"
   end
     

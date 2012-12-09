@@ -20,6 +20,7 @@ class KataController < ApplicationController
     sandbox = Sandbox.new(root_dir, id, params[:avatar])
     @output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
+    inc[:revert_tag] = params[:revert_tag]    
     @traffic_lights = @avatar.save_run_tests(visible_files, @output, inc)
 
     respond_to do |format|

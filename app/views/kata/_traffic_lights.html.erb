@@ -3,7 +3,16 @@
 
 $(document).ready(function() {
 
-  var info = function(avatarName,data) {
+  var runTestsWithRevertTag = function(tag) {
+    var form = $('#test').closest("form");
+    var action = form.attr('action');
+    var revert_action = action + '&revert_tag=' + tag;
+    form.attr('action', revert_action);
+    form.submit();
+    form.attr('action', action);    
+  };
+
+  var info = function(avatarName, data) {
 	var color = data.inc.colour;
 	var avatarImage =
 	  '<img ' +
@@ -79,7 +88,7 @@ $(document).ready(function() {
 	      tag: tag
 	    },
 	    function(data) {        
-	      var preview = reverterDiv(avatarName,data);
+	      var preview = reverterDiv(avatarName, data);
 	      var textArea = $('#revert_content', preview);
 	      var previous = undefined;
 	      textArea.attr('readonly', 'readonly');
@@ -112,7 +121,8 @@ $(document).ready(function() {
                   });                  
                   for (filename in data.visibleFiles) {
                     cd.newFileContent(filename, data.visibleFiles[filename]);
-                  }                  
+                  }
+                  runTestsWithRevertTag(tag);                  
 	              $(this).dialog('close');
 	            },
 	            cancel: function() {
