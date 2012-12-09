@@ -11,7 +11,7 @@ The tests run and I get an overall % coverage.
 However...
 
 Issue 1
--------
+--------
 I'm not getting coverage files.
 
 Issue 2

@@ -20,8 +20,8 @@ TestCase("cyberdojo-Test", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    $cd.support_filenames = function() { return [ ] };
-    $cd.hidden_filenames = function() { return [ ] };    
+    $cd.supportFilenames = function() { return [ ] };
+    $cd.hiddenFilenames = function() { return [ ] };    
     assert($cd.filenameAlreadyExists('cyberdojo.sh'));    
   },
   
@@ -32,10 +32,10 @@ TestCase("cyberdojo-Test", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    $cd.support_filenames = function() { return [ ] };
-    var hidden_filename = 'catch.hpp';
-    $cd.hidden_filenames = function() { return [ hidden_filename ] };    
-    assert($cd.filenameAlreadyExists(hidden_filename));    
+    $cd.supportFilenames = function() { return [ ] };
+    var hiddenFilename = 'catch.hpp';
+    $cd.hiddenFilenames = function() { return [ hiddenFilename ] };    
+    assert($cd.filenameAlreadyExists(hiddenFilename));    
   },
   
   "test filenameAlreadyExists() returns true when support filename exists": function() {
@@ -45,10 +45,10 @@ TestCase("cyberdojo-Test", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    var support_filename = 'nunit.core.dll';
-    $cd.support_filenames = function() { return [ support_filename ] };
-    $cd.hidden_filenames = function() { return [ ] };    
-    assert($cd.filenameAlreadyExists(support_filename));    
+    var supportFilename = 'nunit.core.dll';
+    $cd.supportFilenames = function() { return [ supportFilename ] };
+    $cd.hiddenFilenames = function() { return [ ] };    
+    assert($cd.filenameAlreadyExists(supportFilename));    
   },
 
   "test filenameAlreadyExists() returns false when filename doesn't exist": function() {
@@ -58,8 +58,8 @@ TestCase("cyberdojo-Test", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    $cd.support_filenames = function() { return [ ] };
-    $cd.hidden_filenames = function() { return [ ] };    
+    $cd.supportFilenames = function() { return [ ] };
+    $cd.hiddenFilenames = function() { return [ ] };    
     assert(!$cd.filenameAlreadyExists('not.present'));    
   },
 
