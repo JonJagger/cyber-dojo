@@ -42,16 +42,19 @@ class Avatar
   end
       
   def save_run_tests(visible_files, output, inc)
+    traffic_lights = nil
     inc[:time] = make_time(Time.now)
     visible_files['output'] = output
     Locking::io_lock(dir) do
       increments = locked_read(Increments_filename)
       tag = increments.length + 1
       inc[:number] = tag
-      Files::file_write(pathed(Increments_filename), increments << inc)
+      traffic_lights = increments << inc
+      Files::file_write(pathed(Increments_filename), traffic_lights)
       Files::file_write(pathed(Manifest_filename), visible_files)
       git_commit_tag(visible_files, tag)
     end
+    traffic_lights
   end
 
   def visible_files(tag = nil)

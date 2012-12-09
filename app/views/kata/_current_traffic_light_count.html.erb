@@ -1,10 +1,10 @@
 
 <div id="current_traffic_light_count">
-  <% if @avatar.increments.length != 0 %>
-      <% bulb = @avatar.increments[-1][:colour].to_s %>
+  <% if @traffic_lights.length != 0 %>
+      <% bulb = @traffic_lights[-1][:colour].to_s %>
       <span class="tag_count <%= bulb %>"
-            title="<%= @avatar.name%> has <%= @avatar.increments.length %> traffic-lights so far and is currently at <%= bulb %>">
-        <%= @avatar.increments.length %>
+            title="<%= @avatar.name%> has <%= @traffic_lights.length %> traffic-lights so far and is currently at <%= bulb %>">
+        <%= @traffic_lights.length %>
       </span>
     </td>        
   <% end %>

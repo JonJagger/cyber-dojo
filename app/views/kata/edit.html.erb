@@ -37,7 +37,7 @@ $(document).ready(function() {
       modal: true,
       buttons: {
         ok: function() {
-          if (<%= @avatar.increments == [ ] -%>) {
+          if (<%= @traffic_lights == [ ] -%>) {
             $('#test').closest("form").submit();
           }
           $(this).dialog('close');

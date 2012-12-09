@@ -132,7 +132,7 @@ $(document).ready(function() {
   <table>
     <tr class="row">
       <% max_lights = 36 %>                
-      <% recent(@avatar.increments, max_lights).each do |light| %>
+      <% recent(@traffic_lights, max_lights).each do |light| %>
         <td valign="top">
           <span onclick="cd.revert('<%=@kata.id%>', '<%=@avatar.name%>', <%=light[:number]%>);">
             <%= revert_traffic_light(light) %>
