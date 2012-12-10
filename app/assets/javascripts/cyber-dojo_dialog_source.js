@@ -41,7 +41,7 @@ var cyberDojo = (function(cd, $) {
         + '</a> from scratch.'
       );
 
-    var source = $(cd.makeTable(github,ova,turnKey));
+    var source = $(cd.makeTable(github, ova, turnKey));
       
     cd.dialog(source.html(), 600, 'source');
   };

@@ -64,10 +64,10 @@ var cyberDojo = (function(cd, $) {
     );
       
     var why = $(cd.makeTable(oslo,
-                   startDelay,browser,
-                   feel,improve,
-                   endDelay,projector,
-                   noCollab,social));
+                   startDelay, browser,
+                   feel, improve,
+                   endDelay, projector,
+                   noCollab, social));
       
     cd.dialog(why.html(), 850, 'why');
   };

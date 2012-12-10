@@ -44,7 +44,7 @@ var cyberDojo = (function(cd, $) {
         + '&nbsp;professionalism in programming.'
       );
       
-    var links = $(cd.makeTable(ninetySeven,video,map,accu));
+    var links = $(cd.makeTable(ninetySeven, video, map, accu));
       
     cd.dialog(links.html(), 550, 'links');
   };

@@ -18,7 +18,7 @@ var cyberDojo = (function(cd, $) {
     var refactor = add + "simple auto-refactoring ?";
     var any = add + "... ?";
 
-    var faqs = $(cd.makeTable(hilight,noListen,refactor,noListen,any,noListen));
+    var faqs = $(cd.makeTable(hilight, noListen, refactor, noListen, any, noListen));
       
     cd.dialog(faqs.html(), 550, 'faqs');
   };

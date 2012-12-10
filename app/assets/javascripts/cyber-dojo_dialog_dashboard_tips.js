@@ -11,7 +11,7 @@ var cyberDojo = (function(cd, $) {
                 +   ' height="60"/> ';
     };
     
-    var progression = function(from,to,activity) {
+    var progression = function(from, to, activity) {
       return cd.divPanel(
           'Look for ' + traffic_light(from) + '&rarr;&nbsp;' + traffic_light(to)
         + 'progressions as evidence of ' + activity + '.'
@@ -22,7 +22,7 @@ var cyberDojo = (function(cd, $) {
     var refactor = progression('green', 'green', 'refactoring');
     var amber    = progression('amber', 'amber', 'overly ambitious steps');
 
-    var dashboard = $(cd.makeTable(redFirst,refactor,amber));
+    var dashboard = $(cd.makeTable(redFirst, refactor, amber));
       
     cd.dialog(dashboard.html(), 450, 'tips');
   };

@@ -15,7 +15,7 @@ var cyberDojo = (function(cd, $) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.node = function(name,content) {
+  cd.node = function(name, content) {
     return '<'+name+'>'
           +  content
 	  +'</'+name+'>';

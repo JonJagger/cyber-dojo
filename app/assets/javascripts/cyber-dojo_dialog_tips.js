@@ -47,7 +47,7 @@ var cyberDojo = (function(cd, $) {
         + 'Do five iterations swapping partners each time.'
       );
 
-    var tips = $(cd.makeTable(team,average,atGreen,refactor,recruit));
+    var tips = $(cd.makeTable(team, average, atGreen, refactor, recruit));
   
     cd.dialog(tips.html(), 600, 'tips');
   };
