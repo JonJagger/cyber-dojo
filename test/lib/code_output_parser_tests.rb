@@ -12,6 +12,27 @@ class CodeOutputParserTests < ActionController::TestCase
     assert_equal expected, CodeOutputParser::parse('ignored', amber_output)    
   end
   
+  test "terminated by the server after 5 seconds is amber" do
+    amber_output = "Terminated by the cyber-dojo server after 5 seconds"
+    expected = { :colour => :amber }
+    assert_equal expected, CodeOutputParser::parse('ignored', amber_output)    
+  end
+  
+  test "terminated by the server after 1 second is amber" do
+    amber_output = "Terminated by the cyber-dojo server after 1 second"
+    expected = { :colour => :amber }
+    assert_equal expected, CodeOutputParser::parse('ignored', amber_output)    
+  end
+  
+  test "when not terminated unit_test_framework name is used to select parser" do
+    amber_output =
+      [
+        "test_untitled.rb:7: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('"    
+      ].join("\n")
+    expected = { :colour => :amber }
+    assert_equal expected, CodeOutputParser::parse('ruby_test_unit', amber_output)        
+  end
+  
   #--------------------------------------------------------
   
   test "was a red ruby case" do
@@ -462,6 +483,200 @@ class CodeOutputParserTests < ActionController::TestCase
         "Failed 1/1 test programs. 0/0 subtests failed."
       ].join("\n")
     assert_equal :amber, CodeOutputParser::parse_perl_test_simple(amber_output)                                    
+  end
+  
+  #--------------------------------------------------------
+
+  test "erlang one fail is red" do
+    red_output =
+      [
+        "untitled_tests: answer_test (module 'untitled_tests')...*failed*",
+        "::error:{assertEqual_failed,[{module,untitled_tests},",
+        "                           {line,6},",
+        '                           {expression,"untitled : answer ( )"},',
+        "                           {expected,54},",
+        "                           {value,42}]}",
+        "  in function untitled_tests:'-answer_test/0-fun-0-'/1",
+        "",
+        "",
+        "=======================================================",
+        "  Failed: 1.  Skipped: 0.  Passed: 0."        
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_eunit(red_output)
+  end
+  
+  test "erlang one pass is green" do    
+    green_output =
+      [
+        "  Test passed."        
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_eunit(green_output)    
+  end
+  
+  test "erlang two passes is green" do    
+    green_output =
+      [
+        "  All 2 tests passed."        
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_eunit(green_output)    
+  end
+  
+  test "erlang one pass one fail is red" do
+    red_output =
+      [
+        "untitled_tests: answer2_test...*failed*",
+        "::error:{assertEqual_failed,[{module,untitled_tests},",
+        "                           {line,10},",
+        '                           {expression,"untitled : answer ( )"},',
+        '                           {expected,54},',
+        '                           {value,42}]}',
+        "  in function untitled_tests:'-answer2_test/0-fun-0-'/1",
+        "",
+        "",
+        "=======================================================",
+        "  Failed: 1.  Skipped: 0.  Passed: 1."        
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_eunit(red_output)      
+  end
+  
+  test "erlang syntax error is amber" do
+    amber_output =
+      [
+        "./untitled_tests.erl:5: function ddd/1 undefined",
+        "make: *** [untitled_tests.beam] Error 1"        
+      ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_eunit(amber_output)          
+  end
+  
+  test "erlang makefile error is amber" do
+    amber_output =
+      [
+      "Makefile:8: *** missing separator.  Stop."        
+      ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_eunit(amber_output)          
+  end
+  
+  #--------------------------------------------------------
+
+  test "php one fail is red" do
+    red_output =
+      [
+        "PHPUnit 3.4.5 by Sebastian Bergmann.",
+        "",
+        "UntitledTest",
+        "F",
+        "",
+        "Time: 0 seconds, Memory: 4.00Mb",
+        "",
+        "There was 1 failure:",
+        "",
+        "1) UntitledTest::testAnswer",
+        "Failed asserting that <integer:42> matches expected <integer:54>.",
+        "",
+        "/var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php:10",
+        "",
+        "FAILURES!",
+        "Tests: 1, Assertions: 1, Failures: 1."
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_php_unit(red_output)      
+  end
+
+  test "php one pass is green" do
+    green_output =
+      [
+        "PHPUnit 3.4.5 by Sebastian Bergmann.",
+        "",
+        "UntitledTest",
+        ".",
+        "",
+        "Time: 0 seconds, Memory: 4.00Mb",
+        "",
+        "OK (1 test, 1 assertion)"        
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_php_unit(green_output)            
+  end
+  
+  test "php syntax error is amber" do
+    amber_output =
+      [
+        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"        
+      ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_php_unit(amber_output)                  
+  end
+
+  test "php one pass one fail is red" do
+    red_output =
+      [
+        "PHPUnit 3.4.5 by Sebastian Bergmann.",
+        "",
+        "UntitledTest",
+        ".F",
+        "",
+        "Time: 0 seconds, Memory: 4.00Mb",
+        "",
+        "There was 1 failure:",
+        "",
+        "1) UntitledTest::testAnswer2",
+        "Failed asserting that <integer:42> matches expected <integer:54>.",
+        "",
+        "/var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php:15",
+        "",
+        "FAILURES!",
+        "Tests: 2, Assertions: 2, Failures: 1."        
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_php_unit(red_output)  
+  end
+
+  #--------------------------------------------------------
+
+  test "haskell one fail is red" do
+    red_output =
+      [
+        "Cases: 1  Tried: 0  Errors: 0  Failures: 0",
+        "",
+        "### Failure in: 0",
+        "Testing answer",
+        "expected: 54",
+         "but got: 42",
+        "Cases: 1  Tried: 1  Errors: 0  Failures: 1",
+        "Counts {cases = 1, tried = 1, errors = 0, failures = 1}"       
+      ].join("\n")      
+    assert_equal :red, CodeOutputParser::parse_hunit(red_output)  
+  end
+  
+  test "haskell one pass is green" do
+    green_output =
+      [
+        "Cases: 1  Tried: 0  Errors: 0  Failures: 0",
+        "",                                          
+        "Cases: 1  Tried: 1  Errors: 0  Failures: 0",
+        "Counts {cases = 1, tried = 1, errors = 0, failures = 0}"        
+      ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_hunit(green_output)        
+  end
+  
+  test "haskell one pass one fail is red" do
+    red_output =
+      [
+        "Cases: 2  Tried: 0  Errors: 0  Failures: 0",
+        "Cases: 2  Tried: 1  Errors: 0  Failures: 0",
+        "",                                          
+        "### Failure in: 1",
+        "Testing answer",
+        "expected: 54",
+        " but got: 42",
+        "Cases: 2  Tried: 2  Errors: 0  Failures: 1",
+        "Counts {cases = 2, tried = 2, errors = 0, failures = 1}"        
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_hunit(red_output)        
+  end
+  
+  test "haskell syntax error is amber" do
+    amber_output =
+      [
+        "test_Untitled.hs:8:31: Not in scope: `answer2_test'"        
+      ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_hunit(amber_output)                        
   end
   
 end
