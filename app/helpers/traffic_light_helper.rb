@@ -29,7 +29,7 @@ module TrafficLightHelper
   
   def untitled_unlinked_traffic_light(inc, width = nil, height = nil)
     width ||= 20
-    height ||= 65
+    height ||= 62
     bulb = inc[:colour].to_s
     filename = "traffic_light_#{bulb}"
     if inc[:revert_tag]

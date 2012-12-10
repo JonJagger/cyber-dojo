@@ -141,7 +141,16 @@ $(document).ready(function() {
 <div id="traffic_lights">
   <table>
     <tr class="row">
-      <% max_lights = 36 %>                
+      
+      <td>
+        <div id="revert_tip">
+                click<br/>
+                to &rarr;<br/>
+                revert<br/>
+        </div>
+      </td>                  
+      
+      <% max_lights = 35 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td valign="top">
           <span onclick="cd.revert('<%=@kata.id%>', '<%=@avatar.name%>', <%=light[:number]%>);">
@@ -150,13 +159,10 @@ $(document).ready(function() {
         </td>
       <% end %>
       
-      <td>
-        <div id="revert_tip">
-                Click any<br/>
-                traffic-light<br/>
-                to revert<br/>
-        </div>
-      </td>                  
+      <td valign="center">
+        <%= render :partial => 'current_traffic_light_count' %>
+      </td>
+      
     </tr>      
   </table>
 </div>

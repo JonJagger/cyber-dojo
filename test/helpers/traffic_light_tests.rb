@@ -4,7 +4,7 @@ require 'traffic_light_helper'
 class TrafficLightTests < ActionController::TestCase
 
   include TrafficLightHelper
-
+  
   test "revert traffic light red when revert_tag is nil" do
     inc = make_inc
     inc[:colour] = :red
@@ -12,7 +12,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:revert_tag] = nil
     expected =
       "<span title='Revert to traffic-light 45 (red)'>" +
-        "<img src='/images/traffic_light_red.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_red.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -23,7 +23,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:number] = 45
     expected =
       "<span title='Revert to traffic-light 45 (red)'>" +
-        "<img src='/images/traffic_light_red.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_red.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -34,7 +34,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:number] = 45
     expected =
       "<span title='Revert to traffic-light 45 (amber)'>" +
-        "<img src='/images/traffic_light_amber.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_amber.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -45,7 +45,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:number] = 45
     expected =
       "<span title='Revert to traffic-light 45 (green)'>" +
-        "<img src='/images/traffic_light_green.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_green.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -59,7 +59,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:revert_tag] = 23
     expected =
       "<span title='Revert to traffic-light 99 (red)'>" +
-        "<img src='/images/traffic_light_red_revert.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_red_revert.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -72,7 +72,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:revert_tag] = 23
     expected =
       "<span title='Revert to traffic-light 67 (amber)'>" +
-        "<img src='/images/traffic_light_amber_revert.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_amber_revert.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -85,7 +85,7 @@ class TrafficLightTests < ActionController::TestCase
     inc[:revert_tag] = 23
     expected =
       "<span title='Revert to traffic-light 82 (green)'>" +
-        "<img src='/images/traffic_light_green_revert.png' border='0' width='20' height='65'/>" +
+        "<img src='/images/traffic_light_green_revert.png' border='0' width='#{width}' height='#{height}'/>" +
       "</span>"
     assert_equal expected, revert_traffic_light(inc)
   end
@@ -136,7 +136,7 @@ class TrafficLightTests < ActionController::TestCase
   end
   
   def height
-    65
+    62
   end
   
   def make_inc
