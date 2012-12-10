@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_cantFindDojo = function(title,id) {
+  cd.dialog_cantFindDojo = function(title, id) {
     var cantFindDojo = 
       '<div class="panel">'
       + '<table>'

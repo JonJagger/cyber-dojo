@@ -7,7 +7,7 @@ var cyberDojo = (function(cd, $) {
     return '<span class="large dialog title">' + title + '<span>';
   };
   
-  cd.dialog = function(html,width,name) {
+  cd.dialog = function(html, width, name) {
     var div = $('<div>')
       .html('<div class="dialog">' + html + '</div>')    
       .dialog({

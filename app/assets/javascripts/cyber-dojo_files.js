@@ -79,7 +79,7 @@ var cyberDojo = (function(cd, $) {
     // structure. The <input type="radio"...> entries are wrapped
     // inside a <div class="filename"> and it is to the div that the
     // click handler function is attached. This pattern repeats
-    // in the language and exercise radio-lists in the create-page
+    // in the language and exercise radio-lists in the setup-page
     // and also in the diff-page filename list.
     var div = $('<div>', {
       'class': 'filename'

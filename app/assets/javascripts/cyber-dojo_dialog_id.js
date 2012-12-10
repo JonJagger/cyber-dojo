@@ -3,19 +3,14 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_id = function(title,info) {
-    var fromDiff = false;
+  cd.dialog_id = function(title, info) {
     var panel = '<table>';
-    $.each(info, function(key,value) {
-      if (key.indexOf('diff') !== 0) {
-        panel += '<tr>'
-              +    '<td align="right">' + key + '</td>'
-              +    '<td>:</td>'
-              +    '<td align="left">' + value + '</td>'
-              +  '</tr>';
-      } else {
-        fromDiff = true;
-      }
+    $.each(info, function(key, value) {
+      panel += '<tr>'
+            +    '<td align="right">' + key + '</td>'
+            +    '<td>:</td>'
+            +    '<td align="left">' + value + '</td>'
+            +  '</tr>';
     });
     panel += '</table>';    
     var id = $(cd.makeTable(cd.divPanel(panel)));    
