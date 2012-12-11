@@ -1,6 +1,11 @@
 
 MAJOR
 -----
+Pressing the test button in the browser sometimes creates a new
+traffic-light but the output you get back gets stuck and does
+not reflect edits made to the files. A work-around when this happens
+is to reopen the URL in a new tab.
+-----
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group. See lib/Files.rb
@@ -42,6 +47,9 @@ check for conflicts?
 
 MINOR
 -----
+on the edit-test page the output file needs to show a
+  horizontal scrollbar for long lines.
+-----
 after a revert using alt-f to cycle through the files
   does not cycle through them all.
 -----
@@ -52,16 +60,12 @@ traffic-light tool tips need some tlc
 put a readme.txt file into the kata's root folder explaining
   how to do diffs on the unzipped zip.
 -----
-revert should auto-run the tests and also mark the resulting new
-  traffic-light in some way. Perhaps simply give it a different
-  coloured border.
------
 add help button (screen cast?) for diff page
 -----
 add help button (screen cast?) for dashboard page
 -----
 in the diff view, long lines get truncated rather than bringing up
-  a scroll bar
+  a horizontal scroll bar
 -----
 when you're looking at a diff-view filename=F, tag=N and you move
 to tag=N+1 the selected file should stay at F (if it still exists
