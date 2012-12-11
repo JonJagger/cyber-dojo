@@ -47,9 +47,6 @@ check for conflicts?
 
 MINOR
 -----
-after a revert using alt-f to cycle through the files
-  does not cycle through them all.
------
 traffic-light tool tips need some tlc
   in particular reverted traffic-lights should mention the
   traffic-light number they themselves reverted to
