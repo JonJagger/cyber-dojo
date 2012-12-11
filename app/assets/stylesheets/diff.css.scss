@@ -7,7 +7,7 @@
 #was_tag_number, #now_tag_number
 {
   background: $lighter-color;
-  @include gradient-darken($lighter-color,20%,10%,5%);     
+  @include gradient-darken($lighter-color, 20%, 10%, 5%);     
   color: $darker-color;
   @include font-size-tiny();
   text-align: center;
@@ -56,7 +56,7 @@
 .diffed_code same ln
 {
   background: $darker-color;
-  color: lighten($darker-color,30%);  
+  color: lighten($darker-color, 30%);  
 }
 
 @mixin line-count

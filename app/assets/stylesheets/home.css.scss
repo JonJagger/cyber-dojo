@@ -5,7 +5,7 @@
   padding: 0.4em;
 }
 
-$text-color: darken($lighter-color,10%);
+$text-color: darken($lighter-color, 10%);
 
 #cyber-dojo
 {
@@ -26,8 +26,8 @@ a:link, a:visited
 
 #setup
 {
-  background: lighten($red,10%);
-  @include gradient-lighten($red,20%,10%,5%);
+  background: lighten($red, 10%);
+  @include gradient-lighten($red, 20%, 10%, 5%);
   color: $text-color;
   @include font-size-large();
 }
@@ -40,8 +40,8 @@ a:link, a:visited
   
 #kata_id_input, #start_coding, #resume_coding, #review_coding
 {
-  background: lighten($green,20%);
-  @include gradient-lighten($green,30%,20%,10%);    
+  background: lighten($green, 20%);
+  @include gradient-lighten($green, 30%, 20%, 10%);    
   color: $darker-color;
   @include font-size-large();
 }
@@ -54,7 +54,7 @@ a:link, a:visited
 
 #enter_your_id, .coding
 {
-  color: lighten($green,15%);
+  color: lighten($green, 15%);
   @include font-size-medium();  
 }
 
@@ -77,7 +77,7 @@ a:link, a:visited
 
 #please_donate
 {
-  color: darken($lighter-color,10%);  
+  color: darken($lighter-color, 10%);  
   @include font-size-tiny();
 }
 

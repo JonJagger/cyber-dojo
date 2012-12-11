@@ -2,7 +2,7 @@
 #seconds_per_column, #maximum_columns 
 {
   background: $lighter-color;
-  @include gradient-darken($lighter-color,20%,10%,5%);     
+  @include gradient-darken($lighter-color, 20%, 10%, 5%);     
   color: $darker-color;
   width: 3em; 
   text-align: center;
@@ -14,7 +14,7 @@
 }
 
 #traffic_lights .row td { padding: 0.05em; }
-#traffic_lights .row.odd td  { background: lighten($darker-color,5%); }
+#traffic_lights .row.odd td  { background: lighten($darker-color, 5%); }
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
 #traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
@@ -25,7 +25,7 @@
   font-size: 1.2em;
   padding: 0.3em;
   text-align: right;
-  background: lighten($darker-color,30%);
+  background: lighten($darker-color, 30%);
 }
 .tag_count.green { color: $green; }
 .tag_count.amber { color: $amber; }

@@ -44,7 +44,7 @@ body
   color: $lighter-color;
   border-style: dotted;
   border-width: 2px;
-  border-color: lighten($darker-color,20%);
+  border-color: lighten($darker-color, 20%);
   border-right: none;
   border-bottom: none;  
   margin: none;
@@ -69,7 +69,7 @@ input[value="output"]+label     // from diff-page
 .button
 {
   background: $lighter-color;
-  @include gradient-darken($lighter-color,20%,10%,5%); 
+  @include gradient-darken($lighter-color, 20%, 10%, 5%); 
   color: $darker-color;    
   cursor: pointer;
   padding: 0em 0.2em 0.1em 0.2em;
@@ -82,7 +82,7 @@ input[value="output"]+label     // from diff-page
 
 .button[disabled]
 {
-  background: lighten($darker-color,20%);
+  background: lighten($darker-color, 20%);
   cursor: default;
 }
 
@@ -115,7 +115,7 @@ div[class~="filename"][class~="selected"]
   // See app/assets/javascripts/cyber-dojo_file_load.js
   // function radioEntrySwitch()
   background: $lighter-color;
-  @include gradient-darken($lighter-color,20%,10%,5%);   
+  @include gradient-darken($lighter-color, 20%, 10%, 5%);   
   color: $darker-color;
   cursor: default;  
 }
@@ -127,14 +127,14 @@ div[class~="filename"][class~="selected"] input+label
 
 div[class~="filename"]:hover, .button:hover
 {
-  border:  2px dotted lighten($darker-color,20%);
+  border: 2px dotted lighten($darker-color, 20%);
 }
 
 div[class~="filename"], .button[disabled]:hover, .button
 {
   // match the hover settings above so the filenames
   // retains their vertical position in the list
-  border:  2px solid $darker-color;
+  border: 2px solid $darker-color;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -170,7 +170,7 @@ div[class~="filename"], .button[disabled]:hover, .button
 .line_numbers
 {
   background: $darker-color;
-  color: lighten($darker-color,30%);
+  color: lighten($darker-color, 30%);
   font-weight: 100;
   text-align: right;
   overflow: hidden;
