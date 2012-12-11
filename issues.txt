@@ -47,9 +47,6 @@ check for conflicts?
 
 MINOR
 -----
-on the edit-test page the output file needs to show a
-  horizontal scrollbar for long lines.
------
 after a revert using alt-f to cycle through the files
   does not cycle through them all.
 -----
