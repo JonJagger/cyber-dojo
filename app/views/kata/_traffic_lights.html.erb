@@ -20,8 +20,12 @@ $(document).ready(function() {
 	    'height="47"' +
 	    'width="47"' +
 	    'src="/images/avatars/' + avatarName + '.jpg">';
+    var filename = 'traffic_light_' + color;
+    if (data.inc.revert_tag !== null) {
+      filename += '_revert';
+    }
 	var trafficLight = 
-	  "<img src='/images/traffic_light_" + color + ".png'" +
+	  "<img src='/images/" + filename + ".png'" +
 	  " border='0'" +
 	  " width='20'" +
 	  " height='65'/>";
@@ -29,7 +33,7 @@ $(document).ready(function() {
 	  '<span class="tag_count">' +
 	    data.inc.number +
 	  '</span>';
-	return cd.makeTable(avatarImage,trafficLight,trafficLightNumber);
+	return cd.makeTable(avatarImage, trafficLight, trafficLightNumber);
   };
   
   var reverterDiv = function(avatarName, data)  {
