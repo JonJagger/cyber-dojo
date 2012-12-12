@@ -236,7 +236,7 @@ TestCase("cyberdojo-Test", {
 
     var filename = 'D';
     var content = 'dddd';
-    $cd.newFileContent(filename,content);
+    $cd.newFileContent(filename, content);
     assertEquals('dddd', $cd.fileContentFor('D').attr('value'));
     assertEquals(['A', 'B', 'C', 'D'], $cd.filenames());    
   },
@@ -265,7 +265,7 @@ TestCase("cyberdojo-Test", {
     
     var filename = 'C';
     var content = 'dddd';
-    $cd.newFileContent(filename,content);
+    $cd.newFileContent(filename, content);
     filenames = $cd.rebuildFilenameList();
     assertEquals(3, filenames.length);
     assertEquals(['A','B','C'], filenames.sort());
@@ -339,12 +339,17 @@ TestCase("cyberdojo-Test", {
     $cd.dialog = function(html, idth, name) {};
     $cd.dialog_about();
     $cd.dialog_basics();
+    //$cd.dialog_cantFindDojo(title, id);
     $cd.dialog_dashboard_tips();
     $cd.dialog_donations();
     $cd.dialog_faqs();
     $cd.dialog_feedback();
+    //$cd.dialog_fullDojo(title, id);
+    //$cd.dialog_id(title, info);
     $cd.dialog_kata_help();
     $cd.dialog_links();
+    //$cd.dialog_resumeCoding(title, id, dojo);
+    //$cd.dialog_revert(id, avatarName, tag);
     $cd.dialog_source();
     $cd.dialog_tips();
     $cd.dialog_why();    

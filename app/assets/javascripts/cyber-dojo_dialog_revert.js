@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.revert = function(id, avatarName, tag) {    
+  cd.dialog_revert = function(id, avatarName, tag) {    
 
     var runTestsWithRevertTag = function() {
       var form = $('#test').closest("form");

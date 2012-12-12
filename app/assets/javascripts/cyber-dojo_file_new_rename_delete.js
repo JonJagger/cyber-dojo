@@ -69,8 +69,9 @@ var cyberDojo = (function(cd, $) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.newFileContent = function(filename, content) {    
-    $('#visible_files_container').append(cd.makeNewFile(filename, content));
+  cd.newFileContent = function(filename, content) {
+	var newFile = cd.makeNewFile(filename, content);
+    $('#visible_files_container').append(newFile);
     cd.bindLineNumbers(filename);      
     var current = cd.currentFilename();
     cd.rebuildFilenameList();

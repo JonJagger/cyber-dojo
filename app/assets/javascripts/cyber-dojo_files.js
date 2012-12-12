@@ -121,10 +121,19 @@ var cyberDojo = (function(cd, $) {
     var text = $('<textarea>', {
       'class': 'file_content',
       name: "file_content['" + filename + "']",
-      id: 'file_content_for_' + filename,
-      wrap: 'off'
+      id: 'file_content_for_' + filename
+      //
+      //wrap: 'off'
+      //
     });
-    text.val(content);        
+    // For some reason, setting wrap cannot be done as per the
+    // commented out line above. Well, I mean you can write
+    // it that way, but when you create a new file in FireFox 17.0.1
+    // it still wraps at the textarea width. So instead I do it
+    // like this, which works in FireFox?!
+    text[0].wrap = 'off';
+    
+    text.val(content);    
     td1.append(lines);
     tr.append(td1);
     td2.append(text);
