@@ -3,35 +3,14 @@
 
 $(document).ready(function() {
   
-  cd.resumeCoding = function(id, dojo) {
-    var title = 'resume-coding';
-    if (dojo.exists === false) {
-      cd.dialog_cantFindDojo(title, id);
-    } else {
-      var grid = $('<div>');
-      grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
-        var resumer = $('<div id="resume_coding_dialog">')
-          .html('<div class="dialog">' + grid.html() + '</div>')
-          .dialog({
-            autoOpen: false,
-            title: cd.dialogTitle(title),
-            width: 600,
-            modal: true,
-            buttons: {
-              cancel: function() {
-                $(this).dialog('close');
-              }
-            }
-          });
-        cd.registerCloseResumeDialog(resumer);
-        resumer.dialog('open');
-      });
-    }
-  };
-  
   $('#resume_coding').click(function() {
-    cd.run('exists_json', function(id, dojo) {
-      cd.resumeCoding(id, dojo);
+    cd.run('exists_json', function(id, dojo) {    
+      var title = 'resume-coding';
+      if (dojo.exists === false) {
+        cd.dialog_cantFindDojo(title, id);
+      } else {    
+        cd.dialog_resumeCoding(title, id, dojo);
+      }
     });
   });
     
@@ -39,7 +18,8 @@ $(document).ready(function() {
 
 //--></script>
 
-<input type="button"
-       class="button"
-       id="resume_coding"
-       value="resume" />
+<div class="button"
+     title="resume practising"
+     id="resume_coding">
+  resume
+</div>

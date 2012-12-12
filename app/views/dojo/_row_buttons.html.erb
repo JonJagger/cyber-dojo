@@ -4,7 +4,7 @@
 $(document).ready(function() {
   
   $.each(<%=@buttons.to_json.html_safe%>,
-    function(i,name) {
+    function(i, name) {
       $('#' + name).click(function() {
         cd['dialog_' + name]();    
     });
@@ -15,8 +15,9 @@ $(document).ready(function() {
 //--></script>
 
 <% @buttons.each do |name| %>
-  <input type="button"
-         class="button"
-         id="<%= name %>"
-         value="<%= name %>"/>
+  <div type="button"
+       class="button"
+      id="<%= name %>">
+      <%= name %>
+  </div>
 <% end %>

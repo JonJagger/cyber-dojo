@@ -12,12 +12,6 @@ $(document).ready(function() {
     }
   };
 
-  cd.registerCloseResumeDialog = function(resumer) {
-    cd.closeResumeDialog = function() {
-      resumer.dialog('close');
-    };
-  };
-  
 });
 
 //--></script>
@@ -37,10 +31,13 @@ $(document).ready(function() {
       </div>
   </div>  
   
+<div class="edgeless panel">
   <div class="row">
     <%= render :partial => 'row_setup' %>
   </div>
-  
+</div>
+
+<div class="edgeless panel">
   <div class="row">
     <%= render :partial => 'row_enter_id' %>
   </div>
@@ -48,13 +45,18 @@ $(document).ready(function() {
   <div class="row">
     <%= render :partial => 'row_code' %>
   </div>
-  
+</div>
+
+<div class="edgeless panel">
   <div class="row">
     <%= render :partial => 'row_donate' %>
   </div>
+</div>
   
+<div class="edgeless panel">
   <div class="row">
     <%= render :partial => 'row_buttons' %>
   </div>
-  
+</div>
+
 </div>

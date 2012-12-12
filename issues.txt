@@ -47,6 +47,12 @@ check for conflicts?
 
 MINOR
 -----
+after reverting files the texareas (except output) are losing their
+  wrap=off setting and not autoscrolling horizontally.
+-----
+when resuming, the initial dialog-box should have a title of
+  'resume-coding' rather than 'start-coding'
+-----
 traffic-light tool tips need some tlc
   in particular reverted traffic-lights should mention the
   traffic-light number they themselves reverted to

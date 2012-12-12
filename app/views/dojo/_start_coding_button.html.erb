@@ -3,34 +3,13 @@
 
 $(document).ready(function() {
   
-  var title = 'start-coding';
-  
-  cd.dialog_fullDojo = function(id) {
-    var grid = $('<div>');
-    grid.load('/dojo/full_avatar_grid', { id: id }, function() {
-      var resumer = $('<div class="dialog">')
-        .html(grid.html())
-        .dialog({
-          autoOpen: false,
-          title: cd.dialogTitle('!' + title),
-          width: 600,
-          modal: true,
-          buttons: {
-            ok: function() {
-              $(this).dialog('close');
-            }
-          }
-        });
-      resumer.dialog('open');
-    });
-  };
-    
-  $('#start_coding').click(function() {
+  $('#start_coding').click(function() {   
     cd.run('start_json', function(id, dojo) {
-      if (dojo.exists === false) {
+      var title = 'start-coding';
+      if (!dojo.exists) {
         cd.dialog_cantFindDojo(title, id);
-      } else if (dojo.full === true) {
-        cd.dialog_fullDojo(id);
+      } else if (dojo.full) {
+        cd.dialog_fullDojo(title, id);
       } else {
         cd.postTo('/kata/edit', { id: id, avatar: dojo.avatar_name  }, '_blank');                          
       }
@@ -41,7 +20,8 @@ $(document).ready(function() {
 
 //--></script>
 
-<input type="button"
-       class="button"
-       id="start_coding"
-       value="start" />
+<div class="button"
+     title="start practising"
+     id="start_coding">
+  start
+</div>

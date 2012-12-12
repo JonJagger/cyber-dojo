@@ -21,7 +21,7 @@ a:link, a:visited
 #a_place_to_practice
 {
   color: $text-color;
-  @include font-size-small();
+  @include font-size-tiny();
 }
 
 #setup
@@ -30,12 +30,6 @@ a:link, a:visited
   @include gradient-lighten($red, 20%, 10%, 5%);
   color: $text-color;
   @include font-size-large();
-}
-
-#a_coding_practice
-{
-  color: $text-color;
-  @include font-size-medium();    
 }
   
 #kata_id_input, #start_coding, #resume_coding, #review_coding
@@ -52,10 +46,16 @@ a:link, a:visited
   text-align: center;
 }
 
-#enter_your_id, .coding
+#get_a_new_practice_id
 {
-  color: lighten($green, 15%);
-  @include font-size-medium();  
+  color: $text-color;
+  @include font-size-small();  
+}
+
+#enter_a_practice_id
+{
+  color: lighten($green, 25%);
+  @include font-size-small();  
 }
 
 #cant_find_id
