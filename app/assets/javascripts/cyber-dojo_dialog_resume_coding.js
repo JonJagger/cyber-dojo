@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.dialog_resumeCoding = function(title, id, dojo) {
+  cd.dialog_resumeCoding = function(title, id) {
     var grid = $('<div>');
     grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
       var resumer = $('<div id="resume_coding_dialog">')

@@ -6,10 +6,10 @@ $(document).ready(function() {
   $('#resume_coding').click(function() {
     cd.run('exists_json', function(id, dojo) {    
       var title = 'resume-coding';
-      if (dojo.exists === false) {
+      if (!dojo.exists) {
         cd.dialog_cantFindDojo(title, id);
       } else {    
-        cd.dialog_resumeCoding(title, id, dojo);
+        cd.dialog_resumeCoding(title, id);
       }
     });
   });

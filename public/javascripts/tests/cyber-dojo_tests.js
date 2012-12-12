@@ -1,7 +1,7 @@
 
 var $cd = cyberDojo;
 
-TestCase("cyberdojo-Test", {
+TestCase("cyber-dojo_tests", {
   
   "test filenames() finds all filenames": function() {
     /*:DOC +=
@@ -334,38 +334,5 @@ TestCase("cyberdojo-Test", {
     assertEquals(['A', newFilename, 'C'], $cd.filenames().sort());
     assertEquals(newFilename, $cd.currentFilename());
   },
-  
-  "test home page dialog button content()": function() {
-    $cd.dialog = function(html, idth, name) {};
-    $cd.dialog_about();
-    $cd.dialog_basics();
-    //$cd.dialog_cantFindDojo(title, id);
-    $cd.dialog_dashboard_tips();
-    $cd.dialog_donations();
-    $cd.dialog_faqs();
-    $cd.dialog_feedback();
-    //$cd.dialog_fullDojo(title, id);
-    //$cd.dialog_id(title, info);
-    $cd.dialog_kata_help();
-    $cd.dialog_links();
-    //$cd.dialog_resumeCoding(title, id, dojo);
-    //$cd.dialog_revert(id, avatarName, tag);
-    $cd.dialog_source();
-    $cd.dialog_tips();
-    $cd.dialog_why();    
-  },
-  
-  "test dialog_id": function() {
-    title = 'id';
-    info = { language: "Ruby" };
-    $cd.dialog_id(title, info);    
-  },
-  
-  "test dialog_cantFindDojo": function() {
-    title = 'cant-find';
-    id = '12345ABCDE';
-    $cd.dialog_cantFindDojo(title, id);
-  }
-  
   
 });

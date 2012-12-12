@@ -1,7 +1,7 @@
 
 var $cd = cyberDojo;
 
-TestCase("cyberdojo-random-Tests", {
+TestCase("cyber-dojo_random_tests", {
   
   "test random3() returns 3 char string": function() {
     var target = $cd.random3();
