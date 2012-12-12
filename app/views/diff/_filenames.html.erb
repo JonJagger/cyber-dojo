@@ -5,7 +5,7 @@ $(document).ready(function() {
 
   cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe %>);
   
-  var display = function(node,name,value) {
+  var display = function(node, name, value) {
     if ($(node).attr('disabled') !== 'disabled') {
       $(name).css('display', value);
     }
@@ -18,22 +18,22 @@ $(document).ready(function() {
 
   $('.filename').click(function() {
     var tr = $(this).parent().parent();
-    var del = tr.find('.diff-deleted-line-count');
-    var add = tr.find('.diff-added-line-count');
     disableAllLineCountButtons();
-    del.attr('disabled', false)
-       .attr('title', 'Toggle deleted lines on/off');
-    add.attr('disabled', false)
-       .attr('title', 'Toggle added lines on/off');
+    tr.find('.diff-deleted-line-count')
+        .attr('disabled', false)
+        .attr('title', 'Toggle deleted lines on/off');
+    tr.find('.diff-added-line-count')
+        .attr('disabled', false)
+        .attr('title', 'Toggle added lines on/off');
   });
 
   $('.diff-deleted-line-count').toggle(
-    function() { display(this,'deleted','none' ); },
-    function() { display(this,'deleted','block'); }
+    function() { display(this, 'deleted', 'none' ); },
+    function() { display(this, 'deleted', 'block'); }
   );
   $('.diff-added-line-count').toggle(
-    function() { display(this,'added','none' ); },
-    function() { display(this,'added','block'); }
+    function() { display(this, 'added', 'none' ); },
+    function() { display(this, 'added', 'block'); }
   );
   
   disableAllLineCountButtons();

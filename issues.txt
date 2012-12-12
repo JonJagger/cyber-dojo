@@ -62,7 +62,9 @@ add help button (screen cast?) for diff page
 add help button (screen cast?) for dashboard page
 -----
 in the diff view, long lines get truncated rather than bringing up
-  a horizontal scroll bar
+  a horizontal scroll bar. Also when scrolling, the line numbers
+  are scrolled out of view. Ideally, the line numbers would remain
+  in place like they do in the main edit-test page.
 -----
 when you're looking at a diff-view filename=F, tag=N and you move
 to tag=N+1 the selected file should stay at F (if it still exists

@@ -16,13 +16,13 @@
 
 #diff_panel
 {
+  width: 55em;
   overflow: auto;
   height: 44em;
-  width: 55em;
   position: relative;
 }
 
-#diff_sheet
+#diff_sheet // this is inside #diff_panel
 {
   color: $darker-color;
   margin: 0;
