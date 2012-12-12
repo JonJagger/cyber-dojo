@@ -131,7 +131,7 @@ var cyberDojo = (function(cd, $) {
     // it that way, but when you create a new file in FireFox 17.0.1
     // it still wraps at the textarea width. So instead I do it
     // like this, which works in FireFox?!
-    text[0].wrap = 'off';
+    text.attr('wrap', 'off');
     
     text.val(content);    
     td1.append(lines);
