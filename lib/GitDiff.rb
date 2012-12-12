@@ -105,7 +105,7 @@ module GitDiff
   def diff_htmlify(id, n, max_digits)
     result = ""
     if n[:type] == :section
-      result = "<span id='id_#{id}_section_#{n[:index]}'></span>"
+      result = "<span id='#{id}_section_#{n[:index]}'></span>"
     else
       result = "<#{n[:type]}>" +
         '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +

@@ -26,7 +26,7 @@ var cyberDojo = (function(cd, $) {
         previousFilename = filename;
         // some files have no diffs
         if (sectionCount > 0) {
-          var section = $('#id_' + id + '_section_' + sectionIndex);           
+          var section = $('#' + id + '_section_' + sectionIndex);           
           var delta = 100;
           diffPanel.animate({
             scrollTop: section.offset().top - diffSheet.offset().top - delta
