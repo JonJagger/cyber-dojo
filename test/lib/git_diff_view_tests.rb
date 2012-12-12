@@ -97,7 +97,7 @@ class GitDiffViewTests < ActionController::TestCase
         :deleted_line_count => 1,
         :added_line_count => 1,
         :content =>
-        "<same><ln>  1</ln>def answer</same><span id='id_id_3_section_0'></span>" +
+        "<same><ln>  1</ln>def answer</same><span id='id_3_section_0'></span>" +
         "<deleted><ln>  2</ln>  42</deleted><added><ln>  2</ln>  54</added>" +
         "<same><ln>  3</ln>end</same>"
       }

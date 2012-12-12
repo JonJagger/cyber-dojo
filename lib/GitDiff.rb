@@ -103,6 +103,11 @@ module GitDiff
   #-----------------------------------------------------------
   
   def diff_htmlify(id, n, max_digits)
+    # This needs to be split so it returns two object,
+    # one that contains just the line-numbers and one
+    # that contains the lines themselves. This will allow
+    # the diff view to be scrolled with the line numbers
+    # remaining in sight.
     result = ""
     if n[:type] == :section
       result = "<span id='#{id}_section_#{n[:index]}'></span>"
@@ -138,15 +143,13 @@ module GitDiff
   #-----------------------------------------------------------
 
   def ify(lines, type)
-    result = [ ]
-    lines.each_with_index do |line,number|
-      result << {
+    lines.collect.each_with_index do |line, number|
+      {
         :line => line,
         :type => type,
         :number => number + 1
       }
     end
-    result
   end
 
 end

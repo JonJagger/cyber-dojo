@@ -31,11 +31,9 @@ class Kata
   end
 
   def all_increments
-    all = { }
-    avatars.each do |avatar|
-      all[avatar.name] = avatar.increments
+    avatars.inject({}) do |all,avatar|
+      all.merge( { avatar.name => avatar.increments } )
     end
-    all
   end
   
   def language
