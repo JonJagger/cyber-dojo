@@ -419,7 +419,7 @@ TestCase("cyber-dojo_tests", {
         number: '44'
       }
     };
-    $cd.dialog_revert.reverterDiv(data);
+    $cd.dialog_revert.previewHtml(data);
   },
   
 });

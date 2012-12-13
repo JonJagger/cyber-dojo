@@ -5,7 +5,9 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_revert = function(id, avatarName, tag) {    
 
-    cd.dialog_revert.runTestsWithRevertTag = function() {
+	var self = cd.dialog_revert;
+	
+    self.runTestsWithRevertTag = function() {
       var form = $('#test').closest("form");
       var action = form.attr('action');
       var revert_action = action + '&revert_tag=' + tag;
@@ -16,8 +18,8 @@ var cyberDojo = (function(cd, $) {
   
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
-    cd.dialog_revert.info = function(data) {
-      var color = data.inc.colour;
+    self.revertTagInfo = function(tag) {
+      var color = tag.colour;
       var avatarImage =
         '<img ' +
           'class="avatar_image"' +
@@ -25,7 +27,7 @@ var cyberDojo = (function(cd, $) {
           'width="47"' +
           'src="/images/avatars/' + avatarName + '.jpg">';
       var filename = 'traffic_light_' + color;
-      if (data.inc.revert_tag !== null) {
+      if (tag.revert_tag !== null) {
         filename += '_revert';
       }
       var trafficLight = 
@@ -35,14 +37,14 @@ var cyberDojo = (function(cd, $) {
         " height='62'/>";
       var trafficLightNumber =     
         '<span class="tag_count">' +
-          data.inc.number +
+          tag.number +
         '</span>';
       return cd.makeTable(avatarImage, trafficLight, trafficLightNumber);
     };
     
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
-    cd.dialog_revert.reverterFilenames = function(visibleFiles) {
+    self.revertTagFilenames = function(visibleFiles) {
       var div = $('<div>', {
         'class': 'panel'
       });
@@ -71,7 +73,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
-    cd.dialog_revert.reverterDiv = function(data)  {
+    self.reverterDiv = function(data)  {
       var visibleFiles = data.visibleFiles;
       var color = data.inc.colour;
       var number = data.inc.number;
@@ -82,8 +84,8 @@ var cyberDojo = (function(cd, $) {
       table.append(
        "<tr valign='top'>" +
          "<td>" +
-           cd.dialog_revert.info(data) +
-           cd.dialog_revert.reverterFilenames(visibleFiles).html() +
+           self.revertTagInfo(data.inc) +
+           self.revertTagFilenames(visibleFiles).html() +
          "</td>" +
          "<td>" +
            "<textarea id='revert_content' wrap='off'></textarea>" +
@@ -95,8 +97,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 
-    cd.dialog_revert.callBack = function(data) {
-	  var preview = cd.dialog_revert.reverterDiv(data);
+    self.previewHtml = function(data) {
+	  var preview = self.reverterDiv(data);
 	  var textArea = $('#revert_content', preview);
 	  var previous = undefined;
 	  textArea.attr('readonly', 'readonly');
@@ -115,8 +117,13 @@ var cyberDojo = (function(cd, $) {
 	  });
 	  $('input[type=radio]', preview).hide();
 	  $('.filename', preview)[0].click();
-	  
-	  return preview.dialog({
+	  return preview;
+	};
+	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
+	
+	self.createRevertDialog = function(data) {
+	  return self.previewHtml(data).dialog({
 		  title: cd.dialogTitle('revert?'),
 		  autoOpen: false,
 		  width: 950,
@@ -134,7 +141,7 @@ var cyberDojo = (function(cd, $) {
 				  cd.newFileContent(newFilename, data.visibleFiles[newFilename]);
 				}
 			  }
-			  cd.dialog_revert.runTestsWithRevertTag();                  
+			  self.runTestsWithRevertTag();                  
 			  $(this).dialog('close');
 			}, // revert: ... {
 			cancel: function() {
@@ -153,8 +160,7 @@ var cyberDojo = (function(cd, $) {
         tag: tag
       },
 	  function(data) {
-		var reverter = cd.dialog_revert.callBack(data);
-	    reverter.dialog('open');		
+		self.createRevertDialog(data).dialog('open');		
 	  }
     );
 	
