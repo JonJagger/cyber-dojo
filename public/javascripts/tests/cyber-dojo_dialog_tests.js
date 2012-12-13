@@ -5,7 +5,7 @@ TestCase("cyber-dojo-dialog_tests", {
   
   "test home page dialog buttons": function() {
     // Why do I have to fake cd.dialog() ?
-    $cd.dialog = function(html, width, name) {};
+    $cd.dialog = function(html, width, name) { };
     $cd.dialog_about();
     $cd.dialog_basics();
     $cd.dialog_donations();

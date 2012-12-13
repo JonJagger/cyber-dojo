@@ -149,6 +149,31 @@ TestCase("cyber-dojo_tests", {
     assertEquals('its.name_div', hi.attr('id'));
   },
   
+  "test newFile()": function() {
+    /*:DOC +=
+      <div>
+        <div id="filename_list">
+          <input id="radio_A" name="filename" type="radio" value="A"/>
+          <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
+          <input id="radio_C" name="filename" type="radio" value="C"/>
+        </div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>                
+        <div id="visible_files_container">
+          <div id="A_div">        
+            <textarea id="file_content_for_A">aaaaaaaaaaa</textarea>
+          </div>        
+          <div id="B_div">        
+            <textarea id="file_content_for_B">bbbbbbbbbbb</textarea>
+          </div>        
+          <div id="C_div">        
+            <textarea id="file_content_for_C">ccccccccccc</textarea>
+          </div>        
+        </div>        
+      </div>
+    */    
+    $cd.newFile();
+  },
+  
   "test doDelete() deletes file from filelist": function() {
     /*:DOC +=
       <div>
@@ -179,7 +204,7 @@ TestCase("cyber-dojo_tests", {
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
   },
   
-  "test deleteFilePrompt(avatar_name,false)": function() {
+  "test deleteFilePrompt(avatar_name, false)": function() {
     /*:DOC +=
       <div>
         <div>
@@ -302,6 +327,49 @@ TestCase("cyber-dojo_tests", {
     assertEquals(['A','C'], filenames.sort());
   },
   
+  "test canRenameFileFromTo() is false when newFilename is empty string": function() {
+    var oldFilename = 'any';
+    var newFilename = '';
+    assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));
+  },
+  
+  "test canRenameFileFromTo() is false when newFilename equals oldFilename": function() {
+    var oldFilename = 'same';
+    var newFilename = 'same';
+    assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));
+  },
+  
+  
+  "test canRenameFileFromTo() is false when newFilename already exists": function() {
+    /*:DOC +=
+      <div>
+        <textarea id="file_content_for_A"></textarea>
+        <textarea id="file_content_for_B"></textarea>
+      </div>
+    */
+    var oldFilename = 'A';
+    var newFilename = 'B';
+    assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));
+  },
+  
+  "test canRenameFileFromTo() is false when newFilename contains a back-slash": function() {
+    var oldFilename = 'any';
+    var newFilename = "no\\pe";
+    assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));    
+  },
+  
+  "test canRenameFileFromTo() is false when newFilename starts with a forward-slash": function() {
+    var oldFilename = 'any';
+    var newFilename = "//nope";
+    assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));    
+  },
+
+  "test canRenameFileFromTo() is false when newFilename contains ..": function() {
+    var oldFilename = 'any';
+    var newFilename = "no..pe";
+    assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));    
+  },
+
   "test renameFileFromTo()": function() {
     /*:DOC +=
       <div>
