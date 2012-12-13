@@ -97,7 +97,8 @@
                   
          <td align="right">
           <% traffic_lights_tally = all_lights[avatar_name].length %>
-           <span class="tag_count"
+          <% bulb = all_lights[avatar_name][-1][:colour].to_s %>
+           <span class="tag_count <%= bulb %>"
                  title="<%= avatar_name %> has <%= traffic_lights_tally %> traffic-lights so far">
              <%= traffic_lights_tally %>
            </span>

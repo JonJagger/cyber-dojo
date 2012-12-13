@@ -13,7 +13,7 @@
   @include font-size-tiny();
 }
 
-#traffic_lights .row td { padding: 0.1em 0em 0.1em 0em; }
+#traffic_lights .row td { padding: 0em; }
 #traffic_lights .row.odd td  { background: lighten($darker-color, 5%); }
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }

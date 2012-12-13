@@ -56,6 +56,16 @@ if the start-button puts up the start-animal dialog and when that
 The three buttons on the home page should be enabled only once
   an id has begun to be entered in the text field.
 -----
+The Click-to-revert tip could appear when the current-traffic-light-count
+  disappears (and disappear when it reappears)
+-----
+Now that the traffic-lights offer reverting, it makes sense to allow
+  you to revert from any traffic-light. Yet only enough to fit on the
+  top row are shown. Perhaps the top row can be hold all the
+  traffic-lights but is auto-scrolled to the far right after the tests
+  have finished. And they could be scrollable, even though there is no
+  scrollbar.
+-----
 I'm not seeing horizontal or vertical scrollbars
   for long lines in Safari
 -----

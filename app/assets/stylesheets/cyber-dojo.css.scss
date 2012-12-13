@@ -28,8 +28,8 @@ body
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;  
   padding: none;
-  margin: none;
-  margin-top: 0.5em;
+  margin: 0em;
+  smargin-top: 0.005em;
 }
 
 .avatar_image
@@ -44,7 +44,7 @@ body
   color: $lighter-color;
   border-style: dotted;
   border-width: 2px;
-  border-color: lighten($darker-color, 20%);
+  border-color: lighten($darker-color, 15%);
   border-right: none;
   border-bottom: none;  
   margin: none;
@@ -53,6 +53,8 @@ body
 }
 
 .edgeless.panel { padding: 0em; }
+
+.top.panel { border: none; }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
