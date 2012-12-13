@@ -422,4 +422,14 @@ TestCase("cyber-dojo_tests", {
     $cd.dialog_revert.previewHtml(data);
   },
   
+  "test bindAllLineNumbers()": function() {
+    /*:DOC +=
+      <div>
+        <textarea id="file_content_for_cyberdojo.sh"></textarea>
+        <textarea id="file_content_for_instructions"></textarea>
+      </div>
+    */
+    $cd.bindAllLineNumbers();    
+  },
+  
 });
