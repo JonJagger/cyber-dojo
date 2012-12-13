@@ -12,7 +12,7 @@ var cyberDojo = (function(cd, $) {
       form.attr('action', revert_action);
       form.submit();
       form.attr('action', action);    
-    }; // runTestsWithRevertTag()
+    }; // var runTestsWithRevertTag = function() {
   
     var info = function(data) {
       var color = data.inc.colour;
@@ -30,13 +30,13 @@ var cyberDojo = (function(cd, $) {
         "<img src='/images/" + filename + ".png'" +
         " border='0'" +
         " width='20'" +
-        " height='65'/>";
+        " height='62'/>";
       var trafficLightNumber =     
         '<span class="tag_count">' +
           data.inc.number +
         '</span>';
       return cd.makeTable(avatarImage, trafficLight, trafficLightNumber);
-    }; // info()
+    }; // var info = function(data) {
     
     var reverterDiv = function(data)  {
       var visibleFiles = data.visibleFiles;
@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
        "</tr>");
        div.append(table);
        return div;
-    }; // reverterDiv()
+    }; // var reverterDiv = function(data) {
     
     var reverterFilenames = function(visibleFiles) {
       var div = $('<div>', {
@@ -85,7 +85,7 @@ var cyberDojo = (function(cd, $) {
         div.append(f);
       });
       return div;
-    }; // reverterFilename()
+    }; // var reverterFilenames = ...() {
 
     $.getJSON('/reverter/revert',
       {
@@ -135,16 +135,16 @@ var cyberDojo = (function(cd, $) {
                 }
                 runTestsWithRevertTag();                  
                 $(this).dialog('close');
-              }, // revert
+              }, // revert: ... {
               cancel: function() {
                 $(this).dialog('close');
-              } // cancel
-            } // buttons
-          }); // preview.dialog({
+              } // cancel: ... {
+            } // buttons: {
+          }); // var reverter = preview.dialog({
         reverter.dialog('open');
       } // function(data) {
     ); // $.getJSON(
-  }; // cd.revert = function(...) {
+  }; // cd.dialog_revert = function(id, avatarName, tag) {
 
   return cd;
 })(cyberDojo || {}, $);

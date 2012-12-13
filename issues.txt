@@ -47,6 +47,15 @@ check for conflicts?
 
 MINOR
 -----
+if the start-button puts up the start-animal dialog and when that
+  is clicked a new page is opened (rather than at the moment, the
+  start button opens a new page and then the start-animal opens
+  in that new page) then it appears that it does not count as
+  a popup and does not get blocked. Need to revert back to that.
+-----
+I'm not seeing horizontal or vertical scrollbars
+  for long lines in Safari
+-----
 when resuming, the initial dialog-box should have a title of
   'resume-coding' rather than 'start-coding'
 -----
