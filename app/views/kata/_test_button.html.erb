@@ -5,15 +5,21 @@ $(document).ready(function() {
     
   var spinners = $('.spinner');
   var test = $('#test');
+  var trafficLightCount = function() {
+    // cannot be cached as it is replaced by run_tests.js.erb
+    return $('#current_traffic_light_count');
+  };
   
   spinners.hide();
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
     test.attr('disabled', true);
-    spinners.show();    
+    spinners.show();
+    trafficLightCount().hide();
   });
   
   $('form').bind('ajax:complete', function(evt, data, status, xhr) {
+    trafficLightCount().show();
     spinners.hide();    
     test.attr('disabled', false);
     $('#tip').hide();

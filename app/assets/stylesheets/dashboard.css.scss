@@ -13,7 +13,7 @@
   @include font-size-tiny();
 }
 
-#traffic_lights .row td { padding: 0.05em; }
+#traffic_lights .row td { padding: 0.1em 0em 0.1em 0em; }
 #traffic_lights .row.odd td  { background: lighten($darker-color, 5%); }
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
 #traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
@@ -25,7 +25,6 @@
   font-size: 1.2em;
   padding: 0.3em;
   text-align: right;
-  background: lighten($darker-color, 30%);
 }
 .tag_count.green { color: $green; }
 .tag_count.amber { color: $amber; }
@@ -35,4 +34,5 @@
 .micro.tag_count .red   { padding-bottom: 0.6em; color: $red; }
 .micro.tag_count .amber { color: $amber; }
 .micro.tag_count .green { padding-top: 0.6em; color: $green;  }
+
 

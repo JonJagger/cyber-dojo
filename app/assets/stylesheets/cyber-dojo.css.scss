@@ -49,7 +49,7 @@ body
   border-bottom: none;  
   margin: none;
   padding: 0.5em;
-  @include rounded-corner(0px);  
+  @include rounded-corner(5px);  
 }
 
 .edgeless.panel { padding: 0em; }

@@ -32,7 +32,7 @@ class Kata
 
   def all_increments
     avatars.inject({}) do |all,avatar|
-      all.merge( { avatar.name => avatar.increments } )
+      all.merge( avatar.name => avatar.increments )
     end
   end
   

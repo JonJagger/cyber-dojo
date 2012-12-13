@@ -5,7 +5,7 @@
       
       <td>
         <div id="revert_tip">
-                click<br/>
+                Click<br/>
                 to &rarr;<br/>
                 revert<br/>
         </div>
@@ -13,14 +13,14 @@
       
       <% max_lights = 35 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
-        <td valign="top">
+        <td>
           <span onclick="cd.dialog_revert('<%=@kata.id%>', '<%=@avatar.name%>', <%=light[:number]%>);">
             <%= revert_traffic_light(light) %>
 	      </span>          
         </td>
       <% end %>
       
-      <td valign="center">
+      <td>
         <%= render :partial => 'current_traffic_light_count' %>
       </td>
       
