@@ -53,6 +53,9 @@ if the start-button puts up the start-animal dialog and when that
   in that new page) then it appears that it does not count as
   a popup and does not get blocked. Need to revert back to that.
 -----
+The three buttons on the home page should be enabled only once
+  an id has begun to be entered in the text field.
+-----
 I'm not seeing horizontal or vertical scrollbars
   for long lines in Safari
 -----

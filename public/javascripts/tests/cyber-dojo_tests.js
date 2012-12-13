@@ -403,4 +403,23 @@ TestCase("cyber-dojo_tests", {
     assertEquals(newFilename, $cd.currentFilename());
   },
   
+  "test dialog_revert.info()": function() {
+    id = '1234512345';
+    avatarName = 'wolf';
+    tag = 15;
+    $cd.dialog_revert(id, avatarName, tag);
+    data =  {
+      visibleFiles: {
+        'one': "one-content",
+        'two': "two-content"
+      },
+      inc: {
+        colour: 'red',
+        revert_tag: '15',
+        number: '44'
+      }
+    };
+    $cd.dialog_revert.reverterDiv(data);
+  },
+  
 });
