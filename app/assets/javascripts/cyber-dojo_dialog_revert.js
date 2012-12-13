@@ -8,7 +8,7 @@ var cyberDojo = (function(cd, $) {
 	var self = cd.dialog_revert;
 	
     self.runTestsWithRevertTag = function() {
-      var form = $('#test').closest("form");
+      var form = cd.testForm();
       var action = form.attr('action');
       var revert_action = action + '&revert_tag=' + tag;
       form.attr('action', revert_action);

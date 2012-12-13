@@ -3,10 +3,14 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
+  cd.testForm = function() {
+    return $('#test').closest("form");    
+  };
+  
   cd.bindRunTests = function(event) {
     event.stopPropagation();
     event.preventDefault();
-    $('#test').closest("form").submit();
+    cd.testForm().submit();
     return false;    
   };
   
@@ -26,7 +30,7 @@ var cyberDojo = (function(cd, $) {
   };
   
   cd.bindHotKeys = function(node) {
-    node.bind('keydown', cd.runTestsHotKey(), cd.bindRunTests);
+    node.bind('keydown', cd.runTestsHotKey(),     cd.bindRunTests);
     node.bind('keydown', cd.loadNextFileHotKey(), cd.bindLoadNextFile);
   };
   

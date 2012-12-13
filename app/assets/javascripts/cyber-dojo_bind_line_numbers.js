@@ -29,12 +29,12 @@ var cyberDojo = (function(cd, $) {
     }
     
     content.bind({
-      scroll:     function(ev) { setLine(); },
+      keydown   : function(ev) { setLine(); },
+      scroll    : function(ev) { setLine(); },
       mousewheel: function(ev) { setLine(); },
-      keydown:    function(ev) { setLine(); },
-      mousedown:  function(ev) { setLine(); },
-      mouseup:    function(ev) { setLine(); },
-      mousemove:  function(ev) { setLine(); }
+      mousemove : function(ev) { setLine(); },
+      mousedown : function(ev) { setLine(); },
+      mouseup   : function(ev) { setLine(); }
     });
   };
 
