@@ -14,7 +14,7 @@ $(document).ready(function() {
       if (!dojo.exists) {
         cd.dialog_cantFindDojo(title, id);
       } else if (dojo.full) {
-        cd.dialog_fullDojo(title, id);
+        cd.dialog_dojoIsFull(title, id);
       } else {
         cd.dialog_startCoding(id, dojo.avatar_name).dialog('open');              
       }

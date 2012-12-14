@@ -37,10 +37,10 @@ TestCase("cyber-dojo-dialog_tests", {
     $cd.dialog_cantFindDojo(title, id);
   },
   
-  "test dialog_fullDojo": function() {
+  "test dialog_dojoIsFull": function() {
     title = 'full';
     id = '12345ABCDE';
-    $cd.dialog_fullDojo(title, id);
+    $cd.dialog_dojoIsFull(title, id);
   },
   
   "test dialog_resumeCoding": function() {
