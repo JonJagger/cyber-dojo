@@ -63,9 +63,6 @@ Now that the traffic-lights offer reverting, it makes sense to allow
 I'm not seeing horizontal or vertical scrollbars
   for long lines in Safari
 -----
-when resuming, the initial dialog-box should have a title of
-  'resume-coding' rather than 'start-coding'
------
 traffic-light tool tips need some tlc
   in particular reverted traffic-lights should mention the
   traffic-light number they themselves reverted to
