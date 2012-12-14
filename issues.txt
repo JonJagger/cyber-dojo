@@ -59,6 +59,8 @@ Now that the traffic-lights offer reverting, it makes sense to allow
   have finished. And they could be scrollable, even though there is no
   scrollbar.
 -----
+Offer the fork button on the main edit-test page?
+-----
 I'm not seeing horizontal or vertical scrollbars
   for long lines in Safari
 -----

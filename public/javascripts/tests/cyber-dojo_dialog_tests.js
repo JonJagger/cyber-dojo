@@ -4,8 +4,6 @@ var $cd = cyberDojo;
 TestCase("cyber-dojo-dialog_tests", {  
   
   "test home page dialog buttons": function() {
-    // Why do I have to fake cd.dialog() ?
-    $cd.dialog = function(html, width, name) { };
     $cd.dialog_about();
     $cd.dialog_basics();
     $cd.dialog_donations();
@@ -26,9 +24,15 @@ TestCase("cyber-dojo-dialog_tests", {
   },
   
   "test dialog_id": function() {
-    title = 'id';
+    title = '23ED346A7E';
     info = { language: "Ruby" };
     $cd.dialog_id(title, info);    
+  },
+
+  //----------------------------
+
+  "test dialog_no_id": function() {
+    $cd.dialog_noId();
   },
   
   "test dialog_cantFindDojo": function() {
@@ -41,16 +45,34 @@ TestCase("cyber-dojo-dialog_tests", {
     $cd.dialog_dojoIsFull(id);
   },
   
+  "test dialog_startCoding": function() {
+    id = '12345ABCDE';
+    avatarName = 'wolf';
+    $cd.dialog_startCoding(id, avatarName);    
+  },
+  
   "test dialog_resumeCoding": function() {
     id = '12345ABCDE';
     $cd.dialog_resumeCoding(id);    
   },
   
-  "test dialog_revert": function() {
-    id = '12345ABCDE';
+  "test dialog_revert.createRevertDialog()": function() {
+    id = '1234512345';
     avatarName = 'wolf';
-    tag = "4";
+    tag = 15;
     $cd.dialog_revert(id, avatarName, tag);
+    data =  {
+      visibleFiles: {
+        'one': "one-content",
+        'two': "two-content"
+      },
+      inc: {
+        colour: 'red',
+        revert_tag: '15',
+        number: '44'
+      }
+    };
+    $cd.dialog_revert.createRevertDialog(data);
   },
   
 });
