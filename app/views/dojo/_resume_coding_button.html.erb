@@ -5,11 +5,10 @@ $(document).ready(function() {
   
   $('#resume_coding').click(function() {
     cd.run('exists_json', function(id, dojo) {    
-      var title = 'resume-coding';
       if (!dojo.exists) {
-        cd.dialog_cantFindDojo(title, id);
+        cd.dialog_cantFindDojo(id);
       } else {    
-        cd.dialog_resumeCoding(title, id);
+        cd.dialog_resumeCoding(id);
       }
     });
   });

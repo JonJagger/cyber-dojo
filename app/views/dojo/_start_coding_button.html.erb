@@ -12,9 +12,9 @@ $(document).ready(function() {
     cd.run('start_json', function(id, dojo) {
       var title = 'start-coding';
       if (!dojo.exists) {
-        cd.dialog_cantFindDojo(title, id);
+        cd.dialog_cantFindDojo(id);
       } else if (dojo.full) {
-        cd.dialog_dojoIsFull(title, id);
+        cd.dialog_dojoIsFull(id);
       } else {
         cd.dialog_startCoding(id, dojo.avatar_name).dialog('open');              
       }

@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_cantFindDojo = function(title, id) {
+  cd.dialog_cantFindDojo = function(id) {
     var cantFindDojo = 
       '<div class="panel">'
       + '<table>'
@@ -19,7 +19,7 @@ var cyberDojo = (function(cd, $) {
       +  '</table>'
       + '</div>';
     var width = 400;
-    cd.dialog(cantFindDojo, width, '!'+title);
+    cd.dialog(cantFindDojo, width, '!');
   };
 
   return cd;

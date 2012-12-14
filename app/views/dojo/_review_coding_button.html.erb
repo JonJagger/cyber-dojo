@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('#review_coding').click(function() {
     cd.run('exists_json', function(id, dojo) {
       if (!dojo.exists) {
-        cd.dialog_cantFindDojo('review-coding', id);
+        cd.dialog_cantFindDojo(id);
       } else {
         cd.get('/dashboard/show', { id: id }, '_blank');
       }

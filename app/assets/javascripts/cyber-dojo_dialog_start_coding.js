@@ -5,7 +5,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_startCoding = function(id, avatarName) {
     var size = 120;
-    var html = '' 
+    var avatarImage = '' 
       + '<div align="center">' 
       +   '<div class="medium">your animal is the</div>' 
       +   '<img class="avatar_image"' 
@@ -18,10 +18,9 @@ var cyberDojo = (function(cd, $) {
       + '</div>';
       
     return $('<div class="dialog">')
-      .html(cd.startHtml(avatarName))
+      .html(avatarImage)
       .dialog({
         autoOpen: false,
-        title: cd.dialogTitle('start-coding'),
         width: 400,
         modal: true,
         buttons: {

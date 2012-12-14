@@ -32,21 +32,18 @@ TestCase("cyber-dojo-dialog_tests", {
   },
   
   "test dialog_cantFindDojo": function() {
-    title = 'cant-find';
     id = '12345ABCDE';
-    $cd.dialog_cantFindDojo(title, id);
+    $cd.dialog_cantFindDojo(id);
   },
   
   "test dialog_dojoIsFull": function() {
-    title = 'full';
     id = '12345ABCDE';
-    $cd.dialog_dojoIsFull(title, id);
+    $cd.dialog_dojoIsFull(id);
   },
   
   "test dialog_resumeCoding": function() {
-    title = 'full';
     id = '12345ABCDE';
-    $cd.dialog_resumeCoding(title, id);    
+    $cd.dialog_resumeCoding(id);    
   },
   
   "test dialog_revert": function() {
