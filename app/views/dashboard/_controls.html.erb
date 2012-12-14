@@ -38,7 +38,7 @@ $(document).ready(function() {
     auto_refresh_enabled = !auto_refresh_enabled;
     if (auto_refresh_enabled) {
       $(this).text("enable");
-      } else {
+    } else {
       $(this).text("disable");
     }
   });
@@ -59,40 +59,40 @@ $(document).ready(function() {
 <table cellpadding="1" cellspacing="1">
   <tr>
     <td align="right">
+      <div id="seconds_per_column_text">
+        seconds per column
+      </div>
+    </td>
+    <td align="left">
       <input type="text"
              id="seconds_per_column"
              value="<%= @seconds_per_column %>"/>
-    </td>
-    <td>
-      <span class="tiny">
-        seconds per column
-      </span>
     </td>
   </tr>
   
   <tr>
     <td align="right">
+      <div id="maximum_columns_text">
+        maximum columns
+      </div>
+    </td>
+    <td align="left">
       <input type="text" 
              id="maximum_columns"
              value="<%= @maximum_columns %>"/>
-    </td>
-    <td>
-      <span class="tiny">
-        columns maximum 
-      </span>
     </td>
   </tr>
 
   <tr>
     <td align="right">
-      <span id="auto_refresh"
-            class="button">
-      </span>
-    </td>
-    <td>
-      <span id="auto_refresh_text">
+      <div id="auto_refresh_text">
         auto refresh
-      </span>
+      </div>
+    </td>
+    <td align="left">
+      <div id="auto_refresh"
+            class="button">
+      </div>
     </td>
   </tr>
   

@@ -8,7 +8,11 @@
   text-align: center;
 }
 
-#age, #auto_refresh, #auto_refresh_text, #seconds_per_column, #maximum_columns, .traffic_light_tip
+#age,
+.traffic_light_tip,
+#auto_refresh_text, #auto_refresh,
+#seconds_per_column_text, #seconds_per_column,
+#maximum_columns_text, #maximum_columns,
 {
   @include font-size-tiny();
 }
