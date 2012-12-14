@@ -10,7 +10,7 @@ var cyberDojo = (function(cd, $) {
         .html('<div class="dialog">' + grid.html() + '</div>')
         .dialog({
           autoOpen: false,
-          width: 600,
+          width: 500,
           modal: true,
           buttons: {
             cancel: function() {

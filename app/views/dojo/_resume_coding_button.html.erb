@@ -3,14 +3,19 @@
 
 $(document).ready(function() {
   
-  $('#resume_coding').click(function() {
-    cd.run('exists_json', function(id, dojo) {    
-      if (!dojo.exists) {
-        cd.dialog_cantFindDojo(id);
-      } else {    
-        cd.dialog_resumeCoding(id);
-      }
-    });
+  $('#resume_coding').click(function() {  
+    var id = $.trim($('#kata_id_input').attr('value'));
+    if (id === '') {
+      cd.dialog_noId();
+    } else {  
+      cd.run('exists_json', function(id, dojo) {    
+        if (!dojo.exists) {
+          cd.dialog_cantFindDojo(id);
+        } else {    
+          cd.dialog_resumeCoding(id);
+        }
+      }); 
+    }
   });
     
 });
@@ -18,7 +23,7 @@ $(document).ready(function() {
 //--></script>
 
 <div class="button"
-     title="resume practising"
+     title="resume practising programming"
      id="resume_coding">
   resume
 </div>

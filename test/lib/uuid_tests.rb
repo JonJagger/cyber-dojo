@@ -44,5 +44,11 @@ class UuidTests < ActionController::TestCase
     end
   end
 
+  test "if id is empty string inner and outer return empty string not nil" do
+    id = Uuid.new('')
+    assert_equal '', id.inner
+    assert_equal '', id.outer
+  end
+  
 end
 

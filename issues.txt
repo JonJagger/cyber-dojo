@@ -47,9 +47,6 @@ check for conflicts?
 
 MINOR
 -----
-The three buttons on the home page should be enabled only once
-  an id has begun to be entered in the text field.
------
 The Click-to-revert tip could appear when the current-traffic-light-count
   disappears (and disappear when it reappears). This would also mean
   you don't get the 'Click to revert' tip when there is only one

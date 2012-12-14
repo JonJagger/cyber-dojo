@@ -16,7 +16,7 @@ class Uuid
 
   def outer
     # outer_dir will be unique inside inner_dir    
-    @id[2..-1]
+    @id[2..-1] || ""
   end
   
 end

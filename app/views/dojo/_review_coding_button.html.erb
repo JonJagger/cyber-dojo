@@ -4,13 +4,18 @@
 $(document).ready(function() {
 
   $('#review_coding').click(function() {
-    cd.run('exists_json', function(id, dojo) {
-      if (!dojo.exists) {
-        cd.dialog_cantFindDojo(id);
-      } else {
-        cd.get('/dashboard/show', { id: id }, '_blank');
-      }
-    });
+    var id = $.trim($('#kata_id_input').attr('value'));
+    if (id === '') {
+      cd.dialog_noId();
+    } else {    
+      cd.run('exists_json', function(id, dojo) {
+        if (!dojo.exists) {
+          cd.dialog_cantFindDojo(id);
+        } else {
+          cd.get('/dashboard/show', { id: id }, '_blank');
+        }
+      });
+    }
   });
   
 });
@@ -18,7 +23,7 @@ $(document).ready(function() {
 //--></script>
 
 <div class="button"
-     title="review practice"
+     title="review practising programming"
      id="review_coding">
   review
 </div>

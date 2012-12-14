@@ -21,7 +21,7 @@ var cyberDojo = (function(cd, $) {
       .html(avatarImage)
       .dialog({
         autoOpen: false,
-        width: 400,
+        width: 350,
         modal: true,
         buttons: {
           ok: function() {

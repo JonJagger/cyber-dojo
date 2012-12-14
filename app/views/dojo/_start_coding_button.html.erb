@@ -2,23 +2,27 @@
 <script language="javascript" type="text/javascript"><!--
 
 $(document).ready(function() {
-
+  
   // Opening the start-coding dialog from here at the home page
   // (rather than from inside the edit-test page) is deliberate.
   // This way the edit-test page appears in a new tab _without_
   // getting any of those annoying 'popup blocked' messages.
   
-  $('#start_coding').click(function() {   
-    cd.run('start_json', function(id, dojo) {
-      var title = 'start-coding';
-      if (!dojo.exists) {
-        cd.dialog_cantFindDojo(id);
-      } else if (dojo.full) {
-        cd.dialog_dojoIsFull(id);
-      } else {
-        cd.dialog_startCoding(id, dojo.avatar_name).dialog('open');              
-      }
-    });
+  $('#start_coding').click(function() {
+    var id = $.trim($('#kata_id_input').attr('value'));
+    if (id === '') {
+      cd.dialog_noId();
+    } else {
+      cd.run('start_json', function(id, dojo) {
+        if (!dojo.exists) {
+          cd.dialog_cantFindDojo(id);
+        } else if (dojo.full) {
+          cd.dialog_dojoIsFull(id);
+        } else {
+          cd.dialog_startCoding(id, dojo.avatar_name).dialog('open');              
+        }
+      });
+    }
   });
 
 });
@@ -26,7 +30,7 @@ $(document).ready(function() {
 //--></script>
 
 <div class="button"
-     title="start practising"
+     title="start practising programming"
      id="start_coding">
   start
 </div>

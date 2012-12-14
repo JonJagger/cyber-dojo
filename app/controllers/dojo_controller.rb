@@ -14,7 +14,9 @@ class DojoController < ApplicationController
   def exists_json
     respond_to do |format|
       format.json {
-        render :json => { :exists => Kata.exists?(root_dir, id) }
+        render :json => {
+          :exists => Kata.exists?(root_dir, id)
+        }
       }
     end    
   end
