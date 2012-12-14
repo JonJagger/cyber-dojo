@@ -2,38 +2,11 @@
 <script language="javascript" type="text/javascript"><!--
 
 $(document).ready(function() {
-  
-  cd.startHtml = function(avatarName) {
-    return '' 
-      + '<div align="center">' 
-      +   '<div class="medium">your animal is the</div>' 
-      +   '<img class="avatar_image"' 
-      +        'src="/images/avatars/' + avatarName + '.jpg"' 
-      +        'title="' + avatarName + '"' 
-      +        'width="120"' 
-      +        'height="120" />' 
-      +    '<div align="center">' 
-      +      '<div class="medium">' + avatarName + '</div>' 
-      +    '</div>' 
-      + '</div>';
-  };
 
-  cd.dialog_startCoding = function(id, avatarName) {
-    return $('<div class="dialog">')
-      .html(cd.startHtml(avatarName))
-      .dialog({
-        autoOpen: false,
-        title: cd.dialogTitle('start-coding'),
-        width: 400,
-        modal: true,
-        buttons: {
-          ok: function() {
-            cd.postTo('/kata/edit', { id: id, avatar: avatarName  }, '_blank');      
-            $(this).dialog('close');
-          } // ok:
-        } // buttons:
-      }); // dialog({
-  }; // function() {
+  // Opening the start-coding dialog from here at the home page
+  // (rather than from inside the edit-test page) is deliberate.
+  // This way the edit-test page appears in a new tab _without_
+  // getting any of those annoying 'popup blocked' messages.
   
   $('#start_coding').click(function() {   
     cd.run('start_json', function(id, dojo) {
