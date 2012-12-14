@@ -3,6 +3,38 @@
 
 $(document).ready(function() {
   
+  cd.startHtml = function(avatarName) {
+    return '' 
+      + '<div align="center">' 
+      +   '<div class="medium">your animal is the</div>' 
+      +   '<img class="avatar_image"' 
+      +        'src="/images/avatars/' + avatarName + '.jpg"' 
+      +        'title="' + avatarName + '"' 
+      +        'width="120"' 
+      +        'height="120" />' 
+      +    '<div align="center">' 
+      +      '<div class="medium">' + avatarName + '</div>' 
+      +    '</div>' 
+      + '</div>';
+  };
+
+  cd.dialog_startCoding = function(id, avatarName) {
+    return $('<div class="dialog">')
+      .html(cd.startHtml(avatarName))
+      .dialog({
+        autoOpen: false,
+        title: cd.dialogTitle('start-coding'),
+        width: 400,
+        modal: true,
+        buttons: {
+          ok: function() {
+            cd.postTo('/kata/edit', { id: id, avatar: avatarName  }, '_blank');      
+            $(this).dialog('close');
+          } // ok:
+        } // buttons:
+      }); // dialog({
+  }; // function() {
+  
   $('#start_coding').click(function() {   
     cd.run('start_json', function(id, dojo) {
       var title = 'start-coding';
@@ -11,7 +43,7 @@ $(document).ready(function() {
       } else if (dojo.full) {
         cd.dialog_fullDojo(title, id);
       } else {
-        cd.postTo('/kata/edit', { id: id, avatar: dojo.avatar_name  }, '_blank');                          
+        cd.dialog_startCoding(id, dojo.avatar_name).dialog('open');              
       }
     });
   });

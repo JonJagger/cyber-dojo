@@ -15,36 +15,9 @@ $(document).ready(function() {
     return $.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
   };  
 
-  var startHtml = 
-    '<div align="center">' +
-      '<div class="medium">your animal is the</div>' +
-      '<img class="avatar_image"' +
-           'src="/images/avatars/<%= @avatar.name %>.jpg"' +
-           'title="<%= @avatar.name.humanize %>"' +
-           'width="120"' +
-           'height="120" />' +
-      '<div align="center">' +
-        '<div class="medium"><%= @avatar.name %></div>' +
-      '</div>' +
-    '</div>';
-
-  var starter = $('<div class="dialog">')
-    .html(startHtml)
-    .dialog({
-      autoOpen: false,
-      title: cd.dialogTitle('start-coding'),
-      width: 400,
-      modal: true,
-      buttons: {
-        ok: function() {
-          if (<%= @traffic_lights == [ ] -%>) {            
-            $('#test').closest("form").submit();
-          }
-          $(this).dialog('close');
-        }
-      }
-    });
-  starter.dialog('open');
+  if (<%= @traffic_lights == [ ] -%>) {            
+    cd.testForm().submit();
+  }
 
 });
 
