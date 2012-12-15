@@ -52,6 +52,8 @@ The Click-to-revert tip could appear when the current-traffic-light-count
   you don't get the 'Click to revert' tip when there is only one
   traffic-light (which is kind of pointless).
 -----
+increments should be renamed to traffic_lights
+-----
 Now that the traffic-lights offer reverting, it makes sense to allow
   you to revert from any traffic-light. Yet only enough to fit on the
   top row are shown. Perhaps the top row can be hold all the
