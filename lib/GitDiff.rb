@@ -54,10 +54,10 @@ module GitDiff
       diffs << {
         :id => id,
         :name => name,
-        :section_count => diff.count { |line| line[:type] == :section },
+        :section_count      => diff.count { |line| line[:type] == :section },
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
-        :added_line_count => diff.count { |line| line[:type] == :added },
-        :content => git_diff_html(id, diff),
+        :added_line_count   => diff.count { |line| line[:type] == :added   },
+        :content  => git_diff_html(id, diff),
       }
     end
     diffs    

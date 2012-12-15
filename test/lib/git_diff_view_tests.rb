@@ -5,7 +5,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
   
-  test "building diff view from git repo" do
+  test "building diff view from git repo with modified file" do
     kata = make_kata('Ruby-installed-and-working')
     avatar = Avatar.new(kata, 'wolf')    
     # that will have created tag 0 in the repo
@@ -22,8 +22,9 @@ class GitDiffViewTests < ActionController::TestCase
     run_tests(avatar, visible_files)
     assert_equal :red, avatar.increments.last[:colour], avatar.visible_files["output"]
 
-    # create tag 2 in the repo 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
+    
+    # create tag 2 in the repo     
     run_tests(avatar, visible_files)
     assert_equal :green, avatar.increments.last[:colour]
     
@@ -106,19 +107,6 @@ class GitDiffViewTests < ActionController::TestCase
     assert_equal expected_diffs, diffs
 
   end
-
-  #-----------------------------------------------
-
-  test "uuid_factory" do
-    factory = UuidFactory.new
-    (1..5).each { |n|
-      uuid = factory.create_uuid
-      assert_equal 10, uuid.length
-      uuid.chars{ |ch|
-        assert_not_nil "0123456789ABCDEF".index(ch)
-      }
-    }
-  end
   
   #-----------------------------------------------
   
@@ -139,8 +127,9 @@ class GitDiffViewTests < ActionController::TestCase
     run_tests(avatar, visible_files)
     assert_equal :red, avatar.increments.last[:colour], avatar.visible_files["output"]
 
-    # create tag 2 in the repo 
     visible_files.delete('untitled.rb')
+    
+    # create tag 2 in the repo 
     run_tests(avatar, visible_files)
     assert_equal :amber, avatar.increments.last[:colour]
     
@@ -157,6 +146,19 @@ class GitDiffViewTests < ActionController::TestCase
     }
     
     assert_equal expected, view
+  end
+
+  #-----------------------------------------------
+
+  test "uuid_factory" do
+    factory = UuidFactory.new
+    (1..5).each { |n|
+      uuid = factory.create_uuid
+      assert_equal 10, uuid.length
+      uuid.chars { |ch|
+        assert_not_nil "0123456789ABCDEF".index(ch)
+      }
+    }
   end
 
   #-----------------------------------------------

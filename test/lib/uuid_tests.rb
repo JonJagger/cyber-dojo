@@ -44,10 +44,28 @@ class UuidTests < ActionController::TestCase
     end
   end
 
-  test "if id is empty string inner and outer return empty string not nil" do
+  test "when id is empty string inner and outer return empty string not nil" do
     id = Uuid.new('')
     assert_equal '', id.inner
     assert_equal '', id.outer
+  end
+  
+  test "when id is one char inner is that char and outer is empty string" do
+    id = Uuid.new('E')
+    assert_equal 'E', id.inner
+    assert_equal '', id.outer
+  end
+
+  test "when id is two chars inner is those chars and outer is empty string" do
+    id = Uuid.new('EA')
+    assert_equal 'EA', id.inner
+    assert_equal '', id.outer
+  end
+
+  test "when id is three chars inner is first two chars and outer is third char" do
+    id = Uuid.new('EAC')
+    assert_equal 'EA', id.inner
+    assert_equal 'C', id.outer
   end
   
 end
