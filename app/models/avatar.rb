@@ -87,7 +87,11 @@ private
   def git_commit_tag(visible_files, tag)
     # recreate new empty sandbox so deleted files
     # are not in it and so are seen as deleted
-    # by the git diff command above
+    # by the git diff command above.
+    # Put visible_files into sandbox subdir and not straight
+    # into dir to leave dir available for admin files
+    # such as mainfest.rb and increments.rb which then
+    # don't interfere with sandbox dir contents.
     system("rm -rf #{sandbox}")
     Dir::mkdir(sandbox)
     

@@ -26,7 +26,11 @@ Sandboxes could be retained across run-test submissions.
 This would allow, for example, incremental makes.
 I've prepared this my making the sandboxes/ subfolder be simply the
 dojo id concatenated with the animal name. Of course the sub-folder
-would not be deleted. This would mean I would need to move the sandboxes
+would not be deleted.
+This will require careful file control to ensure if a file has
+been deleted in the browser then it is also deleted in the sandbox.
+This will leave them in place available for debugging if problems arise.
+This would mean I would need to move the sandboxes
 folder onto the large partition on cyber-dojo.com
 I would also need some kind of harvester that reclaimed old sandboxes.
 Eg if sandboxes/X exists but katas/X does not (eg because it has been pruned)
@@ -46,6 +50,12 @@ check for conflicts?
 
 
 MINOR
+-----
+kata.dir should probably return a dir with a / catenated to the end.
+  This would simplify lines 10,26,74 (and probably more in exercises and languages)
+-----
+avatar.dir should probably return a dir with a / catenated to the end.
+  This would simplify line 80
 -----
 The Click-to-revert tip could appear when the current-traffic-light-count
   disappears (and disappear when it reappears). This would also mean
@@ -111,12 +121,6 @@ old increments.rb files could have inc[:outcome] translated into inc[:colour]
   impression dojos will be retained for long periods of time which is
   not an impression I want to give.
 -----
-the use of the sandbox folder under the animals folder could probably be dropped
-  now that the execution of cyber-dojo.sh happens in a dedicated separate sandbox
-  folder. Or perhaps not. The sandbox folder allows for admin files (such as the
-  manifest and increments file) to live in avatar root with no possibility of
-  such files interfering with the source files inside sandbox.
------
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?
 sort filenames so files with the same extension are grouped together?
@@ -146,7 +150,7 @@ module TrafficLight
   end
 end
 -----
-the various uses of eval in the code could do with being replaced with
+the various uses of eval in the ruby code could do with being replaced with
 a json parse.
 -----
 The intention with the installation tests is that they are used to determine
