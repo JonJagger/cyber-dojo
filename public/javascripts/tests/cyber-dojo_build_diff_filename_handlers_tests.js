@@ -21,7 +21,7 @@ TestCase("cyber-dojo_build_diff_filename_handers_tests", {
         </div>        
       </div>      
     */    
-    diffs =
+    var diffs =
     [
       {
         id: '234',
@@ -32,8 +32,8 @@ TestCase("cyber-dojo_build_diff_filename_handers_tests", {
         id: '987',
         section_count: 0,
         content: 'content-for-987'
-      },
-    ]
+      }
+    ];
     $cd.buildDiffFilenameHandlers(diffs);
     //TODO: add diff with section_count > 0 and content has
     //      sections with appropriate ids.

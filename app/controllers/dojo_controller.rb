@@ -49,13 +49,6 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
-
-  def full_avatar_grid
-    @id = id
-    @all_avatar_names = Avatar.names    
-  end
-  
-  #------------------------------------------------
   
   def render_error
     render "error/#{params[:n]}"

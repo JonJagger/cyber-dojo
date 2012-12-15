@@ -20,8 +20,8 @@ TestCase("cyber-dojo_tests", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    $cd.supportFilenames = function() { return [ ] };
-    $cd.hiddenFilenames = function() { return [ ] };    
+    $cd.supportFilenames = function() { return [ ]; };
+    $cd.hiddenFilenames = function() { return [ ]; };    
     assert($cd.filenameAlreadyExists('cyberdojo.sh'));    
   },
   
@@ -32,9 +32,9 @@ TestCase("cyber-dojo_tests", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    $cd.supportFilenames = function() { return [ ] };
+    $cd.supportFilenames = function() { return [ ]; };
     var hiddenFilename = 'catch.hpp';
-    $cd.hiddenFilenames = function() { return [ hiddenFilename ] };    
+    $cd.hiddenFilenames = function() { return [ hiddenFilename ]; };    
     assert($cd.filenameAlreadyExists(hiddenFilename));    
   },
   
@@ -46,8 +46,8 @@ TestCase("cyber-dojo_tests", {
       </div>
     */
     var supportFilename = 'nunit.core.dll';
-    $cd.supportFilenames = function() { return [ supportFilename ] };
-    $cd.hiddenFilenames = function() { return [ ] };    
+    $cd.supportFilenames = function() { return [ supportFilename ]; };
+    $cd.hiddenFilenames = function() { return [ ]; };    
     assert($cd.filenameAlreadyExists(supportFilename));    
   },
 
@@ -58,8 +58,8 @@ TestCase("cyber-dojo_tests", {
         <textarea id="file_content_for_instructions"></textarea>
       </div>
     */
-    $cd.supportFilenames = function() { return [ ] };
-    $cd.hiddenFilenames = function() { return [ ] };    
+    $cd.supportFilenames = function() { return [ ]; };
+    $cd.hiddenFilenames = function() { return [ ]; };    
     assert(!$cd.filenameAlreadyExists('not.present'));    
   },
 
@@ -204,7 +204,7 @@ TestCase("cyber-dojo_tests", {
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');
   },
   
-  "test deleteFilePrompt(avatar_name, false)": function() {
+  "test deleteFilePrompt(avatarName, ask=false)": function() {
     /*:DOC +=
       <div>
         <div>
@@ -229,9 +229,28 @@ TestCase("cyber-dojo_tests", {
     assertEquals(['A', 'B', 'C'], $cd.filenames());
     var filename = 'B';
     assertEquals(filename, $cd.currentFilename());
-    $cd.deleteFilePrompt('snake', false);
+    var avatarName,ask;
+    $cd.deleteFilePrompt(avatarName = 'snake', ask = false);
     assertEquals(['A', 'C'], $cd.filenames());
     assertTrue($cd.currentFilename() == 'A' || $cd.currentFilename() == 'C');    
+  },
+  
+  "test deleteFilePrompt(avatarName, ask=true)": function() {
+    /*:DOC +=
+      <div>
+        <div>
+          <input id="radio_B" name="filename" type="radio" value="B" checked="checked"/>
+        </div>      
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>
+        <div>
+          <div id="B_div">
+            <textarea id="file_content_for_B">bbbbbbbbbbb</textarea>
+          </div>
+        </div>
+      </div>
+    */    
+    var avatarName,ask;
+    $cd.deleteFilePrompt(avatarName = 'snake', ask = true);    
   },
   
   "test newFileContent":function() {
@@ -291,7 +310,7 @@ TestCase("cyber-dojo_tests", {
     var filename = 'C';
     var content = 'dddd';
     $cd.newFileContent(filename, content);
-    filenames = $cd.rebuildFilenameList();
+    var filenames = $cd.rebuildFilenameList();
     assertEquals(3, filenames.length);
     assertEquals(['A','B','C'], filenames.sort());
   },
@@ -338,7 +357,6 @@ TestCase("cyber-dojo_tests", {
     var newFilename = 'same';
     assertEquals(false, $cd.canRenameFileFromTo('wolf', oldFilename, newFilename));
   },
-  
   
   "test canRenameFileFromTo() is false when newFilename already exists": function() {
     /*:DOC +=
@@ -401,6 +419,16 @@ TestCase("cyber-dojo_tests", {
     $cd.renameFileFromTo('frog', oldFilename, newFilename);
     assertEquals(['A', newFilename, 'C'], $cd.filenames().sort());
     assertEquals(newFilename, $cd.currentFilename());
+  },
+  
+  "test renameFile()": function() {
+    /*:DOC +=
+      <div>
+        <input type="hidden" name="current_filename" id="current_filename" value="B"/>
+      </div>
+    */    
+    var avatarName = 'wolf';
+    $cd.renameFile(avatarName);
   },
   
   "test bindAllLineNumbers()": function() {

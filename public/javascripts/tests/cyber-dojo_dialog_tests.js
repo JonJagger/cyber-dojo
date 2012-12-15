@@ -24,8 +24,8 @@ TestCase("cyber-dojo-dialog_tests", {
   },
   
   "test dialog_id": function() {
-    title = '23ED346A7E';
-    info = { language: "Ruby" };
+    var title = '23ED346A7E';
+    var info = { language: "Ruby" };
     $cd.dialog_id(title, info);    
   },
 
@@ -36,32 +36,45 @@ TestCase("cyber-dojo-dialog_tests", {
   },
   
   "test dialog_cantFindDojo": function() {
-    id = '12345ABCDE';
+    var id = '12345ABCDE';
     $cd.dialog_cantFindDojo(id);
   },
   
   "test dialog_dojoIsFull": function() {
-    id = '12345ABCDE';
-    $cd.dialog_dojoIsFull(id);
+    var id = '12345ABCDE';
+    var full = $cd.dialog_dojoIsFull(id);
+    full.dialog('option', 'buttons')['ok'].apply(full);
   },
   
   "test dialog_startCoding": function() {
-    id = '12345ABCDE';
-    avatarName = 'wolf';
-    $cd.dialog_startCoding(id, avatarName);    
+    var id = '12345ABCDE';
+    var avatarName = 'wolf';
+    var start = $cd.dialog_startCoding(id, avatarName);
+    var actual = { };
+    var wasPostTo = $cd.postTo;
+    $cd.postTo = function(url, params, target) {
+      actual.url = url;
+      actual.params = params;
+      actual.target = target;
+    };
+    start.dialog('option', 'buttons')['ok'].apply(start);
+    $cd.postTo = wasPostTo;
+    assertEquals('/kata/edit', actual.url);
+    assertEquals({ id: id, avatar: avatarName }, actual.params);
+    assertEquals('_blank', actual.target);
   },
   
   "test dialog_resumeCoding": function() {
-    id = '12345ABCDE';
+    var id = '12345ABCDE';
     $cd.dialog_resumeCoding(id);    
   },
   
   "test dialog_revert.createRevertDialog()": function() {
-    id = '1234512345';
-    avatarName = 'wolf';
-    tag = 15;
+    var id = '1234512345';
+    var avatarName = 'wolf';
+    var tag = 15;
     $cd.dialog_revert(id, avatarName, tag);
-    data =  {
+    var data =  {
       visibleFiles: {
         'one': "one-content",
         'two': "two-content"
