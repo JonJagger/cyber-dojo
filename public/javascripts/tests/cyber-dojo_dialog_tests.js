@@ -55,11 +55,30 @@ TestCase("cyber-dojo-dialog_tests", {
     assertEquals('_blank', actual.target);
   },
   
-  "test dialog_resumeCoding": function() {
+  "test dialog_resumeCoding is cancelled": function() {
     var id = '1234512345';
     var html = '';
     var resume = $cd.dialog_resumeCoding(id, html);
-    //TODO...
+    resume.dialog('option', 'buttons')['cancel'].apply(resume);    
+  },
+
+  "test dialog_resumeCoding avatar is clicked": function() {
+    var id = '1234512345';
+    var avatarName = 'wolf';
+    var html = '';
+    var resume = $cd.dialog_resumeCoding(id, html);
+    var actual = { };
+    var wasPostTo = $cd.postTo;    
+    $cd.postTo = function(url, params, target) {
+      actual.url = url;
+      actual.params = params;
+      actual.target = target;
+    };
+    $cd.resume(id, avatarName);    
+    $cd.postTo = wasPostTo;
+    assertEquals('/kata/edit', actual.url);
+    assertEquals({ id: id, avatar: avatarName }, actual.params);
+    assertEquals('_blank', actual.target);    
   },
   
   "test dialog_revert.createRevertDialog()": function() {
