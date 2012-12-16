@@ -4,14 +4,18 @@
 $(document).ready(function() {
 
   $('#review_coding').click(function() {
-    var id = $.trim($('#kata_id_input').attr('value'));
+    var open = 'open';
+    var id = $('#kata_id_input').attr('value');
+    id = $.trim(id);
     if (id === '') {
-      cd.dialog_noId();
-    } else {    
-      cd.run('exists_json', function(id, dojo) {
+      cd.dialog_noId().dialog(open);
+    }
+    else {    
+      cd.run(id, 'review_json', function(dojo) {
         if (!dojo.exists) {
-          cd.dialog_cantFindDojo(id);
-        } else {
+          cd.dialog_cantFindDojo(id).dialog(open);
+        }
+        else {
           cd.get('/dashboard/show', { id: id }, '_blank');
         }
       });

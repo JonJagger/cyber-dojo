@@ -46,7 +46,7 @@ var cyberDojo = (function(cd, $) {
       
     var links = $(cd.makeTable(ninetySeven, video, map, accu));
       
-    cd.dialog(links.html(), 550, 'links');
+    return cd.dialog(links.html(), 550, 'links');
   };
 
   return cd;

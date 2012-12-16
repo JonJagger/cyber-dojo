@@ -1,21 +1,4 @@
 
-<script language="javascript" type="text/javascript"><!--
-
-$(document).ready(function() {
-
-  cd.run = function(method, func) {
-    var id = $('#kata_id_input').attr('value');
-    if ($.trim(id) !== '') {
-      $.getJSON('/dojo/' + method, { id: id }, function(data) {
-        func(id, data);
-      });
-    }
-  };
-
-});
-
-//--></script>
-
 <div style="font-size: 1.5em;">
 
   <div class="row">

@@ -14,7 +14,7 @@ var cyberDojo = (function(cd, $) {
     });
     panel += '</table>';    
     var id = $(cd.makeTable(cd.divPanel(panel)));    
-    cd.dialog(id.html(), 450, title);    
+    return cd.dialog(id.html(), 450, title);    
   };
   
   return cd;

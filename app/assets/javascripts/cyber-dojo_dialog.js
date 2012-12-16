@@ -21,7 +21,7 @@ var cyberDojo = (function(cd, $) {
           }
         }
       });
-    div.dialog('open');            
+    return div;
   };
 
   return cd;

@@ -49,7 +49,7 @@ var cyberDojo = (function(cd, $) {
 
     var tips = $(cd.makeTable(team, average, atGreen, refactor, recruit));
   
-    cd.dialog(tips.html(), 600, 'tips');
+    return cd.dialog(tips.html(), 600, 'tips');
   };
 
   return cd;

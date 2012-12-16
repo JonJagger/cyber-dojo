@@ -44,7 +44,7 @@ var cyberDojo = (function(cd, $) {
         );      
     var basics = $(cd.makeTable(setup,enter,limit,retro,repeat));
       
-    cd.dialog(basics.html(), 725, 'basics');
+    return cd.dialog(basics.html(), 725, 'basics');
   };
 
   return cd;

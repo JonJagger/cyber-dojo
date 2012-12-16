@@ -3,30 +3,33 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.dialog_resumeCoding = function(id) {
-    var grid = $('<div>');
-    grid.load('/dojo/resume_avatar_grid', { id: id }, function() {
-      var resumer = $('<div id="resume_coding_dialog">')
-        .html('<div class="dialog">' + grid.html() + '</div>')
-        .dialog({
-          autoOpen: false,
-          width: 500,
-          modal: true,
-          buttons: {
-            cancel: function() {
-              $(this).dialog('close');
-            }
-          }
-        });
-      cd.registerCloseResumeDialog(resumer);
-      resumer.dialog('open');
-    });
+  cd.resume = function(id, avatarName) {
+    cd.postTo('/kata/edit', {
+      id: id,
+      avatar: avatarName
+    }, '_blank');  
+    cd.closeResumeDialog();
+    return false;    
   };
-
-  cd.registerCloseResumeDialog = function(resumer) {
+  
+  cd.dialog_resumeCoding = function(id, dialogHtml) {
+    var resumer = $('<div class="dialog">')
+      .html(dialogHtml)
+      .dialog({
+        autoOpen: false,
+        width: 500,
+        title: cd.dialogTitle(id),
+        modal: true,
+        buttons: {
+          cancel: function() {
+            $(this).dialog('close');
+          }
+        }
+      });
     cd.closeResumeDialog = function() {
       resumer.dialog('close');
-    };
+    };    
+    return resumer;
   };
   
   return cd;

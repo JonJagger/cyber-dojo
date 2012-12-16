@@ -69,7 +69,7 @@ var cyberDojo = (function(cd, $) {
                    endDelay, projector,
                    noCollab, social));
       
-    cd.dialog(why.html(), 850, 'why');
+    return cd.dialog(why.html(), 850, 'why');
   };
 
   return cd;

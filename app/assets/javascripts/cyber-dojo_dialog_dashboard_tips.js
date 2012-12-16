@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
 
     var dashboard = $(cd.makeTable(redFirst, refactor, amber));
       
-    cd.dialog(dashboard.html(), 450, 'tips');
+    return cd.dialog(dashboard.html(), 450, 'tips');
   };
 
   return cd;

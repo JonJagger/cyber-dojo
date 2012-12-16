@@ -51,6 +51,10 @@ check for conflicts?
 
 MINOR
 -----
+dojo is full message appears from start-coding button.
+  dialog should mention "Can't start coding - dojo id has
+  its full quota of 16 animals" or words to that effect. 
+-----
 kata.dir should probably return a dir with a / catenated to the end.
   This would simplify lines 10,26,74 (and probably more in exercises and languages)
 -----
@@ -89,6 +93,12 @@ put a readme.txt file into the kata's root folder explaining
 add help button (screen cast?) for diff page
 -----
 add help button (screen cast?) for dashboard page
+-----
+the dashboard traps carriage-returns on the secs_per_columns and
+  maximum_columns text fields and makes a post call. It could
+  parse the text field to verify it is an integer first before
+  posting (like the diff page does for the was_tag and now_tag
+  text fields)
 -----
 in the diff view, long lines get truncated rather than bringing up
   a horizontal scroll bar. Also when scrolling, the line numbers

@@ -9,7 +9,9 @@ var cyberDojo = (function(cd, $) {
       + '<table>'
       +    '<tr>'
       +      '<td>'
-      +        'Click <div id="setup" class="button">setup</div> to get a new id<br/>'
+      +        'Click'
+      +          ' <div id="setup" class="button">setup</div> '
+      +        'to get a new id.<br/>'
       +        '<br/>'
       +        'A full id is always 10 characters long, '
       +        'contains only the digits 0123456789 '
@@ -22,7 +24,7 @@ var cyberDojo = (function(cd, $) {
       +  '</table>'
       + '</div>';
     var width = 400;
-    cd.dialog(noId, width, '');    
+    return cd.dialog(noId, width, '');    
   };
 
   return cd;

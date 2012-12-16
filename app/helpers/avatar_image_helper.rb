@@ -10,13 +10,5 @@ module AvatarImageHelper
       :height => size,
       :class => "avatar_image"
   end
-
-  def bw_avatar_image(name, size)
-    name = name.downcase
-    image_tag "/images/avatars/bw/#{name}.jpg",
-      :width => size,
-      :height => size,
-      :class => "avatar_image"    
-  end
   
 end

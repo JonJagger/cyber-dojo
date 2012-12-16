@@ -8,15 +8,6 @@ class DojoControllerTest  < IntegrationTest
     assert_response :success
   end
   
-  test "id does not exist" do
-    bad_id = 'ab00ab11ab'
-    get 'dojo/exists_json', {
-        :format => :json,      
-        :id => bad_id
-    }
-    assert_equal({"exists" => false}, json)
-  end
-  
   test "start_json with id that does not exist" do
     bad_id = 'ab00ab11ab'
     get 'dojo/start_json', {
@@ -58,22 +49,37 @@ class DojoControllerTest  < IntegrationTest
     assert_nil json['avatar_name']
   end
 
-  test "resume avatar grid" do
+  test "resume_json with id that does not exist" do
+    bad_id = 'ab00ab11ab'
+    get 'dojo/resume_json', {
+      :format => :json,
+      :id => bad_id
+    }
+    assert_equal false, json['exists']
+  end
+
+  test "resume_json with id that exists but is empty" do
+    id = checked_save_id
+    get 'dojo/resume_json', {
+      :format => :json,
+      :id => id
+    }
+    assert_equal true , json['exists']
+    assert_equal true, json['empty']
+  end
+
+  test "resume_json with id that exists and is not empty" do
     id = checked_save_id
     get '/dojo/start_json', {
       :format => :json,
       :id => id
     }
-    post 'dojo/resume_avatar_grid', {
+    get 'dojo/resume_json', {
+      :format => :json,
       :id => id
     }
-  end
-  
-  test "full avatar grid" do
-    id = checked_save_id
-    post 'dojo/full_avatar_grid', {
-      :id => id
-    }                                                                                                                                                                                        
+    assert_equal true , json['exists']
+    assert_equal false, json['empty']
   end
   
 end

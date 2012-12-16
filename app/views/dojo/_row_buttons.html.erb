@@ -6,7 +6,7 @@ $(document).ready(function() {
   $.each(<%=@buttons.to_json.html_safe%>,
     function(i, name) {
       $('#' + name).click(function() {
-        cd['dialog_' + name]();    
+        cd['dialog_' + name]().dialog('open'); 
     });
   });
   

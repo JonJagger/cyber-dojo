@@ -3,22 +3,9 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_startCoding = function(id, avatarName) {
-    var size = 120;
-    var avatarImage = '' 
-      + '<div align="center">' 
-      +   '<div class="medium">your animal is the</div>' 
-      +   '<img class="avatar_image"' 
-      +        'src="/images/avatars/' + avatarName + '.jpg"' 
-      +        'width="' + size + '"' 
-      +        'height="' + size + '"/>' 
-      +    '<div align="center">' 
-      +      '<div class="medium">' + avatarName + '</div>' 
-      +    '</div>' 
-      + '</div>';
-      
+  cd.dialog_startCoding = function(id, avatarName, dialogHtml) {      
     return $('<div class="dialog">')
-      .html(avatarImage)
+      .html(dialogHtml)
       .dialog({
         autoOpen: false,
         width: 350,

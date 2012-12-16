@@ -1,0 +1,36 @@
+
+<div align="center">
+  <div class="medium">click an animal to resume it</div>  
+  <table>
+    <% index = 0 %>
+    <% size = 60 %>
+    <% (1..4).each do |_| %>
+    <tr>
+      <% (1..4).each do |_| %>
+      <td class="panel">
+        <% avatar_name = @all_avatar_names[index] %>
+        <% if @live_avatar_names.include?(avatar_name) %>
+          <img onclick='return cd.resume("<%= @kata.id %>","<%= avatar_name %>");'
+               src="/images/avatars/<%= avatar_name %>.jpg"
+               title="resume <%= avatar_name %>"
+               width="<%= size %>"
+               height="<%= size %>" />          
+          <div align="center">
+            <b><%= avatar_name %></b>
+          </div>
+        <% else %>
+          <img src="/images/avatars/bw/<%= avatar_name %>.jpg"
+               width="<%= size %>"
+               height="<%= size %>"/>
+          <div align="center" style="color:Gray;">
+            <%= avatar_name %>
+          </div>
+        <% end %>      
+        <% index += 1 %>
+      </td>
+      <% end %>     
+    </tr>
+    <% end %>
+  </table>
+</div>
+

@@ -64,7 +64,7 @@ a:link, a:visited
   @include font-size-large();
 }
 
-#full_dojo
+#full_dojo_text, #empty_dojo_text
 {
   color: $darker-color;
   @include font-size-medium();

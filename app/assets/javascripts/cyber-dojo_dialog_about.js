@@ -28,7 +28,7 @@ var cyberDojo = (function(cd, $) {
 
     var about = $(cd.makeTable(nonIde, practice, author));
       
-    cd.dialog(about.html(), 450, 'about');
+    return cd.dialog(about.html(), 450, 'about');
   };
 
   return cd;

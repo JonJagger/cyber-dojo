@@ -29,7 +29,7 @@ var cyberDojo = (function(cd, $) {
     var donations = $(cd.makeTable(
         "companies", companies, "individuals", individuals, thankYou));
       
-    cd.dialog(donations.html(), 750, 'donations');
+    return cd.dialog(donations.html(), 750, 'donations');
   };
 
   return cd;

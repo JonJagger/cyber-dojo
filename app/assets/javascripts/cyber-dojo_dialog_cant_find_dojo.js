@@ -9,8 +9,8 @@ var cyberDojo = (function(cd, $) {
       + '<table>'
       +    '<tr>'
       +      '<td>'
-      +        "I can't find a cyber-dojo with an id of"
-      +        '<div id="cant_find_id">' + id + '</div>'
+      +        "I can't find a cyber-dojo with that id.<br/>"
+      +        '<br/>'
       +        'A full id is always 10 characters long, '
       +        'contains only the digits 0123456789 '
       +        'and letters ABCDEF, and is case insensitive.<br/>'
@@ -23,8 +23,8 @@ var cyberDojo = (function(cd, $) {
       +    '</tr>'
       +  '</table>'
       + '</div>';
-    var width = 400;
-    cd.dialog(cantFindDojo, width, '');
+    var width, title;
+    return cd.dialog(cantFindDojo, width = 400, title = '? ' + id + ' ?');
   };
 
   return cd;

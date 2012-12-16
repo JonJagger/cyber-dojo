@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
     
     var feedback = $(cd.makeTable(appreciate, tellMe));
       
-    cd.dialog(feedback.html(), 500, 'feedback');
+    return cd.dialog(feedback.html(), 500, 'feedback');
   };
 
   return cd;

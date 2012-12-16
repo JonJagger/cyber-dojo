@@ -23,6 +23,12 @@ TestCase("cyber-dojo-dialog_tests", {
     var id = '12345ABCDE';
     $cd.dialog_cantFindDojo(id);
   },
+
+  "test dialog_dojoIsEmpty": function() {
+    var id = '12345ABCDE';
+    var empty = $cd.dialog_dojoIsEmpty(id);
+    empty.dialog('option', 'buttons')['ok'].apply(empty);
+  },
   
   "test dialog_dojoIsFull": function() {
     var id = '12345ABCDE';
@@ -33,7 +39,8 @@ TestCase("cyber-dojo-dialog_tests", {
   "test dialog_startCoding": function() {
     var id = '12345ABCDE';
     var avatarName = 'wolf';
-    var start = $cd.dialog_startCoding(id, avatarName);
+    var html = '';
+    var start = $cd.dialog_startCoding(id, avatarName, html);
     var actual = { };
     var wasPostTo = $cd.postTo;
     $cd.postTo = function(url, params, target) {
@@ -49,8 +56,10 @@ TestCase("cyber-dojo-dialog_tests", {
   },
   
   "test dialog_resumeCoding": function() {
-    var id = '12345ABCDE';
-    $cd.dialog_resumeCoding(id);    
+    var id = '1234512345';
+    var html = '';
+    var resume = $cd.dialog_resumeCoding(id, html);
+    //TODO...
   },
   
   "test dialog_revert.createRevertDialog()": function() {

@@ -43,7 +43,7 @@ var cyberDojo = (function(cd, $) {
 
     var source = $(cd.makeTable(github, ova, turnKey));
       
-    cd.dialog(source.html(), 600, 'source');
+    return cd.dialog(source.html(), 600, 'source');
   };
 
   return cd;

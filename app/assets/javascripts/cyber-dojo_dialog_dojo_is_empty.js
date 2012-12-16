@@ -2,15 +2,15 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
-  cd.dialog_dojoIsFull = function(id) {
+
+  cd.dialog_dojoIsEmpty = function(id) {
     
     var avatarTd = function(avatarName) {
       var size = 60;
       return ''
         + '<td class="panel" align="center">'
-        + '  <img src="/images/avatars/' + avatarName + '.jpg"'
-        + '       title="' + avatarName + ' has started"'
+        + '  <img src="/images/avatars/bw/' + avatarName + '.jpg"'
+        + '       title="' + avatarName + ' has not started"'
         + '       width="' + size + '"'
         + '       height="' + size + '"/>'
         + '  <div>'
@@ -20,12 +20,12 @@ var cyberDojo = (function(cd, $) {
     };
     
     var message = ''
-      + 'Cannot start a new animal<br/>'
-      + 'because the dojo is full';
+      + 'Cannot resume an  animal<br/>'
+      + 'because the dojo is empty';
       
-    var fullHtml = '' 
+    var emptyHtml = '' 
       + '<div align="center">'
-      + '  <div id="full_dojo_text">' + message + '</div>'
+      + '  <div id="empty_dojo_text">' + message + '</div>'
       + '  <table>'
       + '    <tr>'
       +        avatarTd('alligator')
@@ -55,8 +55,8 @@ var cyberDojo = (function(cd, $) {
       + '</div>';
     
     var width, title;
-    return cd.dialog(fullHtml, width = 600, title = id);
+    return cd.dialog(emptyHtml, width = 600, title = id);
   };
-    
+
   return cd;
 })(cyberDojo || {}, $);
