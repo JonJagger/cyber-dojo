@@ -23,8 +23,7 @@ $(document).ready(function() {
   };
   
   var tagEdit = function(event) {
-    var CARRIAGE_RETURN = 13;      
-    if (event.keyCode === CARRIAGE_RETURN) {
+    if (event.keyCode === $.ui.keyCode.ENTER) {
       var wasInput = $('#was_tag_number');
       var newWasTag = parseInt(wasInput.attr('value'), 10);
       var nowInput = $('#now_tag_number');

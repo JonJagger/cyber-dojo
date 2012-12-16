@@ -14,22 +14,6 @@ TestCase("cyber-dojo-dialog_tests", {
     $cd.dialog_tips();
     $cd.dialog_why();    
   },
-  
-  "test dialog_dashboard_tips": function() {
-    $cd.dialog_dashboard_tips();    
-  },
-  
-  "test dialog_kata_help": function() {
-    $cd.dialog_kata_help();    
-  },
-  
-  "test dialog_id": function() {
-    var title = '23ED346A7E';
-    var info = { language: "Ruby" };
-    $cd.dialog_id(title, info);    
-  },
-
-  //----------------------------
 
   "test dialog_no_id": function() {
     $cd.dialog_noId();
@@ -86,6 +70,22 @@ TestCase("cyber-dojo-dialog_tests", {
       }
     };
     $cd.dialog_revert.createRevertDialog(data);
+  },
+  
+  //----------------------------
+
+  "test dialog_dashboard_tips": function() {
+    $cd.dialog_dashboard_tips();    
+  },
+  
+  "test dialog_kata_help": function() {
+    $cd.dialog_kata_help();    
+  },
+  
+  "test dialog_id": function() {
+    var title = '23ED346A7E';
+    var info = { language: "Ruby" };
+    $cd.dialog_id(title, info);    
   },
   
 });

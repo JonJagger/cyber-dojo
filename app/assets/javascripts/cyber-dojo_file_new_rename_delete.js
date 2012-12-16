@@ -55,11 +55,10 @@ var cyberDojo = (function(cd, $) {
     
 	input.keyup(function(event) {
       event.preventDefault();
-      var CARRIAGE_RETURN = 13;
-      if (event.keyCode === CARRIAGE_RETURN) {
+      if (event.keyCode === $.ui.keyCode.ENTER) {
 		var newFilename = $.trim(input.val());
-		renamer.dialog('close');
 		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+		renamer.dialog('close');
       }  
     });
 	

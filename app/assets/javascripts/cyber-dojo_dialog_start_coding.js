@@ -29,7 +29,7 @@ var cyberDojo = (function(cd, $) {
             $(this).dialog('close');
           } // ok:
         } // buttons:
-      }); // .dialog({
+      }); // .dialog({      
   }; // function() {
   
   return cd;

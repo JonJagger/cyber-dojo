@@ -45,8 +45,7 @@ $(document).ready(function() {
   
   setInterval(refreshDashboard, 10*seconds);
   $('#seconds_per_column,#maximum_columns').keyup(function(event) {
-    var CARRIAGE_RETURN = 13;
-    if (event.keyCode === CARRIAGE_RETURN) {
+    if (event.keyCode === $.ui.keyCode.ENTER) {
       cd.postTo('/dashboard/show', params());
     }
   });
