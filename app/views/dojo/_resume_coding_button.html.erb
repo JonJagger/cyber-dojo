@@ -4,25 +4,14 @@
 $(document).ready(function() {
   
   $('#resume_coding').click(function() {
-    var open = 'open';
-    var id = $('#kata_id_input').attr('value');
-    id = $.trim(id);
-    if (id === '') {
-      cd.dialog_noId().dialog(open);
-    }
-    else {  
-      cd.run(id, 'resume_json', function(dojo) {    
-        if (!dojo.exists) {
-          cd.dialog_cantFindDojo(id).dialog(open);
-        }
-        else if (dojo.empty) {          
-          cd.dialog_dojoIsEmpty(id).dialog(open);
-        }
-        else {
-          cd.dialog_resumeCoding(id, dojo.resume_dialog_html).dialog(open);          
-        }
-      }); 
-    }
+    cd.run('resume_json', function(id, dojo) {    
+      if (dojo.empty) {          
+        cd.dialog_dojoIsEmpty(id).dialog('open');
+      }
+      else {
+        cd.dialog_resumeCoding(id, dojo.resume_dialog_html).dialog('open');          
+      }
+    }); 
   });
     
 });

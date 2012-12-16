@@ -51,9 +51,7 @@ check for conflicts?
 
 MINOR
 -----
-dojo is full message appears from start-coding button.
-  dialog should mention "Can't start coding - dojo id has
-  its full quota of 16 animals" or words to that effect. 
+commonality in dialogs with only ok button? with only cancel button?
 -----
 kata.dir should probably return a dir with a / catenated to the end.
   This would simplify lines 10,26,74 (and probably more in exercises and languages)

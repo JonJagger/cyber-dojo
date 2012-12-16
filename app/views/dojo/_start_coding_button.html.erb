@@ -9,25 +9,14 @@ $(document).ready(function() {
   // getting any of those annoying 'popup blocked' messages.
   
   $('#start_coding').click(function() {
-    var open = 'open';
-    var id = $('#kata_id_input').attr('value');
-    id = $.trim(id);
-    if (id === '') {
-      cd.dialog_noId().dialog(open);
-    }
-    else {
-      cd.run(id, 'start_json', function(dojo) {
-        if (!dojo.exists) {
-          cd.dialog_cantFindDojo(id).dialog(open);
-        }
-        else if (dojo.full) {
-          cd.dialog_dojoIsFull(id).dialog(open);
-        }
-        else {
-          cd.dialog_startCoding(id, dojo.avatar_name, dojo.start_dialog_html).dialog(open);
-        }
-      });
-    }
+    cd.run('start_json', function(id, dojo) {
+      if (dojo.full) {
+        cd.dialog_dojoIsFull(id).dialog('open');
+      }
+      else {
+        cd.dialog_startCoding(id, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
+      }
+    });
   });
 
 });

@@ -4,22 +4,9 @@
 $(document).ready(function() {
 
   $('#review_coding').click(function() {
-    var open = 'open';
-    var id = $('#kata_id_input').attr('value');
-    id = $.trim(id);
-    if (id === '') {
-      cd.dialog_noId().dialog(open);
-    }
-    else {    
-      cd.run(id, 'review_json', function(dojo) {
-        if (!dojo.exists) {
-          cd.dialog_cantFindDojo(id).dialog(open);
-        }
-        else {
-          cd.get('/dashboard/show', { id: id }, '_blank');
-        }
-      });
-    }
+    cd.run('review_json', function(id, dojo) {
+      cd.get('/dashboard/show', { id: id }, '_blank');
+    });
   });
   
 });
