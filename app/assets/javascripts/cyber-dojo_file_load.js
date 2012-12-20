@@ -68,7 +68,8 @@ var cyberDojo = (function(cd, $) {
     if (cd.cantBeRenamedOrDeleted(filename)) {
       turnOff(renameFile);
       turnOff(deleteFile);
-    } else {
+    }
+    else {
       turnOn(renameFile, 'Rename the current file');
       turnOn(deleteFile, 'Delete the current file');
     }    

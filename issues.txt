@@ -1,6 +1,22 @@
 
 MAJOR
 -----
+Sandboxes could be retained across run-test submissions.
+This would allow, for example, incremental makes.
+I've prepared this by making the sandboxes/ subfolder be simply the
+dojo id concatenated with the animal name. Of course the sub-folder
+would not be deleted.
+This will require careful file control to ensure if a file has
+been deleted in the browser then it is also deleted in the sandbox.
+And if a file has not has its contents changed then it is not recreated
+in the sandbox. 
+This will also leave them in place available for debugging if problems arise.
+This would mean I would need to move the sandboxes
+folder onto the large partition on cyber-dojo.com
+I would also need some kind of harvester that reclaimed old sandboxes.
+Eg if sandboxes/X exists but katas/X does not (eg because it has been pruned)
+then I can delete sandboxes/X
+-----
 Pressing the test button in the browser sometimes creates a new
 traffic-light but the output you get back gets stuck and does
 not reflect edits made to the files. A work-around when this happens
@@ -22,20 +38,6 @@ moved the katas/ folder on cyber-dojo.com to a different partition
 but that simply delays the problem. I've run out of inodes twice
 before. 
 -----
-Sandboxes could be retained across run-test submissions.
-This would allow, for example, incremental makes.
-I've prepared this my making the sandboxes/ subfolder be simply the
-dojo id concatenated with the animal name. Of course the sub-folder
-would not be deleted.
-This will require careful file control to ensure if a file has
-been deleted in the browser then it is also deleted in the sandbox.
-This will leave them in place available for debugging if problems arise.
-This would mean I would need to move the sandboxes
-folder onto the large partition on cyber-dojo.com
-I would also need some kind of harvester that reclaimed old sandboxes.
-Eg if sandboxes/X exists but katas/X does not (eg because it has been pruned)
-then I can delete sandboxes/X
------
 The Diff view doesn't work properly in IE8.
 -----
 Do I need to do io_locks? Suppose there is a conflict. Could this
@@ -51,7 +53,23 @@ check for conflicts?
 
 MINOR
 -----
+in the diff view, long lines get truncated rather than bringing up
+  a horizontal scroll bar. Also when scrolling, the line numbers
+  are scrolled out of view. Ideally, the line numbers would remain
+  in place like they do in the main edit-test page.
+-----
+put a readme.txt file into the kata's root folder explaining
+  how to do diffs on the unzipped zip.
+-----
+add help button (screen cast?) for diff page
+-----
+add help button (screen cast?) for dashboard page
+-----
 commonality in dialogs with only ok button? with only cancel button?
+-----
+add tip to dashboard that setting secs_per_column to 999999
+  collapses the columns into 1 if you want to see a non-spaced
+  timeline of traffic lights.
 -----
 kata.dir should probably return a dir with a / catenated to the end.
   This would simplify lines 10,26,74 (and probably more in exercises and languages)
@@ -64,7 +82,8 @@ The Click-to-revert tip could appear when the current-traffic-light-count
   you don't get the 'Click to revert' tip when there is only one
   traffic-light (which is kind of pointless).
 -----
-increments should be renamed to traffic_lights
+increments should be renamed to traffic_lights. And traffic_lights
+  should become a model.
 -----
 Now that the traffic-lights offer reverting, it makes sense to allow
   you to revert from any traffic-light. Yet only enough to fit on the
@@ -85,28 +104,11 @@ traffic-light tool tips need some tlc
   see they are traffic lights. Maybe say something like
   'deer has hit test 34 times and is currently at green'
 -----
-put a readme.txt file into the kata's root folder explaining
-  how to do diffs on the unzipped zip.
------
-add help button (screen cast?) for diff page
------
-add help button (screen cast?) for dashboard page
------
 the dashboard traps carriage-returns on the secs_per_columns and
   maximum_columns text fields and makes a post call. It could
   parse the text field to verify it is an integer first before
   posting (like the diff page does for the was_tag and now_tag
   text fields)
------
-in the diff view, long lines get truncated rather than bringing up
-  a horizontal scroll bar. Also when scrolling, the line numbers
-  are scrolled out of view. Ideally, the line numbers would remain
-  in place like they do in the main edit-test page.
------
-when you're looking at a diff-view filename=F, tag=N and you move
-to tag=N+1 the selected file should stay at F (if it still exists
-at tag N+1). Extra feature would be to detect it has been renamed
-and to move to the renamed file.
 -----
 lib/LineSplitter.rb is duplicated in lib/GitDiffParser.line_split
 -----
@@ -123,11 +125,6 @@ once a dojo has been created it should be independent of the
   initial language filesets it was created from.
   For example, you should be able to rename a languages sub-folder
   and a dojo created from it before the rename should be ok.
------
-old increments.rb files could have inc[:outcome] translated into inc[:colour]
-  so traffic-light images work. Probably not worth doing. Gives an
-  impression dojos will be retained for long periods of time which is
-  not an impression I want to give.
 -----
 sort filenames so filenames with no . in them are grouped together
   and filenames with one or more . in them are grouped together?

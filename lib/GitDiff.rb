@@ -75,16 +75,28 @@ module GitDiff
   
   #-----------------------------------------------------------
   
-  def most_changed_lines_file_id(diffs)        
-    most_changed_diff = diffs[0]
-    diffs.each do |diff|
-      if most_changed_diff[:name] == 'output' && change_count(diff) > 0
-          most_changed_diff = diff
-      elsif diff[:name] != 'output' && change_count(diff) > change_count(most_changed_diff)
-        most_changed_diff = diff
+  def most_changed_lines_file_id(diffs, current_filename)
+    chosen_diff = nil
+    current_filename_diff = diffs.find { |diff| diff[:name] == current_filename }
+    
+    files = diffs.select { |diff| diff[:name] != 'output' && diff[:name] != current_filename }
+    files = files.select { |diff| change_count(diff) > 0 }
+    most_changed_diff = files.max { |lhs,rhs| change_count(lhs) <=> change_count(rhs) }
+    
+    if current_filename_diff != nil
+      if change_count(current_filename_diff) > 0 || most_changed_diff == nil
+        chosen_diff = current_filename_diff
+      else
+        chosen_diff = most_changed_diff
       end
+    elsif most_changed_diff != nil
+      chosen_diff = most_changed_diff
+    else
+      diffs = diffs.select { |diff| diff[:name] != 'output' && diff[:name] != 'instructions' }
+      chosen_diff = diffs.max_by { |diff| diff[:content].size }
     end
-    most_changed_diff[:id]
+    
+    chosen_diff[:id]
   end
   
   #-----------------------------------------------------------

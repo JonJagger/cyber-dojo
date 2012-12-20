@@ -9,12 +9,14 @@ $(document).ready(function() {
   var nowTag = <%= @now_tag %>;
   var maxTag = <%= @max_tag %>;
   
-  var showDiff = function(was_tag, now_tag) {
+  var showDiff = function(wasTag, nowTag) {
+	var currentFilename = $('input:radio[name=filename]:checked').val();  
     cd.postTo('/diff/show', {
       id: "<%= @kata.id %>",
       avatar: "<%= @avatar.name %>",
-      was_tag: was_tag,
-      now_tag: now_tag
+      was_tag: wasTag,
+      now_tag: nowTag,
+	  current_filename: currentFilename
     });
   };
 

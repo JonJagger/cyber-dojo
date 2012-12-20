@@ -107,7 +107,8 @@ var cyberDojo = (function(cd, $) {
 		  }
 		});    
       deleter.dialog('open');
-    } else {
+    }
+	else {
       cd.doDelete(filename);
     }
   };
