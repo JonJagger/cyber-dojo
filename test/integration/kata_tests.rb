@@ -15,7 +15,13 @@ class KataControllerTest  < IntegrationTest
     post 'kata/run_tests', { # 1
       :id => id,
       :avatar => avatar,
-      :file_content => { }
+      :file_content => {
+        'wibble.h' => [
+          "#include WIBBLE_H",
+          "...",
+          "#endif"
+        ].join("\n")
+      }
     }
     
     post 'kata/run_tests', { # 2

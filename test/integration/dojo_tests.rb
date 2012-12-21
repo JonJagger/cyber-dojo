@@ -14,7 +14,7 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => bad_id
     }
-    assert_equal false, json['exists']
+    assert !json['exists']
   end
   
   test "start_json with id that does exist" do
@@ -23,8 +23,8 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => id
     }
-    assert_equal true , json['exists']
-    assert_equal false, json['full']
+    assert json['exists']
+    assert !json['full']
     assert_not_nil json['avatar_name']
   end
 
@@ -35,8 +35,8 @@ class DojoControllerTest  < IntegrationTest
         :format => :json,
         :id => id
       }
-      assert_equal true , json['exists']
-      assert_equal false, json['full']
+      assert json['exists']
+      assert !json['full']
       assert_not_nil json['avatar_name']
     end
 
@@ -44,8 +44,8 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => id
     }
-    assert_equal true , json['exists']
-    assert_equal true, json['full']
+    assert json['exists']
+    assert json['full']
     assert_nil json['avatar_name']
   end
 
@@ -55,7 +55,7 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => bad_id
     }
-    assert_equal false, json['exists']
+    assert !json['exists']
   end
 
   test "resume_json with id that exists but is empty" do
@@ -64,8 +64,8 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => id
     }
-    assert_equal true , json['exists']
-    assert_equal true, json['empty']
+    assert json['exists']
+    assert json['empty']
   end
 
   test "resume_json with id that exists and is not empty" do
@@ -78,8 +78,32 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => id
     }
-    assert_equal true , json['exists']
-    assert_equal false, json['empty']
+    assert json['exists']
+    assert !json['empty']
+  end
+  
+  test "review_json with id that does not exist" do
+    bad_id = 'ab00ab11ab'
+    get 'dojo/review_json', {
+      :format => :json,
+      :id => bad_id
+    }
+    assert !json['exists']      
+  end
+  
+  test "review_json with id that does exist" do
+    id = checked_save_id
+    get 'dojo/review_json', {
+      :format => :json,
+      :id => id
+    }
+    assert json['exists']      
+  end
+  
+  test "render 404 error" do
+    get 'dojo/render_error', {
+      :n => 404
+    }
   end
   
 end
