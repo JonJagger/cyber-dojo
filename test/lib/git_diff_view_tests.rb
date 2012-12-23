@@ -140,7 +140,7 @@ class GitDiffViewTests < ActionController::TestCase
 
     expected =
     {
-      'untitled.rb'      => deleteify(line_split(untitled_rb)),
+      'untitled.rb'      => deleteify(LineSplitter.line_split(untitled_rb)),
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh'    => sameify(cyberdojo_sh)
     }
@@ -232,7 +232,7 @@ HERE
       { :line => "time",        :type => :deleted, :number => 3 },
       { :line => "in the west", :type => :deleted, :number => 4 },
     ]
-    assert_equal expected, deleteify(line_split(great_great_film))
+    assert_equal expected, deleteify(LineSplitter.line_split(great_great_film))
   end
 
 

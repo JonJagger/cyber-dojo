@@ -4,8 +4,6 @@ require 'LineSplitter'
 require 'Uuid'
 
 module GitDiff
-
-  include LineSplitter
   
   # Top level functions used by diff_controller.rb to create data structure
   # (to build view from) containing diffs for all files, for a given avatar, 
@@ -25,7 +23,7 @@ module GitDiff
             view[filename] = deleteify(file_content)            
           else
             file_content = visible_files[filename]
-            view[filename] = GitDiffBuilder.new().build(diff, line_split(file_content))
+            view[filename] = GitDiffBuilder.new().build(diff, LineSplitter.line_split(file_content))
           end
           visible_files.delete(filename)
         end
@@ -143,7 +141,7 @@ module GitDiff
   #-----------------------------------------------------------
 
   def sameify(source)
-    ify(line_split(source), :same)
+    ify(LineSplitter.line_split(source), :same)
   end
 
   #-----------------------------------------------------------

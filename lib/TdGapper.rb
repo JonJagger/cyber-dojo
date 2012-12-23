@@ -1,5 +1,6 @@
 
-# See test/unit/td_gapper_tests.rb
+# See test/lib/td_gapper_tests.rb
+
 class TdGapper
 
   def initialize(start, seconds_per_td, max_seconds_uncollapsed)

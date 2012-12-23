@@ -1,14 +1,15 @@
+require 'LineSplitter'
 
 module GitDiff
 
   # Parses the output of 'git diff' command.
   # Specfically, the one in GitDiffParser.rb git_diff_view()
-  # Also, see test/unit/git_diff_parser_tests.rb
+  # See test/lib/git_diff_parser_tests.rb
 
   class GitDiffParser 
   
     def initialize(diff_text)
-      @lines = line_split(diff_text) 
+      @lines = LineSplitter.line_split(diff_text) 
       @n = 0
     end
   
@@ -216,29 +217,6 @@ module GitDiff
     def parse_newline_at_eof
       if NEWLINE_AT_EOF_RE.match(@lines[@n])
         @n += 1
-      end
-    end
-  
-    def line_split(source)
-      # - - - - - - - - - - - - - - - - -
-      # Note that
-      # source = "a\nb"
-      #   line_split(source)        --> [ "a, "b" ]
-      # and
-      #   line_split(source + "\n") --> [ "a, "b" ]
-      #
-      # Viz, if the last character is a \n it is 'lost'
-      # This means that it is not guaranteed that
-      # line_split(source).join("\n") == source
-      # - - - - - - - - - - - - - - - - -
-      if source == nil
-        [ ]
-      elsif source == ""
-        [ "" ]
-      else
-        lines = source.split(/\n/,-1)
-        lines.pop if lines.last == ""
-        lines
       end
     end
   

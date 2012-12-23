@@ -8,6 +8,7 @@ module Locking
   # the dojo folder before choosing an avatar.
   
   # See test/lib/io_lock_tests.rb
+  
   def self.io_lock(path, &block)
     result = nil
     File.open(path, 'r') do |fd|

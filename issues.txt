@@ -110,8 +110,6 @@ the dashboard traps carriage-returns on the secs_per_columns and
   posting (like the diff page does for the was_tag and now_tag
   text fields)
 -----
-lib/LineSplitter.rb is duplicated in lib/GitDiffParser.line_split
------
 I'd like the rightmost column of avatar images on the dashboard
   to not scroll off screen. But at the same time I'd also like
   the time-moving traffic-lights to update (to the avatar image's

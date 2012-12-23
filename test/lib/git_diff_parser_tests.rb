@@ -5,54 +5,13 @@ class GitDiffParserTests < ActionController::TestCase
 
   include GitDiff
 
-  #-----------------------------------------------------
-
-  test "lines passed into ctor are split" do
-lines = <<HERE
-123
-456
-789
-HERE
+  test "lines are split" do
+    lines = [ "a", "b" ]
+    assert_equal lines, GitDiffParser.new(lines.join("\n")).lines
+  end
    
-    expected = [ "123", "456", "789" ]
-    assert_equal expected, GitDiffParser.new(lines).lines    
-  end
-
   #-----------------------------------------------------
   
-  test "line_split of nil is empty array" do
-    ignored = 'xxxx'
-    assert_equal [ ], GitDiffParser.new(ignored).line_split(nil)
-  end
-
-  test "line_split of empty source is empty string in array" do
-    ignored = 'xxxx'
-    assert_equal [ "" ], GitDiffParser.new(ignored).line_split("")  
-  end
-  
-  test "line_split of source with embedded newlines" do
-    ignored = 'xxxx'
-    expected = [ "12", "34" ]
-    source = expected.join("\n")
-    assert_equal expected, GitDiffParser.new(ignored).line_split(source)        
-  end
-  
-  test "line_split of source with embedded newlines and one trailing newline" do
-    ignored = 'xxxx'
-    expected = [ "12", "34" ]
-    source = expected.join("\n") + "\n"
-    assert_equal expected, GitDiffParser.new(ignored).line_split(source)            
-  end
-  
-  test "line_split of source with embedded newlines and two trailing newlines" do
-    ignored = 'xxxx'
-    expected = [ "12", "34" ]
-    source = expected.join("\n") + "\n" + "\n"
-    assert_equal expected << "", GitDiffParser.new(ignored).line_split(source)            
-  end
-  
-  #-----------------------------------------------------
-   
   test "parse diff for filename ending in tab removes the tab" do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd', 
