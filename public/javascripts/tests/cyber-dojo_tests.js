@@ -431,14 +431,4 @@ TestCase("cyber-dojo_tests", {
     $cd.renameFile(avatarName);
   },
   
-  "test bindAllLineNumbers()": function() {
-    /*:DOC +=
-      <div>
-        <textarea id="file_content_for_cyberdojo.sh"></textarea>
-        <textarea id="file_content_for_instructions"></textarea>
-      </div>
-    */
-    $cd.bindAllLineNumbers();    
-  },
-  
 });

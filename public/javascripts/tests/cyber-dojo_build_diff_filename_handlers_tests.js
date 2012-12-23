@@ -11,22 +11,25 @@ TestCase("cyber-dojo_build_diff_filename_handers_tests", {
       </div>
       <div>
         <div>
-          <input id="radio_234" name="filename" type="radio" value="A"/>
-          <input id="radio_987" name="filename" type="radio" value="B" checked="checked"/>
+          <div id="234" lass="filename">
+            <input id="radio_234" name="filename" type="radio" value="A"/>
+            <label>234</label>
+          </div>
+          <div id="987" class="filename">          
+            <input id="radio_987" name="filename" type="radio" value="B" checked="checked"/>
+            <label>987</label>
+          </div>
         </div>
         <input type="hidden" name="current_filename" id="current_filename" value="B"/>
-        <div>
-          <textarea id="file_content_for_A">a</textarea>
-          <textarea id="file_content_for_B">b</textarea>
-        </div>        
       </div>      
-    */    
+    */
+    var content = '<div id="234_section_0">content-for-234</div>';
     var diffs =
     [
       {
         id: '234',
-        section_count: 0,
-        content: 'content-for-234'
+        section_count: 1,
+        content: content
       },
       {
         id: '987',
@@ -35,11 +38,9 @@ TestCase("cyber-dojo_build_diff_filename_handers_tests", {
       }
     ];
     $cd.buildDiffFilenameHandlers(diffs);
-    //TODO: add diff with section_count > 0 and content has
-    //      sections with appropriate ids.
-    //TODO: get document, retrieve filename elements,
-    //      simulate clicking them, test correct content
-    //      is moved into diff_sheet
+
+    $('#radio_234').parent().click();    
+    assertEquals( content , $('#diff_sheet').html());
   },
   
 });
