@@ -20,7 +20,7 @@ var cyberDojo = (function(cd, $) {
         + "Steve Coates, Johannes van Tonder, Santeri Vesalainen, "
         + "Alexander Ottesen, Lars Storjord, Anders Schau Knatten, "
         + "Mike Sutton, James Grenning, Allan Kelly, Randall White, "
-        + "Videla Lucas, Mark Sargent."
+        + "Lucas Videla, Mark Sargent."
       );
 
     var thankYou =
