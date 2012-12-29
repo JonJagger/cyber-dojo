@@ -212,8 +212,6 @@ class InstallationTests < ActionController::TestCase
   end
   
   def language_test(filename, rhs)
-    
-    
     kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
     avatar = Avatar.new(kata, 'hippo')
     visible_files = avatar.visible_files
