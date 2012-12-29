@@ -35,10 +35,10 @@ module CodeOutputParser
   def self.parse_php_unit(output)
     green_pattern = Regexp.new('OK \(')
     red_pattern = Regexp.new('FAILURES!')
-    if green_pattern.match(output)
-      :green
-    elsif red_pattern.match(output)
+    if red_pattern.match(output)
       :red
+    elsif green_pattern.match(output)
+      :green
     else
       :amber
     end

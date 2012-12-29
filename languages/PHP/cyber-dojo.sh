@@ -1,1 +1,1 @@
-phpunit --verbose *Test*
+phpunit --verbose .

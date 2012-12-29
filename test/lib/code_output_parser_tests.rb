@@ -627,6 +627,38 @@ class CodeOutputParserTests < ActionController::TestCase
     assert_equal :red, CodeOutputParser::parse_php_unit(red_output)  
   end
 
+  test "multiple calls in cyber-dojo.sh and one overall-pass and one overall-fail" do
+    red_output =
+      [
+        "PHPUnit 3.4.5 by Sebastian Bergmann.",
+        "",
+        "UntitledTest",
+        "F",
+        "",
+        "Time: 0 seconds, Memory: 4.00Mb",
+        "",
+        "There was 1 failure:",
+        "",
+        "1) UntitledTest::testAnswer",
+        "Failed asserting that <integer:42> matches expected <integer:426>.",
+        "",
+        "/var/www/cyberdojo/sandboxes/67/0194C272/zebra/UntitledTest.php:10",
+        "",
+        "FAILURES!",
+        "Tests: 1, Assertions: 1, Failures: 1.",
+        "",
+        "PHPUnit 3.4.5 by Sebastian Bergmann.",
+        "",
+        "SecondTest",
+        ".",
+        "",
+        "Time: 0 seconds, Memory: 4.00Mb",
+        "",
+        "OK (1 test, 1 assertion)",
+      ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_php_unit(red_output)        
+  end
+
   #--------------------------------------------------------
 
   test "haskell one fail is red" do
