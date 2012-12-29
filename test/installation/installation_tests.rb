@@ -34,7 +34,7 @@ class InstallationTests < ActionController::TestCase
         not_installed,
           installed_but_not_working = check_languages(Rails.root + 'test/cyberdojo')
     
-    ['C assert', 'Dummy', 'Ruby-installed-and-working'] == installed_and_working &&
+    ['C', 'Dummy', 'Ruby-installed-and-working'] == installed_and_working &&
     ['Ruby-no-42-file'] == cannot_check_because_no_42_file &&
     ['C#','Ruby-not-installed'] == not_installed &&
     ['Ruby-installed-but-not-working'] == installed_but_not_working
@@ -208,10 +208,12 @@ class InstallationTests < ActionController::TestCase
       red = language_test(filename, '42')
     amber = language_test(filename, '4typo2')
     green = language_test(filename, '54')
-    [ red,amber,green ]
+    [ red, amber, green ]
   end
   
   def language_test(filename, rhs)
+    
+    
     kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
     avatar = Avatar.new(kata, 'hippo')
     visible_files = avatar.visible_files
