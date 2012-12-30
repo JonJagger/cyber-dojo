@@ -33,9 +33,12 @@ module CodeOutputParser
   end
 
   def self.parse_php_unit(output)
-    green_pattern = Regexp.new('OK \(')
+	amber_pattern = Regexp.new('PHP Parse error:')
     red_pattern = Regexp.new('FAILURES!')
-    if red_pattern.match(output)
+    green_pattern = Regexp.new('OK \(')
+    if amber_pattern.match(output)
+	  :amber
+    elsif red_pattern.match(output)
       :red
     elsif green_pattern.match(output)
       :green
@@ -242,7 +245,17 @@ module CodeOutputParser
   end
   
   def self.parse_clojure_test(output)
-	:amber
+	syntax_error_pattern = /Exception in thread/	
+    ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
+    if syntax_error_pattern.match(output)
+	  :amber
+    elsif output.scan(ran_pattern).any? { |res| res[3] != "0" || res[4] != "0" }
+	  :red
+    elsif output.scan(ran_pattern).all? { |res| res[3] == "0" && res[4] == "0" }
+	  :green
+	else
+	  :amber
+	end    
   end
 
 end

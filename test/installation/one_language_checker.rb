@@ -50,7 +50,7 @@ class OneLanguageChecker < ActionController::TestCase
     check_named_files_exist(:visible_filenames)      
     filenames42 = get_filenames_42
       
-    # TODO: if length > 1 that is also a probable error
+    # TODO: if filenames42.length > 1 that is also a probable error
     if filenames42 == [ ]
       cannot_check_because_no_42_file << language
       puts "  #{language}  cannot check because no 42 file"
