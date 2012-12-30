@@ -160,3 +160,15 @@ The intention with the installation tests is that they are used to determine
 what languages are installed and to only offer those languages (at the create
 page). But at the moment all the languages are being offered.
 -----
+Getting Objective-C compiling on Ubuntu
+http://www.gnustep.org/
+-----
+Install clojure on Ubuntu
+http://stackoverflow.com/questions/7843974/does-apt-get-work-to-install-clojure-on-linux-ubuntu-10
+ https://raw.github.com/technomancy/leiningen/stable/bin/lein
+-----
+Install scala on Ubuntu
+http://wiki.summercode.com/how_to_install_scala_on_ubuntu_scala_2_8_1_and_ubuntu_10_04
+http://www.scala-lang.org/downloads
+http://blog.cingusoft.org/install-scala-on-mac-os-x
+-----
