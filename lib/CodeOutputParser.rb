@@ -241,5 +241,9 @@ module CodeOutputParser
 	:amber
   end
   
+  def self.parse_clojure_test(output)
+	:amber
+  end
+
 end
 
