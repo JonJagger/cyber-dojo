@@ -237,5 +237,9 @@ module CodeOutputParser
     end
   end
   
+  def self.parse_scala_test(output)
+	:amber
+  end
+  
 end
 
