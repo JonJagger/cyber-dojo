@@ -3,8 +3,27 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
-  def initialize(verbose = false)
+  def initialize(verbose = false, max_duration = 5)
     @verbose = verbose
+    @max_duration = max_duration
+  end
+  
+  def check_one(name)
+    root_dir = Rails.root + 'test/cyberdojo'
+    languages_root_dir = root_dir + 'languages'
+    cannot_check_because_no_42_file = [ ]
+    installed_and_working = [ ]
+    not_installed = [ ]
+    installed_but_not_working = [ ]        
+    
+    check(
+      languages_root_dir,
+      name,
+      cannot_check_because_no_42_file,
+      installed_and_working,
+      not_installed,
+      installed_but_not_working
+    )    
   end
   
   def check(
@@ -184,7 +203,7 @@ class OneLanguageChecker < ActionController::TestCase
       puts "------</test_code>-----"
     end
     
-    run_tests(avatar, visible_files, 5)
+    run_tests(avatar, visible_files, @max_duration)
     colour = avatar.increments.last[:colour]
     
     if @verbose
