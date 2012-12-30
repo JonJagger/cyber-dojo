@@ -2,6 +2,20 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'CodeOutputParser'
 
+# If a player creates a cyberdojo.sh file which runs two
+# test files then it's possible the first one will pass and
+# the second one will have a failure.
+# The tests below need to be restructured, one file per
+# language, and data driven. Each test file will contain
+# an array of green output
+# an array of red output, and
+# an array of amber output.
+# Then the tests should verify that each has its correct
+# colour individually, and also that
+# any amber + any red => amber
+# any amber + any green => amber
+# any green + any red => red
+
 class CodeOutputParserTests < ActionController::TestCase
   
   include CodeOutputParser

@@ -1,8 +1,3 @@
-# If a player creates a cyberdojo.sh file which runs two
-# test files then it's possible the first one will pass and
-# the second one will have a failure. Because of this the
-# regex's below should test for failed/error before passing.
-# TODO: Some of them don't do that.
 
 module CodeOutputParser
 
