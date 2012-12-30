@@ -12,7 +12,7 @@ class ObjectiveCTests < ActionController::TestCase
     not_installed = [ ]
     installed_but_not_working = [ ]        
     
-    OneLanguageChecker.new("x").check(
+    OneLanguageChecker.new(verbose=true).check(
       languages_root_dir,
       'Objective-C',
       cannot_check_because_no_42_file,

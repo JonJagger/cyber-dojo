@@ -3,6 +3,10 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
+  def initialize(verbose = false)
+    @verbose = verbose
+  end
+  
   def check(
         languages_root_dir,
         language,
@@ -27,6 +31,7 @@ class OneLanguageChecker < ActionController::TestCase
     check_named_files_exist(:visible_filenames)      
     filenames42 = get_filenames_42
       
+    # TODO: if length > 1 that is also a probable error
     if filenames42 == [ ]
       cannot_check_because_no_42_file << language
       puts "  #{language}  cannot check because no 42 file"
@@ -172,8 +177,23 @@ class OneLanguageChecker < ActionController::TestCase
     test_code = visible_files[filename]
     assert_not_nil test_code
     visible_files[filename] = test_code.sub('42', rhs)
+    
+    if @verbose
+      puts "------<test_code>------"
+      puts visible_files[filename]
+      puts "------</test_code>-----"
+    end
+    
     run_tests(avatar, visible_files, 5)
-    avatar.increments.last[:colour]
+    colour = avatar.increments.last[:colour]
+    
+    if @verbose
+      puts "-------<output>-----------"
+      puts avatar.visible_files['output']
+      puts "-------</output>----------"      
+    end
+    
+    colour
   end    
 
 end

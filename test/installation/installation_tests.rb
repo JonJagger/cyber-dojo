@@ -52,7 +52,7 @@ class InstallationTests < ActionController::TestCase
     languages = Folders::in(languages_root_dir).sort
     
     languages.each do |language|
-      OneLanguageChecker.new("x").check(
+      OneLanguageChecker.new(verbose=false).check(
         languages_root_dir,
         language,
         cannot_check_because_no_42_file,
