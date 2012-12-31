@@ -30,7 +30,7 @@ for the three colours as follows:
   (o) green - tests ran and all passed
 The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind.
-Note: you will also get an amber traffic light if the tests do not
+You will also get an amber traffic light if the tests do not
 complete within 10 seconds.
 
 
@@ -198,18 +198,27 @@ Adding a new exercise
 
 Adding a new language
 =====================
-Create a new sub-directory under cyberdojo/languages/
-  For example: cyberdojo/languages/Lisp
+Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
+  For example: cyberdojo/test/cyberdojo/languages/Lisp
 Create a manifest.rb file in this directory.
-  For example: cyberdojo/languages/Lisp/manifest.rb
+  For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.rb
 Each manifest.rb file contains an inspected ruby object. 
-Example: cyberdojo/languages/Java/manifest.rb looks like this:
+Example: the one for Java looks like this:
 {
   :visible_filenames => %w( Untitled.java UntitledTest.java cyber-dojo.sh ),
   :support_filenames => %w( junit-4.7.jar ),
   :unit_test_framework => 'junit',
   :tab_size => 4
 }
+Then create a test for it in cyberdojo/test/installation
+by copying an existing language test rb file. Eg
+#cp clojure_tests.rb lisp_tests.rb
+Edit it match the folder name you created
+  s/Clojure/Lisp/
+Then
+#ruby lisp_tests.rb
+Once this passes you can make it live
+#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
 
 manifest.rb Parameters
@@ -391,5 +400,5 @@ o) I have worked hard to <em>remove</em> features from cyber-dojo. My idea
    collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
-   Olve, Mike and Johannes - I really appreciate all your help and
-   encouragement.
+   Mike Sutton too. Olve, Mike, Johannes and Mike - I really appreciate all
+   your help and encouragement.
