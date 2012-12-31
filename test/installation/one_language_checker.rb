@@ -3,15 +3,14 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
-  def initialize(verbose = false, max_duration = 5)
-    @verbose = verbose
-    @max_duration = max_duration
+  def initialize(options = { :verbose => false, :max_duration => 5})
+    @verbose = options[:verbose] || false
+    @max_duration = options[:max_duration] || 5
   end
     
   def check(
         root_dir,
         language,
-        cannot_check_because_no_42_file = [ ],
         installed_and_working = [ ],
         not_installed = [ ],
         installed_but_not_working = [ ]
@@ -31,24 +30,17 @@ class OneLanguageChecker < ActionController::TestCase
     check_cyberdojo_sh_exists
     check_named_files_exist(:hidden_filenames)
     check_named_files_exist(:visible_filenames)      
-    filenames42 = get_filenames_42
       
-    # TODO: if filenames42.length > 1 that is also a probable error
-    if filenames42 == [ ]
-      cannot_check_because_no_42_file << language
-      puts "  #{language}  cannot check because no 42 file"
+    rag = red_amber_green(get_filename_42)
+    if rag == [:red,:amber,:green]
+      installed_and_working << language
+      puts "  #{language} - #{rag.inspect}  installed and working"
+    elsif rag == [:amber, :amber, :amber]
+      not_installed << language
+      puts "  #{language} - #{rag.inspect}  not installed"
     else
-      rag = red_amber_green(filenames42[0])
-      if rag == [:red,:amber,:green]
-        installed_and_working << language
-        puts "  #{language} - #{rag.inspect}  installed and working"
-      elsif rag == [:amber, :amber, :amber]
-        not_installed << language
-        puts "  #{language} - #{rag.inspect}  not installed"
-      else
-        installed_but_not_working << language
-        puts "  #{language} - #{rag.inspect}  installed but not working"          
-      end
+      installed_but_not_working << language
+      puts "  #{language} - #{rag.inspect}  installed but not working"          
     end
   end
     
@@ -159,10 +151,19 @@ class OneLanguageChecker < ActionController::TestCase
     "\n>>>>>>>#{@language}<<<<<<<\n"
   end
   
-  def get_filenames_42
-    visible_filenames.select do |visible_filename|
+  def get_filename_42
+    filenames = visible_filenames.select { |visible_filename|
       IO.read(@language_dir + visible_filename).include? '42'
+    }    
+    if filenames == [ ]
+      message = alert + " no 42-file"
+      assert false, message
     end
+    if filenames.length > 1
+      message = alert + " multiple 42-files " + filenames.inspect
+      assert false, message
+    end
+    filenames[0]
   end
   
   def red_amber_green(filename)
@@ -172,13 +173,13 @@ class OneLanguageChecker < ActionController::TestCase
     [ red, amber, green ]
   end
   
-  def language_test(filename, rhs)
+  def language_test(filename, replacement)
     kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
     avatar = Avatar.new(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]
     assert_not_nil test_code
-    visible_files[filename] = test_code.sub('42', rhs)
+    visible_files[filename] = test_code.sub('42', replacement)
     
     if @verbose
       puts "------<test_code>------"

@@ -13,12 +13,12 @@ var cyberDojo = (function(cd, $) {
         + 'choose an exercise, '
         + 'click <span id="ok" class="button">ok</span><br/>'
         + indent + "You'll get an id, e.g.,"
-        + "<span id='kata_id_input'>3AF65A28F9</span>"
+        + "<span id='kata_id_input'>&nbsp;3AF65A28F9&nbsp;</span>"
     );
     var enter =
       cd.divPanel(''
         + '20. At each computer, '
-        + 'enter the <span id="kata_id_input">3AF65A28F9</span> id, '
+        + 'enter the <span id="kata_id_input">&nbsp;3AF65A28F9&nbsp;</span> id, '
         + 'click <div id="start_coding" class="button">start</div><br/>'
         + indent + '(the first 5 chars of the id are usually enough)'
     );
