@@ -7,35 +7,18 @@ class OneLanguageChecker < ActionController::TestCase
     @verbose = verbose
     @max_duration = max_duration
   end
-  
-  def check_one(name)
-    root_dir = Rails.root + 'test/cyberdojo'
-    languages_root_dir = root_dir + 'languages'
-    cannot_check_because_no_42_file = [ ]
-    installed_and_working = [ ]
-    not_installed = [ ]
-    installed_but_not_working = [ ]        
     
-    check(
-      languages_root_dir,
-      name,
-      cannot_check_because_no_42_file,
-      installed_and_working,
-      not_installed,
-      installed_but_not_working
-    )    
-  end
-  
   def check(
-        languages_root_dir,
+        root_dir,
         language,
-        cannot_check_because_no_42_file,
-        installed_and_working,
-        not_installed,
-        installed_but_not_working      
+        cannot_check_because_no_42_file = [ ],
+        installed_and_working = [ ],
+        not_installed = [ ],
+        installed_but_not_working = [ ]
     )
+    @root_dir = root_dir
     @language = language
-    @language_dir = languages_root_dir + language
+    @language_dir = root_dir + '/languages/' + language + "/"
     @manifest_filename = @language_dir + 'manifest.rb'    
     check_manifest_file_exists
     @manifest = eval IO.read(@manifest_filename)
@@ -73,7 +56,7 @@ class OneLanguageChecker < ActionController::TestCase
     if !File.exists? @manifest_filename
       message =
         alert + 
-        "#{@manifest_filename} does not exists"
+        "#{@manifest_filename} does not exist"
       assert false, message
     end
   end
