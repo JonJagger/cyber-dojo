@@ -67,6 +67,13 @@ add help button (screen cast?) for dashboard page
 -----
 commonality in dialogs with only ok button? with only cancel button?
 -----
+make new file dialog ask for inital name.
+-----
+isolate make new-file and rename-file dialogs and put into dedicated
+  dialog js files.
+-----
+java-cucumber fails test/installation_tests.rb
+-----
 add tip to dashboard that setting secs_per_column to 999999
   collapses the columns into 1 if you want to see a non-spaced
   timeline of traffic lights.
@@ -87,10 +94,10 @@ increments should be renamed to traffic_lights. And traffic_lights
 -----
 Now that the traffic-lights offer reverting, it makes sense to allow
   you to revert from any traffic-light. Yet only enough to fit on the
-  top row are shown. Perhaps the top row can be hold all the
+  top row are shown. Perhaps the top row can hold all the
   traffic-lights but is auto-scrolled to the far right after the tests
   have finished. And they could be scrollable, even though there is no
-  scrollbar.
+  scrollbar. Or maybe simply offer a < > navigation in the revert dialog.
 -----
 Offer the fork button on the main edit-test page?
 -----
