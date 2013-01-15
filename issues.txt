@@ -53,6 +53,10 @@ check for conflicts?
 
 MINOR
 -----
+add fork button to main test-edit page. Also, hitting fork button
+  brings up dialog box (which will ultimately have ability to
+  move files between visible and hidden sections)
+-----
 in the diff view, long lines get truncated rather than bringing up
   a horizontal scroll bar. Also when scrolling, the line numbers
   are scrolled out of view. Ideally, the line numbers would remain

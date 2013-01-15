@@ -15,13 +15,6 @@ class SimulatedFullKataTests < ActionController::TestCase
     check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
   end
   
-  test "no c zombies left unkilled" do
-    @language = 'C assert'
-    @avatar_count = 3
-    @run_tests_count = 4
-    check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
-  end
-  
   def check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
     kata = make_kata(@language)
 

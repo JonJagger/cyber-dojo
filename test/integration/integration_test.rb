@@ -12,7 +12,7 @@ class IntegrationTest  < ActionController::IntegrationTest
 
   def checked_save_id
     post 'setup/save', {
-      :language => 'C assert',
+      :language => 'Ruby-installed-and-working',
       :exercise => 'Yahtzee'
     }
     assert_match @response.redirect_url, /^#{url_for :action => 'index', :controller => 'dojo'}/

@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class TrapOutputRefreshTests < ActionController::TestCase
   
   test "output is correct after refresh" do
-    language = 'C assert'
+    language = 'Ruby-installed-and-working'
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'lion')
     output = run_tests(avatar, avatar.visible_files)

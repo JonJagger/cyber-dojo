@@ -17,6 +17,7 @@ SimpleCov.start do
   add_group 'lib',             'lib'
   
 end
+
 SimpleCov.root '/Users/jonjagger/Desktop/Repos/cyberdojo'
 
 require File.expand_path('../../config/environment', __FILE__)

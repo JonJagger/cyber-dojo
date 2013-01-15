@@ -38,7 +38,7 @@ class ReverterControllerTest  < IntegrationTest
     
     inc = json['inc']
     assert_not_nil inc
-    assert_equal "green", inc['colour']
+    assert_equal "amber", inc['colour']
     assert_equal 1, inc['number']
   end
     

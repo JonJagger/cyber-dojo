@@ -3,13 +3,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 class TimeOutTests < ActionController::TestCase
 
   test "that_code_with_infinite_loop_times_out_to_amber_and_doesnt_leak_processes" do
-    kata = make_kata('C assert', 'Dummy')
-    filename = 'untitled.c'
+    kata = make_kata('Ruby-installed-and-working', 'Dummy')
+    filename = 'untitled.rb'
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.new(kata, avatar_name)
     visible_files = avatar.visible_files
     code = visible_files[filename]
-    visible_files[filename] = code.sub('return 42;', 'for(;;); return 4;')
+    visible_files[filename] = code.sub('42', 'while true;end')
     
     ps_count_before = ps_count
     print 't'
@@ -25,7 +25,7 @@ class TimeOutTests < ActionController::TestCase
   end
   
   def ps_count
-    `ps aux | grep -E "(cyberdojo|make|run\.tests)"`.lines.count
+    `ps aux | grep -E "(cyber-dojo)"`.lines.count
   end
   
 end
