@@ -6,7 +6,7 @@ $(document).ready(function() {
   function dialog_fork() {
     var html = cd.divPanel(
         'Click ok to create a new cyber-dojo, with a new id, '
-      + 'whose starting files are identical to these files.');
+      + "whose starting files are identical to most recent traffic-light's.");
       
     return $('<div class="dialog">')
       .html(html)
@@ -19,8 +19,7 @@ $(document).ready(function() {
           ok: function() {
             cd.postTo('/forker/fork', {
               id: "<%= @kata.id %>",
-              avatar: "<%= @avatar.name %>",
-              tag: "<%= @to_tag %>"
+              avatar: "<%= @avatar.name %>"
             }, '_blank');
             $(this).dialog('close');
           },

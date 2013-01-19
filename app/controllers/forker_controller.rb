@@ -13,7 +13,8 @@ class ForkerController < ApplicationController
     params['language'] = kata.language.name
     params['exercise'] = kata.exercise.name
     info = gather_info
-    info[:visible_files] = avatar.visible_files(params[:tag])    
+    tag = params[:tag] || avatar.increments.length;
+    info[:visible_files] = avatar.visible_files(tag)    
     Kata.create_new(root_dir, info)
     
     redirect_to :controller => :dojo,
