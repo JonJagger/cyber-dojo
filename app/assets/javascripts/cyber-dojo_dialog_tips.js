@@ -30,24 +30,7 @@ var cyberDojo = (function(cd, $) {
         + bullet + 'find a bug, and write a failing test for it.'
       );
 
-    var refactor =
-      cd.divPanel(''
-        + 'Do a '
-        + '<a href="http://jonjagger.blogspot.co.uk/2012/05/yahtzee-cyber-dojo-refactoring-in-java.html" '
-        + ' target="_blank">'
-        + 'refactoring dojo'
-        + '</a>.'
-      );
-
-    var recruit =
-      cd.divPanel(''
-        + 'Use cyber-dojo as part of your recruitment. '
-        + 'See how five prospective hires fare technically and socially '
-        + "by pairing them with five of the team they're hoping to join in a cyber-dojo! "
-        + 'Do five iterations swapping partners each time.'
-      );
-
-    var tips = $(cd.makeTable(team, average, atGreen, refactor, recruit));
+    var tips = $(cd.makeTable(team, average, atGreen));
   
     return cd.dialog(tips.html(), 600, 'tips');
   };

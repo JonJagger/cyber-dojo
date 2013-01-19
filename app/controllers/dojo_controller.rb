@@ -6,7 +6,8 @@ class DojoController < ApplicationController
   def index
     @title = 'Home'
     @id = id
-    @buttons = ['about','basics','donations','faqs','feedback','links','source','tips','why' ]
+    @buttons = ['about','basics','donations','faqs','feedback',
+                'links','source', 'recruiting', 'refactoring', 'tips','why' ]
   end
  
   #------------------------------------------------

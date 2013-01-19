@@ -1,6 +1,16 @@
 
 MAJOR
 -----
+On my Mac (10.7.4) using Firefox (18.0.1) using a local server
+(http://localhost:3000) when you load a file and move the cursor
+position using the mouse-pad then the texarea becomes readonly
+(and the mac beeps at me)????
+Repeatable on the cyber-dojo live server in Firefox.
+Doesn't happen on Chrome on my Mac.
+Doesn't happen on Safari on my Mac.
+Doesn't happen on Opera on my Mac.
+Doesn't happen on Jakub's mac using Firefox. 
+-----
 Sandboxes could be retained across run-test submissions.
 This would allow, for example, incremental makes.
 I've prepared this by making the sandboxes/ subfolder be simply the

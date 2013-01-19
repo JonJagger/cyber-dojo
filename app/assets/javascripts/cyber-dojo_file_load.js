@@ -12,10 +12,12 @@ var cyberDojo = (function(cd, $) {
     // I can set the back _after_ the call to focus()
     // The call to focus() allows you to carry on
     // typing at the point the cursor left off.
+    
     cd.saveScrollPosition(cd.currentFilename());
     cd.fileDiv(cd.currentFilename()).hide();
     cd.selectFileInFileList(filename);    
     cd.fileDiv(filename).show();
+    
     cd.fileContentFor(filename).focus();
     cd.restoreScrollPosition(filename);
     $('#current_filename').val(filename);
