@@ -217,7 +217,7 @@ Edit it match the folder name you created
   s/Clojure/Lisp/
 Then
 #ruby lisp_tests.rb
-Once this passes you can make it live
+Once this passes make it live by moving it to the live languages folder:
 #mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
 
