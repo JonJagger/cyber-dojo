@@ -849,6 +849,38 @@ class CodeOutputParserTests < ActionController::TestCase
     assert_equal :amber, CodeOutputParser::parse_clojure_test(output)                      
   end
 
+  #--------------------------------------------------------
+
+  test "ruby-rspec 1 example, 1 failure is red" do
+    output = "1 example, 1 failure" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec 1 example, 0 failures is green" do
+    output = "1 example, 0 failures" 
+    assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec 2 examples, 2 failures is red" do
+    output = "2 examples, 2 failures" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec 2 examples, 0 failures is green" do
+    output = "2 examples, 0 failures" 
+    assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec 12 examples, 2 failures is red" do
+    output = "12 examples, 2 failures" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec 12 examples, 11 failures is red" do
+    output = "12 examples, 11 failures" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
 end
 
 
