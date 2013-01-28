@@ -1,0 +1,1 @@
+rspec ./*_spec.rb
