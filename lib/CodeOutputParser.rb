@@ -140,16 +140,13 @@ module CodeOutputParser
   end
 
   def self.parse_ruby_rspec(output)
-    rspec_pattern = Regexp.new('^(\d*) example(?:s?), (\d*) failure(?:s?)')
-    if match = rspec_pattern.match(output)
-	  if match[2] == "0"
-		:green
-	  else
-		:red
-	  end
-	else
-	  :amber
-	end
+	if /\A\.+$/ =~ output
+      :green
+    elsif /\A[\.F]+$/ =~ output
+      :red
+    else
+      :amber
+    end	
   end
 
   def self.parse_nunit(output)

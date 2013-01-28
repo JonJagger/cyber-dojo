@@ -851,34 +851,44 @@ class CodeOutputParserTests < ActionController::TestCase
 
   #--------------------------------------------------------
 
-  test "ruby-rspec 1 example, 1 failure is red" do
-    output = "1 example, 1 failure" 
+  test "ruby-rspec F is red" do
+    output = "F" 
     assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
   end
 
-  test "ruby-rspec 1 example, 0 failures is green" do
-    output = "1 example, 0 failures" 
+  test "ruby-rspec .F is red" do
+    output = ".F" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec ..F is red" do
+    output = "..F" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec ..F..is red" do
+    output = "..F.." 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec all .$ is green" do
+    output = "." 
     assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
   end
 
-  test "ruby-rspec 2 examples, 2 failures is red" do
-    output = "2 examples, 2 failures" 
-    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
-  end
-
-  test "ruby-rspec 2 examples, 0 failures is green" do
-    output = "2 examples, 0 failures" 
+  test "ruby-rspec all ..$ is green" do
+    output = ".." 
     assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
   end
 
-  test "ruby-rspec 12 examples, 2 failures is red" do
-    output = "12 examples, 2 failures" 
-    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  test "ruby-rspec all .......$ is green" do
+    output = "......." 
+    assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
   end
 
-  test "ruby-rspec 12 examples, 11 failures is red" do
-    output = "12 examples, 11 failures" 
-    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  test "ruby-rspec no lines only . and F is amber" do
+    output = ".X.F" 
+    assert_equal :amber, CodeOutputParser::parse_ruby_rspec(output)                          
   end
 
 end
