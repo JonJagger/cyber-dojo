@@ -64,6 +64,24 @@ class SandboxTests < ActionController::TestCase
     assert !File.exists?(@sandbox.dir),
           "!File.exists?(#{@sandbox.dir})"
   end
+  
+  test "new text files created in test run are added to visible_files" do
+    language = Language.new(root_dir, 'ApprovalTests-Java')        
+    visible_files = language.visible_files
+    output = @sandbox.run(language, visible_files)
+    assert visible_files.keys.include?("UntitledTest.hitch_hiker.received.txt"), visible_files.to_s
+    assert_match visible_files["UntitledTest.hitch_hiker.received.txt"], /42/
+  end
+
+  test "missing text files are removed from visible_files" do
+    language = Language.new(root_dir, 'ApprovalTests-Java')        
+    visible_files = language.visible_files
+    visible_files["foo.txt"] = "bar"
+    temp_dir = Dir.mktmpdir # empty dir, does not contain foo.txt
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert (not visible_files.keys.include?("foo.txt")), visible_files.to_s
+  end
+  
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   

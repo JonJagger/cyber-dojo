@@ -18,10 +18,12 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@kata, params[:avatar])
     language = @kata.language
     sandbox = Sandbox.new(root_dir, id, params[:avatar])
+    visible_files = received_files
     @output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     inc[:revert_tag] = params[:revert_tag]    
     @traffic_lights = @avatar.save_run_tests(visible_files, @output, inc)
+    @visible_files = @avatar.visible_files
 
     respond_to do |format|
       format.js if request.xhr?
@@ -30,7 +32,7 @@ class KataController < ApplicationController
       
 private
 
-  def visible_files
+  def received_files
     seen = { }
     (params[:file_content] || {}).each do |filename,content|
       # Cater for windows line endings from windows browser

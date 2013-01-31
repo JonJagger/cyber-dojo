@@ -42,7 +42,21 @@ class Sandbox
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     max_run_tests_duration = (test_timeout || 10)
-    Files::popen_read(command, max_run_tests_duration)
+    output = Files::popen_read(command, max_run_tests_duration)
+    update_visible_files_with_text_files_created_and_deleted_in_test_run(dir, visible_files)
+    output
+  end
+  
+  def update_visible_files_with_text_files_created_and_deleted_in_test_run(test_run_dir, visible_files)
+    new_txt_files = Folders.in(test_run_dir).select do |entry| 
+      entry.end_with?('.txt') and not visible_files.include?(entry)
+    end
+    new_txt_files.each do |filename|
+      visible_files[filename] = File.open("#{test_run_dir}/#{filename}").gets()
+    end
+    visible_files.delete_if do |filename, value| 
+      filename.end_with?(".txt") and not Folders.in(test_run_dir).include?(filename)
+    end
   end
   
   def save_file(filename, content)
