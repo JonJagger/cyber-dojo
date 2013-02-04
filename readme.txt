@@ -88,12 +88,14 @@ I will happily tell you these if you email me: jon@jaggersoft.com
 Pull the latest cyber-dojo source code from github onto your TurnKey image
 >cd /var/www/cyberdojo 
 >git pull origin master
-Occasionally this will pull new directories. You must ensure these
-have the correct rights
+Occasionally this will pull new files and folders. You must ensure these
+have the correct rights. The brute force approach is
 >cd /var/www
 >chgrp -R www-data cyberdojo
 >chown -R www-data cyberdojo
-And don't forget to restart apache
+But this could take a long time. So better to simply check the output
+from the git pull and check everything carefully.
+Finally, don't forget to restart apache
 >service apache2 restart
 If the server fails to start try
 >rm Gemfile.lock
@@ -137,6 +139,25 @@ which fixed the problem
 #mkdir /var/www/.mono
 #chgrp www-data .mono
 #chown www-data .mono
+-------C# NUnit upgrade
+I upgraded mono as follows (the server is Ubuntu 10.04 LTS)
+#sudo bash -c "echo deb http://badgerports.org lucid main >> /etc/apt/sources.list"
+#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E1FAD0C
+#sudo apt-get update
+#sudo apt-get install libmono-corlib2.0-cil libmono-system-runtime2.0-cil libmono-system-web2.0-cil libmono-i18n2.0-cil libgdiplus
+I tried to get NUnit 2.6 to work but it failed with
+System.ApplicationException: Exception in TestRunnerThread --->
+   System.NotImplementedException: The requested feature is not implemented.
+   at NUnit.Core.TestExecutionContext.Save () [0x00000] in <filename unknown>:0
+Googling seems to show this is a known problem!
+So I backed up and backed up... until NUnit 2.5.10 which seems to work ok
+and still supports the [TestFixture] attribute.
+I installed all the new dlls into the gac
+#gacutil -i *.dll
+Strace showed that nunit wanted to create some shadow folders...
+#chown -R www-data /tmp/nunit20/ShadowCopyCache
+#chgrp -R www-data /tmp/nunit20/ShadowCopyCache
+
 -------Erlang(26MB)
 #apt-get install erlang
 (thanks to Kalervo Kujala)
@@ -210,13 +231,23 @@ Example: the one for Java looks like this:
   :unit_test_framework => 'junit',
   :tab_size => 4
 }
-Then create a test for it in cyberdojo/test/installation
+Make sure all the named files are in the new folder, including cyber-dojo.sh
+  #chmod +x cyber-dojo.sh
+  #chown www-data *
+  #chgrp www-data *
+  #sudo -u www-data ./cyber-dojo.sh
+or maybe
+ #strace sudo -u www-data ./cyber-dojo.sh
+
+You can also create a test for it in cyberdojo/test/installation
 by copying an existing language test rb file. Eg
-#cp clojure_tests.rb lisp_tests.rb
+  #cp clojure_tests.rb lisp_tests.rb
 Edit it match the folder name you created
   s/Clojure/Lisp/
 Then
-#ruby lisp_tests.rb
+  #sudo -u www-data ruby lisp_tests.rb
+or
+  #strace sudo -u www-data ruby lisp_tests.rb
 Once this passes make it live by moving it to the live languages folder:
 #mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
