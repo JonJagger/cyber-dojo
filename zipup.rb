@@ -1,5 +1,5 @@
 # A ruby script to create a zip file of katas whose total number
-# of traffic-lights is greater Parameter-1 and
+# of traffic-lights is greater than Parameter-1 and
 # that are at least Parameter-2 days old.
 # This allows the subsequent deletion of said katas
 # which is important as cyber-dojo is very heavy on inodes.

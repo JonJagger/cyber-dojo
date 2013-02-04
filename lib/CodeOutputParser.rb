@@ -139,6 +139,16 @@ module CodeOutputParser
     end
   end
 
+  def self.parse_ruby_rspec(output)
+	if /\A\.+$/ =~ output
+      :green
+    elsif /\A[\.F]+$/ =~ output
+      :red
+    else
+      :amber
+    end	
+  end
+
   def self.parse_nunit(output)
     nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+))?, Failures: (\d*)/
     if output =~ nunit_pattern

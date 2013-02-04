@@ -849,6 +849,48 @@ class CodeOutputParserTests < ActionController::TestCase
     assert_equal :amber, CodeOutputParser::parse_clojure_test(output)                      
   end
 
+  #--------------------------------------------------------
+
+  test "ruby-rspec F is red" do
+    output = "F" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec .F is red" do
+    output = ".F" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec ..F is red" do
+    output = "..F" 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec ..F..is red" do
+    output = "..F.." 
+    assert_equal :red, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec all .$ is green" do
+    output = "." 
+    assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec all ..$ is green" do
+    output = ".." 
+    assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec all .......$ is green" do
+    output = "......." 
+    assert_equal :green, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
+  test "ruby-rspec no lines only . and F is amber" do
+    output = ".X.F" 
+    assert_equal :amber, CodeOutputParser::parse_ruby_rspec(output)                          
+  end
+
 end
 
 
