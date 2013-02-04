@@ -23,6 +23,7 @@ $(document).ready(function() {
     spinners.hide();    
     test.attr('disabled', false);
     $('#tip').hide();
+    cd.rebuildFilenameList();
     // when the ajax replaces output the shortcuts
     // are lost so need rebinding
     var output = cd.fileContentFor('output');

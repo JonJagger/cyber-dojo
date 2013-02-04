@@ -60,6 +60,10 @@ class Avatar
   def visible_files(tag = nil)
     unlocked_read(Manifest_filename, tag)
   end
+  
+  def all_files_in_sandbox()
+    Folders.in(sandbox)
+  end
 
   def increments(tag = nil)
     unlocked_read(Increments_filename, tag)

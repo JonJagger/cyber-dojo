@@ -42,4 +42,16 @@ class AvatarTests < ActionController::TestCase
     assert actual.match(/^diff --git/)
   end
   
+  test "save_run_tests saves new files in visible_files" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')
+    visible_files = avatar.visible_files
+    output = "some test output"
+    visible_files["foo.txt"] = "bar"
+    inc = {:colour => :red}
+    avatar.save_run_tests(visible_files, output, inc)
+    assert avatar.visible_files.include?("foo.txt"), avatar.visible_files.to_s
+    assert avatar.all_files_in_sandbox.include?("foo.txt"), avatar.all_files.to_s
+  end
+  
 end
