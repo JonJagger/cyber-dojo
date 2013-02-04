@@ -11,6 +11,6 @@ public class UntitledTest {
     @Test
     public void hitch_hiker() throws Exception {
         int actual = Untitled.answer();
-        Approvals.approve("" + actual);
+        Approvals.verify("" + actual);
     }
 }
