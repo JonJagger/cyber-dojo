@@ -64,9 +64,9 @@ class SandboxTests < ActionController::TestCase
     assert !File.exists?(@sandbox.dir),
           "!File.exists?(#{@sandbox.dir})"
   end
-  
+
   test "new text files created in test run are added to visible_files" do
-    language = Language.new(root_dir, 'ApprovalTests-Java')        
+    language = Language.new(root_dir, 'ApprovalTests-Java')
     visible_files = language.visible_files
     output = @sandbox.run(language, visible_files)
     assert visible_files.keys.include?("UntitledTest.hitch_hiker.received.txt"), visible_files.to_s
@@ -74,14 +74,44 @@ class SandboxTests < ActionController::TestCase
   end
 
   test "missing text files are removed from visible_files" do
-    language = Language.new(root_dir, 'ApprovalTests-Java')        
-    visible_files = language.visible_files
+    visible_files = {}
     visible_files["foo.txt"] = "bar"
     temp_dir = Dir.mktmpdir # empty dir, does not contain foo.txt
     output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
     assert (not visible_files.keys.include?("foo.txt")), visible_files.to_s
   end
-  
+
+  test "text from multi-line files is saved in visible_files" do
+    visible_files = {}
+    temp_dir = Dir.mktmpdir
+    f = File.open(Pathname.new(temp_dir).join("foo.txt"), "w")
+    f.write("a multiline\nstring\n")
+    f.close()
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert (visible_files.keys.include?("foo.txt")), visible_files.to_s
+    assert_match visible_files["foo.txt"], "a multiline\nstring\n", visible_files.to_s
+  end
+
+  test "text from windows files is saved with unix line endings" do
+    visible_files = {}
+    temp_dir = Dir.mktmpdir
+    f = File.open(Pathname.new(temp_dir).join("bar.txt"), "w")
+    f.write("a multiline\r\nstring\r\n")
+    f.close()
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert_match visible_files["bar.txt"], "a multiline\nstring\n", visible_files.to_s
+  end
+
+  test "updated text files are updated in visible_files" do
+    visible_files = {"baz.txt" => "foo"}
+    temp_dir = Dir.mktmpdir
+    f = File.open(Pathname.new(temp_dir).join("baz.txt"), "w")
+    f.write("baz updated")
+    f.close()
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert_match visible_files["baz.txt"], "baz updated", visible_files.to_s
+  end
+
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
