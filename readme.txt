@@ -154,7 +154,11 @@ So I backed up and backed up... until NUnit 2.5.10 which seems to work ok
 and still supports the [TestFixture] attribute.
 I installed all the new dlls into the gac
 #gacutil -i *.dll
-Strace showed that nunit wanted to create some shadow folders...
+nunit-console (the command in cyber-dojo.sh) is simply a  script file
+which calls nunit-console.exe which is itself a CLI assembly. Viz
+  #!/bin/sh
+  exec /usr/bin/cli /usr/lib/nunit/nunit-console.exe "$@"
+strace showed that nunit wanted to create some shadow folders...
 #chown -R www-data /tmp/nunit20/ShadowCopyCache
 #chgrp -R www-data /tmp/nunit20/ShadowCopyCache
 
