@@ -20,15 +20,16 @@ var cyberDojo = (function(cd, $) {
       +     ' src="/images/avatars/' + avatar + '.jpg"'
       +     ' title="' + avatar + '" />';
     var br = '<br/>';
-    var tdTrafficLights = function() {
-      return tdTrafficLight('red') + tdTrafficLight('amber') + tdTrafficLight('green');  
-    };
     var tdTrafficLight = function(color) {
       return ''
         + '<td>'
         +   '<img src="/images/traffic_light_' + color + '.png" width="22" height="65"/>'
         + '</td>';
     };
+    var tdTrafficLights = "" +
+        tdTrafficLight('red') +
+        tdTrafficLight('amber') +
+        tdTrafficLight('green');  
     var space = '&nbsp;';
     var spaces = Array.prototype.join.call({length:4}, space);
 
@@ -49,7 +50,7 @@ var cyberDojo = (function(cd, $) {
       +     '<td class="panel">'            
       +       '<table>'
       +         '<tr>'
-      +             tdTrafficLights()
+      +             tdTrafficLights
       +           '<td>'
       +              'opens a' + br + 'revert' + br + 'dialog'
       +           '</td>'
@@ -70,10 +71,10 @@ var cyberDojo = (function(cd, $) {
       + '</div>'
       + ''
       + '<div class="panel">'
-      +   cd.makeTable(tdTrafficLights(),
-            space + 'red means the tests ran but one or more failed' + br +
-            space + 'amber means the tests could not be run' + br +
-            space + 'green means the tests ran and all passed')
+      +   cd.makeTable(tdTrafficLights,
+            space + '<span style="color:red;">red</span> means the tests ran but one or more failed' + br +
+            space + '<span style="color:#FC3;">amber</span> means the tests could not be run' + br +
+            space + '<span style="color:#0F0;">green</span> means the tests ran and all passed')
       + '</div>'
       + ''      
       + '<div class="panel">'
@@ -95,7 +96,7 @@ var cyberDojo = (function(cd, $) {
 
     var kataHelp = imageButtons + testButton + hotKeys + improve;
 
-    return cd.dialog(kataHelp, 540, '?');
+    return cd.dialog(kataHelp, 523, '?');
   };
 
   return cd;
