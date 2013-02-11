@@ -7,7 +7,7 @@ var cyberDojo = (function(cd, $) {
 
     var team =
       cd.divPanel(''
-        + 'cyber-dojo is designed to encourage <em>group practice</em> '
+        + 'cyber-dojo is designed to encourage <em>team practice</em> '
         + 'and works well with more than one person at each '
         + 'computer, periodically moving the current keyboard '
         + "'drivers' to different computers as non-drivers."
