@@ -18,18 +18,29 @@ $(document).ready(function() {
     trafficLightCount().hide();
   });
   
-  $('form').bind('ajax:complete', function(evt, data, status, xhr) {
+  var ajaxAfter = function() {
     trafficLightCount().show();
     spinners.hide();    
-    test.attr('disabled', false);
-    $('#tip').hide();
-    cd.rebuildFilenameList();
+    test.attr('disabled', false);    
+    cd.loadFile('output');        
+  };
+  
+  $('form').bind('ajax:error', function(evt, data, status, xhr) {
+    var errorMessage = "" +
+      "Files not sent files to the cyber-dojo server." + "\n" +
+      "Have you lost your network connection?";
+    cd.fileContentFor('output').val(errorMessage);
+    ajaxAfter();
+  });
+  
+  $('form').bind('ajax:success', function(evt, data, status, xhr) {
     // when the ajax replaces output the shortcuts
     // are lost so need rebinding
     var output = cd.fileContentFor('output');
-    cd.bindHotKeys(output);        
-    cd.loadFile('output');    
-  });
+    cd.bindHotKeys(output);
+    cd.rebuildFilenameList();
+    ajaxAfter();
+  });  
   
 });
 
