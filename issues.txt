@@ -64,13 +64,6 @@ check for conflicts?
 
 MINOR
 -----
-Alter dashboard page so clicking on animal takes you to that
-  animals current code (not a diff).
-  Tweak the tool-tip for a traffic-light mentions N-1 <-> N
-  and the tool-tip for the animal doesn't.
------
-Alter the diff-controller so @min_tag has a value of zero.
------
 Hitting fork button brings up dialog box (which will ultimately have
   ability to move files between visible and hidden sections)
 -----

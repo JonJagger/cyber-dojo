@@ -22,7 +22,7 @@ $(document).ready(function() {
     });
   };
 
-  var gotoDiffTitle = function(was, now) {
+  var toolTip = function(was, now) {
 	if (was !== now) {
 	  return 'Show diff ' + was + '->' + now;
 	} else {
@@ -54,29 +54,29 @@ $(document).ready(function() {
   
   $('#was_tag_number').keyup(function(event) { tagEdit(event); });
   $('#now_tag_number').keyup(function(event) { tagEdit(event); });
+
+  $('#was_tag_number').attr('value', wasTag);
+  $('#now_tag_number').attr('value', nowTag);
   
+  if (minTag < wasTag) {
+    $('#first_button').attr('title', toolTip(minTag, minTag + tagGap));
+    $('#prev_button' ).attr('title', toolTip(wasTag - 1, nowTag - 1));
+  }
+  if (nowTag < maxTag) {
+    $('#next_button' ).attr('title', toolTip(wasTag + 1, nowTag + 1));
+    $('#last_button' ).attr('title', toolTip(maxTag - tagGap, maxTag));	
+  }
+
   $('#first_button').click(function() { showDiff(minTag, minTag + tagGap); });
   $('#prev_button' ).click(function() { showDiff(wasTag - 1, nowTag - 1); });
   $('#next_button' ).click(function() { showDiff(wasTag + 1, nowTag + 1); });
   $('#last_button' ).click(function() { showDiff(maxTag - tagGap, maxTag); });
 
-  if (minTag <= wasTag && nowTag <= maxTag) {
-    $('#first_button').attr('title', gotoDiffTitle(minTag, minTag + tagGap));
-    $('#prev_button' ).attr('title', gotoDiffTitle(wasTag - 1, nowTag - 1));  
-    $('#next_button' ).attr('title', gotoDiffTitle(wasTag + 1, nowTag + 1));
-    $('#last_button' ).attr('title', gotoDiffTitle(maxTag - tagGap, maxTag));	
-  }
-  if (wasTag <= minTag) {
-    $('#first_button').attr('disabled', true);
-    $('#prev_button' ).attr('disabled', true);
-  }
-  if (nowTag >= maxTag) {
-    $('#next_button').attr('disabled', true);
-    $('#last_button').attr('disabled', true);
-  }
-
-  $('#was_tag_number').attr('value', wasTag);
-  $('#now_tag_number').attr('value', nowTag);
+  $('#first_button').attr('disabled', minTag >= wasTag);
+  $('#prev_button' ).attr('disabled', minTag >= wasTag);
+  $('#next_button' ).attr('disabled', nowTag >= maxTag);
+  $('#last_button' ).attr('disabled', nowTag >= maxTag);
+    
 });
 
 //--></script>

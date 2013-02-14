@@ -61,15 +61,15 @@
             <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
                 :border => 0,
                 :size => "#{size}x#{size}",
-                :title => "Show the diff of #{avatar_name} traffic-light #1",
+                :title => "Show #{avatar_name}'s current code",
                 :class => 'cyber_dojo_image'),
                 {
                   :controller => :diff,
                   :action => :show,
                   :id => @kata.id,
                   :avatar => avatar_name,
-                  :was_tag => 0,
-                  :now_tag => 1
+                  :was_tag => all_lights[avatar_name].length,
+                  :now_tag => all_lights[avatar_name].length
                 },
                 :target => '_blank'
             %>
