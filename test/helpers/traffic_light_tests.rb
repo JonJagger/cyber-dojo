@@ -125,8 +125,8 @@ class TrafficLightTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "tool tip" do
-    assert_equal 'Show the diff of hippo traffic-light #2 (2012 May 1, 23:20:45)',
-      tool_tip('hippo',make_inc)
+    assert_equal "Show hippo's diff 1 -> 2 (2012 May 1, 23:20:45)",
+      tool_tip('hippo', make_inc)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
