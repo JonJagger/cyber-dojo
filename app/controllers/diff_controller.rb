@@ -9,7 +9,7 @@ class DiffController < ApplicationController
     @avatar = Avatar.new(@kata, params[:avatar])
     traffic_lights = @avatar.increments    
     
-    @min_tag = 1
+    @min_tag = 0
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i
     @max_tag = traffic_lights.length

@@ -9,7 +9,8 @@ Repeatable on the cyber-dojo live server in Firefox.
 Doesn't happen on Chrome on my Mac.
 Doesn't happen on Safari on my Mac.
 Doesn't happen on Opera on my Mac.
-Doesn't happen on Jakub's mac using Firefox. 
+Doesn't happen on Jakub's mac using Firefox.
+Seems to be a problem local to me.
 -----
 Sandboxes could be retained across run-test submissions.
 This would allow, for example, incremental makes.
@@ -63,9 +64,15 @@ check for conflicts?
 
 MINOR
 -----
-add fork button to main test-edit page. Also, hitting fork button
-  brings up dialog box (which will ultimately have ability to
-  move files between visible and hidden sections)
+Alter dashboard page so clicking on animal takes you to that
+  animals current code (not a diff).
+  Tweak the tool-tip for a traffic-light mentions N-1 <-> N
+  and the tool-tip for the animal doesn't.
+-----
+Alter the diff-controller so @min_tag has a value of zero.
+-----
+Hitting fork button brings up dialog box (which will ultimately have
+  ability to move files between visible and hidden sections)
 -----
 in the diff view, long lines get truncated rather than bringing up
   a horizontal scroll bar. Also when scrolling, the line numbers
@@ -81,7 +88,7 @@ add help button (screen cast?) for dashboard page
 -----
 commonality in dialogs with only ok button? with only cancel button?
 -----
-make new file dialog ask for inital name.
+make new file dialog ask for inital name?
 -----
 isolate make new-file and rename-file dialogs and put into dedicated
   dialog js files.

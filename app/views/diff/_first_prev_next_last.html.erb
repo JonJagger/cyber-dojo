@@ -9,6 +9,8 @@ $(document).ready(function() {
   var nowTag = <%= @now_tag %>;
   var maxTag = <%= @max_tag %>;
   
+  var tagGap = nowTag - wasTag;
+  
   var showDiff = function(wasTag, nowTag) {
 	var currentFilename = $('input:radio[name=filename]:checked').val();  
     cd.postTo('/diff/show', {
@@ -20,8 +22,12 @@ $(document).ready(function() {
     });
   };
 
-  var gotoDiffTitle = function(name, n) {
-    return 'Show ' + name + ' diff (' + (n-1) + '-' + n + ')';  
+  var gotoDiffTitle = function(was, now) {
+	if (was !== now) {
+	  return 'Show diff ' + was + '->' + now;
+	} else {
+	  return 'Show ' + was;
+	}
   };
   
   var tagEdit = function(event) {
@@ -46,29 +52,27 @@ $(document).ready(function() {
     }        
   };
   
-  $('#first_button').click(function()      { showDiff(minTag-1, minTag);   });
-  $('#prev_button' ).click(function()      { showDiff(nowTag-2, nowTag-1); });
-  
   $('#was_tag_number').keyup(function(event) { tagEdit(event); });
   $('#now_tag_number').keyup(function(event) { tagEdit(event); });
   
-  $('#next_button' ).click(function()      { showDiff(nowTag, nowTag+1); });
-  $('#last_button' ).click(function()      { showDiff(maxTag-1, maxTag); });
+  $('#first_button').click(function() { showDiff(minTag, minTag + tagGap); });
+  $('#prev_button' ).click(function() { showDiff(wasTag - 1, nowTag - 1); });
+  $('#next_button' ).click(function() { showDiff(wasTag + 1, nowTag + 1); });
+  $('#last_button' ).click(function() { showDiff(maxTag - tagGap, maxTag); });
 
-  if (wasTag < minTag) {
+  if (minTag <= wasTag && nowTag <= maxTag) {
+    $('#first_button').attr('title', gotoDiffTitle(minTag, minTag + tagGap));
+    $('#prev_button' ).attr('title', gotoDiffTitle(wasTag - 1, nowTag - 1));  
+    $('#next_button' ).attr('title', gotoDiffTitle(wasTag + 1, nowTag + 1));
+    $('#last_button' ).attr('title', gotoDiffTitle(maxTag - tagGap, maxTag));	
+  }
+  if (wasTag <= minTag) {
     $('#first_button').attr('disabled', true);
     $('#prev_button' ).attr('disabled', true);
-  } else {
-    $('#first_button').attr('title', gotoDiffTitle('first', 1));
-    $('#prev_button' ).attr('title', gotoDiffTitle('previous', nowTag-1));  
   }
-
   if (nowTag >= maxTag) {
     $('#next_button').attr('disabled', true);
     $('#last_button').attr('disabled', true);
-  } else {
-    $('#next_button').attr('title', gotoDiffTitle('next', nowTag+1));
-    $('#last_button').attr('title', gotoDiffTitle('last', maxTag));
   }
 
   $('#was_tag_number').attr('value', wasTag);
