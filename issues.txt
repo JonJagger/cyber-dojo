@@ -64,6 +64,8 @@ check for conflicts?
 
 MINOR
 -----
+Edit help dialog needs to show fork icon.
+-----
 Hitting fork button brings up dialog box (which will ultimately have
   ability to move files between visible and hidden sections)
 -----

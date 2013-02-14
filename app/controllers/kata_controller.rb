@@ -10,7 +10,7 @@ class KataController < ApplicationController
     @visible_files = @avatar.visible_files
     @traffic_lights = @avatar.increments
     @output = @visible_files['output']
-    @title = id[0..4] + ' code ' + @avatar.name
+    @title = id[0..4] + ' ' + @avatar.name + ' code' 
   end
 
   def run_tests

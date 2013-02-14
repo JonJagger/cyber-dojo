@@ -21,7 +21,7 @@ class DiffController < ApplicationController
     diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)    
     @diffs = git_diff_prepare(@avatar, diffed_files)    
     @current_filename_id = most_changed_lines_file_id(@diffs, params[:current_filename])    
-    @title = id[0..4] + ' ' + @avatar.name + ' ' + (@was_tag != @now_tag ? 'diff' : 'code') 
+    @title = id[0..4] + ' ' + @avatar.name + ' diff' 
   end
    
 end

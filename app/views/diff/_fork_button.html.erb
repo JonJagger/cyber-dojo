@@ -3,10 +3,10 @@
 
 $(document).ready(function() {
   
-  function dialog_fork() {
+  function dialog_fork() {  
     var html = cd.divPanel(
         'Click ok to create a new cyber-dojo, with a new id, '
-      + 'whose starting files are identical to these files.');
+      + "with starting files copied from traffic-light <%= @now_tag %>.");
       
     return $('<div class="dialog">')
       .html(html)
@@ -20,7 +20,7 @@ $(document).ready(function() {
             cd.postTo('/forker/fork', {
               id: "<%= @kata.id %>",
               avatar: "<%= @avatar.name %>",
-              tag: "<%= @to_tag %>"
+              tag: "<%= @now_tag %>"
             }, '_blank');
             $(this).dialog('close');
           },
@@ -45,7 +45,7 @@ $(document).ready(function() {
 <%= image_tag("/images/fork.png", 
     :border => 0,
     :size => "#{size}x#{size}",
-    :title => 'Fork a new cyber-dojo from these files',
+    :title => "Fork a new cyber-dojo from traffic-light #{@now_tag}",
     :class => 'cyber_dojo_image')
 %>
 </div>
