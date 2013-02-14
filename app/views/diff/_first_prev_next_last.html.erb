@@ -33,7 +33,7 @@ $(document).ready(function() {
       
       if (isNaN(newWasTag) || newWasTag < minTag ||
           isNaN(newNowTag) || newNowTag > maxTag ||
-		  newWasTag >= newNowTag) {
+		  newWasTag > newNowTag) {
 			newWasTag = wasTag;
 			newNowTag = nowTag;
       }
