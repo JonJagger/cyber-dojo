@@ -15,16 +15,6 @@
     </td>
     
     <td>
-      <%= render :partial => 'download_button' %>
-    </td>
-    
-    <td valign="center">
-      <%= render :partial => 'tips_button' %>
-      <br/>
-      <%= render :partial => 'shared/feedback_button' %>
-    </td>
-  
-    <td>
       &nbsp;&nbsp;
     </td>
   
@@ -32,8 +22,8 @@
       <div class="traffic_light_tip">
               Click any<br/>
               traffic-light<br/>
-              to open its<br/>
-              diff-view
+              to view<br/>
+              its diff
       </div>      
     </td>
   
@@ -45,11 +35,21 @@
       <div class="traffic_light_tip">
               Click any<br/>
               animal<br/>
-              to view its<br/>
-              code
+              to view<br/>
+              its code
       </div>      
     </td>
   
+    <td>
+      <%= render :partial => 'download_button' %>
+    </td>
+
+    <td valign="center">
+      <%= render :partial => 'tips_button' %>
+      <br/>
+      <%= render :partial => 'shared/feedback_button' %>
+    </td>
+    
   </tr>
 
 </table>

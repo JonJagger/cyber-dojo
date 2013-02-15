@@ -33,6 +33,14 @@ $(document).ready(function() {
 
   var seconds = 1000;
   var auto_refresh_enabled = true;  
+    
+  setInterval(refreshDashboard, 10*seconds);
+  
+  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
+    if (event.keyCode === $.ui.keyCode.ENTER) {
+      cd.postTo('/dashboard/show', params());
+    }
+  });
   
   $('#auto_refresh').click(function() {
     auto_refresh_enabled = !auto_refresh_enabled;
@@ -40,13 +48,6 @@ $(document).ready(function() {
       $(this).text("enable");
     } else {
       $(this).text("disable");
-    }
-  });
-  
-  setInterval(refreshDashboard, 10*seconds);
-  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
-    if (event.keyCode === $.ui.keyCode.ENTER) {
-      cd.postTo('/dashboard/show', params());
     }
   });
   

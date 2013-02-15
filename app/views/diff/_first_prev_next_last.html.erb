@@ -56,25 +56,23 @@ $(document).ready(function() {
   $('#now_tag_number').keyup(function(event) { tagEdit(event); });
 
   $('#was_tag_number').attr('value', wasTag);
-  $('#now_tag_number').attr('value', nowTag);
+  $('#now_tag_number').attr('value', nowTag); 
   
+  var wasTagAtLimit = minTag >= wasTag;  
   $('#first_button').click(function() { showDiff(minTag, minTag + tagGap); });
   $('#prev_button' ).click(function() { showDiff(wasTag - 1, nowTag - 1); });
-  $('#next_button' ).click(function() { showDiff(wasTag + 1, nowTag + 1); });
-  $('#last_button' ).click(function() { showDiff(maxTag - tagGap, maxTag); });
-
-  var wasTagAtLimit = minTag >= wasTag;
-  var nowTagAtLimit = nowTag >= maxTag;
-  
   $('#first_button').attr('disabled', wasTagAtLimit);
   $('#prev_button' ).attr('disabled', wasTagAtLimit);
-  $('#next_button' ).attr('disabled', nowTagAtLimit);
-  $('#last_button' ).attr('disabled', nowTagAtLimit);
-    
   if (!wasTagAtLimit) {
     $('#first_button').attr('title', toolTip(minTag, minTag + tagGap));
     $('#prev_button' ).attr('title', toolTip(wasTag - 1, nowTag - 1));
-  }
+  }  
+  
+  var nowTagAtLimit = nowTag >= maxTag;  
+  $('#next_button' ).attr('disabled', nowTagAtLimit);
+  $('#last_button' ).attr('disabled', nowTagAtLimit);  
+  $('#next_button' ).click(function() { showDiff(wasTag + 1, nowTag + 1); });
+  $('#last_button' ).click(function() { showDiff(maxTag - tagGap, maxTag); });    
   if (!nowTagAtLimit) {
     $('#next_button' ).attr('title', toolTip(wasTag + 1, nowTag + 1));
     $('#last_button' ).attr('title', toolTip(maxTag - tagGap, maxTag));	
