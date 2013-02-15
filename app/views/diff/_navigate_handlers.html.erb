@@ -52,15 +52,15 @@ $(document).ready(function() {
     }        
   };
   
-  $('#was_tag_number').keyup(function(event) { tagEdit(event); });
-  $('#now_tag_number').keyup(function(event) { tagEdit(event); });
+  $('#was_tag_number').unbind('keyup').keyup(function(event) { tagEdit(event); });  
+  $('#now_tag_number').unbind('keyup').keyup(function(event) { tagEdit(event); });
 
   $('#was_tag_number').attr('value', wasTag);
   $('#now_tag_number').attr('value', nowTag); 
   
   var wasTagAtLimit = minTag >= wasTag;  
-  $('#first_button').click(function() { showDiff(minTag, minTag + tagGap); });
-  $('#prev_button' ).click(function() { showDiff(wasTag - 1, nowTag - 1); });
+  $('#first_button').unbind('click').click(function() { showDiff(minTag, minTag + tagGap); });
+  $('#prev_button' ).unbind('click').click(function() { showDiff(wasTag - 1, nowTag - 1); });
   $('#first_button').attr('disabled', wasTagAtLimit);
   $('#prev_button' ).attr('disabled', wasTagAtLimit);
   if (!wasTagAtLimit) {
@@ -71,8 +71,8 @@ $(document).ready(function() {
   var nowTagAtLimit = nowTag >= maxTag;  
   $('#next_button' ).attr('disabled', nowTagAtLimit);
   $('#last_button' ).attr('disabled', nowTagAtLimit);  
-  $('#next_button' ).click(function() { showDiff(wasTag + 1, nowTag + 1); });
-  $('#last_button' ).click(function() { showDiff(maxTag - tagGap, maxTag); });    
+  $('#next_button' ).unbind('click').click(function() { showDiff(wasTag + 1, nowTag + 1); });
+  $('#last_button' ).unbind('click').click(function() { showDiff(maxTag - tagGap, maxTag); });    
   if (!nowTagAtLimit) {
     $('#next_button' ).attr('title', toolTip(wasTag + 1, nowTag + 1));
     $('#last_button' ).attr('title', toolTip(maxTag - tagGap, maxTag));	
@@ -81,25 +81,3 @@ $(document).ready(function() {
 });
 
 //--></script>
-
-<table align="center" cellpadding="1" cellspacing="1">
-  <tr>
-    <td>
-      <%= render :partial => 'triangle_button', :locals => { :name => 'first' } %>
-    </td>                
-    <td>
-      <%= render :partial => 'triangle_button', :locals => { :name => 'prev' } %>
-    </td>
-    <td>
-      &nbsp;
-    </td>
-    <td>
-      <%= render :partial => 'triangle_button', :locals => { :name => 'next' } %>
-    </td>
-    <td>
-      <%= render :partial => 'triangle_button', :locals => { :name => 'last' } %>
-    </td>
-  </tr>
-</table>      
-
-
