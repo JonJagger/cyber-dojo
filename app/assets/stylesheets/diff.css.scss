@@ -14,17 +14,23 @@
   width: 2em;
 }
 
-#diff_panel
+#diff_div
 {
   width: 55em;
-  overflow: auto;
   height: 44em;
   position: relative;
 }
 
-#diff_sheet // this is inside #diff_panel
+#diff_panel
+{
+  overflow: none;
+  background: $lighter-color;   
+}
+
+#diff_sheet
 {
   color: $darker-color;
+  overflow: auto;
   margin: 0;
   padding: 0;
 }
@@ -49,9 +55,9 @@
   font-weight: normal;
 }
 
-.diffed_code added   { background: $diff-added-color;  }
-.diffed_code deleted { background: $diff-deleted-color; }
-.diffed_code same    { background: $lighter-color; }
+#diff_panel added   { background: $diff-added-color;  }
+#diff_panel deleted { background: $diff-deleted-color; }
+#diff_panel same    { background: $lighter-color; }
 
 .diffed_code same ln
 {

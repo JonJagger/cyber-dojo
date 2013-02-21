@@ -5,11 +5,9 @@ class DiffController < ApplicationController
   include GitDiff
   
   def show
-    setup_parameters    
-    
+    setup_parameters        
     @was_traffic_light = @traffic_lights[@was_tag - 1]
-    @now_traffic_light = @traffic_lights[@now_tag - 1]
-        
+    @now_traffic_light = @traffic_lights[@now_tag - 1]        
     visible_files = @avatar.visible_files(@now_tag)
     diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)    
     @diffs = git_diff_prepare(@avatar, diffed_files)    

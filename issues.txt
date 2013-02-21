@@ -1,17 +1,6 @@
 
 MAJOR
 -----
-On my Mac (10.7.4) using Firefox (18.0.1) using a local server
-(http://localhost:3000) when you load a file and move the cursor
-position using the mouse-pad then the texarea becomes readonly
-(and the mac beeps at me)????
-Repeatable on the cyber-dojo live server in Firefox.
-Doesn't happen on Chrome on my Mac.
-Doesn't happen on Safari on my Mac.
-Doesn't happen on Opera on my Mac.
-Doesn't happen on Jakub's mac using Firefox.
-Seems to be a problem local to me.
------
 Sandboxes could be retained across run-test submissions.
 This would allow, for example, incremental makes.
 I've prepared this by making the sandboxes/ subfolder be simply the
@@ -59,6 +48,17 @@ would open up the possibility of having multiple players all
 playing as the same avatar. There could also be conflicts in the
 sandbox where the tests are run. Perhaps that is the place to
 check for conflicts?
+-----
+On my Mac (10.7.4) using Firefox (18.0.1) using a local server
+(http://localhost:3000) when you load a file and move the cursor
+position using the mouse-pad then the texarea becomes readonly
+(and the mac beeps at me)????
+Repeatable on the cyber-dojo live server in Firefox.
+Doesn't happen on Chrome on my Mac.
+Doesn't happen on Safari on my Mac.
+Doesn't happen on Opera on my Mac.
+Doesn't happen on Jakub's mac using Firefox.
+Seems to be a problem local to me.
 
 
 
@@ -69,8 +69,9 @@ Edit help dialog needs to show fork icon.
 Hitting fork button brings up dialog box (which will ultimately have
   ability to move files between visible and hidden sections)
 -----
-in the diff view, long lines get truncated rather than bringing up
-  a horizontal scroll bar. Also when scrolling, the line numbers
+in the diff view, long lines no longer get truncated but the scrolled
+  into view portion has lost its red/green colouring.
+  Also when scrolling, the line numbers
   are scrolled out of view. Ideally, the line numbers would remain
   in place like they do in the main edit-test page.
 -----
