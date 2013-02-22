@@ -19,17 +19,20 @@ $(document).ready(function() {
     };
 
     var timeString = function() {
-      var hourMinute = "<%= @kata.created.strftime("%I:%M%p") %>";
+      var hourMinute = "<%= @kata.created.strftime("%I:%M%P") %>";
       var dayName = "<%= @kata.created.strftime("%a") %>";
       var day = <%= @kata.created.day %>;
       var monthYear = "<%= @kata.created.strftime("%b %Y") %>";
-      return hourMinute + ' ' + dayName + ' ' + day + daySuffix(day) + ' ' + monthYear;
+      return hourMinute + ' '
+           + dayName + ' '
+           + day + '<sup>' + daySuffix(day) + '</sup>' + ' '
+           + monthYear;
     };
   
     var info = {
         "language" : "<%= @kata.language.name %>",
        "unit-test" : "<%= @kata.language.unit_test_framework %>",
-        "exercise" : "<%= @kata.exercise.name %>",
+        "exercise" : "<%= @kata.exercise.name %>".replace('_',' '),
          "created" : timeString(),
     };
     

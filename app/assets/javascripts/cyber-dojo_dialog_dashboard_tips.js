@@ -7,8 +7,8 @@ var cyberDojo = (function(cd, $) {
 
     var traffic_light = function(colour) {
         return  '<img src="/images/traffic_light_' +colour + '.png"'
-                +   ' width="20"'
-                +   ' height="60"/> ';
+                +   ' width="15"'
+                +   ' height="45"/> ';
     };
     
     var progression = function(from, to, activity) {

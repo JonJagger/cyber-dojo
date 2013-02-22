@@ -84,7 +84,7 @@ add help button (screen cast?) for dashboard page
 -----
 commonality in dialogs with only ok button? with only cancel button?
 -----
-make new file dialog ask for inital name?
+make new-file dialog ask for inital name?
 -----
 isolate make new-file and rename-file dialogs and put into dedicated
   dialog js files.
