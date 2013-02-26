@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   def browser
     request.env['HTTP_USER_AGENT']
   end
-
+  
   def gather_info    
     language = Language.new(root_dir, params['language'])    
     
