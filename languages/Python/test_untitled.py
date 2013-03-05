@@ -1,5 +1,5 @@
-import untitled
 import unittest
+import untitled
 
 
 class TestUntitled(unittest.TestCase):
