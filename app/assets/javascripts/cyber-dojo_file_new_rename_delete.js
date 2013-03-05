@@ -225,7 +225,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.renameAlert = function(avatarName, message) {
-    var imageSize = 100;
+	var imageSize = 100;
     var imageHtml = ''
       + '<img alt="' + avatarName + '"'
       +     ' class="avatar_image"'
@@ -238,7 +238,7 @@ var cyberDojo = (function(cd, $) {
       + '<div class="panel">'
       +   cd.makeTable(imageHtml, message)
       + '</div>';
-    cd.dialog(alertHtml, 400, '!rename');
+    cd.dialog(alertHtml, 400, '!rename').dialog('open');
   };
 
   return cd;
