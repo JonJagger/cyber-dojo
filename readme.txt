@@ -90,9 +90,9 @@ Pull the latest cyber-dojo source code from github onto your TurnKey image
 >git pull origin master
 Occasionally this will pull new files and folders. You must ensure these
 have the correct rights. The brute force approach is
->cd /var/www
->chgrp -R www-data cyberdojo
->chown -R www-data cyberdojo
+>cd /var/www/cyberdojo
+>chgrp -R www-data app
+>chown -R www-data app
 But this could take a long time. So better to simply check the output
 from the git pull and check everything carefully.
 Finally, don't forget to restart apache
