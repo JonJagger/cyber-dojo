@@ -1,6 +1,7 @@
 import untitled
 import unittest
 
+
 class TestUntitled(unittest.TestCase):
 
     def test_str(self):
