@@ -8,7 +8,3 @@ class TestUntitled(unittest.TestCase):
         """Simple example to start you off."""
         obj = untitled.Untitled()
         self.assertEqual(6 * 9, obj.answer())
-
-
-if __name__ == '__main__':
-    unittest.main()
