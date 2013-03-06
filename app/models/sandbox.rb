@@ -41,7 +41,7 @@ class Sandbox
     
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
-    max_run_tests_duration = (test_timeout || 10)
+    max_run_tests_duration = (test_timeout || 15)
     output = Files::popen_read(command, max_run_tests_duration)
     update_visible_files_with_text_files_created_and_deleted_in_test_run(dir, visible_files)
     output
