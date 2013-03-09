@@ -21,7 +21,8 @@ var cyberDojo = (function(cd, $) {
         + "Alexander Ottesen, Lars Storjord, Anders Schau Knatten, "
         + "Mike Sutton, James Grenning, Allan Kelly, Randall White, "
         + "Lucas Videla, Mark Sargent, Jason Jolly, Mark Grimes, "
-        + "Pedro Gimenez, Marc Kannegiesser, Oliver Baylis, Brian Porter"
+        + "Pedro Gimenez, Marc Kannegiesser, Oliver Baylis, Brian Porter, "
+        + "Jamie Toolin."
       );
 
     var thankYou =
