@@ -31,10 +31,9 @@ class DashboardController < ApplicationController
   end
   
   def download
-    # an id such as 01FE818E68 corresponds to katas/01/FE818E86
-    # however, I'd like the archive to flatten out this inner/outer
-    # folder structure so the resulting archive is 01FE818E86.tar.gz
-    kata = Kata.new(root_dir, id)
+    # an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
+    # however, I flatten out this inner/outer folder structure
+    # so the resulting archive is 01FE818E86.tar.gz
     uuid = Uuid.new(id)
     inner = uuid.inner
     outer = uuid.outer
