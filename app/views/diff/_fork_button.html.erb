@@ -39,14 +39,9 @@ $(document).ready(function() {
 
 //--></script>
 
-<% size = 30 %>
-
-<div id="fork_button">
-<%= image_tag("/images/fork.png", 
-    :border => 0,
-    :size => "#{size}x#{size}",
-    :title => "Fork a new cyber-dojo from traffic-light #{@now_tag}",
-    :class => 'cyber_dojo_image')
-%>
-</div>
+<input type="button"
+       class="button"
+       title="Show help"
+       id="fork"
+       value="fork"/>
 

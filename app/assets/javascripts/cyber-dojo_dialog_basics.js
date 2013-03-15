@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
     );
     var animal =
       cd.divPanel(''
-        + '30. Each computer will be assigned an animal (e.g. panda, wolf)'
+        + '30. Each computer will be assigned an animal (e.g. panda)'
     );
     var limit =
       cd.divPanel(''

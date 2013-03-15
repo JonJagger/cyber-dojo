@@ -30,7 +30,7 @@ $(document).ready(function() {
       });
   };
   
-  $('#fork_button').click(function() {
+  $('#fork').click(function() {
     dialog_fork().dialog('open');
   });
 
@@ -38,14 +38,10 @@ $(document).ready(function() {
 
 //--></script>
 
-<% size = 30 %>
+<input type="button"
+       class="button"
+       title="Show help"
+       id="fork"
+       value="fork"/>
 
-<div id="fork_button">
-<%= image_tag("/images/fork.png", 
-    :border => 0,
-    :size => "#{size}x#{size}",
-    :title => 'Fork a new cyber-dojo from the latest traffic-light',
-    :class => 'cyber_dojo_image')
-%>
-</div>
 

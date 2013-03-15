@@ -12,6 +12,7 @@
 #cyber_dojo_page
 {
   margin-top: 0.3em;
+  margin-left: 0.3em;  
   color: $lighter-color;
 }
 
@@ -138,11 +139,11 @@ div[class~="filename"], .button[disabled]:hover, .button
 {
   background: $lighter-color;
   color: $darker-color;
-  width: 45em;
+  width: 50em;
   font-weight: 500;
 }
 
-.line_numbers, .file_content { height: 31em; }
+.line_numbers, .file_content { height: 36em; }
 
 .line_numbers, #diff_sheet, .file_content, #instructions
 {

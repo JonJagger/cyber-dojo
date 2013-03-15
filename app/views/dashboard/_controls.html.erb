@@ -59,39 +59,39 @@ $(document).ready(function() {
 <table cellpadding="1" cellspacing="1">
   <tr>
     <td align="right">
-      <div id="seconds_per_column_text">
-        seconds per column&nbsp;
-      </div>
-    </td>
-    <td align="left">
       <input type="text"
              id="seconds_per_column"
              value="<%= @seconds_per_column %>"/>
+    </td>
+    <td align="left">
+      <div id="seconds_per_column_text">
+        &nbsp;seconds per column
+      </div>
     </td>
   </tr>
   
   <tr>
     <td align="right">
-      <div id="maximum_columns_text">
-        maximum columns&nbsp;
-      </div>
-    </td>
-    <td align="left">
       <input type="text" 
              id="maximum_columns"
              value="<%= @maximum_columns %>"/>
+    </td>
+    <td align="left">
+      <div id="maximum_columns_text">
+        &nbsp;columns maximum
+      </div>
     </td>
   </tr>
 
   <tr>
     <td align="right">
-      <div id="auto_refresh_text">
-        auto refresh&nbsp;
+      <div id="auto_refresh"
+            class="button">
       </div>
     </td>
     <td align="left">
-      <div id="auto_refresh"
-            class="button">
+      <div id="auto_refresh_text">
+        &nbsp;auto refresh
       </div>
     </td>
   </tr>
