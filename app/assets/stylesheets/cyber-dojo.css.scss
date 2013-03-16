@@ -41,7 +41,6 @@ body
   border-bottom: none;  
   margin: none;
   padding: 0.5em;
-  @include rounded-corner(5px);  
 }
 
 .edgeless.panel { padding: 0em; }
@@ -91,7 +90,6 @@ div[class~="filename"]
 {
   background: $darker-color;
   color: $lighter-color;
-  @include font-size-small();
   margin: none;
   padding: none;
   cursor: pointer;

@@ -18,7 +18,17 @@
   @include font-size-tiny();
 }
 
-#id, #donate, #feedback, #help, #fork
+#file_operations #new:before,
+#file_operations #new:after,
+#file_operations #rename:before,
+#file_operations #rename:after,
+#file_operations #delete:before,
+#file_operations #delete:after
+{
+  content: $retained-space;
+}
+
+#id, #feedback, #help, #fork
 {
   @include font-size-tiny();
 }
