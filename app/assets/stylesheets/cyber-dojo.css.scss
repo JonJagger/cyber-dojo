@@ -137,11 +137,11 @@ div[class~="filename"], .button[disabled]:hover, .button
 {
   background: $lighter-color;
   color: $darker-color;
-  width: 50em;
+  width: 45em;
   font-weight: 500;
 }
 
-.line_numbers, .file_content { height: 36em; }
+.line_numbers, .file_content { height: 34em; }
 
 .line_numbers, #diff_sheet, .file_content, #instructions
 {
