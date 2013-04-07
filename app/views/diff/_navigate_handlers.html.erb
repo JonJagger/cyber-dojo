@@ -6,76 +6,79 @@ $(document).ready(function() {
 
   var minTag = <%= @min_tag %>;
   var wasTag = <%= @was_tag %>;
-  var nowTag = <%= @now_tag %>;
-  var maxTag = <%= @max_tag %>;
+  var wasTagAtLimit = minTag >= wasTag;
   
+  var nowTag = <%= @now_tag %>;
+  var maxTag = <%= @max_tag %>;  
+  var nowTagAtLimit = nowTag >= maxTag;
+
   var tagGap = nowTag - wasTag;
   
-  var showDiff = function(wasTag, nowTag) {
-	var currentFilename = $('input:radio[name=filename]:checked').val();  
+  var showDiff = function(was, now) {
+    var currentFilename = $('input:radio[name=filename]:checked').val();  
     cd.postTo('/diff/show', {
       id: "<%= @kata.id %>",
       avatar: "<%= @avatar.name %>",
-      was_tag: wasTag,
-      now_tag: nowTag,
-	  current_filename: currentFilename
+      was_tag: was,
+      now_tag: now,
+      current_filename: currentFilename
     });
   };
 
   var toolTip = function(was, now) {
-	if (was !== now) {
-	  return 'Show diff ' + was + '->' + now;
-	} else {
-	  return 'Show ' + was;
-	}
+    if (was !== now) {
+      return 'Show diff ' + was + '->' + now;
+    } else {
+      return 'Show ' + was;
+    }
   };
+  
+  var wasTagNumber = $('#was_tag_number');
+  var nowTagNumber = $('#now_tag_number');
+
+  var firstButton = $('#first_button');
+  var  prevButton = $('#prev_button');
+  var  nextButton = $('#next_button');
+  var  lastButton = $('#last_button');
   
   var tagEdit = function(event) {
     if (event.keyCode === $.ui.keyCode.ENTER) {
-      var wasInput = $('#was_tag_number');
-      var newWasTag = parseInt(wasInput.attr('value'), 10);
-      var nowInput = $('#now_tag_number');
-      var newNowTag = parseInt(nowInput.attr('value'), 10);
-      
+      var newWasTag = parseInt(wasTagNumber.attr('value'), 10);
+      var newNowTag = parseInt(nowTagNumber.attr('value'), 10);      
       if (isNaN(newWasTag) || newWasTag < minTag ||
-          isNaN(newNowTag) || newNowTag > maxTag ||
-		  newWasTag > newNowTag) {
-			newWasTag = wasTag;
-			newNowTag = nowTag;
-      }
-      if (newWasTag === wasTag && newNowTag === nowTag) {
-        wasInput.attr('value', newWasTag);
-		nowInput.attr('value', newNowTag);
+            isNaN(newNowTag) || newNowTag > maxTag ||
+              newWasTag > newNowTag) {
+        wasTagNumber.attr('value', wasTag);
+        nowTagNumber.attr('value', nowTag);
       } else {
-		showDiff(newWasTag, newNowTag);
+        showDiff(newWasTag, newNowTag);
       }
     }        
   };
   
-  $('#was_tag_number').unbind('keyup').keyup(function(event) { tagEdit(event); });  
-  $('#now_tag_number').unbind('keyup').keyup(function(event) { tagEdit(event); });
-
-  $('#was_tag_number').attr('value', wasTag);
-  $('#now_tag_number').attr('value', nowTag); 
+  wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
+  nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
   
-  var wasTagAtLimit = minTag >= wasTag;  
-  $('#first_button').unbind('click').click(function() { showDiff(minTag, minTag + tagGap); });
-  $('#prev_button' ).unbind('click').click(function() { showDiff(wasTag - 1, nowTag - 1); });
-  $('#first_button').attr('disabled', wasTagAtLimit);
-  $('#prev_button' ).attr('disabled', wasTagAtLimit);
+  firstButton.attr('disabled', wasTagAtLimit);
+   prevButton.attr('disabled', wasTagAtLimit);
   if (!wasTagAtLimit) {
-    $('#first_button').attr('title', toolTip(minTag, minTag + tagGap));
-    $('#prev_button' ).attr('title', toolTip(wasTag - 1, nowTag - 1));
-  }  
+    firstButton.unbind('click')
+               .click(function() { showDiff(minTag, minTag + tagGap); })
+               .attr('title', toolTip(minTag, minTag + tagGap));	  
+     prevButton.unbind('click')
+               .click(function() { showDiff(wasTag - 1, nowTag - 1); })
+               .attr('title', toolTip(wasTag - 1, nowTag - 1));
+  }
   
-  var nowTagAtLimit = nowTag >= maxTag;  
-  $('#next_button' ).attr('disabled', nowTagAtLimit);
-  $('#last_button' ).attr('disabled', nowTagAtLimit);  
-  $('#next_button' ).unbind('click').click(function() { showDiff(wasTag + 1, nowTag + 1); });
-  $('#last_button' ).unbind('click').click(function() { showDiff(maxTag - tagGap, maxTag); });    
+  nextButton.attr('disabled', nowTagAtLimit);
+  lastButton.attr('disabled', nowTagAtLimit);  
   if (!nowTagAtLimit) {
-    $('#next_button' ).attr('title', toolTip(wasTag + 1, nowTag + 1));
-    $('#last_button' ).attr('title', toolTip(maxTag - tagGap, maxTag));	
+    nextButton.unbind('click')
+              .click(function() { showDiff(wasTag + 1, nowTag + 1); })
+              .attr('title', toolTip(wasTag + 1, nowTag + 1));			  
+    lastButton.unbind('click')
+              .click(function() { showDiff(maxTag - tagGap, maxTag); })
+              .attr('title', toolTip(maxTag - tagGap, maxTag));	
   }
 
 });
