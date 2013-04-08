@@ -4,16 +4,6 @@
 
 $(document).ready(function() {
 
-  var minTag = <%= @min_tag %>;
-  var wasTag = <%= @was_tag %>;
-  var wasTagAtLimit = minTag >= wasTag;
-  
-  var nowTag = <%= @now_tag %>;
-  var maxTag = <%= @max_tag %>;  
-  var nowTagAtLimit = nowTag >= maxTag;
-
-  var tagGap = nowTag - wasTag;
-  
   var showDiff = function(was, now) {
     var currentFilename = $('input:radio[name=filename]:checked').val();  
     cd.postTo('/diff/show', {
@@ -33,14 +23,15 @@ $(document).ready(function() {
     }
   };
   
+  var minTag = <%= @min_tag %>;
+  var wasTag = <%= @was_tag %>;
+  
+  var nowTag = <%= @now_tag %>;
+  var maxTag = <%= @max_tag %>;  
+
   var wasTagNumber = $('#was_tag_number');
   var nowTagNumber = $('#now_tag_number');
 
-  var firstButton = $('#first_button');
-  var  prevButton = $('#prev_button');
-  var  nextButton = $('#next_button');
-  var  lastButton = $('#last_button');
-  
   var tagEdit = function(event) {
     if (event.keyCode === $.ui.keyCode.ENTER) {
       var newWasTag = parseInt(wasTagNumber.attr('value'), 10);
@@ -56,12 +47,21 @@ $(document).ready(function() {
     }        
   };
   
-  wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
-  nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
+  var disable = function(node) {
+	node.attr('disabled', true);
+  };
   
-  firstButton.attr('disabled', wasTagAtLimit);
-   prevButton.attr('disabled', wasTagAtLimit);
-  if (!wasTagAtLimit) {
+  var tagGap = nowTag - wasTag;
+  
+  var firstButton = $('#first_button');
+  var  prevButton = $('#prev_button');
+  var  nextButton = $('#next_button');
+  var  lastButton = $('#last_button');
+  
+  if (minTag >= wasTag) {
+    disable(firstButton);
+    disable(prevButton);
+  } else {
     firstButton.unbind('click')
                .click(function() { showDiff(minTag, minTag + tagGap); })
                .attr('title', toolTip(minTag, minTag + tagGap));	  
@@ -69,10 +69,11 @@ $(document).ready(function() {
                .click(function() { showDiff(wasTag - 1, nowTag - 1); })
                .attr('title', toolTip(wasTag - 1, nowTag - 1));
   }
-  
-  nextButton.attr('disabled', nowTagAtLimit);
-  lastButton.attr('disabled', nowTagAtLimit);  
-  if (!nowTagAtLimit) {
+    
+  if (nowTag >= maxTag) {
+    disable(nextButton);
+    disable(lastButton);
+  } else {
     nextButton.unbind('click')
               .click(function() { showDiff(wasTag + 1, nowTag + 1); })
               .attr('title', toolTip(wasTag + 1, nowTag + 1));			  
@@ -80,6 +81,9 @@ $(document).ready(function() {
               .click(function() { showDiff(maxTag - tagGap, maxTag); })
               .attr('title', toolTip(maxTag - tagGap, maxTag));	
   }
+
+  wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
+  nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
 
 });
 
