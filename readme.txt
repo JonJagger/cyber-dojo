@@ -437,3 +437,5 @@ o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
    Mike Sutton too. Olve, Mike, Johannes and Mike - I really appreciate all
    your help and encouragement.
+o) James Grenning uses Cyber-Dojo a lot, via his own Turnkey S3 cloud servers.
+   James, you've been an awesome "customer". Thanks.
