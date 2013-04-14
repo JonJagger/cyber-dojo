@@ -39,7 +39,6 @@ rm railsapp.conf
 
 cd ~
 apt-get update
-apt-get install libcurl4-openssl-dev
 cd /var/www/cyberdojo
 gem install passenger --no-ri --no-rdoc
 passenger-install-apache2-module
