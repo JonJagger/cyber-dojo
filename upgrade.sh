@@ -1,3 +1,8 @@
+#!/bin/bash
+# This script contains the commands used to convert the ruby 1.8 Rails-Turnkey image
+# into a ruby 1.9 Rails-Turnkey image, as detailed in the blog entry
+# http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
+
 cd ~
 apt-get purge ruby-enterprise
 
