@@ -31,7 +31,7 @@ $(document).ready(function() {
       });
   };
   
-  $('#fork_button').click(function() {
+  $('#fork').click(function() {
     dialog_fork().dialog('open');
   });
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 <input type="button"
        class="button"
-       title="Show help"
+       title="Fork a new dojo from traffic-light <%= @now_tag %>"
        id="fork"
        value="fork"/>
 
