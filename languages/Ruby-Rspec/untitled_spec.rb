@@ -1,4 +1,3 @@
-require 'rspec'
 require './untitled'
 
 describe "untitled" do
