@@ -19,22 +19,19 @@
 	      </span>          
         </td>
       <% end %>
-      
 
-      <td>	  
-    	<div class="micro tag_count">
-    	  <% [:red,:amber,:green].each do |bulb| %>
-    	  <%  bulb_tally = @traffic_lights.count{ |light| light[:colour] == bulb } %>
-    	  <div class="<%= bulb %>"
-    		   title="<%= @avatar.name %> has <%= bulb_tally %> <%= bulb %> traffic-lights so far">
-    		<%= bulb_tally %>
-    	  </div>       
-    	  <% end %>
-    	</div>
+      <td>
+		<%= render :partial => 'shared/traffic_light_bulb_counts',
+				   :locals => { :traffic_lights => @traffic_lights,
+								:avatar_name => @avatar.name
+							  } %>
       </td>
 	  
       <td>
-        <%= render :partial => 'current_traffic_light_count' %>
+		<%= render :partial => 'shared/traffic_light_count',
+				   :locals => { :traffic_lights => @traffic_lights,
+								:avatar_name => @avatar.name
+							  } %>
       </td>
 
 	  <td>
