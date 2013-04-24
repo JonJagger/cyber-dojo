@@ -67,12 +67,18 @@ class DojoController < ApplicationController
     respond_to do |format|
       format.json {
         render :json => {
-          :exists => exists
+          :exists => exists,
+          :review_dialog_html => (exists ? review_dialog_html : '')          
         }
       }
     end
   end
   
+  def review_dialog_html
+    filename = Rails.root.to_s + '/app/views/dojo/review_dialog.html.erb'
+    ERB.new(File.read(filename)).result(binding)    
+  end
+
   #------------------------------------------------
   
   def render_error

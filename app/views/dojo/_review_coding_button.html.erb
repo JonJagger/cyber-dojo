@@ -5,7 +5,12 @@ $(document).ready(function() {
 
   $('#review_coding').click(function() {
     cd.run('review_json', function(id, dojo) {
-      cd.get('/dashboard/show', { id: id }, '_blank');
+      if (dojo.empty) {          
+        cd.dialog_dojoIsEmpty(id).dialog('open');
+      }
+      else {
+        cd.dialog_reviewCoding(id, dojo.review_dialog_html).dialog('open');          
+      }    
     });
   });
   
