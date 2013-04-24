@@ -13,13 +13,12 @@ var cyberDojo = (function(cd, $) {
         + 'choose an exercise, '
         + 'click <span id="ok" class="button">ok</span><br/>'
         + indent + "You'll get an id, e.g.,"
-        + "<span id='kata_id_input'>&nbsp;3AF65A28F9&nbsp;</span>"
+        + "<span id='kata_id_input'>&nbsp;3AF65A&nbsp;</span>"
     );
     var enter =
       cd.divPanel(''
         + '20. At <em>each</em> computer, '
-        + 'enter the <span id="kata_id_input">&nbsp;3AF65A28F9&nbsp;</span> id,<br/>'
-        + indent + '(the first 5 chars of the id are usually enough) '
+        + 'enter the <span id="kata_id_input">&nbsp;3AF65A&nbsp;</span> id, '
         + 'and click <div id="start_coding" class="button">start</div><br/>'
     );
     var animal =
@@ -33,10 +32,10 @@ var cyberDojo = (function(cd, $) {
       );      
     var retro =
       cd.divPanel(''
-        + '50. When time is up everyone uses the '
-        + '<span id="review_coding" class="button">review</span> dashboard and '
-        + 'diff pages to review<br>'
-        + indent + 'what they did and chooses what aspects to focus '
+        + '50. When time is up use the '
+        + '<span id="review_coding" class="button">review</span> dashboard '
+        + 'to review everyones<br>'
+        + indent + 'code and choose what aspects to focus '
         + 'on improving in the next iteration.'
       );
     var repeat =
