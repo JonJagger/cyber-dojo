@@ -15,7 +15,7 @@ class SetupController < ApplicationController
   
   def cancel
     redirect_to :controller => 'dojo',
-                :action => :index    
+                :action => :index
   end
 
   def save
