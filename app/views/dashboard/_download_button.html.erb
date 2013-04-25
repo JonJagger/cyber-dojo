@@ -1,13 +1,20 @@
 
-<% size = 45 %>
-<%= link_to image_tag("/images/download.png",
-    :border => 0,
-    :size => "#{size}x#{size}",
-    :title => 'Download a zip of the dojo',
-    :class => 'cyber_dojo_image'),
-    {
-      :controller => :dashboard,
-      :action => :download,
-      :id => @kata.id 
-    }
-%>      
+<script language="javascript" type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  $('#download').click(function() {
+    cd.postTo('/dashboard/download', {
+              id: "<%= @kata.id %>"
+            });    
+  });
+
+});
+
+//--></script>
+
+<input type="button"
+       class="tiny button"
+       title="Download zip of dojo"
+       id="download"
+       value="download zip"/>

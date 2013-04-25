@@ -1,11 +1,5 @@
 
  <table cellspacing="0" cellpadding="0">
-
-  <tr align="center">
-    <td colspan="999">
-      <%= render :partial => 'axis_label' %>
-    </td>
-  </tr>
    
    <% seconds_per_td = @seconds_per_column %>
    <% maximum_columns = @maximum_columns %>
@@ -62,7 +56,7 @@
                 :border => 0,
                 :size => "#{size}x#{size}",
                 :title => "Show #{avatar_name}'s current code",
-                :class => 'cyber_dojo_image'),
+                :class => 'avatar_image'),
                 {
                   :controller => :diff,
                   :action => :show,

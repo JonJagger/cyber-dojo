@@ -5,29 +5,40 @@
       <%= render :partial => 'shared/yin_yang' %>
       <br/>
       <%= render :partial => 'shared/id_button' %>
-      <div id="age">
-        <%= render :partial => 'age' %>
-      </div>      
     </td>
     
     <td>
-      &nbsp;&nbsp;
+      <div style="margin: 0.5em;">
+        <div id="age">
+          <%= render :partial => 'age' %>
+        </div>
+      </div>
+    </td>
+        
+    <td valign="center">
+      <%= render :partial => 'column_controls' %>      
     </td>
     
     <td valign="center">
-      <%= render :partial => 'controls' %>      
-    </td>
-    
-    <td>
-      <%= render :partial => 'download_button' %>
+      <table cellpadding="0" cellspacing="0" style="margin:0.5em;" class="panel">
+        <tr>
+          <td>
+            <%= render :partial => 'tips_button' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= render :partial => 'shared/feedback_button' %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <%= render :partial => 'download_button' %>
+          </td>
+        </tr>
+      </table>
     </td>
 
-    <td valign="center">
-      <%= render :partial => 'tips_button' %>
-      <br/>
-      <%= render :partial => 'shared/feedback_button' %>
-    </td>
-    
   </tr>
 
 </table>
