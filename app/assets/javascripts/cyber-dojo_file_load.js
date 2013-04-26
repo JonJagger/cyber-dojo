@@ -123,6 +123,14 @@ var cyberDojo = (function(cd, $) {
     cd.loadFile(nextFilename);  
   };
     
+  cd.loadPreviousFile = function() {
+    var filenames = cd.filenames().sort();
+    var index = $.inArray(cd.currentFilename(), filenames);
+    var previousIndex = (index === 0) ? filenames.length - 1 : index - 1;
+    var previousFilename = filenames[previousIndex];
+    cd.loadFile(previousFilename);  
+  };
+
   return cd;
 })(cyberDojo || {}, $);
 

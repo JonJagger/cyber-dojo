@@ -85,7 +85,8 @@ var cyberDojo = (function(cd, $) {
       + ''
       + '<div class="panel">'
       +    space + '<b>alt-t</b> runs the <b><u>t</u></b>ests' + br 
-      +    space + '<b>alt-f</b> cycles through the <b><u>f</u></b>iles'
+      +    space + '<b>alt-f</b> cycles <b><u>f</u></b>orwards to the next file' + br
+      +    space + '<b>alt-b</b> cycles <b><u>b</u></b>ackwards to the previous file'
       + '</div>';
 
     var improve = ''

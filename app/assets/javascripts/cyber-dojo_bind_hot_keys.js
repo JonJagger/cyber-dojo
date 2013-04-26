@@ -21,6 +21,13 @@ var cyberDojo = (function(cd, $) {
     return false;
   };
 
+  cd.bindLoadPreviousFile = function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    cd.loadPreviousFile();
+    return false;
+  };
+
   cd.runTestsHotKey = function() {
     return 'Alt+t';
   };
@@ -29,9 +36,14 @@ var cyberDojo = (function(cd, $) {
     return 'Alt+f';
   };
   
+  cd.loadPreviousFileHotKey = function() {
+    return 'Alt+b';
+  };
+
   cd.bindHotKeys = function(node) {
     node.bind('keydown', cd.runTestsHotKey(),     cd.bindRunTests);
     node.bind('keydown', cd.loadNextFileHotKey(), cd.bindLoadNextFile);
+    node.bind('keydown', cd.loadPreviousFileHotKey(), cd.bindLoadPreviousFile);
   };
   
   return cd;
