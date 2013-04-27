@@ -28,7 +28,6 @@ private
     @kata = Kata.new(root_dir, id)    
     @avatar = Avatar.new(@kata, params[:avatar])
     @traffic_lights = @avatar.increments    
-    
     @min_tag = 0
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i

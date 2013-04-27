@@ -47,44 +47,32 @@ $(document).ready(function() {
     }        
   };
   
-  var disable = function(node) {
-	node.attr('disabled', true);
+  var refresh = function(off, b1, b2, b1From, b1To, b2From, b2To) {
+	b1.attr('disabled', off);
+	b2.attr('disabled', off)
+	if (!off) {
+	  b1.unbind('click')
+		.click(function() { showDiff(b1From, b1To); })
+		.attr('title', toolTip(b1From, b1To));			  
+	  b2.unbind('click')
+		.click(function() { showDiff(b2From, b2To); })
+		.attr('title', toolTip(b2From, b2To));	
+	}
   };
-  
+
   var tagGap = nowTag - wasTag;
   
   var firstButton = $('#first_button');
   var  prevButton = $('#prev_button');
   var  nextButton = $('#next_button');
   var  lastButton = $('#last_button');
-  
-  if (minTag >= wasTag) {
-    disable(firstButton);
-    disable(prevButton);
-  } else {
-    firstButton.unbind('click')
-               .click(function() { showDiff(minTag, minTag + tagGap); })
-               .attr('title', toolTip(minTag, minTag + tagGap));	  
-     prevButton.unbind('click')
-               .click(function() { showDiff(wasTag - 1, nowTag - 1); })
-               .attr('title', toolTip(wasTag - 1, nowTag - 1));
-  }
-    
-  if (nowTag >= maxTag) {
-    disable(nextButton);
-    disable(lastButton);
-  } else {
-    nextButton.unbind('click')
-              .click(function() { showDiff(wasTag + 1, nowTag + 1); })
-              .attr('title', toolTip(wasTag + 1, nowTag + 1));			  
-    lastButton.unbind('click')
-              .click(function() { showDiff(maxTag - tagGap, maxTag); })
-              .attr('title', toolTip(maxTag - tagGap, maxTag));	
-  }
+
+  // every 10 seconds _heartbeat.html.erb causes heartbeat.js.erb to re-run these
+  refresh(minTag >= wasTag, firstButton, prevButton, minTag, minTag+tagGap, wasTag-1, nowTag-1);
+  refresh(nowTag >= maxTag, nextButton, lastButton, wasTag+1, nowTag+1, maxTag-tagGap, maxTag);
 
   wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
   nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
-
 });
 
 //--></script>

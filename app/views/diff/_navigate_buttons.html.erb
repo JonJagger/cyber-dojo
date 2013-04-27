@@ -1,30 +1,8 @@
 
-<script language="JavaScript"
-        type="text/javascript"><!--
+<%= render :partial => 'heartbeat' %>
 
-$(document).ready(function() {
-
-  var refreshNextLastButtons = function() {
-    $.ajax({
-      url: "<%= url_for :action => 'heartbeat' %>",
-      data: {
-        id: "<%= @kata.id %>",
-        avatar: "<%= @avatar.name %>",
-        was_tag: "<%= @was_tag %>",
-        now_tag: "<%= @now_tag %>"
-      },
-      dataType: "script"
-    });
-  };
-  var seconds = 1000;    
-  setInterval(refreshNextLastButtons, 10*seconds);
-
-});
-
-//--></script>
-
-<span id="navigate_handlers">
-  <%= render :partial => 'navigate_handlers' %>
+<span id="navigate_button_handlers">
+  <%= render :partial => 'navigate_button_handlers' %>
 </span>
 
 <table align="center" cellpadding="1" cellspacing="1">
