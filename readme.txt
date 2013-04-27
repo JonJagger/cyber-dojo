@@ -7,13 +7,13 @@ o) choose your language (eg C++)
 o) choose your exercise (eg Prime Factors)
    Each exercise corresponds to a sub-directory of cyberdojo/exercises/
    (see below)
-You will be assigned a 10-character id.
+You will be assigned a 6-character id (the full id is actually 10 characters
+long but statistically 6 chars will be enough for uniqueness).
 
 
 Start coding
 ============
-Enter the 10-character id (case insensitive, 5 chars are usually enough)
-on each participating computer and click start coding.
+Enter the 6-character id on each participating computer and click start coding.
 The server will assign each computer an animal 'avatar' (eg Panda).
 The animal provides identity for each computer.
 You can resume coding (from the home page) at any time by choosing
@@ -89,12 +89,10 @@ Pull the latest cyber-dojo source code from github onto your TurnKey image
 >cd /var/www/cyberdojo 
 >git pull origin master
 Occasionally this will pull new files and folders. You must ensure these
-have the correct rights. The brute force approach is
+have the correct rights.
 >cd /var/www/cyberdojo
 >chgrp -R www-data app
 >chown -R www-data app
-But this could take a long time. So better to simply check the output
-from the git pull and check everything carefully.
 Finally, don't forget to restart apache
 >service apache2 restart
 If the server fails to start try
@@ -241,7 +239,7 @@ Make sure all the named files are in the new folder, including cyber-dojo.sh
   #chgrp www-data *
   #sudo -u www-data ./cyber-dojo.sh
 or maybe
- #strace sudo -u www-data ./cyber-dojo.sh
+  #strace sudo -u www-data ./cyber-dojo.sh
 
 You can also create a test for it in cyberdojo/test/installation
 by copying an existing language test rb file. Eg
@@ -387,7 +385,10 @@ o) If the three tests return any other combination of traffic-lights
 
 Getting dojos off the VirtualBox TurnKey Linux server
 =====================================================
-You will need the username and password info to SSH and SFTP.
+From the review dashboard page click the download-zip button.
+
+If you want to do from within the actual server you will need
+the username and password info to SSH and SFTP.
 I will happily tell you it if you email me: jon@jaggersoft.com
 1. SSH onto the server
 2. cd /var/www/cyberdojo
