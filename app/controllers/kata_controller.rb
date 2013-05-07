@@ -8,6 +8,7 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@kata, params[:avatar])
     @tab = @kata.language.tab    
     @visible_files = @avatar.visible_files
+    @new_files = {}
     @traffic_lights = @avatar.increments
     @output = @visible_files['output']
     @title = id[0..4] + ' ' + @avatar.name + ' code' 
@@ -19,10 +20,12 @@ class KataController < ApplicationController
     language = @kata.language
     sandbox = Sandbox.new(root_dir, id, params[:avatar])
     visible_files = received_files
+    previous_files = visible_files.keys
     @output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     inc[:revert_tag] = params[:revert_tag]    
     @traffic_lights = @avatar.save_run_tests(visible_files, @output, inc)
+    @new_files = @avatar.visible_files.select {|filename, content| ! previous_files.include?(filename)}
     @visible_files = @avatar.visible_files
 
     respond_to do |format|

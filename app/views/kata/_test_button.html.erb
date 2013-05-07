@@ -41,6 +41,7 @@ $(document).ready(function() {
     // are lost so need rebinding
     var output = cd.fileContentFor('output');
     cd.bindHotKeys(output);
+    cd.bindAllLineNumbers();
     cd.rebuildFilenameList();
     ajaxAfter();
   });  
