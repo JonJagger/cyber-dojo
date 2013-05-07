@@ -22,7 +22,8 @@ var cyberDojo = (function(cd, $) {
         + "Mike Sutton, James Grenning, Allan Kelly, Randall White, "
         + "Lucas Videla, Mark Sargent, Jason Jolly, Mark Grimes, "
         + "Pedro Gimenez, Marc Kannegiesser, Oliver Baylis, Brian Porter, "
-        + "Jamie Toolin, Alejandro Perez Garcia, Pavol Rovensky."
+        + "Jamie Toolin, Alejandro Perez Garcia, Pavol Rovensky, "
+        + "Wojciech Kozlowski."
       );
 
     var thankYou =
