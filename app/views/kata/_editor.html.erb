@@ -3,31 +3,7 @@
      class="edgeless panel">
   
   <% @visible_files.each do |filename,content| %>
-    <div class="filename_div"
-         name="<%= filename %>"
-         id="<%= filename %>_div">
-      <table cellspacing="0" cellpadding="0">
-        <tr>
-          <td>
-            <textarea class="line_numbers"
-                      id="<%= filename %>_line_numbers">
-            </textarea>
-          </td>
-          <td>
-            <% if filename != 'output' %>
-              <textarea class="file_content"
-                        name="file_content['<%= filename %>']"
-                        id="file_content_for_<%= filename %>"
-                        wrap="off">
-<%= h content %></textarea>                                     
-            <% else %>            
-              <%= render :partial => 'output' %>        
-            <% end %>
-          </td>
-        </tr>
-      </table>
-    </div>
-        
+    <%= render :partial => 'visible_file', :locals => {:filename => filename, :content => content} %>                
   <% end %>
   
 </div>
