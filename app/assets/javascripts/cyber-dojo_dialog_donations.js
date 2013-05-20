@@ -23,7 +23,7 @@ var cyberDojo = (function(cd, $) {
         + "Lucas Videla, Mark Sargent, Jason Jolly, Mark Grimes, "
         + "Pedro Gimenez, Marc Kannegiesser, Oliver Baylis, Brian Porter, "
         + "Jamie Toolin, Alejandro Perez Garcia, Pavol Rovensky, "
-        + "Wojciech Kozlowski."
+        + "Wojciech Kozlowski, Dan Grassi."
       );
 
     var thankYou =
