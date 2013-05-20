@@ -43,8 +43,8 @@ var cyberDojo = (function(cd, $) {
       );
 
     var endDelay = ''
-      + 'It took a ' + em('long') + ' time to '
-      + 'finish, each group struggling to connect to a projector.';
+      + 'It took a ' + em('long') + ' time to do a '
+      + 'review, each group struggling to connect to a projector.';
       
     var projector =
       cd.divPanel(''

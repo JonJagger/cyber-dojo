@@ -64,9 +64,21 @@ Seems to be a problem local to me.
 
 MINOR
 -----
+Opening file when you start is the output file and it says something like
+  "code and tests have been submitted to the server..."
+-----
+The starting test file should explicitly say that the initial code
+  is always the same for all exercises and just gives a very simple
+  example of how to write a test. It should also explain that the red
+  amber green status relies on the test format used so that should not
+  be changed. Again be explicit. Eg in the C++ tests using assert it
+  should say "the red-amber-green status determination relies on the
+  output being the output from assert. So don't change that. Keep using
+  assert.
+-----
 I'd like to record the ip-address of each animal in a dojo and have a
   kata/edit heartbeat that maintains the ip-address timestamp.
-  This will allow me to only offer animal to resume from when those
+  This will allow me to only offer animals to resume-from when those
   animals are not themselves already being used.
   However, this raises the possibility of the following scenario.
   o) laptop1 starts as hippo
@@ -74,8 +86,10 @@ I'd like to record the ip-address of each animal in a dojo and have a
   o) laptop2 resumes as hippo (its ip-address now the hippo's)
   o) laptop1 unsuspends, and its heartbeat now detects that
     it is no longer the hippo.
+  So not sure I need this.
 -----
-Edit help dialog needs to show fork icon.
+Edit help dialog needs to show fork icon. Or the word fork now that the
+  overly subtle fork-icon has been dropped.
 -----
 Hitting fork button brings up dialog box (which will ultimately have
   ability to move files between visible and hidden sections)
