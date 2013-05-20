@@ -5,8 +5,17 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_links = function() {
 
+    var blogUrl = 'http://jonjagger.blogspot.co.uk/'
+    var company =
+      cd.divPanel('' 
+        + 'Jagger Software Limited '
+        + '<a href="' + blogUrl + '" target="_blank">'
+        + 'blog'
+        + '</a>'
+      );
+
     var thingsUrl = 'http://programmer.97things.oreilly.com/wiki/index.php/Contributions_Appearing_in_the_Book';
-    var blogUrl = 'http://jonjagger.blogspot.com/2011/02/deliberate-practice.html';
+    var practiceUrl = 'http://jonjagger.blogspot.com/2011/02/deliberate-practice.html';
     var ninetySeven =
       cd.divPanel(''
         + '<a href="' + thingsUrl + '" target="_blank">'
@@ -14,7 +23,7 @@ var cyberDojo = (function(cd, $) {
         + '</a>'
         + '<br/>'
         + '&nbsp;&nbsp;number 22: '
-        + '<a href="' + blogUrl + '" target="_blank">'
+        + '<a href="' + practiceUrl + '" target="_blank">'
         + 'Do More Deliberate Practice'
         + '</a>'
       );
@@ -44,7 +53,7 @@ var cyberDojo = (function(cd, $) {
         + '&nbsp;professionalism in programming.'
       );
       
-    var links = $(cd.makeTable(ninetySeven, video, map, accu));
+    var links = $(cd.makeTable(company, ninetySeven, video, map, accu));
       
     return cd.dialog(links.html(), 550, 'links');
   };
