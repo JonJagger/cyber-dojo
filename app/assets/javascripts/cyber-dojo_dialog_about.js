@@ -24,6 +24,7 @@ var cyberDojo = (function(cd, $) {
           'cyber-dojo was conceived, designed,<br/>'
         + 'and is being implemented by '
         + '<a href="http://jonjagger.blogspot.com/" target="_blank">Jon Jagger</a>'
+        + ' of Jagger Software Limited.'
       );
 
     var about = $(cd.makeTable(nonIde, practice, author));
