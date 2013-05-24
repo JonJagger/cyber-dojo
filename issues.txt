@@ -13,15 +13,18 @@ the id of 9A7EA600F9
 When you're in a diff-page to the right of the filename there should be
 two numbers, one in red for the number of lines deleted in this diff
 and one in green for the number of lines added in this diff.
-These two numbers appear momentarily, but then disappear. 
+These two numbers appear momentarily, but then disappear.
+This also happens on a local server.
 -----------
 When you're in a diff-page (eg showing diff between traffic-lights 6 and 7)
 then the diff-view should auto-scroll so that the first red/green lines
 are scrolled into view. It doesn't.
+This also happens on a local server.
 -----------
 When you're in a diff-page and the file has multiple red/green sections
 then clicking on the filename should auto-scroll to the next red/green
 section. It doesn't.
+This also happens on a local server.
 -----------
 
 
