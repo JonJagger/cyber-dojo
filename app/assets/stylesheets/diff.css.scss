@@ -17,7 +17,6 @@
 #diff_div
 {
   width: 55em;
-  height: 44em;
   position: relative;
 }
 
@@ -29,6 +28,7 @@
 
 #diff_sheet
 {
+  height: 35em;
   color: $darker-color;
   overflow: auto;
   margin: 0;
