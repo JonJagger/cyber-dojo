@@ -32,7 +32,7 @@ a:link, a:visited
   @include font-size-large();
 }
   
-#kata_id_input, #start_coding, #resume_coding, #review_coding
+.kata_id_input, #start_coding, #resume_coding, #review_coding
 {
   background: lighten($green, 20%);
   @include gradient-lighten($green, 30%, 20%, 10%);    
@@ -40,7 +40,7 @@ a:link, a:visited
   @include font-size-large();
 }
 
-#kata_id_input
+.kata_id_input
 {
   @include font-size-medium();
   text-align: center;
