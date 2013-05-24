@@ -1,6 +1,22 @@
 
 <script language="javascript" type="text/javascript"><!--
 
+(function($) {
+  // http://stackoverflow.com/questions/4911577/jquery-click-toggle-between-two-functions
+  // $(..).toggle() no longer exists in JQuery
+  $.fn.clickToggle = function(func1, func2) {
+    var funcs = [func1, func2];
+    this.data('toggleclicked', 0);
+    this.click(function() {
+      var data = $(this).data();
+      var tc = data.toggleclicked;
+      $.proxy(funcs[tc], this)();
+      data.toggleclicked = (tc + 1) % 2;
+    });
+    return this;
+  };
+}(jQuery));
+
 $(document).ready(function() {
 
   cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe %>);
@@ -27,15 +43,16 @@ $(document).ready(function() {
         .attr('title', 'Toggle added lines on/off');
   });
 
-  $('.diff-deleted-line-count').toggle(
+  $('.diff-deleted-line-count').clickToggle(
     function() { display(this, 'deleted', 'none' ); },
-    function() { display(this, 'deleted', 'block'); }
+    function() { display(this, 'deleted', 'block'); }    
   );
-  $('.diff-added-line-count').toggle(
-    function() { display(this, 'added', 'none' ); },
-    function() { display(this, 'added', 'block'); }
+
+  $('.diff-added-line-count').clickToggle(
+    function() { display(this, 'deleted', 'none' ); },
+    function() { display(this, 'deleted', 'block'); }    
   );
-  
+
   disableAllLineCountButtons();
   $('#' + '<%= @current_filename_id %>').click();  
   $('input[type=radio]').hide();
