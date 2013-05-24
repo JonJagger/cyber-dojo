@@ -1,6 +1,34 @@
 
-MAJOR
------
+ACTUAL-BUGS
+-----------
+On http://cyber-dojo.com (but not on a local server) if the URL in the browser
+is, eg http://cyber-dojo.com/?id=9A7EA600F9
+then this id is used and not the id entered in the middle text-input.
+For example, if you enter "wibble" and then press the resume button
+you will _not_ get a dialog saying
+"cannot find a cyber-dojo win an id of wibble"
+(as you should) but will instead get a resume dialog for the dojo with
+the id of 9A7EA600F9
+-----------
+When you're in a diff-page to the right of the filename there should be
+two numbers, one in red for the number of lines deleted in this diff
+and one in green for the number of lines added in this diff.
+These two numbers appear momentarily, but then disappear. 
+-----------
+When you're in a diff-page (eg showing diff between traffic-lights 6 and 7)
+then the diff-view should auto-scroll so that the first red/green lines
+are scrolled into view. It doesn't.
+-----------
+When you're in a diff-page and the file has multiple red/green sections
+then clicking on the filename should auto-scroll to the next red/green
+section. It doesn't.
+-----------
+
+
+
+
+FUTURE-MAJOR
+------------
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group. See lib/Files.rb
@@ -62,8 +90,8 @@ Seems to be a problem local to me.
 
 
 
-MINOR
------
+FUTURE-MINOR
+------------
 Opening file when you start is the output file and it says something like
   "code and tests have been submitted to the server..."
 -----
