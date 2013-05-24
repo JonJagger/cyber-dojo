@@ -10,7 +10,7 @@ var cyberDojo = (function(cd, $) {
       cd.dialog_noId().dialog('open');
     }
     else {
-      $.getJSON('/dojo/' + method, { id: id }, function(dojo) {
+      $.getJSON('/dojo/' + method + '/?id=' + id, function(dojo) {
         if (!dojo.exists) {
           cd.dialog_cantFindDojo(id).dialog('open');
         }
