@@ -4,18 +4,18 @@ var cyberDojo = (function(cd, $) {
   "use strict";
   
   cd.run = function(method, func) {    
-    var id = $('#kata_id_input').attr('value');
-    id = $.trim(id);
-    if (id === '') {
+    var dojoId = $('#kata_id_input').attr('value');
+    dojoId = $.trim(dojoId);
+    if (dojoId === '') {
       cd.dialog_noId().dialog('open');
     }
     else {
-      $.getJSON('/dojo/' + method + '/?id=' + id, function(dojo) {
+      $.getJSON('/dojo/' + method + '/?id=' + dojoId, function(dojo) {
         if (!dojo.exists) {
-          cd.dialog_cantFindDojo(id).dialog('open');
+          cd.dialog_cantFindDojo(dojoId).dialog('open');
         }
         else {
-          func(id, dojo);
+          func(dojoId, dojo);
         }
       });
     }
