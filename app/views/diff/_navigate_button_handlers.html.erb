@@ -34,13 +34,13 @@ $(document).ready(function() {
 
   var tagEdit = function(event) {
     if (event.keyCode === $.ui.keyCode.ENTER) {
-      var newWasTag = parseInt(wasTagNumber.attr('value'), 10);
-      var newNowTag = parseInt(nowTagNumber.attr('value'), 10);      
+      var newWasTag = parseInt(wasTagNumber.val(), 10);
+      var newNowTag = parseInt(nowTagNumber.val(), 10);
       if (isNaN(newWasTag) || newWasTag < minTag ||
             isNaN(newNowTag) || newNowTag > maxTag ||
               newWasTag > newNowTag) {
-        wasTagNumber.attr('value', wasTag);
-        nowTagNumber.attr('value', nowTag);
+        wasTagNumber.val(wasTag);
+        nowTagNumber.val(nowTag);
       } else {
         showDiff(newWasTag, newNowTag);
       }
