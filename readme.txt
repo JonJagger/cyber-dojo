@@ -88,16 +88,12 @@ I will happily tell you these if you email me: jon@jaggersoft.com
 Pull the latest cyber-dojo source code from github onto your TurnKey image
 >cd /var/www/cyberdojo 
 >git pull origin master
-Occasionally this will pull new files and folders. You must ensure these
+This may pull new files and folders. You must ensure these
 have the correct rights.
 >cd /var/www/cyberdojo
 >chgrp -R www-data app
 >chown -R www-data app
 Finally, don't forget to restart apache
->service apache2 restart
-If the server fails to start try
->rm Gemfile.lock
->bundle install
 >service apache2 restart
 
    
@@ -361,8 +357,8 @@ You can test if a languages' initial fileset is correctly setup as follows
 For each language...
 o) cyber-dojo searches through its manifests' :visible_filenames,
    in sequence, looking for any that contain the string '42'
-o) If it doesn't find any it will not offer that language when
-   you configure a new kata.
+o) If it doesn't find any it will report than language is not
+   configured correcty.
 o) If it finds at least one file containing '42' it will pick the
    first one as "the-42-file"
 o) It will then use the manifest to [create a kata and run-the-tests]
@@ -373,13 +369,11 @@ o) It will then use the manifest to [create a kata and run-the-tests]
 o) If test-1 generates a red traffic-light and
       test-2 generates a green traffic-light and
       test-3 generates an amber traffic-light then
-   then the cyber-dojo server assumes the language is installed and working
-   and it will offer that language when you create a new kata.
+   then it will assume the language is installed and working.
 o) If the three tests return three amber traffic-lights then
-   the cyber-dojo server assumes the language is not installed
-   and it won't offer that language when you configure a new kata.
+   it will assume the language is not configured correctly.
 o) If the three tests return any other combination of traffic-lights
-   the cyber-dojo server assumes the language is installed but not working.
+   it will assume the language is installed but not working.
    
 
 
