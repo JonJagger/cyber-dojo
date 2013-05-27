@@ -9,14 +9,13 @@ var cyberDojo = (function(cd, $) {
       + '<table>'
       +    '<tr>'
       +      '<td>'
-      +        "I can't find a cyber-dojo with that id.<br/>"
-      +        'Click <div id="setup" class="button">setup</div> to get a new id<br/>'      
+      +        "I can't find a cyber-dojo with that id."
       +      '</td>'
       +    '</tr>'
       +  '</table>'
       + '</div>';
     var width, title;
-    return cd.dialog(cantFindDojo, width = 400, title = id);
+    return cd.dialog(cantFindDojo, width = 400, title = id + ' ?');
   };
 
   return cd;

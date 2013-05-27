@@ -3,11 +3,6 @@
 
 $(document).ready(function() {
   
-  // Opening the start-coding dialog from here at the home page
-  // (rather than from inside the edit-test page) is deliberate.
-  // This way the edit-test page appears in a new tab _without_
-  // getting any of those annoying 'popup blocked' messages.
-  
   $('#start_coding').click(function() {
     cd.run('start_json', function(id, dojo) {
       if (dojo.full) {
