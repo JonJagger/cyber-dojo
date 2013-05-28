@@ -1,15 +1,6 @@
 
 ACTUAL-BUGS
 -----------
-If I upgrade jQuery to 1.9.1 then I get the following error
-Suppose the URL in the browser is, eg http://cyber-dojo.com/?id=9A7EA600F9
-and I'm on the home page. I enter "wibble" into the enter-a-practice-id
-text-input and then press the resume button.
-The id I entered (wibble) should be used and I should get a dialog saying
-"cannot find a cyber-dojo with an id of wibble"
-However, I don't. Instead I get a resume-dialog for the dojo with
-the id of 9A7EA600F9 (the id on the URL)
------------
 When you're in a diff-page (eg showing diff between traffic-lights 6 and 7)
 then the diff-view should auto-scroll so that the first red/green lines
 are scrolled into view. It doesn't.

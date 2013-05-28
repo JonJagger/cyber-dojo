@@ -16,8 +16,8 @@ var cyberDojo = (function(cd, $) {
       +    '</tr>'
       +  '</table>'
       + '</div>';
-    var width = 400;
-    return cd.dialog(noId, width, '');    
+    var width,title;
+    return cd.dialog(noId, width = 400, title = '');    
   };
 
   return cd;
