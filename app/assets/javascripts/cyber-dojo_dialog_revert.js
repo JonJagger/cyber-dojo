@@ -105,7 +105,7 @@ var cyberDojo = (function(cd, $) {
 	  textArea.addClass('file_content');
 	  $('.filename', preview).each(function() {
 		$(this).click(function() {
-		  var filename = $('input', $(this)).attr('value');
+		  var filename = $('input', $(this)).val();
 		  var content = data.visibleFiles[filename];
 		  textArea.val(content);
 		  if (previous !== undefined) {

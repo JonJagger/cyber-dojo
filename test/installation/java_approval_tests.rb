@@ -4,7 +4,7 @@ class ApprovalTestsJavaTests < ActionController::TestCase
   
   test "ApprovalTests-Java" do
     root_dir = Rails.root.to_s + '/test/cyberdojo'
-    OneLanguageChecker.new({ :verbose => true }).check(root_dir, 'ApprovalTests-Java')        
+    OneLanguageChecker.new({ :verbose => true }).check(root_dir, 'Java-Approval')        
   end
   
 end

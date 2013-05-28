@@ -1,15 +1,6 @@
 
 ACTUAL-BUGS
 -----------
-On http://cyber-dojo.com (but not on a local server) if the URL in the browser
-is, eg http://cyber-dojo.com/?id=9A7EA600F9
-then this id is used and not the id entered in the middle text-input.
-For example, if you enter "wibble" and then press the resume button
-you will _not_ get a dialog saying
-"cannot find a cyber-dojo win an id of wibble"
-(as you should) but will instead get a resume dialog for the dojo with
-the id of 9A7EA600F9
------------
 When you're in a diff-page (eg showing diff between traffic-lights 6 and 7)
 then the diff-view should auto-scroll so that the first red/green lines
 are scrolled into view. It doesn't.
