@@ -1,13 +1,8 @@
-
 ACTUAL-BUGS
------------
-When you're in a diff-page (eg showing diff between traffic-lights 6 and 7)
-then the diff-view should auto-scroll so that the first red/green lines
-are scrolled into view. It doesn't.
 -----------
 When you're in a diff-page and the file has multiple red/green sections
 then clicking on the filename should auto-scroll to the next red/green
-section. It doesn't.
+section. It doesn't. Or rather, it seems inconsistent.
 -----------
 
 
