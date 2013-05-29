@@ -30,7 +30,7 @@ var cyberDojo = (function(cd, $) {
           var section = $('#' + id + '_section_' + sectionIndex);           
           var downFromTop = 100;
           var halfSecond = 500;
-          diffPanel.animate({
+          diffSheet.animate({
             scrollTop: section.offset().top - diffSheet.offset().top - downFromTop
             }, halfSecond);
           sectionIndex += 1;
