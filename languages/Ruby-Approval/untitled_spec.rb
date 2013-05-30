@@ -7,8 +7,8 @@ describe "untitled" do
     answer
   end
   
-  context "when doing sums" do
-    it "has the answer" do
+  context "sums" do
+    it "has answer" do
       verify do
         subject
       end

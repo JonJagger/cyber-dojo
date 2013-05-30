@@ -1,6 +1,6 @@
 
 {
-  :visible_filenames => %w( untitled.rb untitled.feature untitled_stepdefs.rb cyber-dojo.sh ),
+  :visible_filenames => %w( untitled.rb untitled_spec.rb spec_helper.rb untitled_sums_has_answer.received.txt cyber-dojo.sh ),
 
   :unit_test_framework => 'ruby_rspec',
 
