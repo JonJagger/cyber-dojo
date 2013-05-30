@@ -18,3 +18,4 @@ gem 'therubyracer'
 gem 'simplecov',    '>= 0.7.1', :require => false, :group => :test
 gem 'rspec'
 gem 'cucumber'
+gem 'approvals', '>= 0.0.7'
