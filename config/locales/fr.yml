@@ -1,0 +1,21 @@
+fr:
+  views:
+    labels:
+      setup: "créer un nouvel exercice"
+      enter_practice_id: "reproduire un exercise"
+    buttons:
+      setup: "créer"
+      start: "commencer"
+      resume: "reproduire"
+      review: "réviser"
+      about: "à propos"
+      basics: "base"
+      donations: "donations"
+      faqs: "questions courantes"
+      feedback: "réactions"
+      source: "source"
+      links: "liens"
+      recruiting: "recrutement"
+      refactoring: "refactoring"
+      tips: "tips"
+      why: "pourquoi"
