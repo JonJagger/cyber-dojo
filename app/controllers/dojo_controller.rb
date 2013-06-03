@@ -6,22 +6,16 @@ class DojoController < ApplicationController
   def index
     @title = 'Home'
     @id = id
-    @buttons = ['about', 'basics', 'donations', 'faqs',
-                'feedback', 'links', 'source', 'recruiting',
-                'refactoring', 'tips','why' ]
   end
  
-  def button_about;       button_dialog('about'); end
-  def button_basics;      button_dialog('basics'); end
-  def button_donations;   button_dialog('donations'); end
-  def button_faqs;        button_dialog('faqs'); end
-  def button_feedback;    button_dialog('feedback'); end
-  def button_links;       button_dialog('links'); end
-  def button_source;      button_dialog('source'); end
-  def button_recruiting;  button_dialog('recruiting'); end
-  def button_refactoring; button_dialog('refactoring'); end
-  def button_tips;        button_dialog('tips'); end
-  def button_why;         button_dialog('why'); end
+  def show_dialog
+    name = params[:id]
+    respond_to do |format|
+      format.json {
+        render :json => { :html => bind("/app/views/dojo/button_#{name}_dialog.html.erb") }
+      }
+    end
+  end
  
   #------------------------------------------------
   
@@ -114,14 +108,6 @@ class DojoController < ApplicationController
   
 private  
 
-  def button_dialog(name)
-    respond_to do |format|
-      format.json {
-        render :json => { :html => bind('/app/views/dojo/button_' + name + '_dialog.html.erb') }
-      }
-    end
-  end
-  
   def random(array)
     array.shuffle[0]
   end
