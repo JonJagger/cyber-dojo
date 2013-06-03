@@ -11,17 +11,17 @@ class DojoController < ApplicationController
                 'refactoring', 'tips','why' ]
   end
  
-  def button_about;       button_dialog(450,'about'); end
-  def button_basics;      button_dialog(800,'basics'); end
-  def button_donations;   button_dialog(750,'donations'); end
-  def button_faqs;        button_dialog(550,'faqs'); end
-  def button_feedback;    button_dialog(500,'feedback'); end
-  def button_links;       button_dialog(550,'links'); end
-  def button_source;      button_dialog(600,'source'); end
-  def button_recruiting;  button_dialog(550,'recruiting'); end
-  def button_refactoring; button_dialog(500,'refactoring'); end
-  def button_tips;        button_dialog(600,'tips'); end
-  def button_why;         button_dialog(850,'why'); end
+  def button_about;       button_dialog('about'); end
+  def button_basics;      button_dialog('basics'); end
+  def button_donations;   button_dialog('donations'); end
+  def button_faqs;        button_dialog('faqs'); end
+  def button_feedback;    button_dialog('feedback'); end
+  def button_links;       button_dialog('links'); end
+  def button_source;      button_dialog('source'); end
+  def button_recruiting;  button_dialog('recruiting'); end
+  def button_refactoring; button_dialog('refactoring'); end
+  def button_tips;        button_dialog('tips'); end
+  def button_why;         button_dialog('why'); end
  
   #------------------------------------------------
   
@@ -114,13 +114,10 @@ class DojoController < ApplicationController
   
 private  
 
-  def button_dialog(size, name)
+  def button_dialog(name)
     respond_to do |format|
       format.json {
-        render :json => {
-          :html => bind('/app/views/dojo/button_' + name + '_dialog.html.erb'),
-          :size => size
-        }
+        render :json => { :html => bind('/app/views/dojo/button_' + name + '_dialog.html.erb') }
       }
     end
   end

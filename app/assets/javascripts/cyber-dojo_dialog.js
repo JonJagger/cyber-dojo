@@ -8,6 +8,10 @@ var cyberDojo = (function(cd, $) {
   };
   
   cd.dialog = function(html, width, title) {
+    // ignore width if explicitly specified in data-size attribute of top element (e.g. <table data-width="550">)
+    // the idea is to keep the formatting with the html, instead of 'polluting' the controller with it
+    width = $(html).data("width") || width;
+
     var div = $('<div>')
       .html('<div class="dialog">' + html + '</div>')    
       .dialog({
