@@ -9,7 +9,8 @@ $(document).ready(function() {
        && name !== 'basics'
        && name !== 'donations'
        && name !== 'faqs'
-       && name !== 'feedback') {
+       && name !== 'feedback'
+       && name !== 'links') {
         $('#' + name).click(function() {
           cd['dialog_' + name]().dialog('open');
       });
@@ -23,7 +24,8 @@ $(document).ready(function() {
        || name === 'basics'
        || name === 'donations'
        || name === 'faqs'
-       || name === 'feedback') {
+       || name === 'feedback'
+       || name === 'links') {
         $('#' + name).click(function() {
           $.getJSON('/dojo/button_' + name, function(json) {
             cd.dialog(json.html, json.size, name).dialog('open');
