@@ -5,7 +5,10 @@ $(document).ready(function() {
   
   $.each(<%=@buttons.to_json.html_safe%>,
     function(i, name) {
-      if (name !== 'about' && name !== 'basics') {
+      if (name !== 'about'
+       && name !== 'basics'
+       && name !== 'donations'
+       && name !== 'faqs') {
         $('#' + name).click(function() {
           cd['dialog_' + name]().dialog('open');
       });
@@ -21,6 +24,18 @@ $(document).ready(function() {
   $('#basics').click(function() {
     $.getJSON('/dojo/button_basics', function(basics) {
       cd.dialog(basics.html, basics.size, 'basics').dialog('open');
+    });
+  });
+
+  $('#donations').click(function() {
+    $.getJSON('/dojo/button_donations', function(donations) {
+      cd.dialog(donations.html, donations.size, 'donations').dialog('open');
+    });
+  });
+  
+  $('#faqs').click(function() {
+    $.getJSON('/dojo/button_faqs', function(faqs) {
+      cd.dialog(faqs.html, faqs.size, 'faqs').dialog('open');
     });
   });
 

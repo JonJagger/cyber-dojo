@@ -36,12 +36,13 @@ class DojoController < ApplicationController
   
   #------------------------------------------------
   
-  def button_about; button_dialog('about', 450); end
-  def button_basics; button_dialog('basics', 800); end
-  def button_donations; button_dialog('donations', 750); end
+  def button_about;     button_dialog(450,'about'); end
+  def button_basics;    button_dialog(800,'basics'); end
+  def button_donations; button_dialog(750,'donations'); end
+  def button_faqs;      button_dialog(550,'faqs'); end
 
   
-  def button_dialog(name, size)
+  def button_dialog(size, name)
     respond_to do |format|
       format.json {
         render :json => {
