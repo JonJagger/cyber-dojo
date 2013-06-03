@@ -48,6 +48,17 @@ class KataController < ApplicationController
     end
   end
       
+  def fork_dialog
+    respond_to do |format|
+      format.json {
+        render :json => {
+          :html => bind('/app/views/kata/fork_dialog.html.erb'),
+          :title => 'fork'
+        }
+      }
+    end
+  end
+  
 private
 
   def received_files

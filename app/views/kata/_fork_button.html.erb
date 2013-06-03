@@ -3,17 +3,13 @@
 
 $(document).ready(function() {
   
-  function dialog_fork() {
-    var html = cd.divPanel(
-        'Click ok to create a new cyber-dojo, with a new id, '
-      + "whose starting files are identical to most recent traffic-light's.");
-      
+  function dialog_fork(html, title) {      
     return $('<div class="dialog">')
       .html(html)
       .dialog({
         autoOpen: false,
         width: 500,
-        title: cd.dialogTitle('fork'),
+        title: cd.dialogTitle(title),
         modal: true,
         buttons: {
           ok: function() {
@@ -30,8 +26,10 @@ $(document).ready(function() {
       });
   };
   
-  $('#fork').click(function() {
-    dialog_fork().dialog('open');
+  $('#fork').click(function() {  
+    $.getJSON('/kata/fork_dialog', function(json) {
+      dialog_fork(json.html, json.title).dialog('open');
+    });
   });
 
 });
