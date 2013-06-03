@@ -4,6 +4,7 @@
 en:
   views:
     buttons:
+      setup:  "setup"
       start:  "start"
       resume: "resume"
       review: "review"
