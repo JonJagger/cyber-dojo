@@ -40,7 +40,8 @@ class DojoController < ApplicationController
   def button_basics;    button_dialog(800,'basics'); end
   def button_donations; button_dialog(750,'donations'); end
   def button_faqs;      button_dialog(550,'faqs'); end
-
+  def button_feedback;  button_dialog(500,'feedback'); end
+  
   
   def button_dialog(size, name)
     respond_to do |format|
