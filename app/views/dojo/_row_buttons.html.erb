@@ -5,44 +5,12 @@ $(document).ready(function() {
   
   $.each(<%=@buttons.to_json.html_safe%>,
     function(i, name) {
-      if (name !== 'about'
-       && name !== 'basics'
-       && name !== 'donations'
-       && name !== 'faqs'
-       && name !== 'feedback'
-       && name !== 'links'
-       && name !== 'source'
-       && name !== 'recruiting'
-       && name !== 'refactoring'
-       && name !== 'tips'
-       && name !== 'why') {
-        $('#' + name).click(function() {
-          cd['dialog_' + name]().dialog('open');
+      $('#' + name).click(function() {
+        $.getJSON('/dojo/button_' + name, function(json) {
+          cd.dialog(json.html, json.size, name).dialog('open');
+        });
       });
-    }
-  });
-
-
-  $.each(<%=@buttons.to_json.html_safe%>,
-    function(i, name) {
-      if (name === 'about'
-       || name === 'basics'
-       || name === 'donations'
-       || name === 'faqs'
-       || name === 'feedback'
-       || name === 'links'
-       || name === 'source'
-       || name === 'recruiting'
-       || name === 'refactoring'
-       || name === 'tips'
-       || name === 'why') {
-        $('#' + name).click(function() {
-          $.getJSON('/dojo/button_' + name, function(json) {
-            cd.dialog(json.html, json.size, name).dialog('open');
-          });
-      });
-    }
-  });
+    });
 
 });
 
