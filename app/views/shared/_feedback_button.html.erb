@@ -3,8 +3,10 @@
 
 $(document).ready(function() {
 
-  $('#feedback').click(function() {
-    cd.dialog_feedback().dialog('open');
+  $('#feedback').click(function() {  
+    $.getJSON('/dojo/button_feedback', function(json) {
+      cd.dialog(json.html, json.size, 'feedback').dialog('open');
+    });
   });
 
 });
