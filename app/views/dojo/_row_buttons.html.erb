@@ -1,25 +1,28 @@
+<% buttons = ['about', 'basics', 'donations', 'faqs',
+              'feedback', 'links', 'source', 'recruiting',
+              'refactoring', 'tips','why' ].map{|action| [action, t("views.buttons.#{action}")]} %>
+
+<% buttons.each do |action, text| %>
+  <div type="button"
+       class="button show-dialog-button"
+       id="<%= action %>">
+    <%= text %>
+  </div>
+
+<% end %>
+
 
 <script language="javascript" type="text/javascript"><!--
 
-$(document).ready(function() {
-  
-  $.each(<%=@buttons.to_json.html_safe%>,
-    function(i, name) {
-      $('#' + name).click(function() {
-        $.getJSON('/dojo/button_' + name, function(json) {
-          cd.dialog(json.html, json.size, name).dialog('open');
-        });
-      });
+$(document).ready(function () {
+
+  $('.show-dialog-button').click(function () {
+    var name = $(this).attr('id');
+    $.getJSON('/dojo/show_dialog/' + name, function (json) {
+      cd.dialog(json.html, json.size, name).dialog('open');
     });
+  });
 
 });
 
 //--></script>
-
-<% @buttons.each do |name| %>
-  <div type="button"
-       class="button"
-      id="<%= name %>">
-      <%= name %>
-  </div>
-<% end %>

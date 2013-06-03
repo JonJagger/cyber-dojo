@@ -5,6 +5,8 @@ require 'Folders'
 require 'Uuid'
 
 class ApplicationController < ActionController::Base
+  before_filter :set_locale
+
   protect_from_forgery
 
   include MakeTimeHelper  
@@ -39,4 +41,12 @@ class ApplicationController < ActionController::Base
     ERB.new(File.read(filename)).result(binding)
   end  
 
+  def set_locale
+    I18n.locale = session[:locale] || I18n.default_locale
+    logger.debug("#{I18n.locale} = #{session[:locale]} || #{I18n.default_locale}")
+  end
+
 end
+
+
+

@@ -1,0 +1,7 @@
+<% locales = {en: "English", fr: "French"} %>
+
+<div class="i18n">
+  <% locales.each do |locale, text| %>
+    <span class="locale"><%= link_to text, "/locales/change/#{locale}" %></span>
+  <% end %>
+</div>
