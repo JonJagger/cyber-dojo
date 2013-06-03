@@ -28,6 +28,9 @@ GEM
     activesupport (3.2.3)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    approvals (0.0.7)
+      nokogiri
+      thor
     arel (3.0.2)
     builder (3.0.4)
     coffee-rails (3.2.2)
@@ -64,6 +67,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.3)
+    nokogiri (1.5.9)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -134,6 +138,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  approvals (>= 0.0.7)
   coffee-rails (~> 3.2.1)
   cucumber
   jquery-rails (= 2.1.3)

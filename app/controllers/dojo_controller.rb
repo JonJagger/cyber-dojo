@@ -35,6 +35,27 @@ class DojoController < ApplicationController
   end
   
   #------------------------------------------------
+  
+  def button_about; button_dialog('about', 450); end
+
+  
+  def button_dialog(name, size)
+    respond_to do |format|
+      format.json {
+        render :json => {
+          :html => bind('/app/views/dojo/button_' + name + '_dialog.html.erb'),
+          :size => size
+        }
+      }
+    end
+  end
+  
+  def bind(filename)
+    filename = Rails.root.to_s + filename
+    ERB.new(File.read(filename)).result(binding)
+  end
+  
+  #------------------------------------------------
 
   def resume_json
     exists = Kata.exists?(root_dir, id)

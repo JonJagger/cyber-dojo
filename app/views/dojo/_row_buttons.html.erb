@@ -5,8 +5,16 @@ $(document).ready(function() {
   
   $.each(<%=@buttons.to_json.html_safe%>,
     function(i, name) {
-      $('#' + name).click(function() {
-        cd['dialog_' + name]().dialog('open'); 
+      if (name !== 'about') {
+        $('#' + name).click(function() {
+          cd['dialog_' + name]().dialog('open');
+      });
+    }
+  });
+
+  $('#about').click(function() {
+    $.getJSON('/dojo/button_about', function(about) {
+      cd.dialog(about.html, about.size, 'about').dialog('open');
     });
   });
   
