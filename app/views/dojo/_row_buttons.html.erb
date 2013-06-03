@@ -13,7 +13,8 @@ $(document).ready(function() {
        && name !== 'links'
        && name !== 'source'
        && name !== 'recruiting'
-       && name !== 'refactoring') {
+       && name !== 'refactoring'
+       && name !== 'tips') {
         $('#' + name).click(function() {
           cd['dialog_' + name]().dialog('open');
       });
@@ -31,7 +32,8 @@ $(document).ready(function() {
        || name === 'links'
        || name === 'source'
        || name === 'recruiting'
-       || name === 'refactoring') {
+       || name === 'refactoring'
+       || name === 'tips') {
         $('#' + name).click(function() {
           $.getJSON('/dojo/button_' + name, function(json) {
             cd.dialog(json.html, json.size, name).dialog('open');

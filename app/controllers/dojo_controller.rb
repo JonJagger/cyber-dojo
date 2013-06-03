@@ -45,6 +45,7 @@ class DojoController < ApplicationController
   def button_source;      button_dialog(600,'source'); end
   def button_recruiting;  button_dialog(550,'recruiting'); end
   def button_refactoring; button_dialog(500,'refactoring'); end
+  def button_tips;        button_dialog(600,'tips'); end
   
   def button_dialog(size, name)
     respond_to do |format|
