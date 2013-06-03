@@ -6,9 +6,22 @@ class DojoController < ApplicationController
   def index
     @title = 'Home'
     @id = id
-    @buttons = ['about','basics','donations','faqs','feedback',
-                'links','source', 'recruiting', 'refactoring', 'tips','why' ]
+    @buttons = ['about', 'basics', 'donations', 'faqs',
+                'feedback', 'links', 'source', 'recruiting',
+                'refactoring', 'tips','why' ]
   end
+ 
+  def button_about;       button_dialog(450,'about'); end
+  def button_basics;      button_dialog(800,'basics'); end
+  def button_donations;   button_dialog(750,'donations'); end
+  def button_faqs;        button_dialog(550,'faqs'); end
+  def button_feedback;    button_dialog(500,'feedback'); end
+  def button_links;       button_dialog(550,'links'); end
+  def button_source;      button_dialog(600,'source'); end
+  def button_recruiting;  button_dialog(550,'recruiting'); end
+  def button_refactoring; button_dialog(500,'refactoring'); end
+  def button_tips;        button_dialog(600,'tips'); end
+  def button_why;         button_dialog(850,'why'); end
  
   #------------------------------------------------
   
@@ -30,42 +43,11 @@ class DojoController < ApplicationController
   
   def start_dialog_html(avatar_name)
     @avatar_name = avatar_name
-    filename = Rails.root.to_s + '/app/views/dojo/start_dialog.html.erb'
-    ERB.new(File.read(filename)).result(binding)
+    bind('/app/views/dojo/start_dialog.html.erb')
   end
   
   #------------------------------------------------
   
-  def button_about;       button_dialog(450,'about'); end
-  def button_basics;      button_dialog(800,'basics'); end
-  def button_donations;   button_dialog(750,'donations'); end
-  def button_faqs;        button_dialog(550,'faqs'); end
-  def button_feedback;    button_dialog(500,'feedback'); end
-  def button_links;       button_dialog(550,'links'); end
-  def button_source;      button_dialog(600,'source'); end
-  def button_recruiting;  button_dialog(550,'recruiting'); end
-  def button_refactoring; button_dialog(500,'refactoring'); end
-  def button_tips;        button_dialog(600,'tips'); end
-  def button_why;         button_dialog(850,'why'); end
-  
-  def button_dialog(size, name)
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :html => bind('/app/views/dojo/button_' + name + '_dialog.html.erb'),
-          :size => size
-        }
-      }
-    end
-  end
-  
-  def bind(filename)
-    filename = Rails.root.to_s + filename
-    ERB.new(File.read(filename)).result(binding)
-  end
-  
-  #------------------------------------------------
-
   def resume_json
     exists = Kata.exists?(root_dir, id)
     kata = exists ? Kata.new(root_dir, id) : nil;
@@ -130,8 +112,19 @@ class DojoController < ApplicationController
     end      
   end
   
-  #------------------------------------------------
+private  
 
+  def button_dialog(size, name)
+    respond_to do |format|
+      format.json {
+        render :json => {
+          :html => bind('/app/views/dojo/button_' + name + '_dialog.html.erb'),
+          :size => size
+        }
+      }
+    end
+  end
+  
   def random(array)
     array.shuffle[0]
   end

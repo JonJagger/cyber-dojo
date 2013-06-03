@@ -4,7 +4,9 @@
 $(document).ready(function() {
 
   $('#help').click(function() {
-    cd.dialog_kata_help("<%= @avatar.name %>").dialog('open');
+    $.getJSON('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(json) {
+      cd.dialog(json.html, json.size, name).dialog('open');
+    });
   });
 
 });

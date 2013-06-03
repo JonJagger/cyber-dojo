@@ -34,4 +34,9 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def bind(filename)
+    filename = Rails.root.to_s + filename
+    ERB.new(File.read(filename)).result(binding)
+  end  
+
 end
