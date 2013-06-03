@@ -37,6 +37,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def button_about; button_dialog('about', 450); end
+  def button_basics; button_dialog('basics', 800); end
 
   
   def button_dialog(name, size)
