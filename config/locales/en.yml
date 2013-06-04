@@ -23,6 +23,7 @@ en:
       please_donate: "If you find cyber-dojo useful please<br/>make a donation. All donations are<br/>used solely to buy <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>   <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>. Thank you."
       your_animal_is: "Your animal is the"
       revert: "Click<br/>to &rarr;<br/>revert<br/>"
+      click_to_resume: "Click an animal to resume it"
     buttons:
       setup: "setup"
       start: "start"
