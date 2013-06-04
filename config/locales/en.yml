@@ -2,7 +2,8 @@ en:
   views:
     labels:
       setup: "get a new practice-id"
-      enter_practice_id: "enter a practice-id"
+      a_place_to_practice: "a place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
+      please_donate: "If you find cyber-dojo useful please<br/>make a donation. All donations are<br/>used solely to buy <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>   <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>. Thank you."
     buttons:
       setup: "setup"
       start: "start"

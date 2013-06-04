@@ -3,14 +3,13 @@
 
   <div class="row">
      <% size = 47 %>	  	
-     <%= image_tag("/images/avatars/cyber-dojo.png",	  	
+     <%= image_tag("/images/avatars/cyber-dojo.png",
          :border => 0,	  	
          :size => "#{size}x#{size}",	  	
          :title => 'cyber-dojo') %>	  	
       <span id="cyber-dojo">cyber-dojo</span>
       <div id="a_place_to_practice">
-          a place to <a href="http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html">practice</a>
-          programming
+          <%= raw t("views.labels.a_place_to_practice") %>
       </div>
   </div>  
   
