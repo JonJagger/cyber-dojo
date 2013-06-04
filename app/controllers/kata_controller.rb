@@ -2,7 +2,7 @@
 require 'CodeOutputParser'
 
 class KataController < ApplicationController
-    
+  
   def edit
     @kata = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
@@ -38,25 +38,17 @@ class KataController < ApplicationController
       
   def help_dialog
     @avatar_name = params[:avatar_name]
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :html => bind('/app/views/kata/help_dialog.html.erb'),
-          :size => 550
-        }
-      }
-    end
+    render :json => {
+      :html => bind('/app/views/kata/help_dialog.html.erb'),
+      :size => 550
+    }
   end
       
   def fork_dialog
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :html => bind('/app/views/kata/fork_dialog.html.erb'),
-          :title => 'fork'
-        }
-      }
-    end
+    render :json => {
+      :html => bind('/app/views/kata/fork_dialog.html.erb'),
+      :title => 'fork'
+    }
   end
   
 private

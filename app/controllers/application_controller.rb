@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  include MakeTimeHelper  
+  include MakeTimeHelper
 
   def root_dir
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
@@ -43,7 +43,6 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = session[:locale] || I18n.default_locale
-    logger.debug("#{I18n.locale} = #{session[:locale]} || #{I18n.default_locale}")
   end
 
 end

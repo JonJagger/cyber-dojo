@@ -10,11 +10,9 @@ class DojoController < ApplicationController
  
   def show_dialog
     name = params[:id]
-    respond_to do |format|
-      format.json {
-        render :json => { :html => bind("/app/views/dojo/button_#{name}_dialog.html.erb") }
-      }
-    end
+    render :json => {
+      :html => bind("/app/views/dojo/button_#{name}_dialog.html.erb")
+    }
   end
  
   #------------------------------------------------
@@ -23,16 +21,12 @@ class DojoController < ApplicationController
     exists = Kata.exists?(root_dir, id)
     avatar_name = exists ? start_avatar(Kata.new(root_dir, id)) : nil
     full = (avatar_name == nil)
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :exists => exists,
-          :avatar_name => avatar_name,
-          :full => full,
-          :start_dialog_html => (full ? '' : start_dialog_html(avatar_name))
-        }
-      }
-    end
+    render :json => {
+      :exists => exists,
+      :avatar_name => avatar_name,
+      :full => full,
+      :start_dialog_html => (full ? '' : start_dialog_html(avatar_name))
+    }
   end
   
   def start_dialog_html(avatar_name)
@@ -47,42 +41,32 @@ class DojoController < ApplicationController
     kata = exists ? Kata.new(root_dir, id) : nil;
     live_avatar_names = exists ? kata.avatar_names : [ ]
     empty = (live_avatar_names == [ ])
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :exists => exists,
-          :empty => empty,
-          :resume_dialog_html => (exists ? resume_dialog_html(kata, live_avatar_names) : '')
-        }
-      }
-    end
+    render :json => {
+      :exists => exists,
+      :empty => empty,
+      :resume_dialog_html => (exists ? resume_dialog_html(kata, live_avatar_names) : '')
+    }
   end
 
   def resume_dialog_html(kata, live_avatar_names)
     @kata = kata
     @live_avatar_names = live_avatar_names
-    @all_avatar_names = Avatar.names        
-    filename = Rails.root.to_s + '/app/views/dojo/resume_dialog.html.erb'
-    ERB.new(File.read(filename)).result(binding)    
+    @all_avatar_names = Avatar.names
+    bind('/app/views/dojo/resume_dialog.html.erb')    
   end
   
   #------------------------------------------------
   
   def review_json
     exists = Kata.exists?(root_dir, id)    
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :exists => exists,
-          :review_dialog_html => (exists ? review_dialog_html : '')          
-        }
-      }
-    end
+    render :json => {
+      :exists => exists,
+      :review_dialog_html => (exists ? review_dialog_html : '')          
+    }
   end
   
   def review_dialog_html
-    filename = Rails.root.to_s + '/app/views/dojo/review_dialog.html.erb'
-    ERB.new(File.read(filename)).result(binding)    
+    bind('/app/views/dojo/review_dialog.html.erb')
   end
 
   #------------------------------------------------
