@@ -9,7 +9,7 @@
       </td>
       <td align="center">
         <%= render :partial => 'shared/avatar_image', :locals => { :target => '_blank' } %>
-        <%= render :partial => 'shared/avatar_name' %>
+        <%= render :partial => 'shared/avatar_name', :locals => { :avatar_name => @avatar.name } %>
       </td>
       <td>
       </td>

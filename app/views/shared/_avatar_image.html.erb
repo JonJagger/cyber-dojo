@@ -1,10 +1,5 @@
 
-<% size = 47 %>
-<%= link_to image_tag("/images/avatars/#{@avatar.name}.jpg",
-    :border => 0,
-    :size => "#{size}x#{size}",
-    :title => 'Open a dashboard page',
-    :class => 'cyber_dojo_image'),
+<%= link_to avatar_image(@avatar.name, 47, "Open a new dashboard page"),
     {
       :controller => :dashboard,
       :action => :show,

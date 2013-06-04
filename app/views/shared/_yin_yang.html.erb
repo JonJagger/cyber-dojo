@@ -1,9 +1,5 @@
 
-<% size = 37 %>
-<%= link_to image_tag("/images/avatars/cyber-dojo.png",
-      :border => 0,
-      :size => "#{size}x#{size}",
-      :title => 'Home page'),
+<%= link_to logo_image(37, "Open a new home page"),
       {
         :controller => :dojo,
         :action => :index,
