@@ -4,8 +4,8 @@
 $(document).ready(function() {
 
   $('#help').click(function() {
-    $.getJSON('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(json) {
-      cd.dialog(json.html, json.size, 'help').dialog('open');
+    $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(data) {
+      cd.dialog(data, null, 'help').dialog('open');
     });
   });
 
@@ -17,4 +17,4 @@ $(document).ready(function() {
        class="button"
        title="Show help"
        id="help"
-       value="help"/>
+       value="<%= t("views.buttons.help") %>" />
