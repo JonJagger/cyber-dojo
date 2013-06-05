@@ -1,5 +1,5 @@
 
-<table>
+<table data-width="550">
   
   <tr>
     <td>
@@ -24,13 +24,13 @@
             <table>
               <tr>
                 <td>
-                  <img alt="<%= @avatar_name %>"
+                  <img alt="<%= translate_avatar @avatar_name %>"
                        class="avatar_image"
                        width="57"
                        height="57"
                        style="float: left; padding: 2px;"
                        src="/images/avatars/<%= @avatar_name %>.jpg"
-                       title="<%= @avatar_name %>" />                  
+                       title="<%= translate_avatar @avatar_name %>" />
                 </td>
                 <td>
                   opens a <br/> dashboard <br/> page
