@@ -1,6 +1,6 @@
 
 <div align="center">
-  <div class="medium">Click an animal to resume it</div>  
+  <div class="medium"><%= t("views.labels.click_to_resume") %></div>
   <table cellspacing="0" cellpadding="0">
     <% index = 0 %>
     <% size = 60 %>
@@ -16,14 +16,14 @@
                width="<%= size %>"
                height="<%= size %>" />          
           <div align="left">
-            <b><%= avatar_name %></b>
+            <b><%= translate_avatar avatar_name %></b>
           </div>
         <% else %>
           <img src="/images/avatars/bw/<%= avatar_name %>.jpg"
                width="<%= size %>"
                height="<%= size %>"/>
           <div align="left" style="color:Gray;">
-            <%= avatar_name %>
+            <b><%= translate_avatar avatar_name %></b>
           </div>
         <% end %>      
         <% index += 1 %>
