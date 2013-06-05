@@ -4,8 +4,8 @@
 $(document).ready(function() {
 
   $('#help').click(function() {
-    $.getJSON('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(json) {
-      cd.dialog(json.html, json.size, name).dialog('open');
+    $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(data) {
+      cd.dialog(data, null, 'help').dialog('open');
     });
   });
 

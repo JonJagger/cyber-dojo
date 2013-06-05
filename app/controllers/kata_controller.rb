@@ -38,14 +38,7 @@ class KataController < ApplicationController
       
   def help_dialog
     @avatar_name = params[:avatar_name]
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :html => bind('/app/views/kata/help_dialog.html.erb'),
-          :size => 550
-        }
-      }
-    end
+    render layout: false
   end
       
   def fork_dialog
