@@ -51,12 +51,7 @@
          <% end %>
                    
          <td align="center" valign="center">           
-            <% size = 45 %>
-            <%= link_to image_tag("/images/avatars/#{avatar_name}.jpg",
-                :border => 0,
-                :size => "#{size}x#{size}",
-                :title => "Show #{avatar_name}'s current code",
-                :class => 'avatar_image'),
+            <%= link_to avatar_image(avatar_name,45,"Show #{avatar_name}'s current code"),
                 {
                   :controller => :diff,
                   :action => :show,
@@ -67,9 +62,9 @@
                 },
                 :target => '_blank'
             %>
-           <div class="tiny">
-             <%= avatar_name %>
-           </div>
+           <%= render :partial => 'shared/avatar_name',
+                     :locals => { :avatar_name => avatar_name
+                                } %>
          </td>
          
         <td>

@@ -2,11 +2,7 @@
 <div style="font-size: 1.5em;">
 
   <div class="row">
-     <% size = 47 %>	  	
-     <%= image_tag("/images/avatars/cyber-dojo.png",
-         :border => 0,	  	
-         :size => "#{size}x#{size}",	  	
-         :title => 'cyber-dojo') %>	  	
+      <%= logo_image(47,"cyber-dojo") %>
       <span id="cyber-dojo">cyber-dojo</span>
       <div id="a_place_to_practice">
           <%= raw t("views.labels.a_place_to_practice") %>

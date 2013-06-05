@@ -43,7 +43,7 @@ en:
       new: "new"
       rename: "rename"
       delete: "delete"
-      help: "?"
+      help: "help"
       fork: "fork"
       feedback: "feedback"
       test: "test"
