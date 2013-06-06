@@ -89,6 +89,7 @@ div[class~="filename"]:after  { content: $retained-space; }
 
 div[class~="filename"]
 {
+  @include font-size-small();  
   background: $darker-color;
   color: $lighter-color;
   margin: none;

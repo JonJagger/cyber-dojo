@@ -11,13 +11,6 @@
   padding-right: 0.2em;
 }
 
-#file_operations #new,
-#file_operations #rename,
-#file_operations #delete
-{
-  @include font-size-tiny();
-}
-
 #file_operations #new:before,
 #file_operations #new:after,
 #file_operations #rename:before,
@@ -27,10 +20,14 @@
 #help:before, #help:after
 #fork:before, #fork:after
 #feedback:before, #feedback:after
+#id:before, #id:after
 {
   content: $retained-space;
 }
 
+#file_operations #new,
+#file_operations #rename,
+#file_operations #delete,
 #id, #feedback, #help, #fork
 {
   @include font-size-tiny();

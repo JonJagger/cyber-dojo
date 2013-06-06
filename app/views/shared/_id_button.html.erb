@@ -43,8 +43,9 @@ $(document).ready(function() {
 
 //--></script>
 
-<input type="button"
-       class="button"
-       title="Show dojo info"
-       id="id"
-       value="<%= @kata.id[0..5] %>"/>
+<div type="button"
+     class="button"
+     title="Show dojo info"
+     id="id">
+  <%= @kata.id[0..5] %>
+</div>
