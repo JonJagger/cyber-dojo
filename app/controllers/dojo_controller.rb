@@ -10,9 +10,8 @@ class DojoController < ApplicationController
  
   def show_dialog
     name = params[:id]
-    render :json => {
-      :html => bind("/app/views/dojo/button_#{name}_dialog.html.erb")
-    }
+    render :partial => "/dojo/button_#{name}.html.erb",
+           :layout => false    
   end
  
   #------------------------------------------------
