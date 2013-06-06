@@ -9,10 +9,7 @@
             <table>
               <tr>
                 <td>
-                  <img width="57"
-                       height="57"
-                       style="float: left; padding: 2px;"
-                       src="/images/avatars/cyber-dojo.png"/>
+                  <%= logo_image(57,'') %>
                 </td>
                 <td>
                   opens a home page
@@ -24,13 +21,7 @@
             <table>
               <tr>
                 <td>
-                  <img alt="<%= translate_avatar @avatar_name %>"
-                       class="avatar_image"
-                       width="57"
-                       height="57"
-                       style="float: left; padding: 2px;"
-                       src="/images/avatars/<%= @avatar_name %>.jpg"
-                       title="<%= translate_avatar @avatar_name %>" />
+                  <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
                 </td>
                 <td>
                   opens a dashboard page
