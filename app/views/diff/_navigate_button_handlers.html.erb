@@ -67,10 +67,14 @@ $(document).ready(function() {
   var  nextButton = $('#next_button');
   var  lastButton = $('#last_button');
 
-  // every 10 seconds _heartbeat.html.erb causes heartbeat.js.erb to re-run these
+  // Every 10 seconds _heartbeat.html.erb causes heartbeat.js.erb to re-run these.
+  // Thus, if the diff is on the last test and the animal runs another test then
+  // the next/last buttons can become enabled.
   refresh(minTag >= wasTag, firstButton, prevButton, minTag, minTag+tagGap, wasTag-1, nowTag-1);
   refresh(nowTag >= maxTag, nextButton, lastButton, wasTag+1, nowTag+1, maxTag-tagGap, maxTag);
 
+  // Every 10 seconds _heartbeat.html.erb causes heartbeat.js.erb to re-run these
+  // Thus I have to unbind all keyups so the new keyup one is the only one.
   wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
   nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
 });
