@@ -6,7 +6,7 @@ var cyberDojo = (function(cd, $) {
   cd.dialog_dashboard_tips = function() {
 
     var traffic_light = function(colour) {
-        return  '<img src="/images/traffic_light_' +colour + '.png"'
+        return  '<img src="/images/traffic_light_' + colour + '.png"'
                 +   ' width="15"'
                 +   ' height="45"/> ';
     };
