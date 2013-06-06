@@ -23,7 +23,10 @@
 #file_operations #rename:before,
 #file_operations #rename:after,
 #file_operations #delete:before,
-#file_operations #delete:after
+#file_operations #delete:after,
+#help:before, #help:after
+#fork:before, #fork:after
+#feedback:before, #feedback:after
 {
   content: $retained-space;
 }
