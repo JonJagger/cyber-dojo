@@ -27,8 +27,8 @@ $(document).ready(function() {
   };
   
   $('#fork').click(function() {  
-    $.getJSON('/kata/fork_dialog', function(json) {
-      dialog_fork(json.html, json.title).dialog('open');
+    $.get('/kata/fork_dialog', function(html) {
+      dialog_fork(html, 'fork').dialog('open');
     });
   });
 

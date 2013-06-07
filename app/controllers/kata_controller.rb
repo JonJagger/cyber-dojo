@@ -42,10 +42,7 @@ class KataController < ApplicationController
   end
       
   def fork_dialog
-    render :json => {
-      :html => bind('/app/views/kata/fork_dialog.html.erb'),
-      :title => 'fork'
-    }
+    render layout: false
   end
   
 private
