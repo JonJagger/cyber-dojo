@@ -37,11 +37,11 @@ class GitDiffViewTests < ActionController::TestCase
     {
       'untitled.rb' =>
       [
-        { :line => "def answer", :type => :same,  :number => 1 },
+        { :line => "def answer", :type => :same,    :number => 1 },
         { :type => :section, :index => 0 },        
         { :line => "  42",       :type => :deleted, :number => 2 },
-        { :line => "  54",       :type => :added, :number => 2 },
-        { :line => "end",        :type => :same,  :number => 3 },
+        { :line => "  54",       :type => :added,   :number => 2 },
+        { :line => "end",        :type => :same,    :number => 3 },
       ],
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh' => sameify(cyberdojo_sh)

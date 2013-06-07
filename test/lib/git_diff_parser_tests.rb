@@ -57,13 +57,13 @@ class GitDiffParserTests < ActionController::TestCase
 line = <<HERE
 "\\\\was"
 HERE
-    assert_equal '"', line[0].chr
+    assert_equal '"',  line[0].chr
     assert_equal "\\", line[1].chr
     assert_equal "\\", line[2].chr
-    assert_equal "w", line[3].chr
-    assert_equal "a", line[4].chr
-    assert_equal "s", line[5].chr
-    assert_equal '"', line[6].chr
+    assert_equal "w",  line[3].chr
+    assert_equal "a",  line[4].chr
+    assert_equal "s",  line[5].chr
+    assert_equal '"',  line[6].chr
   end
   
   #-----------------------------------------------------
@@ -102,7 +102,7 @@ expected =
     ],
     :was_filename => "a/sandbox/\\was_newfile_FIU", # <------ single backslash
     :now_filename => '/dev/null',
-    :chunks => 
+    :chunks       => 
     [
       {
         :range =>
@@ -114,8 +114,8 @@ expected =
         [
           {
             :deleted_lines => [ "Please rename me!"],
-            :added_lines => [ ],
-            :after_lines => [ ]
+            :added_lines   => [ ],
+            :after_lines   => [ ]
           }
         ],
         :before_lines => [ ]
@@ -152,7 +152,7 @@ expected =
     ],
     :was_filename => 'a/sandbox/original',
     :now_filename => '/dev/null',
-    :chunks => [ ]
+    :chunks       => [ ]
   }
 }
 
@@ -198,21 +198,21 @@ expected =
           :was =>
           {
             :start_line => 1,
-            :size => 3
+            :size       => 3
           },
           :now =>
           {
             :start_line => 0,
-            :size => 0
+            :size       => 0
           }
         },
         :before_lines => [ ],
-        :sections =>
+        :sections     =>
         [
           {
           :deleted_lines => ["def answer", "  42", "end"],
-          :added_lines => [ ],
-          :after_lines => [ ]
+          :added_lines   => [ ],
+          :after_lines   => [ ]
           }
         ]
       }
@@ -258,7 +258,7 @@ expected =
     ],
     :was_filename => 'a/sandbox/was_\\wa s_newfile_FIU', # <------ single backslash
     :now_filename => 'b/sandbox/\\was_newfile_FIU', # <------ single backslash
-    :chunks => [ ]
+    :chunks       => [ ]
   }
 }
     parser = GitDiffParser.new(lines)    
@@ -291,7 +291,7 @@ expected =
     ],
     :was_filename => 'a/sandbox/oldname',
     :now_filename => 'b/sandbox/newname',
-    :chunks => [ ]
+    :chunks       => [ ]
   }
 }
 
@@ -352,7 +352,7 @@ expected_diff =
                 {
                   :deleted_lines => [ "obir obri oibr oirb orbi orib" ],
                   :added_lines   => [ "obir obri oibr oirb orbi oribx" ],
-                  :after_lines => [ ]
+                  :after_lines   => [ ]
                 }, # section
               ] # sections
             } # chunk
@@ -409,7 +409,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -418,12 +418,12 @@ HERE
                 :now => { :start_line => 1, :size => 7 },
               },
               :before_lines => [ "1", "2", "3"],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "4" ],
                   :added_lines   => [ "4a" ],
-                  :after_lines => [ "5", "6", "7" ]
+                  :after_lines   => [ "5", "6", "7" ]
                 }, # section
               ] # sections
             } # chunk
@@ -448,12 +448,12 @@ HERE
                 :now => { :start_line => 1, :size => 6 },
               },
               :before_lines => [ "1", "2"],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "3", "4" ],
                   :added_lines   => [ "3a", "4a" ],
-                  :after_lines => [ "5", "6" ]
+                  :after_lines   => [ "5", "6" ]
                 }, # section
               ] # sections
             } # chunk
@@ -577,7 +577,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -586,12 +586,12 @@ HERE
                 :now => { :start_line => 1, :size => 5 },
               },
               :before_lines => [ "1" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "2" ],
                   :added_lines   => [ "2a" ],
-                  :after_lines => [ "3", "4", "5" ]
+                  :after_lines   => [ "3", "4", "5" ]
                 }, # section
               ] # sections
             }, # chunk
@@ -602,12 +602,12 @@ HERE
                 :now => { :start_line => 8, :size => 6 },
               },
               :before_lines => [ "8", "9", "10" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "11" ],
                   :added_lines   => [ "11a" ],
-                  :after_lines => [ "12", "13" ]
+                  :after_lines   => [ "12", "13" ]
                 }, # section
               ] # sections              
             }
@@ -638,12 +638,12 @@ HERE
           :now => { :start_line => 1, :size => 4 },
         },
         :before_lines => [ ],
-        :sections =>
+        :sections     =>
         [
           {
             :deleted_lines => [ "1" ],
             :added_lines   => [ "1a" ],
-            :after_lines => [ "2", "3", "4" ]
+            :after_lines   => [ "2", "3", "4" ]
           }, # section
         ] # sections
       } # chunk
@@ -678,17 +678,17 @@ HERE
             :now => { :start_line => 1, :size => 8 },
           },
           :before_lines => [ "1", "2" ],
-          :sections =>
+          :sections     =>
           [
             {
               :deleted_lines => [ "3" ],
               :added_lines   => [ "3a" ],
-              :after_lines => [ "4" ]
+              :after_lines   => [ "4" ]
             }, # section
             {
               :deleted_lines => [ "5" ],
               :added_lines   => [ "5a" ],
-              :after_lines => [ "6", "7", "8" ]
+              :after_lines   => [ "6", "7", "8" ]
             }, # section            
           ] # sections
         } # chunk
@@ -728,7 +728,7 @@ HERE
       ],
       :was_filename => 'a/sandbox/gapper.rb',
       :now_filename => 'b/sandbox/gapper.rb',
-      :chunks => 
+      :chunks       => 
       [
         {
           :range => 
@@ -978,7 +978,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/test_gapper.rb',
         :now_filename => 'b/sandbox/test_gapper.rb',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -987,11 +987,11 @@ HERE
                 :now => { :start_line => 9, :size => 3 },
               },
               :before_lines => [ ],
-              :sections =>
+              :sections     =>
               [
                 { :deleted_lines => [ "p Timw.now" ],
                   :added_lines   => [ "p Time.now" ],
-                  :after_lines => [ ]
+                  :after_lines   => [ ]
                 }
               ]
             },
@@ -1002,12 +1002,12 @@ HERE
                 :now => { :start_line => 19, :size => 3 },
               },
               :before_lines => [ ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "q Timw.now" ],
                   :added_lines   => [ "q Time.now" ],
-                  :after_lines => [ ]
+                  :after_lines   => [ ]
                 }
               ]      
             }
@@ -1049,7 +1049,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -1058,17 +1058,17 @@ HERE
                 :now => { :start_line => 5, :size => 9 },
               },
               :before_lines => [ "5", "6", "7" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "8" ],
                   :added_lines   => [ "8a" ],
-                  :after_lines => [ "9" ]
+                  :after_lines   => [ "9" ]
                 },
                 {
                   :deleted_lines => [ "10" ],
                   :added_lines   => [ "10a" ],
-                  :after_lines => [ "11", "12", "13" ]
+                  :after_lines   => [ "11", "12", "13" ]
                 } # section
               ] # sections
             } # chunk      
@@ -1111,7 +1111,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -1120,17 +1120,17 @@ HERE
                 :now => { :start_line => 5, :size => 10 },
               },
               :before_lines => [ "5", "6", "7" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "8" ],
                   :added_lines   => [ "8a" ],
-                  :after_lines => [ "9", "10" ]
+                  :after_lines   => [ "9", "10" ]
                 },
                 {
                   :deleted_lines => [ "11" ],
                   :added_lines   => [ "11a" ],
-                  :after_lines => [ "12", "13", "14" ]
+                  :after_lines   => [ "12", "13", "14" ]
                 } # section
               ] # sections
             } # chunk      
@@ -1177,7 +1177,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -1186,17 +1186,17 @@ HERE
                 :now => { :start_line => 5, :size => 14 },
               },
               :before_lines => [ "5", "6", "7" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "8" ],
                   :added_lines   => [ "8a" ],
-                  :after_lines => [ "9", "10", "11", "12", "13", "14" ]
+                  :after_lines   => [ "9", "10", "11", "12", "13", "14" ]
                 },
                 {
                   :deleted_lines => [ "15" ],
                   :added_lines   => [ "15a" ],
-                  :after_lines => [ "16", "17" ]
+                  :after_lines   => [ "16", "17" ]
                 } # section
               ] # sections
             } # chunk      
@@ -1245,7 +1245,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>
@@ -1254,12 +1254,12 @@ HERE
                 :now => { :start_line => 5, :size => 7 },
               },
               :before_lines => [ "5", "6", "7" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "8" ],
                   :added_lines   => [ "8a" ],
-                  :after_lines => [ "9", "10", "11" ]
+                  :after_lines   => [ "9", "10", "11" ]
                 }
               ]
             },
@@ -1270,12 +1270,12 @@ HERE
                 :now => { :start_line => 13, :size => 7 },
               },
               :before_lines => [ "13", "14", "15" ],
-              :sections =>
+              :sections     =>
               [
                 {
                   :deleted_lines => [ "16" ],
                   :added_lines   => [ "16a" ],
-                  :after_lines => [ "17", "18", "19" ]
+                  :after_lines   => [ "17", "18", "19" ]
                 } # section
               ] # sections
             } # chunk      
@@ -1324,7 +1324,7 @@ HERE
           ],
         :was_filename => 'a/sandbox/CircularBufferTest.cpp',
         :now_filename => 'b/sandbox/CircularBufferTest.cpp',
-        :chunks =>
+        :chunks       =>
           [
             {
               :range =>

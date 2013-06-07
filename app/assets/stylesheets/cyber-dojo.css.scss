@@ -60,13 +60,15 @@ input[value="output"]+label     // from diff-page
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.button
+div[class~="button"]
 {
   background: $lighter-color;
   @include gradient-darken($lighter-color, 20%, 10%, 5%); 
   color: $darker-color;    
   cursor: pointer;
-  padding: 0em 0.2em 0.1em 0.2em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-bottom: 0.1em;
   text-decoration: none;
   font-weight: normal;
   border: none;
@@ -74,7 +76,7 @@ input[value="output"]+label     // from diff-page
   display: inline-block;
 }
 
-.button[disabled]
+div[class~="button"][disabled]
 {
   background: lighten($darker-color, 20%);
   cursor: default;
@@ -82,18 +84,14 @@ input[value="output"]+label     // from diff-page
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-$retained-space: "\00a0";
-
-div[class~="filename"]:before { content: $retained-space; }
-div[class~="filename"]:after  { content: $retained-space; } 
-
 div[class~="filename"]
 {
   @include font-size-small();  
   background: $darker-color;
   color: $lighter-color;
   margin: none;
-  padding: none;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
@@ -119,12 +117,14 @@ div[class~="filename"][class~="selected"] input+label
   cursor: default;  
 }
 
-div[class~="filename"]:hover, .button:hover
+div[class~="filename"]:hover, div[class~="button"]:hover
 {
   border: 2px dotted lighten($darker-color, 20%);
 }
 
-div[class~="filename"], .button[disabled]:hover, .button
+div[class~="filename"],
+div[class~="button"][disabled]:hover,
+div[class~="button"]
 {
   // match the hover settings above so the filenames
   // retains their vertical position in the list

@@ -53,9 +53,9 @@ class TdGapperTests < ActionController::TestCase
     {
       :avatars =>
       {
-        :hippo => { 1 => [ t1 ], 4 => [ t2 ] },
+        :hippo => { 1 => [ t1 ], 4 => [ t2    ] },
         :lion  => { 1 => [ t3 ], 4 => [ t4,t5 ] },
-        :panda => { 5 => [ t6 ] }
+        :panda => {                             5 => [ t6 ] }
       },
       :td_nos => [0,1,4,5,7]
     }    
@@ -84,9 +84,9 @@ class TdGapperTests < ActionController::TestCase
     }
     expected = 
     {
-      :hippo => { 0 => [ ], 1 => [ t1 ], 4 => [ t2 ],    5 => [ ],    7 => [ ] },
-      :lion  => { 0 => [ ], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [ ],    7 => [ ] },
-      :panda => { 0 => [ ], 1 => [ ],    4 => [ ],       5 => [ t6 ], 7 => [ ] }
+      :hippo => { 0 => [ ], 1 => [ t1 ], 4 => [ t2    ], 5 => [    ], 7 => [ ] },
+      :lion  => { 0 => [ ], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [    ], 7 => [ ] },
+      :panda => { 0 => [ ], 1 => [    ], 4 => [       ], 5 => [ t6 ], 7 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     s = gapper.stats(all_incs, now)
@@ -157,9 +157,9 @@ class TdGapperTests < ActionController::TestCase
     }
     expected = 
     {
-      :hippo => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2 ],    5 => [ ],    6 => { :collapsed => 4321}, 4327 => [ ] },
-      :lion  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [ ],    6 => { :collapsed => 4321}, 4327 => [ ] },
-      :panda => { 0 => [ ], 1 => [ ],    2 => [ ], 3 => [ ], 4 => [ ],       5 => [ t6 ], 6 => { :collapsed => 4321}, 4327 => [ ] }
+      :hippo => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
+      :lion  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
+      :panda => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     actual = gapper.fully_gapped(all_incs, now)

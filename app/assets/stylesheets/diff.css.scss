@@ -68,19 +68,19 @@
 @mixin line-count
 {
   text-align: right;
-  margin: 0px;
-  padding: 0em 0.2em 0em 0.2em; // to match .button
-  @include font-size-small();  // to match class~=filename
+  margin: none;
+  padding: 0em 0.2em 0em 0.2em;
+  @include font-size-small();  // to match div[class~=filename]
 }
 
-.diff-deleted-line-count
+div[class~="diff-deleted-line-count"]
 {
   background: $diff-deleted-color;
   color: $darker-color;
   @include line-count;
 }
 
-.diff-added-line-count
+div[class~="diff-added-line-count"]
 {
   background: $diff-added-color;
   color: $darker-color;

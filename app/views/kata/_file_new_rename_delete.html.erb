@@ -4,6 +4,7 @@
 $(document).ready(function() {
 
   var fileButtons =  $('#file_operations');
+
   fileButtons.find('#new').click(function() {
     cd.newFile(); 
   });
@@ -21,13 +22,25 @@ $(document).ready(function() {
 <div id="file_operations">
   <table>
     <tr>
-      <td class="button" id="new"><%= t("views.buttons.new") %></td>
+      <td>
+        <div class="button" id="new">
+          <%= t("views.buttons.new") %>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td class="button" id="rename"><%= t("views.buttons.rename") %></td>
+      <td>
+        <div class="button" id="rename">
+          <%= t("views.buttons.rename") %>
+        </div>
+      </td>
     </tr>
     <tr>
-      <td class="button" id="delete"><%= t("views.buttons.delete") %></td>
+      <td>
+        <div class="button" id="delete">
+          <%= t("views.buttons.delete") %>
+        </div>
+      </td>
     </tr>
   </table>
 </div>

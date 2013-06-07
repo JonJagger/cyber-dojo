@@ -11,20 +11,6 @@
   padding-right: 0.2em;
 }
 
-#file_operations #new:before,
-#file_operations #new:after,
-#file_operations #rename:before,
-#file_operations #rename:after,
-#file_operations #delete:before,
-#file_operations #delete:after,
-#help:before, #help:after
-#fork:before, #fork:after
-#feedback:before, #feedback:after
-#id:before, #id:after
-{
-  content: $retained-space;
-}
-
 #file_operations #new,
 #file_operations #rename,
 #file_operations #delete,
