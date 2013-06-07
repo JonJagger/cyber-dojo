@@ -430,7 +430,7 @@ o) I have worked hard to <em>remove</em> features from cyber-dojo. My idea
    collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
-   Mike Sutton too. Olve, Mike, Johannes and Mike - I really appreciate all
-   your help and encouragement.
+   Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
+   Michel - I really appreciate all your help and encouragement.
 o) James Grenning uses Cyber-Dojo a lot, via his own Turnkey S3 cloud servers.
    James, you've been an awesome "customer". Thanks.
