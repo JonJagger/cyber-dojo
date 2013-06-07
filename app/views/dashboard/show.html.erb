@@ -1,17 +1,13 @@
 
 <table>
   <tr>
-    <td align="center">
-      <%= render :partial => 'shared/yin_yang' %>
-      <br/>
-      <%= render :partial => 'shared/id_button' %>
+    <td>
+      <%= render :partial => 'shared/logo_with_id' %>
     </td>
     
     <td>
-      <div style="margin: 0.5em;">
-        <div id="age">
-          <%= render :partial => 'age' %>
-        </div>
+      <div id="age">
+        <%= render :partial => 'age' %>
       </div>
     </td>
         
@@ -20,7 +16,7 @@
     </td>
     
     <td valign="center">
-      <table cellpadding="0" cellspacing="0" style="margin:0.5em;" class="panel">
+      <table class="panel">
         <tr>
           <td>
             <%= render :partial => 'tips_button' %>
@@ -40,7 +36,6 @@
     </td>
 
   </tr>
-
 </table>
   
 <div id="traffic_lights">

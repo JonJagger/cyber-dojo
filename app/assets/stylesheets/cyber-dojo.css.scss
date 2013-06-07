@@ -60,7 +60,7 @@ input[value="output"]+label     // from diff-page
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-div[class~="button"]
+div[class~="button"], input[class~="button"]
 {
   background: $lighter-color;
   @include gradient-darken($lighter-color, 20%, 10%, 5%); 
