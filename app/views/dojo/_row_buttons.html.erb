@@ -16,7 +16,7 @@ $(document).ready(function () {
 
   $('.show-dialog-button').click(function () {
     var name = $(this).attr('id');
-    $.get('/dojo/show_dialog/' + name, function(html) {
+    $.get('/dojo/button_dialog/' + name, function(html) {
       cd.dialog(html, null, name).dialog('open');
     });
 
