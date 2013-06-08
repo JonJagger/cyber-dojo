@@ -1,5 +1,8 @@
 
-#avatar_name
+#file_operations #new,
+#file_operations #rename,
+#file_operations #delete,
+#help, #fork
 {
   @include font-size-tiny();
 }
@@ -19,10 +22,3 @@
 /* eg shared-page id */
 /*************************************/
 
-#file_operations #new,
-#file_operations #rename,
-#file_operations #delete,
-#id, #feedback, #help, #fork
-{
-  @include font-size-tiny();
-}
