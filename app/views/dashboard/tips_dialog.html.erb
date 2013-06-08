@@ -4,13 +4,9 @@
     <td>
       <div class="panel">        
           Look for
-          <img src="/images/traffic_light_red.png"
-               width="15"
-               height="45"/>          
+          <%= traffic_light_image('red',15,45) %>
           &rarr;&nbsp;
-          <img src="/images/traffic_light_green.png"
-               width="15"
-               height="45"/>          
+          <%= traffic_light_image('green',15,45) %>
           progressions as evidence of
           starting with a failing test.
       </div>
@@ -21,13 +17,9 @@
     <td>
       <div class="panel">
           Look for
-          <img src="/images/traffic_light_green.png"
-               width="15"
-               height="45"/>          
+          <%= traffic_light_image('green',15,45) %>          
           &rarr;&nbsp;
-          <img src="/images/traffic_light_green.png"
-               width="15"
-               height="45"/>          
+          <%= traffic_light_image('green',15,45) %>          
           progressions as evidence of
           refactoring.
       </div>
@@ -38,13 +30,9 @@
     <td>
       <div class="panel">
           Look for
-          <img src="/images/traffic_light_amber.png"
-               width="15"
-               height="45"/>          
+          <%= traffic_light_image('amber',15,45) %>                    
           &rarr;&nbsp;
-          <img src="/images/traffic_light_amber.png"
-               width="15"
-               height="45"/>          
+          <%= traffic_light_image('amber',15,45) %>                    
           progressions as evidence of
           overly ambitious steps.
       </div>

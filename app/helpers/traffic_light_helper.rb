@@ -35,7 +35,15 @@ module TrafficLightHelper
     if inc[:revert_tag]
       filename += "_revert"
     end
-    ("<img src='/images/#{filename}.png'" +
+    base_traffic_light_image(filename + '.png',width,height)
+  end
+  
+  def traffic_light_image(colour,width,height)
+    base_traffic_light_image("traffic_light_#{colour}.png",width,height)
+  end
+  
+  def base_traffic_light_image(filename,width,height)
+    ("<img src='/images/#{filename}'" +
       " border='0'" +
       " width='#{width}'" +
       " height='#{height}'/>").html_safe    
