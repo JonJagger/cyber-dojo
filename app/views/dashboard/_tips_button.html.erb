@@ -4,7 +4,9 @@
 $(document).ready(function() {
 
   $('#tips').click(function() {
-    cd.dialog_dashboard_tips().dialog('open');
+    $.get('/dashboard/tips_dialog/', function(html) {
+      cd.dialog(html, null, 'tips').dialog('open');
+    });
   });
 
 });

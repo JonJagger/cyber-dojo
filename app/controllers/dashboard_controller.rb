@@ -30,6 +30,10 @@ class DashboardController < ApplicationController
     value > 0 ? value : default    
   end
   
+  def tips_dialog
+    render :layout => false        
+  end
+  
   def download
     # an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
     # however, I flatten out this inner/outer folder structure
