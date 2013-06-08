@@ -14,3 +14,16 @@
 }
 
 .light_margin.panel { background: $lighter-color; }
+
+#ok, #cancel
+{
+  @include font-size-large();
+}
+
+#exercise_list
+{
+  height: 35em;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+

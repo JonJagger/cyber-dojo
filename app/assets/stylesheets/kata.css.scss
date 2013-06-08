@@ -11,6 +11,14 @@
   padding-right: 0.2em;
 }
 
+/*************************************/
+/* make outer div have id==view-page */
+/* then use it to create nested css  */
+/* eg dashboard-page tips vs home-page tips    */
+/* eg shared-page feedback */
+/* eg shared-page id */
+/*************************************/
+
 #file_operations #new,
 #file_operations #rename,
 #file_operations #delete,

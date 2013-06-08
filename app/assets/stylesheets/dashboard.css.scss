@@ -1,5 +1,23 @@
 
-#seconds_per_column, #maximum_columns 
+.traffic_light_tip
+{
+  @include font-size-large();  /* CURRENTLY NOT WORKING */
+}
+
+#dashboard-page #seconds_per_column_text,
+#dashboard-page #seconds_per_column,
+#dashboard-page #maximum_columns_text,
+#dashboard-page #maximum_columns,
+#dashboard-page #auto_refresh_text,
+#dashboard-page #auto_refresh,
+#dashboard-page #tips,
+#dashboard-page #download
+{
+  @include font-size-tiny();
+}
+
+#dashboard-page #seconds_per_column,
+#dashboard-page #maximum_columns 
 {
   background: $lighter-color;
   @include gradient-darken($lighter-color, 20%, 10%, 5%);     
@@ -12,14 +30,6 @@
 {
   @include font-size-small();
   text-align: center;
-}
-
-.traffic_light_tip,
-#auto_refresh_text, #auto_refresh,
-#seconds_per_column_text, #seconds_per_column,
-#maximum_columns_text, #maximum_columns,
-{
-  @include font-size-tiny();
 }
 
 #traffic_lights .row td { padding: 0em; }

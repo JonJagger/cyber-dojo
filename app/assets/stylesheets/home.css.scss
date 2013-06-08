@@ -12,7 +12,6 @@ $text-color: darken($lighter-color, 10%);
   color: $text-color;
   @include font-size-largest();
 }
-
 a:link, a:visited
 {
   color: $text-color;
@@ -70,7 +69,8 @@ a:link, a:visited
   @include font-size-medium();
 }
 
-#about, #basics, #donations, #faqs, #feedback, #links, #source, #refactoring, #recruiting, #tips, #why
+#about, #basics, #donations, #faqs, #feedback, #links,
+#source, #refactoring, #recruiting, #tips, #why
 {
   @include font-size-tiny();
 }
@@ -79,18 +79,6 @@ a:link, a:visited
 {
   color: darken($lighter-color, 10%);  
   @include font-size-tiny();
-}
-
-#ok, #cancel
-{
-  @include font-size-large();
-}
-
-#exercise_list
-{
-  height: 35em;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 #thank_you
