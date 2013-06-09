@@ -23,7 +23,7 @@ dojo id concatenated with the animal name. Of course the sub-folder
 would not be deleted.
 This will require careful file control to ensure if a file has
 been deleted in the browser then it is also deleted in the sandbox.
-And if a file has not has its contents changed then it is not recreated
+And if a file has not had its contents changed then it is not recreated
 in the sandbox. 
 This will also leave them in place available for debugging if problems arise.
 This would mean I would need to move the sandboxes
@@ -73,6 +73,11 @@ Seems to be a problem local to me.
 
 FUTURE-MINOR
 ------------
+rename fork to branch?
+-----
+Edit help dialog needs to show fork icon. Or the word fork now that the
+  overly subtle fork-icon has been dropped.
+-----
 Opening file when you start is the output file and it says something like
   "code and tests have been submitted to the server..."
 -----
@@ -96,10 +101,6 @@ I'd like to record the ip-address of each animal in a dojo and have a
   o) laptop1 unsuspends, and its heartbeat now detects that
     it is no longer the hippo.
   So not sure I need this.
------
-Edit help dialog needs to show fork icon. Or the word fork now that the
-  overly subtle fork-icon has been dropped.
------
 Hitting fork button brings up dialog box (which will ultimately have
   ability to move files between visible and hidden sections)
 -----

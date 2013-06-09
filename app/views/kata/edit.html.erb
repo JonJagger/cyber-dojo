@@ -15,7 +15,7 @@ $(document).ready(function() {
     return $.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
   };  
 
-  if (<%= @traffic_lights == [ ] -%>) {            
+  if (<%= @traffic_lights == [ ] %>) {            
     cd.testForm().submit();
   }
 
@@ -24,7 +24,7 @@ $(document).ready(function() {
 //--></script>
 
 <%= form_tag( { :action => 'run_tests',
-                :id => @kata.id,
+                :id     => @kata.id,
                 :avatar => @avatar.name
               },
                 :remote => true ) do %>  
