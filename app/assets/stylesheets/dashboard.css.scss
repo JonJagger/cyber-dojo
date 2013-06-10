@@ -32,6 +32,7 @@
   text-align: center;
 }
 
+#traffic_lights img { padding-left: 2px; }
 #traffic_lights .row td { padding: 0em; }
 #traffic_lights .row.odd td  { background: lighten($darker-color, 5%); }
 #traffic_lights .omission { font-size: 0.7em; color: Gray; }
