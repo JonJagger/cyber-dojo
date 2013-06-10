@@ -66,7 +66,7 @@ $(document).ready(function() {
     <% n_deleted = file[:deleted_line_count] %>
     <% n_added   = file[:added_line_count]   %>
     <tr>
-      <td align="left">        
+      <td class="align-left">        
         <div class="filename"
              id="<%= file[:id] %>" >
           <input id="radio_<%= file[:id] %>"
@@ -79,7 +79,7 @@ $(document).ready(function() {
           </label>
         </div>
       </td>    
-      <td align="right">
+      <td class="align-right">
         <% if n_deleted > 0 %>
             <div class="diff-deleted-line-count button">
               <%= n_deleted %>
@@ -90,7 +90,7 @@ $(document).ready(function() {
       <td>
         &nbsp;
       </td>
-      <td align="right">
+      <td class="align-right">
         <% if n_added > 0 %>
           <div class="diff-added-line-count button">
             <%= n_added %>

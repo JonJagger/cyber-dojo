@@ -57,12 +57,12 @@ $(document).ready(function() {
 
 <table class="panel">
   <tr>
-    <td align="right">
+    <td class="align-right">
       <input type="text"
              id="seconds_per_column"
              value="<%= @seconds_per_column %>"/>
     </td>
-    <td align="left">
+    <td class="align-left">
       <div id="seconds_per_column_text">
         &nbsp;<%= t("views.labels.seconds_per_column") %>
       </div>
@@ -70,12 +70,12 @@ $(document).ready(function() {
   </tr>
   
   <tr>
-    <td align="right">
+    <td class="align-right">
       <input type="text" 
              id="maximum_columns"
              value="<%= @maximum_columns %>"/>
     </td>
-    <td align="left">
+    <td class="align-left">
       <div id="maximum_columns_text">
         &nbsp;<%= t("views.labels.columns_maximum") %>
       </div>
@@ -83,12 +83,12 @@ $(document).ready(function() {
   </tr>
 
   <tr>
-    <td align="right">
+    <td class="align-right">
       <div id="auto_refresh"
            class="button">
       </div>
     </td>
-    <td align="left">
+    <td class="align-left">
       <div id="auto_refresh_text">
         &nbsp;<%= t("views.labels.auto_refresh") %>
       </div>
