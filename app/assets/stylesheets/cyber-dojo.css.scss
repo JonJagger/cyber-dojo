@@ -10,9 +10,11 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 table { border-spacing: 0; }
-.align-left   { text-align: left;   } 
-.align-center { text-align: center; }
-.align-right  { text-align: right;  }
+.align-left    { text-align: left;   } 
+.align-center  { text-align: center; }
+.align-right   { text-align: right;  }
+.valign-top    { vertical-align: top;    }
+.valign-center { vertical-align: center; }
 
 #cyber_dojo_page
 {
