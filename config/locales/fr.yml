@@ -20,6 +20,8 @@ fr:
     labels:
       setup: "créer un nouvel exercice"
       enter_a_practice_id: "reproduire un exercise"
+      revert: "revenir"
+      click_to_revert: "Cliquez<br/>pour &rarr;<br/>revenir<br/>"      
     buttons:
       setup: "créer"
       start: "commencer"

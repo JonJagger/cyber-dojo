@@ -1,4 +1,3 @@
-
 require 'Locking'
 
 class DojoController < ApplicationController

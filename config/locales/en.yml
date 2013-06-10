@@ -23,8 +23,12 @@ en:
       a_place_to_practice: "a place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       please_donate: "If you find cyber-dojo useful please<br/>make a donation. All donations are<br/>used solely to buy <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>   <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>. Thank you."
       your_animal_is: "Your animal is the"
-      revert: "Click<br/>to &rarr;<br/>revert<br/>"
+      revert: "revert"
+      click_to_revert: "Click<br/>to &rarr;<br/>revert<br/>"
       click_to_resume: "Click an animal to resume it"
+      seconds_per_column: "seconds per column"
+      columns_maximum: "columns maximum"
+      auto_refresh: "auto refresh"
     buttons:
       setup: "setup"
       start: "start"

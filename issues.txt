@@ -4,7 +4,10 @@ When you're in a diff-page and the file has multiple red/green sections
 then clicking on the filename should auto-scroll to the next red/green
 section. It doesn't. Or rather, it seems inconsistent.
 -----------
-
+If you specify ?locale=fr at the end of the dashboard URL
+it changes the animals names but then resets to english
+when the auto-refresh happens.
+-----------
 
 
 
