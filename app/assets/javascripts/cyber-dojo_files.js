@@ -107,10 +107,7 @@ var cyberDojo = (function(cd, $) {
       name: filename,
       id: filename + '_div'
     });
-    var table = $('<table>', {
-      cellspacing: '0',
-      cellpadding: '0'
-    });
+    var table = $('<table>');
     var tr = $('<tr>');
     var td1 = $('<td>');
     var lines = $('<textarea>', {
