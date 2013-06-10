@@ -35,6 +35,8 @@ en:
       traffic_light: "traffic light"
     buttons:
       setup: "setup"
+      ok: "ok"
+      cancel: "cancel"
       start: "start"
       resume: "resume"
       review: "review"

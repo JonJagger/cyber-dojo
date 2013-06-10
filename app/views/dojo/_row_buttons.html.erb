@@ -1,16 +1,5 @@
-<% buttons = ['about', 'basics', 'donations', 'faqs',
-              'feedback', 'links', 'source', 'recruiting',
-              'refactoring', 'tips','why'
-             ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
-<% buttons.each do |action, text| %>
-  <div class="button show-dialog-button"
-       id="<%= action %>">
-    <%= text %>
-  </div>
-<% end %>
-
-<script language="javascript" type="text/javascript"><!--
+<script type="text/javascript"><!--
 
 $(document).ready(function () {
 
@@ -25,3 +14,16 @@ $(document).ready(function () {
 });
 
 //--></script>
+
+<% buttons = ['about', 'basics', 'donations', 'faqs',
+              'feedback', 'links', 'source', 'recruiting',
+              'refactoring', 'tips','why'
+             ].map{ |action| [action, t("views.buttons.#{action}")] } %>
+
+<% buttons.each do |action, text| %>
+  <div class="button show-dialog-button"
+       id="<%= action %>">
+    <%= text %>
+  </div>
+<% end %>
+

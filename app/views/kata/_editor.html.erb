@@ -3,7 +3,9 @@
      class="edgeless panel">
   
   <% @visible_files.each do |filename,content| %>
-    <%= render :partial => 'visible_file', :locals => {:filename => filename, :content => content} %>                
+    <%= render :partial => 'visible_file',
+               :locals  => { :filename => filename,
+                             :content  => content} %>                
   <% end %>
   
 </div>
