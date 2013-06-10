@@ -1,8 +1,31 @@
 
+<script language="javascript" type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  var nodes = $('#current_traffic_light_count .tag_count');
+  nodes.each(function() {
+    var node = $(this);
+    var animalName = node.data('animal-name');
+    var bulbCount  = node.data('bulb-count');
+    var currentColour = node.data('current-colour');
+    
+    //node.tooltip({ content:
+    //  animalName + ' has ' + bulbCount + ' traffic-lights so far '
+    //  + 'and is currently at ' + currentColour });
+  });
+
+});
+
+//--></script>
+
 <div id="current_traffic_light_count">
   <% if traffic_lights.length != 0 %>
       <% bulb = traffic_lights[-1][:colour].to_s %>
       <span class="tag_count <%= bulb %>"
+            data-animal-name="<%= avatar_name %>"
+            data-bulb-count="<%= traffic_lights.length %>"
+            data-current-colour="<%= bulb %>"
             title="<%= avatar_name%> has <%= traffic_lights.length %> traffic-lights so far and is currently at <%= bulb %>">
         <%= traffic_lights.length %>
       </span>

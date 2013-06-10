@@ -49,7 +49,11 @@
 .tag_count.amber { color: $amber; }
 .tag_count.red   { color: lighten($red, 10%);   }
 
-.micro.tag_count { font-size: 1.1em; padding-left: 0.3em; }
+.micro.tag_count
+{
+  font-size: 1.1em;
+  padding-left: 0.3em;
+}
 .micro.tag_count .red   { color: lighten($red, 10%); }
 .micro.tag_count .amber { color: $amber; }
 .micro.tag_count .green { color: $green;  }
