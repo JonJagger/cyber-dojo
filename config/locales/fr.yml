@@ -1,8 +1,25 @@
 fr:
   views:
+    avatars:
+      alligator: "alligator"
+      buffalo: "buffle"
+      cheetah: "guépard"
+      deer: "cerf"
+      elephant: "éléphant"
+      frog: "grenouille"
+      gorilla: "gorille"
+      hippo: "hippo"
+      koala: "koala"
+      lion: "lion"
+      moose: "élan"
+      panda: "panda"
+      raccoon: "raton laveur"
+      snake: "serpent"
+      wolf: "loup"
+      zebra: "zèbre"    
     labels:
       setup: "créer un nouvel exercice"
-      enter_practice_id: "reproduire un exercise"
+      enter_a_practice_id: "reproduire un exercise"
     buttons:
       setup: "créer"
       start: "commencer"
@@ -19,3 +36,9 @@ fr:
       refactoring: "refactoring"
       tips: "tips"
       why: "pourquoi"
+      new: "neuf"
+      rename: "renommer"
+      delete: "effacer"
+      help: "aider"
+      fork: "bifurquer"
+      test: "tester"
