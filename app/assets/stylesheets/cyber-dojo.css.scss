@@ -11,7 +11,12 @@
 
 table { border-spacing: 0; }
 .align-left    { text-align: left;   } 
-.align-center  { text-align: center; }
+.align-center
+{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 .align-right   { text-align: right;  }
 .valign-top    { vertical-align: top;    }
 .valign-center { vertical-align: center; }
@@ -186,11 +191,28 @@ div[class~="button"]
 {
   background: $lighter-color;
   color: $darker-color;
+  display: table;
+  margin: 0 auto;
 }
 
 .dialog a:link, .dialog a:visited
 {
   color: $lighter-color;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+.started-avatar-name
+{
+  font-weight: bold;
+  text-align: center;
+}
+
+.unstarted-avatar-name
+{
+  color: Gray;
+  font-weight: bold;
+  text-align: center;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -

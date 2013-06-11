@@ -1,7 +1,7 @@
 
-<div align="center">
-  <div class="medium"><%= t("views.labels.click_to_resume") %></div>
-  <table>
+<div>
+  <div class="align-center medium"><%= t("views.labels.click_to_resume") %></div>
+  <table class="align-center">
     <% index = 0 %>
     <% size = 60 %>
     <% (1..4).each do |_| %>
@@ -15,15 +15,15 @@
                title="resume <%= avatar_name %>"
                width="<%= size %>"
                height="<%= size %>" />          
-          <div align="left">
-            <b><%= avatar_name %></b>
+          <div class="started-avatar-name">
+            <%= avatar_name %>
           </div>
         <% else %>
           <img src="/images/avatars/bw/<%= avatar_name %>.jpg"
                width="<%= size %>"
                height="<%= size %>"/>
-          <div align="left" style="color:Gray;">
-            <b><%= avatar_name %></b>
+          <div class="unstarted-avatar-name">
+            <%= avatar_name %>
           </div>
         <% end %>      
         <% index += 1 %>
