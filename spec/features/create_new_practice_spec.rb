@@ -10,7 +10,11 @@ feature "Start a practice" do
     find('#start_coding').click
     click_button('ok')
 
-    page.should have_text 'cyber-dojo.sh'
+    new_window = page.driver.browser.window_handles.last
+
+    page.within_window new_window do
+      page.should have_text 'cyber-dojo.sh'
+    end
 
   end
 end
