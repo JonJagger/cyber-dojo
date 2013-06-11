@@ -31,17 +31,17 @@ for the three colours as follows:
 The colours are positional, top red, middle amber, bottom green.
 This means you can still read the display if you are colour blind.
 You will also get an amber traffic light if the tests do not
-complete within 10 seconds.
+complete within 15 seconds.
 
 
-Review-Dashboard
+Dashboard-Review
 ================
 The dashboard shows a periodically updating display of all traffic lights
 for all the animals in the dojo. If you want to collapse the horizontal time
 gaps simply enter a very large value for the seconds_per_column value.
 
 
-Review-Diff
+Diff-Review
 ===========
 Clicking on a dashboard traffic light opens a new page showing the diffs for
 that increment together with < and > buttons to step backwards and forwards
@@ -381,7 +381,7 @@ Getting dojos off the VirtualBox TurnKey Linux server
 =====================================================
 From the review dashboard page click the download-zip button.
 
-If you want to do from within the actual server you will need
+If you want to do it from within the actual server you will need
 the username and password info to SSH and SFTP.
 I will happily tell you it if you email me: jon@jaggersoft.com
 1. SSH onto the server
