@@ -29,8 +29,8 @@ $(document).ready(function() {
   <div class="filename" >
     <input id="language_<%= index %>" 
            type="radio"
-           name="language" 
+           name="language"
            value="<%= choice %>" />
-    <label><%= choice %></label>
+    <label id=<%= "language_#{choice.tableize.singularize}" %>><%= choice %></label>
   </div>    
 <% end %>    
