@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# this is a huge badass feature test that verifies everyting at once
+# this is a huge badass feature test that verifies everything at once
 feature "Start a practice" do
   scenario "Practice doesn't exist yet" do
     visit "/"
