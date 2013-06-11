@@ -26,7 +26,7 @@
 #diff_panel
 {
   overflow: none;
-  background: $lighter-color;   
+  background: $darker-color;  
 }
 
 #diff_sheet
@@ -92,4 +92,3 @@ div[class~="diff-added-line-count"]
 
 #fork_button { cursor: pointer; }
 
-#age { margin: 0.2em; }
