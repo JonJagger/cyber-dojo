@@ -8,12 +8,12 @@ var cyberDojo = (function(cd, $) {
     var avatarTd = function(avatarName) {
       var size = 60;
       return ''
-        + '<td class="panel" align="center">'
+        + '<td class="panel">'
         + '  <img src="/images/avatars/' + avatarName + '.jpg"'
         + '       title="' + avatarName + ' has started"'
         + '       width="' + size + '"'
         + '       height="' + size + '"/>'
-        + '  <div>'
+        + '  <div class="started-avatar-name">'
         +      avatarName
         + '  </div>'
         + '</td>';      
@@ -24,9 +24,9 @@ var cyberDojo = (function(cd, $) {
       + 'because the dojo is full';
       
     var fullHtml = '' 
-      + '<div align="center">'
+      + '<div>'
       + '  <div id="full_dojo_text">' + message + '</div>'
-      + '  <table>'
+      + '  <table class="align-center">'
       + '    <tr>'
       +        avatarTd('alligator')
       +        avatarTd('buffalo')

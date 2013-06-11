@@ -8,25 +8,25 @@ var cyberDojo = (function(cd, $) {
     var avatarTd = function(avatarName) {
       var size = 60;
       return ''
-        + '<td class="panel" align="center">'
+        + '<td class="panel">'
         + '  <img src="/images/avatars/bw/' + avatarName + '.jpg"'
         + '       title="' + avatarName + ' has not started"'
         + '       width="' + size + '"'
         + '       height="' + size + '"/>'
-        + '  <div>'
+        + '  <div class="unstarted-avatar-name">'
         +      avatarName
         + '  </div>'
         + '</td>';      
     };
     
     var message = ''
-      + 'Cannot resume an  animal<br/>'
+      + 'Cannot resume an animal<br/>'
       + 'because the dojo is empty';
       
     var emptyHtml = '' 
-      + '<div align="center">'
+      + '<div>'
       + '  <div id="empty_dojo_text">' + message + '</div>'
-      + '  <table>'
+      + '  <table class="align-center">'
       + '    <tr>'
       +        avatarTd('alligator')
       +        avatarTd('buffalo')

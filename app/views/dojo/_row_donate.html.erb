@@ -1,10 +1,8 @@
     
-<div align="center">
-<table>
+<table class="align-center">
   <tr>
     <td>
-      <%= render :partial => 'raspberry_pi_logo',
-                 :locals  => { :width => 80, :height => 100 } %>
+      <%= render :partial => 'raspberry_pi_logo' %>
     </td>
 
     <td>
@@ -35,10 +33,9 @@
     </td>
     
     <td>
-      <div id="please_donate">
+      <div id="please_donate" class="align-left">
         <%= raw t("views.labels.please_donate") %>
       </div>
     </td>
   </tr>
 </table>
-</div>
