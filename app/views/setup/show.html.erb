@@ -4,6 +4,7 @@
 $(document).ready(function() {
   
   // remove radio bullets - they are sometimes causing layout weirdness in firefox
+  // and to match style of name lists in test page and diff page
   $('input[type=radio]').hide();  
   
 });
@@ -11,16 +12,12 @@ $(document).ready(function() {
 //--></script>
 
 <table>
-  <tr valign="center">
+  <tr>
     <td class="panel" colspan="2">
       <table>
         <tr>
           <td>
-            <% size = 50 %>
-            <%= link_to image_tag("/images/avatars/cyber-dojo.png",
-                                      :border => 0,
-                                      :size => "#{size}x#{size}",
-                                      :title => 'cyber-dojo'),
+            <%= link_to logo_image(50, "cyber-dojo"),            
                                   {
                                     :controller => :dojo,
                                     :action => :index
@@ -28,7 +25,7 @@ $(document).ready(function() {
           </td>
           <td>&nbsp;</td>
           <td>
-            <%= render :partial => 'ok_button' %>      
+            <%= render :partial => 'ok_button' %>
           </td>
           <td>&nbsp;</td>
           <td>
@@ -37,16 +34,16 @@ $(document).ready(function() {
         </tr>
       </table>
     </td>
-    <td class="light_margin panel" valign="top" rowspan="2">
+    <td class="light_margin panel valign-top" rowspan="2">
       <%= render :partial => 'instructions' %>      
     </td>              
   </tr>
   
   <tr>
-    <td class="panel" valign="top">
+    <td class="panel valign-top">
       <%= render :partial => 'choose_language' %>      
     </td>
-    <td class="panel" valign="top">
+    <td class="panel valign-top">
       <%= render :partial => 'choose_exercise' %>      
     </td>
   </tr>

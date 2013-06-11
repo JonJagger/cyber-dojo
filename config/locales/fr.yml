@@ -35,6 +35,8 @@ fr:
       traffic_light: "feu"      
     buttons:
       setup: "créer"
+      ok: "ok"
+      cancel: "annuler"      
       start: "commencer"
       resume: "reproduire"
       review: "réviser"

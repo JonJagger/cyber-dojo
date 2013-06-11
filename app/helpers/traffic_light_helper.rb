@@ -30,20 +30,21 @@ module TrafficLightHelper
   def untitled_unlinked_traffic_light(inc, width = nil, height = nil)
     width ||= 20
     height ||= 62
-    bulb = inc[:colour].to_s
-    filename = "traffic_light_#{bulb}"
+    colour = inc[:colour].to_s
+    filename = "traffic_light_#{colour}"
     if inc[:revert_tag]
       filename += "_revert"
     end
-    base_traffic_light_image(filename + '.png',width,height)
+    base_traffic_light_image(filename + '.png',colour,width,height)
   end
   
   def traffic_light_image(colour,width,height)
-    base_traffic_light_image("traffic_light_#{colour}.png",width,height)
+    base_traffic_light_image("traffic_light_#{colour}.png",colour,width,height)
   end
   
-  def base_traffic_light_image(filename,width,height)
+  def base_traffic_light_image(filename, colour, width, height)
     ("<img src='/images/#{filename}'" +
+      " alt='#{colour} traffic-light'" +
       " width='#{width}'" +
       " height='#{height}'/>").html_safe    
   end
