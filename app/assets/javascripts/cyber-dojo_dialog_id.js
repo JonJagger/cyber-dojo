@@ -7,9 +7,9 @@ var cyberDojo = (function(cd, $) {
     var panel = '<table>';
     $.each(info, function(key, value) {
       panel += '<tr>'
-            +    '<td align="right">' + key + '</td>'
+            +    '<td class="align-right">' + key + '</td>'
             +    '<td>:</td>'
-            +    '<td align="left">' + value + '</td>'
+            +    '<td class="align-left">' + value + '</td>'
             +  '</tr>';
     });
     panel += '</table>';    

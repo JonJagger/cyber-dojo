@@ -32,7 +32,6 @@ var cyberDojo = (function(cd, $) {
       }
       var trafficLight = 
         "<img src='/images/" + filename + ".png'" +
-        " border='0'" +
         " width='20'" +
         " height='62'/>";
       var trafficLightNumber =     
@@ -82,7 +81,7 @@ var cyberDojo = (function(cd, $) {
       });    
       var table = $('<table>');
       table.append(
-       "<tr valign='top'>" +
+       "<tr class='valign-top'>" +
          "<td>" +
            self.revertTagInfo(data.inc) +
            self.revertTagFilenames(visibleFiles).html() +
