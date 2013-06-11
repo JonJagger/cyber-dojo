@@ -44,7 +44,6 @@ module TrafficLightHelper
   
   def base_traffic_light_image(filename,width,height)
     ("<img src='/images/#{filename}'" +
-      " border='0'" +
       " width='#{width}'" +
       " height='#{height}'/>").html_safe    
   end
