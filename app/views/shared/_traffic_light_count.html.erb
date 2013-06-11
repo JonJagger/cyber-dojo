@@ -20,7 +20,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="current_traffic_light_count">
+<div>
   <% if traffic_lights.length != 0 %>
       <% bulb = traffic_lights[-1][:colour].to_s %>
       <span class="tag_count <%= bulb %>"
