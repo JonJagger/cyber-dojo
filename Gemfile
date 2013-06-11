@@ -16,6 +16,23 @@ end
 gem 'thin'
 gem 'therubyracer'
 gem 'simplecov',    '>= 0.7.1', :require => false, :group => :test
-gem 'rspec'
-gem 'cucumber'
-gem 'approvals', '>= 0.0.7'
+
+group :test do
+  gem 'rspec'
+  gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'faker'
+  gem 'autotest-standalone'
+  gem 'autotest-growl'
+  gem 'approvals', '>= 0.0.7'
+end
+
+# rspec-rails needs to be in the development group so that Rails generators work.
+group :development, :test do
+  gem 'rspec-rails'
+end
+
+group :development do
+  gem 'binding_of_caller'
+  gem 'better_errors'
+end
