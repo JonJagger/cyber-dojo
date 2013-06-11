@@ -1,8 +1,5 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -12,41 +9,43 @@
     <style type="text/css">
       body
       {
-	background-color: #fff;
-	color: green;
-	text-align: center;
-	font-family: arial, sans-serif;
+		background-color: #fff;
+		color: green;
+		text-align: center;
+		font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;		
       }
       #center
       {
-	align: center;
-	width: 95%;
-	padding: 0em;
-	margin: 1em auto 0 auto;
+		align: center;
+		width: 95%;
+		padding: 0em;
+		margin: 1em auto 0 auto;
       }
       h1
       {
-	font-size: 3em;
-	text-align:
-	center; margin: 0;
+		font-size: 3em;
+		text-align:
+		center: margin: 0;
       }
+	  .align-center
+	  {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;		
+	  }
   </style>
 </head>
 
-<body>
+<body class="panel">
 
-  <table align="center">
+  <table class="align-center">
     <tr>
-      <td>      
-	<% size = 40 %>
-	<%= image_tag("/images/avatars/cyber-dojo.png",
-	    :border => 0, :size => "#{size}x#{size}", :title => 'Home page') %>
-      </td>
       <td>
-	&nbsp;&nbsp;
+		<%= logo_image(40, 'cyber-dojo') %>
       </td>
+      <td>&nbsp;&nbsp;</td>
       <td>
-	<h1>@cyber-dojo</h1>                
+	    <h1>cyber-dojo</h1>                
       </td>
     </tr>
   </table>
@@ -56,7 +55,7 @@
 
   <div id="center">
     
-    <table align="center">
+    <table class="align-center">
       <tr>
         <td><%= avatar_image(avatars[0],size) %></td>
         <td><%= avatar_image(avatars[1],size) %></td>
