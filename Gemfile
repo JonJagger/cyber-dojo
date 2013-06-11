@@ -21,6 +21,7 @@ group :test do
   gem 'rspec'
   gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'selenium-webdriver'
   gem 'faker'
   gem 'autotest-standalone'
   gem 'autotest-growl'

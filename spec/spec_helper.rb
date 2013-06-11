@@ -35,4 +35,12 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  config.before(:each) do
+    if [:request, :feature].include? example.metadata[:type]
+      Capybara.current_driver = :selenium # or equivalent javascript driver you are using
+    else
+      Capybara.use_default_driver # presumed to be :rack_test
+    end
+  end
 end
