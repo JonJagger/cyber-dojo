@@ -19,7 +19,7 @@ fr:
       zebra: "zèbre"    
     labels:
       setup: "créer un nouvel exercice"
-      enter_a_practice_id: "reproduire un exercise"
+      enter_a_practice_id: "reproduire un exercice"
       a_place_to_practice: "un endriot pour <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a> la programmation"
       please_donate: "If you find cyber-dojo useful please<br/>make a donation. All donations are<br/>used solely to buy <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>   <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>. Thank you."            
       your_animal_is: "Votre animal est le"      

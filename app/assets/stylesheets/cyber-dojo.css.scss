@@ -215,6 +215,11 @@ div[class~="button"]
   text-align: center;
 }
 
+img[class~="flag"]
+{
+  margin: 5px;
+}
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .micro  { @include font-size-micro();  }
