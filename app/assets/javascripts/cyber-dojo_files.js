@@ -104,7 +104,6 @@ var cyberDojo = (function(cd, $) {
   cd.makeNewFile = function(filename, content) {
     var div = $('<div>', {
       'class': 'filename_div',
-      name: filename,
       id: filename + '_div'
     });
     var table = $('<table>');

@@ -194,7 +194,6 @@ var cyberDojo = (function(cd, $) {
     //         name="<%= filename %>"
     //         id="<%= filename %>_div">
     var div = cd.id(oldFilename + '_div');
-    div.attr('name', newFilename);
     div.attr('id', newFilename + '_div');
     //        <textarea class="line_numbers"
     //                  id="<%= filename %>_line_numbers">

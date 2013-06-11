@@ -67,7 +67,6 @@ var cyberDojo = (function(cd, $) {
       + '<div class="filename selected">'
       +   '<input style="display:none;"'
       +         ' type="radio"'
-      +         ' name="filename' + filename + '"'
       +         ' checked="checked"'
       +         ' value="filename"/>'
       +   '<label>' + filename + '</label>'
