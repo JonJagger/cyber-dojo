@@ -7,7 +7,10 @@ feature "Start a practice" do
     find('#setup').click
     find('#language_ruby_rspec').click
     find('#ok').click
+    find('#start_coding').click
+    click_button('ok')
 
-    sleep(10)
+    page.should have_text 'cyber-dojo.sh'
+
   end
 end
