@@ -20,14 +20,14 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="current_traffic_light_count">
+<div>
   <% if traffic_lights.length != 0 %>
-      <% bulb = traffic_lights[-1][:colour].to_s %>
-      <span class="tag_count <%= bulb %>"
+      <% colour = traffic_lights[-1][:colour].to_s %>
+      <span class="tag_count <%=colour %>"
             data-animal-name="<%= avatar_name %>"
             data-bulb-count="<%= traffic_lights.length %>"
-            data-current-colour="<%= bulb %>"
-            title="<%= avatar_name%> has <%= traffic_lights.length %> traffic-lights so far and is currently at <%= bulb %>">
+            data-current-colour="<%=colour %>"
+            title="<%= avatar_name%> has <%= traffic_lights.length %> traffic-lights so far and is currently at <%= colour %>">
         <%= traffic_lights.length %>
       </span>
   <% end %>

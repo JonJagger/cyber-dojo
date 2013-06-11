@@ -10,7 +10,7 @@ var cyberDojo = (function(cd, $) {
       return ''
         + '<td class="panel">'
         + '  <img src="/images/avatars/' + avatarName + '.jpg"'
-        + '       title="' + avatarName + ' has started"'
+        + '       title="' + avatarName + ' has already started"'
         + '       width="' + size + '"'
         + '       height="' + size + '"/>'
         + '  <div class="started-avatar-name">'
@@ -25,7 +25,7 @@ var cyberDojo = (function(cd, $) {
       
     var fullHtml = '' 
       + '<div>'
-      + '  <div id="full_dojo_text">' + message + '</div>'
+      + '  <div class="align-center" id="full_dojo_text">' + message + '</div>'
       + '  <table class="align-center">'
       + '    <tr>'
       +        avatarTd('alligator')
