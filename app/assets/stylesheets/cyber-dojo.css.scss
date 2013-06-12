@@ -129,7 +129,8 @@ div[class~="filename"][class~="selected"] input+label
   cursor: default;  
 }
 
-div[class~="filename"]:hover, div[class~="button"]:hover
+div[class~="filename"]:hover,
+div[class~="button"]:hover
 {
   border: 2px dotted lighten($darker-color, 20%);
 }
@@ -155,7 +156,8 @@ div[class~="button"]
   font-weight: 500;
 }
 
-.line_numbers, .file_content { height: 34em; }
+.line_numbers,
+.file_content { height: 34em; }
 
 .line_numbers, #diff_sheet, .file_content, #instructions
 {

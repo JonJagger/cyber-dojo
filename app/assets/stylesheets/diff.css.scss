@@ -1,14 +1,12 @@
 
-.triangle.button
-{
+.triangle.button {
   padding-top: 0.2em;
   padding-bottom: 0.05em;
   padding-left: 0.2em;
   padding-right: 0.2em;
 }
 
-#was_tag_number, #now_tag_number
-{
+#was_tag_number, #now_tag_number {
   background: $lighter-color;
   @include gradient-darken($lighter-color, 20%, 10%, 5%);     
   color: $darker-color;
@@ -17,20 +15,12 @@
   width: 2em;
 }
 
-#diff_div
-{
+#diff_div {
   width: 55em;
   position: relative;
 }
 
-#diff_panel
-{
-  overflow: none;
-  background: $darker-color;  
-}
-
-#diff_sheet
-{
+#diff_sheet {
   height: 35em;
   color: $darker-color;
   overflow: auto;
@@ -38,74 +28,78 @@
   padding: 0;
 }
 
-.diffed_code
-{
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#diff_panel {
+  overflow: none;
+  background: $darker-color;  
+  added {
+    background: $diff-added-color;
+  }  
+  same {
+    background: $lighter-color;
+  }  
+  deleted {
+    background: $diff-deleted-color;
+    text-decoration: line-through;
+  }  
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+@mixin pre-block {
+  white-space: pre;
+  display: block;  
+}
+
+.diffed_code {
   margin: 0;
   padding: 0;
+  ln {
+    background: $darker-color;
+    padding-left: 0px;
+    margin-right: 3px;
+    padding-right: 2px;
+    font-weight: normal;    
+  }
+  added {
+    @include pre-block;
+    ln {
+      color: $diff-added-color;
+    }    
+  }
+  deleted {
+    @include pre-block;
+    ln {
+      color: $diff-deleted-color;
+    }    
+  }
+  same {
+    @include pre-block;    
+    ln {
+      color: lighten($darker-color, 30%);
+      text-decoration: none;    
+    }
+  }
 }
 
-.diffed_code added, .diffed_code deleted, .diffed_code same
-{
-  white-space: pre;
-  display: block;
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.diffed_code ln 
-{
-  padding-left: 0px;
-  margin-right: 3px;
-  padding-right: 2px;
-  font-weight: normal;
-}
-
-#diff_panel added   { background: $diff-added-color;  }
-#diff_panel same    { background: $lighter-color; }
-#diff_panel deleted
-{
-  background: $diff-deleted-color;
-  text-decoration: line-through;
-}
-
-.diffed_code same ln
-{
-  background: $darker-color;
-  color: lighten($darker-color, 30%);
-  text-decoration: none;
-}
-
-.diffed_code deleted ln
-{
-  background: $darker-color;
-  color: $diff-deleted-color;
-}
-
-.diffed_code added ln
-{
-  background: $darker-color;
-  color: $diff-added-color;
-}
-
-@mixin line-count
-{
+@mixin line-count {
   text-align: right;
   margin: none;
   padding: 0em 0.2em 0em 0.2em;
   @include font-size-small();  // to match div[class~=filename]
 }
 
-div[class~="diff-deleted-line-count"]
-{
+div[class~="diff-deleted-line-count"] {
   background: $diff-deleted-color;
   color: $darker-color;
   @include line-count;
 }
 
-div[class~="diff-added-line-count"]
-{
+div[class~="diff-added-line-count"] {
   background: $diff-added-color;
   color: $darker-color;
   @include line-count;
 }
-
-#fork_button { cursor: pointer; }
-
