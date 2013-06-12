@@ -33,9 +33,12 @@
   margin: 0.2em; 
 }
 
+$ellipsis: "\2026";
+
 #traffic_lights {
   img {
-    padding-left: 2px;
+    padding-left: 1px;
+    padding-right: 1px;
   }
   .row td {
     padding: 0em;
@@ -48,7 +51,7 @@
     color: Gray;
   }
   .omission:after {
-    content: "\2026"; /* ellipsis ... */
+    content: $ellipsis;
   }
   .gap {
     font-size: 0.5em;
@@ -63,10 +66,6 @@
   padding: 0.1em;
   text-align: right;
 }
-
-.green { color: $green; }
-.amber { color: $amber; }
-.red   { color: lighten($red, 10%);   }
 
 .micro.tag_count {
   font-size: 1.1em;
