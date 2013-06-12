@@ -37,8 +37,10 @@ $ellipsis: "\2026";
 
 #traffic_lights {
   img {
-    padding-left: 1px;
-    padding-right: 1px;
+    padding: {
+      left: 1px;
+      right: 1px;
+    }
   }
   .row td {
     padding: 0em;

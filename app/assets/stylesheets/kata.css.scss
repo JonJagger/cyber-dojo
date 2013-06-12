@@ -11,8 +11,10 @@
 
 #test {
   @include font-size-large();
-  padding-left: 0.2em;
-  padding-right: 0.2em;
+  padding: {
+    left: 0.2em;
+    right: 0.2em;
+  }
 }
 
 /*************************************/

@@ -14,8 +14,10 @@ table { border-spacing: 0; }
 .align-center
 {
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  margin: {
+    left: auto;
+    right: auto;
+  }
 }
 .align-right   { text-align: right;  }
 .valign-top    { vertical-align: top;    }
@@ -23,8 +25,10 @@ table { border-spacing: 0; }
 
 #cyber_dojo_page
 {
-  margin-top: 0.3em;
-  margin-left: 0.3em;  
+  margin: {
+    top: 0.3em;
+    left: 0.3em;
+  }
   color: $lighter-color;
 }
 
@@ -47,11 +51,13 @@ body
 {
   background: $darker-color;
   color: $lighter-color;
-  border-style: dotted;
-  border-width: 2px;
-  border-color: lighten($darker-color, 15%);
-  border-right: none;
-  border-bottom: none;  
+  border: {
+    style: dotted;
+    width: 2px;
+    color: lighten($darker-color, 15%);
+    right: none;
+    bottom: none;    
+  }
   margin: none;
   padding: 0.5em;
 }
@@ -78,9 +84,11 @@ div[class~="button"], input[class~="button"]
   @include gradient-darken($lighter-color, 20%, 10%, 5%); 
   color: $darker-color;    
   cursor: pointer;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  padding-bottom: 0.1em;
+  padding: {
+    left: 0.5em;
+    right: 0.5em;
+    bottom: 0.1em;
+  }
   text-decoration: none;
   font-weight: normal;
   border: none;
@@ -102,8 +110,10 @@ div[class~="filename"]
   background: $darker-color;
   color: $lighter-color;
   margin: none;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding: {
+    left: 0.5em;
+    right: 0.5em;
+  }
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
@@ -161,8 +171,10 @@ div[class~="button"]
 
 .line_numbers, #diff_sheet, .file_content, #instructions
 {
-  font-size: 15pt;
-  font-family: monospace;  
+  font: {
+    size: 15pt;
+    family: monospace;
+  }
 }
 
 .line_numbers, #diff_sheet, .file_content

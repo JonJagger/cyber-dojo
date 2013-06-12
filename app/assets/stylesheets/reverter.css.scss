@@ -4,7 +4,7 @@
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;  
   padding: none;
-  margin: none;
+  margin: 0;
   margin-top: 0.5em;
 }
 
@@ -12,8 +12,10 @@
 {
   width: 40em;
   height: 20em;
-  font-family: monospace;
-  font-size: 1.2em;
+  font: {
+    size: 1.2em;
+    family: monospace;
+  }
 }
 
 #revert_tip

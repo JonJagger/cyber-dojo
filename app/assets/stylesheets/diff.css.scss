@@ -1,9 +1,11 @@
 
 .triangle.button {
-  padding-top: 0.2em;
-  padding-bottom: 0.05em;
-  padding-left: 0.2em;
-  padding-right: 0.2em;
+  padding: {
+    top: 0.2em;
+    bottom: 0.05em;
+    left: 0.2em;
+    right: 0.2em;  
+  }
 }
 
 #was_tag_number, #now_tag_number {
@@ -57,9 +59,11 @@
   padding: 0;
   ln {
     background: $darker-color;
-    padding-left: 0px;
+    padding: {
+      left: 0px;
+      right: 2px;
+    }
     margin-right: 3px;
-    padding-right: 2px;
     font-weight: normal;    
   }
   added {
@@ -88,7 +92,12 @@
 @mixin line-count {
   text-align: right;
   margin: none;
-  padding: 0em 0.2em 0em 0.2em;
+  padding: {
+    top: 0em;
+    right: 0.2em;
+    bottom: 0em;
+    left: 0.2em;
+  }
   @include font-size-small();  // to match div[class~=filename]
 }
 
