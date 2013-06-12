@@ -1,4 +1,17 @@
 
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+  
+  $('.revert-traffic-light').click(function() {
+    var tag = $(this).data('tag');
+	cd.dialog_revert("<%=@kata.id%>", "<%=@avatar.name%>", tag);
+  });
+
+});
+
+//--></script>
+
 <div id="traffic_lights">
   <table>
     <tr class="row">
@@ -12,24 +25,25 @@
       <% max_lights = 35 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
-          <span onclick="cd.dialog_revert('<%=@kata.id%>', '<%=@avatar.name%>', <%=light[:number]%>);">
+		  <span class="revert-traffic-light"
+				data-tag="<%= light[:number] %>">
             <%= revert_traffic_light(light) %>
-	      </span>          
+		  </span>
         </td>
       <% end %>
 
       <td>
 		<%= render :partial => 'shared/traffic_light_bulb_counts',
-				   :locals => { :traffic_lights => @traffic_lights,
-								:avatar_name => translate_avatar(@avatar.name)
-							  } %>
+				   :locals  => { :traffic_lights => @traffic_lights,
+							 	 :avatar_name    => translate_avatar(@avatar.name)
+							   } %>
       </td>
 	  
       <td>
 		<%= render :partial => 'shared/traffic_light_count',
-				   :locals => { :traffic_lights => @traffic_lights,
-								:avatar_name => translate_avatar(@avatar.name)
-							  } %>
+				   :locals  => { :traffic_lights => @traffic_lights,
+								 :avatar_name    => translate_avatar(@avatar.name)
+							   } %>
       </td>
 
 	  <td>
