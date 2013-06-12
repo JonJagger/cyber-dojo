@@ -1,63 +1,75 @@
 
-.traffic_light_tip
-{
+.traffic_light_tip {
   @include font-size-large();  /* CURRENTLY NOT WORKING */
 }
 
-#dashboard-page #seconds_per_column_text,
-#dashboard-page #seconds_per_column,
-#dashboard-page #maximum_columns_text,
-#dashboard-page #maximum_columns,
-#dashboard-page #auto_refresh_text,
-#dashboard-page #auto_refresh,
-#dashboard-page #tips,
-#dashboard-page #download
-{
-  @include font-size-tiny();
+#dashboard-page {
+  #seconds_per_column_text,
+  #seconds_per_column,
+  #maximum_columns_text,
+  #maximum_columns,
+  #auto_refresh_text,
+  #auto_refresh,
+  #tips,
+  #download {
+    @include font-size-tiny();
+  }
 }
 
-#dashboard-page #seconds_per_column,
-#dashboard-page #maximum_columns 
-{
-  background: $lighter-color;
-  @include gradient-darken($lighter-color, 20%, 10%, 5%);     
-  color: $darker-color;
-  width: 3em; 
-  text-align: center;
+#dashboard-page {
+  #seconds_per_column,
+  #maximum_columns {
+    background: $lighter-color;
+    @include gradient-darken($lighter-color, 20%, 10%, 5%);     
+    color: $darker-color;
+    width: 3em; 
+    text-align: center;
+  }
 }
 
-#age
-{
+#age {
   @include font-size-small();
   text-align: center;
   margin: 0.2em; 
 }
 
-#traffic_lights img { padding-left: 2px; }
-#traffic_lights .row td { padding: 0em; }
-#traffic_lights .row.odd td  { background: lighten($darker-color, 5%); }
-#traffic_lights .omission { font-size: 0.7em; color: Gray; }
-#traffic_lights .omission:after { content: "\2026"; /* ellipsis ... */ }
-#traffic_lights .gap { font-size: 0.5em; color: Gray; text-align: center; }
+#traffic_lights {
+  img {
+    padding-left: 2px;
+  }
+  .row td {
+    padding: 0em;
+  }
+  .row.odd td {
+    background: lighten($darker-color, 5%);
+  }
+  .omission {
+    font-size: 0.7em;
+    color: Gray;
+  }
+  .omission:after {
+    content: "\2026"; /* ellipsis ... */
+  }
+  .gap {
+    font-size: 0.5em;
+    color: Gray;
+    text-align: center;
+  }
+}
 
-.tag_count
-{
+.tag_count {
   color: $lighter-color;
   font-size: 2.5em;
   padding: 0.1em;
   text-align: right;
 }
-.tag_count.green { color: $green; }
-.tag_count.amber { color: $amber; }
-.tag_count.red   { color: lighten($red, 10%);   }
 
-.micro.tag_count
-{
+.green { color: $green; }
+.amber { color: $amber; }
+.red   { color: lighten($red, 10%);   }
+
+.micro.tag_count {
   font-size: 1.1em;
-  padding-left: 0.3em;
+  padding-left: 0.3em;  
 }
-.micro.tag_count .red   { color: lighten($red, 10%); }
-.micro.tag_count .amber { color: $amber; }
-.micro.tag_count .green { color: $green;  }
-
 

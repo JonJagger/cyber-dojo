@@ -1,14 +1,15 @@
 
-#file_operations #new,
-#file_operations #rename,
-#file_operations #delete,
-#help, #fork
-{
+#file_operations {
+  #new, #rename, #delete {
+    @include font-size-tiny();  
+  }
+}
+
+#help, #fork {
   @include font-size-tiny();
 }
 
-#test
-{
+#test {
   @include font-size-large();
   padding-left: 0.2em;
   padding-right: 0.2em;
