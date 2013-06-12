@@ -1,6 +1,4 @@
 
-// See http://davidwalsh.name/css-gradients
-
 @mixin gradient-lighten($color, $p1, $p2, $p3)
 {
   // chrome 2+, safari 4+; multiple color stops 
@@ -108,4 +106,6 @@
     darken($color, $p3)
   );    
 }
+
+// From http://davidwalsh.name/css-gradients
 

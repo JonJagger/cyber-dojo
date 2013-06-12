@@ -6,3 +6,16 @@
 @mixin font-size-large()   { font-size: 1.85em; }
 @mixin font-size-largest() { font-size: 2.50em; }
 
+.micro  { @include font-size-micro();  }
+.tiny   { @include font-size-tiny();   }
+.small  { @include font-size-small();  }
+.medium { @include font-size-medium(); }
+.large  { @include font-size-large();  }
+
+@mixin code-font
+{
+  font: {
+    size: 15pt;
+    family: monospace;
+  }
+}

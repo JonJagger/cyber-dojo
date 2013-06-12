@@ -60,11 +60,11 @@ body
   }
   margin: none;
   padding: 0.5em;
+
+  &.edgeless {
+    padding: 0em;
+  }
 }
-
-.edgeless.panel { padding: 0em; }
-
-.top.panel { border: none; }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -117,26 +117,24 @@ div[class~="filename"]
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
-}
-
-div[class~="filename"] input+label
-{
-  cursor: pointer;  
-}
-
-div[class~="filename"][class~="selected"]
-{
-  // See app/assets/javascripts/cyber-dojo_file_load.js
-  // function radioEntrySwitch()
-  background: $lighter-color;
-  @include gradient-darken($lighter-color, 20%, 10%, 5%);   
-  color: $darker-color;
-  cursor: default;  
-}
-
-div[class~="filename"][class~="selected"] input+label
-{
-  cursor: default;  
+  
+  input+label {
+    cursor: pointer;    
+  }
+  
+  &[class~="selected"]
+  {
+    // See app/assets/javascripts/cyber-dojo_file_load.js
+    // function radioEntrySwitch()
+    background: $lighter-color;
+    @include gradient-darken($lighter-color, 20%, 10%, 5%);   
+    color: $darker-color;
+    cursor: default;
+    
+    input+label {
+      cursor: default;  
+    }
+  }  
 }
 
 div[class~="filename"]:hover,
@@ -169,15 +167,12 @@ div[class~="button"]
 .line_numbers,
 .file_content { height: 34em; }
 
-.line_numbers, #diff_sheet, .file_content, #instructions
+.line_numbers, .file_content, #instructions
 {
-  font: {
-    size: 15pt;
-    family: monospace;
-  }
+  @include code-font;
 }
 
-.line_numbers, #diff_sheet, .file_content
+.line_numbers, .file_content
 {
   border: 0;
   margin: 0;
@@ -207,11 +202,10 @@ div[class~="button"]
   color: $darker-color;
   display: table;
   margin: 0 auto;
-}
-
-.dialog a:link, .dialog a:visited
-{
-  color: $lighter-color;
+  
+  a:link, a:visited {
+    color: $lighter-color;  
+  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,14 +227,3 @@ img[class~="flag"]
 {
   margin: 5px;
 }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-.micro  { @include font-size-micro();  }
-.tiny   { @include font-size-tiny();   }
-.small  { @include font-size-small();  }
-.medium { @include font-size-medium(); }
-.large  { @include font-size-large();  }
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-

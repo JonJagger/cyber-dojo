@@ -11,9 +11,9 @@
  * Force sass to regenerate
  * http://stackoverflow.com/questions/7046495/rails-3-1-asset-pipeline-doesnt-pick-up-changes-to-importd-sheets
  *
- *= depend_on gradient.css.scss
- *= depend_on color_scheme.css.scss
- *= depend_on font_size.css.scss 
+ *= depend_on gradients.css.scss
+ *= depend_on colors.css.scss
+ *= depend_on fonts.css.scss 
  *= depend_on cyber-dojo.css.scss
  *= depend_on home.css.scss
  *= depend_on setup.css.scss
@@ -27,9 +27,9 @@
  *= require_self
 */
 
-@import "gradient.css.scss";
-@import "color_scheme.css.scss";
-@import "font_size.css.scss";
+@import "gradients.css.scss";
+@import "colors.css.scss";
+@import "fonts.css.scss";
 @import "cyber-dojo.css.scss";
 @import "home.css.scss";
 @import "setup.css.scss";
