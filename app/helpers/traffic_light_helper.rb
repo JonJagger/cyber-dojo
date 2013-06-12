@@ -3,7 +3,7 @@ module TrafficLightHelper
 
   def revert_traffic_light(inc)
     ("<span title='#{revert_tool_tip(inc)}'>" +
-     untitled_unlinked_traffic_light(inc) +
+     untitled_unlinked_traffic_light(inc, 18, 55) +
      "</span>").html_safe
   end
   
