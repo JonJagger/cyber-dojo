@@ -8,8 +8,8 @@ class KataController < ApplicationController
     @avatar = Avatar.new(@kata, params[:avatar])
     @tab = @kata.language.tab    
     @visible_files = @avatar.visible_files
-    @new_files = {}
-    @files_to_remove = []
+    @new_files = { }
+    @files_to_remove = [ ]
     @traffic_lights = @avatar.increments
     @output = @visible_files['output']
     @title = id[0..4] + ' ' + @avatar.name + ' code' 

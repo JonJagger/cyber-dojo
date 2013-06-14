@@ -15,6 +15,165 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
 
+  # It seems file.atime/ctime/mtime only store the time to the second
+  # That is not fine enough for the test...
+  #
+  #test "after running tests for second time with no change in any file then no file time-stamps are updated" do    
+  #  language = Language.new(root_dir, 'Ruby-installed-and-working')        
+  #  visible_files = language.visible_files
+  #  
+  #  output = @sandbox.run(language, visible_files)
+  #  before = { }
+  #  visible_files.each do |filename,_|
+  #    ts = File.new(@sandbox.dir + filename).atime
+  #    before[filename] = ts.to_s
+  #  end
+  #  output = @sandbox.run(language, visible_files)
+  #  after = { }
+  #  visible_files.each do |filename,_|
+  #    ts = File.new(@sandbox.dir + filename).atime
+  #    after[filename] = ts.to_s
+  #  end
+  #  visible_files.each do |filename,_|
+  #    p "#{before[filename]} --- #{after[filename]}"
+  #    assert_equal before[filename], after[filename]
+  #  end
+  #end
+    
+    # how to delete files in the sandbox that have been
+    # deleted on the browser? Don't want to have to
+    # iterate through the sandbox to find the existing
+    # filenames. But I don't need to because they are
+    # in the avatars manifest file.
+    
+    # avatar.git_commit_tag() looks like it will also
+    # be considerably simplified
+    # why do I do "git add filename" in a loop
+    # Surely it would be ok to do "git add ."
+    
+    # in fact!... I won't need to have a separate
+    # cyberdojo/sandboxes folder at all
+    # At the moment I have
+    # cyberdojo/sandboxes/E3/3EA78C31/hippo
+    # AND
+    # cyberdojo/katas/E3/3EA78C31/hippo/sandbox
+    # and this is pretty crazy. I only
+    # need the later.
+    # Will this have an implication on the
+    # partition organization on cyber-dojo.com
+    # I recall cyberdojo/sandboxes/ was put onto the /tmp partition
+    # but was cyberdojo/katas/ too?
+    # It must be cyberdojo/katas/ on /tmp because at the moment
+    # cyberdojo/sandboxes/ is deleted at the end of sandbox.run()
+    
+    # look at sandboxes/ I can see that the outer folders
+    # eg E3/3EA78C31/ are not deleted but everything underneath is
+    # This too will all drop away.
+
+    # In fact, a useful first step would be to remove the
+    # whole sandboxes/ folder and use and instead refactor
+    # what there currently is to use katas/..../hippo/sandbox instead.
+    #
+    # sandbox/dir currently looks like this
+    # def dir
+    #   @root_dir + '/sandboxes/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/'
+    # end
+    # If I change it to this
+    # def dir
+    #   @root_dir + '/katas/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/'
+    # end
+    # Then avatar.initialize
+    # def initialize(kata, name) 
+    #    @kata = kata
+    #    @name = name
+    #    if !File.exists? dir
+    #      Dir::mkdir(dir)
+    #      Files::file_write(pathed(Manifest_filename), @kata.visible_files)
+    #      Files::file_write(pathed(Increments_filename), [ ])
+    #      command = "git init --quiet;" +
+    #                "git add '#{Manifest_filename}';" +
+    #                "git add '#{Increments_filename}';"    
+    #
+    # this can change to...
+    #
+    # def initialize(kata, name) 
+    #    @kata = kata
+    #    @name = name
+    #    if !File.exists? dir
+    #      Dir::mkdir(dir)
+    #      Dir::mkdir(dir + 'sandbox')
+    #      Files::file_write(pathed(Manifest_filename), @kata.visible_files)
+    #      Files::file_write(pathed(Increments_filename), [ ])
+    #      command = "git init --quiet;" +
+    #                "git add .;"
+    #
+    # Also avatar.run() looks like this
+    #
+    #  def run(language, visible_files)
+    #    make_dir
+    #    output = inner_run(language, visible_files)
+    #    system("rm -rf #{dir}")
+    #    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    #  end
+    #
+    # This will become...
+    #
+    #  def run(language, visible_files)
+    #    output = inner_run(language, visible_files)
+    #    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    #  end
+    #
+    # Also avatar.git_commit_tag() looks like this...
+    #
+    #  def git_commit_tag(visible_files, tag)
+    #    system("rm -rf #{sandbox}")
+    #    Dir::mkdir(sandbox)
+    #    command = ""
+    #    visible_files.each do |filename,content|
+    #      pathed_filename = sandbox + '/' + filename
+    #      Folders::make_folder(pathed_filename)      
+    #      File.open(pathed_filename, 'w') { |file| file.write content }      
+    #      command += "git add '#{pathed_filename}';"
+    #    end
+    #    command += "git commit -a -m '#{tag}' --quiet;"
+    #    command += "git tag -m '#{tag}' #{tag} HEAD;"
+    #    system(cd_dir(command))
+    #  end
+    #
+    # This can become...
+    #
+    #  def git_commit_tag(visible_files, tag)
+    #    command = ""
+    #    command += "git add .;"
+    #    command += "git commit -a -m '#{tag}' --quiet;"
+    #    command += "git tag -m '#{tag}' #{tag} HEAD;"
+    #    system(cd_dir(command))
+    #  end
+    #
+    # except that files deleted in the browser must also be deleted
+    # in the sandbox
+    #
+    # sandbox.inner_run() looks like this and is where this needs to happen
+    # (do the hashing to see if the file has changed after)
+    #
+    #  def inner_run(language, visible_files)
+    #    visible_files.each do |filename,content|
+    #      save_file(filename, content)
+    #    end
+    #    link_files(language.dir, language.support_filenames)
+    #    link_files(language.dir, language.hidden_filenames)
+    #    ...
+    #  end
+    #
+    # I don't need hidden_filenames at all.
+    #
+    # Note also that I should not be doing the link_files() calls
+    # every time. That should happen once at the creation of the avatar
+    # object. It does raise the question of what happens if, in the
+    # browser, someone tries to create a file with the same name as
+    # a support/hidden file. The answer is they can't. I check for that.
+
+
   test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do
     @sandbox.make_dir
     dir = root_dir + '/sandboxes/' + @id[0..1] + '/' +@id[2..-1] + '/' + @avatar_name + '/'
@@ -61,17 +220,17 @@ class SandboxTests < ActionController::TestCase
     assert_not_nil output, "output != nil"
     assert output.class == String, "output.class == String"
     assert_match output, /\<54\> expected but was/
-    assert !File.exists?(@sandbox.dir),
-          "!File.exists?(#{@sandbox.dir})"
+    assert File.exists?(@sandbox.dir),
+          "File.exists?(#{@sandbox.dir})"
   end
 
-  test "new text files created in test run are added to visible_files" do
-    language = Language.new(root_dir, 'ApprovalTests-Java')
-    visible_files = language.visible_files
-    output = @sandbox.run(language, visible_files)
-    assert visible_files.keys.include?("UntitledTest.hitch_hiker.received.txt"), visible_files.to_s
-    assert_match visible_files["UntitledTest.hitch_hiker.received.txt"], /42/
-  end
+  #test "new text files created in test run are added to visible_files" do
+  #  language = Language.new(root_dir, 'ApprovalTests-Java')
+  #  visible_files = language.visible_files
+  #  output = @sandbox.run(language, visible_files)
+  #  assert visible_files.keys.include?("UntitledTest.hitch_hiker.received.txt"), visible_files.to_s
+  #  assert_match visible_files["UntitledTest.hitch_hiker.received.txt"], /42/
+  #end
 
   test "missing text files are removed from visible_files" do
     visible_files = {}
@@ -111,7 +270,6 @@ class SandboxTests < ActionController::TestCase
     output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
     assert_match visible_files["baz.txt"], "baz updated", visible_files.to_s
   end
-
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   

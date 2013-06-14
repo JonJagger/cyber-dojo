@@ -270,6 +270,7 @@ manifest.rb Parameters
   Each of these files must exist in the directory.
   For example, test framework library code.
   Not required if you do not need hidden files.
+  Not currently used anywhere. 
   
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
