@@ -44,7 +44,7 @@ class SandboxTests < ActionController::TestCase
     # deleted on the browser? Don't want to have to
     # iterate through the sandbox to find the existing
     # filenames. But I don't need to because they are
-    # in the avatars manifest file.
+    # in the avatars' manifest file.
     
     # avatar.git_commit_tag() looks like it will also
     # be considerably simplified
@@ -117,6 +117,9 @@ class SandboxTests < ActionController::TestCase
     #  end
     #
     # This will become...
+    # Or will it. Initially, have the rmdir mkdir in place would solve any problems
+    # about deleting files. Leave in place for the switch to using
+    # avatar/sandbox subfolder...
     #
     #  def run(language, visible_files)
     #    output = inner_run(language, visible_files)
@@ -149,6 +152,13 @@ class SandboxTests < ActionController::TestCase
     #    command += "git tag -m '#{tag}' #{tag} HEAD;"
     #    system(cd_dir(command))
     #  end
+    #  or perhaps instead of
+    #    command += "git add .;"
+    # I can do
+    #    command += "git add sandbox;"
+    # Either way is better than adding files individually
+    # because it captures any files that might have been created
+    # (such as .txt approval files).
     #
     # except that files deleted in the browser must also be deleted
     # in the sandbox
@@ -166,12 +176,16 @@ class SandboxTests < ActionController::TestCase
     #  end
     #
     # I don't need hidden_filenames at all.
+    # I recall now - that was put in place for the features
+    # where on a fork, I could move visible files to
+    # become invisible (and vice versa).
     #
     # Note also that I should not be doing the link_files() calls
     # every time. That should happen once at the creation of the avatar
     # object. It does raise the question of what happens if, in the
     # browser, someone tries to create a file with the same name as
-    # a support/hidden file. The answer is they can't. I check for that.
+    # a support/hidden file. The answer is they can't. I check for that
+    # in javascript.
 
 
   test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do

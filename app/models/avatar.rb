@@ -61,10 +61,6 @@ class Avatar
     unlocked_read(Manifest_filename, tag)
   end
   
-  def all_files_in_sandbox() # nothing appears to call this...
-    Folders.in(sandbox)
-  end
-
   def increments(tag = nil)
     unlocked_read(Increments_filename, tag)
   end

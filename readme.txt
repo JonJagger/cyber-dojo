@@ -270,7 +270,9 @@ manifest.rb Parameters
   Each of these files must exist in the directory.
   For example, test framework library code.
   Not required if you do not need hidden files.
-  Not currently used anywhere. 
+  Not currently used anywhere. When doing a fork offers a page that allows
+  you to control which files are visible and which are not (eg to make
+  the test files present but invisible) then this will be needed.
   
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
@@ -375,7 +377,9 @@ o) If the three tests return three amber traffic-lights then
    it will assume the language is not configured correctly.
 o) If the three tests return any other combination of traffic-lights
    it will assume the language is installed but not working.
-   
+
+This approach has a flaw: what if two or more files contain '42'.
+This tends to happens for the BDD style testing.
 
 
 Getting dojos off the VirtualBox TurnKey Linux server
