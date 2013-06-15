@@ -5,7 +5,7 @@ class SandboxTests < ActionController::TestCase
   def setup
     @id = 'ABCDE12345'
     @avatar_name = 'hippo'
-    @sandbox = Sandbox.new(root_dir,@id,@avatar_name)
+    @sandbox = Sandbox.new(root_dir, @id, @avatar_name)
   end
   
   def teardown
@@ -190,7 +190,7 @@ class SandboxTests < ActionController::TestCase
 
   test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do
     @sandbox.make_dir
-    dir = root_dir + '/sandboxes/' + @id[0..1] + '/' +@id[2..-1] + '/' + @avatar_name + '/'
+    dir = root_dir + '/katas/' + @id[0..1] + '/' +@id[2..-1] + '/' + @avatar_name + '/' + 'sandbox' + '/'
     assert_equal dir, @sandbox.dir
     assert File.exists?(@sandbox.dir),
           "File.exists?(#{@sandbox.dir})"
@@ -206,6 +206,17 @@ class SandboxTests < ActionController::TestCase
     assert_equal content, IO.read(pathed_filename)          
   end
   
+  test "after run() a file called output is saved in sandbox and contains the output" do
+    language = Language.new(root_dir, 'Ruby-installed-and-working')
+    visible_files = language.visible_files
+    @sandbox.make_dir
+    output = @sandbox.run(language, visible_files)    
+    output_filename = @sandbox.dir + 'output'
+    assert File.exists?(output_filename),
+          "File.exists?(#{output_filename})"
+    assert_equal output, IO.read(output_filename)          
+  end
+  
   test "visible and hidden files are copied to sandbox and output is generated" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
@@ -219,6 +230,7 @@ class SandboxTests < ActionController::TestCase
             "File.exists?(#{@sandbox.dir}/#{filename})"
     end
     
+    # TODO: there are no hidden files so this does not test anything
     language.hidden_filenames.each do |filename|
       assert File.exists?(@sandbox.dir + '/' + filename),
             "File.exists?(#{@sandbox.dir}/#{filename})"
@@ -227,7 +239,7 @@ class SandboxTests < ActionController::TestCase
     assert_match output, /\<54\> expected but was/
   end    
       
-  test "sandbox dir is deleted after run" do
+  test "sandbox dir is not deleted after run" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')        
     visible_files = language.visible_files
     output = @sandbox.run(language, visible_files)

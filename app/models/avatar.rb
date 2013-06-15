@@ -22,13 +22,21 @@ class Avatar
     @kata = kata
     @name = name
     if !File.exists? dir
-      Dir::mkdir(dir)   
+      Dir::mkdir(dir)
+      Dir::mkdir(sandbox)
       Files::file_write(pathed(Manifest_filename), @kata.visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
       command = "git init --quiet;" +
                 "git add '#{Manifest_filename}';" +
                 "git add '#{Increments_filename}';"
       system(cd_dir(command))
+      
+      visible_files.each do |filename,content|
+        pathed_filename = sandbox + '/' + filename
+        Folders::make_folder(pathed_filename)      
+        File.open(pathed_filename, 'w') { |file| file.write content }          
+      end
+      
       git_commit_tag(@kata.visible_files, tag = 0)
     end
   end
@@ -85,21 +93,9 @@ private
   end
   
   def git_commit_tag(visible_files, tag)
-    # recreate new empty sandbox so deleted files
-    # are not in it and so are seen as deleted
-    # by the git diff command above.
-    # Put visible_files into sandbox subdir and not straight
-    # into dir to leave dir available for admin files
-    # such as mainfest.rb and increments.rb which then
-    # don't interfere with sandbox dir contents.
-    system("rm -rf #{sandbox}")
-    Dir::mkdir(sandbox)
-    
     command = ""
     visible_files.each do |filename,content|
       pathed_filename = sandbox + '/' + filename
-      Folders::make_folder(pathed_filename)      
-      File.open(pathed_filename, 'w') { |file| file.write content }      
       command += "git add '#{pathed_filename}';"
     end
     command += "git commit -a -m '#{tag}' --quiet;"

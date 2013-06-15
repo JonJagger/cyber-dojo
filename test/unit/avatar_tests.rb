@@ -8,7 +8,7 @@ class AvatarTests < ActionController::TestCase
   
   test "there are no increment-traffic-lights before first test-run" do
     kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')    
+    avatar = Avatar.new(kata, 'wolf')
     assert_equal [ ], avatar.increments    
   end
   
@@ -41,5 +41,5 @@ class AvatarTests < ActionController::TestCase
     actual = avatar.diff_lines(was_tag = 1, now_tag = 2)    
     assert actual.match(/^diff --git/)
   end
-  
+
 end

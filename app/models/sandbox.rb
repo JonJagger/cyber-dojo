@@ -13,7 +13,7 @@ class Sandbox
   end
      
   def dir
-    @root_dir + '/sandboxes/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/'
+    @root_dir + '/katas/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/' + 'sandbox' + '/'
   end
     
   def make_dir
@@ -28,7 +28,7 @@ class Sandbox
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     make_dir
     output = inner_run(language, visible_files)
-    system("rm -rf #{dir}")
+    save_file('output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
   

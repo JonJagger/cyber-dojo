@@ -60,7 +60,7 @@ class ActiveSupport::TestCase
   def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
     info = make_info(language_name, exercise_name, id)
     Kata.create_new(root_dir, info)
-    Kata.new(root_dir, info[:id])
+    Kata.new(root_dir, info[:id]) # what is this doing?
   end
     
   def run_tests(avatar, visible_files, timeout = 1)
