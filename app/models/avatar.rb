@@ -24,7 +24,9 @@ class Avatar
     if !File.exists? dir
       Dir::mkdir(dir)
       Dir::mkdir(sandbox)
-      Files::file_write(pathed(Manifest_filename), @kata.visible_files)
+      visible_files = @kata.visible_files
+      visible_files['output'] = ''
+      Files::file_write(pathed(Manifest_filename), visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
       command = "git init --quiet;" +
                 "git add '#{Manifest_filename}';" +
@@ -38,7 +40,7 @@ class Avatar
         File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/            
       end
       
-      git_commit_tag(@kata.visible_files, tag = 0)
+      git_commit_tag(visible_files, tag = 0)
     end
   end
   

@@ -3,11 +3,11 @@ require './integration_test'
 
 class DiffControllerTest < IntegrationTest
 
-  test "show incremental 0-1 no change to any file" do
+  test "show tag_0-tag_1 diff with no change to any file" do
     id = checked_save_id
     kata = Kata.new(root_dir, id)
-
-    avatar_name = Avatar.names[0]    
+    avatar_name = Avatar.names[0]
+    
     post '/kata/edit', {
       :id => id,
       :avatar => avatar_name
@@ -28,11 +28,13 @@ class DiffControllerTest < IntegrationTest
     assert_response :success
   end
   
-  test "show current-state 1-1 no change in any file" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "show tag_1-tag_1 (no diff) no change in any file" do
     id = checked_save_id
-    kata = Kata.new(root_dir, id)
+    kata = Kata.new(root_dir, id)    
+    avatar_name = Avatar.names[0]
     
-    avatar_name = Avatar.names[0]    
     post '/kata/edit', {
       :id => id,
       :avatar => avatar_name

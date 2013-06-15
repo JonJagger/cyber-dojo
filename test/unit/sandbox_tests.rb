@@ -40,48 +40,11 @@ class SandboxTests < ActionController::TestCase
   #  end
   #end
     
-    # how to delete files in the sandbox that have been
-    # deleted on the browser? Don't want to have to
-    # iterate through the sandbox to find the existing
-    # filenames. But I don't need to because they are
-    # in the avatars' manifest file.
-    
     # avatar.git_commit_tag() looks like it will also
     # be considerably simplified
     # why do I do "git add filename" in a loop
     # Surely it would be ok to do "git add ."
     
-    # in fact!... I won't need to have a separate
-    # cyberdojo/sandboxes folder at all
-    # At the moment I have
-    # cyberdojo/sandboxes/E3/3EA78C31/hippo
-    # AND
-    # cyberdojo/katas/E3/3EA78C31/hippo/sandbox
-    # and this is pretty crazy. I only
-    # need the later.
-    # Will this have an implication on the
-    # partition organization on cyber-dojo.com
-    # I recall cyberdojo/sandboxes/ was put onto the /tmp partition
-    # but was cyberdojo/katas/ too?
-    # It must be cyberdojo/katas/ on /tmp because at the moment
-    # cyberdojo/sandboxes/ is deleted at the end of sandbox.run()
-    
-    # look at sandboxes/ I can see that the outer folders
-    # eg E3/3EA78C31/ are not deleted but everything underneath is
-    # This too will all drop away.
-
-    # In fact, a useful first step would be to remove the
-    # whole sandboxes/ folder and use and instead refactor
-    # what there currently is to use katas/..../hippo/sandbox instead.
-    #
-    # sandbox/dir currently looks like this
-    # def dir
-    #   @root_dir + '/sandboxes/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/'
-    # end
-    # If I change it to this
-    # def dir
-    #   @root_dir + '/katas/' + @id.inner + '/' + @id.outer + '/' + @avatar_name + '/'
-    # end
     # Then avatar.initialize
     # def initialize(kata, name) 
     #    @kata = kata
@@ -107,25 +70,6 @@ class SandboxTests < ActionController::TestCase
     #      command = "git init --quiet;" +
     #                "git add .;"
     #
-    # Also avatar.run() looks like this
-    #
-    #  def run(language, visible_files)
-    #    make_dir
-    #    output = inner_run(language, visible_files)
-    #    system("rm -rf #{dir}")
-    #    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
-    #  end
-    #
-    # This will become...
-    # Or will it. Initially, have the rmdir mkdir in place would solve any problems
-    # about deleting files. Leave in place for the switch to using
-    # avatar/sandbox subfolder...
-    #
-    #  def run(language, visible_files)
-    #    output = inner_run(language, visible_files)
-    #    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
-    #  end
-    #
     # Also avatar.git_commit_tag() looks like this...
     #
     #  def git_commit_tag(visible_files, tag)
@@ -146,39 +90,16 @@ class SandboxTests < ActionController::TestCase
     # This can become...
     #
     #  def git_commit_tag(visible_files, tag)
-    #    command = ""
+    #    ...
     #    command += "git add .;"
     #    command += "git commit -a -m '#{tag}' --quiet;"
     #    command += "git tag -m '#{tag}' #{tag} HEAD;"
     #    system(cd_dir(command))
     #  end
-    #  or perhaps instead of
-    #    command += "git add .;"
-    # I can do
-    #    command += "git add sandbox;"
     # Either way is better than adding files individually
     # because it captures any files that might have been created
     # (such as .txt approval files).
     #
-    # except that files deleted in the browser must also be deleted
-    # in the sandbox
-    #
-    # sandbox.inner_run() looks like this and is where this needs to happen
-    # (do the hashing to see if the file has changed after)
-    #
-    #  def inner_run(language, visible_files)
-    #    visible_files.each do |filename,content|
-    #      save_file(filename, content)
-    #    end
-    #    link_files(language.dir, language.support_filenames)
-    #    link_files(language.dir, language.hidden_filenames)
-    #    ...
-    #  end
-    #
-    # I don't need hidden_filenames at all.
-    # I recall now - that was put in place for the features
-    # where on a fork, I could move visible files to
-    # become invisible (and vice versa).
     #
     # Note also that I should not be doing the link_files() calls
     # every time. That should happen once at the creation of the avatar
@@ -250,6 +171,7 @@ class SandboxTests < ActionController::TestCase
           "File.exists?(#{@sandbox.dir})"
   end
 
+  #TODO: do this with an 'echo xx > received.txt' command in the cyber-dojo.sh file
   #test "new text files created in test run are added to visible_files" do
   #  language = Language.new(root_dir, 'ApprovalTests-Java')
   #  visible_files = language.visible_files
@@ -259,7 +181,7 @@ class SandboxTests < ActionController::TestCase
   #end
 
   test "missing text files are removed from visible_files" do
-    visible_files = {}
+    visible_files = { }
     visible_files["foo.txt"] = "bar"
     temp_dir = Dir.mktmpdir # empty dir, does not contain foo.txt
     output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
