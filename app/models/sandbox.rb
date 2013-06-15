@@ -26,6 +26,7 @@ class Sandbox
     #                the visible_files), which may provide hidden_files
     # visible_files  the code/test files from the browser
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    system("rm -rf #{dir}")
     make_dir
     output = inner_run(language, visible_files)
     save_file('output', output)

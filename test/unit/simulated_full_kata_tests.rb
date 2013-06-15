@@ -32,7 +32,7 @@ class SimulatedFullKataTests < ActionController::TestCase
         visible_files = visible_files_set[avatar.name]
         
         defunct_before = defunct_count
-        output = run_tests(avatar, visible_files)        
+        output = run_tests(avatar, visible_files, timeout=5)        
         defunct_after = defunct_count
         
         assert_equal defunct_before, defunct_after, 'run_tests(avatar, visible_files)' 
