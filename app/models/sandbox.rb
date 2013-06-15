@@ -28,6 +28,7 @@ class Sandbox
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     system("rm -rf #{dir}")
     make_dir
+    # TODO: don't delete the sandbox every run-tests
     output = inner_run(language, visible_files)
     save_file('output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
@@ -38,7 +39,10 @@ class Sandbox
       save_file(filename, content)
     end
     link_files(language.dir, language.support_filenames)
-    link_files(language.dir, language.hidden_filenames)
+    link_files(language.dir, language.hidden_filenames)    
+    # TODO: When the sandbox folder is _not_ deleted for
+    # each run-tests then I should be able to do the link_files
+    # just the once in the avatar c'tor.
     
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"

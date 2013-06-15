@@ -40,75 +40,6 @@ class SandboxTests < ActionController::TestCase
   #  end
   #end
     
-    # avatar.git_commit_tag() looks like it will also
-    # be considerably simplified
-    # why do I do "git add filename" in a loop
-    # Surely it would be ok to do "git add ."
-    
-    # Then avatar.initialize
-    # def initialize(kata, name) 
-    #    @kata = kata
-    #    @name = name
-    #    if !File.exists? dir
-    #      Dir::mkdir(dir)
-    #      Files::file_write(pathed(Manifest_filename), @kata.visible_files)
-    #      Files::file_write(pathed(Increments_filename), [ ])
-    #      command = "git init --quiet;" +
-    #                "git add '#{Manifest_filename}';" +
-    #                "git add '#{Increments_filename}';"    
-    #
-    # this can change to...
-    #
-    # def initialize(kata, name) 
-    #    @kata = kata
-    #    @name = name
-    #    if !File.exists? dir
-    #      Dir::mkdir(dir)
-    #      Dir::mkdir(dir + 'sandbox')
-    #      Files::file_write(pathed(Manifest_filename), @kata.visible_files)
-    #      Files::file_write(pathed(Increments_filename), [ ])
-    #      command = "git init --quiet;" +
-    #                "git add .;"
-    #
-    # Also avatar.git_commit_tag() looks like this...
-    #
-    #  def git_commit_tag(visible_files, tag)
-    #    system("rm -rf #{sandbox}")
-    #    Dir::mkdir(sandbox)
-    #    command = ""
-    #    visible_files.each do |filename,content|
-    #      pathed_filename = sandbox + '/' + filename
-    #      Folders::make_folder(pathed_filename)      
-    #      File.open(pathed_filename, 'w') { |file| file.write content }      
-    #      command += "git add '#{pathed_filename}';"
-    #    end
-    #    command += "git commit -a -m '#{tag}' --quiet;"
-    #    command += "git tag -m '#{tag}' #{tag} HEAD;"
-    #    system(cd_dir(command))
-    #  end
-    #
-    # This can become...
-    #
-    #  def git_commit_tag(visible_files, tag)
-    #    ...
-    #    command += "git add .;"
-    #    command += "git commit -a -m '#{tag}' --quiet;"
-    #    command += "git tag -m '#{tag}' #{tag} HEAD;"
-    #    system(cd_dir(command))
-    #  end
-    # Either way is better than adding files individually
-    # because it captures any files that might have been created
-    # (such as .txt approval files).
-    #
-    #
-    # Note also that I should not be doing the link_files() calls
-    # every time. That should happen once at the creation of the avatar
-    # object. It does raise the question of what happens if, in the
-    # browser, someone tries to create a file with the same name as
-    # a support/hidden file. The answer is they can't. I check for that
-    # in javascript.
-
-
   test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do
     @sandbox.make_dir
     dir = root_dir + '/katas/' + @id[0..1] + '/' +@id[2..-1] + '/' + @avatar_name + '/' + 'sandbox' + '/'
@@ -171,14 +102,18 @@ class SandboxTests < ActionController::TestCase
           "File.exists?(#{@sandbox.dir})"
   end
 
-  #TODO: do this with an 'echo xx > received.txt' command in the cyber-dojo.sh file
-  #test "new text files created in test run are added to visible_files" do
-  #  language = Language.new(root_dir, 'ApprovalTests-Java')
-  #  visible_files = language.visible_files
-  #  output = @sandbox.run(language, visible_files)
-  #  assert visible_files.keys.include?("UntitledTest.hitch_hiker.received.txt"), visible_files.to_s
-  #  assert_match visible_files["UntitledTest.hitch_hiker.received.txt"], /42/
-  #end
+  test "new text files created in test run are added to visible_files" do
+    # do this in a way that does not assume approval is actuall installed!
+    language = Language.new(root_dir, 'Ruby-installed-and-working')        
+    visible_files = language.visible_files
+    content = '42'
+    new_text_filename = 'wibble.txt'
+    visible_files['cyber-dojo.sh'] = "echo '#{content}' > #{new_text_filename}"
+    assert !visible_files.keys.include?(new_text_filename)
+    output = @sandbox.run(language, visible_files)
+    assert visible_files.keys.include?(new_text_filename)
+    assert_equal content+"\n", visible_files[new_text_filename] 
+  end
 
   test "missing text files are removed from visible_files" do
     visible_files = { }
