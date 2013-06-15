@@ -12,6 +12,26 @@ class AvatarTests < ActionController::TestCase
     assert_equal [ ], avatar.increments    
   end
   
+  test "after avatar is created sandbox contains visible_files" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')    
+    avatar.visible_files.each do |filename,_content|
+      pathed_filename = avatar.dir + '/sandbox/' + filename
+      assert File.exists?(pathed_filename),
+            "File.exists?(#{pathed_filename})"      
+    end    
+  end
+  
+  test "after avatar is created sandbox contains cyber-dojo.sh and it has execute permission" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')
+    cyber_dojo_sh = avatar.dir + '/sandbox/cyber-dojo.sh'
+    assert File.exists?(cyber_dojo_sh),
+          "File.exists?(#{cyber_dojo_sh})"
+    assert File.stat(cyber_dojo_sh).executable?,
+          "File.stat(#{cyber_dojo_sh}).executable?"
+  end
+  
   test "after first test-run increments contains one traffic-light which does not contain output" do
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'wolf')    

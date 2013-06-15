@@ -34,7 +34,8 @@ class Avatar
       visible_files.each do |filename,content|
         pathed_filename = sandbox + '/' + filename
         Folders::make_folder(pathed_filename)      
-        File.open(pathed_filename, 'w') { |file| file.write content }          
+        File.open(pathed_filename, 'w') { |file| file.write content }
+        File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/            
       end
       
       git_commit_tag(@kata.visible_files, tag = 0)
@@ -78,6 +79,10 @@ class Avatar
     Files::popen_read(command)
   end
   
+  def dir
+    @kata.dir + '/' + name
+  end
+  
 private
 
   def sandbox
@@ -88,10 +93,6 @@ private
     dir + '/' + filename
   end
       
-  def dir
-    @kata.dir + '/' + name
-  end
-  
   def git_commit_tag(visible_files, tag)
     command = ""
     visible_files.each do |filename,content|

@@ -32,13 +32,12 @@ class ReverterControllerTest  < IntegrationTest
     }
 
     visible_files = json['visibleFiles']
-    assert_not_nil visible_files    
-    expected = { "output" => "sh: ./cyber-dojo.sh: No such file or directory\n" }
-    assert_equal expected, json['visibleFiles']
+    assert_not_nil visible_files
+    assert_not_nil visible_files['output']
     
     inc = json['inc']
     assert_not_nil inc
-    assert_equal "amber", inc['colour']
+    assert_equal "red", inc['colour']
     assert_equal 1, inc['number']
   end
     
