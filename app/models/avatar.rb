@@ -40,7 +40,7 @@ class Avatar
         File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/            
       end
       
-      git_commit_tag(visible_files, tag = 0)
+      git_commit(tag = 0)
     end
   end
   
@@ -63,7 +63,7 @@ class Avatar
       traffic_lights = increments << inc
       Files::file_write(pathed(Increments_filename), traffic_lights)
       Files::file_write(pathed(Manifest_filename), visible_files)
-      git_commit_tag(visible_files, tag)
+      git_commit(tag)
     end
     traffic_lights
   end
@@ -95,12 +95,9 @@ private
     dir + '/' + filename
   end
       
-  def git_commit_tag(visible_files, tag)
+  def git_commit(tag)
     command = ""
-    visible_files.each do |filename,content|
-      pathed_filename = sandbox + '/' + filename
-      command += "git add '#{pathed_filename}';"
-    end
+    command += "git add .;"
     command += "git commit -a -m '#{tag}' --quiet;"
     command += "git tag -m '#{tag}' #{tag} HEAD;"
     system(cd_dir(command))
