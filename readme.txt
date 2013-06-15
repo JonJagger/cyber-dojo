@@ -202,9 +202,7 @@ Disk space
 ==========
 The design of cyber-dojo is very heavy on inodes. You will almost certainly
 run out of inodes before running out of disk space. The folder that eats
-the inodes is katas/ If sandboxes/ is ever changed so it retains its contents
-between run-tests (eg to support incremental makes in C/C++) then that too
-would be a culprit.
+the inodes is katas/ 
 
 
 Adding a new exercise
@@ -302,7 +300,10 @@ on its 10 character id. For example
   cyberdojo/katas/82/B583C347
 Each started avatar has a sub-directory underneath this, for example
   cyberdojo/katas/82/B583C347/wolf
-  
+Each started avatar has a sandbox sub-directory where its files are held, eg
+  cyberdojo/katas/82/B583C347/wolf/sandbox
+
+
 
 Git Repositories
 ================
@@ -322,26 +323,6 @@ To look at filename's differences between tag 4 and tag 5
 It's much easier and more informative to just click on a dashboard
 traffic light.
   
-
-Sandboxes
-=========
-It used to be the case that a 'test' event would cause all the browser's
-visible files to be saved into the avatar's sandbox folder along with the
-language's hidden files and then the cyber-dojo.sh file would be run on those
-files. This is no longer the case. Now, the browser's visible files and the
-language's hidden files are saved to a temporary dir under cyberdojo/sandboxes/
-and the cyber-dojo.sh file is run from there. This run generates output which
-is captured and parsed to determine the appropriate traffic-light colour (red,
-amber, or green). Then, the visible files (with the output added to it) and the
-red/amber/green status is saved in the avatar's sandbox folder and git
-committed. Running the tests is deliberately separated out to its own folder.
-This separation offers an easy future route to running dedicated servers just
-to run the tests. The structure of temporary cyberdojo/sandboxes sub-folder
-(where the tests are run from) mirrors the cyberdojo/katas sub-folder. Eg
-  cyberdojo/katas/45/7ED34A21/lion
-  cyberdojo/sandboxes/45/7ED34A21/lion
-This allows for a possible future feature where the sandbox is not deleted
-after each run test event. This could enable, for example, incremental makes.
 
 
 
