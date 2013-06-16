@@ -22,8 +22,7 @@ class Avatar
     @kata = kata
     @name = name
     if !File.exists? dir
-      Dir::mkdir(dir)
-      Dir::mkdir(sandbox)
+      Folders::make_folder(sandbox)
       visible_files = @kata.visible_files
       visible_files['output'] = ''
       Files::file_write(pathed(Manifest_filename), visible_files)
