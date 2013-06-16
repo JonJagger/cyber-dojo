@@ -7,49 +7,126 @@ o) choose your language (eg C++)
 o) choose your exercise (eg Prime Factors)
    Each exercise corresponds to a sub-directory of cyberdojo/exercises/
    (see below)
+o) click the [ok] button.
 You will be assigned a 6-character id (the full id is actually 10 characters
-long but statistically 6 chars will be enough for uniqueness).
+long but statistically 6 chars is enough for uniqueness).
 
 
 Start coding
 ============
-Enter the 6-character id on each participating computer and click start coding.
-The server will assign each computer an animal 'avatar' (eg Panda).
-The animal provides identity for each computer.
-You can resume coding (from the home page) at any time by choosing
-the animal. This is handy if a participant has to leave and take their
-laptop as a new laptop can instantly replace it.
+Enter the 6-character id (case insensitive) on each participating computer
+and click the [start] button.
+The server will assign each computer an animal (eg Panda).
+The animal provides identity for each participating computer.
+Edit the code files and the test files as you work on the chosen exercise.
+Press the [test] button to see if the tests pass or not.
+A new traffic-light will appear at the bottom (progressing left-to-right,
+oldest-to-newest).
 
 
 Traffic Lights
 ==============
-The display of each test increment uses a traffic light, with meanings 
-for the three colours as follows:
+The result of each pressing the [test] button is displayed in the 'output' file
+and also as a new traffic-light (at the bottom). Clicking on a traffic-light
+reverts back to the files for that traffic-light.
+The meanings for the three colours on each traffic-light are as follows:
   (o) red   - tests ran but at least one failed
   (o) amber - syntax error somewhere, tests not run
   (o) green - tests ran and all passed
-The colours are positional, top red, middle amber, bottom green.
-This means you can still read the display if you are colour blind.
-You will also get an amber traffic light if the tests do not
-complete within 15 seconds.
+The colours on the traffic-light are positional, red at the top,
+amber in the middle, green at the bottom. This means you can still read the
+display if you are colour blind.
+You will also get an amber traffic-light if the tests do not complete within
+15 seconds (eg you've accidentally coded an infinite loop or the server is
+overloaded with too many concurrent practice sessions)
 
 
 Dashboard-Review
 ================
-The dashboard shows a periodically updating display of all traffic lights
-for all the animals in the dojo. If you want to collapse the horizontal time
-gaps simply enter a very large value for the seconds_per_column value.
+From the home page, enter the practice session id and click the [review]
+button. A new dashboard page will appear showing a display of all the
+traffic-lights for all the animals in the practice session.
+The dashboard auto-refreshes every 10 seconds.
+The idea is to display the dashboard during the practice session.
+Then when the practice session ends, you can click the [disable] button
+(at the top) to stop the auto-refresh.
+
+Each horizontal row corresponds to one animal and displays, from left to right,
+o) its oldest-to-newest traffic lights
+o) its animal
+o) its most recent traffic-light.
+o) its total number of red,amber,green traffic-lights so far (in red,amber,green).
+o) its total number of traffic-lights (in the current colour).
+
+Each vertical column corresponds to a fixed amount of time
+(the [seconds per column] value at the top). If this value is 30 seconds
+then every three auto-refreshes a new rightmost column will appear
+containing all the traffic-lights created by all the animals in those 30
+seconds. If no animals press the [test] button during these 30 seconds the
+column will contain no traffic-lights at all (instead it will contain
+a single dot and be very thin).
+If you want to collapse the horizontal time gaps between traffic-lights
+simply enter a very large value for the [seconds per column] value (at the top).
+
+As more and more tests are run, more and more traffic-lights
+will be displayed taking up more and more horizontal space.
+This can easily cause the column with the animal images and the summary
+information to scroll out of sight. If this happens you can simply reduce
+the [columns maximum] value at the top of the page. If the [columns maximum]
+value is 30 then only the 30 most recent columns will be displayed (older
+columns are simply chopped off the left and do not appear).
+
+If the dashboard display has a horizontal scrollbar you will probably need
+to [disable] the auto-refresh before scrolling.
 
 
 Diff-Review
 ===========
-Clicking on a dashboard traffic light opens a new page showing the diffs for
-that increment together with < and > buttons to step backwards and forwards
-through the diffs. The diff page does not work properly in Internet Explorer 8.
-A diff will automatically open the file with the most changes.
-Reclicking a file will auto-scroll to the next diff-chunk in the file.
-Clicking the red no-of-lines-deleted button will toggle the deleted lines on/off.
-Clicking the green no-of-lines-added button will toggle the added lines on/off.
+Clicking on a dashboard traffic-light opens a new page showing the diffs for
+that traffic-light for that animal together with << < > >> buttons to step
+backwards and forwards through the diffs. The diff page will automatically
+open the file with the most changes and autoscroll to the first diff-chunk.
+Reclicking on the file should auto-scroll to the next diff-chunk in the file
+(but there is a bug in that somewhere).
+Clicking the red no-of-lines-deleted button (to the right of the filename)
+will toggle the deleted lines on/off.
+Clicking the green no-of-lines-added button (to the right of the filename)
+will toggle the added lines on/off.
+
+The diff is a diff between two traffic-lights. If you click on an animals 13th
+traffic-lights (on the dashboard) then the diff page will show the diff between
+traffic-lights 12 and 13, and the values 12 and 13 will appear at the top left
+below their respective traffic-lights.
+You can show the diff between any two traffic-lights by simply editing these
+numbers. For example, if you edit the 13 to a 15 and press return the page will
+update to display the diff between traffic-lights 12 and 15.
+Below the two traffic-lights are  <<  <  >  >>  buttons.
+These buttons move forwards and backwards whilst maintaining the traffic-light
+gap (eg 12 -> 15 == 3).
+Pressing
+o) << moves back to the first traffic-light, so if the gap is 3
+   it will display the diff of 1 -> 4
+o) <  moves one traffic-light back, so if the gap is 3
+   it will display the diff of 11 -> 14
+o) >  moves one traffic-light forward, so if the gap is 3
+   it will display the diff of 13 -> 16
+o) >> moves forward to the last traffic-light (eg 65), so if the gap is 3
+   it will display the diff of 62 -> 65
+
+You can also do a "no-diff" by simply enterinh the same value (eg 23) twice.
+23 -> 23 will display all the files from traffic-light 23 and there will be
+no diffs at all. The  << < > >> buttons still work and maintain the "no-diff".
+Eg pressing the < button will move back one traffic-light and show all the
+files from traffic-light 22 -> 22.
+
+
+Resuming Coding
+===============
+You can resume at any animals most recent traffic-light by pressing
+the resume button (also from the home page) and then clicking
+the animal. This is handy if a participant has to leave and take their
+laptop as a new laptop can instantly replace it.
+
 
 
 ===========================================================
@@ -79,21 +156,23 @@ Detailed instructions on building your own Turnkey server from scratch are here
 http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 
 
-Pulling the latest github source onto your Turnkey server
-=========================================================
+Pulling the latest github source onto your own cyber-dojo server
+================================================================
 Add port 12320 to the URL you put into your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
-Pull the latest cyber-dojo source code from github onto your TurnKey image
+Pull the latest cyber-dojo source code from github onto your TurnKey image...
 >cd /var/www/cyberdojo 
 >git pull origin master
 This may pull new files and folders. You must ensure these
-have the correct rights.
+have the correct rights...
 >cd /var/www/cyberdojo
 >chgrp -R www-data app
 >chown -R www-data app
-Finally, don't forget to restart apache
+Check for any gem changes...
+>bundle install
+Finally, don't forget to restart apache...
 >service apache2 restart
 
    
@@ -295,19 +374,19 @@ manifest.rb Parameters
 Katas Directory Structure
 =========================
 The rails code does NOT use a database.
-Instead each kata lives in a git-like directory structure based
-on its 10 character id. For example
+Instead each practice session lives in a git-like directory structure based
+on its 10 character id. For example the session with id 82B583C347 lived at
   cyberdojo/katas/82/B583C347
-Each started avatar has a sub-directory underneath this, for example
+Each started animal has a sub-directory underneath this, for example
   cyberdojo/katas/82/B583C347/wolf
-Each started avatar has a sandbox sub-directory where its files are held, eg
+Each started animal has a sandbox sub-directory where its files are held, eg
   cyberdojo/katas/82/B583C347/wolf/sandbox
 
 
 
 Git Repositories
 ================
-Each started animal avatar has its own git respository, eg
+Each started animal has its own git respository, eg
   cyberdojo/katas/82/B583C347/wolf/.git
 The starting files (as loaded from the wolf/manifests.rb file) form
 tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a 
@@ -315,7 +394,7 @@ message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses the 'test' button causes
 >git commit -a -m '4'
 >git tag -m '4' 4 HEAD
-From an avatar's directory you can issue the following commands:
+From an animal's directory you can issue the following commands:
 To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 5
@@ -360,12 +439,12 @@ o) If the three tests return any other combination of traffic-lights
    it will assume the language is installed but not working.
 
 This approach has a flaw: what if two or more files contain '42'.
-This tends to happens for the BDD style testing.
+This tends to happen for the BDD style testing.
 
 
 Getting dojos off the VirtualBox TurnKey Linux server
 =====================================================
-From the review dashboard page click the download-zip button.
+From the review dashboard page click the [download-zip] button.
 
 If you want to do it from within the actual server you will need
 the username and password info to SSH and SFTP.
