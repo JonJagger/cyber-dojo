@@ -4,14 +4,13 @@ require 'Files'
 class FilesTests < ActionController::TestCase
 
   def setup
-    @id = 'ABCDE12345'
-    @folder = "#{root_dir}/#{@id}"
+    id = 'ABCDE12345'
+    @folder = "#{root_dir}/#{id}"
     system("mkdir #{@folder}")
   end
   
   def teardown
-    system("rm -rf #{@folder}/*")
-    system("rmdir #{@folder}")
+    system("rm -rf #{@folder}")
   end
 
   test "saving a file with a folder creates the subfolder and the file in it" do
