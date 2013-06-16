@@ -13,31 +13,6 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
 
-  # It seems file.atime/ctime/mtime only store the time to the second
-  # That is not fine enough for the test...
-  #
-  #test "after running tests for second time with no change in any file then no file time-stamps are updated" do    
-  #  language = Language.new(root_dir, 'Ruby-installed-and-working')        
-  #  visible_files = language.visible_files
-  #  
-  #  output = @sandbox.run(language, visible_files)
-  #  before = { }
-  #  visible_files.each do |filename,_|
-  #    ts = File.new(@sandbox.dir + filename).atime
-  #    before[filename] = ts.to_s
-  #  end
-  #  output = @sandbox.run(language, visible_files)
-  #  after = { }
-  #  visible_files.each do |filename,_|
-  #    ts = File.new(@sandbox.dir + filename).atime
-  #    after[filename] = ts.to_s
-  #  end
-  #  visible_files.each do |filename,_|
-  #    p "#{before[filename]} --- #{after[filename]}"
-  #    assert_equal before[filename], after[filename]
-  #  end
-  #end
-    
   test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do
     @sandbox.make_dir
     dir = @sandbox.dir
