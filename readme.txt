@@ -43,12 +43,17 @@ overloaded with too many concurrent practice sessions)
 
 Dashboard-Review
 ================
-From the home page, enter the practice session id and click the [review]
-button. A new dashboard page will appear showing a display of all the
-traffic-lights for all the animals in the practice session.
+You can get to the dashboard page in two ways.
+o) click the animal image at the top left of the test-coding page, or
+   the diff page.
+o) from the home page, enter the practice session id and click the [review]
+   button.
+
+A new dashboard page will appear displaying all the traffic-lights for all
+the animals in the practice session.
 The dashboard auto-refreshes every 10 seconds.
-The idea is to display the dashboard during the practice session.
-Then when the practice session ends, you can click the [disable] button
+The idea is to display the dashboard during the practice session,
+then when the practice session ends, you click the [disable] button
 (at the top) to stop the auto-refresh.
 
 Each horizontal row corresponds to one animal and displays, from left to right,
@@ -74,7 +79,7 @@ This can easily cause the column with the animal images and the summary
 information to scroll out of sight. If this happens you can simply reduce
 the [columns maximum] value at the top of the page. If the [columns maximum]
 value is 30 then only the 30 most recent columns will be displayed (older
-columns are simply chopped off the left and do not appear).
+columns are simply chopped off the left).
 
 If the dashboard display has a horizontal scrollbar you will probably need
 to [disable] the auto-refresh before scrolling.
