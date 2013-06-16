@@ -8,7 +8,7 @@ o) choose your exercise (eg Prime Factors)
    Each exercise corresponds to a sub-directory of cyberdojo/exercises/
    (see below)
 o) click the [ok] button.
-You will be assigned a 6-character id (the full id is actually 10 characters
+You will get a 6-character id (the full id is actually 10 characters
 long but statistically 6 chars is enough for uniqueness).
 
 
@@ -18,10 +18,10 @@ Enter the 6-character id (case insensitive) on each participating computer
 and click the [start] button.
 The server will assign each computer an animal (eg Panda).
 The animal provides identity for each participating computer.
-Edit the code files and the test files as you work on the chosen exercise.
-Press the [test] button to see if the tests pass or not.
-A new traffic-light will appear at the bottom (progressing left-to-right,
-oldest-to-newest).
+Each computer edits the code files and the test files as they work on the
+chosen exercise. Each computer presses the [test] button to see if the tests
+pass or not. A new traffic-light will appear at the bottom (progressing
+left-to-right, oldest-to-newest).
 
 
 Traffic Lights
@@ -315,11 +315,12 @@ Make sure all the named files are in the new folder, including cyber-dojo.sh
   #chmod +x cyber-dojo.sh
   #chown www-data *
   #chgrp www-data *
+Check that running cyber-dojo.sh behaves as required:
   #sudo -u www-data ./cyber-dojo.sh
 or maybe
   #strace sudo -u www-data ./cyber-dojo.sh
 
-You can also create a test for it in cyberdojo/test/installation
+You can also create a test for your new language in cyberdojo/test/installation
 by copying an existing language test rb file. Eg
   #cp clojure_tests.rb lisp_tests.rb
 Edit it match the folder name you created
@@ -352,9 +353,9 @@ manifest.rb Parameters
   Each of these files must exist in the directory.
   For example, test framework library code.
   Not required if you do not need hidden files.
-  Not currently used anywhere. When doing a fork offers a page that allows
-  you to control which files are visible and which are not (eg to make
-  the test files present but invisible) then this will be needed.
+  Not currently used anywhere. The plan is that doing a fork will offer a
+  page that allows you to control which files are visible and which are not
+  (eg to make the test files present but invisible) then this will be needed.
   
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
@@ -380,9 +381,9 @@ Katas Directory Structure
 =========================
 The rails code does NOT use a database.
 Instead each practice session lives in a git-like directory structure based
-on its 10 character id. For example the session with id 82B583C347 lived at
+on its 10 character id. For example the session with id 82B583C347 lives at
   cyberdojo/katas/82/B583C347
-Each started animal has a sub-directory underneath this, for example
+Each started animal has a sub-directory underneath this, eg
   cyberdojo/katas/82/B583C347/wolf
 Each started animal has a sandbox sub-directory where its files are held, eg
   cyberdojo/katas/82/B583C347/wolf/sandbox

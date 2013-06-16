@@ -28,18 +28,10 @@ class Avatar
       visible_files['output'] = ''
       Files::file_write(pathed(Manifest_filename), visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
-      command = "git init --quiet;" +
-                "git add '#{Manifest_filename}';" +
-                "git add '#{Increments_filename}';"
-      system(cd_dir(command))
-      
       visible_files.each do |filename,content|
-        pathed_filename = sandbox + '/' + filename
-        Folders::make_folder(pathed_filename)      
-        File.open(pathed_filename, 'w') { |file| file.write content }
-        File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/            
-      end
-      
+        Files::file_write(sandbox + '/' + filename, content)
+      end      
+      system(cd_dir('git init --quiet;'))
       git_commit(tag = 0)
     end
   end

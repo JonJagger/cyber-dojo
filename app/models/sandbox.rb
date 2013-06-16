@@ -30,19 +30,20 @@ class Sandbox
     make_dir
     # TODO: don't delete the sandbox every run-tests
     output = inner_run(language, visible_files)
-    save_file('output', output)
+    Files::file_write(dir + '/' + 'output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
   
   def inner_run(language, visible_files)
     visible_files.each do |filename,content|
-      save_file(filename, content)
+      Files::file_write(dir + '/' + filename, content)
     end
     link_files(language.dir, language.support_filenames)
     link_files(language.dir, language.hidden_filenames)    
     # TODO: When the sandbox folder is _not_ deleted for
     # each run-tests then I should be able to do the link_files
     # just the once in the avatar c'tor.
+    # TODO: should the hidden files be linked or copied?
     
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
@@ -64,19 +65,6 @@ class Sandbox
     end
   end
 
-  def save_file(filename, content)
-    path = dir + '/' + filename
-    # if file is in a folder make the folder
-    Folders::make_folder(path)
-    # No need to lock when writing these files.
-    # They are write-once-only
-    File.open(path, 'w') do |fd|
-      fd.write(makefile_filter(filename, content))
-    end
-    # .sh files (eg cyber-dojo.sh) need execute permissions
-    File.chmod(0755, path) if filename =~ /\.sh/    
-  end
-
 private
 
   def read_file(filename)
@@ -95,27 +83,5 @@ private
       system("ln '#{link_dir}/#{filename}' '#{dir}/#{filename}'")
     end    
   end
-  
-  def makefile_filter(name, content)
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # The jquery-tabby.js plugin intercepts tab key presses in the
-    # textarea editor and converts them to spaces for a better
-    # editing experience. However, makefiles are tab sensitive...
-    # Hence this special filter, just for makefiles, to convert
-    # leading spaces back to a tab character.
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -    
-    if name.downcase == 'makefile'
-      lines = [ ]
-      newline = Regexp.new('[\r]?[\n]')
-      content.split(newline).each do |line|
-        if stripped = line.lstrip!
-          line = "\t" + stripped
-        end
-        lines.push(line)
-      end
-      content = lines.join("\n")
-    end
-    content
-  end
-  
+
 end

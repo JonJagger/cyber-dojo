@@ -130,7 +130,7 @@ class GitDiffViewTests < ActionController::TestCase
     visible_files.delete('untitled.rb')
     
     # create tag 2 in the repo 
-    run_tests(avatar, visible_files)
+    run_tests(avatar, visible_files, timeout = 5)
     assert_equal :amber, avatar.increments.last[:colour]
     
     from_tag = 1
