@@ -16,12 +16,13 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    @kata = Kata.new(root_dir, id)
+    @kata   = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
-    language = @kata.language
-    sandbox = Sandbox.new(root_dir, id, params[:avatar])
+    sandbox = Sandbox.new(@avatar)
     visible_files = received_files
     previous_files = visible_files.keys
+    
+    language = @kata.language    
     @output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     inc[:revert_tag] = params[:revert_tag]    

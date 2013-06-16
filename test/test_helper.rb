@@ -65,7 +65,7 @@ class ActiveSupport::TestCase
     
   def run_tests(avatar, visible_files, timeout = 1)
     language = avatar.kata.language
-    sandbox = Sandbox.new(root_dir, @dojo_id, avatar.name)
+    sandbox = Sandbox.new(avatar)
     sandbox.test_timeout = timeout
     output = sandbox.run(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, output)

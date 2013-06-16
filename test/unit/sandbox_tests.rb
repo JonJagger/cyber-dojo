@@ -2,10 +2,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SandboxTests < ActionController::TestCase
 
+  def language
+    'Ruby-installed-and-working'    
+  end
+
   def setup
-    id = 'ABCDE12345'
-    avatar_name = 'hippo'
-    @sandbox = Sandbox.new(root_dir, id, avatar_name)
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'hippo')
+    @sandbox = Sandbox.new(avatar)
   end
   
   def teardown
