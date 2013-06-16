@@ -25,7 +25,7 @@ class FilesTests < ActionController::TestCase
     assert_equal content, IO.read(full_pathed_filename)          
   end
 
-  test "save_file for non-string" do
+  test "save_file for non-string is saved as inspected object" do
     object = { :a => 1, :b => 2 }
     check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n", false)
   end
@@ -37,6 +37,12 @@ class FilesTests < ActionController::TestCase
   test "save file for executable file" do
     check_save_file('file.sh', 'ls', 'ls', true)
   end
+  
+  test "save filename longer than but ends in makefile is not auto-tabbed" do
+    content = '    abc'
+    expected_content = content
+    check_save_file('smakefile', content, expected_content, false)    
+  end  
   
   test "save file for makefile converts all leading whitespace on a line to a single tab" do
     check_save_makefile("            abc", "\tabc")

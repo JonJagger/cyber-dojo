@@ -27,7 +27,7 @@ module Files
     # editing experience. However, makefiles are tab sensitive...
     # Hence this special filter, just for makefiles, to convert
     # leading spaces back to a tab character.
-    if pathed_filename.downcase =~ /makefile/
+    if pathed_filename.downcase.split(File::SEPARATOR).last == 'makefile'
       lines = [ ]
       newline = Regexp.new('[\r]?[\n]')
       content.split(newline).each do |line|
