@@ -27,9 +27,7 @@ class Avatar
       visible_files['output'] = ''
       Files::file_write(pathed(Manifest_filename), visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
-      visible_files.each do |filename,content|
-        Files::file_write(sandbox + '/' + filename, content)
-      end      
+      Sandbox.new(self).save(visible_files)
       system(cd_dir('git init --quiet;'))
       git_commit(tag = 0)
     end
@@ -43,6 +41,10 @@ class Avatar
     @name
   end
       
+  def run_tests(language, visible_files)
+    Sandbox.new(self).run(language, visible_files)
+  end
+  
   def save_run_tests(visible_files, output, inc)    
     traffic_lights = nil
     inc[:time] = make_time(Time.now)

@@ -14,8 +14,10 @@ class Sandbox
     @avatar.dir + '/' + 'sandbox' + '/'
   end
     
-  def make_dir
-    Folders::make_folder(dir)
+  def save(visible_files)
+    visible_files.each do |filename,content|
+      Files::file_write(dir + filename, content)
+    end    
   end
   
   def run(language, visible_files)
@@ -25,17 +27,15 @@ class Sandbox
     # visible_files  the code/test files from the browser
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     system("rm -rf #{dir}")
-    make_dir
+    Folders::make_folder(dir)
     # TODO: don't delete the sandbox every run-tests
     output = inner_run(language, visible_files)
-    Files::file_write(dir + '/' + 'output', output)
+    Files::file_write(dir + 'output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
   
   def inner_run(language, visible_files)
-    visible_files.each do |filename,content|
-      Files::file_write(dir + '/' + filename, content)
-    end
+    save(visible_files)
     link_files(language.dir, language.support_filenames)
     link_files(language.dir, language.hidden_filenames)    
     # TODO: When the sandbox folder is _not_ deleted for
