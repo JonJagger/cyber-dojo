@@ -89,9 +89,9 @@ Diff-Review
 ===========
 Clicking on a dashboard traffic-light opens a new page showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to step
-backwards and forwards through the diffs. The diff page will automatically
+backwards and forwards. The diff page will automatically
 open the file with the most changes and autoscroll to the first diff-chunk.
-Reclicking on the file should auto-scroll to the next diff-chunk in the file
+Clicking on the filename should auto-scroll to the next diff-chunk in the file
 (but there is a bug in that somewhere).
 Clicking the red no-of-lines-deleted button (to the right of the filename)
 will toggle the deleted lines on/off.
@@ -99,7 +99,7 @@ Clicking the green no-of-lines-added button (to the right of the filename)
 will toggle the added lines on/off.
 
 The diff is a diff between two traffic-lights. If you click on an animals 13th
-traffic-lights (on the dashboard) then the diff page will show the diff between
+traffic-light (on the dashboard) then the diff page will show the diff between
 traffic-lights 12 and 13, and the values 12 and 13 will appear at the top left
 below their respective traffic-lights.
 You can show the diff between any two traffic-lights by simply editing these
@@ -118,11 +118,11 @@ o) >  moves one traffic-light forward, so if the gap is 3
 o) >> moves forward to the last traffic-light (eg 65), so if the gap is 3
    it will display the diff of 62 -> 65
 
-You can also do a "no-diff" by simply enterinh the same value (eg 23) twice.
+You can also do a "no-diff" by simply entering the same value (eg 23) twice.
 23 -> 23 will display all the files from traffic-light 23 and there will be
 no diffs at all. The  << < > >> buttons still work and maintain the "no-diff".
-Eg pressing the < button will move back one traffic-light and show all the
-files from traffic-light 22 -> 22.
+Eg pressing the < button will move back one traffic-light and show the diff
+of traffic-lights 22 -> 22, viz, the files from traffic-light 22.
 
 
 Resuming Coding
