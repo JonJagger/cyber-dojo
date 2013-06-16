@@ -3,15 +3,13 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    @id = 'ABCDE12345'
-    @avatar_name = 'hippo'
-    @sandbox = Sandbox.new(root_dir, @id, @avatar_name)
+    id = 'ABCDE12345'
+    avatar_name = 'hippo'
+    @sandbox = Sandbox.new(root_dir, id, avatar_name)
   end
   
   def teardown
-    if File.exists? @sandbox.dir
-      `rm -rf #{root_dir + '/sandboxes/AB'}`
-    end
+    `rm -rf #{@sandbox.dir}`
     @sandbox = nil
   end
 
@@ -42,7 +40,7 @@ class SandboxTests < ActionController::TestCase
     
   test "sandbox.make_dir creates inner-outer-avatar off root_dir-sandboxes" do
     @sandbox.make_dir
-    dir = root_dir + '/katas/' + @id[0..1] + '/' +@id[2..-1] + '/' + @avatar_name + '/' + 'sandbox' + '/'
+    dir = @sandbox.dir
     assert_equal dir, @sandbox.dir
     assert File.exists?(@sandbox.dir),
           "File.exists?(#{@sandbox.dir})"
