@@ -1,0 +1,506 @@
+require File.dirname(__FILE__) + '/../test_helper'
+
+class AvatarTests < ActionController::TestCase
+
+  def language
+    'Ruby-installed-and-working'
+  end
+  
+  test "there are no increment-traffic-lights before first test-run" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')
+    assert_equal [ ], avatar.increments    
+  end
+  
+  test "after avatar is created sandbox contains visible_files" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')    
+    avatar.visible_files.each do |filename,_content|
+      pathed_filename = avatar.dir + '/sandbox/' + filename
+      assert File.exists?(pathed_filename),
+            "File.exists?(#{pathed_filename})"      
+    end    
+  end
+  
+  test "after avatar is created sandbox contains cyber-dojo.sh and it has execute permission" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')
+    cyber_dojo_sh = avatar.dir + '/sandbox/cyber-dojo.sh'
+    assert File.exists?(cyber_dojo_sh),
+          "File.exists?(#{cyber_dojo_sh})"
+    assert File.stat(cyber_dojo_sh).executable?,
+          "File.stat(#{cyber_dojo_sh}).executable?"
+  end
+  
+  test "after first test-run increments contains one traffic-light which does not contain output" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')    
+    run_tests(avatar, avatar.visible_files)
+    increments = avatar.increments
+    assert_equal 1, increments.length
+    assert_equal nil, increments.last[:run_tests_output]
+  end
+  
+  test "deleted file is deleted from that repo tag" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')  # creates tag-0
+    visible_files = avatar.visible_files
+    deleted_filename = 'instructions'
+    visible_files[deleted_filename] = 'Whatever'
+    
+    run_tests(avatar, visible_files)  # creates tag-1
+    visible_files.delete(deleted_filename)
+    run_tests(avatar, visible_files)  # creates tag-2
+    
+    before = avatar.visible_files(1)
+    assert before.keys.include?("#{deleted_filename}"),
+          "before.keys.include?(#{deleted_filename})"
+          
+    after = avatar.visible_files(2)
+    assert !after.keys.include?("#{deleted_filename}"),
+          "!after.keys.include?(#{deleted_filename})"
+  end
+  
+  test "avatar returns kata it was created with" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')    
+    assert_equal kata, avatar.kata    
+  end
+  
+  test "diff_lines is not empty when change in files" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf')
+    visible_files = avatar.visible_files
+    run_tests(avatar, visible_files)
+    visible_files['cyber-dojo.sh'] += 'xxxx'
+    run_tests(avatar, visible_files)
+    increments = avatar.increments
+    assert_equal 2, increments.length
+    was_tag = nil
+    now_tag = nil
+    actual = avatar.diff_lines(was_tag = 1, now_tag = 2)    
+    assert actual.match(/^diff --git/)
+  end
+
+  test "tag 0 repo (created when avatar is made) contains an empty output file" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf') 
+    visible_files = avatar.visible_files
+    assert visible_files.keys.include?('output'),
+          "visible_files.keys.include?('output')"
+  end
+
+  test "diff_lines shows added file" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf') # 0
+    visible_files = avatar.visible_files
+    added_filename = 'unforgiven.txt'
+    content = 'starring Clint Eastwood'
+    visible_files[added_filename] = content
+    run_tests(avatar, visible_files) # 1
+    actual = avatar.diff_lines(was_tag=0, now_tag=1)
+    expected =
+      [
+        "diff --git a/sandbox/#{added_filename} b/sandbox/#{added_filename}",
+        "new file mode 100644",
+        "index 0000000..1bdc268",
+        "--- /dev/null",
+        "+++ b/sandbox/#{added_filename}",
+        "@@ -0,0 +1 @@",
+        "+starring Clint Eastwood"
+      ].join("\n")
+    assert actual.include?(expected)
+  end
+
+  test "diff_lines shows deleted file" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf') # 0
+    visible_files = avatar.visible_files
+    deleted_filename = 'instructions'
+    content = 'tweedle_dee'
+    visible_files[deleted_filename] = content
+    run_tests(avatar, visible_files)  # 1
+    visible_files.delete(deleted_filename)    
+    run_tests(avatar, visible_files)  # 2
+    actual = avatar.diff_lines(was_tag=1, now_tag=2)
+    expected =
+      [
+        "diff --git a/sandbox/#{deleted_filename} b/sandbox/#{deleted_filename}",
+        "deleted file mode 100644",
+        "index f68a37c..0000000",
+        "--- a/sandbox/#{deleted_filename}",
+        "+++ /dev/null",
+        "@@ -1 +0,0 @@",
+        "-#{content}"       
+      ].join("\n")
+    assert actual.include?(expected)
+  end
+
+end
+require File.dirname(__FILE__) + '/../test_helper'
+require 'Files'
+
+class ExerciseTests < ActionController::TestCase
+
+  test "name" do
+    exercise = make_exercise('Yahtzee')    
+    assert_equal 'Yahtzee', exercise.name
+  end
+  
+  test "instructions are loaded" do
+    exercise = make_exercise('Yahtzee')
+    instructions = exercise.instructions
+    assert_not_nil instructions
+    assert exercise.instructions.start_with? "The game of Yahtzee..."
+  end
+  
+  def make_exercise(name)
+    Exercise.new(root_dir, name)
+  end
+    
+end
+require File.dirname(__FILE__) + '/../test_helper'
+
+class KataTests < ActionController::TestCase
+  
+  def language
+    'Ruby-installed-and-working'  
+  end
+  
+  test "all increments initially empty" do
+    kata = make_kata(language)
+    Avatar.new(kata, 'lion')
+    Avatar.new(kata, 'hippo')
+    expected = { "hippo" => [ ], "lion" => [ ] }
+    assert_equal expected, kata.all_increments
+  end
+  
+  test "create new named kata creates manifest with required properies" do
+    id = 'ABCDABCD34'
+    now = [2012,3,3,10,6,12]
+    info = make_info(language, 'Yahtzee', id, now)
+    Kata.create_new(root_dir, info)
+    kata = Kata.new(root_dir, info[:id])
+    
+    assert_equal root_dir + '/katas/AB/CDABCD34', kata.dir
+    assert File.directory?(kata.dir), "File.directory?(#{kata.dir})"
+        
+    manifest_rb = kata.dir + '/manifest.rb'
+    assert File.exists?(manifest_rb), "File.exists?(#{manifest_rb})"
+    manifest = eval(IO.read(manifest_rb))
+    assert manifest.has_key?(:visible_files),
+          "manifest.has_key?(:visible_files)"
+    
+    assert_equal manifest[:visible_files], kata.language.visible_files
+    assert_equal 'Yahtzee', kata.exercise.name
+    assert_equal language, kata.language.name
+    assert_equal id, kata.id
+    assert_equal Time.mktime(*now), kata.created
+    assert_equal 'ruby_test_unit', kata.language.unit_test_framework
+    assert_equal " " * 2, kata.language.tab
+    seconds = 5
+    now = now[0...-1] + [now.last + seconds ]
+    assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))
+  end
+      
+  test "root katas dir initially does not contain an index file" do
+    assert !File.exists?(root_dir + '/katas/index.rb');
+  end
+  
+  test "Kata.exists? returns false before kata is created and true after kata is created" do
+    id = 'AABBCCDDEE'
+    info = make_info(language, 'Yahtzee', id)
+    assert !Kata.exists?(root_dir, id)
+    Kata.create_new(root_dir, info)
+    assert Kata.exists?(root_dir, id)
+  end
+      
+  test "creating a new kata succeeds and creates katas root dir" do
+    kata = make_kata(language)
+    assert File.exists?(kata.dir), 'inner/outer dir created'
+  end
+    
+  test "you can create an avatar in a kata" do
+    kata = make_kata(language) 
+    avatar_name = 'hippo'
+    avatar = Avatar.new(kata, avatar_name)
+    assert 'hippo', avatar.name
+  end
+  
+  test "multiple avatar_names in a kata" do
+    kata = make_kata(language)
+    Avatar.new(kata, 'lion')
+    Avatar.new(kata, 'hippo')
+    assert_equal ['hippo', 'lion'], kata.avatar_names.sort
+  end
+
+end
+require File.dirname(__FILE__) + '/../test_helper'
+require 'Files'
+
+class LanguageTests < ActionController::TestCase
+
+  def language
+  end
+  
+  test "name is as set" do
+    language = make_language()    
+    assert_equal 'Ruby-installed-and-working', language.name
+  end
+  
+  test "dir is based on name" do
+    language = make_language()
+    assert_equal root_dir + '/languages/Ruby-installed-and-working', language.dir
+  end
+  
+  test "blank opening line of visible starter file is retained" do
+    language = make_language()
+    lines = [ "", "def answer", "  42", "end" ]
+    expected = lines.join("\n") + "\n"
+    visible_files = language.visible_files
+    assert_equal expected, visible_files['untitled.rb']
+  end
+  
+  test "visible files are loaded but not output and not instructions" do
+    language = make_language()    
+    visible_files = language.visible_files
+    assert_match visible_files['test_untitled.rb'], /^require '\.\/untitled'/ 
+    assert_nil visible_files['output']
+    assert_nil visible_files['instructions']
+  end
+  
+  test "hidden filenames defaults to [ ] if not present" do
+    language = make_language()
+    assert_equal [ ], language.hidden_filenames    
+  end
+  
+  test "unit test framework is loaded" do
+    language = make_language()    
+    assert_equal 'ruby_test_unit', language.unit_test_framework
+  end
+    
+  test "tab is loaded when not defaulted" do
+    language = make_language()    
+    assert_equal 2, language.tab_size
+  end
+  
+  def make_language()
+    Language.new(root_dir, 'Ruby-installed-and-working')
+  end
+    
+end
+require File.dirname(__FILE__) + '/../test_helper'
+
+class SandboxTests < ActionController::TestCase
+
+  def language
+    'Ruby-installed-and-working'    
+  end
+
+  def setup
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'hippo')
+    @sandbox = Sandbox.new(avatar)
+  end
+  
+  def teardown
+    `rm -rf #{@sandbox.dir}`
+    @sandbox = nil
+  end
+
+  test "sandbox creates inner-outer-avatar off root_dir-sandboxes" do
+    dir = @sandbox.dir
+    assert_equal dir, @sandbox.dir
+    assert File.exists?(@sandbox.dir),
+          "File.exists?(#{@sandbox.dir})"
+  end
+   
+  test "after run() a file called output is saved in sandbox and contains the output" do
+    language = Language.new(root_dir, 'Ruby-installed-and-working')
+    visible_files = language.visible_files
+    output = @sandbox.run(language, visible_files)    
+    output_filename = @sandbox.dir + 'output'
+    assert File.exists?(output_filename),
+          "File.exists?(#{output_filename})"
+    assert_equal output, IO.read(output_filename)          
+  end
+  
+  test "visible and hidden files are copied to sandbox and output is generated" do
+    language = Language.new(root_dir, 'Ruby-installed-and-working')
+    visible_files = language.visible_files
+    output = @sandbox.inner_run(language, visible_files)
+    assert File.exists?(@sandbox.dir), "sandbox dir created"
+    
+    visible_files.each do |filename,content|
+      assert File.exists?(@sandbox.dir + '/' + filename),
+            "File.exists?(#{@sandbox.dir}/#{filename})"
+    end
+    
+    # TODO: there are no hidden files so this does not test anything
+    language.hidden_filenames.each do |filename|
+      assert File.exists?(@sandbox.dir + '/' + filename),
+            "File.exists?(#{@sandbox.dir}/#{filename})"
+    end
+    
+    assert_match output, /\<54\> expected but was/
+  end    
+      
+  test "sandbox dir is not deleted after run" do
+    language = Language.new(root_dir, 'Ruby-installed-and-working')        
+    visible_files = language.visible_files
+    output = @sandbox.run(language, visible_files)
+    assert_not_nil output, "output != nil"
+    assert output.class == String, "output.class == String"
+    assert_match output, /\<54\> expected but was/
+    assert File.exists?(@sandbox.dir),
+          "File.exists?(#{@sandbox.dir})"
+  end
+
+  test "new text files created in test run are added to visible_files" do
+    # do this in a way that does not assume approval is actuall installed!
+    language = Language.new(root_dir, 'Ruby-installed-and-working')        
+    visible_files = language.visible_files
+    content = '42'
+    new_text_filename = 'wibble.txt'
+    visible_files['cyber-dojo.sh'] = "echo '#{content}' > #{new_text_filename}"
+    assert !visible_files.keys.include?(new_text_filename)
+    output = @sandbox.run(language, visible_files)
+    assert visible_files.keys.include?(new_text_filename)
+    assert_equal content+"\n", visible_files[new_text_filename] 
+  end
+
+  test "missing text files are removed from visible_files" do
+    visible_files = { }
+    visible_files["foo.txt"] = "bar"
+    temp_dir = Dir.mktmpdir # empty dir, does not contain foo.txt
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert (not visible_files.keys.include?("foo.txt")), visible_files.to_s
+  end
+
+  test "text from multi-line files is saved in visible_files" do
+    visible_files = {}
+    temp_dir = Dir.mktmpdir
+    f = File.open(Pathname.new(temp_dir).join("foo.txt"), "w")
+    f.write("a multiline\nstring\n")
+    f.close()
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert (visible_files.keys.include?("foo.txt")), visible_files.to_s
+    assert_match visible_files["foo.txt"], "a multiline\nstring\n", visible_files.to_s
+  end
+
+  test "text from windows files is saved with unix line endings" do
+    visible_files = {}
+    temp_dir = Dir.mktmpdir
+    f = File.open(Pathname.new(temp_dir).join("bar.txt"), "w")
+    f.write("a multiline\r\nstring\r\n")
+    f.close()
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert_match visible_files["bar.txt"], "a multiline\nstring\n", visible_files.to_s
+  end
+
+  test "updated text files are updated in visible_files" do
+    visible_files = {"baz.txt" => "foo"}
+    temp_dir = Dir.mktmpdir
+    f = File.open(Pathname.new(temp_dir).join("baz.txt"), "w")
+    f.write("baz updated")
+    f.close()
+    output = @sandbox.update_visible_files_with_text_files_created_and_deleted_in_test_run(temp_dir, visible_files)
+    assert_match visible_files["baz.txt"], "baz updated", visible_files.to_s
+  end
+
+end
+
+require File.dirname(__FILE__) + '/../test_helper'
+
+class SimulatedFullKataTests < ActionController::TestCase
+
+  def defunct_count
+    # See comments in app/lib/Files.rb
+    `ps`.scan(/<defunct>/).length
+  end
+  
+  # These tests feel like they should be in test/lib/popen_read_tests.rb
+  test "no ruby zombie processes left unkilled" do
+    @language = 'Ruby-installed-and-working'
+    @avatar_count = 6
+    @run_tests_count = 8
+    check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
+  end
+  
+  def check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
+    kata = make_kata(@language)
+
+    visible_files_set = { }
+    avatars = [ ]
+    
+    @avatar_count.times do |n|
+      avatar = Avatar.new(kata, Avatar.names[n])
+      visible_files_set[avatar.name] = avatar.visible_files
+      avatars << avatar
+    end
+
+    @run_tests_count.times do |n|
+      avatars.each do |avatar|
+        visible_files = visible_files_set[avatar.name]
+        
+        defunct_before = defunct_count
+        output = run_tests(avatar, visible_files, timeout=5)        
+        defunct_after = defunct_count
+        
+        assert_equal defunct_before, defunct_after, 'run_tests(avatar, visible_files)' 
+        
+        info = avatar.name + ', red'
+        assert_equal :red, avatar.increments.last[:colour], info + ', :red,' + output
+        print 's'
+      end
+    end
+  end
+  
+end
+
+require File.dirname(__FILE__) + '/../test_helper'
+
+class TimeOutTests < ActionController::TestCase
+
+  test "that_code_with_infinite_loop_times_out_to_amber_and_doesnt_leak_processes" do
+    kata = make_kata('Ruby-installed-and-working', 'Dummy')
+    filename = 'untitled.rb'
+    avatar_name = Avatar::names.shuffle[0]
+    avatar = Avatar.new(kata, avatar_name)
+    visible_files = avatar.visible_files
+    code = visible_files[filename]
+    visible_files[filename] = code.sub('42', 'while true;end')
+    
+    ps_count_before = ps_count
+    print 't'
+    STDOUT.flush
+    output = run_tests(avatar, visible_files, timeout = 5)
+    assert_equal :amber, avatar.increments.last[:colour]
+    ps_count_after = ps_count
+    
+    # This next text sometimes fails and I haven't yet determined why...
+    assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'
+    
+    assert_match(/Terminated by the cyber-dojo server after \d+ seconds?/, output)
+  end
+  
+  def ps_count
+    `ps aux | grep -E "(cyber-dojo)"`.lines.count
+  end
+  
+end
+require File.dirname(__FILE__) + '/../test_helper'
+
+class TrapOutputRefreshTests < ActionController::TestCase
+  
+  test "output is correct after refresh" do
+    language = 'Ruby-installed-and-working'
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'lion')
+    output = run_tests(avatar, avatar.visible_files)
+    # now refresh
+    avatar = Avatar.new(kata, 'lion')
+    assert_equal output, avatar.visible_files['output']
+  end    
+      
+end

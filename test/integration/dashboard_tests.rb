@@ -10,7 +10,7 @@ class DashboardControllerTest < IntegrationTest
   end
     
   test "show avatars but no traffic-lights" do
-    id = checked_save_id    
+    id = checked_save_id
     (1..4).each do |n|
       get '/kata/edit', {
         :id => id,
@@ -29,12 +29,15 @@ class DashboardControllerTest < IntegrationTest
         :id => id,
         :avatar => Avatar.names[n]
       }
-      assert_response :success        
+      assert_response :success
+
       (1..2).each do |m|
         post 'kata/run_tests', {
           :id => id,
           :avatar => Avatar.names[n],
-          :file_content => { }
+          :file_content => {
+            quoted('cyber-dojo.sh') => ""
+          }
         }
       end
     end
@@ -44,16 +47,19 @@ class DashboardControllerTest < IntegrationTest
 
   test "download zip of dojo" do
     id = checked_save_id
-    avatar = Avatar.names[0]
+    avatar_name = Avatar.names[0]
     get '/kata/edit', {
       :id => id,
-      :avatar => avatar
+      :avatar => avatar_name
     }
-    assert_response :success        
+    assert_response :success
+
     post 'kata/run_tests', {
       :id => id,
-      :avatar => avatar,
-      :file_content => { }
+      :avatar => avatar_name,
+      :file_content => {
+        quoted('cyber-dojo.sh') => ""        
+      }
     }
     post 'dashboard/download', {
       :id => id
@@ -66,16 +72,18 @@ class DashboardControllerTest < IntegrationTest
 
   test "heartbeat" do
     id = checked_save_id
-    avatar = Avatar.names[0]
+    avatar_name = Avatar.names[0]
     get '/kata/edit', {
       :id => id,
-      :avatar => avatar
+      :avatar => avatar_name
     }
     assert_response :success        
     post 'kata/run_tests', {
       :id => id,
-      :avatar => avatar,
-      :file_content => { }
+      :avatar => avatar_name,
+      :file_content => {
+        quoted('cyber-dojo.sh') => ""        
+      }
     }
     post 'dashboard/heartbeat', {
       :id => id

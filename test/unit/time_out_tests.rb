@@ -14,7 +14,7 @@ class TimeOutTests < ActionController::TestCase
     ps_count_before = ps_count
     print 't'
     STDOUT.flush
-    output = run_tests(avatar, visible_files)
+    output = run_tests(avatar, visible_files, timeout = 5)
     assert_equal :amber, avatar.increments.last[:colour]
     ps_count_after = ps_count
     

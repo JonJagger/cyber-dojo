@@ -6,9 +6,7 @@ require 'Uuid'
 class Kata
   
   def self.create_new(root_dir, info)    
-    dir = Kata.new(root_dir, info[:id]).dir    
-    Folders::make_folder(dir + '/')
-    Files::file_write(dir + '/manifest.rb', info)
+    Files::file_write(Kata.new(root_dir, info[:id]).dir + '/manifest.rb', info)
   end
   
   def self.exists?(root_dir, id)

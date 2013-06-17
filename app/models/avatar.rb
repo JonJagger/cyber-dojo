@@ -27,7 +27,7 @@ class Avatar
       Files::file_write(pathed(Manifest_filename), visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
       sandbox.save(visible_files)
-      system(cd_dir('git init --quiet;'))
+      system(cd_dir('git init --quiet'))
       git_commit(tag = 0)
     end
   end
@@ -69,7 +69,7 @@ class Avatar
   end
 
   def diff_lines(was_tag, now_tag)
-    command = cd_dir("git diff --ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox;")
+    command = cd_dir("git diff --ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox")
     Files::popen_read(command)
   end
   
@@ -88,10 +88,12 @@ private
   end
       
   def git_commit(tag)
-    command = ""
-    command += "git add .;"
-    command += "git commit -a -m '#{tag}' --quiet;"
-    command += "git tag -m '#{tag}' #{tag} HEAD;"
+    command =
+      [
+        "git add .",
+        "git commit -a -m '#{tag}' --quiet",
+        "git tag -m '#{tag}' #{tag} HEAD",
+      ].join(';')
     system(cd_dir(command))
   end
   

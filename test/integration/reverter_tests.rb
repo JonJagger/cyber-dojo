@@ -5,29 +5,33 @@ class ReverterControllerTest  < IntegrationTest
 
   test "revert" do
     id = checked_save_id
-    avatar = Avatar.names[0]
+    avatar_name = Avatar.names[0]
     
     post '/kata/edit', {
       :id => id,
-      :avatar => avatar
+      :avatar => avatar_name
     }
     
     post 'kata/run_tests', { # 1
       :id => id,
-      :avatar => avatar,
-      :file_content => { }
+      :avatar => avatar_name,
+      :file_content => {
+        quoted('cyber-dojo.sh') => ""
+      }
     }
     
     post 'kata/run_tests', { # 2
       :id => id,
-      :avatar => avatar,
-      :file_content => { }
+      :avatar => avatar_name,
+      :file_content => {
+        quoted('cyber-dojo.sh') => ""
+      }
     }
 
     get 'reverter/revert', { 
       :format => :json,
       :id => id,
-      :avatar => avatar,
+      :avatar => avatar_name,
       :tag => 1
     }
 

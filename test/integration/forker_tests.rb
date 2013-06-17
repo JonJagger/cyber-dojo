@@ -5,29 +5,31 @@ class ForkerControllerTest < IntegrationTest
 
   test "fork" do
     id = checked_save_id
-    avatar = Avatar.names[0]
+    avatar_name = Avatar.names[0]
         
     post '/kata/edit', {
       :id => id,
-      :avatar => avatar
+      :avatar => avatar_name
     }
     
     post 'kata/run_tests', {
       :id => id,
-      :avatar => avatar,
-      :file_content => { }
+      :avatar => avatar_name,
+      :file_content => {
+        quoted('cyber-dojo.sh') => ""
+      }
     }
     
     get "diff/show", {
       :id => id,
-      :avatar => avatar,
+      :avatar => avatar_name,
       :from_tag => 0,
       :to_tag => 1
     }
     
     get "forker/fork", {
       :id => id,
-      :avatar => avatar,
+      :avatar => avatar_name,
       :tag => 1
     }
 

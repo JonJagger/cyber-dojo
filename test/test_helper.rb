@@ -63,7 +63,7 @@ class ActiveSupport::TestCase
     Kata.new(root_dir, info[:id])
   end
     
-  def run_tests(avatar, visible_files, timeout = 1)
+  def run_tests(avatar, visible_files, timeout = 15)
     language = avatar.kata.language
     sandbox = Sandbox.new(avatar)
     sandbox.test_timeout = timeout

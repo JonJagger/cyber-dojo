@@ -27,7 +27,6 @@ class Sandbox
     # visible_files  the code/test files from the browser
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     system("rm -rf #{dir}")
-    Folders::make_folder(dir)
     # TODO: don't delete the sandbox every run-tests
     output = inner_run(language, visible_files)
     Files::file_write(dir + 'output', output)

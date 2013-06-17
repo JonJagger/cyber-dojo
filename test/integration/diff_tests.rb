@@ -5,7 +5,6 @@ class DiffControllerTest < IntegrationTest
 
   test "show tag_0-tag_1 diff with no change to any file" do
     id = checked_save_id
-    kata = Kata.new(root_dir, id)
     avatar_name = Avatar.names[0]
     
     post '/kata/edit', {
@@ -16,7 +15,9 @@ class DiffControllerTest < IntegrationTest
     post 'kata/run_tests', {
       :id => id,
       :avatar => avatar_name,
-      :file_content => Avatar.new(kata, avatar_name).visible_files
+      :file_content => {
+        quoted('cyber-dojo.sh') => ""
+      }
     }
     
     get "diff/show", {
