@@ -6,11 +6,20 @@ class FilesTests < ActionController::TestCase
   def setup
     id = 'ABCDE12345'
     @folder = "#{root_dir}/#{id}"
-    system("mkdir #{@folder}")
   end
   
   def teardown
     system("rm -rf #{@folder}")
+  end
+
+  test "save_file for non-string is saved as inspected object and folder is automatically created" do
+    object = { :a => 1, :b => 2 }
+    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n", false)
+  end
+  
+  test "save_file for string - folder is automatically created" do
+    object = "hello world"
+    check_save_file('manifest.rb', object, "hello world", false)
   end
 
   test "saving a file with a folder creates the subfolder and the file in it" do
@@ -24,11 +33,6 @@ class FilesTests < ActionController::TestCase
     assert_equal content, IO.read(full_pathed_filename)          
   end
 
-  test "save_file for non-string is saved as inspected object" do
-    object = { :a => 1, :b => 2 }
-    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n", false)
-  end
-  
   test "save file for non executable file" do
     check_save_file('file.a', 'content', 'content', false)
   end

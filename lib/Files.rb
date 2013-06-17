@@ -3,8 +3,8 @@ require 'Folders'
 module Files
   
   def self.file_write(pathed_filename, object)    
+    Folders::make_folder(pathed_filename) # if file is in a folder make the folder
     if object.is_a? String
-      Folders::make_folder(pathed_filename) # if file is in a folder make the folder
       File.open(pathed_filename, 'w') do |fd|
         fd.write(makefile_filter(pathed_filename, object))
       end

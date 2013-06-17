@@ -22,12 +22,11 @@ class Avatar
     @kata = kata
     @name = name
     if !File.exists? dir
-      Folders::make_folder(sandbox)
       visible_files = @kata.visible_files
       visible_files['output'] = ''
       Files::file_write(pathed(Manifest_filename), visible_files)
       Files::file_write(pathed(Increments_filename), [ ])
-      Sandbox.new(self).save(visible_files)
+      sandbox.save(visible_files)
       system(cd_dir('git init --quiet;'))
       git_commit(tag = 0)
     end
@@ -42,7 +41,7 @@ class Avatar
   end
       
   def run_tests(language, visible_files)
-    Sandbox.new(self).run(language, visible_files)
+    sandbox.run(language, visible_files)
   end
   
   def save_run_tests(visible_files, output, inc)    
@@ -81,9 +80,9 @@ class Avatar
 private
 
   def sandbox
-    pathed('sandbox')
+    Sandbox.new(self)
   end
-
+  
   def pathed(filename)
     dir + '/' + filename
   end
