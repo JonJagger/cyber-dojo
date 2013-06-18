@@ -37,18 +37,18 @@ class DojoController < ApplicationController
   def resume_json
     exists = Kata.exists?(root_dir, id)
     kata = exists ? Kata.new(root_dir, id) : nil;
-    live_avatar_names = exists ? kata.avatar_names : [ ]
-    empty = (live_avatar_names == [ ])
+    started_avatar_names = exists ? kata.avatars.collect{|avatar| avatar.name} : [ ]
+    empty = (started_avatar_names == [ ])
     render :json => {
       :exists => exists,
       :empty => empty,
-      :resume_dialog_html => (exists ? resume_dialog_html(kata, live_avatar_names) : '')
+      :resume_dialog_html => (exists ? resume_dialog_html(kata, started_avatar_names) : '')
     }
   end
 
-  def resume_dialog_html(kata, live_avatar_names)
+  def resume_dialog_html(kata, started_avatar_names)
     @kata = kata
-    @live_avatar_names = live_avatar_names
+    @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatar.names
     bind('/app/views/dojo/resume_dialog.html.erb')    
   end
@@ -77,11 +77,12 @@ class DojoController < ApplicationController
   
   def start_avatar(kata)
     Locking::io_lock(kata.dir) do
-      available_avatar_names = Avatar.names - kata.avatar_names
-      if available_avatar_names == [ ]
+      started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
+      unstarted_avatar_names = Avatar.names - started_avatar_names
+      if unstarted_avatar_names == [ ]
         avatar_name = nil
       else          
-        avatar_name = random(available_avatar_names)
+        avatar_name = random(unstarted_avatar_names)
         Avatar.new(kata, avatar_name)
         avatar_name
       end        

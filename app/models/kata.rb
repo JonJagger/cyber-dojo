@@ -24,12 +24,12 @@ class Kata
     @id.to_s
   end
     
-  def avatar_names
-    Avatar.names.select { |name| File.exists?(dir + '/' + name) }
-  end
-  
   def avatars
-    avatar_names.map { |name| Avatar.new(self, name) }
+    Avatar.names.select { |name|
+      File.exists?(dir + '/' + name)
+    }.collect { |name|
+      Avatar.new(self,name)
+    }
   end
   
   def language

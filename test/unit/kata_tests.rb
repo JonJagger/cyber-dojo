@@ -6,6 +6,15 @@ class KataTests < ActionController::TestCase
     'Ruby-installed-and-working'  
   end
   
+  test "multiple avatars in a kata are all seen" do
+    kata = make_kata(language)
+    Avatar.new(kata, 'lion')
+    Avatar.new(kata, 'hippo')
+    avatars = kata.avatars
+    assert_equal 2, avatars.length
+    assert_equal ['hippo','lion'], avatars.collect{|avatar| avatar.name}.sort
+  end
+  
   test "create new named kata creates manifest with required properies" do
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
@@ -56,13 +65,6 @@ class KataTests < ActionController::TestCase
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)
     assert 'hippo', avatar.name
-  end
-  
-  test "multiple avatar_names in a kata" do
-    kata = make_kata(language)
-    Avatar.new(kata, 'lion')
-    Avatar.new(kata, 'hippo')
-    assert_equal ['hippo', 'lion'], kata.avatar_names.sort
   end
 
 end
