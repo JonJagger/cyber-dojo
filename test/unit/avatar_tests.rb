@@ -6,6 +6,15 @@ class AvatarTests < ActionController::TestCase
     'Ruby-installed-and-working'
   end
   
+  test "tag 0 repo contains an empty output file" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf') 
+    visible_files = avatar.visible_files
+    assert visible_files.keys.include?('output'),
+          "visible_files.keys.include?('output')"
+    assert_equal "", visible_files['output']
+  end
+
   test "there are no increment-traffic-lights before first test-run" do
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'wolf')
@@ -80,14 +89,6 @@ class AvatarTests < ActionController::TestCase
     now_tag = nil
     actual = avatar.diff_lines(was_tag = 1, now_tag = 2)    
     assert actual.match(/^diff --git/)
-  end
-
-  test "tag 0 repo (created when avatar is made) contains an empty output file" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf') 
-    visible_files = avatar.visible_files
-    assert visible_files.keys.include?('output'),
-          "visible_files.keys.include?('output')"
   end
 
   test "diff_lines shows added file" do

@@ -22,10 +22,8 @@ class Avatar
     @kata = kata
     @name = name
     if !File.exists? dir
-      visible_files = @kata.visible_files
-      visible_files['output'] = ''
-      save(visible_files, traffic_lights = [ ])
-      sandbox.save(visible_files)
+      save(@kata.visible_files, traffic_lights = [ ])
+      sandbox.save(@kata.visible_files)
       system(cd_dir('git init --quiet'))
       git_commit(tag = 0)
     end

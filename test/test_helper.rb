@@ -59,6 +59,8 @@ class ActiveSupport::TestCase
   
   def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
     info = make_info(language_name, exercise_name, id)
+    info[:visible_files]['output'] = ''
+    info[:visible_files]['instructions'] = 'practice'
     Kata.create_new(root_dir, info)
     Kata.new(root_dir, info[:id])
   end
