@@ -24,8 +24,7 @@ class Avatar
     if !File.exists? dir
       visible_files = @kata.visible_files
       visible_files['output'] = ''
-      Files::file_write(pathed(Manifest_filename), visible_files)
-      Files::file_write(pathed(Increments_filename), [ ])
+      save(visible_files, traffic_lights = [ ])
       sandbox.save(visible_files)
       system(cd_dir('git init --quiet'))
       git_commit(tag = 0)
@@ -53,8 +52,7 @@ class Avatar
       tag = increments.length + 1
       inc[:number] = tag
       traffic_lights = increments << inc
-      Files::file_write(pathed(Increments_filename), traffic_lights)
-      Files::file_write(pathed(Manifest_filename), visible_files)
+      save(visible_files, traffic_lights)
       git_commit(tag)
     end
     traffic_lights
@@ -79,14 +77,19 @@ class Avatar
   
 private
 
-  def sandbox
-    Sandbox.new(self)
+  def save(visible_files, traffic_lights)
+    Files::file_write(pathed(Manifest_filename), visible_files)
+    Files::file_write(pathed(Increments_filename), traffic_lights)
   end
-  
+
   def pathed(filename)
     dir + '/' + filename
   end
       
+  def sandbox
+    Sandbox.new(self)
+  end
+  
   def git_commit(tag)
     command =
       [

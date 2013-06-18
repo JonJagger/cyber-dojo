@@ -20,6 +20,10 @@ class Kata
     @id = Uuid.new(id)
   end
   
+  def id
+    @id.to_s
+  end
+    
   def avatar_names
     Avatar.names.select { |name| File.exists? dir + '/' + name }
   end
@@ -54,16 +58,12 @@ class Kata
     Time.mktime(*manifest[:created])
   end
   
-  def age_in_seconds( now = Time.now )
+  def age_in_seconds(now = Time.now)
     (now - created).to_i
   end
   
   def dir
     @root_dir + '/katas/' + @id.inner + '/' + @id.outer    
-  end
-  
-  def id
-    @id.to_s
   end
   
 private
