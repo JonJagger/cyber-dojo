@@ -35,6 +35,7 @@ class Sandbox
     max_run_tests_duration = (test_timeout || 15)
     output = Files::popen_read(command, max_run_tests_duration)    
     Files::file_write(dir + 'output', output)
+    visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

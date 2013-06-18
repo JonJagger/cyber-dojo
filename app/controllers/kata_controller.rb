@@ -30,7 +30,7 @@ class KataController < ApplicationController
     
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     inc[:revert_tag] = params[:revert_tag]    
-    @traffic_lights = @avatar.save_run_tests(visible_files, @output, inc)
+    @traffic_lights = @avatar.save_run_tests(visible_files, inc)
 
     @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
     @files_to_remove = previous_files.select {|filename| ! @avatar.visible_files.keys.include?(filename)}

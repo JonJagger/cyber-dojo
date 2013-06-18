@@ -37,10 +37,9 @@ class Avatar
     @name
   end
       
-  def save_run_tests(visible_files, output, inc)    
+  def save_run_tests(visible_files, inc)    
     traffic_lights = nil
     inc[:time] = make_time(Time.now)
-    visible_files['output'] = output
     Locking::io_lock(dir) do
       increments = locked_read(Increments_filename)
       tag = increments.length + 1

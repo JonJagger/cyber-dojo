@@ -71,7 +71,7 @@ class ActiveSupport::TestCase
     sandbox.test_timeout = timeout
     output = sandbox.run_tests(language, visible_files)
     inc = CodeOutputParser::parse(language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, output, inc)
+    avatar.save_run_tests(visible_files, inc)
     output
   end
 
