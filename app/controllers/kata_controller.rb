@@ -25,7 +25,7 @@ class KataController < ApplicationController
     language = @kata.language    
     @output = @avatar.sandbox.run_tests(language, visible_files)
     
-    Approval::add_new_text_files_created_in_run_tests(@avatar.sandbox.dir, visible_files)
+    Approval::add_text_files_created_in_run_tests(@avatar.sandbox.dir, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.dir, visible_files)
     
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)

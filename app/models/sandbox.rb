@@ -15,6 +15,8 @@ class Sandbox
   end
     
   def save(visible_files)
+    # Save each file individually. Enables the 'git diff' 
+    # command in avatar.diff_lines() and hence the diff page.
     visible_files.each do |filename,content|
       Files::file_write(dir + filename, content)
     end    
@@ -43,6 +45,7 @@ private
 
   def link_files(link_dir, link_filenames)
     link_filenames.each do |filename|
+      # TODO: dir ends in a '/' so how is dir/filename working?
       system("ln '#{link_dir}/#{filename}' '#{dir}/#{filename}'")
     end    
   end

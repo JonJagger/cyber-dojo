@@ -2,7 +2,7 @@ require 'Folders'
 
 module Approval
   
-  def self.add_new_text_files_created_in_run_tests(test_run_dir, visible_files)
+  def self.add_text_files_created_in_run_tests(test_run_dir, visible_files)
     txt_files = Folders.in(test_run_dir).select do |entry|
       entry.end_with?('.txt')
     end

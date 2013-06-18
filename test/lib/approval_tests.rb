@@ -16,7 +16,7 @@ class ApprovalTests < ActionController::TestCase
     File.open(Pathname.new(@temp_dir).join('foo.text'), 'w') { |file|
       file.write('foo updated')
     }
-    Approval.add_new_text_files_created_in_run_tests(@temp_dir, visible_files)
+    Approval.add_text_files_created_in_run_tests(@temp_dir, visible_files)
     assert !visible_files.keys.include?('foo.text'), visible_files.to_s    
   end
   
@@ -25,7 +25,7 @@ class ApprovalTests < ActionController::TestCase
     File.open(Pathname.new(@temp_dir).join('baz.txt'), 'w') { |file|
       file.write('baz updated')
     }
-    Approval.add_new_text_files_created_in_run_tests(@temp_dir, visible_files)
+    Approval.add_text_files_created_in_run_tests(@temp_dir, visible_files)
     assert_match visible_files['baz.txt'], "baz updated", visible_files.to_s
   end
 
@@ -37,7 +37,7 @@ class ApprovalTests < ActionController::TestCase
     File.open(Pathname.new(@temp_dir).join('foo.txt'), 'w') { |file|
       file.write('foo updated')
     }    
-    Approval.add_new_text_files_created_in_run_tests(@temp_dir, visible_files)
+    Approval.add_text_files_created_in_run_tests(@temp_dir, visible_files)
     assert_match visible_files['baz.txt'], 'baz updated', visible_files.to_s    
     assert_match visible_files['foo.txt'], 'foo updated', visible_files.to_s    
   end
@@ -57,7 +57,7 @@ class ApprovalTests < ActionController::TestCase
     File.open(Pathname.new(@temp_dir).join('foo.txt'), 'w') { |file|
       file.write("a multiline\nstring\n")
     }
-    Approval.add_new_text_files_created_in_run_tests(@temp_dir, visible_files)
+    Approval.add_text_files_created_in_run_tests(@temp_dir, visible_files)
     assert visible_files.keys.include?('foo.txt'), visible_files.to_s
     assert_match visible_files['foo.txt'], "a multiline\nstring\n", visible_files.to_s
   end
@@ -67,7 +67,7 @@ class ApprovalTests < ActionController::TestCase
     File.open(Pathname.new(@temp_dir).join('bar.txt'), 'w') { |file|
       file.write("a multiline\r\nstring\r\n")
     }
-    Approval.add_new_text_files_created_in_run_tests(@temp_dir, visible_files)
+    Approval.add_text_files_created_in_run_tests(@temp_dir, visible_files)
     assert_match visible_files['bar.txt'], "a multiline\nstring\n", visible_files.to_s
   end
 
