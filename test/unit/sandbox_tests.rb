@@ -17,7 +17,7 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
 
-  test "sandbox creates inner-outer-avatar off root_dir-sandboxes" do
+  test "sandbox dir is created" do
     dir = @sandbox.dir
     assert_equal dir, @sandbox.dir
     assert File.exists?(@sandbox.dir),
@@ -37,8 +37,7 @@ class SandboxTests < ActionController::TestCase
   test "visible and hidden files are copied to sandbox and output is generated" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
-    output = @sandbox.inner_run(language, visible_files)
-    assert File.exists?(@sandbox.dir), "sandbox dir created"
+    output = @sandbox.run_tests(language, visible_files)
     
     visible_files.each do |filename,content|
       assert File.exists?(@sandbox.dir + '/' + filename),
