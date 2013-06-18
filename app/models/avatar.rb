@@ -76,14 +76,10 @@ class Avatar
 private
 
   def save(visible_files, traffic_lights)
-    Files::file_write(pathed(Manifest_filename), visible_files)
-    Files::file_write(pathed(Increments_filename), traffic_lights)
+    Files::file_write(dir + '/' + Manifest_filename, visible_files)
+    Files::file_write(dir + '/' + Increments_filename, traffic_lights)
   end
 
-  def pathed(filename)
-    dir + '/' + filename
-  end
-      
   def sandbox
     Sandbox.new(self)
   end

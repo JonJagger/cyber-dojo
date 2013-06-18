@@ -58,12 +58,8 @@ class Kata
   
 private
 
-  def manifest_filename
-    dir + '/' + 'manifest.rb'
-  end
-  
   def manifest
-    eval IO.read(manifest_filename)
+    eval IO.read(dir + '/' + 'manifest.rb')
   end
   
 end
