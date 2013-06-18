@@ -25,17 +25,11 @@ class Kata
   end
     
   def avatar_names
-    Avatar.names.select { |name| File.exists? dir + '/' + name }
+    Avatar.names.select { |name| File.exists?(dir + '/' + name) }
   end
   
   def avatars
     avatar_names.map { |name| Avatar.new(self, name) }
-  end
-
-  def all_increments
-    avatars.inject({}) do |all,avatar|
-      all.merge( avatar.name => avatar.increments )
-    end
   end
   
   def language
@@ -47,10 +41,6 @@ class Kata
   end
 
   def visible_files
-    # language.visible_files != visible_files
-    # this is because kata.visible_files has the
-    # instructions file and output 'pseudo' file
-    # mixed in
     manifest[:visible_files]
   end
       

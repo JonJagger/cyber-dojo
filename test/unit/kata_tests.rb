@@ -6,14 +6,6 @@ class KataTests < ActionController::TestCase
     'Ruby-installed-and-working'  
   end
   
-  test "all increments initially empty" do
-    kata = make_kata(language)
-    Avatar.new(kata, 'lion')
-    Avatar.new(kata, 'hippo')
-    expected = { "hippo" => [ ], "lion" => [ ] }
-    assert_equal expected, kata.all_increments
-  end
-  
   test "create new named kata creates manifest with required properies" do
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
