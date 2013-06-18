@@ -1,4 +1,5 @@
 
+echo '' > run_all.tmp
 for TEST in *.rb ; do
     cat $TEST >> run_all.tmp
 done

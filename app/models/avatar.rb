@@ -37,10 +37,6 @@ class Avatar
     @name
   end
       
-  def run_tests(language, visible_files)
-    sandbox.run(language, visible_files)
-  end
-  
   def save_run_tests(visible_files, output, inc)    
     traffic_lights = nil
     inc[:time] = make_time(Time.now)
@@ -73,6 +69,10 @@ class Avatar
     @kata.dir + '/' + name
   end
   
+  def sandbox
+    Sandbox.new(self)
+  end
+  
 private
 
   def save(visible_files, traffic_lights)
@@ -80,10 +80,6 @@ private
     Files::file_write(dir + '/' + Increments_filename, traffic_lights)
   end
 
-  def sandbox
-    Sandbox.new(self)
-  end
-  
   def git_commit(tag)
     command =
       [

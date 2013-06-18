@@ -1,5 +1,6 @@
 
 require 'CodeOutputParser'
+require 'Approval'
 
 class KataController < ApplicationController
   
@@ -22,13 +23,18 @@ class KataController < ApplicationController
     previous_files = visible_files.keys
     
     language = @kata.language    
-    @output = @avatar.run_tests(language, visible_files)
+    @output = @avatar.sandbox.run_tests(language, visible_files)
+    
+    Approval::add_new_text_files_created_in_run_tests(@avatar.sandbox.dir, visible_files)
+    Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.dir, visible_files)
+    
     inc = CodeOutputParser::parse(language.unit_test_framework, @output)
     inc[:revert_tag] = params[:revert_tag]    
     @traffic_lights = @avatar.save_run_tests(visible_files, @output, inc)
 
-    @new_files = @avatar.visible_files.select {|filename, content| ! previous_files.include?(filename)}
+    @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
     @files_to_remove = previous_files.select {|filename| ! @avatar.visible_files.keys.include?(filename)}
+    
     @visible_files = @avatar.visible_files
 
     respond_to do |format|
@@ -38,11 +44,11 @@ class KataController < ApplicationController
       
   def help_dialog
     @avatar_name = params[:avatar_name]
-    render layout: false
+    render :layout => false
   end
       
   def fork_dialog
-    render layout: false
+    render :layout => false
   end
   
 private
