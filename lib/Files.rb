@@ -2,7 +2,8 @@ require 'Folders'
 
 module Files
   
-  def self.file_write(pathed_filename, object)    
+  def self.file_write(dir, filename, object)
+    pathed_filename = dir + File::SEPARATOR + filename
     Folders::make_folder(pathed_filename) # if file is in a folder make the folder
     if object.is_a? String
       File.open(pathed_filename, 'w') do |fd|

@@ -23,7 +23,7 @@ class IoLockTests < ActionController::TestCase
   test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
     block_run = false
     filename = 'exists.txt'
-    Files::file_write(filename, 'x=[1,2,3]')
+    Files::file_write('.', filename, 'x=[1,2,3]')
     fd = File.open(filename, 'r')
     begin
       result = Locking::io_lock(filename) {|fd| block_run = true; 'Hello' }
@@ -36,7 +36,7 @@ class IoLockTests < ActionController::TestCase
   
   test "outer_iolock_is_blocking_so_inner_iolock_blocks" do
     filename = 'exists.txt'
-    Files::file_write(filename, 'x=[1,2,3]')
+    Files::file_write('.', filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
     Locking::io_lock(filename) do
@@ -74,7 +74,7 @@ class IoLockTests < ActionController::TestCase
   
   test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
     parent = 'parent'
-    child = "#{parent}/child"
+    child = parent + File::SEPARATOR + 'child'
     `mkdir #{parent}`
     `mkdir #{child}`
     begin

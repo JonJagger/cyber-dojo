@@ -5,7 +5,7 @@ class FilesTests < ActionController::TestCase
 
   def setup
     id = 'ABCDE12345'
-    @folder = "#{root_dir}/#{id}"
+    @folder = root_dir + File::SEPARATOR + id
   end
   
   def teardown
@@ -25,9 +25,9 @@ class FilesTests < ActionController::TestCase
   test "saving a file with a folder creates the subfolder and the file in it" do
     pathed_filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
-    full_pathed_filename = @folder + '/' + pathed_filename
-    Files::file_write(full_pathed_filename, content)
-    
+    Files::file_write(@folder, pathed_filename, content)
+
+    full_pathed_filename = @folder + File::SEPARATOR + pathed_filename    
     assert File.exists?(full_pathed_filename),
           "File.exists?(#{full_pathed_filename})"
     assert_equal content, IO.read(full_pathed_filename)          
@@ -85,8 +85,8 @@ class FilesTests < ActionController::TestCase
   end
       
   def check_save_file(filename, content, expected_content, executable)
-    pathed_filename = @folder + '/' + filename
-    Files::file_write(pathed_filename, content)
+    Files::file_write(@folder, filename, content)
+    pathed_filename = @folder + File::SEPARATOR + filename    
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)

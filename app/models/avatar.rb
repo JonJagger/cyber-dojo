@@ -71,8 +71,8 @@ class Avatar
 private
 
   def save(visible_files, traffic_lights)
-    Files::file_write(dir + File::SEPARATOR + Visible_files_filename, visible_files)
-    Files::file_write(dir + File::SEPARATOR + Traffic_lights_filename, traffic_lights)
+    Files::file_write(dir, Visible_files_filename, visible_files)
+    Files::file_write(dir, Traffic_lights_filename, traffic_lights)
   end
 
   def git_commit(tag)

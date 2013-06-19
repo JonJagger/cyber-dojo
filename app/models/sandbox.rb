@@ -17,7 +17,7 @@ class Sandbox
     # Save each file individually. Enables the 'git diff' 
     # command in avatar.diff_lines() and hence the diff page.
     visible_files.each do |filename,content|
-      Files::file_write(dir + File::SEPARATOR + filename, content)
+      Files::file_write(dir, filename, content)
     end    
   end
   
@@ -34,7 +34,7 @@ class Sandbox
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     output = Files::popen_read(command, max_run_tests_duration)    
-    Files::file_write(dir + '/' + 'output', output)
+    Files::file_write(dir, 'output', output)
     visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
