@@ -1,13 +1,20 @@
-cd unit
-echo UNIT
-./run_all.sh
-cd ../lib
 echo LIB
+cd lib
 ./run_all.sh
+cd ..
+
 echo HELPERS
-cd ../helpers
+cd helpers
 ./run_all.sh
-echo INTEGRATION
-cd ../integration
+cd ..
+
+echo MODELS
+cd models
 ./run_all.sh
+cd ..
+
+echo CONTROLLERS
+cd controllers
+./run_all.sh
+cd ..
 
