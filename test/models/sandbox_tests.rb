@@ -28,7 +28,7 @@ class SandboxTests < ActionController::TestCase
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
     output = @sandbox.run_tests(language, visible_files)    
-    output_filename = @sandbox.dir + 'output'
+    output_filename = @sandbox.dir + '/' + 'output'
     assert File.exists?(output_filename),
           "File.exists?(#{output_filename})"
     assert_equal output, IO.read(output_filename)          
@@ -40,8 +40,9 @@ class SandboxTests < ActionController::TestCase
     output = @sandbox.run_tests(language, visible_files)
     
     visible_files.each do |filename,content|
-      assert File.exists?(@sandbox.dir + '/' + filename),
-            "File.exists?(#{@sandbox.dir}/#{filename})"
+      pathed_filename = @sandbox.dir + '/' + filename
+      assert File.exists?(pathed_filename),
+            "File.exists?(#{pathed_filename})"
     end
     
     # TODO: there are no hidden files so this does not test anything
@@ -63,6 +64,38 @@ class SandboxTests < ActionController::TestCase
     assert File.exists?(@sandbox.dir),
           "File.exists?(#{@sandbox.dir})"
   end
+
+=begin
+  test "support files are linked into sandbox dir" do
+    teardown
+    language = Language.new(root_dir, 'Java-Approval')
+    assert language.support_filenames.length > 0
+    assert !language.dir.end_with?('/'),
+          "!#{language.dir}.end_with?('/')"
+    
+    kata = make_kata('Java-Approval')
+    avatar = Avatar.new(kata, 'hippo')
+    @sandbox = Sandbox.new(avatar)
+    assert !@sandbox.dir.end_with?('/'),
+          "!#{@sandbox.dir}.end_with?('/')"    
+    
+    language.support_filenames.each do |filename|
+      pathed_filename = @sandbox.dir + '/' + filename
+      assert_equal 0, pathed_filename.scan('//').length
+      assert !File.exists?(pathed_filename),
+            "!File.exists?(#{pathed_filename})"
+    end
+    
+    @sandbox.link_files(language.dir, language.support_filenames)
+    
+    language.support_filenames.each do |filename|
+      pathed_filename = @sandbox.dir + '/' + filename
+      assert File.exists?(pathed_filename),
+            "File.exists?(#{pathed_filename})"
+      # and somehow check it is an linked file
+    end    
+  end
+=end
 
 end
 

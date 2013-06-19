@@ -10,14 +10,14 @@ class Sandbox
   end
      
   def dir
-    @avatar.dir + '/' + 'sandbox' + '/'
+    @avatar.dir + '/' + 'sandbox'
   end
     
   def save(visible_files)
     # Save each file individually. Enables the 'git diff' 
     # command in avatar.diff_lines() and hence the diff page.
     visible_files.each do |filename,content|
-      Files::file_write(dir + filename, content)
+      Files::file_write(dir + '/' + filename, content)
     end    
   end
   
@@ -30,22 +30,21 @@ class Sandbox
     save(visible_files)
     link_files(language.dir, language.support_filenames)
     link_files(language.dir, language.hidden_filenames)        
-    #  Should the hidden files be linked or copied?
+    # TODO: I think the hidden files should be copied.
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     output = Files::popen_read(command, max_run_tests_duration)    
-    Files::file_write(dir + 'output', output)
+    Files::file_write(dir + '/' + 'output', output)
     visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
-private
-
   def link_files(link_dir, link_filenames)
     link_filenames.each do |filename|
-      # TODO: dir ends in a '/' so how is dir/filename working?
       system("ln '#{link_dir}/#{filename}' '#{dir}/#{filename}'")
     end    
   end
+
+private
 
 end
