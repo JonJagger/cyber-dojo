@@ -2,12 +2,9 @@
 require 'Files'
 require 'Folders'
 require 'Locking'
-require 'make_time_helper'
 
 class Avatar
 
-  include MakeTimeHelper
-  
   def self.names
     # no two animals start with the same letter
     %w(
@@ -39,7 +36,6 @@ class Avatar
       
   def save_run_tests(visible_files, inc)    
     traffic_lights = nil
-    inc[:time] = make_time(Time.now) # TODO: move to kata_controller?
     Locking::io_lock(dir) do
       increments = locked_read(Traffic_lights_filename)
       tag = increments.length + 1
@@ -115,15 +111,13 @@ private
   end
   
   Traffic_lights_filename = 'increments.rb'
-  # Contains all the traffic-lights so far.
-  # It is used to display the traffic-lights at the bottom of the
+  # Used to display the traffic-lights at the bottom of the
   # animals test page, and also to display the traffic-lights for
   # an animal on the dashboard page.
   # It is part of the git repository and is committed every run-test.
   
   Visible_files_filename = 'manifest.rb'
-  # Contains all the visible files (as an inspected ruby object).
-  # It is used to retrieve (via a single file access) the visible
+  # Used to retrieve (via a single file access) the visible
   # files needed when resuming an animal.
   # It is part of the git repository and is committed every run-test.
 end

@@ -28,9 +28,10 @@ class KataController < ApplicationController
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.dir, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.dir, visible_files)
     
-    inc = CodeOutputParser::parse(language.unit_test_framework, @output)
-    inc[:revert_tag] = params[:revert_tag]    
-    @traffic_lights = @avatar.save_run_tests(visible_files, inc)
+    traffic_light = CodeOutputParser::parse(language.unit_test_framework, @output)
+    traffic_light[:revert_tag] = params[:revert_tag]
+    traffic_light[:time] = make_time(Time.now)
+    @traffic_lights = @avatar.save_run_tests(visible_files, traffic_light)
 
     @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
     @files_to_remove = previous_files.select {|filename| ! @avatar.visible_files.keys.include?(filename)}
