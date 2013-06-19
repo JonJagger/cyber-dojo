@@ -10,24 +10,28 @@ class StubKata
   end
 end
 
-class TrafficLightTests < ActionController::TestCase
+class TrafficLightTests < ActionView::TestCase
 
   include TrafficLightHelper
     
-=begin
-  # fails because linked_traffic_light cannot see link_to method
   test "linked_traffic_light" do
-    kata = StubKata.new(5335)
-    avatar_name = 'lion'    
+    kata = StubKata.new(id=5335)
+    avatar_name = 'lion'
     inc = make_inc
     inc[:colour] = :red
-    inc[:number] = 45
+    tag = 45
+    inc[:number] = tag
     inc[:revert_tag] = nil
     in_new_window = false
-    expected = ""
-    assert_equal expected, linked_traffic_light(kata, avatar_name, inc, in_new_window)
+    html = linked_traffic_light(kata, avatar_name, inc, in_new_window)
+    assert html.start_with?("<a "), '<a :' + html
+    assert html.match("href=\"/diff/show/#{id}"), 'href: ' + html
+    assert html.match("title=\"Show #{avatar_name}'s diff #{tag-1} -&gt; #{tag}"), 'title: ' + html
+    assert html.match("src='/images/traffic_light_red.png"), 'src: ' + html
+    assert html.match("alt='red traffic-light'"), 'alt: ' + html
+    assert html.match("width='20'"), 'width: ' + html
+    assert html.match("height='62'"), 'height: ' + html
   end
-=end
 
   test "traffic_light_image" do
     colour = 'red'

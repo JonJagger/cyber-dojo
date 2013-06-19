@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'recent_helper'
 
-class RecentTests < ActionController::TestCase
+class RecentTests < ActionView::TestCase
 
   include RecentHelper
   

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'make_time_helper'
 
-class MakeTimeTests < ActionController::TestCase
+class MakeTimeTests < ActionView::TestCase
 
   include MakeTimeHelper
   

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'parity_helper'
 
-class ParityTests < ActionController::TestCase
+class ParityTests < ActionView::TestCase
 
   include ParityHelper
   
