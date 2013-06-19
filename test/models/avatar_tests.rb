@@ -6,6 +6,16 @@ class AvatarTests < ActionController::TestCase
     'Ruby-installed-and-working'
   end
   
+  test "avatar names all begin with a different letter" do    
+    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  end
+  
+  test "avatars kata is set" do
+    kata = make_kata(language)
+    avatar = Avatar.new(kata, 'wolf') 
+    assert_equal kata, avatar.kata    
+  end
+  
   test "tag 0 repo contains an empty output file" do
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'wolf') 
