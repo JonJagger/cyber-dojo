@@ -11,7 +11,7 @@ class Language
   end
 
   def dir
-    @root_dir + '/languages/' + name
+    @root_dir + File::SEPARATOR + 'languages' + File::SEPARATOR + name
   end
     
   def visible_files

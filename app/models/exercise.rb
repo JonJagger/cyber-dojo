@@ -5,7 +5,11 @@ class Exercise
     @root_dir = root_dir
     @name = name
   end
-     
+
+  def dir
+    @root_dir + File::SEPARATOR + 'exercises' + File::SEPARATOR + name
+  end
+
   def name
     @name
   end
@@ -13,9 +17,5 @@ class Exercise
   def instructions
     IO.read("#{dir}/instructions")
   end
-          
-  def dir
-    @root_dir + '/exercises/' + name
-  end
-  
+
 end

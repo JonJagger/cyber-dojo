@@ -10,14 +10,14 @@ class Sandbox
   end
      
   def dir
-    @avatar.dir + '/' + 'sandbox'
+    @avatar.dir + File::SEPARATOR + 'sandbox'
   end
     
   def save(visible_files)
     # Save each file individually. Enables the 'git diff' 
     # command in avatar.diff_lines() and hence the diff page.
     visible_files.each do |filename,content|
-      Files::file_write(dir + '/' + filename, content)
+      Files::file_write(dir + File::SEPARATOR + filename, content)
     end    
   end
   
@@ -41,7 +41,8 @@ class Sandbox
 
   def link_files(link_dir, link_filenames)
     link_filenames.each do |filename|
-      system("ln '#{link_dir}/#{filename}' '#{dir}/#{filename}'")
+      command = "ln #{link_dir}/#{filename} #{dir}/#{filename}"
+      system(command)
     end    
   end
 

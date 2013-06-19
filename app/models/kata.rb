@@ -20,13 +20,20 @@ class Kata
     @id = Uuid.new(id)
   end
   
+  def dir
+    @root_dir + File::SEPARATOR +
+      'katas'   + File::SEPARATOR +
+        @id.inner + File::SEPARATOR +
+          @id.outer    
+  end
+
   def id
     @id.to_s
   end
     
   def avatars
     Avatar.names.select { |name|
-      File.exists?(dir + '/' + name)
+      File.exists?(dir + File::SEPARATOR + name)
     }.collect { |name|
       Avatar.new(self,name)
     }
@@ -52,14 +59,10 @@ class Kata
     (now - created).to_i
   end
   
-  def dir
-    @root_dir + '/katas/' + @id.inner + '/' + @id.outer    
-  end
-  
 private
 
   def manifest
-    eval IO.read(dir + '/' + 'manifest.rb')
+    eval IO.read(dir + File::SEPARATOR + 'manifest.rb')
   end
   
 end

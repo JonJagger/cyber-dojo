@@ -26,6 +26,10 @@ class Avatar
     end
   end
   
+  def dir
+    @kata.dir + File::SEPARATOR + name
+  end
+  
   def kata
     @kata
   end
@@ -60,10 +64,6 @@ class Avatar
     Files::popen_read(command)
   end
   
-  def dir
-    @kata.dir + '/' + name
-  end
-  
   def sandbox
     Sandbox.new(self)
   end
@@ -71,8 +71,8 @@ class Avatar
 private
 
   def save(visible_files, traffic_lights)
-    Files::file_write(dir + '/' + Visible_files_filename, visible_files)
-    Files::file_write(dir + '/' + Traffic_lights_filename, traffic_lights)
+    Files::file_write(dir + File::SEPARATOR + Visible_files_filename, visible_files)
+    Files::file_write(dir + File::SEPARATOR + Traffic_lights_filename, traffic_lights)
   end
 
   def git_commit(tag)

@@ -16,7 +16,7 @@ class SandboxTests < ActionController::TestCase
     `rm -rf #{@sandbox.dir}`
     @sandbox = nil
   end
-
+  
   test "sandbox dir is created" do
     dir = @sandbox.dir
     assert_equal dir, @sandbox.dir
@@ -70,18 +70,26 @@ class SandboxTests < ActionController::TestCase
     teardown
     language = Language.new(root_dir, 'Java-Approval')
     assert language.support_filenames.length > 0
-    assert !language.dir.end_with?('/'),
-          "!#{language.dir}.end_with?('/')"
     
     kata = make_kata('Java-Approval')
     avatar = Avatar.new(kata, 'hippo')
+    
+    p "....."
     @sandbox = Sandbox.new(avatar)
-    assert !@sandbox.dir.end_with?('/'),
-          "!#{@sandbox.dir}.end_with?('/')"    
+
+    assert !@sandbox.dir.end_with?(File::SEPARATOR),
+          "!#{@sandbox.dir}.end_with?(#{File::SEPARATOR})"
+
+    #assert File.directory?(@sandbox.dir),
+    #      "File.directory?(#{@sandbox.dir})"
+    # Why do I have to do this?
+    Folders.make_folder(@sandbox.dir + File::SEPARATOR)
+    p "made #{@sandbox.dir + File::SEPARATOR}"
     
     language.support_filenames.each do |filename|
-      pathed_filename = @sandbox.dir + '/' + filename
-      assert_equal 0, pathed_filename.scan('//').length
+      pathed_filename = @sandbox.dir + File::SEPARATOR + filename
+      doubled_separator = File::SEPARATOR + File::SEPARATOR
+      assert_equal 0, pathed_filename.scan(doubled_separator).length
       assert !File.exists?(pathed_filename),
             "!File.exists?(#{pathed_filename})"
     end
@@ -89,10 +97,11 @@ class SandboxTests < ActionController::TestCase
     @sandbox.link_files(language.dir, language.support_filenames)
     
     language.support_filenames.each do |filename|
-      pathed_filename = @sandbox.dir + '/' + filename
+      pathed_filename = @sandbox.dir + File::SEPARATOR + filename
       assert File.exists?(pathed_filename),
             "File.exists?(#{pathed_filename})"
-      # and somehow check it is an linked file
+      assert File.symlink?(pathed_filename),
+            "File.symlink?(#{pathed_filename})"
     end    
   end
 =end
