@@ -27,6 +27,13 @@ class DiffControllerTest < IntegrationTest
       :now_tag => 1
     }
     assert_response :success
+    
+    get "diff/heartbeat", {
+      :id => id,
+      :avatar => avatar_name,
+      :was_tag => 0,
+      :now_tag => 1      
+    }
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -55,6 +62,6 @@ class DiffControllerTest < IntegrationTest
     }
     assert_response :success
   end
-
+  
 end
 

@@ -10,7 +10,7 @@ class DojoController < ApplicationController
   def button_dialog
     name = params[:id]
     render :partial => "/dojo/dialog_#{name}.html.erb",
-           :layout => false    
+           :layout => false
   end
  
   #------------------------------------------------

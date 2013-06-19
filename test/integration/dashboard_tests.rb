@@ -85,7 +85,7 @@ class DashboardControllerTest < IntegrationTest
         quoted('cyber-dojo.sh') => ""        
       }
     }
-    post 'dashboard/heartbeat', {
+    get 'dashboard/heartbeat', {
       :id => id
     }
   end

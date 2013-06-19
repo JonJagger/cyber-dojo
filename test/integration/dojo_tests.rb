@@ -100,6 +100,16 @@ class DojoControllerTest  < IntegrationTest
     assert json['exists']      
   end
   
+  test "button dialogs" do
+    buttons = %w( about basics donations faqs feedback links source recruiting refactoring tips why )
+    buttons.each do |name|
+      get 'dojo/button_dialog', {
+        :id => name
+      }
+      assert_response :success    
+    end
+  end
+  
   test "render 404 error" do
     get 'dojo/render_error', {
       :n => 404
