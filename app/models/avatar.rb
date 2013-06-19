@@ -34,19 +34,13 @@ class Avatar
     @name
   end
       
-  def save_run_tests(visible_files, inc)    
+  def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
     Locking::io_lock(dir) do
-      increments = locked_read(Traffic_lights_filename)
-      tag = increments.length + 1
-      inc[:number] = tag
-      traffic_lights = increments << inc
-      
-      # traffic_lights = locked_read(Increments_filename)
-      # traffic_lights << traffic_light
-      # tag = traffic_lights.length
-      # traffic_light[:number] = tag
-      
+      traffic_lights = locked_read(Traffic_lights_filename)
+      traffic_lights << traffic_light
+      tag = traffic_lights.length
+      traffic_light[:number] = tag
       save(visible_files, traffic_lights)
       git_commit(tag)
     end
