@@ -38,7 +38,7 @@ module TrafficLightHelper
     base_traffic_light_image(filename + '.png',colour,width,height)
   end
   
-  def traffic_light_image(colour,width,height)
+  def traffic_light_image(colour, width, height)
     base_traffic_light_image("traffic_light_#{colour}.png",colour,width,height)
   end
   

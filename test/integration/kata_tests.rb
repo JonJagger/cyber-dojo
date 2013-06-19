@@ -29,4 +29,14 @@ class KataControllerTest  < IntegrationTest
     }
   end
     
+  test "help dialog" do
+    get "/kata/help_dialog", { :avatar_name => 'lion' }
+    assert_response :success            
+  end
+  
+  test "fork dialog" do
+    get "/kata/fork_dialog"
+    assert_response :success            
+  end
+  
 end

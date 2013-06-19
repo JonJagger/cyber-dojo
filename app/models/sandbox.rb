@@ -27,11 +27,11 @@ class Sandbox
     #       When the sandbox folder is _not_ deleted for
     #       each run-tests then I should be able to do the link_files
     #       just the once in the avatar c'tor.
-    #       Should the hidden files be linked or copied?
     system("rm -rf #{dir}")
     save(visible_files)
     link_files(language.dir, language.support_filenames)
     link_files(language.dir, language.hidden_filenames)        
+    #  Should the hidden files be linked or copied?
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     max_run_tests_duration = (test_timeout || 15)

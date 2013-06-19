@@ -1,9 +1,45 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'traffic_light_helper'
 
+class StubKata
+  def initialize(id)
+    @id = id
+  end
+  def id
+    @id
+  end
+end
+
 class TrafficLightTests < ActionController::TestCase
 
   include TrafficLightHelper
+    
+=begin
+  # fails because linked_traffic_light cannot see link_to method
+  test "linked_traffic_light" do
+    kata = StubKata.new(5335)
+    avatar_name = 'lion'    
+    inc = make_inc
+    inc[:colour] = :red
+    inc[:number] = 45
+    inc[:revert_tag] = nil
+    in_new_window = false
+    expected = ""
+    assert_equal expected, linked_traffic_light(kata, avatar_name, inc, in_new_window)
+  end
+=end
+
+  test "traffic_light_image" do
+    colour = 'red'
+    width = 44
+    height = 34
+    actual = traffic_light_image(colour, width, height)
+    assert actual.start_with? '<img '
+    assert actual.match "src='/images/traffic_light_#{colour}.png'"
+    assert actual.match "alt='#{colour} traffic-light'"
+    assert actual.match "width='#{width}'"
+    assert actual.match "height='#{height}'"
+  end
   
   test "revert traffic light red when revert_tag is nil" do
     inc = make_inc
