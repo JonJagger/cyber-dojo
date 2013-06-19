@@ -5,10 +5,10 @@ class ReverterController < ApplicationController
 	kata = Kata.new(root_dir, id)
 	avatar = Avatar.new(kata, params[:avatar])
 	visible_files = avatar.visible_files(params[:tag])
-	increments = avatar.increments(params[:tag])
+	traffic_lights = avatar.traffic_lights(params[:tag])
 	render :json => {
       :visibleFiles => visible_files,
-	  :inc => increments.last          
+	  :inc => traffic_lights.last          
 	}
   end
 

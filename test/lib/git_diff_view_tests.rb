@@ -20,13 +20,13 @@ class GitDiffViewTests < ActionController::TestCase
 
     # create tag 1 in the repo
     run_tests(avatar, visible_files)
-    assert_equal :red, avatar.increments.last[:colour], avatar.visible_files["output"]
+    assert_equal :red, avatar.traffic_lights.last[:colour], avatar.visible_files["output"]
 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
     
     # create tag 2 in the repo     
     run_tests(avatar, visible_files)
-    assert_equal :green, avatar.increments.last[:colour]
+    assert_equal :green, avatar.traffic_lights.last[:colour]
     
     was_tag = 1
     now_tag = 2    
@@ -125,13 +125,13 @@ class GitDiffViewTests < ActionController::TestCase
 
     # create tag 1 in the repo
     run_tests(avatar, visible_files)
-    assert_equal :red, avatar.increments.last[:colour], avatar.visible_files["output"]
+    assert_equal :red, avatar.traffic_lights.last[:colour], avatar.visible_files["output"]
 
     visible_files.delete('untitled.rb')
     
     # create tag 2 in the repo 
     run_tests(avatar, visible_files)
-    assert_equal :amber, avatar.increments.last[:colour]
+    assert_equal :amber, avatar.traffic_lights.last[:colour]
     
     from_tag = 1
     to_tag = 2    

@@ -13,7 +13,7 @@ class ForkerController < ApplicationController
     params['language'] = kata.language.name
     params['exercise'] = kata.exercise.name
     info = gather_info
-    tag = params[:tag] || avatar.increments.length;
+    tag = params[:tag] || avatar.traffic_lights.length;
     info[:visible_files] = avatar.visible_files(tag)    
     Kata.create_new(root_dir, info)
     

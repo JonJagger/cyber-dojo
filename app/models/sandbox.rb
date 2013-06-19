@@ -4,7 +4,6 @@ require 'Folders'
 require 'Uuid'
 
 class Sandbox
-  attr_accessor :test_timeout
   
   def initialize(avatar)
     @avatar = avatar
@@ -22,7 +21,7 @@ class Sandbox
     end    
   end
   
-  def run_tests(language, visible_files)
+  def run_tests(language, visible_files, max_run_tests_duration = 15)
     # TODO: don't delete the sandbox every run-tests    
     #       When the sandbox folder is _not_ deleted for
     #       each run-tests then I should be able to do the link_files
@@ -34,7 +33,6 @@ class Sandbox
     #  Should the hidden files be linked or copied?
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
-    max_run_tests_duration = (test_timeout || 15)
     output = Files::popen_read(command, max_run_tests_duration)    
     Files::file_write(dir + 'output', output)
     visible_files['output'] = output

@@ -27,7 +27,7 @@ private
   def setup_parameters
     @kata = Kata.new(root_dir, id)    
     @avatar = Avatar.new(@kata, params[:avatar])
-    @traffic_lights = @avatar.increments    
+    @traffic_lights = @avatar.traffic_lights    
     @min_tag = 0
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i

@@ -15,10 +15,10 @@ class AvatarTests < ActionController::TestCase
     assert_equal "", visible_files['output']
   end
 
-  test "there are no increment-traffic-lights before first test-run" do
+  test "there are no traffic-lights before first test-run" do
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'wolf')
-    assert_equal [ ], avatar.increments    
+    assert_equal [ ], avatar.traffic_lights    
   end
   
   test "after avatar is created sandbox contains visible_files" do
@@ -41,13 +41,13 @@ class AvatarTests < ActionController::TestCase
           "File.stat(#{cyber_dojo_sh}).executable?"
   end
   
-  test "after first test-run increments contains one traffic-light which does not contain output" do
+  test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'wolf')    
     run_tests(avatar, avatar.visible_files)
-    increments = avatar.increments
-    assert_equal 1, increments.length
-    assert_equal nil, increments.last[:run_tests_output]
+    traffic_lights = avatar.traffic_lights
+    assert_equal 1, traffic_lights.length
+    assert_equal nil, traffic_lights.last[:run_tests_output]
   end
   
   test "deleted file is deleted from that repo tag" do
@@ -83,8 +83,8 @@ class AvatarTests < ActionController::TestCase
     run_tests(avatar, visible_files)
     visible_files['cyber-dojo.sh'] += 'xxxx'
     run_tests(avatar, visible_files)
-    increments = avatar.increments
-    assert_equal 2, increments.length
+    traffic_lights = avatar.traffic_lights
+    assert_equal 2, traffic_lights.length
     was_tag = nil
     now_tag = nil
     actual = avatar.diff_lines(was_tag = 1, now_tag = 2)    

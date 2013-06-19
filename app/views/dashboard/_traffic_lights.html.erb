@@ -5,7 +5,7 @@
    <% maximum_columns = @maximum_columns %>
    <% maximum_seconds_uncollapsed = seconds_per_td * maximum_columns %>
    <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) %>
-   <% all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.increments]}] %>
+   <% all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}] %>
 
    <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) %>
    <% index = 0 %>

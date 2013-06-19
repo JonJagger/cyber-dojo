@@ -44,18 +44,18 @@ class TrapDiffTagTests < ActionController::TestCase
     p name    
     dojo = Dojo.new(params)
     dojo.avatars.each do |avatar|
-      look_for_diff_tag_bug_in_avatar(dojo,avatar)
+      look_for_diff_tag_bug_in_avatar(dojo, avatar)
     end   
   end  
   
-  def look_for_diff_tag_bug_in_avatar(dojo,avatar)   
+  def look_for_diff_tag_bug_in_avatar(dojo, avatar)   
     p "   " + avatar.name
-    traffic_lights = avatar.increments
+    traffic_lights = avatar.traffic_lights
     return if traffic_lights.length <= 1
     
     (0..traffic_lights.length-1).each do |tag|
       begin
-        look_for_diff_bug_in_traffic_light(dojo,avatar,tag+1)
+        look_for_diff_bug_in_traffic_light(dojo, avatar, tag + 1)
       rescue Errno::ENOENT => msg
         # I removed Objective C filesets from my hard disk
         # (Compiler needs some tweaking after OS upgrade)
@@ -67,10 +67,10 @@ class TrapDiffTagTests < ActionController::TestCase
     end
   end
   
-  def look_for_diff_bug_in_traffic_light(dojo,avatar,tag)
+  def look_for_diff_bug_in_traffic_light(dojo, avatar, tag)
     p "        " + tag.to_s
-    @traffic_lights_to_tag = avatar.increments(tag)
-    @all_traffic_lights = avatar.increments    
+    @traffic_lights_to_tag = avatar.traffic_lights(tag)
+    @all_traffic_lights = avatar.traffic_lights    
     diffed_files = git_diff_view(avatar, tag)
     @diffs = git_diff_prepare(diffed_files) 
     @current_filename_id = most_changed_lines_file_id(@diffs)    

@@ -41,7 +41,7 @@ class Avatar
     traffic_lights = nil
     inc[:time] = make_time(Time.now) # TODO: move to kata_controller?
     Locking::io_lock(dir) do
-      increments = locked_read(Increments_filename)
+      increments = locked_read(Traffic_lights_filename)
       tag = increments.length + 1
       inc[:number] = tag
       traffic_lights = increments << inc
@@ -58,11 +58,11 @@ class Avatar
   end
 
   def visible_files(tag = nil)
-    unlocked_read(Manifest_filename, tag)
+    unlocked_read(Visible_files_filename, tag)
   end
   
-  def increments(tag = nil)
-    unlocked_read(Increments_filename, tag)
+  def traffic_lights(tag = nil)
+    unlocked_read(Traffic_lights_filename, tag)
   end
 
   def diff_lines(was_tag, now_tag)
@@ -81,8 +81,8 @@ class Avatar
 private
 
   def save(visible_files, traffic_lights)
-    Files::file_write(dir + '/' + Manifest_filename, visible_files)
-    Files::file_write(dir + '/' + Increments_filename, traffic_lights)
+    Files::file_write(dir + '/' + Visible_files_filename, visible_files)
+    Files::file_write(dir + '/' + Traffic_lights_filename, traffic_lights)
   end
 
   def git_commit(tag)
@@ -114,14 +114,14 @@ private
     "cd #{dir};" + command
   end
   
-  Increments_filename = 'increments.rb'
+  Traffic_lights_filename = 'increments.rb'
   # Contains all the traffic-lights so far.
   # It is used to display the traffic-lights at the bottom of the
   # animals test page, and also to display the traffic-lights for
   # an animal on the dashboard page.
   # It is part of the git repository and is committed every run-test.
   
-  Manifest_filename = 'manifest.rb'
+  Visible_files_filename = 'manifest.rb'
   # Contains all the visible files (as an inspected ruby object).
   # It is used to retrieve (via a single file access) the visible
   # files needed when resuming an animal.

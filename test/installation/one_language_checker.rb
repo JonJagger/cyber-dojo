@@ -188,7 +188,7 @@ class OneLanguageChecker < ActionController::TestCase
     end
     
     run_tests(avatar, visible_files, @max_duration)
-    colour = avatar.increments.last[:colour]
+    colour = avatar.traffic_lights.last[:colour]
     
     if @verbose
       puts "-------<output>-----------"

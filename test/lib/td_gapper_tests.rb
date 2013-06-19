@@ -124,7 +124,7 @@ class TdGapperTests < ActionController::TestCase
     assert_equal expected, actual
   end
 
-  test "fully gapped no increments yet" do
+  test "fully gapped no traffic_lights yet" do
     year = 2011; month = 5; day = 18; hour = 2;
     start = Time.mktime(*[year,month,day,hour,30,0])
     now = [year,month,day+1,hour,32,23] #td 4327
