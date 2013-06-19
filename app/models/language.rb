@@ -45,7 +45,7 @@ class Language
 private
 
   def manifest
-    @manifest ||= eval IO.read(dir + '/manifest.rb')
+    @manifest ||= eval IO.read(dir + File::SEPARATOR + 'manifest.rb')
   end
   
 end
