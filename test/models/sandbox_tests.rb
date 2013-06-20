@@ -17,7 +17,17 @@ class SandboxTests < ActionController::TestCase
     @sandbox = nil
   end
   
-  test "sandbox dir is created" do
+  test "dir does not end in slash" do
+    assert !@sandbox.dir.end_with?(File::SEPARATOR),
+          "!#{@sandbox.dir}.end_with?(#{File::SEPARATOR})"    
+  end
+  
+  test "dir does not have doubled separator" do
+    doubled_separator = File::SEPARATOR + File::SEPARATOR
+    assert_equal 0, @sandbox.dir.scan(doubled_separator).length    
+  end
+    
+  test "dir is created" do
     dir = @sandbox.dir
     assert_equal dir, @sandbox.dir
     assert File.exists?(@sandbox.dir),
@@ -27,40 +37,47 @@ class SandboxTests < ActionController::TestCase
   test "after run_tests() a file called output is saved in sandbox and contains the output" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
-    output = @sandbox.run_tests(language, visible_files)    
-    output_filename = @sandbox.dir + '/' + 'output'
+    output = @sandbox.run_tests(language, visible_files)
+    assert_not_nil output, "output != nil"
+    assert output.class == String, "output.class == String"    
+    assert_match output, /\<54\> expected but was/
+    
+    output_filename = @sandbox.dir + File::SEPARATOR + 'output'
     assert File.exists?(output_filename),
           "File.exists?(#{output_filename})"
     assert_equal output, IO.read(output_filename)          
   end
   
-  test "visible and hidden files are copied to sandbox and output is generated" do
+  test "visible and hidden files are copied to sandbox" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
-    output = @sandbox.run_tests(language, visible_files)
+    @sandbox.run_tests(language, visible_files)
     
     visible_files.each do |filename,content|
-      pathed_filename = @sandbox.dir + '/' + filename
+      pathed_filename = @sandbox.dir + File::SEPARATOR + filename
+      assert File.exists?(pathed_filename),
+            "File.exists?(#{pathed_filename})"
+    end
+  end
+  
+  test "hidden files are copied to sandbox" do  
+    # TODO: there are no hidden files so this does not test anything
+    language = Language.new(root_dir, 'Ruby-installed-and-working')
+    visible_files = language.visible_files
+    @sandbox.run_tests(language, visible_files)
+    
+    language.hidden_filenames.each do |filename|
+      pathed_filename = @sandbox.dir + File::SEPARATOR + filename
       assert File.exists?(pathed_filename),
             "File.exists?(#{pathed_filename})"
     end
     
-    # TODO: there are no hidden files so this does not test anything
-    language.hidden_filenames.each do |filename|
-      assert File.exists?(@sandbox.dir + '/' + filename),
-            "File.exists?(#{@sandbox.dir}/#{filename})"
-    end
-    
-    assert_match output, /\<54\> expected but was/
   end    
       
-  test "sandbox dir is not deleted after run_tests()" do
+  test "dir is not deleted after run_tests()" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')        
     visible_files = language.visible_files
-    output = @sandbox.run_tests(language, visible_files)
-    assert_not_nil output, "output != nil"
-    assert output.class == String, "output.class == String"
-    assert_match output, /\<54\> expected but was/
+    @sandbox.run_tests(language, visible_files)
     assert File.exists?(@sandbox.dir),
           "File.exists?(#{@sandbox.dir})"
   end
@@ -77,9 +94,6 @@ class SandboxTests < ActionController::TestCase
     p "....."
     @sandbox = Sandbox.new(avatar)
 
-    assert !@sandbox.dir.end_with?(File::SEPARATOR),
-          "!#{@sandbox.dir}.end_with?(#{File::SEPARATOR})"
-
     #assert File.directory?(@sandbox.dir),
     #      "File.directory?(#{@sandbox.dir})"
     # Why do I have to do this?
@@ -88,8 +102,6 @@ class SandboxTests < ActionController::TestCase
     
     language.support_filenames.each do |filename|
       pathed_filename = @sandbox.dir + File::SEPARATOR + filename
-      doubled_separator = File::SEPARATOR + File::SEPARATOR
-      assert_equal 0, pathed_filename.scan(doubled_separator).length
       assert !File.exists?(pathed_filename),
             "!File.exists?(#{pathed_filename})"
     end

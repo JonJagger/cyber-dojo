@@ -104,11 +104,7 @@ module Files
   
   def self.kill(pids)
     return if pids == [ ]
-    begin
-      `kill #{pids.join(' ')}`
-    rescue
-      # Could happen if the OS/GC reclaims the process? 
-    end
+    `kill #{pids.join(' ')}`
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

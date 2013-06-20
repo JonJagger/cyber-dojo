@@ -127,6 +127,6 @@ end
 # because the page auto refreshes).
 # Thus there is a max_seconds_uncollapsed parameter. If the time difference
 # between two consecutive entries in the :td_nos array is greater than
-# max_seconds_uncollapsed the the display will not show one td for each
+# max_seconds_uncollapsed the display will not show one td for each
 # gap but will collapse the entire gap down to one td.
 # A collapsed td is shown with a ... in it.
