@@ -14,3 +14,12 @@ coverage
 zipped_dojos.zip
 notes.txt
 *.tmp
+
+test/controllers/assets/
+test/controllers/index.html
+test/helpers/assets/
+test/helpers/index.html
+test/lib/assets/
+test/lib/index.html
+test/models/assets/
+test/models/index.html
