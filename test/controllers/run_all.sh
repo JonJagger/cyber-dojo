@@ -1,6 +1,5 @@
 
-# after running this check the coverage under the
-# app/controllers tab of coverage/index.html
+# after running this check the coverage in index.html
 
 echo '' > run_all.tmp
 for TEST in *.rb ; do
