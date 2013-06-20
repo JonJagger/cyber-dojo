@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/one_language_checker'
 
-class ScalaTests < ActionController::TestCase
+class RubyCucumberTests < ActionController::TestCase
   
   # This fails because there are two files containing 42
   # Not sure what to do about this right now.

@@ -180,6 +180,28 @@ module CodeOutputParser
     end
   end
 
+  def self.parse_groovy_junit(output)
+    green_pattern = Regexp.new('^OK \((\d*) test')
+    if match = green_pattern.match(output)
+      if match[1] != "0" 
+        :green
+      else # treat zero passes as a fail
+        :red 
+      end
+    else
+      amber_pattern = Regexp.new('groovy\.lang')
+      if match = amber_pattern.match(output)
+        :amber
+      else
+        :red
+      end
+    end
+  end
+
+  def self.parse_groovy_spock(output)
+	:red
+  end
+
   def self.parse_jasmine(output)
      jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
      if jasmine_pattern.match(output)

@@ -1,8 +1,8 @@
 require File.dirname(__FILE__) + '/one_language_checker'
 
-class ScalaTests < ActionController::TestCase
+class RubyRspecTests < ActionController::TestCase
   
-  test "Ruby-rspec" do
+  test "Ruby-Rspec" do
     root_dir = Rails.root.to_s + '/test/cyberdojo'
     OneLanguageChecker.new({ :verbose => true }).check(root_dir, 'Ruby-Rspec')        
   end

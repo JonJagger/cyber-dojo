@@ -280,6 +280,12 @@ I then had to add the following line to /etc/apache2/envvars/
 #sudo update-alternatives --config gcc
 and select 2. Finally (39MB)
 #sudo apt-get install valgrind
+------Groovy-JUnit
+#curl -s get.gvmtool.net | bash
+#gvm install groovy
+this gave me the three jars I needed.
+  junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
+(thanks to Schalk Cronje)
 
 
 Disk space
