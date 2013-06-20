@@ -1,5 +1,5 @@
 
-modules=( helpers lib models controllers)
+modules=( helpers lib models controllers )
 
 for module in ${modules[@]}
 do
