@@ -1,20 +1,29 @@
-echo LIB
+
 cd lib
-./run_all.sh
+echo '' > run_all_log.tmp
+./run_all.sh 2>&1 | tee -a run_all_log.tmp
 cd ..
 
-echo HELPERS
 cd helpers
-./run_all.sh
+echo '' > run_all_log.tmp
+./run_all.sh 2>&1 | tee -a run_all_log.tmp
 cd ..
 
-echo MODELS
 cd models
-./run_all.sh
+echo '' > run_all_log.tmp
+./run_all.sh 2>&1 | tee -a run_all_log.tmp
 cd ..
 
-echo CONTROLLERS
 cd controllers
-./run_all.sh
+echo '' > run_all_log.tmp
+./run_all.sh 2>&1 | tee -a run_all_log.tmp
 cd ..
 
+echo LIB
+grep "assertions," lib/run_all_log.tmp
+echo HELPERS
+grep "assertions," helpers/run_all_log.tmp
+echo MODELS
+grep "assertions," models/run_all_log.tmp
+echo CONTROLLERS
+grep "assertions," controllers/run_all_log.tmp

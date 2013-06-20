@@ -13,3 +13,4 @@ coverage
 
 zipped_dojos.zip
 notes.txt
+*.tmp
