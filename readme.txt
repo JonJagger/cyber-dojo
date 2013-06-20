@@ -127,8 +127,8 @@ of traffic-lights 22 -> 22, viz, the files from traffic-light 22.
 
 Resuming Coding
 ===============
-You can resume at any animals most recent traffic-light by pressing
-the resume button (also from the home page) and then clicking
+You can resume at any animals' most recent traffic-light by pressing
+the resume button (from the home page) and then clicking
 the animal. This is handy if a participant has to leave and take their
 laptop as a new laptop can instantly replace it.
 
@@ -493,15 +493,15 @@ o) When I started cyber-dojo I didn't know any ruby, any rails, or any
    I've have no-one to pair with (except google) while developing this
    in my limited spare time. Some of what you find is likely to be
    non-idiomatic. Caveat emptor!
-o) I have worked hard to <em>remove</em> features from cyber-dojo. My idea
-   is that the simpler the environment the more players will concentrate on
+o) I have worked hard to <em>remove</em> features from cyber-dojo.
+   The simpler the environment the more players will concentrate on
    the practice and the more they will need to collaborate with each other.
-   Remember the aim of a cyber-dojo is <em>not</em> to ship something.
+   Remember the aim of a cyber-dojo is <em>not</em> to ship something!
    The aim of cyber-dojo is to deliberately practice developing software
    collaboratively.
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
    Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
    Michel - I really appreciate all your help and encouragement.
-o) James Grenning uses Cyber-Dojo a lot, via his own Turnkey S3 cloud servers.
-   James, you've been an awesome "customer". Thanks.
+o) James Grenning uses Cyber-Dojo a lot, via his own Turnkey S3 cloud servers,
+   and has been an awesome 'customer'.
