@@ -11,4 +11,4 @@ pattern = /<div class=\"file_list_container\" id=\"#{flat}\">
 
 r = html.match(pattern)
 
-p "Coverage = #{r[1]}%"
+puts "Coverage = #{r[1]}%"
