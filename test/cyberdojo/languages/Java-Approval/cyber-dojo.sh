@@ -1,4 +1,6 @@
-javac -cp .:./junit-4.11.jar:./ApprovalTests.012.jar *.java 
+
+javac -cp .:$(ls *.jar | xargs | sed -e 's/ /:/g') *.java 
+
 if [ $? -eq 0 ]; then
-  java -cp .:./junit-4.11.jar:./ApprovalTests.012.jar org.junit.runner.JUnitCore `ls -1 *Test*.class | sed 's/\(.*\)\..*/\1/'`
+  java -cp .:$(ls *.jar | xargs | sed -e 's/ /:/g') org.junit.runner.JUnitCore `ls -1 *Test*.class | sed 's/\(.*\)\..*/\1/'`
 fi

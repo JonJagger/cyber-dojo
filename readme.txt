@@ -197,9 +197,9 @@ Installing Languages
 The base rails3 image is available here (417MB)
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.base.ova
 (see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
-for details on how I built it) and supports for C, C++,
-Python, Perl and Ruby. I installed the other 8 languages onto this baseline
-rails 3 image (to create the larger 817MB ova file above) as follows...
+for details on how I built it) and supports C, C++, Python, Perl and Ruby.
+I installed the other 8+ languages onto this baseline rails 3 image (some of
+which are included in the larger 817MB ova file above) as follows...
 
 #apt-get update
 -----Java (125MB)
@@ -285,6 +285,10 @@ and select 2. Finally (39MB)
 #gvm install groovy
 this gave me the three jars I needed.
   junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
+(thanks to Schalk Cronje)
+------Groovy-Spock
+#grape -Dgrape.root=$(pwd) install org.spockframework spock-core 0.7-groovy-2.0
+this gave me the spock jar I needed.
 (thanks to Schalk Cronje)
 
 
