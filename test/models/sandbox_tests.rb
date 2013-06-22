@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    kata = make_kata(language)
+    kata = make_kata('Ruby-installed-and-working')
     avatar = Avatar.new(kata, 'hippo')
     @sandbox = Sandbox.new(avatar)
   end
@@ -105,10 +105,6 @@ class SandboxTests < ActionController::TestCase
       assert File.symlink?(pathed_filename),
             "File.symlink?(#{pathed_filename})"
     end    
-  end
-
-  def language
-    'Ruby-installed-and-working'    
   end
 
 end
