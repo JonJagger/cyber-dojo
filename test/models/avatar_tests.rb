@@ -2,10 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class AvatarTests < ActionController::TestCase
 
-  def language
-    'Ruby-installed-and-working'
-  end
-  
   test "avatar names all begin with a different letter" do    
     assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
   end
@@ -145,6 +141,10 @@ class AvatarTests < ActionController::TestCase
         "-#{content}"       
       ].join("\n")
     assert actual.include?(expected)
+  end
+
+  def language
+    'Ruby-installed-and-working'
   end
 
 end

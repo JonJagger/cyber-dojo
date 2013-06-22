@@ -33,7 +33,7 @@ class Kata
     Avatar.names.select { |name|
       File.exists?(dir + File::SEPARATOR + name)
     }.collect { |name|
-      Avatar.new(self,name)
+      Avatar.new(self, name)
     }
   end
   

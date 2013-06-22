@@ -17,19 +17,6 @@ class DashboardController < ApplicationController
     end
   end
   
-  def seconds_per_column
-    positive(:seconds_per_column, 30)
-  end
-  
-  def maximum_columns
-    positive(:maximum_columns, 30)
-  end
-
-  def positive(symbol, default)
-    value = params[symbol].to_i
-    value > 0 ? value : default    
-  end
-  
   def tips_dialog
     render :layout => false        
   end
@@ -46,5 +33,20 @@ class DashboardController < ApplicationController
     system(cd_cmd + ";" + zip_cmd)
     send_file "#{root_dir}/zips/#{id}.tar.gz", :type=>'application/zip'
   end
+
+private
+
+  def seconds_per_column
+    positive(:seconds_per_column, 30)
+  end
   
+  def maximum_columns
+    positive(:maximum_columns, 30)
+  end
+  
+  def positive(symbol, default)
+    value = params[symbol].to_i
+    value > 0 ? value : default    
+  end
+ 
 end

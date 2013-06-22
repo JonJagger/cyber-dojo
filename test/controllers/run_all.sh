@@ -10,9 +10,5 @@ done
 ruby run_all.tmp 2>&1 | tee -a run_all_log.tmp
 cp -R ../../coverage/* .
 ruby ../perc.rb index.html app/controllers > coverage.tmp
-
-echo
-echo CONTROLLERS
-grep "assertions," run_all_log.tmp 
 cat coverage.tmp
 echo

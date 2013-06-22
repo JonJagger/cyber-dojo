@@ -3,9 +3,6 @@ require 'Files'
 
 class LanguageTests < ActionController::TestCase
 
-  def language
-  end
-  
   test "name is as set in ctor" do
     language = make_language()    
     assert_equal 'Ruby-installed-and-working', language.name
@@ -59,8 +56,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal 2, language.tab_size
   end
   
-  def make_language()
+  def make_language
     Language.new(root_dir, 'Ruby-installed-and-working')
   end
-    
+      
 end

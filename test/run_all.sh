@@ -2,18 +2,29 @@
 modules=( helpers lib models controllers )
 
 for module in ${modules[@]}
-do
+do    
+    echo
+    echo "====================================="
+    echo ">>>>$module<<<<"
     cd $module
     ./run_all.sh
     cd ..
 done
 
-echo; echo; echo '----------------------------------------'
+echo
+echo
+echo
+echo "====================================="
 
 for module in ${modules[@]}
 do
-    echo "$module" | tr '[a-z]' '[A-Z]'
-    grep "assertions," $module/run_all_log.tmp
-    cat $module/coverage.tmp
+    greenness=`grep "assertions," $module/run_all_log.tmp`
+    duration=`grep "Finished tests" $module/run_all_log.tmp`
+    coverage=`cat $module/coverage.tmp`
+    echo $module
+    echo "   $greenness"
+    echo "   $duration"
+    echo "   $coverage"
     echo
 done
+

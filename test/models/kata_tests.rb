@@ -2,10 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class KataTests < ActionController::TestCase
   
-  def language
-    'Ruby-installed-and-working'  
-  end
-  
   test "multiple avatars in a kata are all seen" do
     kata = make_kata(language)
     Avatar.new(kata, 'lion')
@@ -42,10 +38,6 @@ class KataTests < ActionController::TestCase
     now = now[0...-1] + [now.last + seconds ]
     assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))
   end
-      
-  test "root katas dir initially does not contain an index file" do
-    assert !File.exists?(root_dir + '/katas/index.rb');
-  end
   
   test "Kata.exists? returns false before kata is created and true after kata is created" do
     id = 'AABBCCDDEE'
@@ -65,6 +57,10 @@ class KataTests < ActionController::TestCase
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)
     assert 'hippo', avatar.name
+  end
+
+  def language
+    'Ruby-installed-and-working'  
   end
 
 end
