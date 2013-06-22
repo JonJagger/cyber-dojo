@@ -26,8 +26,8 @@ class Sandbox
     #       just the once in the avatar c'tor.
     system("rm -rf #{dir}")
     save(visible_files)
-    link_files(language.dir, language.support_filenames)
-    link_files(language.dir, language.hidden_filenames)        
+    link_files(language, language.support_filenames)
+    link_files(language, language.hidden_filenames)        
     # TODO: I think the hidden files should be copied.
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
@@ -37,13 +37,12 @@ class Sandbox
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
-  def link_files(link_dir, link_filenames)
+  def link_files(language, link_filenames)
     link_filenames.each do |filename|
-      command = "ln #{link_dir}/#{filename} #{dir}/#{filename}"
-      system(command)
+      old_name = language.dir + File::SEPARATOR + filename
+      new_name = dir + File::SEPARATOR + filename
+      File.symlink(old_name, new_name)
     end    
   end
-
-private
 
 end

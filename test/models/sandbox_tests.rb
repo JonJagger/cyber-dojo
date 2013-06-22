@@ -82,31 +82,25 @@ class SandboxTests < ActionController::TestCase
           "File.exists?(#{@sandbox.dir})"
   end
 
-=begin
   test "support files are linked into sandbox dir" do
     teardown
     language = Language.new(root_dir, 'Java-Approval')
     assert language.support_filenames.length > 0
     
-    kata = make_kata('Java-Approval')
+    kata = make_kata('Java-Approval', 'Yahtzee', Uuid.new.to_s)
     avatar = Avatar.new(kata, 'hippo')
-    
-    p "....."
-    @sandbox = Sandbox.new(avatar)
+    @sandbox = avatar.sandbox
 
-    #assert File.directory?(@sandbox.dir),
-    #      "File.directory?(#{@sandbox.dir})"
-    # Why do I have to do this?
-    Folders.make_folder(@sandbox.dir + File::SEPARATOR)
-    p "made #{@sandbox.dir + File::SEPARATOR}"
-    
+    assert Dir.exists?(@sandbox.dir),
+          "Dir.exists?(#{@sandbox.dir})"
+              
     language.support_filenames.each do |filename|
       pathed_filename = @sandbox.dir + File::SEPARATOR + filename
       assert !File.exists?(pathed_filename),
             "!File.exists?(#{pathed_filename})"
     end
     
-    @sandbox.link_files(language.dir, language.support_filenames)
+    @sandbox.link_files(language, language.support_filenames)
     
     language.support_filenames.each do |filename|
       pathed_filename = @sandbox.dir + File::SEPARATOR + filename
@@ -116,7 +110,6 @@ class SandboxTests < ActionController::TestCase
             "File.symlink?(#{pathed_filename})"
     end    
   end
-=end
 
 end
 

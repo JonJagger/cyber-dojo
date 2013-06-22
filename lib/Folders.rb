@@ -10,8 +10,8 @@ module Folders
       path = File.dirname(path)
     end
     # the -p option creates intermediate directories as required
-    cmd = "mkdir -p #{path}"
-    system(cmd)
+    command = "mkdir -p #{path}"
+    system(command)
   end
 
   def self.id_complete(root_dir, id)
