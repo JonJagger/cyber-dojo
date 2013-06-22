@@ -22,12 +22,12 @@ class KataController < ApplicationController
     visible_files = received_files
     previous_files = visible_files.keys
     
-    language = @kata.language    
-    @output = @avatar.sandbox.run_tests(language, visible_files)
+    @output = @avatar.sandbox.run_tests(visible_files)
     
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.dir, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.dir, visible_files)
     
+    language = @kata.language    
     traffic_light = CodeOutputParser::parse(language.unit_test_framework, @output)
     traffic_light[:revert_tag] = params[:revert_tag]
     traffic_light[:time] = make_time(Time.now)

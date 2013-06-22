@@ -2,10 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SandboxTests < ActionController::TestCase
 
-  def language
-    'Ruby-installed-and-working'    
-  end
-
   def setup
     kata = make_kata(language)
     avatar = Avatar.new(kata, 'hippo')
@@ -37,7 +33,7 @@ class SandboxTests < ActionController::TestCase
   test "after run_tests() a file called output is saved in sandbox and contains the output" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
-    output = @sandbox.run_tests(language, visible_files)
+    output = @sandbox.run_tests(visible_files)
     assert_not_nil output, "output != nil"
     assert output.class == String, "output.class == String"    
     assert_match output, /\<54\> expected but was/
@@ -51,7 +47,7 @@ class SandboxTests < ActionController::TestCase
   test "visible and hidden files are copied to sandbox" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
-    @sandbox.run_tests(language, visible_files)
+    @sandbox.run_tests(visible_files)
     
     visible_files.each do |filename,content|
       pathed_filename = @sandbox.dir + File::SEPARATOR + filename
@@ -64,7 +60,7 @@ class SandboxTests < ActionController::TestCase
     # TODO: there are no hidden files so this does not test anything
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
-    @sandbox.run_tests(language, visible_files)
+    @sandbox.run_tests(visible_files)
     
     language.hidden_filenames.each do |filename|
       pathed_filename = @sandbox.dir + File::SEPARATOR + filename
@@ -77,7 +73,7 @@ class SandboxTests < ActionController::TestCase
   test "dir is not deleted after run_tests()" do
     language = Language.new(root_dir, 'Ruby-installed-and-working')        
     visible_files = language.visible_files
-    @sandbox.run_tests(language, visible_files)
+    @sandbox.run_tests(visible_files)
     assert File.exists?(@sandbox.dir),
           "File.exists?(#{@sandbox.dir})"
   end
@@ -109,6 +105,10 @@ class SandboxTests < ActionController::TestCase
       assert File.symlink?(pathed_filename),
             "File.symlink?(#{pathed_filename})"
     end    
+  end
+
+  def language
+    'Ruby-installed-and-working'    
   end
 
 end

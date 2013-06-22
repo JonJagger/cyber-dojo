@@ -19,13 +19,14 @@ class Sandbox
     end    
   end
   
-  def run_tests(language, visible_files, max_run_tests_duration = 15)
+  def run_tests(visible_files, max_run_tests_duration = 15)
     # TODO: don't delete the sandbox every run-tests    
     #       When the sandbox folder is _not_ deleted for
     #       each run-tests then I should be able to do the link_files
     #       just the once in the avatar c'tor.
     system("rm -rf #{dir}")
     save(visible_files)
+    language = @avatar.kata.language
     link_files(language, language.support_filenames)
     link_files(language, language.hidden_filenames)        
     # TODO: I think the hidden files should be copied.
@@ -44,5 +45,5 @@ class Sandbox
       File.symlink(old_name, new_name)
     end    
   end
-
+  
 end
