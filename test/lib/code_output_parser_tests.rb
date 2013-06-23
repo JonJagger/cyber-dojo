@@ -971,6 +971,83 @@ class CodeOutputParserTests < ActionController::TestCase
     ].join("\n")
     assert_equal :red, CodeOutputParser::parse_groovy_spock(output)                                          
   end
+ 
+  #--------------------------------------------------------
+
+  test "Groovy-JUnit initial red is red" do
+    output =
+    [
+      "JUnit version 4.11",
+      ".E",
+      "Time: 0.516",
+      "There was 1 failure:",
+      "1) isItFortyTwo(UntitledTest)",
+      "java.lang.AssertionError",
+      "	at org.junit.Assert.fail(Assert.java:86)",
+      "",
+      "	at org.junit.runner.JUnitCore.main(JUnitCore.java:40)",
+      "",
+      "FAILURES!!!",
+      "Tests run: 1,  Failures: 1",
+    ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_groovy_junit(output)                                              
+  end
+  
+  test "Groovy-JUnit initial green is green" do  
+    output =
+    [
+      "JUnit version 4.11",
+      "",
+      "Time: 0.575",
+      "",
+      "OK (1 test)"
+    ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_groovy_junit(output)                                          
+  end
+  
+  test "Groovy-JUnit syntax error of the first kind is amber" do
+    output =
+    [
+      "org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:",
+      "UntitledTest.groovy: 5: unexpected token: @ @ line 5, column 5.",
+      "       @Test",
+      "       ^",
+      "",
+      "1 error"
+    ].join("\n")
+    assert_equal :amber, CodeOutputParser::parse_groovy_junit(output)                                              
+  end
+  
+  test "Groovy-JUnit two passes and no fail is green" do
+    output =
+    [
+      "JUnit version 4.11",
+      "..",
+      "Time: 0.544",
+      "",
+      "OK (2 tests)"
+    ].join("\n")
+    assert_equal :green, CodeOutputParser::parse_groovy_junit(output)                                                  
+  end
+
+  test "Groovy-JUnit one pass oen fail is red" do
+    output =
+    [
+      "JUnit version 4.11",
+      "..E",
+      "Time: 0.884",
+      "There was 1 failure:",
+      "1) anotherIsItFortyTwo(UntitledTest)",
+      "java.lang.AssertionError",
+      "	at org.junit.Assert.fail(Assert.java:86)",
+      "",
+      "	at org.junit.runner.JUnitCore.main(JUnitCore.java:40)",
+      "",
+      "FAILURES!!!",
+      "Tests run: 2,  Failures: 1"
+    ].join("\n")
+    assert_equal :red, CodeOutputParser::parse_groovy_junit(output)                                                  
+  end
   
 end
 

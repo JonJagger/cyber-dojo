@@ -183,14 +183,11 @@ module CodeOutputParser
   def self.parse_groovy_junit(output)
     green_pattern = Regexp.new('^OK \((\d*) test')
     if match = green_pattern.match(output)
-      if match[1] != "0" 
-        :green
-      else # treat zero passes as a fail
-        :red 
-      end
+      :green
     else
-      amber_pattern = Regexp.new('groovy\.lang')
-      if match = amber_pattern.match(output)
+      amber_pattern1 = Regexp.new('groovy\.lang')
+      amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')      
+      if amber_pattern1.match(output) || amber_pattern2.match(output)
         :amber
       else
         :red
