@@ -34,11 +34,11 @@ module CodeOutputParser
     if amber_pattern.match(output)
 	  :amber
     elsif red_pattern.match(output)
-      :red
+	  :red
     elsif green_pattern.match(output)
-      :green
+	  :green
     else
-      :amber
+	  :amber
     end
   end
 
