@@ -207,10 +207,11 @@ module CodeOutputParser
         :red 
       end
     else
-      amber_pattern = Regexp.new('groovy\.lang')
-      if match = amber_pattern.match(output)
-        :amber
-      else
+      amber_pattern1 = Regexp.new('groovy\.lang')
+      amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
+      if amber_pattern1.match(output) || amber_pattern2.match(output)
+		:amber
+	  else
         :red
       end
     end
