@@ -2,7 +2,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'CodeOutputParser'
 
-class OutputErlangEUnitSpockTests < ActionController::TestCase
+class OutputErlangEUnitTests < ActionController::TestCase
   
   include CodeOutputParser
 
