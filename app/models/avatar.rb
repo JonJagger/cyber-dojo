@@ -21,7 +21,7 @@ class Avatar
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
       system(cd_dir('git init --quiet'))
-      git_commit(tag = 0)
+      git_commit(@kata.visible_files, tag = 0)
     end
   end
   
@@ -45,7 +45,7 @@ class Avatar
       tag = traffic_lights.length
       traffic_light[:number] = tag
       save(visible_files, traffic_lights)
-      git_commit(tag)
+      git_commit(visible_files, tag)
     end
     traffic_lights
   end
@@ -74,7 +74,7 @@ private
     Files::file_write(dir, Traffic_lights_filename, traffic_lights)
   end
 
-  def git_commit(tag)
+  def git_commit(visible_files, tag)
     command =
       [
         "git add .",

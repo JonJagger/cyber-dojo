@@ -150,6 +150,31 @@ class GitDiffViewTests < ActionController::TestCase
 
   #-----------------------------------------------
 
+  test "only visible files are commited and are seen in diff_lines" do
+    kata = make_kata('Java-JUnit')
+    avatar = Avatar.new(kata, 'wolf')  # tag 0
+    visible_files = avatar.visible_files
+    
+    cyber_dojo_sh = visible_files['cyber-dojo.sh']
+    cyber_dojo_sh += "\n"
+    cyber_dojo_sh += "echo xxx > jj.x"
+    visible_files['cyber-dojo.sh'] = cyber_dojo_sh
+    run_tests(avatar, visible_files) # tag 1
+    
+    from_tag = 0
+    to_tag = 1  
+    view = git_diff_view(avatar, from_tag, to_tag)
+    
+    view.keys.each do |filename|
+      assert visible_files.keys.include?(filename),
+            "visible_files.keys.include?(#{filename})"
+    end
+    
+    assert_equal view.length, visible_files.length
+  end
+
+  #-----------------------------------------------
+  
   test "uuid_factory" do
     factory = UuidFactory.new
     (1..5).each { |n|
