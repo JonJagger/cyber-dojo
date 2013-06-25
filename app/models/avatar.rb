@@ -21,6 +21,8 @@ class Avatar
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
       system(cd_dir('git init --quiet'))
+      system(cd_dir("git add #{Traffic_lights_filename}"))
+      system(cd_dir("git add #{Visible_files_filename}"))      
       git_commit(@kata.visible_files, tag = 0)
     end
   end
@@ -75,12 +77,12 @@ private
   end
 
   def git_commit(visible_files, tag)
-    command =
-      [
-        "git add .",
-        "git commit -a -m '#{tag}' --quiet",
-        "git tag -m '#{tag}' #{tag} HEAD",
-      ].join(';')
+    command = ""
+    visible_files.keys.each do |filename|
+      command += "git add sandbox/#{filename};"
+    end
+    command += "git commit -a -m '#{tag}' --quiet;"
+    command += "git tag -m '#{tag}' #{tag} HEAD";    
     system(cd_dir(command))
   end
   

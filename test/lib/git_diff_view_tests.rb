@@ -150,7 +150,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   #-----------------------------------------------
 
-  test "only visible files are commited and are seen in diff_lines" do
+  test "only visible files are commited and are seen in diff_lines" do    
     kata = make_kata('Java-JUnit')
     avatar = Avatar.new(kata, 'wolf')  # tag 0
     visible_files = avatar.visible_files
