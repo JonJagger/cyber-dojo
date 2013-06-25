@@ -15,18 +15,6 @@ module CodeOutputParser
     inc
   end
 
-  def self.parse_node(output)
-    red_pattern = /AssertionError/
-    green_pattern = /^All tests passed/
-    if output =~ green_pattern
-      :green
-    elsif output =~ red_pattern
-      :red
-    else
-      :amber
-    end
-  end
-
   def self.parse_php_unit(output)
     return :amber if /PHP Parse error:/.match(output)
     return :red   if /FAILURES!/.match(output)
@@ -42,18 +30,6 @@ module CodeOutputParser
     return :amber if syntax_error_pattern.match(output)
     return :amber if compilation_aborted_pattern.match(output)
     return :red
-  end
-
-  def self.parse_js_test_simple(output)
-    amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
-    red_pattern = Regexp.new('FAILED:assertEqual')
-    if amber_pattern.match(output)
-      :amber
-    elsif red_pattern.match(output)
-      :red
-    else
-      :green
-    end
   end
 
   def self.parse_eunit(output) 
@@ -161,15 +137,6 @@ module CodeOutputParser
     end
   end
 
-  def self.parse_jasmine(output)
-     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
-     if jasmine_pattern.match(output)
-        return $3 == "0" ? :green : :red
-     else
-        :amber
-     end
-  end
-
   def self.parse_hunit(output)
     if output =~ /Counts \{cases = (\d+), tried = (\d+), errors = (\d+), failures = (\d+)\}/
       if $3.to_i != 0
@@ -184,6 +151,28 @@ module CodeOutputParser
     end
   end
 
+  def self.parse_go_testing(output)
+    return :amber if /\[build failed\]/.match(output)
+    return :red   if /FAIL/.match(output)
+    return :green if /PASS/.match(output)
+    return :amber  
+  end
+  
+  def self.parse_clojure_test(output)
+	syntax_error_pattern = /Exception in thread/	
+    ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
+    if syntax_error_pattern.match(output)
+	  :amber
+    elsif output.scan(ran_pattern).any? { |res| res[3] != "0" || res[4] != "0" }
+	  :red
+    elsif output.scan(ran_pattern).all? { |res| res[3] == "0" && res[4] == "0" }
+	  :green
+	else
+	  :amber
+	end    
+  end
+
+=begin
   def self.parse_cpputest(output)
     failed_pattern = /Errors /
     passed_pattern = /OK /
@@ -194,6 +183,39 @@ module CodeOutputParser
     else
       :amber  
     end
+  end
+
+  def self.parse_node(output)
+    red_pattern = /AssertionError/
+    green_pattern = /^All tests passed/
+    if output =~ green_pattern
+      :green
+    elsif output =~ red_pattern
+      :red
+    else
+      :amber
+    end
+  end
+
+  def self.parse_js_test_simple(output)
+    amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
+    red_pattern = Regexp.new('FAILED:assertEqual')
+    if amber_pattern.match(output)
+      :amber
+    elsif red_pattern.match(output)
+      :red
+    else
+      :green
+    end
+  end
+
+  def self.parse_jasmine(output)
+     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
+     if jasmine_pattern.match(output)
+        return $3 == "0" ? :green : :red
+     else
+        :amber
+     end
   end
 
   def self.parse_googletest(output)
@@ -211,30 +233,10 @@ module CodeOutputParser
      end
   end
  
-  def self.parse_go_testing(output)
-    return :amber if /\[build failed\]/.match(output)
-    return :red   if /FAIL/.match(output)
-    return :green if /PASS/.match(output)
-    return :amber  
-  end
-  
   def self.parse_scala_test(output)
 	:amber
   end
-  
-  def self.parse_clojure_test(output)
-	syntax_error_pattern = /Exception in thread/	
-    ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
-    if syntax_error_pattern.match(output)
-	  :amber
-    elsif output.scan(ran_pattern).any? { |res| res[3] != "0" || res[4] != "0" }
-	  :red
-    elsif output.scan(ran_pattern).all? { |res| res[3] == "0" && res[4] == "0" }
-	  :green
-	else
-	  :amber
-	end    
-  end
+=end
 
 end
 
