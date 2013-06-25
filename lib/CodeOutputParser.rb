@@ -28,33 +28,20 @@ module CodeOutputParser
   end
 
   def self.parse_php_unit(output)
-	amber_pattern = Regexp.new('PHP Parse error:')
-    red_pattern = Regexp.new('FAILURES!')
-    green_pattern = Regexp.new('OK \(')
-    if amber_pattern.match(output)
-	  :amber
-    elsif red_pattern.match(output)
-	  :red
-    elsif green_pattern.match(output)
-	  :green
-    else
-	  :amber
-    end
+    return :amber if /PHP Parse error:/.match(output)
+    return :red   if /FAILURES!/.match(output)
+    return :green if /OK \(/.match(output)
+	return :amber
   end
 
   def self.parse_perl_test_simple(output)
     green_pattern = Regexp.new('All tests successful')
     syntax_error_pattern = Regexp.new('syntax error')
     compilation_aborted_pattern = Regexp.new('aborted due to compilation errors')
-    if green_pattern.match(output)
-      :green
-    elsif syntax_error_pattern.match(output)
-      :amber
-    elsif compilation_aborted_pattern.match(output)
-	  :amber
-    else
-      :red
-    end
+    return :green if green_pattern.match(output)
+    return :amber if syntax_error_pattern.match(output)
+    return :amber if compilation_aborted_pattern.match(output)
+    return :red
   end
 
   def self.parse_js_test_simple(output)
@@ -70,40 +57,21 @@ module CodeOutputParser
   end
 
   def self.parse_eunit(output) 
-    red_pattern = Regexp.new('Failed: ')
-    green_pattern = Regexp.new('passed.')
-    if red_pattern.match(output)
-      :red
-    elsif green_pattern.match(output)
-      :green
-    else
-      :amber
-    end
+    return :red   if /Failed: /.match(output)
+    return :green if /passed./.match(output)
+    return :amber
   end
 	
   def self.parse_python_unittest(output) 
-    red_pattern = Regexp.new('FAILED \(failures=')
-    green_pattern = Regexp.new('OK')
-    if red_pattern.match(output)
-      :red
-    elsif green_pattern.match(output)
-      :green
-    else
-      :amber
-    end
+    return :red   if /FAILED \(failures=/.match(output)
+    return :green if /OK/.match(output)
+    return :amber
   end
 	
-  def self.parse_catch(output)
-    red_pattern = Regexp.new('\[Testing completed.*failed\]')
-    green_pattern = Regexp.new('\[Testing completed.*succeeded\]')
-    
-    if red_pattern.match(output)
-      :red
-    elsif green_pattern.match(output)
-      :green
-    else
-      :amber
-    end
+  def self.parse_catch(output)    
+    return :red   if /\[Testing completed.*failed\]/.match(output)
+    return :green if /\[Testing completed.*succeeded\]/.match(output)
+    return :amber
   end
   
   def self.parse_cassert(output)
@@ -111,31 +79,22 @@ module CodeOutputParser
     syntax_error_pattern = Regexp.new(':(\d*): error')
     make_error_pattern = Regexp.new('^make:')
     makefile_error_pattern = Regexp.new('^makefile:')
-    if red_pattern.match(output)
-      :red
-    elsif make_error_pattern.match(output)
-      :amber
-    elsif makefile_error_pattern.match(output)
-	  :amber
-    elsif syntax_error_pattern.match(output)
-      :amber
-    else
-      :green
-    end
+    
+    return :red   if red_pattern.match(output)
+    return :amber if make_error_pattern.match(output)
+    return :amber if makefile_error_pattern.match(output)
+    return :amber if syntax_error_pattern.match(output)
+    return :green
   end
 
   def self.parse_ruby_test_unit(output)
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
-      if match[4] != "0"
-        :amber
-      elsif match[3] != "0"
-        :red
-      else
-        :green
-      end
+      return :amber if match[4] != "0"
+      return :red   if match[3] != "0"
+      return :green
     else
-      :amber
+      return :amber
     end
   end
 
@@ -163,21 +122,9 @@ module CodeOutputParser
   end
   
   def self.parse_junit(output)
-    junit_green_pattern = Regexp.new('^OK \((\d*) test')
-    if match = junit_green_pattern.match(output)
-      if match[1] != "0" 
-        :green
-      else # treat zero passes as a fail
-        :red 
-      end
-    else
-      junit_red_pattern = Regexp.new('^Tests run: (\d*),  Failures: (\d*)')
-      if match = junit_red_pattern.match(output)
-        :red
-      else
-        :amber
-      end
-    end
+    return :green if /^OK \((\d*) test/.match(output)
+    return :red   if /^Tests run: (\d*),  Failures: (\d*)/.match(output)
+    return :amber
   end
 
   def self.parse_groovy_junit(output)
@@ -265,18 +212,10 @@ module CodeOutputParser
   end
  
   def self.parse_go_testing(output)
-    didnt_build_pattern = /\[build failed\]/
-    failed_pattern = /FAIL/
-    passed_pattern = /PASS/
-    if didnt_build_pattern.match(output)
-      :amber
-    elsif failed_pattern.match(output)
-      :red
-    elsif passed_pattern.match(output)
-      :green
-    else
-      :amber  
-    end
+    return :amber if /\[build failed\]/.match(output)
+    return :red   if /FAIL/.match(output)
+    return :green if /PASS/.match(output)
+    return :amber  
   end
   
   def self.parse_scala_test(output)
