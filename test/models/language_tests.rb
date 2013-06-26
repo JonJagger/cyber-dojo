@@ -1,7 +1,37 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
+class MockDiskFile
+  
+  def initialize
+    @called = false
+  end
+  
+  def read(dir, filename)
+    @called = true
+    { :unit_test_framework => 'satchmo' }.inspect
+  end
+  
+  def separator
+    '/'
+  end
+  
+  def called
+    @called
+  end
+  
+end
+
 class LanguageTests < ActionController::TestCase
+
+  test "am able to substitute mock using Thread[:current]" do
+    mock = MockDiskFile.new
+    Thread.current[:file] = mock 
+    language = make_language()    
+    assert_equal 'satchmo', language.unit_test_framework
+    assert mock.called
+    Thread.current[:file] = nil
+  end
 
   test "name is as set in ctor" do
     language = make_language()    
@@ -44,6 +74,11 @@ class LanguageTests < ActionController::TestCase
   test "hidden filenames defaults to [ ] if not present" do
     language = make_language()
     assert_equal [ ], language.hidden_filenames    
+  end
+  
+  test "support filenames defaults to [ ] if not present" do
+    language = make_language()
+    assert_equal [ ], language.support_filenames    
   end
   
   test "unit test framework is loaded" do

@@ -9,7 +9,7 @@ class Exercise
   end
 
   def dir
-    @root_dir + File::SEPARATOR + 'exercises' + File::SEPARATOR + name
+    @root_dir + @file.separator + 'exercises' + @file.separator + name
   end
 
   def name

@@ -1,10 +1,11 @@
-require 'Files'
+require 'DiskFile'
 
 class Language
   
   def initialize(root_dir, name)
     @root_dir = root_dir
     @name = name
+    @file = Thread.current[:file] || DiskFile.new
   end
      
   def name
@@ -12,13 +13,13 @@ class Language
   end
 
   def dir
-    @root_dir + File::SEPARATOR + 'languages' + File::SEPARATOR + name
+    @root_dir + @file.separator + 'languages' + @file.separator + name
   end
     
   def visible_files
     seen = { }
     manifest[:visible_filenames].each do |filename|
-      seen[filename] = Files::file_read(dir, filename)
+      seen[filename] = @file.read(dir, filename)
     end
     seen
   end
@@ -46,7 +47,7 @@ class Language
 private
 
   def manifest
-    @manifest ||= eval Files::file_read(dir, 'manifest.rb')
+    @manifest ||= eval @file.read(dir, 'manifest.rb')
   end
   
 end

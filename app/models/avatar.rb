@@ -21,9 +21,9 @@ class Avatar
     if !File.exists? dir
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
-      system(cd_dir('git init --quiet'))
-      system(cd_dir("git add #{Traffic_lights_filename}"))
-      system(cd_dir("git add #{Visible_files_filename}"))      
+      Git.init(dir, "--quiet")
+      Git.add(dir, Traffic_lights_filename)
+      Git.add(dir, Visible_files_filename)      
       git_commit(@kata.visible_files, tag = 0)
     end
   end
@@ -78,13 +78,11 @@ private
   end
 
   def git_commit(visible_files, tag)
-    command = ""
     visible_files.keys.each do |filename|
-      command += "git add sandbox/#{filename};"
+      Git.add(dir, "sandbox/#{filename}")
     end
-    command += "git commit -a -m '#{tag}' --quiet;"
-    command += "git tag -m '#{tag}' #{tag} HEAD";    
-    system(cd_dir(command))
+    Git.commit(dir, "-a -m '#{tag}' --quiet")
+    Git.tag(dir, "-m '#{tag}' #{tag} HEAD")
   end
   
   def unlocked_read(filename, tag)
@@ -98,10 +96,6 @@ private
      
   def most_recent_tag
     Git::most_recent_tag(dir)
-  end
-  
-  def cd_dir(command)
-    "cd #{dir};" + command
   end
   
   Traffic_lights_filename = 'increments.rb'

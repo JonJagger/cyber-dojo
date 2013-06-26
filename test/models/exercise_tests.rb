@@ -11,6 +11,10 @@ class MockDiskFile
     @called = true
   end
   
+  def separator
+    '/'
+  end
+  
   def called
     @called
   end
