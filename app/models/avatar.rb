@@ -1,5 +1,5 @@
 
-require 'Files'
+require 'DiskFile'
 require 'Git'
 require 'Locking'
 
@@ -18,6 +18,7 @@ class Avatar
   def initialize(kata, name) 
     @kata = kata
     @name = name
+    @file = Thread.current[:file] || DiskFile.new
     if !File.exists? dir
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
@@ -29,7 +30,7 @@ class Avatar
   end
   
   def dir
-    @kata.dir + File::SEPARATOR + name
+    @kata.dir + @file.separator + name
   end
   
   def kata
@@ -73,8 +74,8 @@ class Avatar
 private
 
   def save(visible_files, traffic_lights)
-    Files::file_write(dir, Visible_files_filename, visible_files)
-    Files::file_write(dir, Traffic_lights_filename, traffic_lights)
+    @file.write(dir, Visible_files_filename, visible_files)
+    @file.write(dir, Traffic_lights_filename, traffic_lights)
   end
 
   def git_commit(visible_files, tag)
