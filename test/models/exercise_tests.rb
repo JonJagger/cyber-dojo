@@ -1,7 +1,32 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
 
+class MockDiskFile
+  
+  def initialize
+    @called = false
+  end
+  
+  def read(dir, filename)
+    @called = true
+  end
+  
+  def called
+    @called
+  end
+  
+end
+
 class ExerciseTests < ActionController::TestCase
+  
+  test "am able to substitute mock using Thread[:current]" do
+    mock = MockDiskFile.new
+    Thread.current[:file] = mock 
+    exercise = make_exercise('Yahtzee')
+    exercise.instructions
+    assert mock.called
+    Thread.current[:file] = nil
+  end
   
   test "dir is based on name" do
     exercise = make_exercise('Yahtzee') 

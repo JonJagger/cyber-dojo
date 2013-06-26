@@ -8,7 +8,7 @@ module GitDiff
   #    the lines that have stayed the same.
   #
   # diff: created from GitDiffParser. The diff between
-  #       sucessive tags (run-tests) of a file.
+  #       two tags (run-tests) of a file.
   #
   # lines: an array containing the current content of the 
   #        diffed file.

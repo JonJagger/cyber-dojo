@@ -1,3 +1,4 @@
+require 'Files'
 
 class Language
   
@@ -17,7 +18,7 @@ class Language
   def visible_files
     seen = { }
     manifest[:visible_filenames].each do |filename|
-      seen[filename] = IO.read("#{dir}/#{filename}")
+      seen[filename] = Files::file_read(dir, filename)
     end
     seen
   end
@@ -45,7 +46,7 @@ class Language
 private
 
   def manifest
-    @manifest ||= eval IO.read(dir + File::SEPARATOR + 'manifest.rb')
+    @manifest ||= eval Files::file_read(dir, 'manifest.rb')
   end
   
 end

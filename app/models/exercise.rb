@@ -1,9 +1,11 @@
+require 'DiskFile'
 
 class Exercise
   
   def initialize(root_dir, name)
     @root_dir = root_dir
     @name = name
+    @file = Thread.current[:file] || DiskFile.new
   end
 
   def dir
@@ -15,7 +17,7 @@ class Exercise
   end
   
   def instructions
-    IO.read("#{dir}/instructions")
+    @file.read(dir, 'instructions')
   end
 
 end

@@ -16,6 +16,7 @@ class Kata
   def initialize(root_dir, id)
     @root_dir = root_dir
     @id = Uuid.new(id)
+    #@ctx = Thread.current[:context] || Context.new
   end
   
   def dir
@@ -60,7 +61,7 @@ class Kata
 private
 
   def manifest
-    eval IO.read(dir + File::SEPARATOR + 'manifest.rb')
+    eval Files::file_read(dir, 'manifest.rb')
   end
   
 end

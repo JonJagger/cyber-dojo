@@ -1,5 +1,6 @@
 
 require 'Files'
+require 'Git'
 require 'Locking'
 
 class Avatar
@@ -61,8 +62,8 @@ class Avatar
   end
 
   def diff_lines(was_tag, now_tag)
-    command = cd_dir("git diff --ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox")
-    Files::popen_read(command)
+    command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
+    Git::diff(dir, command)
   end
   
   def sandbox
@@ -92,13 +93,15 @@ private
   
   def locked_read(filename, tag = nil)
     tag ||= most_recent_tag
-    command = cd_dir("git show #{tag}:#{filename}")
-    eval Files::popen_read(command)
+    #command = cd_dir("git show #{tag}:#{filename}")
+    #eval Files::popen_read(command)
+    Git::show(dir, "#{tag}:#{filename}")
   end
      
   def most_recent_tag
-    command = cd_dir("git tag|sort -g")
-    eval Files::popen_read(command)
+    #command = cd_dir("git tag|sort -g")
+    #eval Files::popen_read(command)
+    Git::most_recent_tag(dir)
   end
   
   def cd_dir(command)

@@ -2,6 +2,10 @@ require 'Folders'
 
 module Files
   
+  def self.file_read(dir, filename)
+    IO.read(dir + File::SEPARATOR + filename)
+  end
+  
   def self.file_write(dir, filename, object)
     pathed_filename = dir + File::SEPARATOR + filename
     Folders::make_folder(pathed_filename) # if file is in a folder make the folder
