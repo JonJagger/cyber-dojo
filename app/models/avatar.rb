@@ -1,6 +1,6 @@
 
 require 'DiskFile'
-require 'Git'
+require 'DiskGit'
 require 'Locking'
 
 class Avatar
@@ -19,12 +19,13 @@ class Avatar
     @kata = kata
     @name = name
     @file = Thread.current[:file] || DiskFile.new
+    @git = Thread.current[:git] || DiskGit.new
     if !File.exists? dir
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
-      Git.init(dir, "--quiet")
-      Git.add(dir, Traffic_lights_filename)
-      Git.add(dir, Visible_files_filename)      
+      @git.init(dir, "--quiet")
+      @git.add(dir, Traffic_lights_filename)
+      @git.add(dir, Visible_files_filename)      
       git_commit(@kata.visible_files, tag = 0)
     end
   end
@@ -64,7 +65,7 @@ class Avatar
 
   def diff_lines(was_tag, now_tag)
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-    Git::diff(dir, command)
+    @git.diff(dir, command)
   end
   
   def sandbox
@@ -80,10 +81,10 @@ private
 
   def git_commit(visible_files, tag)
     visible_files.keys.each do |filename|
-      Git.add(dir, "sandbox/#{filename}")
+      @git.add(dir, "sandbox/#{filename}")
     end
-    Git.commit(dir, "-a -m '#{tag}' --quiet")
-    Git.tag(dir, "-m '#{tag}' #{tag} HEAD")
+    @git.commit(dir, "-a -m '#{tag}' --quiet")
+    @git.tag(dir, "-m '#{tag}' #{tag} HEAD")
   end
   
   def unlocked_read(filename, tag)
@@ -92,11 +93,11 @@ private
   
   def locked_read(filename, tag = nil)
     tag ||= most_recent_tag
-    Git::show(dir, "#{tag}:#{filename}")
+    @git.show(dir, "#{tag}:#{filename}")
   end
      
   def most_recent_tag
-    Git::most_recent_tag(dir)
+    @git.most_recent_tag(dir)
   end
   
   Traffic_lights_filename = 'increments.rb'

@@ -5,17 +5,18 @@ class Sandbox
   
   def initialize(avatar)
     @avatar = avatar
+    @file = Thread.current[:file] || DiskFile.new
   end
      
   def dir
-    @avatar.dir + File::SEPARATOR + 'sandbox'
+    @avatar.dir + @file.separator + 'sandbox'
   end
     
   def save(visible_files)
     # Save each file individually. Enables the 'git diff' 
     # command in avatar.diff_lines() and hence the diff page.
     visible_files.each do |filename,content|
-      Files::file_write(dir, filename, content)
+      @file.write(dir, filename, content)
     end    
   end
   
@@ -33,16 +34,16 @@ class Sandbox
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     output = Files::popen_read(command, max_run_tests_duration)    
-    Files::file_write(dir, 'output', output)
+    @file.write(dir, 'output', output)
     visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
   def link_files(language, link_filenames)
     link_filenames.each do |filename|
-      old_name = language.dir + File::SEPARATOR + filename
-      new_name = dir + File::SEPARATOR + filename
-      File.symlink(old_name, new_name)
+      old_name = language.dir + @file.separator + filename
+      new_name = dir + @file.separator + filename
+      @file.symlink(old_name, new_name)
     end    
   end
   

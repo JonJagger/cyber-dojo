@@ -1,32 +1,32 @@
 require 'Files'
 
-module Git
+class DiskGit
 
-  def self.init(dir, options)  
+  def init(dir, options)  
     system("cd #{dir}; git init #{options}")
   end
   
-  def self.add(dir, what)
+  def add(dir, what)
     system("cd #{dir}; git add #{what}")
   end
 
-  def self.commit(dir, options)
+  def commit(dir, options)
     system("cd #{dir}; git commit #{options}")
   end
 
-  def self.tag(dir, options)
+  def tag(dir, options)
     system("cd #{dir}; git tag #{options}")
   end
   
-  def self.show(dir, options)
+  def show(dir, options)
     eval Files::popen_read("cd #{dir}; git show #{options}")
   end  
   
-  def self.diff(dir, options)
+  def diff(dir, options)
     Files::popen_read("cd #{dir}; git diff #{options}")
   end
   
-  def self.most_recent_tag(dir)
+  def most_recent_tag(dir)
     eval Files::popen_read("cd #{dir}; git tag|sort -g")
   end
 

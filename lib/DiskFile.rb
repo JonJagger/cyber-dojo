@@ -15,4 +15,8 @@ class DiskFile
     Files::file_read(dir, filename)
   end
   
+  def symlink(old_name, new_name)
+   File.symlink(old_name, new_name)
+  end
+  
 end
