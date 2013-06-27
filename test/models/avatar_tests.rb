@@ -2,19 +2,21 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class AvatarTests < ActionController::TestCase
 
+  def setup
+    @kata = make_kata('Ruby-installed-and-working')
+  end
+  
   test "avatar names all begin with a different letter" do    
     assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
   end
   
-  test "avatars kata is set" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf') 
-    assert_equal kata, avatar.kata    
+  test "avatar returns kata it was created with" do
+    avatar = Avatar.new(@kata, 'wolf')    
+    assert_equal @kata, avatar.kata    
   end
   
   test "tag 0 repo contains an empty output file" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf') 
+    avatar = Avatar.new(@kata, 'wolf') 
     visible_files = avatar.visible_files
     assert visible_files.keys.include?('output'),
           "visible_files.keys.include?('output')"
@@ -22,14 +24,12 @@ class AvatarTests < ActionController::TestCase
   end
 
   test "there are no traffic-lights before first test-run" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')
+    avatar = Avatar.new(@kata, 'wolf')
     assert_equal [ ], avatar.traffic_lights    
   end
   
   test "after avatar is created sandbox contains visible_files" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')    
+    avatar = Avatar.new(@kata, 'wolf')    
     avatar.visible_files.each do |filename,_content|
       pathed_filename = avatar.dir + '/sandbox/' + filename
       assert File.exists?(pathed_filename),
@@ -38,8 +38,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "after avatar is created sandbox contains cyber-dojo.sh and it has execute permission" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')
+    avatar = Avatar.new(@kata, 'wolf')
     cyber_dojo_sh = avatar.dir + '/sandbox/cyber-dojo.sh'
     assert File.exists?(cyber_dojo_sh),
           "File.exists?(#{cyber_dojo_sh})"
@@ -48,8 +47,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')    
+    avatar = Avatar.new(@kata, 'wolf')    
     run_tests(avatar, avatar.visible_files)
     traffic_lights = avatar.traffic_lights
     assert_equal 1, traffic_lights.length
@@ -57,8 +55,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "deleted file is deleted from that repo tag" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')  # creates tag-0
+    avatar = Avatar.new(@kata, 'wolf')  # creates tag-0
     visible_files = avatar.visible_files
     deleted_filename = 'instructions'
     visible_files[deleted_filename] = 'Whatever'
@@ -76,15 +73,8 @@ class AvatarTests < ActionController::TestCase
           "!after.keys.include?(#{deleted_filename})"
   end
   
-  test "avatar returns kata it was created with" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')    
-    assert_equal kata, avatar.kata    
-  end
-  
   test "diff_lines is not empty when change in files" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf')
+    avatar = Avatar.new(@kata, 'wolf')
     visible_files = avatar.visible_files
     run_tests(avatar, visible_files)
     visible_files['cyber-dojo.sh'] += 'xxxx'
@@ -98,8 +88,7 @@ class AvatarTests < ActionController::TestCase
   end
 
   test "diff_lines shows added file" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf') # 0
+    avatar = Avatar.new(@kata, 'wolf') # 0
     visible_files = avatar.visible_files
     added_filename = 'unforgiven.txt'
     content = 'starring Clint Eastwood'
@@ -120,8 +109,7 @@ class AvatarTests < ActionController::TestCase
   end
 
   test "diff_lines shows deleted file" do
-    kata = make_kata(language)
-    avatar = Avatar.new(kata, 'wolf') # 0
+    avatar = Avatar.new(@kata, 'wolf') # 0
     visible_files = avatar.visible_files
     deleted_filename = 'instructions'
     content = 'tweedle_dee'
@@ -141,10 +129,6 @@ class AvatarTests < ActionController::TestCase
         "-#{content}"       
       ].join("\n")
     assert actual.include?(expected)
-  end
-
-  def language
-    'Ruby-installed-and-working'
   end
 
 end

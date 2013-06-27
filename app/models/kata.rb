@@ -1,14 +1,17 @@
 
 require 'Files'
+require 'DiskFile'
 
 class Kata
   
-  def self.create_new(root_dir, info)    
-    Files::file_write(Kata.new(root_dir, info[:id]).dir, 'manifest.rb', info)
+  def self.create_new(root_dir, info)
+    file = Thread.current[:file] || DiskFile.new
+    file.write(Kata.new(root_dir, info[:id]).dir, 'manifest.rb', info)
   end
   
   def self.exists?(root_dir, id)
-    File.directory? Kata.new(root_dir,id).dir
+    file = Thread.current[:file] || DiskFile.new
+    file.directory?(Kata.new(root_dir,id).dir)
   end
 
   #---------------------------------
@@ -16,13 +19,13 @@ class Kata
   def initialize(root_dir, id)
     @root_dir = root_dir
     @id = Uuid.new(id)
-    #@ctx = Thread.current[:context] || Context.new
+    @file = Thread.current[:file] || DiskFile.new
   end
   
   def dir
-    @root_dir + File::SEPARATOR +
-      'katas'   + File::SEPARATOR +
-        @id.inner + File::SEPARATOR +
+    @root_dir + @file.separator +
+      'katas'   + @file.separator +
+        @id.inner + @file.separator +
           @id.outer    
   end
 
@@ -32,7 +35,7 @@ class Kata
     
   def avatars
     Avatar.names.select { |name|
-      File.exists?(dir + File::SEPARATOR + name)
+      @file.exists?(dir, name)
     }.collect { |name|
       Avatar.new(self, name)
     }
@@ -61,7 +64,7 @@ class Kata
 private
 
   def manifest
-    eval Files::file_read(dir, 'manifest.rb')
+    eval @file.read(dir, 'manifest.rb')
   end
   
 end

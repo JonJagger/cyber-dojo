@@ -2,6 +2,20 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class KataTests < ActionController::TestCase
   
+  def language
+    'Ruby-installed-and-working'  
+  end
+
+  #test "language is as set in manifest" do
+  #  mock_file = MockDiskFile.new
+  #  Thread.current[:file] = mock_file
+  #  mock_file.setup(
+  #    [ { :language => 'Groovy' }.inspect ]
+  #  )
+  #  kata = make_kata('Groovy')
+  #  
+  #end
+  
   test "multiple avatars in a kata are all seen" do
     kata = make_kata(language)
     Avatar.new(kata, 'lion')
@@ -57,10 +71,6 @@ class KataTests < ActionController::TestCase
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)
     assert 'hippo', avatar.name
-  end
-
-  def language
-    'Ruby-installed-and-working'  
   end
 
 end

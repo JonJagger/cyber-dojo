@@ -17,6 +17,17 @@ class MockDiskFile
     result
   end
   
+  def write(dir, filename, object)
+  end
+  
+  def directory?(dir)
+    nil
+  end
+  
+  def exists?(dir)
+    nil
+  end
+  
   def separator
     '/'
   end

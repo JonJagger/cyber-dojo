@@ -20,7 +20,7 @@ class Avatar
     @name = name
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
-    if !File.exists? dir
+    if !File.exists? dir ##
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
       @git.init(dir, "--quiet")
@@ -44,7 +44,7 @@ class Avatar
       
   def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
-    Locking::io_lock(dir) do
+    Locking::io_lock(dir) do ##
       traffic_lights = locked_read(Traffic_lights_filename)
       traffic_lights << traffic_light
       tag = traffic_lights.length
@@ -88,7 +88,9 @@ private
   end
   
   def unlocked_read(filename, tag)
-    Locking::io_lock(dir) { locked_read(filename, tag) }
+    Locking::io_lock(dir) { ##
+      locked_read(filename, tag)
+    }
   end
   
   def locked_read(filename, tag = nil)
