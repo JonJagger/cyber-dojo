@@ -25,7 +25,7 @@ class SetupController < ApplicationController
     vis = info[:visible_files] = language.visible_files
     vis['output'] = ''
     vis['instructions'] = exercise.instructions
-    Kata.create_new(root_dir, info)
+    Kata.create(root_dir, info)
     
     redirect_to :controller => 'dojo',
                 :action => :index, 

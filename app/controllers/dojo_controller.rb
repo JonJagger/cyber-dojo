@@ -1,4 +1,4 @@
-require 'Locking'
+require 'DiskFile'
 
 class DojoController < ApplicationController
   
@@ -76,14 +76,14 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def start_avatar(kata)
-    Locking::io_lock(kata.dir) do
+    DiskFile.new.lock(kata.dir) do
       started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
       unstarted_avatar_names = Avatar.names - started_avatar_names
       if unstarted_avatar_names == [ ]
         avatar_name = nil
       else          
         avatar_name = random(unstarted_avatar_names)
-        Avatar.new(kata, avatar_name)
+        Avatar.create(kata, avatar_name)
         avatar_name
       end        
     end      

@@ -1,9 +1,14 @@
 
 require 'DiskFile'
 require 'DiskGit'
-require 'Locking'
 
 class Avatar
+
+  def self.create(kata, name)
+    avatar = Avatar.new(kata, name)
+    avatar.setup
+    avatar
+  end
 
   def self.names
     # no two animals start with the same letter
@@ -20,7 +25,11 @@ class Avatar
     @name = name
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
-    if !@file.exists?(dir)
+    setup  # idea is to drop this when proper actual initial creation is done via create()
+  end
+  
+  def setup
+    if !@file.exists?(dir) # idea is to drop this too...
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
       @git.init(dir, "--quiet")
@@ -44,7 +53,7 @@ class Avatar
       
   def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
-    Locking::io_lock(dir) do ##
+    @file.lock(dir) do
       traffic_lights = locked_read(Traffic_lights_filename)
       traffic_lights << traffic_light
       tag = traffic_lights.length
@@ -88,7 +97,7 @@ private
   end
   
   def unlocked_read(filename, tag)
-    Locking::io_lock(dir) { ##
+    @file.lock(dir) {
       locked_read(filename, tag)
     }
   end

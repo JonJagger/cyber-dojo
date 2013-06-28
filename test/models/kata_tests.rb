@@ -38,6 +38,7 @@ class KataTests < ActionController::TestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # these have not been stubbed and do lots of disk io
   
   test "multiple avatars in a kata are all seen" do
     teardown
@@ -54,7 +55,7 @@ class KataTests < ActionController::TestCase
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
     info = make_info(language, 'Yahtzee', id, now)
-    Kata.create_new(root_dir, info)
+    Kata.create(root_dir, info)
     kata = Kata.new(root_dir, info[:id])
     
     assert_equal root_dir + '/katas/AB/CDABCD34', kata.dir
@@ -83,7 +84,7 @@ class KataTests < ActionController::TestCase
     id = 'AABBCCDDEE'
     info = make_info(language, 'Yahtzee', id)
     assert !Kata.exists?(root_dir, id), "exists? false before created"
-    Kata.create_new(root_dir, info)
+    Kata.create(root_dir, info)
     assert Kata.exists?(root_dir, id), "exists? true after created"
   end
       

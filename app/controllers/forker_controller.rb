@@ -15,7 +15,7 @@ class ForkerController < ApplicationController
     info = gather_info
     tag = params[:tag] || avatar.traffic_lights.length;
     info[:visible_files] = avatar.visible_files(tag)    
-    Kata.create_new(root_dir, info)
+    Kata.create(root_dir, info)
     
     redirect_to :controller => :dojo,
                 :action => :index, 

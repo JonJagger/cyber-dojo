@@ -4,7 +4,7 @@ require 'DiskFile'
 
 class Kata
   
-  def self.create_new(root_dir, info)
+  def self.create(root_dir, info)
     file = Thread.current[:file] || DiskFile.new
     file.write(Kata.new(root_dir, info[:id]).dir, 'manifest.rb', info)
   end
@@ -13,7 +13,10 @@ class Kata
     file = Thread.current[:file] || DiskFile.new
     file.directory?(Kata.new(root_dir,id).dir)
   end
-
+  
+  #def self.find(root_dir, id)
+  #end
+  
   #---------------------------------
 
   def initialize(root_dir, id)

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Files'
-require 'Locking'
+require 'DiskFile'
 
 class IoLockTests < ActionController::TestCase
   
@@ -8,7 +8,7 @@ class IoLockTests < ActionController::TestCase
     block_run = false
     exception_throw = false
     begin
-      result = Locking::io_lock('does_not_exist.txt') do |fd|
+      result = DiskFile.new.lock('does_not_exist.txt') do |fd|
         block_run = true
       end
     rescue
@@ -26,7 +26,7 @@ class IoLockTests < ActionController::TestCase
     Files::file_write('.', filename, 'x=[1,2,3]')
     fd = File.open(filename, 'r')
     begin
-      result = Locking::io_lock(filename) {|fd| block_run = true; 'Hello' }
+      result = DiskFile.new.lock(filename) {|fd| block_run = true; 'Hello' }
       assert block_run, 'block_run'
       assert_equal 'Hello', result
     ensure
@@ -39,11 +39,11 @@ class IoLockTests < ActionController::TestCase
     Files::file_write('.', filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
-    Locking::io_lock(filename) do
+    DiskFile.new.lock(filename) do
       outer_run = true
       
       inner_thread = Thread.new {
-        Locking::io_lock(filename) do
+        DiskFile.new.lock(filename) do
           inner_run = true
         end
       }
@@ -64,7 +64,7 @@ class IoLockTests < ActionController::TestCase
     `mkdir #{dir}`
     begin
       run = false
-      result = Locking::io_lock(dir) {|_| run = true }
+      result = DiskFile.new.lock(dir) {|_| run = true }
       assert run
       assert result
     ensure
@@ -80,9 +80,9 @@ class IoLockTests < ActionController::TestCase
     begin
       parent_run = false
       child_run = false
-      Locking::io_lock(parent) do
+      DiskFile.new.lock(parent) do
         parent_run = true
-        Locking::io_lock(child) do
+        DiskFile.new.lock(child) do
           child_run = true
         end
       end

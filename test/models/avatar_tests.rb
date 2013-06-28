@@ -5,14 +5,41 @@ class AvatarTests < ActionController::TestCase
   def setup
     @kata = make_kata('Ruby-installed-and-working')
   end
-  
+
   def teardown
     Thread.current[:file] = nil
     system("rm -rf #{root_dir}/katas/*")
     system("rm -rf #{root_dir}/zips/*")    
   end
+
+=begin
+  def root_dir
+    Rails.root + 'test/cyberdojo').to_s
+  end
+
+  def id
+    '45ED23A2F1'
+  end
+
+  test "basic avatar creation sets up git repository" do
+    kata = Kata.new(root_dir, id)    
+    stub_file = StubDiskFile.new
+    Thread.current[:file] = stub_file
+    stub_git = StubDiskGit.new
+    Thread.current[:git] = stub_git
   
-  test "avatar names all begin with a different letter" do    
+    # what I can see clearly from this is that I should
+    # separate out Avatar.new from Avatar.find
+    # most of the time I want Avatar.find and that should be
+    # easy to stub. But how do I do this? The find method will
+    # still need to create an avatar object if the find is successful.
+    # an extra parameter?
+  
+    #avatar = Avatar.new(kata, 'wolf')    
+  end
+=end
+
+  test "avatar names all begin with a different letter" do
     assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
   end
   
