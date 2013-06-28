@@ -24,7 +24,7 @@ class DiskFile
     File.directory?(dir)
   end
   
-  def exists?(dir, filename)
+  def exists?(dir, filename = "")    
     File.exists?(dir + separator + filename)
   end
   

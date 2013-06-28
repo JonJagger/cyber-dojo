@@ -7,6 +7,12 @@ class SimulatedFullKataTests < ActionController::TestCase
     `ps`.scan(/<defunct>/).length
   end
   
+  def teardown
+    Thread.current[:file] = nil
+    system("rm -rf #{root_dir}/katas/*")
+    system("rm -rf #{root_dir}/zips/*")    
+  end
+  
   # These tests feel like they should be in test/lib/popen_read_tests.rb
   test "no ruby zombie processes left unkilled" do
     @language = 'Ruby-installed-and-working'

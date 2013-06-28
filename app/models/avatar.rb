@@ -20,7 +20,7 @@ class Avatar
     @name = name
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
-    if !File.exists? dir ##
+    if !@file.exists?(dir)
       save(@kata.visible_files, traffic_lights = [ ])
       sandbox.save(@kata.visible_files)
       @git.init(dir, "--quiet")

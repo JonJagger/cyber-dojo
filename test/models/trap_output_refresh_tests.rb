@@ -2,6 +2,12 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TrapOutputRefreshTests < ActionController::TestCase
   
+  def teardown
+    Thread.current[:file] = nil
+    system("rm -rf #{root_dir}/katas/*")
+    system("rm -rf #{root_dir}/zips/*")    
+  end
+  
   test "output is correct after refresh" do
     language = 'Ruby-installed-and-working'
     kata = make_kata(language)

@@ -6,6 +6,12 @@ class AvatarTests < ActionController::TestCase
     @kata = make_kata('Ruby-installed-and-working')
   end
   
+  def teardown
+    Thread.current[:file] = nil
+    system("rm -rf #{root_dir}/katas/*")
+    system("rm -rf #{root_dir}/zips/*")    
+  end
+  
   test "avatar names all begin with a different letter" do    
     assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
   end

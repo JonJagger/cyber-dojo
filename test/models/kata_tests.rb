@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/mock_disk_file'
 
 class KataTests < ActionController::TestCase
   
@@ -6,17 +7,40 @@ class KataTests < ActionController::TestCase
     'Ruby-installed-and-working'  
   end
 
-  #test "language is as set in manifest" do
-  #  mock_file = MockDiskFile.new
-  #  Thread.current[:file] = mock_file
-  #  mock_file.setup(
-  #    [ { :language => 'Groovy' }.inspect ]
-  #  )
-  #  kata = make_kata('Groovy')
-  #  
-  #end
+  def setup
+    @mock_file = MockDiskFile.new
+    Thread.current[:file] = @mock_file
+  end
+  
+  def teardown
+    Thread.current[:file] = nil
+    system("rm -rf #{root_dir}/katas/*")
+    system("rm -rf #{root_dir}/zips/*")    
+  end
+  
+  test "created is loaded from manifest" do
+    @mock_file.setup(
+      [ { :created => [ 2013,6,27,18,38,42] }.inspect ]
+    )
+    id = 'ABCDE12345'
+    kata = Kata.new(root_dir, id)
+    assert kata.created.to_s.start_with?("2013-06-27 18:38:42")
+  end
+  
+  test "age in seconds is loaded from manifest" do
+    @mock_file.setup(
+      [ { :created => [ 2013,6,27,18,38,42] }.inspect ]
+    )
+    id = 'ABCDE12345'
+    kata = Kata.new(root_dir, id)
+    now = Time.mktime(2013,6,27,18,39,43)
+    assert_equal 61, kata.age_in_seconds(now)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "multiple avatars in a kata are all seen" do
+    teardown
     kata = make_kata(language)
     Avatar.new(kata, 'lion')
     Avatar.new(kata, 'hippo')
@@ -26,6 +50,7 @@ class KataTests < ActionController::TestCase
   end
   
   test "create new named kata creates manifest with required properies" do
+    teardown    
     id = 'ABCDABCD34'
     now = [2012,3,3,10,6,12]
     info = make_info(language, 'Yahtzee', id, now)
@@ -54,19 +79,22 @@ class KataTests < ActionController::TestCase
   end
   
   test "Kata.exists? returns false before kata is created and true after kata is created" do
+    teardown    
     id = 'AABBCCDDEE'
     info = make_info(language, 'Yahtzee', id)
-    assert !Kata.exists?(root_dir, id)
+    assert !Kata.exists?(root_dir, id), "exists? false before created"
     Kata.create_new(root_dir, info)
-    assert Kata.exists?(root_dir, id)
+    assert Kata.exists?(root_dir, id), "exists? true after created"
   end
       
   test "creating a new kata succeeds and creates katas root dir" do
+    teardown    
     kata = make_kata(language)
     assert File.exists?(kata.dir), 'inner/outer dir created'
   end
-    
+  
   test "you can create an avatar in a kata" do
+    teardown    
     kata = make_kata(language) 
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)
