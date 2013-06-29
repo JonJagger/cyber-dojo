@@ -1,52 +1,5 @@
-require 'Folders'
 
 module Files
-  
-  def self.file_read(dir, filename)
-    IO.read(dir + File::SEPARATOR + filename)
-  end
-  
-  def self.file_write(dir, filename, object)
-    pathed_filename = dir + File::SEPARATOR + filename
-    Folders::make_folder(pathed_filename) # if file is in a folder make the folder
-    if object.is_a? String
-      File.open(pathed_filename, 'w') do |fd|
-        fd.write(makefile_filter(pathed_filename, object))
-      end
-      # .sh files (eg cyber-dojo.sh) need execute permissions
-      File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/    
-    else
-      # When doing a git diff on a repository that includes files created
-      # by this function I found the output contained extra lines thus
-      # \ No newline at end of file
-      # So I've appended a newline to help keep git quieter.
-      File.open(pathed_filename, 'w') { |file| file.write(object.inspect + "\n") }
-    end
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
-  
-  def self.makefile_filter(pathed_filename, content)
-    # The jquery-tabby.js plugin intercepts tab key presses in the
-    # textarea editor and converts them to spaces for a better
-    # editing experience. However, makefiles are tab sensitive...
-    # Hence this special filter, just for makefiles, to convert
-    # leading spaces back to a tab character.
-    if pathed_filename.downcase.split(File::SEPARATOR).last == 'makefile'
-      lines = [ ]
-      newline = Regexp.new('[\r]?[\n]')
-      content.split(newline).each do |line|
-        if stripped = line.lstrip!
-          line = "\t" + stripped
-        end
-        lines.push(line)
-      end
-      content = lines.join("\n")
-    end
-    content
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
   
   def self.popen_read(command, max_seconds = nil)
     # Originally I was writing

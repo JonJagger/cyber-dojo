@@ -24,20 +24,24 @@ class FoldersTests < ActionController::TestCase
   end
   
   test "id_complete with no matching id is unchanged id" do
-    Folders::make_folder(root_dir + '/katas/12/345ABCDE/wolf')
+    make_dir(root_dir + '/katas/12/345ABCDE/wolf')
     assert_equal '123AEEE', Folders::id_complete(root_dir, '123AEEE')    
   end
   
   test "id_complete with one matching id is found and returned as id" do
-    Folders::make_folder(root_dir + '/katas/12/345ABCDE/wolf')
+    make_dir(root_dir + '/katas/12/345ABCDE/wolf')
     assert_equal '12345ABCDE', Folders::id_complete(root_dir, '1234')
   end
   
   test "id_complete with two matching ids found is unchanged id" do
-    Folders::make_folder(root_dir + '/katas/12/345ABCDE/wolf')
-    Folders::make_folder(root_dir + '/katas/12/346ABCDE/wolf')
+    # 12/345... and 12/346... diff is in 5th character
+    make_dir(root_dir + '/katas/12/345ABCDE/wolf')
+    make_dir(root_dir + '/katas/12/346ABCDE/wolf')
     assert_equal '1234', Folders::id_complete(root_dir, '1234')    
   end
   
+  def make_dir(dir)
+    `mkdir -p #{dir}`
+  end
 end
 

@@ -28,9 +28,9 @@ class Kata
   end
   
   def dir
-    @root_dir + @file.separator +
-      'katas'   + @file.separator +
-        @id.inner + @file.separator +
+    @root_dir + separator +
+      'katas'   + separator +
+        @id.inner + separator +
           @id.outer    
   end
 
@@ -68,6 +68,10 @@ class Kata
   
 private
 
+  def separator
+    @file.separator
+  end
+  
   def manifest
     @manifest ||= eval @file.read(dir, 'manifest.rb')
   end

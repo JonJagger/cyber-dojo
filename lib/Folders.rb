@@ -5,15 +5,6 @@ module Folders
     Dir.entries(path).select { |name| name != '.' and name != '..' }
   end
   
-  def self.make_folder(path)
-    if path[-1] != '/'
-      path = File.dirname(path)
-    end
-    # the -p option creates intermediate directories as required
-    command = "mkdir -p #{path}"
-    system(command)
-  end
-
   def self.id_complete(root_dir, id)
     if id != nil
       id = id[0..9].upcase

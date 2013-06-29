@@ -1,6 +1,4 @@
 
-require 'Files'
-
 class DiskFile
 
   def separator
@@ -8,12 +6,25 @@ class DiskFile
   end
   
   def write(dir, filename, object)
-    #TODO: move the implementation of Files::file_write to here
-    Files::file_write(dir, filename, object)
+    pathed_filename = dir + separator + filename
+    make_dir(pathed_filename) # if file is in a dir make the dir
+    if object.is_a? String
+      File.open(pathed_filename, 'w') do |fd|
+        fd.write(makefile_filter(pathed_filename, object))
+      end
+      # .sh files (eg cyber-dojo.sh) need execute permissions
+      File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/    
+    else
+      # When doing a git diff on a repository that includes files created
+      # by this function I found the output contained extra lines thus
+      # \ No newline at end of file
+      # So I've appended a newline to help keep git quieter.
+      File.open(pathed_filename, 'w') { |file| file.write(object.inspect + "\n") }
+    end    
   end
   
   def read(dir, filename)
-    Files::file_read(dir, filename)
+    IO.read(dir + separator + filename)
   end
   
   def symlink(old_name, new_name)
@@ -46,6 +57,37 @@ class DiskFile
       end
     end
     result
+  end
+
+private
+
+  def make_dir(dir)
+    if dir[-1] != '/'
+      dir = File.dirname(dir)
+    end
+    # the -p option creates intermediate dirs as required
+    command = "mkdir -p #{dir}"
+    system(command)
+  end
+  
+  def makefile_filter(pathed_filename, content)
+    # The jquery-tabby.js plugin intercepts tab key presses in the
+    # textarea editor and converts them to spaces for a better
+    # editing experience. However, makefiles are tab sensitive...
+    # Hence this special filter, just for makefiles, to convert
+    # leading spaces back to a tab character.
+    if pathed_filename.downcase.split(separator).last == 'makefile'
+      lines = [ ]
+      newline = Regexp.new('[\r]?[\n]')
+      content.split(newline).each do |line|
+        if stripped = line.lstrip!
+          line = "\t" + stripped
+        end
+        lines.push(line)
+      end
+      content = lines.join("\n")
+    end
+    content
   end
   
 end
