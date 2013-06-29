@@ -43,8 +43,8 @@ class KataTests < ActionController::TestCase
   test "multiple avatars in a kata are all seen" do
     teardown
     kata = make_kata(language)
-    Avatar.new(kata, 'lion')
-    Avatar.new(kata, 'hippo')
+    Avatar.create(kata, 'lion')
+    Avatar.create(kata, 'hippo')
     avatars = kata.avatars
     assert_equal 2, avatars.length
     assert_equal ['hippo','lion'], avatars.collect{|avatar| avatar.name}.sort

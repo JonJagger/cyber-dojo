@@ -28,7 +28,7 @@ class SimulatedFullKataTests < ActionController::TestCase
     avatars = [ ]
     
     @avatar_count.times do |n|
-      avatar = Avatar.new(kata, Avatar.names[n])
+      avatar = Avatar.create(kata, Avatar.names[n])
       visible_files_set[avatar.name] = avatar.visible_files
       avatars << avatar
     end

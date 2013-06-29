@@ -49,7 +49,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "tag 0 repo contains an empty output file" do
-    avatar = Avatar.new(@kata, 'wolf') 
+    avatar = Avatar.create(@kata, 'wolf') 
     visible_files = avatar.visible_files
     assert visible_files.keys.include?('output'),
           "visible_files.keys.include?('output')"
@@ -57,12 +57,12 @@ class AvatarTests < ActionController::TestCase
   end
 
   test "there are no traffic-lights before first test-run" do
-    avatar = Avatar.new(@kata, 'wolf')
+    avatar = Avatar.create(@kata, 'wolf')
     assert_equal [ ], avatar.traffic_lights    
   end
   
   test "after avatar is created sandbox contains visible_files" do
-    avatar = Avatar.new(@kata, 'wolf')    
+    avatar = Avatar.create(@kata, 'wolf')    
     avatar.visible_files.each do |filename,_content|
       pathed_filename = avatar.dir + '/sandbox/' + filename
       assert File.exists?(pathed_filename),
@@ -71,7 +71,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "after avatar is created sandbox contains cyber-dojo.sh and it has execute permission" do
-    avatar = Avatar.new(@kata, 'wolf')
+    avatar = Avatar.create(@kata, 'wolf')
     cyber_dojo_sh = avatar.dir + '/sandbox/cyber-dojo.sh'
     assert File.exists?(cyber_dojo_sh),
           "File.exists?(#{cyber_dojo_sh})"
@@ -80,7 +80,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
-    avatar = Avatar.new(@kata, 'wolf')    
+    avatar = Avatar.create(@kata, 'wolf')    
     run_tests(avatar, avatar.visible_files)
     traffic_lights = avatar.traffic_lights
     assert_equal 1, traffic_lights.length
@@ -88,7 +88,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "deleted file is deleted from that repo tag" do
-    avatar = Avatar.new(@kata, 'wolf')  # creates tag-0
+    avatar = Avatar.create(@kata, 'wolf')  # creates tag-0
     visible_files = avatar.visible_files
     deleted_filename = 'instructions'
     visible_files[deleted_filename] = 'Whatever'
@@ -107,7 +107,7 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "diff_lines is not empty when change in files" do
-    avatar = Avatar.new(@kata, 'wolf')
+    avatar = Avatar.create(@kata, 'wolf')
     visible_files = avatar.visible_files
     run_tests(avatar, visible_files)
     visible_files['cyber-dojo.sh'] += 'xxxx'
@@ -121,7 +121,7 @@ class AvatarTests < ActionController::TestCase
   end
 
   test "diff_lines shows added file" do
-    avatar = Avatar.new(@kata, 'wolf') # 0
+    avatar = Avatar.create(@kata, 'wolf') # 0
     visible_files = avatar.visible_files
     added_filename = 'unforgiven.txt'
     content = 'starring Clint Eastwood'
@@ -142,7 +142,7 @@ class AvatarTests < ActionController::TestCase
   end
 
   test "diff_lines shows deleted file" do
-    avatar = Avatar.new(@kata, 'wolf') # 0
+    avatar = Avatar.create(@kata, 'wolf') # 0
     visible_files = avatar.visible_files
     deleted_filename = 'instructions'
     content = 'tweedle_dee'

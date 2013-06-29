@@ -5,6 +5,7 @@ require 'DiskGit'
 class Avatar
 
   def self.create(kata, name)
+    # To start an avatar in a kata call this.
     avatar = Avatar.new(kata, name)
     avatar.setup
     avatar
@@ -25,18 +26,15 @@ class Avatar
     @name = name
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
-    setup  # idea is to drop this when proper actual initial creation is done via create()
   end
   
   def setup
-    if !@file.exists?(dir) # idea is to drop this too...
-      save(@kata.visible_files, traffic_lights = [ ])
-      sandbox.save(@kata.visible_files)
-      @git.init(dir, "--quiet")
-      @git.add(dir, Traffic_lights_filename)
-      @git.add(dir, Visible_files_filename)      
-      git_commit(@kata.visible_files, tag = 0)
-    end
+    save(@kata.visible_files, traffic_lights = [ ])
+    sandbox.save(@kata.visible_files)
+    @git.init(dir, "--quiet")
+    @git.add(dir, Traffic_lights_filename)
+    @git.add(dir, Visible_files_filename)      
+    git_commit(@kata.visible_files, tag = 0)
   end
   
   def dir

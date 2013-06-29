@@ -7,7 +7,7 @@ class GitDiffViewTests < ActionController::TestCase
   
   test "building diff view from git repo with modified file" do
     kata = make_kata('Ruby-installed-and-working')
-    avatar = Avatar.new(kata, 'wolf')    
+    avatar = Avatar.create(kata, 'wolf')    
     # that will have created tag 0 in the repo
 
     visible_files =
@@ -112,7 +112,7 @@ class GitDiffViewTests < ActionController::TestCase
   
   test "building git diff view from repo with deleted file" do
     kata = make_kata('Ruby-installed-and-working')
-    avatar = Avatar.new(kata, 'wolf')    
+    avatar = Avatar.create(kata, 'wolf')    
     # that will have created tag 0 in the repo
 
     visible_files =
@@ -152,7 +152,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   test "only visible files are commited and are seen in diff_lines" do    
     kata = make_kata('Java-JUnit')
-    avatar = Avatar.new(kata, 'wolf')  # tag 0
+    avatar = Avatar.create(kata, 'wolf')  # tag 0
     visible_files = avatar.visible_files
     
     cyber_dojo_sh = visible_files['cyber-dojo.sh']

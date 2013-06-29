@@ -4,7 +4,7 @@ class SandboxTests < ActionController::TestCase
 
   def setup
     kata = make_kata('Ruby-installed-and-working')
-    avatar = Avatar.new(kata, 'hippo')
+    avatar = Avatar.create(kata, 'hippo')
     @sandbox = Sandbox.new(avatar)
   end
   
@@ -57,7 +57,7 @@ class SandboxTests < ActionController::TestCase
   end
   
   test "hidden files are copied to sandbox" do  
-    # TODO: there are no hidden files so this does not test anything
+    # TODO: there are no hidden files for this language so this does not test anything
     language = Language.new(root_dir, 'Ruby-installed-and-working')
     visible_files = language.visible_files
     @sandbox.run_tests(visible_files)
@@ -84,7 +84,7 @@ class SandboxTests < ActionController::TestCase
     assert language.support_filenames.length > 0
     
     kata = make_kata('Java-Approval', 'Yahtzee', Uuid.new.to_s)
-    avatar = Avatar.new(kata, 'hippo')
+    avatar = Avatar.create(kata, 'hippo')
     @sandbox = avatar.sandbox
 
     assert Dir.exists?(@sandbox.dir),

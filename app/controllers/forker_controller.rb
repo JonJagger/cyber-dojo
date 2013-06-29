@@ -8,7 +8,7 @@ class ForkerController < ApplicationController
 
   def fork
     kata = Kata.new(root_dir, params['id'])
-    avatar = Avatar.new(kata, params['avatar'])
+    avatar = Avatar.create(kata, params['avatar'])
     # gather_info requres params['language] and params['exercise']
     params['language'] = kata.language.name
     params['exercise'] = kata.exercise.name

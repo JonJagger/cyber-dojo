@@ -11,7 +11,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
   test "output is correct after refresh" do
     language = 'Ruby-installed-and-working'
     kata = make_kata(language)
-    avatar = Avatar.new(kata, 'lion')
+    avatar = Avatar.create(kata, 'lion')
     output = run_tests(avatar, avatar.visible_files)
     # now refresh
     avatar = Avatar.new(kata, 'lion')

@@ -11,7 +11,7 @@ class TimeOutTests < ActionController::TestCase
   test "that code with infinite loop times out to amber and doesnt leak processes" do
     kata = make_kata('Ruby-installed-and-working', exercise='Dummy')
     avatar_name = Avatar::names.shuffle[0]
-    avatar = Avatar.new(kata, avatar_name)
+    avatar = Avatar.create(kata, avatar_name)
     visible_files = avatar.visible_files
     filename = 'untitled.rb'    
     code = visible_files[filename]
