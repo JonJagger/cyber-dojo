@@ -3,10 +3,6 @@ require 'Files'
 
 class PopenReadTests < ActionController::TestCase
 
-  test "popen without timeout that completes returns command output" do
-    assert_equal "#{expected}\n", Files::popen_read(command)
-  end
-
   test "popen with timeout that completes returns command output" do
     assert_equal "#{expected}\n", Files::popen_read(command, 2)
   end

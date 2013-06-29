@@ -2,8 +2,22 @@
 module Files
   
   # I think this is now only called from sandbox.run_tests
-      
-  def self.popen_read(command, max_seconds = nil)
+  #  and test/lib/popen_read_tests.rb
+  
+  # TODO: rename it. It is a timeboxed_task
+  #
+  # TODO: it should return, somehow, the result, or a timeout
+  #       as hash containing two entries?
+  #         { :output => ..., :timed_out => false }
+  #
+  # TODO: the calling function should add the message
+  #          Terminated by the cyber-dojo server
+  #
+  # TODO: make instance-based
+  #
+  # TODO: make stubbable in sandbox using Thread.current trick
+  
+  def self.popen_read(command, max_seconds)
     # Originally I was writing
     #   eval IO::popen(cmd).read
     # However, this was leaving many [sh <defunct>] processes.
@@ -22,14 +36,9 @@ module Files
     pipe = IO::popen(with_stderr(command))
     
     output = ""
-    if max_seconds == nil
-      output += pipe.read
-      timed_out = false
-    else
-      sandbox_thread = Thread.new { output += pipe.read }    
-      result = sandbox_thread.join(max_seconds);
-      timed_out = (result == nil)
-    end
+    sandbox_thread = Thread.new { output += pipe.read }    
+    result = sandbox_thread.join(max_seconds);
+    timed_out = (result == nil)
     
     # Is this overkill... Can't I just do this...
     #   `kill -9 -#{pipe.pid}`
@@ -53,21 +62,17 @@ module Files
     output
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+private
     
   def self.with_stderr(cmd)
     cmd + " " + "2>&1"
   end
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   
   def self.kill(pids)
     return if pids == [ ]
     `kill #{pids.join(' ')}`
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  
   def self.descendant_pids_of(base)
     # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
     # Autovivify the hash

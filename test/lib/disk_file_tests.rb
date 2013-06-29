@@ -175,10 +175,6 @@ class DiskFileTests < ActionController::TestCase
     check_save_makefile("    123\r\n456\r\n   789", "\t123\n456\n\t789")    
   end
 
-  #test "kill bad pids does not throw exception" do
-  #  Files::kill(pids=[:a, :b, :c])
-  #end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def check_save_makefile(content, expected_content)    
