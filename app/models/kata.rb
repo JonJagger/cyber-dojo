@@ -1,5 +1,4 @@
 
-require 'Files'
 require 'DiskFile'
 
 class Kata

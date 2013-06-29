@@ -1,11 +1,6 @@
 
-module Files
+module TimeBoxedTask
   
-  # I think this is now only called from sandbox.run_tests
-  #  and test/lib/popen_read_tests.rb
-  
-  # TODO: rename it. It is a timeboxed_task
-  #
   # TODO: it should return, somehow, the result, or a timeout
   #       as hash containing two entries?
   #         { :output => ..., :timed_out => false }
@@ -17,7 +12,7 @@ module Files
   #
   # TODO: make stubbable in sandbox using Thread.current trick
   
-  def self.popen_read(command, max_seconds)
+  def self.execute(command, max_seconds)
     # Originally I was writing
     #   eval IO::popen(cmd).read
     # However, this was leaving many [sh <defunct>] processes.
@@ -61,9 +56,9 @@ module Files
     
     output
   end
-
-private
     
+private
+
   def self.with_stderr(cmd)
     cmd + " " + "2>&1"
   end
