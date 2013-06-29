@@ -1,5 +1,5 @@
 
-module TimeBoxedTask
+class TimeBoxedTask
   
   # TODO: it should return, somehow, the result, or a timeout
   #       as hash containing two entries?
@@ -7,12 +7,8 @@ module TimeBoxedTask
   #
   # TODO: the calling function should add the message
   #          Terminated by the cyber-dojo server
-  #
-  # TODO: make instance-based
-  #
-  # TODO: make stubbable in sandbox using Thread.current trick
   
-  def self.execute(command, max_seconds)
+  def execute(command, max_seconds)
     # Originally I was writing
     #   eval IO::popen(cmd).read
     # However, this was leaving many [sh <defunct>] processes.
@@ -59,16 +55,16 @@ module TimeBoxedTask
     
 private
 
-  def self.with_stderr(cmd)
+  def with_stderr(cmd)
     cmd + " " + "2>&1"
   end
   
-  def self.kill(pids)
+  def kill(pids)
     return if pids == [ ]
     `kill #{pids.join(' ')}`
   end
 
-  def self.descendant_pids_of(base)
+  def descendant_pids_of(base)
     # From http://t-a-w.blogspot.com/2010/04/how-to-kill-all-your-children.html
     # Autovivify the hash
     descendants = Hash.new { |ht,k| ht[k] = [k] }

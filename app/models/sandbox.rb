@@ -7,6 +7,7 @@ class Sandbox
   def initialize(avatar)
     @avatar = avatar
     @file = Thread.current[:file] || DiskFile.new
+    @task = Thread.current[:task] || TimeBoxedTask.new
   end
      
   def dir
@@ -34,7 +35,7 @@ class Sandbox
     # TODO: I think the hidden files should be copied.
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
-    output = TimeBoxedTask::execute(command, max_run_tests_duration)     ##
+    output = @task.execute(command, max_run_tests_duration)
     @file.write(dir, 'output', output)
     visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
