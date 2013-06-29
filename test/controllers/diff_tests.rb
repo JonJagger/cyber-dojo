@@ -5,7 +5,11 @@ class DiffControllerTest < IntegrationTest
 
   test "show tag_0-tag_1 diff with no change to any file" do
     id = checked_save_id
-    avatar_name = Avatar.names[0]
+
+    get 'dojo/start_json', {
+      :id => id
+    }
+    avatar_name = json['avatar_name']    
     
     post '/kata/edit', {
       :id => id,
@@ -41,7 +45,11 @@ class DiffControllerTest < IntegrationTest
   test "show tag_1-tag_1 (no diff) no change in any file" do
     id = checked_save_id
     kata = Kata.new(root_dir, id)    
-    avatar_name = Avatar.names[0]
+
+    get 'dojo/start_json', {
+      :id => id
+    }
+    avatar_name = json['avatar_name']    
     
     post '/kata/edit', {
       :id => id,

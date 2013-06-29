@@ -5,7 +5,7 @@ require 'DiskGit'
 class Avatar
 
   def self.create(kata, name)
-    # To start an avatar in a kata call this.
+    # To start an animal in a kata, call this.
     avatar = Avatar.new(kata, name)
     avatar.setup
     avatar
@@ -21,7 +21,9 @@ class Avatar
       )
   end
 
-  def initialize(kata, name) 
+  def initialize(kata, name)
+    # To create an object to represent an animal which has
+    # already started a kata, call this.
     @kata = kata
     @name = name
     @file = Thread.current[:file] || DiskFile.new

@@ -30,7 +30,7 @@ class DiskFile
   
   def lock(dir, &block)
     # io locking uses blocking call.
-    # For example, when a player is start-coding then
+    # For example, when a player starts-coding then
     # the controller needs to wait to acquire a lock on
     # the dojo folder before choosing an avatar.    
     # See test/lib/io_lock_tests.rb

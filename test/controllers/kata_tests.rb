@@ -5,13 +5,17 @@ class KataControllerTest  < IntegrationTest
 
   test "edit and then run-tests" do
     id = checked_save_id
-    avatar_name = Avatar.names[0]
+    
+    get 'dojo/start_json', {
+      :id => id
+    }
+    avatar_name = json['avatar_name']    
     
     post '/kata/edit', {
       :id => id,
       :avatar => avatar_name
     }
-        
+       
     post 'kata/run_tests', { # 1
       :id => id,
       :avatar => avatar_name,

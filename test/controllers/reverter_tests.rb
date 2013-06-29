@@ -5,7 +5,11 @@ class ReverterControllerTest  < IntegrationTest
 
   test "revert" do
     id = checked_save_id
-    avatar_name = Avatar.names[0]
+
+    get 'dojo/start_json', {
+      :id => id
+    }
+    avatar_name = json['avatar_name']    
     
     post '/kata/edit', {
       :id => id,

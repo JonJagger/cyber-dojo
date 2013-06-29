@@ -6,7 +6,9 @@ class Kata
   
   def self.create(root_dir, info)
     file = Thread.current[:file] || DiskFile.new
-    file.write(Kata.new(root_dir, info[:id]).dir, 'manifest.rb', info)
+    kata = Kata.new(root_dir, info[:id])
+    file.write(kata.dir, 'manifest.rb', info)
+    kata    
   end
   
   def self.exists?(root_dir, id)
@@ -67,7 +69,7 @@ class Kata
 private
 
   def manifest
-    eval @file.read(dir, 'manifest.rb')
+    @manifest ||= eval @file.read(dir, 'manifest.rb')
   end
   
 end

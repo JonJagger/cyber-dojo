@@ -63,7 +63,6 @@ class ActiveSupport::TestCase
     info[:visible_files]['instructions'] = 'practice'
     
     Kata.create(root_dir, info)
-    Kata.new(root_dir, info[:id])
   end
     
   def run_tests(avatar, visible_files, timeout = 15)

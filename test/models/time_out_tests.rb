@@ -26,7 +26,9 @@ class TimeOutTests < ActionController::TestCase
     assert_equal :amber, avatar.traffic_lights.last[:colour]
     
     ps_count_after = ps_count    
-    # This next text sometimes fails and I haven't yet determined why...
+    # This often fails with
+    # <1> expected but was
+    # <2>
     assert_equal ps_count_before, ps_count_after, 'proper cleanup of shell processes'    
   end
   

@@ -9,12 +9,20 @@ class DashboardControllerTest < IntegrationTest
     assert_response :success    
   end
     
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
   test "show avatars but no traffic-lights" do
     id = checked_save_id
     (1..4).each do |n|
+      
+      get 'dojo/start_json', {
+        :id => id
+      }
+      avatar_name = json['avatar_name']    
+      
       get '/kata/edit', {
         :id => id,
-        :avatar => Avatar.names[n]
+        :avatar => avatar_name
       }
       assert_response :success    
     end
@@ -22,19 +30,27 @@ class DashboardControllerTest < IntegrationTest
     assert_response :success    
   end  
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test "show avatars with some traffic lights" do
     id = checked_save_id
     (1..3).each do |n|
+
+      get 'dojo/start_json', {
+        :id => id
+      }
+      avatar_name = json['avatar_name']    
+
       get '/kata/edit', {
         :id => id,
-        :avatar => Avatar.names[n]
+        :avatar => avatar_name
       }
       assert_response :success
 
       (1..2).each do |m|
         post 'kata/run_tests', {
           :id => id,
-          :avatar => Avatar.names[n],
+          :avatar => avatar_name,
           :file_content => {
             quoted('cyber-dojo.sh') => ""
           }
@@ -45,9 +61,29 @@ class DashboardControllerTest < IntegrationTest
     assert_response :success        
   end
 
-  test "download zip of dojo" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "download zip of empty dojo" do
     id = checked_save_id
-    avatar_name = Avatar.names[0]
+    post 'dashboard/download', {
+      :id => id
+    }
+    assert_response :success
+    root = Rails.root.to_s + '/test/cyberdojo' 
+    zipfile_name = root + "/zips/#{id}.tar.gz"
+    assert File.exists?(zipfile_name), "File.exists?(#{zipfile_name})"        
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "download zip of non-empty dojo" do
+    id = checked_save_id
+    
+    get 'dojo/start_json', {
+      :id => id
+    }
+    avatar_name = json['avatar_name']    
+
     get '/kata/edit', {
       :id => id,
       :avatar => avatar_name
@@ -70,9 +106,16 @@ class DashboardControllerTest < IntegrationTest
     assert File.exists?(zipfile_name), "File.exists?(#{zipfile_name})"    
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "heartbeat" do
     id = checked_save_id
-    avatar_name = Avatar.names[0]
+    
+    get 'dojo/start_json', {
+      :id => id
+    }
+    avatar_name = json['avatar_name']
+    
     get '/kata/edit', {
       :id => id,
       :avatar => avatar_name
@@ -90,11 +133,13 @@ class DashboardControllerTest < IntegrationTest
     }
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test "tips dialog" do
     id = checked_save_id
     get "/dashboard/tips_dialog"
     assert_response :success        
   end
-  
+
 end
 

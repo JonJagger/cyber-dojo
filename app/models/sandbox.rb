@@ -33,7 +33,7 @@ class Sandbox
     # TODO: I think the hidden files should be copied.
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
-    output = Files::popen_read(command, max_run_tests_duration)    
+    output = Files::popen_read(command, max_run_tests_duration)     ##
     @file.write(dir, 'output', output)
     visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
