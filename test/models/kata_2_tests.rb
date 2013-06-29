@@ -26,7 +26,11 @@ class StubDiskFile
   
   def kata_manifest
     {
-      :id => id,      
+      :id => id,
+      :created => [2013,6,29,14,24,51],
+      :unit_test_framework => 'verdal',
+      :exercise => 'March Hare',
+      :language => 'Carroll',
       :visible_files => {
         'name' => 'content for name'
       }
@@ -108,14 +112,48 @@ class Kata2Tests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "kata creation saves manifest in kata dir" do
+  test "creation saves manifest in kata dir" do
     info = @stub_file.kata_manifest
     kata = Kata.create(root_dir, info)
     
     assert_equal [ [ 'manifest.rb', info.inspect ] ], @stub_file.write_log[kata.dir]    
     assert_equal nil, @stub_file.read_log[kata.dir]
   end
+
+  test "id property is from manifest" do
+    info = @stub_file.kata_manifest
+    kata = Kata.create(root_dir, info)
+    assert_equal info[:id], kata.id    
+  end
   
+  test "created property is from manifest" do
+    info = @stub_file.kata_manifest
+    kata = Kata.create(root_dir, info)
+    assert_equal Time.mktime(*info[:created]), kata.created    
+  end
+  
+  test "age_in_seconds property is set from manifest" do
+    info = @stub_file.kata_manifest
+    kata = Kata.create(root_dir, info)
+    now = info[:created]
+    seconds = 5
+    now = now[0...-1] + [now.last + seconds ]
+    assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))    
+  end
+  
+  test "language is set from manifest" do
+    info = @stub_file.kata_manifest
+    kata = Kata.create(root_dir, info)
+    assert_equal Language.new(root_dir, info[:language]).name, kata.language.name
+  end
+  
+  test "exercise is set from manifest" do
+    info = @stub_file.kata_manifest
+    kata = Kata.create(root_dir, info)
+    assert_equal Exercise.new(root_dir, info[:exercise]).name, kata.exercise.name    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "avatar creation saves manifest.rb and empty increments.rb in avatar dir" do  

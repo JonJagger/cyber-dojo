@@ -1,6 +1,8 @@
 
 module Files
   
+  # I think this is now only called from sandbox.run_tests
+      
   def self.popen_read(command, max_seconds = nil)
     # Originally I was writing
     #   eval IO::popen(cmd).read

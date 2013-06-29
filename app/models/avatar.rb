@@ -103,12 +103,11 @@ private
   end
   
   def locked_read(filename, tag = nil)
-    tag ||= most_recent_tag
+    tag ||= @git.most_recent_tag(dir)
     @git.show(dir, "#{tag}:#{filename}")
-  end
-     
-  def most_recent_tag
-    @git.most_recent_tag(dir)
+    # TODO: do I need most_recent_tag ?
+    # won't simply reading the current manifest.rb work now that
+    # there is no separate /sandboxes dir?    
   end
   
   Traffic_lights_filename = 'increments.rb'

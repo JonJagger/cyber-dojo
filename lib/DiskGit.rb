@@ -1,4 +1,3 @@
-require 'Files'
 
 class DiskGit
 
@@ -19,15 +18,18 @@ class DiskGit
   end
   
   def show(dir, options)
-    eval Files::popen_read("cd #{dir}; git show #{options}")
+    command = "cd #{dir}; git show #{options}"
+    eval IO::popen(command).read
   end  
   
   def diff(dir, options)
-    Files::popen_read("cd #{dir}; git diff #{options}")
+    command = "cd #{dir}; git diff #{options}"
+    IO::popen(command).read
   end
   
   def most_recent_tag(dir)
-    eval Files::popen_read("cd #{dir}; git tag|sort -g")
+    command = "cd #{dir}; git tag|sort -g"
+    eval IO::popen(command).read
   end
 
 end
