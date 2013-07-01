@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class SimulatedFullKataTests < ActionController::TestCase
 
   def defunct_count
-    # See comments in app/lib/Files.rb
+    # See comments in app/lib/TimeBoxedTask.rb
     `ps`.scan(/<defunct>/).length
   end
   
@@ -13,27 +13,23 @@ class SimulatedFullKataTests < ActionController::TestCase
     system("rm -rf #{root_dir}/zips/*")    
   end
   
-  # These tests feel like they should be in test/lib/popen_read_tests.rb
-  test "no ruby zombie processes left unkilled" do
-    @language = 'Ruby-installed-and-working'
-    @avatar_count = 6
-    @run_tests_count = 8
-    check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
-  end
-  
-  def check_running_tests_does_not_accumulate_zombie_defunct_shell_processes
-    kata = make_kata(@language)
+  test "check running tests does not accumulate zombie defunct shell processes" do
+    language = 'Ruby-installed-and-working'
+    avatar_count = 6
+    run_tests_count = 8
+
+    kata = make_kata(language)
 
     visible_files_set = { }
     avatars = [ ]
     
-    @avatar_count.times do |n|
+    avatar_count.times do |n|
       avatar = Avatar.create(kata, Avatar.names[n])
       visible_files_set[avatar.name] = avatar.visible_files
       avatars << avatar
     end
 
-    @run_tests_count.times do |n|
+    run_tests_count.times do |n|
       avatars.each do |avatar|
         visible_files = visible_files_set[avatar.name]
         

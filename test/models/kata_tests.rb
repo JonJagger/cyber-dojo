@@ -6,8 +6,8 @@ class KataTests < ActionController::TestCase
 
   def setup
     @stub_file = StubDiskFile.new
-    Thread.current[:file] = @stub_file
     @stub_git = StubDiskGit.new
+    Thread.current[:file] = @stub_file
     Thread.current[:git] = @stub_git
   end
 
