@@ -30,7 +30,7 @@ class LanguageTests < ActionController::TestCase
   end
   
   test "dir does not have doubled separator" do
-    doubled_separator = File::SEPARATOR + File::SEPARATOR
+    doubled_separator = File::SEPARATOR * 2
     assert_equal 0, @language.dir.scan(doubled_separator).length
     assert !@mock_file.called?
   end

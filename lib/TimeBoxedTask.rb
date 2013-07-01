@@ -1,11 +1,11 @@
 
 class TimeBoxedTask
   
-  # TODO: it should return, somehow, the result, or a timeout
+  # TODO?: it should return, somehow, the result, or a timeout
   #       as hash containing two entries?
   #         { :output => ..., :timed_out => false }
   #
-  # TODO: the calling function should add the message
+  # TODO?: the calling function should add the message
   #          Terminated by the cyber-dojo server
   
   def execute(command, max_seconds)

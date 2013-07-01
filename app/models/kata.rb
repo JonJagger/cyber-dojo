@@ -39,7 +39,7 @@ class Kata
     
   def avatars
     Avatar.names.select { |name|
-      @file.exists?(dir, name)
+      @file.exists?(dir + @file.separator + name)
     }.collect { |name|
       Avatar.new(self, name)
     }
