@@ -117,5 +117,84 @@ class Avatar2Tests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "avatar returns kata it was created with" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)
+    avatar = Avatar.create(kata, 'wolf')
+    
+    assert_equal kata, avatar.kata    
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "avatar's tag 0 repo contains an empty output file only if kata-manifest does" do    
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'output' => ''
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)
+    avatar = Avatar.create(kata, 'wolf')
+    
+    visible_files = avatar.visible_files
+    assert visible_files.keys.include?('output'),
+          "visible_files.keys.include?('output')"
+    assert_equal "", visible_files['output']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "after avatar is created sandbox contains visible_files" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'output' => ''
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')
+    
+    sandbox_dir = avatar.dir + @stub_file.separator + 'sandbox' 
+    visible_files.each do |filename,content|
+      assert_equal content.inspect, @stub_file.read(sandbox_dir, filename)
+    end    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
 end

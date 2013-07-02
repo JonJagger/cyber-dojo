@@ -11,33 +11,7 @@ class AvatarTests < ActionController::TestCase
     system("rm -rf #{root_dir}/katas/*")
     system("rm -rf #{root_dir}/zips/*")    
   end
-
-  #test "avatar names all begin with a different letter" do
-  #  assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
-  #end
-  
-  test "avatar returns kata it was created with" do
-    avatar = Avatar.new(@kata, 'wolf')    
-    assert_equal @kata, avatar.kata    
-  end
-  
-  test "tag 0 repo contains an empty output file" do
-    avatar = Avatar.create(@kata, 'wolf') 
-    visible_files = avatar.visible_files
-    assert visible_files.keys.include?('output'),
-          "visible_files.keys.include?('output')"
-    assert_equal "", visible_files['output']
-  end
-  
-  test "after avatar is created sandbox contains visible_files" do
-    avatar = Avatar.create(@kata, 'wolf')    
-    avatar.visible_files.each do |filename,_content|
-      pathed_filename = avatar.dir + '/sandbox/' + filename
-      assert File.exists?(pathed_filename),
-            "File.exists?(#{pathed_filename})"      
-    end    
-  end
-  
+      
   test "after avatar is created sandbox contains cyber-dojo.sh and it has execute permission" do
     avatar = Avatar.create(@kata, 'wolf')
     cyber_dojo_sh = avatar.dir + '/sandbox/cyber-dojo.sh'
