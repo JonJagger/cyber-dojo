@@ -1,12 +1,11 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/mock_disk_file'
+require File.dirname(__FILE__) + '/stub_disk_file'
 
 class LanguageTests < ActionController::TestCase
-
+  
   def setup
-    @mock_file = MockDiskFile.new
-    Thread.current[:file] = @mock_file
-    @language = Language.new(root_dir, 'Ruby-installed-and-working')
+    @stub_file = StubDiskFile.new
+    Thread.current[:file] = @stub_file    
+    @language = Language.new(root_dir, 'Ruby')    
   end
   
   def teardown
@@ -14,103 +13,142 @@ class LanguageTests < ActionController::TestCase
   end
   
   test "name is as set in ctor" do
-    assert_equal 'Ruby-installed-and-working', @language.name
-    assert !@mock_file.called?
+    assert_equal 'Ruby', @language.name
   end
   
   test "dir is based on name" do
     assert @language.dir.match(@language.name), @language.dir
-    assert !@mock_file.called?
   end
   
   test "dir does not end in a slash" do
-    assert !@language.dir.end_with?(File::SEPARATOR),
-          "!#{@language.dir}.end_with?(#{File::SEPARATOR})"
-    assert !@mock_file.called?
+    assert !@language.dir.end_with?(@stub_file.separator),
+          "!#{@language.dir}.end_with?(#{@stub_file.separator})"
   end
   
   test "dir does not have doubled separator" do
-    doubled_separator = File::SEPARATOR * 2
+    doubled_separator = @stub_file.separator * 2
     assert_equal 0, @language.dir.scan(doubled_separator).length
-    assert !@mock_file.called?
   end
   
   test "visible files are loaded but not output and not instructions" do
-    @mock_file.setup(
-      [
-         { :visible_filenames => [ 'test_untitled.rb' ] }.inspect,
-         "require './untitled'"
-      ]
-    )
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_filenames => [ 'test_untitled.rb' ]
+      }.inspect
+    })
+
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'test_untitled.rb',
+      :content => "require './untitled.rb'"
+    })
+    
     visible_files = @language.visible_files
-    assert_match visible_files['test_untitled.rb'], /^require '\.\/untitled'/ 
+    assert_match visible_files['test_untitled.rb'], /^require '\.\/untitled.rb'/ 
     assert_nil visible_files['output']
     assert_nil visible_files['instructions']
   end
   
   test "hidden_filenames defaults to [ ]" do
-    @mock_file.setup(
-      [ { }.inspect ]
-    )    
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_filenames => [ 'test_untitled.rb' ]
+      }.inspect
+    })    
     assert_equal [ ], @language.hidden_filenames    
   end
   
   test "hidden_filenames set if not defaulted" do
-    @mock_file.setup(
-      [ { :hidden_filenames => [ 'x', 'y' ] }.inspect ]
-    )
-    assert_equal [ 'x','y' ], @language.hidden_filenames        
+    hidden_filenames = [ 'x', 'y' ]
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :hidden_filenames => hidden_filenames
+      }.inspect
+    })    
+    assert_equal hidden_filenames, @language.hidden_filenames        
   end
   
   test "support_filenames defaults to [ ]" do
-    @mock_file.setup(
-      [ { }.inspect ]
-    )
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_filenames => [ 'test_untitled.rb' ]
+      }.inspect
+    })        
     assert_equal [ ], @language.support_filenames    
   end
   
   test "support_filenames set if not defaulted" do
-    @mock_file.setup(
-      [ { :support_filenames => [ 'a', 'b' ] }.inspect ]
-    )
-    assert_equal [ 'a','b' ], @language.support_filenames        
+    support_filenames = [ 'x.jar', 'y.dll' ]
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :support_filenames => support_filenames
+      }.inspect
+    })        
+    assert_equal support_filenames, @language.support_filenames        
   end
   
   test "unit_test_framework is set" do
-    @mock_file.setup(
-      [ { :unit_test_framework => 'satchmo' }.inspect ]
-    )    
-    assert_equal 'satchmo', @language.unit_test_framework
-    assert @mock_file.called?
+    unit_test_framework = 'Satchmo'
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :unit_test_framework => unit_test_framework
+      }.inspect
+    })        
+    assert_equal unit_test_framework, @language.unit_test_framework
   end
 
-    
   test "tab_size is set if not defaulted" do
-    @mock_file.setup(
-      [ { :tab_size => 42 }.inspect ]  
-    )
-    assert_equal 42, @language.tab_size
+    tab_size = 42
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :tab_size => tab_size
+      }.inspect
+    })            
+    assert_equal tab_size, @language.tab_size
   end
   
   test "tab_size defaults to 4" do
-    @mock_file.setup(
-      [ { }.inspect ]  
-    )
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    })            
     assert_equal 4, @language.tab_size    
+  end
+
+  test "tab is 7 spaces if tab_size is 7" do
+    tab_size = 7
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :tab_size => tab_size
+      }.inspect
+    })            
+    assert_equal " "*tab_size, @language.tab
   end
   
   test "tab defaults to 4 spaces" do
-    @mock_file.setup(
-      [ { }.inspect ]        
-    )
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    })            
     assert_equal " "*4, @language.tab
-  end
-  
-  test "tab is 7 spaces if tab_size is 7" do
-    @mock_file.setup(
-      [ { :tab_size => 7 }.inspect ]  
-    )    
-    assert_equal " "*7, @language.tab
-  end
+  end  
   
 end
