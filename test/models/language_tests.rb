@@ -85,18 +85,32 @@ class LanguageTests < ActionController::TestCase
   end
 
     
-  test "tab is set if not defaulted" do
+  test "tab_size is set if not defaulted" do
     @mock_file.setup(
       [ { :tab_size => 42 }.inspect ]  
     )
     assert_equal 42, @language.tab_size
   end
   
-  test "tab defaults to 4" do
+  test "tab_size defaults to 4" do
     @mock_file.setup(
       [ { }.inspect ]  
     )
     assert_equal 4, @language.tab_size    
+  end
+  
+  test "tab defaults to 4 spaces" do
+    @mock_file.setup(
+      [ { }.inspect ]        
+    )
+    assert_equal " "*4, @language.tab
+  end
+  
+  test "tab is 7 spaces if tab_size is 7" do
+    @mock_file.setup(
+      [ { :tab_size => 7 }.inspect ]  
+    )    
+    assert_equal " "*7, @language.tab
   end
   
 end

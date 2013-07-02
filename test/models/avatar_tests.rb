@@ -11,14 +11,6 @@ class AvatarTests < ActionController::TestCase
     system("rm -rf #{root_dir}/katas/*")
     system("rm -rf #{root_dir}/zips/*")    
   end
-      
-  test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
-    avatar = Avatar.create(@kata, 'wolf')    
-    run_tests(avatar, avatar.visible_files)
-    traffic_lights = avatar.traffic_lights
-    assert_equal 1, traffic_lights.length
-    assert_equal nil, traffic_lights.last[:run_tests_output]
-  end
   
   test "deleted file is deleted from that repo tag" do
     avatar = Avatar.create(@kata, 'wolf')  # creates tag-0
@@ -30,11 +22,11 @@ class AvatarTests < ActionController::TestCase
     visible_files.delete(deleted_filename)
     run_tests(avatar, visible_files)  # creates tag-2
     
-    before = avatar.visible_files(1)
+    before = avatar.visible_files(tag=1)
     assert before.keys.include?("#{deleted_filename}"),
           "before.keys.include?(#{deleted_filename})"
           
-    after = avatar.visible_files(2)
+    after = avatar.visible_files(tag=2)
     assert !after.keys.include?("#{deleted_filename}"),
           "!after.keys.include?(#{deleted_filename})"
   end

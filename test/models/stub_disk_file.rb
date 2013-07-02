@@ -59,5 +59,8 @@ class StubDiskFile
     block.call()
   end
   
+  def rm_dir(dir)    
+  end
+  
 end
 

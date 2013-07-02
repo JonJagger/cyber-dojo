@@ -1,19 +1,24 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 require File.dirname(__FILE__) + '/stub_disk_git'
+require File.dirname(__FILE__) + '/stub_time_boxed_task'
+
 
 class Avatar2Tests < ActionController::TestCase
 
   def setup
     @stub_file = StubDiskFile.new
     @stub_git = StubDiskGit.new
+    @stub_task = StubTimeBoxedTask.new    
     Thread.current[:file] = @stub_file
     Thread.current[:git] = @stub_git
+    Thread.current[:task] = @stub_task
   end
 
   def teardown
     Thread.current[:file] = nil
     Thread.current[:git] = nil
+    Thread.current[:task] = nil
   end
 
   def root_dir
@@ -221,6 +226,60 @@ class Avatar2Tests < ActionController::TestCase
     assert_equal visible_files['cyber-dojo.sh'].inspect,
       @stub_file.read(sandbox_dir, 'cyber-dojo.sh')
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
+  test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
+    
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'cyber-dojo.sh' => 'make',
+    }
+    language = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')
+    
+    language_dir = root_dir + @stub_file.separator + 'languages' + @stub_file.separator + language
+    @stub_file.read = {
+      :dir => language_dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_files => visible_files,
+        :unit_test_framework => 'cassert'
+      }.inspect
+    }
+    @stub_file.read = {
+      :dir => language_dir,
+      :filename => 'name',
+      :content => 'content for name'
+    }
+    @stub_file.read = {
+      :dir => language_dir,
+      :filename => 'cyber-dojo.sh',
+      :content => 'make'
+    }    
+    
+    output = avatar.sandbox.run_tests(avatar.visible_files, timeout=15)
+    language = avatar.kata.language
+    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
+    avatar.save_run_tests(visible_files, traffic_light)
+    
+    traffic_lights = avatar.traffic_lights
+    assert_equal 1, traffic_lights.length
+    assert_equal nil, traffic_lights.last[:run_tests_output]
+  end
   
 end
