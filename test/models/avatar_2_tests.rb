@@ -196,5 +196,31 @@ class Avatar2Tests < ActionController::TestCase
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "after avatar is created sandbox contains cyber-dojo.sh if katas' manifest does" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'cyber-dojo.sh' => 'make'
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')
+    sandbox_dir = avatar.dir + @stub_file.separator + 'sandbox'
+    
+    assert_equal visible_files['cyber-dojo.sh'].inspect,
+      @stub_file.read(sandbox_dir, 'cyber-dojo.sh')
+  end
+  
   
 end

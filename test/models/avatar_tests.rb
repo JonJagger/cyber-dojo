@@ -12,15 +12,6 @@ class AvatarTests < ActionController::TestCase
     system("rm -rf #{root_dir}/zips/*")    
   end
       
-  test "after avatar is created sandbox contains cyber-dojo.sh and it has execute permission" do
-    avatar = Avatar.create(@kata, 'wolf')
-    cyber_dojo_sh = avatar.dir + '/sandbox/cyber-dojo.sh'
-    assert File.exists?(cyber_dojo_sh),
-          "File.exists?(#{cyber_dojo_sh})"
-    assert File.stat(cyber_dojo_sh).executable?,
-          "File.stat(#{cyber_dojo_sh}).executable?"
-  end
-  
   test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
     avatar = Avatar.create(@kata, 'wolf')    
     run_tests(avatar, avatar.visible_files)
