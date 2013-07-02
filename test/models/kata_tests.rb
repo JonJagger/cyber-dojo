@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 require File.dirname(__FILE__) + '/stub_disk_git'
 
@@ -181,8 +180,6 @@ class KataTests < ActionController::TestCase
     }  
 
     kata = Kata.create(root_dir, manifest)
-    
-    
     Avatar.create(kata, 'lion')
     Avatar.create(kata, 'hippo')
     avatars = kata.avatars

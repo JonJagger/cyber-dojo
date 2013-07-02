@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 require File.dirname(__FILE__) + '/stub_disk_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
