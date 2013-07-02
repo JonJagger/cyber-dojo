@@ -21,7 +21,7 @@ class Avatar2Tests < ActionController::TestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "avatar creation saves visible_files in manifest.rb and empty increments.rb both in avatar dir" do  
     id = '45ED23A2F1'
     visible_files = {
@@ -93,8 +93,7 @@ class Avatar2Tests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-=begin
-  test "there are no traffic-lights before first test-run" do
+  test "avatar has no traffic-lights before first test-run" do
     id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name'
@@ -110,11 +109,13 @@ class Avatar2Tests < ActionController::TestCase
       :content => manifest.inspect
     }  
     
-    kata = Kata.create(root_dir, manifest)    
-    avatar = Avatar.create(kata, 'wolf')    
+    kata = Kata.create(root_dir, manifest)
+    avatar = Avatar.create(kata, 'wolf')
     
     assert_equal [ ], avatar.traffic_lights    
   end
-=end  
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   
 end

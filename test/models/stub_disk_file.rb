@@ -32,12 +32,19 @@ class StubDiskFile
     @read_log[dir] ||= [ ]
     @read_log[dir] << [filename]
 
+    if @read_repo[dir] == nil
+      puts "stub_disk_file:nil  read(#{dir},#{filename})"
+    end
+    
     @read_repo[dir][filename]
   end
   
   def write(dir, filename, object)
     @write_log[dir] ||= [ ]
-    @write_log[dir] << [filename, object.inspect]    
+    @write_log[dir] << [filename, object.inspect]
+    
+    @read_repo[dir] ||= { }
+    @read_repo[dir][filename] = object.inspect
   end
   
   def directory?(dir)

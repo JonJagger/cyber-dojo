@@ -28,11 +28,6 @@ class AvatarTests < ActionController::TestCase
           "visible_files.keys.include?('output')"
     assert_equal "", visible_files['output']
   end
-
-  test "there are no traffic-lights before first test-run" do
-    avatar = Avatar.create(@kata, 'wolf')
-    assert_equal [ ], avatar.traffic_lights    
-  end
   
   test "after avatar is created sandbox contains visible_files" do
     avatar = Avatar.create(@kata, 'wolf')    
