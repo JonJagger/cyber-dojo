@@ -27,12 +27,15 @@ class Sandbox
     #       When the sandbox folder is _not_ deleted for
     #       each run-tests then I should be able to do the link_files
     #       just the once in the avatar c'tor.
-    system("rm -rf #{dir}")
+    @file.rm_dir(dir)
     save(visible_files)
     language = @avatar.kata.language
     link_files(language, language.support_filenames)
     link_files(language, language.hidden_filenames)        
     # TODO: I think the hidden files should be copied.
+    # The difference between support and hidden is essentially
+    # that support files need to be linked, so otherwise
+    # what is the difference?
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     output = @task.execute(command, max_run_tests_duration)

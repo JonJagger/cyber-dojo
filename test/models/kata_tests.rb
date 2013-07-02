@@ -8,7 +8,7 @@ class KataTests < ActionController::TestCase
     @stub_file = StubDiskFile.new
     @stub_git = StubDiskGit.new
     Thread.current[:file] = @stub_file
-    Thread.current[:git] = @stub_git
+    Thread.current[:git] = @stub_git    
   end
 
   def teardown
@@ -22,99 +22,172 @@ class KataTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "creation saves manifest in kata dir" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)    
-    assert_equal [ [ 'manifest.rb', info.inspect ] ], @stub_file.write_log[kata.dir]    
-    assert_equal nil, @stub_file.read_log[kata.dir]
-  end
-
-  test "id is from manifest" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
-    assert_equal info[:id], kata.id    
+  test "id is from ctor" do
+    # recreation of existing kata from get request uses incoming
+    # id as key. So id has to be ctor argument even though
+    # id is stored in manifest saved in Kata.create
+    id = '45ED23A2F1'
+    kata = Kata.new(root_dir, id)
+    assert_equal id, kata.id    
   end
 
   test "dir does not end in slash" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
+    id = '45ED23A2F1'
+    kata = Kata.new(root_dir, id)        
     assert !kata.dir.end_with?(@stub_file.separator),
           "!#{kata.dir}.end_with?(#{@stub_file.separator})"       
   end
 
   test "dir does not have doubled separator" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
+    id = '45ED23A2F1'
+    kata = Kata.new(root_dir, id)        
     doubled_separator = @stub_file.separator * 2
     assert_equal 0, kata.dir.scan(doubled_separator).length    
   end
   
   test "dir is based on root_dir and id" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
+    id = '45ED23A2F1'
+    kata = Kata.new(root_dir, id)        
     assert kata.dir.match(root_dir), "root_dir"
-    id = Uuid.new(info[:id])
-    assert kata.dir.match(id.inner), "id.inner"
-    assert kata.dir.match(id.outer), "id.outer"
+    uuid = Uuid.new(id)
+    assert kata.dir.match(uuid.inner), "id.inner"
+    assert kata.dir.match(uuid.outer), "id.outer"
   end
   
-  test "created is from manifest" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
-    assert_equal Time.mktime(*info[:created]), kata.created    
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "creation saves manifest in kata dir" do
+    id = '45ED23A2F1'
+    manifest = { :id => id }    
+    kata = Kata.create(root_dir, manifest)
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[kata.dir]    
+    assert_equal nil, @stub_file.read_log[kata.dir]
   end
-  
+    
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  test "created date property is set from manifest" do
+    now = [2013,6,29,14,24,51]
+    id = '45ED23A2F1'    
+    manifest = { :created => now, :id => id }
+    
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    kata = Kata.create(root_dir, manifest)
+    assert_equal Time.mktime(*now), kata.created    
+  end
+
   test "age_in_seconds is set from manifest" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
-    now = info[:created]
+    now = [2013,6,29,14,24,51]
+    id = '45ED23A2F1'    
+    manifest = { :created => now, :id => id }
+    
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    kata = Kata.create(root_dir, manifest)
     seconds = 5
     now = now[0...-1] + [now.last + seconds ]
     assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))    
   end
   
   test "language is set from manifest" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
-    assert_equal Language.new(root_dir, info[:language]).name, kata.language.name
+    language = 'Wibble'
+    id = '45ED23A2F1'    
+    manifest = { :language => language, :id => id }
+    
+    dir = Kata.new(root_dir, id).dir    
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    kata = Kata.create(root_dir, manifest)
+    assert_equal language, kata.language.name
   end
   
   test "exercise is set from manifest" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
-    assert_equal Exercise.new(root_dir, info[:exercise]).name, kata.exercise.name    
+    exercise = 'Tweedle'
+    id = '45ED23A2F1'    
+    manifest = { :exercise => exercise, :id => id }
+    
+    dir = Kata.new(root_dir, id).dir    
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    kata = Kata.create(root_dir, manifest)
+    assert_equal exercise, kata.exercise.name    
   end
   
-  test "creating a new kata succeeds and creates katas root dir" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
-    assert_not_equal nil, @stub_file.write_log[kata.dir]    
-  end
+  test "kata visible_files is set from manifest" do
+    id = '45ED23A2F1'
+    visible_files = {
+        'name' => 'content for name'      
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir    
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    kata = Kata.create(root_dir, manifest)
+    assert_equal visible_files, kata.visible_files
+  end  
   
   test "Kata.exists? returns false before kata is created and true after kata is created" do
-    info = @stub_file.kata_manifest
-    id = info[:id]
+    id = '45ED23A2F1'   
     assert !Kata.exists?(root_dir, id), "exists? false before created"
-    Kata.create(root_dir, info)
+    manifest = { :id => id }
+    Kata.create(root_dir, manifest)
     assert Kata.exists?(root_dir, id), "exists? true after created"
   end
   
   test "you can create an avatar in a kata" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
+    id = '45ED23A2F1'   
+    manifest = { :id => id }
+    kata = Kata.create(root_dir, manifest)
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)
     assert avatar_name, avatar.name
   end
-  
+
   test "multiple avatars in a kata are all seen" do
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)
+    id = '45ED23A2F1'   
+    manifest = {
+      :id => id,
+      :visible_files => {
+        'name' => 'content for name'
+      }      
+    }
+
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+
+    kata = Kata.create(root_dir, manifest)
+    
+    
     Avatar.create(kata, 'lion')
     Avatar.create(kata, 'hippo')
     avatars = kata.avatars
     assert_equal 2, avatars.length
     assert_equal ['hippo','lion'], avatars.collect{|avatar| avatar.name}.sort
   end
-  
+
 end

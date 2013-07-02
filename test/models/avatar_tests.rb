@@ -12,9 +12,9 @@ class AvatarTests < ActionController::TestCase
     system("rm -rf #{root_dir}/zips/*")    
   end
 
-  test "avatar names all begin with a different letter" do
-    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
-  end
+  #test "avatar names all begin with a different letter" do
+  #  assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  #end
   
   test "avatar returns kata it was created with" do
     avatar = Avatar.new(@kata, 'wolf')    

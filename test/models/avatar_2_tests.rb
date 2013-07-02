@@ -6,8 +6,8 @@ class Avatar2Tests < ActionController::TestCase
 
   def setup
     @stub_file = StubDiskFile.new
-    Thread.current[:file] = @stub_file
     @stub_git = StubDiskGit.new
+    Thread.current[:file] = @stub_file
     Thread.current[:git] = @stub_git
   end
 
@@ -22,13 +22,27 @@ class Avatar2Tests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "avatar creation saves manifest.rb and empty increments.rb in avatar dir" do  
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)    
+  test "avatar creation saves visible_files in manifest.rb and empty increments.rb both in avatar dir" do  
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')    
     
     assert_equal [
-        [ 'manifest.rb', { "name" => "content for name" }.inspect ],
+        [ 'manifest.rb', visible_files.inspect ],
         [ 'increments.rb', [ ].inspect ]
       ],
       @stub_file.write_log[avatar.dir]
@@ -37,8 +51,22 @@ class Avatar2Tests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   test "avatar creation sets up initial git repo of visible files" do  
-    info = @stub_file.kata_manifest
-    kata = Kata.create(root_dir, info)    
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')    
     
     assert_equal [
@@ -53,9 +81,18 @@ class Avatar2Tests < ActionController::TestCase
       
     assert_equal nil, @stub_file.read_log[avatar.dir]
     
-    assert_equal [ [ 'manifest.rb', info.inspect ] ], @stub_file.write_log[kata.dir]         
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[kata.dir]         
     assert_equal [ [ 'manifest.rb' ] ], @stub_file.read_log[kata.dir]
   end
     
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "avatar names all begin with a different letter" do
+    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  
   
 end
