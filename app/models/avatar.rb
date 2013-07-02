@@ -54,7 +54,7 @@ class Avatar
   def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
     @file.lock(dir) do
-      traffic_lights = locked_read(Traffic_lights_filename)
+      traffic_lights = eval @file.read(dir, Traffic_lights_filename)
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light[:number] = tag
@@ -102,12 +102,12 @@ private
     }
   end
   
-  def locked_read(filename, tag = nil)
-    tag ||= @git.most_recent_tag(dir)
-    @git.show(dir, "#{tag}:#{filename}")
-    # TODO: do I need most_recent_tag ?
-    # won't simply reading the current manifest.rb work now that
-    # there is no separate /sandboxes dir?    
+  def locked_read(filename, tag = nil)    
+    if tag != nil
+      eval @git.show(dir, "#{tag}:#{filename}")
+    else
+      eval @file.read(dir, filename)
+    end
   end
   
   Traffic_lights_filename = 'increments.rb'

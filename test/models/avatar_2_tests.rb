@@ -93,6 +93,28 @@ class Avatar2Tests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  
+=begin
+  test "there are no traffic-lights before first test-run" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
+    }
+    manifest = {
+      :id => id,
+      :visible_files => visible_files
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')    
+    
+    assert_equal [ ], avatar.traffic_lights    
+  end
+=end  
   
 end

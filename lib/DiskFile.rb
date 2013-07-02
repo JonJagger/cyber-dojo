@@ -54,7 +54,7 @@ class DiskFile
       mode = File::LOCK_EX
       if fd.flock(mode)
         begin
-          result = block.call(fd)
+          result = block.call()
         ensure
           fd.flock(File::LOCK_UN)
         end

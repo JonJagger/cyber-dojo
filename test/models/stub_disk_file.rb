@@ -48,5 +48,9 @@ class StubDiskFile
     @write_log[dir] != nil
   end
   
+  def lock(dir, &block)
+    block.call()
+  end
+  
 end
 

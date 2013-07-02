@@ -19,7 +19,7 @@ class DiskGit
   
   def show(dir, options)
     command = "cd #{dir}; git show #{options}"
-    eval IO::popen(command).read
+    IO::popen(command).read
   end  
   
   def diff(dir, options)
@@ -27,9 +27,4 @@ class DiskGit
     IO::popen(command).read
   end
   
-  def most_recent_tag(dir)
-    command = "cd #{dir}; git tag|sort -g"
-    eval IO::popen(command).read
-  end
-
 end

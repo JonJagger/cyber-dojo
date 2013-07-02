@@ -26,6 +26,10 @@ class StubDiskGit
     store(dir, 'commit', options)
   end
   
+  def show(dir, options)
+    store(dir, "show", options)
+  end
+  
 private
 
   def store(dir, command, options)
