@@ -1,11 +1,10 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/mock_disk_file'
+require File.dirname(__FILE__) + '/stub_disk_file'
 
 class ExerciseTests < ActionController::TestCase
-  
+    
   def setup
-    @mock_file = MockDiskFile.new
-    Thread.current[:file] = @mock_file
+    @stub_file = StubDiskFile.new
+    Thread.current[:file] = @stub_file    
     @exercise = Exercise.new(root_dir, 'Yahtzee')
   end
   
@@ -13,36 +12,33 @@ class ExerciseTests < ActionController::TestCase
     Thread.current[:file] = nil
   end
     
+  test "name is as set in ctor" do
+    assert_equal 'Yahtzee', @exercise.name
+  end
+    
   test "dir is based on name" do
     assert @exercise.dir.match(@exercise.name), @exercise.dir
-    assert !@mock_file.called?
   end
   
   test "dir does not end in a slash" do
-    assert !@exercise.dir.end_with?(File::SEPARATOR),
-          "!#{@exercise.dir}.end_with?(#{File::SEPARATOR})"
-    assert !@mock_file.called?
+    assert !@exercise.dir.end_with?(@stub_file.separator),
+          "!#{@exercise.dir}.end_with?(#{@stub_file.separator})"
   end
   
   test "dir does not have doubled separator" do
-    doubled_separator = File::SEPARATOR * 2
+    doubled_separator = @stub_file.separator * 2
     assert_equal 0, @exercise.dir.scan(doubled_separator).length
-    assert !@mock_file.called?
   end
   
-  test "name is as set in ctor" do
-    assert_equal 'Yahtzee', @exercise.name
-    assert !@mock_file.called?
-  end
-
   test "instructions are loaded" do
-    @mock_file.setup(
-      [ 'Fishing on the Verdal' ]
-    )
+    @stub_file.read=({
+      :dir => @exercise.dir,
+      :filename => 'instructions',
+      :content => 'Fishing on the Verdal'
+    })    
     instructions = @exercise.instructions
-    assert @mock_file.called?
     assert_not_nil instructions
     assert instructions.start_with? "Fishing on the Verdal"
   end
-  
+
 end
