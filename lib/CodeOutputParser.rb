@@ -173,18 +173,11 @@ module CodeOutputParser
   end
 
   def self.parse_node(output)
-    red_pattern = /AssertionError/
-    green_pattern = /^All tests passed/
-    if output =~ green_pattern
-      :green
-    elsif output =~ red_pattern
-      :red
-    else
-      :amber
-    end
+	return :green if /^All tests passed/.match(output)
+	return :red   if /AssertionError/.match(output)
+	return :amber
   end
 
-=begin
   def self.parse_cpputest(output)
     failed_pattern = /Errors /
     passed_pattern = /OK /
@@ -197,6 +190,7 @@ module CodeOutputParser
     end
   end
 
+=begin
   def self.parse_js_test_simple(output)
     amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
     red_pattern = Regexp.new('FAILED:assertEqual')
