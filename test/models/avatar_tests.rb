@@ -32,11 +32,11 @@ class AvatarTests < ActionController::TestCase
   end
   
   test "diff_lines is not empty when change in files" do
-    avatar = Avatar.create(@kata, 'wolf')
+    avatar = Avatar.create(@kata, 'wolf') # 0
     visible_files = avatar.visible_files
-    run_tests(avatar, visible_files)
+    run_tests(avatar, visible_files) # 1
     visible_files['cyber-dojo.sh'] += 'xxxx'
-    run_tests(avatar, visible_files)
+    run_tests(avatar, visible_files) # 2
     traffic_lights = avatar.traffic_lights
     assert_equal 2, traffic_lights.length
     was_tag = nil

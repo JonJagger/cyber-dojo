@@ -21,6 +21,8 @@ class Avatar
       )
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   def initialize(kata, name)
     # To create an object to represent an animal which has
     # already started a kata, call this.
@@ -65,11 +67,11 @@ class Avatar
   end
 
   def visible_files(tag = nil)
-    unlocked_read(Visible_files_filename, tag)
+    eval unlocked_read(Visible_files_filename, tag)
   end
   
   def traffic_lights(tag = nil)
-    unlocked_read(Traffic_lights_filename, tag)
+    eval unlocked_read(Traffic_lights_filename, tag)
   end
 
   def diff_lines(was_tag, now_tag)
@@ -102,11 +104,11 @@ private
     }
   end
   
-  def locked_read(filename, tag = nil)    
+  def locked_read(filename, tag)    
     if tag != nil
-      eval @git.show(dir, "#{tag}:#{filename}")
+      @git.show(dir, "#{tag}:#{filename}")
     else
-      eval @file.read(dir, filename)
+      @file.read(dir, filename)
     end
   end
   

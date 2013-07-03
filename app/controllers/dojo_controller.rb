@@ -1,4 +1,3 @@
-require 'DiskFile'
 
 class DojoController < ApplicationController
   
@@ -16,14 +15,15 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def start_json
-    exists = Kata.exists?(root_dir, id)
-    avatar_name = exists ? start_avatar(Kata.new(root_dir, id)) : nil
-    full = (avatar_name == nil)
+    kata = Kata.find(root_dir, id)
+    avatar = (kata ? kata.start_avatar : nil)    
+    full = kata && avatar.nil?
+    html = kata && avatar ? start_dialog_html(avatar.name) : ''    
     render :json => {
-      :exists => exists,
-      :avatar_name => avatar_name,
+      :exists => !kata.nil?,
+      :avatar_name => avatar ? avatar.name : nil,
       :full => full,
-      :start_dialog_html => (full ? '' : start_dialog_html(avatar_name))
+      :start_dialog_html => html
     }
   end
   
@@ -50,7 +50,7 @@ class DojoController < ApplicationController
     @kata = kata
     @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatar.names
-    bind('/app/views/dojo/resume_dialog.html.erb')    
+    bind('/app/views/dojo/resume_dialog.html.erb')
   end
   
   #------------------------------------------------
@@ -73,26 +73,4 @@ class DojoController < ApplicationController
     render "error/#{params[:n]}"
   end
 
-  #------------------------------------------------
-  
-  def start_avatar(kata)
-    DiskFile.new.lock(kata.dir) do
-      started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
-      unstarted_avatar_names = Avatar.names - started_avatar_names
-      if unstarted_avatar_names == [ ]
-        avatar_name = nil
-      else          
-        avatar_name = random(unstarted_avatar_names)
-        Avatar.create(kata, avatar_name)
-        avatar_name
-      end        
-    end      
-  end
-  
-private  
-
-  def random(array)
-    array.shuffle[0]
-  end
-  
 end
