@@ -251,7 +251,7 @@ strace showed that nunit wanted to create some shadow folders...
 #wget http://go.googlecode.com/files/go.go1.linux-386.tar.gz
 #tar -C /usr/local -xzf go.go1.linux-386.tar.gz
 #rm go.go1.linux-386.tar.gz
-I then had to add the following line to /etc/apache2/envvars/
+I then added the following line to the end of /etc/apache2/envvars/
 #export PATH=$PATH:/usr/local/go/bin
 -----Javascript (63MB)
 #cd ~
@@ -281,9 +281,13 @@ I then had to add the following line to /etc/apache2/envvars/
 and select 2. Finally (39MB)
 #sudo apt-get install valgrind
 ------Groovy-JUnit
+#apt-get update
+#apt-get install curl
 #curl -s get.gvmtool.net | bash
 #gvm install groovy
-this gave me the three jars I needed.
+I then added the following line to the end of /etc/apache2/envvars/
+#export PATH=$PATH:${location-of-groovy-bin}
+This also gave me the three jars I needed.
   junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
 (thanks to Schalk Cronje)
 ------Groovy-Spock
