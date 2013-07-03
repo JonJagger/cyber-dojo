@@ -173,9 +173,9 @@ module CodeOutputParser
   end
 
   def self.parse_node(output)
-	return :green if /^All tests passed/.match(output)
-	return :red   if /AssertionError/.match(output)
-	return :amber
+    return :green if /^All tests passed/.match(output)
+    return :red   if /AssertionError/.match(output)
+    return :amber
   end
 
   def self.parse_cpputest(output)
@@ -190,6 +190,15 @@ module CodeOutputParser
     end
   end
 
+  def self.parse_jasmine(output)
+     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
+     if jasmine_pattern.match(output)
+        return $3 == "0" ? :green : :red
+     else
+        :amber
+     end
+  end
+
 =begin
   def self.parse_js_test_simple(output)
     amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
@@ -201,15 +210,6 @@ module CodeOutputParser
     else
       :green
     end
-  end
-
-  def self.parse_jasmine(output)
-     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
-     if jasmine_pattern.match(output)
-        return $3 == "0" ? :green : :red
-     else
-        :amber
-     end
   end
 
   def self.parse_googletest(output)
