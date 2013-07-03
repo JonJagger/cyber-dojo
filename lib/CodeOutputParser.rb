@@ -172,6 +172,18 @@ module CodeOutputParser
 	end    
   end
 
+  def self.parse_node(output)
+    red_pattern = /AssertionError/
+    green_pattern = /^All tests passed/
+    if output =~ green_pattern
+      :green
+    elsif output =~ red_pattern
+      :red
+    else
+      :amber
+    end
+  end
+
 =begin
   def self.parse_cpputest(output)
     failed_pattern = /Errors /
@@ -182,18 +194,6 @@ module CodeOutputParser
       :green
     else
       :amber  
-    end
-  end
-
-  def self.parse_node(output)
-    red_pattern = /AssertionError/
-    green_pattern = /^All tests passed/
-    if output =~ green_pattern
-      :green
-    elsif output =~ red_pattern
-      :red
-    else
-      :amber
     end
   end
 
