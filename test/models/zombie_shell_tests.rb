@@ -15,8 +15,8 @@ class ZombieShellTests < ActionController::TestCase
   
   test "check running tests does not accumulate zombie defunct shell processes" do
     language = 'Ruby-installed-and-working'
-    avatar_count = 6
-    run_tests_count = 8
+    avatar_count = 4
+    run_tests_count = 4
 
     kata = make_kata(language)
 

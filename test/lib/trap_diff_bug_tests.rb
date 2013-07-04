@@ -5,7 +5,7 @@ class TrapDiffBugTests < ActionController::TestCase
   
   include GitDiff
   
-  test "another specific real dojo that once_failed a diff" do    
+  test "another specific real dojo that once failed a diff" do    
     bad_diff_lines =
     [
       "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
