@@ -160,7 +160,7 @@ class Avatar2Tests < ActionController::TestCase
       :dir => dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
-    }  
+    }
     
     kata = Kata.create(root_dir, manifest)
     avatar = Avatar.create(kata, 'wolf')
@@ -220,10 +220,10 @@ class Avatar2Tests < ActionController::TestCase
     
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')
-    sandbox_dir = avatar.dir + @stub_file.separator + 'sandbox'
+    sandbox = avatar.sandbox
     
     assert_equal visible_files['cyber-dojo.sh'].inspect,
-      @stub_file.read(sandbox_dir, 'cyber-dojo.sh')
+      @stub_file.read(sandbox.dir, 'cyber-dojo.sh')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -235,25 +235,23 @@ class Avatar2Tests < ActionController::TestCase
       'name' => 'content for name',
       'cyber-dojo.sh' => 'make',
     }
-    language = 'C'
+    language_name = 'C'
     manifest = {
       :id => id,
       :visible_files => visible_files,
-      :language => language
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
       :dir => dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
-    }  
-    
+    }      
     kata = Kata.create(root_dir, manifest)    
-    avatar = Avatar.create(kata, 'wolf')
-    
-    language_dir = root_dir + @stub_file.separator + 'languages' + @stub_file.separator + language
+    language = kata.language
+    avatar = Avatar.create(kata, 'wolf')    
     @stub_file.read = {
-      :dir => language_dir,
+      :dir => language.dir,
       :filename => 'manifest.rb',
       :content => {
         :visible_files => visible_files,
@@ -261,12 +259,12 @@ class Avatar2Tests < ActionController::TestCase
       }.inspect
     }
     @stub_file.read = {
-      :dir => language_dir,
+      :dir => language.dir,
       :filename => 'name',
       :content => 'content for name'
     }
     @stub_file.read = {
-      :dir => language_dir,
+      :dir => language.dir,
       :filename => 'cyber-dojo.sh',
       :content => 'make'
     }    
