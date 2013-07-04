@@ -33,7 +33,8 @@ class Avatar
   end
   
   def setup
-    save(@kata.visible_files, traffic_lights = [ ])
+    @file.write(dir, Visible_files_filename, @kata.visible_files)
+    @file.write(dir, Traffic_lights_filename, [ ])    
     sandbox.save(@kata.visible_files)
     @git.init(dir, "--quiet")
     @git.add(dir, Traffic_lights_filename)
@@ -60,7 +61,8 @@ class Avatar
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light[:number] = tag
-      save(visible_files, traffic_lights)
+      @file.write(dir, Traffic_lights_filename, traffic_lights)
+      @file.write(dir, Visible_files_filename, visible_files)
       git_commit(visible_files, tag)
     end
     traffic_lights
@@ -84,11 +86,6 @@ class Avatar
   end
   
 private
-
-  def save(visible_files, traffic_lights)
-    @file.write(dir, Visible_files_filename, visible_files)
-    @file.write(dir, Traffic_lights_filename, traffic_lights)
-  end
 
   def git_commit(visible_files, tag)
     visible_files.keys.each do |filename|

@@ -5,6 +5,7 @@ class StubDiskFile
   def initialize
     @read_log = { }
     @write_log = { }
+    @symlink_log = [ ]
     @read_repo = { }
   end
 
@@ -14,6 +15,10 @@ class StubDiskFile
   
   def write_log
     @write_log
+  end
+  
+  def symlink_log
+    @symlink_log
   end
   
   def separator
@@ -40,6 +45,8 @@ class StubDiskFile
   end
   
   def write(dir, filename, object)
+    # TODO: using an array here is perhaps not such a good idea
+    #       since I don't really want to test the order of writes...
     @write_log[dir] ||= [ ]
     @write_log[dir] << [filename, object.inspect]
     
@@ -59,7 +66,14 @@ class StubDiskFile
     block.call()
   end
   
-  def rm_dir(dir)    
+  def rm_dir(dir)
+    @write_log[dir] ||= [ ]
+    @write_log[dir] << ['rmdir',dir]
+    @read_repo[dir] = nil
+  end
+  
+  def symlink(old_name, new_name)
+    @symlink_log << ['symlink', old_name, new_name]    
   end
   
 end
