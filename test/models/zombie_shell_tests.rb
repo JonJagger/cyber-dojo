@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SimulatedFullKataTests < ActionController::TestCase
+class ZombieShellTests < ActionController::TestCase
 
   def defunct_count
     # See comments in app/lib/TimeBoxedTask.rb

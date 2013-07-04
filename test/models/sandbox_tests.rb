@@ -82,7 +82,8 @@ class SandboxTests < ActionController::TestCase
          "and an output file is inserted into the visible_files argument" do
     id = '145ED23A2F'
     kata = Kata.new(root_dir, id)
-    avatar = Avatar.new(kata, 'frog')
+    animal_name = 'frog'
+    avatar = Avatar.new(kata, animal_name)
     sandbox = avatar.sandbox    
     visible_files = {
       'untitled.c' => 'content for code file',
@@ -92,12 +93,13 @@ class SandboxTests < ActionController::TestCase
     # run-tests also pulls
     # avatar.kata.language.support_filenames
     # avatar.kata.language.hidden_filenames
-    language = Language.new(root_dir, 'C')    
+    language_name = 'C'
+    language = Language.new(root_dir, language_name)    
     @stub_file.read=({
       :dir => kata.dir,
       :filename => 'manifest.rb',
       :content => {
-        :language => 'C'
+        :language => language_name
       }.inspect
     })    
     @stub_file.read=({
@@ -105,7 +107,7 @@ class SandboxTests < ActionController::TestCase
       :filename => 'manifest.rb',
       :content => {
         :hidden_filenames => [ ],
-        :support_filenames => [ ]
+        :support_filenames => [ ],
       }.inspect      
     })
     assert !visible_files.keys.include?('output')
@@ -114,7 +116,7 @@ class SandboxTests < ActionController::TestCase
     assert_equal 'amber', visible_files['output']
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber".inspect], @stub_file.write_log[sandbox.dir].last
+    assert_equal ['output',"amber".inspect], @stub_file.write_log[sandbox.dir].last    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
