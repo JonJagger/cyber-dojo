@@ -79,7 +79,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "after run_tests() a file called output is saved in sandbox" +
-         "and an output file is inserted into the visible_files argument" do
+         "and an output file is not inserted into the visible_files argument" do
     id = '145ED23A2F'
     kata = Kata.new(root_dir, id)
     animal_name = 'frog'
@@ -112,8 +112,7 @@ class SandboxTests < ActionController::TestCase
     })
     assert !visible_files.keys.include?('output')
     output = sandbox.run_tests(visible_files)
-    assert visible_files.keys.include?('output')
-    assert_equal 'amber', visible_files['output']
+    assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
     assert_equal ['output',"amber".inspect], @stub_file.write_log[sandbox.dir].last    
