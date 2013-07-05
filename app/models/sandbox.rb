@@ -25,8 +25,9 @@ class Sandbox
   def run_tests(visible_files, max_run_tests_duration = 15)
     # TODO: don't delete the sandbox every run-tests    
     #       When the sandbox folder is _not_ deleted for
-    #       each run-tests then I should be able to do the link_files
-    #       just the once in the avatar c'tor.
+    #       each run-tests then I should be able to do the linking
+    #       of the support_files once in avatar.setup and the copying
+    #       of the hidden_files once in avatar.setup
     @file.rm_dir(dir)
     save(visible_files)
     language = @avatar.kata.language
@@ -39,8 +40,8 @@ class Sandbox
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
     output = @task.execute(command, max_run_tests_duration)
+    # create output file so it appears in diff-view
     @file.write(dir, 'output', output)
-    visible_files['output'] = output
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
