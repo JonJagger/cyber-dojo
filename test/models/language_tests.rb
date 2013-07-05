@@ -40,7 +40,32 @@ class LanguageTests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
-  test "visible_files are loaded but not output and not instructions" do
+  test "when :visible_filenames is not in manifest then visible_files is empty hash" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+      }.inspect
+    })
+    assert_equal({ }, @language.visible_files)
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
+  test "when :visible_filenames is empty array in manifest then visible_files is empty hash" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_filenames => [ ]
+      }.inspect
+    })
+    assert_equal({ }, @language.visible_files)
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "when :visible_filenames is non-empty array in manifest then visible_files are loaded but not output and not instructions" do
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.rb',
@@ -48,22 +73,45 @@ class LanguageTests < ActionController::TestCase
         :visible_filenames => [ 'test_untitled.rb' ]
       }.inspect
     })
-
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'test_untitled.rb',
-      :content => "require './untitled.rb'"
-    })
-    
+      :content => 'content'
+    })    
     visible_files = @language.visible_files
-    assert_match visible_files['test_untitled.rb'], /^require '\.\/untitled.rb'/ 
+    assert_equal( { 'test_untitled.rb' => 'content' }, @language.visible_files)
     assert_nil visible_files['output']
     assert_nil visible_files['instructions']
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
+  test "when :hidden_filenames is not in manifest then hidden_files is empty hash" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+      }.inspect
+    })
+    assert_equal({ }, @language.hidden_files)
+  end
   
-  test "hidden_files are loaded" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  test "when :hidden_filenames is empty array in manifest then hidden_files is empty hash" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :hidden_filenames => [ ]
+      }.inspect
+    })
+    assert_equal({ }, @language.hidden_files)
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "when :hidden_filenames is non-empty array in manifest then hidden_files are loaded" do
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.rb',
@@ -89,7 +137,6 @@ class LanguageTests < ActionController::TestCase
       :dir => @language.dir,
       :filename => 'manifest.rb',
       :content => {
-        :visible_filenames => [ 'test_untitled.rb' ]
       }.inspect
     })    
     assert_equal [ ], @language.hidden_filenames    
