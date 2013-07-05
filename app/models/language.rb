@@ -17,14 +17,15 @@ class Language
   end
     
   def visible_files
-    seen = { }
-    manifest[:visible_filenames].each do |filename|
-      seen[filename] = @file.read(dir, filename)
-    end
-    seen
+    Hash[visible_filenames.collect{|filename| [filename, @file.read(dir, filename)]}]
   end
         
+  def hidden_files
+    Hash[hidden_filenames.collect{|filename| [filename, @file.read(dir, filename)]}]
+  end
+
   def hidden_filenames
+    #TODO: make private?
     manifest[:hidden_filenames] || [ ]
   end
   
@@ -45,6 +46,10 @@ class Language
   end
   
 private
+
+  def visible_filenames
+    manifest[:visible_filenames] || [ ]
+  end
 
   def manifest
     @manifest ||= eval @file.read(dir, 'manifest.rb')

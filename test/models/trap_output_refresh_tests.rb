@@ -16,6 +16,7 @@ class TrapOutputRefreshTests < ActionController::TestCase
     visible_files = avatar.visible_files
     output = run_tests(avatar, visible_files)
     visible_files['output'] = output
+    
     traffic_light = { :colour => 'amber' }
     avatar.save_run_tests(visible_files, traffic_light)
     

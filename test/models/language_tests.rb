@@ -12,25 +12,35 @@ class LanguageTests < ActionController::TestCase
     Thread.current[:file] = nil
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "name is as set in ctor" do
     assert_equal 'Ruby', @language.name
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "dir is based on name" do
     assert @language.dir.match(@language.name), @language.dir
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "dir does not end in a slash" do
     assert !@language.dir.end_with?(@stub_file.separator),
           "!#{@language.dir}.end_with?(#{@stub_file.separator})"
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "dir does not have doubled separator" do
     doubled_separator = @stub_file.separator * 2
     assert_equal 0, @language.dir.scan(doubled_separator).length
   end
   
-  test "visible files are loaded but not output and not instructions" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
+  test "visible_files are loaded but not output and not instructions" do
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.rb',
@@ -51,6 +61,29 @@ class LanguageTests < ActionController::TestCase
     assert_nil visible_files['instructions']
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+  
+  test "hidden_files are loaded" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :hidden_filenames => [ 'test_untitled.rb' ]
+      }.inspect
+    })
+
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'test_untitled.rb',
+      :content => "require './untitled.rb'"
+    })
+    
+    hidden_files = @language.hidden_files
+    assert_match hidden_files['test_untitled.rb'], /^require '\.\/untitled.rb'/ 
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test "hidden_filenames defaults to [ ]" do
     @stub_file.read=({
       :dir => @language.dir,
@@ -62,6 +95,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal [ ], @language.hidden_filenames    
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "hidden_filenames set if not defaulted" do
     hidden_filenames = [ 'x', 'y' ]
     @stub_file.read=({
@@ -74,6 +109,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal hidden_filenames, @language.hidden_filenames        
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "support_filenames defaults to [ ]" do
     @stub_file.read=({
       :dir => @language.dir,
@@ -85,6 +122,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal [ ], @language.support_filenames    
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "support_filenames set if not defaulted" do
     support_filenames = [ 'x.jar', 'y.dll' ]
     @stub_file.read=({
@@ -97,6 +136,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal support_filenames, @language.support_filenames        
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "unit_test_framework is set" do
     unit_test_framework = 'Satchmo'
     @stub_file.read=({
@@ -108,6 +149,8 @@ class LanguageTests < ActionController::TestCase
     })        
     assert_equal unit_test_framework, @language.unit_test_framework
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "tab_size is set if not defaulted" do
     tab_size = 42
@@ -121,6 +164,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal tab_size, @language.tab_size
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "tab_size defaults to 4" do
     @stub_file.read=({
       :dir => @language.dir,
@@ -129,6 +174,8 @@ class LanguageTests < ActionController::TestCase
     })            
     assert_equal 4, @language.tab_size    
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "tab is 7 spaces if tab_size is 7" do
     tab_size = 7
@@ -142,6 +189,8 @@ class LanguageTests < ActionController::TestCase
     assert_equal " "*tab_size, @language.tab
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "tab defaults to 4 spaces" do
     @stub_file.read=({
       :dir => @language.dir,
