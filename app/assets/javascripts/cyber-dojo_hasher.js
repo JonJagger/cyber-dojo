@@ -3,10 +3,10 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.hasher = function(str) {
+  cd.hashOf = function(content) {
     var hash, i;
-    for (hash = 0, i = 0; i < str.length; ++i) {
-      hash = (hash << 5) - hash + str.charCodeAt(i);
+    for (hash = 0, i = 0; i < content.length; ++i) {
+      hash = (hash << 5) - hash + content.charCodeAt(i);
       hash &= hash;
     }
     return hash;

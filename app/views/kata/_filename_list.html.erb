@@ -4,19 +4,16 @@
 $(document).ready(function() {
 
   var filenames = cd.filenames();
-  var filename, file, i, max;
-  
-  for (i = 0, max = filenames.length; i < max; i += 1) {
-    filename = filenames[i];
-    file = cd.fileContentFor(filename);
+  $.each(filenames, function(index,filename) {
+    var file = cd.fileContentFor(filename);
     cd.bindHotKeys(file);
     if (filename !== 'output') {
       cd.tabber(file);
     }
-  }
+  });
   cd.bindAllLineNumbers();
   cd.rebuildFilenameList();
-  cd.loadFile(filenames[cd.rand(max)]);
+  cd.loadFile(filenames[cd.rand(filenames.length)]);
 
 });
 

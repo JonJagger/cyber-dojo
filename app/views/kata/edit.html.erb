@@ -30,6 +30,8 @@ $(document).ready(function() {
                 :remote => true ) do %>  
 
   <%= render :partial => 'current_filename' %>
+  <%= render :partial => 'file_hashes_incoming' %>
+  <%= render :partial => 'file_hashes_outgoing' %>
   
   <table>
     <tr class="valign-top">

@@ -16,7 +16,10 @@ class KataController < ApplicationController
     @title = id[0..4] + ' ' + @avatar.name + ' code' 
   end
 
-  def run_tests
+  def run_tests    
+    #Rails.logger.debug('FILE_HASHES_INCOMING:'+params[:file_hashes_incoming].inspect);
+    #Rails.logger.debug('FILE_HASHES_OUTGOING:'+params[:file_hashes_outgoing].inspect);
+    
     @kata   = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
     visible_files = received_files

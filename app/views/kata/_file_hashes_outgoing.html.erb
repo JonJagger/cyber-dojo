@@ -1,0 +1,30 @@
+
+<!-- create hashes of files' contents when page is submitted -->
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  cd.storeOutgoingFileHashes = function() {
+    var container = $('#file_hashes_outgoing_container');
+    container.empty();
+    $.each(cd.filenames(), function(index,filename) {
+      var node = cd.fileContentFor(filename);
+      var content = node.val();
+      var hash = cd.hashOf(content);
+      container.append(
+        $('<input>', {
+          'type': 'hidden',
+          'name': "file_hashes_outgoing[" + filename + "]",
+          'value': hash
+        })
+      );
+    });    
+  };
+  
+});
+
+//--></script>
+
+<div id="file_hashes_outgoing_container">
+</div>

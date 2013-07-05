@@ -16,6 +16,7 @@ $(document).ready(function() {
     test.attr('disabled', true);
     spinners.show();
     trafficLightCount().hide();
+    cd.storeOutgoingFileHashes();
   });
   
   var ajaxAfter = function() {
@@ -42,7 +43,7 @@ $(document).ready(function() {
     var output = cd.fileContentFor('output');
     cd.bindHotKeys(output);
     cd.bindAllLineNumbers();
-    cd.rebuildFilenameList();
+    cd.storeIncomingFileHashes();
     ajaxAfter();
   });  
   
