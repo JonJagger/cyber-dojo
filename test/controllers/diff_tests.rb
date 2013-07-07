@@ -21,7 +21,13 @@ class DiffControllerTest < IntegrationTest
       :avatar => avatar_name,
       :file_content => {
         quoted('cyber-dojo.sh') => ""
-      }
+      },
+      :file_hashes_incoming => {
+        'cyber-dojo.sh' => 234234
+      },
+      :file_hashes_outgoing => {
+        'cyber-dojo.sh' => -4545645678
+      }      
     }
     
     get "diff/show", {
@@ -50,18 +56,26 @@ class DiffControllerTest < IntegrationTest
       :id => id
     }
     avatar_name = json['avatar_name']    
-    
+
     post '/kata/edit', {
       :id => id,
       :avatar => avatar_name
     }
-    
+
     post 'kata/run_tests', {
       :id => id,
       :avatar => avatar_name,
-      :file_content => Avatar.new(kata, avatar_name).visible_files
+      :file_content => {
+        quoted('cyber-dojo.sh') => 'echo hello'
+      },
+      :file_hashes_incoming => {
+        'cyber-dojo.sh' => 234234
+      },
+      :file_hashes_outgoing => {
+        'cyber-dojo.sh' => -4545645678
+      }      
     }
-    
+
     get "diff/show", {
       :id => id,
       :avatar => avatar_name,

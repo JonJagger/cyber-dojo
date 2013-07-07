@@ -21,6 +21,12 @@ class ReverterControllerTest  < IntegrationTest
       :avatar => avatar_name,
       :file_content => {
         quoted('cyber-dojo.sh') => ""
+      },
+      :file_hashes_incoming => {
+        'cyber-dojo.sh' => 234234
+      },
+      :file_hashes_outgoing => {
+        'cyber-dojo.sh' => -4545645678
       }
     }
     
@@ -29,6 +35,12 @@ class ReverterControllerTest  < IntegrationTest
       :avatar => avatar_name,
       :file_content => {
         quoted('cyber-dojo.sh') => ""
+      },
+      :file_hashes_incoming => {
+        'cyber-dojo.sh' => 234234
+      },
+      :file_hashes_outgoing => {
+        'cyber-dojo.sh' => -4545645678
       }
     }
 
