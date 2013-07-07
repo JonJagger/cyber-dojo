@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/../coverage_test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 require File.dirname(__FILE__) + '/stub_disk_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
@@ -120,7 +121,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "run_tests() linked hidden files into sandbox dir" do
+  test "run_tests() links hidden files into sandbox dir" do
     id = '145ED23A2F'
     kata = Kata.new(root_dir, id)
     avatar = Avatar.new(kata, 'frog')

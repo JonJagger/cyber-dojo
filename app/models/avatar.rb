@@ -35,8 +35,8 @@ class Avatar
   def setup
     @file.write(dir, Visible_files_filename, @kata.visible_files)
     @file.write(dir, Traffic_lights_filename, [ ])
-    sandbox.save(@kata.visible_files) # includes output and instructions    
-    #TODO: save kata.language.hidden_filenames
+    sandbox.save(@kata.visible_files) # includes output and instructions
+    sandbox.save(@kata.language.hidden_files)
     #TODO: link kata.language.support_filenames    
     @git.init(dir, "--quiet")
     @git.add(dir, Traffic_lights_filename)
@@ -45,7 +45,8 @@ class Avatar
   end
   
   def dir
-    @kata.dir + @file.separator + name
+    @kata.dir + @file.separator +
+      name
   end
   
   def kata

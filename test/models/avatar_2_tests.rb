@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/../coverage_test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 require File.dirname(__FILE__) + '/stub_disk_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
@@ -26,30 +27,50 @@ class Avatar2Tests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar creation saves visible_files in manifest.rb and empty increments.rb both in avatar dir" do  
+  test "avatar creation saves visible_files in avatar/manifest.rb " +
+          "and empty avatar/increments.rb " +
+          "and each visible_file in avatar/sandbox " +
+          "and each hidden_file in avatar/sandbox" do
     id = '45ED23A2F1'
     visible_files = {
-      'name' => 'content for name'
+      'visible.txt' => 'content for visible.txt'
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
       :dir => dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
-    }  
-    
+    }
+    language = Language.new(root_dir, language_name)
+    hidden_filenames = [ 'hidden.txt' ]
+    @stub_file.read=({
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :hidden_filenames => hidden_filenames
+      }.inspect
+    })    
+    @stub_file.read=({
+      :dir => language.dir,
+      :filename => 'hidden.txt',
+      :content => 'content for hidden.txt'
+    })        
     kata = Kata.create(root_dir, manifest)    
-    avatar = Avatar.create(kata, 'wolf')    
-    
-    assert_equal [
-        [ 'manifest.rb', visible_files.inspect ],
-        [ 'increments.rb', [ ].inspect ]
-      ],
-      @stub_file.write_log[avatar.dir]
+    avatar = Avatar.create(kata, 'wolf')            
+    assert_not_nil @stub_file.write_log[avatar.dir]
+    assert @stub_file.write_log[avatar.dir].include?(['manifest.rb', visible_files.inspect])
+    assert @stub_file.write_log[avatar.dir].include?(['increments.rb', [ ].inspect])    
+    sandbox = avatar.sandbox
+    log = @stub_file.write_log[sandbox.dir]
+    assert_not_nil log
+    assert log.include?(['visible.txt', 'content for visible.txt'.inspect]), log.inspect    
+    assert log.include?(['hidden.txt', 'content for hidden.txt'.inspect]), log.inspect
   end
     
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,20 +80,26 @@ class Avatar2Tests < ActionController::TestCase
     visible_files = {
       'name' => 'content for name'
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
       :dir => dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
-    }  
-    
+    }
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
     kata = Kata.create(root_dir, manifest)    
-    avatar = Avatar.create(kata, 'wolf')    
-    
+    avatar = Avatar.create(kata, 'wolf')        
     assert_equal [
           [ 'init', '--quiet'],
           [ 'add', 'increments.rb' ],
@@ -81,10 +108,8 @@ class Avatar2Tests < ActionController::TestCase
           [ 'commit', "-a -m '0' --quiet" ],
           [ 'commit', "-m '0' 0 HEAD" ]
         ], 
-      @stub_git.log[avatar.dir]
-      
-    assert_equal nil, @stub_file.read_log[avatar.dir]
-    
+      @stub_git.log[avatar.dir]      
+    assert_equal nil, @stub_file.read_log[avatar.dir]    
     assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[kata.dir]         
     assert_equal [ [ 'manifest.rb' ] ], @stub_file.read_log[kata.dir]
   end
@@ -102,20 +127,26 @@ class Avatar2Tests < ActionController::TestCase
     visible_files = {
       'name' => 'content for name'
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
       :dir => dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
-    }  
-    
+    }
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }    
     kata = Kata.create(root_dir, manifest)
-    avatar = Avatar.create(kata, 'wolf')
-    
+    avatar = Avatar.create(kata, 'wolf')    
     assert_equal [ ], avatar.traffic_lights    
   end
 
@@ -126,9 +157,11 @@ class Avatar2Tests < ActionController::TestCase
     visible_files = {
       'name' => 'content for name'
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
@@ -136,10 +169,14 @@ class Avatar2Tests < ActionController::TestCase
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
     kata = Kata.create(root_dir, manifest)
-    avatar = Avatar.create(kata, 'wolf')
-    
+    avatar = Avatar.create(kata, 'wolf')    
     assert_equal kata, avatar.kata    
   end
 
@@ -151,9 +188,11 @@ class Avatar2Tests < ActionController::TestCase
       'name' => 'content for name',
       'output' => ''
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
@@ -161,10 +200,14 @@ class Avatar2Tests < ActionController::TestCase
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }    
     kata = Kata.create(root_dir, manifest)
-    avatar = Avatar.create(kata, 'wolf')
-    
+    avatar = Avatar.create(kata, 'wolf')    
     visible_files = avatar.visible_files
     assert visible_files.keys.include?('output'),
           "visible_files.keys.include?('output')"
@@ -179,9 +222,11 @@ class Avatar2Tests < ActionController::TestCase
       'name' => 'content for name',
       'output' => ''
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
@@ -189,10 +234,14 @@ class Avatar2Tests < ActionController::TestCase
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
     kata = Kata.create(root_dir, manifest)    
-    avatar = Avatar.create(kata, 'wolf')
-    
+    avatar = Avatar.create(kata, 'wolf')    
     sandbox_dir = avatar.dir + @stub_file.separator + 'sandbox' 
     visible_files.each do |filename,content|
       assert_equal content.inspect, @stub_file.read(sandbox_dir, filename)
@@ -207,9 +256,11 @@ class Avatar2Tests < ActionController::TestCase
       'name' => 'content for name',
       'cyber-dojo.sh' => 'make'
     }
+    language_name = 'C'
     manifest = {
       :id => id,
-      :visible_files => visible_files
+      :visible_files => visible_files,
+      :language => language_name
     }
     dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
@@ -217,19 +268,23 @@ class Avatar2Tests < ActionController::TestCase
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')
-    sandbox = avatar.sandbox
-    
+    sandbox = avatar.sandbox    
     assert_equal visible_files['cyber-dojo.sh'].inspect,
       @stub_file.read(sandbox.dir, 'cyber-dojo.sh')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "after first test-run traffic_lights contains one traffic-light which does not contain output" do
-    
+  test "after first test-run traffic_lights contains one traffic-light " +
+        "which does not contain output" do    
     id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name',
@@ -249,7 +304,6 @@ class Avatar2Tests < ActionController::TestCase
     }      
     kata = Kata.create(root_dir, manifest)    
     language = kata.language
-    avatar = Avatar.create(kata, 'wolf')    
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.rb',
@@ -268,15 +322,14 @@ class Avatar2Tests < ActionController::TestCase
       :filename => 'cyber-dojo.sh',
       :content => 'make'
     }    
-    
+    avatar = Avatar.create(kata, 'wolf')        
     output = avatar.sandbox.run_tests(avatar.visible_files, timeout=15)
     language = avatar.kata.language
     traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, traffic_light)
-    
+    avatar.save_run_tests(visible_files, traffic_light)    
     traffic_lights = avatar.traffic_lights
     assert_equal 1, traffic_lights.length
     assert_equal nil, traffic_lights.last[:run_tests_output]
   end
-  
+
 end
