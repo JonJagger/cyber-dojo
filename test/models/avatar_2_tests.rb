@@ -27,15 +27,19 @@ class Avatar2Tests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar creation saves visible_files in avatar/manifest.rb " +
-          "and empty avatar/increments.rb " +
-          "and each visible_file in avatar/sandbox " +
-          "and each hidden_file in avatar/sandbox" do
+  test "avatar creation saves " +
+          "visible_files in avatar/manifest.rb, and " +
+          "empty avatar/increments.rb, and " +
+          "each visible_file into avatar/sandbox, and " +
+          "each hidden_file into avatar/sandbox, and" +
+          "links each support_filename into avatar/sandbox" do
     id = '45ED23A2F1'
+    visible_filename = 'visible.txt'
+    visible_filename_content = 'content for visible.txt'
     visible_files = {
-      'visible.txt' => 'content for visible.txt'
+      visible_filename => visible_filename_content
     }
-    language_name = 'C'
+    language_name = 'C#'
     manifest = {
       :id => id,
       :visible_files => visible_files,
@@ -48,18 +52,21 @@ class Avatar2Tests < ActionController::TestCase
       :content => manifest.inspect
     }
     language = Language.new(root_dir, language_name)
-    hidden_filenames = [ 'hidden.txt' ]
+    hidden_filename = 'hidden.txt'
+    hidden_filename_content = 'content for hidden.txt'
+    support_filename = 'wibble.dll' 
     @stub_file.read=({
       :dir => language.dir,
       :filename => 'manifest.rb',
       :content => {
-        :hidden_filenames => hidden_filenames
+        :hidden_filenames => [ hidden_filename ],
+        :support_filenames => [ support_filename ]
       }.inspect
-    })    
+    })
     @stub_file.read=({
       :dir => language.dir,
-      :filename => 'hidden.txt',
-      :content => 'content for hidden.txt'
+      :filename => hidden_filename,
+      :content => hidden_filename_content
     })        
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')            
@@ -69,13 +76,20 @@ class Avatar2Tests < ActionController::TestCase
     sandbox = avatar.sandbox
     log = @stub_file.write_log[sandbox.dir]
     assert_not_nil log
-    assert log.include?(['visible.txt', 'content for visible.txt'.inspect]), log.inspect    
-    assert log.include?(['hidden.txt', 'content for hidden.txt'.inspect]), log.inspect
+    assert log.include?([visible_filename, visible_filename_content.inspect]), log.inspect    
+    assert log.include?([hidden_filename, hidden_filename_content.inspect]), log.inspect
+    expected_symlink = [
+      'symlink',
+      language.dir + @stub_file.separator + support_filename,
+      sandbox.dir + @stub_file.separator + support_filename
+    ]
+    assert @stub_file.symlink_log.include?(expected_symlink), @stub_file.symlink_log.inspect    
   end
     
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
-  test "avatar creation sets up initial git repo of visible files" do  
+  test "avatar creation sets up initial git repo of visible files " +
+        "but not hidden_files and not support_files" do  
     id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name'

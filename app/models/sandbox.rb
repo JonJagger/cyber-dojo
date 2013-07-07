@@ -14,13 +14,22 @@ class Sandbox
     @avatar.dir + @file.separator + 'sandbox'
   end
     
-  def save(visible_files)
-    # Save each file individually. Enables the 'git diff' 
-    # command in avatar.diff_lines() and hence the diff page.
-    visible_files.each do |filename,content|
+  def save(files)
+    files.each do |filename,content|
       @file.write(dir, filename, content)
     end    
   end
+  
+  def link(language_dir, language_support_filenames)
+    language_support_filenames.each do |filename|
+      old_name = language_dir + @file.separator + filename
+      new_name = dir + @file.separator + filename
+      @file.symlink(old_name, new_name)
+    end        
+  end
+  
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def run_tests(visible_files, max_run_tests_duration = 15)
     # TODO: don't delete the sandbox every run-tests    
@@ -28,11 +37,13 @@ class Sandbox
     #       each run-tests then I should be able to do the linking
     #       of the support_files once in avatar.setup and the copying
     #       of the hidden_files once in avatar.setup
+    
     @file.rm_dir(dir)
     save(visible_files)
     language = @avatar.kata.language
     link_files(language, language.support_filenames)
-    link_files(language, language.hidden_filenames)        
+    link_files(language, language.hidden_filenames)
+    
     # TODO: I think the hidden files should be copied.
     # The difference between support and hidden is essentially
     # that support files need to be linked, so otherwise

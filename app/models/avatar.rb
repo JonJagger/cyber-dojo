@@ -36,8 +36,9 @@ class Avatar
     @file.write(dir, Visible_files_filename, @kata.visible_files)
     @file.write(dir, Traffic_lights_filename, [ ])
     sandbox.save(@kata.visible_files) # includes output and instructions
-    sandbox.save(@kata.language.hidden_files)
-    #TODO: link kata.language.support_filenames    
+    language = @kata.language
+    sandbox.save(language.hidden_files)
+    sandbox.link(language.dir, language.support_filenames)
     @git.init(dir, "--quiet")
     @git.add(dir, Traffic_lights_filename)
     @git.add(dir, Visible_files_filename)      
@@ -80,6 +81,7 @@ class Avatar
   end
 
   def diff_lines(was_tag, now_tag)
+    # N.B. visible_files are saved to the sandbox dir individually.
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
     @git.diff(dir, command)
   end
