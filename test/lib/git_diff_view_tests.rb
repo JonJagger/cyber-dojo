@@ -17,15 +17,26 @@ class GitDiffViewTests < ActionController::TestCase
         'test_untitled.rb' => test_untitled_rb,
         'output'           => '' 
       }
-
+    delta = {
+      :changed => visible_files.keys,
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]      
+    }
     # create tag 1 in the repo
-    run_tests(avatar, visible_files)
+    run_test(delta, avatar, visible_files)
     assert_equal :red, avatar.traffic_lights.last[:colour], avatar.visible_files["output"]
 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
+    delta = {
+      :changed => [ 'untitled.rb' ],
+      :unchanged => visible_files.keys - [ 'untitled.rb' ],
+      :deleted => [ ],
+      :new => [ ]      
+    }
     
     # create tag 2 in the repo     
-    run_tests(avatar, visible_files)
+    run_test(delta, avatar, visible_files)
     assert_equal :green, avatar.traffic_lights.last[:colour]
     
     was_tag = 1
@@ -122,15 +133,27 @@ class GitDiffViewTests < ActionController::TestCase
         'test_untitled.rb' => test_untitled_rb,
         'output'           => '' 
       }
+    delta = {
+      :changed => visible_files.keys,
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]      
+    }
 
     # create tag 1 in the repo
-    run_tests(avatar, visible_files)
+    run_test(delta, avatar, visible_files)
     assert_equal :red, avatar.traffic_lights.last[:colour], avatar.visible_files["output"]
 
     visible_files.delete('untitled.rb')
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys - [ 'untitled.rb' ],
+      :deleted => [ 'untitled.rb' ],
+      :new => [ ]      
+    }
     
     # create tag 2 in the repo 
-    run_tests(avatar, visible_files)
+    run_test(delta, avatar, visible_files)
     assert_equal :amber, avatar.traffic_lights.last[:colour]
     
     from_tag = 1
@@ -159,7 +182,13 @@ class GitDiffViewTests < ActionController::TestCase
     cyber_dojo_sh += "\n"
     cyber_dojo_sh += "echo xxx > jj.x"
     visible_files['cyber-dojo.sh'] = cyber_dojo_sh
-    run_tests(avatar, visible_files) # tag 1
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys,
+      :deleted => [ ],
+      :new => [ ]            
+    }
+    run_test(delta, avatar, visible_files) # tag 1
     
     from_tag = 0
     to_tag = 1  
