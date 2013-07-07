@@ -65,14 +65,14 @@ class ActiveSupport::TestCase
     Kata.create(root_dir, info)
   end
     
-  def run_tests(avatar, visible_files, timeout = 15)
-    output = avatar.sandbox.run_tests(visible_files, timeout)
+  def run_test(delta, avatar, visible_files, timeout = 15)
+    output = avatar.sandbox.test(delta, visible_files, timeout)
     language = avatar.kata.language
     traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, traffic_light)
+    avatar.save_run_tests(visible_files, traffic_light)    
     output
   end
-
+  
   def root_dir
     #TODO?: use ENV like test/integration/integration_test.rb
     (@root_dir || Rails.root + 'test/cyberdojo').to_s

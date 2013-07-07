@@ -1,6 +1,7 @@
 
-require 'CodeOutputParser'
 require 'Approval'
+require 'CodeOutputParser'
+require 'FileHashDiffer'
 
 class KataController < ApplicationController
   
@@ -17,8 +18,11 @@ class KataController < ApplicationController
   end
 
   def run_tests    
-    #Rails.logger.debug('FILE_HASHES_INCOMING:'+params[:file_hashes_incoming].inspect);
-    #Rails.logger.debug('FILE_HASHES_OUTGOING:'+params[:file_hashes_outgoing].inspect);    
+    incoming_hashes = params[:file_hashes_incoming]
+    outgoing_hashes = params[:file_hashes_outgoing]
+    #Rails.logger.debug('FILE_HASHES_INCOMING:' + incoming_hashes.inspect);
+    #Rails.logger.debug('FILE_HASHES_OUTGOING:' + outgoing_hashes.inspect);    
+    delta = FileHashDiffer.diff(incoming_hashes, outgoing_hashes)
     
     @kata   = Kata.new(root_dir, id)
     @avatar = Avatar.new(@kata, params[:avatar])
@@ -26,7 +30,7 @@ class KataController < ApplicationController
     previous_files = visible_files.keys
     
     visible_files.delete('output')
-    @output = @avatar.sandbox.run_tests(visible_files)
+    @output = @avatar.sandbox.test(delta, visible_files)
     visible_files['output'] = @output
     
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.dir, visible_files)

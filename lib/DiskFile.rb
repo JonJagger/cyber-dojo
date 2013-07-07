@@ -39,10 +39,6 @@ class DiskFile
     File.exists?(dir + separator + filename)
   end
   
-  def rm_dir(dir)
-    system("rm -rf #{dir}")    
-  end
-  
   def lock(dir, &block)
     # io locking uses blocking call.
     # For example, when a player starts-coding then

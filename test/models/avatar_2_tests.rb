@@ -297,11 +297,11 @@ class Avatar2Tests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "after first test-run traffic_lights contains one traffic-light " +
+  test "after first test() traffic_lights contains one traffic-light " +
         "which does not contain output" do    
     id = '45ED23A2F1'
     visible_files = {
-      'name' => 'content for name',
+      'untitled.c' => 'content for visible file',
       'cyber-dojo.sh' => 'make',
     }
     language_name = 'C'
@@ -328,18 +328,24 @@ class Avatar2Tests < ActionController::TestCase
     }
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'name',
-      :content => 'content for name'
+      :filename => 'untitled.c',
+      :content => 'content for visible file'
     }
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'cyber-dojo.sh',
       :content => 'make'
     }    
-    avatar = Avatar.create(kata, 'wolf')        
-    output = avatar.sandbox.run_tests(avatar.visible_files, timeout=15)
+    avatar = Avatar.create(kata, 'wolf')    
+    delta = {
+      :changed => [ 'untitled.c' ],
+      :unchanged => [ 'cyber-dojo.sh' ],
+      :deleted => [ 'wibble.cs' ],
+      :new => [ ]      
+    }
+    output = avatar.sandbox.test(delta, avatar.visible_files, timeout=15)    
     language = avatar.kata.language
-    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
+    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)    
     avatar.save_run_tests(visible_files, traffic_light)    
     traffic_lights = avatar.traffic_lights
     assert_equal 1, traffic_lights.length

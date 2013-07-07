@@ -18,6 +18,10 @@ class StubDiskGit
     store(dir, 'add', what)
   end
   
+  def rm(dir, what)
+    store(dir, 'rm', what)
+  end
+  
   def commit(dir, options)
     store(dir, 'commit', options)
   end

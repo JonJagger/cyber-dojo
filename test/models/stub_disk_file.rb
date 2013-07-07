@@ -66,12 +66,6 @@ class StubDiskFile
     block.call()
   end
   
-  def rm_dir(dir)
-    @write_log[dir] ||= [ ]
-    @write_log[dir] << ['rmdir',dir]
-    @read_repo[dir] = nil
-  end
-  
   def symlink(old_name, new_name)
     @symlink_log << ['symlink', old_name, new_name]    
   end

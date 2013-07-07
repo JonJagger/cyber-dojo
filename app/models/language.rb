@@ -25,7 +25,6 @@ class Language
   end
 
   def hidden_filenames
-    #TODO: make private?
     manifest[:hidden_filenames] || [ ]
   end
   

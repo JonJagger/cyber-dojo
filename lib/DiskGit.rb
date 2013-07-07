@@ -9,6 +9,10 @@ class DiskGit
     system("cd #{dir}; git add #{what}")
   end
 
+  def rm(dir, what)
+    `cd #{dir}; git rm #{what}`
+  end
+  
   def commit(dir, options)
     system("cd #{dir}; git commit #{options}")
   end

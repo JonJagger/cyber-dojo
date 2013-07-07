@@ -14,7 +14,13 @@ class TrapOutputRefreshTests < ActionController::TestCase
     avatar = Avatar.create(kata, 'lion')
 
     visible_files = avatar.visible_files
-    output = run_tests(avatar, visible_files)
+    delta = {
+      :changed => visible_files.keys,
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]      
+    }        
+    output = run_test(delta, avatar, visible_files)
     visible_files['output'] = output
     
     traffic_light = { :colour => 'amber' }

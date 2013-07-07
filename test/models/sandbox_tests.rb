@@ -79,7 +79,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "after run_tests() a file called output is saved in sandbox" +
+  test "after run_tests() a file called output is saved in sandbox " +
          "and an output file is not inserted into the visible_files argument" do
     id = '145ED23A2F'
     kata = Kata.new(root_dir, id)
@@ -111,8 +111,14 @@ class SandboxTests < ActionController::TestCase
         :support_filenames => [ ],
       }.inspect      
     })
-    assert !visible_files.keys.include?('output')
-    output = sandbox.run_tests(visible_files)
+    assert !visible_files.keys.include?('output')    
+    delta = {
+      :changed => [ 'untitled.c' ],
+      :unchanged => [ 'untitled.test.c' ],
+      :deleted => [ ],
+      :new => [ ]
+    }
+    output = sandbox.test(delta, visible_files)    
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
@@ -121,46 +127,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "run_tests() links hidden files into sandbox dir" do
-    id = '145ED23A2F'
-    kata = Kata.new(root_dir, id)
-    avatar = Avatar.new(kata, 'frog')
-    sandbox = avatar.sandbox    
-    visible_files = {
-      'untitled.c' => 'content for code file',
-      'untitled.test.c' => 'content for test file',
-      'cyber-dojo.sh' => 'make'
-    }
-    language_name = 'C'
-    language = Language.new(root_dir, language_name)    
-    @stub_file.read=({
-      :dir => kata.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :language => language_name
-      }.inspect
-    })
-    hidden_filename = 'secret.h'
-    @stub_file.read=({
-      :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :hidden_filenames => [ hidden_filename ],
-        :support_filenames => [ ]
-      }.inspect      
-    })
-    sandbox.run_tests(visible_files)    
-    assert @stub_file.symlink_log.include?(
-      [ 'symlink',
-         language.dir + @stub_file.separator + hidden_filename,
-         sandbox.dir + @stub_file.separator + hidden_filename
-      ]
-    )
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "run_tests() links support files into sandbox dir" do
+  test "test():delta[:changed] files are saved" do
     id = '145ED23A2F'
     kata = Kata.new(root_dir, id)
     avatar = Avatar.new(kata, 'frog')
@@ -170,31 +137,107 @@ class SandboxTests < ActionController::TestCase
       'untitled.test.cs' => 'content for test file',
       'cyber-dojo.sh' => 'gmcs'
     }
-    language_name = 'C#'
-    language = Language.new(root_dir, language_name)    
-    @stub_file.read=({
-      :dir => kata.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :language => language_name
-      }.inspect
-    })
-    support_filename = 'secret.dll'
-    @stub_file.read=({
-      :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :hidden_filenames => [ ],
-        :support_filenames => [ support_filename ]
-      }.inspect      
-    })
-    sandbox.run_tests(visible_files)    
-    assert @stub_file.symlink_log.include?(
-      [ 'symlink',
-         language.dir + @stub_file.separator + support_filename,
-         sandbox.dir + @stub_file.separator + support_filename
-      ]
-    )    
+    delta = {
+      :changed => [ 'untitled.cs', 'untitled.test.cs'  ],
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]
+    }
+    sandbox.test(delta, visible_files)
+    log = @stub_file.write_log[sandbox.dir]
+    saved_files = filenames_in(log)    
+    assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort    
+    assert log.include?(
+      ['untitled.cs', 'content for code file'.inspect ]                                                 
+    ), log.inspect
+    assert log.include?(
+      ['untitled.test.cs', 'content for test file'.inspect ]                                                 
+    ), log.inspect
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "test():delta[:unchanged] files are not saved" do
+    id = '145ED23A2F'
+    kata = Kata.new(root_dir, id)
+    avatar = Avatar.new(kata, 'frog')
+    sandbox = avatar.sandbox    
+    visible_files = {
+      'untitled.cs' => 'content for code file',
+      'untitled.test.cs' => 'content for test file',
+      'cyber-dojo.sh' => 'gmcs'
+    }
+    delta = {
+      :changed => [ 'untitled.cs' ],
+      :unchanged => [ 'cyber-dojo.sh', 'untitled.test.cs' ],
+      :deleted => [ ],
+      :new => [ ]
+    }
+    sandbox.test(delta, visible_files)
+    log = @stub_file.write_log[sandbox.dir]
+    saved_files = filenames_in(log)
+    assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
+    assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  test "test():delta[:new] files are saved and git added" do
+    id = '145ED23A2F'
+    kata = Kata.new(root_dir, id)
+    avatar = Avatar.new(kata, 'frog')
+    sandbox = avatar.sandbox    
+    visible_files = {
+      'wibble.cs' => 'content for code file',
+      'untitled.test.cs' => 'content for test file',
+      'cyber-dojo.sh' => 'gmcs'
+    }
+    delta = {
+      :changed => [ ],
+      :unchanged => [ 'cyber-dojo.sh', 'untitled.test.cs' ],
+      :deleted => [ ],
+      :new => [ 'wibble.cs' ]
+    }
+    sandbox.test(delta, visible_files)
+    write_log = @stub_file.write_log[sandbox.dir]
+    saved_files = filenames_in(write_log)
+    assert saved_files.include?('wibble.cs'), saved_files.inspect
+    
+    git_log = @stub_git.log[sandbox.dir]
+    assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      
+  test "test():delta[:deleted] files are git rm'd" do
+    id = '145ED23A2F'
+    kata = Kata.new(root_dir, id)
+    avatar = Avatar.new(kata, 'frog')
+    sandbox = avatar.sandbox    
+    visible_files = {
+      'untitled.cs' => 'content for code file',
+      'untitled.test.cs' => 'content for test file',
+      'cyber-dojo.sh' => 'gmcs'
+    }
+    delta = {
+      :changed => [ 'untitled.cs' ],
+      :unchanged => [ 'cyber-dojo.sh', 'untitled.test.cs' ],
+      :deleted => [ 'wibble.cs' ],
+      :new => [ ]
+    }
+    sandbox.test(delta, visible_files)
+    write_log = @stub_file.write_log[sandbox.dir]
+    saved_files = filenames_in(write_log)
+    assert !saved_files.include?('wibble.cs'), saved_files.inspect
+    
+    git_log = @stub_git.log[sandbox.dir]
+    assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def filenames_in(log)
+    log.collect{ |entry| entry.first }
   end
   
 end

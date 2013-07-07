@@ -213,8 +213,7 @@ class KataTests < ActionController::TestCase
       :dir => language.dir,
       :filename => 'manifest.rb',
       :content => { }.inspect
-    }  
-    
+    }      
     kata = Kata.create(root_dir, manifest)
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name)

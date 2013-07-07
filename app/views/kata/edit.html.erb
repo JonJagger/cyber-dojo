@@ -15,7 +15,9 @@ $(document).ready(function() {
     return $.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
   };  
 
-  if (<%= @traffic_lights == [ ] %>) {            
+  if (<%= @traffic_lights == [ ] %>) {
+    cd.storeIncomingFileHashes();    
+    cd.storeOutgoingFileHashes();    
     cd.testForm().submit();
   }
 

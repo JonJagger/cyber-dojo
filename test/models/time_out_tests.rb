@@ -15,16 +15,19 @@ class TimeOutTests < ActionController::TestCase
     visible_files = avatar.visible_files
     filename = 'untitled.rb'    
     code = visible_files[filename]
-    visible_files[filename] = code.sub('42', 'while true;end')
-    
+    visible_files[filename] = code.sub('42', 'while true;end')    
     ps_count_before = ps_count
     print 't'
-    STDOUT.flush
-    output = run_tests(avatar, visible_files, timeout = 5)
-
+    STDOUT.flush    
+    delta = {
+      :changed => visible_files.keys,
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]      
+    }    
+    output = run_test(delta, avatar, visible_files, timeout = 5)
     assert_match(/Terminated by the cyber-dojo server after \d+ seconds?/, output)
-    assert_equal :amber, avatar.traffic_lights.last[:colour]
-    
+    assert_equal :amber, avatar.traffic_lights.last[:colour]    
     ps_count_after = ps_count    
     # This often fails with
     # <1> expected but was
