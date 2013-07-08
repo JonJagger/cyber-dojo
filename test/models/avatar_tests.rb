@@ -96,7 +96,7 @@ class AvatarTests < ActionController::TestCase
         "--- /dev/null",
         "+++ b/sandbox/#{added_filename}",
         "@@ -0,0 +1 @@",
-        "+starring Clint Eastwood"
+        "+#{content}"
       ].join("\n")
     assert actual.include?(expected)
   end
@@ -140,5 +140,27 @@ class AvatarTests < ActionController::TestCase
       ].join("\n")
     assert actual.include?(expected), actual
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "output is correct on refresh" do
+    language = 'Ruby-installed-and-working'
+    kata = make_kata(language)
+    avatar = Avatar.create(kata, 'lion')
+    visible_files = avatar.visible_files
+    delta = {
+      :changed => visible_files.keys,
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]      
+    }        
+    output = run_test(delta, avatar, visible_files)
+    visible_files['output'] = output    
+    traffic_light = { :colour => 'amber' }
+    avatar.save_run_tests(visible_files, traffic_light)    
+    # now refresh
+    avatar = Avatar.new(kata, 'lion')
+    assert_equal output, avatar.visible_files['output']
+  end    
 
 end

@@ -96,6 +96,7 @@ private
     visible_files.keys.each do |filename|
       @git.add(dir, "sandbox/#{filename}")
     end
+    # N.B. the -a is important for .txt files in approval style tests
     @git.commit(dir, "-a -m '#{tag}' --quiet")
     @git.tag(dir, "-m '#{tag}' #{tag} HEAD")
   end
