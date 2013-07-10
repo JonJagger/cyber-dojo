@@ -61,7 +61,7 @@ var cyberDojo = (function(cd, $) {
   cd.filenames = function() {  
     var prefix = 'file_content_for_';
     var filenames = [ ];
-    $('textarea[id^="' + prefix + '"]').each(function(index) {
+    $('textarea[id^=' + prefix + ']').each(function(index) {
       var id = $(this).attr('id');
       var filename = id.substr(prefix.length, id.length - prefix.length);
       filenames.push(filename);
@@ -116,7 +116,7 @@ var cyberDojo = (function(cd, $) {
     var td2 = $('<td>');
     var text = $('<textarea>', {
       'class': 'file_content',
-      name: "file_content['" + filename + "']",
+      name: "file_content[" + filename + "]",
       id: 'file_content_for_' + filename
       //
       //wrap: 'off'
