@@ -20,8 +20,8 @@ class KataController < ApplicationController
   def run_tests    
     incoming_hashes = params[:file_hashes_incoming]
     outgoing_hashes = params[:file_hashes_outgoing]
-    #Rails.logger.debug('FILE_HASHES_INCOMING:' + incoming_hashes.inspect);
-    #Rails.logger.debug('FILE_HASHES_OUTGOING:' + outgoing_hashes.inspect);    
+    Rails.logger.debug('FILE_HASHES_INCOMING:' + incoming_hashes.inspect);
+    Rails.logger.debug('FILE_HASHES_OUTGOING:' + outgoing_hashes.inspect);    
     delta = FileHashDiffer.diff(incoming_hashes, outgoing_hashes)
     
     @kata   = Kata.new(root_dir, id)
