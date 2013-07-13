@@ -6,8 +6,17 @@ feature "localization:" do
     visit "/?locale=fr"
   end
 
+  scenario "home page is localized" do
+    page.should have_text "créer"
+  end
+
   scenario "home page remembers locale" do
     visit "/"
     page.should have_text "créer"
+  end
+
+  scenario "about page is localized" do
+    find("#about").click
+    page.should have_text "Le Cyber-Dojo"
   end
 end
