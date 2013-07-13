@@ -17,6 +17,7 @@ feature "localization:" do
 
   scenario "about page is localized" do
     find("#about").click
+    page.should_not have_text "about"
     page.should have_text "Le Cyber-Dojo"
   end
 end

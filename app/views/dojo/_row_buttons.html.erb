@@ -5,8 +5,9 @@ $(document).ready(function () {
 
   $('.show-dialog-button').click(function () {
     var name = $(this).attr('id');
+    var title = $(this).text();
     $.get('/dojo/button_dialog/' + name, function(html) {
-      cd.dialog(html, null, name).dialog('open');
+      cd.dialog(html, null, title).dialog('open');
     });
   });
 
