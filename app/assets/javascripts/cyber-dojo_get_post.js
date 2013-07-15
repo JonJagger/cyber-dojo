@@ -39,12 +39,16 @@ var cyberDojo = (function (cd, $) {
         // the value of this token can be found in the header of the current page. E.g:
         // <meta name="csrf-token" content="70qsxwZWWvUw29ByElrylrq=">
         var token = $('meta[name="csrf-token"]').attr('content');
-        var token_field = $('input');
-        token_field.attr('name', 'authenticity_token').attr('value', token);
+        var token_field = $('<input>').attr('name', 'authenticity_token')
+                                      .attr('type', 'hidden')
+                                      .attr('id', 'csrf-token-field')
+                                      .attr('value', token);
         form.append(token_field);
 
         form.appendTo(document.body);
         form.submit();
+
+        $('#csrf-token-field').remove();
     };
 
     return cd;
