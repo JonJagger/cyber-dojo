@@ -21,6 +21,9 @@ feature "Start a practice" do
         page.should have_text 'untitled_spec.rb'
       end
     end
-
   end
+end
+
+feature "Practice is full" do
+
 end
