@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
 
-feature "localization:" do
+feature "dojo localization:" do
   before(:each) do
     visit '/?locale=fr'
   end
@@ -28,5 +28,8 @@ feature "localization:" do
     page.should have_text 'exercice?'
     page.should have_text 'ok'
     page.should have_text 'annuler'
+
+    find('#ok').click
+    page.should have_text 'créer'
   end
 end
