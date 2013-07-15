@@ -1,5 +1,22 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+  
+  $('#setup').click(function() {
+    cd.postTo('/setup/show');
+  });
+
+});
+
+//--></script>
+
 <div id="get_a_new_practice_id">
   <%= t("views.labels.setup") %>
 </div>
 
-<%= link_to t("views.buttons.setup"), "/setup/show", id: "setup", class: "button" %>
+<div id="setup"
+     title="choose your programming language and exercise"
+     class="button">
+  <%= t("views.buttons.setup") %>
+</div>
