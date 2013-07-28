@@ -1,32 +1,18 @@
 
 <script type="text/javascript"><!--
 
+"<%= t('views.buttons.disable') %>"
+
 $(document).ready(function() {
 
   $('#id').click(function() {
   
-    var daySuffix = function(day) {
-      if (Math.floor(day / 10) === 1) {
-        return "th";
-      } else {
-        switch (day % 10) {
-          case 1 : return "st";
-          case 2 : return "nd";
-          case 3 : return "rd";
-          default: return "th";
-        }
-      }
-    };
-
     var timeString = function() {
-      var hourMinute = "<%= @kata.created.strftime("%I:%M%P") %>";
-      var dayName = "<%= @kata.created.strftime("%a") %>";
+      var hourMinute = "<%= @kata.created.strftime("%I:%M") %>";
       var day = <%= @kata.created.day %>;
-      var monthYear = "<%= @kata.created.strftime("%b %Y") %>";
-      return hourMinute + ' '
-           + dayName + ' '
-           + day + '<sup>' + daySuffix(day) + '</sup>' + ' '
-           + monthYear;
+      var month = "<%= translate_month_kata_created(@kata) %>";
+      var year = "<%= @kata.created.strftime("%Y") %>";
+      return year + ' ' + month + ' ' + day + ' ' + hourMinute;
     };
   
     var info = {
