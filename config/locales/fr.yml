@@ -116,4 +116,15 @@ fr:
       runs_the_tests: "exécute les tests"
       open_the_next_file: "ouvrir le fichier suivant"
       open_the_previous_file: "ouvrir le fichier précédent"
-      think_about_improving_not_finishing: "penser à améliorer, ne pas finir"      
+      think_about_improving_not_finishing: "penser à améliorer, ne pas finir"
+      
+    feedback:
+      id_really_appreciate_it_if_you_could: "J'apprécierais vraiment si vous pouviez"
+      email_me: "email-moi"
+      what_did_you_like: "Qu'avez-vous aimé?"
+      what_did_you_dislike: "Qu'est-ce que vous n'aimez pas?"
+      what_worked: "Ce qui a fonctionné?"
+      what_didnt: "Ce qui n'a pas?"
+      what_features_should_i_add_remove: "Quelles caractéristiques dois-je ajouter / supprimer?"
+      please_tell_me_about_your_use_of_cyberdojo_and_ill_add_it_to_the: "Veuillez me dire à propos de votre utilisation de cyber-dojo et je vais l'ajouter à la"
+      blog_page: "page de blog"      
