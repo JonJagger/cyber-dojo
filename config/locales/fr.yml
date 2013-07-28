@@ -60,3 +60,8 @@ fr:
       fork: "bifurquer"
       test: "tester"
       download: "télécharger"      
+    donations:
+      individuals: "personnes"
+      companies: "entreprises"
+      schlumberger: "Schlumberger Pékin Geoscience Centre ont trouvé cyber-dojo un outil précieux pour la formation et le développement de notre communauté du logiciel et croyez le projet a un brillant avenir. Merci de votre contribution à nos efforts de formation. Nous sommes ravis de parrainer le projet cyber-dojo en contribuant de 1000 $."
+      thank_you: "merci"

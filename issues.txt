@@ -76,13 +76,23 @@ Seems to be a problem local to me.
 
 FUTURE-MINOR
 ------------
+It would be simpler if output and instructions were not mixed
+into kata.language and avatar.setup did an explicit
+save(kata.exercise.instructions)
+-----
+kata.dir should probably return a dir with a / catenated to the end.
+  This would simplify lines 10,26,74 (and probably more in exercises and languages)
+-----
+avatar.dir should probably return a dir with a / catenated to the end.
+  This would simplify line 80
+-----
 rename fork to branch?
 -----
 Edit help dialog needs to show fork icon. Or the word fork now that the
   overly subtle fork-icon has been dropped.
 -----
 Opening file when you start is the output file and it says something like
-  "code and tests have been submitted to the server..."
+  "please wait... initial code and tests have been submitted to the server..."
 -----
 The starting test file should explicitly say that the initial code
   is always the same for all exercises and just gives a very simple
@@ -93,7 +103,7 @@ The starting test file should explicitly say that the initial code
   output being the output from assert. So don't change that. Keep using
   assert.
 -----
-I'd like to record the ip-address of each animal in a dojo and have a
+Suppose I record the ip-address of each animal in a dojo and have a
   kata/edit heartbeat that maintains the ip-address timestamp.
   This will allow me to only offer animals to resume-from when those
   animals are not themselves already being used.
@@ -132,12 +142,6 @@ java-cucumber fails test/installation_tests.rb
 add tip to dashboard that setting secs_per_column to 999999
   collapses the columns into 1 if you want to see a non-spaced
   timeline of traffic lights.
------
-kata.dir should probably return a dir with a / catenated to the end.
-  This would simplify lines 10,26,74 (and probably more in exercises and languages)
------
-avatar.dir should probably return a dir with a / catenated to the end.
-  This would simplify line 80
 -----
 The Click-to-revert tip could appear when the current-traffic-light-count
   disappears (and disappear when it reappears). This would also mean
