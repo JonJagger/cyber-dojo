@@ -9,10 +9,14 @@ $(document).ready(function() {
     cd.newFile(); 
   });
   fileButtons.find('#rename').click(function() {
-    cd.renameFile("<%= @avatar.name %>");
+    var name = $(this).attr('id');
+    var title = $(this).text();        
+    cd.renameFile(title,"<%= @avatar.name %>");
   });
   fileButtons.find('#delete').click(function() {
-    cd.deleteFile("<%= @avatar.name %>");
+    var name = $(this).attr('id');
+    var title = $(this).text();        
+    cd.deleteFile(title, "<%= @avatar.name %>");
   });
 
 });
@@ -23,21 +27,24 @@ $(document).ready(function() {
   <table>
     <tr>
       <td>
-        <div class="button" id="new">
+        <div class="button"
+             id="new">
           <%= t("views.buttons.new") %>
         </div>
       </td>
     </tr>
     <tr>
       <td>
-        <div class="button" id="rename">
+        <div class="button"
+             id="rename">
           <%= t("views.buttons.rename") %>
         </div>
       </td>
     </tr>
     <tr>
       <td>
-        <div class="button" id="delete">
+        <div class="button"
+             id="delete">
           <%= t("views.buttons.delete") %>
         </div>
       </td>

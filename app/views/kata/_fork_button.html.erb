@@ -26,9 +26,11 @@ $(document).ready(function() {
       });
   };
   
-  $('#fork').click(function() {  
+  $('#fork').click(function() {
+    var name = $(this).attr('id');
+    var title = $(this).text();        
     $.get('/kata/fork_dialog', function(html) {
-      dialog_fork(html, 'fork').dialog('open');
+      dialog_fork(html, title).dialog('open');
     });
   });
 

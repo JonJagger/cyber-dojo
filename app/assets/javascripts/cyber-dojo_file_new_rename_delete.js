@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.newFile = function() {
+  cd.newFile = function(title) {
     // Append three random chars to the end of the filename.
     // There is no excuse not to rename it!
     cd.newFileContent('newfile_' + cd.random3(), 'Please rename me!');
@@ -11,13 +11,13 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.deleteFile = function(avatarName) {
-    cd.deleteFilePrompt(avatarName, true);
+  cd.deleteFile = function(title, avatarName) {
+    cd.deleteFilePrompt(title, avatarName, true);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.renameFile = function(avatarName) {
+  cd.renameFile = function(title, avatarName) {
     var oldFilename = cd.currentFilename();
     if (cd.cantBeRenamedOrDeleted(oldFilename)) {
       return;
@@ -39,7 +39,7 @@ var cyberDojo = (function(cd, $) {
       .dialog({
 		autoOpen: false,
 		width: 350,
-		title: cd.dialogTitle('rename'),
+		title: cd.dialogTitle(title),
 		modal: true,
 		buttons: {
 		  ok: function() {
@@ -79,7 +79,7 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.deleteFilePrompt = function(avatarName, ask) {
+  cd.deleteFilePrompt = function(title, avatarName, ask) {
     var filename = cd.currentFilename();
     if (cd.cantBeRenamedOrDeleted(filename)) {
       return;
@@ -94,7 +94,7 @@ var cyberDojo = (function(cd, $) {
 		.dialog({
 		  autoOpen: false,
 		  width: 350,
-		  title: cd.dialogTitle('delete'),
+		  title: cd.dialogTitle(title),
 		  modal: true,
 		  buttons: {
 			ok: function() {

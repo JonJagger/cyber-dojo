@@ -4,8 +4,10 @@
 $(document).ready(function() {
 
   $('#help').click(function() {
+    var name = $(this).attr('id');
+    var title = $(this).text();        
     $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(data) {
-      cd.dialog(data, null, 'help').dialog('open');
+      cd.dialog(data, null, title).dialog('open');
     });
   });
 
