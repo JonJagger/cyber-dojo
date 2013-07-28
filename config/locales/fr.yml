@@ -34,7 +34,11 @@ fr:
       setup: "créer un nouvel exercice"
       enter_a_practice_id: "reproduire un exercice"
       a_place_to_practice: "un endriot pour <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a> la programmation"
-      please_donate: "If you find cyber-dojo useful please<br/>make a donation. All donations are<br/>used solely to buy <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>   <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>. Thank you."            
+      please_donate: "If you find cyber-dojo useful please<br/>make a donation.
+                      All donations are<br/>used solely to buy
+                      <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
+                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>.
+                      Thank you."            
       your_animal_is: "Votre animal est le"      
       revert: "revenir"
       click_to_revert: "Cliquez<br/>pour &rarr;<br/>revenir<br/>"
@@ -78,5 +82,19 @@ fr:
     donations:
       individuals: "personnes"
       companies: "entreprises"
-      schlumberger: "Schlumberger Pékin Geoscience Centre ont trouvé cyber-dojo un outil précieux pour la formation et le développement de notre communauté du logiciel et croyez le projet a un brillant avenir. Merci de votre contribution à nos efforts de formation. Nous sommes ravis de parrainer le projet cyber-dojo en contribuant de 1000 $."
+      schlumberger: "Schlumberger Pékin Geoscience Centre ont trouvé cyber-dojo
+                     un outil précieux pour la formation et le développement de
+                     notre communauté du logiciel et croyez le projet a un
+                     brillant avenir. Merci de votre contribution à nos efforts
+                     de formation. Nous sommes ravis de parrainer le projet
+                     cyber-dojo en contribuant de 1000 $."
       thank_you: "merci"
+    faqs:
+      why_dont_you_add_syntax_highlighting: "Pourquoi n'avez-vous pas ajouter la coloration syntaxique?"
+      why_dont_you_add_auto_refactoring: "Why don't you add auto refactoring ?"
+      why_dont_you_add_dot_dot_dot: "Pourquoi ajoutez-vous pas ... ?"
+      no_listen: "No. Écoutez. Arrêtez d'essayer d'aller plus vite, commencer à essayer d'aller plus <em>lentement</em>."
+      dont_think_about_finishing: "Ne pas penser à la finition, penser à <em>améliorer</em>."
+      think_about_practising: "Pensez à <em>pratiquer</em> en <em>équipe</em>."
+      thats_what_cyberdojo_is_built_for: "C'est ce cyber-dojo est construit pour."
+                  
