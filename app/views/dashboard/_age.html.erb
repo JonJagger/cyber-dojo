@@ -1,2 +1,4 @@
 
-<%= formatted_age_from_seconds(@kata.age_in_seconds) %>
+<span title="<%= t('views.dashboard.age_dhms_tip') %>">
+  <%= formatted_age_from_seconds(@kata.age_in_seconds) %>
+</span>

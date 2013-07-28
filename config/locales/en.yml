@@ -128,3 +128,6 @@ en:
       what_features_should_i_add_remove: "What features should I add/remove?"
       please_tell_me_about_your_use_of_cyberdojo_and_ill_add_it_to_the: "Please tell me about your use of cyber-dojo and I'll add it to the"
       blog_page: "blog page"
+      
+    dashboard:
+      age_dhms_tip: "days:hours:minutes:seconds"

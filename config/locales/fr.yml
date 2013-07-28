@@ -127,4 +127,7 @@ fr:
       what_didnt: "Ce qui n'a pas?"
       what_features_should_i_add_remove: "Quelles caractéristiques dois-je ajouter / supprimer?"
       please_tell_me_about_your_use_of_cyberdojo_and_ill_add_it_to_the: "Veuillez me dire à propos de votre utilisation de cyber-dojo et je vais l'ajouter à la"
-      blog_page: "page de blog"      
+      blog_page: "page de blog"
+      
+    dashboard:
+      age_dhms_tip: "jours:heures:minutes:secondes"
