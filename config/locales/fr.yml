@@ -12,7 +12,8 @@ fr:
       September: "Septembre"
       October: "Octobre"
       November: "Novembre"
-      December: "Décembre"      
+      December: "Décembre"
+      
     avatars:
       alligator: "alligator"
       buffalo: "buffle"
@@ -29,7 +30,8 @@ fr:
       raccoon: "raton laveur"
       snake: "serpent"
       wolf: "loup"
-      zebra: "zèbre"    
+      zebra: "zèbre"
+      
     labels:
       setup: "créer un nouvel exercice"
       enter_a_practice_id: "reproduire un exercice"
@@ -52,6 +54,7 @@ fr:
       traffic_light: "feu"      
       language: "language?"
       exercise: "exercice?"
+      
     buttons:
       setup: "créer"
       ok: "ok"
@@ -78,7 +81,8 @@ fr:
       test: "tester"
       download: "télécharger"
       disable: "désactiver"
-      enable: "permettre"      
+      enable: "permettre"
+      
     donations:
       individuals: "personnes"
       companies: "entreprises"
@@ -89,6 +93,7 @@ fr:
                      de formation. Nous sommes ravis de parrainer le projet
                      cyber-dojo en contribuant de 1000 $."
       thank_you: "merci"
+      
     faqs:
       why_dont_you_add_syntax_highlighting: "Pourquoi n'avez-vous pas ajouter la coloration syntaxique?"
       why_dont_you_add_auto_refactoring: "Why don't you add auto refactoring ?"
@@ -97,4 +102,18 @@ fr:
       dont_think_about_finishing: "Ne pas penser à la finition, penser à <em>améliorer</em>."
       think_about_practising: "Pensez à <em>pratiquer</em> en <em>équipe</em>."
       thats_what_cyberdojo_is_built_for: "C'est ce cyber-dojo est construit pour."
-                  
+            
+    kata_help:
+      opens_a_home_page: "ouvre une page d'accueil"
+      opens_a_dashboard_page: "ouvre une page de tableau de bord"
+      opens_a_revert_dialog: "ouvre un dialogue revenir"
+      results_go_to: "résultats vont à"
+      the_tests_ran_but_one_or_more_failed: "les tests ont couru, mais un ou plusieurs ont échoué"
+      the_tests_could_not_be_run: "les tests ne peuvent pas être exécutés"
+      the_tests_ran_and_all_passed: "les tests ont couru et ont tous passé"
+      file: "fichier"
+      opens_the_file: "ouvre la fichier"
+      runs_the_tests: "exécute les tests"
+      open_the_next_file: "ouvrir le fichier suivant"
+      open_the_previous_file: "ouvrir le fichier précédent"
+      think_about_improving_not_finishing: "penser à améliorer, ne pas finir"      

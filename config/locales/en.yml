@@ -1,5 +1,5 @@
 en:
-  views:    
+  views:
     months:
       January: "January"
       February: "February"
@@ -13,6 +13,7 @@ en:
       October: "October"
       November: "November"
       December: "December"
+      
     avatars:
       alligator: "alligator"
       buffalo: "buffalo"
@@ -30,6 +31,7 @@ en:
       snake: "snake"
       wolf: "wolf"
       zebra: "zebra"
+      
     labels:
       setup: "get a new practice-id"
       enter_a_practice_id: "enter a practice id"
@@ -52,6 +54,7 @@ en:
       traffic_light: "traffic light"
       language: "language?"
       exercise: "exercise?"
+      
     buttons:
       setup: "setup"
       ok: "ok"
@@ -79,6 +82,7 @@ en:
       download: "download"
       disable: "disable"
       enable: "enable"
+      
     donations:
       individuals: "individuals"
       companies: "companies"
@@ -89,6 +93,7 @@ en:
                      efforts. We are delighted to sponsor the cyber-dojo project
                      by contributing $1000."
       thank_you: "thank you"
+      
     faqs:
       why_dont_you_add_syntax_highlighting: "Why don't you add syntax highlighting ?"
       why_dont_you_add_auto_refactoring: "Why don't you add auto-refactoring ?"
@@ -97,3 +102,18 @@ en:
       dont_think_about_finishing: "Don't think about finishing, think about <em>improving</em>."
       think_about_practising: "Think about <em>practising</em> as a <em>team</em>."
       thats_what_cyberdojo_is_built_for: "That's what cyber-dojo is built for."
+      
+    kata_help:
+      opens_a_home_page: "opens a home page"
+      opens_a_dashboard_page: "opens a dashboard page"
+      opens_a_revert_dialog: "opens a revert dialog"
+      results_go_to: "results go to"
+      the_tests_ran_but_one_or_more_failed: "the tests ran but one or more failed"
+      the_tests_could_not_be_run: "the tests could not be run"
+      the_tests_ran_and_all_passed: "the tests ran and all passed"
+      file: "file"
+      opens_the_file: "opens the file"
+      runs_the_tests: "runs the tests"
+      open_the_next_file: "open the next file"
+      open_the_previous_file: "open the previous file"
+      think_about_improving_not_finishing: "think about improving, not finishing"

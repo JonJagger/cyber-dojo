@@ -1,5 +1,5 @@
 
-<table data-width="550">
+<table data-width="650">
   
   <tr>
     <td>
@@ -12,7 +12,7 @@
                   <%= logo_image(57,'') %>
                 </td>
                 <td>
-                  opens a home page
+                  <%= t("views.kata_help.opens_a_home_page") %>
                 </td>
               </tr>
             </table>
@@ -24,7 +24,7 @@
                   <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
                 </td>
                 <td>
-                  opens a dashboard page
+                  <%= t("views.kata_help.opens_a_dashboard_page") %>
                 </td>
               </tr>
             </table>
@@ -45,7 +45,7 @@
                   &nbsp;
                 </td>
                 <td>
-                  opens a revert dialog
+                  <%= t("views.kata_help.opens_a_revert_dialog") %>                  
                 </td>
               </tr>
             </table>
@@ -61,10 +61,13 @@
         <table>
           <tr>
             <td>
-              <input type="submit" class="button" id="test" value="test"/>
+              <input type="submit"
+                     class="button"
+                     id="test"
+                     value="<%= t("views.buttons.test") %>"/>
             </td>
             <td>
-              &nbsp;results go to the
+              &nbsp;<%= t("views.kata_help.results_go_to") %>
             </td>
             <td>
               <div class="filename selected">
@@ -74,9 +77,6 @@
                        value="filename"/>
                 <label><i>output</i></label>
               </div>
-            </td>
-            <td>
-              &nbsp;file
             </td>
           </tr>
         </table>
@@ -99,9 +99,12 @@
               <%= traffic_light_image('green',22,65) %>
             </td>
             <td>
-              &nbsp;<span style="color:red;">red</span> means the tests ran but one or more failed<br/> 
-              &nbsp;<span style="color:#FC3;">amber</span> means the tests could not be run<br/>
-              &nbsp;<span style="color:#0F0;">green</span> means the tests ran and all passed
+              &nbsp;<span style="color:red;"><%= t("views.labels.red") %></span>
+              <%= t('views.kata_help.the_tests_ran_but_one_or_more_failed') %><br/> 
+              &nbsp;<span style="color:#FC3;"><%= t("views.labels.amber") %></span>
+              <%= t('views.kata_help.the_tests_could_not_be_run') %><br/>
+              &nbsp;<span style="color:#0F0;"><%= t("views.labels.green") %></span>
+              <%= t('views.kata_help.the_tests_ran_and_all_passed') %>
             </td>
           </tr>
         </table>
@@ -120,12 +123,12 @@
                        type="radio"'
                        checked="checked"
                        value="filename"/>
-                  <label>filename</label>
+                  <label><%= t('views.kata_help.file') %></label>
               </div>
             </td>
             <td>
               <div>
-                &nbsp;opens a file
+                &nbsp;<%= t('views.kata_help.opens_the_file') %>
               </div>
               </td>
           </tr>
@@ -137,9 +140,9 @@
   <tr>
     <td>
       <div class="panel">
-        <b>alt-t</b> runs the <b><u>t</u></b>ests <br/> 
-        <b>alt-f</b> cycles <b><u>f</u></b>orwards to the next file<br/>
-        <b>alt-b</b> cycles <b><u>b</u></b>ackwards to the previous file
+        <b>alt-t</b> <%= t('views.kata_help.runs_the_tests') %><br/> 
+        <b>alt-f</b> <%= t('views.kata_help.open_the_next_file') %><br/>
+        <b>alt-b</b> <%= t('views.kata_help.open_the_previous_file') %>
       </div>
     </td>
   </tr>
@@ -147,7 +150,7 @@
   <tr>
     <td>
       <div class="panel">
-        think about improving, not finishing
+        <%= t('views.kata_help.think_about_improving_not_finishing') %>
       </div>
     </td>
   </tr>
