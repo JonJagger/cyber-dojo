@@ -59,7 +59,9 @@ fr:
       help: "aider"
       fork: "bifurquer"
       test: "tester"
-      download: "télécharger"      
+      download: "télécharger"
+      disable: "désactiver"
+      enable: "permettre"      
     donations:
       individuals: "personnes"
       companies: "entreprises"

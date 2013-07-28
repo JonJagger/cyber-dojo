@@ -44,9 +44,9 @@ $(document).ready(function() {
   $('#auto_refresh').click(function() {
     auto_refresh_enabled = !auto_refresh_enabled;
     if (auto_refresh_enabled) {
-      $(this).text("enable");
+      $(this).text("<%= t('views.buttons.enable') %>");
     } else {
-      $(this).text("disable");
+      $(this).text("<%= t('views.buttons.disable') %>");
     }
   });
   

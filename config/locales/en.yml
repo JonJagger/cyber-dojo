@@ -60,6 +60,8 @@ en:
       fork: "fork"
       test: "test"
       download: "download"
+      disable: "disable"
+      enable: "enable"
     donations:
       individuals: "individuals"
       companies: "companies"
