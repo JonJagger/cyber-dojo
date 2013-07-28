@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
   
-  function dialog_fork() {  
+  function dialog_fork(title) {  
     var html = cd.divPanel(
         'Click ok to create a new cyber-dojo, with a new id, '
       + "with starting files copied from traffic-light <%= @now_tag %>.");
@@ -13,7 +13,7 @@ $(document).ready(function() {
       .dialog({
         autoOpen: false,
         width: 500,
-        title: cd.dialogTitle('fork'),
+        title: cd.dialogTitle(title),
         modal: true,
         buttons: {
           ok: function() {
@@ -32,7 +32,9 @@ $(document).ready(function() {
   };
   
   $('#fork').click(function() {
-    dialog_fork().dialog('open');
+    var name = $(this).attr('id');
+    var title = $(this).text();        
+    dialog_fork(title).dialog('open');
   });
 
 });
