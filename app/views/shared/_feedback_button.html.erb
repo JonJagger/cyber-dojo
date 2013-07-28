@@ -4,7 +4,6 @@
 $(document).ready(function() {
 
   $('#feedback').click(function() {  
-    var name = $(this).attr('id');
     var title = $(this).text();      
     $.get('/dojo/button_dialog/feedback', function(html) {
       cd.dialog(html, null, title).dialog('open');

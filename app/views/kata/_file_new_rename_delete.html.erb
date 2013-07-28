@@ -9,12 +9,10 @@ $(document).ready(function() {
     cd.newFile(); 
   });
   fileButtons.find('#rename').click(function() {
-    var name = $(this).attr('id');
     var title = $(this).text();        
     cd.renameFile(title,"<%= @avatar.name %>");
   });
   fileButtons.find('#delete').click(function() {
-    var name = $(this).attr('id');
     var title = $(this).text();        
     cd.deleteFile(title, "<%= @avatar.name %>");
   });
