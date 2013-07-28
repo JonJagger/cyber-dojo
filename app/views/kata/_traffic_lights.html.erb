@@ -4,8 +4,9 @@
 $(document).ready(function() {
   
   $('.revert-traffic-light').click(function() {
+    var title = "<%= t('views.labels.revert') %>";          
     var tag = $(this).data('tag');
-	cd.dialog_revert("<%=@kata.id%>", "<%=@avatar.name%>", tag);
+	cd.dialog_revert(title, "<%=@kata.id%>", "<%=@avatar.name%>", tag);
   });
 
 });

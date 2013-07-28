@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(id, avatarName, tag) {    
+  cd.dialog_revert = function(title, id, avatarName, tag) {    
 
 	var self = cd.dialog_revert;
 	
@@ -123,12 +123,12 @@ var cyberDojo = (function(cd, $) {
 	
 	self.createRevertDialog = function(data) {
 	  return self.previewHtml(data).dialog({
-		  title: cd.dialogTitle('revert?'),
+		  title: cd.dialogTitle(title),
 		  autoOpen: false,
 		  width: 950,
 		  modal: true,
 		  buttons: {
-			revert: function() {
+			ok: function() {
 			  var newFilename;
 			  $.each(cd.filenames(), function(n, filename) {
 				if (filename !== 'output') {
