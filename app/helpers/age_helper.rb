@@ -1,6 +1,8 @@
 
 module AgeHelper
 
+  # Used on dashboard
+
   def age_from_seconds(secs)
     [secs / (60*60*24), (secs / (60*60)) % 24, (secs / 60) % 60, secs % 60]
   end
