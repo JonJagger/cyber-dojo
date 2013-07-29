@@ -1,5 +1,5 @@
-run.tests.output : run.tests
+run.tests.output : makefile run.tests
 	./run.tests
 
-run.tests : *.c 
+run.tests : makefile *.c *.h
 	gcc -Wall -Werror -O -std=c99 *.c -o run.tests
