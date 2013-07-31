@@ -76,7 +76,6 @@ en:
       new: "new"
       rename: "rename"
       delete: "delete"
-      help: "help"
       fork: "fork"
       test: "test"
       download: "download"

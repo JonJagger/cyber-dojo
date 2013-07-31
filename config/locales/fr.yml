@@ -76,7 +76,6 @@ fr:
       new: "neuf"
       rename: "renommer"
       delete: "effacer"
-      help: "aider"
       fork: "bifurquer"
       test: "tester"
       download: "télécharger"

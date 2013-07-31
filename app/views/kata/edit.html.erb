@@ -46,12 +46,19 @@ $(document).ready(function() {
           <br/>
           <%= render :partial => 'file_new_rename_delete' %>
         </div>        
-        <div class="panel">
-          <%= render :partial => 'help_fork_feedback' %>
-        </div>
+        <div class="edgeless panel"></div>
       </td>
       <td>
         <%= render :partial => 'editor' %>
+      </td>
+    </tr>
+    <tr class="valign-top">
+      <td align="center" class="valign-center">
+        <div class="panel">
+          <%= render :partial => 'fork_revert' %>
+        </div>
+      </td>
+      <td>
         <%= render :partial => 'traffic_lights' %>
       </td>
     </tr>

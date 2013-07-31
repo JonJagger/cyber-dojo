@@ -5,9 +5,14 @@
   }
 }
 
-#help_fork_feedback_buttons {
-  #feedback, #fork, #help {
-    @include font-size-tiny();  
+#help {
+  @include font-size-small();
+  @include rounded-corner(14px);    
+}
+
+#fork_revert_buttons {
+  #fork, #revert {
+    @include font-size-small();  
   }
 }
 

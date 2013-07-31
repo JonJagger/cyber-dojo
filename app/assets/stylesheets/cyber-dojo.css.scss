@@ -53,8 +53,8 @@ body
   color: $lighter-color;
   border: {
     style: dotted;
-    width: 2px;
-    color: lighten($darker-color, 15%);
+    width: 1px;
+    color: lighten($darker-color, 10%);
     right: none;
     bottom: none;    
   }
@@ -160,12 +160,12 @@ div[class~="button"]
 {
   background: $lighter-color;
   color: $darker-color;
-  width: 45em;
+  width: 46em;
   font-weight: 500;
 }
 
 .line_numbers,
-.file_content { height: 33em; }
+.file_content { height: 34em; }
 
 .line_numbers, .file_content, #instructions
 {
