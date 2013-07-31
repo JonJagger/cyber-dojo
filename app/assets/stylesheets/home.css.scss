@@ -69,8 +69,8 @@ a:link, a:visited
   @include font-size-medium();
 }
 
-#about, #basics, #donations, #faqs, #feedback, #links,
-#source, #refactoring, #recruiting, #tips, #why
+#about, #basics, #donations, #faqs, #feedback,
+#links, #source, #tips, #why
 {
   @include font-size-tiny();
 }

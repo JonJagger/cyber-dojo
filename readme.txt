@@ -1,6 +1,7 @@
 
 Setup a coding practice
 =======================
+o) from the home page, click the [setup] button
 o) choose your language (eg C++)
    Each language corresponds to a sub-directory of cyberdojo/languages/
    (see below)
@@ -8,20 +9,22 @@ o) choose your exercise (eg Prime Factors)
    Each exercise corresponds to a sub-directory of cyberdojo/exercises/
    (see below)
 o) click the [ok] button.
-You will get a 6-character id (the full id is actually 10 characters
-long but statistically 6 chars is enough for uniqueness).
+o) You will get a 6-character id (the full id is actually 10 characters
+   long but statistically 6 chars is enough for uniqueness).
 
 
 Start coding
 ============
-Enter the 6-character id (case insensitive) on each participating computer
-and click the [start] button.
-The server will assign each computer an animal (eg Panda).
-The animal provides identity for each participating computer.
-Each computer edits the code files and the test files as they work on the
-chosen exercise. Each computer presses the [test] button to see if the tests
-pass or not. A new traffic-light will appear at the bottom (progressing
-left-to-right, oldest-to-newest).
+o) Enter the 6-character id (case insensitive) on <em>each</em> participating
+   computer and click the [start] button.
+o) The server will assign each computer an animal (eg Panda).
+   The animal provides identity for each participating computer.
+o) On each computer do the chosen exercise by editing the test files and the
+   code files, and pressing the [test] button to see if the
+   tests pass or not.
+o) Every time the [test] button is pressed a new traffic-light appeard at
+   the bottom right.
+o) Traffic-lights progress left-to-right, oldest-to-newest.
 
 
 Traffic Lights
@@ -43,9 +46,9 @@ overloaded with too many concurrent practice sessions)
 
 Dashboard-Review
 ================
-You can get to the dashboard page in two ways.
-o) click the animal image at the top left of the test-coding page, or
-   the diff page.
+You can get to the dashboard page in three ways.
+o) from the test page, click the animal image at the top left
+o) from the diff page, click the animal image at the top left
 o) from the home page, enter the practice session id and click the [review]
    button.
 
@@ -179,6 +182,8 @@ Check for any gem changes...
 >bundle install
 Finally, don't forget to restart apache...
 >service apache2 restart
+If you have the file /var/www/cyberdojo/pull.sh then you can just
+run that to execute all the above steps
 
    
 Versions
@@ -427,10 +432,10 @@ traffic light.
 
 Only offering installed languages
 =================================
-The intention is to use a specific structure for the contents of the
+The intention is (maybe) to use a specific structure for the contents of the
 languages' manifests to enable an automated check to see what is correctly
 installed and working, and to only offer installed and working languages when
-you setup a new coding practice. However at the moment when you setup a
+you setup a new coding practice. At the moment when you setup a
 new coding practice all languages/ subfolders are offered.
 
 You can test if a languages' initial fileset is correctly setup as follows
@@ -458,8 +463,8 @@ o) If the three tests return three amber traffic-lights then
 o) If the three tests return any other combination of traffic-lights
    it will assume the language is installed but not working.
 
-This approach has a flaw: what if two or more files contain '42'.
-This tends to happen for the BDD style testing.
+This approach has a flaw: what if two or more files contain '42'...
+This tends to happen for BDD style testing.
 
 
 Getting dojos off the VirtualBox TurnKey Linux server
@@ -518,4 +523,5 @@ o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
    Michel - I really appreciate all your help and encouragement.
 o) James Grenning uses Cyber-Dojo a lot, via his own Turnkey S3 cloud servers,
-   and has been an awesome 'customer'.
+   and has provided awesome feedback and made several very generous donations.
+   
