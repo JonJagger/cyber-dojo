@@ -15,6 +15,7 @@
  *= depend_on colors.css.scss
  *= depend_on fonts.css.scss
  *= depend_on force_scrollbars.css.scss
+ *= depend_on shared.css.scss
  *= depend_on cyber-dojo.css.scss
  *= depend_on home.css.scss
  *= depend_on setup.css.scss
@@ -22,7 +23,6 @@
  *= depend_on dashboard.css.scss
  *= depend_on diff.css.scss
  *= depend_on reverter.css.scss
- *= depend_on shared.css.scss
  *= depend_on jquery-ui-1.8.16.custom.css.scss
  *= require locales
  *= require_self
@@ -32,6 +32,7 @@
 @import "colors.css.scss";
 @import "fonts.css.scss";
 @import "force_scrollbars.css.scss";
+@import "shared.css.scss";
 @import "cyber-dojo.css.scss";
 @import "home.css.scss";
 @import "setup.css.scss";
@@ -39,5 +40,4 @@
 @import "dashboard.css.scss";
 @import "diff.css.scss";
 @import "reverter.css.scss";
-@import "shared.css.scss";
 @import "jquery-ui-1.8.16.custom.css.scss";
