@@ -117,7 +117,7 @@ class DojoControllerTest  < IntegrationTest
   # - - - - - - - - - - - - - - - - - - - - - -
   
   test "button dialogs" do
-    buttons = %w( about basics donations faqs feedback links source recruiting refactoring tips why )
+    buttons = %w( about basics donations faqs feedback links source tips why )
     buttons.each do |name|
       get 'dojo/button_dialog', {
         :id => name

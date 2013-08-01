@@ -74,7 +74,7 @@ class GitDiffViewTests < ActionController::TestCase
       
     end
     
-    diffs = git_diff_prepare(avatar, view, MockUuidFactory.new(["1","2","3"]))
+    diffs = git_diff_prepare(view, MockUuidFactory.new(["1","2","3"]))
     expected_diffs = [
       {
         :id => "id_1",
