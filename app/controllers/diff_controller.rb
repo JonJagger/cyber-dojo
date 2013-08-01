@@ -10,7 +10,7 @@ class DiffController < ApplicationController
     @now_traffic_light = @traffic_lights[@now_tag - 1]        
     visible_files = @avatar.visible_files(@now_tag)
     diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)    
-    @diffs = git_diff_prepare(@avatar, diffed_files)    
+    @diffs = git_diff_prepare(diffed_files)    
     @current_filename_id = most_changed_lines_file_id(@diffs, params[:current_filename])    
     @title = id[0..4] + ' ' + @avatar.name + ' ' + 'diff' 
   end

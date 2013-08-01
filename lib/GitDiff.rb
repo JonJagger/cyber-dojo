@@ -11,7 +11,11 @@ module GitDiff
   
   def git_diff_view(avatar, was_tag, now_tag, visible_files = nil)
       visible_files ||= avatar.visible_files(now_tag)      
-      diff_lines = avatar.diff_lines(was_tag, now_tag)      
+      diff_lines = avatar.diff_lines(was_tag, now_tag)
+      unit_testable_git_diff_view(diff_lines, visible_files)
+  end
+  
+  def unit_testable_git_diff_view(diff_lines, visible_files)
       view = { }      
       diffs = GitDiffParser.new(diff_lines).parse_all           
       diffs.each do |sandbox_name,diff|        
@@ -45,7 +49,7 @@ module GitDiff
     end
   end
   
-  def git_diff_prepare(avatar, diffed_files, uuid_factory = UuidFactory.new)
+  def git_diff_prepare(diffed_files, uuid_factory = UuidFactory.new)
     diffs = [ ]
     diffed_files.sort.each do |name,diff|
       id = 'id_' + uuid_factory.create_uuid

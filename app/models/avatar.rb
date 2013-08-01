@@ -83,7 +83,21 @@ class Avatar
   def diff_lines(was_tag, now_tag)
     # N.B. visible_files are saved to the sandbox dir individually.
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-    @git.diff(dir, command)
+    output = @git.diff(dir, command)
+    # During the Chennai Cisco training 31 July 2013 I got a server-error when
+    # trying to view a diff. The server log contained this...
+    # Completed 500 Internal Server Error in 56ms
+    #  
+    # ArgumentError (invalid byte sequence in UTF-8):
+    #   lib/LineSplitter.rb:23:in `split'
+    #   lib/LineSplitter.rb:23:in `line_split'
+    #   lib/GitDiffParser.rb:12:in `initialize'
+    #   lib/GitDiff.rb:16:in `new'
+    #   lib/GitDiff.rb:16:in `git_diff_view'
+    #   app/controllers/diff_controller.rb:12:in `show'
+    #
+    # This is the same issue as in sandbox.test() so same fix
+    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)        
   end
   
   def sandbox
