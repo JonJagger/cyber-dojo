@@ -23,14 +23,12 @@ class DashboardController < ApplicationController
   
   def download
     # an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
-    # however, I flatten out this inner/outer folder structure
-    # so the resulting archive is 01FE818E86.tar.gz
     uuid = Uuid.new(id)
     inner = uuid.inner
     outer = uuid.outer
-    cd_cmd = "cd #{root_dir}/katas/#{inner}"
-    zip_cmd = "find #{outer} -print | xargs tar -s /#{outer}/#{inner}#{outer}/ -czf ../../zips/#{id}.tar.gz"
-    system(cd_cmd + ";" + zip_cmd)
+    cd_cmd = "cd #{root_dir}/katas"
+    tar_cmd = "tar -zcf ../zips/#{id}.tar.gz #{inner}/#{outer}"
+    system(cd_cmd + ";" + tar_cmd)
     send_file "#{root_dir}/zips/#{id}.tar.gz", :type=>'application/zip'
   end
 
