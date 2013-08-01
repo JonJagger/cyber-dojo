@@ -6,6 +6,15 @@
   padding: none;
   margin: 0;
   margin-top: 0.5em;
+  .tag_red {
+    color: $red;  
+  }
+  .tag_amber {
+    color: $amber;  
+  }  
+  .tag_green {
+    color: $green;
+  }
 }
 
 #revert_content

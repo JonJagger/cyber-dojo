@@ -19,14 +19,14 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
     self.revertTagInfo = function(tag) {
-      var color = tag.colour;
+      var colour = tag.colour;
       var avatarImage =
         '<img ' +
           'class="avatar_image"' +
           'height="47"' +
           'width="47"' +
           'src="/images/avatars/' + avatarName + '.jpg">';
-      var filename = 'traffic_light_' + color;
+      var filename = 'traffic_light_' + colour;
       if (tag.revert_tag !== null) {
         filename += '_revert';
       }
@@ -35,7 +35,7 @@ var cyberDojo = (function(cd, $) {
         " width='20'" +
         " height='62'/>";
       var trafficLightNumber =     
-        '<span class="tag_count">' +
+        '<span class="tag_' + colour + '">' +
           tag.number +
         '</span>';
       return cd.makeTable(avatarImage, trafficLight, trafficLightNumber);
