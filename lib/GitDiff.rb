@@ -78,6 +78,9 @@ module GitDiff
   #-----------------------------------------------------------
   
   def most_changed_lines_file_id(diffs, current_filename)
+    # prefers to stay on the same file if it still exists    
+    # in the now_tag (it could have been deleted or renamed)
+    # and has at least one red or green change.
     chosen_diff = nil
     current_filename_diff = diffs.find { |diff| diff[:name] == current_filename }
     
