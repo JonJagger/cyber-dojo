@@ -1,20 +1,22 @@
 
-<table class="align-center">
+<table class="align-center" class="valign-center">
+  <% width = 16 %>
+  <% height = width*3 %>
   <tr>
-    <td class="align-center">
-      <%= unlinked_traffic_light(@was_traffic_light,18,48) %>
+    <td>
+      <%= unlinked_traffic_light(@was_traffic_light,width,height) %>
     </td>
     <td>
       <input type="text" id="was_tag_number" value="<%= @was_tag %>" />
     </td>
     <td>
-      &rarr;
+      &nbsp;&rarr;&nbsp;
     </td>
     <td>
       <input type="text" id="now_tag_number" value="<%= @now_tag %>" />
     </td>
-    <td class="align-center">
-      <%= unlinked_traffic_light(@now_traffic_light,18,48) %>
+    <td>
+      <%= unlinked_traffic_light(@now_traffic_light,width,height) %>
     </td>
   </tr>
 </table>      
