@@ -1,0 +1,22 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  $('#help').click(function() {
+    var title = $(this).text();        
+    $.get('/dashboard/help_dialog', function(data) {
+      cd.dialog(data, null, title).dialog('open');
+    });
+  });
+
+});
+
+//--></script>
+
+<div class="button"
+     title="Show help"
+     id="help">
+  ?
+</div>
+

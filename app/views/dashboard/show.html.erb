@@ -5,19 +5,28 @@
     <td>
       <%= render :partial => 'shared/logo_with_id' %>
     </td>
-    
     <td>
-      <div id="age">      
-        <%= render :partial => 'age' %>
-      </div>
+      &nbsp;
     </td>
-        
+    <td>
+      <%= render :partial => 'help_button' %>
+    </td>
+    <td>
+      &nbsp;
+    </td>
     <td class="valign-top">
       <%= render :partial => 'column_controls' %>      
     </td>
     
     <td class="valign-top">
       <table class="panel">
+        <tr>
+          <td>
+            <div id="age">      
+              <%= render :partial => 'age' %>
+            </div>
+          </td>
+        </tr>
         <tr>
           <td>
             <%= render :partial => 'tips_button' %>

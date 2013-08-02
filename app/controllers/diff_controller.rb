@@ -22,6 +22,11 @@ class DiffController < ApplicationController
     end
   end
   
+  def help_dialog
+    @avatar_name = params[:avatar_name]
+    render :layout => false
+  end
+  
 private
 
   def setup_parameters
