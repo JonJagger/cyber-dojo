@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
 private
 
   def seconds_per_column
-    positive(:seconds_per_column, 30)
+    positive(:seconds_per_column, 60)
   end
   
   def maximum_columns
