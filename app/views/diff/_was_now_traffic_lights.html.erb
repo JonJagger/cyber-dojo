@@ -1,16 +1,9 @@
 
-<table>
+<table class="align-center">
   <tr>
     <td class="align-center">
       <%= unlinked_traffic_light(@was_traffic_light,18,48) %>
     </td>
-    <td>
-    </td>
-    <td class="align-center">
-      <%= unlinked_traffic_light(@now_traffic_light,18,48) %>
-    </td>
-  </tr>        
-  <tr>
     <td>
       <input type="text" id="was_tag_number" value="<%= @was_tag %>" />
     </td>
@@ -19,6 +12,9 @@
     </td>
     <td>
       <input type="text" id="now_tag_number" value="<%= @now_tag %>" />
+    </td>
+    <td class="align-center">
+      <%= unlinked_traffic_light(@now_traffic_light,18,48) %>
     </td>
   </tr>
 </table>      
