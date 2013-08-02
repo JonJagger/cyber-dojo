@@ -28,7 +28,7 @@
 }
 
 #age {
-  @include font-size-tiny();
+  @include font-size-small();
   text-align: left;
   margin: 0.2em; 
 }

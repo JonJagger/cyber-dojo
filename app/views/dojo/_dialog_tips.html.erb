@@ -1,5 +1,5 @@
-    
-<table data-width="750">
+
+<table data-width="750" data-height="600">
   <tr>
     <td>
       <div class="panel">
@@ -12,21 +12,36 @@
   </tr>
   
   <tr>
-    <td>
-      <div class="panel">
-        When everyone is at green set a challenge to either<br/>
-        &nbsp;&nbsp;&bull; find some code you can delete and the tests still all pass!<br/>
-        &nbsp;&nbsp;&bull; find a bug, and write a failing test for it.
-      </div>
-    </td>
-  </tr>
-
-  <tr>
     <td>  
       <div class="panel">
         Spend time doing a review after each practice.
-        Use the dashboard. Use the diff-view to step through the traffic-lights.
-        Then start again! 
+        Use the dashboard. Use the diff-view. Step through the traffic-lights.
+        Look for...<br/>
+        
+        <% width=10 %>
+        <% height=width*3 %>
+        &nbsp;&nbsp;&bull; 
+          <%= traffic_light_image('red',width,height) %>
+          &rarr;&nbsp;
+          <%= traffic_light_image('green',width,height) %>
+          progressions as evidence of
+          starting with a failing test.<br/>
+        
+        &nbsp;&nbsp;&bull; 
+          <%= traffic_light_image('green',width,height) %>          
+          &rarr;&nbsp;
+          <%= traffic_light_image('green',width,height) %>          
+          progressions as evidence of
+          refactoring.<br/>        
+        
+        &nbsp;&nbsp;&bull; 
+          <%= traffic_light_image('amber',width,height) %>                    
+          &rarr;&nbsp;
+          <%= traffic_light_image('amber',width,height) %>                    
+          progressions as evidence of
+          overly ambitious steps.<br/>
+        
+        After the review, start again! 
       </div>
     </td>
   </tr>
@@ -44,10 +59,9 @@
   <tr>
     <td>
       <div class="panel">
-        Why not use cyber-dojo as part of your recruitment process?
-        See how five candiates fare technically (and socially)
-        in a cyber-dojo. Pair each one with a developer from the team
-        they're hoping to join. Do five iterations swapping partners each time.
+        When everyone is at green set a challenge to either<br/>
+        &nbsp;&nbsp;&bull; find some code you can delete and the tests still all pass!<br/>
+        &nbsp;&nbsp;&bull; find a bug, and write a failing test for it.
       </div>
     </td>
   </tr>
@@ -65,12 +79,30 @@
   </tr>
   
   <tr>
+    <td>
+      <div class="panel">
+        Why not use cyber-dojo as part of your recruitment process?
+        See how five candiates fare technically (and socially)
+        in a cyber-dojo. Pair each one with a developer from the team
+        they're hoping to join. Do five iterations swapping partners each time.
+      </div>
+    </td>
+  </tr>
+
+  <tr>
     <td>  
       <div class="panel">
         Play the 
         <a href="http://jonjagger.blogspot.com/2009/06/average-time-to-green-game.html" 
            target="_blank">
         average-time-to-green-game</a>.
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>  
+      <div class="panel">
       </div>
     </td>
   </tr>

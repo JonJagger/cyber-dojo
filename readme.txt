@@ -92,8 +92,13 @@ Diff-Review
 ===========
 Clicking on a dashboard traffic-light opens a new page showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to step
-backwards and forwards. The diff page will automatically
-open the file with the most changes and autoscroll to the first diff-chunk.
+backwards and forwards. As you move forwards and backwards using the
+<< < > >> buttons the server will stay on the same file if it continues to
+have a diff. If it cannot do this (because the file has been renamed or
+deleted or has not changed) the server will 
+open the file with the most changes.
+Whichever file is initially opened the display will autoscroll to the
+first diff-chunk.
 Clicking on the filename should auto-scroll to the next diff-chunk in the file
 (but there is a bug in that somewhere).
 Clicking the red no-of-lines-deleted button (to the right of the filename)
