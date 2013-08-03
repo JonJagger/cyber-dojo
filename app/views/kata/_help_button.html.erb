@@ -5,8 +5,8 @@ $(document).ready(function() {
 
   $('#help').click(function() {
     var title = $(this).text();        
-    $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(data) {
-      cd.dialog(data, title).dialog('open');
+    $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(html) {
+      cd.dialog(html, title).dialog('open');
     });
   });
 
