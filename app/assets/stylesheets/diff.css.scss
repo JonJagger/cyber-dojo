@@ -102,14 +102,32 @@
   @include font-size-small();  // to match div[class~=filename]
 }
 
-div[class~="diff-deleted-line-count"] {
-  background: $diff-deleted-color;
+.diff-deleted-line-count, .diff-added-line-count {
   color: $darker-color;
   @include line-count;
+  border: 2px solid $darker-color;
+  border-left: 3px solid $darker-color;
+  @include rounded-corner(4px);  
 }
 
-div[class~="diff-added-line-count"] {
-  background: $diff-added-color;
-  color: $darker-color;
-  @include line-count;
+.diff-deleted-line-count {
+  background: $diff-deleted-color;
+  cursor: pointer;
+
+  &[disabled] {
+    background: lighten($darker-color, 20%);
+    cursor: default;
+  }
 }
+
+
+.diff-added-line-count {
+  background: $diff-added-color;
+  cursor: pointer;
+
+  &[disabled] {
+    background: lighten($darker-color, 20%);
+    cursor: default;
+  }
+}
+
