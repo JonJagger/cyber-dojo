@@ -10,7 +10,7 @@ $(document).ready(function() {
   });
   fileButtons.find('#rename').click(function() {
     var title = $(this).text();        
-    cd.renameFile(title,"<%= @avatar.name %>");
+    cd.renameFile(title, "<%= @avatar.name %>");
   });
   fileButtons.find('#delete').click(function() {
     var title = $(this).text();        

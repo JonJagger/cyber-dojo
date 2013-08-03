@@ -115,7 +115,7 @@ numbers. For example, if you edit the 13 to a 15 and press return the page will
 update to display the diff between traffic-lights 12 and 15.
 Below the two traffic-lights are  <<  <  >  >>  buttons.
 These buttons move forwards and backwards whilst maintaining the traffic-light
-gap (eg 12 -> 15 == 3).
+gap (eg 12 <-> 15 == 3).
 Pressing
 o) << moves back to the first traffic-light, so if the gap is 3
    it will display the diff of 1 -> 4
@@ -127,10 +127,10 @@ o) >> moves forward to the last traffic-light (eg 65), so if the gap is 3
    it will display the diff of 62 -> 65
 
 You can also do a "no-diff" by simply entering the same value (eg 23) twice.
-23 -> 23 will display all the files from traffic-light 23 and there will be
+23 <-> 23 will display all the files from traffic-light 23 and there will be
 no diffs at all. The  << < > >> buttons still work and maintain the "no-diff".
 Eg pressing the < button will move back one traffic-light and show the diff
-of traffic-lights 22 -> 22, viz, the files from traffic-light 22.
+of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
 Resuming Coding

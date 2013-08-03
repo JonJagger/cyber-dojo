@@ -3,7 +3,19 @@
 
 $(document).ready(function() {
   
-  function dialog_fork(html, title) {      
+  function dialog_fork(html, title) {
+    var i18nButtons = { };
+    i18nButtons["<%= t('views.buttons.ok') %>"] = function() {
+      cd.postTo('/forker/fork', {
+        id: "<%= @kata.id %>",
+        avatar: "<%= @avatar.name %>"
+      }, '_blank');
+      $(this).dialog('close');      
+    };
+    i18nButtons["<%= t('views.buttons.cancel') %>"] = function() {
+      $(this).dialog('close');            
+    };
+    
     return $('<div class="dialog">')
       .html(html)
       .dialog({
@@ -11,18 +23,7 @@ $(document).ready(function() {
         width: 500,
         title: cd.dialogTitle(title),
         modal: true,
-        buttons: {
-          ok: function() {
-            cd.postTo('/forker/fork', {
-              id: "<%= @kata.id %>",
-              avatar: "<%= @avatar.name %>"
-            }, '_blank');
-            $(this).dialog('close');
-          },
-          cancel: function() {
-            $(this).dialog('close');
-          }
-        }
+        buttons: i18nButtons
       });
   };
   
