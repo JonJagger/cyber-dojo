@@ -8,7 +8,11 @@ var cyberDojo = (function(cd, $) {
   };
   
   cd.dialog = function(html, title) {
-    var div = $('<div>')
+    var i18nButtons = { };
+    i18nButtons["ok"] = function() {
+      $(this).dialog('close');      
+    };
+    return $('<div>')
       .html('<div class="dialog">' + html + '</div>')    
       .dialog({
         autoOpen: false,
@@ -16,13 +20,8 @@ var cyberDojo = (function(cd, $) {
         height: $(html).data("height"),
         title: cd.dialogTitle(title),
         modal: true,
-        buttons: {
-          ok: function() {
-            $(this).dialog('close');
-          }
-        }
+        buttons: i18nButtons
       });
-    return div;
   };
 
   return cd;
