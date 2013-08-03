@@ -8,5 +8,5 @@ module TranslationHelper
     month_name = kata.created.strftime("%B")
     t "views.months.#{month_name}"
   end
-  
+
 end

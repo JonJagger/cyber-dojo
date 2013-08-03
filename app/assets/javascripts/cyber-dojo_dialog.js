@@ -7,9 +7,9 @@ var cyberDojo = (function(cd, $) {
     return '<span class="large dialog title">' + title + '<span>';
   };
   
-  cd.dialog = function(html, title) {
+  cd.dialog = function(html, title, ok) {
     var i18nButtons = { };
-    i18nButtons["ok"] = function() {
+    i18nButtons[ok || 'ok'] = function() {
       $(this).dialog('close');      
     };
     return $('<div>')
