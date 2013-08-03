@@ -13,8 +13,11 @@ var cyberDojo = (function(cd, $) {
             +  '</tr>';
     });
     panel += '</table>';    
-    var id = $(cd.makeTable(cd.divPanel(panel)));    
-    return cd.dialog(id.html(), 450, title);    
+    var id =
+        '<div data-width="450">'
+      + cd.makeTable(cd.divPanel(panel))
+      + '<div>';
+    return cd.dialog(id, title);    
   };
   
   return cd;

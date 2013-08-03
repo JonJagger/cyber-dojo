@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
       + 'because the dojo is full';
       
     var fullHtml = '' 
-      + '<div>'
+      + '<div data-width="600">'
       + '  <div class="align-center" id="full_dojo_text">' + message + '</div>'
       + '  <table class="align-center">'
       + '    <tr>'
@@ -54,8 +54,8 @@ var cyberDojo = (function(cd, $) {
       + '  </table>'
       + '</div>';
     
-    var width, title;
-    return cd.dialog(fullHtml, width = 600, title = id);
+    var title = id;
+    return cd.dialog(fullHtml, title);
   };
     
   return cd;

@@ -234,10 +234,10 @@ var cyberDojo = (function(cd, $) {
       +     ' src="/images/avatars/' + avatarName + '.jpg'+ '"'
       +     ' title="' + avatarName + '" />';      
     var alertHtml = ''    
-      + '<div class="panel">'
+      + '<div class="panel" data-width="400">'
       +   cd.makeTable(imageHtml, message)
       + '</div>';
-    cd.dialog(alertHtml, 400, '!rename').dialog('open');
+    cd.dialog(alertHtml, '!rename').dialog('open');
   };
 
   return cd;

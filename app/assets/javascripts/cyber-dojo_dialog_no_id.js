@@ -5,7 +5,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_noId = function() {
     var noId = 
-      '<div class="panel">'
+      '<div class="panel" data-width="400">'
       + '<table>'
       +    '<tr>'
       +      '<td>'
@@ -16,8 +16,8 @@ var cyberDojo = (function(cd, $) {
       +    '</tr>'
       +  '</table>'
       + '</div>';
-    var width,title;
-    return cd.dialog(noId, width = 400, title = '');    
+    var title = '';
+    return cd.dialog(noId, title);    
   };
 
   return cd;
