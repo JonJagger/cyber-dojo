@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('#help').click(function() {
     var title = $(this).text();        
     $.get('/dashboard/help_dialog', function(data) {
-      cd.dialog(data, null, title).dialog('open');
+      cd.dialog(data, title).dialog('open');
     });
   });
 

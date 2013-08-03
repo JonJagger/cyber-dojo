@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('#help').click(function() {
     var title = $(this).text();        
     $.get('/diff/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(data) {
-      cd.dialog(data, null, title).dialog('open');
+      cd.dialog(data, title).dialog('open');
     });
   });
 
