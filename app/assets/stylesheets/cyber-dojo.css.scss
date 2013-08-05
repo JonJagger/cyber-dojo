@@ -164,13 +164,9 @@ div[class~="button"]
   font-weight: 500;
 }
 
-.line_numbers,
-.file_content { height: 34em; }
+.line_numbers, .file_content { height: 34em; }
 
-.line_numbers, .file_content, #instructions
-{
-  @include code-font;
-}
+.line_numbers, .file_content, #instructions { @include code-font; }
 
 .line_numbers, .file_content
 {
