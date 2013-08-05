@@ -4,7 +4,7 @@
 $(document).ready(function() {
   
   $('#setup').click(function() {
-    var title = 'setup';
+    var title = $(this).text();        
     var ok = $(this).data('ok');
     var cancel = $(this).data('cancel');       
     $.get('/setup/show', function(html) {
