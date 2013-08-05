@@ -114,8 +114,7 @@ module GitDiff
   #-----------------------------------------------------------
   
   def git_diff_html(id, diff)
-    max_digits = diff.length.to_s.length
-    lines = diff.map {|n| diff_htmlify(id, n, max_digits) }.join("")
+    lines = diff.map {|n| diff_htmlify(id, n) }.join("")
   end
   
   def git_diff_html_line_numbers(diff)
@@ -125,7 +124,7 @@ module GitDiff
   
   #-----------------------------------------------------------
   
-  def diff_htmlify(id, n, max_digits)
+  def diff_htmlify(id, n)
     # This needs to be split so it returns two object,
     # one that contains just the line-numbers and one
     # that contains the lines themselves. This will allow

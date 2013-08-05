@@ -23,21 +23,38 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
     ]    
     expected =
     [ 
-           "<same><ln>  1</ln>once</same>",
-           "<same><ln>  2</ln>upon a</same>",
-           "<same><ln>  3</ln>time</same>",
-        "<deleted><ln>  4</ln>IN</deleted>",
-          "<added><ln>  4</ln>in</added>",
-           "<same><ln>  5</ln>the west</same>",
-           "<same><ln>  6</ln>Charles Bronson</same>",
-           "<same><ln>  7</ln>Jason Robarts</same>",
-           "<same><ln>  8</ln>Henry Fonda</same>",
-           "<same><ln>  9</ln>Claudia Cardinale</same>",
-          "<added><ln> 10</ln>Sergio Leone</added>",
-           "<same><ln> 11</ln>Ennio Morricone</same>",        
-    ].join
-    
+           "<same>once</same>",
+           "<same>upon a</same>",
+           "<same>time</same>",
+        "<deleted>IN</deleted>",
+          "<added>in</added>",
+           "<same>the west</same>",
+           "<same>Charles Bronson</same>",
+           "<same>Jason Robarts</same>",
+           "<same>Henry Fonda</same>",
+           "<same>Claudia Cardinale</same>",
+          "<added>Sergio Leone</added>",
+           "<same>Ennio Morricone</same>",        
+    ].join    
     assert_equal expected, git_diff_html('ennio', diffed)
+
+    expected =
+    [ 
+           "<same><ln>  1</ln></same>",
+           "<same><ln>  2</ln></same>",
+           "<same><ln>  3</ln></same>",
+        "<deleted><ln>  4</ln></deleted>",
+          "<added><ln>  4</ln></added>",
+           "<same><ln>  5</ln></same>",
+           "<same><ln>  6</ln></same>",
+           "<same><ln>  7</ln></same>",
+           "<same><ln>  8</ln></same>",
+           "<same><ln>  9</ln></same>",
+          "<added><ln> 10</ln></added>",
+           "<same><ln> 11</ln></same>",        
+    ].join
+    assert_equal expected, git_diff_html_line_numbers(diffed)
+
   end
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -54,15 +71,26 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
     ]    
     expected =
     [ 
-           "<same><ln>  1</ln>once</same>",
-           "<same><ln>  2</ln>upon a</same>",
-           "<same><ln>  3</ln>time</same>",
-        "<deleted><ln>  4</ln>IN</deleted>",
-          "<added><ln>  4</ln>in</added>",
-           "<same><ln>  5</ln>the west</same>",
-    ].join
-    
+           "<same>once</same>",
+           "<same>upon a</same>",
+           "<same>time</same>",
+        "<deleted>IN</deleted>",
+          "<added>in</added>",
+           "<same>the west</same>",
+    ].join    
     assert_equal expected, git_diff_html('ennio', diffed)
+
+    expected =
+    [ 
+           "<same><ln>  1</ln></same>",
+           "<same><ln>  2</ln></same>",
+           "<same><ln>  3</ln></same>",
+        "<deleted><ln>  4</ln></deleted>",
+          "<added><ln>  4</ln></added>",
+           "<same><ln>  5</ln></same>",
+    ].join
+    assert_equal expected, git_diff_html_line_numbers(diffed)
+
   end  
   
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -78,14 +106,24 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
     ]    
     expected =
     [ 
-         "<same><ln>  1</ln>once</same>",
-         "<same><ln>  2</ln>upon a</same>",
-         "<same><ln>  3</ln>time</same>",
-        "<added><ln>  4</ln>in</added>",
-        "<same><ln>  5</ln>the west</same>",
-        ].join
-    
+         "<same>once</same>",
+         "<same>upon a</same>",
+         "<same>time</same>",
+        "<added>in</added>",
+        "<same>the west</same>",
+        ].join    
     assert_equal expected, git_diff_html('ennio', diffed)
+
+    expected =
+    [ 
+         "<same><ln>  1</ln></same>",
+         "<same><ln>  2</ln></same>",
+         "<same><ln>  3</ln></same>",
+        "<added><ln>  4</ln></added>",
+        "<same><ln>  5</ln></same>",
+        ].join
+    assert_equal expected, git_diff_html_line_numbers(diffed)
+
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
@@ -101,13 +139,22 @@ class GitDiffHtmlTests <  ActiveSupport::TestCase
     
     expected =
     [ 
-        "<same><ln>  1</ln>once</same>",
-        "<same><ln>  2</ln>upon a</same>",
-        "<same><ln>  3</ln>time</same>",
-        "<same><ln>  4</ln>in the west</same>"
-    ].join
-    
+        "<same>once</same>",
+        "<same>upon a</same>",
+        "<same>time</same>",
+        "<same>in the west</same>"
+    ].join    
     assert_equal expected, git_diff_html('ennio', diffed)
+
+    expected =
+    [ 
+        "<same><ln>  1</ln></same>",
+        "<same><ln>  2</ln></same>",
+        "<same><ln>  3</ln></same>",
+        "<same><ln>  4</ln></same>"
+    ].join
+    assert_equal expected, git_diff_html_line_numbers(diffed)
+
   end
     
 end
