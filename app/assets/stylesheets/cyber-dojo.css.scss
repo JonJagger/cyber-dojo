@@ -166,9 +166,9 @@ div[class~="button"]
 
 .line_numbers, .file_content { height: 34em; }
 
-.line_numbers, .file_content, #instructions { @include code-font; }
+.line_numbers, .file_content, #diff_line_numbers, #instructions { @include code-font; }
 
-.line_numbers, .file_content
+.line_numbers, .file_content, #Xdiff_line_numbers
 {
   border: 0;
   margin: 0;
@@ -178,7 +178,7 @@ div[class~="button"]
   overflow: auto;
 }
 
-.line_numbers
+.line_numbers, #Xdiff_line_numbers
 {
   background: $darker-color;
   color: lighten($darker-color, 30%);

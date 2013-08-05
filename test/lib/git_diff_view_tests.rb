@@ -82,7 +82,8 @@ class GitDiffViewTests < ActionController::TestCase
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
-        :content => "<same><ln>  1</ln>ruby test_untitled.rb</same>"
+        :content => "<same>ruby test_untitled.rb</same>",
+        :line_numbers => "<same><ln>  1</ln></same>"
       },
       {
         :id => "id_2",
@@ -91,16 +92,27 @@ class GitDiffViewTests < ActionController::TestCase
         :deleted_line_count => 0,
         :added_line_count => 0,
         :content =>
-        "<same><ln>  1</ln>require './untitled'</same>" +
-        "<same><ln>  2</ln>require 'test/unit'</same>" +
+        "<same>require './untitled'</same>" +
+        "<same>require 'test/unit'</same>" +
+        "<same></same>" +
+        "<same>class TestUntitled &lt; Test::Unit::TestCase</same>" +
+        "<same></same>" + 
+        "<same>  def test_simple</same>" +
+        "<same>    assert_equal 9 * 6, answer</same>" +
+        "<same>  end</same>" +
+        "<same></same>" +
+        "<same>end</same>",
+        :line_numbers =>
+        "<same><ln>  1</ln></same>" +
+        "<same><ln>  2</ln></same>" +
         "<same><ln>  3</ln></same>" +
-        "<same><ln>  4</ln>class TestUntitled &lt; Test::Unit::TestCase</same>" +
+        "<same><ln>  4</ln></same>" +
         "<same><ln>  5</ln></same>" + 
-        "<same><ln>  6</ln>  def test_simple</same>" +
-        "<same><ln>  7</ln>    assert_equal 9 * 6, answer</same>" +
-        "<same><ln>  8</ln>  end</same>" +
+        "<same><ln>  6</ln></same>" +
+        "<same><ln>  7</ln></same>" +
+        "<same><ln>  8</ln></same>" +
         "<same><ln>  9</ln></same>" +
-        "<same><ln> 10</ln>end</same>"
+        "<same><ln> 10</ln></same>"    
       },
       {
         :id => "id_3",
@@ -109,13 +121,21 @@ class GitDiffViewTests < ActionController::TestCase
         :deleted_line_count => 1,
         :added_line_count => 1,
         :content =>
-        "<same><ln>  1</ln>def answer</same><span id='id_3_section_0'></span>" +
-        "<deleted><ln>  2</ln>  42</deleted><added><ln>  2</ln>  54</added>" +
-        "<same><ln>  3</ln>end</same>"
+        "<same>def answer</same>" + "<span id='id_3_section_0'></span>" +
+        "<deleted>  42</deleted>" +
+        "<added>  54</added>" +
+        "<same>end</same>",
+        :line_numbers =>
+        "<same><ln>  1</ln></same>" +
+        "<deleted><ln>  2</ln></deleted>" +
+        "<added><ln>  2</ln></added>" +
+        "<same><ln>  3</ln></same>"        
       }
     ]
 
-    assert_equal expected_diffs, diffs
+    assert_equal expected_diffs[0], diffs[0], "0"
+    assert_equal expected_diffs[1], diffs[1], "1"
+    assert_equal expected_diffs[2], diffs[2], "2"
 
   end
   

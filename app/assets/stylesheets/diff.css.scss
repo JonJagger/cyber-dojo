@@ -54,16 +54,16 @@
   display: block;  
 }
 
-.diffed_code {
+.diffed_code, #diff_line_numbers {
   margin: 0;
   padding: 0;
   ln {
     background: $darker-color;
     padding: {
       left: 0px;
-      right: 2px;
+      right: 0px;
     }
-    margin-right: 3px;
+    margin-right: 0px;
     font-weight: normal;    
   }
   added {

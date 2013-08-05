@@ -9,6 +9,7 @@ var cyberDojo = (function(cd, $) {
   // the diffSheet.
   
   cd.buildDiffFilenameHandlers = function(diffs) {
+    var diffLineNumbers = $('#diff_line_numbers');
     var diffSheet = $('#diff_sheet');
     var diffPanel = $('#diff_panel');  
     var previousFilename;
@@ -22,6 +23,7 @@ var cyberDojo = (function(cd, $) {
           filename.parent().attr('title', 'Auto-scroll through diffs');
       }
       return function() {
+        diffLineNumbers.html(diff.line_numbers);
         diffSheet.html(diff.content);
         cd.radioEntrySwitch(previousFilename, filename);
         previousFilename = filename;

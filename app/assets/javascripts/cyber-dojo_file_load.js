@@ -9,7 +9,7 @@ var cyberDojo = (function(cd, $) {
     //    2. restore focus (also restores cursor position)
     // Restoring the focus loses the scrollTop/Left
     // positions so I have to save them in the dom so
-    // I can set the back _after_ the call to focus()
+    // I can set them back _after_ the call to focus()
     // The call to focus() allows you to carry on
     // typing at the point the cursor left off.
     
