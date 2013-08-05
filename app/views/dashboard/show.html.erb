@@ -2,17 +2,23 @@
 <div id="dashboard-page">
 <table>
   <tr>
-    <td>
-      <%= render :partial => 'shared/logo_with_id' %>
+    <td class="panel">
+      <table>
+        <tr>
+          <td>
+            <%= render :partial => 'shared/logo' %>
+          </td>
+          <td>
+            &nbsp;
+          </td>
+          <td>
+            <%= render :partial => 'help_button' %>
+          </td>
+        </tr>
+      </table>
     </td>
-    <td>
-      &nbsp;
-    </td>
-    <td>
-      <%= render :partial => 'help_button' %>
-    </td>
-    <td>
-      &nbsp;
+    <td class="panel">
+      <%= render :partial => 'shared/info' %>      
     </td>
     <td class="valign-top">
       <%= render :partial => 'column_controls' %>      

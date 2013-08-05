@@ -1,20 +1,16 @@
 
-<div>
-  <table class="align-center">
-    <tr">
-      <td>
-        <%= render :partial => 'shared/logo_with_id' %>        
-      </td>
-      <td>
-        <%= render :partial => 'shared/avatar_image', :locals => { :target => '_blank' } %>
-        <%= render :partial => 'shared/avatar_name',  :locals => { :avatar_name => @avatar.name } %>        
-      </td>
-      <td>
-        <%= render :partial => 'help_button' %>
-        <br/>
-        <br/>
-      </td>
-    </tr>
-  </table>
-</div>
-
+<table class="align-center">
+  <tr>
+    <td>
+      <%= render :partial => 'shared/logo' %>        
+    </td>
+    <td>
+      <%= render :partial => 'shared/avatar_image', :locals => { :target => '_blank' } %>
+    </td>
+    <td>
+      <%= render :partial => 'help_button' %>
+      <br/>
+      <br/>
+    </td>
+  </tr>
+</table>
