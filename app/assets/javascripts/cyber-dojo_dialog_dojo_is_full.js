@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.dialog_dojoIsFull = function(id) {
+  cd.dialog_dojoIsFull = function(id, ok) {
     
     var avatarTd = function(avatarName) {
       var size = 60;
@@ -55,7 +55,7 @@ var cyberDojo = (function(cd, $) {
       + '</div>';
     
     var title = id;
-    return cd.dialog(fullHtml, title);
+    return cd.dialog(fullHtml, title, ok);
   };
     
   return cd;

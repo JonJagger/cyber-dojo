@@ -4,12 +4,13 @@
 $(document).ready(function() {
 
   $('#review_coding').click(function() {
-    cd.run('review_json', function(id, dojo) {
+    var ok = $(this).data('ok');  
+    cd.run('review_json', ok, function(id, dojo) {
       if (dojo.empty) {          
-        cd.dialog_dojoIsEmpty(id).dialog('open');
+        cd.dialog_dojoIsEmpty(id, ok).dialog('open');
       }
       else {
-        cd.dialog_reviewCoding(id, dojo.review_dialog_html).dialog('open');          
+        cd.dialog_reviewCoding(id, ok, dojo.review_dialog_html).dialog('open');          
       }    
     });
   });
@@ -20,6 +21,7 @@ $(document).ready(function() {
 
 <div class="button"
      title="review practising programming"
+     data-ok="<%= t('views.buttons.ok') %>"     
      id="review_coding">
   <%= t("views.buttons.review") %>
 </div>

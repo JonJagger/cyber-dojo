@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_noId = function() {
+  cd.dialog_noId = function(ok) {
     var noId = 
       '<div class="panel" data-width="400">'
       + '<table>'
@@ -17,7 +17,7 @@ var cyberDojo = (function(cd, $) {
       +  '</table>'
       + '</div>';
     var title = '';
-    return cd.dialog(noId, title);    
+    return cd.dialog(noId, title, ok);    
   };
 
   return cd;

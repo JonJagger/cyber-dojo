@@ -9,7 +9,7 @@ var cyberDojo = (function(cd, $) {
   
   cd.dialog = function(html, title, ok) {
     var i18nButtons = { };
-    i18nButtons[ok || 'ok'] = function() {
+    i18nButtons[ok] = function() {
       $(this).dialog('close');      
     };
     return $('<div>')

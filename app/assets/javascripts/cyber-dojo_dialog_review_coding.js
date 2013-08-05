@@ -3,7 +3,12 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_reviewCoding = function(id, dialogHtml) {
+  cd.dialog_reviewCoding = function(id, ok, dialogHtml) {
+    var i18nButtons = { };
+    i18nButtons[ok] = function() {
+      cd.get('/dashboard/show', { id: id }, '_blank');            
+      $(this).dialog('close');      
+    };
     return $('<div class="dialog">')
       .html(dialogHtml)
       .dialog({
@@ -11,17 +16,9 @@ var cyberDojo = (function(cd, $) {
         width: 550,
         title: cd.dialogTitle(id),
         modal: true,
-        buttons: {
-          ok: function() {
-            cd.get('/dashboard/show', { id: id }, '_blank');            
-            $(this).dialog('close');
-          }, // ok:
-          cancel: function() {
-            $(this).dialog('close');            
-          } // cancel:
-        } // buttons:
-      }); // .dialog({      
-  }; // function() {
+        buttons: i18nButtons
+      }); 
+  };
   
   return cd;
 })(cyberDojo || {}, $);

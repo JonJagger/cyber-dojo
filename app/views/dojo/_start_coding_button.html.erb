@@ -4,12 +4,13 @@
 $(document).ready(function() {
   
   $('#start_coding').click(function() {
-    cd.run('start_json', function(id, dojo) {
+    var ok = $(this).data('ok');
+    cd.run('start_json', ok, function(id, dojo) {
       if (dojo.full) {
-        cd.dialog_dojoIsFull(id).dialog('open');
+        cd.dialog_dojoIsFull(id, ok).dialog('open');
       }
       else {
-        cd.dialog_startCoding(id, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
+        cd.dialog_startCoding(id, ok, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
       }
     });
   });
@@ -20,6 +21,7 @@ $(document).ready(function() {
 
 <div class="button"
      title="start practising programming"
+     data-ok="<%= t('views.buttons.ok') %>"
      id="start_coding">
   <%= t("views.buttons.start") %>
 </div>

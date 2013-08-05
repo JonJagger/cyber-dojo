@@ -20,16 +20,16 @@ var cyberDojo = (function(cd, $) {
   // example if there is an _intervening_ $.getJSON call) then the
   // new page will get a (possibly suppressed) "popup blocked".
 
-  cd.run = function(methodName, func) {    
+  cd.run = function(methodName, ok, func) {    
     var id = $('#kata_id_input').val();
     id = $.trim(id);
     if (id === '') {
-      cd.dialog_noId().dialog('open');
+      cd.dialog_noId(ok).dialog('open');
     }
     else {
       $.getJSON('/dojo/' + methodName , { id: id }, function(dojo) {
         if (!dojo.exists) {
-          cd.dialog_cantFindDojo(id).dialog('open');
+          cd.dialog_cantFindDojo(id, ok).dialog('open');
         }
         else {
           func(id, dojo);
