@@ -79,6 +79,20 @@ en:
       download: "download"
       disable: "disable"
       enable: "enable"
+
+    feedback:
+      id_really_appreciate_it_if_you_could: "I'd really appreciate it if you could"
+      email_me: "email me"
+      what_did_you_like: "What did you like?"
+      what_did_you_dislike: "What did you dislike?"
+      what_worked: "What worked?"
+      what_didnt: "What didn't?"
+      what_features_should_i_add_remove: "What features should I add/remove?"
+      please_tell_me_about_your_use_of_cyberdojo_and_ill_add_it_to_the: "Please tell me about your use of cyber-dojo and I'll add it to the"
+      blog_page: "blog page"
+      
+    tips:
+      think_about_improving_not_finishing: "Think about improving, not finishing"
       
     donations:
       individuals: "individuals"
@@ -113,7 +127,6 @@ en:
       runs_the_tests: "runs the tests"
       open_the_next_file: "open the next file"
       open_the_previous_file: "open the previous file"
-      think_about_improving_not_finishing: "think about improving, not finishing"
       
     dashboard:
       age_dhms_tip: "days:hours:minutes:seconds"
