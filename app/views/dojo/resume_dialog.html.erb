@@ -16,14 +16,14 @@
                width="<%= size %>"
                height="<%= size %>" />          
           <div class="started-avatar-name">
-            <%= avatar_name %>
+            <%= t("views.avatars.#{avatar_name}") %>
           </div>
         <% else %>
           <img src="/images/avatars/bw/<%= avatar_name %>.jpg"
                width="<%= size %>"
                height="<%= size %>"/>
           <div class="unstarted-avatar-name">
-            <%= avatar_name %>
+            <%= t("views.avatars.#{avatar_name}") %>
           </div>
         <% end %>      
         <% index += 1 %>
