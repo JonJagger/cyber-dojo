@@ -117,19 +117,7 @@ module GitDiff
     lines = diff.map {|n| diff_htmlify(id, n) }.join("")
   end
   
-  def git_diff_html_line_numbers(diff)
-    max_digits = diff.length.to_s.length
-    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n, max_digits) }.join("")
-  end
-  
-  #-----------------------------------------------------------
-  
   def diff_htmlify(id, n)
-    # This needs to be split so it returns two object,
-    # one that contains just the line-numbers and one
-    # that contains the lines themselves. This will allow
-    # the diff view to be scrolled with the line numbers
-    # remaining in sight.
     result = ""
     if n[:type] == :section
       result = "<span id='#{id}_section_#{n[:index]}'></span>"
@@ -143,7 +131,14 @@ module GitDiff
     end
     result
   end
-  
+
+  #-----------------------------------------------------------
+    
+  def git_diff_html_line_numbers(diff)
+    max_digits = diff.length.to_s.length
+    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n, max_digits) }.join("")
+  end
+    
   def diff_htmlify_line_numbers(n, max_digits)
     result = ""
     if n[:type] != :section

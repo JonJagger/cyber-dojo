@@ -94,13 +94,13 @@ class GitDiffViewTests < ActionController::TestCase
         :content =>
         "<same>require './untitled'</same>" +
         "<same>require 'test/unit'</same>" +
-        "<same></same>" +
+        "<same>&thinsp;</same>" +
         "<same>class TestUntitled &lt; Test::Unit::TestCase</same>" +
-        "<same></same>" + 
+        "<same>&thinsp;</same>" + 
         "<same>  def test_simple</same>" +
         "<same>    assert_equal 9 * 6, answer</same>" +
         "<same>  end</same>" +
-        "<same></same>" +
+        "<same>&thinsp;</same>" +
         "<same>end</same>",
         :line_numbers =>
         "<same><ln>  1</ln></same>" +
@@ -133,8 +133,8 @@ class GitDiffViewTests < ActionController::TestCase
       }
     ]
 
-    assert_equal expected_diffs[0], diffs[0], "0"
-    assert_equal expected_diffs[1], diffs[1], "1"
+    assert_equal expected_diffs[0], diffs[0], "0"    
+    assert_equal expected_diffs[1], diffs[1], "1"    
     assert_equal expected_diffs[2], diffs[2], "2"
 
   end
