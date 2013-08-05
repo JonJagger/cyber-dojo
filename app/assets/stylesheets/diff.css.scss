@@ -20,13 +20,9 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#diff_div {
-  width: 55em;
-  position: relative;
-}
-
 #diff_panel {
-  overflow: none;
+  width: 65em;
+  overflow: auto;
   background: $darker-color;  
   added {
     background: $diff-added-color;
@@ -41,9 +37,10 @@
 }
 
 #diff_sheet {
+  width: 200em;
   height: 35em;
+  overflow: none;
   color: $darker-color;
-  overflow: auto;
   margin: 0;
   padding: 0;
   @include code-font;  
