@@ -23,7 +23,10 @@
 #diff_panel {
   width: 65em;
   overflow: auto;
-  background: $darker-color;  
+  background: $darker-color;
+}
+
+#diff_sheet {
   added {
     background: $diff-added-color;
   }  
@@ -32,7 +35,7 @@
   }  
   deleted {
     background: $diff-deleted-color;
-    text-decoration: line-through;
+    text-decoration: line-through;    
   }  
 }
 
@@ -54,16 +57,12 @@
   display: block;  
 }
 
-.diffed_code, #diff_line_numbers {
+#diff_sheet, #diff_line_numbers {
   margin: 0;
   padding: 0;
   ln {
     background: $darker-color;
-    padding: {
-      left: 0px;
-      right: 0px;
-    }
-    margin-right: 0px;
+    margin-right: 2px;
     font-weight: normal;    
   }
   added {
@@ -73,7 +72,7 @@
     }    
   }
   deleted {
-    @include pre-block;
+    @include pre-block;    
     ln {
       color: $diff-deleted-color;
     }    
@@ -84,6 +83,16 @@
       color: lighten($darker-color, 30%);
       text-decoration: none;    
     }
+  }
+}
+
+#diff_sheet {
+  added, deleted, same { padding-left: 3px; }
+  added {
+    background: $diff-added-color;
+  }
+  deleted {
+    background: $diff-deleted-color;
   }
 }
 
