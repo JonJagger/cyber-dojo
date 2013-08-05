@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     @kata = Kata.new(root_dir, id)    
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
-    @title = id[0..4] + ' dashboard'    
+    @title = id[0..5] + ' dashboard'    
   end
 
   def heartbeat

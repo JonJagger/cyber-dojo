@@ -14,7 +14,7 @@ class KataController < ApplicationController
     @files_to_remove = [ ]
     @traffic_lights = @avatar.traffic_lights
     @output = @visible_files['output']
-    @title = id[0..4] + ' ' + @avatar.name + ' code' 
+    @title = id[0..5] + ' ' + @avatar.name + ' code' 
   end
 
   def run_tests    

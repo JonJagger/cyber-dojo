@@ -1,36 +1,16 @@
 
-<script type="text/javascript"><!--
-
-$(document).ready(function() {
-
-  var languages = $('[name=language]');
-  var rand = Math.floor(Math.random() * languages.size());
-  var previousLanguage = $(languages[rand]);
-
-  languages.each(function(index) {
-    var node = $(this);
-    node.parent().click(function() {
-      cd.radioEntrySwitch(previousLanguage, node);
-      previousLanguage = node;
-    });
-  });
-  
-  $('#language_' + rand).parent().click();
-
-});
-
-//--></script>
-
 <div id="language_qm">
   <%= t("views.labels.language") %>
-</div>
+</div>      
 
-<% @languages.each_with_index do |choice,index| %>
-  <div class="filename" >
-    <input id="language_<%= index %>" 
-           type="radio"
-           name="language"
-           value="<%= choice %>" />
-    <label id=<%= "language_#{choice.tableize.singularize}" %>><%= choice %></label>
-  </div>    
-<% end %>    
+<div id="languages_list">
+  <% @languages.each_with_index do |choice,index| %>
+    <div class="filename" >
+      <input id="language_<%= index %>" 
+             type="radio"
+             name="language"
+             value="<%= choice %>" />
+      <label id=<%= "language_#{choice.tableize.singularize}" %>><%= choice %></label>
+    </div>    
+  <% end %>
+</div>

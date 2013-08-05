@@ -4,7 +4,12 @@
 $(document).ready(function() {
   
   $('#setup').click(function() {
-    cd.postTo('/setup/show');
+    var title = 'setup';
+    var ok = $(this).data('ok');
+    var cancel = $(this).data('cancel');       
+    $.get('/setup/show', function(html) {
+      cd.dialog_setup(html, title, ok, cancel).dialog('open');
+    });  
   });
 
 });
@@ -17,6 +22,8 @@ $(document).ready(function() {
 
 <div id="setup"
      title="choose your programming language and exercise"
+     data-ok="<%= t('views.buttons.ok') %>"     
+     data-cancel="<%= t('views.buttons.cancel') %>"     
      class="button">
   <%= t("views.buttons.setup") %>
 </div>

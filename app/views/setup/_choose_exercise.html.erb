@@ -1,33 +1,9 @@
 
-<script type="text/javascript"><!--
-        
-$(document).ready(function() {
-
-  var exercises = $('[name=exercise]');
-  var rand = Math.floor(Math.random() * exercises.size());   
-  var previousExercise = $(exercises[rand]);
-  
-  exercises.each(function(index) {
-    var instructions = $('#instructions_' + index).val();
-    var node = $(this);
-    node.parent().click(function() {
-      cd.radioEntrySwitch(previousExercise, node);
-      previousExercise = node;
-      $('#instructions').val(instructions);      
-    });
-  });
-
-  $('#exercise_' + rand).parent().click();
-
-});
-
-//--></script>
-
 <div id="exercise_qm">
   <%= t("views.labels.exercise") %>
-</div>
+</div>      
 
-<div id="exercise_list">
+<div id="exercises_list">
   <% @exercises.each_with_index do |choice,index| %>
     <div class="filename" >
       <input id="exercise_<%= index %>" 
