@@ -6,8 +6,8 @@ $(document).ready(function() {
   $('#start_coding').click(function() {
     var ok = $(this).data('ok');
     cd.run('start_json', ok, function(id, dojo) {
-      if (dojo.full) {
-        cd.dialog_dojoIsFull(id, ok).dialog('open');
+      if (dojo.full) {        
+        cd.dialog(dojo.full_dialog_html, id, ok).dialog('open');
       }
       else {
         cd.dialog_startCoding(id, ok, dojo.avatar_name, dojo.start_dialog_html).dialog('open');

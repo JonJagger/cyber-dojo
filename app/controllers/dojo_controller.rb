@@ -18,12 +18,14 @@ class DojoController < ApplicationController
     kata = Kata.find(root_dir, id)
     avatar = (kata ? kata.start_avatar : nil)    
     full = kata && avatar.nil?
-    html = kata && avatar ? start_dialog_html(avatar.name) : ''    
+    start_html = kata && avatar ? start_dialog_html(avatar.name) : ''
+    full_html = full ? full_dialog_html() : ''
     render :json => {
       :exists => !kata.nil?,
       :avatar_name => avatar ? avatar.name : nil,
       :full => full,
-      :start_dialog_html => html
+      :start_dialog_html => start_html,
+      :full_dialog_html => full_html
     }
   end
   
@@ -32,6 +34,11 @@ class DojoController < ApplicationController
     bind('/app/views/dojo/start_dialog.html.erb')
   end
   
+  def full_dialog_html()
+    @all_avatar_names = Avatar.names    
+    bind('/app/views/dojo/full_dialog.html.erb')
+  end
+
   #------------------------------------------------
   
   def resume_json
