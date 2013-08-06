@@ -149,15 +149,7 @@ class DashboardControllerTest < IntegrationTest
     get 'dashboard/heartbeat', {
       :id => id
     }
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test "tips dialog" do
-    id = checked_save_id
-    get "/dashboard/tips_dialog"
-    assert_response :success        
-  end
+  end  
 
 end
 

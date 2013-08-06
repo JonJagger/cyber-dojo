@@ -8,9 +8,8 @@ class RenderErrorTests < ActionController::TestCase
     @response   = ActionController::TestResponse.new
   end
   
-  test "render errors 404 422 500" do
+  test "render errors 404 500" do
     check_render_error(404, true)
-    check_render_error(422, true)
     check_render_error(500, true)
   end
     
