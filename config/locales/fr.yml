@@ -36,11 +36,11 @@ fr:
       setup: "créer un nouvel exercice"
       enter_a_practice_id: "reproduire un exercice"
       a_place_to_practice: "un endriot pour <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a> la programmation"
-      please_donate: "If you find cyber-dojo useful please<br/>make a donation.
-                      All donations are<br/>used solely to buy
+      please_donate: "Si vous trouvez cyber-dojo utile s'il vous plaît<br/>faire un don.
+                      Tous les dons sont<br/>utilisé uniquement pour acheter
                       <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
-                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>.
-                      Thank you."            
+                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>ordinateurs pour les enfants</a>.
+                      Merci."            
       your_animal_is: "Votre animal est le"      
       revert: "revenir"
       click_to_revert: "Cliquez<br/>pour &rarr;<br/>revenir<br/>"
