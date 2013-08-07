@@ -52,8 +52,8 @@ fr:
       amber: "ambre"
       green: "vert"
       traffic_light: "feu"      
-      language: "langue?"
-      exercise: "exercice?"
+      language: "langue"
+      exercise: "exercice"
       
     buttons:
       setup: "créer"

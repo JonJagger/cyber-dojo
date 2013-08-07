@@ -6,12 +6,12 @@
     <td class="align-left"><%= @kata.id[0..5] %></td>
   </tr>
   <tr>
-    <td class="align-right">language</td>
+    <td class="align-right"><%= t('views.labels.language') %></td>
     <td>&nbsp;=&nbsp;</td>
     <td class="align-left"><%= @kata.language.name %></td>
   </tr>
   <tr>
-    <td class="align-right">exercise</td>
+    <td class="align-right"><%= t('views.labels.exercise') %></td>
     <td>&nbsp;=&nbsp;</td>
     <td class="align-left"><%= @kata.exercise.name.sub('_',' ') %></td>
   </tr>

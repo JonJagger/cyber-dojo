@@ -52,8 +52,8 @@ en:
       amber: "amber"
       green: "green"
       traffic_light: "traffic light"
-      language: "language?"
-      exercise: "exercise?"
+      language: "language"
+      exercise: "exercise"
       
     buttons:
       setup: "setup"
