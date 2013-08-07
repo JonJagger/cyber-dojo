@@ -28,6 +28,13 @@ var cyberDojo = (function(cd, $) {
     return false;
   };
 
+  cd.bindShowOutputFile = function(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    cd.loadFile('output');
+    return false;
+  };
+
   cd.runTestsHotKey = function() {
     return 'Alt+t';
   };
@@ -40,10 +47,15 @@ var cyberDojo = (function(cd, $) {
     return 'Alt+b';
   };
 
+  cd.showOutputFileHotKey = function() {
+    return 'Alt+o';
+  };
+
   cd.bindHotKeys = function(node) {
     node.bind('keydown', cd.runTestsHotKey(),     cd.bindRunTests);
     node.bind('keydown', cd.loadNextFileHotKey(), cd.bindLoadNextFile);
     node.bind('keydown', cd.loadPreviousFileHotKey(), cd.bindLoadPreviousFile);
+    node.bind('keydown', cd.showOutputFileHotKey(), cd.bindShowOutputFile);
   };
   
   return cd;

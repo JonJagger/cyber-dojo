@@ -125,8 +125,9 @@ fr:
       file: "fichier"
       opens_the_file: "ouvre la fichier"
       runs_the_tests: "exécute les tests"
-      open_the_next_file: "ouvrir le fichier suivant"
-      open_the_previous_file: "ouvrir le fichier précédent"
+      open_the_output_file: "ouvre le fichier de sortie"      
+      open_the_next_file: "ouvre le fichier suivant"
+      open_the_previous_file: "ouvre le fichier précédent"
       
     dashboard:
       age_dhms_tip: "jours:heures:minutes:secondes"

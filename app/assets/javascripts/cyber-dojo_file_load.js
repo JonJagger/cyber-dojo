@@ -130,7 +130,7 @@ var cyberDojo = (function(cd, $) {
     var previousFilename = filenames[previousIndex];
     cd.loadFile(previousFilename);  
   };
-
+  
   return cd;
 })(cyberDojo || {}, $);
 
