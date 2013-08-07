@@ -10,6 +10,7 @@
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 table { border-spacing: 0; }
+
 .align-left    { text-align: left;   } 
 .align-center
 {
@@ -137,19 +138,19 @@ div[class~="filename"]
   }  
 }
 
+$filename_and_button_border_size: 2px;
+
 div[class~="filename"]:hover,
 div[class~="button"]:hover
 {
-  border: 2px dotted lighten($darker-color, 20%);
+  border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
 }
 
 div[class~="filename"],
 div[class~="button"][disabled]:hover,
 div[class~="button"]
 {
-  // match the hover settings above so the filenames
-  // retain their vertical position in the list
-  border: 2px solid $darker-color;
+  border: $filename_and_button_border_size solid $darker-color;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
