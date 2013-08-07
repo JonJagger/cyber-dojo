@@ -1,0 +1,9 @@
+
+.tooltip {
+  display: none;
+  padding: 0.25em;
+  background: $lighter-color;
+  color: $darker-color;
+  @include font-size-medium();
+  @include rounded-corner(14px);
+}
