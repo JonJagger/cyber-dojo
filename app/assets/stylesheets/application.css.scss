@@ -11,7 +11,7 @@
  * Force sass to regenerate
  * http://stackoverflow.com/questions/7046495/rails-3-1-asset-pipeline-doesnt-pick-up-changes-to-importd-sheets
  *
- *= depend_on gradients.css.scss
+ *= depend_on color_gradients.css.scss
  *= depend_on colors.css.scss
  *= depend_on fonts.css.scss
  *= depend_on force_scrollbars.css.scss
@@ -28,7 +28,7 @@
  *= require_self
 */
 
-@import "gradients.css.scss";
+@import "color_gradients.css.scss";
 @import "colors.css.scss";
 @import "fonts.css.scss";
 @import "force_scrollbars.css.scss";
