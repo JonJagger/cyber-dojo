@@ -17,10 +17,6 @@ class DashboardController < ApplicationController
     end
   end
   
-  def tips_dialog
-    render :layout => false        
-  end
-  
   def help_dialog
     render :layout => false    
   end
