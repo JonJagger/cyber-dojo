@@ -83,7 +83,7 @@ class GitDiffViewTests < ActionController::TestCase
         :deleted_line_count => 0,
         :added_line_count => 0,
         :content => "<same>ruby test_untitled.rb</same>",
-        :line_numbers => "<same><ln>  1</ln></same>"
+        :line_numbers => "<same><ln>1</ln></same>"
       },
       {
         :id => "id_2",
@@ -103,16 +103,16 @@ class GitDiffViewTests < ActionController::TestCase
         "<same>&thinsp;</same>" +
         "<same>end</same>",
         :line_numbers =>
-        "<same><ln>  1</ln></same>" +
-        "<same><ln>  2</ln></same>" +
-        "<same><ln>  3</ln></same>" +
-        "<same><ln>  4</ln></same>" +
-        "<same><ln>  5</ln></same>" + 
-        "<same><ln>  6</ln></same>" +
-        "<same><ln>  7</ln></same>" +
-        "<same><ln>  8</ln></same>" +
-        "<same><ln>  9</ln></same>" +
-        "<same><ln> 10</ln></same>"    
+        "<same><ln>1</ln></same>" +
+        "<same><ln>2</ln></same>" +
+        "<same><ln>3</ln></same>" +
+        "<same><ln>4</ln></same>" +
+        "<same><ln>5</ln></same>" + 
+        "<same><ln>6</ln></same>" +
+        "<same><ln>7</ln></same>" +
+        "<same><ln>8</ln></same>" +
+        "<same><ln>9</ln></same>" +
+        "<same><ln>10</ln></same>"    
       },
       {
         :id => "id_3",
@@ -126,10 +126,10 @@ class GitDiffViewTests < ActionController::TestCase
         "<added>  54</added>" +
         "<same>end</same>",
         :line_numbers =>
-        "<same><ln>  1</ln></same>" +
-        "<deleted><ln>  2</ln></deleted>" +
-        "<added><ln>  2</ln></added>" +
-        "<same><ln>  3</ln></same>"        
+        "<same><ln>1</ln></same>" +
+        "<deleted><ln>2</ln></deleted>" +
+        "<added><ln>2</ln></added>" +
+        "<same><ln>3</ln></same>"        
       }
     ]
 

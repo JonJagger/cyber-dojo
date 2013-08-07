@@ -135,27 +135,18 @@ module GitDiff
   #-----------------------------------------------------------
     
   def git_diff_html_line_numbers(diff)
-    max_digits = diff.length.to_s.length
-    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n, max_digits) }.join("")
+    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n) }.join("")
   end
     
-  def diff_htmlify_line_numbers(n, max_digits)
+  def diff_htmlify_line_numbers(n)
     result = ""
     if n[:type] != :section
       result =
         "<#{n[:type]}>" +
-          '<ln>' + spaced_line_number(n[:number], max_digits) + '</ln>' +
+          '<ln>' + n[:number].to_s + '</ln>' +
         "</#{n[:type]}>"
     end
     result
-  end
-
-  #-----------------------------------------------------------
-    
-  def spaced_line_number(n, max_digits)
-    max_digits = [max_digits,3].max
-    n = n.to_s
-    ' ' * (max_digits - n.length) + n
   end
 
   #-----------------------------------------------------------
