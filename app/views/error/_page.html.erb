@@ -29,32 +29,32 @@
   <% avatars = Avatar.names.shuffle %>
   <% size = 125 %>
 
-  <h1>Ah bum-shakalak<br/><%= message %><br/>Sorry</h1>
+  <h1><%= message %><br/>Sorry</h1>
 	
 	<table class="align-center">
 	  <tr>
-		<td><%= avatar_image(avatars[0],size) %></td>
-		<td><%= avatar_image(avatars[1],size) %></td>
-		<td><%= avatar_image(avatars[2],size) %></td>
-		<td><%= avatar_image(avatars[3],size) %></td>
+		<td><%= avatar_image(avatars[0],size,avatars[0] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[1],size,avatars[1] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[2],size,avatars[2] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[3],size,avatars[3] + " says sorry") %></td>
 	  </tr>
 	  <tr>
-		<td><%= avatar_image(avatars[4],size) %></td>
-		<td><%= avatar_image(avatars[5],size) %></td>
-		<td><%= avatar_image(avatars[6],size) %></td>
-		<td><%= avatar_image(avatars[7],size) %></td>
+		<td><%= avatar_image(avatars[4],size,avatars[4] + " doesn't say sorry!") %></td>
+		<td><%= avatar_image(avatars[5],size,avatars[5] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[6],size,avatars[6] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[7],size,avatars[0] + " says sorry") %></td>
 	  </tr>
 	  <tr>
-		<td><%= avatar_image(avatars[8],size) %></td>
-		<td><%= avatar_image(avatars[9],size) %></td>
-		<td><%= avatar_image(avatars[10],size) %></td>
-		<td><%= avatar_image(avatars[11],size) %></td>
+		<td><%= avatar_image(avatars[ 8],size,avatars[ 8] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[ 9],size,avatars[ 9] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[10],size,avatars[10] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[11],size,avatars[11] + " says sorry") %></td>
 	  </tr>
 	  <tr>
-		<td><%= avatar_image(avatars[12],size) %></td>
-		<td><%= avatar_image(avatars[13],size) %></td>
-		<td><%= avatar_image(avatars[14],size) %></td>
-		<td><%= avatar_image(avatars[15],size) %></td>
+		<td><%= avatar_image(avatars[12],size,avatars[12] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[13],size,avatars[13] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[14],size,avatars[14] + " says sorry") %></td>
+		<td><%= avatar_image(avatars[15],size,avatars[15] + " says sorry") %></td>
 	  </tr>
 	</table>      
 
