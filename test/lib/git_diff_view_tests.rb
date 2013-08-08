@@ -78,7 +78,7 @@ class GitDiffViewTests < ActionController::TestCase
     expected_diffs = [
       {
         :id => "id_1",
-        :name => "cyber-dojo.sh",
+        :filename => "cyber-dojo.sh",
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
@@ -87,7 +87,7 @@ class GitDiffViewTests < ActionController::TestCase
       },
       {
         :id => "id_2",
-        :name => "test_untitled.rb",
+        :filename => "test_untitled.rb",
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
@@ -116,7 +116,7 @@ class GitDiffViewTests < ActionController::TestCase
       },
       {
         :id => "id_3",
-        :name => "untitled.rb",
+        :filename => "untitled.rb",
         :section_count => 1,
         :deleted_line_count => 1,
         :added_line_count => 1,

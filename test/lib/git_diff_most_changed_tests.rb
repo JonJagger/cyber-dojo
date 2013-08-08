@@ -12,13 +12,13 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :deleted_line_count => 22,
       :added_line_count => 32,
       :id => 'jj23',          
-      :name => 'abc',
+      :filename => 'abc',
     }
     diffs << {
       :deleted_line_count => 3,
       :added_line_count => 1,
       :id => 'jj24',          
-      :name => current_filename,
+      :filename => current_filename,
     }
     id = most_changed_lines_file_id(diffs, current_filename)
     assert_equal 'jj24', id
@@ -33,13 +33,13 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :deleted_line_count => 0,
       :added_line_count => 0,
       :id => 'jj23',          
-      :name => 'abc',
+      :filename => 'abc',
     }
     diffs << {
       :deleted_line_count => 0,
       :added_line_count => 0,
       :id => 'jj24',          
-      :name => current_filename,
+      :filename => current_filename,
     }
     id = most_changed_lines_file_id(diffs, current_filename)
     assert_equal 'jj24', id
@@ -54,13 +54,13 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :deleted_line_count => 2,
       :added_line_count => 4,
       :id => 'jj23',          
-      :name => 'output',
+      :filename => 'output',
     }
     diffs << {
       :deleted_line_count => 0,
-      :id => 'jj24',          
-      :name => current_filename,
       :added_line_count => 0,
+      :id => 'jj24',          
+      :filename => current_filename
     }
     id = most_changed_lines_file_id(diffs, current_filename)
     assert_equal 'jj24', id
@@ -75,13 +75,13 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :deleted_line_count => 2,
       :added_line_count => 4,
       :id => 'jj23',          
-      :name => 'not-output',
+      :filename => 'not-output',
     }
     diffs << {
       :deleted_line_count => 0,
       :added_line_count => 0,
       :id => 'jj24',          
-      :name => current_filename,
+      :filename => current_filename,
     }
     id = most_changed_lines_file_id(diffs, current_filename)
     assert_equal 'jj23', id
@@ -95,25 +95,25 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :deleted_line_count => 22,
       :added_line_count => 44,
       :id => 'jj22',          
-      :name => 'output',
+      :filename => 'output',
     }
     diffs << {
       :deleted_line_count => 2,
       :added_line_count => 4,
       :id => 'jj23',          
-      :name => 'not-output',
+      :filename => 'not-output',
     }
     diffs << {
       :deleted_line_count => 0,
       :added_line_count => 0,
       :id => 'jj24',          
-      :name => 'also-not-output',
+      :filename => 'also-not-output',
     }
     diffs << {
       :deleted_line_count => 3,
       :added_line_count => 4,
       :id => 'jj25',          
-      :name => 'again-not-output',
+      :filename => 'again-not-output',
     }
     current_filename = 'not-present'
     id = most_changed_lines_file_id(diffs, current_filename)
@@ -128,21 +128,21 @@ class GitDiffMostChangedTests < ActionController::TestCase
       :deleted_line_count => 23,
       :added_line_count => 23,
       :id => 'jj22',          
-      :name => 'output',
+      :filename => 'output',
       :content => '13453453534535345345'
     }    
     diffs << {
       :deleted_line_count => 0,
       :added_line_count => 0,
       :id => 'jj23',          
-      :name => 'not-output',
+      :filename => 'not-output',
       :content => '1'
     }
     diffs << {
       :deleted_line_count => 0,
       :added_line_count => 0,
       :id => 'jj24',          
-      :name => 'also-not-output',
+      :filename => 'also-not-output',
       :content => '1234'
     }
     current_filename = nil

@@ -28,30 +28,41 @@ var cyberDojo = (function(cd, $) {
       });
     };
 
-    var previousFilename;
+    var previousFilenameNode;
     
-    var loadFrom = function(filename, diff) {
+    var loadFrom = function(filenameNode, diff) {
       // filename is a dom node
       // diff is a data structure
       // TODO: Refactor...  filename.val() == diff[:name]
       //  diff[:filename] is better
       
-      var diffSheet = cd.fileContentFor(filename.val());
+      var diffSheet = cd.fileContentFor(filenameNode.val());
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
       var id = diff.id;
       
       if (sectionCount > 0) {
-          filename.parent().attr('title', 'Auto-scroll through diffs');
+          filenameNode.parent().attr('title', 'Auto-scroll through diffs');
       }
       
-      return function() {        
-        cd.radioEntrySwitch(previousFilename, filename);
-        if (previousFilename !== undefined) {
-          cd.fileDiv(previousFilename.val()).hide();          
+      return function() {
+        
+        // .hide() and .show() calls restore the cursorPos
+        // and scrollPos correctly on files that have no diffs.
+        // However, if the file has a diff, it will auto-scroll
+        // to the current section rather than leaving the
+        // position where it was. This could be refactored
+        // so autoscroll doesn't change a manually scrolled
+        // position. Or simpler only autoscrolls when a file
+        // is selected for the first time, or when a file is
+        // explicitly reselected.
+        
+        cd.radioEntrySwitch(previousFilenameNode, filenameNode);
+        if (previousFilenameNode !== undefined) {
+          cd.fileDiv(previousFilenameNode.val()).hide();          
         }
-        cd.fileDiv(filename.val()).show();
-        previousFilename = filename;
+        cd.fileDiv(filenameNode.val()).show();
+        previousFilenameNode = filenameNode;
         // some files have no diffs
         if (sectionCount > 0) {
           var section = $('#' + id + '_section_' + sectionIndex);           
@@ -70,9 +81,9 @@ var cyberDojo = (function(cd, $) {
       // _filenames.html.erb contains an
       // <input type="radio" id="radio_<%= diff[:id] %>" />
       // for each file in the current diff.
-      var filename = $('#radio_' + diff.id);
-      filename.parent().click(loadFrom(filename, diff));
-      bindLineNumbers(filename.val());
+      var filenameNode = $('#radio_' + diff.id);
+      filenameNode.parent().click(loadFrom(filenameNode, diff));
+      bindLineNumbers(filenameNode.val());
     });
   };
 

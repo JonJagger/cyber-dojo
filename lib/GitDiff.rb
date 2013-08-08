@@ -51,11 +51,11 @@ module GitDiff
   
   def git_diff_prepare(diffed_files, uuid_factory = UuidFactory.new)
     diffs = [ ]
-    diffed_files.sort.each do |name,diff|
+    diffed_files.sort.each do |filename,diff|
       id = 'id_' + uuid_factory.create_uuid
       diffs << {
         :id => id,
-        :name => name,
+        :filename => filename,
         :section_count      => diff.count { |line| line[:type] == :section },
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :added_line_count   => diff.count { |line| line[:type] == :added   },
@@ -83,9 +83,9 @@ module GitDiff
     # in the now_tag (it could have been deleted or renamed)
     # and has at least one red or green change.
     chosen_diff = nil
-    current_filename_diff = diffs.find { |diff| diff[:name] == current_filename }
+    current_filename_diff = diffs.find { |diff| diff[:filename] == current_filename }
     
-    files = diffs.select { |diff| diff[:name] != 'output' && diff[:name] != current_filename }
+    files = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != current_filename }
     files = files.select { |diff| change_count(diff) > 0 }
     most_changed_diff = files.max { |lhs,rhs| change_count(lhs) <=> change_count(rhs) }
     
@@ -98,7 +98,7 @@ module GitDiff
     elsif most_changed_diff != nil
       chosen_diff = most_changed_diff
     else
-      diffs = diffs.select { |diff| diff[:name] != 'output' && diff[:name] != 'instructions' }
+      diffs = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != 'instructions' }
       chosen_diff = diffs.max_by { |diff| diff[:content].size }
     end
     

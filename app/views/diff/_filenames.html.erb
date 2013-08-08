@@ -68,20 +68,20 @@ $(document).ready(function() {
 //--></script>
 
 <table>
-  <% @diffs.each do |file| %>
-    <% n_deleted = file[:deleted_line_count] %>
-    <% n_added   = file[:added_line_count]   %>
+  <% @diffs.each do |diff| %>
+    <% n_deleted = diff[:deleted_line_count] %>
+    <% n_added   = diff[:added_line_count]   %>
     <tr>
       <td class="align-left">        
         <div class="filename"
-             id="<%= file[:id] %>">
-          <input id="radio_<%= file[:id] %>"
+             id="<%= diff[:id] %>">
+          <input id="radio_<%= diff[:id] %>"
                  name="filename"
                  type="radio"
                  checked="checked"
-                 value="<%= file[:name] %>"/>
+                 value="<%= diff[:filename] %>"/>
           <label>
-            <%= file[:name] %>
+            <%= diff[:filename] %>
           </label>
         </div>       
       </td>    
