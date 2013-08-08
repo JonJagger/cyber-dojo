@@ -5,16 +5,28 @@ var cyberDojo = (function(cd, $) {
 
   // Builds the diff filenames click handlers for a given kata-id,
   // given animal-name, and given traffic-light number. Clicking
-  // on the filename brings its diff into view by loading it into
-  // the diffSheet.
+  // on the filename brings it into view by hiding the previous
+  // one and showing the selected one.
   
   cd.buildDiffFilenameHandlers = function(diffs) {
-    var diffLineNumbers = $('#diff_line_numbers');
-    var diffSheet = $('#diff_sheet');
-    var diffPanel = $('#diff_panel');  
+    
+    // The section scrolling won't work.
+    // Now each diff-view file has its own pair of divs
+    // (one for the line-numbers and one for the content)
+    // I need to target the specific divs with a '#id'
+    // selector rather than via '.class'
+    
+    //var diffSheet = $('.diff_sheet');
+    
     var previousFilename;
     
     var loadFrom = function(filename, diff) {
+      // filename is a dom node
+      // diff is a data structure
+      // TODO: Refactor...  filename.val() == diff[:name]
+      //  diff[:filename] is better
+      
+      var diffSheet = cd.fileContentFor(filename.val());
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
       var id = diff.id;
@@ -22,9 +34,13 @@ var cyberDojo = (function(cd, $) {
       if (sectionCount > 0) {
           filename.parent().attr('title', 'Auto-scroll through diffs');
       }
-      return function() {
-        diffLineNumbers.html(diff.line_numbers);
-        diffSheet.html(diff.content);
+      
+      return function() {        
+        if (previousFilename !== undefined) {
+          cd.fileDiv(previousFilename.val()).hide();          
+        }
+        cd.fileDiv(filename.val()).show();
+
         cd.radioEntrySwitch(previousFilename, filename);
         previousFilename = filename;
         // some files have no diffs

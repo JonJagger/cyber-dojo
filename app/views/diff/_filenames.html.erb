@@ -19,6 +19,11 @@
 
 $(document).ready(function() {
 
+  // TODO: This currently passes all of @diffs as a parameter.
+  //       However, diff[:content] and diff[:line_numbers] are large
+  //       and are not needed now that each diff-view file has its
+  //       own pair of divs (one for line-numbers and one for content).
+
   cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe %>);
   
   var display = function(node, name, value) {

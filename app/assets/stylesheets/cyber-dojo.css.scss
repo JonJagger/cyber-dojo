@@ -157,7 +157,7 @@ div[class~="button"]
 
 .line_numbers, .file_content { height: 34em; }
 
-.line_numbers, .file_content, #diff_line_numbers, #instructions { @include code-font; }
+.line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
 .line_numbers, .file_content
 {

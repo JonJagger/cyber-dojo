@@ -1,16 +1,32 @@
 
-<table class="edgeless panel">
-  <tr class="valign-top">
-    <td>
-      <div id="diff_line_numbers_container">
-        <div id="diff_line_numbers" class="align-right"></div>
-      </div>
-    </td>
-    <td>
-      <div id="diff_sheet_container">
-        <div id="diff_sheet"></div>
-      </div>
-    </td>
-  </tr>
-</table>
-<div class="panel"></div>
+<div id="diff_files_container">
+  <% @diffs.each do |diff| %>
+    <% filename = diff[:name] %>
+
+    <div class="filename_div"
+         id="<%= filename %>_div">
+      <table class="edgeless panel">
+        <tr>
+          <td>
+            <div class="diff_line_numbers_container">
+              <div id="<%= filename %>_line_numbers" class="diff_line_numbers align-right">
+                <%= raw diff[:line_numbers] %>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="diff_sheet_container">
+              <div class="diff_sheet"
+                   name="file_content[<%= filename %>]"
+                   id="file_content_for_<%= filename %>">
+                <%= raw diff[:content] %>
+              </div>
+            </div>            
+          </td>
+        </tr>
+      </table>
+      <div class="panel"></div>      
+    </div>
+    
+  <% end %>  
+</div>

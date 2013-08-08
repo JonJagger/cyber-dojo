@@ -25,18 +25,18 @@
   display: block;  
 }
 
-#diff_line_numbers_container, #diff_sheet_container {
+.diff_line_numbers_container, .diff_sheet_container {
   height: 42em;
   overflow: hidden;
 }
 
-#diff_sheet_container {
+.diff_sheet_container {
   width: 60em;
   overflow: auto;
   background: $darker-color;
 }
 
-#diff_sheet {
+.diff_sheet {
   width: 200em;
   color: $darker-color;
   @include code-font;  
@@ -52,7 +52,7 @@
   }  
 }
 
-#diff_sheet, #diff_line_numbers {
+.diff_sheet, .diff_line_numbers {
   margin: 0;
   padding: 0;
   ln {
@@ -82,7 +82,7 @@
   }
 }
 
-#diff_sheet {
+.diff_sheet {
   added, deleted, same { padding-left: 3px; }
   added {
     background: $diff-added-color;
