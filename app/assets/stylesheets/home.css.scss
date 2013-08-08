@@ -12,6 +12,7 @@ $text-color: darken($lighter-color, 10%);
   color: $text-color;
   @include font-size-largest();
 }
+
 a:link, a:visited
 {
   color: $text-color;
@@ -20,7 +21,7 @@ a:link, a:visited
 #a_place_to_practice
 {
   color: $text-color;
-  @include font-size-tiny();
+  @include font-size-small();
 }
 
 #setup
@@ -31,7 +32,7 @@ a:link, a:visited
   @include font-size-large();
 }
   
-.kata_id_input, #start_coding, #resume_coding, #review_coding
+.kata_id_input, #start, #resume, #review
 {
   background: lighten($green, 20%);
   @include gradient-lighten($green, 30%, 20%, 10%);    
@@ -48,13 +49,13 @@ a:link, a:visited
 #get_a_new_practice_id
 {
   color: $text-color;
-  @include font-size-small();  
+  @include font-size-tiny();  
 }
 
 #enter_a_practice_id
 {
   color: lighten($green, 25%);
-  @include font-size-small();  
+  @include font-size-tiny();  
 }
 
 #cant_find_id

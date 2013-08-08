@@ -33,7 +33,7 @@ en:
       zebra: "zebra"
       
     labels:
-      setup: "get a new practice-id"
+      get_a_new_practice_id: "get a new practice-id"
       enter_a_practice_id: "enter a practice id"
       a_place_to_practice: "a place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       please_donate: "If you find cyber-dojo useful please<br/>make a donation.
