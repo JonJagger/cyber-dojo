@@ -17,6 +17,7 @@ var cyberDojo = (function(cd, $) {
     // selector rather than via '.class'
     
     //var diffSheet = $('.diff_sheet');
+    var diffContainer = $('#diff_files_container');
     
     var previousFilename;
     
@@ -26,7 +27,7 @@ var cyberDojo = (function(cd, $) {
       // TODO: Refactor...  filename.val() == diff[:name]
       //  diff[:filename] is better
       
-      var diffSheet = cd.fileContentFor(filename.val());
+      //var diffSheet = cd.fileContentFor(filename.val());
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
       var id = diff.id;
@@ -48,8 +49,9 @@ var cyberDojo = (function(cd, $) {
           var section = $('#' + id + '_section_' + sectionIndex);           
           var downFromTop = 100;
           var halfSecond = 500;
-          diffSheet.animate({
-            scrollTop: section.offset().top - diffSheet.offset().top - downFromTop
+          //diffSheet.animate({
+          diffContainer.animate({
+            scrollTop: section.offset().top - diffContainer.offset().top - downFromTop
             }, halfSecond);
           sectionIndex += 1;
           sectionIndex %= sectionCount;

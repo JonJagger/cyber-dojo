@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  $('#review_coding').click(function() {
+  $('#review').click(function() {
     var ok = $(this).data('ok');  
     cd.run('review_json', ok, function(id, dojo) {
       if (dojo.empty) {          

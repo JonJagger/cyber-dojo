@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
   
-  $('#start_coding').click(function() {
+  $('#start').click(function() {
     var ok = $(this).data('ok');
     cd.run('start_json', ok, function(id, dojo) {
       if (dojo.full) {        
