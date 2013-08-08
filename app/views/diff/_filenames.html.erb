@@ -19,7 +19,8 @@
 
 $(document).ready(function() {
 
-  // TODO: This currently passes all of @diffs as a parameter.
+  // TODO: This buildDiffFilenameHandlers() call currently passes
+  //       all of @diffs as a parameter.
   //       However, diff[:content] and diff[:line_numbers] are large
   //       and are not needed now that each diff-view file has its
   //       own pair of divs (one for line-numbers and one for content).
@@ -45,7 +46,7 @@ $(document).ready(function() {
         .attr('title', 'Toggle deleted lines on/off');
     tr.find('.diff-added-line-count')
         .attr('disabled', false)
-        .attr('title', 'Toggle added lines on/off');
+        .attr('title', 'Toggle added lines on/off');    
   });
 
   $('.diff-deleted-line-count').clickToggle(
@@ -73,7 +74,7 @@ $(document).ready(function() {
     <tr>
       <td class="align-left">        
         <div class="filename"
-             id="<%= file[:id] %>" >
+             id="<%= file[:id] %>">
           <input id="radio_<%= file[:id] %>"
                  name="filename"
                  type="radio"

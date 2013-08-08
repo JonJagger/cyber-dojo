@@ -10,15 +10,24 @@ var cyberDojo = (function(cd, $) {
   
   cd.buildDiffFilenameHandlers = function(diffs) {
     
-    // The section scrolling won't work.
-    // Now each diff-view file has its own pair of divs
-    // (one for the line-numbers and one for the content)
-    // I need to target the specific divs with a '#id'
-    // selector rather than via '.class'
-    
-    //var diffSheet = $('.diff_sheet');
-    var diffContainer = $('#diff_files_container');
-    
+    var bindLineNumbers = function(filename) {
+      var content = cd.fileContentFor(filename);
+      var numbers = cd.lineNumbersFor(filename);
+      
+      function setLine() {
+        numbers.scrollTop(content.scrollTop());   
+      }
+      
+      content.bind({
+        keydown   : function(ev) { setLine(); },
+        scroll    : function(ev) { setLine(); },
+        mousewheel: function(ev) { setLine(); },
+        mousemove : function(ev) { setLine(); },
+        mousedown : function(ev) { setLine(); },
+        mouseup   : function(ev) { setLine(); }
+      });
+    };
+
     var previousFilename;
     
     var loadFrom = function(filename, diff) {
@@ -27,7 +36,7 @@ var cyberDojo = (function(cd, $) {
       // TODO: Refactor...  filename.val() == diff[:name]
       //  diff[:filename] is better
       
-      //var diffSheet = cd.fileContentFor(filename.val());
+      var diffSheet = cd.fileContentFor(filename.val());
       var sectionIndex = 0;
       var sectionCount = diff.section_count;
       var id = diff.id;
@@ -37,21 +46,19 @@ var cyberDojo = (function(cd, $) {
       }
       
       return function() {        
+        cd.radioEntrySwitch(previousFilename, filename);
         if (previousFilename !== undefined) {
           cd.fileDiv(previousFilename.val()).hide();          
         }
         cd.fileDiv(filename.val()).show();
-
-        cd.radioEntrySwitch(previousFilename, filename);
         previousFilename = filename;
         // some files have no diffs
         if (sectionCount > 0) {
           var section = $('#' + id + '_section_' + sectionIndex);           
           var downFromTop = 100;
-          var halfSecond = 500;
-          //diffSheet.animate({
-          diffContainer.animate({
-            scrollTop: section.offset().top - diffContainer.offset().top - downFromTop
+          var halfSecond = 500;          
+          diffSheet.animate({
+            scrollTop: section.offset().top - diffSheet.offset().top - downFromTop
             }, halfSecond);
           sectionIndex += 1;
           sectionIndex %= sectionCount;
@@ -65,6 +72,7 @@ var cyberDojo = (function(cd, $) {
       // for each file in the current diff.
       var filename = $('#radio_' + diff.id);
       filename.parent().click(loadFrom(filename, diff));
+      bindLineNumbers(filename.val());
     });
   };
 

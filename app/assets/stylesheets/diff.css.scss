@@ -25,19 +25,17 @@
   display: block;  
 }
 
-.diff_line_numbers_container, .diff_sheet_container {
-  height: 42em;
+.diff_line_numbers, .diff_sheet {
+  height: 36em;
+}
+
+.diff_line_numbers {
   overflow: hidden;
 }
 
-.diff_sheet_container {
-  width: 60em;
-  overflow: auto;
-  background: $darker-color;
-}
-
 .diff_sheet {
-  width: 200em;
+  width: 52em;
+  overflow: auto;
   color: $darker-color;
   @include code-font;  
   added {
