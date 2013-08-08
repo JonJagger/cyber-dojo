@@ -31,10 +31,7 @@ var cyberDojo = (function(cd, $) {
     var previousFilenameNode;
     
     var loadFrom = function(filenameNode, diff) {
-      // filename is a dom node
-      // diff is a data structure
-      // TODO: Refactor...  filename.val() == diff[:name]
-      //  diff[:filename] is better
+      // assert filename.val() == diff[:filename]
       
       var diffSheet = cd.fileContentFor(filenameNode.val());
       var sectionIndex = 0;
@@ -47,15 +44,13 @@ var cyberDojo = (function(cd, $) {
       
       return function() {
         
-        // .hide() and .show() calls restore the cursorPos
-        // and scrollPos correctly on files that have no diffs.
-        // However, if the file has a diff, it will auto-scroll
-        // to the current section rather than leaving the
-        // position where it was. This could be refactored
-        // so autoscroll doesn't change a manually scrolled
-        // position. Or simpler only autoscrolls when a file
-        // is selected for the first time, or when a file is
-        // explicitly reselected.
+        // .hide() and .show() calls restore the cursorPos and scrollPos
+        // correctly (automatically) on files that have no diffs.
+        // However, if the file has a diff it will auto-scroll to the
+        // first diff-section (when opened) rather than leaving the
+        // position where it was. This could be refactored so autoscroll
+        // only happens when a file is selected for the first time
+        // or when the current file is explicitly reselected.
         
         cd.radioEntrySwitch(previousFilenameNode, filenameNode);
         if (previousFilenameNode !== undefined) {
@@ -83,7 +78,7 @@ var cyberDojo = (function(cd, $) {
       // for each file in the current diff.
       var filenameNode = $('#radio_' + diff.id);
       filenameNode.parent().click(loadFrom(filenameNode, diff));
-      bindLineNumbers(filenameNode.val());
+      bindLineNumbers(diff.filename);
     });
   };
 

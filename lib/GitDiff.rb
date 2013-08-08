@@ -133,7 +133,19 @@ module GitDiff
   end
 
   #-----------------------------------------------------------
-    
+  # Originally I left-padded each line-number.
+  # Now I don't and the CSS right-aligns the line-numbers.
+  # There is a downside to this approach however.
+  # If I have two files in the diff-view and one has less
+  # than 10 lines and the other has more than 10 lines then
+  # the first one's line-numbers will be 2 chars wide and the
+  # seconds one's line-numbers will be 3 chars wide. This
+  # will make the left edge of a file's content move
+  # horizontally when you switch between these two files.
+  # In practice I've decided this is not worth worrying about
+  # since the overwhelming feeling you get when switching files
+  # is the change of content anyway.
+  
   def git_diff_html_line_numbers(diff)
     line_numbers = diff.map {|n| diff_htmlify_line_numbers(n) }.join("")
   end
