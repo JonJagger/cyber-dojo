@@ -20,24 +20,6 @@ var cyberDojo = (function(cd, $) {
   // diff (which will cycle round).
   
   cd.buildDiffFilenameHandlers = function(diffs) {
-    
-    var bindLineNumbers = function(filename) {
-      var content = cd.fileContentFor(filename);
-      var numbers = cd.lineNumbersFor(filename);
-      
-      function setLine() {
-        numbers.scrollTop(content.scrollTop());   
-      }
-      
-      content.bind({
-        keydown   : function(ev) { setLine(); },
-        scroll    : function(ev) { setLine(); },
-        mousewheel: function(ev) { setLine(); },
-        mousemove : function(ev) { setLine(); },
-        mousedown : function(ev) { setLine(); },
-        mouseup   : function(ev) { setLine(); }
-      });
-    };
 
     var previousFilenameNode;
     var alreadyOpened = [ ];
@@ -80,7 +62,7 @@ var cyberDojo = (function(cd, $) {
       var filenameNode = $('#radio_' + diff.id);
       var filename = filenameNode.val();
       filenameNode.parent().click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
-      bindLineNumbers(filename);
+      cd.bindLineNumbersEvents(filename);
     });
   };
 

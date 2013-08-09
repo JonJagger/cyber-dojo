@@ -17,25 +17,27 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.bindLineNumbers = function(filename) {
+  cd.bindLineNumbersEvents = function(filename) {
     var content = cd.fileContentFor(filename);
-    var numbers = cd.lineNumbersFor(filename);
-    
-    numbers.attr('readonly', 'true');
-    numbers.val(cd.lineNumbers);
-    
-    function setLine() {
+    var numbers = cd.lineNumbersFor(filename);    
+    var setLine = function() {
       numbers.scrollTop(content.scrollTop());   
-    }
-    
+    }    
     content.bind({
-      keydown   : function(ev) { setLine(); },
-      scroll    : function(ev) { setLine(); },
-      mousewheel: function(ev) { setLine(); },
-      mousemove : function(ev) { setLine(); },
-      mousedown : function(ev) { setLine(); },
-      mouseup   : function(ev) { setLine(); }
-    });
+      keydown   : setLine,
+      scroll    : setLine,
+      mousewheel: setLine,
+      mousemove : setLine,
+      mousedown : setLine,
+      mouseup   : setLine 
+    });    
+  };
+  
+  cd.bindLineNumbers = function(filename) {
+    var numbers = cd.lineNumbersFor(filename);
+    cd.bindLineNumbersEvents(filename);    
+    numbers.attr('readonly', 'true');
+    numbers.val(cd.lineNumbers);    
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

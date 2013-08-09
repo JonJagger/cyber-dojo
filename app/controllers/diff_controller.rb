@@ -42,9 +42,8 @@ private
     
   def prune(array)
     # diff-view has been refactored so each diff-view has its own
-    # pair of line-number content divs. The filenames are handled
-    # separately and don't need :line_numbers or :content which can
-    # be quite large and would take up needless bandwidth.
+    # pair of [line-number,content] divs. The filenames are handled
+    # separately and only need :id and :section_count entries.
     array.map {|hash| { :id => hash[:id], :section_count => hash[:section_count] } }    
   end
   
