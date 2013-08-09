@@ -31,6 +31,10 @@ class Language
   def support_filenames
     manifest[:support_filenames] || [ ]
   end
+
+  def highlight_filenames
+    manifest[:highlight_filenames] || [ ]
+  end
   
   def unit_test_framework
     manifest[:unit_test_framework]      

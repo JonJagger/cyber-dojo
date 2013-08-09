@@ -13,7 +13,11 @@ $(document).ready(function() {
   
   cd.hiddenFilenames = function() {
     return $.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
-  };  
+  };
+  
+  cd.highlightFilenames = function() {
+    return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
+  };
 
   if (<%= @traffic_lights == [ ] %>) {
     cd.storeIncomingFileHashes();    

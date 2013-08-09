@@ -84,15 +84,19 @@ var cyberDojo = (function(cd, $) {
     var div = $('<div>', {
       'class': 'filename'
     });
-    div.click(function() {
-      cd.loadFile(filename);
-    });
-    div.append($('<input>', {
+    var input = $('<input>', {
       id: 'radio_' + filename,
       name: 'filename',
       type: 'radio',
       value: filename   
-    }));
+    });
+    if (cd.inArray(filename, cd.highlightFilenames())) {
+      input.attr('class', 'highlight');
+    }
+    div.click(function() {
+      cd.loadFile(filename);
+    });    
+    div.append(input);
     div.append($('<label>', {
       text: filename
     }));

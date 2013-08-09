@@ -61,10 +61,16 @@ body
 
 input+label { cursor: pointer; }
 
-input[id="radio_output"]+label, // from edit-page
+input[id="radio_output"]+label, // from test-page
 input[value="output"]+label     // from diff-page
 {
   font-style: italic;
+}
+
+input[class='highlight']+label // from test-page]
+{
+  //&:before { content: ">"; }
+  //&:after  { content: "<"; }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
