@@ -22,8 +22,9 @@ $(document).ready(function() {
   // TODO: This buildDiffFilenameHandlers() call currently passes
   //       all of @diffs as a parameter.
   //       However, diff[:content] and diff[:line_numbers] are large
-  //       and are not needed now that each diff-view file has its
-  //       own pair of divs (one for line-numbers and one for content).
+  //       and are not needed (here) now that each diff-view file has its
+  //       own pair of divs (one for line-numbers and one for content)
+  //       in _lined_diff.html.erb
 
   cd.buildDiffFilenameHandlers(<%= @diffs.to_json.html_safe %>);
   
@@ -69,8 +70,6 @@ $(document).ready(function() {
 
 <table>
   <% @diffs.each do |diff| %>
-    <% n_deleted = diff[:deleted_line_count] %>
-    <% n_added   = diff[:added_line_count]   %>
     <tr>
       <td class="align-left">        
         <div class="filename"
@@ -86,6 +85,7 @@ $(document).ready(function() {
         </div>       
       </td>    
  
+      <% n_deleted = diff[:deleted_line_count] %>
       <% if n_deleted > 0 %>
         <td class="align-right diff-deleted-line-count button">
             <%= n_deleted %>
@@ -95,6 +95,7 @@ $(document).ready(function() {
         </td>
       <% end %>
               
+      <% n_added = diff[:added_line_count]   %>
       <% if n_added > 0 %>
         <td class="align-right diff-added-line-count button">
           <%= n_added %>

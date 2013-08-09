@@ -27,6 +27,22 @@
 
 .diff_line_numbers, .diff_sheet {
   height: 36em;
+  margin: 0;
+  padding: 0;
+  @include code-font;    
+  ln {
+    background: $darker-color;
+    margin-left: 4px;
+    margin-right: 3px;
+    font-weight: normal;    
+  }
+  added, deleted, same { @include pre-block; }
+  added   ln { color: $diff-added-color; }
+  deleted ln { color: $diff-deleted-color; }
+  same    ln {
+    color: lighten($darker-color, 30%);
+    text-decoration: none;    
+  }
 }
 
 .diff_line_numbers {
@@ -34,60 +50,16 @@
 }
 
 .diff_sheet {
-  width: 52em;
   overflow: auto;
+  width: 52em;
   color: $darker-color;
-  @include code-font;  
-  added {
-    background: $diff-added-color;
-  }  
-  same {
-    background: $lighter-color;
-  }  
+  added, deleted, same { padding-left: 3px; }
+  added { background: $diff-added-color; }  
+  same  { background: $lighter-color; }  
   deleted {
     background: $diff-deleted-color;
     text-decoration: line-through;    
   }  
-}
-
-.diff_sheet, .diff_line_numbers {
-  margin: 0;
-  padding: 0;
-  ln {
-    background: $darker-color;
-    margin-left: 4px;
-    margin-right: 3px;
-    font-weight: normal;    
-  }
-  added {
-    @include pre-block;
-    ln {
-      color: $diff-added-color;
-    }    
-  }
-  deleted {
-    @include pre-block;    
-    ln {
-      color: $diff-deleted-color;
-    }    
-  }
-  same {
-    @include pre-block;    
-    ln {
-      color: lighten($darker-color, 30%);
-      text-decoration: none;    
-    }
-  }
-}
-
-.diff_sheet {
-  added, deleted, same { padding-left: 3px; }
-  added {
-    background: $diff-added-color;
-  }
-  deleted {
-    background: $diff-deleted-color;
-  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
