@@ -59,22 +59,6 @@ body
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-input+label { cursor: pointer; }
-
-input[id="radio_output"]+label, // from test-page
-input[value="output"]+label     // from diff-page
-{
-  font-style: italic;
-}
-
-input[class='highlight']+label // from test-page]
-{
-  //&:before { content: ">"; }
-  //&:after  { content: "<"; }
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 div.button, input.button, a.button
 {
   background: $lighter-color;
@@ -93,7 +77,7 @@ div.button, input.button, a.button
   display: inline-block;
 }
 
-div[class~="button"][disabled]
+div[class~='button'][disabled]
 {
   background: lighten($darker-color, 20%);
   cursor: default;
@@ -101,7 +85,7 @@ div[class~="button"][disabled]
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-div[class~="filename"]
+div[class~='filename']
 {
   @include font-size-small();  
   background: $darker-color;
@@ -114,12 +98,8 @@ div[class~="filename"]
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
-  
-  input+label {
-    cursor: pointer;    
-  }
-  
-  &[class~="selected"]
+    
+  &[class~='selected']
   {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
@@ -127,10 +107,10 @@ div[class~="filename"]
     @include gradient-darken($lighter-color, 20%, 10%, 5%);   
     color: $darker-color;
     cursor: default;
-    
-    input+label {
-      cursor: default;  
-    }
+  }
+  
+  &[class~='highlight'] {
+    &:before { content: ">"; }
   }  
 }
 

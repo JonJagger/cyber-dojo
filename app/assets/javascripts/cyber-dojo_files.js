@@ -52,7 +52,6 @@ var cyberDojo = (function(cd, $) {
       var fileListEntry = cd.makeFileListEntry(filename);
       filenameList.append(fileListEntry);
     });
-    $('input[type=radio]').hide();
     return filenames;
   };
   
@@ -72,35 +71,18 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.makeFileListEntry = function(filename) {
-    // Creates a filename entry on the run-tests page. I can't stand
-    // radio-lists that have differing length text and you have to
-    // click exactly on the text rather than on the space after
-    // the text when its one of the shorter texts. So this has extra
-    // structure. The <input type="radio"...> entries are wrapped
-    // inside a <div class="filename"> and it is to the div that the
-    // click handler function is attached. This pattern repeats
-    // in the language and exercise radio-lists in the setup-page
-    // and also in the diff-page filename list.
     var div = $('<div>', {
-      'class': 'filename'
-    });
-    var input = $('<input>', {
+      'class': 'filename',
       id: 'radio_' + filename,
-      name: 'filename',
-      type: 'radio',
-      value: filename   
+      text: filename
     });
     if (cd.inArray(filename, cd.highlightFilenames())) {
-      input.attr('class', 'highlight');
-    }
+      div.addClass('highlight');
+    }      
     div.click(function() {
       cd.loadFile(filename);
     });    
-    div.append(input);
-    div.append($('<label>', {
-      text: filename
-    }));
-    return div;
+    return div;  
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

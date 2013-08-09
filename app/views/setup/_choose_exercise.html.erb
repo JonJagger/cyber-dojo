@@ -7,11 +7,19 @@ $(document).ready(function() {
   var rand = Math.floor(Math.random() * exercises.size());   
   var previousExercise = $(exercises[rand]);
   
+  var radioEntrySwitch = function(previous, current) {
+    if (previous !== undefined) {
+      previous.parent().removeClass('selected');
+    }   
+    current.parent().addClass('selected');
+    current.attr('checked', 'checked');            
+  };  
+  
   exercises.each(function(index) {
     var instructions = $('#instructions_' + index).val();
     var node = $(this);
     node.parent().click(function() {
-      cd.radioEntrySwitch(previousExercise, node);
+      radioEntrySwitch(previousExercise, node);
       previousExercise = node;
       $('#instructions').val(instructions);      
     });

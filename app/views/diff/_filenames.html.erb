@@ -33,7 +33,7 @@ $(document).ready(function() {
   };
 
   $('.filename').click(function() {
-    var tr = $(this).parent().parent();
+    var tr = $(this).closest('tr');
     disableAllLineCountButtons();
     tr.find('.diff-deleted-line-count')
         .attr('disabled', false)
@@ -54,8 +54,7 @@ $(document).ready(function() {
   );
 
   disableAllLineCountButtons();
-  $('#' + '<%= @current_filename_id %>').click();  
-  $('input[type=radio]').hide();
+  $('#radio_' + '<%= @current_filename_id %>').click();  
   
 });
 
@@ -66,15 +65,8 @@ $(document).ready(function() {
     <tr>
       <td class="align-left">        
         <div class="filename"
-             id="<%= diff[:id] %>">
-          <input id="radio_<%= diff[:id] %>"
-                 name="filename"
-                 type="radio"
-                 checked="checked"
-                 value="<%= diff[:filename] %>"/>
-          <label>
-            <%= diff[:filename] %>
-          </label>
+             id="radio_<%= diff[:id] %>">
+          <%= diff[:filename] %>
         </div>       
       </td>    
  

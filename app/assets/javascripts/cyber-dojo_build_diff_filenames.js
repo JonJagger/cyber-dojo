@@ -6,16 +6,16 @@ var cyberDojo = (function(cd, $) {
   // Builds the diff filename click handlers for a given kata-id,
   // given animal-name, and given traffic-light was/now numbers.
   // Clicking on the filename brings it into view by hiding the
-  // previous one and showing the selected one.
+  // previously selected file and showing the selected one.
   //
   // The first time the filename for a file with one or more diff-sections
-  // is clicked the first diff-section is scrolled into view.
+  // is clicked its diff-section is scrolled into view.
   //
   // Subsequent times if you click on the filename you will _not_ get
   // an autoscroll. The reason for this is so that the scrollPos of a
   // diff that has been manually scrolled is retained.
   //
-  // However, if filename X is open and you reclick on the filename
+  // However, if filename X is open and you reclick on filename X
   // then you _will_ get an autoscroll to the _next_ diff-section in that
   // diff (which will cycle round).
   
@@ -23,6 +23,9 @@ var cyberDojo = (function(cd, $) {
 
     var previousFilenameNode;
     var alreadyOpened = [ ];
+    var getFilename = function(node) {
+      return $.trim(node.text());
+    };
     
     var loadFrom = function(filename, filenameNode, id, sectionCount) {
       
@@ -30,18 +33,18 @@ var cyberDojo = (function(cd, $) {
       var sectionIndex = 0;
       
       if (sectionCount > 0) {
-          filenameNode.parent().attr('title', 'Auto-scroll through diffs');
+          filenameNode.attr('title', 'Auto-scroll through diffs');
       }
       
       return function() {
         var reselected =
-          previousFilenameNode !== undefined && previousFilenameNode.val() === filename;
+          previousFilenameNode !== undefined && getFilename(previousFilenameNode) === filename;
         
         cd.radioEntrySwitch(previousFilenameNode, filenameNode);
         if (previousFilenameNode !== undefined) {
-          cd.fileDiv(previousFilenameNode.val()).hide();          
+          cd.fileDiv(getFilename(previousFilenameNode)).hide();          
         }
-        cd.fileDiv(filenameNode.val()).show();
+        cd.fileDiv(getFilename(filenameNode)).show();
         previousFilenameNode = filenameNode;
         
         if (sectionCount > 0 && (reselected || !cd.inArray(filename, alreadyOpened))) {
@@ -60,8 +63,8 @@ var cyberDojo = (function(cd, $) {
     
     $.each(diffs, function(_n, diff) {
       var filenameNode = $('#radio_' + diff.id);
-      var filename = filenameNode.val();
-      filenameNode.parent().click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
+      var filename = getFilename(filenameNode);
+      filenameNode.click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
       cd.bindLineNumbersEvents(filename);
     });
   };

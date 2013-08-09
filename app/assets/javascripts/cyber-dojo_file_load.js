@@ -90,7 +90,6 @@ var cyberDojo = (function(cd, $) {
     // Can't do $('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
     // characters in a dom node id
-    // NB: This fails if the filename contains a double quote
     var node = $('[id="radio_' + filename + '"]');
     var previousFilename = cd.currentFilename();
     var previous = $('[id="radio_' + previousFilename + '"]');
@@ -101,17 +100,11 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.radioEntrySwitch = function(previous, current) {
-    // Used by the run-tests-page filename radio-list
-    // and also the create-page languages/exercises radio-lists
-    // and the diff page radio lists
-    // See the comment for makeFileListEntry() in
-    // cyberdojo-files.js
-    
+    // Used in test-page and diff-page but not in setup-page
     if (previous !== undefined) {
-      previous.parent().removeClass('selected');
+      previous.removeClass('selected');
     }   
-    current.parent().addClass('selected');
-    current.attr('checked', 'checked');            
+    current.addClass('selected');
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

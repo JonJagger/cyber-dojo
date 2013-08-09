@@ -6,11 +6,18 @@ $(document).ready(function() {
   var languages = $('[name=language]');
   var rand = Math.floor(Math.random() * languages.size());
   var previousLanguage = $(languages[rand]);
+  var radioEntrySwitch = function(previous, current) {
+    if (previous !== undefined) {
+      previous.parent().removeClass('selected');
+    }   
+    current.parent().addClass('selected');
+    current.attr('checked', 'checked');            
+  };  
 
   languages.each(function(index) {
     var node = $(this);
     node.parent().click(function() {
-      cd.radioEntrySwitch(previousLanguage, node);
+      radioEntrySwitch(previousLanguage, node);
       previousLanguage = node;
     });
   });

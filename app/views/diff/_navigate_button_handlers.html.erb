@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   var showDiff = function(was, now) {
-    var currentFilename = $('input:radio[name=filename]:checked').val();  
+	var currentFilename = $.trim($('[class~=selected]').html());
     cd.postTo('/diff/show', {
       id: "<%= @kata.id %>",
       avatar: "<%= @avatar.name %>",
