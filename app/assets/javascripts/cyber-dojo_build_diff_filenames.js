@@ -3,10 +3,21 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  // Builds the diff filenames click handlers for a given kata-id,
-  // given animal-name, and given traffic-light number. Clicking
-  // on the filename brings it into view by hiding the previous
-  // one and showing the selected one.
+  // Builds the diff filename click handlers for a given kata-id,
+  // given animal-name, and given traffic-light was/now numbers.
+  // Clicking on the filename brings it into view by hiding the
+  // previous one and showing the selected one.
+  //
+  // The first time the filename for a file with one or more diff-sections
+  // is clicked the first diff-section is scrolled into view.
+  //
+  // Subsequent times if you click on the filename you will _not_ get
+  // an autoscroll. The reason for this is so that the scrollPos of a
+  // diff that has been manually scrolled is retained.
+  //
+  // However, if filename X is open and you reclick on the filename
+  // then you _will_ get an autoscroll to the _next_ diff-section in that
+  // diff (which will cycle round).
   
   cd.buildDiffFilenameHandlers = function(diffs) {
     
@@ -31,9 +42,9 @@ var cyberDojo = (function(cd, $) {
     var previousFilenameNode;
     var alreadyOpened = [ ];
     
-    var loadFrom = function(filenameNode, id, sectionCount) {
+    var loadFrom = function(filename, filenameNode, id, sectionCount) {
       
-      var diffSheet = cd.fileContentFor(filenameNode.val());
+      var diffSheet = cd.fileContentFor(filename);
       var sectionIndex = 0;
       
       if (sectionCount > 0) {
@@ -41,7 +52,6 @@ var cyberDojo = (function(cd, $) {
       }
       
       return function() {
-        var filename = filenameNode.val();
         var reselected =
           previousFilenameNode !== undefined && previousFilenameNode.val() === filename;
         
@@ -66,14 +76,11 @@ var cyberDojo = (function(cd, $) {
       };
     };
     
-    $.each(diffs, function(n, diff) {
-      // _filenames.html.erb contains an
-      // <input id="radio_<%= diff[:id] %>" ... />
-      // for each file in the current diff.
+    $.each(diffs, function(_n, diff) {
       var filenameNode = $('#radio_' + diff.id);
-      filenameNode.parent().click(loadFrom(filenameNode, diff.id, diff.section_count));
-      // assert filenameNode.val() == diff.filename
-      bindLineNumbers(diff.filename);
+      var filename = filenameNode.val();
+      filenameNode.parent().click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
+      bindLineNumbers(filename);
     });
   };
 

@@ -11,6 +11,7 @@ class DiffController < ApplicationController
     visible_files = @avatar.visible_files(@now_tag)
     diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)    
     @diffs = git_diff_prepare(diffed_files)
+    @ids_and_section_counts = prune(@diffs)
     @current_filename_id = most_changed_lines_file_id(@diffs, params[:current_filename])    
     @title = id[0..5] + ' ' + @avatar.name + ' ' + 'diff' 
   end
@@ -37,6 +38,14 @@ private
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i
     @max_tag = @traffic_lights.length
+  end
+    
+  def prune(array)
+    # diff-view has been refactored so each diff-view has its own
+    # pair of line-number content divs. The filenames are handled
+    # separately and don't need :line_numbers or :content which can
+    # be quite large and would take up needless bandwidth.
+    array.map {|hash| { :id => hash[:id], :section_count => hash[:section_count] } }    
   end
   
 end

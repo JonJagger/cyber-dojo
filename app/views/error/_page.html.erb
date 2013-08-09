@@ -27,7 +27,13 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  $(".avatar_image").tooltip({ predelay: 750, effect: "fade" });
+  $(".avatar_image").tooltip({
+	predelay: 750,
+	effect: 'fade',
+	position: 'bottom center',
+	offset: [-30,0],
+	delay: 1000
+  });
 });
 
 //--></script>
