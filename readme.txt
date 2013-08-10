@@ -371,6 +371,22 @@ manifest.rb Parameters
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 
+:highight_filenames
+  A subset of :visible_filenames which names filenames whose appearance
+  are to be highlighted on the test page. This can be useful if you have
+  many :visible_filenames and want to mark which files form the focus
+  of the practice. For example
+  :highlight_filenames => %w( buffer.cpp buffer.hpp )
+  Not required. Defaults to the empty.
+  The apperance of :highlight_filenames is controlled by the CSS
+   div[class~='filename']
+   {
+     &[class~='highlight'] {
+       &:before { content: ">"; }
+     }  
+   }
+  in the file app/assets/stylesheets/cyber-dojo.css.scss
+  
 :hidden_filenames
   The names of text files that are not visible in the browser's editor but
   which will nonetheless be available each time the player runs their tests.
@@ -378,8 +394,8 @@ manifest.rb Parameters
   For example, test framework library code.
   Not required if you do not need hidden files.
   Not currently used anywhere. The plan is that doing a fork will offer a
-  page that allows you to control which files are visible and which are not
-  (eg to make the test files present but invisible) then this will be needed.
+  dialog that allows you to control which files are visible and which are not
+  (eg to make the test files present but invisible).
   
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
