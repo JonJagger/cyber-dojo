@@ -95,16 +95,13 @@ that traffic-light for that animal together with << < > >> buttons to step
 backwards and forwards. As you move forwards and backwards using the
 << < > >> buttons the server will stay on the same file if it continues to
 have a diff. If it cannot do this (because the file has been renamed or
-deleted or has not changed) the server will 
-open the file with the most changes.
-Whichever file is initially opened the display will autoscroll to the
-first diff-chunk.
-Clicking on the filename should auto-scroll to the next diff-chunk in the file
-(but there is a bug in that somewhere).
+deleted or has not changed) the server will open the file with the most changes.
+When a file is initially opened it autoscroll to that file's first diff-chunk.
+Reclicking on the filename auto-scrolls to the next diff-chunk in the file
 Clicking the red no-of-lines-deleted button (to the right of the filename)
-will toggle the deleted lines on/off.
+will toggle the deleted lines on/off for that file's diff.
 Clicking the green no-of-lines-added button (to the right of the filename)
-will toggle the added lines on/off.
+will toggle the added lines on/off for that file's diff.
 
 The diff is a diff between two traffic-lights. If you click on an animals 13th
 traffic-light (on the dashboard) then the diff page will show the diff between
