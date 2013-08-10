@@ -1,18 +1,12 @@
 
-<table class=align-center">  
+<table class="align-center">  
   <tr>
-    <td class="align-right">practice</td>
-    <td>&nbsp;=&nbsp;</td>
-    <td class="align-left"><%= @kata.id[0..5] %></td>
+    <td><%= @kata.id[0..5] %></td>
   </tr>
   <tr>
-    <td class="align-right"><%= t('views.labels.language') %></td>
-    <td>&nbsp;=&nbsp;</td>
-    <td class="align-left"><%= @kata.language.name %></td>
+    <td><%= @kata.language.name %></td>
   </tr>
   <tr>
-    <td class="align-right"><%= t('views.labels.exercise') %></td>
-    <td>&nbsp;=&nbsp;</td>
-    <td class="align-left"><%= @kata.exercise.name.sub('_',' ') %></td>
+    <td><%= @kata.exercise.name.sub('_',' ') %></td>
   </tr>
 </table>
