@@ -4,6 +4,10 @@
 $(document).ready(function() {
 
   var previousExercise = undefined;
+  var container = $('#div_exercises');
+  var downFromTop = 100;
+  var halfSecond = 500;
+  var selected = $('#exercise_' + <%= @selected_exercise_index %>);
   
   $('[id^=exercise_]').each(function(index) {
     var instructions = $('#instructions_' + index).val();
@@ -15,8 +19,11 @@ $(document).ready(function() {
     });
   });
 
-  $('#exercise_' + <%= @selected_exercise_index %>).click();
-  //TODO: ensure visible (auto scroll)
+  selected.click();
+  // ensure visible
+  container.animate({
+    scrollTop: selected.offset().top - container.offset().top - downFromTop
+  }, halfSecond);
 
 });
 

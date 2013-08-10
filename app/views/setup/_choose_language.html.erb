@@ -4,6 +4,11 @@
 $(document).ready(function() {
 
   var previousLanguage = undefined;
+  var container = $('#div_languages');
+  var downFromTop = 100;
+  var halfSecond = 500;
+  var selected = $('#language_' + <%= @selected_language_index %>);
+
 
   $('[id^=language_]').each(function(index) {
     var node = $(this);
@@ -13,8 +18,11 @@ $(document).ready(function() {
     });
   });
   
-  $('#language_' + <%= @selected_language_index %>).click();
-  //TODO: ensure visible (auto scroll)
+  selected.click();
+  // ensure visible
+  container.animate({
+    scrollTop: selected.offset().top - container.offset().top - downFromTop
+  }, halfSecond);
 
 });
 
