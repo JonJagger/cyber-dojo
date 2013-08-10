@@ -3,41 +3,35 @@
 
 $(document).ready(function() {
 
-  var languages = $('[name=language]');
+  var languages = $('[id^=language_]');
   var rand = Math.floor(Math.random() * languages.size());
   var previousLanguage = $(languages[rand]);
-  var radioEntrySwitch = function(previous, current) {
-    if (previous !== undefined) {
-      previous.parent().removeClass('selected');
-    }   
-    current.parent().addClass('selected');
-    current.attr('checked', 'checked');            
-  };  
 
   languages.each(function(index) {
     var node = $(this);
-    node.parent().click(function() {
-      radioEntrySwitch(previousLanguage, node);
+    node.click(function() {
+      cd.radioEntrySwitch(previousLanguage, node);
       previousLanguage = node;
     });
   });
   
-  $('#language_' + rand).parent().click();
+  $('#language_' + rand).click();
+  //TODO: ensure visible (auto scroll)
 
 });
 
 //--></script>
 
-<div id="language_qm">
+<div id="choose_language">
   <%= t("views.labels.language") %>
 </div>
 
-<% @languages.each_with_index do |choice,index| %>
-  <div class="filename" >
-    <input id="language_<%= index %>" 
-           type="radio"
-           name="language"
-           value="<%= choice %>" />
-    <label id=<%= "language_#{choice.tableize.singularize}" %>><%= choice %></label>
-  </div>    
-<% end %>    
+<div id="div_languages">
+  <% @languages.each_with_index do |choice,index| %>
+    <div class="filename" 
+         id="language_<%= index %>"
+         data-language="<%= choice %>">
+      <%= choice %>
+    </div>    
+  <% end %>    
+</div>

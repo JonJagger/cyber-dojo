@@ -89,7 +89,7 @@ var cyberDojo = (function(cd, $) {
   cd.selectFileInFileList = function(filename) {    
     // Can't do $('radio_' + filename) because filename
     // could contain characters that aren't strictly legal
-    // characters in a dom node id
+    // characters in a dom node id so I do this instead...
     var node = $('[id="radio_' + filename + '"]');
     var previousFilename = cd.currentFilename();
     var previous = $('[id="radio_' + previousFilename + '"]');
@@ -100,7 +100,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.radioEntrySwitch = function(previous, current) {
-    // Used in test-page and diff-page but not in setup-page
+    // Used in test-page and diff-page and setup-page
     if (previous !== undefined) {
       previous.removeClass('selected');
     }   

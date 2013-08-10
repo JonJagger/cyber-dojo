@@ -3,46 +3,37 @@
         
 $(document).ready(function() {
 
-  var exercises = $('[name=exercise]');
+  var exercises = $('[id^=exercise_]');
   var rand = Math.floor(Math.random() * exercises.size());   
   var previousExercise = $(exercises[rand]);
-  
-  var radioEntrySwitch = function(previous, current) {
-    if (previous !== undefined) {
-      previous.parent().removeClass('selected');
-    }   
-    current.parent().addClass('selected');
-    current.attr('checked', 'checked');            
-  };  
   
   exercises.each(function(index) {
     var instructions = $('#instructions_' + index).val();
     var node = $(this);
-    node.parent().click(function() {
-      radioEntrySwitch(previousExercise, node);
+    node.click(function() {
+      cd.radioEntrySwitch(previousExercise, node);
       previousExercise = node;
       $('#instructions').val(instructions);      
     });
   });
 
-  $('#exercise_' + rand).parent().click();
+  $('#exercise_' + rand).click();
+  //TODO: ensure visible (auto scroll)
 
 });
 
 //--></script>
 
-<div id="exercise_qm">
+<div id="choose_exercise">
   <%= t("views.labels.exercise") %>
 </div>
 
-<div id="exercise_list">
+<div id="div_exercises">
   <% @exercises.each_with_index do |choice,index| %>
-    <div class="filename" >
-      <input id="exercise_<%= index %>" 
-             type="radio"
-             name="exercise" 
-             value="<%= choice %>" />
-      <label><%= choice.gsub("_", " ") %></label>
+    <div class="filename" 
+         id="exercise_<%= index %>"
+         data-exercise="<%= choice %>" >
+      <%= choice.gsub("_", " ") %>
     </div>    
   <% end %>
 </div>

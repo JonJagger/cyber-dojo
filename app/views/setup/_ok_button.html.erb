@@ -3,10 +3,12 @@
 
 $(document).ready(function() {
   
-  $('#ok').click(function() {    
+  $('#ok').click(function() {  
+    var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
+    var language = $('[id^=language_][class~=selected]').data('language');
     cd.postTo('/setup/save', {
-      exercise: $('input[name="exercise"]:checked').val(),
-      language: $('input[name="language"]:checked').val()
+      exercise: exercise,
+      language: language
     });    
   });
   
