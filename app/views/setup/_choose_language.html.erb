@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   var languages = $('[id^=language_]');
-  var rand = Math.floor(Math.random() * languages.size());
+  var rand = cd.rand(languages.size());
   var previousLanguage = $(languages[rand]);
 
   languages.each(function(index) {

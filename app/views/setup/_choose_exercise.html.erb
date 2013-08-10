@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   var exercises = $('[id^=exercise_]');
-  var rand = Math.floor(Math.random() * exercises.size());   
+  var rand = cd.rand(exercises.size());   
   var previousExercise = $(exercises[rand]);
   
   exercises.each(function(index) {
