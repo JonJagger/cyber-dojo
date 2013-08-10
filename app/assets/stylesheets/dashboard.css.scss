@@ -46,7 +46,7 @@ $ellipsis: "\2026";
   }
   .omission {
     font-size: 0.7em;
-    color: Gray;
+    color: White;
   }
   .omission:after {
     content: $ellipsis;
