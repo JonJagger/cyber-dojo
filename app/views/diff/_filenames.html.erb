@@ -3,7 +3,7 @@
 
 (function($) {
   // http://stackoverflow.com/questions/4911577/jquery-click-toggle-between-two-functions
-  // $(..).toggle() no longer exists in JQuery
+  // $().toggle() no longer exists in JQuery
   $.fn.clickToggle = function(func1, func2) {
     var funcs = [func1, func2];
     this.data('toggleclicked', 0);
@@ -23,7 +23,9 @@ $(document).ready(function() {
   
   var display = function(node, name, value) {
     if ($(node).attr('disabled') !== 'disabled') {
-      $(name).css('display', value);
+      var filename = $(node).data('filename');
+      var selector = '[id="' + filename + '_div"] ' + name;
+      $(selector).css('display', value);
     }
   };
   var allLineCountButtons = $('.diff-deleted-line-count, .diff-added-line-count');
@@ -72,7 +74,8 @@ $(document).ready(function() {
  
       <% n_deleted = diff[:deleted_line_count] %>
       <% if n_deleted > 0 %>
-        <td class="align-right diff-deleted-line-count button">
+        <td class="align-right diff-deleted-line-count button"
+            data-filename="<%= diff[:filename] %>">
             <%= n_deleted %>
         </td>            
       <% else %>
@@ -82,7 +85,8 @@ $(document).ready(function() {
               
       <% n_added = diff[:added_line_count]   %>
       <% if n_added > 0 %>
-        <td class="align-right diff-added-line-count button">
+        <td class="align-right diff-added-line-count button"
+            data-filename="<%= diff[:filename] %>">
           <%= n_added %>
         </td>
       <% else %>
