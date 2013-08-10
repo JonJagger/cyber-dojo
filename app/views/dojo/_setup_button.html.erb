@@ -4,7 +4,9 @@
 $(document).ready(function() {
   
   $('#setup').click(function() {
-    cd.postTo('/setup/show');
+    cd.postTo('/setup/show', {
+      id: $('#kata_id_input').val()
+    });
   });
 
 });

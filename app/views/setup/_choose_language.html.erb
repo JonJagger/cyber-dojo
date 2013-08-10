@@ -3,11 +3,9 @@
 
 $(document).ready(function() {
 
-  var languages = $('[id^=language_]');
-  var rand = cd.rand(languages.size());
-  var previousLanguage = $(languages[rand]);
+  var previousLanguage = undefined;
 
-  languages.each(function(index) {
+  $('[id^=language_]').each(function(index) {
     var node = $(this);
     node.click(function() {
       cd.radioEntrySwitch(previousLanguage, node);
@@ -15,7 +13,7 @@ $(document).ready(function() {
     });
   });
   
-  $('#language_' + rand).click();
+  $('#language_' + <%= @selected_language_index %>).click();
   //TODO: ensure visible (auto scroll)
 
 });

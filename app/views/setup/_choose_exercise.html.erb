@@ -3,11 +3,9 @@
         
 $(document).ready(function() {
 
-  var exercises = $('[id^=exercise_]');
-  var rand = cd.rand(exercises.size());   
-  var previousExercise = $(exercises[rand]);
+  var previousExercise = undefined;
   
-  exercises.each(function(index) {
+  $('[id^=exercise_]').each(function(index) {
     var instructions = $('#instructions_' + index).val();
     var node = $(this);
     node.click(function() {
@@ -17,7 +15,7 @@ $(document).ready(function() {
     });
   });
 
-  $('#exercise_' + rand).click();
+  $('#exercise_' + <%= @selected_exercise_index %>).click();
   //TODO: ensure visible (auto scroll)
 
 });
