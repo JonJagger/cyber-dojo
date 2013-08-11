@@ -15,6 +15,8 @@ done
 
 eval "chown www-data /var/www/cyberdojo/*"
 eval "chgrp www-data /var/www/cyberdojo/*"
+eval "chown www-data /var/www/cyberdojo/.*"
+eval "chgrp www-data /var/www/cyberdojo/.*"
 
 # poke rails
 bundle install
