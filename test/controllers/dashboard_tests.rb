@@ -120,6 +120,14 @@ class DashboardControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "help_dialog" do
+    id = checked_save_id
+    get "/dashboard/help_dialog"
+    assert_response :success    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test "heartbeat" do
     id = checked_save_id
     

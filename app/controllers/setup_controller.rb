@@ -38,7 +38,7 @@ private
 
   def choose_language
     choice = [*0..@languages.length-1].shuffle[0]
-    if Kata.exists?(root_dir, id)
+    if params[:id] && Kata.exists?(root_dir, id)
       language_index = @languages.index(Kata.new(root_dir, id).language.name)
       if language_index != nil
         choice = language_index;
@@ -49,7 +49,7 @@ private
   
   def choose_exercise
     choice = [*0..@exercises.length-1].shuffle[0]
-    if Kata.exists?(root_dir, id)
+    if params[:id] && Kata.exists?(root_dir, id)
       exercise_index = @exercises.index(Kata.new(root_dir, id).exercise.name)
       if exercise_index != nil
         choice = exercise_index
