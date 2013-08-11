@@ -15,7 +15,8 @@ index('katas') do |kata_dir,id|
     manifest_filename = "#{kata_dir}/manifest.rb"
     if File.exists? manifest_filename
       begin
-        manifest = eval IO.popen("cat #{manifest_filename}").read
+        content = "# encoding: utf-8\n\n" + readfile(manifest_filename)
+        manifest = eval content
         created = Time.mktime(*manifest[:created])
         ymd = [created.year, created.month, created.day, created.strftime('%a')]
         stats[ymd] ||= 0
