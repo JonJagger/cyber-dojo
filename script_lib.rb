@@ -57,7 +57,7 @@ def prune_stats
       
       begin
         content = "# encoding: utf-8\n\n" + readfile(manifest_filename)
-        manifest = content
+        manifest = eval content
         created = Time.mktime(*manifest[:created])
         days_old = ((Time.now - created) / 60 / 60 / 24).to_i
         stats[count] ||= [ ]    
