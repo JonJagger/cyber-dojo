@@ -1,3 +1,4 @@
+# encoding: utf-8
 
 def avatars
   %w(
@@ -55,7 +56,8 @@ def prune_stats
       tally,count = traffic_light_count(kata_dir)
       
       begin
-        manifest = eval readfile(manifest_filename)
+        content = "# encoding: utf-8\n\n" + readfile(manifest_filename)
+        manifest = content
         created = Time.mktime(*manifest[:created])
         days_old = ((Time.now - created) / 60 / 60 / 24).to_i
         stats[count] ||= [ ]    
