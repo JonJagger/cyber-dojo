@@ -8,12 +8,16 @@ def avatars
     )
 end
 
+def readfile(filename)
+  `cat #{filename}`
+end
+
 def traffic_light_count(kata_dir)
   tally,count = 0,0
   avatars.each do |avatar|
     inc_filename = "#{kata_dir}/#{avatar}/increments.rb"
     if File.exists? inc_filename
-      incs = eval IO.popen("cat #{inc_filename}").read
+      incs = eval readfile(inc_filename)
       if incs.length > 0
         tally += 1
         count += incs.length
@@ -51,7 +55,7 @@ def prune_stats
       tally,count = traffic_light_count(kata_dir)
       
       begin
-        manifest = eval IO.popen("cat #{manifest_filename}").read      
+        manifest = eval readfile(manifest_filename)
         created = Time.mktime(*manifest[:created])
         days_old = ((Time.now - created) / 60 / 60 / 24).to_i
         stats[count] ||= [ ]    
@@ -80,16 +84,18 @@ def prune(do_delete)
         rm = "rm -rf " + kata_dir
         if do_delete == "true"
           system(rm)
+          print "."
         else
           print "will rm " + id + " " + traffic_light_count.to_s + "\t" + days_old.to_s + "\n"
         end
+        $stdout.flush        
       else
         tally_no += 1
       end
     end
   end
   
-  print tally_yes.to_s + " katas "
+  print "\n" + tally_yes.to_s + " katas "
   if do_delete == "false"
     print "will be "
   end

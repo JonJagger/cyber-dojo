@@ -1,6 +1,3 @@
-# When run this is causing  a lot of <defunct> shell processes to accumulate
-# I don't know why yet but for know please do not run these on the server.
-
 # A ruby script to prune folders containing old katas with a lot of traffic lights.
 # Katas with a lot of traffic lights use a lot of inodes and unless
 # regular pruning occurs the server will run out of inodes.
