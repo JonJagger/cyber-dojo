@@ -1,5 +1,6 @@
 
 require 'Folders'
+require 'Choose'
 
 class SetupController < ApplicationController
   
@@ -10,8 +11,8 @@ class SetupController < ApplicationController
     @exercises.each do |exercise|
       @instructions[exercise] = Exercise.new(root_dir, exercise).instructions
     end
-    @selected_language_index = choose_language                                               
-    @selected_exercise_index = choose_exercise
+    @selected_language_index = Choose::language(@languages, params[:id], id, root_dir)                                              
+    @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, root_dir)
     @title = 'Setup'
   end
   
@@ -33,29 +34,5 @@ class SetupController < ApplicationController
                 :action => :index, 
                 :id => info[:id]
   end  
-  
-private
-
-  def choose_language
-    choice = [*0..@languages.length-1].shuffle[0]
-    if params[:id] && Kata.exists?(root_dir, id)
-      language_index = @languages.index(Kata.new(root_dir, id).language.name)
-      if language_index != nil
-        choice = language_index;
-      end
-    end
-    choice
-  end
-  
-  def choose_exercise
-    choice = [*0..@exercises.length-1].shuffle[0]
-    if params[:id] && Kata.exists?(root_dir, id)
-      exercise_index = @exercises.index(Kata.new(root_dir, id).exercise.name)
-      if exercise_index != nil
-        choice = exercise_index
-      end
-    end
-    choice
-  end
 
 end

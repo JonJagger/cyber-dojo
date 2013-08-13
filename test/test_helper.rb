@@ -41,7 +41,7 @@ class ActiveSupport::TestCase
     @dojo_id || Uuid.new.to_s
   end
   
-  def make_info( language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
+  def make_info(language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
     @dojo_id = id
     language = Language.new(root_dir, language_name)
     exercise = Exercise.new(root_dir, exercise_name)
