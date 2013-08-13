@@ -13,12 +13,14 @@ class SetupController < ApplicationController
     end
     @selected_language_index = Choose::language(@languages, params[:id], id, root_dir)                                              
     @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, root_dir)
+    @id = id
     @title = 'Setup'
   end
   
   def cancel
     redirect_to :controller => 'dojo',
-                :action => :index
+                :action => :index,
+                :id => params[:id]
   end
 
   def save

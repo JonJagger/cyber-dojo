@@ -4,7 +4,9 @@
 $(document).ready(function() {
   
   $('#cancel').click(function() {
-    cd.postTo('/setup/cancel');
+    cd.postTo('/setup/cancel', {
+      id: "<%= @id %>"
+    });
   });
   
 });
