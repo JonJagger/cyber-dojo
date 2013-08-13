@@ -18,8 +18,9 @@ prune(do_delete) { |traffic_light_count,days_old|
   traffic_light_count >= min_traffic_light_count and days_old >= min_days_old
 }
 
-puts
+puts '============================================'
 puts 'This could have pruned the refactoring dojos'
 puts 'Restore with'
 puts '#unzip refactoring_dojos.zip'
+puts '============================================'
 puts
