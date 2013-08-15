@@ -5,6 +5,7 @@ class DashboardController < ApplicationController
     @kata = Kata.new(root_dir, id)    
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
+    @auto_refresh = flag(:auto_refresh, true)
     @title = id[0..5] + ' dashboard'    
   end
 
@@ -12,6 +13,7 @@ class DashboardController < ApplicationController
     @kata = Kata.new(root_dir, id)    
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
+    @auto_refresh = flag(:auto_refresh, true)
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -47,4 +49,10 @@ private
     value > 0 ? value : default    
   end
  
+  def flag(symbol, default)
+    tf = params[symbol]
+    return tf if tf == "true"
+    return tf if tf == "false"
+    return default
+  end
 end

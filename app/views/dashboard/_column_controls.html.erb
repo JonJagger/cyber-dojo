@@ -3,6 +3,17 @@
 
 $(document).ready(function() {
 
+  var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";  
+
+  var setRefreshButtonText = function() {
+    var b = $('#auto_refresh');
+    if (autoRefreshEnabled) {
+      b.text("<%= t('views.buttons.enable') %>");
+    } else {
+      b.text("<%= t('views.buttons.disable') %>");
+    }    
+  };
+  
   var parse = function(name, current_value) {
     var input = $('#' + name);
     var newValue = parseInt(input.val());
@@ -16,12 +27,15 @@ $(document).ready(function() {
     return {
       id: "<%= @kata.id %>",
       seconds_per_column: parse('seconds_per_column', <%= @seconds_per_column %>),
-      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>)
+      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>),
+      auto_refresh: autoRefreshEnabled
     };
   };
   
   var refreshDashboard = function() {
-    if (!auto_refresh_enabled) {
+    // button is a toggle, it shows what will happen if you press it
+    // that is, it displays the opposite of the current state
+    if (!autoRefreshEnabled) {
       $.ajax({
         url: "<%= url_for :action => 'heartbeat' %>",
         data: params(),
@@ -31,7 +45,6 @@ $(document).ready(function() {
   };
 
   var seconds = 1000;
-  var auto_refresh_enabled = true;  
     
   setInterval(refreshDashboard, 10*seconds);
   
@@ -42,15 +55,11 @@ $(document).ready(function() {
   });
   
   $('#auto_refresh').click(function() {
-    auto_refresh_enabled = !auto_refresh_enabled;
-    if (auto_refresh_enabled) {
-      $(this).text("<%= t('views.buttons.enable') %>");
-    } else {
-      $(this).text("<%= t('views.buttons.disable') %>");
-    }
+    autoRefreshEnabled = !autoRefreshEnabled;
+    setRefreshButtonText();
   });
   
-  $('#auto_refresh').click();
+  setRefreshButtonText();
 });
 
 //--></script>
