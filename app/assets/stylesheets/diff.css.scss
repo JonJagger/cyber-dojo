@@ -31,7 +31,6 @@
   padding: 0;
   @include code-font;    
   ln {
-    background: $darker-color;
     margin-left: 4px;
     margin-right: 3px;
     font-weight: normal;    
@@ -39,23 +38,23 @@
   added, deleted, same { @include pre-block; }
   added   ln { color: $diff-added-color; }
   deleted ln { color: $diff-deleted-color; }
-  same    ln {
-    color: lighten($darker-color, 30%);
-    text-decoration: none;    
-  }
+  same    ln { color: lighten($darker-color, 30%); }
 }
 
 .diff_line_numbers {
   overflow: hidden;
+  background: $darker-color; 
 }
 
 .diff_sheet {
   overflow: auto;
   width: 52em;
   color: $darker-color;
+  background: $lighter-color;  
   added, deleted, same { padding-left: 3px; }
-  added { background: $diff-added-color; }  
-  same  { background: $lighter-color; }  
+  added {
+    background: $diff-added-color;
+  }  
   deleted {
     background: $diff-deleted-color;
     text-decoration: line-through;    
