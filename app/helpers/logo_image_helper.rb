@@ -9,4 +9,10 @@ module LogoImageHelper
       :height => size
   end
 
+  def home_page_logo()
+    image_tag "/images/home_page_logo.png",
+      :alt   => 'cyber-dojo',
+      :title => 'cyber-dojo'
+  end
+
 end

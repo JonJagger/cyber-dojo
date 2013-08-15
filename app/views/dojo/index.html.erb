@@ -2,10 +2,13 @@
 <div style="font-size: 1.5em;">
 
   <div class="row">
-      <%= logo_image(47,"cyber-dojo") %>
+      <%= home_page_logo() %>
       <span id="cyber-dojo">cyber-dojo</span>
       <div id="a_place_to_practice">
           <%= raw t("views.labels.a_place_to_practice") %>
+      </div>
+      <div id="custom_message">
+        <%= render :partial => 'custom_message' %>      
       </div>
   </div>  
   
