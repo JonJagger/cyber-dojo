@@ -6,11 +6,11 @@ $(document).ready(function() {
   var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";  
 
   var setRefreshButtonText = function() {
-    var b = $('#auto_refresh');
+    var button = $('#auto_refresh');
     if (autoRefreshEnabled) {
-      b.text("<%= t('views.buttons.enable') %>");
+      button.text("<%= t('views.buttons.enable') %>");
     } else {
-      b.text("<%= t('views.buttons.disable') %>");
+      button.text("<%= t('views.buttons.disable') %>");
     }    
   };
   
@@ -60,6 +60,7 @@ $(document).ready(function() {
   });
   
   setRefreshButtonText();
+  $('#auto_refresh').click();
 });
 
 //--></script>
