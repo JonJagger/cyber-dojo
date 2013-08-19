@@ -33,8 +33,6 @@ $(document).ready(function() {
   };
   
   var refreshDashboard = function() {
-    // button is a toggle, it shows what will happen if you press it
-    // that is, it displays the opposite of the current state
     if (!autoRefreshEnabled) {
       $.ajax({
         url: "<%= url_for :action => 'heartbeat' %>",
@@ -60,6 +58,9 @@ $(document).ready(function() {
   });
   
   setRefreshButtonText();
+
+  // The auto_refresh button is a toggle, it shows what will happen if
+  // you press it. That is, it displays the opposite of the currentstate
   $('#auto_refresh').click();
 });
 
