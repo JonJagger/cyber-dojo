@@ -6,11 +6,11 @@ class DiskGit
   end
   
   def add(dir, what)
-    system("cd #{dir}; git add #{what}")
+    system("cd #{dir}; git add '#{what}'")
   end
 
   def rm(dir, what)
-    `cd #{dir}; git rm #{what}`
+    `cd #{dir}; git rm '#{what}'`
   end
   
   def commit(dir, options)
