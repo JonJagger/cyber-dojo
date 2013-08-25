@@ -47,42 +47,26 @@ $(document).ready(function() {
   <h1><%= message %></h1>
 	
   <table class="align-center">
+	<% (0..3).each do |row| %>
 	<tr>
-	  <td>
-	  <img alt="<%= avatars[0]%>"
-		   class="avatar_image"
-		   height="<%= size %>"
-		   width="<%= size %>"
-		   src="/images/avatars/<%= avatars[0]%>.jpg" />		  
-	  <div class="tooltip">
-		<%= avatars[0] %> says <em>sorry</em>
-	  </div>
-	  </td>
-	  <td><%= avatar_image(avatars[1],size) %></td>
-	  <td><%= avatar_image(avatars[2],size) %></td>
-	  <td><%= avatar_image(avatars[3],size) %></td>
-	</tr>
-	<tr>
-	  <td><%= avatar_image(avatars[4],size) %></td>
-	  <td><%= avatar_image(avatars[5],size) %></td>
-	  <td><%= avatar_image(avatars[6],size) %></td>
-	  <td><%= avatar_image(avatars[7],size) %></td>
-	</tr>
-	<tr>
-	  <td><%= avatar_image(avatars[ 8],size) %></td>
-	  <td><%= avatar_image(avatars[ 9],size) %></td>
-	  <td><%= avatar_image(avatars[10],size) %></td>
-	  <td><%= avatar_image(avatars[11],size) %></td>
-	</tr>
-	<tr>
-	  <td><%= avatar_image(avatars[12],size) %></td>
-	  <td><%= avatar_image(avatars[13],size) %></td>
-	  <td><%= avatar_image(avatars[14],size) %></td>
-	  <td><%= avatar_image(avatars[15],size) %></td>
-	</tr>
+	  <% (0..3).each do |col| %>
+	     <td>
+		  <% n = row*4 + col %>
+		  <img alt="<%= avatars[n] %>"
+		       class="avatar_image"
+			   height="<%= size %>"
+			   width="<%= size %>"
+		       src="/images/avatars/<%= avatars[n]%>.jpg" />		  
+			<div class="tooltip">
+			  <%= avatars[n] %> says <em>sorry</em>
+			</div>
+		 </td>
+	  <% end %>	  	  
+	</tr>	
+	<% end %>
   </table>      
 
-  <h1>Sorry</h1>
+  <h1>We're sorry</h1>
 	
 </body>
 </html>  
