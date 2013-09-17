@@ -96,7 +96,7 @@ backwards and forwards. As you move forwards and backwards using the
 << < > >> buttons the server will stay on the same file if it continues to
 have a diff. If it cannot do this (because the file has been renamed or
 deleted or has not changed) the server will open the file with the most changes.
-When a file is initially opened it autoscroll to that file's first diff-chunk.
+When a file is initially opened it autoscrolls to that file's first diff-chunk.
 Reclicking on the filename auto-scrolls to the next diff-chunk in the file
 Clicking the red no-of-lines-deleted button (to the right of the filename)
 will toggle the deleted lines on/off for that file's diff.
@@ -115,13 +115,13 @@ These buttons move forwards and backwards whilst maintaining the traffic-light
 gap (eg 12 <-> 15 == 3).
 Pressing
 o) << moves back to the first traffic-light, so if the gap is 3
-   it will display the diff of 1 -> 4
+   it will display the diff of 1 <-> 4
 o) <  moves one traffic-light back, so if the gap is 3
-   it will display the diff of 11 -> 14
+   it will display the diff of 11 <-> 14
 o) >  moves one traffic-light forward, so if the gap is 3
-   it will display the diff of 13 -> 16
+   it will display the diff of 13 <-> 16
 o) >> moves forward to the last traffic-light (eg 65), so if the gap is 3
-   it will display the diff of 62 -> 65
+   it will display the diff of 62 <-> 65
 
 You can also do a "no-diff" by simply entering the same value (eg 23) twice.
 23 <-> 23 will display all the files from traffic-light 23 and there will be
