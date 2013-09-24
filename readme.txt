@@ -148,6 +148,8 @@ setup your own server you are strongly advised to consider using
 o) a dedicated server.
 o) a virtual box.
 o) a dedicated network segment.
+A technology that looks very promising for creating isolated
+sandboxes on the server is http://www.docker.io/
 
 
 Running your own VirtualBox TurnKey Linux cyber-dojo server
