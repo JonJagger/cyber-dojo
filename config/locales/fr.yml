@@ -76,6 +76,7 @@ fr:
       rename: "renommer"
       delete: "effacer"
       fork: "bifurquer"
+      diff: "diff"
       test: "tester"
       download: "télécharger"
       disable: "désactiver"
