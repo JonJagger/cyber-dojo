@@ -1,4 +1,4 @@
-The game of yahtzee is a simple dice game. Each player
+The game of yatzy is a simple dice game. Each player
 rolls five six-sided dice. The player places the roll in
 a category, such as one-pair, two-pair, small-straight etc
 (see below).
@@ -20,12 +20,12 @@ scoring category for a given roll.
 Yahtzee Categories and Scoring Rules
 ===================================
 
-Yahtzee: 
+Yatzy: 
   If all dice have the same number,
   the player scores 50 points. 
   For example,
-   1,1,1,1,1 placed on "yahtzee" scores 50
-   1,1,1,2,1 placed on "yahtzee" scores 0
+   1,1,1,1,1 placed on "yatzy" scores 50
+   1,1,1,2,1 placed on "yatzy" scores 0
 
 Pair: 
   The player scores the sum of the two highest matching dice.
