@@ -12,4 +12,4 @@ $green: #0F0;
 .red   { color: lighten($red, 10%);   }
 
 $diff-added-color: lighten($green, 25%);
-$diff-deleted-color: lighten($red, 25%);
+$diff-deleted-color: lighten($red, 35%);
