@@ -1,0 +1,23 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+    
+  $('#diff').click(function() {
+      cd.postTo('/diff/show', {
+        id: "<%= @kata.id %>",
+        avatar: "<%= @avatar.name %>",
+        was_tag: 0,
+        now_tag: 1,
+      }, '_blank');
+  });
+
+});
+
+//--></script>
+
+<div class="button"
+     id="diff">
+  <%= t("views.buttons.diff") %>
+</div>
+
