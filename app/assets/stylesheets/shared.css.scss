@@ -4,3 +4,7 @@
   @include font-size-tiny();
 }
 
+#shared-info
+{
+  @include font-size-small();
+}
