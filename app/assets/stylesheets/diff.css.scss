@@ -12,7 +12,7 @@
   background: $lighter-color;
   @include gradient-darken($lighter-color, 20%, 10%, 5%);     
   color: $darker-color;
-  @include font-size-tiny();
+  @include font-size-small();
   text-align: center;
   width: 2em;
 }
