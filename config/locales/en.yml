@@ -76,6 +76,7 @@ en:
       rename: "rename"
       delete: "delete"
       fork: "fork"
+      diff: "diff"
       test: "test"
       download: "download"
       disable: "disable"

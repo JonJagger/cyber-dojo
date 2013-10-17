@@ -10,8 +10,8 @@
   @include rounded-corner(14px);    
 }
 
-#fork_revert_buttons {
-  #fork, #revert {
+#fork_diff_buttons {
+  #fork, #diff {
     @include font-size-small();  
   }
 }
