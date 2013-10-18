@@ -3,37 +3,25 @@
 
 $(document).ready(function() {
 
-  var kata_id_input = $('#XXXXkata_id_input');
-  var start = $('#start');
-  var resume = $('#resume');
-  var review = $('#review');
+  var kata_id_input = $('#kata_id_input');
+  var buttons = $('#start,#resume,#review');
   
-  var enable = function(button) {
-    button.removeAttr('disabled');
-    //button.attr('title', title);          
-  };
-  
-  var disable = function(button) {
-    button.attr('disabled', true);
-    //button.removeAttr('title');          
-  };
-  
-  kata_id_input.keyup(function(event) {
+  var enableDisableStartResumeReview = function() {
     var id = kata_id_input.val();
     $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
       if (dojo.exists) {
-        console.log("enable");
-        enable(start);
-        enable(resume);
-        enable(review);
+        buttons.removeAttr('disabled');
       } else {
-        console.log("disable");
-        disable(start);
-        disable(resume);
-        disable(review);
+        buttons.attr('disabled', true);
       }
-    });
-  });  
+    });    
+  };
+  
+  kata_id_input.keyup(function(event) {
+    enableDisableStartResumeReview();
+  });
+  
+  enableDisableStartResumeReview();
 });
 
 //--></script>

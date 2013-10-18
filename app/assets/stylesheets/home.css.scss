@@ -40,6 +40,12 @@ a:link, a:visited
   @include font-size-large();
 }
 
+#start[disabled], #resume[disabled], #review[disabled] {
+  background: lighten($darker-color, 20%);
+  cursor: default;
+  font-style: italic;
+}
+
 .kata_id_input
 {
   @include font-size-medium();

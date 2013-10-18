@@ -4,15 +4,10 @@
 $(document).ready(function() {
 
   $('#review').click(function() {
-    var ok = $(this).data('ok');  
-    cd.run('review_json', ok, function(id, dojo) {
-      if (dojo.empty) {          
-        cd.dialog_dojoIsEmpty(id, ok).dialog('open');
-      }
-      else {
-        cd.dialog_reviewCoding(id, ok, dojo.review_dialog_html).dialog('open');          
-      }    
-    });
+    var id = $('#kata_id_input').val();
+    if (!$(this).attr('disabled')) {
+      cd.get('/dashboard/show', { id: id }, '_blank');
+    }
   });
   
 });

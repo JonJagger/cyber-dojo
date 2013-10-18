@@ -4,13 +4,15 @@
 $(document).ready(function() {
   
   $('#resume').click(function() {
+    if ($(this).attr('disabled')) {
+      return;
+    }  
     var ok = $(this).data('ok');
     var cancel = $(this).data('cancel');
     cd.run('resume_json', ok, function(id, dojo) {    
       if (dojo.empty) {          
         cd.dialog_dojoIsEmpty(id, ok).dialog('open');
-      }
-      else {
+      } else {
         cd.dialog_resumeCoding(id, cancel, dojo.resume_dialog_html).dialog('open');          
       }
     }); 
