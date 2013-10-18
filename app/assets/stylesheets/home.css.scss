@@ -93,3 +93,7 @@ a:link, a:visited
   @include font-size-medium();
 }
 
+[data-cursor=pointer]
+{
+  cursor: pointer;
+}
