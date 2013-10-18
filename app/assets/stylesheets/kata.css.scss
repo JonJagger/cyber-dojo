@@ -1,8 +1,14 @@
 
 #file_operations {
   #new, #rename, #delete {
+    background: lighten($green, 20%);  
     @include font-size-tiny();  
   }
+  
+  #rename[disabled], #delete[disabled] {
+    background: lighten($darker-color, 20%);
+    cursor: default;
+  }  
 }
 
 #help {
@@ -18,6 +24,7 @@
 }
 
 #test {
+  background: lighten($green, 20%);  
   @include font-size-large();
   padding: {
     left: 0.2em;
