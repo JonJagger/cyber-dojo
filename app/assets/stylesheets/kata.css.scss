@@ -10,8 +10,9 @@
   @include rounded-corner(14px);    
 }
 
-#fork_diff_buttons {
-  #fork, #diff {
+#fork_review_buttons {
+  #fork, #review {
+    background: lighten($green, 20%);  
     @include font-size-small();  
   }
 }

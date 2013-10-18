@@ -14,6 +14,15 @@ class DojoController < ApplicationController
  
   #------------------------------------------------
   
+  def valid_id
+    kata = Kata.find(root_dir, id)
+    render :json => {
+      :exists =>params[:id].length >= 6 && !kata.nil?
+    }
+  end
+  
+  #------------------------------------------------
+  
   def start_json
     kata = Kata.find(root_dir, id)
     avatar = (kata ? kata.start_avatar : nil)    
