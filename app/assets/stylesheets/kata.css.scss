@@ -1,15 +1,8 @@
 
 #file_operations {
   #new, #rename, #delete {
-    background: lighten($green, 20%);  
     @include font-size-tiny();  
   }
-  
-  #rename[disabled], #delete[disabled] {
-    background: lighten($darker-color, 20%);
-    cursor: default;
-    font-style: italic;
-  }  
 }
 
 #help {
@@ -19,7 +12,6 @@
 
 #fork_review_buttons {
   #fork, #review {
-    background: lighten($green, 20%);  
     @include font-size-small();  
   }
 }

@@ -81,6 +81,7 @@ div[class~='button'][disabled]
 {
   background: lighten($darker-color, 20%);
   cursor: default;
+  font-style: italic;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - 

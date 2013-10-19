@@ -32,7 +32,7 @@ a:link, a:visited
   @include font-size-large();
 }
   
-.kata_id_input, #start, #resume, #review
+.kata_id_input
 {
   background: lighten($green, 20%);
   @include gradient-lighten($green, 30%, 20%, 10%);    
@@ -40,10 +40,10 @@ a:link, a:visited
   @include font-size-large();
 }
 
-#start[disabled], #resume[disabled], #review[disabled] {
-  background: lighten($darker-color, 20%);
-  cursor: default;
-  font-style: italic;
+#start, #resume, #review
+{
+  color: $darker-color;
+  @include font-size-large();
 }
 
 .kata_id_input
