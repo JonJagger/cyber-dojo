@@ -1,5 +1,6 @@
-rm -f *.class
-javac -cp .:./junit-4.11.jar *.java 
+rm -f *Test*.class
+CLASSES=.:`ls *.jar | tr '\n' ':'`
+javac -cp $CLASSES  *.java   
 if [ $? -eq 0 ]; then
-  java -cp .:./junit-4.11.jar org.junit.runner.JUnitCore `ls -1 *Test*.class | grep -v '\\$' | sed 's/\(.*\)\..*/\1/'`
+  java -cp $CLASSES org.junit.runner.JUnitCore `ls -1 *Test*.class | grep -v '\\$' | sed 's/\(.*\)\..*/\1/'`  
 fi
