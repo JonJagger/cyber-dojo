@@ -6,7 +6,8 @@ $(document).ready(function() {
   var fileButtons =  $('#file_operations');
 
   fileButtons.find('#new').click(function() {
-    cd.newFile(); 
+    cd.newFile();
+    cd.allLineNumbersRefresh();
   });
   fileButtons.find('#rename').click(function() {
     var title = $(this).text();        

@@ -3,22 +3,30 @@
 
 $(document).ready(function() {
 
-  var allLineNumbers = function(f) {
+  var lineNumbersOn = true;
+  
+  cd.allLineNumbersRefresh = function() {
     $.each(cd.filenames(), function(i, filename) {
-      f(cd.lineNumbersFor(filename));
+      var node = cd.lineNumbersFor(filename);
+      if (lineNumbersOn) {
+        node.show();
+      } else {
+        node.hide();
+      }
     });
   };
   
   $('#line_numbers_on').click(function() {
-    allLineNumbers(function(node) { node.show(); });
+    lineNumbersOn = true;
+    cd.allLineNumbersRefresh();
     // TO DO: this loses the cursor on the currently open file
     $(this).hide();
     $('#line_numbers_off').show();
   });
 
   $('#line_numbers_off').click(function() {
-    var button = $(this);
-    allLineNumbers(function(node) { node.hide(); });
+    lineNumbersOn = false;
+    cd.allLineNumbersRefresh();
     $(this).hide();
     $('#line_numbers_on').show();
   });
