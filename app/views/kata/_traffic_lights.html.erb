@@ -17,6 +17,10 @@ $(document).ready(function() {
   <table>
     <tr class="row">
       
+	  <td>	  
+	    <%= render :partial => 'line_numbers_on_off' %>
+	  </td>
+
       <td>
         <div id="revert_tip">
           <%= raw t("views.labels.click_to_revert") %>

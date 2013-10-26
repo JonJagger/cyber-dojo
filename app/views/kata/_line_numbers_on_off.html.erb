@@ -1,0 +1,40 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  var allLineNumbers = function(f) {
+    $.each(cd.filenames(), function(i, filename) {
+      f(cd.lineNumbersFor(filename));
+    });
+  };
+  
+  $('#line_numbers_on').click(function() {
+    allLineNumbers(function(node) { node.show(); });
+    $(this).hide();
+    $('#line_numbers_off').show();
+  });
+
+  $('#line_numbers_off').click(function() {
+    var button = $(this);
+    allLineNumbers(function(node) { node.hide(); });
+    $(this).hide();
+    $('#line_numbers_on').show();
+  });
+
+});
+
+//--></script>
+
+<div class="button"
+     title="Turn line numbers off"
+     id="line_numbers_off">
+  &mdash;
+</div>
+
+<div class="button"
+     style="display:none;"
+     title="Turn line numbers on"
+     id="line_numbers_on">
+  +
+</div>
