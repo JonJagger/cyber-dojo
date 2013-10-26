@@ -11,7 +11,7 @@ module GitDiff
   
   def git_diff_view(avatar, was_tag, now_tag, visible_files = nil)
       visible_files ||= avatar.visible_files(now_tag)      
-      diff_lines = avatar.diff_lines(was_tag, now_tag)
+      diff_lines = avatar.diff_lines(was_tag, now_tag)      
       unit_testable_git_diff_view(diff_lines, visible_files)
   end
   
@@ -22,8 +22,11 @@ module GitDiff
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
         if md
           filename = md[2]
-          if deleted_file?(md[1])
-            file_content = diff[:chunks][0][:sections][0][:deleted_lines]
+          if deleted_file?(md[1])              
+            file_content = [ ]
+            if diff[:chunks] != [ ] #[ ] indicates empty file was deleted
+              file_content = diff[:chunks][0][:sections][0][:deleted_lines]
+            end              
             view[filename] = deleteify(file_content)            
           else
             file_content = visible_files[filename]
