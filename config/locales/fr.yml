@@ -43,7 +43,7 @@ fr:
                       Merci."            
       your_animal_is: "Votre animal est le"      
       revert: "revenir"
-      click_to_revert: "Cliquez<br/>pour &rarr;<br/>revenir<br/>"
+      click_to_revert: "Cliquez<br/>&larr;pour<br/>revenir<br/>"
       sorry_the_practice_is_full_cannot_start_a_new_animal: "Désolé, cette pratique est pleine. <br/> Pouvez pas commencer un nouvel animal."      
       click_to_resume: "Cliquez sur un animal à reprendre."
       seconds_per_column: "secondes par colonne"

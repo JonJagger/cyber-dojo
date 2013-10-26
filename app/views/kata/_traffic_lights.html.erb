@@ -21,12 +21,6 @@ $(document).ready(function() {
 	    <%= render :partial => 'line_numbers_on_off' %>
 	  </td>
 
-      <td>
-        <div id="revert_tip">
-          <%= raw t("views.labels.click_to_revert") %>
-        </div>
-      </td>                  
-      
       <% max_lights = 36 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
@@ -37,6 +31,10 @@ $(document).ready(function() {
         </td>
       <% end %>
 
+      <td>
+		<%= render :partial => 'revert_tip' %>
+      </td>                  
+      
       <td>
 		<%= render :partial => 'shared/traffic_light_bulb_counts',
 				   :locals  => { :traffic_lights => @traffic_lights,

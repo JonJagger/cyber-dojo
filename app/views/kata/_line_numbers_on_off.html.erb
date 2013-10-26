@@ -11,6 +11,7 @@ $(document).ready(function() {
   
   $('#line_numbers_on').click(function() {
     allLineNumbers(function(node) { node.show(); });
+    // TO DO: this loses the cursor on the currently open file
     $(this).hide();
     $('#line_numbers_off').show();
   });
