@@ -63,7 +63,11 @@ var cyberDojo = (function(cd, $) {
     });
 	
     renamer.dialog('open');
-    input[0].setSelectionRange(0, oldFilename.lastIndexOf('.'));
+    var end = oldFilename.lastIndexOf('.');
+    if (end === -1) {
+      end = oldFilename.length;
+    }
+    input[0].setSelectionRange(0, end);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,7 +76,6 @@ var cyberDojo = (function(cd, $) {
 	var newFile = cd.makeNewFile(filename, content);
     $('#visible_files_container').append(newFile);
     cd.bindLineNumbers(filename);      
-    var current = cd.currentFilename();
     cd.rebuildFilenameList();
     cd.loadFile(filename);
   };
@@ -189,9 +192,8 @@ var cyberDojo = (function(cd, $) {
     // since it is much easier to retain its cursor
     // and scroll positions that way.
     //
-    // See ap/views/kata/_editor.html.erb
+    // See ap/views/kata/_visible_file.html.erb
     //    <div class="filename_div"
-    //         name="<%= filename %>"
     //         id="<%= filename %>_div">
     var div = cd.id(oldFilename + '_div');
     div.attr('id', newFilename + '_div');
@@ -237,7 +239,8 @@ var cyberDojo = (function(cd, $) {
       + '<div class="panel" data-width="400">'
       +   cd.makeTable(imageHtml, message)
       + '</div>';
-    cd.dialog(alertHtml, '!rename').dialog('open');
+    var ok = "ok";
+    cd.dialog(alertHtml, '!rename', ok).dialog('open');
   };
 
   return cd;
