@@ -6,14 +6,12 @@ $(document).ready(function() {
   var lineNumbersOn = true;
   
   cd.allLineNumbersRefresh = function() {
-    $.each(cd.filenames(), function(i, filename) {
-      var node = cd.lineNumbersFor(filename);
-      if (lineNumbersOn) {
-        node.show();
-      } else {
-        node.hide();
-      }
-    });
+    var nodes = $('[id$=line_numbers]');
+    if (lineNumbersOn) {
+      nodes.show();
+    } else {
+      nodes.hide();
+    }    
   };
   
   $('#line_numbers_on').click(function() {
