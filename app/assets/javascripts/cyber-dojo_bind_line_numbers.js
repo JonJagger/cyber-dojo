@@ -19,8 +19,14 @@ var cyberDojo = (function(cd, $) {
 
   cd.bindLineNumbersEvents = function(filename) {
     var content = cd.fileContentFor(filename);
-    var numbers = cd.lineNumbersFor(filename);    
+    var numbers = cd.lineNumbersFor(filename);
     var setLine = function() {
+      var lineCount = content.val().match(/\n/g).length  
+      if (lineCount < 99) {
+        numbers.css('width', '1.5em');
+      } else {
+        numbers.css('width', '2em');        
+      }
       numbers.scrollTop(content.scrollTop());   
     }    
     content.bind({
