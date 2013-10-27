@@ -46,6 +46,7 @@ body
     style: dotted;
     width: 1px;
     color: lighten($darker-color, 25%);
+    left: none;
     right: none;
     bottom: none;    
   }
@@ -149,6 +150,11 @@ div[class~="button"]
 .line_numbers, .file_content
 {
   border: 0;
+  border-left: {
+    style: dotted;
+    width: 1px;
+    color: lighten($darker-color, 25%);
+  }
   margin: 0;
   padding: 0;
   padding-left: 2px;
