@@ -43,7 +43,12 @@
 
 .diff_line_numbers {
   overflow: hidden;
-  background: $darker-color; 
+  background: $darker-color;
+  border-left: {
+    style: dotted;
+    width: 1px;
+    color: lighten($darker-color, 25%);
+  }  
 }
 
 .diff_sheet {
