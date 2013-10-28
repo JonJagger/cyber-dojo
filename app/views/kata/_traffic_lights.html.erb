@@ -17,10 +17,6 @@ $(document).ready(function() {
   <table>
     <tr class="row">
       
-	  <td>	  
-	    <%= render :partial => 'line_numbers_on_off' %>
-	  </td>
-
       <% max_lights = 36 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
