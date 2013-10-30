@@ -4,34 +4,34 @@
     <td class="panel">
         cyber-dojo is designed to encourage <em>team practice</em> 
         and works well with two (or more) people at each 
-        computer, periodically 'rotating' the current keyboard 
-        'drivers' to <em>different</em> computers as non-drivers.
+        computer, periodically rotating the current keyboard
+        drivers to <em>different</em> computers as navigators.
     </td>
   </tr>
   
   <tr>
     <td class="panel">
-        Spend time doing a review after each practice.
-        Use the dashboard. Use the diff-view. Step through the traffic-lights.
+        Do a review after each practice.
+        Use the dashboard and the diff-review.
         Look for...<br/>
         
         <% width=10 %>
         <% height=width*3 %>
-        &nbsp;&nbsp;&bull; 
+        &nbsp;&nbsp; 
           <%= traffic_light_image('red',width,height) %>
           &rarr;&nbsp;
           <%= traffic_light_image('green',width,height) %>
           progressions as evidence of
           starting with a failing test.<br/>
         
-        &nbsp;&nbsp;&bull; 
+        &nbsp;&nbsp;
           <%= traffic_light_image('green',width,height) %>          
           &rarr;&nbsp;
           <%= traffic_light_image('green',width,height) %>          
           progressions as evidence of
           refactoring.<br/>        
         
-        &nbsp;&nbsp;&bull; 
+        &nbsp;&nbsp;
           <%= traffic_light_image('amber',width,height) %>                    
           &rarr;&nbsp;
           <%= traffic_light_image('amber',width,height) %>                    
@@ -61,7 +61,8 @@
   <tr>
     <td class="panel">
         Here's some more variations...<br/>
-        &nbsp;&nbsp;&bull; Fork a new practice with all the tests but none of the code<br/>
+        &nbsp;&nbsp;&bull; Do a practice with no line numbers<br/>
+        &nbsp;&nbsp;&bull; Fork a new practice with all the tests, but none of the code<br/>
         &nbsp;&nbsp;&bull; Fork a new practice with all the code, but none of the tests<br/>
         &nbsp;&nbsp;&bull; Finish the practice using at most three amber traffic-lights<br/>
         &nbsp;&nbsp;&bull; Create a practice with a specific fault and see which pair can fix it first<br/>
