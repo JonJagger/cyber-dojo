@@ -36,7 +36,7 @@ var cyberDojo = (function(cd, $) {
         " height='62'/>";
       var trafficLightNumber =     
         '<span class="tag_' + colour + '">' +
-          tag.number +
+          '&nbsp;' + tag.number +
         '</span>';
       return cd.makeTable(avatarImage, trafficLight, trafficLightNumber);
     };
@@ -54,17 +54,10 @@ var cyberDojo = (function(cd, $) {
       filenames.sort();
       $.each(filenames, function(n, filename) {
         var f = $('<div>', {
-          'class': 'filename'
+          'class': 'filename',
+          'id': 'radio_' + filename,
+          'text': filename
         });
-        f.append($('<input>', {
-          id: 'radio_' + filename,
-          name: 'filename',
-          type: 'radio',
-          value: filename   
-        }));
-        f.append($('<label>', {
-          text: filename
-        }));
         div.append(f);
       });
       return div;
@@ -104,7 +97,7 @@ var cyberDojo = (function(cd, $) {
 	  textArea.addClass('file_content');
 	  $('.filename', preview).each(function() {
 		$(this).click(function() {
-		  var filename = $('input', $(this)).val();
+		  var filename = $(this).text();
 		  var content = data.visibleFiles[filename];
 		  textArea.val(content);
 		  if (previous !== undefined) {
@@ -114,7 +107,6 @@ var cyberDojo = (function(cd, $) {
 		  previous = $(this);                            
 		});
 	  });
-	  $('input[type=radio]', preview).hide();
 	  $('.filename', preview)[0].click();
 	  return preview;
 	};
@@ -147,7 +139,7 @@ var cyberDojo = (function(cd, $) {
 			  $(this).dialog('close');
 			} // cancel: ... {
 		  } // buttons: {
-		}); // var reverter = preview.dialog({
+		}); // self.previewHtml(data).dialog({
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -163,7 +155,7 @@ var cyberDojo = (function(cd, $) {
 	  }
     );
 	
-  }; // cd.dialog_revert = function(id, avatarName, tag) {
+  }; // cd.dialog_revert = function(title, id, avatarName, tag) {
 
   return cd;
 })(cyberDojo || {}, $);
