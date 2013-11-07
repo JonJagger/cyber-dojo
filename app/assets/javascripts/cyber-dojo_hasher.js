@@ -15,7 +15,7 @@ var cyberDojo = (function(cd, $) {
   cd.storeIncomingFileHashes = function() {
     var container = $('#file_hashes_incoming_container');
     container.empty();
-    $.each(cd.filenames(), function(index,filename) {
+    $.each(cd.filenames(), function(_,filename) {
       var node = cd.fileContentFor(filename);
       var content = node.val();
       var hash = cd.hashOf(content);
@@ -67,22 +67,43 @@ var cyberDojo = (function(cd, $) {
     outgoingFilenames.sort();
     
     if (JSON.stringify(incomingFilenames) != JSON.stringify(outgoingFilenames)) {
+      //alert("incomingFilenames != outgoingFilenames");
       return false;
     }
 
     var outHashes = $('#file_hashes_outgoing_container');
+    //var msg = "\n";
     var allSame = true;
     $.each(incomingFilenames,function(i,filename) {
       var  inNode = $('input[data-filename="'+filename+'"]',  inHashes);
       var outNode = $('input[data-filename="'+filename+'"]', outHashes);
-      if (inNode.attr('value') != outNode.attr('value')) {
+      if (filename != 'output' && inNode.attr('value') != outNode.attr('value')) {
         allSame = false;
       }
+      //msg += filename + ": in:" +  inNode.attr('value') + "\n";
+      //msg += filename + ":out:" + outNode.attr('value') + "\n";
     });
-
+    //msg += "returning " + allSame;
+    //alert(msg);
     return allSame;
   };
   
+  cd.setForkButton = function() {
+    if (cd.allFilesSameAsCurrentTrafficLight()) {
+      $('#fork').removeAttr('disabled');
+    } else {
+      $('#fork').attr('disabled', true);
+    }    
+  };
+  
+  cd.setContentListeners = function() {    
+    $(".file_content").unbind().on("keyup", function() {      
+      var filename = $(this).data('filename');
+      cd.storeOutgoingFileHash(filename);
+      cd.setForkButton();
+    });    
+  };
+    
   return cd;
 })(cyberDojo || {}, $);
 

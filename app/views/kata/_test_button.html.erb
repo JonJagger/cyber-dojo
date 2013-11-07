@@ -24,7 +24,7 @@ $(document).ready(function() {
     spinners.hide();    
     test.attr('disabled', false);    
     cd.loadFile('output');
-    $('#fork').attr('disabled', false);
+    cd.setContentListeners();    
   };
   
   $('form').bind('ajax:error', function(evt, data, status, xhr) {
@@ -46,6 +46,7 @@ $(document).ready(function() {
     cd.bindAllLineNumbers();
     cd.storeIncomingFileHashes();
     ajaxAfter();
+    $('#fork').attr('disabled', false);
   });  
   
 });

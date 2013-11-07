@@ -132,7 +132,7 @@ var cyberDojo = (function(cd, $) {
 				  cd.newFileContent(newFilename, data.visibleFiles[newFilename]);
 				}
 			  }
-			  self.runTestsWithRevertTag();                  
+			  self.runTestsWithRevertTag();
 			  $(this).dialog('close');
 			}, // revert: ... {
 			cancel: function() {

@@ -18,14 +18,6 @@ $(document).ready(function() {
   cd.highlightFilenames = function() {
     return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
   };
-
-  cd.setForkButton = function() {
-    if (cd.allFilesSameAsCurrentTrafficLight()) {
-      $('#fork').removeAttr('disabled');
-    } else {
-      $('#fork').attr('disabled', true);
-    }    
-  };
   
   cd.storeIncomingFileHashes();    
   cd.storeOutgoingFileHashes();
@@ -34,13 +26,7 @@ $(document).ready(function() {
     cd.testForm().submit();
   }
 
-  $(".file_content").on("keyup", function() {
-    var filename = $(this).data('filename');
-    cd.storeOutgoingFileHash(filename);
-    cd.setForkButton();
-  });
-  
-  // also need to reset after test submit
+  cd.setContentListeners();
   
 });
 

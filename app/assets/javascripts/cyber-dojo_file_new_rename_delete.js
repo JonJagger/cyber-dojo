@@ -7,6 +7,7 @@ var cyberDojo = (function(cd, $) {
     // Append three random chars to the end of the filename.
     // There is no excuse not to rename it!
     cd.newFileContent('newfile_' + cd.random3(), 'Please rename me!');
+	cd.setContentListeners();	
 	cd.setForkButton();
   };
 
