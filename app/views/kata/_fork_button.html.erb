@@ -28,6 +28,9 @@ $(document).ready(function() {
   };
   
   $('#fork').click(function() {
+    if ($(this).attr('disabled')) {
+      return;
+    }
     var title = $(this).text();
     var ok = $(this).data('ok');
     var cancel = $(this).data('cancel');

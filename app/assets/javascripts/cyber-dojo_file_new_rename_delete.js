@@ -205,6 +205,7 @@ var cyberDojo = (function(cd, $) {
     //                  name="file_content[<%= filename %>]"
     //                  id="file_content_for_<%= filename %>"
     var ta = cd.id('file_content_for_' + oldFilename);
+	ta.data('filename', newFilename);
     ta.attr('name', "file_content[" + newFilename + "]");
     ta.attr('id', 'file_content_for_' + newFilename);
   };

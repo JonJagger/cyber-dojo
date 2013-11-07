@@ -19,12 +19,30 @@ $(document).ready(function() {
     return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
   };
 
+  cd.setForkButton = function() {
+    if (cd.allFilesSameAsCurrentTrafficLight()) {
+      $('#fork').removeAttr('disabled');
+    } else {
+      $('#fork').attr('disabled', true);
+    }    
+  };
+  
+  cd.storeIncomingFileHashes();    
+  cd.storeOutgoingFileHashes();
+  
   if (<%= @traffic_lights == [ ] %>) {
-    cd.storeIncomingFileHashes();    
-    cd.storeOutgoingFileHashes();    
     cd.testForm().submit();
   }
 
+  $(".file_content").on("keyup", function() {
+    var filename = $(this).data('filename');
+    cd.storeOutgoingFileHash(filename);
+    cd.setForkButton();
+  });
+  
+  // also need to reset outgoing hashes on file rename
+  // also need to reset after test submit
+  
 });
 
 //--></script>

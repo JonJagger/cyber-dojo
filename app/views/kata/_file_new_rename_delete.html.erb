@@ -6,9 +6,10 @@ $(document).ready(function() {
   var fileButtons =  $('#file_operations');
   
   fileButtons.find('#new').click(function() {
-    //var title = $(this).text();
     cd.newFile();
     cd.allLineNumbersRefresh();
+    //Do immediate rename?
+    //var title = $(this).text();
     //cd.renameFile(title, "<%= @avatar.name %>");
   });
   fileButtons.find('#rename').click(function() {

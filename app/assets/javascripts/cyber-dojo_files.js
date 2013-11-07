@@ -102,7 +102,8 @@ var cyberDojo = (function(cd, $) {
     var td2 = $('<td>');
     var text = $('<textarea>', {
       'class': 'file_content',
-      name: "file_content[" + filename + "]",
+      'data-filename': filename,
+      name: 'file_content[' + filename + ']',
       id: 'file_content_for_' + filename
       //
       //wrap: 'off'
