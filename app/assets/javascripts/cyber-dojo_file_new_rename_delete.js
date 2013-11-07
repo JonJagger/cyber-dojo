@@ -7,6 +7,7 @@ var cyberDojo = (function(cd, $) {
     // Append three random chars to the end of the filename.
     // There is no excuse not to rename it!
     cd.newFileContent('newfile_' + cd.random3(), 'Please rename me!');
+	cd.setForkButton();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -43,9 +44,10 @@ var cyberDojo = (function(cd, $) {
 		modal: true,
 		buttons: {
 		  ok: function() {
-			$(this).dialog('close');
 			var newFilename = $.trim(input.val());
 			cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+			cd.setForkButton();
+			$(this).dialog('close');
 		  },
 		  cancel: function() {
 			$(this).dialog('close');
@@ -58,6 +60,7 @@ var cyberDojo = (function(cd, $) {
       if (event.keyCode === $.ui.keyCode.ENTER) {
 		var newFilename = $.trim(input.val());
 		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+		cd.setForkButton();
 		renamer.dialog('close');
       }  
     });
@@ -102,6 +105,7 @@ var cyberDojo = (function(cd, $) {
 		  buttons: {
 			ok: function() {
 			  cd.doDelete(filename);
+			  cd.setForkButton();
 			  $(this).dialog('close');
 			},
 			cancel: function() {

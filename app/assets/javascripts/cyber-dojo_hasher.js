@@ -65,20 +65,24 @@ var cyberDojo = (function(cd, $) {
     
     incomingFilenames.sort();
     outgoingFilenames.sort();
+    
     if (JSON.stringify(incomingFilenames) != JSON.stringify(outgoingFilenames)) {
+      //alert("filenames not same returning false");
       return false;
     }
 
-    var outHashes = $('#file_hashes_outgoing_container');   
+    var outHashes = $('#file_hashes_outgoing_container');
     var allSame = true;
+    //var msg = "\n";
     $.each(incomingFilenames,function(i,filename) {
       var  inNode = $('input[data-filename="'+filename+'"]',  inHashes);
       var outNode = $('input[data-filename="'+filename+'"]', outHashes);
       if (inNode.attr('value') != outNode.attr('value')) {
         allSame = false;
       }
+      //msg += filename + ":" + inNode.attr('value') + ":" + outNode.attr('value') + "\n";
     });
-    
+    //alert("filenames same" + msg + "returning " + allSame);
     return allSame;
   };
   
