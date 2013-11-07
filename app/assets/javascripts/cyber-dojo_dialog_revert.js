@@ -32,13 +32,28 @@ var cyberDojo = (function(cd, $) {
       }
       var trafficLight = 
         "<img src='/images/" + filename + ".png'" +
-        " width='20'" +
-        " height='62'/>";
-      var trafficLightNumber =     
-        '<span class="tag_' + colour + '">' +
-          '&nbsp;' + tag.number +
-        '</span>';
-      return cd.makeTable(avatarImage, trafficLight, trafficLightNumber);
+        " width='15'" +
+        " height='46'/>";
+
+	  var trafficLightNumber =	  
+		'<span class="tag_' + colour + '">' +
+		  '&nbsp;' + tag.number + '&nbsp;' +
+		'</span>';
+	  
+	  return '' +
+	    '<table class="align-center">' +
+		  '<tr>' +
+		    '<td>' +
+			  avatarImage +
+		    '</td>' +
+		    '<td>' +
+			  trafficLight +
+		    '</td>' +
+		    '<td>' +
+			  trafficLightNumber +
+		    '</td>' +
+		  '</tr>' +
+		'</table>';	  
     };
     
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -64,6 +79,42 @@ var cyberDojo = (function(cd, $) {
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
+  
+	cd.navigateButton = function(name) {	
+	  return "<div class='triangle button'" +
+			  'id="' + name + '_button">' +
+		'<img src="/images/triangle_' + name + '.gif"' +
+			 'alt="move to ' + name + ' diff"' +                 
+			 'width="25"' + 
+			 'height="25" />' +
+	  '</div>';      
+	};	
+	
+    cd.navigateButtons = function(tag) {
+	  return '<div class="panel">' +
+	    '<table class="align-center">' +
+          '<tr>' +
+            '<td>' +
+               cd.navigateButton('first') +
+			'</td>' +
+			'<td>' +
+               cd.navigateButton('prev') +
+			'</td>' +
+			'<td>' +
+			  '<span class="tag_' + tag.colour + '">' +
+				'&nbsp;' + tag.number + '&nbsp;' +
+			  '</span>' +
+			'</td>' +
+            '<td>' +
+               cd.navigateButton('next') +
+			'</td>' +
+			'<td>' +
+               cd.navigateButton('last') +
+			'</td>' +
+		  '</tr>' +
+		'</table>' +
+	  '</div>';
+	};			
 	
     self.reverterDiv = function(data)  {
       var visibleFiles = data.visibleFiles;
@@ -71,18 +122,28 @@ var cyberDojo = (function(cd, $) {
       var number = data.inc.number;
       var div = $('<div>', {    
         'id': 'revert_dialog'
-      });    
+      });
+
       var table = $('<table>');
       table.append(
-       "<tr class='valign-top'>" +
-         "<td>" +
-           self.revertTagInfo(data.inc) +
-           self.revertTagFilenames(visibleFiles).html() +
-         "</td>" +
-         "<td>" +
+        "<tr class='valign-top'>" +
+          "<td>" +
+			self.revertTagInfo(data.inc) +
+          "</td>" +
+          "<td rowspan='2'>" + //3
            "<textarea id='revert_content' wrap='off'></textarea>" +
+          "</td>" +
+	    "</tr>" +
+		//"<tr class='valign-top'>" + 
+        //  "<td>" +
+		//    cd.navigateButtons(data.inc) +
+        //  "</td>" +
+        //"</tr>" +
+		"<tr class='valign-top'>" + 
+         "<td><div class='panel'>" +
+			self.revertTagFilenames(visibleFiles).html() +
          "</td>" +
-       "</tr>");
+       "</div></tr>");
        div.append(table);
        return div;
     };
