@@ -20,9 +20,6 @@ var cyberDojo = (function(cd, $) {
 
   cd.renameFile = function(title, avatarName) {
     var oldFilename = cd.currentFilename();
-    if (cd.cantBeRenamedOrDeleted(oldFilename)) {
-      return;
-    }
     var div = $('<div>', {
       'class': 'panel'
     });
@@ -87,9 +84,6 @@ var cyberDojo = (function(cd, $) {
 
   cd.deleteFilePrompt = function(title, avatarName, ask) {
     var filename = cd.currentFilename();
-    if (cd.cantBeRenamedOrDeleted(filename)) {
-      return;
-    }
     var div = $(cd.divPanel(''));
     div.append(cd.centeredDiv(cd.avatarImage(avatarName, 100)));
     div.append('<div>&nbsp;</div>');
