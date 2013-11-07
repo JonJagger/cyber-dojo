@@ -4,7 +4,11 @@
 $(document).ready(function() {
 
   var fileButtons =  $('#file_operations');
-    
+  
+  var isEnabled = function(node) {
+    return node.attr('disabled') !== 'disabled';
+  };
+  
   fileButtons.find('#new').click(function() {
     cd.newFile();
     cd.allLineNumbersRefresh();
@@ -13,13 +17,13 @@ $(document).ready(function() {
     //cd.renameFile(title, "<%= @avatar.name %>");
   });
   fileButtons.find('#rename').click(function() {
-    if ($(this).attr('disabled') != 'disabled') {
+    if (isEnabled($(this))) {
       var title = $(this).text();
       cd.renameFile(title, "<%= @avatar.name %>");
     }
   });
   fileButtons.find('#delete').click(function() {
-    if ($(this).attr('disabled') != 'disabled') {
+    if (isEnabled($(this))) {
       var title = $(this).text();        
       cd.deleteFile(title, "<%= @avatar.name %>");
     }
