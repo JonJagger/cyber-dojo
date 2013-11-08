@@ -50,10 +50,10 @@ $(document).ready(function() {
 	b1.attr('disabled', off);
 	b2.attr('disabled', off)
 	if (!off) {
-	  b1.unbind('click')
+	  b1.unbind()
 		.click(function() { showDiff(b1From, b1To); })
 		.attr('title', toolTip(b1From, b1To));			  
-	  b2.unbind('click')
+	  b2.unbind()
 		.click(function() { showDiff(b2From, b2To); })
 		.attr('title', toolTip(b2From, b2To));	
 	}
