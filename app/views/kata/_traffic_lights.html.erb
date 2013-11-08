@@ -3,13 +3,6 @@
 
 $(document).ready(function() {
   
-  $('.revert-traffic-light').click(function() {
-    var title = "<%= t('views.labels.revert') %>";          
-    var tag = $(this).data('tag');
-	var lastTag = parseInt("<%= @traffic_lights.length %>");
-	cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", tag, lastTag);
-  });
-
 });
 
 //--></script>
@@ -21,16 +14,11 @@ $(document).ready(function() {
       <% max_lights = 36 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
-		  <span class="revert-traffic-light"
-				data-tag="<%= light[:number] %>">
-            <%= revert_traffic_light(light) %>
+		  <span>
+            <%= untitled_unlinked_traffic_light(light,20,62) %>
 		  </span>
         </td>
       <% end %>
-
-      <td>
-		<%= render :partial => 'revert_tip' %>
-      </td>                  
       
       <td>
 		<%= render :partial => 'shared/traffic_light_bulb_counts',

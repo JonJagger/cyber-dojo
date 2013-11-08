@@ -1,3 +1,20 @@
 
-<br/>
-<!-- revert button will go here -->
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+    
+  $('#revert_button').unbind().click(function() {
+    var title = "<%= t('views.labels.revert') %>";
+    var lastTag = parseInt($('#traffic_light_count').text());    
+	cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", lastTag, lastTag);
+  });
+
+});
+
+//--></script>
+
+<div id="revert_button"
+     class="button"
+     title="Revert to a previous traffic-light">
+  <%= t("views.buttons.revert") %>
+</div>

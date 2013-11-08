@@ -10,10 +10,8 @@
   @include rounded-corner(14px);    
 }
 
-#fork_review_buttons {
-  #fork, #review {
-    @include font-size-small();  
-  }
+#fork_button, #review_button, #revert_button {
+  @include font-size-small();  
 }
 
 #test {

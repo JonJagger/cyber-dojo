@@ -1,12 +1,14 @@
 
 module TrafficLightHelper
 
+  # UNUSED
   def revert_traffic_light(inc)
     ("<span title='#{revert_tool_tip(inc)}'>" +
      untitled_unlinked_traffic_light(inc, 18, 55) +
      "</span>").html_safe
   end
   
+  #UNUSED
   def revert_tool_tip(inc)
     bulb = inc[:colour].to_s
     "Revert to traffic-light #{inc[:number]} (#{bulb})"
@@ -32,9 +34,6 @@ module TrafficLightHelper
     height ||= 62
     colour = inc[:colour].to_s
     filename = "traffic_light_#{colour}"
-    if inc[:revert_tag]
-      filename += "_revert"
-    end
     base_traffic_light_image(filename + '.png',colour,width,height)
   end
   

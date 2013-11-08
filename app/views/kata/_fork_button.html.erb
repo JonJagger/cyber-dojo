@@ -27,7 +27,7 @@ $(document).ready(function() {
       });
   };
   
-  $('#fork').click(function() {
+  $('#fork_button').click(function() {
     if ($(this).attr('disabled')) {
       return;
     }
@@ -47,7 +47,7 @@ $(document).ready(function() {
      title="Fork a new dojo from the latest traffic-light"
      data-ok="<%= t('views.buttons.ok') %>"
      data-cancel="<%= t('views.buttons.cancel') %>"
-     id="fork">
+     id="fork_button">
   <%= t("views.buttons.fork") %>
 </div>
 

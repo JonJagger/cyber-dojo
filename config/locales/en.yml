@@ -63,6 +63,7 @@ en:
       start: "start"
       resume: "resume"
       review: "review"
+      revert: "revert"
       about: "about"
       basics: "basics"
       donations: "donations"
