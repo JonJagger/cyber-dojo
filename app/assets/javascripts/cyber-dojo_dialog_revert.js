@@ -90,14 +90,17 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	self.makeRevertNumber = function() {
-	  
+	self.makeTrafficLightNumber = function() {
+	  var trafficLight = data.inc;
+	  return '' +
+		'<div id="traffic_light_number" class="tag_' + trafficLight.colour + '">' +
+		  '&nbsp;' + trafficLight.number + '&nbsp;' +
+		'</div>';	  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
     self.makeNavigateButtons = function() {
-	  var trafficLight = data.inc;
 	  return '<div class="panel">' +
 	    '<table class="align-center">' +
           '<tr>' +
@@ -108,9 +111,7 @@ var cyberDojo = (function(cd, $) {
                self.makeNavigateButton('prev') +
 			'</td>' +
 			'<td>' +
-			  '<span class="tag_' + trafficLight.colour + '">' +
-				'&nbsp;' + trafficLight.number + '&nbsp;' +
-			  '</span>' +
+               self.makeTrafficLightNumber() +
 			'</td>' +
             '<td>' +
                self.makeNavigateButton('next') +
@@ -190,6 +191,7 @@ var cyberDojo = (function(cd, $) {
 		function(d) {
 		  data = d;
 		  $('#filenames', preview).html(self.makeRevertFilenames().html());
+		  $('#traffic_light_number', preview).html(self.makeTrafficLightNumber());
 		  self.showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
 		}
