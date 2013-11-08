@@ -198,6 +198,7 @@ var cyberDojo = (function(cd, $) {
 		function(d) {
 		  data = d;
 		  $('#filenames', preview).html(self.makeRevertFilenames());
+		  $('#traffic_light', preview).html(self.makeTrafficLight());
 		  $('#traffic_light_number', preview).html(self.makeTrafficLightNumber());
 		  self.showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
