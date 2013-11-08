@@ -1,0 +1,28 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  var lineNumbersOn = true;
+    
+  $('#line_numbers_button').click(function() {
+    //TODO: this loses the focus on the currently opened file
+    lineNumbersOn = !lineNumbersOn;
+    var nodes = $('[id$=line_numbers]');
+    if (lineNumbersOn) {
+      nodes.show();
+    } else {
+      nodes.hide();
+    }    
+  });
+
+});
+
+//--></script>
+
+<div class="button"
+     title="Turn line numbers on/off"
+     id="line_numbers_button">
+  line-numbers
+</div>
+

@@ -10,7 +10,7 @@
   @include rounded-corner(14px);    
 }
 
-#fork_button, #review_button, #revert_button {
+#fork_button, #line_numbers_button, #review_button, #revert_button {
   @include font-size-tiny();  
 }
 

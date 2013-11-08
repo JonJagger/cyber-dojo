@@ -57,7 +57,7 @@ $(document).ready(function() {
           <%= render :partial => 'file_new_rename_delete' %>
         </div>        
         <div class="panel">
-          <%= render :partial => 'fork_review_revert' %>          
+          <%= render :partial => 'misc_buttons' %>          
         </div>
       </td>
       <td>
@@ -68,16 +68,7 @@ $(document).ready(function() {
       <td>
       </td>
       <td>
-        <table>
-          <tr class="valign-top">
-            <td>	  
-              <%= render :partial => 'line_numbers_on_off' %>
-            </td>
-            <td>
-              <%= render :partial => 'traffic_lights' %>
-            </td>
-          </tr>
-        </table>
+        <%= render :partial => 'traffic_lights' %>
       </td>
     </tr>
   </table>
