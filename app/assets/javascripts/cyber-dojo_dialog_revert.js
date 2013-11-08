@@ -3,9 +3,8 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(title, id, avatarName, t) {    
+  cd.dialog_revert = function(title, id, avatarName, tag, lastTag) {    
   
-	var tag = t;
 	var data = undefined;
 	var preview = undefined;
 	
@@ -208,7 +207,11 @@ var cyberDojo = (function(cd, $) {
 	  
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	  
-    self.setupNavigateButtonHandlers = function() {	  
+    self.setupNavigateButtonHandlers = function() {
+	  $('#first_button', preview).click(function() {
+		tag = 1;
+		self.refresh();
+	  });			  
 	  $('#prev_button', preview).click(function() {
 		tag -= 1;
 		self.refresh();
@@ -217,6 +220,10 @@ var cyberDojo = (function(cd, $) {
 		tag += 1;
 		self.refresh();
 	  });
+	  $('#last_button', preview).click(function() {
+		tag = lastTag;
+		self.refresh();
+	  });			  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -270,7 +277,7 @@ var cyberDojo = (function(cd, $) {
         avatar: avatarName,
         tag: tag
       },
-	  function(d) {
+	  function(d) {		
 		data = d;
 	    preview = self.reverterDiv();
 		self.showContentOnFilenameClick();
@@ -280,7 +287,7 @@ var cyberDojo = (function(cd, $) {
 	  }
     );
 	
-  }; // cd.dialog_revert = function(title, id, avatarName, t) {
+  }; // cd.dialog_revert = function(title, id, avatarName, tag) {
 
   return cd;
 })(cyberDojo || {}, $);

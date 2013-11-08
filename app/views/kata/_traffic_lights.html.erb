@@ -6,7 +6,8 @@ $(document).ready(function() {
   $('.revert-traffic-light').click(function() {
     var title = "<%= t('views.labels.revert') %>";          
     var tag = $(this).data('tag');
-	cd.dialog_revert(title, "<%=@kata.id%>", "<%=@avatar.name%>", tag);
+	var lastTag = parseInt("<%= @traffic_lights.length %>");
+	cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", tag, lastTag);
   });
 
 });
