@@ -73,7 +73,7 @@ var cyberDojo = (function(cd, $) {
         });
         div.append(f);
       });
-      return div;  
+      return div.html();
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -148,7 +148,7 @@ var cyberDojo = (function(cd, $) {
 		"<tr class='valign-top'>" + 
           "<td>" +
 		    "<div id='filenames' class='panel'>" +
-			  self.makeRevertFilenames().html() +
+			  self.makeRevertFilenames() +
 			"</div>" +
           "</td>" +
         "</tr>");
@@ -190,7 +190,7 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(d) {
 		  data = d;
-		  $('#filenames', preview).html(self.makeRevertFilenames().html());
+		  $('#filenames', preview).html(self.makeRevertFilenames());
 		  $('#traffic_light_number', preview).html(self.makeTrafficLightNumber());
 		  self.showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
