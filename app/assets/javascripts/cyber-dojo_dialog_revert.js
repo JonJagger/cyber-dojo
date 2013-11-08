@@ -24,23 +24,28 @@ var cyberDojo = (function(cd, $) {
   
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
+	self.makeTrafficLight = function() {
+	  var trafficLight = data.inc;
+      var filename = 'traffic_light_' + trafficLight.colour;
+      if (trafficLight.revert_tag !== null) {
+        filename += '_revert';
+      }
+      return '' +
+        "<img src='/images/" + filename + ".png'" +
+        " width='15'" +
+        " height='46'/>";	  
+	};
+	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	
     self.makeRevertInfo = function() {
-	  var tag = data.inc;
-      var colour = tag.colour;
+	  var trafficLight = data.inc;
       var avatarImage =
         '<img ' +
           'class="avatar_image"' +
           'height="47"' +
           'width="47"' +
           'src="/images/avatars/' + avatarName + '.jpg">';
-      var filename = 'traffic_light_' + colour;
-      if (tag.revert_tag !== null) {
-        filename += '_revert';
-      }
-      var trafficLight = 
-        "<img src='/images/" + filename + ".png'" +
-        " width='15'" +
-        " height='46'/>";
 
 	  return '' +
 	    '<table class="align-center">' +
@@ -49,7 +54,7 @@ var cyberDojo = (function(cd, $) {
 			  avatarImage +
 		    '</td>' +
 		    '<td>' +
-			  trafficLight +
+			  self.makeTrafficLight() +
 		    '</td>' +
 		  '</tr>' +
 		'</table>';	  
