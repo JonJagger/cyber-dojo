@@ -10,6 +10,8 @@ var cyberDojo = (function(cd, $) {
 	var data = undefined;
 	var preview = undefined;
 	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     self.runTestsWithRevertTag = function() {
       var form = cd.testForm();
       var action = form.attr('action');
@@ -168,33 +170,33 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
-    self.setupNavigateButtonHandlers = function() {
+
+	self.refresh = function() {
+	  $.getJSON('/reverter/revert',
+		{
+		  id: id,
+		  avatar: avatarName,
+		  tag: tag
+		},
+		function(d) {
+		  data = d;
+		  $('#filenames', preview).html(self.revertTagFilenames().html());
+		  self.showContentOnFilenameClick();			
+		  $('.filename', preview)[0].click();			 
+		}
+	  );		
+	};
 	  
-	  var refresh = function() {
-		$.getJSON('/reverter/revert',
-		  {
-			id: id,
-			avatar: avatarName,
-			tag: tag
-		  },
-		  function(d) {
-			data = d;
-			$('#filenames', preview).html(self.revertTagFilenames().html());
-	        self.showContentOnFilenameClick();			
-    	    $('.filename', preview)[0].click();			 
-		  }
-		);		
-	  };
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	  
+    self.setupNavigateButtonHandlers = function() {	  
 	  $('#prev_button', preview).click(function() {
 		tag -= 1;
-		refresh();
-	  });
-		
+		self.refresh();
+	  });		
 	  $('#next_button', preview).click(function() {
 		tag += 1;
-		refresh();
+		self.refresh();
 	  });
 	};
 	
