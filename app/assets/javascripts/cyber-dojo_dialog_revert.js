@@ -8,6 +8,7 @@ var cyberDojo = (function(cd, $) {
 	var self = cd.dialog_revert;
 	var tag = t;
 	var data = undefined;
+	var preview = undefined;
 	
     self.runTestsWithRevertTag = function() {
       var form = cd.testForm();
@@ -149,7 +150,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
-	self.showContentOnFilenameClick = function(preview) {
+	self.showContentOnFilenameClick = function() {
 	  var textArea = $('#revert_content', preview);
 	  var previous = undefined;
 	  $('.filename', preview).each(function() {
@@ -168,7 +169,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-    self.setupNavigateButtonHandlers = function(preview) {
+    self.setupNavigateButtonHandlers = function() {
 	  
 	  var refresh = function() {
 		$.getJSON('/reverter/revert',
@@ -180,7 +181,7 @@ var cyberDojo = (function(cd, $) {
 		  function(d) {
 			data = d;
 			$('#filenames', preview).html(self.revertTagFilenames().html());
-	        self.showContentOnFilenameClick(preview);			
+	        self.showContentOnFilenameClick();			
     	    $('.filename', preview)[0].click();			 
 		  }
 		);		
@@ -200,10 +201,9 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
 	self.createRevertDialog = function() {
-	  var preview = self.reverterDiv();
-	  self.showContentOnFilenameClick(preview);
+	  self.showContentOnFilenameClick();
 	  $('.filename', preview)[0].click();	  
-	  self.setupNavigateButtonHandlers(preview);
+	  self.setupNavigateButtonHandlers();
 	  
 	  return preview.dialog({
 		  title: cd.dialogTitle(title),
@@ -230,7 +230,7 @@ var cyberDojo = (function(cd, $) {
 			  $(this).dialog('close');
 			} // cancel: ... {
 		  } // buttons: {
-		}); // self.previewHtml(data).dialog({
+		}); // preview.dialog({
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -243,11 +243,12 @@ var cyberDojo = (function(cd, $) {
       },
 	  function(d) {
 		data = d;
+	    preview = self.reverterDiv();		
 		self.createRevertDialog().dialog('open');		
 	  }
     );
 	
-  }; // cd.dialog_revert = function(title, id, avatarName, tag) {
+  }; // cd.dialog_revert = function(title, id, avatarName, t) {
 
   return cd;
 })(cyberDojo || {}, $);
