@@ -11,17 +11,6 @@ var cyberDojo = (function(cd, $) {
 	
 	var self = cd.dialog_revert;
 	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    self.runTests = function() {
-      var form = cd.testForm();
-      var action = form.attr('action');
-      var revert_action = action + '&revert_tag=' + tag;
-      form.attr('action', revert_action);
-      form.submit();
-      form.attr('action', action);    
-    };
-  
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
 	self.makeTrafficLight = function() {
@@ -289,7 +278,7 @@ var cyberDojo = (function(cd, $) {
 			ok: function() {
 			  self.deleteAllCurrentFiles();
 			  self.copyRevertFilesToCurrentFiles();
-			  self.runTests();
+			  cd.testForm().submit();			  
 			  $(this).dialog('close');
 			},
 			cancel: function() {

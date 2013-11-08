@@ -38,7 +38,6 @@ class KataController < ApplicationController
     
     language = @kata.language    
     traffic_light = CodeOutputParser::parse(language.unit_test_framework, @output)
-    traffic_light[:revert_tag] = params[:revert_tag]
     traffic_light[:time] = make_time(Time.now)
     @traffic_lights = @avatar.save_run_tests(visible_files, traffic_light)
 
