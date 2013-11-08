@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
   
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
-    self.makeRevertInfo = function(/*tag*/) {
+    self.makeRevertInfo = function() {
 	  var tag = data.inc;
       var colour = tag.colour;
       var avatarImage =
@@ -96,7 +96,7 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-    self.makeNavigateButtons = function(/*tag*/) {
+    self.makeNavigateButtons = function() {
 	  var trafficLight = data.inc;
 	  return '<div class="panel">' +
 	    '<table class="align-center">' +
@@ -133,7 +133,7 @@ var cyberDojo = (function(cd, $) {
       table.append(
         "<tr class='valign-top'>" +
           "<td>" +
-			self.makeRevertInfo(/*data.inc*/) +
+			self.makeRevertInfo() +
           "</td>" +
           "<td rowspan='3'>" +
            "<textarea id='revert_content' wrap='off'></textarea>" +
@@ -141,13 +141,13 @@ var cyberDojo = (function(cd, $) {
 	    "</tr>" +
 		"<tr class='valign-top'>" + 
           "<td>" +
-		    self.makeNavigateButtons(/*data.inc*/) +
+		    self.makeNavigateButtons() +
           "</td>" +
         "</tr>" +
 		"<tr class='valign-top'>" + 
           "<td>" +
 		    "<div id='filenames' class='panel'>" +
-			  self.makeRevertFilenames(/*data.visibleFiles*/).html() +
+			  self.makeRevertFilenames().html() +
 			"</div>" +
           "</td>" +
         "</tr>");
