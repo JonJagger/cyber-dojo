@@ -3,8 +3,9 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(title, id, avatarName, tag, lastTag) {    
+  cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {    
   
+	var minTag = 1;
 	var data = undefined;
 	var preview = undefined;
 	
@@ -199,6 +200,7 @@ var cyberDojo = (function(cd, $) {
 		  $('#filenames', preview).html(self.makeRevertFilenames());
 		  $('#traffic_light', preview).html(self.makeTrafficLight());
 		  $('#traffic_light_number', preview).html(self.makeTrafficLightNumber());
+		  self.setupNavigateButtonHandlers();
 		  self.showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
 		}
@@ -208,22 +210,49 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	  
     self.setupNavigateButtonHandlers = function() {
-	  $('#first_button', preview).click(function() {
-		tag = 1;
-		self.refresh();
-	  });			  
-	  $('#prev_button', preview).click(function() {
-		tag -= 1;
-		self.refresh();
-	  });		
-	  $('#next_button', preview).click(function() {
-		tag += 1;
-		self.refresh();
-	  });
-	  $('#last_button', preview).click(function() {
-		tag = lastTag;
-		self.refresh();
-	  });			  
+	  var firstPrev = (tag > minTag);
+	  var nextLast  = (tag < maxTag);
+	  
+	  $('#first_button', preview)
+		.attr('disabled', !firstPrev)
+	    .unbind()
+		.click(function() {
+		  if (firstPrev) {
+			tag = minTag;
+			self.refresh();
+		  }
+	    }
+	  );			  
+	  $('#prev_button',  preview)
+		.attr('disabled', !firstPrev)
+		.unbind()
+		.click(function() {
+		  if (firstPrev) {
+			tag -= 1;
+			self.refresh();
+		  }
+		}
+	  );	  
+	  $('#next_button', preview)
+		.attr('disabled', !nextLast)
+		.unbind()
+		.click(function() {
+		  if (nextLast) {
+			tag += 1;
+			self.refresh();
+		  }
+	    }
+	  );
+	  $('#last_button', preview)
+		.attr('disabled', !nextLast)
+		.unbind()
+		.click(function() {
+		  if (nextLast) {
+			tag = maxTag;
+			self.refresh();
+		  }
+	    }
+	  );			  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -240,9 +269,10 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 
 	self.copyRevertFilesToCurrentFiles = function() {
-	  for (newFilename in data.visibleFiles) {
-		if (newFilename !== 'output') {
-		  cd.newFileContent(newFilename, data.visibleFiles[newFilename]);
+	  var filename;
+	  for (filename in data.visibleFiles) {
+		if (filename !== 'output') {
+		  cd.newFileContent(filename, data.visibleFiles[filename]);
 		}
 	  }	  
 	};
