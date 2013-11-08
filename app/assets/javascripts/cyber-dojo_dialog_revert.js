@@ -31,9 +31,11 @@ var cyberDojo = (function(cd, $) {
         filename += '_revert';
       }
       return '' +
-        "<img src='/images/" + filename + ".png'" +
-        " width='15'" +
-        " height='46'/>";	  
+	    "<div id='traffic_light'>" +
+		  "<img src='/images/" + filename + ".png'" +
+		  " width='15'" +
+		  " height='46'/>" +
+		"</div>";		  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
