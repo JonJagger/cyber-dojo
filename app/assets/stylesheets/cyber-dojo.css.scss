@@ -62,8 +62,7 @@ body
 
 div.button, input.button, a.button
 {
-  background: $lighter-color;
-  @include gradient-darken($lighter-color, 20%, 10%, 5%); 
+  background: darken($lighter-color, 10%);  
   color: $darker-color;    
   cursor: pointer;
   padding: {
@@ -105,8 +104,7 @@ div[class~='filename']
   {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
-    background: $lighter-color;
-    @include gradient-darken($lighter-color, 20%, 10%, 5%);   
+    background: darken($lighter-color, 10%);
     color: $darker-color;
     cursor: default;
   }
