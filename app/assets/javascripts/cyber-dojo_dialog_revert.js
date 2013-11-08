@@ -3,8 +3,9 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(title, id, avatarName, tag) {    
-
+  cd.dialog_revert = function(title, id, avatarName, t) {    
+  
+	var tag = t;
 	var self = cd.dialog_revert;
 	
     self.runTestsWithRevertTag = function() {
@@ -35,11 +36,6 @@ var cyberDojo = (function(cd, $) {
         " width='15'" +
         " height='46'/>";
 
-	  var trafficLightNumber =	  
-		'<span class="tag_' + colour + '">' +
-		  '&nbsp;' + tag.number + '&nbsp;' +
-		'</span>';
-	  
 	  return '' +
 	    '<table class="align-center">' +
 		  '<tr>' +
@@ -49,9 +45,6 @@ var cyberDojo = (function(cd, $) {
 		    '<td>' +
 			  trafficLight +
 		    '</td>' +
-		    '<td>' +
-			  trafficLightNumber +
-		    '</td>' +
 		  '</tr>' +
 		'</table>';	  
     };
@@ -59,15 +52,14 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
     self.revertTagFilenames = function(visibleFiles) {
-      var div = $('<div>', {
-        'class': 'panel'
-      });
-      var filename, filenames = [ ];
+      var div = $('<div>');
+	  var filenames = [ ];
+      var filename;
       for (filename in visibleFiles) {
         filenames.push(filename);
       }
       filenames.sort();
-      $.each(filenames, function(n, filename) {
+      $.each(filenames, function(_, filename) {
         var f = $('<div>', {
           'class': 'filename',
           'id': 'radio_' + filename,
@@ -75,13 +67,13 @@ var cyberDojo = (function(cd, $) {
         });
         div.append(f);
       });
-      return div;
+      return div;  
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
-	cd.navigateButton = function(name) {	
-	  return "<div class='triangle button'" +
+	self.navigateButton = function(name) {	
+	  return '<div class="triangle button"' +
 			  'id="' + name + '_button">' +
 		'<img src="/images/triangle_' + name + '.gif"' +
 			 'alt="move to ' + name + ' diff"' +                 
@@ -90,15 +82,17 @@ var cyberDojo = (function(cd, $) {
 	  '</div>';      
 	};	
 	
-    cd.navigateButtons = function(tag) {
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+    self.navigateButtons = function(tag) {
 	  return '<div class="panel">' +
 	    '<table class="align-center">' +
           '<tr>' +
             '<td>' +
-               cd.navigateButton('first') +
+               self.navigateButton('first') +
 			'</td>' +
 			'<td>' +
-               cd.navigateButton('prev') +
+               self.navigateButton('prev') +
 			'</td>' +
 			'<td>' +
 			  '<span class="tag_' + tag.colour + '">' +
@@ -106,15 +100,17 @@ var cyberDojo = (function(cd, $) {
 			  '</span>' +
 			'</td>' +
             '<td>' +
-               cd.navigateButton('next') +
+               self.navigateButton('next') +
 			'</td>' +
 			'<td>' +
-               cd.navigateButton('last') +
+               self.navigateButton('last') +
 			'</td>' +
 		  '</tr>' +
 		'</table>' +
 	  '</div>';
 	};			
+	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
     self.reverterDiv = function(data)  {
       var visibleFiles = data.visibleFiles;
@@ -130,36 +126,41 @@ var cyberDojo = (function(cd, $) {
           "<td>" +
 			self.revertTagInfo(data.inc) +
           "</td>" +
-          "<td rowspan='2'>" + //3
+          "<td rowspan='3'>" +
            "<textarea id='revert_content' wrap='off'></textarea>" +
           "</td>" +
 	    "</tr>" +
-		//"<tr class='valign-top'>" + 
-        //  "<td>" +
-		//    cd.navigateButtons(data.inc) +
-        //  "</td>" +
-        //"</tr>" +
 		"<tr class='valign-top'>" + 
-         "<td><div class='panel'>" +
-			self.revertTagFilenames(visibleFiles).html() +
-         "</td>" +
-       "</div></tr>");
-       div.append(table);
-       return div;
+          "<td>" +
+		    self.navigateButtons(data.inc) +
+          "</td>" +
+        "</tr>" +
+		"<tr class='valign-top'>" + 
+          "<td>" +
+		    "<div id='filenames' class='panel'>" +
+			  self.revertTagFilenames(visibleFiles).html() +
+			"</div>" +
+          "</td>" +
+        "</tr>");
+	  
+      div.append(table);
+	   
+	  var textArea = $('#revert_content', div);
+	  textArea.attr('readonly', 'readonly');
+	  textArea.addClass('file_content');
+
+      return div;
     };
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-
-    self.previewHtml = function(data) {
-	  var preview = self.reverterDiv(data);
+  
+	self.showContentOnFilenameClick = function(visibleFiles, preview) {
 	  var textArea = $('#revert_content', preview);
 	  var previous = undefined;
-	  textArea.attr('readonly', 'readonly');
-	  textArea.addClass('file_content');
 	  $('.filename', preview).each(function() {
 		$(this).click(function() {
 		  var filename = $(this).text();
-		  var content = data.visibleFiles[filename];
+		  var content = visibleFiles[filename];
 		  textArea.val(content);
 		  if (previous !== undefined) {
 			previous.removeClass('selected');
@@ -168,14 +169,49 @@ var cyberDojo = (function(cd, $) {
 		  previous = $(this);                            
 		});
 	  });
-	  $('.filename', preview)[0].click();
-	  return preview;
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+    self.setupNavigateButtonHandlers = function(preview) {
+	  
+	  var refresh = function() {
+		$.getJSON('/reverter/revert',
+		  {
+			id: id,
+			avatar: avatarName,
+			tag: tag
+		  },
+		  function(data) {
+			$('#filenames', preview).html(
+  	         self.revertTagFilenames(data.visibleFiles).html()
+			);
+	        self.showContentOnFilenameClick(data.visibleFiles, preview);			
+    	    $('.filename', preview)[0].click();			 
+		  }
+		);		
+	  };
+	  
+	  $('#prev_button', preview).click(function() {
+		tag -= 1;
+		refresh();
+	  });
+		
+	  $('#next_button', preview).click(function() {
+		tag += 1;
+		refresh();
+	  });
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
 	self.createRevertDialog = function(data) {
-	  return self.previewHtml(data).dialog({
+	  var preview = self.reverterDiv(data);
+	  self.showContentOnFilenameClick(data.visibleFiles, preview);
+	  $('.filename', preview)[0].click();	  
+	  self.setupNavigateButtonHandlers(preview);
+	  
+	  return preview.dialog({
 		  title: cd.dialogTitle(title),
 		  autoOpen: false,
 		  width: 950,
