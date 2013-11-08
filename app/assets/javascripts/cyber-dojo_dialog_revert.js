@@ -16,9 +16,6 @@ var cyberDojo = (function(cd, $) {
 	self.makeTrafficLight = function() {
 	  var trafficLight = data.inc;
       var filename = 'traffic_light_' + trafficLight.colour;
-      if (trafficLight.revert_tag !== null) {
-        filename += '_revert';
-      }
       return '' +
 	    "<div id='traffic_light'>" +
 		  "<img src='/images/" + filename + ".png'" +
