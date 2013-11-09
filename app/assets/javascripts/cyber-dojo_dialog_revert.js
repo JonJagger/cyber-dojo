@@ -190,7 +190,7 @@ var cyberDojo = (function(cd, $) {
 		  self.showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
 		}
-	  );		
+	  );
 	};
 	  
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

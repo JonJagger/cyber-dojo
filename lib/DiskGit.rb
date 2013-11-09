@@ -23,12 +23,12 @@ class DiskGit
   
   def show(dir, options)
     command = "cd #{dir}; git show #{options}"
-    IO::popen(command).read
+    `#{command}`
   end  
   
   def diff(dir, options)
     command = "cd #{dir}; git diff #{options}"
-    IO::popen(command).read
+    `#{command}`
   end
   
 end
