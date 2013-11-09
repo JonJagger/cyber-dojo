@@ -1,34 +1,38 @@
 
 class DiskGit
 
-  def init(dir, options)  
-    system("cd #{dir}; git init #{options}")
+  def init(dir, args)  
+    run(dir, 'init', args)
   end
   
-  def add(dir, what)
-    system("cd #{dir}; git add '#{what}'")
+  def add(dir, args)
+    run(dir, 'add', args)
   end
 
-  def rm(dir, what)
-    `cd #{dir}; git rm '#{what}'`
+  def rm(dir, args)
+    run(dir, 'rm', args)
   end
   
-  def commit(dir, options)
-    system("cd #{dir}; git commit #{options}")
+  def commit(dir, args)
+    run(dir, 'commit', args)
   end
 
-  def tag(dir, options)
-    system("cd #{dir}; git tag #{options}")
+  def tag(dir, args)
+    run(dir, 'tag', args)
   end
   
-  def show(dir, options)
-    command = "cd #{dir}; git show #{options}"
-    `#{command}`
+  def show(dir, args)
+    run(dir, 'show', args)
   end  
   
-  def diff(dir, options)
-    command = "cd #{dir}; git diff #{options}"
-    `#{command}`
+  def diff(dir, args)
+    run(dir, 'diff', args)
+  end
+  
+private
+
+  def run(dir, command, args)
+    `cd #{dir}; git #{command} #{args}`
   end
   
 end
