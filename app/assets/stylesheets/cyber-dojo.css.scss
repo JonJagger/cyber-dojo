@@ -77,7 +77,7 @@ div.button, input.button, a.button
   display: inline-block;
 }
 
-div[class~='button'][disabled]
+div[class~='button'][disabled], input.button[disabled]
 {
   background: lighten($darker-color, 20%);
   cursor: default;

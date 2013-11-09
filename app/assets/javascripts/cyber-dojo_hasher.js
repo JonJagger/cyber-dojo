@@ -91,10 +91,10 @@ var cyberDojo = (function(cd, $) {
   cd.setForkButton = function() {
     if (cd.allFilesSameAsCurrentTrafficLight()) {
       $('#fork_button').removeAttr('disabled');
-      //$('#test').attr('disabled', true);
+      $('#test').attr('disabled', true);
     } else {
       $('#fork_button').attr('disabled', true);
-      //$('#test').removeAttr('disabled');
+      $('#test').attr('disabled',false);
     }    
   };
   

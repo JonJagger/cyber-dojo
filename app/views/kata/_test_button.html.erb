@@ -19,14 +19,6 @@ $(document).ready(function() {
     cd.storeOutgoingFileHashes();
   });
   
-  var ajaxAfter = function() {
-    trafficLightCount().show();
-    spinners.hide();    
-    test.attr('disabled', false);    
-    cd.loadFile('output');
-    cd.setContentListeners();    
-  };
-  
   $('form').bind('ajax:error', function(evt, data, status, xhr) {
     var errorMessage = "" +
       "Files not sent files to the cyber-dojo server." + "\n" +
@@ -36,7 +28,6 @@ $(document).ready(function() {
   });
   
   $('form').bind('ajax:success', function(evt, data, status, xhr) {
-    test.attr('disabled', false);
     $('#tip').hide();
     cd.rebuildFilenameList();
     // when the ajax replaces output the shortcuts
@@ -48,6 +39,13 @@ $(document).ready(function() {
     ajaxAfter();
     $('#fork_button').attr('disabled', false);
   });  
+  
+  var ajaxAfter = function() {
+    trafficLightCount().show();
+    spinners.hide();    
+    cd.loadFile('output');
+    cd.setContentListeners();    
+  };
   
 });
 
