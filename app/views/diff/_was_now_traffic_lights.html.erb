@@ -10,7 +10,15 @@
       <input type="text" id="was_tag_number" value="<%= @was_tag %>" />
     </td>
     <td>
-      &nbsp;&harr;&nbsp;
+      <%= link_to avatar_image(@avatar.name, 35, "Open a new dashboard page"),
+          {
+            :controller => :dashboard,
+            :action => :show,
+            :id => @kata.id 
+          },
+          :target => defined?(target) ? target : ""
+      %>
+      
     </td>
     <td>
       <input type="text" id="now_tag_number" value="<%= @now_tag %>" />
