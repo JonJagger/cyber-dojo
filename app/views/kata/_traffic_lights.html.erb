@@ -3,11 +3,13 @@
   <table>
     <tr class="row">
       
-      <% max_lights = 36 %>                
+      <% max_lights = 40 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
 		  <span>
-            <%= untitled_unlinked_traffic_light(light,20,62) %>
+			<% width = 19 %>
+			<% height = 62 %>			
+            <%= untitled_unlinked_traffic_light(light,width,height) %>
 		  </span>
         </td>
       <% end %>
