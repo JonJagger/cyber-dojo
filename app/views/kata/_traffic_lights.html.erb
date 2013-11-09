@@ -25,6 +25,11 @@
 								 :avatar_name    => translate_avatar(@avatar.name)
 							   } %>
       </td>
+	  
+	  <td>
+		<%= render :partial => 'shared/avatar_image', :locals => { :target => '_blank' } %>
+	  </td>
+	  
     </tr>      
   </table>
 </div>
