@@ -51,6 +51,20 @@
            </td>          
          <% end %>
                    
+         <td>
+           <%= render :partial => 'shared/traffic_light_bulb_counts',
+                      :locals  => { :traffic_lights => all_lights[avatar_name],
+                                    :avatar_name    => avatar_name
+                                  } %>
+         </td>
+                  
+         <td class="align-right">          
+           <%= render :partial => 'shared/traffic_light_count',
+                      :locals  => { :traffic_lights => all_lights[avatar_name],
+                                    :avatar_name    => avatar_name
+                                  } %>
+         </td>
+         
          <td class="align-center valign-center">           
             <%= link_to avatar_image(avatar_name,45,"Show #{avatar_name}'s current code"),
                 {
@@ -66,27 +80,8 @@
            <%= render :partial => 'shared/avatar_name',
                       :locals  => { :avatar_name => avatar_name 
                                   } %>
-         </td> 
+         </td>
          
-        <td>
-          <%  in_new_window = true %>            
-          <%= linked_traffic_light(@kata, avatar_name, all_lights[avatar_name].last, in_new_window) %>
-        </td>
-          
-        <td>
-          <%= render :partial => 'shared/traffic_light_bulb_counts',
-                     :locals  => { :traffic_lights => all_lights[avatar_name],
-                                   :avatar_name    => avatar_name
-                                 } %>
-         </td>
-                  
-         <td class="align-right">          
-          <%= render :partial => 'shared/traffic_light_count',
-                     :locals  => { :traffic_lights => all_lights[avatar_name],
-                                   :avatar_name    => avatar_name
-                                 } %>
-         </td>
-
        </tr>
      <% end %>
    <% end %>
