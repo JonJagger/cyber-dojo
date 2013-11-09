@@ -20,14 +20,12 @@ $(document).ready(function() {
   };
   
   cd.storeIncomingFileHashes();    
-  cd.storeOutgoingFileHashes();
+  cd.storeOutgoingFileHashes();  
+  cd.setContentListeners();
   
   if (<%= @traffic_lights == [ ] %>) {
     cd.testForm().submit();
   }
-
-  cd.setContentListeners();
-  
 });
 
 //--></script>
