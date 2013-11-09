@@ -16,6 +16,7 @@ $(document).ready(function() {
     //var title = $(this).text();
     //cd.renameFile(title, "<%= @avatar.name %>");
     //Best is to ask for the new filename _first_
+    //and only enable [ok] button if it is valid
   });
   fileButtons.find('#rename').click(function() {
     if (isEnabled($(this))) {

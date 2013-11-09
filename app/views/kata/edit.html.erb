@@ -24,7 +24,7 @@ $(document).ready(function() {
   cd.setContentListeners();
   cd.setForkAndTestButtons();
   
-  if (<%= @traffic_lights == [ ] %>) {
+  if (<%= @traffic_lights.length === 0 %>) {
     cd.testForm().submit();
   }
 });
