@@ -69,7 +69,13 @@ var cyberDojo = (function(cd, $) {
   cd.setForkAndTestButtons = function() {
     var same = allFilesSameAsCurrentTrafficLight();
     $('#fork_button').attr('disabled', !same);
-    $('#test').attr('disabled', same);
+    // I could do this...
+    //   $('#test').attr('disabled', same);
+    // so the test button is only enabled when the file contents
+    // is in some way different to the previous traffic-light.
+    // Trouble with this is that a new players initial
+    // view will be of a disabled test button.
+    $('#test').attr('disabled', false);
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
