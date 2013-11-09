@@ -39,10 +39,10 @@ var cyberDojo = (function(cd, $) {
 	    '<table class="align-center">' +
 		  '<tr>' +
 		    '<td>' +
-			  avatarImage +
+			  self.makeTrafficLight() +
 		    '</td>' +
 		    '<td>' +
-			  self.makeTrafficLight() +
+			  avatarImage +
 		    '</td>' +
 		  '</tr>' +
 		'</table>';	  
