@@ -3,14 +3,11 @@
   <table>
     <tr class="row">
       
-      <% max_lights = 40 %>                
+      <%  in_new_window = true %>
+      <% max_lights = 35 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
-		  <span>
-			<% width = 19 %>
-			<% height = 62 %>			
-            <%= untitled_unlinked_traffic_light(light,width,height) %>
-		  </span>
+		  <%= linked_traffic_light(@kata, @avatar.name, light, in_new_window) %>			
         </td>
       <% end %>
       

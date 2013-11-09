@@ -118,9 +118,9 @@ fr:
       thats_what_cyberdojo_is_built_for: "C'est ce cyber-dojo est construit pour."
             
     kata_help:
-      opens_a_home_page: "ouvre une<br/>page d'accueil"
-      opens_a_dashboard_page: "ouvre une<br/>page de tableau de bord"
-      opens_a_revert_dialog: "ouvre un<br/>dialogue revenir"
+      opens_a_home_page: "ouvre une<br/>page<br/>d'accueil"
+      opens_a_dashboard_page: "ouvre une<br/>page<br/>dashboard"
+      opens_a_diff_review: "ouvre un<br/>page<br/>diff-réviser"      
       results_go_to: "résultats vont à"
       the_tests_ran_but_one_or_more_failed: "les tests ont couru, mais un ou plusieurs ont échoué"
       the_tests_could_not_be_run: "les tests ne peuvent pas être exécutés"
