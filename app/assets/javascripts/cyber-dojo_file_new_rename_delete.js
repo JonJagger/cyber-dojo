@@ -8,7 +8,7 @@ var cyberDojo = (function(cd, $) {
     // There is no excuse not to rename it!
     cd.newFileContent('newfile_' + cd.random3(), 'Please rename me!');
 	cd.setContentListeners();	
-	cd.setForkButton();
+	cd.setForkAndTestButtons();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,7 +44,7 @@ var cyberDojo = (function(cd, $) {
 		  ok: function() {
 			var newFilename = $.trim(input.val());
 			cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-			cd.setForkButton();
+			cd.setForkAndTestButtons();
 			$(this).dialog('close');
 		  },
 		  cancel: function() {
@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
       if (event.keyCode === $.ui.keyCode.ENTER) {
 		var newFilename = $.trim(input.val());
 		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-		cd.setForkButton();
+		cd.setForkAndTestButtons();
 		renamer.dialog('close');
       }  
     });
@@ -100,7 +100,7 @@ var cyberDojo = (function(cd, $) {
 		  buttons: {
 			ok: function() {
 			  cd.doDelete(filename);
-			  cd.setForkButton();
+			  cd.setForkAndTestButtons();
 			  $(this).dialog('close');
 			},
 			cancel: function() {

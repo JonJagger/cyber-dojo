@@ -36,8 +36,8 @@ $(document).ready(function() {
     cd.bindHotKeys(output);
     cd.bindAllLineNumbers();
     cd.storeIncomingFileHashes();
+    cd.setForkAndTestButtons();
     ajaxAfter();
-    $('#fork_button').attr('disabled', false);
   });  
   
   var ajaxAfter = function() {

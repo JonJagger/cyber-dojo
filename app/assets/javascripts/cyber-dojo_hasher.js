@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.hashOf = function(content) {
+  var hashOf = function(content) {
     var hash, i;
     for (hash = 0, i = 0; i < content.length; ++i) {
       hash = (hash << 5) - hash + content.charCodeAt(i);
@@ -11,31 +11,20 @@ var cyberDojo = (function(cd, $) {
     }
     return hash;
   };  
-    
-  cd.storeIncomingFileHashes = function() {
-    var container = $('#file_hashes_incoming_container');
-    container.empty();
-    $.each(cd.filenames(), function(_,filename) {
-      var node = cd.fileContentFor(filename);
-      var content = node.val();
-      var hash = cd.hashOf(content);
-      container.append(
-        $('<input>', {
-          'type': 'hidden',
-          'data-filename': filename,
-          'name': "file_hashes_incoming[" + filename + "]",
-          'value': hash
-        })
-      );
-    });
-  };
 
-  cd.storeOutgoingFileHash = function(filename) {
-    var container = $('#file_hashes_outgoing_container');
+  var outgoingHashContainer = function() {
+    return $('#file_hashes_outgoing_container');
+  };
+  
+  var incomingHashContainer = function() {
+    return $('#file_hashes_incoming_container');
+  };
+    
+  var storeOutgoingFileHash = function(filename) {
     var node = cd.fileContentFor(filename);
-    var hash = cd.hashOf(node.val());    
-    $('input[data-filename="'+filename+'"]',container).remove();    
-    container.append(
+    var hash = hashOf(node.val());    
+    $('input[data-filename="'+filename+'"]',outgoingHashContainer()).remove();    
+    outgoingHashContainer().append(
       $('<input>', {
         'type': 'hidden',
         'data-filename': filename,
@@ -45,38 +34,25 @@ var cyberDojo = (function(cd, $) {
     );
   };
   
-  cd.storeOutgoingFileHashes = function() {
-    var container = $('#file_hashes_outgoing_container');
-    container.empty();
-    $.each(cd.filenames(), function(_,filename) {
-      cd.storeOutgoingFileHash(filename);
-    });    
-  };
-    
-  cd.allFilesSameAsCurrentTrafficLight = function() {
-    var  inHashes = $('#file_hashes_incoming_container');
-    var incomingFilenames = [ ];
-    $('input',inHashes).each(function() {
+  var allFilesSameAsCurrentTrafficLight = function() {
+    var outgoingFilenames = cd.filenames();
+    var incomingFilenames = [ ];    
+    $('input',incomingHashContainer()).each(function() {
       var filename = $(this).data('filename');
       incomingFilenames.push(filename);
-    });
-        
-    var outgoingFilenames = cd.filenames();
-    
+    });    
     incomingFilenames.sort();
-    outgoingFilenames.sort();
-    
+    outgoingFilenames.sort();    
     if (JSON.stringify(incomingFilenames) != JSON.stringify(outgoingFilenames)) {
       //alert("incomingFilenames != outgoingFilenames");
       return false;
     }
 
-    var outHashes = $('#file_hashes_outgoing_container');
     //var msg = "\n";
     var allSame = true;
-    $.each(incomingFilenames,function(i,filename) {
-      var  inNode = $('input[data-filename="'+filename+'"]',  inHashes);
-      var outNode = $('input[data-filename="'+filename+'"]', outHashes);
+    $.each(incomingFilenames,function(_,filename) {
+      var  inNode = $('input[data-filename="'+filename+'"]', incomingHashContainer());
+      var outNode = $('input[data-filename="'+filename+'"]', outgoingHashContainer());
       if (filename != 'output' && inNode.attr('value') != outNode.attr('value')) {
         allSame = false;
       }
@@ -88,21 +64,49 @@ var cyberDojo = (function(cd, $) {
     return allSame;
   };
   
-  cd.setForkButton = function() {
-    if (cd.allFilesSameAsCurrentTrafficLight()) {
-      $('#fork_button').removeAttr('disabled');
-      $('#test').attr('disabled', true);
-    } else {
-      $('#fork_button').attr('disabled', true);
-      $('#test').attr('disabled',false);
-    }    
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  cd.setForkAndTestButtons = function() {
+    var same = allFilesSameAsCurrentTrafficLight();
+    $('#fork_button').attr('disabled', !same);
+    $('#test').attr('disabled', same);
   };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  cd.storeOutgoingFileHashes = function() {
+    outgoingHashContainer().empty();
+    $.each(cd.filenames(), function(_,filename) {
+      storeOutgoingFileHash(filename);
+    });    
+  };
+    
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  cd.storeIncomingFileHashes = function() {
+    incomingHashContainer().empty();
+    $.each(cd.filenames(), function(_,filename) {
+      var node = cd.fileContentFor(filename);
+      var content = node.val();
+      var hash = hashOf(content);
+      incomingHashContainer().append(
+        $('<input>', {
+          'type': 'hidden',
+          'data-filename': filename,
+          'name': "file_hashes_incoming[" + filename + "]",
+          'value': hash
+        })
+      );
+    });
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.setContentListeners = function() {    
     $(".file_content").unbind().on("keyup", function() {      
       var filename = $(this).data('filename');
-      cd.storeOutgoingFileHash(filename);
-      cd.setForkButton();
+      storeOutgoingFileHash(filename);
+      cd.setForkAndTestButtons();
     });    
   };
     
