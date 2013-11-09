@@ -1,0 +1,20 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+    
+  $('#dashboard_button').unbind().click(function() {
+      cd.postTo('/dashboard/show', {
+        id: "<%= @kata.id %>"
+      }, '_blank');
+  });
+
+});
+
+//--></script>
+
+<div id="dashboard_button"
+     class="button"
+     title="Open a dashboard page">
+  <%= t("views.buttons.dashboard") %>
+</div>

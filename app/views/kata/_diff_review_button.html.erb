@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
     
-  $('#review_button').click(function() {
+  $('#diff_review_button').click(function() {
       cd.postTo('/diff/show', {
         id: "<%= @kata.id %>",
         avatar: "<%= @avatar.name %>",
@@ -18,6 +18,6 @@ $(document).ready(function() {
 
 <div class="button"
      title="Review the practice diff by diff"
-     id="review_button">
-  <%= t("views.buttons.review") %>
+     id="diff_review_button">
+  <%= t("views.buttons.diff_review") %>
 </div>
