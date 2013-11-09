@@ -1,0 +1,29 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+    
+  var lineNumbersOn = true;
+    
+  $('#line_numbers_button').click(function() {
+    lineNumbersOn = !lineNumbersOn;
+    var nodes = $('[id$=line_numbers]');
+    if (lineNumbersOn) {
+      nodes.show();
+    } else {
+      nodes.hide();
+    }        
+  });
+
+  $('#line_numbers_button').click();
+
+});
+
+//--></script>
+
+<div class="button"
+     title="Turn line-numbers on/off"
+     id="line_numbers_button">
+  line-numbers
+</div>
+

@@ -30,7 +30,7 @@ $(document).ready(function() {
       });
   };
   
-  $('#fork').click(function() {
+  $('#fork_button').click(function() {
     var title = $(this).text();
     var ok = $(this).data('ok');
     var cancel = $(this).data('cancel');
@@ -45,7 +45,7 @@ $(document).ready(function() {
      title="Fork a new dojo from traffic-light <%= @now_tag %>"
      data-ok="<%= t('views.buttons.ok') %>"
      data-cancel="<%= t('views.buttons.cancel') %>"
-     id="fork">
+     id="fork_button">
   <%= t("views.buttons.fork") %>
 </div>
 
