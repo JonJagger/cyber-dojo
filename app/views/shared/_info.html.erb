@@ -1,12 +1,21 @@
 
-<table class="align-center" id="shared-info">  
+<table class="align-center" id="shared-info">
   <tr>
-    <td><%= @kata.id[0..5] %></td>
-  </tr>
-  <tr>
-    <td><%= @kata.language.name %></td>
-  </tr>
-  <tr>
-    <td><%= @kata.exercise.name.sub('_',' ') %></td>
+    <td>
+      <%= render :partial => 'shared/logo' %>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <td><%= @kata.id[0..5] %></td>
+        </tr>
+        <tr>
+          <td><%= @kata.language.name %></td>
+        </tr>
+        <tr>
+          <td><%= @kata.exercise.name.sub('_',' ') %></td>
+        </tr>
+      </table>
+    </td>
   </tr>
 </table>
