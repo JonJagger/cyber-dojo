@@ -187,6 +187,24 @@ var cyberDojo = (function(cd, $) {
   
     var revertContent = $('#revert_content', preview);
 	
+	var currentFilename = undefined;
+	
+	var showCurrentFile = function() {	  
+	  var found = false;
+	  $('.filename', preview).each(function() {
+		var filename = $(this).text();
+		if (filename === currentFilename) {
+		  $(this).click();
+		  found = true;
+		}
+	  });
+	  if (!found) {
+		// make better choice?
+		// cyber-dojo.sh is often first which is pretty boring
+		$('.filename', preview)[0].click();		
+	  }
+	};
+	
 	var showContentOnFilenameClick = function() {
 	  var previous = undefined;
 	  $('.filename', preview).each(function() {
@@ -198,9 +216,11 @@ var cyberDojo = (function(cd, $) {
 			previous.removeClass('selected');
 		  }
 		  $(this).addClass('selected');
+		  currentFilename = filename;
 		  previous = $(this);                            
 		});
 	  });
+	  showCurrentFile();
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -252,7 +272,6 @@ var cyberDojo = (function(cd, $) {
 		  trafficLightNumber.html(makeTrafficLightNumber());
 		  resetNavigateButtonHandlers();
 		  showContentOnFilenameClick();			
-		  $('.filename', preview)[0].click();			 
 		}
 	  );
 	};
