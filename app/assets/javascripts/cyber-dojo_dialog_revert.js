@@ -107,32 +107,34 @@ var cyberDojo = (function(cd, $) {
 
     var preview = makeReverterDiv();
 
+	var deleteAllCurrentFiles = function() {
+	  var newFilename;
+	  $.each(cd.filenames(), function(_, filename) {
+		if (filename !== 'output') {
+		  cd.doDelete(filename);
+		}
+	  });					  
+	};
+	
+	var copyRevertFilesToCurrentFiles = function() {
+	  var filename;
+	  for (filename in data.visibleFiles) {
+		if (filename !== 'output') {
+		  cd.newFileContent(filename, data.visibleFiles[filename]);
+		}
+	  }	  
+	};		  
+
 	var revertDialog = preview.dialog({	  
 	  title: cd.dialogTitle(title),
 	  autoOpen: false,
 	  width: 1150,
 	  modal: true,
 	  buttons: {
-		ok: function() {		  
-		  var deleteAllCurrentFiles = function() {
-			var newFilename;
-			$.each(cd.filenames(), function(_, filename) {
-			  if (filename !== 'output') {
-				cd.doDelete(filename);
-			  }
-			});					  
-		  };	  
-		  var copyRevertFilesToCurrentFiles = function() {
-			var filename;
-			for (filename in data.visibleFiles) {
-			  if (filename !== 'output') {
-				cd.newFileContent(filename, data.visibleFiles[filename]);
-			  }
-			}	  
-		  };		  
+		ok: function() {
 		  deleteAllCurrentFiles();
 		  copyRevertFilesToCurrentFiles();
-		  cd.testForm().submit();			  
+		  cd.testForm().submit();
 		  $(this).dialog('close');
 		},
 		cancel: function() {
@@ -220,7 +222,6 @@ var cyberDojo = (function(cd, $) {
 		  previous = $(this);                            
 		});
 	  });
-	  showCurrentFile();
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -254,9 +255,9 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
-	var revertFilenames    = $('#revert_filenames', preview);
 	var trafficLight       = $('#traffic_light', preview);
 	var trafficLightNumber = $('#traffic_light_number', preview);
+	var revertFilenames    = $('#revert_filenames', preview);
 	
 	var refresh = function() {
 	  $.getJSON('/reverter/revert',
@@ -267,11 +268,12 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(d) {
 		  data = d;
-		  revertFilenames.html(makeRevertFilenames());
+		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight());
 		  trafficLightNumber.html(makeTrafficLightNumber());
-		  resetNavigateButtonHandlers();
-		  showContentOnFilenameClick();			
+		  revertFilenames.html(makeRevertFilenames());
+		  showContentOnFilenameClick();
+          showCurrentFile();		  
 		}
 	  );
 	};
@@ -282,6 +284,9 @@ var cyberDojo = (function(cd, $) {
 	refresh();
 	
   }; // cd.dialog_revert = function(title, id, avatarName, tag) {
+
+
+
 
   return cd;
 })(cyberDojo || {}, $);
