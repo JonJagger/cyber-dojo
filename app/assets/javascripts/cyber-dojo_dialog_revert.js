@@ -14,11 +14,10 @@ var cyberDojo = (function(cd, $) {
 			  '</div>' +
 		    '</td>' +
 		    '<td>' +
-			  '<img ' +
-				'class="avatar_image"' +
-				'height="47"' +
-				'width="47"' +
-				'src="/images/avatars/' + avatarName + '.jpg">' +
+			  '<img class="avatar_image"' +
+				   'height="47"' +
+				   'width="47"' +
+				   'src="/images/avatars/' + avatarName + '.jpg">' +
 		    '</td>' +
 		  '</tr>' +
 		'</table>';	  
@@ -27,40 +26,42 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	  
 	var makeNavigateButton = function(name) {	
-	  return '<div class="triangle button"' +
-			  'id="' + name + '_button">' +
-		'<img src="/images/triangle_' + name + '.gif"' +
-			 'alt="move to ' + name + ' diff"' +                 
-			 'width="25"' + 
-			 'height="25" />' +
-	  '</div>';      
+	  return '' +
+	    '<div class="triangle button"' +
+			 'id="' + name + '_button">' +
+		  '<img src="/images/triangle_' + name + '.gif"' +
+			   'alt="move to ' + name + ' diff"' +                 
+			   'width="25"' + 
+			   'height="25" />' +
+	    '</div>';      
 	};	
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
     var makeNavigateButtons = function() {
-	  return '<div class="panel">' +
-	    '<table class="align-center">' +
-          '<tr>' +
-            '<td>' +
-               makeNavigateButton('first') +
-			'</td>' +
-			'<td>' +
-               makeNavigateButton('prev') +
-			'</td>' +
-			'<td>' +
-    	      '<div id="traffic_light_number">' +			
-			  '</div>' +
-			'</td>' +
-            '<td>' +
-               makeNavigateButton('next') +
-			'</td>' +
-			'<td>' +
-               makeNavigateButton('last') +
-			'</td>' +
-		  '</tr>' +
-		'</table>' +
-	  '</div>';
+	  return '' +
+	    '<div class="panel">' +
+		  '<table class="align-center">' +
+			'<tr>' +
+			  '<td>' +
+				 makeNavigateButton('first') +
+			  '</td>' +
+			  '<td>' +
+				 makeNavigateButton('prev') +
+			  '</td>' +
+			  '<td>' +
+				'<div id="traffic_light_number">' +			
+				'</div>' +
+			  '</td>' +
+			  '<td>' +
+				 makeNavigateButton('next') +
+			  '</td>' +
+			  '<td>' +
+				 makeNavigateButton('last') +
+			  '</td>' +
+			'</tr>' +
+		  '</table>' +
+		'</div>';
 	};			
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -76,7 +77,11 @@ var cyberDojo = (function(cd, $) {
 			makeRevertInfo() +
           "</td>" +
           "<td rowspan='3'>" +
-           "<textarea id='revert_content' wrap='off'></textarea>" +
+           "<textarea id='revert_content'" +
+		             "class='file_content'" +
+					 "readonly='readonly'" +
+		             "wrap='off'>" +
+		   "</textarea>" +
           "</td>" +
 	    "</tr>" +
 		"<tr class='valign-top'>" + 
@@ -86,15 +91,13 @@ var cyberDojo = (function(cd, $) {
         "</tr>" +
 		"<tr class='valign-top'>" + 
           "<td>" +
-		    "<div id='revert_filenames' class='panel'>" +
+		    "<div id='revert_filenames'" +
+			     "class='panel'>" +
 			"</div>" +
           "</td>" +
         "</tr>");
 	  
       div.append(table);	   
-	  var textArea = $('#revert_content', div);
-	  textArea.attr('readonly', 'readonly');
-	  textArea.addClass('file_content');
       return div;
     };
 	
@@ -145,8 +148,8 @@ var cyberDojo = (function(cd, $) {
       var filename = 'traffic_light_' + trafficLight.colour;
       return '' +
 		"<img src='/images/" + filename + ".png'" +
-		" width='15'" +
-		" height='46'/>";
+		     "width='15'" +
+		     "height='46'/>";
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
