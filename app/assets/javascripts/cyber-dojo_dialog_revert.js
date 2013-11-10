@@ -102,8 +102,48 @@ var cyberDojo = (function(cd, $) {
       return div;
     };
 
+	self.makeRevertDialog = function() {
+	  return preview.dialog({
+		  title: cd.dialogTitle(title),
+		  autoOpen: false,
+		  width: 1150,
+		  modal: true,
+		  buttons: {
+			ok: function() {
+			  self.deleteAllCurrentFiles();
+			  self.copyRevertFilesToCurrentFiles();
+			  cd.testForm().submit();			  
+			  $(this).dialog('close');
+			},
+			cancel: function() {
+			  $(this).dialog('close');
+			}
+		  }
+		});
+	};
+	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var preview = self.reverterDiv();
 
+	var revertDialog = preview.dialog({
+	  title: cd.dialogTitle(title),
+	  autoOpen: false,
+	  width: 1150,
+	  modal: true,
+	  buttons: {
+		ok: function() {
+		  self.deleteAllCurrentFiles();
+		  self.copyRevertFilesToCurrentFiles();
+		  cd.testForm().submit();			  
+		  $(this).dialog('close');
+		},
+		cancel: function() {
+		  $(this).dialog('close');
+		}
+	  }
+	});
+	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var data = undefined;
@@ -240,28 +280,6 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	self.makeRevertDialog = function() {
-	  return preview.dialog({
-		  title: cd.dialogTitle(title),
-		  autoOpen: false,
-		  width: 1150,
-		  modal: true,
-		  buttons: {
-			ok: function() {
-			  self.deleteAllCurrentFiles();
-			  self.copyRevertFilesToCurrentFiles();
-			  cd.testForm().submit();			  
-			  $(this).dialog('close');
-			},
-			cancel: function() {
-			  $(this).dialog('close');
-			}
-		  }
-		});
-	};
-	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
 	self.refresh = function() {
 	  $.getJSON('/reverter/revert',
 		{
@@ -283,24 +301,8 @@ var cyberDojo = (function(cd, $) {
 	  
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-    $.getJSON('/reverter/revert',
-      {
-        id: id,
-        avatar: avatarName,
-        tag: tag
-      },
-	  function(d) {		
-		data = d;		
-		$('#filenames', preview).html(self.makeRevertFilenames());
-		$('#traffic_light', preview).html(self.makeTrafficLight());
-		$('#traffic_light_number', preview).html(self.makeTrafficLightNumber());
-		self.setupNavigateButtonHandlers();		
-		self.showContentOnFilenameClick();
-		$('.filename', preview)[0].click();
-		
-		self.makeRevertDialog().dialog('open');		
-	  }
-    );
+	revertDialog.dialog('open');
+	self.refresh();
 	
   }; // cd.dialog_revert = function(title, id, avatarName, tag) {
 
