@@ -86,7 +86,7 @@ var cyberDojo = (function(cd, $) {
         "</tr>" +
 		"<tr class='valign-top'>" + 
           "<td>" +
-		    "<div id='filenames' class='panel'>" +
+		    "<div id='revert_filenames' class='panel'>" +
 			"</div>" +
           "</td>" +
         "</tr>");
@@ -100,9 +100,9 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var preview = makeReverterDiv();
-
 	var data = undefined;
+
+    var preview = makeReverterDiv();
 
 	var revertDialog = preview.dialog({	  
 	  title: cd.dialogTitle(title),
@@ -182,14 +182,15 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
+    var revertContent = $('#revert_content', preview);
+	
 	var showContentOnFilenameClick = function() {
-	  var textArea = $('#revert_content', preview);
 	  var previous = undefined;
 	  $('.filename', preview).each(function() {
 		$(this).click(function() {
 		  var filename = $(this).text();
 		  var content = data.visibleFiles[filename];
-		  textArea.val(content);
+		  revertContent.val(content);
 		  if (previous !== undefined) {
 			previous.removeClass('selected');
 		  }
@@ -230,6 +231,10 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
+	var revertFilenames    = $('#revert_filenames', preview);
+	var trafficLight       = $('#traffic_light', preview);
+	var trafficLightNumber = $('#traffic_light_number', preview);
+	
 	var refresh = function() {
 	  $.getJSON('/reverter/revert',
 		{
@@ -239,9 +244,9 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(d) {
 		  data = d;
-		  $('#filenames', preview).html(makeRevertFilenames());
-		  $('#traffic_light', preview).html(makeTrafficLight());
-		  $('#traffic_light_number', preview).html(makeTrafficLightNumber());
+		  revertFilenames.html(makeRevertFilenames());
+		  trafficLight.html(makeTrafficLight());
+		  trafficLightNumber.html(makeTrafficLightNumber());
 		  resetNavigateButtonHandlers();
 		  showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
