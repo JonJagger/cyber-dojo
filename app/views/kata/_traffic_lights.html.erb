@@ -3,7 +3,7 @@
   <table>
     <tr class="row">
       
-      <%  in_new_window = true %>
+      <% in_new_window = true %>
       <% max_lights = 35 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
@@ -26,7 +26,12 @@
       </td>
 	  
 	  <td>
-		<%= render :partial => 'shared/avatar_image', :locals => { :target => '_blank' } %>
+		<%= render :partial => 'shared/avatar_image',
+		           :locals => { :target => '_blank' } %>
+		
+		<%= render :partial => 'shared/avatar_name',
+				   :locals  => { :avatar_name => @avatar.name 
+							   } %>		
 	  </td>
 	  
     </tr>      
