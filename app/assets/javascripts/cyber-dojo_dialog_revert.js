@@ -200,6 +200,11 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var firstButton = $('#first_button', preview);
+	var prevButton  = $('#prev_button',  preview);
+	var nextButton  = $('#next_button',  preview);
+	var lastButton  = $('#last_button',  preview);
 	  
     var resetNavigateButtonHandlers = function() {	  
 	  var resetHandler = function(button, onOff, newTag) {
@@ -217,10 +222,10 @@ var cyberDojo = (function(cd, $) {
   	  var minTag = 1;	  
 	  var atMin = (tag === minTag);
 	  var atMax = (tag === maxTag);
-	  resetHandler($('#first_button', preview), atMin, minTag);
-	  resetHandler($('#prev_button',  preview), atMin, tag-1);
-	  resetHandler($('#next_button',  preview), atMax, tag+1);
-	  resetHandler($('#last_button',  preview), atMax, maxTag);
+	  resetHandler(firstButton, atMin, minTag);
+	  resetHandler(prevButton,  atMin, tag-1);
+	  resetHandler(nextButton,  atMax, tag+1);
+	  resetHandler(lastButton,  atMax, maxTag);
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
