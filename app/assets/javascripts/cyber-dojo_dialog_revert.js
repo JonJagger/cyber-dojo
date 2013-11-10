@@ -201,51 +201,26 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	  
-    var setupNavigateButtonHandlers = function() {
+    var resetNavigateButtonHandlers = function() {	  
+	  var resetHandler = function(button, onOff, newTag) {
+		button
+		  .attr('disabled', onOff)
+		  .unbind()
+		  .click(function() {
+			if (!onOff) {
+			  tag = newTag;
+			  refresh();
+			}
+		  }
+		);			  		
+	  };	  
   	  var minTag = 1;	  
-	  var firstPrev = (tag > minTag);
-	  var nextLast  = (tag < maxTag);
-	  
-	  $('#first_button', preview)
-		.attr('disabled', !firstPrev)
-	    .unbind()
-		.click(function() {
-		  if (firstPrev) {
-			tag = minTag;
-			refresh();
-		  }
-	    }
-	  );			  
-	  $('#prev_button',  preview)
-		.attr('disabled', !firstPrev)
-		.unbind()
-		.click(function() {
-		  if (firstPrev) {
-			tag -= 1;
-			refresh();
-		  }
-		}
-	  );	  
-	  $('#next_button', preview)
-		.attr('disabled', !nextLast)
-		.unbind()
-		.click(function() {
-		  if (nextLast) {
-			tag += 1;
-			refresh();
-		  }
-	    }
-	  );
-	  $('#last_button', preview)
-		.attr('disabled', !nextLast)
-		.unbind()
-		.click(function() {
-		  if (nextLast) {
-			tag = maxTag;
-			refresh();
-		  }
-	    }
-	  );			  
+	  var atMin = (tag === minTag);
+	  var atMax = (tag === maxTag);
+	  resetHandler($('#first_button', preview), atMin, minTag);
+	  resetHandler($('#prev_button',  preview), atMin, tag-1);
+	  resetHandler($('#next_button',  preview), atMax, tag+1);
+	  resetHandler($('#last_button',  preview), atMax, maxTag);
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -262,7 +237,7 @@ var cyberDojo = (function(cd, $) {
 		  $('#filenames', preview).html(makeRevertFilenames());
 		  $('#traffic_light', preview).html(makeTrafficLight());
 		  $('#traffic_light_number', preview).html(makeTrafficLightNumber());
-		  setupNavigateButtonHandlers();
+		  resetNavigateButtonHandlers();
 		  showContentOnFilenameClick();			
 		  $('.filename', preview)[0].click();			 
 		}
