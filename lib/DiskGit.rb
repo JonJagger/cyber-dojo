@@ -15,6 +15,7 @@ class DiskGit
   
   def commit(dir, args)
     run(dir, 'commit', args)
+    run(dir, 'gc', '--aggressive')
   end
 
   def tag(dir, args)
