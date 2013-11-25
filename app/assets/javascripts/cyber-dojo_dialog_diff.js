@@ -380,15 +380,7 @@ var cyberDojo = (function(cd, $) {
 	var diffFilenames = $('#diff_filenames', diff);
 
     var makeDiffFilenames = function(diffs) {
-	  
-	  var display = function(node, name, value) {
-		if ($(node).attr('disabled') !== 'disabled') {
-		  var filename = $(node).data('filename');
-		  var selector = '[id="' + filename + '_div"] ' + name;
-		  $(selector, diff).css('display', value);
-		}
-	  };
-	  
+	  	  
       var table= $('<table>');
       $.each(diffs, function(_, diff) {
 		var tr = $('<tr>');
@@ -429,6 +421,19 @@ var cyberDojo = (function(cd, $) {
         table.append(tr);		
       });
 	  
+      return table.html();
+    };
+
+	var resetFilenameAddedDeletedLineCountHandlers = function() {	  
+	  var display = function(node, name, value) {
+		console.log("DISPLAY");
+		if ($(node).attr('disabled') !== 'disabled') {
+		  var filename = $(node).data('filename');
+		  var selector = '[id="' + filename + '_diff_div"] ' + name;
+		  $(selector, diff).css('display', value);
+		}
+	  };
+	  
 	  $('.diff-deleted-line-count', diff).clickToggle(
 		function() { display(this, 'deleted', 'none' ); },
 		function() { display(this, 'deleted', 'block'); }    
@@ -437,11 +442,9 @@ var cyberDojo = (function(cd, $) {
 	  $('.diff-added-line-count', diff).clickToggle(
 		function() { display(this, 'added', 'none' ); },
 		function() { display(this, 'added', 'block'); }    
-	  );
-	  
-      return table.html();
-    };
-
+	  );	  
+	};
+  
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
 	var diffDialog = diff.dialog({	  
@@ -481,6 +484,7 @@ var cyberDojo = (function(cd, $) {
 		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
 		  nowTagNumber.val(nowTag);
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
+		  resetFilenameAddedDeletedLineCountHandlers();
 		  diffContent.html(makeDiffContent(data.diffs));
 		  //showContentOnFilenameClick();
           //showCurrentFile();
