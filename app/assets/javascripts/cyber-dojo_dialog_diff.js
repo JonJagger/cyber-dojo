@@ -3,6 +3,20 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
+  // http://stackoverflow.com/questions/4911577/jquery-click-toggle-between-two-functions
+  // $().toggle() no longer exists in JQuery
+  $.fn.clickToggle = function(func1, func2) {
+    var funcs = [func1, func2];
+    this.data('toggleclicked', 0);
+    this.click(function() {
+      var data = $(this).data();
+      var tc = data.toggleclicked;
+      $.proxy(funcs[tc], this)();
+      data.toggleclicked = (tc + 1) % 2;
+    });
+    return this;
+  };
+
   cd.dialog_diff = function(title, id, avatarName, wasTag, nowTag, maxTag) {    
   
   	var minTag = 0;
@@ -112,11 +126,8 @@ var cyberDojo = (function(cd, $) {
 			
           "</td>" +
           "<td>" +
-           "<textarea id='diff_content'" +
-		             "class='file_content'" +
-					 "readonly='readonly'" +
-		             "wrap='off'>" +
-		   "</textarea>" +
+            "<div id='diff_content'>" +
+		    "</div>" +
           "</td>" +
 	    "</tr>");
 	  
@@ -124,28 +135,17 @@ var cyberDojo = (function(cd, $) {
       return div;
     };
 	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
     var diff = makeDiffDiv();
-
-	var diffDialog = diff.dialog({	  
-	  title: cd.dialogTitle(title),
-	  autoOpen: false,
-	  width: 1150,
-	  modal: true,
-	  buttons: {
-		cancel: function() {
-		  $(this).dialog('close');
-		}
-	  }
-	});
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-		  
+
+	// UNUSED
     var diffContent = $('#diff_content', diff);
 	
+	// UNUSED
 	var currentFilename = undefined;
 	
+	// UNUSED
 	var showCurrentFile = function() {	  
 	  var found = false;
 	  $('.filename', diff).each(function() {
@@ -162,6 +162,7 @@ var cyberDojo = (function(cd, $) {
 	  }
 	};
 	
+	// UNUSED
 	var showContentOnFilenameClick = function() {
 	  var previous = undefined;
 	  $('.filename', diff).each(function() {
@@ -256,11 +257,138 @@ var cyberDojo = (function(cd, $) {
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// DIFF-CONTENT
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var diffContent = $('#diff_content', diff);
+
+    var makeDiffContent = function(diffs) {
+	  var span = $('<span>');
+	  $.each(diffs, function(_, diff) {
+		var divHolder = $('<div>', {
+		  id: diff.filename + '_diff_div',
+		  'class': 'filename_div'
+		});
+		var div = $('<div>', {
+		  id: 'diff_file_content_for_' + diff.filename,
+		  'class': 'diff_sheet'
+		});
+		div.html(diff.content);
+		divHolder.append(div);
+		span.append(divHolder);
+	  });
+	  return span;
+/*	  
+<% @diffs.each do |diff| %>
+  <% filename = diff[:filename] %>
+
+  <div id="<%= filename %>_div"
+       class="filename_div">
+    <table class="edgeless panel">
+      <tr>
+        <td>
+          <div id="<%= filename %>_line_numbers"
+               class="diff_line_numbers align-right">
+            <%= raw diff[:line_numbers] %>
+          </div>
+        </td>
+        <td>
+          <div id="file_content_for_<%= filename %>"
+               class="diff_sheet">
+            <%= raw diff[:content] %>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div class="panel"></div>      
+  </div>
+  
+<% end %>  
+*/	  
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// DIFF-FILENAME-HANDLERS
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var buildDiffFilenameHandlers = function(diffs) {
+  
+	  var previousFilenameNode;
+	  var alreadyOpened = [ ];
+	  var getFilename = function(node) {
+		return $.trim(node.text());
+	  };
+	  
+	  var diffId = function(name) {
+		return $('[id="' + name + '"]');
+	  };
+	  
+	  var diffFileContentFor = function(filename) {
+		return diffId('diff_file_content_for_' + filename);
+	  };
+	
+	  var diffFileDiv = function(filename) {
+		return diffId(filename + '_diff_div');
+	  };
+	  		
+	  var loadFrom = function(filename, filenameNode, id, sectionCount) {
+		
+		var diffSheet = diffFileContentFor(filename);
+		var sectionIndex = 0;
+		
+		if (sectionCount > 0) {
+			filenameNode.attr('title', 'Auto-scroll through diffs');
+		}
+		
+		return function() {
+		  var reselected =
+			previousFilenameNode !== undefined && getFilename(previousFilenameNode) === filename;
+		  
+		  cd.radioEntrySwitch(previousFilenameNode, filenameNode);
+		  if (previousFilenameNode !== undefined) {
+			diffFileDiv(getFilename(previousFilenameNode)).hide();          
+		  }
+		  diffFileDiv(getFilename(filenameNode)).show();
+		  previousFilenameNode = filenameNode;
+		  
+		  if (sectionCount > 0 && (reselected || !cd.inArray(filename, alreadyOpened))) {
+			var section = $('#' + id + '_section_' + sectionIndex);           
+			var downFromTop = 150;
+			var halfSecond = 500;
+			diffSheet.animate({
+			  scrollTop: section.offset().top - diffSheet.offset().top - downFromTop
+			  }, halfSecond);
+			sectionIndex += 1;
+			sectionIndex %= sectionCount;
+		  }
+		  alreadyOpened.push(filename);                
+		};
+	  };
+	  
+	  $.each(diffs, function(_n, diff) {
+		var filenameNode = $('#radio_' + diff.id);
+		var filename = getFilename(filenameNode);
+		filenameNode.click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
+		//cd.bindLineNumbersEvents(filename);
+	  });
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// DIFF-FILENAMES
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var diffFilenames = $('#diff_filenames', diff);
 
     var makeDiffFilenames = function(diffs) {
+	  
+	  var display = function(node, name, value) {
+		if ($(node).attr('disabled') !== 'disabled') {
+		  var filename = $(node).data('filename');
+		  var selector = '[id="' + filename + '_div"] ' + name;
+		  $(selector, diff).css('display', value);
+		}
+	  };
+	  
       var table= $('<table>');
       $.each(diffs, function(_, diff) {
 		var tr = $('<tr>');
@@ -300,9 +428,34 @@ var cyberDojo = (function(cd, $) {
 		tr.append(addedLineCountTd)
         table.append(tr);		
       });
+	  
+	  $('.diff-deleted-line-count', diff).clickToggle(
+		function() { display(this, 'deleted', 'none' ); },
+		function() { display(this, 'deleted', 'block'); }    
+	  );
+	
+	  $('.diff-added-line-count', diff).clickToggle(
+		function() { display(this, 'added', 'none' ); },
+		function() { display(this, 'added', 'block'); }    
+	  );
+	  
       return table.html();
     };
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+	var diffDialog = diff.dialog({	  
+	  title: cd.dialogTitle(title),
+	  autoOpen: false,
+	  width: 1150,
+	  modal: true,
+	  buttons: {
+		cancel: function() {
+		  $(this).dialog('close');
+		}
+	  }
+	});
+	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var data = undefined;
@@ -328,8 +481,11 @@ var cyberDojo = (function(cd, $) {
 		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
 		  nowTagNumber.val(nowTag);
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
+		  diffContent.html(makeDiffContent(data.diffs));
 		  //showContentOnFilenameClick();
-          //showCurrentFile();		  
+          //showCurrentFile();
+          buildDiffFilenameHandlers(data.idsAndSectionCounts);
+
 		}
 	  );
 	};
