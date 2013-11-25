@@ -1,19 +1,6 @@
 
 module TrafficLightHelper
 
-  # UNUSED
-  def revert_traffic_light(inc)
-    ("<span title='#{revert_tool_tip(inc)}'>" +
-     untitled_unlinked_traffic_light(inc, 18, 55) +
-     "</span>").html_safe
-  end
-  
-  #UNUSED
-  def revert_tool_tip(inc)
-    bulb = inc[:colour].to_s
-    "Revert to traffic-light #{inc[:number]} (#{bulb})"
-  end
-
   def linked_traffic_light(kata, avatar_name, inc, in_new_window)
     new_window = in_new_window ? { :target => '_blank' } : { }
     
