@@ -5,6 +5,9 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_diff = function(title, id, avatarName, wasTag, nowTag, maxTag) {    
   
+  	var minTag = 0;
+    var tagGap = nowTag - wasTag;
+
     var makeDiffInfo = function() {
 	  return '' +
 	    '<table class="align-center">' +
@@ -198,32 +201,69 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	var wasTagNumber = $('#was_tag_number', diff);
+	var nowTagNumber = $('#now_tag_number', diff);
+		
+	var wasTrafficLight = $('#was_traffic_light', diff);
+	var nowTrafficLight = $('#now_traffic_light', diff);
+	
 	var firstButton = $('#first_button', diff);
 	var prevButton  = $('#prev_button',  diff);
 	var nextButton  = $('#next_button',  diff);
 	var lastButton  = $('#last_button',  diff);
 	  
-    var resetNavigateButtonHandlers = function() {	  
-	  var resetHandler = function(button, onOff, newTag) {
-		button
-		  .attr('disabled', onOff)
-		  .unbind()
-		  .click(function() {
-			if (!onOff) {
-			  tag = newTag;
-			  refresh();
-			}
+    var resetNavigateButtonHandlers = function() {
+	  
+	  var toolTip = function(was, now) {
+		if (was !== now) {
+		  return 'Show diff of ' + was + ' <-> ' + now;
+		} else {
+		  return 'Show ' + was;
+		}
+	  };
+	  
+	  var showDiff = function(was,now) {
+		wasTag = was;
+		nowTag = now;
+		tagGap = now - was;
+		refresh();		
+	  };
+	  
+	  var tagEdit = function(event) {
+		if (event.keyCode === $.ui.keyCode.ENTER) {
+		  var newWasTag = parseInt(wasTagNumber.val(), 10);
+		  var newNowTag = parseInt(nowTagNumber.val(), 10);
+		  if (isNaN(newWasTag) || newWasTag < minTag ||
+				isNaN(newNowTag) || newNowTag > maxTag ||
+				  newWasTag > newNowTag) {
+			wasTagNumber.val(wasTag);
+			nowTagNumber.val(nowTag);
+		  } else {
+			showDiff(newWasTag, newNowTag);
 		  }
-		);			  		
-	  };	  
-  	  var minTag = 1;	  
-	  var atMin = (tag === minTag);
-	  var atMax = (tag === maxTag);
-	  resetHandler(firstButton, atMin, minTag);
-	  resetHandler(prevButton,  atMin, tag-1);
-	  resetHandler(nextButton,  atMax, tag+1);
-	  resetHandler(lastButton,  atMax, maxTag);
+		}        
+	  };
+
+	  var refreshNavigationHandlers = function(off, b1, b2, b1From, b1To, b2From, b2To) {
+		b1.attr('disabled', off);
+		b2.attr('disabled', off)
+		if (!off) {
+		  b1.unbind()
+			.click(function() { showDiff(b1From, b1To); })
+			.attr('title', toolTip(b1From, b1To));			  
+		  b2.unbind()
+			.click(function() { showDiff(b2From, b2To); })
+			.attr('title', toolTip(b2From, b2To));	
+		}
+	  };
+	
+	  refreshNavigationHandlers(minTag >= wasTag, firstButton, prevButton, minTag, minTag+tagGap, wasTag-1, nowTag-1);
+	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, lastButton, wasTag+1, nowTag+1, maxTag-tagGap, maxTag);
+
+	  wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
+	  nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
@@ -245,10 +285,8 @@ var cyberDojo = (function(cd, $) {
 	// data.idsAndSectionCounts
 	// data.currentFilenameId
 
-	var wasTrafficLight       = $('#was_traffic_light', diff);
-	var nowTrafficLight       = $('#now_traffic_light', diff);
 
-	var diffFilenames      = $('#diff_filenames', diff);
+	var diffFilenames = $('#diff_filenames', diff);
 	
 	var refresh = function() {
 	  $.getJSON('/differ/diff',
@@ -260,9 +298,11 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(d) {
 		  data = d;
-		  //resetNavigateButtonHandlers();
+		  resetNavigateButtonHandlers();
+		  wasTagNumber.val(wasTag);
 		  wasTrafficLight.html(makeTrafficLight(data.wasTrafficLight));
-		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));		  
+		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
+		  nowTagNumber.val(nowTag);
 		  //diffFilenames.html(makeDiffFilenames());
 		  //showContentOnFilenameClick();
           //showCurrentFile();		  
