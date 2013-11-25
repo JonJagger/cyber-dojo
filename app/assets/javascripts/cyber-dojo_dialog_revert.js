@@ -72,30 +72,41 @@ var cyberDojo = (function(cd, $) {
       });
       var table = $('<table>');
       table.append(
-        "<tr class='valign-top'>" +
-          "<td>" +
-			makeRevertInfo() +
+        "<tr valign='top'>" +		  
+          "<td valign='top'>" +
+		  
+		    "<table>" +
+			  "<tr valign='top'>" + 
+				"<td valign='top'>" +
+			      makeRevertInfo() +
+			    "</td>" +
+			  "</tr>" +
+			  
+			  "<tr valign='top'>" + 
+				"<td valign='top'>" +
+				  makeNavigateButtons() +
+				"</td>" +
+			  "</tr>" +
+			  
+			  "<tr valign='top'>" + 
+				"<td valign='top'>" +
+				  "<div id='revert_filenames'" +
+					   "class='panel'>" +
+				  "</div>" +
+				"</td>" +
+			  "</tr>" +
+			  
+			"</table>" +
+			
           "</td>" +
-          "<td rowspan='3'>" +
+          "<td>" +
            "<textarea id='revert_content'" +
 		             "class='file_content'" +
 					 "readonly='readonly'" +
 		             "wrap='off'>" +
 		   "</textarea>" +
           "</td>" +
-	    "</tr>" +
-		"<tr class='valign-top'>" + 
-          "<td>" +
-		    makeNavigateButtons() +
-          "</td>" +
-        "</tr>" +
-		"<tr class='valign-top'>" + 
-          "<td>" +
-		    "<div id='revert_filenames'" +
-			     "class='panel'>" +
-			"</div>" +
-          "</td>" +
-        "</tr>");
+	    "</tr>");
 	  
       div.append(table);	   
       return div;
@@ -283,9 +294,7 @@ var cyberDojo = (function(cd, $) {
 	revertDialog.dialog('open');
 	refresh();
 	
-  }; // cd.dialog_revert = function(title, id, avatarName, tag) {
-
-
+  }; // cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {
 
 
   return cd;

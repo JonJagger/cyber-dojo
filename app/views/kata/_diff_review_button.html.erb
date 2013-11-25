@@ -3,13 +3,24 @@
 
 $(document).ready(function() {
     
+  
   $('#diff_review_button').click(function() {
-      cd.postTo('/diff/show', {
-        id: "<%= @kata.id %>",
-        avatar: "<%= @avatar.name %>",
-        was_tag: 0,
-        now_tag: 1,
-      }, '_blank');
+    cd.postTo('/diff/show', {
+      id: "<%= @kata.id %>",
+      avatar: "<%= @avatar.name %>",
+      was_tag: 0,
+      now_tag: 1,
+    }, '_blank');
+  });
+
+  $('#new_diff_review_button').click(function() {
+    var title = 'diff';
+    var id = "<%= @id %>";
+    var avatarName = "<%= @avatar.name %>";
+    var wasTag = 23;
+    var nowTag = 24;
+    var maxTag = parseInt($('#traffic_light_count').text());    
+    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
 
 });
