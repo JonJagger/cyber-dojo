@@ -1,10 +1,9 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
-    
+$(document).ready(function() {    
   
-  $('#diff_review_button').click(function() {
+  $('#old_diff_review_button').click(function() {
     cd.postTo('/diff/show', {
       id: "<%= @kata.id %>",
       avatar: "<%= @avatar.name %>",
@@ -13,12 +12,12 @@ $(document).ready(function() {
     }, '_blank');
   });
 
-  $('#new_diff_review_button').click(function() {
+  $('#diff_review_button').click(function() {
     var title = 'diff';
-    var id = "<%= @id %>";
+    var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
-    var wasTag = 23;
-    var nowTag = 24;
+    var wasTag = 199;
+    var nowTag = 200;
     var maxTag = parseInt($('#traffic_light_count').text());    
     cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
