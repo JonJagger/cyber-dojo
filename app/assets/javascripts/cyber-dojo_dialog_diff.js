@@ -142,27 +142,6 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 		  
-    var makeDiffFilenames = function() {
-      var div = $('<div>');
-	  var filenames = [ ];
-      var filename;
-      for (filename in data.visibleFiles) {
-        filenames.push(filename);
-      }
-      filenames.sort();
-      $.each(filenames, function(_, filename) {
-        var f = $('<div>', {
-          'class': 'filename',
-          'id': 'radio_' + filename,
-          'text': filename
-        });
-        div.append(f);
-      });
-      return div.html();
-    };
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-  
     var diffContent = $('#diff_content', diff);
 	
 	var currentFilename = undefined;
@@ -277,6 +256,54 @@ var cyberDojo = (function(cd, $) {
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var diffFilenames = $('#diff_filenames', diff);
+
+    var makeDiffFilenames = function(diffs) {
+      var table= $('<table>');
+      $.each(diffs, function(_, diff) {
+		var tr = $('<tr>');
+		var td = $('<td>', { 'class': 'align-left' });
+	  
+        var filenameDiv = $('<div>', {
+          'class': 'filename',
+		  'id': 'radio_' + diff.id,
+          'text': diff.filename
+        });
+		
+		var deletedLineCountTd = undefined;
+		if (diff.deleted_line_count > 0) {
+		  deletedLineCountTd = $('<td>', {
+			'class': 'align-right diff-deleted-line-count button',
+			'data-filename': diff.filename
+		  });
+		  deletedLineCountTd.append(diff.deleted_line_count);
+		} else {
+		  deletedLineCountTd = $('<td>');
+		}
+		 		
+		var addedLineCountTd = undefined;
+		if (diff.added_line_count > 0) {
+		  addedLineCountTd = $('<td>', {
+			'class': 'align-right diff-added-line-count button',
+			'data-filename': diff.filename
+		  });
+		  addedLineCountTd.append(diff.added_line_count);
+		} else {
+		  addedLineCountTd = $('<td>');
+		}				
+				
+		td.append(filenameDiv);
+		tr.append(td);
+		tr.append(deletedLineCountTd);
+		tr.append(addedLineCountTd)
+        table.append(tr);		
+      });
+      return table.html();
+    };
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var data = undefined;
 	// data.wasTrafficLight
@@ -284,9 +311,6 @@ var cyberDojo = (function(cd, $) {
 	// data.diffs
 	// data.idsAndSectionCounts
 	// data.currentFilenameId
-
-
-	var diffFilenames = $('#diff_filenames', diff);
 	
 	var refresh = function() {
 	  $.getJSON('/differ/diff',
@@ -303,7 +327,7 @@ var cyberDojo = (function(cd, $) {
 		  wasTrafficLight.html(makeTrafficLight(data.wasTrafficLight));
 		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
 		  nowTagNumber.val(nowTag);
-		  //diffFilenames.html(makeDiffFilenames());
+		  diffFilenames.html(makeDiffFilenames(data.diffs));
 		  //showContentOnFilenameClick();
           //showCurrentFile();		  
 		}

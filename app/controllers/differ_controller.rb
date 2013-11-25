@@ -13,7 +13,6 @@ class DifferController < ApplicationController
     @diffs = git_diff_prepare(diffed_files)
     @ids_and_section_counts = prune(@diffs)
     @current_filename_id = most_changed_lines_file_id(@diffs, params[:current_filename])    
-    @title = id[0..5] + ' ' + @avatar.name + ' ' + 'diff' 
 	
 	render :json => {
 	  :wasTrafficLight => @was_traffic_light,

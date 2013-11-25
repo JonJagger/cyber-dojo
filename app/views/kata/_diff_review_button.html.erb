@@ -16,8 +16,8 @@ $(document).ready(function() {
     var title = 'diff';
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
-    var wasTag = 199;
-    var nowTag = 200;
+    var wasTag = 0;
+    var nowTag = 1;
     var maxTag = parseInt($('#traffic_light_count').text());    
     cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
