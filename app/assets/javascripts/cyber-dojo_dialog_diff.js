@@ -138,49 +138,6 @@ var cyberDojo = (function(cd, $) {
     var diff = makeDiffDiv();
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	// UNUSED
-    var diffContent = $('#diff_content', diff);
-	
-	// UNUSED
-	var currentFilename = undefined;
-	
-	// UNUSED
-	var showCurrentFile = function() {	  
-	  var found = false;
-	  $('.filename', diff).each(function() {
-		var filename = $(this).text();
-		if (filename === currentFilename) {
-		  $(this).click();
-		  found = true;
-		}
-	  });
-	  if (!found) {
-		// make better choice?
-		// cyber-dojo.sh is often first which is pretty boring
-		$('.filename', diff)[0].click();		
-	  }
-	};
-	
-	// UNUSED
-	var showContentOnFilenameClick = function() {
-	  var previous = undefined;
-	  $('.filename', diff).each(function() {
-		$(this).click(function() {
-		  var filename = $(this).text();
-		  var content = data.visibleFiles[filename];
-		  revertContent.val(content);
-		  if (previous !== undefined) {
-			previous.removeClass('selected');
-		  }
-		  $(this).addClass('selected');
-		  currentFilename = filename;
-		  previous = $(this);                            
-		});
-	  });
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var wasTagNumber = $('#was_tag_number', diff);
@@ -312,23 +269,34 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var buildDiffFilenameHandlers = function(diffs) {
-  
+	  // Builds the diff filename click handlers for a given kata-id,
+	  // given animal-name, and given traffic-light was/now numbers.
+	  // Clicking on the filename brings it into view by hiding the
+	  // previously selected file and showing the selected one.
+	  //
+	  // The first time the filename for a file with one or more diff-sections
+	  // is clicked its diff-section is scrolled into view.
+	  //
+	  // Subsequent times if you click on the filename you will _not_ get
+	  // an autoscroll. This is so that the scrollPos of a diff that has 
+	  // been manually scrolled is retained.
+	  //
+	  // However, if filename X is open and you reclick on filename X
+	  // then you _will_ get an autoscroll to the _next_ diff-section in that
+	  // diff (which will cycle round).
+	
 	  var previousFilenameNode;
 	  var alreadyOpened = [ ];
 	  var getFilename = function(node) {
 		return $.trim(node.text());
 	  };
 	  
-	  var diffId = function(name) {
-		return $('[id="' + name + '"]');
-	  };
-	  
 	  var diffFileContentFor = function(filename) {
-		return diffId('diff_file_content_for_' + filename);
+		return cd.id('diff_file_content_for_' + filename);
 	  };
 	
 	  var diffFileDiv = function(filename) {
-		return diffId(filename + '_diff_div');
+		return cd.id(filename + '_diff_div');
 	  };
 	  		
 	  var loadFrom = function(filename, filenameNode, id, sectionCount) {
@@ -369,7 +337,6 @@ var cyberDojo = (function(cd, $) {
 		var filenameNode = $('#radio_' + diff.id);
 		var filename = getFilename(filenameNode);
 		filenameNode.click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
-		//cd.bindLineNumbersEvents(filename);
 	  });
 	};
 
@@ -426,7 +393,6 @@ var cyberDojo = (function(cd, $) {
 
 	var resetFilenameAddedDeletedLineCountHandlers = function() {	  
 	  var display = function(node, name, value) {
-		console.log("DISPLAY");
 		if ($(node).attr('disabled') !== 'disabled') {
 		  var filename = $(node).data('filename');
 		  var selector = '[id="' + filename + '_diff_div"] ' + name;
@@ -444,7 +410,13 @@ var cyberDojo = (function(cd, $) {
 		function() { display(this, 'added', 'block'); }    
 	  );	  
 	};
+	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
   
+	var showCurrentFile = function(filenameId) {
+	  $('#radio_' + filenameId).click();  	  
+	};
+	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
 	var diffDialog = diff.dialog({	  
@@ -486,10 +458,8 @@ var cyberDojo = (function(cd, $) {
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
 		  resetFilenameAddedDeletedLineCountHandlers();
 		  diffContent.html(makeDiffContent(data.diffs));
-		  //showContentOnFilenameClick();
-          //showCurrentFile();
           buildDiffFilenameHandlers(data.idsAndSectionCounts);
-
+          showCurrentFile(data.currentFilenameId);
 		}
 	  );
 	};
