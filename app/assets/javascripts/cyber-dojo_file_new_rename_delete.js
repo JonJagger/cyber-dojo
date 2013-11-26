@@ -54,6 +54,7 @@ var cyberDojo = (function(cd, $) {
       });
     
 	input.keyup(function(event) {
+	  // enable disable [ok] button based on current filename
       event.preventDefault();
       if (event.keyCode === $.ui.keyCode.ENTER) {
 		var newFilename = $.trim(input.val());
