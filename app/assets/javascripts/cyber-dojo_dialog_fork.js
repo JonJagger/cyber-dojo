@@ -193,21 +193,30 @@ var cyberDojo = (function(cd, $) {
     var forkContent = $('#fork_content', forkDiv);
 	
 	var currentFilename = undefined;
-	
-	var showCurrentFile = function() {	  
-	  var found = false;
-	  $('.filename', forkDiv).each(function() {
-		var filename = $(this).text();
+		
+	var showCurrentFile = function() {
+	  var i, filename;
+	  var files = $('.filename', forkDiv);
+	  for (i = 0; i < files.length; i++) {
+		filename = $(files[i]).text();
 		if (filename === currentFilename) {
-		  $(this).click();
-		  found = true;
-		}
-	  });
-	  if (!found) {
-		// TODO: make better choice
-		// cyber-dojo.sh is often first which is pretty boring
-		$('.filename', forkDiv)[0].click();		
+		  break;
+		}		
 	  }
+	  if (i === files.length) {
+		for (i = 0; i < files.length; i++) {
+		  filename = $(files[i]).text();
+		  if (filename !== 'cyber-dojo.sh' &&
+			  filename !== 'instructions' &&
+			  filename != 'output') {
+			break;
+		  }
+		}
+	  }
+	  if (i === files.length) {
+		i = 0;
+	  }
+      files[i].click();		
 	};
 	
 	var showContentOnFilenameClick = function(visibleFiles) {
