@@ -9,7 +9,7 @@ $(document).ready(function() {
     var avatarName = "<%= @avatar.name %>";
     var wasTag = 0;
     var nowTag = 1;
-    var maxTag = parseInt($('#traffic_light_count').text());    
+    var maxTag = "<%= @traffic_lights.length %>";
     cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
 

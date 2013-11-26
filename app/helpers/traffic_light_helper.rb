@@ -1,6 +1,22 @@
 
 module TrafficLightHelper
 
+  def diff_traffic_light(kata, avatar_name, light)
+    colour = light[:colour].to_s    
+    ("<span class='diff-traffic-light'" +
+          " title='#{tool_tip(avatar_name,light)}'" +
+          " data-id='#{kata.id}'" +
+          " data-avatar-name='#{avatar_name}'" +
+          " data-was-tag='#{light[:number]-1}'" +
+          " data-now-tag='#{light[:number]}'>" +
+      "<img src='/images/traffic_light_#{colour}.png'" +
+          " alt='#{colour} traffic-light'" +
+          " width='20'" +
+          " height='62'/>" +           
+     "</span>"
+    ).html_safe
+  end
+
   def linked_traffic_light(kata, avatar_name, inc, in_new_window)
     new_window = in_new_window ? { :target => '_blank' } : { }
     
@@ -44,7 +60,7 @@ module TrafficLightHelper
  
   def tool_tip(avatar_name, inc)
     n = inc[:number]
-    "Show #{avatar_name}'s diff #{n-1} -> #{n} (#{at(inc)})"
+    "Show #{avatar_name}s diff #{n-1} <-> #{n} (#{at(inc)})"
   end
     
   def at(inc)
