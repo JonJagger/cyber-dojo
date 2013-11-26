@@ -9,10 +9,7 @@ module TrafficLightHelper
           " data-was-tag='#{light[:number]-1}'" +
           " data-now-tag='#{light[:number]}'" +
           " data-max-tag='#{max_lights}'>" +
-      "<img src='/images/traffic_light_#{light[:colour].to_s}.png'" +
-          " alt='#{light[:colour].to_s} traffic-light'" +
-          " width='20'" +
-          " height='62'/>" +           
+        traffic_light_image(light[:colour], 20, 62) +
      "</span>"
     ).html_safe    
   end
@@ -33,6 +30,13 @@ module TrafficLightHelper
     ).html_safe    
   end
  
+  def traffic_light_image(colour, width, height)
+    ("<img src='/images/traffic_light_#{colour}.png'" +
+      " alt='#{colour} traffic-light'" +
+      " width='#{width}'" +
+      " height='#{height}'/>").html_safe    
+  end
+
   def tool_tip(avatar_name, light)
     n = light[:number]
     "Show #{avatar_name}'s diff #{n-1} <-> #{n} (#{at(light)})"
