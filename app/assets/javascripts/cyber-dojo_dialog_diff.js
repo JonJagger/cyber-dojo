@@ -398,7 +398,7 @@ var cyberDojo = (function(cd, $) {
 	  width: 1150,
 	  modal: true,
 	  buttons: {
-		cancel: function() {
+		close: function() {
 		  $(this).dialog('close');
 		}
 	  }
