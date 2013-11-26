@@ -2,51 +2,25 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
-  function dialog_fork(html, title, ok, cancel) {
-    var i18nButtons = { };
-    i18nButtons[ok] = function() {
-      cd.postTo('/forker/fork', {
-        id: "<%= @kata.id %>",
-        avatar: "<%= @avatar.name %>"
-      }, '_blank');
-      $(this).dialog('close');      
-    };
-    i18nButtons[cancel] = function() {
-      $(this).dialog('close');            
-    };
     
-    return $('<div class="dialog">')
-      .html(html)
-      .dialog({
-        autoOpen: false,
-        width: 300,
-        title: cd.dialogTitle(title),
-        modal: true,
-        buttons: i18nButtons
-      });
-  };
-  
   $('#fork_button').click(function() {
-    if ($(this).attr('disabled')) {
-      return;
-    }
-    var title = $(this).text();
-    var ok = $(this).data('ok');
-    var cancel = $(this).data('cancel');
-    $.get('/kata/fork_dialog', function(html) {
-      dialog_fork(html, title, ok, cancel).dialog('open');
-    });
+    //if ($(this).attr('disabled')) {
+    //  return;
+    //}
+    var title = $(this).text();  
+    var id = "<%= @kata.id %>";
+    var avatarName = "<%= @avatar.name %>";
+    var maxTag = "<%= @traffic_lights.length %>";
+    var tag = maxTag;
+    cd.dialog_fork(title, id, avatarName, tag, maxTag);  
   });
-
+  
 });
 
 //--></script>
 
 <div class="button"
      title="Fork a new dojo from the latest traffic-light"
-     data-ok="<%= t('views.buttons.ok') %>"
-     data-cancel="<%= t('views.buttons.cancel') %>"
      id="fork_button">
   <%= t("views.buttons.fork") %>
 </div>
