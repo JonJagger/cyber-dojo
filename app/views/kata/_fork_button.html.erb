@@ -4,9 +4,6 @@
 $(document).ready(function() {
     
   $('#fork_button').click(function() {
-    //if ($(this).attr('disabled')) {
-    //  return;
-    //}
     var title = $(this).text();  
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
