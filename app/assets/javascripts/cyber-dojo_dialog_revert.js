@@ -156,7 +156,6 @@ var cyberDojo = (function(cd, $) {
 	});
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var trafficLight = $('#traffic_light', revertDiv);
 

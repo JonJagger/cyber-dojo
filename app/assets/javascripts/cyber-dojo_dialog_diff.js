@@ -214,8 +214,6 @@ var cyberDojo = (function(cd, $) {
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// DIFF-CONTENT
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var diffContent = $('#diff_content', diffDiv);
 
@@ -237,8 +235,6 @@ var cyberDojo = (function(cd, $) {
 	  return span;
 	};
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// DIFF-FILENAME-HANDLERS
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var buildDiffFilenameHandlers = function(diffs) {
@@ -313,8 +309,6 @@ var cyberDojo = (function(cd, $) {
 	  });
 	};
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// DIFF-FILENAMES
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var diffFilenames = $('#diff_filenames', diffDiv);
