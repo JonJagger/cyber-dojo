@@ -19,7 +19,7 @@ module TrafficLightHelper
 
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
     ("<span class='diff-traffic-light'" +
-          " title='Show #{avatar_name}'s current code'" +
+          ' title="' + "Show #{avatar_name}'s current code" + '"' +
           " data-id='#{kata.id}'" +
           " data-avatar-name='#{avatar_name}'" +
           " data-was-tag='#{light[:number]}'" +
