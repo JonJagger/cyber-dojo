@@ -135,21 +135,21 @@ var cyberDojo = (function(cd, $) {
       return div;
     };
 	
-    var diff = makeDiffDiv();
+    var diffDiv = makeDiffDiv();
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var wasTagNumber = $('#was_tag_number', diff);
-	var nowTagNumber = $('#now_tag_number', diff);
+	var wasTagNumber = $('#was_tag_number', diffDiv);
+	var nowTagNumber = $('#now_tag_number', diffDiv);
 		
-	var wasTrafficLight = $('#was_traffic_light', diff);
-	var nowTrafficLight = $('#now_traffic_light', diff);
+	var wasTrafficLight = $('#was_traffic_light', diffDiv);
+	var nowTrafficLight = $('#now_traffic_light', diffDiv);
 	
-	var firstButton = $('#first_button', diff);
-	var prevButton  = $('#prev_button',  diff);
-	var nextButton  = $('#next_button',  diff);
-	var lastButton  = $('#last_button',  diff);
+	var firstButton = $('#first_button', diffDiv);
+	var prevButton  = $('#prev_button',  diffDiv);
+	var nextButton  = $('#next_button',  diffDiv);
+	var lastButton  = $('#last_button',  diffDiv);
 	  
     var resetNavigateButtonHandlers = function() {
 	  
@@ -217,7 +217,7 @@ var cyberDojo = (function(cd, $) {
 	// DIFF-CONTENT
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var diffContent = $('#diff_content', diff);
+	var diffContent = $('#diff_content', diffDiv);
 
     var makeDiffContent = function(diffs) {
 	  var span = $('<span>');
@@ -317,7 +317,7 @@ var cyberDojo = (function(cd, $) {
 	// DIFF-FILENAMES
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var diffFilenames = $('#diff_filenames', diff);
+	var diffFilenames = $('#diff_filenames', diffDiv);
 
     var makeDiffFilenames = function(diffs) {
 	  	  
@@ -369,16 +369,16 @@ var cyberDojo = (function(cd, $) {
 		if ($(node).attr('disabled') !== 'disabled') {
 		  var filename = $(node).data('filename');
 		  var selector = '[id="' + filename + '_diff_div"] ' + name;
-		  $(selector, diff).css('display', value);
+		  $(selector, diffDiv).css('display', value);
 		}
 	  };
 	  
-	  $('.diff-deleted-line-count', diff).clickToggle(
+	  $('.diff-deleted-line-count', diffDiv).clickToggle(
 		function() { display(this, 'deleted', 'none' ); },
 		function() { display(this, 'deleted', 'block'); }    
 	  );
 	
-	  $('.diff-added-line-count', diff).clickToggle(
+	  $('.diff-added-line-count', diffDiv).clickToggle(
 		function() { display(this, 'added', 'none' ); },
 		function() { display(this, 'added', 'block'); }    
 	  );	  
@@ -392,7 +392,7 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	var diffDialog = diff.dialog({	  
+	var diffDialog = diffDiv.dialog({	  
 	  title: cd.dialogTitle(title),
 	  autoOpen: false,
 	  width: 1150,
@@ -405,13 +405,6 @@ var cyberDojo = (function(cd, $) {
 	});
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var data = undefined;
-	// data.wasTrafficLight
-	// data.nowTrafficLight
-	// data.diffs
-	// data.idsAndSectionCounts
-	// data.currentFilenameId
 	
 	var refresh = function() {
 	  $.getJSON('/differ/diff',
@@ -421,8 +414,7 @@ var cyberDojo = (function(cd, $) {
 		  was_tag: wasTag,
 		  now_tag: nowTag
 		},
-		function(d) {
-		  data = d;
+		function(data) {
 		  resetNavigateButtonHandlers();
 		  wasTagNumber.val(wasTag);
 		  wasTrafficLight.html(makeTrafficLight(data.wasTrafficLight));

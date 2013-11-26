@@ -17,6 +17,10 @@
   }
 }
 
+#revert_tag_number {
+  @include editable_tag_number;
+}
+
 #revert_content
 {
   width: 40em;

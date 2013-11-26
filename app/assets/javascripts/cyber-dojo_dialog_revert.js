@@ -5,6 +5,8 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {    
   
+  	var minTag = 0;
+  
     var makeRevertInfo = function() {
 	  return '' +
 	    '<table class="align-center">' +
@@ -14,8 +16,7 @@ var cyberDojo = (function(cd, $) {
 			  '</div>' +
 		    '</td>' +
 			'<td>' +
-			  '<div id="traffic_light_number">' +			
-			  '</div>' +
+			  '<input type="text" id="revert_tag_number" value="" />' +			  
 			'</td>' +			
 		  '</tr>' +
 		'</table>';	  
@@ -114,9 +115,7 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var data = undefined;
-
-    var preview = makeReverterDiv();
+    var revertDiv = makeReverterDiv();
 
 	var deleteAllCurrentFiles = function() {
 	  var newFilename;
@@ -127,6 +126,8 @@ var cyberDojo = (function(cd, $) {
 	  });					  
 	};
 	
+	var data = undefined;
+	
 	var copyRevertFilesToCurrentFiles = function() {
 	  var filename;
 	  for (filename in data.visibleFiles) {
@@ -136,7 +137,7 @@ var cyberDojo = (function(cd, $) {
 	  }	  
 	};		  
 
-	var revertDialog = preview.dialog({	  
+	var revertDialog = revertDiv.dialog({	  
 	  title: cd.dialogTitle(title),
 	  autoOpen: false,
 	  width: 1150,
@@ -155,9 +156,11 @@ var cyberDojo = (function(cd, $) {
 	});
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var makeTrafficLight = function() {
-	  var trafficLight = data.inc;
+	var trafficLight = $('#traffic_light', revertDiv);
+
+	var makeTrafficLight = function(trafficLight) {
       var filename = 'traffic_light_' + trafficLight.colour;
       return '' +
 		"<img src='/images/" + filename + ".png'" +
@@ -167,21 +170,29 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
-	var makeTrafficLightNumber = function() {
-	  var trafficLight = data.inc;
-	  return '' +
-	    '<div class="tag_' + trafficLight.colour + '">' +
-		    '&nbsp;' + trafficLight.number + '&nbsp;' +
-	    '</div>';	  
+	var trafficLightNumber = $('#revert_tag_number', revertDiv);
+		
+	var tagEdit = function(event) {
+	  if (event.keyCode === $.ui.keyCode.ENTER) {
+		var newTag = parseInt(trafficLightNumber.val(), 10);
+		if (isNaN(newTag) || newTag < minTag || newTag > maxTag) {
+		  trafficLightNumber.val(tag);
+		} else {
+		  tag = newTag;
+		  refresh();		
+		}
+	  }        
 	};
-	
+		
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+		  	
+	var revertFilenames = $('#revert_filenames', revertDiv);
 		  
-    var makeRevertFilenames = function() {
+    var makeRevertFilenames = function(visibleFiles) {
       var div = $('<div>');
 	  var filenames = [ ];
       var filename;
-      for (filename in data.visibleFiles) {
+      for (filename in visibleFiles) {
         filenames.push(filename);
       }
       filenames.sort();
@@ -198,13 +209,13 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
-    var revertContent = $('#revert_content', preview);
+    var revertContent = $('#revert_content', revertDiv);
 	
 	var currentFilename = undefined;
 	
 	var showCurrentFile = function() {	  
 	  var found = false;
-	  $('.filename', preview).each(function() {
+	  $('.filename', revertDiv).each(function() {
 		var filename = $(this).text();
 		if (filename === currentFilename) {
 		  $(this).click();
@@ -212,18 +223,18 @@ var cyberDojo = (function(cd, $) {
 		}
 	  });
 	  if (!found) {
-		// make better choice?
+		// TODO: make better choice
 		// cyber-dojo.sh is often first which is pretty boring
-		$('.filename', preview)[0].click();		
+		$('.filename', revertDiv)[0].click();		
 	  }
 	};
 	
-	var showContentOnFilenameClick = function() {
+	var showContentOnFilenameClick = function(visibleFiles) {
 	  var previous = undefined;
-	  $('.filename', preview).each(function() {
+	  $('.filename', revertDiv).each(function() {
 		$(this).click(function() {
 		  var filename = $(this).text();
-		  var content = data.visibleFiles[filename];
+		  var content = visibleFiles[filename];
 		  revertContent.val(content);
 		  if (previous !== undefined) {
 			previous.removeClass('selected');
@@ -236,11 +247,11 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var firstButton = $('#first_button', preview);
-	var prevButton  = $('#prev_button',  preview);
-	var nextButton  = $('#next_button',  preview);
-	var lastButton  = $('#last_button',  preview);
+	
+	var firstButton = $('#first_button', revertDiv);
+	var prevButton  = $('#prev_button',  revertDiv);
+	var nextButton  = $('#next_button',  revertDiv);
+	var lastButton  = $('#last_button',  revertDiv);
 	  
     var resetNavigateButtonHandlers = function() {	  
 	  var resetHandler = function(button, onOff, newTag) {
@@ -255,20 +266,17 @@ var cyberDojo = (function(cd, $) {
 		  }
 		);			  		
 	  };	  
-  	  var minTag = 1;	  
 	  var atMin = (tag === minTag);
 	  var atMax = (tag === maxTag);
 	  resetHandler(firstButton, atMin, minTag);
 	  resetHandler(prevButton,  atMin, tag-1);
 	  resetHandler(nextButton,  atMax, tag+1);
 	  resetHandler(lastButton,  atMax, maxTag);
+	  
+	  trafficLightNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  	  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-	
-	var trafficLight       = $('#traffic_light', preview);
-	var trafficLightNumber = $('#traffic_light_number', preview);
-	var revertFilenames    = $('#revert_filenames', preview);
 	
 	var refresh = function() {
 	  $.getJSON('/reverter/revert',
@@ -280,10 +288,10 @@ var cyberDojo = (function(cd, $) {
 		function(d) {
 		  data = d;
 		  resetNavigateButtonHandlers();
-		  trafficLight.html(makeTrafficLight());
-		  trafficLightNumber.html(makeTrafficLightNumber());
-		  revertFilenames.html(makeRevertFilenames());
-		  showContentOnFilenameClick();
+		  trafficLight.html(makeTrafficLight(data.inc));
+		  trafficLightNumber.val(data.inc.number);
+		  revertFilenames.html(makeRevertFilenames(data.visibleFiles));
+		  showContentOnFilenameClick(data.visibleFiles);
           showCurrentFile();		  
 		}
 	  );
