@@ -67,15 +67,18 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.setForkAndTestButtons = function() {
-    var same = allFilesSameAsCurrentTrafficLight();
-    $('#fork_button').attr('disabled', !same);
-    // I could do this...
-    //   $('#test').attr('disabled', same);
-    // so the test button is only enabled when the file contents
-    // is in some way different to the previous traffic-light.
-    // Trouble with this is that a new players initial
+    var same = allFilesSameAsCurrentTrafficLight();    
+    // I used to do this...
+    //  $('#fork_button').attr('disabled', !same);
+    // but now that fork creates a dialog with
+    // << < > >> navigation I no longer do that.
+    // This means a participant will not know if
+    // the current files are different in some way
+    // from the most recent traffic-light.    
+    $('#test').attr('disabled', same);
+    // This means that a new participants initial
     // view will be of a disabled test button.
-    $('#test').attr('disabled', false);
+    // I guess that is ok.
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
