@@ -3,17 +3,8 @@
 
 $(document).ready(function() {    
   
-  $('#old_diff_review_button').click(function() {
-    cd.postTo('/diff/show', {
-      id: "<%= @kata.id %>",
-      avatar: "<%= @avatar.name %>",
-      was_tag: 0,
-      now_tag: 1,
-    }, '_blank');
-  });
-
   $('#diff_review_button').click(function() {
-    var title = 'diff';
+    var title = $(this).text();  
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var wasTag = 0;
