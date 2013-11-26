@@ -235,33 +235,6 @@ var cyberDojo = (function(cd, $) {
 		span.append(divHolder);
 	  });
 	  return span;
-/*	  
-<% @diffs.each do |diff| %>
-  <% filename = diff[:filename] %>
-
-  <div id="<%= filename %>_div"
-       class="filename_div">
-    <table class="edgeless panel">
-      <tr>
-        <td>
-          <div id="<%= filename %>_line_numbers"
-               class="diff_line_numbers align-right">
-            <%= raw diff[:line_numbers] %>
-          </div>
-        </td>
-        <td>
-          <div id="file_content_for_<%= filename %>"
-               class="diff_sheet">
-            <%= raw diff[:content] %>
-          </div>
-        </td>
-      </tr>
-    </table>
-    <div class="panel"></div>      
-  </div>
-  
-<% end %>  
-*/	  
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
