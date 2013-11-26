@@ -5,7 +5,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {    
   
-  	var minTag = 0;
+  	var minTag = 1;
   
     var makeRevertInfo = function() {
 	  return '' +
