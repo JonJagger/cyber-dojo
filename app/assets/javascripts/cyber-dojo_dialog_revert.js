@@ -13,12 +13,10 @@ var cyberDojo = (function(cd, $) {
 	          '<div id="traffic_light">' +
 			  '</div>' +
 		    '</td>' +
-		    '<td>' +
-			  '<img class="avatar_image"' +
-				   'height="47"' +
-				   'width="47"' +
-				   'src="/images/avatars/' + avatarName + '.jpg">' +
-		    '</td>' +
+			'<td>' +
+			  '<div id="traffic_light_number">' +			
+			  '</div>' +
+			'</td>' +			
 		  '</tr>' +
 		'</table>';	  
     };
@@ -50,8 +48,10 @@ var cyberDojo = (function(cd, $) {
 				 makeNavigateButton('prev') +
 			  '</td>' +
 			  '<td>' +
-				'<div id="traffic_light_number">' +			
-				'</div>' +
+				'<img class="avatar_image"' +
+					 'height="47"' +
+					 'width="47"' +
+					 'src="/images/avatars/' + avatarName + '.jpg">' +
 			  '</td>' +
 			  '<td>' +
 				 makeNavigateButton('next') +
