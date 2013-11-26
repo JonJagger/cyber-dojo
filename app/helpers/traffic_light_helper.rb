@@ -1,14 +1,15 @@
 
 module TrafficLightHelper
 
-  def diff_traffic_light(kata, avatar_name, light)
+  def diff_traffic_light(kata, avatar_name, light, max_lights)
     colour = light[:colour].to_s    
     ("<span class='diff-traffic-light'" +
           " title='#{tool_tip(avatar_name,light)}'" +
           " data-id='#{kata.id}'" +
           " data-avatar-name='#{avatar_name}'" +
           " data-was-tag='#{light[:number]-1}'" +
-          " data-now-tag='#{light[:number]}'>" +
+          " data-now-tag='#{light[:number]}'" +
+          " data-max-tag='#{max_lights}'>" +
       "<img src='/images/traffic_light_#{colour}.png'" +
           " alt='#{colour} traffic-light'" +
           " width='20'" +

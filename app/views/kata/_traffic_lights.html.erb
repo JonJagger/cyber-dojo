@@ -9,7 +9,7 @@ $(document).ready(function() {
 	var avatarName = $(this).data('avatar-name');
 	var wasTag = $(this).data('was-tag');
 	var nowTag = $(this).data('now-tag');
-	var maxTag = "<%= @traffic_lights.length %>";
+	var maxTag = $(this).data('max-tag');
 	cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
   
@@ -24,7 +24,7 @@ $(document).ready(function() {
       <% max_lights = 35 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
-		  <%= diff_traffic_light(@kata, @avatar.name, light) %>			
+		  <%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>			
         </td>
       <% end %>
       

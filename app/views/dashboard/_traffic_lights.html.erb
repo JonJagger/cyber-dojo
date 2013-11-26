@@ -1,4 +1,22 @@
 
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  $('.diff-traffic-light').unbind('click').click(function() {
+    var title = "<%= t('views.buttons.diff_review') %>";	
+	var id = $(this).data('id');
+	var avatarName = $(this).data('avatar-name');
+	var wasTag = $(this).data('was-tag');
+	var nowTag = $(this).data('now-tag');
+	var maxTag = $(this).data('max-tag');
+	cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
+  });
+  
+});
+
+//--></script>
+
  <table>
    
    <% seconds_per_td = @seconds_per_column %>
@@ -36,8 +54,7 @@
                  <tr>
                    <% td.each do |light| %>
                      <td>
-                       <%  in_new_window = true %>
-                       <%= linked_traffic_light(@kata, avatar_name, light, in_new_window) %>
+      	               <%= diff_traffic_light(@kata, avatar_name, light, all_lights[avatar_name].length) %>			
                      </td>
                    <% end %>
                  </tr>
