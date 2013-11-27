@@ -31,3 +31,9 @@
   text-align: center;
   width: 2em;
 }
+
+.tooltip {
+  border: 1px solid $lighter-color;
+  background: $darker-color;
+  color: $lighter-color;
+}

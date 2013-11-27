@@ -23,10 +23,23 @@ $(document).ready(function() {
   cd.storeOutgoingFileHashes();  
   cd.setContentListeners();
   cd.setForkAndTestButtons();
-  
+
+  var tipSettings = {
+    cancelDefault: true,
+	predelay: 500,
+	effect: 'toggle',
+	position: 'top right',
+	offset: [20,0],
+	relative: true,
+	delay: 0  
+  };
+
+  $("[title]").tooltip(tipSettings);
+    
   if (<%= @traffic_lights.length === 0 %>) {
     cd.testForm().submit();
   }
+  
 });
 
 //--></script>

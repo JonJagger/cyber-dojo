@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
     
-  $('#dashboard_button').unbind().click(function() {
+  $('#dashboard_button').click(function() {
       cd.postTo('/dashboard/show', {
         id: "<%= @kata.id %>"
       }, '_blank');
@@ -13,8 +13,8 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="dashboard_button"
-     class="button"
-     title="Open a dashboard page">
+<div class="button"
+     title="Open a new dashboard page"
+	 id="dashboard_button">
   <%= t("views.buttons.dashboard") %>
 </div>

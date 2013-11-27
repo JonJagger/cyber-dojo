@@ -39,7 +39,9 @@ module TrafficLightHelper
 
   def tool_tip(avatar_name, light)
     n = light[:number]
-    "Show #{avatar_name}'s diff #{n-1} <-> #{n} (#{at(light)})"
+    "Show #{avatar_name}'s diff<br>" +
+    "#{n-1} &harr; #{n}<br>" +
+    "(#{at(light)})"
   end
     
   def at(light)

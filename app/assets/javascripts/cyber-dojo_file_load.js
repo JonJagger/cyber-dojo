@@ -57,13 +57,12 @@ var cyberDojo = (function(cd, $) {
     var newFile    = fileOps.find('#new');
     var renameFile = fileOps.find('#rename');
     var deleteFile = fileOps.find('#delete');
+    
     var turnOff = function(node) {
       node.attr('disabled', true);
-      node.removeAttr('title');      
     };
-    var turnOn = function(node, title) {
+    var turnOn = function(node) {
       node.removeAttr('disabled');
-      node.attr('title', title);      
     };
 
     newFile.attr('title', 'Create a new file');
@@ -72,8 +71,8 @@ var cyberDojo = (function(cd, $) {
       turnOff(deleteFile);
     }
     else {
-      turnOn(renameFile, 'Rename the current file');
-      turnOn(deleteFile, 'Delete the current file');
+      turnOn(renameFile);
+      turnOn(deleteFile);
     }    
   };
 

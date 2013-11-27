@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
     
-  $('#revert_button').unbind().click(function() {
+  $('#revert_button').click(function() {
     var title = "<%= t('views.labels.revert') %>";
     var maxTag = parseInt($('#traffic_light_count').text());    
     cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag);

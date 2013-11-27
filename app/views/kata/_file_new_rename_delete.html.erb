@@ -8,8 +8,12 @@ $(document).ready(function() {
   var isEnabled = function(node) {
     return node.attr('disabled') !== 'disabled';
   };
+    
+  var newFile = fileButtons.find('#new');
+  var renameFile = fileButtons.find('#rename');
+  var deleteFile = fileButtons.find('#delete');
   
-  fileButtons.find('#new').click(function() {
+  newFile.click(function() {
     cd.newFile();
     cd.allLineNumbersRefresh();
     //Do immediate rename?
@@ -18,19 +22,33 @@ $(document).ready(function() {
     //Best is to ask for the new filename _first_
     //and only enable [ok] button if it is valid
   });
-  fileButtons.find('#rename').click(function() {
+  renameFile.click(function() {
     if (isEnabled($(this))) {
       var title = $(this).text();
       cd.renameFile(title, "<%= @avatar.name %>");
     }
   });
-  fileButtons.find('#delete').click(function() {
+  deleteFile.click(function() {
     if (isEnabled($(this))) {
       var title = $(this).text();        
       cd.deleteFile(title, "<%= @avatar.name %>");
     }
   });
 
+  var tipSettings = {
+    cancelDefault: true,
+	predelay: 500,
+	effect: 'toggle',
+	position: 'top right',
+	offset: [20,0],
+	relative: true,
+	delay: 0  
+  };
+
+  newFile.tooltip(tipSettings);
+  renameFile.tooltip(tipSettings);
+  deleteFile.tooltip(tipSettings);
+  
 });
 
 //--></script>
@@ -39,26 +57,38 @@ $(document).ready(function() {
   <table>
     <tr>
       <td>
-        <div class="button"
-             id="new">
-          <%= t("views.buttons.new_file") %>
-        </div>
+        <input type="button"
+               class="button"
+               id="new"
+               value="<%= t("views.buttons.new_file") %>">
+          <div class="tooltip">
+            Create a new file
+          </div>
+        </input>
       </td>
     </tr>
     <tr>
       <td>
-        <div class="button"
-             id="rename">
-          <%= t("views.buttons.rename_file") %>
-        </div>
+        <input type="button"
+               class="button"
+               id="rename"
+               value="<%= t("views.buttons.rename_file") %>">
+          <div class="tooltip">
+            Rename the current file
+          </div>                
+        </input>
       </td>
     </tr>
     <tr>
       <td>
-        <div class="button"
-             id="delete">
-          <%= t("views.buttons.delete_file") %>
-        </div>
+        <input type="button"
+               class="button"
+               id="delete"
+               value="<%= t("views.buttons.delete_file") %>">
+          <div class="tooltip">
+            Delete the current file
+          </div>                        
+        </input>
       </td>
     </tr>
   </table>
