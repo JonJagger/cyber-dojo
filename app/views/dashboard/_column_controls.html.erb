@@ -7,7 +7,6 @@ $(document).ready(function() {
   var autoRefreshButton = $('#auto_refresh');
   
   var setRefreshButtonText = function() {
-    //var button = $('#auto_refresh');
     if (autoRefreshEnabled) {
       autoRefreshButton.text("<%= t('views.buttons.enable') %>");
     } else {
