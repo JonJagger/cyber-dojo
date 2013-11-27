@@ -23,7 +23,7 @@ $(document).ready(function() {
   cd.storeOutgoingFileHashes();  
   cd.setContentListeners();
   cd.setForkAndTestButtons();
-  $('#tipWindow').hide();
+  $('#tip_window').hide();
   
   if (<%= @traffic_lights.length === 0 %>) {
     cd.testForm().submit();

@@ -1,18 +1,15 @@
 
-<div>
-  <% if traffic_lights.length != 0 %>
-      <% colour = traffic_lights[-1][:colour].to_s %>
-      <div class="traffic_light_count <%= colour %>"
-           Xclass="tag_count <%=colour %>"
-           data-animal-name="<%= avatar_name %>"
-           data-bulb-count="<%= traffic_lights.length %>"
-           data-current-colour="<%=colour %>">
-        <%= traffic_lights.length %>
-        <div class='tooltip'>
-           <%= avatar_name%> has <%= traffic_lights.length %><br>
-           traffic-lights so far and<br>
-           is currently at <%= colour %>
-        </div>        
-      </div>
-  <% end %>
-</div>
+<% if traffic_lights.length != 0 %>
+    <% colour = traffic_lights[-1][:colour].to_s %>
+    <div class="traffic_light_count <%= colour %>"
+         data-animal-name="<%= avatar_name %>"
+         data-bulb-count="<%= traffic_lights.length %>"
+         data-current-colour="<%=colour %>">
+      <%= traffic_lights.length %>
+      <div class='tooltip'>
+         <%= avatar_name%> has <%= traffic_lights.length %><br>
+         traffic-lights so far and<br>
+         is currently at <%= colour %>
+      </div>        
+    </div>
+<% end %>
