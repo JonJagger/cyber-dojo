@@ -15,24 +15,31 @@ var cyberDojo = (function(cd, $) {
     };
   };
   
-  cd.tipify = function(node) {
-	var tipWindow = $('#tipWindow');
-	var timer;
-	node.on('mouseenter', function(event) {
-	  var tip = $(event.target).children().first();
-	  timer = setTimeout(function() {
-		tipWindow.html(tip.html());
-		tipWindow.show();
-	  }, 750);
-	});
-	
-	node.on('mouseleave', function(e) {
-	  tipWindow.hide();
-	  tipWindow.empty();
-	  clearTimeout(timer);
-	});	
+  cd.tipify = function(nodes) {
+    var tipWindow = $('#tipWindow');
+    $.each(nodes, function(_,node) {      
+      var timer;
+      $(node).on('mouseenter', function(event) {
+        // For some reason, the diff-traffic-light is
+        // showing event.target as the inner <img> rather
+        // than the outer div???  Hack work-around is
+        // to find for the tooltip inside the parent
+        var parent = $(event.target).parent();
+        var tip = $('.tooltip', parent);        
+        timer = setTimeout(function() {
+          tipWindow.html(tip.html());
+          tipWindow.show();
+        }, 750);
+      });
+      
+      $(node).on('mouseleave', function(e) {
+        tipWindow.hide();
+        tipWindow.empty();
+        clearTimeout(timer);
+      });	
+    });
   };
-  
+    
   return cd;
 })(cyberDojo || {}, $);
 
