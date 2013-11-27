@@ -5,9 +5,10 @@ $(document).ready(function() {
     
   var spinners = $('.spinner');
   var testButton = $('#test');
+  var tipWindow = $('#tip_window');
   var trafficLightCount = function() {
     // cannot be cached as it is replaced by run_tests.js.erb
-    return $('#current_traffic_light_count');
+    return $('.current_traffic_light_count');
   };
   
   spinners.hide();
@@ -15,8 +16,8 @@ $(document).ready(function() {
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
     testButton.attr('disabled', true);
-    $('#tipWindow').hide();
-    $('#tipWindow').empty();
+    tipWindow.hide();
+    tipWindow.empty();
     spinners.show();
     trafficLightCount().hide();
     cd.storeOutgoingFileHashes();
@@ -48,8 +49,8 @@ $(document).ready(function() {
     cd.loadFile('output');
     cd.setContentListeners();
     testButton.attr('disabled', false);
-    $('#tipWindow').hide();
-    $('#tipWindow').empty();    
+    tipWindow.hide();
+    tipWindow.empty();    
   };
   
 });

@@ -6,7 +6,7 @@ $(document).ready(function() {
   var revertButton = $('#revert_button');
   revertButton.click(function() {
     var title = $(this).val();
-    var maxTag = parseInt($('#traffic_light_count').text());    
+    var maxTag = parseInt($('.traffic_light_count').text());    
     cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag);
   });    
   cd.tipify(revertButton);

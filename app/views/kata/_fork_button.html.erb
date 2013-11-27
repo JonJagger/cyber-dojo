@@ -8,7 +8,7 @@ $(document).ready(function() {
     var title = $(this).val();
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
-    var maxTag = parseInt($('#traffic_light_count').text());        
+    var maxTag = parseInt($('.traffic_light_count').text());        
     var tag = maxTag;
     cd.dialog_fork(title, id, avatarName, tag, maxTag);  
   });
