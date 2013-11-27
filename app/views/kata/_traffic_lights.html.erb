@@ -18,6 +18,7 @@ $(document).ready(function() {
   cd.tipify($('.tag_count .amber'));
   cd.tipify($('.tag_count .green'));
   cd.tipify($('#traffic_light_count'));
+  cd.tipify($('.avatar_image'));
 });
 
 //--></script>
@@ -48,8 +49,7 @@ $(document).ready(function() {
       </td>
 	  
 	  <td>
-		<%= render :partial => 'shared/avatar_image',
-		           :locals => { :target => '_blank' } %>
+		<%= render :partial => 'avatar_image' %>
 		
 		<%= render :partial => 'shared/avatar_name',
 				   :locals  => { :avatar_name => @avatar.name 
