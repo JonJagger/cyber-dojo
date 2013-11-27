@@ -3,16 +3,10 @@
 
 $(document).ready(function() {
   
+  var title = "<%= t('views.buttons.diff_review') %>";
   var lights = $('.diff-traffic-light');
-  lights.click(function() {
-    var title = "<%= t('views.buttons.diff_review') %>";	
-    var id = $(this).data('id');
-    var avatarName = $(this).data('avatar-name');
-    var wasTag = $(this).data('was-tag');
-    var nowTag = $(this).data('now-tag');
-    var maxTag = $(this).data('max-tag');
-    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
-  });
+  cd.setupDiffHandlerHandlers(lights, title);
+  
   cd.tipify(lights);
   cd.tipify($('.tag_count .red'));
   cd.tipify($('.tag_count .amber'));

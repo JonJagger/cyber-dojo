@@ -16,7 +16,18 @@ var cyberDojo = (function(cd, $) {
     });
     return this;
   };
-
+  
+  cd.setupDiffHandlerHandlers = function(nodes, title) {
+	nodes.click(function() {
+	  var id = $(this).data('id');
+	  var avatarName = $(this).data('avatar-name');
+	  var wasTag = $(this).data('was-tag');
+	  var nowTag = $(this).data('now-tag');
+	  var maxTag = $(this).data('max-tag');
+	  cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
+	});
+  };
+  
   cd.dialog_diff = function(title, id, avatarName, wasTag, nowTag, maxTag) {    
   
   	var minTag = 0;
