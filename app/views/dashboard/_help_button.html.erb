@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  $('#help').click(function() {
+  $('#help_button').click(function() {
     var title = $(this).text();
     var ok = $(this).data('ok');
     $.get('/dashboard/help_dialog', function(html) {
@@ -15,10 +15,10 @@ $(document).ready(function() {
 
 //--></script>
 
-<div class="button"
-     title="Show help"
-     data-ok="<%= t('views.buttons.ok') %>"
-     id="help">
+<button type="button"
+        value="Show help"
+        data-ok="<%= t('views.buttons.ok') %>"
+       id="help_button">
   ?
-</div>
+</button>
 

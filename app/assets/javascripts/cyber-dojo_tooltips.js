@@ -16,7 +16,7 @@ var cyberDojo = (function(cd, $) {
   };
   
   cd.tipify = function(nodes) {
-    var tipWindow = $('#tipWindow');
+    var tipWindow = $('#tip_window');
     $.each(nodes, function(_,node) {      
       var timer;
       $(node).on('mouseenter', function(event) {
