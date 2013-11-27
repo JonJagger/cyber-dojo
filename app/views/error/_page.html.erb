@@ -33,7 +33,7 @@ $(document).ready(function() {
 	effect: 'fade',
 	position: 'bottom center',
 	offset: [-30,0],
-	delay: 1000
+	delay: 150
   });
 });
 
@@ -59,6 +59,11 @@ $(document).ready(function() {
 		       src="/images/avatars/<%= avatars[n]%>.jpg" />		  
 			<div class="tooltip">
 			  <%= avatars[n] %> says <em>sorry</em>
+			  <img alt="<%= avatars[n] %>"
+				   class="avatar_image"
+				   height="<%= size/2 %>"
+				   width="<%= size/2 %>"
+				   src="/images/avatars/<%= avatars[n]%>.jpg" />		  
 			</div>
 		 </td>
 	  <% end %>	  	  
