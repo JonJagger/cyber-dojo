@@ -17,7 +17,7 @@ var cyberDojo = (function(cd, $) {
     return this;
   };
   
-  cd.setupDiffHandlerHandlers = function(nodes, title) {
+  cd.setupTrafficLightOpensDiffDialogHandlers = function(nodes, title) {
 	nodes.click(function() {
 	  var id = $(this).data('id');
 	  var avatarName = $(this).data('avatar-name');
