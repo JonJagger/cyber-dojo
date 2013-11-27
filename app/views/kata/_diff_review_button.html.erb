@@ -3,8 +3,9 @@
 
 $(document).ready(function() {    
   
-  $('#diff_review_button').click(function() {
-    var title = $(this).text();  
+  var diffReviewButton = $('#diff_review_button');
+  diffReviewButton.click(function() {
+    var title = $(this).val();  
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var wasTag = 0;
@@ -12,13 +13,17 @@ $(document).ready(function() {
     var maxTag = parseInt($('#traffic_light_count').text());
     cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
-
+  diffReviewButton.tooltip(cd.tipSettings());
+  
 });
 
 //--></script>
 
-<div class="button"
-     title="Review the practice diff by diff"
-     id="diff_review_button">
-  <%= t("views.buttons.diff_review") %>
-</div>
+<input type="button"
+       class="button"
+       id="diff_review_button"
+       value="<%= t("views.buttons.diff_review") %>">
+  <div class="tooltip">
+    Review the practice diff by diff
+  </div>    
+</input>

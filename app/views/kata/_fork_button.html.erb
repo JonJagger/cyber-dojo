@@ -3,22 +3,27 @@
 
 $(document).ready(function() {
     
-  $('#fork_button').click(function() {
-    var title = $(this).text();  
+  var forkButton = $('#fork_button');
+  forkButton.click(function() {
+    var title = $(this).val();
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var maxTag = parseInt($('#traffic_light_count').text());        
     var tag = maxTag;
     cd.dialog_fork(title, id, avatarName, tag, maxTag);  
   });
+  forkButton.tooltip(cd.tipSettings());
   
 });
 
 //--></script>
 
-<div class="button"
-     title="Fork a new dojo from any traffic-light"
-     id="fork_button">
-  <%= t("views.buttons.fork") %>
-</div>
+<input type="button"
+       class="button"
+       id="fork_button"
+       value="<%= t("views.buttons.fork") %>">
+  <div class="tooltip">
+    Fork a new dojo from any traffic-light
+  </div>
+</input>
 

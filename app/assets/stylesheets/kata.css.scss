@@ -5,13 +5,18 @@
   }
 }
 
-#help {
-  @include font-size-tiny();
-  @include rounded-corner(14px);    
+
+#dashboard_button,
+#diff_review_button,
+#fork_button,
+#line_numbers_button,
+#revert_button,
+#help_button {
+  @include font-size-tiny();  
 }
 
-#dashboard_button, #diff_review_button, #fork_button, #line_numbers_button, #revert_button {
-  @include font-size-tiny();  
+#help_button {
+  @include rounded-corner(14px);    
 }
 
 #test {
@@ -22,9 +27,4 @@
   }
 }
 
-#revert_tip {
-  padding: {
-    left: 0.3em;
-  }
-}
 

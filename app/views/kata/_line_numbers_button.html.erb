@@ -5,7 +5,8 @@ $(document).ready(function() {
 
   var lineNumbersOn = true;
     
-  $('#line_numbers_button').click(function() {
+  var lineNumberButton = $('#line_numbers_button');
+  lineNumberButton.click(function() {
     //TODO: this loses the focus on the currently opened file
     lineNumbersOn = !lineNumbersOn;
     var nodes = $('[id$=line_numbers]');
@@ -15,16 +16,19 @@ $(document).ready(function() {
       nodes.hide();
     }    
   });
-
-  $('#line_numbers_button').click();
+  lineNumberButton.tooltip(cd.tipSettings());
+  lineNumberButton.click();
 
 });
 
 //--></script>
 
-<div class="button"
-     title="Turn line numbers on/off"
-     id="line_numbers_button">
-  line-numbers
-</div>
+<input type="button"
+       class="button"
+       id="line_numbers_button"
+       value="line-numbers">
+  <div class="tooltip">
+     Turn line numbers on/off
+  </div>
+</input>
 

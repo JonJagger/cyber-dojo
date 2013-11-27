@@ -3,18 +3,23 @@
 
 $(document).ready(function() {
     
-  $('#dashboard_button').click(function() {
+  var dashboardButton = $('#dashboard_button');
+  dashboardButton.click(function() {
       cd.postTo('/dashboard/show', {
         id: "<%= @kata.id %>"
       }, '_blank');
   });
-
+  dashboardButton.tooltip(cd.tipSettings());
+  
 });
 
 //--></script>
 
-<div class="button"
-     title="Open a new dashboard page"
-	 id="dashboard_button">
-  <%= t("views.buttons.dashboard") %>
-</div>
+<input type="button"
+       class="button"
+	   id="dashboard_button"
+       value="<%= t("views.buttons.dashboard") %>">
+  <div class="tooltip">
+    Open a new dashboard page	
+  </div>
+</input>
