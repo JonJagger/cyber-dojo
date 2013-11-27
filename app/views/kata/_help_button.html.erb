@@ -5,25 +5,25 @@ $(document).ready(function() {
 
   var helpButton = $('#help_button');
   helpButton.click(function() {
-    var title = $(this).text();
+    var title = $(this).val();
     var ok = $(this).data('ok');
     $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(html) {
       cd.dialog(html, title, ok).dialog('open');
     });
   });
-  helpButton.tooltip(cd.tipSettings());
+  cd.tipify(helpButton);
 
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       data-ok="<%= t('views.buttons.ok') %>"
-       id="help_button"
-       value="?">
+<button type="button"
+        data-ok="<%= t('views.buttons.ok') %>"
+        id="help_button"
+        value="?">
+  ?
   <div class="tooltip">
     Show help
   </div>
-</input>
+</button>
 

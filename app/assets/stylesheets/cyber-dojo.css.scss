@@ -62,7 +62,7 @@ body
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-div.button, input.button, a.button
+button, div.button, input.button, a.button
 {
   background: darken($lighter-color, 10%);  
   color: $darker-color;    
@@ -79,7 +79,7 @@ div.button, input.button, a.button
   display: inline-block;
 }
 
-div[class~='button'][disabled], input.button[disabled]
+button[disabled], div[class~='button'][disabled], input.button[disabled]
 {
   background: lighten($darker-color, 20%);
   cursor: default;

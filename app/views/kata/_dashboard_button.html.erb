@@ -9,17 +9,17 @@ $(document).ready(function() {
         id: "<%= @kata.id %>"
       }, '_blank');
   });
-  dashboardButton.tooltip(cd.tipSettings());
+  cd.tipify(dashboardButton);
   
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-	   id="dashboard_button"
-       value="<%= t("views.buttons.dashboard") %>">
+<button type="button"
+	    id="dashboard_button"
+        value="<%= t('views.buttons.dashboard') %>">
+  <%= t('views.buttons.dashboard') %>
   <div class="tooltip">
-    Open a new dashboard page	
+    Open a new<br>dashboard page	
   </div>
 </input>

@@ -74,11 +74,12 @@ var cyberDojo = (function(cd, $) {
     // << < > >> navigation I no longer do that.
     // This means a participant will not know if
     // the current files are different in some way
-    // from the most recent traffic-light.    
-    $('#test').attr('disabled', same);
+    // from the most recent traffic-light.
+    
+    //$('#test').attr('disabled', same);
     // This means that a new participants initial
     // view will be of a disabled test button.
-    // I guess that is ok.
+    // Decided I don't like that...
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -

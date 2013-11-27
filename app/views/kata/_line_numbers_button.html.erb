@@ -16,19 +16,19 @@ $(document).ready(function() {
       nodes.hide();
     }    
   });
-  lineNumberButton.tooltip(cd.tipSettings());
+  cd.tipify(lineNumberButton);
   lineNumberButton.click();
 
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       id="line_numbers_button"
-       value="line-numbers">
+<button type="button"
+        id="line_numbers_button"
+        value="line-numbers">
+  line-numbers
   <div class="tooltip">
      Turn line numbers on/off
   </div>
-</input>
+</button>
 

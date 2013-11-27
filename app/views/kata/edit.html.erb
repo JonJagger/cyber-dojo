@@ -23,8 +23,6 @@ $(document).ready(function() {
   cd.storeOutgoingFileHashes();  
   cd.setContentListeners();
   cd.setForkAndTestButtons();
-
-  $("[title]").tooltip(cd.tipSettings());
     
   if (<%= @traffic_lights.length === 0 %>) {
     cd.testForm().submit();
@@ -69,6 +67,8 @@ $(document).ready(function() {
     </tr>
     <tr class="valign-top">
       <td>
+        <div id="tipWindow">
+        </div>        
       </td>
       <td>
         <%= render :partial => 'traffic_lights' %>

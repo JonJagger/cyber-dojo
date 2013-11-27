@@ -65,7 +65,6 @@ var cyberDojo = (function(cd, $) {
       node.removeAttr('disabled');
     };
 
-    newFile.attr('title', 'Create a new file');
     if (cd.cantBeRenamedOrDeleted(filename)) {
       turnOff(renameFile);
       turnOff(deleteFile);

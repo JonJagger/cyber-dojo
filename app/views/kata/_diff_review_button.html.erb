@@ -13,17 +13,17 @@ $(document).ready(function() {
     var maxTag = parseInt($('#traffic_light_count').text());
     cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
-  diffReviewButton.tooltip(cd.tipSettings());
+  cd.tipify(diffReviewButton);
   
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       id="diff_review_button"
-       value="<%= t("views.buttons.diff_review") %>">
+<button type="button"
+        id="diff_review_button"
+        value="<%= t('views.buttons.diff_review') %>">
+  <%= t('views.buttons.diff_review') %>
   <div class="tooltip">
-    Review the practice diff by diff
+    Review the practice<br>diff by diff
   </div>    
 </input>

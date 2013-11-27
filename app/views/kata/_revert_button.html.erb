@@ -8,18 +8,19 @@ $(document).ready(function() {
     var title = $(this).val();
     var maxTag = parseInt($('#traffic_light_count').text());    
     cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag);
-  });
-  revertButton.tooltip(cd.tipSettings());
+  });    
+  cd.tipify(revertButton);
 
 });
 
 //--></script>
 
-<input type="button"
-       id="revert_button"
-       class="button"
-       value="<%= t("views.buttons.revert") %>">
+<button type="button"
+        id="revert_button"
+        value="<%= t('views.buttons.revert') %>">
+  <%= t('views.buttons.revert') %>	   
   <div class="tooltip">
-    Revert to any previous traffic-light
+    Revert to any<br>previous<br>traffic-light
   </div>
-</input>
+</button>
+

@@ -12,18 +12,18 @@ $(document).ready(function() {
     var tag = maxTag;
     cd.dialog_fork(title, id, avatarName, tag, maxTag);  
   });
-  forkButton.tooltip(cd.tipSettings());
+  cd.tipify(forkButton);
   
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       id="fork_button"
-       value="<%= t("views.buttons.fork") %>">
+<button type="button"
+        id="fork_button"
+        value="<%= t('views.buttons.fork') %>">
+  <%= t('views.buttons.fork') %>
   <div class="tooltip">
-    Fork a new dojo from any traffic-light
+    Create a new dojo<br>from any traffic-light
   </div>
-</input>
+</button>
 

@@ -4,16 +4,19 @@
 $(document).ready(function() {
     
   var spinners = $('.spinner');
-  var test = $('#test');
+  var testButton = $('#test');
   var trafficLightCount = function() {
     // cannot be cached as it is replaced by run_tests.js.erb
     return $('#current_traffic_light_count');
   };
   
   spinners.hide();
+  cd.tipify(testButton);
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
-    test.attr('disabled', true);
+    testButton.attr('disabled', true);
+    $('#tipWindow').hide();
+    $('#tipWindow').empty();
     spinners.show();
     trafficLightCount().hide();
     cd.storeOutgoingFileHashes();
@@ -28,7 +31,6 @@ $(document).ready(function() {
   });
   
   $('form').bind('ajax:success', function(evt, data, status, xhr) {
-    $('#tip').hide();
     cd.rebuildFilenameList();
     // when the ajax replaces output the shortcuts
     // are lost so need rebinding
@@ -44,7 +46,10 @@ $(document).ready(function() {
     trafficLightCount().show();
     spinners.hide();    
     cd.loadFile('output');
-    cd.setContentListeners();    
+    cd.setContentListeners();
+    testButton.attr('disabled', false);
+    $('#tipWindow').hide();
+    $('#tipWindow').empty();    
   };
   
 });
@@ -57,11 +62,14 @@ $(document).ready(function() {
       <%= render :partial => 'spinner' %>
     </td>
     <td>
-      <input type="submit"
-             class="button"
-             id="test"
-             value="<%= t("views.buttons.test") %>"
-             title="Run the tests and generate a new traffic-light" />
+      <button type="submit"
+              id="test"
+              value="<%= t('views.buttons.test') %>">
+        <%= t('views.buttons.test') %>
+        <div class="tooltip">
+          Run the tests<br>and generate a<br>new traffic-light
+        </div>
+      </button>
     </td>
     <td>
       <%= render :partial => 'spinner' %>

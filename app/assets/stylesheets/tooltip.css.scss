@@ -1,9 +1,17 @@
 
 .tooltip {
   display: none;
-  padding: 0.25em;
-  background: $lighter-color;
-  color: $darker-color;
-  @include font-size-medium();
+}
+
+#tipWindow {
+  border: 1px solid $lighter-color;
+  margin: 0.50em;
+  padding: 0.50em;
+  background: $darker-color;
+  color: $lighter-color;
+  font-size: 0.75em;
   @include rounded-corner(14px);
+  position: absolute;
+  bottom: 10;
+  left: 10;
 }

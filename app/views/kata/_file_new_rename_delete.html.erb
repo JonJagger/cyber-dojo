@@ -22,22 +22,23 @@ $(document).ready(function() {
     //Best is to ask for the new filename _first_
     //and only enable [ok] button if it is valid
   });
+  cd.tipify(newFile);
+  
   renameFile.click(function() {
     if (isEnabled($(this))) {
       var title = $(this).text();
       cd.renameFile(title, "<%= @avatar.name %>");
     }
   });
+  cd.tipify(renameFile);
+  
   deleteFile.click(function() {
     if (isEnabled($(this))) {
       var title = $(this).text();        
       cd.deleteFile(title, "<%= @avatar.name %>");
     }
   });
-
-  newFile.tooltip(cd.tipSettings());
-  renameFile.tooltip(cd.tipSettings());
-  deleteFile.tooltip(cd.tipSettings());
+  cd.tipify(deleteFile);
   
 });
 
@@ -47,38 +48,38 @@ $(document).ready(function() {
   <table>
     <tr>
       <td>
-        <input type="button"
-               class="button"
-               id="new"
-               value="<%= t("views.buttons.new_file") %>">
+        <button type="button"
+                id="new"
+                value="<%= t('views.buttons.new_file') %>">
+          <%= t('views.buttons.new_file') %>
           <div class="tooltip">
             Create a new file
           </div>
-        </input>
+        </button>
       </td>
     </tr>
     <tr>
       <td>
-        <input type="button"
-               class="button"
-               id="rename"
-               value="<%= t("views.buttons.rename_file") %>">
+        <button type="button"
+                id="rename"
+                value="<%= t('views.buttons.rename_file') %>">
+          <%= t('views.buttons.rename_file') %>
           <div class="tooltip">
             Rename the current file
           </div>                
-        </input>
+        </button>
       </td>
     </tr>
     <tr>
       <td>
-        <input type="button"
-               class="button"
-               id="delete"
-               value="<%= t("views.buttons.delete_file") %>">
+        <button type="button"
+                id="delete"
+                value="<%= t('views.buttons.delete_file') %>">
+          <%= t('views.buttons.delete_file') %>
           <div class="tooltip">
             Delete the current file
           </div>                        
-        </input>
+        </button>
       </td>
     </tr>
   </table>
