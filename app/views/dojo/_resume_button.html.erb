@@ -11,23 +11,22 @@ $(document).ready(function() {
       if (dojo.empty) {          
         cd.dialog_dojoIsEmpty(id, ok).dialog('open');
       } else {
-        cd.dialog_resumeCoding(id, cancel, dojo.resume_dialog_html).dialog('open');          
+        cd.dialog_resumeCoding(cancel, dojo.resume_dialog_html).dialog('open');          
       }
     }); 
   });
-  resumeButton.tooltip(cd.tipSettings());
+  cd.tipify(resumeButton);
     
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       data-ok="<%= t('views.buttons.ok') %>"
-       data-cancel="<%= t('views.buttons.cancel') %>"
-       id="resume_button"
-       value="<%= t("views.buttons.resume") %>">
+<button type="button"
+        data-ok="<%= t('views.buttons.ok') %>"
+        data-cancel="<%= t('views.buttons.cancel') %>"
+        id="resume_button">
+  <%= t("views.buttons.resume") %>
   <div class="tooltip">
      resume coding
   <div>
-</input>
+</button>

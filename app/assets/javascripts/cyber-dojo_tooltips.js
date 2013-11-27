@@ -39,7 +39,8 @@ var cyberDojo = (function(cd, $) {
         tipWindow.hide();
         tipWindow.empty();
         clearTimeout(timer);
-      });	
+      });
+      return nodes;
     });
   };
     

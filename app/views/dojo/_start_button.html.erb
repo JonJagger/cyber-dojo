@@ -15,18 +15,17 @@ $(document).ready(function() {
       }
     });
   });
-  startButton.tooltip(cd.tipSettings());
+  cd.tipify(startButton);
   
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       data-ok="<%= t('views.buttons.ok') %>"
-       id="start_button"
-       value="<%= t("views.buttons.start") %>">
+<button type="button"
+        data-ok="<%= t('views.buttons.ok') %>"
+        id="start_button">
+  <%= t("views.buttons.start") %>
   <div class="tooltip">
      start coding
   </div>
-</input>
+</button>

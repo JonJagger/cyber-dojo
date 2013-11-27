@@ -8,19 +8,18 @@ $(document).ready(function() {
     var id = $('#kata_id_input').val();
     cd.get('/dashboard/show', { id: id }, '_blank');
   });
-  reviewButton.tooltip(cd.tipSettings());
+  cd.tipify(reviewButton);
   
 });
 
 //--></script>
 
-<input type="button"
-       class="button"
-       data-ok="<%= t('views.buttons.ok') %>"     
-       id="review_button"
-       value="<%= t("views.buttons.review") %>">
+<button type="button"
+        data-ok="<%= t('views.buttons.ok') %>"     
+        id="review_button">
+  <%= t("views.buttons.review") %>
   <div class="tooltip">
      review all code
   </div>
-</input>
+</button>
 

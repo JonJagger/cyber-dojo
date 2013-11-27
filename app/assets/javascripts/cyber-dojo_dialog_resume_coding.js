@@ -12,7 +12,7 @@ var cyberDojo = (function(cd, $) {
     return false;    
   };
   
-  cd.dialog_resumeCoding = function(id, cancel ,dialogHtml) {
+  cd.dialog_resumeCoding = function(cancel ,dialogHtml) {
     var i18nButtons = { };
     i18nButtons[cancel] = function() {
       $(this).dialog('close');      
@@ -22,7 +22,6 @@ var cyberDojo = (function(cd, $) {
       .dialog({
         autoOpen: false,
         width: 500,
-        title: cd.dialogTitle(id),
         modal: true,
         buttons: i18nButtons
       });
