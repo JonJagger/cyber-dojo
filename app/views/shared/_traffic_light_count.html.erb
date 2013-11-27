@@ -1,35 +1,18 @@
 
-<script type="text/javascript"><!--
-
-$(document).ready(function() {
-
-  var nodes = $('#current_traffic_light_count .tag_count');
-  nodes.each(function() {
-    var node = $(this);
-    var animalName = node.data('animal-name');
-    var bulbCount  = node.data('bulb-count');
-    var currentColour = node.data('current-colour');
-    
-    // Need jQuery-ui 1.9 for tooltip()
-    // node.tooltip({ content:
-    //   animalName + ' has ' + bulbCount + ' traffic-lights so far '
-    //   + 'and is currently at ' + currentColour });
-  });
-
-});
-
-//--></script>
-
 <div>
   <% if traffic_lights.length != 0 %>
       <% colour = traffic_lights[-1][:colour].to_s %>
-      <span id="traffic_light_count"
-            class="tag_count <%=colour %>"
-            data-animal-name="<%= avatar_name %>"
-            data-bulb-count="<%= traffic_lights.length %>"
-            data-current-colour="<%=colour %>"
-            title="<%= avatar_name%> has <%= traffic_lights.length %> traffic-lights so far and is currently at <%= colour %>">
+      <div id="traffic_light_count"
+           class="tag_count <%=colour %>"
+           data-animal-name="<%= avatar_name %>"
+           data-bulb-count="<%= traffic_lights.length %>"
+           data-current-colour="<%=colour %>">
         <%= traffic_lights.length %>
-      </span>
+        <div class='tooltip'>
+           <%= avatar_name%> has <%= traffic_lights.length %><br>
+           traffic-lights so far and<br>
+           is currently at <%= colour %>
+        </div>        
+      </div>
   <% end %>
 </div>
