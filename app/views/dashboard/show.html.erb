@@ -1,46 +1,38 @@
 
 <div id="dashboard-page">
-<table class="align-center">
-  <tr>
-    <td>
-    </td>
-    <td>
-      <%= render :partial => 'shared/info' %>      
-    </td>
-    <td class="valign-top">
-      <%= render :partial => 'column_controls' %>      
-    </td>
-    
-    <td class="valign-top">
-      <table>
-        <tr>
-          <td>
-            <div id="age">      
-              <%= render :partial => 'age' %>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <%= render :partial => 'download_button' %>
-          </td>
-        </tr>
-      </table>
-    </td>
-    
-    <td>
-        <%= render :partial => 'help_button' %>
-    </td>
-
-    <td valign="top">
-        <%= render :partial => 'shared/tip_window' %>
-    </td>
-    
-  </tr>
-</table>
-<br/>
-<div id="traffic_lights">
-  <%= render :partial => 'traffic_lights' %>
-</div>
+  <table class="align-center">
+    <tr>
+      <td>
+        <%= render :partial => 'shared/info' %>      
+      </td>
+      
+      <td>
+        <%= render :partial => 'column_controls' %>      
+      </td>
+      
+      <td>
+        <div class="row">      
+          <%= render :partial => 'age' %>
+        </div>
+        <div class="row">      
+          <%= render :partial => 'download_button' %>
+        </div>
+        <div class="row">      
+          <%= render :partial => 'help_button' %>
+        </div>
+      </td>
+            
+      <td>
+          <%= render :partial => 'shared/tip_window' %>
+      </td>
+      
+    </tr>
+  </table>
+  
+  <br/>
+  
+  <div id="traffic_lights">
+    <%= render :partial => 'traffic_lights' %>
+  </div>
 </div>
 
