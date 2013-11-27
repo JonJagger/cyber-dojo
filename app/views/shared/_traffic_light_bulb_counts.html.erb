@@ -1,14 +1,12 @@
 
-<div class="micro tag_count">
-  <% [:red,:amber,:green].each do |bulb| %>
-    <%  bulb_tally = traffic_lights.count{ |light| light[:colour] == bulb } %>
-    <div class="<%= bulb %>">
-      <%= bulb_tally %>
-      <div class='tooltip'>
-         <%= avatar_name %> has<br>
-         <%= bulb_tally %> <%= bulb %><br>
-         traffic-lights so far
-      </div>
-    </div>       
-  <% end %>
-</div>
+<% [:red,:amber,:green].each do |bulb| %>
+  <%  bulb_tally = traffic_lights.count{ |light| light[:colour] == bulb } %>
+  <div class="tag_count <%= bulb %>">
+    <%= bulb_tally %>
+    <div class='tooltip'>
+       <%= avatar_name %> has<br>
+       <%= bulb_tally %> <%= bulb %><br>
+       traffic-lights so far
+    </div>
+  </div>       
+<% end %>
