@@ -4,13 +4,14 @@
 $(document).ready(function() {
 
   var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";  
-
+  var autoRefreshButton = $('#auto_refresh');
+  
   var setRefreshButtonText = function() {
-    var button = $('#auto_refresh');
+    //var button = $('#auto_refresh');
     if (autoRefreshEnabled) {
-      button.text("<%= t('views.buttons.enable') %>");
+      autoRefreshButton.text("<%= t('views.buttons.enable') %>");
     } else {
-      button.text("<%= t('views.buttons.disable') %>");
+      autoRefreshButton.text("<%= t('views.buttons.disable') %>");
     }    
   };
   
@@ -52,7 +53,7 @@ $(document).ready(function() {
     }
   });
   
-  $('#auto_refresh').click(function() {
+  autoRefreshButton.click(function() {
     autoRefreshEnabled = !autoRefreshEnabled;
     setRefreshButtonText();
   });
@@ -61,7 +62,7 @@ $(document).ready(function() {
 
   // The auto_refresh button is a toggle, it shows what will happen if
   // you press it. That is, it displays the opposite of the current state
-  $('#auto_refresh').click();
+  autoRefreshButton.click();
 });
 
 //--></script>
