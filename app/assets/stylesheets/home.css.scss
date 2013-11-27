@@ -40,7 +40,7 @@ a:link, a:visited
   @include font-size-large();
 }
 
-#start, #resume, #review
+#start_button, #resume_button, #review_button
 {
   color: $darker-color;
   @include font-size-large();

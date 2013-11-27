@@ -3,21 +3,24 @@
 
 $(document).ready(function() {
 
-  $('#review').click(function() {
+  var reviewButton = $('#review_button');
+  reviewButton.click(function() {
     var id = $('#kata_id_input').val();
-    if (!$(this).attr('disabled')) {
-      cd.get('/dashboard/show', { id: id }, '_blank');
-    }
+    cd.get('/dashboard/show', { id: id }, '_blank');
   });
+  reviewButton.tooltip(cd.tipSettings());
   
 });
 
 //--></script>
 
-<div class="button"
-     title="review all animals code"
-     data-ok="<%= t('views.buttons.ok') %>"     
-     id="review">
-  <%= t("views.buttons.dashboard") %>
-</div>
+<input type="button"
+       class="button"
+       data-ok="<%= t('views.buttons.ok') %>"     
+       id="review_button"
+       value="<%= t("views.buttons.review") %>">
+  <div class="tooltip">
+     review all code
+  </div>
+</input>
 

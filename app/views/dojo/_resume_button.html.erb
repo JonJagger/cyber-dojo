@@ -3,10 +3,8 @@
 
 $(document).ready(function() {
   
-  $('#resume').click(function() {
-    if ($(this).attr('disabled')) {
-      return;
-    }  
+  var resumeButton = $('#resume_button');
+  resumeButton.click(function() {
     var ok = $(this).data('ok');
     var cancel = $(this).data('cancel');
     cd.run('resume_json', ok, function(id, dojo) {    
@@ -17,15 +15,19 @@ $(document).ready(function() {
       }
     }); 
   });
+  resumeButton.tooltip(cd.tipSettings());
     
 });
 
 //--></script>
 
-<div class="button"
-     title="resume coding as a specific animal"
-     data-ok="<%= t('views.buttons.ok') %>"
-     data-cancel="<%= t('views.buttons.cancel') %>"
-     id="resume">
-  <%= t("views.buttons.resume") %>
-</div>
+<input type="button"
+       class="button"
+       data-ok="<%= t('views.buttons.ok') %>"
+       data-cancel="<%= t('views.buttons.cancel') %>"
+       id="resume_button"
+       value="<%= t("views.buttons.resume") %>">
+  <div class="tooltip">
+     resume coding
+  <div>
+</input>

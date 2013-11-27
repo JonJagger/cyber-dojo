@@ -3,12 +3,14 @@
 
 $(document).ready(function() {
   
-  $('#setup').click(function() {
+  var setup = $('#setup');  
+  setup.click(function() {
     cd.postTo('/setup/show', {
       id: $('#kata_id_input').val()
     });
   });
-
+  setup.tooltip(cd.tipSettings());
+  
 });
 
 //--></script>
@@ -17,8 +19,11 @@ $(document).ready(function() {
   <%= t("views.labels.get_a_new_practice_id") %>
 </div>
 
-<div id="setup"
-     title="choose your programming language and exercise"
-     class="button">
-  <%= t("views.buttons.setup") %>
-</div>
+<input type="button"
+       class="button"
+       id="setup"
+      value="<%= t("views.buttons.setup") %>">
+  <div class="tooltip">
+     choose your<br>programming<br>language<br>and exercise
+  </div>
+</input>

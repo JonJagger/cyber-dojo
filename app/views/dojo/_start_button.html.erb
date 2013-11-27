@@ -3,11 +3,10 @@
 
 $(document).ready(function() {
   
-  $('#start').click(function() {    
+  var startButton = $('#start_button');
+  
+  startButton.click(function() {    
     var ok = $(this).data('ok');
-    if ($(this).attr('disabled')) {
-      return;
-    }
     cd.run('start_json', ok, function(id, dojo) {
       if (dojo.full) {        
         cd.dialog(dojo.full_dialog_html, id, ok).dialog('open');
@@ -16,14 +15,18 @@ $(document).ready(function() {
       }
     });
   });
-
+  startButton.tooltip(cd.tipSettings());
+  
 });
 
 //--></script>
 
-<div class="button"
-     title="start coding as a specific animal"
-     data-ok="<%= t('views.buttons.ok') %>"
-     id="start">
-  <%= t("views.buttons.start") %>
-</div>
+<input type="button"
+       class="button"
+       data-ok="<%= t('views.buttons.ok') %>"
+       id="start_button"
+       value="<%= t("views.buttons.start") %>">
+  <div class="tooltip">
+     start coding
+  </div>
+</input>

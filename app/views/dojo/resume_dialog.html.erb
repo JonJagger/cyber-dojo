@@ -12,7 +12,6 @@
         <% if @started_avatar_names.include?(avatar_name) %>
           <img onclick='return cd.resume("<%= @kata.id %>","<%= avatar_name %>");'
                src="/images/avatars/<%= avatar_name %>.jpg"
-               title="resume <%= avatar_name %>"
                width="<%= size %>"
                height="<%= size %>"
                data-cursor="pointer"/>          
