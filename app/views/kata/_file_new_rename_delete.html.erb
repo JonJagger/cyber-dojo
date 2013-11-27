@@ -35,19 +35,9 @@ $(document).ready(function() {
     }
   });
 
-  var tipSettings = {
-    cancelDefault: true,
-	predelay: 500,
-	effect: 'toggle',
-	position: 'top right',
-	offset: [20,0],
-	relative: true,
-	delay: 0  
-  };
-
-  newFile.tooltip(tipSettings);
-  renameFile.tooltip(tipSettings);
-  deleteFile.tooltip(tipSettings);
+  newFile.tooltip(cd.tipSettings());
+  renameFile.tooltip(cd.tipSettings());
+  deleteFile.tooltip(cd.tipSettings());
   
 });
 
