@@ -3,18 +3,6 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.tipSettings = function() { // TODO: AIM TO DROP
-    return {
-      cancelDefault: true,
-      predelay: 500,
-      effect: 'toggle',
-      position: 'top right',
-      offset: [20,0],
-      relative: true,
-      delay: 0  
-    };
-  };
-  
   cd.tipify = function(nodes) {
     var tipWindow = $('#tip_window');
     $.each(nodes, function(_,node) {      

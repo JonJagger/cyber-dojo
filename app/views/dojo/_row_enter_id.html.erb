@@ -17,8 +17,7 @@ $(document).ready(function() {
     });    
   };
   
-  // I'm getting odd tooltip behaviour for text input
-  //kata_id_input.tooltip(cd.tipSettings());
+  cd.tipify(kata_id_input);
   
   kata_id_input.keyup(function(event) {
     enableDisableStartResumeReview();
@@ -39,8 +38,9 @@ $(document).ready(function() {
        size="8"
        value="<%= @id[0..5] %>">
   <div class="tooltip">
-    An id contains only the digits 0123456789
-    and letters ABCDEF,
+    An id contains only<br>
+    the digits 0123456789<br>
+    and letters ABCDEF,<br>
     and is case insensitive."
   </div>
 </input>
