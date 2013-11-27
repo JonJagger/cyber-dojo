@@ -1,7 +1,7 @@
 
 <% [:red,:amber,:green].each do |bulb| %>
   <%  bulb_tally = traffic_lights.count{ |light| light[:colour] == bulb } %>
-  <div class="tag_count <%= bulb %>">
+  <div class="<%= bulb %> bulb_count">
     <%= bulb_tally %>
     <div class='tooltip'>
        <%= avatar_name %> has<br>
