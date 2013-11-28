@@ -5,17 +5,15 @@
       <%= render :partial => 'shared/logo' %>
     </td>
     <td>
-      <table>
-        <tr>
-          <td><%= @kata.id[0..5] %></td>
-        </tr>
-        <tr>
-          <td><%= @kata.language.name %></td>
-        </tr>
-        <tr>
-          <td><%= @kata.exercise.name.sub('_',' ') %></td>
-        </tr>
-      </table>
+      <div class="table-row">
+        <%= @kata.id[0..5] %>
+      </div>
+      <div class="table-row">
+        <%= @kata.language.name %>
+      </div>
+      <div class="table-row">
+        <%= @kata.exercise.name.sub('_',' ') %>
+      </div>
     </td>
   </tr>
 </table>
