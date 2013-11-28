@@ -2,20 +2,6 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-
-  // http://stackoverflow.com/questions/4911577/jquery-click-toggle-between-two-functions
-  // $().toggle() no longer exists in JQuery
-  $.fn.clickToggle = function(func1, func2) {
-    var funcs = [func1, func2];
-    this.data('toggleclicked', 0);
-    this.click(function() {
-      var data = $(this).data();
-      var tc = data.toggleclicked;
-      $.proxy(funcs[tc], this)();
-      data.toggleclicked = (tc + 1) % 2;
-    });
-    return this;
-  };
   
   cd.setupTrafficLightOpensDiffDialogHandlers = function(nodes, title) {
 	nodes.click(function() {
@@ -27,6 +13,8 @@ var cyberDojo = (function(cd, $) {
 	  cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
 	});
   };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - -	
   
   cd.dialog_diff = function(title, id, avatarName, wasTag, nowTag, maxTag) {    
   
@@ -248,8 +236,8 @@ var cyberDojo = (function(cd, $) {
 	  // Clicking on the filename brings it into view by hiding the
 	  // previously selected file and showing the selected one.
 	  //
-	  // The first time the filename for a file with one or more diff-sections
-	  // is clicked its diff-section is scrolled into view.
+	  // The first time the filename for a file with one or more 
+	  // diff-sections is clicked its diff-section is scrolled into view.
 	  //
 	  // Subsequent times if you click on the filename you will _not_ get
 	  // an autoscroll. This is so that the scrollPos of a diff that has 
