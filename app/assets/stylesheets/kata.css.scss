@@ -1,10 +1,14 @@
 
+#filename_list {
+  height: 17em;
+  overflow-y: auto;
+}
+
 #file_operations {
   #new, #rename, #delete {
     @include font-size-tiny();  
   }
 }
-
 
 #dashboard_button,
 #diff_review_button,
