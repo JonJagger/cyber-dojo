@@ -62,7 +62,7 @@ body
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-button, div.button, input.button, a.button
+button
 {
   background: darken($lighter-color, 10%);  
   color: $darker-color;    
@@ -79,7 +79,7 @@ button, div.button, input.button, a.button
   display: inline-block;
 }
 
-button[disabled], div[class~='button'][disabled], input.button[disabled]
+button[disabled]
 {
   background: lighten($darker-color, 20%);
   cursor: default;
@@ -118,15 +118,12 @@ div[class~='filename']
 
 $filename_and_button_border_size: 2px;
 
-div[class~="filename"]:hover,
-div[class~="button"]:hover
+div[class~="filename"]:hover
 {
   border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
 }
 
-div[class~="filename"],
-div[class~="button"][disabled]:hover,
-div[class~="button"]
+div[class~="filename"]
 {
   border: $filename_and_button_border_size solid $darker-color;
 }

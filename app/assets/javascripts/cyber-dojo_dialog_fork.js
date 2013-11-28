@@ -26,13 +26,13 @@ var cyberDojo = (function(cd, $) {
 	  
 	var makeNavigateButton = function(name) {	
 	  return '' +
-	    '<div class="triangle button"' +
+	    '<button class="triangle button"' +
 			 'id="' + name + '_button">' +
 		  '<img src="/images/triangle_' + name + '.gif"' +
 			   'alt="move to ' + name + ' diff"' +                 
 			   'width="25"' + 
 			   'height="25" />' +
-	    '</div>';      
+	    '</button>';      
 	};	
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
