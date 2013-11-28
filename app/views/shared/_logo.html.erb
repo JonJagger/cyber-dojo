@@ -1,9 +1,25 @@
 
-<%= link_to logo_image(48, "Open a new home page"),
-      {
-        :controller => :dojo,
-        :action => :index,
-        :id => @kata.id
-      },
-      :target => defined? target ? target : ""
-%>              
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  $('#yin_yang_logo').click(function() {
+    cd.get('/dojo/index', { id: $(this).data('id') }, '_blank');
+  });
+  
+});
+
+//--></script>
+
+<div id="yin_yang_logo"
+     data-id="<%= @kata.id %>"
+     class="tipped">
+  <img alt="cyber-dojo yin-yang logo"
+       src="/images/avatars/cyber-dojo.png"
+       height="48"
+       width="48" />
+  <div class="tooltip">
+    Open a new home page
+  </div>
+</div>
+
