@@ -3,8 +3,7 @@
 
 $(document).ready(function() {    
   
-  var diffReviewButton = $('#diff_review_button');
-  diffReviewButton.click(function() {
+  $('#diff_review_button').click(function() {
     var title = $(this).val();  
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
@@ -13,7 +12,6 @@ $(document).ready(function() {
     var maxTag = parseInt($('.traffic_light_count').text());
     cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   });
-  cd.tipify(diffReviewButton);
   
 });
 
@@ -21,6 +19,7 @@ $(document).ready(function() {
 
 <button type="button"
         id="diff_review_button"
+        class="tipped"
         value="<%= t('views.buttons.diff_review') %>">
   <%= t('views.buttons.diff_review') %>
   <div class="tooltip">

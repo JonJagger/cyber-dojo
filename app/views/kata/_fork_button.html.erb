@@ -3,8 +3,7 @@
 
 $(document).ready(function() {
     
-  var forkButton = $('#fork_button');
-  forkButton.click(function() {
+  $('#fork_button').click(function() {
     var title = $(this).val();
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
@@ -12,7 +11,6 @@ $(document).ready(function() {
     var tag = maxTag;
     cd.dialog_fork(title, id, avatarName, tag, maxTag);  
   });
-  cd.tipify(forkButton);
   
 });
 
@@ -20,6 +18,7 @@ $(document).ready(function() {
 
 <button type="button"
         id="fork_button"
+        class="tipped"
         value="<%= t('views.buttons.fork') %>">
   <%= t('views.buttons.fork') %>
   <div class="tooltip">

@@ -12,7 +12,6 @@ $(document).ready(function() {
   };
   
   spinners.hide();
-  cd.tipify(testButton);
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
     testButton.attr('disabled', true);
@@ -65,6 +64,7 @@ $(document).ready(function() {
     <td>
       <button type="submit"
               id="test"
+              class="tipped"                          
               value="<%= t('views.buttons.test') %>">
         <%= t('views.buttons.test') %>
         <div class="tooltip">

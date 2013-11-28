@@ -16,7 +16,6 @@ $(document).ready(function() {
       nodes.hide();
     }    
   });
-  cd.tipify(lineNumberButton);
   lineNumberButton.click();
 
 });
@@ -25,6 +24,7 @@ $(document).ready(function() {
 
 <button type="button"
         id="line_numbers_button"
+        class="tipped"
         value="line-numbers">
   line-numbers
   <div class="tooltip">

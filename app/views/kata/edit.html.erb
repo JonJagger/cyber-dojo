@@ -23,6 +23,8 @@ $(document).ready(function() {
   cd.storeOutgoingFileHashes();  
   cd.setContentListeners();
   cd.setForkAndTestButtons();
+
+  cd.tipify($('.tipped'));
   
   if (<%= @traffic_lights.length === 0 %>) {
     cd.testForm().submit();

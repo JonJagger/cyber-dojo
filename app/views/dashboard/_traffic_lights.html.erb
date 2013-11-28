@@ -6,11 +6,7 @@ $(document).ready(function() {
   var title = "<%= t('views.buttons.diff_review') %>";
   var lights = $('.diff-traffic-light');
   cd.setupTrafficLightOpensDiffDialogHandlers(lights, title);
-  cd.tipify(lights);
-  cd.tipify($(  '.red.bulb_count'));
-  cd.tipify($('.amber.bulb_count'));
-  cd.tipify($('.green.bulb_count'));
-  cd.tipify($('.traffic_light_count'));
+  cd.tipify($('.tipped'));  
   
 });
 

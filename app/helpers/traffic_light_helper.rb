@@ -3,7 +3,7 @@ module TrafficLightHelper
 
   def diff_traffic_light(kata, avatar_name, light, max_lights)
     # used from test page and from dashboard page    
-    ("<div class='diff-traffic-light'" +
+    ("<div class='tipped diff-traffic-light'" +
          " data-id='#{kata.id}'" +
          " data-avatar-name='#{avatar_name}'" +
          " data-was-tag='#{light[:number]-1}'" +
@@ -18,7 +18,7 @@ module TrafficLightHelper
   end
 
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
-    ("<div class='diff-traffic-light'" +
+    ("<div class='tipped diff-traffic-light'" +
          " data-id='#{kata.id}'" +
          " data-avatar-name='#{avatar_name}'" +
          " data-was-tag='#{light[:number]}'" +

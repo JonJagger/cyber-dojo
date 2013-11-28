@@ -3,13 +3,11 @@
 
 $(document).ready(function() {
     
-  var dashboardButton = $('#dashboard_button');
-  dashboardButton.click(function() {
+  $('#dashboard_button').click(function() {
       cd.postTo('/dashboard/show', {
         id: "<%= @kata.id %>"
       }, '_blank');
   });
-  cd.tipify(dashboardButton);
   
 });
 
@@ -17,6 +15,7 @@ $(document).ready(function() {
 
 <button type="button"
 	    id="dashboard_button"
+		class="tipped"
         value="<%= t('views.buttons.dashboard') %>">
   <%= t('views.buttons.dashboard') %>
   <div class="tooltip">

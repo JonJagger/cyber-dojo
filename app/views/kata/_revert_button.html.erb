@@ -3,13 +3,11 @@
 
 $(document).ready(function() {
     
-  var revertButton = $('#revert_button');
-  revertButton.click(function() {
+  $('#revert_button').click(function() {
     var title = $(this).val();
     var maxTag = parseInt($('.traffic_light_count').text());    
     cd.dialog_revert(title, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag);
   });    
-  cd.tipify(revertButton);
 
 });
 
@@ -17,6 +15,7 @@ $(document).ready(function() {
 
 <button type="button"
         id="revert_button"
+		class="tipped"
         value="<%= t('views.buttons.revert') %>">
   <%= t('views.buttons.revert') %>	   
   <div class="tooltip">

@@ -3,15 +3,13 @@
 
 $(document).ready(function() {
 
-  var helpButton = $('#help_button');
-  helpButton.click(function() {
+  $('#help_button').click(function() {
     var title = $(this).val();
     var ok = $(this).data('ok');
     $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(html) {
       cd.dialog(html, title, ok).dialog('open');
     });
   });
-  cd.tipify(helpButton);
 
 });
 
@@ -20,6 +18,7 @@ $(document).ready(function() {
 <button type="button"
         data-ok="<%= t('views.buttons.ok') %>"
         id="help_button"
+        class="tipped"
         value="?">
   ?
   <div class="tooltip">
