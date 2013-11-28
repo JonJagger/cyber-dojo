@@ -3,9 +3,6 @@
 
 $(document).ready(function() {
 
-  var isEnabled = function(node) {
-    return node.attr('disabled') !== 'disabled';
-  };
   var fileButtons =  $('#file_operations');
       
   fileButtons.find('#new').click(function() {
@@ -19,17 +16,13 @@ $(document).ready(function() {
   });
   
   fileButtons.find('#rename').click(function() {
-    if (isEnabled($(this))) {
-      var title = $(this).text();
-      cd.renameFile(title, "<%= @avatar.name %>");
-    }
+    var title = $(this).data('title');
+    cd.renameFile(title, "<%= @avatar.name %>");
   });
   
   fileButtons.find('#delete').click(function() {
-    if (isEnabled($(this))) {
-      var title = $(this).text();        
-      cd.deleteFile(title, "<%= @avatar.name %>");
-    }
+    var title = $(this).data('title');        
+    cd.deleteFile(title, "<%= @avatar.name %>");
   });
   
 });
@@ -53,6 +46,7 @@ $(document).ready(function() {
   <div class="table-row">
     <button type="button"
             id="rename"
+            data-title="<%= t('views.buttons.rename_file') %>"
             class="tipped"
             value="<%= t('views.buttons.rename_file') %>">
       <%= t('views.buttons.rename_file') %>
@@ -65,6 +59,7 @@ $(document).ready(function() {
   <div class="table-row">
     <button type="button"
             id="delete"
+            data-title="<%= t('views.buttons.delete_file') %>"            
             class="tipped"
             value="<%= t('views.buttons.delete_file') %>">
       <%= t('views.buttons.delete_file') %>
