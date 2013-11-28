@@ -66,7 +66,7 @@ var cyberDojo = (function(cd, $) {
 			  
 			  "<tr valign='top'>" + 
 				"<td valign='top'>" +
-				  cd.makeNavigateButtons() +
+				  cd.makeNavigateButtons(avatarName) +
 				"</td>" +
 			  "</tr>" +
 			  

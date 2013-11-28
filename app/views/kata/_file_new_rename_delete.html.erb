@@ -30,19 +30,7 @@ $(document).ready(function() {
 //--></script>
 
 <div id="file_operations">
-  
-  <div class="table-row">
-    <button type="button"
-            id="new"
-            class="tipped"
-            value="<%= t('views.buttons.new_file') %>">
-      <%= t('views.buttons.new_file') %>
-      <div class="tooltip">
-        Create a new file
-      </div>
-    </button>
-  </div>
-  
+    
   <div class="table-row">
     <button type="button"
             id="rename"
@@ -67,6 +55,18 @@ $(document).ready(function() {
         Delete the current file
       </div>                        
     </button>    
+  </div>
+  
+  <div class="table-row">
+    <button type="button"
+            id="new"
+            class="tipped"
+            value="<%= t('views.buttons.new_file') %>">
+      <%= t('views.buttons.new_file') %>
+      <div class="tooltip">
+        Create a new file
+      </div>
+    </button>
   </div>
   
 </div>

@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.makeNavigateButtons = function() {
+  cd.makeNavigateButtons = function(avatarName) {
 	  
 	var makeNavigateButton = function(name) {	
 	  return '' +
@@ -25,6 +25,12 @@ var cyberDojo = (function(cd, $) {
 			'</td>' +
 			'<td>' +
 			   makeNavigateButton('prev') +
+			'</td>' +
+			'<td>' +
+			  '<img class="avatar_image"' +
+			            ' height="42"' +
+			            ' width="42"' +
+			            ' src="/images/avatars/' + avatarName + '.jpg"/>' +
 			'</td>' +
 			'<td>' +
 			   makeNavigateButton('next') +
