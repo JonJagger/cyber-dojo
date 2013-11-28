@@ -46,7 +46,6 @@ var cyberDojo = (function(cd, $) {
   cd.avatarImage = function(avatarName, imageSize) {
     return $('<img>', {
        alt: avatarName,
-      'class': "avatar_image",
       'height': imageSize,
       'width': imageSize,
        src: "/images/avatars/" + avatarName + ".jpg",
