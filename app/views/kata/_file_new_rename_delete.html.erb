@@ -45,42 +45,39 @@ $(document).ready(function() {
 //--></script>
 
 <div id="file_operations">
-  <table>
-    <tr>
-      <td>
-        <button type="button"
-                id="new"
-                value="<%= t('views.buttons.new_file') %>">
-          <%= t('views.buttons.new_file') %>
-          <div class="tooltip">
-            Create a new file
-          </div>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button type="button"
-                id="rename"
-                value="<%= t('views.buttons.rename_file') %>">
-          <%= t('views.buttons.rename_file') %>
-          <div class="tooltip">
-            Rename the current file
-          </div>                
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button type="button"
-                id="delete"
-                value="<%= t('views.buttons.delete_file') %>">
-          <%= t('views.buttons.delete_file') %>
-          <div class="tooltip">
-            Delete the current file
-          </div>                        
-        </button>
-      </td>
-    </tr>
-  </table>
+  
+  <div class="table-row">
+    <button type="button"
+            id="new"
+            value="<%= t('views.buttons.new_file') %>">
+      <%= t('views.buttons.new_file') %>
+      <div class="tooltip">
+        Create a new file
+      </div>
+    </button>
+  </div>
+  
+  <div class="table-row">
+    <button type="button"
+            id="rename"
+            value="<%= t('views.buttons.rename_file') %>">
+      <%= t('views.buttons.rename_file') %>
+      <div class="tooltip">
+        Rename the current file
+      </div>                
+    </button>
+  </div>
+
+  <div class="table-row">
+    <button type="button"
+            id="delete"
+            value="<%= t('views.buttons.delete_file') %>">
+      <%= t('views.buttons.delete_file') %>
+      <div class="tooltip">
+        Delete the current file
+      </div>                        
+    </button>    
+  </div>
+  
 </div>
+
