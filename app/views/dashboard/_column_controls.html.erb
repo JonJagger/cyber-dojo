@@ -3,14 +3,16 @@
 
 $(document).ready(function() {
 
-  var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";  
-  var autoRefreshButton = $('#auto_refresh');
-  
+  var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";
+  var autoRefreshButton = $('#auto_refresh');    
+  var autoRefreshLabel = $('#auto_refresh_label');
+
   var setRefreshButtonText = function() {
+    var label = "<%= t('views.labels.auto_refresh') %>";
     if (autoRefreshEnabled) {
-      autoRefreshButton.text("<%= t('views.buttons.enable') %>");
+      autoRefreshLabel.text(label + ' on');
     } else {
-      autoRefreshButton.text("<%= t('views.buttons.disable') %>");
+      autoRefreshLabel.text(label + ' off');
     }    
   };
   
@@ -74,9 +76,10 @@ $(document).ready(function() {
              value="<%= @seconds_per_column %>"/>
     </td>
     <td class="align-left">
-      <div id="seconds_per_column_text">
-        &nbsp;<%= t("views.labels.seconds_per_column") %>
-      </div>
+      &thinsp;      
+      <span id="seconds_per_column_text">
+        <%= t("views.labels.seconds_per_column") %>
+      </span>
     </td>
   </tr>
   
@@ -87,22 +90,31 @@ $(document).ready(function() {
              value="<%= @maximum_columns %>"/>
     </td>
     <td class="align-left">
-      <div id="maximum_columns_text">
-        &nbsp;<%= t("views.labels.columns_maximum") %>
-      </div>
+      &thinsp;
+      <span id="maximum_columns_text">
+        <%= t("views.labels.columns_maximum") %>
+      </span>
     </td>
   </tr>
 
   <tr>
     <td class="align-right">
-      <button id="auto_refresh"
-              type="button">
+      <button type="button"
+              class="tipped"
+              id="auto_refresh">
+        toggle
+        <div class="tooltip">
+          toggle 10 second<br>
+          dashboard auto-refresh<br>
+          on/off
+        </div>
       </button>
     </td>
     <td class="align-left">
-      <div id="auto_refresh_text">
-        &nbsp;<%= t("views.labels.auto_refresh") %>
-      </div>
+      &thinsp;
+      <span id="auto_refresh_label">
+        <%= t("views.labels.auto_refresh") %>
+      </span>
     </td>
   </tr>
   

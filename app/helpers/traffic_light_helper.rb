@@ -25,7 +25,8 @@ module TrafficLightHelper
          " data-now-tag='#{light[:number]}'" +
          " data-max-tag='#{max_lights}'>" +
         "<div class='tooltip'>" +
-          "Show #{avatar_name}'s current code" +
+          "Show #{avatar_name}'s<br>" +
+          "current code" +
         "</div>" +
         "<img src='/images/avatars/#{avatar_name}.jpg'" +
             " alt='#{avatar_name}'" +

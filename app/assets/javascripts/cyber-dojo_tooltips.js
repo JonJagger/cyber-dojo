@@ -11,11 +11,11 @@ var cyberDojo = (function(cd, $) {
         // For some reason, the diff-traffic-light is
         // showing event.target as the inner <img> rather
         // than the outer <div>!?  Hack work-around is
-        // to find for the tooltip inside the parent
-        var node = $(event.target);
-        var tip = node.children().first();
+        // to find for the tooltip inside the parent.
+        var target = $(event.target);
+        var tip = target.children().first();
         if (tip.length === 0) {
-          tip = $('.tooltip', node.parent());
+          tip = $('.tooltip', target.parent());
         }        
         timer = setTimeout(function() {
           tipWindow.html(tip.html());
@@ -28,7 +28,6 @@ var cyberDojo = (function(cd, $) {
         tipWindow.empty();
         clearTimeout(timer);
       });
-      return nodes;
     });
   };
     
