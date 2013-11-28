@@ -22,10 +22,10 @@ $(document).ready(function () {
              ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
 <% buttons.each do |action, text| %>
-  <div class="button show-dialog-button"
-       data-ok="<%= t('views.buttons.ok') %>"
-       id="<%= action %>">
+  <button class="show-dialog-button"
+          data-ok="<%= t('views.buttons.ok') %>"
+          id="<%= action %>">
     <%= text %>
-  </div>
+  </button>
 <% end %>
 
