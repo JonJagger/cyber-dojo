@@ -22,7 +22,8 @@ $(document).ready(function () {
              ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
 <% buttons.each do |action, text| %>
-  <button class="show-dialog-button"
+  <button type="button"
+          class="show-dialog-button"
           data-ok="<%= t('views.buttons.ok') %>"
           id="<%= action %>">
     <%= text %>
