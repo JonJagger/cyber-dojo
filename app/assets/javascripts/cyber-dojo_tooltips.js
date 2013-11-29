@@ -3,8 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.tipify = function(nodes) {
-    var tipWindow = $('#tip_window');
+  cd.tipify = function(nodes, tipWindow) {
     $.each(nodes, function(_,node) {      
       var timer;
       $(node).on('mouseenter', function(event) {

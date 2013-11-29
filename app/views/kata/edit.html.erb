@@ -24,7 +24,7 @@ $(document).ready(function() {
   cd.setContentListeners();
   cd.setForkAndTestButtons();
 
-  cd.tipify($('.tipped'));
+  cd.tipify($('.tipped'), $('#tip_window'));
   
   if (<%= @traffic_lights.length === 0 %>) {
     cd.testForm().submit();
