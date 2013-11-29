@@ -22,7 +22,7 @@ o) The server will assign each computer an animal (eg Panda).
 o) On each computer do the chosen exercise by editing the test files and the
    code files, and pressing the [test] button to see if the
    tests pass or not.
-o) Every time the [test] button is pressed a new traffic-light appeard at
+o) Every time the [test] button is pressed a new traffic-light appears at
    the bottom right.
 o) Traffic-lights progress left-to-right, oldest-to-newest.
 
@@ -31,8 +31,8 @@ Traffic Lights
 ==============
 The result of each pressing the [test] button is displayed in the 'output' file
 and also as a new traffic-light (at the bottom). Clicking on a traffic-light
-reverts back to the files for that traffic-light.
-The meanings for the three colours on each traffic-light are as follows:
+opens a diff-view of the files associated with that traffic-light.
+The meanings for the colours on each traffic-light are as follows:
   (o) red   - tests ran but at least one failed
   (o) amber - syntax error somewhere, tests not run
   (o) green - tests ran and all passed
@@ -47,8 +47,8 @@ overloaded with too many concurrent practice sessions)
 Dashboard-Review
 ================
 You can get to the dashboard page in three ways.
-o) from the test page, click the animal image at the top left
-o) from the diff page, click the animal image at the top left
+o) from the test page, click the animal image at the bottom right
+o) from the test page, click the dashboard button on the left.
 o) from the home page, enter the practice session id and click the [review]
    button.
 
@@ -56,8 +56,7 @@ A new dashboard page will appear displaying all the traffic-lights for all
 the animals in the practice session.
 The dashboard auto-refreshes every 10 seconds.
 The idea is to display the dashboard during the practice session,
-then when the practice session ends, you click the [disable] button
-(at the top) to stop the auto-refresh.
+then when the practice session ends, you disable the auto-refresh.
 
 Each horizontal row corresponds to one animal and displays, from left to right,
 o) its oldest-to-newest traffic lights
@@ -85,12 +84,12 @@ value is 30 then only the 30 most recent columns will be displayed (older
 columns are simply chopped off the left).
 
 If the dashboard display has a horizontal scrollbar you will probably need
-to [disable] the auto-refresh before scrolling.
+to disable the auto-refresh before scrolling.
 
 
 Diff-Review
 ===========
-Clicking on a dashboard traffic-light opens a new page showing the diffs for
+Clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to step
 backwards and forwards. As you move forwards and backwards using the
 << < > >> buttons the server will stay on the same file if it continues to
@@ -106,7 +105,7 @@ will toggle the added lines on/off for that file's diff.
 The diff is a diff between two traffic-lights. If you click on an animals 13th
 traffic-light (on the dashboard) then the diff page will show the diff between
 traffic-lights 12 and 13, and the values 12 and 13 will appear at the top left
-below their respective traffic-lights.
+next to their respective traffic-lights.
 You can show the diff between any two traffic-lights by simply editing these
 numbers. For example, if you edit the 13 to a 15 and press return the page will
 update to display the diff between traffic-lights 12 and 15.
@@ -489,7 +488,7 @@ This tends to happen for BDD style testing.
 
 Getting dojos off the VirtualBox TurnKey Linux server
 =====================================================
-From the review dashboard page click the [download-zip] button.
+From the review dashboard page click the [download .zip] button.
 
 If you want to do it from within the actual server you will need
 the username and password info to SSH and SFTP.
