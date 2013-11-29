@@ -3,8 +3,7 @@
 
 $(document).ready(function() {
   
-  var resumeButton = $('#resume_button');
-  resumeButton.click(function() {
+  $('#resume_button').click(function() {
     var ok = $(this).data('ok');
     var cancel = $(this).data('cancel');
     cd.run('resume_json', ok, function(id, dojo) {    
@@ -15,13 +14,13 @@ $(document).ready(function() {
       }
     }); 
   });
-  cd.tipify(resumeButton);
-    
+
 });
 
 //--></script>
 
 <button type="button"
+        class="tipped"
         data-ok="<%= t('views.buttons.ok') %>"
         data-cancel="<%= t('views.buttons.cancel') %>"
         id="resume_button">

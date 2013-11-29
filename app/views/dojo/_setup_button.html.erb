@@ -3,13 +3,11 @@
 
 $(document).ready(function() {
   
-  var setupButton = $('#setup');  
-  setupButton.click(function() {
+  $('#setup').click(function() {
     cd.get('/setup/show', {
       id: $('#kata_id_input').val()
     });
   });
-  cd.tipify(setupButton);
   
 });
 
@@ -20,6 +18,7 @@ $(document).ready(function() {
 </div>
 
 <button type="button"
+        class="tipped"
         id="setup">
   <%= t('views.buttons.setup') %>
   <div class="tooltip">

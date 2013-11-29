@@ -3,18 +3,17 @@
 
 $(document).ready(function() {
 
-  var reviewButton = $('#review_button');
-  reviewButton.click(function() {
+  $('#review_button').click(function() {
     var id = $('#kata_id_input').val();
     cd.get('/dashboard/show', { id: id }, '_blank');
   });
-  cd.tipify(reviewButton);
   
 });
 
 //--></script>
 
 <button type="button"
+        class="tipped"
         data-ok="<%= t('views.buttons.ok') %>"     
         id="review_button">
   <%= t("views.buttons.review") %>

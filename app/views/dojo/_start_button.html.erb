@@ -3,9 +3,7 @@
 
 $(document).ready(function() {
   
-  var startButton = $('#start_button');
-  
-  startButton.click(function() {    
+  $('#start_button').click(function() {    
     var ok = $(this).data('ok');
     cd.run('start_json', ok, function(id, dojo) {
       if (dojo.full) {        
@@ -15,13 +13,13 @@ $(document).ready(function() {
       }
     });
   });
-  cd.tipify(startButton);
   
 });
 
 //--></script>
 
 <button type="button"
+        class="tipped"
         data-ok="<%= t('views.buttons.ok') %>"
         id="start_button">
   <%= t("views.buttons.start") %>
