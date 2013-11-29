@@ -8,11 +8,10 @@ $(document).ready(function() {
   var autoRefreshLabel = $('#auto_refresh_label');
 
   var setRefreshButtonText = function() {
-    var label = "<%= t('views.labels.auto_refresh') %>";
     if (autoRefreshEnabled) {
-      autoRefreshLabel.text(label + ' on');
+      autoRefreshLabel.text('== off');
     } else {
-      autoRefreshLabel.text(label + ' off');
+      autoRefreshLabel.text('== on');
     }    
   };
   
@@ -102,7 +101,7 @@ $(document).ready(function() {
       <button type="button"
               class="tipped"
               id="auto_refresh">
-        toggle
+        refresh
         <div class="tooltip">
           toggle the 10 second<br>
           dashboard auto-refresh<br>
