@@ -31,4 +31,6 @@
   }
 }
 
-
+#rename_ok, #rename_cancel {
+  @include font-size-small();      
+}

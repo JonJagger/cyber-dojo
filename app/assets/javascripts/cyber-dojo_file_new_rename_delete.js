@@ -7,8 +7,6 @@ var cyberDojo = (function(cd, $) {
     // Append three random chars to the end of the filename.
     // There is no excuse not to rename it!
     cd.newFileContent('newfile_' + cd.random3(), 'Please rename me!');
-	cd.setContentListeners();	
-	cd.setForkAndTestButtons();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -24,7 +22,7 @@ var cyberDojo = (function(cd, $) {
     var div = $('<div>', {
       'class': 'panel'
     });
-    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 100)));
+    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 50)));
     div.append('<div>&nbsp;</div>');
     var input = $('<input>', {
       type: 'text',
@@ -32,6 +30,7 @@ var cyberDojo = (function(cd, $) {
       name: 'renamer',
       value: oldFilename
     });
+	
     div.append(cd.centeredDiv(input));
     var renamer = $('<div>')
       .html(div)
@@ -40,26 +39,34 @@ var cyberDojo = (function(cd, $) {
 		width: 350,
 		title: cd.dialogTitle(title),
 		modal: true,
-		buttons: {
-		  ok: function() {
-			var newFilename = $.trim(input.val());
-			cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-			cd.setForkAndTestButtons();
-			$(this).dialog('close');
+		buttons: [
+		  {
+			id: 'rename_ok',
+			text: 'ok',
+			click: function() {
+			  var newFilename = $.trim(input.val());
+			  cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+			  $(this).dialog('close');
+		    }
 		  },
-		  cancel: function() {
-			$(this).dialog('close');
+		  {
+			id: 'rename_cancel',
+			text: 'cancel',
+			click: function() {
+			  $(this).dialog('close');
+			}
 		  }
-		}
+		]
       });
     
 	input.keyup(function(event) {
-	  // enable disable [ok] button based on current filename
+	  var newFilename = $.trim(input.val());
       event.preventDefault();
+	  // TODO: set this based on newFilename
+      //$('#rename_ok').button('disable');
+	  // TODO: if [ok] enabled && 
       if (event.keyCode === $.ui.keyCode.ENTER) {
-		var newFilename = $.trim(input.val());
-		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-		cd.setForkAndTestButtons();
+		cd.renameFileFromTo(avatarName, oldFilename, newFilename);		
 		renamer.dialog('close');
       }  
     });
@@ -87,7 +94,7 @@ var cyberDojo = (function(cd, $) {
   cd.deleteFilePrompt = function(title, avatarName, ask) {
     var filename = cd.currentFilename();
     var div = $(cd.divPanel(''));
-    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 100)));
+    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 50)));
     div.append('<div>&nbsp;</div>');
     div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
     if (ask) {
@@ -101,7 +108,6 @@ var cyberDojo = (function(cd, $) {
 		  buttons: {
 			ok: function() {
 			  cd.doDelete(filename);
-			  cd.setForkAndTestButtons();
 			  $(this).dialog('close');
 			},
 			cancel: function() {
@@ -241,7 +247,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.renameAlert = function(avatarName, message) {
-	var imageSize = 100;
+	var imageSize = 50;
     var imageHtml = ''
       + '<img alt="' + avatarName + '"'
       +     ' class="avatar_image"'

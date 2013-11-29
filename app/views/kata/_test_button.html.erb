@@ -38,7 +38,6 @@ $(document).ready(function() {
     cd.bindHotKeys(output);
     cd.bindAllLineNumbers();
     cd.storeIncomingFileHashes();
-    cd.setForkAndTestButtons();
     ajaxAfter();
   });  
   
@@ -46,7 +45,6 @@ $(document).ready(function() {
     trafficLightCount().show();
     spinners.hide();    
     cd.loadFile('output');
-    cd.setContentListeners();
     testButton.attr('disabled', false);
     tipWindow.hide();
     tipWindow.empty();    

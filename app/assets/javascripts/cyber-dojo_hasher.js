@@ -34,7 +34,10 @@ var cyberDojo = (function(cd, $) {
     );
   };
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   var allFilesSameAsCurrentTrafficLight = function() {
+    // Could be used to selectively enable/disable buttons
     var outgoingFilenames = cd.filenames();
     var incomingFilenames = [ ];    
     $('input',incomingHashContainer()).each(function() {
@@ -44,11 +47,9 @@ var cyberDojo = (function(cd, $) {
     incomingFilenames.sort();
     outgoingFilenames.sort();    
     if (JSON.stringify(incomingFilenames) != JSON.stringify(outgoingFilenames)) {
-      //alert("incomingFilenames != outgoingFilenames");
       return false;
     }
 
-    //var msg = "\n";
     var allSame = true;
     $.each(incomingFilenames,function(_,filename) {
       var  inNode = $('input[data-filename="'+filename+'"]', incomingHashContainer());
@@ -56,30 +57,8 @@ var cyberDojo = (function(cd, $) {
       if (filename != 'output' && inNode.attr('value') != outNode.attr('value')) {
         allSame = false;
       }
-      //msg += filename + ": in:" +  inNode.attr('value') + "\n";
-      //msg += filename + ":out:" + outNode.attr('value') + "\n";
     });
-    //msg += "returning " + allSame;
-    //alert(msg);
     return allSame;
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  cd.setForkAndTestButtons = function() {
-    var same = allFilesSameAsCurrentTrafficLight();    
-    // I used to do this...
-    //  $('#fork_button').attr('disabled', !same);
-    // but now that fork creates a dialog with
-    // << < > >> navigation I no longer do that.
-    // This means a participant will not know if
-    // the current files are different in some way
-    // from the most recent traffic-light.
-    
-    //$('#test').attr('disabled', same);
-    // This means that a new participants initial
-    // view will be of a disabled test button.
-    // Decided I don't like that...
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -109,17 +88,7 @@ var cyberDojo = (function(cd, $) {
       );
     });
   };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  cd.setContentListeners = function() {    
-    $(".file_content").unbind().on("keyup", function() {      
-      var filename = $(this).data('filename');
-      storeOutgoingFileHash(filename);
-      cd.setForkAndTestButtons();
-    });    
-  };
-    
+      
   return cd;
 })(cyberDojo || {}, $);
 
