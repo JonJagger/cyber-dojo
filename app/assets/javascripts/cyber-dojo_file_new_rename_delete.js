@@ -28,9 +28,26 @@ var cyberDojo = (function(cd, $) {
       name: 'renamer',
       value: oldFilename
     });
-
-    div.append(cd.centeredDiv(input));
-	
+    var okButton =
+	{
+	  id: 'rename_ok',
+	  text: 'ok',
+	  disabled: true,
+	  click: function() {
+		var newFilename = $.trim(input.val());
+		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+		$(this).remove();
+	  }	  
+	};
+	var cancelButton = 
+	{
+	  id: 'rename_cancel',
+	  text: 'cancel',
+	  click: function() {
+		$(this).remove();
+	  }
+	};
+		
     var renamer = $('<div>')
       .html(div)
       .dialog({
@@ -38,27 +55,10 @@ var cyberDojo = (function(cd, $) {
 		width: 350,
 		title: cd.dialogTitle(title),
 		modal: true,
-		buttons: [
-		  {
-			id: 'rename_ok',
-			text: 'ok',
-			disabled: true,
-			click: function() {
-			  console.log("CLICKED");
-			  var newFilename = $.trim(input.val());
-			  cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-			  $(this).remove();
-		    }
-		  },
-		  {
-			id: 'rename_cancel',
-			text: 'cancel',
-			click: function() {
-			  $(this).remove();
-			}
-		  }
-		]
+		buttons: [ okButton, cancelButton ]
       });
+	
+    div.append(cd.centeredDiv(input));
 	
 	input.keyup(function(event) {
 	  var newFilename = $.trim(input.val());
