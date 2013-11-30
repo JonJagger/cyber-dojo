@@ -22,10 +22,10 @@ var cyberDojo = (function(cd, $) {
         }, 750);
       });
       
-      $(node).on('mouseleave', function(e) {
+      $(node).on('mouseleave', function() {
+        clearTimeout(timer);
         tipWindow.hide();
         tipWindow.empty();
-        clearTimeout(timer);
       });
     });
   };
