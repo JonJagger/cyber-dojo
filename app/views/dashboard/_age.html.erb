@@ -1,4 +1,7 @@
 
-<span title="<%= t('views.dashboard.age_dhms_tip') %>">
+<span class="tipped">
   <%= formatted_age_from_seconds(@kata.age_in_seconds) %>
+  <div class="tooltip">
+    age=<%= t('views.dashboard.age_dhms_tip') %>    
+  </div>
 </span>
