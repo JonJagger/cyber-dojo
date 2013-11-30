@@ -47,3 +47,15 @@
   display: table-row;
 }
 
+.align-left    { text-align: left;   } 
+.align-center
+{
+  text-align: center;
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+.align-right   { text-align: right;  }
+.valign-top    { vertical-align: top;    }
+.valign-center { vertical-align: center; }

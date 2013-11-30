@@ -27,8 +27,8 @@ var cyberDojo = (function(cd, $) {
 			   makeNavigateButton('prev') +
 			'</td>' +
 			'<td>' +
-			  '<img height="42"' +
-			      ' width="42"' +
+			  '<img height="38"' +
+			      ' width="38"' +
 			      ' src="/images/avatars/' + avatarName + '.jpg"/>' +
 			'</td>' +
 			'<td>' +
