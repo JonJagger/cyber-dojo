@@ -29,8 +29,6 @@ var cyberDojo = (function(cd, $) {
       value: oldFilename
     });
 
-    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 50)));
-    div.append('<div>&nbsp;</div>');
     div.append(cd.centeredDiv(input));
 	
     var renamer = $('<div>')
@@ -100,8 +98,6 @@ var cyberDojo = (function(cd, $) {
   cd.deleteFilePrompt = function(title, avatarName, ask) {
     var filename = cd.currentFilename();
     var div = $(cd.divPanel(''));
-    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 50)));
-    div.append('<div>&nbsp;</div>');
     div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
     if (ask) {
       var deleter = $('<div>')
@@ -114,10 +110,10 @@ var cyberDojo = (function(cd, $) {
 		  buttons: {
 			ok: function() {
 			  cd.doDelete(filename);
-			  $(this).dialog('close');
+			  $(this).remove();
 			},
 			cancel: function() {
-			  $(this).dialog('close');
+			  $(this).remove();
 			}
 		  }
 		});    
