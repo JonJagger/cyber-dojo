@@ -28,14 +28,12 @@
   }
 }
 
-#diff_tip
-{
-  @include font-size-tiny();
-  text-align: left;  
-}
-
 #was_tag_number, #now_tag_number {
   @include editable_tag_number;
+}
+
+#tag_gap_number {
+  @include font-size-tiny();
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -

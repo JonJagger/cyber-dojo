@@ -33,7 +33,15 @@ var cyberDojo = (function(cd, $) {
 			  '<input type="text" id="was_tag_number" value="' + wasTag + '" />' +
 			'</td>' +
 			'<td>' +
-			  '&harr;' +
+			  '&larr;' +
+			'</td>' +
+			'<td>' +
+			  '<div id="tag_gap_number">' +
+			    tagGap +
+			  '</div>' +
+			'</td>' +
+			'<td>' +
+			  '&rarr;' +
 			'</td>' +
 			'<td>' +
 			  '<input type="text" id="now_tag_number" value="' + nowTag + '" />' +
@@ -97,6 +105,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var wasTagNumber = $('#was_tag_number', diffDiv);
+	var tagGapNumber = $('#tag_gap_number', diffDiv);
 	var nowTagNumber = $('#now_tag_number', diffDiv);
 		
 	var wasTrafficLight = $('#was_traffic_light', diffDiv);
@@ -366,10 +375,13 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(data) {
 		  resetNavigateButtonHandlers();
-		  wasTagNumber.val(wasTag);
+		  
 		  wasTrafficLight.html(makeTrafficLight(data.wasTrafficLight));
-		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
+		  wasTagNumber.val(wasTag);
+		  tagGapNumber.html(tagGap);
 		  nowTagNumber.val(nowTag);
+		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
+		  
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
 		  resetFilenameAddedDeletedLineCountHandlers();
 		  diffContent.html(makeDiffContent(data.diffs));
