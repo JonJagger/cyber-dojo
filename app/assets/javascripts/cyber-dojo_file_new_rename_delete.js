@@ -22,16 +22,17 @@ var cyberDojo = (function(cd, $) {
     var div = $('<div>', {
       'class': 'panel'
     });
-    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 50)));
-    div.append('<div>&nbsp;</div>');
     var input = $('<input>', {
       type: 'text',
       id: 'renamer',
       name: 'renamer',
       value: oldFilename
     });
-	
+
+    div.append(cd.centeredDiv(cd.avatarImage(avatarName, 50)));
+    div.append('<div>&nbsp;</div>');
     div.append(cd.centeredDiv(input));
+	
     var renamer = $('<div>')
       .html(div)
       .dialog({
@@ -43,34 +44,39 @@ var cyberDojo = (function(cd, $) {
 		  {
 			id: 'rename_ok',
 			text: 'ok',
+			disabled: true,
 			click: function() {
+			  console.log("CLICKED");
 			  var newFilename = $.trim(input.val());
 			  cd.renameFileFromTo(avatarName, oldFilename, newFilename);
-			  $(this).dialog('close');
+			  $(this).remove();
 		    }
 		  },
 		  {
 			id: 'rename_cancel',
 			text: 'cancel',
 			click: function() {
-			  $(this).dialog('close');
+			  $(this).remove();
 			}
 		  }
 		]
       });
-    
+	
 	input.keyup(function(event) {
 	  var newFilename = $.trim(input.val());
+      var renameOk = $('#rename_ok');
       event.preventDefault();
-	  // TODO: set this based on newFilename
-      //$('#rename_ok').button('disable');
-	  // TODO: if [ok] enabled && 
-      if (event.keyCode === $.ui.keyCode.ENTER) {
-		cd.renameFileFromTo(avatarName, oldFilename, newFilename);		
-		renamer.dialog('close');
-      }  
+	  if (cd.isValidFilename(newFilename))  {
+        renameOk.button('enable');
+		if (event.keyCode === $.ui.keyCode.ENTER) {
+		 cd.renameFileFromTo(avatarName, oldFilename, newFilename);		
+		 renamer.remove();
+		}  		
+	  } else {
+        renameOk.button('disable');
+	  }
     });
-	
+		
     renamer.dialog('open');
     var end = oldFilename.lastIndexOf('.');
     if (end === -1) {
@@ -150,6 +156,8 @@ var cyberDojo = (function(cd, $) {
 
   cd.renameFileFromTo = function(avatarName, oldFilename, newFilename) {
     cd.saveScrollPosition(oldFilename);
+	//TODO: once live rename checks are fully in place drop this if
+	//      but retain if contents.
     if (cd.canRenameFileFromTo(avatarName, oldFilename, newFilename)) {	  
       cd.rewireFileFromTo(oldFilename, newFilename);	  
       cd.rebuildFilenameList();
@@ -166,6 +174,27 @@ var cyberDojo = (function(cd, $) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
+  cd.isValidFilename = function(filename) {
+    if (filename === "") {
+      return false;
+    }
+    if (cd.filenameAlreadyExists(filename)) {
+      return false;
+    }
+    if (filename.indexOf("\\") !== -1) {
+      return false;
+    }
+    if (filename[0] === '/') {
+      return false;      
+    }
+    if (filename.indexOf("..") !== -1) {
+      return false;      
+    }
+    return true;    	
+  };
+  
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   cd.canRenameFileFromTo = function(avatarName, oldFilename, newFilename) {
     var message;
     if (newFilename === "") {
