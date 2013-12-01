@@ -30,6 +30,17 @@ var cyberDojo = (function(cd, $) {
     });
   };
     
+  cd.showTip = function(tip, tipWindow) {
+    setTimeout(function() {
+	  tipWindow.html(tip);
+	  tipWindow.show();
+	  setTimeout(function() {
+		tipWindow.hide();
+		tipWindow.empty();
+	  }, 1000);
+    }, 0);	
+  };
+      
   return cd;
 })(cyberDojo || {}, $);
 

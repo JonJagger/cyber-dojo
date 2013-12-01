@@ -10,7 +10,6 @@ var cyberDojo = (function(cd, $) {
   cd.deleteFile = function(title) {
     var filename = cd.currentFilename();
     var div = $(cd.divPanel(''));
-    div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
 	var deleter = $('<div>')
 	  .html(div)
 	  .dialog({
@@ -28,6 +27,7 @@ var cyberDojo = (function(cd, $) {
 		  }
 		}
 	  });    
+    div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
 	deleter.dialog('open');
   };
 
@@ -244,63 +244,29 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
   
   cd.isValidFilename = function(filename) {
+	var tipWindow = $('#tip_window');
     if (filename === "") {
+	  cd.showTip('No filename', tipWindow);	  
       return false;
     }
     if (cd.filenameAlreadyExists(filename)) {
+	  cd.showTip('Already exists', tipWindow);
       return false;
     }
     if (filename.indexOf("\\") !== -1) {
+	  cd.showTip("Can't contain \\", tipWindow);
       return false;
     }
     if (filename[0] === '/') {
+	  cd.showTip("Can't start with /", tipWindow);
       return false;      
     }
     if (filename.indexOf("..") !== -1) {
+	  cd.showTip("Can't contain ..", tipWindow);
       return false;      
     }
     return true;    	
   };
   
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-  // Unused code from here down.
-  // But the messages could be usefully displayed in some
-  // kind of a tooltip inside the dialog.
- 
-  var message = function(oldFilename, newFilename) {
-    if (newFilename === "") {
-      return "No filename entered" + "<br/>" +
-	    "Rename " + oldFilename + " abandoned";
-    }
-    if (cd.filenameAlreadyExists(newFilename)) {
-      return renameFailure(oldFilename, newFilename,
-		    "a file called " + newFilename + " already exists");
-    }
-    if (newFilename.indexOf("\\") !== -1) {
-      return renameFailure(oldFilename, newFilename,
-		    newFilename + " contains a back slash");
-    }
-    if (newFilename[0] === '/') {
-      return renameFailure(oldFilename, newFilename,
-		    newFilename + " starts with a forward slash");
-    }
-    if (newFilename.indexOf("..") !== -1) {
-      return renameFailure(oldFilename, newFilename,
-		    newFilename + " contains ..");
-    }
-    return "";    
-  };
-  
-  cd.renameFailure = function(oldFilename, newFilename, reason) {
-    var space = "&nbsp;";
-    var tab = space + space + space + space;
-    var br = "<br/>";
-    return "Cannot rename" + br +
-	   tab + oldFilename + br +
-	   "to" + br + 
-	   tab + newFilename + br +
-	  "because " + reason;
-  };
-
   return cd;
 })(cyberDojo || {}, $);
