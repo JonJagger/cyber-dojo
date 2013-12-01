@@ -6,12 +6,8 @@ $(document).ready(function() {
   var fileButtons =  $('#file_operations');
       
   fileButtons.find('#new').click(function() {
-    cd.newFile();
-    //Do immediate rename?
-    //var title = $(this).text();
-    //cd.renameFile(title, "<%= @avatar.name %>");
-    //Best is to ask for the new filename _first_
-    //and only enable [ok] button if it is valid
+    var title = $(this).data('title');
+    cd.newFile(title);
   });
   
   fileButtons.find('#rename').click(function() {
@@ -34,8 +30,7 @@ $(document).ready(function() {
     <button type="button"
             id="rename"
             data-title="<%= t('views.buttons.rename_file') %>"
-            class="tipped"
-            value="<%= t('views.buttons.rename_file') %>">
+            class="tipped">
       <%= t('views.buttons.rename_file') %>
       <div class="tooltip">
         Rename the current file
@@ -47,8 +42,7 @@ $(document).ready(function() {
     <button type="button"
             id="delete"
             data-title="<%= t('views.buttons.delete_file') %>"            
-            class="tipped"
-            value="<%= t('views.buttons.delete_file') %>">
+            class="tipped">
       <%= t('views.buttons.delete_file') %>
       <div class="tooltip">
         Delete the current file
@@ -59,8 +53,8 @@ $(document).ready(function() {
   <div class="table-row">
     <button type="button"
             id="new"
-            class="tipped"
-            value="<%= t('views.buttons.new_file') %>">
+            data-title="<%= t('views.buttons.new_file') %>"            
+            class="tipped">
       <%= t('views.buttons.new_file') %>
       <div class="tooltip">
         Create a new file

@@ -3,19 +3,78 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.newFile = function(title) {
-    // Append three random chars to the end of the filename.
-    // There is no excuse not to rename it!
-    cd.newFileContent('newfile_' + cd.random3(), 'Please rename me!');
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   cd.deleteFile = function(title, avatarName) {
     cd.deleteFilePrompt(title, avatarName, true);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  cd.newFile = function(title) {
+    var newFilename = 'filename';
+    var div = $('<div>', {
+      'class': 'panel'
+    });
+    var input = $('<input>', {
+      type: 'text',
+      id: 'new_filename',
+      name: 'new_filename',
+      value: newFilename
+    });
+    var okButton =
+	{
+	  id: 'new_file_ok',
+	  text: 'ok',
+	  disabled: !cd.isValidFilename(newFilename),	  
+	  click: function() {
+		var newFilename = $.trim(input.val());
+        cd.newFileContent(newFilename, '');		
+		$(this).remove();
+	  }	  
+	};
+	var cancelButton = 
+	{
+	  id: 'new_file_cancel',
+	  text: 'cancel',
+	  click: function() {
+		$(this).remove();
+	  }
+	};
+    var newFileDialog = $('<div id="new_file_dialog">')
+      .html(div)
+      .dialog({
+		autoOpen: false,
+		width: 350,
+		title: cd.dialogTitle(title),
+		modal: true,
+		buttons: [ okButton, cancelButton ]
+      });
+	
+    div.append(cd.centeredDiv(input));		
+	
+	input.keyup(function(event) {
+      var ok = $('#new_file_ok');
+	  newFilename = $.trim(input.val());
+      event.preventDefault();
+	  if (cd.isValidFilename(newFilename))  {
+        ok.button('enable');
+		if (event.keyCode === $.ui.keyCode.ENTER) {
+          cd.newFileContent(newFilename, '');				  
+		  newFileDialog.remove();
+		}  		
+	  } else {
+        ok.button('disable');
+	  }
+    });
+		
+	// Don't refactor to newFileDialog.dialog('open')
+	// If you do that the dialog only works the first time. See
+	// http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
+    $('#new_file_dialog').dialog('open');
+    input[0].setSelectionRange(0, newFilename.length);
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
   cd.renameFile = function(title, avatarName) {
     var oldFilename = cd.currentFilename();
@@ -24,15 +83,15 @@ var cyberDojo = (function(cd, $) {
     });
     var input = $('<input>', {
       type: 'text',
-      id: 'renamer',
-      name: 'renamer',
+      id: 'rename_filename',
+      name: 'rename_filename',
       value: oldFilename
     });
     var okButton =
 	{
-	  id: 'rename_ok',
+	  id: 'rename_file_ok',
 	  text: 'ok',
-	  disabled: true,
+	  disabled: !cd.isValidFilename(oldFilename),
 	  click: function() {
 		var newFilename = $.trim(input.val());
 		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
@@ -41,13 +100,13 @@ var cyberDojo = (function(cd, $) {
 	};
 	var cancelButton = 
 	{
-	  id: 'rename_cancel',
+	  id: 'rename_file_cancel',
 	  text: 'cancel',
 	  click: function() {
 		$(this).remove();
 	  }
 	};
-    var renamer = $('<div id="rename_dialog">')
+    var renameFileDialog = $('<div id="rename_file_dialog">')
       .html(div)
       .dialog({
 		autoOpen: false,
@@ -61,23 +120,23 @@ var cyberDojo = (function(cd, $) {
 	
 	input.keyup(function(event) {
 	  var newFilename = $.trim(input.val());
-      var renameOk = $('#rename_ok');
+      var ok = $('#rename_file_ok');
       event.preventDefault();
 	  if (cd.isValidFilename(newFilename))  {
-        renameOk.button('enable');
+        ok.button('enable');
 		if (event.keyCode === $.ui.keyCode.ENTER) {
 		 cd.renameFileFromTo(avatarName, oldFilename, newFilename);		
-		 renamer.remove();
+		 renameFileDialog.remove();
 		}  		
 	  } else {
-        renameOk.button('disable');
+        ok.button('disable');
 	  }
     });
 		
 	// Don't refactor to renamer.dialog('open')
 	// If you do that the dialog only works the first time. See
 	// http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
-    $('#rename_dialog').dialog('open');
+    $('#rename_file_dialog').dialog('open');
     var end = oldFilename.lastIndexOf('.');
     if (end === -1) {
       end = oldFilename.length;
