@@ -19,7 +19,7 @@ var cyberDojo = (function(cd, $) {
         timer = setTimeout(function() {
           tipWindow.html(tip.html());
           tipWindow.show();
-        }, 750);
+        }, 1000);
       });
       
       $(node).on('mouseleave', function() {

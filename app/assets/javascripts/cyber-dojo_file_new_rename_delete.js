@@ -3,6 +3,10 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // delete file
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   cd.deleteFile = function(title) {
     var filename = cd.currentFilename();
     var div = $(cd.divPanel(''));
@@ -27,6 +31,8 @@ var cyberDojo = (function(cd, $) {
 	deleter.dialog('open');
   };
 
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
   cd.doDelete = function(filename) {
 	var i, filenames, notBoring;
     cd.fileDiv(filename).remove();    
@@ -49,6 +55,8 @@ var cyberDojo = (function(cd, $) {
     cd.loadFile(filenames[i]);
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // new file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   cd.newFile = function(title) {
@@ -115,6 +123,8 @@ var cyberDojo = (function(cd, $) {
     input[0].setSelectionRange(0, newFilename.length);
   };
 
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+
   cd.newFileContent = function(filename, content) {
 	var newFile = cd.makeNewFile(filename, content);
     $('#visible_files_container').append(newFile);
@@ -123,6 +133,8 @@ var cyberDojo = (function(cd, $) {
     cd.loadFile(filename);
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // rename file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.renameFile = function(title) {
@@ -193,87 +205,16 @@ var cyberDojo = (function(cd, $) {
     input[0].setSelectionRange(0, end);
   };
   
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+  
   cd.renameFileFromTo = function(oldFilename, newFilename) {
     cd.saveScrollPosition(oldFilename);
-	//TODO: once live rename checks are fully in place drop this if
-	//      but retain if contents.
-    if (cd.canRenameFileFromTo(oldFilename, newFilename)) {	  
-      cd.rewireFileFromTo(oldFilename, newFilename);	  
-      cd.rebuildFilenameList();
-      cd.loadFile(newFilename);
-    }
-    // else
-    //   the scroll position is still ok but the
-    //   cursor position is now lost... doing
-    //     cd.fileContentFor(oldFilename).focus();
-    //     cd.restoreScrollPosition(oldFilename);
-    //   does not work - there is some interaction between
-    //   jQuery dialog and the textarea cursor...??
+	cd.rewireFileFromTo(oldFilename, newFilename);	  
+	cd.rebuildFilenameList();
+	cd.loadFile(newFilename);
   };
   
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  cd.isValidFilename = function(filename) {
-    if (filename === "") {
-      return false;
-    }
-    if (cd.filenameAlreadyExists(filename)) {
-      return false;
-    }
-    if (filename.indexOf("\\") !== -1) {
-      return false;
-    }
-    if (filename[0] === '/') {
-      return false;      
-    }
-    if (filename.indexOf("..") !== -1) {
-      return false;      
-    }
-    return true;    	
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.canRenameFileFromTo = function(oldFilename, newFilename) {
-    var message;
-    if (newFilename === "") {
-      message = "No filename entered" + "<br/>" +
-	    "Rename " + oldFilename + " abandoned";
-      cd.renameAlert(message);
-      return false;
-    }
-    if (newFilename === oldFilename) {
-      message = "Same filename entered." + "<br/>" +
-	    oldFilename + " is unchanged";
-      cd.renameAlert(message);
-      return false;
-    }
-    if (cd.filenameAlreadyExists(newFilename)) {
-      cd.renameFailure(oldFilename, newFilename,
-		    "a file called " + newFilename + " already exists");
-      return false;
-    }
-    if (newFilename.indexOf("\\") !== -1) {
-      cd.renameFailure(oldFilename, newFilename,
-		    newFilename + " contains a back slash");
-      return false;
-    }
-    if (newFilename[0] === '/') {
-      cd.renameFailure(oldFilename, newFilename,
-		    newFilename + " starts with a forward slash");
-      return false;      
-    }
-    if (newFilename.indexOf("..") !== -1) {
-      cd.renameFailure(oldFilename, newFilename,
-		    newFilename + " contains ..");
-      return false;      
-    }
-    return true;    
-  };
-  
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
   
   cd.rewireFileFromTo = function(oldFilename, newFilename) {
     // I used to delete the old file and then create
@@ -299,30 +240,66 @@ var cyberDojo = (function(cd, $) {
     ta.attr('name', "file_content[" + newFilename + "]");
     ta.attr('id', 'file_content_for_' + newFilename);
   };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+  
+  cd.isValidFilename = function(filename) {
+    if (filename === "") {
+      return false;
+    }
+    if (cd.filenameAlreadyExists(filename)) {
+      return false;
+    }
+    if (filename.indexOf("\\") !== -1) {
+      return false;
+    }
+    if (filename[0] === '/') {
+      return false;      
+    }
+    if (filename.indexOf("..") !== -1) {
+      return false;      
+    }
+    return true;    	
+  };
+  
+  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+  // Unused code from here down.
+  // But the messages could be usefully displayed in some
+  // kind of a tooltip inside the dialog.
+ 
+  var message = function(oldFilename, newFilename) {
+    if (newFilename === "") {
+      return "No filename entered" + "<br/>" +
+	    "Rename " + oldFilename + " abandoned";
+    }
+    if (cd.filenameAlreadyExists(newFilename)) {
+      return renameFailure(oldFilename, newFilename,
+		    "a file called " + newFilename + " already exists");
+    }
+    if (newFilename.indexOf("\\") !== -1) {
+      return renameFailure(oldFilename, newFilename,
+		    newFilename + " contains a back slash");
+    }
+    if (newFilename[0] === '/') {
+      return renameFailure(oldFilename, newFilename,
+		    newFilename + " starts with a forward slash");
+    }
+    if (newFilename.indexOf("..") !== -1) {
+      return renameFailure(oldFilename, newFilename,
+		    newFilename + " contains ..");
+    }
+    return "";    
+  };
+  
   cd.renameFailure = function(oldFilename, newFilename, reason) {
     var space = "&nbsp;";
     var tab = space + space + space + space;
     var br = "<br/>";
-    var why = "Cannot rename" + br +
+    return "Cannot rename" + br +
 	   tab + oldFilename + br +
 	   "to" + br + 
 	   tab + newFilename + br +
 	  "because " + reason;
-    cd.renameAlert(why);
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  cd.renameAlert = function(message) {
-    var alertHtml = ''    
-      + '<div class="panel" data-width="400">'
-      +   cd.makeTable(message)
-      + '</div>';
-    var ok = "ok";
-    cd.dialog(alertHtml, '!rename', ok).dialog('open');
   };
 
   return cd;
