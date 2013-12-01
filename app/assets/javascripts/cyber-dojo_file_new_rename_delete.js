@@ -4,7 +4,49 @@ var cyberDojo = (function(cd, $) {
   "use strict";
   
   cd.deleteFile = function(title) {
-    cd.deleteFilePrompt(title, true);
+    var filename = cd.currentFilename();
+    var div = $(cd.divPanel(''));
+    div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
+	var deleter = $('<div>')
+	  .html(div)
+	  .dialog({
+		autoOpen: false,
+		width: 350,
+		title: cd.dialogTitle(title),
+		modal: true,
+		buttons: {
+		  ok: function() {
+			cd.doDelete(filename);
+			$(this).remove();
+		  },
+		  cancel: function() {
+			$(this).remove();
+		  }
+		}
+	  });    
+	deleter.dialog('open');
+  };
+
+  cd.doDelete = function(filename) {
+	var i, filenames, notBoring;
+    cd.fileDiv(filename).remove();    
+    filenames = cd.rebuildFilenameList();
+    // cyber-dojo.sh & output cannot be deleted so
+    // there is always at least one file. But
+	// they are boring files, and so is instructions
+	// so try to avoid those three...
+	for (i = 0; i < filenames.length; i++) {
+	  notBoring = filenames[i];
+	  if (notBoring !== 'cyber-dojo.sh' &&
+		  notBoring !== 'intstructions' &&
+		  notBoring !== 'output') {
+		break;
+	  }
+	}
+	if (i === filenames.length) {
+	  i = 0;
+	}
+    cd.loadFile(filenames[i]);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -73,8 +115,15 @@ var cyberDojo = (function(cd, $) {
     input[0].setSelectionRange(0, newFilename.length);
   };
 
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  cd.newFileContent = function(filename, content) {
+	var newFile = cd.makeNewFile(filename, content);
+    $('#visible_files_container').append(newFile);
+    cd.bindLineNumbers(filename);      
+    cd.rebuildFilenameList();
+    cd.loadFile(filename);
+  };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.renameFile = function(title) {
     var oldFilename = cd.currentFilename();
@@ -144,71 +193,6 @@ var cyberDojo = (function(cd, $) {
     input[0].setSelectionRange(0, end);
   };
   
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.newFileContent = function(filename, content) {
-	var newFile = cd.makeNewFile(filename, content);
-    $('#visible_files_container').append(newFile);
-    cd.bindLineNumbers(filename);      
-    cd.rebuildFilenameList();
-    cd.loadFile(filename);
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.deleteFilePrompt = function(title, ask) {
-    var filename = cd.currentFilename();
-    var div = $(cd.divPanel(''));
-    div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
-    if (ask) {
-      var deleter = $('<div>')
-		.html(div)
-		.dialog({
-		  autoOpen: false,
-		  width: 350,
-		  title: cd.dialogTitle(title),
-		  modal: true,
-		  buttons: {
-			ok: function() {
-			  cd.doDelete(filename);
-			  $(this).remove();
-			},
-			cancel: function() {
-			  $(this).remove();
-			}
-		  }
-		});    
-      deleter.dialog('open');
-    }
-	else {
-      cd.doDelete(filename);
-    }
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.doDelete = function(filename) {
-	var i, filenames, notBoring;
-    cd.fileDiv(filename).remove();    
-    filenames = cd.rebuildFilenameList();
-    // cyber-dojo.sh & output cannot be deleted so
-    // there is always at least one file. But
-	// they are boring files, and so is instructions
-	// so try to avoid those three...
-	for (i = 0; i < filenames.length; i++) {
-	  notBoring = filenames[i];
-	  if (notBoring !== 'cyber-dojo.sh' &&
-		  notBoring !== 'intstructions' &&
-		  notBoring !== 'output') {
-		break;
-	  }
-	}
-	if (i === filenames.length) {
-	  i = 0;
-	}
-    cd.loadFile(filenames[i]);
-  };
-
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.renameFileFromTo = function(oldFilename, newFilename) {
