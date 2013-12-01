@@ -34,6 +34,7 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.doDelete = function(filename) {
+	// Also used in cyber-dojo_dialog_revert.js	
 	var i, filenames, notBoring;
     cd.fileDiv(filename).remove();    
     filenames = cd.rebuildFilenameList();
@@ -126,6 +127,7 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.newFileContent = function(filename, content) {
+	// Also used in cyber-dojo_dialog_revert.js
 	var newFile = cd.makeNewFile(filename, content);
     $('#visible_files_container').append(newFile);
     cd.bindLineNumbers(filename);      
