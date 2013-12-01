@@ -181,6 +181,7 @@ var cyberDojo = (function(cd, $) {
 		}		
 	  }
 	  if (i === files.length) {
+		// TODO: this is duplicated in cyber-dojo_dialog_revert.js
 		for (i = 0; i < files.length; i++) {
 		  filename = $(files[i]).text();
 		  if (filename !== 'cyber-dojo.sh' &&
