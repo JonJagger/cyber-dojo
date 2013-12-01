@@ -47,8 +47,7 @@ var cyberDojo = (function(cd, $) {
 		$(this).remove();
 	  }
 	};
-		
-    var renamer = $('<div>')
+    var renamer = $('<div id="rename_dialog">')
       .html(div)
       .dialog({
 		autoOpen: false,
@@ -58,7 +57,7 @@ var cyberDojo = (function(cd, $) {
 		buttons: [ okButton, cancelButton ]
       });
 	
-    div.append(cd.centeredDiv(input));
+    div.append(cd.centeredDiv(input));		
 	
 	input.keyup(function(event) {
 	  var newFilename = $.trim(input.val());
@@ -75,7 +74,10 @@ var cyberDojo = (function(cd, $) {
 	  }
     });
 		
-    renamer.dialog('open');
+	// Don't refactor to renamer.dialog('open')
+	// If you do that the dialog only works the first time. See
+	// http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
+    $('#rename_dialog').dialog('open');
     var end = oldFilename.lastIndexOf('.');
     if (end === -1) {
       end = oldFilename.length;
