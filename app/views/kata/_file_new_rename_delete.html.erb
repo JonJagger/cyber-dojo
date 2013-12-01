@@ -12,12 +12,12 @@ $(document).ready(function() {
   
   fileButtons.find('#rename').click(function() {
     var title = $(this).data('title');
-    cd.renameFile(title, "<%= @avatar.name %>");
+    cd.renameFile(title);
   });
   
   fileButtons.find('#delete').click(function() {
     var title = $(this).data('title');        
-    cd.deleteFile(title, "<%= @avatar.name %>");
+    cd.deleteFile(title);
   });
   
 });

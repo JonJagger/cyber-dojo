@@ -3,8 +3,8 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
   
-  cd.deleteFile = function(title, avatarName) {
-    cd.deleteFilePrompt(title, avatarName, true);
+  cd.deleteFile = function(title) {
+    cd.deleteFilePrompt(title, true);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -76,7 +76,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-  cd.renameFile = function(title, avatarName) {
+  cd.renameFile = function(title) {
     var oldFilename = cd.currentFilename();
     var div = $('<div>', {
       'class': 'panel'
@@ -94,7 +94,7 @@ var cyberDojo = (function(cd, $) {
 	  disabled: !cd.isValidFilename(oldFilename),
 	  click: function() {
 		var newFilename = $.trim(input.val());
-		cd.renameFileFromTo(avatarName, oldFilename, newFilename);
+		cd.renameFileFromTo(oldFilename, newFilename);
 		$(this).remove();
 	  }	  
 	};
@@ -125,7 +125,7 @@ var cyberDojo = (function(cd, $) {
 	  if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
 		if (event.keyCode === $.ui.keyCode.ENTER) {
-		 cd.renameFileFromTo(avatarName, oldFilename, newFilename);		
+		 cd.renameFileFromTo(oldFilename, newFilename);		
 		 renameFileDialog.remove();
 		}  		
 	  } else {
@@ -156,7 +156,7 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.deleteFilePrompt = function(title, avatarName, ask) {
+  cd.deleteFilePrompt = function(title, ask) {
     var filename = cd.currentFilename();
     var div = $(cd.divPanel(''));
     div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
@@ -211,11 +211,11 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.renameFileFromTo = function(avatarName, oldFilename, newFilename) {
+  cd.renameFileFromTo = function(oldFilename, newFilename) {
     cd.saveScrollPosition(oldFilename);
 	//TODO: once live rename checks are fully in place drop this if
 	//      but retain if contents.
-    if (cd.canRenameFileFromTo(avatarName, oldFilename, newFilename)) {	  
+    if (cd.canRenameFileFromTo(oldFilename, newFilename)) {	  
       cd.rewireFileFromTo(oldFilename, newFilename);	  
       cd.rebuildFilenameList();
       cd.loadFile(newFilename);
@@ -252,37 +252,37 @@ var cyberDojo = (function(cd, $) {
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.canRenameFileFromTo = function(avatarName, oldFilename, newFilename) {
+  cd.canRenameFileFromTo = function(oldFilename, newFilename) {
     var message;
     if (newFilename === "") {
       message = "No filename entered" + "<br/>" +
 	    "Rename " + oldFilename + " abandoned";
-      cd.renameAlert(avatarName, message);
+      cd.renameAlert(message);
       return false;
     }
     if (newFilename === oldFilename) {
       message = "Same filename entered." + "<br/>" +
 	    oldFilename + " is unchanged";
-      cd.renameAlert(avatarName, message);
+      cd.renameAlert(message);
       return false;
     }
     if (cd.filenameAlreadyExists(newFilename)) {
-      cd.renameFailure(avatarName, oldFilename, newFilename,
+      cd.renameFailure(oldFilename, newFilename,
 		    "a file called " + newFilename + " already exists");
       return false;
     }
     if (newFilename.indexOf("\\") !== -1) {
-      cd.renameFailure(avatarName, oldFilename, newFilename,
+      cd.renameFailure(oldFilename, newFilename,
 		    newFilename + " contains a back slash");
       return false;
     }
     if (newFilename[0] === '/') {
-      cd.renameFailure(avatarName, oldFilename, newFilename,
+      cd.renameFailure(oldFilename, newFilename,
 		    newFilename + " starts with a forward slash");
       return false;      
     }
     if (newFilename.indexOf("..") !== -1) {
-      cd.renameFailure(avatarName, oldFilename, newFilename,
+      cd.renameFailure(oldFilename, newFilename,
 		    newFilename + " contains ..");
       return false;      
     }
@@ -318,7 +318,7 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.renameFailure = function(avatarName, oldFilename, newFilename, reason) {
+  cd.renameFailure = function(oldFilename, newFilename, reason) {
     var space = "&nbsp;";
     var tab = space + space + space + space;
     var br = "<br/>";
@@ -327,24 +327,15 @@ var cyberDojo = (function(cd, $) {
 	   "to" + br + 
 	   tab + newFilename + br +
 	  "because " + reason;
-    cd.renameAlert(avatarName, why);
+    cd.renameAlert(why);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  cd.renameAlert = function(avatarName, message) {
-	var imageSize = 50;
-    var imageHtml = ''
-      + '<img alt="' + avatarName + '"'
-      +     ' class="avatar_image"'
-      +     ' width="' + imageSize + '"'
-      +     ' height="' + imageSize + '"'
-      +     ' style="float: left; padding: 2px;"'
-      +     ' src="/images/avatars/' + avatarName + '.jpg'+ '"'
-      +     ' title="' + avatarName + '" />';      
+  cd.renameAlert = function(message) {
     var alertHtml = ''    
       + '<div class="panel" data-width="400">'
-      +   cd.makeTable(imageHtml, message)
+      +   cd.makeTable(message)
       + '</div>';
     var ok = "ok";
     cd.dialog(alertHtml, '!rename', ok).dialog('open');
