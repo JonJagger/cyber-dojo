@@ -32,6 +32,11 @@ class SetupController < ApplicationController
     vis['instructions'] = exercise.instructions
     Kata.create(root_dir, info)
     
+    logger.warn("Created dojo " + info[:id] +
+                ", " + language.name +
+                ", " + exercise.name +
+                ", " + make_time(Time.now).to_s)
+    
     redirect_to :controller => 'dojo',
                 :action => :index, 
                 :id => info[:id]
