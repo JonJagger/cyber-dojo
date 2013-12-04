@@ -1,5 +1,5 @@
 module Untitled where
 
-anwer :: Int
+answer :: Int
 answer = 42
 
