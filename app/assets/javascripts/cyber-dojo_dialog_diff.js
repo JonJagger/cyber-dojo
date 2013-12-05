@@ -126,7 +126,7 @@ var cyberDojo = (function(cd, $) {
 		}
 	  };
 	  
-	  var showDiff = function(was,now) {
+	  var showDiff = function(was,now) {		
 		wasTag = was;
 		nowTag = now;
 		tagGap = now - was;
@@ -148,21 +148,19 @@ var cyberDojo = (function(cd, $) {
 		}        
 	  };
 
-	  var refreshNavigationHandlers = function(off, b1, b2, b1From, b1To, b2From, b2To) {
-		b1.attr('disabled', off);
-		b2.attr('disabled', off)
+	  var refreshNavigationHandlers = function(off, button, from, to) {
+		button.attr('disabled', off);
 		if (!off) {
-		  b1.unbind()
-			.click(function() { showDiff(b1From, b1To); })
-			.attr('title', toolTip(b1From, b1To));			  
-		  b2.unbind()
-			.click(function() { showDiff(b2From, b2To); })
-			.attr('title', toolTip(b2From, b2To));	
+		  button.unbind()
+			.click(function() { showDiff(from, to); })
+			.attr('title', toolTip(from, to));			  
 		}
 	  };
 	
-	  refreshNavigationHandlers(minTag >= wasTag, firstButton, prevButton, minTag, minTag+tagGap, wasTag-1, nowTag-1);
-	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, lastButton, wasTag+1, nowTag+1, maxTag-tagGap, maxTag);
+	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);
+	  refreshNavigationHandlers(minTag >= wasTag, prevButton, wasTag-1, nowTag-1);	  
+	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
+	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
 
 	  wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
 	  nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
