@@ -162,8 +162,8 @@ var cyberDojo = (function(cd, $) {
 	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
 	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
 
-	  wasTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  
-	  nowTagNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });
+	  wasTagNumber.unbind().keyup(function(event) { tagEdit(event); });  
+	  nowTagNumber.unbind().keyup(function(event) { tagEdit(event); });
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
