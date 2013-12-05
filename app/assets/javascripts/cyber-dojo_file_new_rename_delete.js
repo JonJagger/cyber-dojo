@@ -35,26 +35,9 @@ var cyberDojo = (function(cd, $) {
 
   cd.doDelete = function(filename) {
 	// Also used in cyber-dojo_dialog_revert.js	
-	var i, filenames, notBoring;
     cd.fileDiv(filename).remove();    
-    filenames = cd.rebuildFilenameList();
-    // cyber-dojo.sh & output cannot be deleted so
-    // there is always at least one file. But
-	// they are boring files, and so is instructions
-	// so try to avoid those three...
-    // TODO: this is duplicated in cyber-dojo_file_new_rename_delete.js	
-	/*for (i = 0; i < filenames.length; i++) {
-	  notBoring = filenames[i];
-	  if (notBoring !== 'cyber-dojo.sh' &&
-		  notBoring !== 'intstructions' &&
-		  notBoring !== 'output') {
-		break;
-	  }
-	}
-	if (i === filenames.length) {
-	  i = 0;
-	}*/
-	i = cd.nonBoringFilenameIndex(filenames);
+    var filenames = cd.rebuildFilenameList();
+	var i = cd.nonBoringFilenameIndex(filenames);
     cd.loadFile(filenames[i]);
   };
 

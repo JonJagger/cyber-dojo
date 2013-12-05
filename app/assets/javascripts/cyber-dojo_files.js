@@ -131,6 +131,10 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.nonBoringFilenameIndex = function(filenames) {
+    // In << < > >> navigation the current file is
+    // sometimes not present after the navigation
+    // (eg the file has been renamed/deleted).
+    // When this happens, try to select a non-boring file.
     var i, filename;
     for (i = 0; i < filenames.length; i++) {
       filename = filenames[i];
