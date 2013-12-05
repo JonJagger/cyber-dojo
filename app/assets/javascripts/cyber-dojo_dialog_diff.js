@@ -156,7 +156,13 @@ var cyberDojo = (function(cd, $) {
 			.attr('title', toolTip(from, to));			  
 		}
 	  };
-	
+	  
+	  // The wasTagNumber and nowTagNumber may have been edited since the
+	  // refresh but before a navigation button is pressed. However, the
+	  // navigation buttons do _not_ look at the current state of the
+	  // wasTagNumber/nowTagNumbers, but use the values set on refresh.
+	  // This is the simplest way to ensure the navigation buttons are
+	  // not incorrectly enabled/disabled.
 	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);
 	  refreshNavigationHandlers(minTag >= wasTag, prevButton, wasTag-1, nowTag-1);	  
 	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);

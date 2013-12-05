@@ -172,27 +172,18 @@ var cyberDojo = (function(cd, $) {
 	var currentFilename = undefined;
 	
 	var showCurrentFile = function() {
-	  var i, filename;
+	  var i, filename, filenames = [ ];
 	  var files = $('.filename', revertDiv);
 	  for (i = 0; i < files.length; i++) {
 		filename = $(files[i]).text();
 		if (filename === currentFilename) {
 		  break;
-		}		
-	  }
-	  if (i === files.length) {
-		// TODO: this is duplicated in cyber-dojo_dialog_revert.js
-		for (i = 0; i < files.length; i++) {
-		  filename = $(files[i]).text();
-		  if (filename !== 'cyber-dojo.sh' &&
-			  filename !== 'instructions' &&
-			  filename != 'output') {
-			break;
-		  }
+		} else {
+		  filenames.push(filename);
 		}
 	  }
 	  if (i === files.length) {
-		i = 0;
+		i = cd.nonBoringFilenameIndex(filenames);
 	  }
       files[i].click();		
 	};
@@ -236,12 +227,13 @@ var cyberDojo = (function(cd, $) {
 	  };	  
 	  var atMin = (tag === minTag);
 	  var atMax = (tag === maxTag);
+	  
 	  resetHandler(firstButton, atMin, minTag);
 	  resetHandler(prevButton,  atMin, tag-1);
 	  resetHandler(nextButton,  atMax, tag+1);
 	  resetHandler(lastButton,  atMax, maxTag);
 	  
-	  trafficLightNumber.unbind('keyup').keyup(function(event) { tagEdit(event); });  	  
+	  trafficLightNumber.unbind().keyup(function(event) { tagEdit(event); });  	  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	

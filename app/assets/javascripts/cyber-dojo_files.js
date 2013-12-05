@@ -128,6 +128,26 @@ var cyberDojo = (function(cd, $) {
     return div;
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.nonBoringFilenameIndex = function(filenames) {
+    var i, filename;
+    for (i = 0; i < filenames.length; i++) {
+      filename = filenames[i];
+      if (filename !== 'cyber-dojo.sh' &&
+          filename !== 'instructions' &&
+          filename != 'output') {
+        break;
+      }
+    }
+    if (i === filenames.length) {
+      i = 0;
+    }
+    return i;
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   return cd;
 })(cyberDojo || {}, $);
 

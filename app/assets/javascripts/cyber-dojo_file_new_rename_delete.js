@@ -43,7 +43,7 @@ var cyberDojo = (function(cd, $) {
 	// they are boring files, and so is instructions
 	// so try to avoid those three...
     // TODO: this is duplicated in cyber-dojo_file_new_rename_delete.js	
-	for (i = 0; i < filenames.length; i++) {
+	/*for (i = 0; i < filenames.length; i++) {
 	  notBoring = filenames[i];
 	  if (notBoring !== 'cyber-dojo.sh' &&
 		  notBoring !== 'intstructions' &&
@@ -53,7 +53,8 @@ var cyberDojo = (function(cd, $) {
 	}
 	if (i === filenames.length) {
 	  i = 0;
-	}
+	}*/
+	i = cd.nonBoringFilenameIndex(filenames);
     cd.loadFile(filenames[i]);
   };
 
