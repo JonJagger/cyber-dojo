@@ -4,7 +4,11 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {    
-  
+    // This is virtually identical to
+	// cyber-dojo_dialog_revert.js
+	// except for the command executed when ok is pressed
+	// and refresh().
+	
   	var minTag = 1;
   
     var makeForkInfo = function() {
@@ -86,10 +90,10 @@ var cyberDojo = (function(cd, $) {
 			avatar: avatarName,
 			tag: tag
 		  }, '_blank');		  
-		  $(this).dialog('close');
+		  $(this).remove();
 		},
 		cancel: function() {
-		  $(this).dialog('close');
+		  $(this).remove();
 		}
 	  }
 	});

@@ -4,7 +4,11 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {    
-  
+    // This is virtually identical to
+	// cyber-dojo_dialog_fork.js
+	// except for the command executed when ok is pressed
+	// and refresh().
+	
   	var minTag = 1;
   
     var makeRevertInfo = function() {
@@ -106,10 +110,10 @@ var cyberDojo = (function(cd, $) {
 		  deleteAllCurrentFiles();
 		  copyRevertFilesToCurrentFiles();
 		  cd.testForm().submit();
-		  $(this).dialog('close');
+		  $(this).remove();
 		},
 		cancel: function() {
-		  $(this).dialog('close');
+		  $(this).remove();
 		}
 	  }
 	});
