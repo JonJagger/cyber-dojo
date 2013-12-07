@@ -54,4 +54,13 @@ module TrafficLightHelper
     Time.mktime(*light[:time]).strftime("%Y %b %-d, %H:%M:%S")    
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  def unlinked_traffic_light(inc, width = nil, height = nil)
+    width ||= 20
+    height ||= 62
+    colour = inc[:colour].to_s
+    traffic_light_image(colour,width,height)
+  end
+  
 end
