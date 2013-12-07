@@ -162,7 +162,9 @@ var cyberDojo = (function(cd, $) {
 		  filenames.push(filename);
 		}
 	  }
-	  i = cd.nonBoringFilenameIndex(filenames);
+	  if (i === files.length) {	  
+	    i = cd.nonBoringFilenameIndex(filenames);
+	  }
       files[i].click();		
 	};
 	
@@ -224,7 +226,6 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(data) {
-		  //data = d;
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
 		  trafficLightNumber.val(data.inc.number);
