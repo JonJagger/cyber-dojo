@@ -4,7 +4,7 @@
 $(document).ready(function() {
     
   $('#dashboard_button').click(function() {
-      cd.postTo('/dashboard/show', {
+      cd.get('/dashboard/show', {
         id: "<%= @kata.id %>"
       }, '_blank');
   });

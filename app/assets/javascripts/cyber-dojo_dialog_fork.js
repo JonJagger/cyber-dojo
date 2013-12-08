@@ -81,7 +81,7 @@ var cyberDojo = (function(cd, $) {
 	var forkDialog = forkDiv.dialog({	  
 	  title: cd.dialogTitle(title),
 	  autoOpen: false,
-	  width: 1150,
+	  width: 1100,
 	  modal: true,
 	  buttons: {
 		ok: function() {
