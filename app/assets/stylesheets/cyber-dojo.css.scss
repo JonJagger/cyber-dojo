@@ -50,6 +50,8 @@ body
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+$filename_and_button_border_size: 2px;
+
 button
 {
   background: darken($lighter-color, 10%);  
@@ -62,7 +64,7 @@ button
   }
   text-decoration: none;
   font-weight: normal;
-  border: none;
+  border: $filename_and_button_border_size solid $darker-color;  
   @include rounded-corner(4px);
   display: inline-block;
 }
@@ -104,14 +106,12 @@ div[class~='filename']
   }  
 }
 
-$filename_and_button_border_size: 2px;
-
-div[class~="filename"]:hover
+div[class~="filename"]:hover, button:hover
 {
   border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
 }
 
-div[class~="filename"]
+div[class~="filename"], button[disabled]:hover
 {
   border: $filename_and_button_border_size solid $darker-color;
 }
