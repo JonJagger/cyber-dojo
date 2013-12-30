@@ -23,6 +23,7 @@ class DashboardController < ApplicationController
     render :layout => false    
   end
   
+  # reinstate if anyone asks for this...
   def download
     # an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
     uuid = Uuid.new(id)
