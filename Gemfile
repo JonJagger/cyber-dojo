@@ -26,6 +26,7 @@ group :test do
   gem 'autotest-standalone'
   gem 'autotest-growl'
   gem 'approvals', '>= 0.0.7'
+  gem 'cucumber'
 end
 
 # rspec-rails needs to be in the development group so that Rails generators work.
