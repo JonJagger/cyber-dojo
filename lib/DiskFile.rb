@@ -46,9 +46,8 @@ class DiskFile
     # the dojo folder before choosing an avatar.    
     # See test/lib/io_lock_tests.rb
     result = nil
-    File.open(dir, 'r') do |fd|
-      mode = File::LOCK_EX
-      if fd.flock(mode)
+    File.open(dir + separator + 'f.lock', "w") do |fd|
+      if fd.flock(File::LOCK_EX)
         begin
           result = block.call()
         ensure
