@@ -35,21 +35,16 @@ a:link, a:visited
 .kata_id_input
 {
   background: lighten($green, 20%);
-  @include gradient-lighten($green, 30%, 20%, 10%);    
+  @include gradient-lighten($green, 30%, 25%, 20%);    
   color: $darker-color;
-  @include font-size-large();
+  @include font-size-medium();
+  text-align: center;
 }
 
 #start_button, #resume_button, #review_button
 {
   color: $darker-color;
   @include font-size-large();
-}
-
-.kata_id_input
-{
-  @include font-size-medium();
-  text-align: center;
 }
 
 #get_a_new_practice_id
@@ -60,7 +55,7 @@ a:link, a:visited
 
 #enter_a_practice_id
 {
-  color: lighten($green, 25%);
+  color: lighten($green, 30%);
   @include font-size-tiny();  
 }
 
