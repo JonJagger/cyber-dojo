@@ -1,14 +1,11 @@
 #include "untitled.hpp"
-#include <cassert>
-#include <iostream>
+#include "gtest.h"
+#include "gmock.h"
 
-static void example()
+using namespace ::testing;
+
+TEST(UntitledTest, HitchHiker)
 {
-    assert(hhg() == 6*9);
+  ASSERT_THAT(hhg(), Eq(6 * 9));
 }
 
-int main()
-{
-    example();
-    std::cout << "All tests passed";
-}
