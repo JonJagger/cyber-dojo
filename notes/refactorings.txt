@@ -1,56 +1,15 @@
-ACTUAL-BUGS
------------
-When you're in a diff-page and the file has multiple red/green sections
-then clicking on the filename should auto-scroll to the next red/green
-section. It doesn't. Or rather, it seems inconsistent.
------------
-If you specify ?locale=fr at the end of the dashboard URL
-it changes the animals names but then resets to english
-when the auto-refresh happens.
------------
 
 
-
-FUTURE-MAJOR
-------------
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
 better to use pgid - process group. See lib/Files.rb
 Note, if you're running under apache then this never seems to be
 a problem - does apache auto clean processes?
 -----
-Sandboxes could be retained across run-test submissions.
-This would allow, for example, incremental makes.
-I've prepared this by making the sandboxes/ subfolder be simply the
-dojo id concatenated with the animal name. Of course the sub-folder
-would not be deleted.
-This will require careful file control to ensure if a file has
-been deleted in the browser then it is also deleted in the sandbox.
-And if a file has not had its contents changed then it is not recreated
-in the sandbox. 
-This will also leave them in place available for debugging if problems arise.
-This would mean I would need to move the sandboxes
-folder onto the large partition on cyber-dojo.com
-I would also need some kind of harvester that reclaimed old sandboxes.
-Eg if sandboxes/X exists but katas/X does not (eg because it has been pruned)
-then I can delete sandboxes/X
------
 Pressing the test button in the browser sometimes creates a new
 traffic-light but the output you get back gets stuck and does
 not reflect edits made to the files. A work-around when this happens
 is to reopen the URL in a new tab.
------
-I need an automated process that moves dojos that have
-a minimum number of traffic lights and are at least N days
-old onto a separate server (or at the very minimum
-into a separate folder on the same server.) Or simply deletes them.
-But ideally, one that has a list of id's not to delete (eg the
-refactoring dojo's ids). This is not currently a problem as I've
-moved the katas/ folder on cyber-dojo.com to a different partition
-but that simply delays the problem. I've run out of inodes twice
-before. 
------
-The Diff view doesn't work properly in IE8.
 -----
 Do I need to do io_locks? Suppose there is a conflict. Could this
 simply mean the git commit fails with a merge conflict? I think
@@ -71,10 +30,6 @@ Doesn't happen on Safari on my Mac.
 Doesn't happen on Opera on my Mac.
 Doesn't happen on Jakub's mac using Firefox.
 Seems to be a problem local to me.
-
-
-
-FUTURE-MINOR
 ------------
 It would be simpler if output and instructions were not mixed
 into kata.language and avatar.setup did an explicit
