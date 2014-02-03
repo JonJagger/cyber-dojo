@@ -27,3 +27,9 @@ Then the hash of dojo-X frog 28 would be the same as dojo-Y alligator 1
 This would allow me to store these hashes in a database and to
 be able to know when any traffic-light's file-set has occured before
 (either through a commit or coincidentally).
+Thinking a bit more, do I want to detect file contents as being the same
+or content and filename? In reality it's unlikely the content would be
+the same if the filename was different as file contents often refer
+to filenames. Eg #includes. If I sort the filenames, then concat all
+the content into one-file (in sorted filename order) and then compute
+the hash of the one-file then that should be sufficient I think.
