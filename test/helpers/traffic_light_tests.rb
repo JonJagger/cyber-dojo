@@ -6,7 +6,7 @@ class TrafficLightTests < ActionView::TestCase
   include TrafficLightHelper    
   
   test "tool tip" do
-    assert_equal "Show hippo's diff 1 <-> 2 (2012 May 1, 23:20:45)",
+    assert_equal "Review hippo's<br>1 &harr; 2 diff<br>(2012 May 1, 23:20:45)",
       tool_tip('hippo', make_inc)
   end
   
