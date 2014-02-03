@@ -199,7 +199,7 @@ module CodeOutputParser
      end
   end
 
-  def self.parse_googletest(output)
+  def self.parse_googlemock(output)
      failed_pattern = Regexp.new('(.*)FAILED(.*)')
      syntax_error_pattern = Regexp.new(':(\d*): error')
      make_error_pattern = Regexp.new('^make:')

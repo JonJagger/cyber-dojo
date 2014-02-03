@@ -175,7 +175,7 @@ class OneLanguageChecker < ActionController::TestCase
   
   def language_test(filename, replacement)
     kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
-    avatar = Avatar.new(kata, 'hippo')
+    avatar = Avatar.create(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]
     assert_not_nil test_code
@@ -187,7 +187,13 @@ class OneLanguageChecker < ActionController::TestCase
       puts "------</test_code>-----"
     end
     
-    run_tests(avatar, visible_files, @max_duration)
+    delta = {
+      :changed => [filename],
+      :unchanged => visible_files.keys - [filename],
+      :deleted => [ ],
+      :new => [ ]      
+    }    
+    run_test(delta, avatar, visible_files, @max_duration)
     colour = avatar.traffic_lights.last[:colour]
     
     if @verbose
