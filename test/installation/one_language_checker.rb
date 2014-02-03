@@ -6,16 +6,24 @@ class OneLanguageChecker < ActionController::TestCase
   def initialize(options = { :verbose => false, :max_duration => 5})
     @verbose = options[:verbose] || false
     @max_duration = options[:max_duration] || 5
+    @root_dir = Rails.root.to_s + '/test/cyberdojo'    
   end
     
+  # currently get_filename_42() uses an algorithm to find the
+  # the file to change to verify red/amber/green status from
+  # the code-output-parser. This doesn't work for some
+  # test frameworks such as Ruby-cucumber because they have
+  # multiple files containing 42.
+  # Perhaps put all the language tests into a single class
+  # and explicitly pass in the filename containing the 42
+  # to be peturbed as part of the test.
+  
   def check(
-        root_dir,
         language,
         installed_and_working = [ ],
         not_installed = [ ],
         installed_but_not_working = [ ]
     )
-    @root_dir = root_dir
     @language = language
     @language_dir = root_dir + '/languages/' + language + "/"
     @manifest_filename = @language_dir + 'manifest.rb'    
