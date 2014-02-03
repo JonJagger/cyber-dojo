@@ -199,19 +199,6 @@ module CodeOutputParser
      end
   end
 
-=begin
-  def self.parse_js_test_simple(output)
-    amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
-    red_pattern = Regexp.new('FAILED:assertEqual')
-    if amber_pattern.match(output)
-      :amber
-    elsif red_pattern.match(output)
-      :red
-    else
-      :green
-    end
-  end
-
   def self.parse_googletest(output)
      failed_pattern = Regexp.new('(.*)FAILED(.*)')
      syntax_error_pattern = Regexp.new(':(\d*): error')
@@ -225,6 +212,19 @@ module CodeOutputParser
      else
        :green
      end
+  end
+
+=begin
+  def self.parse_js_test_simple(output)
+    amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
+    red_pattern = Regexp.new('FAILED:assertEqual')
+    if amber_pattern.match(output)
+      :amber
+    elsif red_pattern.match(output)
+      :red
+    else
+      :green
+    end
   end
  
   def self.parse_scala_test(output)
