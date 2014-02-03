@@ -7,6 +7,7 @@ class DiskFileTests < ActionController::TestCase
     id = 'ABCDE12345'
     @disk_file = DiskFile.new
     @folder = root_dir + @disk_file.separator + id
+    system("mkdir #{@folder}")
   end
   
   def teardown
@@ -19,7 +20,7 @@ class DiskFileTests < ActionController::TestCase
     block_run = false
     exception_throw = false
     begin
-      result = @disk_file.lock('does_not_exist.txt') do |fd|
+      result = @disk_file.lock('dir_does_not_exist') do 
         block_run = true
       end
     rescue
@@ -33,28 +34,23 @@ class DiskFileTests < ActionController::TestCase
 
   test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
     block_run = false
-    filename = 'exists.txt'
-    @disk_file.write('.', filename, 'x=[1,2,3]')
-    fd = File.open(filename, 'r')
     begin
-      result = @disk_file.lock(filename) {|fd| block_run = true; 'Hello' }
+      result = @disk_file.lock(@folder) {
+        block_run = true; 'Hello'
+      }
       assert block_run, 'block_run'
       assert_equal 'Hello', result
-    ensure
-      File.delete(filename)
     end
   end
   
   test "outer_lock_is_blocking_so_inner_lock_blocks" do
-    filename = 'exists.txt'
-    @disk_file.write('.', filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
-    @disk_file.lock(filename) do
+    @disk_file.lock(@folder) do
       outer_run = true
       
       inner_thread = Thread.new {
-        @disk_file.lock(filename) do
+        @disk_file.lock(@folder) do
           inner_run = true
         end
       }
@@ -67,7 +63,6 @@ class DiskFileTests < ActionController::TestCase
     end
     assert outer_run
     assert !inner_run
-    `rm #{filename}`
   end
   
   test "lock_can_be_acquired_on_an_existing_dir" do
@@ -75,11 +70,11 @@ class DiskFileTests < ActionController::TestCase
     `mkdir #{dir}`
     begin
       run = false
-      result = @disk_file.lock(dir) {|_| run = true }
+      result = @disk_file.lock(dir) { run = true }
       assert run
       assert result
     ensure
-      `rmdir #{dir}`      
+      `rm -rf #{dir}`      
     end
   end
   
@@ -100,8 +95,8 @@ class DiskFileTests < ActionController::TestCase
       assert parent_run
       assert child_run
     ensure
-      `rmdir #{child}`
-      `rmdir #{parent}`
+      `rm -rf #{child}`
+      `rm -rf #{parent}`
     end
   end
 
