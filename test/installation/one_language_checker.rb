@@ -14,9 +14,13 @@ class OneLanguageChecker < ActionController::TestCase
   # the code-output-parser. This doesn't work for some
   # test frameworks such as Ruby-cucumber because they have
   # multiple files containing 42.
+  #
   # Perhaps put all the language tests into a single class
   # and explicitly pass in the filename containing the 42
   # to be peturbed as part of the test.
+  #
+  # I'm also getting console output appearing from the
+  # 'git gc' command inside DiskGit.commit()
   
   def check(
         language,
