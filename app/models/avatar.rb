@@ -30,6 +30,27 @@ class Avatar
     @name = name
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
+    # idea is to do this instead
+    #@git = Thread.current[:newDiskGit](dir)
+    # and calling context has to set the function that created
+    # the DiskGit (or mock/stub etc).
+    # This also means that the root_dir does not have to be
+    # passed into the kata/avatar/sandbox objects
+    # and is instead held in the external DiskGit object
+    # which seems much more cohesive.
+    # How to you make an anonymous method in Ruby!?
+    #
+    # If doing this on DiskFile check out the symlink() function though
+    #
+    # Also check for uses of system('x') and `x` that should
+    # also have an external class representation
+    #
+    # DiskFile- can it open the file in "rw" mode and
+    # then pass the fd back to the calling block.
+    # This would enable a cleaner API.
+    # Argument should always be a file and never a dir (I think)
+    # and so the locking can be on the file itself and hence
+    # I do not need to create the f.lock files.
   end
   
   def setup
@@ -46,8 +67,7 @@ class Avatar
   end
   
   def dir
-    @kata.dir + @file.separator +
-      name
+    @kata.dir + @file.separator + name
   end
   
   def kata

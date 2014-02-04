@@ -17,10 +17,9 @@ class OneLanguageChecker < ActionController::TestCase
   #
   # Perhaps put all the language tests into a single class
   # and explicitly pass in the filename containing the 42
-  # to be peturbed as part of the test.
+  # to be peturbed as part of the test?
   #
-  # I'm also getting console output appearing from the
-  # 'git gc' command inside DiskGit.commit()
+  # Am not seeing the output in verbose=true mode.
   
   def check(
         language,
