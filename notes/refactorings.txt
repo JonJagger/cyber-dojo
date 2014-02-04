@@ -1,4 +1,6 @@
 
+See app/models/avatar.rb
+See test/installation/one_language_checker.rb
 
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be

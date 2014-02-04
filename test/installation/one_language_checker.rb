@@ -18,8 +18,6 @@ class OneLanguageChecker < ActionController::TestCase
   # Perhaps put all the language tests into a single class
   # and explicitly pass in the filename containing the 42
   # to be peturbed as part of the test?
-  #
-  # Am not seeing the output in verbose=true mode.
   
   def check(
         language,
@@ -204,12 +202,12 @@ class OneLanguageChecker < ActionController::TestCase
       :deleted => [ ],
       :new => [ ]      
     }    
-    run_test(delta, avatar, visible_files, @max_duration)
+    output = run_test(delta, avatar, visible_files, @max_duration)
     colour = avatar.traffic_lights.last[:colour]
     
     if @verbose
       puts "-------<output>-----------"
-      puts avatar.visible_files['output']
+      puts output
       puts "-------</output>----------"      
     end
     
