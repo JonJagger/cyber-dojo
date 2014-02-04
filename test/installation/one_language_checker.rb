@@ -3,22 +3,12 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
-  def initialize(options = { :verbose => false, :max_duration => 5})
+  def initialize(options = { :verbose => true, :max_duration => 5 })
     @verbose = options[:verbose] || false
     @max_duration = options[:max_duration] || 5
     @root_dir = Rails.root.to_s + '/test/cyberdojo'    
   end
     
-  # currently get_filename_42() uses an algorithm to find the
-  # the file to change to verify red/amber/green status from
-  # the code-output-parser. This doesn't work for some
-  # test frameworks such as Ruby-cucumber because they have
-  # multiple files containing 42.
-  #
-  # Perhaps put all the language tests into a single class
-  # and explicitly pass in the filename containing the 42
-  # to be peturbed as part of the test?
-  
   def check(
         language,
         installed_and_working = [ ],
@@ -34,8 +24,8 @@ class OneLanguageChecker < ActionController::TestCase
     check_required_keys_exist
     check_no_unknown_keys_exist
     check_no_duplicates_in_both_visible_and_hidden_filenames
-    check_no_duplications_inside_visible_filenames
-    check_no_duplications_inside_hidden_filenames
+    check_no_duplicates_in_visible_filenames
+    check_no_duplicates_in_hidden_filenames
     check_cyberdojo_sh_exists
     check_named_files_exist(:hidden_filenames)
     check_named_files_exist(:visible_filenames)      
@@ -103,7 +93,7 @@ class OneLanguageChecker < ActionController::TestCase
     end    
   end
   
-  def check_no_duplications_inside_visible_filenames
+  def check_no_duplicates_in_visible_filenames
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
@@ -114,7 +104,7 @@ class OneLanguageChecker < ActionController::TestCase
     end
   end
   
-  def check_no_duplications_inside_hidden_filenames
+  def check_no_duplicates_in_hidden_filenames
     hidden_filenames.each do |filename|
       if hidden_filenames.count(filename) > 1
         message =

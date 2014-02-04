@@ -6,7 +6,7 @@ class RubyCucumberTests < ActionController::TestCase
   # Not sure what to do about this right now.
 
   test "Ruby-rspec" do
-    OneLanguageChecker.new({ :verbose => true }).check('Ruby-Cucumber')        
+    OneLanguageChecker.new.check('Ruby-Cucumber')        
   end
   
 end

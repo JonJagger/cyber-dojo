@@ -1,6 +1,41 @@
 
-See app/models/avatar.rb
-See test/installation/one_language_checker.rb
+In app/models/avatar.rb
+#
+# idea is that instead of doing this
+#     @git = Thread.current[:git] || DiskGit.new
+# I do this...
+#     @git = Thread.current[:newDiskGit].call(dir)
+# and the outer context does this
+#     Thread.current[:newDiskGit] = Proc.new{|dir| new DiskGit(dir)}
+# or in tests, does this...
+#     Thread.current[:newDiskGit] = Proc.new{|dir| new MockGit(dir)}
+#
+# This also means that the root_dir does not have to be
+# passed into the kata/avatar/sandbox objects
+# and is instead held in the external DiskGit object
+# which seems much more cohesive.
+#
+# If doing this on DiskFile check out the symlink() function though
+#
+# Also check for uses of system('x') and `x` that should
+# also have an external class representation
+#
+# DiskFile- can it open the file in "rw" mode and
+# then pass the fd back to the calling block.
+# This would enable a cleaner API.
+# Argument should always be a file and never a dir (I think)
+# and so the locking can be on the file itself and hence
+# I do not need to create the f.lock files.
+
+
+In test/installation/one_language_checker.rb
+# currently get_filename_42() uses an algorithm to find the
+# the file to change to verify red/amber/green status from
+# the code-output-parser. This doesn't work for some
+# test frameworks such as Ruby-cucumber because they have
+# multiple files containing 42.
+# Perhaps explicitly pass in the filename containing the 42
+# to be peturbed as an argument?
 
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be

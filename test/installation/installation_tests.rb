@@ -6,7 +6,7 @@ class InstallationTests < ActionController::TestCase
     puts "Checking the (red,amber,green) installation testing mechanism..."
     verify_test_languages
     
-    puts "\nOK. Now determining what's on this Cyber-Dojo server (this will take a while)"    
+    puts "\nOK. Now determining what's on this cyber-dojo server (this will take a while)"    
     installed_and_working,
       not_installed,
         installed_but_not_working = check_installed_languages
