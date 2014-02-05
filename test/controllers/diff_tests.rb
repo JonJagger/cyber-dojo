@@ -85,13 +85,5 @@ class DiffControllerTest < IntegrationTest
     assert_response :success
   end
   
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test "help_dialog" do
-    id = checked_save_id
-    get "/diff/help_dialog"
-    assert_response :success    
-  end
-  
 end
 

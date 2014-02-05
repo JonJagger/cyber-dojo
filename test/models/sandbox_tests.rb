@@ -274,6 +274,7 @@ class SandboxTests < ActionController::TestCase
   end
   
   test "defect-driven: filename containing space is not accidentally retained" do
+    # retained means stays in the 
     teardown
     kata = make_kata('Java-JUnit', exercise='Dummy')
     avatar_name = Avatar::names.shuffle[0]
@@ -330,7 +331,9 @@ class SandboxTests < ActionController::TestCase
     output = sandbox.test(delta, visible_files)    
     traffic_light = CodeOutputParser::parse('junit', output)
     avatar.save_run_tests(visible_files, traffic_light)
-    assert_equal :green, traffic_light[:colour]
+    # if the file whose name contained a space has been retained
+    # this will be :amber instead of :green
+    assert_equal :green, traffic_light[:colour], id + ":" + avatar_name
     
   end
 

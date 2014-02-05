@@ -186,6 +186,35 @@ class LanguageTests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
+  test "highlight_filenames defaults to [ ]" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_filenames => [ 'test_untitled.rb' ]
+      }.inspect
+    })        
+    assert_equal [ ], @language.support_filenames        
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
+  test "highlight_filenames set if not defaulted" do
+    visible_filenames = [ 'x.hpp', 'x.cpp' ]
+    highlight_filenames = [ 'x.hpp' ]
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_filenames => visible_filenames,
+        :highlight_filenames => highlight_filenames
+      }.inspect
+    })        
+    assert_equal highlight_filenames, @language.highlight_filenames            
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+
   test "unit_test_framework is set" do
     unit_test_framework = 'Satchmo'
     @stub_file.read=({

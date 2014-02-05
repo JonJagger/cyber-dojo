@@ -1,0 +1,44 @@
+
+
+I'd like an automated process that moves dojos that have
+a minimum number of traffic lights and are at least N days
+old onto a separate read-only cyber-dojo server. 
+Ideally, one that has a list of id's not to delete (eg the
+refactoring dojo's ids). These dojos' ids would all be stored
+in a database holding various details such as language, exercise,
+animals, each animals traffic-light count.
+I could do this with scp
+Do you need to be logged into the source or target server to scp?
+Could I scp from cyber-dojo.com to a temporary server?
+$ruby prune_large.rb false 50 7
+reveals 843 katas with dojos having 50 or more traffic-lights.
+Obviously don't want to prune. Want to zip and scp.
+Scp has a -r option - it follows symbolic links.
+
+---------------------------
+redirect URL for diff-view to open a diff-view dialog
+(on dashboard background?) and then delete all the
+duplicated diff-view code.
+
+---------------------------
+Suppose in dojo-X the frog forked from traffic-light 28
+whose git hash was 2d0d2bb21ad7....
+In the new dojo-Y the alligators first traffic-light will not
+have the same hash because a git hash depends not only on the
+content but on the history and date/time.
+Even if it didn't depend on the history the content is not
+exactly the same. This is because..
+  o) the output file is part usually contains timing info.
+  o) the output file's content is also in manifest.rb 
+  o) increments.rb contains a date-time-stamp of the test
+However, I could create a separate hash of the genuine files.
+Then the hash of dojo-X frog 28 would be the same as dojo-Y alligator 1
+This would allow me to store these hashes in a database and to
+be able to know when any traffic-light's file-set has occured before
+(either through a commit or coincidentally).
+Thinking a bit more, do I want to detect file contents as being the same
+or content and filename? Content only.
+So if I have an array of string, each string being the content of one of
+the genuine files I need to
+  o) sort the array based on the string contents
+  o) form a hash from the array contents in array order.

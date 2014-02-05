@@ -6,8 +6,7 @@ class RubyCucumberTests < ActionController::TestCase
   # Not sure what to do about this right now.
 
   test "Ruby-rspec" do
-    root_dir = Rails.root.to_s + '/test/cyberdojo'
-    OneLanguageChecker.new({ :verbose => true }).check(root_dir, 'Ruby-Cucumber')        
+    OneLanguageChecker.new.check('Ruby-Cucumber')        
   end
   
 end

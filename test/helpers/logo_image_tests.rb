@@ -15,6 +15,14 @@ class LogoImageTests < ActionView::TestCase
     assert html.match('title="wibble"'), 'title: ' + html
   end
 
+  test "home_page_logo html" do
+    html = home_page_logo
+    assert html.start_with?('<img '), '<img: ' + html
+    assert html.match('alt="cyber-dojo"'), 'alt: ' + html
+    assert html.match('title="cyber-dojo"'), 'title: ' + html
+    assert html.match('src="/images/home_page_logo.png'), 'src: ' + html
+  end
+
 end
 
 

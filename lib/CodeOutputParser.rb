@@ -199,7 +199,7 @@ module CodeOutputParser
      end
   end
 
-  def self.parse_googlemock(output)
+  def self.parse_google_test(output)
      failed_pattern = Regexp.new('(.*)FAILED(.*)')
      syntax_error_pattern = Regexp.new(':(\d*): error')
      make_error_pattern = Regexp.new('^make:')
@@ -228,7 +228,7 @@ module CodeOutputParser
   end
 
   def self.parse_scala_test(output)
-	:amber
+    :amber
   end
 =end
 

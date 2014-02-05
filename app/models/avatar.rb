@@ -46,8 +46,7 @@ class Avatar
   end
   
   def dir
-    @kata.dir + @file.separator +
-      name
+    @kata.dir + @file.separator + name
   end
   
   def kata

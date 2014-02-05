@@ -6,16 +6,16 @@ class DiskGit
   end
   
   def add(dir, args)
-    run(dir, 'add', args)
+    run(dir, 'add', quoted(args))
   end
 
   def rm(dir, args)
-    run(dir, 'rm', args)
+    run(dir, 'rm', quoted(args))
   end
   
   def commit(dir, args)
     run(dir, 'commit', args)
-    run(dir, 'gc', '--aggressive')
+    run(dir, 'gc', '--aggressive --quiet')
   end
 
   def tag(dir, args)
@@ -32,6 +32,10 @@ class DiskGit
   
 private
 
+  def quoted(args)
+    "'" + args + "'"  
+  end
+  
   def run(dir, command, args)
     `cd #{dir}; git #{command} #{args}`
   end

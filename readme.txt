@@ -20,10 +20,9 @@ o) Enter the 6-character id (case insensitive) on <em>each</em> participating
 o) The server will assign each computer an animal (eg Panda).
    The animal provides identity for each participating computer.
 o) On each computer do the chosen exercise by editing the test files and the
-   code files, and pressing the [test] button to see if the
-   tests pass or not.
+   code files, and pressing the [test] button to see if the tests pass or not.
 o) Every time the [test] button is pressed a new traffic-light appears at
-   the bottom right.
+   the bottom.
 o) Traffic-lights progress left-to-right, oldest-to-newest.
 
 
@@ -369,13 +368,13 @@ manifest.rb Parameters
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 
-:highight_filenames
+:higlight_filenames
   A subset of :visible_filenames which names filenames whose appearance
   are to be highlighted on the test page. This can be useful if you have
   many :visible_filenames and want to mark which files form the focus
   of the practice. For example
   :highlight_filenames => %w( buffer.cpp buffer.hpp )
-  Not required. Defaults to the empty.
+  Not required. Defaults to empty.
   The apperance of :highlight_filenames is controlled by the CSS
    div[class~='filename']
    {
@@ -391,13 +390,16 @@ manifest.rb Parameters
   Each of these files must exist in the directory.
   For example, test framework library code.
   Not required if you do not need hidden files.
-  Not currently used anywhere. The plan is that doing a fork will offer a
+  Not currently used anywhere. A feature could be - doing a fork offering a
   dialog that allows you to control which files are visible and which are not
   (eg to make the test files present but invisible).
   
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
+  These are symlinked from the /languages folder to each animals /katas folder.
+  Despite the name :support_filenames you can symlink a folder if required
+  which can be very handy.
   Not required if you do not need support files.
   
 :unit_test_framework
@@ -489,6 +491,8 @@ This tends to happen for BDD style testing.
 Getting dojos off the VirtualBox TurnKey Linux server
 =====================================================
 From the review dashboard page click the [download .zip] button.
+Zip button now removed. Wanted to see if anyone missed it.
+No one did. As usual, it was a feature too far.
 
 If you want to do it from within the actual server you will need
 the username and password info to SSH and SFTP.
@@ -541,6 +545,6 @@ o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
    Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
    Michel - I really appreciate all your help and encouragement.
-o) James Grenning uses Cyber-Dojo a lot, via his own Turnkey S3 cloud servers,
+o) James Grenning uses cyber-dojo a lot, via his own Turnkey S3 cloud servers,
    and has provided awesome feedback and made several very generous donations.
    

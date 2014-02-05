@@ -6,20 +6,65 @@ class DiskFileTests < ActionController::TestCase
   def setup
     id = 'ABCDE12345'
     @disk_file = DiskFile.new
-    @folder = root_dir + @disk_file.separator + id
+    @dir = root_dir + @disk_file.separator + id
+    system("mkdir #{@dir}")
   end
   
   def teardown
-    system("rm -rf #{@folder}")
+    system("rm -rf #{@dir}")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "directory? true because it exists" do
+    assert @disk_file.directory?(@dir)
+  end
+
+  test "directory? false because it does not exist" do
+    assert !@disk_file.directory?(@dir + 'XX')
+  end
+
+  test "directory? false because its a file" do
+    @disk_file.write(@dir, 'filename', "content")
+    assert !@disk_file.directory?(@dir + @disk_file.separator + 'filename')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "exists?(file) true" do
+    @disk_file.write(@dir, 'filename', "content")
+    assert @disk_file.exists?(@dir, 'filename')
+  end
+  
+  test "exists?(file) false" do
+    assert !@disk_file.exists?(@dir, 'filename')
+  end
+
+  test "exists?(dir) true" do
+    @disk_file.write(@dir, 'filename', "content")
+    assert @disk_file.exists?(@dir)
+  end
+  
+  test "exists?(dir) false" do
+    assert !@disk_file.exists?(@dir + 'XX')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "reads back what was written" do
+    expected = "content"
+    @disk_file.write(@dir, 'filename', expected)
+    actual = @disk_file.read(@dir, 'filename')
+    assert_equal expected, actual 
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test "if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
     block_run = false
     exception_throw = false
     begin
-      result = @disk_file.lock('does_not_exist.txt') do |fd|
+      result = @disk_file.lock('dir_does_not_exist') do 
         block_run = true
       end
     rescue
@@ -33,28 +78,23 @@ class DiskFileTests < ActionController::TestCase
 
   test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
     block_run = false
-    filename = 'exists.txt'
-    @disk_file.write('.', filename, 'x=[1,2,3]')
-    fd = File.open(filename, 'r')
     begin
-      result = @disk_file.lock(filename) {|fd| block_run = true; 'Hello' }
+      result = @disk_file.lock(@dir) {
+        block_run = true; 'Hello'
+      }
       assert block_run, 'block_run'
       assert_equal 'Hello', result
-    ensure
-      File.delete(filename)
     end
   end
   
   test "outer_lock_is_blocking_so_inner_lock_blocks" do
-    filename = 'exists.txt'
-    @disk_file.write('.', filename, 'x=[1,2,3]')
     outer_run = false
     inner_run = false
-    @disk_file.lock(filename) do
+    @disk_file.lock(@dir) do
       outer_run = true
       
       inner_thread = Thread.new {
-        @disk_file.lock(filename) do
+        @disk_file.lock(@dir) do
           inner_run = true
         end
       }
@@ -67,7 +107,6 @@ class DiskFileTests < ActionController::TestCase
     end
     assert outer_run
     assert !inner_run
-    `rm #{filename}`
   end
   
   test "lock_can_be_acquired_on_an_existing_dir" do
@@ -75,11 +114,11 @@ class DiskFileTests < ActionController::TestCase
     `mkdir #{dir}`
     begin
       run = false
-      result = @disk_file.lock(dir) {|_| run = true }
+      result = @disk_file.lock(dir) { run = true }
       assert run
       assert result
     ensure
-      `rmdir #{dir}`      
+      `rm -rf #{dir}`      
     end
   end
   
@@ -100,8 +139,8 @@ class DiskFileTests < ActionController::TestCase
       assert parent_run
       assert child_run
     ensure
-      `rmdir #{child}`
-      `rmdir #{parent}`
+      `rm -rf #{child}`
+      `rm -rf #{parent}`
     end
   end
 
@@ -109,37 +148,37 @@ class DiskFileTests < ActionController::TestCase
   
   test "save_file for non-string is saved as inspected object and folder is automatically created" do
     object = { :a => 1, :b => 2 }
-    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n", false)
+    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n")
   end
   
   test "save_file for string - folder is automatically created" do
     object = "hello world"
-    check_save_file('manifest.rb', object, "hello world", false)
+    check_save_file('manifest.rb', object, "hello world")
   end
 
   test "saving a file with a folder creates the subfolder and the file in it" do
     pathed_filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
-    @disk_file.write(@folder, pathed_filename, content)
+    @disk_file.write(@dir, pathed_filename, content)
 
-    full_pathed_filename = @folder + File::SEPARATOR + pathed_filename    
+    full_pathed_filename = @dir + File::SEPARATOR + pathed_filename    
     assert File.exists?(full_pathed_filename),
           "File.exists?(#{full_pathed_filename})"
     assert_equal content, IO.read(full_pathed_filename)          
   end
 
   test "save file for non executable file" do
-    check_save_file('file.a', 'content', 'content', false)
+    check_save_file('file.a', 'content', 'content')
   end
   
   test "save file for executable file" do
-    check_save_file('file.sh', 'ls', 'ls', true)
+    check_save_file('file.sh', 'ls', 'ls', executable=true)
   end
   
   test "save filename longer than but ends in makefile is not auto-tabbed" do
     content = '    abc'
     expected_content = content
-    check_save_file('smakefile', content, expected_content, false)    
+    check_save_file('smakefile', content, expected_content)    
   end  
   
   test "save file for makefile converts all leading whitespace on a line to a single tab" do
@@ -150,10 +189,10 @@ class DiskFileTests < ActionController::TestCase
   end
   
   test "save file for Makefile converts all leading whitespace on a line to a single tab" do
-    check_save_file('Makefile', "            abc", "\tabc", false)
-    check_save_file('Makefile', "        abc", "\tabc", false)
-    check_save_file('Makefile', "    abc", "\tabc", false)
-    check_save_file('Makefile', "\tabc", "\tabc", false)
+    check_save_file('Makefile', "            abc", "\tabc")
+    check_save_file('Makefile', "        abc", "\tabc")
+    check_save_file('Makefile', "    abc", "\tabc")
+    check_save_file('Makefile', "\tabc", "\tabc")
   end
   
   test "save file for makefile converts all leading whitespace to single tab for all lines in any line format" do
@@ -181,9 +220,9 @@ class DiskFileTests < ActionController::TestCase
     check_save_file('makefile', content, expected_content, false)
   end
       
-  def check_save_file(filename, content, expected_content, executable)
-    @disk_file.write(@folder, filename, content)
-    pathed_filename = @folder + File::SEPARATOR + filename    
+  def check_save_file(filename, content, expected_content, executable = false)
+    @disk_file.write(@dir, filename, content)
+    pathed_filename = @dir + File::SEPARATOR + filename    
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)

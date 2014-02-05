@@ -6,8 +6,8 @@
 git pull
 
 # ensure pulled files have correct rights
-# don't chmod or chgrp the katas folder
-for folder in app config exercises languages lib public script spec test
+# don't chmod or chgrp the katas folder (no need and very large)
+for folder in app config exercises languages lib log notes public script spec test
 do
   eval "chown -R www-data /var/www/cyberdojo/$folder"
   eval "chgrp -R www-data /var/www/cyberdojo/$folder"

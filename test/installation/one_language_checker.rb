@@ -3,19 +3,18 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
-  def initialize(options = { :verbose => false, :max_duration => 5})
+  def initialize(options = { :verbose => true, :max_duration => 5 })
     @verbose = options[:verbose] || false
     @max_duration = options[:max_duration] || 5
+    @root_dir = Rails.root.to_s + '/test/cyberdojo'    
   end
     
   def check(
-        root_dir,
         language,
         installed_and_working = [ ],
         not_installed = [ ],
         installed_but_not_working = [ ]
     )
-    @root_dir = root_dir
     @language = language
     @language_dir = root_dir + '/languages/' + language + "/"
     @manifest_filename = @language_dir + 'manifest.rb'    
@@ -25,9 +24,10 @@ class OneLanguageChecker < ActionController::TestCase
     check_required_keys_exist
     check_no_unknown_keys_exist
     check_no_duplicates_in_both_visible_and_hidden_filenames
-    check_no_duplications_inside_visible_filenames
-    check_no_duplications_inside_hidden_filenames
+    check_no_duplicates_in_visible_filenames
+    check_no_duplicates_in_hidden_filenames
     check_cyberdojo_sh_exists
+    check_cyberdojo_sh_has_execute_permission
     check_named_files_exist(:hidden_filenames)
     check_named_files_exist(:visible_filenames)      
       
@@ -94,7 +94,7 @@ class OneLanguageChecker < ActionController::TestCase
     end    
   end
   
-  def check_no_duplications_inside_visible_filenames
+  def check_no_duplicates_in_visible_filenames
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
@@ -105,7 +105,7 @@ class OneLanguageChecker < ActionController::TestCase
     end
   end
   
-  def check_no_duplications_inside_hidden_filenames
+  def check_no_duplicates_in_hidden_filenames
     hidden_filenames.each do |filename|
       if hidden_filenames.count(filename) > 1
         message =
@@ -139,6 +139,15 @@ class OneLanguageChecker < ActionController::TestCase
     end
   end
   
+  def check_cyberdojo_sh_has_execute_permission
+    if !File.stat(@language_dir + 'cyber-dojo.sh').executable?
+      message =
+        alert +
+          " 'cyber-dojo.sh does not have execute permission"
+        assert false, message
+    end
+  end
+
   def visible_filenames
     @manifest[:visible_filenames] || [ ]
   end
@@ -175,24 +184,31 @@ class OneLanguageChecker < ActionController::TestCase
   
   def language_test(filename, replacement)
     kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
-    avatar = Avatar.new(kata, 'hippo')
+    avatar = Avatar.create(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]
     assert_not_nil test_code
     visible_files[filename] = test_code.sub('42', replacement)
     
     if @verbose
+      puts avatar.dir
       puts "------<test_code>------"
       puts visible_files[filename]
       puts "------</test_code>-----"
     end
     
-    run_tests(avatar, visible_files, @max_duration)
+    delta = {
+      :changed => [filename],
+      :unchanged => visible_files.keys - [filename],
+      :deleted => [ ],
+      :new => [ ]      
+    }    
+    output = run_test(delta, avatar, visible_files, @max_duration)
     colour = avatar.traffic_lights.last[:colour]
     
     if @verbose
       puts "-------<output>-----------"
-      puts avatar.visible_files['output']
+      puts output
       puts "-------</output>----------"      
     end
     
