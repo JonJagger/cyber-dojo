@@ -368,7 +368,7 @@ manifest.rb Parameters
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 
-:highight_filenames
+:higlight_filenames
   A subset of :visible_filenames which names filenames whose appearance
   are to be highlighted on the test page. This can be useful if you have
   many :visible_filenames and want to mark which files form the focus
