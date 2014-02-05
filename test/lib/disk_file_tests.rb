@@ -51,7 +51,7 @@ class DiskFileTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "read back what was written" do
+  test "reads back what was written" do
     expected = "content"
     @disk_file.write(@dir, 'filename', expected)
     actual = @disk_file.read(@dir, 'filename')

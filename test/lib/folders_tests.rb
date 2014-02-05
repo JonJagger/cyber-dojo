@@ -29,8 +29,8 @@ class FoldersTests < ActionController::TestCase
   end
   
   test "id_complete with one matching id is found and returned as id" do
-    make_dir(root_dir + '/katas/12/345ABCDE/wolf')
-    assert_equal '12345ABCDE', Folders::id_complete(root_dir, '1234')
+    make_dir(root_dir + '/katas/12/3579BCDE/wolf')
+    assert_equal '123579BCDE', Folders::id_complete(root_dir, '1235')
   end
   
   test "id_complete with two matching ids found is unchanged id" do
