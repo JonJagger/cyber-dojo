@@ -1,22 +1,26 @@
 
 helpers
-   23 tests, 169 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 2.041842s, 11.2643 tests/s, 82.7684 assertions/s.
-   Coverage = 97.5%  1.86
+   Old: Finished tests in 2.041842s, 11.2643 tests/s, 82.7684 assertions/s.
+   Now: Finished tests in 0.535970s, 31.7182 tests/s, 335.8397 assertions/s.
+   Coverage = 97.5%  1.86 (-0.180)
+   Coverage = 96.49% 0.53 (-0.133)
 
 lib
-   210 tests, 2201 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 31.573560s, 6.6511 tests/s, 69.7102 assertions/s.
-   Coverage = 99.4%  25.22 (-6)
+   Old: Finished tests in 31.573560s, 6.6511 tests/s, 69.7102 assertions/s.
+   Now: Finished tests in 17.588662s, 13.2472 tests/s, 37.7516 assertions/s.
+   Coverage = 99.4%  25.22 (-6.35)
+   Coverage = 98.05% 17.59 (-7.63)
 
 models
-   45 tests, 185 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 123.407032s, 0.3646 tests/s, 1.4991 assertions/s.
-   Coverage = 100.0% 39.99 (-83)
+   Old: Finished tests in 123.407032s, 0.3646 tests/s, 1.4991 assertions/s.
+   Now: Finished tests in 56.521879s, 1.1854 tests/s, 2.7246 assertions/s.
+   Coverage = 100% 39.99 (-83)
+   Coverage = 100% 56.21 (+16.22)
 
 controllers
-   28 tests, 140 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 48.154916s, 0.5815 tests/s, 2.9073 assertions/s.
+   Old: Finished tests in 48.154916s, 0.5815 tests/s, 2.9073 assertions/s.
+   Now: Finished tests in 37.540862s, 0.8790 tests/s, 4.1022 assertions/s.
    Coverage = 97.71% 28.01 (-20)
+   Coverage = 90.66% 37.54 (+9.53)
 ===============================================================
 
