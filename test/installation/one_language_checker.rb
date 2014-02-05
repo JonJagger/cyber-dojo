@@ -191,6 +191,7 @@ class OneLanguageChecker < ActionController::TestCase
     visible_files[filename] = test_code.sub('42', replacement)
     
     if @verbose
+      puts avatar.dir
       puts "------<test_code>------"
       puts visible_files[filename]
       puts "------</test_code>-----"
