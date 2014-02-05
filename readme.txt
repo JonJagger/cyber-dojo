@@ -375,7 +375,7 @@ manifest.rb Parameters
   many :visible_filenames and want to mark which files form the focus
   of the practice. For example
   :highlight_filenames => %w( buffer.cpp buffer.hpp )
-  Not required. Defaults to the empty.
+  Not required. Defaults to empty.
   The apperance of :highlight_filenames is controlled by the CSS
    div[class~='filename']
    {
