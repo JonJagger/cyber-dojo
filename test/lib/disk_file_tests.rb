@@ -104,12 +104,12 @@ class DiskFileTests < ActionController::TestCase
   
   test "save_file for non-string is saved as inspected object and folder is automatically created" do
     object = { :a => 1, :b => 2 }
-    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n", false)
+    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}\n")
   end
   
   test "save_file for string - folder is automatically created" do
     object = "hello world"
-    check_save_file('manifest.rb', object, "hello world", false)
+    check_save_file('manifest.rb', object, "hello world")
   end
 
   test "saving a file with a folder creates the subfolder and the file in it" do
@@ -124,17 +124,17 @@ class DiskFileTests < ActionController::TestCase
   end
 
   test "save file for non executable file" do
-    check_save_file('file.a', 'content', 'content', false)
+    check_save_file('file.a', 'content', 'content')
   end
   
   test "save file for executable file" do
-    check_save_file('file.sh', 'ls', 'ls', true)
+    check_save_file('file.sh', 'ls', 'ls', executable=true)
   end
   
   test "save filename longer than but ends in makefile is not auto-tabbed" do
     content = '    abc'
     expected_content = content
-    check_save_file('smakefile', content, expected_content, false)    
+    check_save_file('smakefile', content, expected_content)    
   end  
   
   test "save file for makefile converts all leading whitespace on a line to a single tab" do
@@ -145,10 +145,10 @@ class DiskFileTests < ActionController::TestCase
   end
   
   test "save file for Makefile converts all leading whitespace on a line to a single tab" do
-    check_save_file('Makefile', "            abc", "\tabc", false)
-    check_save_file('Makefile', "        abc", "\tabc", false)
-    check_save_file('Makefile', "    abc", "\tabc", false)
-    check_save_file('Makefile', "\tabc", "\tabc", false)
+    check_save_file('Makefile', "            abc", "\tabc")
+    check_save_file('Makefile', "        abc", "\tabc")
+    check_save_file('Makefile', "    abc", "\tabc")
+    check_save_file('Makefile', "\tabc", "\tabc")
   end
   
   test "save file for makefile converts all leading whitespace to single tab for all lines in any line format" do
@@ -176,7 +176,7 @@ class DiskFileTests < ActionController::TestCase
     check_save_file('makefile', content, expected_content, false)
   end
       
-  def check_save_file(filename, content, expected_content, executable)
+  def check_save_file(filename, content, expected_content, executable = false)
     @disk_file.write(@folder, filename, content)
     pathed_filename = @folder + File::SEPARATOR + filename    
     assert File.exists?(pathed_filename),
