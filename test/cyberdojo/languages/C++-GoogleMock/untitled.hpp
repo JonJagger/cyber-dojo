@@ -1,6 +1,14 @@
 #ifndef UNTITLED_INCLUDED
 #define UNTITLED_INCLUDED
 
-int hhg();
+class Untitled {
+public:
+    Untitled(UntitledHelper const & _helper);
+
+    int answer();
+
+private:
+    UntitledHelper const & helper;
+};
 
 #endif

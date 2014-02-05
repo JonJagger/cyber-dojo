@@ -1,7 +1,13 @@
 #include "untitled.hpp"
+#include "untitled_helper.hpp"
 
-int hhg()
+Untitled::Untitled(UntitledHelper const & _helper)
+    : helper(_helper)
 {
-    return 42;
+}
+
+int Untitled::answer()
+{
+    return helper.answer();
 }
 
