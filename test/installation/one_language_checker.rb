@@ -27,6 +27,7 @@ class OneLanguageChecker < ActionController::TestCase
     check_no_duplicates_in_visible_filenames
     check_no_duplicates_in_hidden_filenames
     check_cyberdojo_sh_exists
+    check_cyberdojo_sh_has_execute_permission
     check_named_files_exist(:hidden_filenames)
     check_named_files_exist(:visible_filenames)      
       
@@ -138,6 +139,15 @@ class OneLanguageChecker < ActionController::TestCase
     end
   end
   
+  def check_cyberdojo_sh_has_execute_permission
+    if !File.stat(@language_dir + 'cyber-dojo.sh').executable?
+      message =
+        alert +
+          " 'cyber-dojo.sh does not have execute permission"
+        assert false, message
+    end
+  end
+
   def visible_filenames
     @manifest[:visible_filenames] || [ ]
   end
