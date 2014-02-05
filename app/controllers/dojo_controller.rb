@@ -17,7 +17,7 @@ class DojoController < ApplicationController
   def valid_id
     kata = Kata.find(root_dir, id)
     render :json => {
-      :exists =>params[:id].length >= 6 && !kata.nil?
+      :exists => params[:id].length >= 6 && !kata.nil?
     }
   end
   
