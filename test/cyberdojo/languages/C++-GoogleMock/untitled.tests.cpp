@@ -13,7 +13,8 @@ TEST(UntitledTest, HitchHiker)
     UntitledHelperMock helper;
     Untitled target(helper);
 
-    EXPECT_CALL(helper, answer()).Return(42);
+    EXPECT_CALL(helper, answer())
+      .WillOnce(Return(42));
 
     ASSERT_THAT(target.answer(), Eq(6 * 9));
 }
