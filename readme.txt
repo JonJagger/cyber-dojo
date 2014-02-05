@@ -398,6 +398,9 @@ manifest.rb Parameters
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
+  These are symlinked to each practice folder.
+  Despite the name (:support_filenames) you can symlink a folder if
+  you wish which can be very handy.
   Not required if you do not need support files.
   
 :unit_test_framework
