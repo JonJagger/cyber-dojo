@@ -1,24 +1,4 @@
 
-<script type="text/javascript"><!--
-
-$(document).ready(function() {
-
-  var filenames = cd.filenames();
-  $.each(filenames, function(index,filename) {
-    var file = cd.fileContentFor(filename);
-    cd.bindHotKeys(file);
-    if (filename !== 'output') {
-      cd.tabber(file);
-    }
-  });
-  cd.bindAllLineNumbers();
-  cd.rebuildFilenameList();
-  cd.loadFile(filenames[cd.nonBoringFilenameIndex(filenames)]);
-
-});
-
-//--></script>
-
 <div id="filename_list">
 </div>
 

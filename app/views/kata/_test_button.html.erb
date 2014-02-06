@@ -10,8 +10,6 @@ $(document).ready(function() {
     // cannot be cached as it is replaced by run_tests.js.erb
     return $('.current_traffic_light_count');
   };
-  
-  spinners.hide();
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
     testButton.attr('disabled', true);
