@@ -1,11 +1,38 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+At startup put message into the output file saying something like
+"please wait while the tests are run..."
+and select the output file so it is visible.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+NEW-FILE
+When you press this it should honour the current setting for
+line-numbers being off.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 If you press test and no changes are detected on the browser then
 do not submit the files. Instead put message into output file.
+Or disable the test button?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HELP
+  put in content for dashboard help. At least mention being
+  able to press any traffic-light to get a diff.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-PAGE
+  redirect URL to dashboard with diff-dialog opened to the diff as
+  specified in the URL
+  This also means I won't need the diff-heartbeat code.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  red/green buttons are not dimmed on unselected filenames
+  (they are on the dialog page).
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if you press < > and the next diff has no actual diff
-  then repeat (atuomatically) the < > until you get an actual diff.
+  then repeat (atuomatically) the < > until you get an actual diff?
+  I think it might be better to simply not allow a [test] when
+  there is no diff in the browser.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAVICON
+Make the favicon for [test] page be a bulb of the current colour?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chip away at help tool-tips.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -14,23 +41,10 @@ chip away at internationalisation. Have promises for Russian and Ukranian.
 MISC
   add ghosting when traffic-light is hovered over.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  red/green buttons are not dimmed on unselected filenames
-  (they are on the dialog page).
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  add button to open it in new tab/window which takes you to diff/show page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-PAGE
-  lose line-numbers.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP
   use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HELP
-  put in content for dashboard help.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-SHOW
+DIFF-SHOW (redudant when diff-page becomes diff-dialog)
   make it appear same as diff-dialog
   o) add tagGap between wasTag and nowTag
   o) move animal image between << < and > >>
@@ -38,16 +52,12 @@ DIFF-SHOW
   o) add (?) button
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
-  for fork/review/diff dialog << < > >> buttons 
+  needed for fork/review/diff dialog << < > >> buttons 
   Also, tips on the setup page.
-  Make the tip appear next to the element it is tipping.
+  Make the tip appear next to the element it is tipping?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF/REVERT/FORK DIALOGS
   add css to control height and scrollbar-y of filename-list
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DELETE-FILE
-  show filename in non-editable input type="text"
-  to match appearance of rename and new dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIALOGS
   change .close() calls to .remove()
@@ -55,13 +65,6 @@ DIALOGS
 HTML
   s/fork/forker/
   s/revert/reverter/ ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-PAGE
-Should I retain the heartbeat?
-Ultimately, have same code and it runs inside a page or inside a dialog!?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAVICON
-Make the favicon for [test] page be a bulb of the current colour.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ZIP
 Make sure the zip download works. That is gets all of the files.
