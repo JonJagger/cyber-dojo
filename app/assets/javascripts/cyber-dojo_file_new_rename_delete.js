@@ -62,8 +62,12 @@ var cyberDojo = (function(cd, $) {
 	  text: 'ok',
 	  disabled: !cd.isValidFilename(newFilename),	  
 	  click: function() {
-		var newFilename = $.trim(input.val());
-        cd.newFileContent(newFilename, '');		
+		var newFilename = $.trim(input.val())
+		cd.newFileContent(newFilename, '');
+		// hack to ensure if line-numbers are off
+		// then they are not initially displayed
+		$('#line_numbers_button').click();
+		$('#line_numbers_button').click();		
 		$(this).remove();
 	  }	  
 	};

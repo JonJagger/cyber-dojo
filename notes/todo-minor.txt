@@ -1,9 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-NEW-FILE
-When you press this it should honour the current setting for
-line-numbers being off.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Enable the test button only when files are
 different to previous submission.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
