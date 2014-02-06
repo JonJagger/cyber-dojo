@@ -159,17 +159,17 @@ module CodeOutputParser
   end
   
   def self.parse_clojure_test(output)
-	syntax_error_pattern = /Exception in thread/	
+    syntax_error_pattern = /Exception in thread/	
     ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
     if syntax_error_pattern.match(output)
-	  :amber
+      :amber
     elsif output.scan(ran_pattern).any? { |res| res[3] != "0" || res[4] != "0" }
-	  :red
-    elsif output.scan(ran_pattern).all? { |res| res[3] == "0" && res[4] == "0" }
-	  :green
-	else
-	  :amber
-	end    
+      :red
+    elsif output.scan(ran_pattern).any? { |res| res[3] == "0" && res[4] == "0" }
+      :green
+    else
+      :amber
+    end    
   end
 
   def self.parse_node(output)

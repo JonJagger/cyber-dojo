@@ -86,6 +86,14 @@ class OutputClojureTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)           
   end
 
+  test "mistake in cyber-dojo.sh is amber" do
+    output =
+      [
+        "./cyber-dojo.sh: 1: xjava: not found"
+      ].join("\n")
+    assert_equal :amber, colour_of(output)               
+  end
+  
   def colour_of(output)
     CodeOutputParser::parse_clojure_test(output)     
   end
