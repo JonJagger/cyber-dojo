@@ -56,6 +56,19 @@ class OutputHaskellTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)                     
   end
   
+  test "no tests is amber" do
+    # Got this by raising an error exception
+    # answer :: Int
+    # answer = do
+    #    error "Ooops"    
+    output =
+      [
+        "Cases: 1  Tried: 1  Errors: 1  Failures: 0",
+        "Counts {cases = 1, tried = 1, errors = 1, failures = 0}"
+      ].join("\n")
+    assert_equal :amber, colour_of(output)                     
+  end
+  
   def colour_of(output)
     CodeOutputParser::parse_hunit(output)   
   end
