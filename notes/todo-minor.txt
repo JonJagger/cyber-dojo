@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Remove :hidden_filenames It's not used.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 At startup put message into the output file saying something like
 "please wait while the tests are run..."
 and select the output file so it is visible.

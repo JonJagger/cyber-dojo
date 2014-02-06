@@ -37,7 +37,6 @@ class Avatar
     @file.write(dir, Traffic_lights_filename, [ ])
     sandbox.save(@kata.visible_files) # includes output and instructions
     language = @kata.language
-    sandbox.save(language.hidden_files)
     sandbox.link(language.dir, language.support_filenames)
     @git.init(dir, "--quiet")
     @git.add(dir, Traffic_lights_filename)

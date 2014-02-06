@@ -37,8 +37,7 @@ var cyberDojo = (function(cd, $) {
   cd.filenameAlreadyExists = function(filename) {
     return filename === 'cyber-dojo.sh' ||
            cd.inArray(filename, cd.filenames()) ||
-           cd.inArray(filename, cd.supportFilenames()) ||
-           cd.inArray(filename, cd.hiddenFilenames());	   
+           cd.inArray(filename, cd.supportFilenames());
   };
   
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

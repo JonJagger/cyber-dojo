@@ -93,7 +93,6 @@ class SandboxTests < ActionController::TestCase
     }
     # run-tests also pulls
     # avatar.kata.language.support_filenames
-    # avatar.kata.language.hidden_filenames
     language_name = 'C'
     language = Language.new(root_dir, language_name)    
     @stub_file.read=({
@@ -107,7 +106,6 @@ class SandboxTests < ActionController::TestCase
       :dir => language.dir,
       :filename => 'manifest.rb',
       :content => {
-        :hidden_filenames => [ ],
         :support_filenames => [ ],
       }.inspect      
     })

@@ -11,10 +11,6 @@ $(document).ready(function() {
     return $.parseJSON('<%= @kata.language.support_filenames.inspect.html_safe %>');
   };
   
-  cd.hiddenFilenames = function() {
-    return $.parseJSON('<%= @kata.language.hidden_filenames.inspect.html_safe %>');
-  };
-  
   cd.highlightFilenames = function() {
     return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
   };
@@ -24,7 +20,7 @@ $(document).ready(function() {
 
   cd.tipify($('.tipped'), $('#tip_window'));
   
-  if (<%= @traffic_lights.length === 0 %>) {
+  if (<%= @traffic_lights.length === 0 %>) {    
     cd.testForm().submit();
   }
   

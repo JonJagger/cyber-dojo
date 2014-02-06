@@ -31,7 +31,6 @@ class Avatar2Tests < ActionController::TestCase
           "visible_files in avatar/manifest.rb, and " +
           "empty avatar/increments.rb, and " +
           "each visible_file into avatar/sandbox, and " +
-          "each hidden_file into avatar/sandbox, and" +
           "links each support_filename into avatar/sandbox" do
     id = '45ED23A2F1'
     visible_filename = 'visible.txt'
@@ -52,22 +51,14 @@ class Avatar2Tests < ActionController::TestCase
       :content => manifest.inspect
     }
     language = Language.new(root_dir, language_name)
-    hidden_filename = 'hidden.txt'
-    hidden_filename_content = 'content for hidden.txt'
     support_filename = 'wibble.dll' 
     @stub_file.read=({
       :dir => language.dir,
       :filename => 'manifest.rb',
       :content => {
-        :hidden_filenames => [ hidden_filename ],
         :support_filenames => [ support_filename ]
       }.inspect
     })
-    @stub_file.read=({
-      :dir => language.dir,
-      :filename => hidden_filename,
-      :content => hidden_filename_content
-    })        
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')            
     assert_not_nil @stub_file.write_log[avatar.dir]
@@ -77,7 +68,6 @@ class Avatar2Tests < ActionController::TestCase
     log = @stub_file.write_log[sandbox.dir]
     assert_not_nil log
     assert log.include?([visible_filename, visible_filename_content.inspect]), log.inspect    
-    assert log.include?([hidden_filename, hidden_filename_content.inspect]), log.inspect
     expected_symlink = [
       'symlink',
       language.dir + @stub_file.separator + support_filename,
@@ -89,7 +79,7 @@ class Avatar2Tests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   test "avatar creation sets up initial git repo of visible files " +
-        "but not hidden_files and not support_files" do  
+        "but not support_files" do  
     id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name'

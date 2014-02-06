@@ -1,11 +1,6 @@
 
 class ForkerController < ApplicationController
 
-  # the plan is to extend this so it provides a page showing
-  # a list of visible_filenames and hidden_filenames
-  # and allows you to move files from one list to the other
-  # before forking.
-
   def fork
     kata = Kata.new(root_dir, params['id'])
     avatar = Avatar.new(kata, params['avatar'])
