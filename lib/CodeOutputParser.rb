@@ -45,8 +45,8 @@ module CodeOutputParser
   end
 	
   def self.parse_catch(output)    
-    return :red   if /\[Testing completed.*failed\]/.match(output)
-    return :green if /\[Testing completed.*succeeded\]/.match(output)
+    return :red   if /failed \(\d* assertion/.match(output)
+    return :green if /All tests passed/.match(output)
     return :amber
   end
   
