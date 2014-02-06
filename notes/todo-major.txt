@@ -44,5 +44,11 @@ the genuine files I need to
   o) form a hash from the array contents in array order.
 This could also give me a way to catalogue all the initial starting positions.
 This is useful since some exercises have changed their names and this causes
-problems with forking. 
-
+problems with forking.
+Thinking further... I don't need to compute a single hash of all the
+visible files. I can create a hash. Eg
+{ '234ef354df' -> 'wibble.hpp', '65432134aacd' -> 'wibble.hpp' }
+This allows me to tell if
+  o) how often any individual file's content has been seen before.
+  o) how often the set of files for a single traffic-light have
+     been seen before.
