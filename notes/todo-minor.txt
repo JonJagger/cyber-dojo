@@ -4,9 +4,8 @@ NEW-FILE
 When you press this it should honour the current setting for
 line-numbers being off.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-If you press test and no changes are detected on the browser then
-do not submit the files. Instead put message into output file.
-Or disable the test button?
+Enable the test button only when files are
+different to previous submission.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HELP
   put in content for dashboard help. At least mention being
