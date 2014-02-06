@@ -42,3 +42,7 @@ So if I have an array of string, each string being the content of one of
 the genuine files I need to
   o) sort the array based on the string contents
   o) form a hash from the array contents in array order.
+This could also give me a way to catalogue all the initial starting positions.
+This is useful since some exercises have changed their names and this causes
+problems with forking. 
+
