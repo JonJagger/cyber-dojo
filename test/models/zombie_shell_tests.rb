@@ -7,12 +7,6 @@ class ZombieShellTests < ActionController::TestCase
     `ps`.scan(/<defunct>/).length
   end
   
-  def teardown
-    Thread.current[:file] = nil
-    system("rm -rf #{root_dir}/katas/*")
-    system("rm -rf #{root_dir}/zips/*")    
-  end
-  
   test "check running tests does not accumulate zombie defunct shell processes" do
     language = 'Ruby-installed-and-working'
     avatar_count = 4

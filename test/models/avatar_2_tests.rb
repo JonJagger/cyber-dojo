@@ -7,12 +7,9 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class Avatar2Tests < ActionController::TestCase
 
   def setup
-    @stub_file = StubDiskFile.new
-    @stub_git = StubDiskGit.new
-    @stub_task = StubTimeBoxedTask.new    
-    Thread.current[:file] = @stub_file
-    Thread.current[:git] = @stub_git
-    Thread.current[:task] = @stub_task
+    Thread.current[:file] = @stub_file = StubDiskFile.new
+    Thread.current[:git] = @stub_git = StubDiskGit.new
+    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new  
   end
 
   def teardown

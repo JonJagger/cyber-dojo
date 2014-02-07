@@ -1,7 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Enable the test button only when files are
-different to previous submission.
+Enable the test button only when files are different to previous
+submission? Problem with this is on starting the tests are
+automatically run, so when that completes the test button will
+be disabled.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HELP
   put in content for dashboard help. At least mention being

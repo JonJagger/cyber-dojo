@@ -4,8 +4,7 @@ require File.dirname(__FILE__) + '/stub_disk_file'
 class LanguageTests < ActionController::TestCase
   
   def setup
-    @stub_file = StubDiskFile.new
-    Thread.current[:file] = @stub_file    
+    Thread.current[:file] = @stub_file = StubDiskFile.new  
     @language = Language.new(root_dir, 'Ruby')    
   end
   

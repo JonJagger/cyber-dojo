@@ -4,8 +4,7 @@ require File.dirname(__FILE__) + '/stub_disk_file'
 class ExerciseTests < ActionController::TestCase
     
   def setup
-    @stub_file = StubDiskFile.new
-    Thread.current[:file] = @stub_file    
+    Thread.current[:file] = @stub_file = StubDiskFile.new  
     @exercise = Exercise.new(root_dir, 'Yahtzee')
   end
   

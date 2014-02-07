@@ -2,12 +2,6 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class TimeOutTests < ActionController::TestCase
 
-  def teardown
-    Thread.current[:file] = nil
-    system("rm -rf #{root_dir}/katas/*")
-    system("rm -rf #{root_dir}/zips/*")    
-  end
-
   test "that code with infinite loop times out to amber and doesnt leak processes" do
     kata = make_kata('Ruby-installed-and-working', exercise='Dummy')
     avatar_name = Avatar::names.shuffle[0]

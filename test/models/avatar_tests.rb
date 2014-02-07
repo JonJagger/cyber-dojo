@@ -7,11 +7,6 @@ class AvatarTests < ActionController::TestCase
   end
 
   def teardown
-    Thread.current[:file] = nil
-    Thread.current[:git] = nil
-    Thread.current[:task] = nil
-    system("rm -rf #{root_dir}/katas/*")
-    system("rm -rf #{root_dir}/zips/*")    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

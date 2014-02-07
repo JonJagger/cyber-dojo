@@ -7,12 +7,9 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    @stub_file = StubDiskFile.new
-    @stub_git = StubDiskGit.new
-    @stub_task = StubTimeBoxedTask.new
-    Thread.current[:file] = @stub_file
-    Thread.current[:git] = @stub_git
-    Thread.current[:task] = @stub_task
+    Thread.current[:file] = @stub_file = StubDiskFile.new
+    Thread.current[:git] = @stub_git = StubDiskGit.new
+    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
   end
 
   def teardown
@@ -263,7 +260,7 @@ class SandboxTests < ActionController::TestCase
   
   def content_for_cyber_dojo_sh
     [
-      "rm *.class",
+      "rm -f *.class",
       "javac -cp .:./junit-4.11.jar *.java ",
       "if [ $? -eq 0 ]; then",
       "  java -cp .:./junit-4.11.jar org.junit.runner.JUnitCore `ls -1 *Test*.class | grep -v '\\$' | sed 's/\(.*\)\..*/\1/'`",
@@ -272,7 +269,7 @@ class SandboxTests < ActionController::TestCase
   end
   
   test "defect-driven: filename containing space is not accidentally retained" do
-    # retained means stays in the 
+    # retained means stays in the sandbox
     teardown
     kata = make_kata('Java-JUnit', exercise='Dummy')
     avatar_name = Avatar::names.shuffle[0]

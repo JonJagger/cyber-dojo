@@ -5,10 +5,8 @@ require File.dirname(__FILE__) + '/stub_disk_git'
 class KataTests < ActionController::TestCase
 
   def setup
-    @stub_file = StubDiskFile.new
-    @stub_git = StubDiskGit.new
-    Thread.current[:file] = @stub_file
-    Thread.current[:git] = @stub_git    
+    Thread.current[:file] = @stub_file = StubDiskFile.new
+    Thread.current[:git] = @stub_git = StubDiskGit.new 
   end
 
   def teardown
