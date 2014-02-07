@@ -14,8 +14,13 @@ SimpleCov.start do
   add_group 'app/controllers', 'app/controllers'
   add_group 'app/models',      'app/models'
   add_group 'app/helpers',     'app/helpers'
-  add_group 'lib',             'lib'
+  add_group 'app/lib',         'app/lib'  
   
+  add_group 'lib'             do |src_file|
+    src_file.filename.include?('lib') &&
+    !src_file.filename.include?('app/lib')
+  end
+
 end
 
 SimpleCov.root '/Users/jonjagger/Desktop/Repos/cyberdojo'
