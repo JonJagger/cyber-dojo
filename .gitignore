@@ -12,7 +12,6 @@ coverage
 .approvals
 
 zipped_dojos.zip
-notes.txt
 *.tmp
 
 test/app_controllers/assets/
