@@ -10,7 +10,6 @@ class SandboxTests < ActionController::TestCase
 
   test "defect-driven: filename containing space is not accidentally retained" do
     # retained means stays in the sandbox
-    teardown
     kata = make_kata('Java-JUnit', exercise='Dummy')
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.create(kata, avatar_name)
