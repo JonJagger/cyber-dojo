@@ -2,18 +2,6 @@ require File.dirname(__FILE__) + '/../coverage_test_helper'
 
 class SandboxTests < ActionController::TestCase
 
-  def setup
-    #Thread.current[:file] = @stub_file = StubDiskFile.new
-    #Thread.current[:git] = @stub_git = StubDiskGit.new
-    #Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
-  end
-
-  def teardown
-    #Thread.current[:file] = nil
-    #Thread.current[:git] = nil
-    #Thread.current[:task] = nil
-  end
-
   def root_dir
     (Rails.root + 'test/cyberdojo').to_s
   end
