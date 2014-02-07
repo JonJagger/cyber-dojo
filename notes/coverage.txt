@@ -4,9 +4,9 @@ app_helpers
    Coverage = 100.0%
 
 app_lib
-   188 tests, 258 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 1.917662s, 98.0360 tests/s, 134.5388 assertions/s.
-   Coverage = 94.05%
+   196 tests, 331 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 18.936008s, 10.3507 tests/s, 17.4799 assertions/s.
+   Coverage = 98.40%
 
 app_models
    56 tests, 103 assertions, 0 failures, 0 errors, 0 skips
@@ -19,15 +19,15 @@ lib
    Coverage = 41.18%
 
 integration
-   47 tests, 225 assertions, 1 failures, 0 errors, 0 skips
+   39 tests, 152 assertions, 1 failures, 0 errors, 0 skips
    Finished tests in 73.981797s, 0.6353 tests/s, 3.0413 assertions/s.
    Coverage stat for this is reported (by perc.rb) as 100%
    But there is nothing in that tab of index.html
    True coverage is set of coverages for the *other* modules....
    app/helpers 49.12%
-   app/lib 58.12%
+   app/lib 25.86%
    app/models 88.11%
-   lib 99.16%
+   lib 94.12%
 
 app_controllers
    33 tests, 154 assertions, 0 failures, 0 errors, 0 skips
