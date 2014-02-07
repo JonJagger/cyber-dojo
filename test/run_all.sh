@@ -1,5 +1,5 @@
 
-modules=( helpers lib models integration controllers )
+modules=( app_helpers app_lib app_models lib integration app_controllers )
 
 for module in ${modules[@]}
 do    

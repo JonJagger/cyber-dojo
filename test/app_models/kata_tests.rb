@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../coverage_test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 require File.dirname(__FILE__) + '/stub_disk_git'
 

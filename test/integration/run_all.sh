@@ -9,6 +9,6 @@ for TEST in *.rb ; do
 done
 ruby run_all.tmp 2>&1 | tee -a run_all_log.tmp
 cp -R ../../coverage/* .
-ruby ../perc.rb index.html app/models > coverage.tmp
+ruby ../perc.rb index.html integration > coverage.tmp
 cat coverage.tmp
 echo

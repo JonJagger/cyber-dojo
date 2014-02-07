@@ -1,27 +1,39 @@
-
-app/helpers
-   Finished tests in 0.535970s, 31.7182 tests/s, 335.8397 assertions/s.
+app_helpers
+   17 tests, 180 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 0.600491s, 28.3102 tests/s, 299.7547 assertions/s.
    Coverage = 96.49%
 
-app/lib
-   Finished tests in 1.336163s, 140.7014 tests/s, 193.0902 assertions/s.
-   Coverage = 94.05% 
+app_lib
+   188 tests, 258 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 1.917662s, 98.0360 tests/s, 134.5388 assertions/s.
+   Coverage = 94.05%
 
-app/models
-   Finished tests in 0.585318s, 95.6745 tests/s, 175.9727 assertions/s.
-   Coverage = 100.00% 
-
-app/controllers
-   Finished tests in 37.540862s, 0.8790 tests/s, 4.1022 assertions/s.
-   Coverage = 90.66% 
+app_models
+   56 tests, 103 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 0.773960s, 72.3552 tests/s, 133.0818 assertions/s.
+   Coverage = 100.0%
 
 lib
-  Finished tests in 1.209361s, 12.4032 tests/s, 195.1444 assertions/s.
-  Coverage = 41.18%
+   15 tests, 236 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 1.328628s, 11.2898 tests/s, 177.6268 assertions/s.
+   Coverage = 41.18%
 
 integration
-   Finished tests in 71.658370s, 0.6559 tests/s, 3.1399 assertions/s.
-   Coverage = 88.11%
-   
-===============================================================
+   47 tests, 225 assertions, 1 failures, 0 errors, 0 skips
+   Finished tests in 73.981797s, 0.6353 tests/s, 3.0413 assertions/s.
+   Coverage stat for this is reported (by perc.rb) as 100%
+   But there is nothing in that tab of index.html
+   True coverage is set of coverages for the *other* modules....
+   app/helpers 49.12%
+   app/lib 58.12%
+   app/models 88.11%
+   lib 99.16%
 
+app_controllers
+   33 tests, 154 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 42.872469s, 0.7697 tests/s, 3.5920 assertions/s.
+   Coverage = 90.66%
+     app/helpers 87.72%
+     app/lib 65.90%
+     app/models 96.22%
+     lib 90.76%

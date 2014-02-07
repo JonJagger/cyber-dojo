@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../coverage_test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class SandboxTests < ActionController::TestCase
 
