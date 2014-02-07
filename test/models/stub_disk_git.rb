@@ -34,11 +34,16 @@ class StubDiskGit
     store(dir, "show", options)
   end
   
+  def diff(dir, options)
+    store(dir, "diff", options)
+  end
+  
 private
 
   def store(dir, command, options)
     @log[dir] ||= [ ]
     @log[dir] << [command, options]
+    "{:hack=>'yes'}"
   end
     
 end

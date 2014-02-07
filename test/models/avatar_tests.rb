@@ -251,7 +251,7 @@ class Avatar2Tests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "after avatar is created sandbox contains cyber-dojo.sh if katas' manifest does" do
+  test "after avatar is created sandbox contains cyber-dojo.sh" do
     id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name',
@@ -339,4 +339,32 @@ class Avatar2Tests < ActionController::TestCase
     assert_equal nil, traffic_lights.last[:run_tests_output]
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "diff_lines" do
+    id = '45ED23A2F1'
+    kata = Kata.new(root_dir, id)
+    avatar = Avatar.new(kata, 'lion')
+    output = avatar.diff_lines(was_tag=3,now_tag=4)
+    assert @stub_git.log[avatar.dir].include?(
+      [
+       'diff',
+       '--ignore-space-at-eol --find-copies-harder 3 4 sandbox'
+      ])  
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "locked_read with tag" do
+    id = '45ED23A2F1'
+    kata = Kata.new(root_dir, id)
+    avatar = Avatar.new(kata, 'lion')
+    output = avatar.visible_files(tag=4)
+    assert @stub_git.log[avatar.dir].include?(
+      [
+       'show',
+       '4:manifest.rb'
+      ])  
+  end
+  
 end
