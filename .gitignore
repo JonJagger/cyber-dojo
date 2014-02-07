@@ -23,4 +23,6 @@ test/lib/assets/
 test/lib/index.html
 test/models/assets/
 test/models/index.html
+test/integration/assets/
+test/integration/index.html
 test/cyberdojo/zips

@@ -1,161 +1,342 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../coverage_test_helper'
+require File.dirname(__FILE__) + '/stub_disk_file'
+require File.dirname(__FILE__) + '/stub_disk_git'
+require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
-class AvatarTests < ActionController::TestCase
+
+class Avatar2Tests < ActionController::TestCase
 
   def setup
-    @kata = make_kata('Ruby-installed-and-working')
+    Thread.current[:file] = @stub_file = StubDiskFile.new
+    Thread.current[:git] = @stub_git = StubDiskGit.new
+    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new  
   end
 
   def teardown
+    Thread.current[:file] = nil
+    Thread.current[:git] = nil
+    Thread.current[:task] = nil
   end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "deleted file is deleted from that repo tag" do
-    avatar = Avatar.create(@kata, 'wolf')  # creates tag-0
-    visible_files = avatar.visible_files
-    deleted_filename = 'instructions'
-    visible_files[deleted_filename] = 'Whatever'
-    delta = {
-      :changed => [ ],
-      :unchanged => visible_files.keys,
-      :deleted => [ ],
-      :new => [ ]                                    
+  def root_dir
+    (Rails.root + 'test/cyberdojo').to_s
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "avatar creation saves " +
+          "visible_files in avatar/manifest.rb, and " +
+          "empty avatar/increments.rb, and " +
+          "each visible_file into avatar/sandbox, and " +
+          "links each support_filename into avatar/sandbox" do
+    id = '45ED23A2F1'
+    visible_filename = 'visible.txt'
+    visible_filename_content = 'content for visible.txt'
+    visible_files = {
+      visible_filename => visible_filename_content
     }
-    run_test(delta, avatar, visible_files)  # creates tag-1
-    visible_files.delete(deleted_filename)
-    delta = {
-      :changed => [ ],
-      :unchanged => visible_files.keys - [ deleted_filename ],
-      :deleted => [ deleted_filename ],
-      :new => [ ]                                          
-    }    
-    run_test(delta, avatar, visible_files)  # creates tag-2    
-    before = avatar.visible_files(tag=1)
-    assert before.keys.include?("#{deleted_filename}"),
-          "before.keys.include?(#{deleted_filename})"          
-    after = avatar.visible_files(tag=2)
-    assert !after.keys.include?("#{deleted_filename}"),
-          "!after.keys.include?(#{deleted_filename})"
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test "diff_lines is not empty when change in files" do
-    avatar = Avatar.create(@kata, 'wolf') # 0
-    visible_files = avatar.visible_files
-    delta = {
-      :changed => [ ],
-      :unchanged => visible_files.keys,
-      :deleted => [ ],
-      :new => [ ]                              
-     }    
-    run_test(delta, avatar, visible_files) # 1
-    visible_files['cyber-dojo.sh'] += 'xxxx'
-    delta = {
-      :changed => [ 'cyber-dojo.sh' ],
-      :unchanged => visible_files.keys - [ 'cyber-dojo.sh' ],
-      :deleted => [ ],
-      :new => [ ]                              
-     }
-    run_test(delta, avatar, visible_files) # 2    
-    traffic_lights = avatar.traffic_lights
-    assert_equal 2, traffic_lights.length
-    was_tag = nil
-    now_tag = nil
-    actual = avatar.diff_lines(was_tag = 1, now_tag = 2)    
-    assert actual.match(/^diff --git/)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test "diff_lines shows added file" do
-    avatar = Avatar.create(@kata, 'wolf') # 0
-    visible_files = avatar.visible_files
-    added_filename = 'unforgiven.txt'
-    content = 'starring Clint Eastwood'
-    visible_files[added_filename] = content
-    delta = {
-      :changed => [ ],
-      :unchanged => visible_files.keys - [ added_filename ],
-      :deleted => [ ],
-      :new => [ added_filename ]                        
+    language_name = 'C#'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
     }
-    run_test(delta, avatar, visible_files) # 1
-    actual = avatar.diff_lines(was_tag=0, now_tag=1)
-    expected =
-      [
-        "diff --git a/sandbox/#{added_filename} b/sandbox/#{added_filename}",
-        "new file mode 100644",
-        "index 0000000..1bdc268",
-        "--- /dev/null",
-        "+++ b/sandbox/#{added_filename}",
-        "@@ -0,0 +1 @@",
-        "+#{content}"
-      ].join("\n")
-    assert actual.include?(expected)
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }
+    language = Language.new(root_dir, language_name)
+    support_filename = 'wibble.dll' 
+    @stub_file.read=({
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :support_filenames => [ support_filename ]
+      }.inspect
+    })
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')            
+    assert_not_nil @stub_file.write_log[avatar.dir]
+    assert @stub_file.write_log[avatar.dir].include?(['manifest.rb', visible_files.inspect])
+    assert @stub_file.write_log[avatar.dir].include?(['increments.rb', [ ].inspect])    
+    sandbox = avatar.sandbox
+    log = @stub_file.write_log[sandbox.dir]
+    assert_not_nil log
+    assert log.include?([visible_filename, visible_filename_content.inspect]), log.inspect    
+    expected_symlink = [
+      'symlink',
+      language.dir + @stub_file.separator + support_filename,
+      sandbox.dir + @stub_file.separator + support_filename
+    ]
+    assert @stub_file.symlink_log.include?(expected_symlink), @stub_file.symlink_log.inspect    
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "diff_lines shows deleted file" do
-    avatar = Avatar.create(@kata, 'wolf') # 0
-    visible_files = avatar.visible_files
-    deleted_filename = 'instructions'
-    content = 'tweedle_dee'
-    visible_files[deleted_filename] = content
     
-    delta = {
-      :changed => [ deleted_filename ],
-      :unchanged => visible_files.keys - [ deleted_filename ],
-      :deleted => [ ],
-      :new => [ ]                  
-    }    
-    run_test(delta, avatar, visible_files)  # 1
-    #- - - - -
-    visible_files.delete(deleted_filename)    
-    delta = {
-      :changed => [ ],
-      :unchanged => visible_files.keys - [ deleted_filename ],
-      :deleted => [ deleted_filename ],
-      :new => [ ]                        
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+  test "avatar creation sets up initial git repo of visible files " +
+        "but not support_files" do  
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
     }
-    run_test(delta, avatar, visible_files)  # 2    
-    #- - - - -
-    actual = avatar.diff_lines(was_tag=1, now_tag=2)
-    expected =
-      [
-        "diff --git a/sandbox/#{deleted_filename} b/sandbox/#{deleted_filename}",
-        "deleted file mode 100644",
-        "index f68a37c..0000000",
-        "--- a/sandbox/#{deleted_filename}",
-        "+++ /dev/null",
-        "@@ -1 +0,0 @@",
-        "-#{content}"       
-      ].join("\n")
-    assert actual.include?(expected), actual
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')        
+    assert_equal [
+          [ 'init', '--quiet'],
+          [ 'add', 'increments.rb' ],
+          [ 'add', 'manifest.rb'],
+          [ 'add', 'sandbox/name'],
+          [ 'commit', "-a -m '0' --quiet" ],
+          [ 'commit', "-m '0' 0 HEAD" ]
+        ], 
+      @stub_git.log[avatar.dir]      
+    assert_equal nil, @stub_file.read_log[avatar.dir]    
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[kata.dir]         
+    assert_equal [ [ 'manifest.rb' ] ], @stub_file.read_log[kata.dir]
+  end
+    
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "avatar names all begin with a different letter" do
+    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "avatar has no traffic-lights before first test-run" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
+    }
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }    
+    kata = Kata.create(root_dir, manifest)
+    avatar = Avatar.create(kata, 'wolf')    
+    assert_equal [ ], avatar.traffic_lights    
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "output is correct on refresh" do
-    language = 'Ruby-installed-and-working'
-    kata = make_kata(language)
-    avatar = Avatar.create(kata, 'lion')
+  test "avatar returns kata it was created with" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name'
+    }
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
+    kata = Kata.create(root_dir, manifest)
+    avatar = Avatar.create(kata, 'wolf')    
+    assert_equal kata, avatar.kata    
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "avatar's tag 0 repo contains an empty output file only if kata-manifest does" do    
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'output' => ''
+    }
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }    
+    kata = Kata.create(root_dir, manifest)
+    avatar = Avatar.create(kata, 'wolf')    
     visible_files = avatar.visible_files
+    assert visible_files.keys.include?('output'),
+          "visible_files.keys.include?('output')"
+    assert_equal "", visible_files['output']
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "after avatar is created sandbox contains visible_files" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'output' => ''
+    }
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')    
+    sandbox_dir = avatar.dir + @stub_file.separator + 'sandbox' 
+    visible_files.each do |filename,content|
+      assert_equal content.inspect, @stub_file.read(sandbox_dir, filename)
+    end    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "after avatar is created sandbox contains cyber-dojo.sh if katas' manifest does" do
+    id = '45ED23A2F1'
+    visible_files = {
+      'name' => 'content for name',
+      'cyber-dojo.sh' => 'make'
+    }
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }  
+    language = Language.new(root_dir, language_name)
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => { }.inspect
+    }      
+    kata = Kata.create(root_dir, manifest)    
+    avatar = Avatar.create(kata, 'wolf')
+    sandbox = avatar.sandbox    
+    assert_equal visible_files['cyber-dojo.sh'].inspect,
+      @stub_file.read(sandbox.dir, 'cyber-dojo.sh')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "after first test() traffic_lights contains one traffic-light " +
+        "which does not contain output" do    
+    id = '45ED23A2F1'
+    visible_files = {
+      'untitled.c' => 'content for visible file',
+      'cyber-dojo.sh' => 'make',
+    }
+    language_name = 'C'
+    manifest = {
+      :id => id,
+      :visible_files => visible_files,
+      :language => language_name
+    }
+    dir = Kata.new(root_dir, id).dir
+    @stub_file.read = {
+      :dir => dir,
+      :filename => 'manifest.rb',
+      :content => manifest.inspect
+    }      
+    kata = Kata.create(root_dir, manifest)    
+    language = kata.language
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :visible_files => visible_files,
+        :unit_test_framework => 'cassert'
+      }.inspect
+    }
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'untitled.c',
+      :content => 'content for visible file'
+    }
+    @stub_file.read = {
+      :dir => language.dir,
+      :filename => 'cyber-dojo.sh',
+      :content => 'make'
+    }    
+    avatar = Avatar.create(kata, 'wolf')    
     delta = {
-      :changed => visible_files.keys,
-      :unchanged => [ ],
-      :deleted => [ ],
+      :changed => [ 'untitled.c' ],
+      :unchanged => [ 'cyber-dojo.sh' ],
+      :deleted => [ 'wibble.cs' ],
       :new => [ ]      
-    }        
-    output = run_test(delta, avatar, visible_files)
-    visible_files['output'] = output    
-    traffic_light = { :colour => 'amber' }
+    }
+    output = avatar.sandbox.test(delta, avatar.visible_files, timeout=15)    
+    language = avatar.kata.language
+    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)    
     avatar.save_run_tests(visible_files, traffic_light)    
-    # now refresh
-    avatar = Avatar.new(kata, 'lion')
-    assert_equal output, avatar.visible_files['output']
-  end    
+    traffic_lights = avatar.traffic_lights
+    assert_equal 1, traffic_lights.length
+    assert_equal nil, traffic_lights.last[:run_tests_output]
+  end
 
 end

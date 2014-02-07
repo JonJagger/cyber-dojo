@@ -14,9 +14,13 @@ lib
 models
    Old: Finished tests in 123.407032s, 0.3646 tests/s, 1.4991 assertions/s.
    Now: Finished tests in 56.521879s, 1.1854 tests/s, 2.7246 assertions/s.
-   Coverage = 100% 39.99 (-83)
-   Coverage = 100% 56.21 (+16.22)
+   Coverage = 100.00% 39.99 (-83)
+   Coverage =  97.84%  0.62 (-40)
 
+integration
+   Now: Finished tests in 56.509874s, 0.1416 tests/s, 0.8140 assertions/s.
+   Coverage = 88.11%
+   
 controllers
    Old: Finished tests in 48.154916s, 0.5815 tests/s, 2.9073 assertions/s.
    Now: Finished tests in 37.540862s, 0.8790 tests/s, 4.1022 assertions/s.
