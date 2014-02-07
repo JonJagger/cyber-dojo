@@ -6,9 +6,6 @@ class AvatarTests < ActionController::TestCase
     @kata = make_kata('Ruby-installed-and-working')
   end
 
-  def teardown
-  end
-  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "deleted file is deleted from that repo tag" do

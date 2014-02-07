@@ -21,19 +21,17 @@ lib
 integration
    39 tests, 152 assertions, 1 failures, 0 errors, 0 skips
    Finished tests in 73.981797s, 0.6353 tests/s, 3.0413 assertions/s.
-   Coverage stat for this is reported (by perc.rb) as 100%
-   But there is nothing in that tab of index.html
-   True coverage is set of coverages for the *other* modules....
-   app/helpers 49.12%
-   app/lib 25.86%
-   app/models 88.11%
-   lib 94.12%
+     Coverage is set of coverages for the *other* modules....
+     49.12%  app/helpers 
+     25.86%  app/lib 
+     88.11%  app/models 
+     94.12%  lib 
 
 app_controllers
    33 tests, 154 assertions, 0 failures, 0 errors, 0 skips
    Finished tests in 42.872469s, 0.7697 tests/s, 3.5920 assertions/s.
    Coverage = 90.66%
-     app/helpers 87.72%
-     app/lib 65.90%
-     app/models 96.22%
-     lib 90.76%
+     87.72%  app/helpers 
+     65.90%  app/lib 
+     96.22%  app/models 
+     90.76%  lib 

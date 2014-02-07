@@ -13,7 +13,7 @@ class DiskFileTests < ActionController::TestCase
   def teardown
     system("rm -rf #{@dir}")
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "directory? true because it exists" do
@@ -108,40 +108,22 @@ class DiskFileTests < ActionController::TestCase
     assert outer_run
     assert !inner_run
   end
-  
-  test "lock_can_be_acquired_on_an_existing_dir" do
-    dir = 'new_dir'
-    `mkdir #{dir}`
-    begin
-      run = false
-      result = @disk_file.lock(dir) { run = true }
-      assert run
-      assert result
-    ensure
-      `rm -rf #{dir}`      
-    end
-  end
-  
+    
   test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
-    parent = 'parent'
+    parent = @dir + @disk_file.separator + 'parent'
     child = parent + @disk_file.separator + 'child'
     `mkdir #{parent}`
     `mkdir #{child}`
-    begin
-      parent_run = false
-      child_run = false
-      @disk_file.lock(parent) do
-        parent_run = true
-        @disk_file.lock(child) do
-          child_run = true
-        end
+    parent_run = false
+    child_run = false
+    @disk_file.lock(parent) do
+      parent_run = true
+      @disk_file.lock(child) do
+        child_run = true
       end
-      assert parent_run
-      assert child_run
-    ensure
-      `rm -rf #{child}`
-      `rm -rf #{parent}`
     end
+    assert parent_run
+    assert child_run
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
