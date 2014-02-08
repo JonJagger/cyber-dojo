@@ -175,44 +175,7 @@ class DiskFileTests < ActionController::TestCase
     check_save_file('smakefile', content, expected_content)    
   end  
   
-  test "save file for makefile converts all leading whitespace on a line to a single tab" do
-    check_save_makefile("            abc", "\tabc")
-    check_save_makefile("        abc", "\tabc")
-    check_save_makefile("    abc", "\tabc")
-    check_save_makefile("\tabc", "\tabc")
-  end
-  
-  test "save file for Makefile converts all leading whitespace on a line to a single tab" do
-    check_save_file('Makefile', "            abc", "\tabc")
-    check_save_file('Makefile', "        abc", "\tabc")
-    check_save_file('Makefile', "    abc", "\tabc")
-    check_save_file('Makefile', "\tabc", "\tabc")
-  end
-  
-  test "save file for makefile converts all leading whitespace to single tab for all lines in any line format" do
-    check_save_makefile("123\n456", "123\n456")
-    check_save_makefile("123\r\n456", "123\n456")
-    
-    check_save_makefile("    123\n456", "\t123\n456")
-    check_save_makefile("    123\r\n456", "\t123\n456")
-    
-    check_save_makefile("123\n    456", "123\n\t456")
-    check_save_makefile("123\r\n    456", "123\n\t456")
-    
-    check_save_makefile("    123\n   456", "\t123\n\t456")
-    check_save_makefile("    123\r\n   456", "\t123\n\t456")
-    
-    check_save_makefile("    123\n456\n   789", "\t123\n456\n\t789")    
-    check_save_makefile("    123\r\n456\n   789", "\t123\n456\n\t789")    
-    check_save_makefile("    123\n456\r\n   789", "\t123\n456\n\t789")    
-    check_save_makefile("    123\r\n456\r\n   789", "\t123\n456\n\t789")    
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def check_save_makefile(content, expected_content)    
-    check_save_file('makefile', content, expected_content, false)
-  end
       
   def check_save_file(filename, content, expected_content, executable = false)
     @disk_file.write(@dir, filename, content)

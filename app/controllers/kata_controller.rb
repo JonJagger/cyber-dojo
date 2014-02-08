@@ -2,6 +2,7 @@
 require 'Approval'
 require 'CodeOutputParser'
 require 'FileHashDiffer'
+require 'MakefileFilter'
 
 class KataController < ApplicationController
   
@@ -20,8 +21,6 @@ class KataController < ApplicationController
   def run_tests    
     incoming_hashes = params[:file_hashes_incoming]
     outgoing_hashes = params[:file_hashes_outgoing]
-    #Rails.logger.debug('FILE_HASHES_INCOMING:' + incoming_hashes.inspect);
-    #Rails.logger.debug('FILE_HASHES_OUTGOING:' + outgoing_hashes.inspect);    
     delta = FileHashDiffer.diff(incoming_hashes, outgoing_hashes)
     
     @kata   = Kata.new(root_dir, id)
@@ -66,7 +65,9 @@ private
     seen = { }
     (params[:file_content] || {}).each do |filename,content|
       # Cater for windows line endings from windows browser
-      seen[filename] = content.gsub(/\r\n/, "\n")  
+      content = content.gsub(/\r\n/, "\n")
+      # Cater for jquery-tabby.js plugin
+      seen[filename] = MakefileFilter.filter(filename,content)
     end
     seen
   end
