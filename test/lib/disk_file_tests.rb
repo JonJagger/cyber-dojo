@@ -60,7 +60,7 @@ class DiskFileTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
+  test "on_lock_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
     block_run = false
     exception_throw = false
     begin
@@ -126,6 +126,18 @@ class DiskFileTests < ActionController::TestCase
     assert child_run
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "symlink" do
+    expected = "content"
+    @disk_file.write(@dir, 'filename', expected)
+    oldname = @dir + '/' + 'filename'
+    newname = @dir + '/' + 'linked'
+    output = @disk_file.symlink(oldname, newname)
+    assert !File.symlink?(oldname)
+    assert File.symlink?(newname)
+  end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "save_file for non-string is saved as inspected object and folder is automatically created" do
