@@ -42,6 +42,9 @@ TOOL-TIPS
   Also, tips on the setup page.
   Make the tip appear next to the element it is tipping?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+  needed for dashboard seconds-per-column and columns-maximum
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF/REVERT/FORK DIALOGS
   add css to control height and scrollbar-y of filename-list
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
