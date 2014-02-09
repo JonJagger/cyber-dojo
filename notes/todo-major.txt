@@ -14,13 +14,7 @@ $ruby prune_large.rb false 50 7
 reveals 843 katas with dojos having 50 or more traffic-lights.
 Obviously don't want to prune. Want to zip and scp.
 Scp has a -r option - it follows symbolic links.
-
----------------------------
-redirect URL for diff-view to open a diff-view dialog
-(on dashboard background?) and then delete all the
-duplicated diff-view code.
-
----------------------------
+------------------------------------------------------
 Suppose in dojo-X the frog forked from traffic-light 28
 whose git hash was 2d0d2bb21ad7....
 In the new dojo-Y the alligators first traffic-light will not

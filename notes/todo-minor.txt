@@ -12,15 +12,6 @@ HELP
   put in content for dashboard help. At least mention being
   able to press any traffic-light to get a diff.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-PAGE
-  redirect URL to dashboard with diff-dialog opened to the diff as
-  specified in the URL
-  This also means I won't need the diff-heartbeat code.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  red/green buttons are not dimmed on unselected filenames
-  (they are on the dialog page).
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if you press < > and the next diff has no actual diff
   then repeat (atuomatically) the < > until you get an actual diff?

@@ -6,7 +6,18 @@ class DashboardController < ApplicationController
     @seconds_per_column = seconds_per_column
     @maximum_columns = maximum_columns
     @auto_refresh = flag(:auto_refresh, true)
-    @title = id[0..5] + ' dashboard'    
+    @title = id[0..5] + ' dashboard'
+
+    # provide these if you want to open the diff-dialog
+    # for a specific avatar,was_tag,now_tag as the
+    # dashboard opens
+    if params['avatar_name'] && params['was_tag'] && params['now_tag']
+      @id = id
+      @avatar_name = params['avatar_name']
+      @was_tag = params['was_tag']
+      @now_tag = params['now_tag']
+      @max_tag =  Avatar.new(@kata, params['avatar_name']).traffic_lights
+    end
   end
 
   def heartbeat

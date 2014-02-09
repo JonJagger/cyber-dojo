@@ -250,6 +250,20 @@ var cyberDojo = (function(cd, $) {
 		  var reselected =
 			previousFilenameNode !== undefined && getFilename(previousFilenameNode) === filename;
 		  
+		  var allLineCountButtons = $('.diff-deleted-line-count, .diff-added-line-count');
+		  var off = { 'disabled':true, 'title':'' }; 
+		  var disableAllLineCountButtons = function() {
+			allLineCountButtons.attr(off);
+		  };
+		  var tr = filenameNode.closest('tr');
+		  disableAllLineCountButtons();
+		  tr.find('.diff-deleted-line-count')
+			  .attr('disabled', false)
+			  .attr('title', 'Toggle deleted lines on/off');
+		  tr.find('.diff-added-line-count')
+			  .attr('disabled', false)
+			  .attr('title', 'Toggle added lines on/off');    
+		  
 		  cd.radioEntrySwitch(previousFilenameNode, filenameNode);
 		  if (previousFilenameNode !== undefined) {
 			diffFileDiv(getFilename(previousFilenameNode)).hide();          
