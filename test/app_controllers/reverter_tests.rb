@@ -20,7 +20,7 @@ class ReverterControllerTest  < IntegrationTest
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        quoted('cyber-dojo.sh') => ""
+        'cyber-dojo.sh' => "echo abc"
       },
       :file_hashes_incoming => {
         'cyber-dojo.sh' => 234234
@@ -34,7 +34,7 @@ class ReverterControllerTest  < IntegrationTest
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        quoted('cyber-dojo.sh') => ""
+        'cyber-dojo.sh' => "echo def"
       },
       :file_hashes_incoming => {
         'cyber-dojo.sh' => 234234
@@ -54,6 +54,9 @@ class ReverterControllerTest  < IntegrationTest
     visible_files = json['visibleFiles']
     assert_not_nil visible_files
     assert_not_nil visible_files['output']
+    assert_not_nil visible_files['cyber-dojo.sh']
+    
+    assert_equal "echo abc", visible_files['cyber-dojo.sh']
     
     inc = json['inc']
     assert_not_nil inc

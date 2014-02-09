@@ -20,7 +20,7 @@ class ForkerControllerTest < IntegrationTest
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        quoted('cyber-dojo.sh') => ""
+        'cyber-dojo.sh' => ""
       },
       :file_hashes_incoming => {
         'cyber-dojo.sh' => 234234

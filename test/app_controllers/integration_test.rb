@@ -20,7 +20,4 @@ class IntegrationTest  < ActionController::IntegrationTest
     $1
   end
     
-  def quoted(filename)
-    "'" + filename + "'"
-  end
 end
