@@ -1,16 +1,17 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Enable the test button only when files are different to previous
-submission? Problem with this is on starting the tests are
-automatically run, so when that completes the test button will
-be disabled.
+On diff-page zeroth traffic-light is green (for Java-Junit). 
+It would be a bit better if the zeroth one was colourless.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DiskFile.write should really be 2 methods?
 Or should object.inspect be passed so its always a string?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HELP
+DASHBOARD-HELP
   put in content for dashboard help. At least mention being
   able to press any traffic-light to get a diff.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-HELP
+  provide some
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if you press < > and the next diff has no actual diff
@@ -28,15 +29,13 @@ chip away at internationalisation. Have promises for Russian and Ukranian.
 MISC
   add ghosting when traffic-light is hovered over.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Enable the test button only when files are different to previous
+submission? Problem with this is on starting the tests are
+automatically run, so when that completes the test button will
+be disabled.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP
   use a dialog?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-SHOW (redudant when diff-page becomes diff-dialog)
-  make it appear same as diff-dialog
-  o) add tagGap between wasTag and nowTag
-  o) move animal image between << < and > >>
-  o) lose line-numbers
-  o) add (?) button
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   needed for fork/review/diff dialog << < > >> buttons 
@@ -102,10 +101,6 @@ Would that affect the ability to clone from a given position?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 line-numbers - dynamically change width from <99 to 100+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-On diff-page zeroth traffic-light is green (for Java-Junit). Correct?
-Lose fork button on diff-review page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on diff page alt-f and alt-b move forwards and backwards (cycle)
@@ -116,9 +111,6 @@ Or did James mean to cycle through edited files in the test page?
 
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Add some content for diff-view (?)
-Add some content for dashboard-view (?)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 https://github.com/gdunn/cyberdojo
 Add UnitTest++ C/C++
@@ -160,15 +152,6 @@ a different folder than before?
 
 
 ------------------------------------------------------------
-split external-lib off into separate folder
-and create separate test/external-lib too.
-Also add filter for coverage of test/external-lib.
-
-Add tests for DiskGit
-Add tests for DiskFile
-Add/move tests for Uuid
-Add/move tests for TimeboxedTask
-
 It would be simpler if output and instructions were not mixed
 into kata.language and avatar.setup did an explicit
 save(kata.exercise.instructions)
