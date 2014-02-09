@@ -33,9 +33,10 @@ fr:
       zebra: "zèbre"
       
     labels:
+      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a> la programmation ensemble"
       get_a_new_practice_id: "obtenir un nouvel id de pratique"
-      enter_a_practice_id: "entrez votre id pratique"
-      a_place_to_practice: "un endriot pour <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a> la programmation"
+      enter_the_practice_id: "sur <em>chaque</em> ordinateur<br>entrez votre id pratique"
+      and: "et"      
       please_donate: "Si vous trouvez cyber-dojo utile s'il vous plaît<br/>faire un don.
                       Tous les dons sont<br/>utilisé uniquement pour acheter
                       <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>

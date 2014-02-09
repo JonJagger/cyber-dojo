@@ -38,6 +38,9 @@ SETUP
   use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
+  Need to be i18n'd
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
   needed for fork/review/diff dialog << < > >> buttons 
   Also, tips on the setup page.
   Make the tip appear next to the element it is tipping?
