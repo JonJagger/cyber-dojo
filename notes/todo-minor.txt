@@ -5,7 +5,8 @@ submission? Problem with this is on starting the tests are
 automatically run, so when that completes the test button will
 be disabled.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DiskFile.write should really be 2 methods...
+DiskFile.write should really be 2 methods?
+Or should object.inspect be passed so its always a string?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HELP
   put in content for dashboard help. At least mention being
