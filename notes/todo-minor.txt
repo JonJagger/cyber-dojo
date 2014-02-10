@@ -1,6 +1,22 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-tool-tip on dashboard needs to appear without moving other elements.
+TOOL-TIPS
+  for diff-dialog
+  for fork-dialog
+  for revert-dialog
+  Need to be i18n'd
+  on the setup page.
+  on dashboard - seconds-per-column and columns-maximum
+  on dashboard - needs to appear without moving other elements.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
+  filenames: add * marker if files have changed since last [test]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+custom error page: [sorry - message] at top
+and use space at bottom for detail. Eg
+o) old dojos may no longer exist (need to reclaim disk space)
+o) if you think there's a fault email me
+o) allow trace to be emailed to me?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On diff-page zeroth traffic-light is green (for Java-Junit). 
 It would be a bit better if the zeroth one was colourless.
@@ -12,14 +28,9 @@ DASHBOARD-HELP
   put in content for dashboard help. At least mention being
   able to press any traffic-light to get a diff.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-HELP
-  provide some
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if you press < > and the next diff has no actual diff
   then repeat (atuomatically) the < > until you get an actual diff?
-  I think it might be better to simply not allow a [test] when
-  there is no diff in the browser.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAVICON
 Make the favicon for [test] page be a bulb of the current colour?
@@ -38,17 +49,6 @@ be disabled.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP
   use a dialog?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TOOL-TIPS
-  Need to be i18n'd
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TOOL-TIPS
-  needed for fork/review/diff dialog << < > >> buttons 
-  Also, tips on the setup page.
-  Make the tip appear next to the element it is tipping?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TOOL-TIPS
-  needed for dashboard seconds-per-column and columns-maximum
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF/REVERT/FORK DIALOGS
   add css to control height and scrollbar-y of filename-list
