@@ -29,7 +29,7 @@ module TrafficLightHelper
          " data-now-tag='#{light[:number]}'" +
          " data-max-tag='#{max_lights}'>" +
         "<div class='tooltip'>" +
-          "Show #{avatar_name}'s<br>" +
+          "show #{avatar_name}'s<br>" +
           "current code" +
         "</div>" +
         "<img src='/images/avatars/#{avatar_name}.jpg'" +
@@ -49,7 +49,7 @@ module TrafficLightHelper
 
   def tool_tip(avatar_name, light)
     n = light[:number]
-    "Review #{avatar_name}'s<br>" +
+    "review #{avatar_name}'s<br>" +
     "#{n-1} &harr; #{n} diff<br>" +
     "(#{at(light)})"
   end

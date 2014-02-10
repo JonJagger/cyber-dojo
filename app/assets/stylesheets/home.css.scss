@@ -49,20 +49,20 @@ a:link, a:visited
 
 #get_a_new_practice_id
 {
-  color: $text-color;
+  color: lighten($red, 20%);
   @include font-size-tiny();  
 }
 
-#enter_the_practice_id, #and
+#enter_the_practice_id
 {
   color: lighten($green, 30%);
   @include font-size-tiny();  
 }
 
-#cant_find_id
+#and
 {
-  text-align: center;
-  @include font-size-large();
+  color: $text_color;
+  @include font-size-tiny();  
 }
 
 #full_dojo_text, #empty_dojo_text

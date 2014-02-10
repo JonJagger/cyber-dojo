@@ -7,9 +7,10 @@
          data-current-colour="<%=colour %>">
       <%= traffic_lights.length %>
       <div class='tooltip'>
-         so far, <%= avatar_name%> has<br>
+         <%= avatar_name%> has<br>
          <%= pluralize(traffic_lights.length, 'traffic-light') %><br>
-         and is currently at <%= colour %>
+         so far and is<br>
+         currently at <%= colour %>
       </div>        
     </div>
 <% end %>

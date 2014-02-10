@@ -4,8 +4,9 @@
   <div class="tipped <%= bulb %> bulb_count">
     <%= bulb_tally %>
     <div class='tooltip'>
-       so far, <%= avatar_name %> has<br>
-       <%= pluralize(bulb_tally, bulb.to_s + ' traffic-light') %>
+       <%= avatar_name %> has<br>
+       <%= pluralize(bulb_tally, bulb.to_s + ' traffic-light') %><br>
+       so far
     </div>
   </div>       
 <% end %>

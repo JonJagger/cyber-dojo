@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+tool-tip on dashboard needs to appear without moving other elements.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On diff-page zeroth traffic-light is green (for Java-Junit). 
 It would be a bit better if the zeroth one was colourless.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
