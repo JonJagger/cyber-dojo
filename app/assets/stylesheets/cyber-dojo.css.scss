@@ -1,7 +1,6 @@
 
 table { border-spacing: 0; }
 
-
 #cyber_dojo_page
 {
   margin: {
@@ -167,9 +166,17 @@ div[class~="filename"], button[disabled]:hover
   color: $darker-color;
   display: table;
   margin: 0 auto;
-  
+  margin-left: 45px;
+  margin-right: 45px;
   a:link, a:visited {
     color: $lighter-color;  
+  }
+  
+  &.title
+  {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    position: relative;
+    left: -45px;
   }
 }
 
