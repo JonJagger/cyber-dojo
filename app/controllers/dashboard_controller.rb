@@ -11,12 +11,12 @@ class DashboardController < ApplicationController
     # provide these if you want to open the diff-dialog
     # for a specific avatar,was_tag,now_tag as the
     # dashboard opens
-    if params['avatar_name'] && params['was_tag'] && params['now_tag']
+    if params['avatar'] && params['was_tag'] && params['now_tag']
       @id = id
-      @avatar_name = params['avatar_name']
+      @avatar_name = params['avatar']
       @was_tag = params['was_tag']
       @now_tag = params['now_tag']
-      @max_tag =  Avatar.new(@kata, params['avatar_name']).traffic_lights.length
+      @max_tag = Avatar.new(@kata, @avatar_name).traffic_lights.length
     end
   end
 

@@ -8,7 +8,7 @@ class DiffController < ApplicationController
     redirect_to :controller => 'dashboard',
                 :action => 'show',
                 :id => id,
-                :avatar_name => params['avatar'],
+                :avatar => params['avatar'],
                 :was_tag => params['was_tag'],
                 :now_tag => params['now_tag']
   end
