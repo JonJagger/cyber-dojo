@@ -7,7 +7,8 @@
 	body
 	{
 	  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;		
-	  background-color: #fff;
+	  background-color: #666;
+	  color: Khaki;
 	  text-align: center;
 	}
 	h1
@@ -23,21 +24,6 @@
 	}
   </style>
 </head>
-
-<script type="text/javascript"><!--
-
-$(document).ready(function() {
-  // See http://jquerytools.org/documentation/tooltip/#positioning
-  $(".avatar_image").tooltip({
-	predelay: 750,
-	effect: 'fade',
-	position: 'bottom center',
-	offset: [-30,0],
-	delay: 150
-  });
-});
-
-//--></script>
 
 <body class="panel">
 
@@ -57,21 +43,13 @@ $(document).ready(function() {
 			   height="<%= size %>"
 			   width="<%= size %>"
 		       src="/images/avatars/<%= avatars[n]%>.jpg" />		  
-			<div class="tooltip">
-			  <%= avatars[n] %> says <em>sorry</em>
-			  <img alt="<%= avatars[n] %>"
-				   class="avatar_image"
-				   height="<%= size/2 %>"
-				   width="<%= size/2 %>"
-				   src="/images/avatars/<%= avatars[n]%>.jpg" />		  
-			</div>
 		 </td>
 	  <% end %>	  	  
 	</tr>	
 	<% end %>
   </table>      
 
-  <h1>We're sorry</h1>
+  <h1>we're sorry</h1>
 	
 </body>
 </html>  

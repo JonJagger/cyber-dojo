@@ -19,15 +19,7 @@ class Language
   def visible_files
     Hash[visible_filenames.collect{|filename| [filename, @file.read(dir, filename)]}]
   end
-        
-  def hidden_files
-    Hash[hidden_filenames.collect{|filename| [filename, @file.read(dir, filename)]}]
-  end
 
-  def hidden_filenames
-    manifest[:hidden_filenames] || [ ]
-  end
-  
   def support_filenames
     manifest[:support_filenames] || [ ]
   end

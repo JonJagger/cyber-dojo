@@ -384,16 +384,6 @@ manifest.rb Parameters
    }
   in the file app/assets/stylesheets/cyber-dojo.css.scss
   
-:hidden_filenames
-  The names of text files that are not visible in the browser's editor but
-  which will nonetheless be available each time the player runs their tests.
-  Each of these files must exist in the directory.
-  For example, test framework library code.
-  Not required if you do not need hidden files.
-  Not currently used anywhere. A feature could be - doing a fork offering a
-  dialog that allows you to control which files are visible and which are not
-  (eg to make the test files present but invisible).
-  
 :support_filenames
   The names of necessary supporting non-text files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.

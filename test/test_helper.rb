@@ -14,7 +14,13 @@ SimpleCov.start do
   add_group 'app/controllers', 'app/controllers'
   add_group 'app/models',      'app/models'
   add_group 'app/helpers',     'app/helpers'
-  add_group 'lib',             'lib'
+  add_group 'app/lib',         'app/lib'
+  add_group 'integration',     'integration' # hack
+  
+  add_group 'lib'             do |src_file|
+    src_file.filename.include?('lib') &&
+    !src_file.filename.include?('app/lib')
+  end
   
 end
 
@@ -74,12 +80,12 @@ class ActiveSupport::TestCase
   end
   
   def root_dir
-    #TODO?: use ENV like test/integration/integration_test.rb
+    #TODO?: use ENV like test/app_controllers/integration_test.rb
     (@root_dir || Rails.root + 'test/cyberdojo').to_s
   end
   
-  def teardown
-    #system("rm -rf #{root_dir}/katas/*")
+  def setup
+    system("rm -rf #{root_dir}/katas/*")
   end
   
 end

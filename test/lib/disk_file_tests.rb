@@ -13,7 +13,7 @@ class DiskFileTests < ActionController::TestCase
   def teardown
     system("rm -rf #{@dir}")
   end
-
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "directory? true because it exists" do
@@ -60,7 +60,7 @@ class DiskFileTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
+  test "on_lock_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
     block_run = false
     exception_throw = false
     begin
@@ -108,42 +108,36 @@ class DiskFileTests < ActionController::TestCase
     assert outer_run
     assert !inner_run
   end
-  
-  test "lock_can_be_acquired_on_an_existing_dir" do
-    dir = 'new_dir'
-    `mkdir #{dir}`
-    begin
-      run = false
-      result = @disk_file.lock(dir) { run = true }
-      assert run
-      assert result
-    ensure
-      `rm -rf #{dir}`      
-    end
-  end
-  
+    
   test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
-    parent = 'parent'
+    parent = @dir + @disk_file.separator + 'parent'
     child = parent + @disk_file.separator + 'child'
     `mkdir #{parent}`
     `mkdir #{child}`
-    begin
-      parent_run = false
-      child_run = false
-      @disk_file.lock(parent) do
-        parent_run = true
-        @disk_file.lock(child) do
-          child_run = true
-        end
+    parent_run = false
+    child_run = false
+    @disk_file.lock(parent) do
+      parent_run = true
+      @disk_file.lock(child) do
+        child_run = true
       end
-      assert parent_run
-      assert child_run
-    ensure
-      `rm -rf #{child}`
-      `rm -rf #{parent}`
     end
+    assert parent_run
+    assert child_run
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "symlink" do
+    expected = "content"
+    @disk_file.write(@dir, 'filename', expected)
+    oldname = @dir + '/' + 'filename'
+    newname = @dir + '/' + 'linked'
+    output = @disk_file.symlink(oldname, newname)
+    assert !File.symlink?(oldname)
+    assert File.symlink?(newname)
+  end
+  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "save_file for non-string is saved as inspected object and folder is automatically created" do
@@ -181,44 +175,7 @@ class DiskFileTests < ActionController::TestCase
     check_save_file('smakefile', content, expected_content)    
   end  
   
-  test "save file for makefile converts all leading whitespace on a line to a single tab" do
-    check_save_makefile("            abc", "\tabc")
-    check_save_makefile("        abc", "\tabc")
-    check_save_makefile("    abc", "\tabc")
-    check_save_makefile("\tabc", "\tabc")
-  end
-  
-  test "save file for Makefile converts all leading whitespace on a line to a single tab" do
-    check_save_file('Makefile', "            abc", "\tabc")
-    check_save_file('Makefile', "        abc", "\tabc")
-    check_save_file('Makefile', "    abc", "\tabc")
-    check_save_file('Makefile', "\tabc", "\tabc")
-  end
-  
-  test "save file for makefile converts all leading whitespace to single tab for all lines in any line format" do
-    check_save_makefile("123\n456", "123\n456")
-    check_save_makefile("123\r\n456", "123\n456")
-    
-    check_save_makefile("    123\n456", "\t123\n456")
-    check_save_makefile("    123\r\n456", "\t123\n456")
-    
-    check_save_makefile("123\n    456", "123\n\t456")
-    check_save_makefile("123\r\n    456", "123\n\t456")
-    
-    check_save_makefile("    123\n   456", "\t123\n\t456")
-    check_save_makefile("    123\r\n   456", "\t123\n\t456")
-    
-    check_save_makefile("    123\n456\n   789", "\t123\n456\n\t789")    
-    check_save_makefile("    123\r\n456\n   789", "\t123\n456\n\t789")    
-    check_save_makefile("    123\n456\r\n   789", "\t123\n456\n\t789")    
-    check_save_makefile("    123\r\n456\r\n   789", "\t123\n456\n\t789")    
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def check_save_makefile(content, expected_content)    
-    check_save_file('makefile', content, expected_content, false)
-  end
       
   def check_save_file(filename, content, expected_content, executable = false)
     @disk_file.write(@dir, filename, content)

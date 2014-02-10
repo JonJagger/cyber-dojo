@@ -175,7 +175,9 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
   	var makeTrafficLight = function(trafficLight) {
-      var filename = 'traffic_light_' + trafficLight.colour;
+	  // old increments.rb files used light[:outcome]
+	  var colour = trafficLight.colour || trafficLight.outcome
+      var filename = 'traffic_light_' + colour;
       return '' +
 		"<img src='/images/" + filename + ".png'" +
 		     "width='15'" +
@@ -249,6 +251,20 @@ var cyberDojo = (function(cd, $) {
 		return function() {
 		  var reselected =
 			previousFilenameNode !== undefined && getFilename(previousFilenameNode) === filename;
+		  
+		  var allLineCountButtons = $('.diff-deleted-line-count, .diff-added-line-count');
+		  var off = { 'disabled':true, 'title':'' }; 
+		  var disableAllLineCountButtons = function() {
+			allLineCountButtons.attr(off);
+		  };
+		  var tr = filenameNode.closest('tr');
+		  disableAllLineCountButtons();
+		  tr.find('.diff-deleted-line-count')
+			  .attr('disabled', false)
+			  .attr('title', 'Toggle deleted lines on/off');
+		  tr.find('.diff-added-line-count')
+			  .attr('disabled', false)
+			  .attr('title', 'Toggle added lines on/off');    
 		  
 		  cd.radioEntrySwitch(previousFilenameNode, filenameNode);
 		  if (previousFilenameNode !== undefined) {

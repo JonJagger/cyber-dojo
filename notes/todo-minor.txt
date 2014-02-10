@@ -1,11 +1,26 @@
 
-
-If you press test and no changes are detected on the browser then
-do not submit the files. Instead put message into output file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+On diff-page zeroth traffic-light is green (for Java-Junit). 
+It would be a bit better if the zeroth one was colourless.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DiskFile.write should really be 2 methods?
+Or should object.inspect be passed so its always a string?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-HELP
+  put in content for dashboard help. At least mention being
+  able to press any traffic-light to get a diff.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-HELP
+  provide some
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if you press < > and the next diff has no actual diff
-  then repeat (atuomatically) the < > until you get an actual diff.
+  then repeat (atuomatically) the < > until you get an actual diff?
+  I think it might be better to simply not allow a [test] when
+  there is no diff in the browser.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAVICON
+Make the favicon for [test] page be a bulb of the current colour?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chip away at help tool-tips.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -14,40 +29,27 @@ chip away at internationalisation. Have promises for Russian and Ukranian.
 MISC
   add ghosting when traffic-light is hovered over.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  red/green buttons are not dimmed on unselected filenames
-  (they are on the dialog page).
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  add button to open it in new tab/window which takes you to diff/show page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-PAGE
-  lose line-numbers.
+Enable the test button only when files are different to previous
+submission? Problem with this is on starting the tests are
+automatically run, so when that completes the test button will
+be disabled.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP
   use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HELP
-  put in content for dashboard help.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-SHOW
-  make it appear same as diff-dialog
-  o) add tagGap between wasTag and nowTag
-  o) move animal image between << < and > >>
-  o) lose line-numbers
-  o) add (?) button
+TOOL-TIPS
+  Need to be i18n'd
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
-  for fork/review/diff dialog << < > >> buttons 
+  needed for fork/review/diff dialog << < > >> buttons 
   Also, tips on the setup page.
-  Make the tip appear next to the element it is tipping.
+  Make the tip appear next to the element it is tipping?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+  needed for dashboard seconds-per-column and columns-maximum
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF/REVERT/FORK DIALOGS
   add css to control height and scrollbar-y of filename-list
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DELETE-FILE
-  show filename in non-editable input type="text"
-  to match appearance of rename and new dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIALOGS
   change .close() calls to .remove()
@@ -55,13 +57,6 @@ DIALOGS
 HTML
   s/fork/forker/
   s/revert/reverter/ ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-PAGE
-Should I retain the heartbeat?
-Ultimately, have same code and it runs inside a page or inside a dialog!?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAVICON
-Make the favicon for [test] page be a bulb of the current colour.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ZIP
 Make sure the zip download works. That is gets all of the files.
@@ -112,10 +107,6 @@ Would that affect the ability to clone from a given position?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 line-numbers - dynamically change width from <99 to 100+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-On diff-page zeroth traffic-light is green (for Java-Junit). Correct?
-Lose fork button on diff-review page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on diff page alt-f and alt-b move forwards and backwards (cycle)
@@ -126,9 +117,6 @@ Or did James mean to cycle through edited files in the test page?
 
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Add some content for diff-view (?)
-Add some content for dashboard-view (?)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 https://github.com/gdunn/cyberdojo
 Add UnitTest++ C/C++
@@ -170,15 +158,6 @@ a different folder than before?
 
 
 ------------------------------------------------------------
-split external-lib off into separate folder
-and create separate test/external-lib too.
-Also add filter for coverage of test/external-lib.
-
-Add tests for DiskGit
-Add tests for DiskFile
-Add/move tests for Uuid
-Add/move tests for TimeboxedTask
-
 It would be simpler if output and instructions were not mixed
 into kata.language and avatar.setup did an explicit
 save(kata.exercise.instructions)

@@ -12,11 +12,15 @@ module TrafficLightHelper
         "<div class='tooltip'>" +
           tool_tip(avatar_name,light) +
         "</div>" +
-        traffic_light_image(light[:colour], 20, 62) +
+        traffic_light_image(colour(light), 20, 62) +
      "</div>"
     ).html_safe    
   end
 
+  def colour(light)
+     (light[:colour] || light[:outcome]).to_s
+  end
+  
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
     ("<div class='tipped diff-traffic-light'" +
          " data-id='#{kata.id}'" +
@@ -59,8 +63,7 @@ module TrafficLightHelper
   def unlinked_traffic_light(inc, width = nil, height = nil)
     width ||= 20
     height ||= 62
-    colour = inc[:colour].to_s
-    traffic_light_image(colour,width,height)
+    traffic_light_image(colour(inc),width,height)
   end
   
 end

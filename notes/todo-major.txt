@@ -1,5 +1,7 @@
 
-
+------------------------------------------------------
+Offer a fork button on the diff-dialog
+------------------------------------------------------
 I'd like an automated process that moves dojos that have
 a minimum number of traffic lights and are at least N days
 old onto a separate read-only cyber-dojo server. 
@@ -14,13 +16,7 @@ $ruby prune_large.rb false 50 7
 reveals 843 katas with dojos having 50 or more traffic-lights.
 Obviously don't want to prune. Want to zip and scp.
 Scp has a -r option - it follows symbolic links.
-
----------------------------
-redirect URL for diff-view to open a diff-view dialog
-(on dashboard background?) and then delete all the
-duplicated diff-view code.
-
----------------------------
+------------------------------------------------------
 Suppose in dojo-X the frog forked from traffic-light 28
 whose git hash was 2d0d2bb21ad7....
 In the new dojo-Y the alligators first traffic-light will not
@@ -42,3 +38,18 @@ So if I have an array of string, each string being the content of one of
 the genuine files I need to
   o) sort the array based on the string contents
   o) form a hash from the array contents in array order.
+This could also give me a way to catalogue all the initial starting positions.
+This is useful since some exercises have changed their names and this causes
+problems with forking.
+Thinking further... I don't need to compute a single hash of all the
+visible files. I can create a hash. Eg
+{ '234ef354df' -> 'wibble.hpp', '65432134aacd' -> 'wibble.hpp' }
+This allows me to tell if
+  o) how often any individual file's content has been seen before.
+  o) how often the set of files for a single traffic-light have
+     been seen before.
+For the hashing I could use
+  require 'digest/sha1'
+  Digest::SHA1.hexdigest("some string") -> "8b45e4bd1c6acb88bebf6407d16205f567e62a3e"
+  Would need a test to make sure the sha1 of a known string did not change (eg when
+  upgrading Rails or Ruby)

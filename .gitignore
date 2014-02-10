@@ -12,15 +12,21 @@ coverage
 .approvals
 
 zipped_dojos.zip
-notes.txt
 *.tmp
 
-test/controllers/assets/
-test/controllers/index.html
-test/helpers/assets/
-test/helpers/index.html
+test/app_controllers/assets/
+test/app_controllers/index.html
+test/app_helpers/assets/
+test/app_helpers/index.html
+test/app_lib/assets/
+test/app_lib/index.html
+test/app_models/assets/
+test/app_models/index.html
+
 test/lib/assets/
 test/lib/index.html
-test/models/assets/
-test/models/index.html
+
+test/integration/assets/
+test/integration/index.html
+
 test/cyberdojo/zips

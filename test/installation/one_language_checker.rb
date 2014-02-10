@@ -23,12 +23,9 @@ class OneLanguageChecker < ActionController::TestCase
     
     check_required_keys_exist
     check_no_unknown_keys_exist
-    check_no_duplicates_in_both_visible_and_hidden_filenames
     check_no_duplicates_in_visible_filenames
-    check_no_duplicates_in_hidden_filenames
     check_cyberdojo_sh_exists
     check_cyberdojo_sh_has_execute_permission
-    check_named_files_exist(:hidden_filenames)
     check_named_files_exist(:visible_filenames)      
       
     rag = red_amber_green(get_filename_42)
@@ -67,7 +64,6 @@ class OneLanguageChecker < ActionController::TestCase
   
   def check_no_unknown_keys_exist
     known = [ :visible_filenames,
-              :hidden_filenames,
               :support_filenames,
               :unit_test_framework,
               :tab_size
@@ -82,35 +78,12 @@ class OneLanguageChecker < ActionController::TestCase
     end    
   end
   
-  def check_no_duplicates_in_both_visible_and_hidden_filenames    
-    visible_filenames.each do |filename|
-      if hidden_filenames.count(filename) > 0
-        message =
-          alert + 
-          "  #{@manifest_filename}'s :visible_filenames contains #{filename}\n" +
-          "  which is also in :hidden_filenames"
-        assert false, message        
-      end
-    end    
-  end
-  
   def check_no_duplicates_in_visible_filenames
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
           alert +
           "  #{@manifest_filename}'s :visible_filenames contains #{filename} more than once"
-        assert false, message
-      end
-    end
-  end
-  
-  def check_no_duplicates_in_hidden_filenames
-    hidden_filenames.each do |filename|
-      if hidden_filenames.count(filename) > 1
-        message =
-          alert +
-          "  #{@manifest_filename}'s :hidden_filenames contains #{filename} more than once"
         assert false, message
       end
     end
@@ -129,12 +102,11 @@ class OneLanguageChecker < ActionController::TestCase
   end
   
   def check_cyberdojo_sh_exists
-    all_filenames = visible_filenames + hidden_filenames
-    if all_filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
+    if visible_filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
       message =
         alert + 
         "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in either\n" +
-        "  :visible_filenames or :hidden_filenames"
+        "  :visible_filenames"
       assert false, message
     end
   end
@@ -150,10 +122,6 @@ class OneLanguageChecker < ActionController::TestCase
 
   def visible_filenames
     @manifest[:visible_filenames] || [ ]
-  end
-  
-  def hidden_filenames
-    @manifest[:hidden_filenames] || [ ]     
   end
     
   def alert
