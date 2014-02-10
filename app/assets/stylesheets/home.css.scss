@@ -49,7 +49,7 @@ a:link, a:visited
 
 #get_a_new_practice_id
 {
-  color: lighten($red, 20%);
+  color: $text-color;
   @include font-size-tiny();  
 }
 
