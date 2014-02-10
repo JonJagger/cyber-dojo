@@ -175,7 +175,9 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
   	var makeTrafficLight = function(trafficLight) {
-      var filename = 'traffic_light_' + trafficLight.colour;
+	  // old increments.rb files used light[:outcome]
+	  var colour = trafficLight.colour || trafficLight.outcome
+      var filename = 'traffic_light_' + colour;
       return '' +
 		"<img src='/images/" + filename + ".png'" +
 		     "width='15'" +
