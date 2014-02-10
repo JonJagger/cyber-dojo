@@ -6,8 +6,9 @@ class TrafficLightTests < ActionView::TestCase
   include TrafficLightHelper    
   
   test "tool tip" do
+    light = { :number => 2, :time => [2012,5,1,23,20,45], :colour => :red }
     assert_equal "Review hippo's<br>1 &harr; 2 diff<br>(2012 May 1, 23:20:45)",
-      tool_tip('hippo', make_inc)
+      tool_tip('hippo', light)
   end
   
   test "traffic_light_image" do
@@ -48,11 +49,31 @@ class TrafficLightTests < ActionView::TestCase
     assert_equal expected, actual
   end
   
+  # light[:colour] used to be light[:outcome]
+    
   test "diff_traffic_light" do
+    diff_traffic_light_func({:colour => 'red'})
+    diff_traffic_light_func({:outcome => 'red'})
+  end
+    
+  test "unlinked_traffic_light with defaults" do
+    unlinked_traffic_light_with_defaults_func({ :colour => 'red' })
+    unlinked_traffic_light_with_defaults_func({ :outcome => 'red' })    
+  end
+  
+  test "unlinked_traffic_light with explicit width and height" do
+    unlinked_traffic_light_with_explicit_width_and_height_func({ :colour => 'red' })
+    unlinked_traffic_light_with_explicit_width_and_height_func({ :outcome => 'red' })
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  def diff_traffic_light_func(light)
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar_name = 'hippo'
-    light = { :number => 23, :colour => 'red', :time => [2012,5,1,23,20,45] }
+    light[:number] = 23
+    light[:time] = [2012,5,1,23,20,45] 
     max_lights = 45
     expected = "" +
       "<div" +
@@ -74,42 +95,26 @@ class TrafficLightTests < ActionView::TestCase
     assert_equal expected, actual    
   end
   
-  test "unlinked_traffic_light with defaults" do
+  def unlinked_traffic_light_with_defaults_func(light)
     expected = "" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +
           " width='20'" +
           " height='62'/>"
-    inc = { :colour => 'red' }
-    actual = unlinked_traffic_light(inc)
-    assert_equal expected, actual
+    actual = unlinked_traffic_light(light)
+    assert_equal expected, actual    
   end
   
-  test "unlinked_traffic_light with explicit width and height" do
+  def unlinked_traffic_light_with_explicit_width_and_height_func(light)
     expected = "" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +
           " width='12'" +
           " height='40'/>"
-    inc = { :colour => 'red' }
     width = 12
     height = 40
-    actual = unlinked_traffic_light(inc,width,height)
+    actual = unlinked_traffic_light(light,width,height)
     assert_equal expected, actual
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  def width
-    18
-  end
-  
-  def height
-    55
-  end
-  
-  def make_inc
-    { :number => 2, :time => [2012,5,1,23,20,45], :colour => :red }
   end
   
 end

@@ -1,5 +1,7 @@
 
-
+------------------------------------------------------
+Offer a fork button on the diff-dialog
+------------------------------------------------------
 I'd like an automated process that moves dojos that have
 a minimum number of traffic lights and are at least N days
 old onto a separate read-only cyber-dojo server. 
