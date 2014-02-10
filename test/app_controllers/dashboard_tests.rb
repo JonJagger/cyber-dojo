@@ -100,7 +100,7 @@ class DashboardControllerTest < IntegrationTest
     end
     get "dashboard/show", {
       :id => id,
-      :avatar_name => avatar_name,
+      :avatar => avatar_name,
       :was_tag => 1,
       :now_tag => 2
     }
