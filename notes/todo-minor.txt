@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+insert thin margin at top of bottom row (above traffic-lights)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   for diff-dialog
   for fork-dialog
