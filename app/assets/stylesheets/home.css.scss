@@ -10,7 +10,7 @@ $text-color: darken($lighter-color, 10%);
 #cyber-dojo
 {
   color: $text-color;
-  @include font-size-largest();
+  font-size: 4em;
 }
 
 a:link, a:visited
