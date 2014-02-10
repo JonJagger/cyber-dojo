@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
       @avatar_name = params['avatar_name']
       @was_tag = params['was_tag']
       @now_tag = params['now_tag']
-      @max_tag =  Avatar.new(@kata, params['avatar_name']).traffic_lights
+      @max_tag =  Avatar.new(@kata, params['avatar_name']).traffic_lights.length
     end
   end
 
