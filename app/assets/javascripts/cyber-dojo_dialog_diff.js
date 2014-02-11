@@ -174,12 +174,13 @@ var cyberDojo = (function(cd, $) {
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -	
 	
-  	var makeTrafficLight = function(trafficLight) {
-	  // old increments.rb files used light[:outcome]
+  	var makeTrafficLight = function(tag, trafficLight) {
 	  var colour = trafficLight.colour || trafficLight.outcome
-      var filename = 'traffic_light_' + colour;
+	  if (tag == 0) {
+		colour = 'white';
+	  }
       return '' +
-		"<img src='/images/" + filename + ".png'" +
+		"<img src='/images/" + 'traffic_light_' + colour + ".png'" +
 		     "width='15'" +
 		     "height='46'/>";
 	};
@@ -396,11 +397,11 @@ var cyberDojo = (function(cd, $) {
 		function(data) {
 		  resetNavigateButtonHandlers();
 		  
-		  wasTrafficLight.html(makeTrafficLight(data.wasTrafficLight));
+		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
 		  wasTagNumber.val(wasTag);
 		  tagGapNumber.html(tagGap);
 		  nowTagNumber.val(nowTag);
-		  nowTrafficLight.html(makeTrafficLight(data.nowTrafficLight));
+		  nowTrafficLight.html(makeTrafficLight(nowTag, data.nowTrafficLight));
 		  
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
 		  resetFilenameAddedDeletedLineCountHandlers();

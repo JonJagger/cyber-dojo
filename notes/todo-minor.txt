@@ -12,16 +12,7 @@ TOOL-TIPS
   on dashboard - needs to appear without moving other elements.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
-  filenames: add * marker if files have changed since last [test]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-custom error page: [sorry - message] at top
-and use space at bottom for detail. Eg
-o) old dojos may no longer exist (need to reclaim disk space)
-o) if you think there's a fault email me
-o) allow trace to be emailed to me?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-On diff-page zeroth traffic-light is green (for Java-Junit). 
-It would be a bit better if the zeroth one was colourless.
+  filenames: add * marker if files have changed since last [test] ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD-HELP
   put in content for dashboard help. At least mention being
