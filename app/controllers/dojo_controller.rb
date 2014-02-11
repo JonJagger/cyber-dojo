@@ -68,25 +68,5 @@ class DojoController < ApplicationController
     @all_avatar_names = Avatar.names
     bind('/app/views/dojo/resume_dialog.html.erb')
   end
-  
-  #------------------------------------------------
-  
-  def review_json
-    exists = Kata.exists?(root_dir, id)    
-    render :json => {
-      :exists => exists,
-      :review_dialog_html => (exists ? review_dialog_html : '')          
-    }
-  end
-  
-  def review_dialog_html
-    bind('/app/views/dojo/review_dialog.html.erb')
-  end
-
-  #------------------------------------------------
-  
-  def render_error
-    render "error/#{params[:n]}"
-  end
 
 end

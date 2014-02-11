@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/stub_disk_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
 
-class Avatar2Tests < ActionController::TestCase
+class AvatarTests < ActionController::TestCase
 
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new

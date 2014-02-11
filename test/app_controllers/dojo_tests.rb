@@ -140,29 +140,9 @@ class DojoControllerTest  < IntegrationTest
     assert json['exists']
     assert !json['empty']
   end
-  
-  test "review_json with id that does not exist" do
-    bad_id = 'ab00ab11ab'
-    get 'dojo/review_json', {
-      :format => :json,
-      :id => bad_id
-    }
-    assert !json['exists']      
-  end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test "review_json with id that does exist" do
-    id = checked_save_id
-    get 'dojo/review_json', {
-      :format => :json,
-      :id => id
-    }
-    assert json['exists']      
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - -
-  
   test "button dialogs" do
     buttons = %w( about basics donations faqs feedback links source tips why )
     buttons.each do |name|
@@ -171,14 +151,6 @@ class DojoControllerTest  < IntegrationTest
       }
       assert_response :success    
     end
-  end
-  
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  test "render 404 error" do
-    get 'dojo/render_error', {
-      :n => 404
-    }
   end
   
 end

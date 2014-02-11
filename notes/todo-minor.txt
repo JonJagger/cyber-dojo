@@ -23,9 +23,6 @@ o) allow trace to be emailed to me?
 On diff-page zeroth traffic-light is green (for Java-Junit). 
 It would be a bit better if the zeroth one was colourless.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DiskFile.write should really be 2 methods?
-Or should object.inspect be passed so its always a string?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD-HELP
   put in content for dashboard help. At least mention being
   able to press any traffic-light to get a diff.
