@@ -84,11 +84,6 @@ a:link, a:visited
   @include font-size-tiny();
 }
 
-#thank_you
-{
-  @include font-size-medium();
-}
-
 [data-cursor=pointer]
 {
   cursor: pointer;

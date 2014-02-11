@@ -1,11 +1,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-insert thin margin at top of bottom row (above traffic-lights)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-front-page dialogs. I like the fat left-right margin on the
-basics, faq dialogs. Put that on all front page dialogs.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-use smaller font for ok/cancel buttons on dialogs.
+use smaller font for ok/cancel buttons on dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   for diff-dialog
