@@ -81,8 +81,8 @@ Java-ApprovalTests
 to
 Java-Approval
 I think this is overly brittle. There is no reason I can see for
-an existing practice to have a dependency on the language fileset
-it was created from.
+an existing practice to have a dependency on the *name* of
+language fileset it was created from.
 I thought that files named in the manifest linked. Perhaps this is
 an old practice session and the files were not linked for it.
 If they are linked and you attempt to delete the original what happens?
