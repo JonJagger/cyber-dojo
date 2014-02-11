@@ -79,12 +79,12 @@ var cyberDojo = (function(cd, $) {
     var forkDiv = makeForkerDiv();
 	
 	var forkDialog = forkDiv.dialog({	  
-	  title: cd.dialogTitle(title),
+	  title: cd.dialogTitle(title + '?'),
 	  autoOpen: false,
 	  width: 1100,
 	  modal: true,
 	  buttons: {
-		ok: function() {
+		fork: function() {
 		  cd.postTo('/forker/fork', {
 			id: id,
 			avatar: avatarName,
@@ -92,7 +92,7 @@ var cyberDojo = (function(cd, $) {
 		  }, '_blank');		  
 		  $(this).remove();
 		},
-		cancel: function() {
+		'cancel': function() {
 		  $(this).remove();
 		}
 	  }

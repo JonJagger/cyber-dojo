@@ -2,6 +2,8 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use smaller font for ok/cancel buttons on dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+revert and fork javascript is virtually identical.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   for diff-dialog
   for fork-dialog

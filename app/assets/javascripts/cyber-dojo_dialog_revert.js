@@ -101,12 +101,12 @@ var cyberDojo = (function(cd, $) {
 	};		  
 
 	var revertDialog = revertDiv.dialog({	  
-	  title: cd.dialogTitle(title),
+	  title: cd.dialogTitle(title + '?'),
 	  autoOpen: false,
 	  width: 1100,
 	  modal: true,
 	  buttons: {
-		ok: function() {
+		revert: function() {
 		  deleteAllCurrentFiles();
 		  copyRevertFilesToCurrentFiles();
 		  cd.testForm().submit();
