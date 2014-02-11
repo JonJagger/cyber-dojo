@@ -23,14 +23,14 @@ class ExceptionControllerTests < IntegrationTest
   #   ./run_all.sh exception_controller_tests.rb
   # ??
   
-  test "404" do
+  test "bad path" do
     get 'dojo/sdsdsd'
-    assert_template 'error/404'
+    assert_template 'error/sorry'
   end
   
-  test "500" do
+  test "bad id" do
     get 'kata/edit/234523424234'
-    assert_template 'error/500'
+    assert_template 'error/sorry'
   end
 =end
 
