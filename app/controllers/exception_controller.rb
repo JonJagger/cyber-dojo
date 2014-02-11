@@ -8,8 +8,7 @@ class ExceptionController < ActionController::Base
       render "error/500"
     else
       render "error/404"
-    end
-    
+    end    
   end
 
 end

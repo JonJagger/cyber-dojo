@@ -16,6 +16,13 @@ class ExceptionControllerTests < IntegrationTest
   end
   
 =begin
+  # these pass when run
+  #   $ruby exception_controller_tests.rb
+  #   ./run_one.sh exception_controller_tests.rb
+  # but not when run
+  #   ./run_all.sh exception_controller_tests.rb
+  # ??
+  
   test "404" do
     get 'dojo/sdsdsd'
     assert_template 'error/404'
