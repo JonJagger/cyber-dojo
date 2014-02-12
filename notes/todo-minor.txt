@@ -28,9 +28,6 @@ DIFF-DIALOG
   if you press < > and the next diff has no actual diff
   then repeat (atuomatically) the < > until you get an actual diff?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAVICON
-Make the favicon for [test] page be a bulb of the current colour?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chip away at help tool-tips.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chip away at internationalisation. Have promises for Russian and Ukranian.

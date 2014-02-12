@@ -16,6 +16,7 @@ hi = (ARGV[2] || "10000").to_i
 
 `cat #{ARGV[0]}`.scan(/^will rm ([A-Z0-9]*) ([0-9]*)/) do |matches|
   id = matches[0]
+  # TODO: if already downloaded id don't wget it
   rags = matches[1].to_i
   if lo <= rags && rags <= hi
     p id + " " + rags.to_s

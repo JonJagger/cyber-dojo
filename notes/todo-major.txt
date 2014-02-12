@@ -9,43 +9,67 @@ in a database holding various details such as id, language, exercise,
 animals, each animals traffic-light count, etc.
 $ruby prune_large.rb false 25 14
 reveals 1,947 katas with dojos having 25 or more traffic-lights.
+http://cyber-dojo.com could offer a button to 'export' a dojo.
+This would call a method on the read-only server passing the id.
+The read-only server would respond by getting the id.tar.gz file via
+a wget on http://cyber-dojo.com/dashboard/download/id
 ------------------------------------------------------
 Suppose in dojo-X the frog forked from traffic-light 28
 whose git hash was 2d0d2bb21ad7....
-In the new dojo-Y the alligators first traffic-light will not
+In the new dojo-Y the alligators first traffic-light will *not*
 have the same hash because a git hash depends not only on the
-content but on the history and date/time.
+content but on the history and date/time etc.
 Even if it didn't depend on the history the content is not
 exactly the same. This is because..
-  o) the output file is part usually contains timing info.
-  o) the output file's content is also in manifest.rb 
-  o) increments.rb contains a date-time-stamp of the test
-However, I could create a separate hash of the genuine files.
+  o) the output file usually contains timing info.
+  o) the output file's content is also in manifest.rb (which is git commited)
+  o) increments.rb contains a date-time-stamp of each test
+- - - - - - - - - - - - - -
+However, I could create a separate sha1 hash of the "genuine" files.
+Where genuine files are visible_files - [output]
 Then the hash of dojo-X frog 28 would be the same as dojo-Y alligator 1
-This would allow me to store these hashes in a database and to
-be able to know when any traffic-light's file-set has occured before
-(either through a commit or coincidentally).
-Thinking a bit more, do I want to detect file contents as being the same
-or content and filename? Content only.
-So if I have an array of string, each string being the content of one of
-the genuine files I need to
-  o) sort the array based on the string contents
-  o) form a hash from the array contents in array order.
+This would allow me to store these hashes in a database table and to
+be able to know when any file's content has occured before (either through
+a fork or coincidentally).
+So a database table would need to be something like
+  CREATE TABLE digests (
+    sha1 CHAR(40) NOT NULL,         # '8b45e4bd1c6acb88bebf6407d16205f567e62a3e'
+    id CHAR(10) NOT NULL,           # '7D2111A7D0'
+    animal VARCHAR(32) NOT NULL,    # 'hippo'
+    light INT,                      # 14'th traffic-light
+    filename VARCHAR(127) NOT NULL, # 'fizz_buzz.hpp'
+    CONSTRAINT pk PRIMARY KEY (id,animal,light,filename)
+  )
+  CREATE INDEX sha1_index ON digests (sha1)
+- - - - -
 This could also give me a way to catalogue all the initial starting positions.
 This is useful since some exercises have changed their names and this causes
 problems with forking.
-Thinking further... I don't need to compute a single hash of all the
-visible files. I can create a hash. Eg
-{ '234ef354df' -> 'wibble.hpp', '65432134aacd' -> 'wibble.hpp' }
-This allows me to tell if
-  o) how often any individual file's content has been seen before.
-  o) how often the set of files for a single traffic-light have
-     been seen before.
+- - - - - - - - - - - - - - - -
 For the hashing I could use
   require 'digest/sha1'
   Digest::SHA1.hexdigest("some string") -> "8b45e4bd1c6acb88bebf6407d16205f567e62a3e"
   Would need a test to make sure the sha1 of a known string did not change (eg when
   upgrading Rails or Ruby)
+------------------------------------------------------
+Store data in json format not inspect format.
+Or maybe there is a library offering a restricted eval method? Doubt it.
+One option is to switch to storing (eg manifest) in manifest.json
+And also to change the code that reads back. If .json file exists
+then we use that. If not we rely on .rb file and eval that.
+o) Install json save/read (with eval read backup) on cyber-dojo.com
+o) Write script to convert all existing dojos from .rb to json format.
+   This will be some work. Increments.rb is saved with *each* commit.
+   May need to simulate each commit again.
+o) Copy all cyber-dojo.com dojos to new read-only server
+o) Do the conversion on read-only server (so as not to drain cpu on main server)
+   and ensure everything is saved in json format.
+o) Forward review ids from cyber-dojo.com to read-only server...?
+o) Delete all old eval saved dojos from cyber-dojo.com
+o) Use pure json save/read on cyber-dojo.com
+A lot of work, but the result is no evals on the read-only server.
+------------------------------------------------------
+Look into using PStore instead of DiskFile?
 ------------------------------------------------------
 Offer a fork button on the diff-dialog?
 ------------------------------------------------------

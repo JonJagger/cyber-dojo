@@ -1,6 +1,7 @@
 
 // http://stackoverflow.com/questions/4911577/jquery-click-toggle-between-two-functions
 // $().toggle() no longer exists in JQuery
+
 $.fn.clickToggle = function(func1, func2) {
   var funcs = [func1, func2];
   this.data('toggleclicked', 0);

@@ -1,6 +1,6 @@
 
 require 'sqlite3'
-require './script_lib'
+require './script_lib' # for index()
 
 def avatars
   %w(
@@ -41,7 +41,7 @@ cyberDojo.execute 'DELETE FROM dojos'
 
 count = 0
 index("." + "/katas") do |dir,id|
-  cyberDojo.execute 'insert into dojos values (?,?,?,?,?,?,?,?)', dojo_row(dir,id)
+  cyberDojo.execute('INSERT INTO dojos VALUES (?,?,?,?,?,?,?,?)', dojo_row(dir,id))
   count += 1
   print "\r#{count} inserted"
 end
@@ -50,7 +50,7 @@ puts ""
 
 # Find some records
 count = 0
-cyberDojo.execute 'SELECT * FROM dojos' do |row|
+cyberDojo.execute('SELECT * FROM dojos') do |row|
   count += 1
 end
 puts "#{count} retrieved"
