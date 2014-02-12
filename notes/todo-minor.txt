@@ -46,9 +46,6 @@ be disabled.
 SETUP
   use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF/REVERT/FORK DIALOGS
-  add css to control height and scrollbar-y of filename-list
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIALOGS
   change .close() calls to .remove()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  

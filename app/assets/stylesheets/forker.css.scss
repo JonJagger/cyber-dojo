@@ -36,3 +36,8 @@
   @include font-size-tiny();
   text-align: left;  
 }
+
+#fork_filenames {
+  height: 18em;
+  overflow-y: auto;
+}
