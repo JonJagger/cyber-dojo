@@ -1,21 +1,14 @@
 
 ------------------------------------------------------
-Offer a fork button on the diff-dialog
-------------------------------------------------------
 I'd like an automated process that moves dojos that have
 a minimum number of traffic lights and are at least N days
 old onto a separate read-only cyber-dojo server. 
 Ideally, one that has a list of id's not to delete (eg the
-refactoring dojo's ids). These dojos' ids would all be stored
-in a database holding various details such as language, exercise,
-animals, each animals traffic-light count.
-I could do this with scp
-Do you need to be logged into the source or target server to scp?
-Could I scp from cyber-dojo.com to a temporary server?
-$ruby prune_large.rb false 50 7
-reveals 843 katas with dojos having 50 or more traffic-lights.
-Obviously don't want to prune. Want to zip and scp.
-Scp has a -r option - it follows symbolic links.
+refactoring dojo's ids). Info about these dojos' would be stored
+in a database holding various details such as id, language, exercise,
+animals, each animals traffic-light count, etc.
+$ruby prune_large.rb false 25 14
+reveals 1,947 katas with dojos having 25 or more traffic-lights.
 ------------------------------------------------------
 Suppose in dojo-X the frog forked from traffic-light 28
 whose git hash was 2d0d2bb21ad7....
@@ -53,3 +46,6 @@ For the hashing I could use
   Digest::SHA1.hexdigest("some string") -> "8b45e4bd1c6acb88bebf6407d16205f567e62a3e"
   Would need a test to make sure the sha1 of a known string did not change (eg when
   upgrading Rails or Ruby)
+------------------------------------------------------
+Offer a fork button on the diff-dialog?
+------------------------------------------------------

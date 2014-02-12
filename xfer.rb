@@ -1,5 +1,14 @@
 # A ruby script to download zips of dojos identified by
 # the output of the prunt_large.rb script
+#
+# eg the following will find all dojos with 25 or more
+# traffic lights that are at least 14 days old
+#   ruby prune_large.rb false 25 14 > tl_25_age_14.txt
+#
+# from the target server you then run
+#   ruby xfer.rb tl_25_age_14.txt 0 100
+# which will xfer tar.gz files for all dojos with
+# between 0 and 100 traffic lights
 
 txt_file = ARGV[0]
 lo = (ARGV[1] || "0").to_i
@@ -14,3 +23,9 @@ hi = (ARGV[2] || "10000").to_i
     `#{xfer_cmd}`
   end
 end
+
+# this will create lots of *.tar.gz files
+# these can be untarred as follows
+#   mv *.tar.gz dst_folder
+#   cd dst_folder
+#   find . -name '*.tar.gz' -print0 | xargs -0 -n1 tar xf
