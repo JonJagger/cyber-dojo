@@ -4,6 +4,10 @@ use smaller font for ok/cancel buttons on dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+hashes of the files, together with filenames, could be used
+to determine if a traffic-light is reverted.
+Store the hashes in increments.rb ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   for diff-dialog
   for fork-dialog

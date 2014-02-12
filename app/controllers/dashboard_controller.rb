@@ -43,7 +43,7 @@ class DashboardController < ApplicationController
     cd_cmd = "cd #{root_dir}/katas"
     tar_cmd = "tar -zcf ../zips/#{id}.tar.gz #{inner}/#{outer}"
     system(cd_cmd + ";" + tar_cmd)
-    send_file "#{root_dir}/zips/#{id}.tar.gz", :type=>'application/zip'
+    send_file "#{root_dir}/zips/#{id}.tar.gz"
   end
 
 private
