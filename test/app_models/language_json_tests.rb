@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
-require 'JSON'
 
 class LanguageJSONTests < ActionController::TestCase
   
@@ -56,9 +55,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'visible_filenames' => [ ]
-      )
+      })
     })
     assert_equal({ }, @language.visible_files)
   end
@@ -69,9 +68,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'visible_filenames' => [ 'test_untitled.rb' ]
-      )
+      })
     })
     @stub_file.read=({
       :dir => @language.dir,
@@ -90,9 +89,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'visible_filenames' => [ 'test_untitled.rb' ]
-      )
+      })
     })        
     assert_equal [ ], @language.support_filenames    
   end
@@ -104,9 +103,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'support_filenames' => support_filenames
-      )
+      })
     })        
     assert_equal support_filenames, @language.support_filenames        
   end
@@ -117,9 +116,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'visible_filenames' => [ 'test_untitled.rb' ]
-      )
+      })
     })        
     assert_equal [ ], @language.support_filenames        
   end
@@ -132,10 +131,10 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'visible_filenames' => visible_filenames,
         'highlight_filenames' => highlight_filenames
-      )
+      })
     })        
     assert_equal highlight_filenames, @language.highlight_filenames            
   end
@@ -147,9 +146,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'unit_test_framework' => unit_test_framework
-      )
+      })
     })        
     assert_equal unit_test_framework, @language.unit_test_framework
   end
@@ -161,9 +160,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'tab_size' => tab_size
-      )
+      })
     })            
     assert_equal tab_size, @language.tab_size
   end
@@ -186,9 +185,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'tab_size' => tab_size
-      )
+      })
     })            
     assert_equal " "*tab_size, @language.tab
   end
@@ -210,9 +209,9 @@ class LanguageJSONTests < ActionController::TestCase
     @stub_file.read=({
       :dir => @language.dir,
       :filename => 'manifest.json',
-      :content => JSON.unparse(
+      :content => JSON.unparse({
         'tab_size' => 4
-      )
+      })
     })
     @stub_file.read=({
       :dir => @language.dir,

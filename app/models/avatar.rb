@@ -1,7 +1,6 @@
 
 require 'DiskFile'
 require 'DiskGit'
-require 'JSON'
 
 class Avatar
 

@@ -1,5 +1,4 @@
 require 'DiskFile'
-require 'JSON'
 
 class Language
   

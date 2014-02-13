@@ -1,6 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Folders'
-require 'JSON'
 
 class OneLanguageChecker < ActionController::TestCase
   

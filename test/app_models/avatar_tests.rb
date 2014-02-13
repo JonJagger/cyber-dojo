@@ -51,10 +51,10 @@ class AvatarTests < ActionController::TestCase
     support_filename = 'wibble.dll' 
     @stub_file.read=({
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :support_filenames => [ support_filename ]
-      }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({
+        "support_filenames" => [ support_filename ]
+      })
     })
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')            
@@ -96,8 +96,8 @@ class AvatarTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }      
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')        
@@ -143,8 +143,8 @@ class AvatarTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }    
     kata = Kata.create(root_dir, manifest)
     avatar = Avatar.create(kata, 'wolf')    
@@ -173,8 +173,8 @@ class AvatarTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }      
     kata = Kata.create(root_dir, manifest)
     avatar = Avatar.create(kata, 'wolf')    
@@ -204,8 +204,8 @@ class AvatarTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }    
     kata = Kata.create(root_dir, manifest)
     avatar = Avatar.create(kata, 'wolf')    
@@ -216,7 +216,7 @@ class AvatarTests < ActionController::TestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "after avatar is created sandbox contains visible_files" do
     id = '45ED23A2F1'
     visible_files = {
@@ -238,8 +238,8 @@ class AvatarTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }      
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')    
@@ -272,8 +272,8 @@ class AvatarTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }      
     kata = Kata.create(root_dir, manifest)    
     avatar = Avatar.create(kata, 'wolf')
@@ -307,11 +307,11 @@ class AvatarTests < ActionController::TestCase
     language = kata.language
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :visible_files => visible_files,
-        :unit_test_framework => 'cassert'
-      }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({
+        "visible_files" => visible_files,
+        "unit_test_framework" => "cassert"
+      })
     }
     @stub_file.read = {
       :dir => language.dir,
@@ -366,5 +366,5 @@ class AvatarTests < ActionController::TestCase
        '4:manifest.rb'
       ])  
   end
-  
+
 end
