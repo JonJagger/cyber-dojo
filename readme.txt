@@ -171,20 +171,16 @@ Add port 12320 to the URL you put into your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
-Pull the latest cyber-dojo source code from github onto your TurnKey image...
->cd /var/www/cyberdojo 
->git pull origin master
-This may pull new files and folders. You must ensure these
-have the correct rights...
->cd /var/www/cyberdojo
->chgrp -R www-data app
->chown -R www-data app
-Check for any gem changes...
->bundle install
-Finally, don't forget to restart apache...
->service apache2 restart
-If you have the file /var/www/cyberdojo/pull.sh then you can just
-run that to execute all the above steps
+Then grab the latest cyber-dojo source code from github and install it.
+  >cd /var/www/cyberdojo 
+  >git pull origin master
+  >chmod +x ./pull.sh
+  >./pull.sh
+pull.sh performs the following tasks...
+  o) pulls the latest source from the cyberdojo github repo
+  o) ensures any new files and folders have the correct group and owner
+  o) checks for any gemfile changes
+  o) restarts apache
 
    
 Versions
@@ -323,6 +319,10 @@ Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
   For example: cyberdojo/test/cyberdojo/languages/Lisp
 Create a manifest.json file in this directory.
   For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
+Note the above are
+  cyberdojo/languages
+and not
+  cyberdojo/test/cyberdojo/languages
 Each manifest.json file contains an ruby object in JSON format
 Example: the one for Java looks like this:
 <quote>
@@ -399,7 +399,7 @@ manifest.json Parameters
   which can be very handy.
   Not required if you do not need support files.
   
-"unit_test_framework"
+"unit_test_framework": string
   The name of the unit test framework used. This name partially determines the 
   name of the ruby function (in the cyber-dojo server) used to parse the 
   test output (to see if the increment generates a red/green/amber
@@ -409,7 +409,7 @@ manifest.json Parameters
   output of running the tests via the cyber-dojo.sh shell file.
   Required. No default.
 
-"tab_size"
+"tab_size": int
   This is the number of spaces a tab character expands to in the editor
   textarea. Not required. Defaults to 4 spaces.
 
@@ -442,8 +442,7 @@ To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 5
 >git diff 4 5 sandbox/filename 
-It's much easier and more informative to just click on a dashboard
-traffic light.
+It's much easier and more informative to just click on dashboard traffic light.
   
 
 
