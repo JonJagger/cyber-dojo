@@ -176,6 +176,7 @@ Then grab the latest cyber-dojo source code from github and install it.
   >git pull origin master
   >chmod +x ./pull.sh
   >./pull.sh
+If pull.sh asks for a password just hit return.
 pull.sh performs the following tasks...
   o) pulls the latest source from the cyberdojo github repo
   o) ensures any new files and folders have the correct group and owner
