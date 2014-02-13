@@ -48,8 +48,7 @@ Dashboard-Review
 You can get to the dashboard page in three ways.
 o) from the test page, click the animal image at the bottom right
 o) from the test page, click the dashboard button on the left.
-o) from the home page, enter the practice session id and click the [review]
-   button.
+o) from the home page, enter the practice id and click the [review] button.
 
 A new dashboard page will appear displaying all the traffic-lights for all
 the animals in the practice session.
@@ -322,16 +321,24 @@ Adding a new language
 =====================
 Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
   For example: cyberdojo/test/cyberdojo/languages/Lisp
-Create a manifest.rb file in this directory.
-  For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.rb
-Each manifest.rb file contains an inspected ruby object. 
+Create a manifest.json file in this directory.
+  For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
+Each manifest.json file contains an ruby object in JSON format
 Example: the one for Java looks like this:
+<quote>
 {
-  :visible_filenames => %w( Untitled.java UntitledTest.java cyber-dojo.sh ),
-  :support_filenames => %w( junit-4.7.jar ),
-  :unit_test_framework => 'junit',
-  :tab_size => 4
+  "visible_filenames": [
+    "Untitled.java",
+    "UntitledTest.java",
+    "cyber-dojo.sh"
+  ],
+  "support_filenames": [
+    "junit-4.7.jar"
+  ],
+  "unit_test_framework": "junit",
+  "tab_size": 4
 }
+</quote>
 Make sure all the named files are in the new folder, including cyber-dojo.sh
   #chmod +x cyber-dojo.sh
   #chown www-data *
@@ -354,13 +361,13 @@ Once this passes make it live by moving it to the live languages folder:
 #mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
 
-manifest.rb Parameters
+manifest.json Parameters
 ======================
-:visible_filenames
+"visible_filenames": [ ... ]
   The names of the text files that will be visible in the browser's editor
   at startup. Each of these files must exist in the directory.
-  The filename cyber-dojo.sh must be present, either as a :visible_filename
-  or a :hidden_filename. This is because cyber-dojo.sh is the name of the
+  The filename cyber-dojo.sh must be present as a "visible_filename"
+  This is because cyber-dojo.sh is the name of the
   shell file assumed by the ruby code (in the server) to be the start point
   for running the tests. You can write any actions in the cyber-dojo.sh file
   but clearly any programs it tries to run must be installed on the server.
@@ -368,14 +375,14 @@ manifest.rb Parameters
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 
-:higlight_filenames
-  A subset of :visible_filenames which names filenames whose appearance
-  are to be highlighted on the test page. This can be useful if you have
-  many :visible_filenames and want to mark which files form the focus
+"higlight_filenames": [ ... ]
+  A subset of "visible_filenames" nameing filenames whose appearance
+  are to be highlighted in the browser. This can be useful if you have
+  many "visible_filenames" and want to mark which files form the focus
   of the practice. For example
-  :highlight_filenames => %w( buffer.cpp buffer.hpp )
+  "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
   Not required. Defaults to empty.
-  The apperance of :highlight_filenames is controlled by the CSS
+  The apperance of "highlight_filenames" is controlled by the CSS
    div[class~='filename']
    {
      &[class~='highlight'] {
@@ -384,15 +391,15 @@ manifest.rb Parameters
    }
   in the file app/assets/stylesheets/cyber-dojo.css.scss
   
-:support_filenames
+"support_filenames": [ ... ]
   The names of necessary supporting non-text files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
   These are symlinked from the /languages folder to each animals /katas folder.
-  Despite the name :support_filenames you can symlink a folder if required
+  Despite the name "support_filenames" you can symlink a folder if required
   which can be very handy.
   Not required if you do not need support files.
   
-:unit_test_framework
+"unit_test_framework"
   The name of the unit test framework used. This name partially determines the 
   name of the ruby function (in the cyber-dojo server) used to parse the 
   test output (to see if the increment generates a red/green/amber
@@ -402,7 +409,7 @@ manifest.rb Parameters
   output of running the tests via the cyber-dojo.sh shell file.
   Required. No default.
 
-:tab_size
+"tab_size"
   This is the number of spaces a tab character expands to in the editor
   textarea. Not required. Defaults to 4 spaces.
 
