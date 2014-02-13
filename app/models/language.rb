@@ -48,15 +48,7 @@ private
   end
 
   def manifest
-    if @manifest
-      return @manifest
-    end
-    if @file.exists?(dir, 'manifest.json')
-      text = @file.read(dir, 'manifest.json')
-      return @manifest = JSON.parse(text)
-    end    
-    object = eval @file.read(dir, 'manifest.rb')
-    return @manifest = JSON.parse(JSON.unparse(object))
+    @manifest = JSON.parse(@file.read(dir, 'manifest.json'))
   end
   
 end
