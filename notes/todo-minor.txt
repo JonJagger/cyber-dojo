@@ -1,8 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-hit escape on setup page should be a cancel
+hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+name of animal is not i18n in start dialog
 dialog for dojo is full (on start) needs work on sizing.
+dialog for dojo is empty (on resume) needs i18n title.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when Approval txt file is auto opened after pressing [test]
 it does not honour the line-numbers state.
@@ -15,14 +17,17 @@ hashes of the files, together with filenames, could be used
 to determine if a traffic-light is reverted.
 Store the hashes in increments.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+create a download_controller allowing URL of
+  cyber-dojo.com/download/1234ADEF
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
+  on dashboard - needs to appear without moving other elements.
+  on dashboard - seconds-per-column and columns-maximum
   for diff-dialog
   for fork-dialog
   for revert-dialog
   Need to be i18n'd
   on the setup page.
-  on dashboard - seconds-per-column and columns-maximum
-  on dashboard - needs to appear without moving other elements.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   filenames: add * marker if files have changed since last [test] ?
@@ -56,12 +61,6 @@ DIALOGS
 HTML
   s/fork/forker/
   s/revert/reverter/ ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ZIP
-Make sure the zip download works. That is gets all of the files.
-This could be because `system` calls are asynchronous.
-Apparently no. It is already synchronous. And the command it
-calls must also be synchronous too of course.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 READONLY PRACTICE VIEW WITH VOTING
 Start to think about opening up the done katas so people

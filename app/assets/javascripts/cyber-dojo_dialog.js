@@ -15,10 +15,10 @@ var cyberDojo = (function(cd, $) {
     return $('<div>')
       .html('<div class="dialog">' + html + '</div>')    
       .dialog({
+        title: cd.dialogTitle(title),
         autoOpen: false,
         width: $(html).data("width"),
         height: $(html).data("height"),
-        title: cd.dialogTitle(title),
         modal: true,
         buttons: i18nButtons
       });

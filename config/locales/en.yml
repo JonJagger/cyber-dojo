@@ -42,11 +42,11 @@ en:
                       <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
                       <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>.
                       Thank you."      
-      your_animal_is: "Your animal is the"
+      your_animal_is: "your animal is the"
       revert: "revert"
-      click_to_revert: "Click<br/>&larr;to<br/>revert<br/>"
-      sorry_the_practice_is_full_cannot_start_a_new_animal: "Sorry, the practice is full.<br/>Cannot start a new animal."
-      click_to_resume: "Click an animal to resume it."
+      click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
+      sorry_full_up: "sorry, full up!"
+      click_to_resume: "click the animal"
       seconds_per_column: "seconds per column"
       columns_maximum: "columns maximum"
       auto_refresh: "auto refresh"

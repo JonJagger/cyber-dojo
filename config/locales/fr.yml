@@ -37,16 +37,16 @@ fr:
       get_a_new_practice_id: "obtenir un nouvel id de pratique"
       enter_the_practice_id: "sur <em>chaque</em> ordinateur<br>entrez votre id pratique"
       and: "et"      
-      please_donate: "Si vous trouvez cyber-dojo utile s'il vous plaît<br/>faire un don.
+      please_donate: "si vous trouvez cyber-dojo utile s'il vous plaît<br/>faire un don.
                       Tous les dons sont<br/>utilisé uniquement pour acheter
                       <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
                       <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>ordinateurs pour les enfants</a>.
                       Merci."            
-      your_animal_is: "Votre animal est le"      
+      your_animal_is: "votre animal est le"      
       revert: "revenir"
-      click_to_revert: "Cliquez<br/>&larr;pour<br/>revenir<br/>"
-      sorry_the_practice_is_full_cannot_start_a_new_animal: "Désolé, cette pratique est pleine. <br/> Pouvez pas commencer un nouvel animal."      
-      click_to_resume: "Cliquez sur un animal à reprendre."
+      click_to_revert: "cliquez<br/>&larr;pour<br/>revenir<br/>"
+      sorry_full_up: "désolé, le plein"
+      click_to_resume: "cliquez sur l'animal"
       seconds_per_column: "secondes par colonne"
       columns_maximum: "colonnes maximale"
       auto_refresh: "rafraîchissement automatique"
