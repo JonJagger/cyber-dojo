@@ -58,16 +58,133 @@ One option is to switch to storing (eg manifest) in manifest.json
 And also to change the code that reads back. If .json file exists
 then we use that. If not we rely on .rb file and eval that.
 o) Install json save/read (with eval read backup) on cyber-dojo.com
+   Don't need to do immediately
 o) Write script to convert all existing dojos from .rb to json format.
-   This will be some work. Increments.rb is saved with *each* commit.
+   This will be some work. Eg increments.rb is saved with *each* commit.
    May need to simulate each commit again.
 o) Copy all cyber-dojo.com dojos to new read-only server
 o) Do the conversion on read-only server (so as not to drain cpu on main server)
    and ensure everything is saved in json format.
 o) Forward review ids from cyber-dojo.com to read-only server...?
+   On read-only server have json method 'dojo/valid_id'
+   On cyber-dojo.com call this (in javascript) and if id exists
+   then open a dashboard on the readonly server. Otherwise see if
+   the id is on cyber-dojo.com (and if it is open dashboard there).
+   This means the start/resume buttons should only be enabled if the
+   id is valid on cyber-dojo.com
+   The review button should be enabled if the id is valid on
+   either cyber-dojo.com or the readonly server.
+   Thus ids for harvested dojos (whose id is *only* on the readonly server)
+   will only enable the review button.
 o) Delete all old eval saved dojos from cyber-dojo.com
 o) Use pure json save/read on cyber-dojo.com
 A lot of work, but the result is no evals on the read-only server.
+------------------------------------------------------
+...> require 'JSON'
+>= true
+...> o = {:x=>1,:y=>[1,2,3]}
+>= {:x=>1, :y=>[1, 2, 3]} 
+...> s = JSON.unparse(o)
+>= "{\"x\":1,\"y\":[1,2,3]}" 
+...> JSON.parse(s)
+>= {"x"=>1, "y"=>[1, 2, 3]}
+From this I can see that :x --> 'x'
+So
+  def tab_size
+    manifest[:tab_size] || 4
+  end
+will need to become something like
+  def tab_size
+    manifest['tab_size'] || manifest[:tab_size] || 4
+  end
+and
+  def manifest
+    @manifest ||= eval @file.read(dir, 'manifest.rb')
+  end
+something like
+  def manifest
+    return @manifest if
+      @manifest
+    return @manifest = eval @file.read(dir, 'manifest.rb')
+      if @file.exists?(dir,'manifest.rb')
+    return @manifest = JSON.unparse(@file.read(dir, 'manifest.json'))
+      if @file.exists?(dir,'manifest.json')
+  end
+  
+This still not quite enough, manifest[:language] will be wrong for
+JSON files...
+
+  def manifest
+    if @manifest
+      return @manifest
+    end
+    if @file.exists?(dir,'manifest.rb')
+      object = eval @file.read(dir, 'manifest.rb')
+      return @manifest = JSON.parse(JSON.unparse(object))
+    end
+    if @file.exists?(dir,'manifest.json')
+      return @manifest = JSON.unparse(@file.read(dir, 'manifest.json'))
+    end
+  end
+  
+and then
+  manifest[:language]
+becomes
+  manifest['language']
+  
+
+It will also mean the manifests for all languages and exercises
+will need to be JSON'd ... but not, I don't think, on the readonly server.
+DiskFile.rb will go from
+  File.open(pathed_filename, 'w') { |file|
+    file.write(object.inspect + "\n")
+  }
+to
+  File.open(pathed_filename, 'w') { |file|
+    if (pathed_filename.end_with?('.json')) {
+      file.write(JSON.unparse(object) + "\n")
+    } else {
+      file.write(object.inspect + "\n")    
+    }
+  }
+
+
+And the filename will need changing on the calling side too.
+Eg increments.rb to increments.json
+Strategies?
+
+ o) on cyber-katas.com
+ o)   harvest dojos from cyber-dojo.com
+ o)   write script to convert them to JSON
+ o)   create database
+ o)   write script to parse JSON'd dojos and populate database
+ o)   create index page which feeds off database
+ o)   verify dashboard and diff-dialog works ok
+ o)   use git branch for this work
+ o)   only problem is harvested dojos still need initial evals
+ o)   that's why second part of the work is...
+ 
+ o) on cyber-dojo.com
+ o)   support inspect on old dojos
+ o)   but use JSON on new dojos
+ o)     ***can I do this***?
+ o)     languages?
+ o)     exercises?
+ o)     forking?
+ o)     resuming?
+ o)   install
+ o)   harvest all dojos to cyber-katas
+ o)   convert them to JSON on cyber-katas as above
+ o)   forward [review]s to cyber-katas (not button on test page?)
+ 
+ 
+------------------------------------------------------
+url = 'http://cyber-katas.org/dojo/valid_id'
+$.getJSON(url, { id: id }).done(function(theId) {
+  if (theId.exists) {
+    ...
+  }
+});
 ------------------------------------------------------
 Look into using PStore instead of DiskFile?
 ------------------------------------------------------
