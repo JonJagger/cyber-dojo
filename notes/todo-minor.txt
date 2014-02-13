@@ -2,6 +2,11 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hit escape on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dialog for dojo is full (on start) needs work on sizing.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+when Approval txt file is auto opened after pressing [test]
+it does not honour the line-numbers state.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use smaller font for ok/cancel buttons on dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 revert and fork javascript is virtually identical.

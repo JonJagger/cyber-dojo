@@ -24,6 +24,7 @@
 }
 
 #test {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   @include font-size-large();
   padding: {
     left: 0.2em;

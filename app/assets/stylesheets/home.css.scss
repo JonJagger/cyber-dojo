@@ -27,6 +27,7 @@ a:link, a:visited
 
 #setup
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: lighten($red, 10%);
   @include gradient-lighten($red, 20%, 10%, 5%);
   color: $text-color;
@@ -35,6 +36,7 @@ a:link, a:visited
   
 .kata_id_input
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: lighten($green, 20%);
   @include gradient-lighten($green, 30%, 25%, 20%);    
   color: $darker-color;
@@ -44,6 +46,7 @@ a:link, a:visited
 
 #start_button, #resume_button, #review_button
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   color: $darker-color;
   @include font-size-large();
 }

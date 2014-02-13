@@ -3,9 +3,10 @@
 
 $(document).ready(function() {
   
-  $('#start_button').click(function() {    
-    var ok = $(this).data('ok');
-    cd.run('start_json', ok, function(id, dojo) {
+  $('#start_button').click(function() {
+    var id = $('#kata_id_input').val();  
+    var ok = "<%= t('views.buttons.ok') %>";
+    $.getJSON('/dojo/start_json' , { id: id }, function(dojo) {    
       if (dojo.full) {        
         cd.dialog(dojo.full_dialog_html, id, ok).dialog('open');
       } else {
@@ -20,7 +21,6 @@ $(document).ready(function() {
 
 <button type="button"
         class="tipped"
-        data-ok="<%= t('views.buttons.ok') %>"
         id="start_button">
   <%= t("views.buttons.start") %>
   <div class="tooltip">

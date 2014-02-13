@@ -80,74 +80,17 @@ o) Delete all old eval saved dojos from cyber-dojo.com
 o) Use pure json save/read on cyber-dojo.com
 A lot of work, but the result is no evals on the read-only server.
 ------------------------------------------------------
-...> require 'JSON'
->= true
-...> o = {:x=>1,:y=>[1,2,3]}
->= {:x=>1, :y=>[1, 2, 3]} 
-...> s = JSON.unparse(o)
->= "{\"x\":1,\"y\":[1,2,3]}" 
-...> JSON.parse(s)
->= {"x"=>1, "y"=>[1, 2, 3]}
-From this I can see that :x --> 'x'
-So
-  def tab_size
-    manifest[:tab_size] || 4
-  end
-will need to become something like
-  def tab_size
-    manifest['tab_size'] || manifest[:tab_size] || 4
-  end
-and
-  def manifest
-    @manifest ||= eval @file.read(dir, 'manifest.rb')
-  end
-something like
-  def manifest
-    return @manifest if
-      @manifest
-    return @manifest = eval @file.read(dir, 'manifest.rb')
-      if @file.exists?(dir,'manifest.rb')
-    return @manifest = JSON.unparse(@file.read(dir, 'manifest.json'))
-      if @file.exists?(dir,'manifest.json')
-  end
-  
-This still not quite enough, manifest[:language] will be wrong for
-JSON files...
-
-  def manifest
-    if @manifest
-      return @manifest
-    end
-    if @file.exists?(dir,'manifest.rb')
-      object = eval @file.read(dir, 'manifest.rb')
-      return @manifest = JSON.parse(JSON.unparse(object))
-    end
-    if @file.exists?(dir,'manifest.json')
-      return @manifest = JSON.unparse(@file.read(dir, 'manifest.json'))
-    end
-  end
-  
-and then
-  manifest[:language]
-becomes
-  manifest['language']
-  
-
 It will also mean the manifests for all languages and exercises
 will need to be JSON'd ... but not, I don't think, on the readonly server.
-DiskFile.rb will go from
+DiskFile.rb could go from
   File.open(pathed_filename, 'w') { |file|
     file.write(object.inspect + "\n")
   }
 to
   File.open(pathed_filename, 'w') { |file|
-    if (pathed_filename.end_with?('.json')) {
       file.write(JSON.unparse(object) + "\n")
-    } else {
-      file.write(object.inspect + "\n")    
     }
   }
-
 
 And the filename will need changing on the calling side too.
 Eg increments.rb to increments.json

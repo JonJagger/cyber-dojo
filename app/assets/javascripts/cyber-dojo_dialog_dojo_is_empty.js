@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
       + 'because the dojo is empty';
       
     var emptyHtml = '' 
-      + '<div data-width="600">'
+      + '<div data-width="500">'
       + '  <div id="empty_dojo_text">' + message + '</div>'
       + '  <table class="align-center">'
       + '    <tr>'

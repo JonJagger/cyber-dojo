@@ -4,9 +4,10 @@
 $(document).ready(function() {
   
   $('#resume_button').click(function() {
-    var ok = $(this).data('ok');
-    var cancel = $(this).data('cancel');
-    cd.run('resume_json', ok, function(id, dojo) {    
+    var id = $('#kata_id_input').val();    
+    var ok = "<%= t('views.buttons.ok') %>";
+    var cancel = "<%= t('views.buttons.cancel') %>";   
+    $.getJSON('/dojo/resume_json' , { id: id }, function(dojo) {    
       if (dojo.empty) {          
         cd.dialog_dojoIsEmpty(id, ok).dialog('open');
       } else {
@@ -21,8 +22,6 @@ $(document).ready(function() {
 
 <button type="button"
         class="tipped"
-        data-ok="<%= t('views.buttons.ok') %>"
-        data-cancel="<%= t('views.buttons.cancel') %>"
         id="resume_button">
   <%= t("views.buttons.resume") %>
   <div class="tooltip">
