@@ -49,23 +49,12 @@ class TrafficLightTests < ActionView::TestCase
     assert_equal expected, actual
   end
   
-  # light[:colour] used to be light[:outcome]
-    
   test "diff_traffic_light" do
+    # light[:colour] used to be light[:outcome]
     diff_traffic_light_func({'colour' => 'red'})
     diff_traffic_light_func({'outcome' => 'red'})
   end
     
-  test "unlinked_traffic_light with defaults" do
-    unlinked_traffic_light_with_defaults_func({ 'colour' => 'red' })
-    unlinked_traffic_light_with_defaults_func({ 'outcome' => 'red' })    
-  end
-  
-  test "unlinked_traffic_light with explicit width and height" do
-    unlinked_traffic_light_with_explicit_width_and_height_func({ 'colour' => 'red' })
-    unlinked_traffic_light_with_explicit_width_and_height_func({ 'outcome' => 'red' })
-  end
-  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def diff_traffic_light_func(light)
