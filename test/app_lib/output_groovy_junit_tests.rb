@@ -6,6 +6,11 @@ class OutputGroovyJUnitTests < ActionController::TestCase
   
   include CodeOutputParser
 
+  test "groovyc not installed is amber" do
+    output = [ "groovyc: command not found" ].join("\n")
+    assert_equal :amber, colour_of(output)
+  end
+  
   test "initial red is red" do
     output =
     [

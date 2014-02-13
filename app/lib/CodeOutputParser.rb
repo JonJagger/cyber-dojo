@@ -108,9 +108,12 @@ module CodeOutputParser
     if match = green_pattern.match(output)
       :green
     else
+	  amber_pattern0 = Regexp.new('groovyc: command not found')
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')      
-      if amber_pattern1.match(output) || amber_pattern2.match(output)
+      if amber_pattern0.match(output) ||
+		 amber_pattern1.match(output) ||
+		 amber_pattern2.match(output)
         :amber
       else
         :red
@@ -127,9 +130,12 @@ module CodeOutputParser
         :red 
       end
     else
+      amber_pattern0 = Regexp.new('groovyc: command not found')    	
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
-      if amber_pattern1.match(output) || amber_pattern2.match(output)
+      if amber_pattern0.match(output) ||
+		 amber_pattern1.match(output) ||
+		 amber_pattern2.match(output)		 
 		:amber
 	  else
         :red
