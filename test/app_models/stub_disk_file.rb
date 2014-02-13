@@ -45,8 +45,6 @@ class StubDiskFile
   end
   
   def write(dir, filename, object)
-    # TODO: using an array here is perhaps not such a good idea
-    #       since I don't really want to test the order of writes...
     @write_log[dir] ||= [ ]
     @write_log[dir] << [filename, object.inspect]
     
@@ -59,7 +57,14 @@ class StubDiskFile
   end
   
   def exists?(dir, filename = "")
-    @write_log[dir] != nil
+    wdir = @write_log[dir]
+    rdir = @read_repo[dir]
+    if filename == ""
+      return wdir != nil || rdir != nil
+    else
+      return (wdir != nil && wdir[filename] != nil) ||
+             (rdir != nil && rdir[filename] != nil)
+    end
   end
   
   def lock(dir, &block)

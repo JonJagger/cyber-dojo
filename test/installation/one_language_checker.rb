@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Folders'
+require 'JSON'
 
 class OneLanguageChecker < ActionController::TestCase
   
@@ -17,9 +18,10 @@ class OneLanguageChecker < ActionController::TestCase
     )
     @language = language
     @language_dir = root_dir + '/languages/' + language + "/"
-    @manifest_filename = @language_dir + 'manifest.rb'    
+    
+    @manifest_filename = @language_dir + 'manifest.json'    
     check_manifest_file_exists
-    @manifest = eval IO.read(@manifest_filename)
+    @manifest = JSON.parse(IO.read(@manifest_filename))
     
     check_required_keys_exist
     check_no_unknown_keys_exist
@@ -29,10 +31,10 @@ class OneLanguageChecker < ActionController::TestCase
     check_named_files_exist(:visible_filenames)      
       
     rag = red_amber_green(get_filename_42)
-    if rag == [:red,:amber,:green]
+    if rag == ['red','amber','green']
       installed_and_working << language
       puts "  #{language} - #{rag.inspect}  installed and working"
-    elsif rag == [:amber, :amber, :amber]
+    elsif rag == ['amber', 'amber', 'amber']
       not_installed << language
       puts "  #{language} - #{rag.inspect}  not installed"
     else
@@ -51,28 +53,28 @@ class OneLanguageChecker < ActionController::TestCase
   end
   
   def check_required_keys_exist
-    required_keys = [ :visible_filenames, :unit_test_framework ]
+    required_keys = [ 'visible_filenames', 'unit_test_framework' ]
     required_keys.each do |key|
       if !@manifest.keys.include? key
         message =
           alert + 
-          "#{@manifest_filename} must contain key :#{key}"  
+          "#{@manifest_filename} must contain key '#{key}'"
         assert false, message
       end
     end
   end
   
   def check_no_unknown_keys_exist
-    known = [ :visible_filenames,
-              :support_filenames,
-              :unit_test_framework,
-              :tab_size
+    known = [ 'visible_filenames',
+              'support_filenames',
+              'unit_test_framework',
+              'tab_size'
             ]
     @manifest.keys.each do |key|
       if !known.include? key
         message =
           alert + 
-          "#{@manifest_filename} contains unknown key :#{key}"
+          "#{@manifest_filename} contains unknown key '#{key}'"
         assert false, message
       end
     end    
@@ -83,7 +85,7 @@ class OneLanguageChecker < ActionController::TestCase
       if visible_filenames.count(filename) > 1
         message =
           alert +
-          "  #{@manifest_filename}'s :visible_filenames contains #{filename} more than once"
+          "  #{@manifest_filename}'s 'visible_filenames' contains #{filename} more than once"
         assert false, message
       end
     end
@@ -94,7 +96,7 @@ class OneLanguageChecker < ActionController::TestCase
       if !File.exists?(@language_dir + filename)
         message =
           alert + 
-          "  #{@manifest_filename} contains a :#{symbol} entry [#{filename}]\n" +
+          "  #{@manifest_filename} contains a '#{symbol}' entry [#{filename}]\n" +
           "  but the #{@language_dir}/ dir does not contain a file called #{filename}"
         assert false, message
       end
@@ -105,8 +107,8 @@ class OneLanguageChecker < ActionController::TestCase
     if visible_filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
       message =
         alert + 
-        "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in either\n" +
-        "  :visible_filenames"
+        "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
+        "  'visible_filenames'"
       assert false, message
     end
   end
@@ -121,7 +123,7 @@ class OneLanguageChecker < ActionController::TestCase
   end
 
   def visible_filenames
-    @manifest[:visible_filenames] || [ ]
+    @manifest['visible_filenames'] || [ ]
   end
     
   def alert
@@ -172,7 +174,7 @@ class OneLanguageChecker < ActionController::TestCase
       :new => [ ]      
     }    
     output = run_test(delta, avatar, visible_files, @max_duration)
-    colour = avatar.traffic_lights.last[:colour]
+    colour = avatar.traffic_lights.last['colour']
     
     if @verbose
       puts "-------<output>-----------"

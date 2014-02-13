@@ -1,4 +1,4 @@
 
 def answer
-  42
+  40+2
 end
