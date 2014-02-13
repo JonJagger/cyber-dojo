@@ -21,7 +21,7 @@ class TimeOutTests < ActionController::TestCase
     }    
     output = run_test(delta, avatar, visible_files, timeout = 5)
     assert_match(/Terminated by the cyber-dojo server after \d+ seconds?/, output)
-    assert_equal :amber, avatar.traffic_lights.last[:colour]    
+    assert_equal 'amber', avatar.traffic_lights.last['colour']
     ps_count_after = ps_count    
     # This often fails with
     # <1> expected but was

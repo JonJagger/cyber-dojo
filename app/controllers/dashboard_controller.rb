@@ -46,8 +46,11 @@ class DashboardController < ApplicationController
     system(cd_cmd + ";" + tar_cmd)
     zip_filename = "#{root_dir}/zips/#{id}.tar.gz"
     send_file zip_filename
-    rm_cmd = "rm #{zip_filename}"
-    system(rm_cmd)
+    # would like to delete this zip file
+    # but download tests unzip them to verify
+    # unzipped zip is identical to original 
+    #rm_cmd = "rm #{zip_filename}"
+    #system(rm_cmd)
   end
 
 private

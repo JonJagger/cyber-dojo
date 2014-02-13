@@ -1,6 +1,7 @@
 
 require 'DiskFile'
 require 'DiskGit'
+require 'JSON'
 
 class Avatar
 
@@ -59,10 +60,11 @@ class Avatar
   def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
     @file.lock(dir) do
-      traffic_lights = eval @file.read(dir, Traffic_lights_filename)
+      text = @file.read(dir, Traffic_lights_filename)
+      traffic_lights = JSON.parse(JSON.unparse(eval text)) 
       traffic_lights << traffic_light
       tag = traffic_lights.length
-      traffic_light[:number] = tag
+      traffic_light['number'] = tag
       @file.write(dir, Traffic_lights_filename, traffic_lights)
       @file.write(dir, Visible_files_filename, visible_files)
       git_commit(visible_files, tag)
@@ -71,11 +73,13 @@ class Avatar
   end
 
   def visible_files(tag = nil)
-    eval unlocked_read(Visible_files_filename, tag)
+    text = unlocked_read(Visible_files_filename, tag)
+    JSON.parse(JSON.unparse(eval text))
   end
   
   def traffic_lights(tag = nil)
-    eval unlocked_read(Traffic_lights_filename, tag)
+    text = unlocked_read(Traffic_lights_filename, tag)    
+    JSON.parse(JSON.unparse(eval text))    
   end
 
   def diff_lines(was_tag, now_tag)

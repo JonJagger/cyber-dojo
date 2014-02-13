@@ -6,7 +6,7 @@ class TrafficLightTests < ActionView::TestCase
   include TrafficLightHelper    
   
   test "tool tip" do
-    light = { :number => 2, :time => [2012,5,1,23,20,45], :colour => :red }
+    light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
     assert_equal "review hippo's<br>1 &harr; 2 diff<br>(2012 May 1, 23:20:45)",
       tool_tip('hippo', light)
   end
@@ -27,7 +27,7 @@ class TrafficLightTests < ActionView::TestCase
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar_name = 'hippo'
-    light = { :number => 23 }
+    light = { 'number' => 23 }
     max_lights = 45
     expected = "" +
       "<div" +
@@ -52,18 +52,18 @@ class TrafficLightTests < ActionView::TestCase
   # light[:colour] used to be light[:outcome]
     
   test "diff_traffic_light" do
-    diff_traffic_light_func({:colour => 'red'})
-    diff_traffic_light_func({:outcome => 'red'})
+    diff_traffic_light_func({'colour' => 'red'})
+    diff_traffic_light_func({'outcome' => 'red'})
   end
     
   test "unlinked_traffic_light with defaults" do
-    unlinked_traffic_light_with_defaults_func({ :colour => 'red' })
-    unlinked_traffic_light_with_defaults_func({ :outcome => 'red' })    
+    unlinked_traffic_light_with_defaults_func({ 'colour' => 'red' })
+    unlinked_traffic_light_with_defaults_func({ 'outcome' => 'red' })    
   end
   
   test "unlinked_traffic_light with explicit width and height" do
-    unlinked_traffic_light_with_explicit_width_and_height_func({ :colour => 'red' })
-    unlinked_traffic_light_with_explicit_width_and_height_func({ :outcome => 'red' })
+    unlinked_traffic_light_with_explicit_width_and_height_func({ 'colour' => 'red' })
+    unlinked_traffic_light_with_explicit_width_and_height_func({ 'outcome' => 'red' })
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,8 +72,8 @@ class TrafficLightTests < ActionView::TestCase
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar_name = 'hippo'
-    light[:number] = 23
-    light[:time] = [2012,5,1,23,20,45] 
+    light['number'] = 23
+    light['time'] = [2012,5,1,23,20,45] 
     max_lights = 45
     expected = "" +
       "<div" +

@@ -1,4 +1,5 @@
 require 'DiskFile'
+require 'JSON'
 
 class Language
   
@@ -21,15 +22,15 @@ class Language
   end
 
   def support_filenames
-    manifest[:support_filenames] || [ ]
+    manifest['support_filenames'] || [ ]
   end
 
   def highlight_filenames
-    manifest[:highlight_filenames] || [ ]
+    manifest['highlight_filenames'] || [ ]
   end
 
   def unit_test_framework
-    manifest[:unit_test_framework]      
+    manifest['unit_test_framework']
   end
   
   def tab
@@ -37,17 +38,22 @@ class Language
   end
   
   def tab_size
-    manifest[:tab_size] || 4
+    manifest['tab_size'] || 4
   end
   
 private
 
   def visible_filenames
-    manifest[:visible_filenames] || [ ]
+    manifest['visible_filenames'] || [ ]
   end
 
   def manifest
-    @manifest ||= eval @file.read(dir, 'manifest.rb')
+    if @manifest
+      return @manifest
+    else
+      object = eval @file.read(dir, 'manifest.rb')
+      return @manifest = JSON.parse(JSON.unparse(object))
+    end
   end
   
 end

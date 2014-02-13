@@ -1,6 +1,6 @@
 
-<% [:red,:amber,:green].each do |bulb| %>
-  <%  bulb_tally = traffic_lights.count{ |light| light[:colour] == bulb } %>
+<% ['red','amber','green'].each do |bulb| %>
+  <%  bulb_tally = traffic_lights.count{ |light| light['colour'] == bulb } %>
   <div class="tipped <%= bulb %> bulb_count">
     <%= bulb_tally %>
     <div class='tooltip'>

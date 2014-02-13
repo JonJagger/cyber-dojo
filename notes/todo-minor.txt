@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app/helpers/traffic_light_helpers
+  # TODO: DOES ANYTHING CALL THIS?
+  def no_diff_avatar_image(kata, avatar_name, light, max_lights)
+  #TODO: DOES ANYTHING CALL THIS?
+  def unlinked_traffic_light(inc, width = nil, height = nil)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use smaller font for ok/cancel buttons on dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 revert and fork javascript is virtually identical.

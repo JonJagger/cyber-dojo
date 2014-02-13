@@ -37,12 +37,10 @@ class KataController < ApplicationController
     
     language = @kata.language    
     traffic_light = CodeOutputParser::parse(language.unit_test_framework, @output)
-    traffic_light[:time] = make_time(Time.now)
+    traffic_light['time'] = make_time(Time.now)
     @traffic_lights = @avatar.save_run_tests(visible_files, traffic_light)
-
     @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
-    @files_to_remove = previous_files.select {|filename| ! @avatar.visible_files.keys.include?(filename)}
-    
+    @files_to_remove = previous_files.select {|filename| ! @avatar.visible_files.keys.include?(filename)}    
     @visible_files = @avatar.visible_files
 
     respond_to do |format|
