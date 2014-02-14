@@ -4,6 +4,8 @@ hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 perhaps disable resume/review buttons until dojo is 30 seconds old?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+should clicking avatar image on [test] page open dashboard? or home?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 i18n on dialog buttons
   cancel: new-file,rename-file,delete-file
   close: diff-review, revert, fork

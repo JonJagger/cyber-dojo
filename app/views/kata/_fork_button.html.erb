@@ -4,7 +4,7 @@
 $(document).ready(function() {
     
   $('#fork_button').click(function() {
-    var title = $(this).val();
+    var title = $(this).data('title');
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var maxTag = parseInt($('.traffic_light_count').text());        
@@ -19,7 +19,7 @@ $(document).ready(function() {
 <button type="button"
         id="fork_button"
         class="tipped"
-        value="<%= t('views.buttons.fork') %>">
+        data-title="<%= t('views.buttons.fork') %>">
   <%= t('views.buttons.fork') %>
   <div class="tooltip">
     forks a new dojo<br>from any traffic-light

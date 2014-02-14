@@ -4,7 +4,7 @@
 $(document).ready(function() {    
   
   $('#diff_review_button').click(function() {
-    var title = $(this).val();  
+    var title = $(this).data('title');  
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var wasTag = 0;
@@ -18,13 +18,13 @@ $(document).ready(function() {
 //--></script>
 
 <button type="button"
+        data-title="<%= t('views.buttons.diff_review') %>"
         id="diff_review_button"
-        class="tipped"
-        value="<%= t('views.buttons.diff_review') %>">
+        class="tipped">
   <%= t('views.buttons.diff_review') %>
   <div class="tooltip">
     reviews each<br>
     traffic-light<br>
     diff by diff
   </div>    
-</input>
+</button>

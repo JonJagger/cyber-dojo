@@ -4,9 +4,9 @@
 $(document).ready(function() {
     
   $('#dashboard_button').click(function() {
-      cd.get('/dashboard/show', {
-        id: "<%= @kata.id %>"
-      }, '_blank');
+	  var id = "<%= @kata.id %>";
+	  var url = '/dashboard/show/' + id;
+	  window.open(url);
   });
   
 });
@@ -15,10 +15,9 @@ $(document).ready(function() {
 
 <button type="button"
 	    id="dashboard_button"
-		class="tipped"
-        value="<%= t('views.buttons.dashboard') %>">
+		class="tipped">
   <%= t('views.buttons.dashboard') %>
   <div class="tooltip">
     opens a new<br>dashboard page	
   </div>
-</input>
+</button>
