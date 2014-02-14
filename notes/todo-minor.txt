@@ -2,8 +2,13 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dialog for dojo is full (on start) needs work on sizing.
-dialog for dojo is empty (on resume) needs i18n title.
+perhaps disable resume/review buttons until dojo is 30 seconds old?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+i18n on dialog buttons
+  cancel: new-file,rename-file,delete-file
+  close: diff-review, revert, fork
+  fork: fork
+  revert: revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when Approval txt file is auto opened after pressing [test]
 it does not honour the line-numbers state.
