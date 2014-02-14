@@ -2,7 +2,6 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-name of animal is not i18n in start dialog
 dialog for dojo is full (on start) needs work on sizing.
 dialog for dojo is empty (on resume) needs i18n title.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
