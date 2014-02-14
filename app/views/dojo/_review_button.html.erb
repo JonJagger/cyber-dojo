@@ -5,7 +5,8 @@ $(document).ready(function() {
 
   $('#review_button').click(function() {
     var id = $('#kata_id_input').val();
-    cd.get('/dashboard/show', { id: id }, '_blank');  
+    var url = '/dashboard/show/' + id;
+    window.open(url)
   });
   
 });

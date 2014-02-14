@@ -30,3 +30,10 @@ end
 #   mv *.tar.gz dst_folder
 #   cd dst_folder
 #   find . -name '*.tar.gz' -print0 | xargs -0 -n1 tar xf
+# and possibly then
+#   chgrp -R www-data *
+#   chown -R www-data *
+# or if you have sudo
+#   sudo -u www-data find . -name '*.tar.gz' -print0 | xargs -0 -n1 tar xf
+# no sudo? try
+#   apt-get install sudo

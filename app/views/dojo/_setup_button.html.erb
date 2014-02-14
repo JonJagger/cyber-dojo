@@ -4,9 +4,9 @@
 $(document).ready(function() {
   
   $('#setup').click(function() {
-    cd.get('/setup/show', {
-      id: $('#kata_id_input').val()
-    });
+    var id = $('#kata_id_input').val();
+    var url = '/setup/show/' + id;
+    window.location = url;
   });
   
 });
