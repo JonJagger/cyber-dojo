@@ -4,7 +4,8 @@
 $(document).ready(function() {
 
   $('#download').click(function() {
-    cd.postTo('/dashboard/download', { id: "<%= @kata.id %>" });
+    var id = "<%= @kata.id %>";
+    window.location = '/dashboard/download/' + id;
   });
 
 });
