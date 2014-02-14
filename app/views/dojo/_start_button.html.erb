@@ -12,6 +12,7 @@ $(document).ready(function() {
         cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
       } else {
         cd.dialog_startCoding(title, id, ok, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
+        cd.enableDisableStartResumeReview();        
       }
     });
   });
