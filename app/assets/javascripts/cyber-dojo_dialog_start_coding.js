@@ -6,7 +6,9 @@ var cyberDojo = (function(cd, $) {
   cd.dialog_startCoding = function(title, id, ok, avatarName, dialogHtml) {
     var i18nButtons =  { };
     i18nButtons[ok] = function() {
-      cd.postTo('/kata/edit', { id: id, avatar: avatarName  }, '_blank');      
+      var url = '/kata/edit/' + id + '?' +
+                'avatar=' + avatarName;
+      window.open(url);
       $(this).dialog('close');    
     };
     return $('<div class="dialog">')

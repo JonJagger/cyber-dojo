@@ -85,11 +85,10 @@ var cyberDojo = (function(cd, $) {
 	  modal: true,
 	  buttons: {
 		fork: function() {
-		  cd.postTo('/forker/fork', {
-			id: id,
-			avatar: avatarName,
-			tag: tag
-		  }, '_blank');		  
+		  var url = '/forker/fork/' + id + '?' +
+		            'avatar=' + avatarName + '&' +
+					'tag=' + tag;
+		  window.open(url);
 		  $(this).remove();
 		},
 		'cancel': function() {

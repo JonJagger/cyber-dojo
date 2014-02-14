@@ -4,10 +4,9 @@ var cyberDojo = (function(cd, $) {
   "use strict";
   
   cd.resume = function(id, avatarName) {
-    cd.postTo('/kata/edit', {
-      id: id,
-      avatar: avatarName
-    }, '_blank');  
+    var url = '/kata/edit/' + id + '?' +
+              'avatar=' + avatarName;
+    window.open(url);
     cd.closeResumeDialog();
     return false;    
   };
