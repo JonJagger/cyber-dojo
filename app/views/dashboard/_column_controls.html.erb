@@ -9,9 +9,9 @@ $(document).ready(function() {
 
   var setRefreshButtonText = function() {
     if (autoRefreshEnabled) {
-      autoRefreshLabel.text('== off');
-    } else {
       autoRefreshLabel.text('== on');
+    } else {
+      autoRefreshLabel.text('== off');
     }    
   };
   
@@ -23,46 +23,64 @@ $(document).ready(function() {
     }
     return input.val();
   };
-
+  
+  var id = function() {
+    return "<%= @kata.id %>";
+  };
+  
+  var secondsPerColumn = function() {
+    return parse('seconds_per_column', <%= @seconds_per_column %>);
+  };
+  
+  var maximumColumns = function() {
+    return parse('maximum_columns', <%= @maximum_columns %>);
+  };
+  
   var params = function() {
     return {
-      id: "<%= @kata.id %>",
-      seconds_per_column: parse('seconds_per_column', <%= @seconds_per_column %>),
-      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>),
+      id: id(),
+      seconds_per_column: secondsPerColumn(),
+      maximum_columns: maximumColumns(),
       auto_refresh: autoRefreshEnabled
     };
   };
   
-  var refreshDashboard = function() {
-    if (!autoRefreshEnabled) {
+  var dashboardHeartbeat = function() {
+    if (autoRefreshEnabled) {
       $.ajax({
-        url: "<%= url_for :action => 'heartbeat' %>",
+        url: '/dashboard/heartbeat',
         data: params(),
         dataType: "script"
       });
     }
   };
 
-  var seconds = 1000;
-    
-  setInterval(refreshDashboard, 10*seconds);
+  var refreshDashboard = function() {
+      var url = '/dashboard/show/' + id() + '?' +
+                'seconds_per_column=' + secondsPerColumn() + '&' +
+                'maximum_columns=' + maximumColumns() + '&' +
+                'auto_refresh=' + autoRefreshEnabled;
+      window.location = url;    
+  };
+  
+  var seconds = 1000;    
+  setInterval(dashboardHeartbeat, 10*seconds);
   
   $('#seconds_per_column,#maximum_columns').keyup(function(event) {
     if (event.keyCode === $.ui.keyCode.ENTER) {
-      cd.postTo('/dashboard/show', params());
+      refreshDashboard();
     }
   });
   
   autoRefreshButton.click(function() {
     autoRefreshEnabled = !autoRefreshEnabled;
     setRefreshButtonText();
+    if (autoRefreshEnabled) {
+      refreshDashboard();
+    }
   });
   
   setRefreshButtonText();
-
-  // The auto_refresh button is a toggle, it shows what will happen if
-  // you press it. That is, it displays the opposite of the current state
-  autoRefreshButton.click();
 });
 
 //--></script>
