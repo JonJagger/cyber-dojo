@@ -51,12 +51,7 @@ module TrafficLightHelper
   def tool_tip(avatar_name, light)
     n = light['number'].to_i
     "review #{avatar_name}'s<br>" +
-    "#{n-1} &harr; #{n} diff<br>" +
-    "(#{at(light)})"
-  end
-    
-  def at(light)
-    Time.mktime(*light['time']).strftime("%Y %b %-d, %H:%M:%S")    
+    "#{n-1} &harr; #{n} diff"
   end
   
 end

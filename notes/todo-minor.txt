@@ -3,12 +3,6 @@
 revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
-  Limit height of traffic-light area so it autoscrolls.
-  This ensures the tool-tip does not scroll off-screen.
-  ...
-  Put tooltip area at bottom of lhs column (same as [test] page)
-  and enable tool-tips
-  ...
   Rework age of dojo showing each field? (only show non zeros)
          days: 0
         hours: 01

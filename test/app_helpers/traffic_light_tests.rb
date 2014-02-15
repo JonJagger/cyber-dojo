@@ -7,8 +7,7 @@ class TrafficLightTests < ActionView::TestCase
   
   test "tool tip" do
     light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
-    assert_equal "review hippo's<br>1 &harr; 2 diff<br>(2012 May 1, 23:20:45)",
-      tool_tip('hippo', light)
+    assert_equal "review hippo's<br>1 &harr; 2 diff", tool_tip('hippo', light)
   end
   
   test "traffic_light_image" do
@@ -73,7 +72,7 @@ class TrafficLightTests < ActionView::TestCase
       " data-now-tag='23'" +
       " data-max-tag='45'>" +
       "<div class='tooltip'>" +      
-      "review hippo's<br>22 &harr; 23 diff<br>(2012 May 1, 23:20:45)" +
+      "review hippo's<br>22 &harr; 23 diff" +
       "</div>" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +

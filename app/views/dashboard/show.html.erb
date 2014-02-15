@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  //cd.tipify($('.tipped'), $('#tip_window'));
+  cd.tipify($('.tipped'), $('#tip_window'));
   
   if ("<%=@avatar_name%>" !== "") {
     var title = "<%= t('views.buttons.diff_review') %>";
@@ -34,19 +34,23 @@ $(document).ready(function() {
         </div>
         <div class="panel">      
           <%= render :partial => 'help_button' %>
-        </div>        
-        <div>
-            <%= render :partial => 'shared/tip_window' %>
         </div>
-        
       </td>
-      
-      <td class="valign-top">
+      <td class="valign-top" rowspan="2">
         <div id="traffic_lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
       </td>
     </tr>
+    
+    <tr>
+      <td class="valign-bottom">
+        <div>
+          <%= render :partial => 'shared/tip_window' %>
+        </div>        
+      </td>
+    </tr>
+    
   </table>
     
 </div>
