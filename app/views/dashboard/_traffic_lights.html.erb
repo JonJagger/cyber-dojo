@@ -41,7 +41,7 @@ $(document).ready(function() {
          
          <% recent_td_nos.each do |td_no| %>
            <% td = td_map[td_no] %>            
-           <td>
+           <td align="right">
            <% if td.class == Array %>
              <% if td.length == 0 %>
                <div class="gap">.</div>

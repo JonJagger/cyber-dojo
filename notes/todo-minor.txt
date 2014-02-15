@@ -6,14 +6,21 @@ DASHBOARD
   When dashboard initially shows, the minute_columns=true
   setting is not seen.
   ...
+  Limit height of traffic-light area so it autoscrolls.
+  This ensures the tool-tip does not scroll off-screen.
+  ...
+  Add i18n for minute-columns
+  ...
   Put tooltip area at bottom of lhs column (same as [test] page)
   and enable tool-tips
   ...
-  Rework age of dojo showing each field (only show non zeros)
+  Rework age of dojo showing each field? (only show non zeros)
          days: 0
         hours: 01
       minutes: 23
       seconds: 14
+  ...
+  Add client javascript to increment age second by second?  
   ...
   Maybe show ticks on top row to indicate where columns are
   Or perhaps try subtle alternate "vertical-stripe" shading on rows.
