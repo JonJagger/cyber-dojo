@@ -47,6 +47,7 @@ en:
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
       sorry_full_up: "sorry, full up!"
       click_to_resume: "click the animal"
+      minute_columns: "minute columns"
       auto_refresh: "auto refresh"
       red: "red"
       amber: "amber"

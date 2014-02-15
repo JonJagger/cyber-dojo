@@ -6,8 +6,6 @@ DASHBOARD
   Limit height of traffic-light area so it autoscrolls.
   This ensures the tool-tip does not scroll off-screen.
   ...
-  Add i18n for minute-columns
-  ...
   Put tooltip area at bottom of lhs column (same as [test] page)
   and enable tool-tips
   ...
@@ -21,6 +19,7 @@ DASHBOARD
   ...
   Maybe show ticks on top row to indicate where columns are
   Or perhaps try subtle alternate "vertical-stripe" shading on rows.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD HELP
   put in content for dashboard help-dialog. At least mention being
      able to press any traffic-light to get a diff.  
