@@ -47,8 +47,12 @@ en:
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
       sorry_full_up: "sorry, full up!"
       click_to_resume: "click the animal"
-      minute_columns: "minute columns"
+      minute_columns: "|60s| columns"
       auto_refresh: "auto refresh"
+      days: "days"
+      hours: "hours"
+      minutes: "minutes"
+      seconds: "seconds"      
       red: "red"
       amber: "amber"
       green: "green"
@@ -135,4 +139,3 @@ en:
       open_the_previous_file: "opens the previous file"
       
     dashboard:
-      age_dhms_tip: "days:hours:minutes:seconds"

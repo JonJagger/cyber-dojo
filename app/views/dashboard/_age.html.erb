@@ -1,7 +1,62 @@
+<script type="text/javascript"><!--
 
-<span class="tipped">
-  <%= formatted_age_from_seconds(@kata.age_in_seconds) %>
-  <div class="tooltip">
-    age=<%= t('views.dashboard.age_dhms_tip') %>    
-  </div>
-</span>
+$(document).ready(function() {
+  
+  var age = parseInt("<%= @kata.age_in_seconds %>");
+
+  var seconds = function() {
+    return age % 60;
+  };
+  var minutes = function() {
+    return Math.floor((age / 60) % 60);
+  };
+  var hours = function() {
+    return Math.floor((age / (60*60)) % 24); 
+  };
+  var days = function() {
+    return Math.floor(age / (60*60*24));
+  };
+  var zerod = function(n) {
+    return ('00' + n).slice(-2);
+  };
+  var sep = '&thinsp;:&thinsp;';
+  
+  if (days() > 0) {
+    $('#days_label').html("<%= t('views.labels.days') %>" + sep);
+    $('#days').text(days());
+  }
+  if (days() > 0 || hours() > 0) {
+    $('#hours_label').html("<%= t('views.labels.hours') %>" + sep);
+    $('#hours').text(zerod(hours()));      
+  }
+  if (days() > 0 || hours() > 0 || minutes() > 0) {
+    $('#minutes_label').html("<%= t('views.labels.minutes') %>" + sep);
+    $('#minutes').text(zerod(minutes()));
+  }
+  $('#seconds_label').html("<%= t('views.labels.seconds') %>" + sep);
+  $('#seconds').text(zerod(seconds()));
+
+});
+
+//--></script>
+
+<div id="age">
+  <table>
+    <tr>
+      <td id="days_label" class="align-right"></td>
+      <td id="days" class="align-left"></td>
+    </tr>
+    <tr>
+      <td id="hours_label" class="align-right"></td>
+      <td id="hours" class="align-left"></td>
+    </tr>    
+    <tr>
+      <td id="minutes_label" class="align-right"></td>
+      <td id="minutes" class="align-left"></td>
+    </tr>    
+    <tr>
+      <td id="seconds_label" class="align-right"></td>
+      <td id="seconds" class="align-left"></td>
+    </tr>    
+  </table>
+</div>

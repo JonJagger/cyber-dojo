@@ -19,6 +19,7 @@ module TrafficLightHelper
   end
 
   def colour(light)
+     # old dojos used 'outcome'
      (light['colour'] || light['outcome']).to_s
   end
   
@@ -30,7 +31,7 @@ module TrafficLightHelper
          " data-now-tag='#{light['number']}'" +
          " data-max-tag='#{max_lights}'>" +
         "<div class='tooltip'>" +
-          "show #{avatar_name}'s<br>" +
+          "review #{avatar_name}'s<br>" +
           "current code" +
         "</div>" +
         "<img src='/images/avatars/#{avatar_name}.jpg'" +

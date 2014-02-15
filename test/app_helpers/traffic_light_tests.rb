@@ -37,7 +37,7 @@ class TrafficLightTests < ActionView::TestCase
       " data-now-tag='23'" +
       " data-max-tag='45'>" +
       "<div class='tooltip'>" +
-      "show hippo's<br>current code" +
+      "review hippo's<br>current code" +
       "</div>" +
       "<img src='/images/avatars/hippo.jpg'" +
           " alt='hippo'" +

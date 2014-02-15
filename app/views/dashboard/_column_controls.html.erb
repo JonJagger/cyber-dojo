@@ -29,11 +29,16 @@ $(document).ready(function() {
     }
   };
 
+  var refreshDashboard = function() {
+    var url = '/dashboard/show/' + id() + '?' +
+              'minute_columns=' + minuteColumns() + '&' +
+              'auto_refresh=' + autoRefresh();
+    window.location = url;    
+  };
+
   var seconds = 1000;    
   setInterval(dashboardHeartbeat, 10*seconds);
   
-  //-----------
-
   $('#minute_columns_checkbox')
     .attr('checked', "<%= @minute_columns %>" === "true")
     .click(function() {  
@@ -46,13 +51,6 @@ $(document).ready(function() {
       refreshDashboard();
     });
   
-  var refreshDashboard = function() {
-    var url = '/dashboard/show/' + id() + '?' +
-              'minute_columns=' + minuteColumns() + '&' +
-              'auto_refresh=' + autoRefresh();
-    window.location = url;    
-  };
-
 });
 
 //--></script>

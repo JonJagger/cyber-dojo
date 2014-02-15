@@ -3,13 +3,8 @@
 revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
-  Rework age of dojo showing each field? (only show non zeros)
-         days: 0
-        hours: 01
-      minutes: 23
-      seconds: 14
-  ...
-  Add client javascript to increment age second by second?  
+  dashboard on read-only server won't need heartbeat
+  dashboard on read-only server won't need age (use creation date instead)
   ...
   Maybe show ticks on top row to indicate where columns are
   Or perhaps try subtle alternate "vertical-stripe" shading on rows.
