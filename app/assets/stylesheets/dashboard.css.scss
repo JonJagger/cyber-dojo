@@ -23,42 +23,46 @@
   }
 }
 
-#age {
-  text-align: center;
-  margin: 0.2em; 
+#dashboard-page {
+  #age {
+    text-align: center;
+    margin: 0.2em; 
+  }
 }
 
 $ellipsis: "\2026";
 
-#traffic_lights {
-  width: 65em;
-  overflow-x: auto;
-  height: 45em;
-  overflow-y: auto;
-  
-  img {
-    padding: {
-      left: 1px;
-      right: 1px;
+#dashboard-page {
+  #traffic_lights {
+    width: 65em;
+    overflow-x: auto;
+    height: 45em;
+    overflow-y: auto;
+    
+    img {
+      padding: {
+        left: 1px;
+        right: 1px;
+      }
     }
-  }
-  .row td {
-    padding: 0em;
-  }
-  .row.odd td {
-    background: lighten($darker-color, 5%);
-  }
-  .omission {
-    font-size: 0.7em;
-    color: White;
-  }
-  .omission:after {
-    content: $ellipsis;
-  }
-  .gap {
-    font-size: 0.5em;
-    color: Gray;
-    text-align: center;
+    .row td {
+      padding: 0em;
+    }
+    .row.odd td {
+      background: lighten($darker-color, 5%);
+    }
+    .omission {
+      font-size: 0.7em;
+      color: White;
+    }
+    .omission:after {
+      content: $ellipsis;
+    }
+    .gap {
+      font-size: 0.5em;
+      color: Gray;
+      text-align: center;
+    }
   }
 }
 
