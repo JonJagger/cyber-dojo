@@ -2,9 +2,32 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD-HELP
-  put in content for dashboard help. At least mention being
-  able to press any traffic-light to get a diff.
+DASHBOARD
+  Put controls on lhs column (consistent with [test] page)
+  ...
+  Put tooltip area at bottom of lhs column (same as [test] page)
+  ...
+  Rework age of dojo showing each field (only show non zeros)
+         days: 0
+        hours: 01
+      minutes: 23
+      seconds: 14
+  On refresh do an auto scroll *left* so animals are always in view on rhs.
+  when no scrollbar, align to left, should work! try $('#id').scrollLeft(0)
+  ...
+  I think this would mean I don't need max-columns?
+  ...
+  I only really use seconds_per_column to collapse rows when
+     I want to see the rag progression same as on the [test] page
+  So perhaps offer a toggle:
+     o) minute columns==off (one column with v big seconds_per_column value)
+     o) minute columns==on  (seconds_per_column:60)
+     I like that, two control toggles both with ==on/==off option
+  Maybe show ticks on top row to indicate where columns are
+  Or perhaps try subtle alternate "vertical-stripe" shading on rows.
+DASHBOARD HELP
+  put in content for dashboard help-dialog. At least mention being
+     able to press any traffic-light to get a diff.  
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

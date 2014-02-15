@@ -5,14 +5,15 @@ $(document).ready(function() {
 
   var title = "<%= t('views.buttons.diff_review') %>";
   var lights = $('.diff-traffic-light');
-  cd.setupTrafficLightOpensDiffDialogHandlers(lights, title);
+  cd.setupTrafficLightOpensDiffDialogHandlers(lights, title);  
+  $('#traffic_lights').scrollLeft(100000);
   //cd.tipify($('.tipped'), $('#tip_window'));
   
 });
 
 //--></script>
 
- <table class="align-center">
+ <table>
    
    <% seconds_per_td = @seconds_per_column %>
    <% maximum_columns = @maximum_columns %>

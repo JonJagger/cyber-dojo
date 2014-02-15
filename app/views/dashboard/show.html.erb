@@ -20,38 +20,34 @@ $(document).ready(function() {
 //--></script>
 
 <div id="dashboard-page">
-  <table class="align-center">
+  <table class="xalign-center">
     <tr>
       <td>
-        <%= render :partial => 'shared/info' %>      
-      </td>
-      
-      <td>
-        <%= render :partial => 'column_controls' %>      
-      </td>
-      
-      <td>
-        <div class="table-row">      
+        <div class="panel">
+          <%= render :partial => 'shared/info' %>
         </div>
-        <div class="table-row" id="age">      
+        <div class="panel">
+          <%= render :partial => 'column_controls' %>      
+        </div>
+        <div class="panel" id="age">      
           <%= render :partial => 'age' %>
         </div>
-        <div class="table-row">      
+        <div class="panel">      
           <%= render :partial => 'help_button' %>
+        </div>        
+        <div>
+            <%= render :partial => 'shared/tip_window' %>
         </div>
-      </td>
-            
-      <td class="valign-top">
-          <%= render :partial => 'shared/tip_window' %>
+        
       </td>
       
+      <td class="valign-top">
+        <div id="traffic_lights">
+          <%= render :partial => 'traffic_lights' %>
+        </div>
+      </td>
     </tr>
   </table>
-  
-  <br/>
-  
-  <div id="traffic_lights">
-    <%= render :partial => 'traffic_lights' %>
-  </div>
+    
 </div>
 

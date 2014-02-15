@@ -32,6 +32,8 @@
 $ellipsis: "\2026";
 
 #traffic_lights {
+  width: 65em;
+  overflow-x: auto;
   img {
     padding: {
       left: 1px;
