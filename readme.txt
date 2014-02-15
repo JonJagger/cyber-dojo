@@ -65,7 +65,7 @@ o) old ones are scrolled out of view to the left
 o) the animal image is always visible.
 The idea is to turn off auto-refresh before starting a dashboard review.
 
-minute columns?
+|60s| columns?
 ---------------
 When this is checked, each vertical column corresponds to 60 seconds.
 Every 6 auto-refreshes a new rightmost column will appear
@@ -73,10 +73,8 @@ containing all the traffic-lights created by all the animals in those 60
 seconds. If no animals press the [test] button during those 60 seconds the
 column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
-When this is not checked the traffic-lights of different animals are not
+When not checked the traffic-lights of different animals are not
 vertically aligned.
-
-
 
 
 Diff-Review

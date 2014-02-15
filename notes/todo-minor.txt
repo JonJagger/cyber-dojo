@@ -5,6 +5,13 @@ revert and fork javascript is virtually identical.
 on test page show all traffic-lights at the bottom but
 auto-scroll like I now do on the dashboard.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+can i18n yml files be split?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename css files,
+  eg forker->forker_dialog
+  eg reverter->reverter_dialog
+  eg diff->diff_dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
   dashboard on read-only server won't need heartbeat
   dashboard on read-only server won't need age (use creation date instead)
