@@ -50,39 +50,33 @@ o) from the test page, click the animal image at the bottom right
 o) from the test page, click the dashboard button on the left.
 o) from the home page, enter the practice id and click the [review] button.
 
-A new dashboard page will appear displaying all the traffic-lights for all
-the animals in the practice session.
-The dashboard auto-refreshes every 10 seconds.
-The idea is to display the dashboard during the practice session,
-then when the practice session ends, you disable the auto-refresh.
-
 Each horizontal row corresponds to one animal and displays, from left to right,
 o) its oldest-to-newest traffic lights
-o) its animal
-o) its most recent traffic-light.
 o) its total number of red,amber,green traffic-lights so far (in red,amber,green).
 o) its total number of traffic-lights (in the current colour).
+o) its animal
 
-Each vertical column corresponds to a fixed amount of time
-(the [seconds per column] value at the top). If this value is 30 seconds
-then every three auto-refreshes a new rightmost column will appear
-containing all the traffic-lights created by all the animals in those 30
-seconds. If no animals press the [test] button during these 30 seconds the
+auto refresh?
+-------------
+The dashboard page auto-refreshes every 10 seconds. As more and more tests
+are run, more and more traffic-lights appear taking up more and more
+horizontal space. These traffic-lights auto scroll:
+o) old ones are scrolled out of view to the left
+o) the animal image is always visible.
+The idea is to turn off auto-refresh before starting a dashboard review.
+
+minute columns?
+---------------
+When this is checked, each vertical column corresponds to 60 seconds.
+Every 6 auto-refreshes a new rightmost column will appear
+containing all the traffic-lights created by all the animals in those 60
+seconds. If no animals press the [test] button during those 60 seconds the
 column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
-If you want to collapse the horizontal time gaps between traffic-lights
-simply enter a very large value for the [seconds per column] value (at the top).
+When this is not checked the traffic-lights of different animals are not
+vertically aligned.
 
-As more and more tests are run, more and more traffic-lights
-will be displayed taking up more and more horizontal space.
-This can easily cause the column with the animal images and the summary
-information to scroll out of sight. If this happens you can simply reduce
-the [columns maximum] value at the top of the page. If the [columns maximum]
-value is 30 then only the 30 most recent columns will be displayed (older
-columns are simply chopped off the left).
 
-If the dashboard display has a horizontal scrollbar you will probably need
-to disable the auto-refresh before scrolling.
 
 
 Diff-Review
