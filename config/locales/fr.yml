@@ -48,7 +48,6 @@ fr:
       sorry_full_up: "désolé, le plein"
       click_to_resume: "cliquez sur l'animal"
       seconds_per_column: "secondes par colonne"
-      columns_maximum: "colonnes maximale"
       auto_refresh: "rafraîchissement automatique"
       red: "rouge"
       amber: "ambre"

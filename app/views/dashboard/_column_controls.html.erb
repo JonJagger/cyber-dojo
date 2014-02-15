@@ -32,15 +32,10 @@ $(document).ready(function() {
     return parse('seconds_per_column', <%= @seconds_per_column %>);
   };
   
-  var maximumColumns = function() {
-    return parse('maximum_columns', <%= @maximum_columns %>);
-  };
-  
   var params = function() {
     return {
       id: id(),
       seconds_per_column: secondsPerColumn(),
-      maximum_columns: maximumColumns(),
       auto_refresh: autoRefreshEnabled
     };
   };
@@ -58,7 +53,6 @@ $(document).ready(function() {
   var refreshDashboard = function() {
       var url = '/dashboard/show/' + id() + '?' +
                 'seconds_per_column=' + secondsPerColumn() + '&' +
-                'maximum_columns=' + maximumColumns() + '&' +
                 'auto_refresh=' + autoRefreshEnabled;
       window.location = url;    
   };
@@ -66,7 +60,7 @@ $(document).ready(function() {
   var seconds = 1000;    
   setInterval(dashboardHeartbeat, 10*seconds);
   
-  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
+  $('#seconds_per_column').keyup(function(event) {
     if (event.keyCode === $.ui.keyCode.ENTER) {
       refreshDashboard();
     }
@@ -102,26 +96,12 @@ $(document).ready(function() {
   
   <tr>
     <td class="align-right">
-      <input type="text" 
-             id="maximum_columns"
-             value="<%= @maximum_columns %>"/>
-    </td>
-    <td class="align-left">
-      &thinsp;
-      <span id="maximum_columns_text">
-        <%= t("views.labels.columns_maximum") %>
-      </span>
-    </td>
-  </tr>
-
-  <tr>
-    <td class="align-right">
       <button type="button"
               class="tipped"
               id="auto_refresh">
-        auto refresh
+        auto-refresh
         <div class="tooltip">
-          Toggle the 10 second<br>
+          toggle the 10 second<br>
           dashboard auto-refresh<br>
           on/off
         </div>
