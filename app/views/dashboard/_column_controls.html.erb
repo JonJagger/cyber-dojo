@@ -59,27 +59,31 @@ $(document).ready(function() {
 
   <tr>
     <td class="align-right">
-      <%= raw t("views.labels.minute_columns") %>
+      <div class="tipped">
+        <%= raw t("views.labels.columns") %>
+        <div class="tooltip">
+        </div>
+      </div>
     </td>
     <td>
       <input type="checkbox"
              id="minute_columns_checkbox"/>
-      <div class="tooltip">
-      </div>
     </td>
   </tr>
 
   <tr>
     <td class="align-right">
-      <%= raw t("views.labels.auto_refresh") %>
+      <div class="tipped">
+        <%= raw t('views.labels.auto_refresh') %>
+        <div class="tooltip">
+          toggles the 10 second<br>
+          auto-refresh on/off
+        </div>        
+      </div>
     </td>
     <td>
       <input type="checkbox"
              id="auto_refresh_checkbox"/>
-      <div class="tooltip">
-        toggles the 10 second<br>
-        auto-refresh on/off
-      </div>
     </td>
   </tr>
   

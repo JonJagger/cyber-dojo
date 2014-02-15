@@ -13,6 +13,8 @@ DASHBOARD HELP
   put in content for dashboard help-dialog. At least mention being
      able to press any traffic-light to get a diff.  
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+exception_controller_test.rb needs some assertions!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 perhaps disable resume/review buttons until dojo is 30 seconds old?
