@@ -7,6 +7,8 @@ auto-scroll like I now do on the dashboard.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 can i18n yml files be split?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add tool tips to diff-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename css files,
   eg forker->forker_dialog
   eg reverter->reverter_dialog

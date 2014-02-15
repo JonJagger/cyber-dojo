@@ -3,6 +3,11 @@ $ellipsis: "\2026";
 
 #dashboard_page {
 
+  #help_button {
+    @include font-size-tiny();  
+    @include rounded-corner(14px);    
+  }
+
   #traffic_lights {
     width: 65em;
     overflow-x: auto;
