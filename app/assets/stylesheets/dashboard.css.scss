@@ -3,31 +3,6 @@ $ellipsis: "\2026";
 
 #dashboard-page {
 
-  #seconds_per_column_text,
-  #seconds_per_column,
-  #maximum_columns_text,
-  #maximum_columns,
-  #auto_refresh_label,
-  #auto_refresh,
-  #tips,
-  #download {
-    @include font-size-tiny();
-  }
-
-  #seconds_per_column,
-  #maximum_columns {
-    background: $lighter-color;
-    @include gradient-darken($lighter-color, 20%, 10%, 5%);     
-    color: $darker-color;
-    width: 4.5em; 
-    text-align: center;
-  }
-
-  #age {
-    text-align: center;
-    margin: 0.2em; 
-  }
-
   #traffic_lights {
     width: 65em;
     overflow-x: auto;
