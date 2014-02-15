@@ -2,116 +2,86 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-
-  var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";
-  var autoRefreshButton = $('#auto_refresh');    
-  var autoRefreshLabel = $('#auto_refresh_label');
-
-  var setRefreshButtonText = function() {
-    if (autoRefreshEnabled) {
-      autoRefreshLabel.text('== on');
-    } else {
-      autoRefreshLabel.text('== off');
-    }    
-  };
-  
-  var parse = function(name, current_value) {
-    var input = $('#' + name);
-    var newValue = parseInt(input.val());
-    if (isNaN(newValue)) {
-      input.attr('value', current_value);
-    }
-    return input.val();
-  };
   
   var id = function() {
     return "<%= @kata.id %>";
   };
   
-  var secondsPerColumn = function() {
-    return parse('seconds_per_column', <%= @seconds_per_column %>);
+  var minuteColumns = function() {
+    return $('#minute_columns_checkbox').is(':checked');    
   };
   
-  var params = function() {
-    return {
-      id: id(),
-      seconds_per_column: secondsPerColumn(),
-      auto_refresh: autoRefreshEnabled
-    };
+  var autoRefresh = function() {
+    return $('#auto_refresh_checkbox').is(':checked');
   };
   
   var dashboardHeartbeat = function() {
-    if (autoRefreshEnabled) {
+    if (autoRefresh()) {
       $.ajax({
         url: '/dashboard/heartbeat',
-        data: params(),
+        data: {
+          id: id(),
+          minute_columns: minuteColumns(),
+          auto_refresh: autoRefresh()
+        },
         dataType: "script"
       });
     }
   };
 
-  var refreshDashboard = function() {
-      var url = '/dashboard/show/' + id() + '?' +
-                'seconds_per_column=' + secondsPerColumn() + '&' +
-                'auto_refresh=' + autoRefreshEnabled;
-      window.location = url;    
-  };
-  
   var seconds = 1000;    
   setInterval(dashboardHeartbeat, 10*seconds);
   
-  $('#seconds_per_column').keyup(function(event) {
-    if (event.keyCode === $.ui.keyCode.ENTER) {
+  //-----------
+
+  $('#minute_columns_checkbox')
+    .attr('checked', "<%= @minute_columns %>" === "true")
+    .click(function() {  
       refreshDashboard();
-    }
-  });
+    });
   
-  autoRefreshButton.click(function() {
-    autoRefreshEnabled = !autoRefreshEnabled;
-    setRefreshButtonText();
-    if (autoRefreshEnabled) {
+  $('#auto_refresh_checkbox')
+    .attr('checked', "<%= @auto_refresh %>" === "true")
+    .click(function() {  
       refreshDashboard();
-    }
-  });
+    });
   
-  setRefreshButtonText();
+  var refreshDashboard = function() {
+    var url = '/dashboard/show/' + id() + '?' +
+              'minute_columns=' + minuteColumns() + '&' +
+              'auto_refresh=' + autoRefresh();
+    window.location = url;    
+  };
+
 });
 
 //--></script>
 
 <table>
+
   <tr>
     <td class="align-right">
-      <input type="text"
-             id="seconds_per_column"
-             value="<%= @seconds_per_column %>"/>
+      minute columns
     </td>
-    <td class="align-left">
-      &thinsp;      
-      <span id="seconds_per_column_text">
-        <%= t("views.labels.seconds_per_column") %>
-      </span>
+    <td>
+      <input type="checkbox"
+             id="minute_columns_checkbox"/>
+      <div class="tooltip">
+      </div>
     </td>
   </tr>
-  
+
   <tr>
     <td class="align-right">
-      <button type="button"
-              class="tipped"
-              id="auto_refresh">
-        <%= raw t("views.labels.auto_refresh") %>
-        <div class="tooltip">
-          toggle the 10 second<br>
-          dashboard auto-refresh<br>
-          on/off
-        </div>
-      </button>
+      <%= raw t("views.labels.auto_refresh") %>
     </td>
-    <td class="align-left">
-      &thinsp;
-      <span id="auto_refresh_label">
-        <%= t("views.labels.auto_refresh") %>
-      </span>
+    <td>
+      <input type="checkbox"
+             id="auto_refresh_checkbox"/>
+      <div class="tooltip">
+        toggles the 10 second<br>
+        auto-refresh on/off
+      </div>
     </td>
   </tr>
   

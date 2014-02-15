@@ -3,9 +3,10 @@ class DashboardController < ApplicationController
 
   def show
     @kata = Kata.new(root_dir, id)    
-    @seconds_per_column = seconds_per_column
-    @maximum_columns = 10000000    
+    @minute_columns = flag(:minute_columns, true)
     @auto_refresh = flag(:auto_refresh, true)
+    @seconds_per_column = seconds_per_column
+    @maximum_columns = 10000000
     @title = id[0..5] + ' dashboard'
 
     # provide these if you want to open the diff-dialog
@@ -21,10 +22,11 @@ class DashboardController < ApplicationController
   end
 
   def heartbeat
-    @kata = Kata.new(root_dir, id)    
+    @kata = Kata.new(root_dir, id)
+    @minute_columns = flag(:minute_columns, true)    
+    @auto_refresh = flag(:auto_refresh, true)
     @seconds_per_column = seconds_per_column
     @maximum_columns = 10000000
-    @auto_refresh = flag(:auto_refresh, true)
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -56,7 +58,11 @@ class DashboardController < ApplicationController
 private
 
   def seconds_per_column
-    positive(:seconds_per_column, 60)
+    if params[:minute_columns] == "true"
+      return 60
+    else
+      return 60000000
+    end
   end
     
   def positive(symbol, default)
