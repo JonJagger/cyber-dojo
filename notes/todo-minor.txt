@@ -3,9 +3,6 @@
 revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
-  When dashboard initially shows, the minute_columns=true
-  setting is not seen.
-  ...
   Limit height of traffic-light area so it autoscrolls.
   This ensures the tool-tip does not scroll off-screen.
   ...

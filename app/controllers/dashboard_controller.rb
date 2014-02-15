@@ -3,15 +3,15 @@ class DashboardController < ApplicationController
 
   def show
     @kata = Kata.new(root_dir, id)    
-    @minute_columns = flag(:minute_columns, true)
-    @auto_refresh = flag(:auto_refresh, true)
+    @minute_columns = bool('minute_columns')
+    @auto_refresh = bool('auto_refresh')
     @seconds_per_column = seconds_per_column
-    @maximum_columns = 10000000
+    @maximum_columns = maximum_columns
     @title = id[0..5] + ' dashboard'
 
-    # provide these if you want to open the diff-dialog
-    # for a specific avatar,was_tag,now_tag as the
-    # dashboard opens
+    # provide these if you want to open the diff-dialog for a
+    # specific [avatar,was_tag,now_tag] as the dashboard open.
+    # See also app/controllers/diff_controller.rb
     if params['avatar'] && params['was_tag'] && params['now_tag']
       @id = id
       @avatar_name = params['avatar']
@@ -23,10 +23,10 @@ class DashboardController < ApplicationController
 
   def heartbeat
     @kata = Kata.new(root_dir, id)
-    @minute_columns = flag(:minute_columns, true)    
-    @auto_refresh = flag(:auto_refresh, true)
+    @minute_columns = bool('minute_columns')
+    @auto_refresh = bool('auto_refresh')
     @seconds_per_column = seconds_per_column
-    @maximum_columns = 10000000
+    @maximum_columns = maximum_columns
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -58,22 +58,22 @@ class DashboardController < ApplicationController
 private
 
   def seconds_per_column
-    if params[:minute_columns] == "true"
+    flag = params['minute_columns']
+    if  !flag || flag == "true"
       return 60
     else
-      return 60000000
+      return 60*60*24*365*1000 
     end
   end
     
-  def positive(symbol, default)
-    value = params[symbol].to_i
-    value > 0 ? value : default    
+  def maximum_columns
+    10000000    
   end
  
-  def flag(symbol, default)
-    tf = params[symbol]
+  def bool(attribute)
+    tf = params[attribute]
     return tf if tf == "true"
     return tf if tf == "false"
-    return default
+    return "true"
   end
 end
