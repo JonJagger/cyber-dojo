@@ -1,5 +1,8 @@
 
+$ellipsis: "\2026";
+
 #dashboard-page {
+
   #seconds_per_column_text,
   #seconds_per_column,
   #maximum_columns_text,
@@ -10,9 +13,7 @@
   #download {
     @include font-size-tiny();
   }
-}
 
-#dashboard-page {
   #seconds_per_column,
   #maximum_columns {
     background: $lighter-color;
@@ -21,18 +22,12 @@
     width: 4.5em; 
     text-align: center;
   }
-}
 
-#dashboard-page {
   #age {
     text-align: center;
     margin: 0.2em; 
   }
-}
 
-$ellipsis: "\2026";
-
-#dashboard-page {
   #traffic_lights {
     width: 65em;
     overflow-x: auto;
