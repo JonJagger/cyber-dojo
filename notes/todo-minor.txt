@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+revert and fork javascript is virtually identical.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-HELP
+  put in content for dashboard help. At least mention being
+  able to press any traffic-light to get a diff.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hitting escape key on setup page should be a cancel
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 perhaps disable resume/review buttons until dojo is 30 seconds old?
@@ -16,8 +22,6 @@ when Approval txt file is auto opened after pressing [test]
 it does not honour the line-numbers state.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use smaller font for ok/cancel buttons on dialogs?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hashes of the files, together with filenames, could be used
 to determine if a traffic-light is reverted.
@@ -37,10 +41,6 @@ TOOL-TIPS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   filenames: add * marker if files have changed since last [test] ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD-HELP
-  put in content for dashboard help. At least mention being
-  able to press any traffic-light to get a diff.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if you press < > and the next diff has no actual diff
