@@ -48,7 +48,7 @@ en:
       sorry_full_up: "sorry, full up!"
       click_to_resume: "click the animal"
       seconds_per_column: "seconds per column"
-      auto_refresh: "auto refresh"
+      auto_refresh: "auto<br/>refresh"
       red: "red"
       amber: "amber"
       green: "green"

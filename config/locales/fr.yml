@@ -48,7 +48,7 @@ fr:
       sorry_full_up: "désolé, le plein"
       click_to_resume: "cliquez sur l'animal"
       seconds_per_column: "secondes par colonne"
-      auto_refresh: "rafraîchissement automatique"
+      auto_refresh: "rafraîchissement<br/>automatique"
       red: "rouge"
       amber: "ambre"
       green: "vert"
