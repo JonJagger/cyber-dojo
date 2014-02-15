@@ -12,7 +12,9 @@ module LogoImageHelper
   def home_page_logo()
     image_tag "/images/home_page_logo.png",
       :alt   => 'cyber-dojo',
-      :title => 'cyber-dojo'
+      :title => 'cyber-dojo',
+      :width => "68",
+      :height => "68"
   end
 
 end

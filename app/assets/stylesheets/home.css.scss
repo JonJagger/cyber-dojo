@@ -2,7 +2,8 @@
 .row
 {
   text-align: center;
-  padding: 0.4em;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
 }
 
 $text-color: darken($lighter-color, 10%);
@@ -11,7 +12,9 @@ $text-color: darken($lighter-color, 10%);
 {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   color: $text-color;
-  font-size: 4em;
+  font-size: 4.2em;
+  margin-bottom: 0em;
+  padding-bottom: 0em;
 }
 
 a:link, a:visited
@@ -19,12 +22,17 @@ a:link, a:visited
   color: $text-color;
 }
 
-#a_place_to_practice, #custom_message
+#a_place_to_practice
+{
+  font-size: 1em;
+  color: $text-color;
+}
+
+#custom_message
 {
   color: $text-color;
   @include font-size-small();
 }
-
 #setup
 {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;

@@ -33,7 +33,7 @@ en:
       zebra: "zebra"
       
     labels:
-      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practising</a> programming together"
+      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practising</a> programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer<br>enter the id"
       and: "and"
