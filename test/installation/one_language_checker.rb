@@ -3,9 +3,9 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
-  def initialize(options = { })
-    @verbose = options.has_key?(:verbose) ? options[:verbose] : true    
-    @max_duration = options.has_key?(:max_duration) ? options[:max_duration] : 10
+  def initialize(option = "noisy")
+    @verbose = (option == "noisy")
+    @max_duration = 60
     @root_dir = Rails.root.to_s + '/test/cyberdojo'    
   end
     
@@ -31,17 +31,21 @@ class OneLanguageChecker < ActionController::TestCase
     check_named_files_exist(:visible_filenames)
     check_unit_test_framework_has_parse_method
       
+    t1 = Time.now
     rag = red_amber_green(get_filename_42)
+    t2 = Time.now
+    took = ((t2 - t1) / 3).round(2)
     if rag == ['red','amber','green']
       installed_and_working << language
-      puts "  #{language} - #{rag.inspect}  installed and working"
+      puts "  #{language} - #{rag.inspect}  installed and working (~#{took} seconds)"
     elsif rag == ['amber', 'amber', 'amber']
       not_installed << language
-      puts "  #{language} - #{rag.inspect}  not installed"
+      puts "  #{language} - #{rag.inspect}  not installed (~ #{took} seconds)"
     else
       installed_but_not_working << language
-      puts "  #{language} - #{rag.inspect}  installed but not working"          
+      puts "  #{language} - #{rag.inspect}  installed but not working (~ #{took} seconds)"
     end
+    took
   end
     
   def check_manifest_file_exists    

@@ -1,9 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSTALLATION-TESTS
-  Time the tests and print that info.
-  Create script that can pass root_dir and optional language
-    and it will check languages off the root_dir
+  Create script that can pass root_dir and optional language to remainder
+    it will check languages off the root_dir
+    if language supplied will check only that
   Install cpputest and get app/lib coverage to 100%
   Save run-tests outputs to log file?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
