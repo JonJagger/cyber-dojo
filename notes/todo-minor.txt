@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+INSTALLATION-TESTS
+  Add check that output_parser method exists. Loud failure if not.
+  Create script that can pass root_dir and optional language
+    and it will check languages off the root_dir
+  Install cpputest and get app/lib coverage to 100%
+  Save run-tests outputs to log file.  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK-REVERT
   show the filenames with red/green line-counts
   show the content with the red/green deleted/added lines

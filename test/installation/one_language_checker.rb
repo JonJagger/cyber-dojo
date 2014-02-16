@@ -3,9 +3,9 @@ require 'Folders'
 
 class OneLanguageChecker < ActionController::TestCase
   
-  def initialize(options = { :verbose => true, :max_duration => 5 })
-    @verbose = options[:verbose] || false
-    @max_duration = options[:max_duration] || 5
+  def initialize(options = { })
+    @verbose = options.has_key?(:verbose) ? options[:verbose] : true    
+    @max_duration = options.has_key?(:max_duration) ? options[:max_duration] : 10
     @root_dir = Rails.root.to_s + '/test/cyberdojo'    
   end
     

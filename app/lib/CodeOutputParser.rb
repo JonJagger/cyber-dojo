@@ -211,6 +211,15 @@ module CodeOutputParser
      return :amber
   end
 
+  def self.parse_scala_test(output)
+    scala_pattern = /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
+	if scala_pattern.match(output)
+	  return $2 == "0" ? :green : :red
+	else
+	  :amber
+	end
+  end
+
 =begin
   def self.parse_js_test_simple(output)
     amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
@@ -224,9 +233,6 @@ module CodeOutputParser
     end
   end
  
-  def self.parse_scala_test(output)
-	:amber
-  end
 =end
 
 end

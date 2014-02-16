@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/one_language_checker'
 
 class InstallationTests < ActionController::TestCase
 
-  test "actual installed languages" do
+  test "installed languages" do
     puts "Checking the (red,amber,green) installation testing mechanism..."
     verify_test_languages
     
@@ -31,7 +31,8 @@ class InstallationTests < ActionController::TestCase
       ]
     
     languages.each do |language|
-      OneLanguageChecker.new().check(
+      options = { :verbose => false, :max_duration => 15 }
+      OneLanguageChecker.new(options).check(
         language,
         installed_and_working,
         not_installed,
@@ -48,10 +49,14 @@ class InstallationTests < ActionController::TestCase
     root_dir = Rails.root.to_s + '/test/cyberdojo'
     installed_and_working = [ ]
     not_installed = [ ]
-    installed_but_not_working = [ ]        
-    languages = Folders::in(root_dir + '/languages').sort    
+    installed_but_not_working = [ ]
+    languages = Folders::in(root_dir + '/languages').sort
+    languages -= ['Ruby-installed-and-working']
+    languages -= ['Ruby-not-installed']
+    languages -= ['Ruby-installed-but-not-working']
     languages.each do |language|
-      OneLanguageChecker.new().check(
+      options = { :verbose => false, :max_duration => 30 }    
+      OneLanguageChecker.new(options).check(
         language,
         installed_and_working,
         not_installed,
