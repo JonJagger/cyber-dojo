@@ -9,7 +9,7 @@ class Kata
     file = Thread.current[:file] || DiskFile.new
     kata = Kata.new(root_dir, info[:id])
     file.write(kata.dir, 'manifest.rb', info)
-    kata    
+    kata
   end
   
   def self.find(root_dir, id)

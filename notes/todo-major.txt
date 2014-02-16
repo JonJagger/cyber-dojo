@@ -1,4 +1,87 @@
 
+o) refactor so new dojos are saved in json format and also save sha1 hashes
+   and also includes URL of server dojo is on.
+   Old dojos are still usable in old format.
+   
+o) write a script to convert a dojo in old-rb format into new-json format
+   This will need to detect if the :language named in the katas manifest.rb
+   (not the animals manifest) still exists on the server.
+   If it does not then it could be the language has been
+     - renamed
+     - deleted (eg Objective-C)
+   If its renamed patch the language name to the new name.
+   Run it on all dojos already xferred to cyber-katas.org
+   This means checking for language exist/rename/delete information
+   will need to come from a .json file and not by looking at the actual server.
+   If language has been renamed the information would be useful for the
+      fork feature on cyber-dojo
+   If the language has been deleted the information would also be useful
+      since it means I can not attempt the fork.
+   Question - does this detection happen on cyber-katas too?
+   Fork *request* happens on cyber-katas, targetting cyber-dojo (say)
+   Forker controller needs to alter json returned.
+      :succeeded (bool)
+      :diagnostic (text (eg deleted))
+      :id
+   If language is patched - will cyber-katas still be able to
+   detect the fork from the sha1's? It needs to be able to.
+   So sha1's must be solely from file contents. Sounds ok.
+      
+o) add buttons on cyber-dojo to publish a dojo to cyber-kata with tags
+   on the sending server check format of dojo
+   if its old-rb format then convert it *in-place* (on sending server) using script above
+   send it in new-json format (tar.gz) to cyber-katas
+o) do not offer fork on cyber-katas
+   but do offer link back to original dojo (if URL is not localhost)
+o) this means we could get a cycle
+  I publish a dojo
+  Someone else links back to my dojo and adds some more traffic-lights
+  Suppose they then *re*publish it!
+  That should be allowed. It would be cool!
+  Does create issues.
+  Can't assume that inserted database information will be new
+  Could be information that already exists.
+  Re-publish event could add new tags.
+  Tags should be recorded with the publish-event not the dojo.
+  Can then see a history of "tags" added.
+  Allow tags to be editable on cyber-katas?
+  Want re-publish of unchanged dojo to be low-overhead 
+  Should be enough to check, URL,id,animals,traffic-lights per animal.
+  
+o) another problem is it opens up the possibility of
+   two people trying to edit the same code at the same time
+   as the same animal.
+   This implies that if you click from cyber-katas to get back to
+   the original dojo you should not go back to the original.
+   You should never see the original's ID. Instead you should
+   auto-fork and thus get a new ID. Sharing the new ID it is now your decision.
+   This is great but it means it will require database+code using sha1's to
+   figure out which old traffic-light the new dojo was forked from.
+   New dojo will not be tied to old dojo until new dojo is published back
+   onto cyber-katas
+   
+o) old dojos that have had their language name changed cannot be forked.
+   Need to fix this.
+   Or at least detect it and either
+      not publish them on cyber-katas.org
+      or figure out what the new name is and patch
+   Patching should really be done on the old-new conversion.
+   This is because it will (I think) affect the sha1 identity.
+   
+o) must be careful not to expose the ids of the original dojos
+   when viewing diffs on cyber-katas.org
+   Create a simple fake-id->id mapping table.
+
+o) if traffic-light's files' hashes match traffic-light 1 for
+   others dojo then those other dojos were forked from this
+   traffic-light. Could simply offer a count of this on dashboard/diff
+   Or simpler, a mark which can reveal information about the forks.
+   if traffic-light's files' hashes match other traffic-lights for
+   this dojo then reverts have occured.
+
+o) open cyber-katas.org
+   
+
 ------------------------------------------------------
 I'd like an automated process that moves dojos that have
 a minimum number of traffic lights and are at least N days

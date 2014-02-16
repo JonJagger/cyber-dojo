@@ -85,17 +85,53 @@ var cyberDojo = (function(cd, $) {
 	  modal: true,
 	  buttons: {
 		fork: function() {
-		  var url = '/forker/fork/' + id + '?' +
-		            'avatar=' + avatarName + '&' +
-					'tag=' + tag;
-		  window.open(url);
-		  $(this).remove();
+		  $.getJSON('/forker/fork', {
+			id: id,
+			avatar: avatarName,
+			tag: tag
+		  }, function(fork) {
+			// important not to do window.open(url) directly from here
+			// as it will open in a new window and not a new tab ***
+			forkOutcomeDialog(fork);
+		  });		  
+          $(this).remove();
 		},
 		'cancel': function() {
 		  $(this).remove();
 		}
 	  }
 	});
+	
+	var forkOutcomeDialog = function(fork) {
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1.5em;'>" +
+	        "your forked dojo's id is" +
+			"<div class='align-center'>" +
+              "<span class='kata_id_input'>" +
+			  "&nbsp;" +
+			  fork.id.substring(0,6) +
+			  "&nbsp;" +
+			  "</span>" +
+			"</div>" +
+		  "</div>" +
+		"</div>";
+	  var outcome = $('<div>').html(html).dialog({
+		title: cd.dialogTitle(''),
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			// *** whereas here it will open in a new tab
+			var url = '/dojo/index/' + fork.id;
+			window.open(url);
+			$(this).remove();
+		  }
+		}
+	  });
+	  outcome.dialog('open'); 	  
+	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 

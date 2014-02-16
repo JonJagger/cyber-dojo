@@ -7,14 +7,11 @@ class ForkerControllerTest < IntegrationTest
     id = checked_save_id
 
     get 'dojo/start_json', {
+      :format => :json,            
       :id => id
     }
     avatar_name = json['avatar_name']    
-        
-    post '/kata/edit', {
-      :id => id,
-      :avatar => avatar_name
-    }
+    assert_not_nil avatar_name
     
     post 'kata/run_tests', {
       :id => id,
@@ -30,21 +27,16 @@ class ForkerControllerTest < IntegrationTest
       }      
     }
     
-    get "diff/show", {
-      :id => id,
-      :avatar => avatar_name,
-      :from_tag => 0,
-      :to_tag => 1
-    }
-    
     get "forker/fork", {
+      :format => :json,      
       :id => id,
       :avatar => avatar_name,
       :tag => 1
     }
-
-    assert_match @response.redirect_url, /^#{url_for :controller => 'dojo', :action => 'index'}/
-    @response.redirect_url =~ /id=(.+)/ or fail "Unexpected #{@response.redirect_url}"    
+    assert_not_nil json['id']    
+    assert_equal 10, json['id'].length
+    assert_not_equal id, json['id']
+    assert Kata.exists?(root_dir, json['id'])    
   end
   
 end
