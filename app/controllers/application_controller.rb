@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
       :id => Uuid.new.to_s,
       :browser => browser,
       :language => language.name,
-      :exercise => params['exercise'],
+      :exercise => params['exercise'], # used only for display
       :unit_test_framework => language.unit_test_framework,
       :tab_size => language.tab_size
     }

@@ -53,7 +53,7 @@ class StubDiskFile
   end
   
   def directory?(dir)
-    @write_log[dir] != nil
+    @write_log[dir] != nil || @read_repo[dir] != nil
   end
   
   def exists?(dir, filename = "")

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk_file'
 
-class LanguageJSONTests < ActionController::TestCase
+class LanguageTests < ActionController::TestCase
   
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new  
@@ -14,6 +14,21 @@ class LanguageJSONTests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
+  test "exists? is false when language folder does not exist" do
+    assert !Language.exists?(root_dir, 'xxxxx')
+  end
+
+  test "exists? is true when language folder exists" do
+    @stub_file.read=({
+      :dir => @language.dir,
+      :filename => 'manifest.json',
+      :content => ""
+    })
+    assert Language.exists?(root_dir, @language.name)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
+  
   test "name is as set in ctor" do
     assert_equal 'Ruby', @language.name
   end

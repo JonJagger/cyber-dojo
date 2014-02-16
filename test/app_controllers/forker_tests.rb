@@ -1,9 +1,20 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require File.dirname(__FILE__) + '/../app_models/stub_disk_file'
 require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
 
-  test "fork" do
+  def setup
+    super
+    Thread.current[:file] = @stub_file = nil
+  end
+  
+  def teardown
+    Thread.current[:file] = @stub_file = nil
+    super
+  end
+
+  test "when fork works new dojo's id is returned" do
     id = checked_save_id
 
     get 'dojo/start_json', {
@@ -33,10 +44,89 @@ class ForkerControllerTest < IntegrationTest
       :avatar => avatar_name,
       :tag => 1
     }
-    assert_not_nil json['id']    
+    assert_not_nil json, "assert_not_nil json"
+    assert_equal true, json['forked'], json.inspect
+    assert_not_nil json['id'], json.inspect    
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
     assert Kata.exists?(root_dir, json['id'])    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "if ID is bad then fork fails and reason is given as ID" do
+    get "forker/fork", {
+      :format => :json,      
+      :id => 'helloworld',
+      :avatar => 'hippo',
+      :tag => 1
+    }
+    assert_not_nil json, "assert_not_nil json"
+    assert_equal false, json['forked'], json.inspect
+    assert_equal 'id', json['reason'], json.inspect 
+    assert_nil json['id'], "json['id']==nil"
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "if language folder no longer exists the fork fails and reason is given as language" do
+    Thread.current[:file] = @stub_file = StubDiskFile.new  
+    id = '1234512345'
+    kata = Kata.new(root_dir, id)
+    @stub_file.read=({
+      :dir => kata.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :language => 'xxxxx'
+      }.inspect
+    })
+
+    get "forker/fork", {
+      :format => :json,      
+      :id => id,
+      :avatar => 'hippo',
+      :tag => 1
+    }
+    
+    assert_not_nil json, "assert_not_nil json"
+    assert_equal false, json['forked'], json.inspect
+    assert_equal 'language', json['reason'], json.inspect   
+    assert_nil json['id'], "json['id']==nil"    
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "if avatar not started the fork fails and reason is given as avatar" do
+    Thread.current[:file] = @stub_file = StubDiskFile.new  
+    id = '1234512345'
+    language_name = 'Ruby-installed-and-working'
+    kata = Kata.new(root_dir, id)
+    @stub_file.read=({
+      :dir => kata.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :language => language_name
+      }.inspect
+    })
+    language = Language.new(root_dir, language_name)
+    @stub_file.read=({
+      :dir => language.dir,
+      :filename => 'instructions',
+      :content => "dummy"
+    })    
+
+    get "forker/fork", {
+      :format => :json,      
+      :id => id,
+      :avatar => 'hippo',
+      :tag => 1
+    }
+    
+    assert_not_nil json, "assert_not_nil json"
+    assert_equal false, json['forked'], json.inspect
+    assert_equal 'avatar', json['reason'], json.inspect   
+    assert_nil json['id'], "json['id']==nil"
+    
   end
   
 end
