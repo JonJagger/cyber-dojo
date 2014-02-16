@@ -1,87 +1,88 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-revert and fork javascript is virtually identical.
+REVERT
+  Hashes of the files, together with filenames, could be used
+  to determine if a traffic-light is reverted.
+  ...
+  Store the hashes in increments.rb ?
+  Yes. Do this as part of .rb -> .json file refactoring towards
+  read-only server
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-can i18n yml files be split?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add tool tips to diff-dialog
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename zips folder to downloads folder
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename css files,
-  eg forker->forker_dialog
-  eg reverter->reverter_dialog
-  eg diff->diff_dialog
-  don't forget to update application.css.scss
+DIFF-DIALOG
+  Add its own tool-tips
+  ...
+  if you press < > and the next diff has no actual diff
+  then repeat (automatically) the < > until you get an actual diff?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
-  I can add a download button
+  Rename zips folder to downloads folder
+  Figure out how to have download tests and gz file is rm'd on server
+  Install download button
   Later I can add a publish button which exports the dojo to cyber-katas.org
-  dashboard on read-only server won't need heartbeat
-  dashboard on read-only server won't need age (use creation date instead)
+  Dashboard on read-only server won't need heartbeat
+  Dashboard on read-only server won't need age (use creation date instead)
   ...
-  dont refresh dashboard when refresh goes from off->on
+  Dont refresh dashboard when refresh goes from on->off?
+  ...
   Maybe show ticks on top row to indicate where columns are
   Or perhaps try subtle alternate "vertical-stripe" shading on rows.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-create a download_controller allowing URL of
-  cyber-dojo.com/download/1234ADEF
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD HELP
-  put in content for dashboard help-dialog. At least mention being
-     able to press any traffic-light to get a diff.  
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-exception_controller_test.rb needs some assertions!
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-hitting escape key on setup page should be a cancel
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-perhaps disable resume/review buttons until dojo is 30 seconds old?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-should clicking avatar image on [test] page open dashboard? or home?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-i18n on dialog buttons
-  cancel: new-file,rename-file,delete-file
-  close: diff-review, revert, fork
-  fork: fork
-  revert: revert
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-when Approval txt file is auto opened after pressing [test]
-it does not honour the line-numbers state.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-use smaller font for ok/cancel buttons on dialogs?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-hashes of the files, together with filenames, could be used
-to determine if a traffic-light is reverted.
-Store the hashes in increments.rb ?
+  ...
+  Nicer help dialog content (same format as on test page)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   on dashboard  |60s|columns
+  on dashboard  age
   for diff-dialog
   for fork-dialog
   for revert-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I18N  
   Need to be i18n'd on the setup page.
+  ...
+  On dialog buttons
+    cancel: new-file,rename-file,delete-file
+    close: diff-review, revert, fork
+    fork: fork
+    revert: revert
+  ...  
+  Lots more.
+  Have promises for Russian and Ukranian.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   filenames: add * marker if files have changed since last [test] ?
+  ...
+  If [test] pressed and nothing has changed since last traffic-light
+  pop up a dialog? Saying nothing different since last time.
+  ...
+  Should clicking avatar image on [test] page open dashboard? or home?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  if you press < > and the next diff has no actual diff
-  then repeat (atuomatically) the < > until you get an actual diff?
+SETUP
+  Hitting escape key on setup page should be a cancel
+  ...
+  Use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-chip away at help tool-tips.
+HOME
+  Perhaps disable resume/review buttons until dojo is 30 seconds old?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-chip away at internationalisation. Have promises for Russian and Ukranian.
+REFACTORING
+  Revert and fork javascript is virtually identical.
+  ...
+  Can i18n yml files be split?
+  ...
+  Exception_controller_test.rb needs some assertions!
+  ...
+  Rename css files,
+    eg forker->forker_dialog
+    eg reverter->reverter_dialog
+    eg diff->diff_dialog
+    don't forget to update application.css.scss
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+APPROVAL
+  When Approval txt file is auto opened after pressing [test]
+  it does not honour the line-numbers state.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   add ghosting when traffic-light is hovered over.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Enable the test button only when files are different to previous
-submission? Problem with this is on starting the tests are
-automatically run, so when that completes the test button will
-be disabled.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SETUP
-  use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIALOGS
   change .close() calls to .remove()
@@ -91,66 +92,60 @@ HTML
   s/revert/reverter/ ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 READONLY PRACTICE VIEW WITH VOTING
-Start to think about opening up the done katas so people
-can see them and vote on them. Online database here...
-https://sodadb.com/
+  Start to think about opening up the done katas so people
+  can see them and vote on them.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ANIMATION
-keeping on the same file and showing its content in a rapid
-sequence of updates would be a nice feature?
+  keeping on the same file and showing its content in a rapid
+  sequence of updates would be a nice feature?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RESUME/FORK? FROM RENAMED LANGUAGE
-http://localhost:3000/kata/edit/11870BBD9F?avatar=elephant
-This will not resume.
-   lib/DiskFile.rb:27:in `read'
-   lib/DiskFile.rb:27:in `read'
-   app/models/language.rb:58:in `manifest'
-   app/models/language.rb:48:in `tab_size'
-   app/models/language.rb:44:in `tab'
-   app/controllers/kata_controller.rb:11:in `edit'
-The reason is its trying to load
-/Users/jonjagger/Desktop/Repos/cyberdojo/languages/Java-ApprovalTests/manifest.rb
-But the name of the language has changed from
-Java-ApprovalTests
-to
-Java-Approval
-I think this is overly brittle. There is no reason I can see for
-an existing practice to have a dependency on the *name* of
-language fileset it was created from.
-I thought that files named in the manifest linked. Perhaps this is
-an old practice session and the files were not linked for it.
-If they are linked and you attempt to delete the original what happens?
-The linking is irrelevant. The name of the folder is a string in the manifest.
-models/kata.rb
-64  def language
-65    Language.new(@root_dir, manifest[:language])
-66  end
-so it's getting the language name from the kata's manifest
-This is the manifest from the kata. Not the animal.
-I think a better option  may be to create a "dummy" animal and each
-animal simply gets a copy of the language files as it's starting files.
-Would that affect the ability to clone from a given position?
+  http://localhost:3000/kata/edit/11870BBD9F?avatar=elephant
+  This will not resume.
+     lib/DiskFile.rb:27:in `read'
+     lib/DiskFile.rb:27:in `read'
+     app/models/language.rb:58:in `manifest'
+     app/models/language.rb:48:in `tab_size'
+     app/models/language.rb:44:in `tab'
+     app/controllers/kata_controller.rb:11:in `edit'
+  The reason is its trying to load
+  /Users/jonjagger/Desktop/Repos/cyberdojo/languages/Java-ApprovalTests/manifest.rb
+  But the name of the language has changed from
+  Java-ApprovalTests
+  to
+  Java-Approval
+  This is overly brittle. There is no reason I can see for
+  an existing practice to have a dependency on the *name* of
+  language fileset it was created from.
+  I thought that files named in the manifest linked. Perhaps this is
+  an old practice session and the files were not linked for it.
+  If they are linked and you attempt to delete the original what happens?
+  The linking is irrelevant. The name of the folder is a string in the manifest.
+  models/kata.rb
+  64  def language
+  65    Language.new(@root_dir, manifest[:language])
+  66  end
+  so it's getting the language name from the kata's manifest
+  This is the manifest from the kata. Not the animal.
+  I think a better option  may be to create a "dummy" animal and each
+  animal simply gets a copy of the language files as it's starting files.
+  Would that affect the ability to clone from a given position?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-line-numbers - dynamically change width from <99 to 100+
+LINE-NUMBERS
+  Dynamically change width from <99 to 100+
+  Make the left padding on the line-numbers (on test page)
+  a bit thinner. Only if its >99 lines long use extra padding.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+FORWARDS-BACKWARDS
+  on diff page alt-f and alt-b move forwards and backwards (cycle)
+  through only the diff'd files.
+  What do I bind to?
+  Or did James mean to cycle through edited files in the test page?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on diff page alt-f and alt-b move forwards and backwards (cycle)
-through only the diff'd files.
-What do I bind to?
-Or did James mean to cycle through edited files in the test page?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-https://github.com/gdunn/cyberdojo
-Add UnitTest++ C/C++
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Also add James Grenning's CppTest for C/C++
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Make the left padding on the line-numbers (on test page)
-a bit thinner. Only if its >99 lines long use extra padding.
+NEW-LANGUAGES
+  https://github.com/gdunn/cyberdojo
+  Add UnitTest++ C/C++
+  Also add James Grenning's CppTest for C/C++
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 feedback from Derek Graham.
 o) devs seem very reluctant to change the names of the untitled. files
@@ -158,29 +153,10 @@ o) devs seem very reluctant to change the names of the untitled. files
 At the moment the instructions come from exercises/ and
 everything else comes from languages/ via manifest.rb
 This means if I want to create a special exercise with
-:highlight_filenames I have to do it as an exercise.
-That's nuts. How to solve this? Whacky idea...
-Have a null-object entry for language and put everything
-you want into a custom exercise which includes the language.
+:highlight_filenames I have to do it as an exercise :-}
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on the dashboard-page
-o) add (?) button dialog content (use text in readme.txt)
-o) perhaps reduce the amount of time that has to pass between traffic-lights
-   (from any animal) before the columns are collapsed into one ...
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on the diff-page
-o) add (?) button dialog content (use text in readme.txt)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-get the error/404/500 pages working so that they appear when there is a fault.
-I tried this and got it to work by adding a config file setting to make fault
-handling be done by routes.rb and then adding a match for 404 and 500 which
-forwarded to an error_controller. This worked but it lost all the images
-(in the other pages). Is the problem here that rails 3 puts public images in
-a different folder than before?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 ------------------------------------------------------------
@@ -197,20 +173,7 @@ app/controllers
   application_controller.set_locale
   locales_controller.change
   
-//----------------------------------
-After this maybe the test cycle will be fast enough to install
-o) C++ GTest
-o) C++ CATCH
-o) scala
-//----------------------------------
-What external resources do I use? Which could be seamed and mocked to speed up testing?
-o) any system() call or backtick call
-   mkdir -p
-   uuid
-   cd
-   cyber-dojo.sh with all its variations!?
-   kill
-//----------------------------------
+-------------------------------------------------------------
 Thinking about how I could reduce the number of clicks to get started...
 Suppose there were 4 rooms, each of a different colour.
 Then players would not need to type in an ID. The room could have an ID
