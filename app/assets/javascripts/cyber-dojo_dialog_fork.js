@@ -88,10 +88,14 @@ var cyberDojo = (function(cd, $) {
 			id: id,
 			avatar: avatarName,
 			tag: tag
-		  }, function(fork) {
-			// important not to do window.open(url) directly from here
-			// as it will open in a new window and not a new tab ***
-			forkOutcomeDialog(fork);
+		  }, function(data) {
+			if (data.forked) {
+			  // important not to do window.open(url) directly from here
+			  // as it will open in a new window and not a new tab ***
+			  forkSucceededDialog(data);
+			} else {
+			  forkFailedDialog(data);
+			}
 		  });		  
           $(this).remove();
 		},
@@ -101,7 +105,7 @@ var cyberDojo = (function(cd, $) {
 	  }
 	});
 	
-	var forkOutcomeDialog = function(fork) {
+	var forkSucceededDialog = function(fork) {
 	  var html = "" +
 	    "<div class='dialog'>" +
 		  "<div class='panel' style='font-size:1.5em;'>" +
@@ -115,7 +119,7 @@ var cyberDojo = (function(cd, $) {
 			"</div>" +
 		  "</div>" +
 		"</div>";
-	  var outcome = $('<div>').html(html).dialog({
+	  var succeeded = $('<div>').html(html).dialog({
 		title: cd.dialogTitle(''),
 		autoOpen: false,
 		modal: true,
@@ -129,7 +133,43 @@ var cyberDojo = (function(cd, $) {
 		  }
 		}
 	  });
-	  outcome.dialog('open'); 	  
+	  succeeded.dialog('open'); 	  
+	};
+	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+	var forkFailedDialog = function(data) {
+	  var diagnostic = " an unknown failure occurred";
+	  if (data.reason === 'id') {
+		diagnostic = "the practice session no longer exists";
+	  } else if (data.reason === 'language') {
+		diagnostic = "the language " + data['language'] + " no longer exists";
+	  } else if (data.reason === 'avatar') {
+		diagnostic = "there is no " + avatarName +
+		             " in the practice session";
+	  } else  if (data.reason === 'tag') {
+		diagnostic = avatarName +
+		            " doesn't have traffic-light[" + tag + "]" +
+		            " in the practice session";
+	  }
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1em;'>" +
+	        "On the originating server " + diagnostic + "."
+		  "</div>" +
+		"</div>";
+	  var failed = $('<div>').html(html).dialog({
+		title: cd.dialogTitle('could not fork'),
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			$(this).remove();
+		  }
+		}
+	  });
+	  failed.dialog('open'); 	  	  
 	};
 	
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

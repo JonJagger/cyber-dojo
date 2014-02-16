@@ -54,7 +54,7 @@ class ForkerControllerTest < IntegrationTest
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "if ID is bad then fork fails and reason is given as ID" do
+  test "if id is bad then fork fails and reason is given as id" do
     get "forker/fork", {
       :format => :json,      
       :id => 'helloworld',
@@ -72,12 +72,13 @@ class ForkerControllerTest < IntegrationTest
   test "if language folder no longer exists the fork fails and reason is given as language" do
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
+    dead_language = 'xxxxx'
     kata = Kata.new(root_dir, id)
     @stub_file.read=({
       :dir => kata.dir,
       :filename => 'manifest.rb',
       :content => {
-        :language => 'xxxxx'
+        :language => dead_language
       }.inspect
     })
 
@@ -90,7 +91,8 @@ class ForkerControllerTest < IntegrationTest
     
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
-    assert_equal 'language', json['reason'], json.inspect   
+    assert_equal 'language', json['reason'], json.inspect
+    assert_equal dead_language, json['language'], json.inspect
     assert_nil json['id'], "json['id']==nil"    
   end
 
@@ -126,7 +128,6 @@ class ForkerControllerTest < IntegrationTest
     assert_equal false, json['forked'], json.inspect
     assert_equal 'avatar', json['reason'], json.inspect   
     assert_nil json['id'], "json['id']==nil"
-    
   end
   
 end
