@@ -2,15 +2,19 @@
 .row
 {
   text-align: center;
-  padding: 0.4em;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
 }
 
 $text-color: darken($lighter-color, 10%);
 
 #cyber-dojo
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   color: $text-color;
-  @include font-size-largest();
+  font-size: 4.2em;
+  margin-bottom: 0em;
+  padding-bottom: 0em;
 }
 
 a:link, a:visited
@@ -18,14 +22,20 @@ a:link, a:visited
   color: $text-color;
 }
 
-#a_place_to_practice, #custom_message
+#a_place_to_practice
+{
+  font-size: 1em;
+  color: $text-color;
+}
+
+#custom_message
 {
   color: $text-color;
   @include font-size-small();
 }
-
 #setup
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: lighten($red, 10%);
   @include gradient-lighten($red, 20%, 10%, 5%);
   color: $text-color;
@@ -34,6 +44,7 @@ a:link, a:visited
   
 .kata_id_input
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: lighten($green, 20%);
   @include gradient-lighten($green, 30%, 25%, 20%);    
   color: $darker-color;
@@ -43,6 +54,7 @@ a:link, a:visited
 
 #start_button, #resume_button, #review_button
 {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   color: $darker-color;
   @include font-size-large();
 }
@@ -53,16 +65,16 @@ a:link, a:visited
   @include font-size-tiny();  
 }
 
-#enter_the_practice_id, #and
+#enter_the_practice_id
 {
   color: lighten($green, 30%);
   @include font-size-tiny();  
 }
 
-#cant_find_id
+#and
 {
-  text-align: center;
-  @include font-size-large();
+  color: $text_color;
+  @include font-size-tiny();  
 }
 
 #full_dojo_text, #empty_dojo_text
@@ -83,12 +95,8 @@ a:link, a:visited
   @include font-size-tiny();
 }
 
-#thank_you
-{
-  @include font-size-medium();
-}
-
 [data-cursor=pointer]
 {
   cursor: pointer;
 }
+

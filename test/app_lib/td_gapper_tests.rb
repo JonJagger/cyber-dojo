@@ -15,10 +15,10 @@ class TdGapperTests < ActionController::TestCase
     # 5 : 2:31:40 - 2:32:00    
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
-    assert_equal 0, gapper.number({ :time => [year,month,day,hour,30,19] })
-    assert_equal 1, gapper.number({ :time => [year,month,day,hour,30,22] })
-    assert_equal 2, gapper.number({ :time => [year,month,day,hour,30,58] })
-    assert_equal 3, gapper.number({ :time => [year,month,day,hour,31,11] })    
+    assert_equal 0, gapper.number({ 'time' => [year,month,day,hour,30,19] })
+    assert_equal 1, gapper.number({ 'time' => [year,month,day,hour,30,22] })
+    assert_equal 2, gapper.number({ 'time' => [year,month,day,hour,30,58] })
+    assert_equal 3, gapper.number({ 'time' => [year,month,day,hour,31,11] })    
   end
 
   test "stats" do
@@ -39,25 +39,25 @@ class TdGapperTests < ActionController::TestCase
 
     all_incs =
     {
-      :hippo => [ t1={ :time => [year,month,day,hour,30,21] }, # 1
-                  t2={ :time => [year,month,day,hour,31,33] }, # 4
-                ],
-      :lion =>  [ t3={ :time => [year,month,day,hour,30,25] }, # 1
-                  t4={ :time => [year,month,day,hour,31,37] }, # 4
-                  t5={ :time => [year,month,day,hour,31,39] }, # 4
-                ],
-      :panda => [ t6={ :time => [year,month,day,hour,31,42] }, # 5
-                ]
+      'hippo' => [ t1={ 'time' => [year,month,day,hour,30,21] }, # 1
+                   t2={ 'time' => [year,month,day,hour,31,33] }, # 4
+                 ],
+      'lion' =>  [ t3={ 'time' => [year,month,day,hour,30,25] }, # 1
+                   t4={ 'time' => [year,month,day,hour,31,37] }, # 4
+                   t5={ 'time' => [year,month,day,hour,31,39] }, # 4
+                 ],
+      'panda' => [ t6={ 'time' => [year,month,day,hour,31,42] }, # 5
+                 ]
     }
     expected = 
     {
-      :avatars =>
+      'avatars' =>
       {
-        :hippo => { 1 => [ t1 ], 4 => [ t2    ] },
-        :lion  => { 1 => [ t3 ], 4 => [ t4,t5 ] },
-        :panda => {                             5 => [ t6 ] }
+        'hippo' => { 1 => [ t1 ], 4 => [ t2    ] },
+        'lion'  => { 1 => [ t3 ], 4 => [ t4,t5 ] },
+        'panda' => {                             5 => [ t6 ] }
       },
-      :td_nos => [0,1,4,5,7]
+      'td_nos' => [0,1,4,5,7]
     }    
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
@@ -72,26 +72,26 @@ class TdGapperTests < ActionController::TestCase
     seconds_per_td = 20
     all_incs =
     {
-      :hippo => [ t1={ :time => [year,month,day,hour,30,21] }, # 1
-                  t2={ :time => [year,month,day,hour,31,33] }, # 4
-                ],
-      :lion =>  [ t3={ :time => [year,month,day,hour,30,25] }, # 1
-                  t4={ :time => [year,month,day,hour,31,37] }, # 4
-                  t5={ :time => [year,month,day,hour,31,39] }, # 4
-                ],
-      :panda => [ t6={ :time => [year,month,day,hour,31,42] }, # 5
-                ]
+      'hippo' => [ t1={ 'time' => [year,month,day,hour,30,21] }, # 1
+                   t2={ 'time' => [year,month,day,hour,31,33] }, # 4
+                 ],
+      'lion' =>  [ t3={ 'time' => [year,month,day,hour,30,25] }, # 1
+                   t4={ 'time' => [year,month,day,hour,31,37] }, # 4
+                   t5={ 'time' => [year,month,day,hour,31,39] }, # 4
+                 ],
+      'panda' => [ t6={ 'time' => [year,month,day,hour,31,42] }, # 5
+                 ]
     }
     expected = 
     {
-      :hippo => { 0 => [ ], 1 => [ t1 ], 4 => [ t2    ], 5 => [    ], 7 => [ ] },
-      :lion  => { 0 => [ ], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [    ], 7 => [ ] },
-      :panda => { 0 => [ ], 1 => [    ], 4 => [       ], 5 => [ t6 ], 7 => [ ] }
+      'hippo' => { 0 => [ ], 1 => [ t1 ], 4 => [ t2    ], 5 => [    ], 7 => [ ] },
+      'lion'  => { 0 => [ ], 1 => [ t3 ], 4 => [ t4,t5 ], 5 => [    ], 7 => [ ] },
+      'panda' => { 0 => [ ], 1 => [    ], 4 => [       ], 5 => [ t6 ], 7 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     s = gapper.stats(all_incs, now)
     gapper.vertical_bleed(s)
-    assert_equal expected, s[:avatars]
+    assert_equal expected, s['avatars']
   end
 
   test "collapsed table" do
@@ -104,9 +104,9 @@ class TdGapperTests < ActionController::TestCase
     td_nos = [0,1,4,5]
     expected =
     {
-      0 => [ :dont_collapse, 0 ],
-      1 => [ :dont_collapse, 2 ], 
-      4 => [ :dont_collapse, 0 ]
+      0 => [ 'dont_collapse', 0 ],
+      1 => [ 'dont_collapse', 2 ], 
+      4 => [ 'dont_collapse', 0 ]
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
@@ -116,9 +116,9 @@ class TdGapperTests < ActionController::TestCase
     td_nos = [0,1,3,95]
     expected =
     {
-      0 => [ :dont_collapse, 0 ],
-      1 => [ :dont_collapse, 1 ],
-      3 => [ :collapse, 91 ] 
+      0 => [ 'dont_collapse', 0 ],
+      1 => [ 'dont_collapse', 1 ],
+      3 => [ 'collapse', 91 ] 
     }
     actual = gapper.collapsed_table(td_nos)
     assert_equal expected, actual
@@ -145,21 +145,21 @@ class TdGapperTests < ActionController::TestCase
     seconds_per_td = 20
     all_incs =
     {
-      :hippo => [ t1={ :time => [year,month,day,hour,30,21] }, # 1
-                  t2={ :time => [year,month,day,hour,31,33] }, # 4
-                ],
-      :lion =>  [ t3={ :time => [year,month,day,hour,30,25] }, # 1
-                  t4={ :time => [year,month,day,hour,31,37] }, # 4
-                  t5={ :time => [year,month,day,hour,31,39] }, # 4
-                ],
-      :panda => [ t6={ :time => [year,month,day,hour,31,42] }, # 5
-                ]
+      'hippo' => [ t1={ 'time' => [year,month,day,hour,30,21] }, # 1
+                   t2={ 'time' => [year,month,day,hour,31,33] }, # 4
+                 ],
+      'lion' =>  [ t3={ 'time' => [year,month,day,hour,30,25] }, # 1
+                   t4={ 'time' => [year,month,day,hour,31,37] }, # 4
+                   t5={ 'time' => [year,month,day,hour,31,39] }, # 4
+                 ],
+      'panda' => [ t6={ 'time' => [year,month,day,hour,31,42] }, # 5
+                 ]
     }
     expected = 
     {
-      :hippo => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
-      :lion  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
-      :panda => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
+      'hippo' => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { 'collapsed' => 4321 }, 4327 => [ ] },
+      'lion'  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { 'collapsed' => 4321 }, 4327 => [ ] },
+      'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { 'collapsed' => 4321 }, 4327 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     actual = gapper.fully_gapped(all_incs, now)

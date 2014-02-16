@@ -1,16 +1,16 @@
 
 module CodeOutputParser
 
-  #  :red   - this means the tests ran but at least one failed
-  #  :amber - this means the tests could not be run (eg syntax error)
-  #  :green - this means the tests ran and all passed
+  #  'red'   - this means the tests ran but at least one failed
+  #  'amber' - this means the tests could not be run (eg syntax error)
+  #  'green' - this means the tests ran and all passed
   
   def self.parse(unit_test_framework, output)
     inc = { }
     if Regexp.new("Terminated by the cyber-dojo server after").match(output)
-      inc[:colour] = :amber
+      inc['colour'] = 'amber'
     else
-      inc[:colour] = eval "parse_#{unit_test_framework}(output)"
+      inc['colour'] = (eval "parse_#{unit_test_framework}(output)").to_s
     end
     inc
   end
@@ -108,9 +108,12 @@ module CodeOutputParser
     if match = green_pattern.match(output)
       :green
     else
+	  amber_pattern0 = Regexp.new('groovyc: command not found')
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')      
-      if amber_pattern1.match(output) || amber_pattern2.match(output)
+      if amber_pattern0.match(output) ||
+		 amber_pattern1.match(output) ||
+		 amber_pattern2.match(output)
         :amber
       else
         :red
@@ -127,9 +130,12 @@ module CodeOutputParser
         :red 
       end
     else
+      amber_pattern0 = Regexp.new('groovyc: command not found')    	
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
-      if amber_pattern1.match(output) || amber_pattern2.match(output)
+      if amber_pattern0.match(output) ||
+		 amber_pattern1.match(output) ||
+		 amber_pattern2.match(output)		 
 		:amber
 	  else
         :red

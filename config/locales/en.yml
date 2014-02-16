@@ -1,19 +1,5 @@
 en:
-  views:
-    months:
-      January: "January"
-      February: "February"
-      March: "March"
-      April: April"
-      May: "May"
-      June: "June"
-      July: "July"
-      August: "August"
-      September: "September"
-      October: "October"
-      November: "November"
-      December: "December"
-      
+  views:      
     avatars:
       alligator: "alligator"
       buffalo: "buffalo"
@@ -33,7 +19,7 @@ en:
       zebra: "zebra"
       
     labels:
-      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practising</a> programming together"
+      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practising</a> programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer<br>enter the id"
       and: "and"
@@ -42,14 +28,17 @@ en:
                       <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
                       <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>.
                       Thank you."      
-      your_animal_is: "Your animal is the"
+      your_animal_is: "your animal is the"
       revert: "revert"
-      click_to_revert: "Click<br/>&larr;to<br/>revert<br/>"
-      sorry_the_practice_is_full_cannot_start_a_new_animal: "Sorry, the practice is full.<br/>Cannot start a new animal."
-      click_to_resume: "Click an animal to resume it."
-      seconds_per_column: "seconds per column"
-      columns_maximum: "columns maximum"
+      click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
+      sorry_full_up: "sorry, full up!"
+      click_to_resume: "click the animal"
+      columns: "|60s| columns"
       auto_refresh: "auto refresh"
+      days: "days"
+      hours: "hours"
+      minutes: "minutes"
+      seconds: "seconds"      
       red: "red"
       amber: "amber"
       green: "green"
@@ -92,7 +81,8 @@ en:
       what_did_you_dislike: "What did you dislike?"
       what_worked: "What worked?"
       what_didnt: "What didn't?"
-      what_features_should_i_add_remove: "What features should I add/remove?"
+      what_should_i_add: "What should I add?"
+      what_should_i_remove: "What should I remove?"
       please_tell_me_about_your_use_of_cyberdojo_and_ill_add_it_to_the: "Please tell me about your use of cyber-dojo and I'll add it to the"
       blog_page: "blog page"
       
@@ -135,4 +125,3 @@ en:
       open_the_previous_file: "opens the previous file"
       
     dashboard:
-      age_dhms_tip: "days:hours:minutes:seconds"

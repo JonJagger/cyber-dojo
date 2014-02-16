@@ -16,8 +16,11 @@ class DojoController < ApplicationController
   
   def valid_id
     kata = Kata.find(root_dir, id)
+    exists = params[:id].length >= 6 && !kata.nil?
+    started = exists ? kata.avatars.length : 0
     render :json => {
-      :exists => params[:id].length >= 6 && !kata.nil?
+      :exists => exists,
+      :started => started
     }
   end
   
@@ -44,7 +47,7 @@ class DojoController < ApplicationController
   end
   
   def full_dialog_html()
-    @all_avatar_names = Avatar.names    
+    @all_avatar_names = Avatar.names   
     bind('/app/views/dojo/full_dialog.html.erb')
   end
 
@@ -67,26 +70,6 @@ class DojoController < ApplicationController
     @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatar.names
     bind('/app/views/dojo/resume_dialog.html.erb')
-  end
-  
-  #------------------------------------------------
-  
-  def review_json
-    exists = Kata.exists?(root_dir, id)    
-    render :json => {
-      :exists => exists,
-      :review_dialog_html => (exists ? review_dialog_html : '')          
-    }
-  end
-  
-  def review_dialog_html
-    bind('/app/views/dojo/review_dialog.html.erb')
-  end
-
-  #------------------------------------------------
-  
-  def render_error
-    render "error/#{params[:n]}"
   end
 
 end

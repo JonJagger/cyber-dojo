@@ -6,9 +6,8 @@ class TrafficLightTests < ActionView::TestCase
   include TrafficLightHelper    
   
   test "tool tip" do
-    light = { :number => 2, :time => [2012,5,1,23,20,45], :colour => :red }
-    assert_equal "Review hippo's<br>1 &harr; 2 diff<br>(2012 May 1, 23:20:45)",
-      tool_tip('hippo', light)
+    light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
+    assert_equal "review hippo's<br>1 &harr; 2 diff", tool_tip('hippo', light)
   end
   
   test "traffic_light_image" do
@@ -27,7 +26,7 @@ class TrafficLightTests < ActionView::TestCase
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar_name = 'hippo'
-    light = { :number => 23 }
+    light = { 'number' => 23 }
     max_lights = 45
     expected = "" +
       "<div" +
@@ -38,7 +37,7 @@ class TrafficLightTests < ActionView::TestCase
       " data-now-tag='23'" +
       " data-max-tag='45'>" +
       "<div class='tooltip'>" +
-      "Show hippo's<br>current code" +
+      "review hippo's<br>current code" +
       "</div>" +
       "<img src='/images/avatars/hippo.jpg'" +
           " alt='hippo'" +
@@ -49,31 +48,20 @@ class TrafficLightTests < ActionView::TestCase
     assert_equal expected, actual
   end
   
-  # light[:colour] used to be light[:outcome]
-    
   test "diff_traffic_light" do
-    diff_traffic_light_func({:colour => 'red'})
-    diff_traffic_light_func({:outcome => 'red'})
+    # light[:colour] used to be light[:outcome]
+    diff_traffic_light_func({'colour' => 'red'})
+    diff_traffic_light_func({'outcome' => 'red'})
   end
     
-  test "unlinked_traffic_light with defaults" do
-    unlinked_traffic_light_with_defaults_func({ :colour => 'red' })
-    unlinked_traffic_light_with_defaults_func({ :outcome => 'red' })    
-  end
-  
-  test "unlinked_traffic_light with explicit width and height" do
-    unlinked_traffic_light_with_explicit_width_and_height_func({ :colour => 'red' })
-    unlinked_traffic_light_with_explicit_width_and_height_func({ :outcome => 'red' })
-  end
-  
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def diff_traffic_light_func(light)
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar_name = 'hippo'
-    light[:number] = 23
-    light[:time] = [2012,5,1,23,20,45] 
+    light['number'] = 23
+    light['time'] = [2012,5,1,23,20,45] 
     max_lights = 45
     expected = "" +
       "<div" +
@@ -84,7 +72,7 @@ class TrafficLightTests < ActionView::TestCase
       " data-now-tag='23'" +
       " data-max-tag='45'>" +
       "<div class='tooltip'>" +      
-      "Review hippo's<br>22 &harr; 23 diff<br>(2012 May 1, 23:20:45)" +
+      "review hippo's<br>22 &harr; 23 diff" +
       "</div>" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +

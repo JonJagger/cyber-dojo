@@ -16,12 +16,6 @@ class SetupController < ApplicationController
     @id = id
     @title = 'Setup'
   end
-  
-  def cancel
-    redirect_to :controller => 'dojo',
-                :action => :index,
-                :id => params[:id]
-  end
 
   def save
     info = gather_info
@@ -36,10 +30,10 @@ class SetupController < ApplicationController
                 ", " + language.name +
                 ", " + exercise.name +
                 ", " + make_time(Time.now).to_s)
-    
-    redirect_to :controller => 'dojo',
-                :action => :index, 
-                :id => info[:id]
+
+    render :json => {
+      :id => info[:id]
+    }    
   end  
 
 end

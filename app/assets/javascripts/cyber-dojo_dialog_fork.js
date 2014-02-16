@@ -79,20 +79,19 @@ var cyberDojo = (function(cd, $) {
     var forkDiv = makeForkerDiv();
 	
 	var forkDialog = forkDiv.dialog({	  
-	  title: cd.dialogTitle(title),
+	  title: cd.dialogTitle(title + '?'),
 	  autoOpen: false,
 	  width: 1100,
 	  modal: true,
 	  buttons: {
-		ok: function() {
-		  cd.postTo('/forker/fork', {
-			id: id,
-			avatar: avatarName,
-			tag: tag
-		  }, '_blank');		  
+		fork: function() {
+		  var url = '/forker/fork/' + id + '?' +
+		            'avatar=' + avatarName + '&' +
+					'tag=' + tag;
+		  window.open(url);
 		  $(this).remove();
 		},
-		cancel: function() {
+		'cancel': function() {
 		  $(this).remove();
 		}
 	  }

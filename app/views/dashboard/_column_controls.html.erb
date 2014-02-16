@@ -2,67 +2,55 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-
-  var autoRefreshEnabled = "<%= @auto_refresh %>" === "true";
-  var autoRefreshButton = $('#auto_refresh');    
-  var autoRefreshLabel = $('#auto_refresh_label');
-
-  var setRefreshButtonText = function() {
-    if (autoRefreshEnabled) {
-      autoRefreshLabel.text('== off');
-    } else {
-      autoRefreshLabel.text('== on');
-    }    
+  
+  var id = function() {
+    return "<%= @kata.id %>";
   };
   
-  var parse = function(name, current_value) {
-    var input = $('#' + name);
-    var newValue = parseInt(input.val());
-    if (isNaN(newValue)) {
-      input.attr('value', current_value);
-    }
-    return input.val();
-  };
-
-  var params = function() {
-    return {
-      id: "<%= @kata.id %>",
-      seconds_per_column: parse('seconds_per_column', <%= @seconds_per_column %>),
-      maximum_columns: parse('maximum_columns', <%= @maximum_columns %>),
-      auto_refresh: autoRefreshEnabled
-    };
+  var minuteColumns = function() {
+    return $('#minute_columns_checkbox').is(':checked');    
   };
   
-  var refreshDashboard = function() {
-    if (!autoRefreshEnabled) {
+  var autoRefresh = function() {
+    return $('#auto_refresh_checkbox').is(':checked');
+  };
+  
+  var dashboardHeartbeat = function() {
+    if (autoRefresh()) {
       $.ajax({
-        url: "<%= url_for :action => 'heartbeat' %>",
-        data: params(),
+        url: '/dashboard/heartbeat',
+        data: {
+          id: id(),
+          minute_columns: minuteColumns(),
+          auto_refresh: autoRefresh()
+        },
         dataType: "script"
       });
     }
   };
 
-  var seconds = 1000;
-    
-  setInterval(refreshDashboard, 10*seconds);
-  
-  $('#seconds_per_column,#maximum_columns').keyup(function(event) {
-    if (event.keyCode === $.ui.keyCode.ENTER) {
-      cd.postTo('/dashboard/show', params());
-    }
-  });
-  
-  autoRefreshButton.click(function() {
-    autoRefreshEnabled = !autoRefreshEnabled;
-    setRefreshButtonText();
-  });
-  
-  setRefreshButtonText();
+  var refreshDashboard = function() {
+    var url = '/dashboard/show/' + id() + '?' +
+              'minute_columns=' + minuteColumns() + '&' +
+              'auto_refresh=' + autoRefresh();
+    window.location = url;    
+  };
 
-  // The auto_refresh button is a toggle, it shows what will happen if
-  // you press it. That is, it displays the opposite of the current state
-  autoRefreshButton.click();
+  var seconds = 1000;    
+  setInterval(dashboardHeartbeat, 10*seconds);
+  
+  $('#minute_columns_checkbox')
+    .attr('checked', "<%= @minute_columns %>" === "true")
+    .click(function() {  
+      refreshDashboard();
+    });
+  
+  $('#auto_refresh_checkbox')
+    .attr('checked', "<%= @auto_refresh %>" === "true")
+    .click(function() {  
+      refreshDashboard();
+    });
+  
 });
 
 //--></script>
@@ -70,51 +58,30 @@ $(document).ready(function() {
 <table>
   <tr>
     <td class="align-right">
-      <input type="text"
-             id="seconds_per_column"
-             value="<%= @seconds_per_column %>"/>
-    </td>
-    <td class="align-left">
-      &thinsp;      
-      <span id="seconds_per_column_text">
-        <%= t("views.labels.seconds_per_column") %>
-      </span>
-    </td>
-  </tr>
-  
-  <tr>
-    <td class="align-right">
-      <input type="text" 
-             id="maximum_columns"
-             value="<%= @maximum_columns %>"/>
-    </td>
-    <td class="align-left">
-      &thinsp;
-      <span id="maximum_columns_text">
-        <%= t("views.labels.columns_maximum") %>
-      </span>
-    </td>
-  </tr>
-
-  <tr>
-    <td class="align-right">
-      <button type="button"
-              class="tipped"
-              id="auto_refresh">
-        refresh
+      <div class="tipped">
+        <%= raw t("views.labels.columns") %>
         <div class="tooltip">
-          Toggle the 10 second<br>
-          dashboard auto-refresh<br>
-          on/off
         </div>
-      </button>
+      </div>
     </td>
-    <td class="align-left">
-      &thinsp;
-      <span id="auto_refresh_label">
-        <%= t("views.labels.auto_refresh") %>
-      </span>
+    <td>
+      <input type="checkbox"
+             id="minute_columns_checkbox"/>
     </td>
   </tr>
-  
+  <tr>
+    <td class="align-right">
+      <div class="tipped">
+        <%= raw t('views.labels.auto_refresh') %>
+        <div class="tooltip">
+          toggles the 10 second<br>
+          auto-refresh on/off
+        </div>        
+      </div>
+    </td>
+    <td>
+      <input type="checkbox"
+             id="auto_refresh_checkbox"/>
+    </td>
+  </tr>  
 </table>

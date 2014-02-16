@@ -39,7 +39,7 @@ class ZombieShellTests < ActionController::TestCase
         assert_equal defunct_before, defunct_after, 'run_test(delta, avatar, visible_files)' 
         
         info = avatar.name + ', red'
-        assert_equal :red, avatar.traffic_lights.last[:colour], info + ', :red,' + output
+        assert_equal 'red', avatar.traffic_lights.last['colour'], info + ', red,' + output
         print 's'
       end
     end

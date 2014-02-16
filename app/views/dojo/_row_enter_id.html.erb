@@ -4,24 +4,29 @@
 $(document).ready(function() {
 
   var kata_id_input = $('#kata_id_input');
-  var buttons = $('#start_button,#resume_button,#review_button');
   
-  var enableDisableStartResumeReview = function() {
+  var enableIf = function(button, condition) {
+    if (condition) {
+      button.removeAttr('disabled');
+    } else {
+      button.attr('disabled', true);
+    }
+  };
+  
+  cd.enableDisableStartResumeReview = function() {
     var id = kata_id_input.val();
     $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
-      if (dojo.exists) {
-        buttons.removeAttr('disabled');
-      } else {
-        buttons.attr('disabled', true);
-      }
+      enableIf($('#start_button'), dojo.exists);
+      enableIf($('#resume_button'), dojo.started > 0);
+      enableIf($('#review_button'), dojo.started > 0);
     });    
   };
   
-  kata_id_input.keyup(function(event) {
-    enableDisableStartResumeReview();
+  kata_id_input.keyup(function() {
+    cd.enableDisableStartResumeReview();
   });
   
-  enableDisableStartResumeReview();
+  cd.enableDisableStartResumeReview();
 });
 
 //--></script>
@@ -36,7 +41,7 @@ $(document).ready(function() {
        size="8"
        value="<%= @id[0..5] %>">
   <div class="tooltip">
-    an id contains only the digits 0123456789<br>
+    an id contains only the digits 0123456789
     and letters ABCDEF, and is case insensitive
   </div>
 </input>

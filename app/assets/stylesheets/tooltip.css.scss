@@ -4,6 +4,8 @@
 }
 
 #tip_window {
+  display: inline-block;
+  text-align: center;  
   border: 1px solid $lighter-color;
   margin: 0.50em;
   padding: 0.50em;
@@ -11,7 +13,4 @@
   color: $lighter-color;
   font-size: 0.75em;
   @include rounded-corner(14px);
-  position: absolute;
-  bottom: 10;
-  left: 10;
 }

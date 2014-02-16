@@ -4,7 +4,9 @@
 $(document).ready(function() {
 
   $('#yin_yang_logo').click(function() {
-    cd.get('/dojo/index', { id: $(this).data('id') }, '_blank');
+    var id = $(this).data('id');
+    var url = '/dojo/index/' + id;
+    window.open(url);
   });
   
 });
@@ -19,7 +21,7 @@ $(document).ready(function() {
        height="48"
        width="48" />
   <div class="tooltip">
-    Open a new home page
+    opens a new<br>home page
   </div>
 </div>
 

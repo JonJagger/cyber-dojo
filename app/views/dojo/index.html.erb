@@ -11,47 +11,40 @@ $(document).ready(function() {
   
 <div style="font-size: 1.5em;">
 
-  <div class="row">
+  <div class="align-center">
       <%= home_page_logo() %>
       <span id="cyber-dojo">cyber-dojo</span>
-      <div id="a_place_to_practice">
-          <%= raw t("views.labels.a_place_to_practice") %>
-      </div>
       <div id="custom_message">
-        <%= render :partial => 'custom_message' %>      
+        <%= render :partial => 'custom_message' %>
       </div>
   </div>  
   
-  <div class="edgeless">
-    <div class="row">
-      <%= render :partial => 'setup_button' %>      
-    </div>
-  </div>
-  
-  <div class="edgeless">
-    <div class="row">
-      <%= render :partial => 'row_enter_id' %>
-    </div>
-    
-    <div class="row">
-      <%= render :partial => 'row_code' %>
-    </div>
-  </div>
-  
-  <div class="edgeless">
-    <div class="row">
-      <%= render :partial => 'row_donate' %>
-    </div>
-  </div>
-    
-  <div class="edgeless">
-    <div class="row">
-      <%= render :partial => 'row_buttons' %>
-    </div>
+  <div class="row">
+    <%= render :partial => 'setup_button' %>      
   </div>
 
-  <table class="align-center"><tr><td>
-      <%= render :partial => 'shared/tip_window' %>
-  </td></tr></table>
+  <div class="row">
+    <%= render :partial => 'row_enter_id' %>
+  </div>
+  
+  <div class="row">
+    <%= render :partial => 'row_code' %>
+  </div>
+
+  <div class="row">
+    <%= render :partial => 'row_donate' %>
+  </div>
+  
+  <div class="row">
+    <%= render :partial => 'row_buttons' %>
+  </div>
+
+  <div class="row" id="a_place_to_practice">
+      <%= raw t("views.labels.a_place_to_practice") %>
+  </div>
+
+  <div class="row">
+    <%= render :partial => 'shared/tip_window' %>
+  </div>
 
 </div>

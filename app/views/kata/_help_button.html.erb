@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   $('#help_button').click(function() {
-    var title = $(this).val();
+    var title = $(this).data('title');
     var ok = $(this).data('ok');
     $.get('/kata/help_dialog', { avatar_name: "<%= @avatar.name %>" }, function(html) {
       cd.dialog(html, title, ok).dialog('open');
@@ -16,13 +16,13 @@ $(document).ready(function() {
 //--></script>
 
 <button type="button"
+        data-title="?"
         data-ok="<%= t('views.buttons.ok') %>"
         id="help_button"
-        class="tipped"
-        value="?">
+        class="tipped">
   ?
   <div class="tooltip">
-    Show help
+    shows help
   </div>
 </button>
 

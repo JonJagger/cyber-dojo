@@ -1,7 +1,6 @@
 
 table { border-spacing: 0; }
 
-
 #cyber_dojo_page
 {
   margin: {
@@ -42,6 +41,8 @@ body
   }
   margin: none;
   padding: 0.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
 
   &.edgeless {
     padding: 0em;
@@ -167,9 +168,17 @@ div[class~="filename"], button[disabled]:hover
   color: $darker-color;
   display: table;
   margin: 0 auto;
-  
+  margin-left: 45px;
+  margin-right: 45px;
   a:link, a:visited {
     color: $lighter-color;  
+  }
+  
+  &.title
+  {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    position: relative;
+    left: -45px;
   }
 }
 
@@ -178,6 +187,7 @@ div[class~="filename"], button[disabled]:hover
 .started-avatar-name
 {
   font-weight: bold;
+  font-size: 70%;
   text-align: center;
 }
 
@@ -185,6 +195,7 @@ div[class~="filename"], button[disabled]:hover
 {
   color: Gray;
   font-weight: bold;
+  font-size: 70%;
   text-align: center;
 }
 

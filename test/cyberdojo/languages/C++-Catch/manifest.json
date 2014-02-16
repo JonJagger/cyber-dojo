@@ -1,0 +1,6 @@
+
+{
+  "visible_filenames": [ "untitled.cpp", "untitled.tests.cpp", "untitled.hpp", "makefile", "cyber-dojo.sh" ],
+  "support_filenames": [ "catch.hpp" ],  
+  "unit_test_framework": "catch"
+}

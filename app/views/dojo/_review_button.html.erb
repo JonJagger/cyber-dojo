@@ -5,7 +5,8 @@ $(document).ready(function() {
 
   $('#review_button').click(function() {
     var id = $('#kata_id_input').val();
-    cd.get('/dashboard/show', { id: id }, '_blank');  
+    var url = '/dashboard/show/' + id;
+    window.open(url)
   });
   
 });
@@ -18,7 +19,7 @@ $(document).ready(function() {
         id="review_button">
   <%= t("views.buttons.review") %>
   <div class="tooltip">
-     review all code
+     reviews all the avatars' code
   </div>
 </button>
 

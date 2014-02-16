@@ -13,12 +13,12 @@ var cyberDojo = (function(cd, $) {
       $(this).dialog('close');      
     };
     return $('<div>')
-      .html('<div class="dialog">' + html + '</div>')    
+      .html(html)
       .dialog({
+        title: cd.dialogTitle(title),
         autoOpen: false,
         width: $(html).data("width"),
         height: $(html).data("height"),
-        title: cd.dialogTitle(title),
         modal: true,
         buttons: i18nButtons
       });

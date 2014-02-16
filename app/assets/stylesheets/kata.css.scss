@@ -1,32 +1,42 @@
 
-#filename_list {
-  height: 18em;
-  overflow-y: auto;
-}
+#kata_page {
 
-#file_operations {
-  #new, #rename, #delete {
+  #filename_list {
+    height: 18em;
+    overflow-y: auto;
+  }
+  
+  #file_operations {
+    #new, #rename, #delete {
+      @include font-size-tiny();  
+    }
+  }
+  
+  #dashboard_button,
+  #diff_review_button,
+  #fork_button,
+  #line_numbers_button,
+  #revert_button,
+  #help_button {
     @include font-size-tiny();  
   }
-}
-
-#dashboard_button,
-#diff_review_button,
-#fork_button,
-#line_numbers_button,
-#revert_button,
-#help_button {
-  @include font-size-tiny();  
-}
-
-#help_button {
-  @include rounded-corner(14px);    
-}
-
-#test {
-  @include font-size-large();
-  padding: {
-    left: 0.2em;
-    right: 0.2em;
+  
+  #help_button {
+    @include rounded-corner(14px);    
+  }
+  
+  #test {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include font-size-large();
+    padding: {
+      left: 0.2em;
+      right: 0.2em;
+    }
+  }
+  
+  #traffic_lights {
+    width: 50em;
+    margin-top: 5px;
+    margin-left: 5px;
   }
 }

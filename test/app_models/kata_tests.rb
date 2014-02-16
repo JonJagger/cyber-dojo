@@ -209,8 +209,8 @@ class KataTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }      
     kata = Kata.create(root_dir, manifest)
     avatar_name = 'hippo'
@@ -239,8 +239,8 @@ class KataTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }    
     kata = Kata.create(root_dir, manifest)
     Avatar.create(kata, 'lion')
@@ -271,8 +271,8 @@ class KataTests < ActionController::TestCase
     language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => { }.inspect
+      :filename => 'manifest.json',
+      :content => JSON.unparse({ })
     }    
     kata = Kata.create(root_dir, manifest)
     created = [ ]

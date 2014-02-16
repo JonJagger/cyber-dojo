@@ -5,7 +5,7 @@ $(document).ready(function() {
   
   var title = "<%= t('views.buttons.diff_review') %>";
   var trafficLights = $('.diff-traffic-light');
-  cd.setupTrafficLightOpensDiffDialogHandlers(trafficLights, title);  
+  cd.setupTrafficLightOpensDiffDialogHandlers(trafficLights, title);
   cd.tipify($('.tipped'), $('#tip_window'));
 
 });
@@ -16,7 +16,7 @@ $(document).ready(function() {
   <table>
     <tr class="row">
       
-      <% max_lights = 35 %>                
+      <% max_lights = 40 %>                
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
 		  <%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>			

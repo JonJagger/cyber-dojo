@@ -2,15 +2,11 @@
 class DashboardController < ApplicationController
 
   def show
-    @kata = Kata.new(root_dir, id)    
-    @seconds_per_column = seconds_per_column
-    @maximum_columns = maximum_columns
-    @auto_refresh = flag(:auto_refresh, true)
+    gather
     @title = id[0..5] + ' dashboard'
-
-    # provide these if you want to open the diff-dialog
-    # for a specific avatar,was_tag,now_tag as the
-    # dashboard opens
+    # provide these if you want to open the diff-dialog for a
+    # specific [avatar,was_tag,now_tag] as the dashboard opens.
+    # See also app/controllers/diff_controller.rb
     if params['avatar'] && params['was_tag'] && params['now_tag']
       @id = id
       @avatar_name = params['avatar']
@@ -21,10 +17,7 @@ class DashboardController < ApplicationController
   end
 
   def heartbeat
-    @kata = Kata.new(root_dir, id)    
-    @seconds_per_column = seconds_per_column
-    @maximum_columns = maximum_columns
-    @auto_refresh = flag(:auto_refresh, true)
+    gather
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -34,7 +27,8 @@ class DashboardController < ApplicationController
     render :layout => false    
   end
   
-  # reinstate if anyone asks for this...
+  # left because will be used to xfer dojos to readonly 2nd server
+  # reinstate if anyone asks for this?
   def download
     # an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
     uuid = Uuid.new(id)
@@ -43,28 +37,38 @@ class DashboardController < ApplicationController
     cd_cmd = "cd #{root_dir}/katas"
     tar_cmd = "tar -zcf ../zips/#{id}.tar.gz #{inner}/#{outer}"
     system(cd_cmd + ";" + tar_cmd)
-    send_file "#{root_dir}/zips/#{id}.tar.gz", :type=>'application/zip'
+    zip_filename = "#{root_dir}/zips/#{id}.tar.gz"
+    send_file zip_filename
+    # would like to delete this zip file
+    # but download tests unzip them to verify
+    # unzipped zip is identical to original 
+    #rm_cmd = "rm #{zip_filename}"
+    #system(rm_cmd)
   end
 
 private
 
-  def seconds_per_column
-    positive(:seconds_per_column, 60)
+  def gather
+    @kata = Kata.new(root_dir, id)
+    @minute_columns = bool('minute_columns')
+    @auto_refresh = bool('auto_refresh')
+    @seconds_per_column = seconds_per_column    
   end
   
-  def maximum_columns
-    positive(:maximum_columns, 30)
-  end
-  
-  def positive(symbol, default)
-    value = params[symbol].to_i
-    value > 0 ? value : default    
-  end
- 
-  def flag(symbol, default)
-    tf = params[symbol]
+  def bool(attribute)
+    tf = params[attribute]
     return tf if tf == "true"
     return tf if tf == "false"
-    return default
+    return "true"
   end
+
+  def seconds_per_column
+    flag = params['minute_columns']
+    if !flag || flag == "true"
+      return 60
+    else
+      return 60*60*24*365*1000 
+    end
+  end
+ 
 end

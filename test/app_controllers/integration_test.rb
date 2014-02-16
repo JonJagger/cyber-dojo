@@ -15,9 +15,7 @@ class IntegrationTest  < ActionController::IntegrationTest
       :language => 'Ruby-installed-and-working',
       :exercise => 'Yahtzee'
     }
-    assert_match @response.redirect_url, /^#{url_for :action => 'index', :controller => 'dojo'}/
-    @response.redirect_url =~ /id=(.+)/ or fail "Unexpected #{@response.redirect_url}"
-    $1
+    json['id']
   end
     
 end

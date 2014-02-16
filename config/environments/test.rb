@@ -34,4 +34,9 @@ CyberDojo::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  
+  config.exceptions_app = lambda do |env|
+    ExceptionController.action(:render_error).call(env)
+  end  
+
 end

@@ -1,60 +1,43 @@
 
-#dashboard-page {
-  #seconds_per_column_text,
-  #seconds_per_column,
-  #maximum_columns_text,
-  #maximum_columns,
-  #auto_refresh_label,
-  #auto_refresh,
-  #tips,
-  #download {
-    @include font-size-tiny();
-  }
-}
-
-#dashboard-page {
-  #seconds_per_column,
-  #maximum_columns {
-    background: $lighter-color;
-    @include gradient-darken($lighter-color, 20%, 10%, 5%);     
-    color: $darker-color;
-    width: 4.5em; 
-    text-align: center;
-  }
-}
-
-#age {
-  @include font-size-small();
-  text-align: center;
-  margin: 0.2em; 
-}
-
 $ellipsis: "\2026";
 
-#traffic_lights {
-  img {
-    padding: {
-      left: 1px;
-      right: 1px;
+#dashboard_page {
+
+  #help_button {
+    @include font-size-tiny();  
+    @include rounded-corner(14px);    
+  }
+
+  #traffic_lights {
+    width: 65em;
+    overflow-x: auto;
+    height: 45em;
+    overflow-y: auto;
+    
+    img {
+      padding: {
+        left: 1px;
+        right: 1px;
+      }
     }
-  }
-  .row td {
-    padding: 0em;
-  }
-  .row.odd td {
-    background: lighten($darker-color, 5%);
-  }
-  .omission {
-    font-size: 0.7em;
-    color: White;
-  }
-  .omission:after {
-    content: $ellipsis;
-  }
-  .gap {
-    font-size: 0.5em;
-    color: Gray;
-    text-align: center;
+    .row td {
+      padding: 0em;
+    }
+    .row.odd td {
+      background: lighten($darker-color, 5%);
+    }
+    .omission {
+      font-size: 0.7em;
+      color: White;
+    }
+    .omission:after {
+      content: $ellipsis;
+    }
+    .gap {
+      font-size: 0.5em;
+      color: Gray;
+      text-align: center;
+    }
   }
 }
 

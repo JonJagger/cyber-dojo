@@ -12,8 +12,8 @@ class DiskFile
       File.open(pathed_filename, 'w') do |fd|
         fd.write(object)
       end
-      # .sh files (eg cyber-dojo.sh) need execute permissions
-      File.chmod(0755, pathed_filename) if pathed_filename =~ /\.sh/    
+      execute_permission = 0755
+      File.chmod(execute_permission, pathed_filename) if pathed_filename =~ /\.sh/    
     else
       # The newline is to silence git's "\ No newline at end of file"
       File.open(pathed_filename, 'w') { |file| file.write(object.inspect + "\n") }
