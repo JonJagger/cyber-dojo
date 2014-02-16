@@ -2,19 +2,21 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 revert and fork javascript is virtually identical.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on test page show all traffic-lights at the bottom but
-auto-scroll like I now do on the dashboard.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 can i18n yml files be split?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add tool tips to diff-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename zips folder to downloads folder
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename css files,
   eg forker->forker_dialog
   eg reverter->reverter_dialog
   eg diff->diff_dialog
+  don't forget to update application.css.scss
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
+  I can add a download button
+  Later I can add a publish button which exports the dojo to cyber-katas.org
   dashboard on read-only server won't need heartbeat
   dashboard on read-only server won't need age (use creation date instead)
   ...
@@ -53,7 +55,7 @@ to determine if a traffic-light is reverted.
 Store the hashes in increments.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
-  on dashboard - seconds-per-column and columns-maximum
+  on dashboard  |60s|columns
   for diff-dialog
   for fork-dialog
   for revert-dialog

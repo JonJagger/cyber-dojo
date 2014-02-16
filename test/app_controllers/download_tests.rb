@@ -5,7 +5,7 @@ class DownloadControllerTest < IntegrationTest
 
   test "downloaded zip of empty dojo with no animals yet unzips to same as original folder" do
     id = checked_save_id
-    post 'dashboard/download', {
+    post 'downloader/download', {
       :id => id
     }
     assert_response :success
@@ -44,7 +44,7 @@ class DownloadControllerTest < IntegrationTest
         'cyber-dojo.sh' => -4545645678
       }      
     }
-    post 'dashboard/download', {
+    post 'downloader/download', {
       :id => id
     }
     assert_response :success
@@ -86,7 +86,7 @@ class DownloadControllerTest < IntegrationTest
       }
     end
     
-    post 'dashboard/download', {
+    post 'downloader/download', {
       :id => id
     }
     assert_response :success

@@ -3,9 +3,9 @@
 
 $(document).ready(function() {
 
-  $('#download').click(function() {
+  $('#download_button').click(function() {
     var id = "<%= @kata.id %>";
-    window.location = '/dashboard/download/' + id;
+    window.location = '/downloader/download/' + id;
   });
 
 });
@@ -14,10 +14,10 @@ $(document).ready(function() {
 
 <button type="button"
         class="tipped"
-        id="download">
-  <%= t("views.buttons.download") %> .zip
+        id="download_button">
+  <%= t("views.buttons.download") %>
   <div class="tooltip">
-     Download a zip<br>
+     download a zip<br>
      of all animals<br>
      git repos
   </div>
