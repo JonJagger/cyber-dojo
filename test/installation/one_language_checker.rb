@@ -24,7 +24,8 @@ class OneLanguageChecker < ActionController::TestCase
     
     check_required_keys_exist
     check_no_unknown_keys_exist
-    check_no_duplicates_in_visible_filenames
+    check_no_duplicate_visible_filenames
+    check_no_duplicate_support_filenames
     check_cyberdojo_sh_exists
     check_cyberdojo_sh_has_execute_permission
     check_named_files_exist(:visible_filenames)      
@@ -79,7 +80,7 @@ class OneLanguageChecker < ActionController::TestCase
     end    
   end
   
-  def check_no_duplicates_in_visible_filenames
+  def check_no_duplicate_visible_filenames
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
@@ -89,6 +90,17 @@ class OneLanguageChecker < ActionController::TestCase
       end
     end
   end
+  
+  def check_no_duplicate_support_filenames
+    support_filenames.each do |filename|
+      if support_filenames.count(filename) > 1
+        message =
+          alert +
+          "  #{@manifest_filename}'s 'support_filenames' contains #{filename} more than once"
+        assert false, message
+      end
+    end
+  end  
   
   def check_named_files_exist(symbol)
     (@manifest[symbol] || [ ]).each do |filename|
@@ -103,11 +115,12 @@ class OneLanguageChecker < ActionController::TestCase
   end
   
   def check_cyberdojo_sh_exists
-    if visible_filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
+    filenames = visible_filenames + support_filenames
+    if filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
       message =
         alert + 
         "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
-        "  'visible_filenames'"
+        "  'visible_filenames' or 'support_filenames'"
       assert false, message
     end
   end
@@ -123,6 +136,10 @@ class OneLanguageChecker < ActionController::TestCase
 
   def visible_filenames
     @manifest['visible_filenames'] || [ ]
+  end
+  
+  def support_filenames
+    @manifest['support_filenames'] || [ ]
   end
     
   def alert

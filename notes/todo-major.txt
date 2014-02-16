@@ -14,15 +14,9 @@ o) write a script to convert a dojo in old-rb format into new-json format
    This means checking for language exist/rename/delete information
    will need to come from a .json file and not by looking at the actual server.
    If language has been renamed the information would be useful for the
-      fork feature on cyber-dojo
+      fork feature on cyber-dojo. It can intercept and patch the language name
    If the language has been deleted the information would also be useful
-      since it means I can not attempt the fork.
-   Question - does this detection happen on cyber-katas too?
-   Fork *request* happens on cyber-katas, targetting cyber-dojo (say)
-   Forker controller needs to alter json returned.
-      :succeeded (bool)
-      :diagnostic (text (eg deleted))
-      :id
+      since it means I cannot attempt the fork.
    If language is patched - will cyber-katas still be able to
    detect the fork from the sha1's? It needs to be able to.
    So sha1's must be solely from file contents. Sounds ok.
@@ -31,8 +25,10 @@ o) add buttons on cyber-dojo to publish a dojo to cyber-kata with tags
    on the sending server check format of dojo
    if its old-rb format then convert it *in-place* (on sending server) using script above
    send it in new-json format (tar.gz) to cyber-katas
-o) do not offer fork on cyber-katas
-   but do offer link back to original dojo (if URL is not localhost)
+   
+o) can offer fork on cyber-katas if I know URL of originating dojo
+   can can make with $.getJSON('forker/fork'...) to it
+   
 o) this means we could get a cycle
   I publish a dojo
   Someone else links back to my dojo and adds some more traffic-lights

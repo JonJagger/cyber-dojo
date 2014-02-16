@@ -359,11 +359,11 @@ manifest.json Parameters
 "visible_filenames": [ ... ]
   The names of the text files that will be visible in the browser's editor
   at startup. Each of these files must exist in the directory.
-  The filename cyber-dojo.sh must be present as a "visible_filename"
-  This is because cyber-dojo.sh is the name of the
-  shell file assumed by the ruby code (in the server) to be the start point
-  for running the tests. You can write any actions in the cyber-dojo.sh file
-  but clearly any programs it tries to run must be installed on the server.
+  The filename cyber-dojo.sh must be present as a "visible_filenames" entry
+  or as a "support_filenames" entry. This is because cyber-dojo.sh is the name
+  of the shell file assumed by the ruby code (in the server) to be the start
+  point for running the tests. You can write any actions in the cyber-dojo.sh
+  file but clearly any programs it tries to run must be installed on the server.
   For example, if cyber-dojo.sh runs gcc to compile C files then gcc has 
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
@@ -385,7 +385,7 @@ manifest.json Parameters
   in the file app/assets/stylesheets/cyber-dojo.css.scss
   
 "support_filenames": [ ... ]
-  The names of necessary supporting non-text files. Each of these files must
+  The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
   These are symlinked from the /languages folder to each animals /katas folder.
   Despite the name "support_filenames" you can symlink a folder if required
