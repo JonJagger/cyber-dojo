@@ -4,10 +4,9 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {    
-    // This is virtually identical to
-	// cyber-dojo_dialog_revert.js
-	// except for the command executed when ok is pressed
-	// and refresh().
+    // There is a lot commonality in the fork and revert dialogs.
+	// And both could be improved by showing the red/green
+	// lines added/removed (like on the diff)
 	
   	var minTag = 1;
   
