@@ -28,7 +28,8 @@ class OneLanguageChecker < ActionController::TestCase
     check_no_duplicate_support_filenames
     check_cyberdojo_sh_exists
     check_cyberdojo_sh_has_execute_permission
-    check_named_files_exist(:visible_filenames)      
+    check_named_files_exist(:visible_filenames)
+    check_unit_test_framework_has_parse_method
       
     rag = red_amber_green(get_filename_42)
     if rag == ['red','amber','green']
@@ -134,6 +135,22 @@ class OneLanguageChecker < ActionController::TestCase
     end
   end
 
+  def check_unit_test_framework_has_parse_method
+    has_parse_method = true
+    begin
+      CodeOutputParser::parse(unit_test_framework, "xx")    
+    rescue
+      has_parse_method = false
+    end
+    if !has_parse_method
+      message =
+        alert +
+          "app/lib/CodeOutputParser.rb does not contain a " +
+          "parse_#{unit_test_framework}(output) method"
+        assert false, message
+    end
+  end  
+
   def visible_filenames
     @manifest['visible_filenames'] || [ ]
   end
@@ -142,6 +159,10 @@ class OneLanguageChecker < ActionController::TestCase
     @manifest['support_filenames'] || [ ]
   end
     
+  def unit_test_framework
+    @manifest['unit_test_framework'] || [ ]
+  end
+  
   def alert
     "\n>>>>>>>#{@language}<<<<<<<\n"
   end
