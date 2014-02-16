@@ -130,5 +130,59 @@ class ForkerControllerTest < IntegrationTest
     assert_nil json['id'], "json['id']==nil"
   end
   
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "if tag is bad fork fails and reason is given as tag" do
+    bad_tag_test('xx')
+    bad_tag_test('-14')
+    bad_tag_test('-1')
+    bad_tag_test('0')
+    bad_tag_test('2')
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def bad_tag_test(bad_tag)
+    Thread.current[:file] = @stub_file = StubDiskFile.new  
+    id = '1234512345'
+    language_name = 'Ruby-installed-and-working'
+    kata = Kata.new(root_dir, id)
+    @stub_file.read=({
+      :dir => kata.dir,
+      :filename => 'manifest.rb',
+      :content => {
+        :language => language_name
+      }.inspect
+    })
+    language = Language.new(root_dir, language_name)
+    @stub_file.read=({
+      :dir => language.dir,
+      :filename => 'instructions',
+      :content => "dummy"
+    })    
+    avatar_name = 'hippo'
+    avatar = Avatar.new(kata, avatar_name)
+    @stub_file.read=({
+      :dir => avatar.dir,
+      :filename => 'increments.rb',
+      :content => [{
+        "colour"=>"red",
+        "time"=>[2014, 2, 15, 8, 54, 6],
+        "number"=>1}].inspect
+    })    
+    
+    get "forker/fork", {
+      :format => :json,      
+      :id => id,
+      :avatar => 'hippo',
+      :tag => bad_tag
+    }
+    
+    assert_not_nil json, "assert_not_nil json"
+    assert_equal false, json['forked'], json.inspect
+    assert_equal 'tag', json['reason'], json.inspect   
+    assert_nil json['id'], "json['id']==nil"    
+  end
+  
 end
 
