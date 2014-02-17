@@ -10,6 +10,9 @@ class SandboxTests < ActionController::TestCase
     Thread.current[:file] = @stub_file = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
+    root_dir = '/roach'
+    @cd = Cyber_Dojo.new(root_dir)
+    @id = '45ED23A2F1'
   end
 
   def teardown
@@ -18,15 +21,10 @@ class SandboxTests < ActionController::TestCase
     Thread.current[:task] = nil
   end
 
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    id = '45ED23A2F1'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'hippo')
     sandbox = avatar.sandbox
     assert !sandbox.dir.end_with?(@stub_file.separator),
@@ -36,8 +34,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir does not have doubled separator" do
-    id = '45ED23A2F1'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'hippo')
     sandbox = avatar.sandbox    
     doubled_separator = @stub_file.separator * 2
@@ -47,8 +44,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir is not created until file is saved" do
-    id = '45ED23A2F1'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'hippo')
     sandbox = avatar.sandbox    
     assert !@stub_file.exists?(sandbox.dir),
@@ -58,8 +54,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "save(visible_files) creates dir and saves files" do
-    id = '45ED23A2F1'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'hippo')
     sandbox = avatar.sandbox    
     visible_files = {
@@ -78,8 +73,7 @@ class SandboxTests < ActionController::TestCase
   
   test "after run_tests() a file called output is saved in sandbox " +
          "and an output file is not inserted into the visible_files argument" do
-    id = '145ED23A2F'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     animal_name = 'frog'
     avatar = Avatar.new(kata, animal_name)
     sandbox = avatar.sandbox    
@@ -91,7 +85,7 @@ class SandboxTests < ActionController::TestCase
     # run-tests also pulls
     # avatar.kata.language.support_filenames
     language_name = 'C'
-    language = Language.new(root_dir, language_name)    
+    language = @cd.language(language_name)    
     @stub_file.read=({
       :dir => kata.dir,
       :filename => 'manifest.rb',
@@ -123,8 +117,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "test():delta[:changed] files are saved" do
-    id = '145ED23A2F'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'frog')
     sandbox = avatar.sandbox    
     visible_files = {
@@ -153,8 +146,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "test():delta[:unchanged] files are not saved" do
-    id = '145ED23A2F'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'frog')
     sandbox = avatar.sandbox    
     visible_files = {
@@ -178,8 +170,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
   test "test():delta[:new] files are saved and git added" do
-    id = '145ED23A2F'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'frog')
     sandbox = avatar.sandbox    
     visible_files = {
@@ -205,8 +196,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       
   test "test():delta[:deleted] files are git rm'd" do
-    id = '145ED23A2F'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[@id]
     avatar = Avatar.new(kata, 'frog')
     sandbox = avatar.sandbox    
     visible_files = {

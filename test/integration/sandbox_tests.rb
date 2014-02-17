@@ -2,20 +2,11 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SandboxTests < ActionController::TestCase
 
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "defect-driven: filename containing space is not accidentally retained" do
     # retained means stays in the sandbox
     kata = make_kata('Java-JUnit', exercise='Dummy')
     avatar_name = Avatar::names.shuffle[0]
     avatar = Avatar.create(kata, avatar_name)
-    
-    id = kata.id
-    kata = Kata.new(root_dir, id)
     sandbox = avatar.sandbox
     
     visible_files = {
@@ -67,7 +58,7 @@ class SandboxTests < ActionController::TestCase
     avatar.save_run_tests(visible_files, traffic_light)
     # if the file whose name contained a space has been retained
     # this will be :amber instead of :green
-    assert_equal 'green', traffic_light['colour'], id + ":" + avatar_name
+    assert_equal 'green', traffic_light['colour'], kata.id + ":" + avatar_name
     
   end
   

@@ -36,8 +36,7 @@ class ForkerControllerTest < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }      
-    }
-    
+    }    
     get "forker/fork", {
       :format => :json,      
       :id => id,
@@ -49,7 +48,7 @@ class ForkerControllerTest < IntegrationTest
     assert_not_nil json['id'], json.inspect    
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
-    assert Kata.new(root_dir, json['id']).exists?
+    assert @cd[json['id']].exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,27 +71,24 @@ class ForkerControllerTest < IntegrationTest
   test "if language folder no longer exists the fork fails and reason is given as language" do
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
-    dead_language = 'xxxxx'
-    kata = Kata.new(root_dir, id)
+    language = @cd.language('xxxx')
     @stub_file.read=({
-      :dir => kata.dir,
+      :dir => @cd[id].dir,
       :filename => 'manifest.rb',
       :content => {
-        :language => dead_language
+        :language => language.name
       }.inspect
     })
-
     get "forker/fork", {
       :format => :json,      
       :id => id,
       :avatar => 'hippo',
       :tag => 1
-    }
-    
+    }    
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'language', json['reason'], json.inspect
-    assert_equal dead_language, json['language'], json.inspect
+    assert_equal language.name, json['language'], json.inspect
     assert_nil json['id'], "json['id']==nil"    
   end
 
@@ -101,29 +97,25 @@ class ForkerControllerTest < IntegrationTest
   test "if avatar not started the fork fails and reason is given as avatar" do
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
-    language_name = 'Ruby-installed-and-working'
-    kata = Kata.new(root_dir, id)
+    language = @cd.language('Ruby-installed-and-working')
     @stub_file.read=({
-      :dir => kata.dir,
+      :dir => @cd[id].dir,
       :filename => 'manifest.rb',
       :content => {
-        :language => language_name
+        :language => language.name
       }.inspect
     })
-    language = Language.new(root_dir, language_name)
     @stub_file.read=({
       :dir => language.dir,
       :filename => 'instructions',
       :content => "dummy"
     })    
-
     get "forker/fork", {
       :format => :json,      
       :id => id,
       :avatar => 'hippo',
       :tag => 1
-    }
-    
+    }    
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'avatar', json['reason'], json.inspect   
@@ -146,7 +138,7 @@ class ForkerControllerTest < IntegrationTest
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
     language_name = 'Ruby-installed-and-working'
-    kata = Kata.new(root_dir, id)
+    kata = @cd[id]
     @stub_file.read=({
       :dir => kata.dir,
       :filename => 'manifest.rb',
@@ -154,7 +146,7 @@ class ForkerControllerTest < IntegrationTest
         :language => language_name
       }.inspect
     })
-    language = Language.new(root_dir, language_name)
+    language = @cd.language(language_name)
     @stub_file.read=({
       :dir => language.dir,
       :filename => 'instructions',
@@ -169,15 +161,13 @@ class ForkerControllerTest < IntegrationTest
         "colour"=>"red",
         "time"=>[2014, 2, 15, 8, 54, 6],
         "number"=>1}].inspect
-    })    
-    
+    })        
     get "forker/fork", {
       :format => :json,      
       :id => id,
       :avatar => 'hippo',
       :tag => bad_tag
-    }
-    
+    }    
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'tag', json['reason'], json.inspect   

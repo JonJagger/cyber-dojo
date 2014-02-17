@@ -43,18 +43,23 @@ class ActiveSupport::TestCase
   
   include MakeTimeHelper
   
+  def setup
+    root_dir = (@root_dir || Rails.root + 'test/cyberdojo').to_s
+    system("rm -rf #{root_dir}/katas/*")
+    @cd = Cyber_Dojo.new(root_dir)
+  end
+  
   def dojo_id
     @dojo_id || Uuid.new.to_s
   end
   
   def make_info(language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
     @dojo_id = id
-    language = Language.new(root_dir, language_name)
-    exercise = Exercise.new(root_dir, exercise_name)
+    language = @cd.language(language_name)
+    exercise = @cd.exercise(exercise_name)
     { 
       :created => now,
       :id => id,
-      :browser => 'Firefox',
       :language => language.name,
       :exercise => exercise.name,
       :visible_files => language.visible_files,
@@ -66,9 +71,8 @@ class ActiveSupport::TestCase
   def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
     info = make_info(language_name, exercise_name, id)
     info[:visible_files]['output'] = ''
-    info[:visible_files]['instructions'] = 'practice'
-    
-    Cyber_Dojo.new(root_dir).create_kata(info)
+    info[:visible_files]['instructions'] = 'practice'    
+    @cd.create_kata(info)
   end
     
   def run_test(delta, avatar, visible_files, timeout = 15)
@@ -78,13 +82,5 @@ class ActiveSupport::TestCase
     avatar.save_run_tests(visible_files, traffic_light)    
     output
   end
-  
-  def root_dir
-    (@root_dir || Rails.root + 'test/cyberdojo').to_s
-  end
-  
-  def setup
-    system("rm -rf #{root_dir}/katas/*")
-  end
-  
+    
 end

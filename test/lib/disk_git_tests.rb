@@ -4,8 +4,9 @@ require 'DiskGit'
 class DiskGitTests < ActionController::TestCase
 
   def setup
+    super
     id = '12345ABCDE'
-    @dir = root_dir + '/' + id
+    @dir = @cd.dir + '/' + id
     system("mkdir #{@dir}")
     @git = DiskGit.new
   end

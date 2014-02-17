@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AvatarTests < ActionController::TestCase
 
   def setup
+    super
     @kata = make_kata('Ruby-installed-and-working')
   end
 

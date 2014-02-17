@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 class IntegrationTest  < ActionController::IntegrationTest
 
   def setup
+    super
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'    
   end
   

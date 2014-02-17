@@ -4,9 +4,10 @@ require 'DiskFile'
 class DiskFileTests < ActionController::TestCase
 
   def setup
+    super
     id = 'ABCDE12345'
     @disk_file = DiskFile.new
-    @dir = root_dir + @disk_file.separator + id
+    @dir = @cd.dir + @disk_file.separator + id
     system("mkdir #{@dir}")
   end
   
