@@ -28,19 +28,12 @@ SimpleCov.root '/Users/jonjagger/Desktop/Repos/cyberdojo'
 
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-
 require 'make_time_helper'
 require 'Uuid'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
 
-  # Add more helper methods to be used by all tests here...
-  
+  fixtures :all
   include MakeTimeHelper
   
   def setup
@@ -48,14 +41,10 @@ class ActiveSupport::TestCase
     @dojo = Dojo.new(root_dir)
   end
   
-  def dojo_id
-    @dojo_id || Uuid.new.to_s
-  end
-  
-  def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
+  def make_kata(language_name, exercise_name = 'Yahtzee')
     # does not rely on setup having been called.
     # See installation/one_language_checker::language_test()
-    info = make_info(language_name, exercise_name, id)
+    info = make_info(language_name, exercise_name)
     info[:visible_files]['output'] = ''
     info[:visible_files]['instructions'] = 'practice'    
     dojo.create_kata(info)
@@ -79,15 +68,13 @@ private
     Dojo.new(root_dir)
   end
   
-  def make_info(language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
-    @dojo_id = id
+  def make_info(language_name, exercise_name)
     language = dojo.language(language_name)
-    exercise = dojo.exercise(exercise_name)
     { 
-      :created => now,
-      :id => id,
+      :created => now = make_time(Time.now),
+      :id => Uuid.new.to_s,
       :language => language.name,
-      :exercise => exercise.name,
+      :exercise => exercise_name,
       :visible_files => language.visible_files,
       :unit_test_framework => language.unit_test_framework,
       :tab_size => language.tab_size

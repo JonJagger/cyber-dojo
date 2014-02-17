@@ -196,7 +196,7 @@ private
   end
   
   def language_test(filename, replacement)
-    kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
+    kata = make_kata(@language, 'Yahtzee')
     avatar = Avatar.create(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]

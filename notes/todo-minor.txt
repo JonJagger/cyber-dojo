@@ -2,7 +2,7 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
    avatar = kata['hippo']
-   app_lib/Choose methods -> Cyber_Dojo methods
+   app_lib/Choose methods -> Dojo methods
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   help dialog top panel is slightly wider than panels below

@@ -24,8 +24,6 @@ class Avatar
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def initialize(kata, name)
-    # Call this to create an object representing an
-    # animal which has already started a kata
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
     @kata = kata
