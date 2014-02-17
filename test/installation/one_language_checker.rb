@@ -16,7 +16,7 @@ class OneLanguageChecker < ActionController::TestCase
         installed_but_not_working = [ ]
     )
     @language = language
-    @language_dir = root_dir + '/languages/' + language + "/"
+    @language_dir = @root_dir + '/languages/' + language + "/"
     
     @manifest_filename = @language_dir + 'manifest.json'    
     check_manifest_file_exists
@@ -48,6 +48,8 @@ class OneLanguageChecker < ActionController::TestCase
     took
   end
     
+private
+
   def check_manifest_file_exists    
     if !File.exists? @manifest_filename
       message =

@@ -44,7 +44,6 @@ class ActiveSupport::TestCase
   include MakeTimeHelper
   
   def setup
-    root_dir = (@root_dir || Rails.root + 'test/cyberdojo').to_s
     system("rm -rf #{root_dir}/katas/*")
     @dojo = Dojo.new(root_dir)
   end
@@ -53,10 +52,37 @@ class ActiveSupport::TestCase
     @dojo_id || Uuid.new.to_s
   end
   
+  def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
+    # does not rely on setup having been called.
+    # See installation/one_language_checker::language_test()
+    info = make_info(language_name, exercise_name, id)
+    info[:visible_files]['output'] = ''
+    info[:visible_files]['instructions'] = 'practice'    
+    dojo.create_kata(info)
+  end
+    
+  def run_test(delta, avatar, visible_files, timeout = 15)
+    output = avatar.sandbox.test(delta, visible_files, timeout)
+    language = avatar.kata.language
+    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
+    avatar.save_run_tests(visible_files, traffic_light)    
+    output
+  end
+
+private
+
+  def root_dir
+    (Rails.root + 'test/cyberdojo').to_s
+  end
+  
+  def dojo
+    Dojo.new(root_dir)
+  end
+  
   def make_info(language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
     @dojo_id = id
-    language = @dojo.language(language_name)
-    exercise = @dojo.exercise(exercise_name)
+    language = dojo.language(language_name)
+    exercise = dojo.exercise(exercise_name)
     { 
       :created => now,
       :id => id,
@@ -67,20 +93,5 @@ class ActiveSupport::TestCase
       :tab_size => language.tab_size
     }
   end
-  
-  def make_kata(language_name, exercise_name = 'Yahtzee', id = dojo_id)
-    info = make_info(language_name, exercise_name, id)
-    info[:visible_files]['output'] = ''
-    info[:visible_files]['instructions'] = 'practice'    
-    @dojo.create_kata(info)
-  end
-    
-  def run_test(delta, avatar, visible_files, timeout = 15)
-    output = avatar.sandbox.test(delta, visible_files, timeout)
-    language = avatar.kata.language
-    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, traffic_light)    
-    output
-  end
-    
+
 end
