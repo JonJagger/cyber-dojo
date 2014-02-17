@@ -3,10 +3,9 @@ require 'DiskFile'
 
 class Kata
   
-  #TODO: refactor this so first argument is cyberdojo object
-  def initialize(root_dir, id)
+  def initialize(dojo, id)
     @file = Thread.current[:file] || DiskFile.new
-    @root_dir = root_dir
+    @root_dir = dojo.dir
     @id = Uuid.new(id)
   end
   

@@ -15,7 +15,7 @@ class Cyber_Dojo
   end
   
   def [](id)
-    Kata.new(@dir,id)
+    Kata.new(self,id)
   end
   
   def language(name)
@@ -28,7 +28,7 @@ class Cyber_Dojo
 
   def create_kata(info)
     file = Thread.current[:file] || DiskFile.new
-    kata = Kata.new(dir, info[:id])
+    kata = self[info[:id]]
     file.write(kata.dir, 'manifest.rb', info)
     kata
   end
