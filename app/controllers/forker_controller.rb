@@ -21,7 +21,7 @@ class ForkerController < ApplicationController
       bad = true
     end
     
-    if !bad && !Avatar.exists?(kata, params['avatar'])
+    if !bad && !Avatar.new(kata, params['avatar']).exists?
       result[:forked] = false
       result[:reason] = "avatar"
       bad = true

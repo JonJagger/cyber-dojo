@@ -10,11 +10,6 @@ class Avatar
     avatar.setup
     avatar
   end
-
-  #def self.exists?(kata, name)
-  #  file = Thread.current[:file] || DiskFile.new
-  #  file.directory?(Avatar.new(kata,name).dir)    
-  #end
   
   def self.names
     # no two animals start with the same letter
