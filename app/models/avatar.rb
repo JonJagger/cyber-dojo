@@ -34,20 +34,20 @@ class Avatar
     @file.exists?(dir)        
   end
   
+  def dir
+    @kata.dir + @file.separator + name
+  end
+  
   def setup
-    @file.write(dir, Visible_files_filename, @kata.visible_files)
-    @file.write(dir, Traffic_lights_filename, [ ])
+    @file.write(dir, visible_files_filename, @kata.visible_files)
+    @file.write(dir, traffic_lights_filename, [ ])
     sandbox.save(@kata.visible_files) # includes output and instructions
     language = @kata.language
     sandbox.link(language.dir, language.support_filenames)
     @git.init(dir, "--quiet")
-    @git.add(dir, Traffic_lights_filename)
-    @git.add(dir, Visible_files_filename)      
+    @git.add(dir, traffic_lights_filename)
+    @git.add(dir, visible_files_filename)      
     git_commit(@kata.visible_files, tag = 0)
-  end
-  
-  def dir
-    @kata.dir + @file.separator + name
   end
   
   def kata
@@ -61,45 +61,32 @@ class Avatar
   def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
     @file.lock(dir) do
-      text = @file.read(dir, Traffic_lights_filename)
+      text = @file.read(dir, traffic_lights_filename)
       traffic_lights = JSON.parse(JSON.unparse(eval text)) 
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light['number'] = tag
-      @file.write(dir, Traffic_lights_filename, traffic_lights)
-      @file.write(dir, Visible_files_filename, visible_files)
+      @file.write(dir, traffic_lights_filename, traffic_lights)
+      @file.write(dir, visible_files_filename, visible_files)
       git_commit(visible_files, tag)
     end
     traffic_lights
   end
 
   def visible_files(tag = nil)
-    text = unlocked_read(Visible_files_filename, tag)
+    text = unlocked_read(visible_files_filename, tag)
     JSON.parse(JSON.unparse(eval text))
   end
   
   def traffic_lights(tag = nil)
-    text = unlocked_read(Traffic_lights_filename, tag)    
+    text = unlocked_read(traffic_lights_filename, tag)    
     JSON.parse(JSON.unparse(eval text))    
   end
 
   def diff_lines(was_tag, now_tag)
-    # N.B. visible_files are saved to the sandbox dir individually.
+    # visible_files are saved to the sandbox dir individually.
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
     output = @git.diff(dir, command)
-    # During the Chennai Cisco training 31 July 2013 I got a server-error when
-    # trying to view a diff. The server log contained this...
-    # Completed 500 Internal Server Error in 56ms
-    #  
-    # ArgumentError (invalid byte sequence in UTF-8):
-    #   lib/LineSplitter.rb:23:in `split'
-    #   lib/LineSplitter.rb:23:in `line_split'
-    #   lib/GitDiffParser.rb:12:in `initialize'
-    #   lib/GitDiff.rb:16:in `new'
-    #   lib/GitDiff.rb:16:in `git_diff_view'
-    #   app/controllers/diff_controller.rb:12:in `show'
-    #
-    # This is the same issue as in sandbox.test() so same fix
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)        
   end
   
@@ -113,7 +100,7 @@ private
     visible_files.keys.each do |filename|
       @git.add(dir, "sandbox/#{filename}")
     end
-    # N.B. the -a is important for .txt files in approval style tests
+    # the -a is important for .txt files in approval style tests
     @git.commit(dir, "-a -m '#{tag}' --quiet")
     @git.tag(dir, "-m '#{tag}' #{tag} HEAD")
   end
@@ -132,16 +119,21 @@ private
     end
   end
   
-  Traffic_lights_filename = 'increments.rb'
-  # Used to display the traffic-lights at the bottom of the
-  # animals test page, and also to display the traffic-lights for
-  # an animal on the dashboard page.
-  # It is part of the git repository and is committed every run-test.
+  def traffic_lights_filename
+    # Used to display the traffic-lights at the bottom of the
+    # animals test page, and also to display the traffic-lights for
+    # an animal on the dashboard page.
+    # It is part of the git repository and is committed every run-test.
+    'increments.rb'
+  end
   
-  Visible_files_filename = 'manifest.rb'
-  # Used to retrieve (via a single file access) the visible
-  # files needed when resuming an animal.
-  # It is part of the git repository and is committed every run-test.
+  def visible_files_filename
+    # Used to retrieve (via a single file access) the visible
+    # files needed when resuming an animal.
+    # It is part of the git repository and is committed every run-test.
+    'manifest.rb'
+  end
+
 end
 
 

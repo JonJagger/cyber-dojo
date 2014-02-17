@@ -15,6 +15,7 @@ INSTALLATION-TESTS
   Save run-tests outputs to log file?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK-REVERT
+  make it look the same as diff-dialog
   show the filenames with red/green line-counts
   show the content with the red/green deleted/added lines
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
