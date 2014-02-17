@@ -2,6 +2,7 @@ require 'DiskFile'
 
 class Language
     
+  #TODO: pass in cyberdojo object as 1st parameter
   def initialize(root_dir, name)
     @file = Thread.current[:file] || DiskFile.new
     @root_dir = root_dir

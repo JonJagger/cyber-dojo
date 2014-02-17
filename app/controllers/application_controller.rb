@@ -11,21 +11,16 @@ class ApplicationController < ActionController::Base
 
   include MakeTimeHelper
 
-  def root_dir_X
-    Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
-  end
-  
   def id
-    Folders::id_complete(root_dir_X, params[:id]) || ""
+    Folders::id_complete(root_dir, params[:id]) || ""
   end
     
   def cd
-    root_dir = Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
     Cyber_Dojo.new(root_dir)
   end
   
   def gather_info    
-    language = Language.new(root_dir_X, params['language'])    
+    language = Language.new(root_dir, params['language'])    
     
     { :created => make_time(Time.now),
       :id => Uuid.new.to_s,
@@ -49,4 +44,10 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
   end
 
+private
+
+  def root_dir
+    Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
+  end
+  
 end

@@ -2,6 +2,7 @@ require 'DiskFile'
 
 class Exercise
   
+  #TODO: pass in cyberdojo object as 1st parameter  
   def initialize(root_dir, name)
     @root_dir = root_dir
     @name = name
