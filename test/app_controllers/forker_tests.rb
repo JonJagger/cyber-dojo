@@ -49,7 +49,7 @@ class ForkerControllerTest < IntegrationTest
     assert_not_nil json['id'], json.inspect    
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
-    assert Kata.exists?(root_dir, json['id'])    
+    assert Kata.new(root_dir, json['id']).exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

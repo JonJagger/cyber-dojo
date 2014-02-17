@@ -2,17 +2,19 @@
 class ForkerController < ApplicationController
 
   def fork    
-    result = { }
-    
+    result = { }    
     bad = false
-    if !bad && !Kata.exists?(root_dir, params['id'])      
+    
+    cd = Cyber_Dojo.new(root_dir)
+    kata = cd[params['id']]
+    
+    if !bad && !kata.exists?      
       result[:forked] = false
       result[:reason] = "id"
       bad = true
     end
     
-    kata = Kata.new(root_dir, params['id'])
-    if !bad && !Language.new(root_dir, kata.language.name).exists?
+    if !bad && !cd.language(kata.language.name).exists?
       result[:forked] = false
       result[:reason] = "language"
       result[:language] = kata.language.name

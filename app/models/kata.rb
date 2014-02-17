@@ -12,14 +12,15 @@ class Kata
     kata
   end
   
-  def self.find(root_dir, id)
-    self.exists?(root_dir, id) ? Kata.new(root_dir, id) : nil
-  end
+  #def self.find(root_dir, id)
+  #  #self.exists?(root_dir, id) ? Kata.new(root_dir, id) : nil
+  #  Kata.new(root_dir,id).exists? ? Kata.new(root_dir, id) : nil
+  #end
   
-  def self.exists?(root_dir, id)
-    file = Thread.current[:file] || DiskFile.new
-    file.directory?(Kata.new(root_dir,id).dir)
-  end
+  #def self.exists?(root_dir, id)
+  #  file = Thread.current[:file] || DiskFile.new
+  #  file.directory?(Kata.new(root_dir,id).dir)
+  #end
     
   #---------------------------------
 
@@ -29,6 +30,10 @@ class Kata
     @file = Thread.current[:file] || DiskFile.new
   end
   
+  def exists?
+    @file.exists?(dir)
+  end
+  
   def dir
     @root_dir + separator +
       'katas'   + separator +
@@ -36,10 +41,6 @@ class Kata
           @id.outer    
   end
 
-  def exists?
-    @file.exists?(dir)
-  end
-  
   def id
     @id.to_s
   end

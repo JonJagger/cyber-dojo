@@ -158,27 +158,10 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "Kata.exists? returns false before kata is created then true after kata is created" do
-    ####
-    assert !Kata.exists?(@cd.dir, @id), "Kata.exists? false before created"
+    assert !@kata.exists?, "kata.exists? false before created"
     manifest = { :id => @id }
-    ####
-    Kata.create(@cd.dir, manifest)
-    ####
-    assert Kata.exists?(@cd.dir, @id), "Kata.exists? true after created"
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test "Kata.find returns nil before kata is created then object after kata is created" do
-    ####
-    kata = Kata.find(@cd.dir, @id)
-    assert_nil kata, "Kata.find returns nil before created"
-    manifest = { :id => @id }
-    ####
-    Kata.create(@cd.dir, manifest)
-    ####
-    kata = Kata.find(@cd.dir, @id)
-    assert_not_nil kata, "Kata.find returns kata before created"    
+    Kata.create(@cd.dir, manifest) ####
+    assert @kata.exists?, "Kata.exists? true after created"
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -15,8 +15,8 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def valid_id
-    kata = Kata.find(root_dir, id)
-    exists = params[:id].length >= 6 && !kata.nil?
+    kata = Kata.new(root_dir, id)
+    exists = params[:id].length >= 6 && kata.exists?
     started = exists ? kata.avatars.length : 0
     render :json => {
       :exists => exists,
@@ -27,13 +27,13 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def start_json
-    kata = Kata.find(root_dir, id)
-    avatar = (kata ? kata.start_avatar : nil)    
-    full = kata && avatar.nil?
-    start_html = kata && avatar ? start_dialog_html(avatar.name) : ''
+    kata = Kata.new(root_dir,id)
+    avatar = (kata.exists? ? kata.start_avatar : nil)    
+    full = kata.exists? && avatar.nil?
+    start_html = kata.exists? && avatar ? start_dialog_html(avatar.name) : ''
     full_html = full ? full_dialog_html() : ''
     render :json => {
-      :exists => !kata.nil?,
+      :exists => kata.exists?,
       :avatar_name => avatar ? avatar.name : nil,
       :full => full,
       :start_dialog_html => start_html,
@@ -54,8 +54,8 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def resume_json
-    exists = Kata.exists?(root_dir, id)
-    kata = exists ? Kata.new(root_dir, id) : nil;
+    kata = Kata.new(root_dir,id)
+    exists = kata.exists?
     started_avatar_names = exists ? kata.avatars.collect{|avatar| avatar.name} : [ ]
     empty = (started_avatar_names == [ ])
     render :json => {
