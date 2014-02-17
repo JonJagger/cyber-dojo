@@ -8,8 +8,8 @@ class SetupController < ApplicationController
     @languages = Folders::in(cd.dir + '/languages').sort    
     @exercises = Folders::in(cd.dir + '/exercises').sort
     @instructions = { }
-    @exercises.each do |exercise|
-      @instructions[exercise] = Exercise.new(cd.dir, exercise).instructions
+    @exercises.each do |name|
+      @instructions[name] = cd.exercise(name).instructions
     end
     @selected_language_index = Choose::language(@languages, params[:id], id, cd.dir)                                              
     @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, cd.dir)

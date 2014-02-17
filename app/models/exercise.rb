@@ -2,11 +2,10 @@ require 'DiskFile'
 
 class Exercise
   
-  #TODO: pass in cyberdojo object as 1st parameter  
-  def initialize(root_dir, name)
-    @root_dir = root_dir
-    @name = name
+  def initialize(dojo, name)
     @file = Thread.current[:file] || DiskFile.new
+    @dojo = dojo
+    @name = name
   end
 
   def exists?
@@ -14,7 +13,7 @@ class Exercise
   end
   
   def dir
-    @root_dir + @file.separator + 'exercises' + @file.separator + name
+    @dojo.dir + @file.separator + 'exercises' + @file.separator + name
   end
 
   def name

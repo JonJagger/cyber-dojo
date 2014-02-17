@@ -5,7 +5,7 @@ class Kata
   
   def initialize(dojo, id)
     @file = Thread.current[:file] || DiskFile.new
-    @root_dir = dojo.dir
+    @dojo = dojo
     @id = Uuid.new(id)
   end
   
@@ -14,7 +14,7 @@ class Kata
   end
   
   def dir
-    @root_dir + separator +
+    @dojo.dir + separator +
       'katas'   + separator +
         @id.inner + separator +
           @id.outer    
@@ -46,11 +46,11 @@ class Kata
   end
   
   def language
-    Language.new(@root_dir, manifest[:language])
+    @dojo.language(manifest[:language])
   end
   
   def exercise
-    Exercise.new(@root_dir, manifest[:exercise])
+    @dojo.exercise(manifest[:exercise])
   end
 
   def visible_files

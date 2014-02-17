@@ -19,11 +19,11 @@ class Cyber_Dojo
   end
   
   def language(name)
-    Language.new(@dir,name)
+    Language.new(self,name)
   end
   
   def exercise(name)
-    Exercise.new(@dir,name)
+    Exercise.new(self,name)
   end
 
   def create_kata(info)

@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
   
   def gather_info    
-    language = Language.new(root_dir, params['language'])    
+    language = cd.language(params['language'])    
     
     { :created => make_time(Time.now),
       :id => Uuid.new.to_s,

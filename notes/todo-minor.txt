@@ -5,8 +5,6 @@ REFACTORING
    kata = cd['AE346E0D21']
    avatar = kata['hippo']
    app_lib/Choose methods -> Cyber_Dojo methods
-   refactor Kata.new(root_dir,id) calls to cd[id] calls
-     when all done make 1st parameter cyberdojo
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   help dialog top panel is slightly wider than panels below

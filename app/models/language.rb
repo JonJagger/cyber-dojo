@@ -2,10 +2,9 @@ require 'DiskFile'
 
 class Language
     
-  #TODO: pass in cyberdojo object as 1st parameter
-  def initialize(root_dir, name)
+  def initialize(dojo, name)
     @file = Thread.current[:file] || DiskFile.new
-    @root_dir = root_dir
+    @dojo = dojo
     @name = name
   end
      
@@ -18,7 +17,7 @@ class Language
   end
 
   def dir
-    @root_dir + @file.separator + 'languages' + @file.separator + name
+    @dojo.dir + @file.separator + 'languages' + @file.separator + name
   end
     
   def visible_files
