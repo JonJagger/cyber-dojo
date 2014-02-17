@@ -7,7 +7,7 @@ require 'MakefileFilter'
 class KataController < ApplicationController
   
   def edit
-    @kata = cd[id]
+    @kata = dojo[id]
     @avatar = Avatar.new(@kata, params[:avatar])
     @tab = @kata.language.tab    
     @visible_files = @avatar.visible_files
@@ -23,7 +23,7 @@ class KataController < ApplicationController
     outgoing_hashes = params[:file_hashes_outgoing]
     delta = FileHashDiffer.diff(incoming_hashes, outgoing_hashes)
     
-    @kata   = cd[id]
+    @kata   = dojo[id]
     @avatar = Avatar.new(@kata, params[:avatar])
     visible_files = received_files
     previous_files = visible_files.keys

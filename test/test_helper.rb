@@ -46,7 +46,7 @@ class ActiveSupport::TestCase
   def setup
     root_dir = (@root_dir || Rails.root + 'test/cyberdojo').to_s
     system("rm -rf #{root_dir}/katas/*")
-    @cd = Cyber_Dojo.new(root_dir)
+    @dojo = Dojo.new(root_dir)
   end
   
   def dojo_id
@@ -55,8 +55,8 @@ class ActiveSupport::TestCase
   
   def make_info(language_name, exercise_name = 'Yahtzee', id = dojo_id, now = make_time(Time.now) )
     @dojo_id = id
-    language = @cd.language(language_name)
-    exercise = @cd.exercise(exercise_name)
+    language = @dojo.language(language_name)
+    exercise = @dojo.exercise(exercise_name)
     { 
       :created => now,
       :id => id,
@@ -72,7 +72,7 @@ class ActiveSupport::TestCase
     info = make_info(language_name, exercise_name, id)
     info[:visible_files]['output'] = ''
     info[:visible_files]['instructions'] = 'practice'    
-    @cd.create_kata(info)
+    @dojo.create_kata(info)
   end
     
   def run_test(delta, avatar, visible_files, timeout = 15)

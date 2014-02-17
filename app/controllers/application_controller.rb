@@ -15,12 +15,12 @@ class ApplicationController < ActionController::Base
     Folders::id_complete(root_dir, params[:id]) || ""
   end
     
-  def cd
-    Cyber_Dojo.new(root_dir)
+  def dojo
+    Dojo.new(root_dir)
   end
   
   def gather_info    
-    language = cd.language(params['language'])    
+    language = dojo.language(params['language'])    
     
     { :created => make_time(Time.now),
       :id => Uuid.new.to_s,

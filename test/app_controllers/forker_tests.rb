@@ -48,7 +48,7 @@ class ForkerControllerTest < IntegrationTest
     assert_not_nil json['id'], json.inspect    
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
-    assert @cd[json['id']].exists?
+    assert @dojo[json['id']].exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -71,9 +71,9 @@ class ForkerControllerTest < IntegrationTest
   test "if language folder no longer exists the fork fails and reason is given as language" do
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
-    language = @cd.language('xxxx')
+    language = @dojo.language('xxxx')
     @stub_file.read=({
-      :dir => @cd[id].dir,
+      :dir => @dojo[id].dir,
       :filename => 'manifest.rb',
       :content => {
         :language => language.name
@@ -97,9 +97,9 @@ class ForkerControllerTest < IntegrationTest
   test "if avatar not started the fork fails and reason is given as avatar" do
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
-    language = @cd.language('Ruby-installed-and-working')
+    language = @dojo.language('Ruby-installed-and-working')
     @stub_file.read=({
-      :dir => @cd[id].dir,
+      :dir => @dojo[id].dir,
       :filename => 'manifest.rb',
       :content => {
         :language => language.name
@@ -138,7 +138,7 @@ class ForkerControllerTest < IntegrationTest
     Thread.current[:file] = @stub_file = StubDiskFile.new  
     id = '1234512345'
     language_name = 'Ruby-installed-and-working'
-    kata = @cd[id]
+    kata = @dojo[id]
     @stub_file.read=({
       :dir => kata.dir,
       :filename => 'manifest.rb',
@@ -146,7 +146,7 @@ class ForkerControllerTest < IntegrationTest
         :language => language_name
       }.inspect
     })
-    language = @cd.language(language_name)
+    language = @dojo.language(language_name)
     @stub_file.read=({
       :dir => language.dir,
       :filename => 'instructions',

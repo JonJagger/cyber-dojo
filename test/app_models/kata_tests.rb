@@ -8,9 +8,9 @@ class KataTests < ActionController::TestCase
     Thread.current[:file] = @stub_file = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     root_dir = '/anywhere'
-    @cd = Cyber_Dojo.new(root_dir)
+    @dojo = Dojo.new(root_dir)
     @id = '45ED23A2F1'
-    @kata = @cd[@id]
+    @kata = @dojo[@id]
   end
   
   def teardown
@@ -53,7 +53,7 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir is based on cyberdojo root_dir and id" do
-    assert @kata.dir.match(@cd.dir), "root_dir"
+    assert @kata.dir.match(@dojo.dir), "root_dir"
     uuid = Uuid.new(@id)
     assert @kata.dir.match(uuid.inner), "id.inner"
     assert @kata.dir.match(uuid.outer), "id.outer"
@@ -63,7 +63,7 @@ class KataTests < ActionController::TestCase
 
   test "creation saves manifest in kata dir" do
     manifest = { :id => @id }    
-    kata = @cd.create_kata(manifest)
+    kata = @dojo.create_kata(manifest)
     assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[@kata.dir]    
     assert_equal nil, @stub_file.read_log[@kata.dir]
   end
@@ -158,14 +158,14 @@ class KataTests < ActionController::TestCase
   test "Kata.exists? returns false before kata is created then true after kata is created" do
     assert !@kata.exists?, "!kata.exists? before created"
     manifest = { :id => @id }
-    @cd.create_kata(manifest)
+    @dojo.create_kata(manifest)
     assert @kata.exists?, "Kata.exists? after created"
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "you can create an avatar in a kata" do
-    language = @cd.language('C')
+    language = @dojo.language('C')
     manifest = {
       :id => @id,
       :language => language.name
@@ -180,7 +180,7 @@ class KataTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = @cd.create_kata(manifest)
+    kata = @dojo.create_kata(manifest)
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name) ###
     assert avatar_name, avatar.name
@@ -189,7 +189,7 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "multiple avatars in a kata are all seen" do
-    language = @cd.language('C')
+    language = @dojo.language('C')
     manifest = {
       :id => @id,
       :visible_files => {
@@ -207,7 +207,7 @@ class KataTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = @cd.create_kata(manifest)
+    kata = @dojo.create_kata(manifest)
     Avatar.create(kata, 'lion') ####
     Avatar.create(kata, 'hippo') ####
     avatars = kata.avatars
@@ -218,7 +218,7 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "start_avatar succeeds once for each avatar name then fails" do
-    language = @cd.language('C')
+    language = @dojo.language('C')
     manifest = {
       :id => @id,
       :language => language.name,
@@ -236,7 +236,7 @@ class KataTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = @cd.create_kata(manifest)
+    kata = @dojo.create_kata(manifest)
     created = [ ]
     Avatar.names.length.times do |n|
       avatar = kata.start_avatar

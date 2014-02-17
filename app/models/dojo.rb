@@ -1,10 +1,7 @@
 
-# can't call it CyberDojo presumably because something else
-# is already called that from the rails app name
-
 require 'DiskFile'
 
-class Cyber_Dojo
+class Dojo
   
   def initialize(dir)
     @dir = dir

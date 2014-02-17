@@ -1,8 +1,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
-   cd = CyberDojo.new(root_dir)
-   kata = cd['AE346E0D21']
    avatar = kata['hippo']
    app_lib/Choose methods -> Cyber_Dojo methods
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

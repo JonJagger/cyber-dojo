@@ -6,7 +6,7 @@ class ExerciseTests < ActionController::TestCase
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new
     dir = '/blah'
-    @exercise = Cyber_Dojo.new(dir).exercise('Yahtzee')
+    @exercise = Dojo.new(dir).exercise('Yahtzee')
   end
   
   def teardown
@@ -17,7 +17,7 @@ class ExerciseTests < ActionController::TestCase
   
   test "exists? is false when exercise folder does not exist" do
     dir = '/perch'
-    assert !Cyber_Dojo.new(dir).exercise('xxxx').exists?    
+    assert !Dojo.new(dir).exercise('xxxx').exists?    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -6,7 +6,7 @@ class LanguageTests < ActionController::TestCase
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new
     dir = '/blah'
-    @language = Cyber_Dojo.new(dir).language('Ruby')
+    @language = Dojo.new(dir).language('Ruby')
   end
 
   def teardown
@@ -17,7 +17,7 @@ class LanguageTests < ActionController::TestCase
 
   test "exists? is false when language folder does not exist" do
     dir = '/salmon'
-    assert !Cyber_Dojo.new(dir).language('xxxx').exists?
+    assert !Dojo.new(dir).language('xxxx').exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

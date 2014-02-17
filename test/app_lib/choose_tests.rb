@@ -15,7 +15,7 @@ class ChooseTests < ActionController::TestCase
     languages = ['C', 'Ruby', 'Python', 'C++']
     params_id = '012345'
     id = '0123456789'
-    actual = Choose::language(languages, params_id, id, @cd.dir)
+    actual = Choose::language(languages, params_id, id, @dojo.dir)
     assert actual.is_a? Numeric
     assert actual >= 0 && actual < languages.length    
   end
@@ -24,7 +24,7 @@ class ChooseTests < ActionController::TestCase
     language = 'Ruby-installed-and-working'
     languages = [ 'C', 'Python', language, 'C++', 'Clojure' ]
     kata = make_kata(language, 'Yahtzee')
-    actual = Choose::language(languages, kata.id, kata.id, @cd.dir)
+    actual = Choose::language(languages, kata.id, kata.id, @dojo.dir)
     assert actual.is_a? Numeric
     assert_equal languages.index(language), actual
   end
@@ -33,7 +33,7 @@ class ChooseTests < ActionController::TestCase
     language = 'Ruby-installed-and-working'
     languages = [ 'C', 'Python', 'Ruby', 'Clojure', 'Java' ]
     kata = make_kata(language, 'Yahtzee')
-    actual = Choose::language(languages, kata.id, kata.id, @cd.dir)
+    actual = Choose::language(languages, kata.id, kata.id, @dojo.dir)
     assert actual.is_a? Numeric
     assert actual >= 0 && actual < languages.length        
   end
@@ -52,7 +52,7 @@ class ChooseTests < ActionController::TestCase
     exercises = ['Yahtzee', 'Roman Numerals', 'Leap Years', 'Fizz Buzz']
     params_id = '012345'
     id = '0123456789'
-    actual = Choose::exercise(exercises, params_id, id, @cd.dir)
+    actual = Choose::exercise(exercises, params_id, id, @dojo.dir)
     assert actual.is_a? Numeric
     assert actual >= 0 && actual < exercises.length    
   end
@@ -61,7 +61,7 @@ class ChooseTests < ActionController::TestCase
     exercise = 'Yahtzee'
     exercises = [ 'Leap Years', 'Roman Numerals', exercise, 'Fizz Buzz', 'Zeckendorf' ]
     kata = make_kata('Ruby-installed-and-working', exercise)
-    actual = Choose::exercise(exercises, kata.id, kata.id, @cd.dir)
+    actual = Choose::exercise(exercises, kata.id, kata.id, @dojo.dir)
     assert actual.is_a? Numeric
     assert_equal exercises.index(exercise), actual
   end
@@ -70,7 +70,7 @@ class ChooseTests < ActionController::TestCase
     exercise = 'Yahtzee'
     exercises = [ 'Leap Years', 'Roman Numerals', 'Fizz Buzz', 'Zeckendorf' ]
     kata = make_kata('Ruby-installed-and-working', exercise)
-    actual = Choose::exercise(exercises, kata.id, kata.id, @cd.dir)
+    actual = Choose::exercise(exercises, kata.id, kata.id, @dojo.dir)
     assert actual.is_a? Numeric
     assert actual >= 0 && actual < exercises.length        
   end

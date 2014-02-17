@@ -7,7 +7,7 @@ class DiskFileTests < ActionController::TestCase
     super
     id = 'ABCDE12345'
     @disk_file = DiskFile.new
-    @dir = @cd.dir + @disk_file.separator + id
+    @dir = @dojo.dir + @disk_file.separator + id
     system("mkdir #{@dir}")
   end
   

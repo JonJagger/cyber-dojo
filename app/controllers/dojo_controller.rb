@@ -15,7 +15,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def valid_id
-    kata = cd[id]
+    kata = dojo[id]
     exists = params[:id].length >= 6 && kata.exists?
     started = exists ? kata.avatars.length : 0
     render :json => {
@@ -27,7 +27,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def start_json
-    kata = cd[id]
+    kata = dojo[id]
     avatar = (kata.exists? ? kata.start_avatar : nil)    
     full = kata.exists? && avatar.nil?
     start_html = kata.exists? && avatar ? start_dialog_html(avatar.name) : ''
@@ -54,7 +54,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
   
   def resume_json
-    kata = cd[id]
+    kata = dojo[id]
     exists = kata.exists?
     started_avatar_names = exists ? kata.avatars.collect{|avatar| avatar.name} : [ ]
     empty = (started_avatar_names == [ ])

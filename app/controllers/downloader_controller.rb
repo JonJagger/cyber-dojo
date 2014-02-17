@@ -8,10 +8,10 @@ class DownloaderController < ApplicationController
     uuid = Uuid.new(id)
     inner = uuid.inner
     outer = uuid.outer
-    cd_cmd = "cd #{cd.dir}/katas"
+    cd_cmd = "cd #{dojo.dir}/katas"
     tar_cmd = "tar -zcf ../zips/#{id}.tar.gz #{inner}/#{outer}"
     system(cd_cmd + ";" + tar_cmd)
-    zip_filename = "#{cd.dir}/zips/#{id}.tar.gz"
+    zip_filename = "#{dojo.dir}/zips/#{id}.tar.gz"
     send_file zip_filename
     # would like to delete this zip file
     # but download tests unzip them to verify

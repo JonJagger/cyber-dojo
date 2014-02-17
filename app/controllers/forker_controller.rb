@@ -5,7 +5,7 @@ class ForkerController < ApplicationController
     result = { }    
     bad = false
     
-    kata = cd[params['id']]
+    kata = dojo[params['id']]
     
     if !bad && !kata.exists?      
       result[:forked] = false
@@ -13,7 +13,7 @@ class ForkerController < ApplicationController
       bad = true
     end
     
-    if !bad && !cd.language(kata.language.name).exists?
+    if !bad && !dojo.language(kata.language.name).exists?
       result[:forked] = false
       result[:reason] = "language"
       result[:language] = kata.language.name
@@ -44,7 +44,7 @@ class ForkerController < ApplicationController
       params['exercise'] = kata.exercise.name
       info = gather_info
       info[:visible_files] = avatar.visible_files(params['tag'])    
-      cd.create_kata(info)
+      dojo.create_kata(info)
       result[:forked] = true
       result[:id] = info[:id]
     end

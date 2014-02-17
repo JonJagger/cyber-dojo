@@ -6,7 +6,7 @@ class DiskGitTests < ActionController::TestCase
   def setup
     super
     id = '12345ABCDE'
-    @dir = @cd.dir + '/' + id
+    @dir = @dojo.dir + '/' + id
     system("mkdir #{@dir}")
     @git = DiskGit.new
   end
