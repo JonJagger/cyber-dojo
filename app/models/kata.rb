@@ -13,9 +13,9 @@ class Kata
   #---------------------------------
 
   def initialize(root_dir, id)
+    @file = Thread.current[:file] || DiskFile.new
     @root_dir = root_dir
     @id = Uuid.new(id)
-    @file = Thread.current[:file] || DiskFile.new
   end
   
   def exists?

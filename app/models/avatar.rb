@@ -11,10 +11,10 @@ class Avatar
     avatar
   end
 
-  def self.exists?(kata, name)
-    file = Thread.current[:file] || DiskFile.new
-    file.directory?(Avatar.new(kata,name).dir)    
-  end
+  #def self.exists?(kata, name)
+  #  file = Thread.current[:file] || DiskFile.new
+  #  file.directory?(Avatar.new(kata,name).dir)    
+  #end
   
   def self.names
     # no two animals start with the same letter
@@ -31,10 +31,14 @@ class Avatar
   def initialize(kata, name)
     # Call this to create an object representing an
     # animal which has already started a kata
-    @kata = kata
-    @name = name
     @file = Thread.current[:file] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
+    @kata = kata
+    @name = name
+  end
+  
+  def exists?
+    @file.exists?(dir)        
   end
   
   def setup

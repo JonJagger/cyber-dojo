@@ -24,25 +24,25 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "Avatar.exists? false when it doesn't" do
-    manifest = { :id => '45ED23A2F1' }
-    kata = Kata.create(root_dir, manifest)    
-    assert_equal false, Avatar.exists?(kata, 'hippo')  
+  test "exists? is false when its folder doesn't exist" do
+    cd = Cyber_Dojo.new(root_dir)
+    id = '45ED23A2F1'
+    avatar = Avatar.new(cd[id], 'hippo')
+    assert_equal false, avatar.exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
-  test "Avatar.exists? true when it does" do
-    manifest = { :id => '45ED23A2F1' }
-    kata = Kata.create(root_dir, manifest)
-    avatar_name = 'hippo'
-    avatar = Avatar.new(kata, avatar_name)
+  test "exists? is true when its folder does exist" do
+    cd = Cyber_Dojo.new(root_dir)
+    id = '45ED23A2F1'
+    avatar = Avatar.new(cd[id], 'hippo')
     @stub_file.read = {
       :dir => avatar.dir,
       :filename => '',
       :content => ''
     }    
-    assert_equal true, Avatar.exists?(kata, avatar_name)      
+    assert_equal true, avatar.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
