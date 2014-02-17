@@ -15,6 +15,10 @@ class Language
     @name = name
   end
      
+  def exists?
+    @file.exists?(dir)
+  end
+  
   def name
     @name
   end

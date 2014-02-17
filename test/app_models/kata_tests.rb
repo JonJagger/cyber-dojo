@@ -4,21 +4,14 @@ require File.dirname(__FILE__) + '/stub_disk_git'
 
 class KataTests < ActionController::TestCase
 
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
+    root = (Rails.root + 'test/cyberdojo').to_s
+    @cd = Cyber_Dojo.new(root_dir)
     @id = '45ED23A2F1'
-    @kata = Cyber_Dojo.new(root_dir)[@id]
+    @kata = @cd[@id]
   end
-  
-  def stub_file; @stub_file; end
-  def stub_git; @stub_git; end
-  def id; @id; end
-  def kata; @kata; end
   
   def teardown
     Thread.current[:file] = nil
@@ -28,52 +21,53 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "id is from ctor" do
-    assert_equal id, kata.id    
+    assert_equal @id, @kata.id    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "exists? false then true" do
-    assert !kata.exists?
-    stub_file.read = {
-      :dir => kata.dir,
+    assert !@kata.exists?
+    @stub_file.read = {
+      :dir => @kata.dir,
       :filename => '',
       :content => ''
     }    
-    assert kata.exists?
+    assert @kata.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    assert !kata.dir.end_with?(stub_file.separator),
-          "!#{kata.dir}.end_with?(#{stub_file.separator})"       
+    assert !@kata.dir.end_with?(@stub_file.separator),
+          "!#{@kata.dir}.end_with?(#{@stub_file.separator})"       
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not have doubled separator" do
-    doubled_separator = stub_file.separator * 2
-    assert_equal 0, kata.dir.scan(doubled_separator).length    
+    doubled_separator = @stub_file.separator * 2
+    assert_equal 0, @kata.dir.scan(doubled_separator).length    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir is based on root_dir and id" do
-    assert kata.dir.match(root_dir), "root_dir"
-    uuid = Uuid.new(id)
-    assert kata.dir.match(uuid.inner), "id.inner"
-    assert kata.dir.match(uuid.outer), "id.outer"
+  test "dir is based on cyberdojo root_dir and id" do
+    assert @kata.dir.match(@cd.dir), "root_dir"
+    uuid = Uuid.new(@id)
+    assert @kata.dir.match(uuid.inner), "id.inner"
+    assert @kata.dir.match(uuid.outer), "id.outer"
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "creation saves manifest in kata dir" do
-    manifest = { :id => id }    
-    kata = Kata.create(root_dir, manifest)
-    # kata = cd[id].create(manifest) ??
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], stub_file.write_log[kata.dir]    
-    assert_equal nil, stub_file.read_log[kata.dir]
+    manifest = { :id => @id }    
+    kata = Kata.create(@cd.dir, manifest) ### 
+    # kata.create(manifest) ??
+    # cd.create_kata(manifest) ??
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[@kata.dir]    
+    assert_equal nil, @stub_file.read_log[@kata.dir]
   end
     
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -82,14 +76,14 @@ class KataTests < ActionController::TestCase
     now = [2013,6,29,14,24,51]
     manifest = {
       :created => now,
-      :id => id
+      :id => @id
     }    
-    stub_file.read = {
-      :dir => kata.dir,
+    @stub_file.read = {
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    assert_equal Time.mktime(*now), kata.created    
+    assert_equal Time.mktime(*now), @kata.created    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -98,16 +92,16 @@ class KataTests < ActionController::TestCase
     now = [2013,6,29,14,24,51]
     manifest = {
       :created => now,
-      :id => id
+      :id => @id
     }    
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
     seconds = 5
     now = now[0...-1] + [now.last + seconds ]
-    assert_equal seconds, kata.age_in_seconds(Time.mktime(*now))    
+    assert_equal seconds, @kata.age_in_seconds(Time.mktime(*now))    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,14 +110,14 @@ class KataTests < ActionController::TestCase
     language = 'Wibble'
     manifest = {
       :language => language,
-      :id => id
+      :id => @id
     }    
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    assert_equal language, kata.language.name
+    assert_equal language, @kata.language.name
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -132,14 +126,14 @@ class KataTests < ActionController::TestCase
     exercise = 'Tweedle'
     manifest = {
       :exercise => exercise,
-      :id => id
+      :id => @id
     }    
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    assert_equal exercise, kata.exercise.name    
+    assert_equal exercise, @kata.exercise.name    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -150,87 +144,91 @@ class KataTests < ActionController::TestCase
         'wibble.c' => '#include "wibble.h"'
     }
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files
     }
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    assert_equal visible_files, kata.visible_files
+    assert_equal visible_files, @kata.visible_files
   end  
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "Kata.exists? returns false before kata is created then true after kata is created" do
-    assert !Kata.exists?(root_dir, id), "Kata.exists? false before created"
-    manifest = { :id => id }
-    Kata.create(root_dir, manifest)
-    assert Kata.exists?(root_dir, id), "Kata.exists? true after created"
+    ####
+    assert !Kata.exists?(@cd.dir, @id), "Kata.exists? false before created"
+    manifest = { :id => @id }
+    ####
+    Kata.create(@cd.dir, manifest)
+    ####
+    assert Kata.exists?(@cd.dir, @id), "Kata.exists? true after created"
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "Kata.find returns nil before kata is created then object after kata is created" do
-    kata = Kata.find(root_dir, id)
+    ####
+    kata = Kata.find(@cd.dir, @id)
     assert_nil kata, "Kata.find returns nil before created"
-    manifest = { :id => id }
-    Kata.create(root_dir, manifest)
-    kata = Kata.find(root_dir, id)
+    manifest = { :id => @id }
+    ####
+    Kata.create(@cd.dir, manifest)
+    ####
+    kata = Kata.find(@cd.dir, @id)
     assert_not_nil kata, "Kata.find returns kata before created"    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "you can create an avatar in a kata" do
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
-      :language => language_name
+      :id => @id,
+      :language => language.name
     }
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    language = Language.new(root_dir, language_name) ####
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = Kata.create(root_dir, manifest)  #####
+    kata = Kata.create(@cd.dir, manifest)  ####
     avatar_name = 'hippo'
-    avatar = Avatar.new(kata, avatar_name)
+    avatar = Avatar.new(kata, avatar_name) ###
     assert avatar_name, avatar.name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "multiple avatars in a kata are all seen" do
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => {
         'name' => 'content for name'
       },
-      :language => language_name
+      :language => language.name
     }
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    language = Language.new(root_dir, language_name) ####
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = Kata.create(root_dir, manifest) ###
-    Avatar.create(kata, 'lion')
-    Avatar.create(kata, 'hippo')
+    kata = Kata.create(@cd.dir, manifest) ####
+    Avatar.create(kata, 'lion') ####
+    Avatar.create(kata, 'hippo') ####
     avatars = kata.avatars
     assert_equal 2, avatars.length
     assert_equal ['hippo','lion'], avatars.collect{|avatar| avatar.name}.sort
@@ -239,26 +237,25 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "start_avatar succeeds once for each avatar name then fails" do
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
-      :language => language_name,
+      :id => @id,
+      :language => language.name,
       :visible_files => {
         'wibble.h' => '#include <stdio.h>'
       }      
     }
     @stub_file.read = {
-      :dir => kata.dir,
+      :dir => @kata.dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    language = Language.new(root_dir, language_name) ###
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = Kata.create(root_dir, manifest) ###
+    kata = Kata.create(@cd.dir, manifest) ####
     created = [ ]
     Avatar.names.length.times do |n|
       avatar = kata.start_avatar

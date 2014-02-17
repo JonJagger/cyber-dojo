@@ -5,9 +5,9 @@ class LanguageTests < ActionController::TestCase
   
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new  
-    @language = Language.new(root_dir, 'Ruby')    
+    @language = Cyber_Dojo.new(root_dir).language('Ruby')
   end
-  
+
   def teardown
     Thread.current[:file] = nil
   end
@@ -15,7 +15,7 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "exists? is false when language folder does not exist" do
-    assert !Language.exists?(root_dir, 'xxxxx')
+    assert !Cyber_Dojo.new(root_dir).language('xxxx').exists?
   end
 
   test "exists? is true when language folder exists" do
@@ -24,7 +24,7 @@ class LanguageTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => ""
     })
-    assert Language.exists?(root_dir, @language.name)
+    assert @language.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
@@ -93,7 +93,7 @@ class LanguageTests < ActionController::TestCase
       :content => 'content'
     })    
     visible_files = @language.visible_files
-    assert_equal( { 'test_untitled.rb' => 'content' }, @language.visible_files)
+    assert_equal( { 'test_untitled.rb' => 'content' }, visible_files)
     assert_nil visible_files['output']
     assert_nil visible_files['instructions']
   end

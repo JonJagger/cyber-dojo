@@ -16,4 +16,8 @@ class Cyber_Dojo
     Kata.new(@dir,id)
   end
   
+  def language(name)
+    Language.new(@dir,name)
+  end
+  
 end
