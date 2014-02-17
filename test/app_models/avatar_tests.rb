@@ -6,10 +6,16 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
 class AvatarTests < ActionController::TestCase
 
+  def root_dir
+    (Rails.root + 'test/cyberdojo').to_s
+  end
+
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new  
+    @cd = Cyber_Dojo.new(root_dir)
+    @id = '45ED23A2F1'
   end
 
   def teardown
@@ -18,25 +24,17 @@ class AvatarTests < ActionController::TestCase
     Thread.current[:task] = nil
   end
 
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? is false when its folder doesn't exist" do
-    cd = Cyber_Dojo.new(root_dir)
-    id = '45ED23A2F1'
-    avatar = Avatar.new(cd[id], 'hippo')
+    avatar = Avatar.new(@cd[@id], 'hippo')
     assert_equal false, avatar.exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "exists? is true when its folder does exist" do
-    cd = Cyber_Dojo.new(root_dir)
-    id = '45ED23A2F1'
-    avatar = Avatar.new(cd[id], 'hippo')
+    avatar = Avatar.new(@cd[@id], 'hippo')
     @stub_file.read = {
       :dir => avatar.dir,
       :filename => '',
@@ -52,25 +50,22 @@ class AvatarTests < ActionController::TestCase
           "empty avatar/increments.rb, and " +
           "each visible_file into avatar/sandbox, and " +
           "links each support_filename into avatar/sandbox" do
-    id = '45ED23A2F1'
     visible_filename = 'visible.txt'
     visible_filename_content = 'content for visible.txt'
     visible_files = {
       visible_filename => visible_filename_content
     }
-    language_name = 'C#'
+    language = @cd.language('C#')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    language = Language.new(root_dir, language_name)
     support_filename = 'wibble.dll' 
     @stub_file.read=({
       :dir => language.dir,
@@ -100,23 +95,20 @@ class AvatarTests < ActionController::TestCase
     
   test "avatar creation sets up initial git repo of visible files " +
         "but not support_files" do  
-    id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name'
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -147,23 +139,20 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "avatar has no traffic-lights before first test-run" do
-    id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name'
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -177,23 +166,20 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar returns kata it was created with" do
-    id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name'
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -207,24 +193,21 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar's tag 0 repo contains an empty output file only if kata-manifest does" do    
-    id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name',
       'output' => ''
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }
-    language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -241,24 +224,21 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after avatar is created sandbox contains visible_files" do
-    id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name',
       'output' => ''
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -275,24 +255,21 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after avatar is created sandbox contains cyber-dojo.sh" do
-    id = '45ED23A2F1'
     visible_files = {
       'name' => 'content for name',
       'cyber-dojo.sh' => 'make'
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }  
-    language = Language.new(root_dir, language_name)
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -309,25 +286,22 @@ class AvatarTests < ActionController::TestCase
   
   test "after first test() traffic_lights contains one traffic-light " +
         "which does not contain output" do    
-    id = '45ED23A2F1'
     visible_files = {
       'untitled.c' => 'content for visible file',
       'cyber-dojo.sh' => 'make',
     }
-    language_name = 'C'
+    language = @cd.language('C')
     manifest = {
-      :id => id,
+      :id => @id,
       :visible_files => visible_files,
-      :language => language_name
+      :language => language.name
     }
-    dir = Kata.new(root_dir, id).dir
     @stub_file.read = {
-      :dir => dir,
+      :dir => @cd[@id].dir,
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }      
     kata = Kata.create(root_dir, manifest)    
-    language = kata.language
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',
@@ -365,9 +339,7 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "diff_lines" do
-    id = '45ED23A2F1'
-    kata = Kata.new(root_dir, id)
-    avatar = Avatar.new(kata, 'lion')
+    avatar = Avatar.new(@cd[@id], 'lion')
     output = avatar.diff_lines(was_tag=3,now_tag=4)
     assert @stub_git.log[avatar.dir].include?(
       [
@@ -379,9 +351,7 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "locked_read with tag" do
-    id = '45ED23A2F1'
-    kata = Kata.new(root_dir, id)
-    avatar = Avatar.new(kata, 'lion')
+    avatar = Avatar.new(@cd[@id], 'lion')
     output = avatar.visible_files(tag=4)
     assert @stub_git.log[avatar.dir].include?(
       [
