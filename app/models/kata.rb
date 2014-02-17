@@ -3,25 +3,13 @@ require 'DiskFile'
 
 class Kata
   
-  # At the top level use either Kata.create or Kata.find
-
   def self.create(root_dir, info)
     file = Thread.current[:file] || DiskFile.new
     kata = Kata.new(root_dir, info[:id])
     file.write(kata.dir, 'manifest.rb', info)
     kata
   end
-  
-  #def self.find(root_dir, id)
-  #  #self.exists?(root_dir, id) ? Kata.new(root_dir, id) : nil
-  #  Kata.new(root_dir,id).exists? ? Kata.new(root_dir, id) : nil
-  #end
-  
-  #def self.exists?(root_dir, id)
-  #  file = Thread.current[:file] || DiskFile.new
-  #  file.directory?(Kata.new(root_dir,id).dir)
-  #end
-    
+      
   #---------------------------------
 
   def initialize(root_dir, id)
