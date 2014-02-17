@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
+  help dialog top panel is slightly wider than panels below
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSTALLATION-TESTS
   Create script that can pass root_dir and optional language to remainder
     it will check languages off the root_dir

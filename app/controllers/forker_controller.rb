@@ -19,7 +19,7 @@ class ForkerController < ApplicationController
       bad = true
     end
     
-    if !bad && !kata.avatars.map{|avatar| avatar.name}.include?(params['avatar'])
+    if !bad && !Avatar.exists?(kata, params['avatar'])
       result[:forked] = false
       result[:reason] = "avatar"
       bad = true

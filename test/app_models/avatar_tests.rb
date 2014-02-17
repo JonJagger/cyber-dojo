@@ -24,6 +24,29 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "Avatar.exists? false when it doesn't" do
+    manifest = { :id => '45ED23A2F1' }
+    kata = Kata.create(root_dir, manifest)    
+    assert_equal false, Avatar.exists?(kata, 'hippo')  
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "Avatar.exists? true when it does" do
+    manifest = { :id => '45ED23A2F1' }
+    kata = Kata.create(root_dir, manifest)
+    avatar_name = 'hippo'
+    avatar = Avatar.new(kata, avatar_name)
+    @stub_file.read = {
+      :dir => avatar.dir,
+      :filename => '',
+      :content => ''
+    }    
+    assert_equal true, Avatar.exists?(kata, avatar_name)      
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "avatar creation saves " +
           "visible_files in avatar/manifest.rb, and " +
           "empty avatar/increments.rb, and " +
