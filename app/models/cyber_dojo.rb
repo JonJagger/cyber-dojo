@@ -12,7 +12,7 @@ class Cyber_Dojo
     @dir
   end
   
-  def [ ](id)
+  def [](id)
     Kata.new(@dir,id)
   end
   
