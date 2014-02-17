@@ -36,6 +36,10 @@ class Kata
           @id.outer    
   end
 
+  def exists?
+    @file.exists?(dir)
+  end
+  
   def id
     @id.to_s
   end

@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTORING
+   cd = CyberDojo.new(root_dir)
+   kata = cd['AE346E0D21']
+   avatar = kata['hippo']   
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   help dialog top panel is slightly wider than panels below
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

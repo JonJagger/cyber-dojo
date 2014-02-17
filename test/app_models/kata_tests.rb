@@ -30,6 +30,25 @@ class KataTests < ActionController::TestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "exists? false" do
+    id = '45ED23A2F1'
+    assert !Kata.new(root_dir,id).exists?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  test "exists? true" do
+    id = '45ED23A2F1'
+    @stub_file.read = {
+      :dir => Kata.new(root_dir, id).dir,
+      :filename => '',
+      :content => ''
+    }    
+    assert Kata.new(root_dir,id).exists?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
     id = '45ED23A2F1'
