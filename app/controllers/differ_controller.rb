@@ -26,7 +26,7 @@ class DifferController < ApplicationController
 private
 
   def setup_parameters
-    @kata = Kata.new(root_dir, id)    
+    @kata = cd[id]
     @avatar = Avatar.new(@kata, params[:avatar])
     @traffic_lights = @avatar.traffic_lights    
     @min_tag = 0

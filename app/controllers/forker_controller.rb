@@ -5,7 +5,6 @@ class ForkerController < ApplicationController
     result = { }    
     bad = false
     
-    cd = Cyber_Dojo.new(root_dir)
     kata = cd[params['id']]
     
     if !bad && !kata.exists?      
@@ -45,7 +44,7 @@ class ForkerController < ApplicationController
       params['exercise'] = kata.exercise.name
       info = gather_info
       info[:visible_files] = avatar.visible_files(params['tag'])    
-      Kata.create(root_dir, info)
+      cd.create_kata(info)
       result[:forked] = true
       result[:id] = info[:id]
     end

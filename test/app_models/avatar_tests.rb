@@ -6,14 +6,11 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
 class AvatarTests < ActionController::TestCase
 
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
-    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new  
+    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
+    root_dir = '/where'
     @cd = Cyber_Dojo.new(root_dir)
     @id = '45ED23A2F1'
   end
@@ -74,7 +71,7 @@ class AvatarTests < ActionController::TestCase
         "support_filenames" => [ support_filename ]
       })
     })
-    kata = Kata.create(root_dir, manifest)    
+    kata = @cd.create_kata(manifest)    
     avatar = Avatar.create(kata, 'wolf')            
     assert_not_nil @stub_file.write_log[avatar.dir]
     assert @stub_file.write_log[avatar.dir].include?(['manifest.rb', visible_files.inspect])
@@ -114,7 +111,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = Kata.create(root_dir, manifest)    
+    kata = @cd.create_kata(manifest)    
     avatar = Avatar.create(kata, 'wolf')        
     assert_equal [
           [ 'init', '--quiet'],
@@ -158,7 +155,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = Kata.create(root_dir, manifest)
+    kata = @cd.create_kata(manifest)
     avatar = Avatar.create(kata, 'wolf')    
     assert_equal [ ], avatar.traffic_lights    
   end
@@ -185,7 +182,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = Kata.create(root_dir, manifest)
+    kata = @cd.create_kata(manifest)
     avatar = Avatar.create(kata, 'wolf')    
     assert_equal kata, avatar.kata    
   end
@@ -213,7 +210,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = Kata.create(root_dir, manifest)
+    kata = @cd.create_kata(manifest)
     avatar = Avatar.create(kata, 'wolf')    
     visible_files = avatar.visible_files
     assert visible_files.keys.include?('output'),
@@ -244,7 +241,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = Kata.create(root_dir, manifest)    
+    kata = @cd.create_kata(manifest)    
     avatar = Avatar.create(kata, 'wolf')    
     sandbox_dir = avatar.dir + @stub_file.separator + 'sandbox' 
     visible_files.each do |filename,content|
@@ -275,7 +272,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = Kata.create(root_dir, manifest)    
+    kata = @cd.create_kata(manifest)    
     avatar = Avatar.create(kata, 'wolf')
     sandbox = avatar.sandbox    
     assert_equal visible_files['cyber-dojo.sh'].inspect,
@@ -301,7 +298,7 @@ class AvatarTests < ActionController::TestCase
       :filename => 'manifest.rb',
       :content => manifest.inspect
     }      
-    kata = Kata.create(root_dir, manifest)    
+    kata = @cd.create_kata(manifest)    
     @stub_file.read = {
       :dir => language.dir,
       :filename => 'manifest.json',

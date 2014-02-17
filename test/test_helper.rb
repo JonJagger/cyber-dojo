@@ -68,7 +68,7 @@ class ActiveSupport::TestCase
     info[:visible_files]['output'] = ''
     info[:visible_files]['instructions'] = 'practice'
     
-    Kata.create(root_dir, info)
+    Cyber_Dojo.new(root_dir).create_kata(info)
   end
     
   def run_test(delta, avatar, visible_files, timeout = 15)

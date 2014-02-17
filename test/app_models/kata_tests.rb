@@ -7,7 +7,7 @@ class KataTests < ActionController::TestCase
   def setup
     Thread.current[:file] = @stub_file = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
-    root = (Rails.root + 'test/cyberdojo').to_s
+    root_dir = '/anywhere'
     @cd = Cyber_Dojo.new(root_dir)
     @id = '45ED23A2F1'
     @kata = @cd[@id]
@@ -63,9 +63,7 @@ class KataTests < ActionController::TestCase
 
   test "creation saves manifest in kata dir" do
     manifest = { :id => @id }    
-    kata = Kata.create(@cd.dir, manifest) ### 
-    # kata.create(manifest) ??
-    # cd.create_kata(manifest) ??
+    kata = @cd.create_kata(manifest)
     assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_file.write_log[@kata.dir]    
     assert_equal nil, @stub_file.read_log[@kata.dir]
   end
@@ -158,10 +156,10 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "Kata.exists? returns false before kata is created then true after kata is created" do
-    assert !@kata.exists?, "kata.exists? false before created"
+    assert !@kata.exists?, "!kata.exists? before created"
     manifest = { :id => @id }
-    Kata.create(@cd.dir, manifest) ####
-    assert @kata.exists?, "Kata.exists? true after created"
+    @cd.create_kata(manifest)
+    assert @kata.exists?, "Kata.exists? after created"
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,7 +180,7 @@ class KataTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }      
-    kata = Kata.create(@cd.dir, manifest)  ####
+    kata = @cd.create_kata(manifest)
     avatar_name = 'hippo'
     avatar = Avatar.new(kata, avatar_name) ###
     assert avatar_name, avatar.name
@@ -209,7 +207,7 @@ class KataTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = Kata.create(@cd.dir, manifest) ####
+    kata = @cd.create_kata(manifest)
     Avatar.create(kata, 'lion') ####
     Avatar.create(kata, 'hippo') ####
     avatars = kata.avatars
@@ -238,7 +236,7 @@ class KataTests < ActionController::TestCase
       :filename => 'manifest.json',
       :content => JSON.unparse({ })
     }    
-    kata = Kata.create(@cd.dir, manifest) ####
+    kata = @cd.create_kata(manifest)
     created = [ ]
     Avatar.names.length.times do |n|
       avatar = kata.start_avatar

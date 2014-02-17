@@ -3,15 +3,7 @@ require 'DiskFile'
 
 class Kata
   
-  def self.create(root_dir, info)
-    file = Thread.current[:file] || DiskFile.new
-    kata = Kata.new(root_dir, info[:id])
-    file.write(kata.dir, 'manifest.rb', info)
-    kata
-  end
-      
-  #---------------------------------
-
+  #TODO: refactor this so first argument is cyberdojo object
   def initialize(root_dir, id)
     @file = Thread.current[:file] || DiskFile.new
     @root_dir = root_dir
