@@ -4,8 +4,9 @@ require File.dirname(__FILE__) + '/stub_disk_file'
 class LanguageTests < ActionController::TestCase
   
   def setup
-    Thread.current[:file] = @stub_file = StubDiskFile.new  
-    @language = Cyber_Dojo.new(root_dir).language('Ruby')
+    Thread.current[:file] = @stub_file = StubDiskFile.new
+    dir = '/blah'
+    @language = Cyber_Dojo.new(dir).language('Ruby')
   end
 
   def teardown
@@ -15,9 +16,12 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "exists? is false when language folder does not exist" do
-    assert !Cyber_Dojo.new(root_dir).language('xxxx').exists?
+    dir = '/salmon'
+    assert !Cyber_Dojo.new(dir).language('xxxx').exists?
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
   test "exists? is true when language folder exists" do
     @stub_file.read=({
       :dir => @language.dir,

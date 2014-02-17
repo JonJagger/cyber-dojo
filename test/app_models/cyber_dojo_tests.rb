@@ -1,16 +1,4 @@
 require File.dirname(__FILE__) + '/../test_helper'
-#require File.dirname(__FILE__) + '/stub_disk_file'
-
-# Lot of duplication of root_dir in ctor arguments etc
-# Sign of a missing abstraction...
-#
-#   cd = Cyber_Dojo.new(root_dir)
-#   kata = cd['AE346E0D21']
-#   avatar = kata['hippo']   
-#
-#  Cyber_Dojo.new(root_dir)['AE346E0D21'].exists?
-#  Cyber_Dojo.new(root_dir)['AE346E0D21']['hippo'].exists?
-
 
 class Cyber_DojoTests < ActionController::TestCase
   
@@ -27,4 +15,12 @@ class Cyber_DojoTests < ActionController::TestCase
     assert_equal @dir+'/katas/12/34567890', @cd['1234567890'].dir
   end
 
+  test "cd.language gives you language which knows its name" do
+    assert_equal 'xxx', @cd.language('xxx').name
+  end
+  
+  test "cd.exercise gives you exercise which knows its name" do
+    assert_equal 'yyy', @cd.exercise('yyy').name
+  end
+  
 end

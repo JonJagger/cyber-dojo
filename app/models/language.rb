@@ -1,14 +1,7 @@
 require 'DiskFile'
 
 class Language
-  
-  def self.exists?(root_dir, name)
-    @file = Thread.current[:file] || DiskFile.new    
-    @file.directory?(Language.new(root_dir,name).dir)
-  end
-  
-  #---------------------------------
-  
+    
   def initialize(root_dir, name)
     @file = Thread.current[:file] || DiskFile.new
     @root_dir = root_dir

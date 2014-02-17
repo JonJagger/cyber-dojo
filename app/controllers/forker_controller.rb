@@ -12,7 +12,7 @@ class ForkerController < ApplicationController
     end
     
     kata = Kata.new(root_dir, params['id'])
-    if !bad && !Language.exists?(root_dir, kata.language.name)
+    if !bad && !Language.new(root_dir, kata.language.name).exists?
       result[:forked] = false
       result[:reason] = "language"
       result[:language] = kata.language.name

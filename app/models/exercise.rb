@@ -8,6 +8,10 @@ class Exercise
     @file = Thread.current[:file] || DiskFile.new
   end
 
+  def exists?
+    @file.exists?(dir)
+  end
+  
   def dir
     @root_dir + @file.separator + 'exercises' + @file.separator + name
   end

@@ -20,4 +20,8 @@ class Cyber_Dojo
     Language.new(@dir,name)
   end
   
+  def exercise(name)
+    Exercise.new(@dir,name)
+  end
+
 end
