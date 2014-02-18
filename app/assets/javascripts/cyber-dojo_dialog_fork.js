@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_fork = function(id, avatarName, tag, maxTag) {    
+  cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {    
     // There is a lot commonality in the fork and revert dialogs.
 	// And both could be improved by showing the red/green
 	// lines added/removed (like on the diff)
@@ -14,6 +14,12 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    '<table class="align-center">' +
 		  '<tr>' +
+			'<td>' +
+			  '<button type="button"' +
+			          'id="fork_button">' +
+				  title +
+			  '</button>' +
+			'</td>' +		  
 		    '<td>' +
 	          '<div id="traffic_light">' +
 			  '</div>' +
@@ -79,29 +85,30 @@ var cyberDojo = (function(cd, $) {
 	
 	var forkDialog = forkDiv.dialog({	  
 	  autoOpen: false,
-	  width: 1100,
+	  width: 1200,
 	  modal: true,
 	  buttons: {
-		fork: function() {
-		  $.getJSON('/forker/fork', {
-			id: id,
-			avatar: avatarName,
-			tag: tag
-		  }, function(data) {
-			if (data.forked) {
-			  // important not to do window.open(url) directly from here
-			  // as it will open in a new window and not a new tab ***
-			  forkSucceededDialog(data);
-			} else {
-			  forkFailedDialog(data);
-			}
-		  });		  
-          $(this).remove();
-		},
-		'cancel': function() {
+		'close': function() {
 		  $(this).remove();
 		}
 	  }
+	});
+	
+	$('#fork_button', forkDiv).click(function() {
+	  $.getJSON('/forker/fork', {
+		id: id,
+		avatar: avatarName,
+		tag: tag
+	  }, function(data) {
+		if (data.forked) {
+		  // important not to do window.open(url) directly from here
+		  // as it will open in a new window and not a new tab ***
+		  forkSucceededDialog(data);
+		} else {
+		  forkFailedDialog(data);
+		}
+	  });		  
+	  forkDialog.remove();	  
 	});
 	
 	var forkSucceededDialog = function(fork) {
@@ -317,7 +324,7 @@ var cyberDojo = (function(cd, $) {
 	forkDialog.dialog('open');
 	refresh();
 	
-  }; // cd.dialog_fork = function(id, avatarName, tag, maxTag) {
+  }; // cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {
 
 
   return cd;

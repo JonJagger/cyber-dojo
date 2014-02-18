@@ -12,11 +12,9 @@
     }
   }
   
-  #dashboard_button,
-  #diff_review_button,
-  #fork_button,
   #line_numbers_button,
   #revert_button,
+  #fork_button,
   #help_button {
     @include font-size-tiny();  
   }
@@ -42,3 +40,13 @@
     }
   }
 }
+
+#revert_dialog #revert_button, #fork_dialog #fork_button {
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include font-size-large();
+  padding: {
+    left: 0.2em;
+    right: 0.2em;
+  }
+}
+

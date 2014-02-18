@@ -3,18 +3,23 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(id, avatarName, tag, maxTag) {    
+  cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {    
     // This is virtually identical to
 	// cyber-dojo_dialog_fork.js
 	// except for the command executed when ok is pressed
 	// and refresh().
-	
   	var minTag = 1;
   
     var makeRevertInfo = function() {
 	  return '' +
 	    '<table class="align-center">' +
 		  '<tr>' +
+			'<td>' +
+			  '<button type="button"' +
+			          'id="revert_button">' +
+				  title +
+			  '</button>' +
+			'</td>' +
 		    '<td>' +
 	          '<div id="traffic_light">' +
 			  '</div>' +
@@ -23,7 +28,7 @@ var cyberDojo = (function(cd, $) {
 			  '<input type="text" ' +
 			        ' id="revert_tag_number"' +
 					' value="" />' +			  
-			'</td>' +			
+			'</td>' +
 		  '</tr>' +
 		'</table>';	  
     };
@@ -80,6 +85,13 @@ var cyberDojo = (function(cd, $) {
 
     var revertDiv = makeReverterDiv();
 
+	$('#revert_button', revertDiv).click(function() {
+	  deleteAllCurrentFiles();
+	  copyRevertFilesToCurrentFiles();
+	  cd.testForm().submit();
+	  revertDialog.remove();
+	});
+
 	var deleteAllCurrentFiles = function() {
 	  var newFilename;
 	  $.each(cd.filenames(), function(_, filename) {
@@ -102,16 +114,10 @@ var cyberDojo = (function(cd, $) {
 
 	var revertDialog = revertDiv.dialog({	  
 	  autoOpen: false,
-	  width: 1100,
+	  width: 1200,
 	  modal: true,
 	  buttons: {
-		revert: function() {
-		  deleteAllCurrentFiles();
-		  copyRevertFilesToCurrentFiles();
-		  cd.testForm().submit();
-		  $(this).remove();
-		},
-		cancel: function() {
+		close: function() {
 		  $(this).remove();
 		}
 	  }
@@ -265,7 +271,7 @@ var cyberDojo = (function(cd, $) {
 	revertDialog.dialog('open');
 	refresh();
 	
-  }; // cd.dialog_revert = function(id, avatarName, tag, maxTag) {
+  }; // cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {
 
 
   return cd;
