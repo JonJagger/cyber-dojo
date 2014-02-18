@@ -25,6 +25,14 @@
     @include rounded-corner(14px);    
   }
   
+  #traffic_lights {
+    width: 50em;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+}
+
+#kata_page, #help_dialog {
   #test {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-large();
@@ -32,11 +40,5 @@
       left: 0.2em;
       right: 0.2em;
     }
-  }
-  
-  #traffic_lights {
-    width: 50em;
-    margin-top: 5px;
-    margin-left: 5px;
   }
 }

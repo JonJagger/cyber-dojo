@@ -5,6 +5,12 @@ REFACTORING
    app_lib/Choose methods -> Dojo methods
    StubDiskFile can verify read= settings were actually read
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+drop titles on diff/review/fork dialogs?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIP
+   default state can be showing a message saying
+   hover over any element to reveal its tooltip
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSTALLATION-TESTS
   Copy make_info out of test-helper so there is no dependency
   Create script that can pass root_dir and optional language to remainder
