@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {    
+  cd.dialog_fork = function(title, close, id, avatarName, tag, maxTag) {    
     // There is a lot commonality in the fork and revert dialogs.
 	// And both could be improved by showing the red/green
 	// lines added/removed (like on the diff)
@@ -87,11 +87,14 @@ var cyberDojo = (function(cd, $) {
 	  autoOpen: false,
 	  width: 1200,
 	  modal: true,
-	  buttons: {
-		'close': function() {
-		  $(this).remove();
-		}
-	  }
+	  buttons: [
+		{
+		  text: close,
+		  click: function() {
+		    $(this).remove();
+		  }
+	    }
+	  ]
 	});
 	
 	$('#fork_button', forkDiv).click(function() {
@@ -324,7 +327,7 @@ var cyberDojo = (function(cd, $) {
 	forkDialog.dialog('open');
 	refresh();
 	
-  }; // cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {
+  }; // cd.dialog_fork = function(title, close, id, avatarName, tag, maxTag) {
 
 
   return cd;

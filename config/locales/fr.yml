@@ -49,6 +49,7 @@ fr:
     buttons:
       setup: "créer"
       ok: "ok"
+      close: "proche"
       cancel: "annuler"      
       start: "commencer"
       resume: "reproduire"

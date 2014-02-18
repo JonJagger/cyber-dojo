@@ -2,10 +2,13 @@
 DIFF-DIALOG
   make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REVERT
+  line-numbers appear momentarily
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
-   avatar = kata['hippo']
-   app_lib/Choose methods -> Dojo methods
-   StubDiskFile can verify read= settings were actually read
+  avatar = kata['hippo']
+  app_lib/Choose methods -> Dojo methods
+  StubDiskFile can verify read= settings were actually read
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIP
    default state can be showing a message saying

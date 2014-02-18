@@ -49,6 +49,7 @@ en:
     buttons:
       setup: "setup"
       ok: "ok"
+      close: "close"
       cancel: "cancel"
       start: "start"
       resume: "resume"
