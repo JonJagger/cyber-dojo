@@ -24,8 +24,8 @@ INSTALLATION-TESTS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK-REVERT
   make it look the same as diff-dialog
-  show the filenames with red/green line-counts
-  show the content with the red/green deleted/added lines
+    show the filenames with red/green line-counts
+    show the content with the red/green deleted/added lines
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   Hashes of the files, together with filenames, could be used
