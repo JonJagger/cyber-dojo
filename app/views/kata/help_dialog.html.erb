@@ -1,15 +1,16 @@
 
-<div class="dialog" data-width="650">
+<div class="dialog" data-width="575">
   <table>  
     <tr>
       <td>
+        <div class="panel">
         <table>
           <tr>
-            <td class="panel">
+            <td>
               <table>
                 <tr>
                   <td>
-                    <%= logo_image(57,'') %>
+                    <%= logo_image(50,'') %>
                   </td>
                   <td>
                     <%= raw t("views.kata_help.opens_a_home_page") %>
@@ -17,7 +18,7 @@
                 </tr>
               </table>
             </td>
-            <td class="panel">
+            <td>
               <table>
                 <tr>
                   <td>
@@ -29,7 +30,7 @@
                 </tr>
               </table>
             </td>
-            <td class="panel">
+            <td>
               <table>
                 <tr>
                   <td>
@@ -51,7 +52,8 @@
               </table>
             </td>
           </tr>
-        </table>      
+        </table>
+        </div>
       </td>
     </tr>
   
@@ -91,13 +93,13 @@
           <table>
             <tr>
               <td>
-                <%= traffic_light_image('red',22,65) %>
+                <%= traffic_light_image('red',20,60) %>
               </td>
               <td>
-                <%= traffic_light_image('amber',22,65) %>
+                <%= traffic_light_image('amber',20,60) %>
               </td>
               <td>
-                <%= traffic_light_image('green',22,65) %>
+                <%= traffic_light_image('green',20,60) %>
               </td>
               <td>
                 &nbsp;<span style="color:red;"><%= t("views.labels.red") %></span>

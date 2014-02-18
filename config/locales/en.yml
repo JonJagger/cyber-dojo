@@ -112,7 +112,7 @@ en:
     kata_help:
       opens_a_home_page: "opens a<br/>home<br/>page"
       opens_a_dashboard_page: "opens a<br/>dashboard<br/>page"
-      opens_a_diff_review: "opens a<br/>diff-review<br/>dialog"
+      opens_a_diff_review: "opens a<br/>diff<br/>dialog"
       results_go_to: "results go to"
       the_tests_ran_but_one_or_more_failed: "the tests ran but one or more failed"
       the_tests_could_not_be_run: "the tests could not be run"

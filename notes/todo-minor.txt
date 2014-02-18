@@ -5,9 +5,6 @@ REFACTORING
    app_lib/Choose methods -> Dojo methods
    StubDiskFile can verify read= settings were actually read
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE
-  help dialog top panel is slightly wider than panels below
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSTALLATION-TESTS
   Copy make_info out of test-helper so there is no dependency
   Create script that can pass root_dir and optional language to remainder

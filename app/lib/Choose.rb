@@ -6,7 +6,7 @@ module Choose
   # language and the exercise on the setup page the same as the
   # kata with that id - if they still exist.
   
-  #TODO: put these two methods in app/models/Cyber_Dojo
+  #TODO: put these two methods in app/models/Dojo
   
   def self.language(languages, params_id, id, root_dir)
     dojo = Dojo.new(root_dir)
