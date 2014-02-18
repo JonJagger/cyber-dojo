@@ -3,9 +3,8 @@
 
 $(document).ready(function() {
 
-  var title = "<%= t('views.buttons.diff_review') %>";
   var lights = $('.diff-traffic-light');
-  cd.setupTrafficLightOpensDiffDialogHandlers(lights, title);  
+  cd.setupTrafficLightOpensDiffDialogHandlers(lights);  
   $('#traffic_lights').scrollLeft(100000);
   cd.tipify($('.tipped'), $('#tip_window'));
   
