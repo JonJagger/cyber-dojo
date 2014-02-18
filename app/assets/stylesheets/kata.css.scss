@@ -8,7 +8,11 @@
   
   #file_operations {
     #new, #rename, #delete {
-      @include font-size-tiny();  
+      @include font-size-tiny();
+      padding: {
+          left: 0.3em;
+          right: 0.3em;
+      }
     }
   }
   
@@ -30,9 +34,9 @@
 }
 
 #kata_page, #help_dialog {
-  #test {
+  #test_button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-large();
+    @include font-size-largest();
     padding: {
       left: 0.2em;
       right: 0.2em;

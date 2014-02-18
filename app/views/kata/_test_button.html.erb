@@ -4,7 +4,7 @@
 $(document).ready(function() {
     
   var spinners = $('.spinner');
-  var testButton = $('#test');
+  var testButton = $('#test_button');
   var tipWindow = $('#tip_window');
   var trafficLightCount = function() {
     // cannot be cached as it is replaced by run_tests.js.erb
@@ -59,7 +59,7 @@ $(document).ready(function() {
     </td>
     <td>
       <button type="submit"
-              id="test"
+              id="test_button"
               class="tipped"                          
               value="<%= t('views.buttons.test') %>">
         <%= t('views.buttons.test') %>
