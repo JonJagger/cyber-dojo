@@ -27,9 +27,6 @@ FORK-REVERT
   show the filenames with red/green line-counts
   show the content with the red/green deleted/added lines
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINE-NUMBERS
-  Should be a checkbox.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   Hashes of the files, together with filenames, could be used
   to determine if a traffic-light is reverted.
