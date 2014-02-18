@@ -17,10 +17,6 @@
   }
 }
 
-#fork_tag_number {
-  @include editable_tag_number;
-}
-
 #fork_content
 {
   width: 40em;
@@ -29,6 +25,10 @@
     size: 1.5em;
     family: monospace;
   }
+}
+
+#fork_tag_number {
+  @include editable_tag_number;
 }
 
 #fork_tip

@@ -1,11 +1,11 @@
 
+DIFF-DIALOG
+  make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
    avatar = kata['hippo']
    app_lib/Choose methods -> Dojo methods
    StubDiskFile can verify read= settings were actually read
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-drop titles on diff/review/fork dialogs?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIP
    default state can be showing a message saying
@@ -26,10 +26,6 @@ FORK-REVERT
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
   Should be a checkbox.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-drop diff-review button on [test] page
-Rely on always pressing a traffic-light to get diff-dialog.
-drop dashboard button too? 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   Hashes of the files, together with filenames, could be used
@@ -72,7 +68,7 @@ I18N
   ...
   On dialog buttons
     cancel: new-file,rename-file,delete-file
-    close: diff-review, revert, fork
+    close: diff, revert, fork
     fork: fork
     revert: revert
   ...  

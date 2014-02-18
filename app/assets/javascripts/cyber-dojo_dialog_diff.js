@@ -33,7 +33,7 @@ var cyberDojo = (function(cd, $) {
 			  '<input type="text" id="was_tag_number" value="' + wasTag + '" />' +
 			'</td>' +
 			'<td>' +
-			  '&larr;' +
+			  '&thinsp;&larr;' +
 			'</td>' +
 			'<td>' +
 			  '<div id="tag_gap_number">' +
@@ -41,7 +41,7 @@ var cyberDojo = (function(cd, $) {
 			  '</div>' +
 			'</td>' +
 			'<td>' +
-			  '&rarr;' +
+			  '&rarr;&thinsp;' +
 			'</td>' +
 			'<td>' +
 			  '<input type="text" id="now_tag_number" value="' + nowTag + '" />' +
@@ -101,7 +101,6 @@ var cyberDojo = (function(cd, $) {
 	
     var diffDiv = makeDiffDiv();
 	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var wasTagNumber = $('#was_tag_number', diffDiv);
@@ -373,7 +372,6 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
 	var diffDialog = diffDiv.dialog({	  
-	  //title: cd.dialogTitle(title),
 	  autoOpen: false,
 	  width: 1200,
 	  modal: true,

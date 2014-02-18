@@ -44,9 +44,15 @@
 #revert_dialog #revert_button, #fork_dialog #fork_button {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   @include font-size-large();
-  padding: {
-    left: 0.2em;
-    right: 0.2em;
+  margin-left: 0em;
+  margin-right: 0em;
+  margin-bottom: 0.3em;
+}
+
+#revert_dialog, #fork_dialog {
+  #traffic_light {
+     margin-left: 0.3em;
+     margin-right: 0.3em;
   }
 }
 

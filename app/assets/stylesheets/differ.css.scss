@@ -16,12 +16,18 @@
   .tag_green {
     color: $green;
   }
+  #was_traffic_light {
+    margin-right: 0.3em;
+  }
+  #now_traffic_light {
+    margin-left: 0.3em;
+  }
 }
 
 #diff_content
 {
-  height: 26em;
   width: 40em;
+  height: 25em;
   font: {
     size: 1.5em;
     family: monospace;
@@ -44,7 +50,7 @@
 }
 
 .diff_line_numbers, .diff_sheet {
-  height: 26em;
+  height: 25em;
   margin: 0;
   padding: 0;
   @include code-font;    
@@ -70,8 +76,8 @@
 }
 
 .diff_sheet {
-  overflow: auto;
   width: 40em;
+  overflow: auto;
   color: $darker-color;
   background: $lighter-color;  
   added, deleted, same { padding-left: 3px; }
