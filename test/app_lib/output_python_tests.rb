@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputPythonTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
   
   test "failing test is red" do
     output = 
@@ -87,9 +87,7 @@ class OutputPythonTests < ActionController::TestCase
   end
       
   def colour_of(output)
-    CodeOutputParser::parse_python_unittest(output) 
+    OutputParser::parse_python_unittest(output) 
   end
   
 end
-
-

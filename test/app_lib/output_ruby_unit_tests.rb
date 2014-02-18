@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputRubyUnitTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "was a red ruby case" do
     output =
@@ -133,7 +133,7 @@ class OutputRubyUnitTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_ruby_test_unit(output) 
+    OutputParser::parse_ruby_test_unit(output) 
   end
 end
 

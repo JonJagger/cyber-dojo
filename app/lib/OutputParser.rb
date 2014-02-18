@@ -1,5 +1,5 @@
 
-module CodeOutputParser
+module OutputParser
 
   #  'red'   - this means the tests ran but at least one failed
   #  'amber' - this means the tests could not be run (eg syntax error)

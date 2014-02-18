@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputNUnitTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "nunit RED" do
     # There are two NUnit output formats depending on what
@@ -29,7 +29,7 @@ class OutputNUnitTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_nunit(output)
+    OutputParser::parse_nunit(output)
   end
   
 end

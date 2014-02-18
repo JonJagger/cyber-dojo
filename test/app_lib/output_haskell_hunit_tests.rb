@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputHaskellTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "one fail is red" do
     output =
@@ -70,7 +70,7 @@ class OutputHaskellTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_hunit(output)   
+    OutputParser::parse_hunit(output)   
   end
   
 end

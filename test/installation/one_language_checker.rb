@@ -144,7 +144,7 @@ private
   def check_unit_test_framework_has_parse_method
     has_parse_method = true
     begin
-      CodeOutputParser::parse(unit_test_framework, "xx")    
+      OutputParser::parse(unit_test_framework, "xx")    
     rescue
       has_parse_method = false
     end

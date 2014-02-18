@@ -326,7 +326,7 @@ class AvatarTests < ActionController::TestCase
     }
     output = avatar.sandbox.test(delta, avatar.visible_files, timeout=15)    
     language = avatar.kata.language
-    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)    
+    traffic_light = OutputParser::parse(language.unit_test_framework, output)    
     avatar.save_run_tests(visible_files, traffic_light)    
     traffic_lights = avatar.traffic_lights
     assert_equal 1, traffic_lights.length

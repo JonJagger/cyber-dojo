@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputJasmineTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "one fail is red" do
     output =
@@ -89,9 +89,7 @@ class OutputJasmineTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_jasmine(output) # coffee-script
+    OutputParser::parse_jasmine(output) # coffee-script
   end
   
 end
-
-

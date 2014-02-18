@@ -21,7 +21,7 @@ class SandboxTests < ActionController::TestCase
       :new       => [ ]
     }
     output = sandbox.test(delta, visible_files)    
-    traffic_light = CodeOutputParser::parse('junit', output)
+    traffic_light = OutputParser::parse('junit', output)
     avatar.save_run_tests(visible_files, traffic_light)
     assert_equal 'green', traffic_light['colour']
     
@@ -38,7 +38,7 @@ class SandboxTests < ActionController::TestCase
     }
     output = sandbox.test(delta, visible_files)
     avatar.save_run_tests(visible_files, traffic_light)      
-    traffic_light = CodeOutputParser::parse('junit', output)
+    traffic_light = OutputParser::parse('junit', output)
     assert_equal 'amber', traffic_light['colour']
     
     # put it back the way it was
@@ -54,7 +54,7 @@ class SandboxTests < ActionController::TestCase
       :new       => [ 'Untitled.java' ]
     }
     output = sandbox.test(delta, visible_files)    
-    traffic_light = CodeOutputParser::parse('junit', output)
+    traffic_light = OutputParser::parse('junit', output)
     avatar.save_run_tests(visible_files, traffic_light)
     # if the file whose name contained a space has been retained
     # this will be :amber instead of :green

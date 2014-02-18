@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputRubyRSpecTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "F is red" do
     output = "F" 
@@ -47,9 +47,7 @@ class OutputRubyRSpecTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_ruby_rspec(output)   
+    OutputParser::parse_ruby_rspec(output)   
   end
   
 end
-
-

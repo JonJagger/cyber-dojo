@@ -53,7 +53,7 @@ class ActiveSupport::TestCase
   def run_test(delta, avatar, visible_files, timeout = 15)
     output = avatar.sandbox.test(delta, visible_files, timeout)
     language = avatar.kata.language
-    traffic_light = CodeOutputParser::parse(language.unit_test_framework, output)
+    traffic_light = OutputParser::parse(language.unit_test_framework, output)
     avatar.save_run_tests(visible_files, traffic_light)    
     output
   end

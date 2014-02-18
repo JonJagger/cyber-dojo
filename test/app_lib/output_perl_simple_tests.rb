@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputPerlTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "one failing test is red" do
     output =
@@ -108,7 +108,7 @@ class OutputPerlTests < ActionController::TestCase
   end
    
   def colour_of(output)
-    CodeOutputParser::parse_perl_test_simple(output) 
+    OutputParser::parse_perl_test_simple(output) 
   end
   
 end

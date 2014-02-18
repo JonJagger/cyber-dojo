@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputNodeTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "one fail is red" do
     output =
@@ -39,7 +39,7 @@ class OutputNodeTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_node(output)     
+    OutputParser::parse_node(output)     
   end
   
 end

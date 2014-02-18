@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputScalaTestTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "red" do
     output =
@@ -38,8 +38,6 @@ class OutputScalaTestTests < ActionController::TestCase
   end
     
   def colour_of(output)
-    CodeOutputParser::parse_scala_test(output) 
+    OutputParser::parse_scala_test(output) 
   end
 end
-
-

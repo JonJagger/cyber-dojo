@@ -29,7 +29,7 @@ class Sandbox
     end        
   end
   
-  def test(delta, visible_files, max_run_tests_duration = 15)    
+  def test(delta, visible_files, max_duration = 15)    
     delta[:changed].each do |filename|
       @file.write(dir, filename, visible_files[filename])
     end    
@@ -42,7 +42,7 @@ class Sandbox
     end    
     command  = "cd '#{dir}';" +
                "./cyber-dojo.sh"
-    output = @task.execute(command, max_run_tests_duration)
+    output = @task.execute(command, max_duration)
     # create output file so it appears in diff-view
     @file.write(dir, 'output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)    

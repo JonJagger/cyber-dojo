@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputGroovySpockTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "groovyc not installed is amber" do
     output = [ "groovyc: command not found" ].join("\n")
@@ -91,7 +91,7 @@ class OutputGroovySpockTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_groovy_spock(output)    
+    OutputParser::parse_groovy_spock(output)    
   end
   
 end

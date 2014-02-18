@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputCppGoogleTestTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "initial red is red" do
     output =
@@ -65,7 +65,7 @@ class OutputCppGoogleTestTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_google_test(output)       
+    OutputParser::parse_google_test(output)       
   end
   
 end

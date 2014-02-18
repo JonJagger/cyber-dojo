@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputGoTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
 
   test "build failed is amber" do
     assert_equal :amber, colour_of("[build failed]")  
@@ -23,9 +23,7 @@ class OutputGoTests < ActionController::TestCase
   end
   
   def colour_of(output)
-    CodeOutputParser::parse_go_testing(output)
+    OutputParser::parse_go_testing(output)
   end
   
 end
-
-

@@ -1,10 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
+require 'OutputParser'
 
 class OutputJavaJUnitTests < ActionController::TestCase
   
-  include CodeOutputParser
+  include OutputParser
   
   test "failing test is red" do
     output =
@@ -47,9 +47,7 @@ class OutputJavaJUnitTests < ActionController::TestCase
   end
      
   def colour_of(output)
-    CodeOutputParser::parse_junit(output)  
+    OutputParser::parse_junit(output)  
   end
   
 end
-
-

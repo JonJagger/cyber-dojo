@@ -1,7 +1,7 @@
 
 require 'Approval'
-require 'CodeOutputParser'
-require 'FileHashDiffer'
+require 'OutputParser'
+require 'ContentHashDiffer'
 require 'MakefileFilter'
 
 class KataController < ApplicationController
@@ -21,7 +21,7 @@ class KataController < ApplicationController
   def run_tests    
     incoming_hashes = params[:file_hashes_incoming]
     outgoing_hashes = params[:file_hashes_outgoing]
-    delta = FileHashDiffer.diff(incoming_hashes, outgoing_hashes)
+    delta = ContentHashDiffer.diff(incoming_hashes, outgoing_hashes)
     
     @kata   = dojo[id]
     @avatar = Avatar.new(@kata, params[:avatar])
@@ -36,7 +36,7 @@ class KataController < ApplicationController
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.dir, visible_files)
     
     language = @kata.language    
-    traffic_light = CodeOutputParser::parse(language.unit_test_framework, @output)
+    traffic_light = OutputParser::parse(language.unit_test_framework, @output)
     traffic_light['time'] = make_time(Time.now)
     @traffic_lights = @avatar.save_run_tests(visible_files, traffic_light)
     @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
