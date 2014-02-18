@@ -45,6 +45,7 @@ en:
       traffic_light: "traffic light"
       language: "language"
       exercise: "exercise"
+      file: "file"      
       
     buttons:
       setup: "setup"
@@ -64,9 +65,9 @@ en:
       tips: "tips"
       why: "why"
       test: "test"
-      new_file: "new file"
-      rename_file: "rename file"
-      delete_file: "delete file"
+      new_file: "new"
+      rename_file: "rename"
+      delete_file: "delete"
       fork: "fork"
       revert: "revert"
       download: "download"

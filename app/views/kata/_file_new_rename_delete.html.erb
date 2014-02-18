@@ -24,43 +24,49 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="file_operations">
-    
-  <div class="table-row">
-    <button type="button"
-            id="rename"
-            data-title="<%= t('views.buttons.rename_file') %>"
-            class="tipped">
-      <%= t('views.buttons.rename_file') %>
-      <div class="tooltip">
-        renames the<br>current file
-      </div>                
-    </button>
-  </div>
+<div id="file_operations">    
+  <table>
+    <tr>
+      <td>
+        <%= t('views.labels.file') %>
+      </td>
+        
+      <td>
+        <button type="button"
+                id="new"
+                data-title="<%= t('views.buttons.new_file') %>"
+                class="tipped">
+          <%= t('views.buttons.new_file') %>
+          <div class="tooltip">
+            creates a<br>new file
+          </div>
+        </button>
+      </td>
+        
+      <td>
+        <button type="button"
+                id="rename"
+                data-title="<%= t('views.buttons.rename_file') %>"
+                class="tipped">
+          <%= t('views.buttons.rename_file') %>
+          <div class="tooltip">
+            renames the<br>current file
+          </div>                
+        </button>
+      </td>
 
-  <div class="table-row">
-    <button type="button"
-            id="delete"
-            data-title="<%= t('views.buttons.delete_file') %>" 
-            class="tipped">
-      <%= t('views.buttons.delete_file') %>
-      <div class="tooltip">
-        deletes the<br>current file
-      </div>                        
-    </button>    
-  </div>
-  
-  <div class="table-row">
-    <button type="button"
-            id="new"
-            data-title="<%= t('views.buttons.new_file') %>"
-            class="tipped">
-      <%= t('views.buttons.new_file') %>
-      <div class="tooltip">
-        creates a<br>new file
-      </div>
-    </button>
-  </div>
-  
+      <td>
+        <button type="button"
+                id="delete"
+                data-title="<%= t('views.buttons.delete_file') %>" 
+                class="tipped">
+          <%= t('views.buttons.delete_file') %>
+          <div class="tooltip">
+            deletes the<br>current file
+          </div>                        
+        </button>    
+      </td>
+    </tr>
+  </table>
 </div>
 

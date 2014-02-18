@@ -68,9 +68,7 @@ I18N
   ...
   On dialog buttons
     cancel: new-file,rename-file,delete-file
-    close: diff, revert, fork
-    fork: fork
-    revert: revert
+    close: diff
   ...  
   Lots more.
   Have promises for Russian and Ukranian.

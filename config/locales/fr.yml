@@ -45,6 +45,7 @@ fr:
       traffic_light: "feu"      
       language: "langue"
       exercise: "exercice"
+      file: "fichier"
       
     buttons:
       setup: "créer"
@@ -64,9 +65,9 @@ fr:
       tips: "conseil"
       why: "pourquoi"
       test: "tester"
-      new_file: "neuf fichier"
-      rename_file: "renommer fichier"
-      delete_file: "effacer fichier"
+      new_file: "neuf"
+      rename_file: "renommer"
+      delete_file: "effacer"
       fork: "bifurquer"
       revert: "revenir"
       download: "télécharger"
