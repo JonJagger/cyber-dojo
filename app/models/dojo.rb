@@ -23,10 +23,10 @@ class Dojo
     Exercise.new(self,name)
   end
 
-  def create_kata(info)
+  def create_kata(manifest)
     file = Thread.current[:file] || DiskFile.new
-    kata = self[info[:id]]
-    file.write(kata.dir, 'manifest.rb', info)
+    kata = self[manifest[:id]]
+    file.write(kata.dir, 'manifest.rb', manifest)
     kata
   end
 

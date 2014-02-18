@@ -38,16 +38,16 @@ class ActiveSupport::TestCase
   
   def setup
     system("rm -rf #{root_dir}/katas/*")
-    @dojo = Dojo.new(root_dir)
+    @dojo = dojo
   end
   
   def make_kata(language_name, exercise_name = 'Yahtzee')
     # does not rely on setup having been called.
     # See installation/one_language_checker::language_test()
-    info = make_info(language_name, exercise_name)
-    info[:visible_files]['output'] = ''
-    info[:visible_files]['instructions'] = 'practice'    
-    dojo.create_kata(info)
+    manifest = make_manifest(language_name, exercise_name)
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = 'practice'    
+    dojo.create_kata(manifest)
   end
     
   def run_test(delta, avatar, visible_files, timeout = 15)
@@ -68,7 +68,7 @@ private
     Dojo.new(root_dir)
   end
   
-  def make_info(language_name, exercise_name)
+  def make_manifest(language_name, exercise_name)
     language = dojo.language(language_name)
     { 
       :created => now = make_time(Time.now),

@@ -18,21 +18,21 @@ class SetupController < ApplicationController
   end
 
   def save
-    info = gather_info
-    language = dojo.language(info[:language])
-    exercise = dojo.exercise(info[:exercise])
-    vis = info[:visible_files] = language.visible_files
+    manifest = make_manifest(params['language'], params['exercise'])
+    language = dojo.language(manifest[:language])
+    exercise = dojo.exercise(manifest[:exercise])
+    vis = manifest[:visible_files] = language.visible_files
     vis['output'] = ''
     vis['instructions'] = exercise.instructions
-    dojo.create_kata(info)
+    dojo.create_kata(manifest)
     
-    logger.info("Created dojo " + info[:id] +
+    logger.info("Created dojo " + manifest[:id] +
                 ", " + language.name +
                 ", " + exercise.name +
                 ", " + make_time(Time.now).to_s)
 
     render :json => {
-      :id => info[:id]
+      :id => manifest[:id]
     }    
   end  
 

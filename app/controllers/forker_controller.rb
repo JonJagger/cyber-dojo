@@ -39,14 +39,11 @@ class ForkerController < ApplicationController
     end
 
     if !bad    
-      # gather_info requres params['language] and params['exercise']
-      params['language'] = kata.language.name      
-      params['exercise'] = kata.exercise.name
-      info = gather_info
-      info[:visible_files] = avatar.visible_files(params['tag'])    
-      dojo.create_kata(info)
+      manifest = make_manifest(kata.language.name, kata.exercise.name)
+      manifest[:visible_files] = avatar.visible_files(params['tag'])    
+      dojo.create_kata(manifest)
       result[:forked] = true
-      result[:id] = info[:id]
+      result[:id] = manifest[:id]
     end
       
     render :json => result    

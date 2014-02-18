@@ -19,18 +19,18 @@ class ApplicationController < ActionController::Base
     Dojo.new(root_dir)
   end
   
-  def gather_info    
-    language = dojo.language(params['language'])    
-    
-    { :created => make_time(Time.now),
+  def make_manifest(language_name, exercise_name)
+    language = dojo.language(language_name)
+    {
+      :created => make_time(Time.now),
       :id => Uuid.new.to_s,
       :language => language.name,
-      :exercise => params['exercise'], # used only for display
+      :exercise => exercise_name, # used only for display
       :unit_test_framework => language.unit_test_framework,
       :tab_size => language.tab_size
     }
   end
-
+  
   def bind(filename)
     filename = Rails.root.to_s + filename
     ERB.new(File.read(filename)).result(binding)
