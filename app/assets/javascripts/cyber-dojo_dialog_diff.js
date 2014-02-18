@@ -373,7 +373,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	
 	var diffDialog = diffDiv.dialog({	  
-	  title: cd.dialogTitle(title),
+	  //title: cd.dialogTitle(title),
 	  autoOpen: false,
 	  width: 1200,
 	  modal: true,
