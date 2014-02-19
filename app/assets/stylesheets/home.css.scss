@@ -87,6 +87,8 @@ a:link, a:visited
 #links, #source, #tips, #why
 {
   @include font-size-tiny();
+  padding-left: 0.3em;
+  padding-right: 0.3em;
 }
 
 #please_donate

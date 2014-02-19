@@ -1,4 +1,12 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+19th Feb 2014: On cyber-dojo.com ran
+  > ruby prune_small.rb true 3 7 
+    2764 katas deleted
+    5783 katas not deleted
+  >df
+  reports no inodes regained?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

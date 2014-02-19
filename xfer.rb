@@ -8,7 +8,7 @@
 # from the target server you then run
 #   ruby xfer.rb tl_25_age_14.txt 0 100
 # which will xfer tar.gz files for all dojos with
-# between 0 and 100 traffic lights
+# between 0 and 100 traffic lights (assuming cyber-dojo.com is up)
 
 txt_file = ARGV[0]
 lo = (ARGV[1] || "0").to_i
