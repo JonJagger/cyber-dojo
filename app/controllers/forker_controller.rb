@@ -3,9 +3,9 @@ class ForkerController < ApplicationController
 
   def fork    
     result = { :forked => false }    
-    error = false
-    
+    error = false    
     kata = dojo[params['id']]
+    avatar = Avatar.new(kata, params['avatar']) ###
     
     if !error && !kata.exists?
       result[:reason] = "id"
@@ -18,15 +18,12 @@ class ForkerController < ApplicationController
       error = true
     end
     
-    #avatar = kata[params['avatar']]
-    #if !error && !avatar.exits?
-    if !error && !Avatar.new(kata, params['avatar']).exists?
+    if !error && !avatar.exists?
       result[:reason] = "avatar"
       error = true
     end
 
     if !error
-      avatar = Avatar.new(kata, params['avatar']) # drop
       traffic_lights = avatar.traffic_lights
       is_tag = params['tag'].match(/^\d+$/)
       tag = params['tag'].to_i;
@@ -38,7 +35,6 @@ class ForkerController < ApplicationController
 
     if !error    
       manifest = make_manifest(kata.language.name, kata.exercise.name)
-      # is avatar still visible here?
       manifest[:visible_files] = avatar.visible_files(params['tag'])    
       dojo.create_kata(manifest)
       result[:forked] = true

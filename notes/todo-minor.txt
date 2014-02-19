@@ -23,7 +23,9 @@ REFACTORING
     @stubDisk[dir+file] = content
     relies on dir's always ending in a /
   StubDiskFile is better named as StubDisk
+    so two classes are DiskFile and StubFile
   StubDiskGit is better named as StubGit
+    so two classes are DiskGit and StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIP
    default state can be showing a message saying
