@@ -2,14 +2,28 @@
 DIFF-DIALOG
   make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ContentHashDiffer.diff should be called makeDelta
+  its about previous and current (not incoming outgoing)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
+  Dojo.create_kata(manifest)
+    add 2nd parameter specifying format, no default, on call use "rb"
+  ...
   avatar = kata['hippo']
+  ...
   app_lib/Choose methods -> Dojo methods
+  ...
   StubDiskFile can verify read= settings were actually read
     they can do this in teardown methods!
+  @stubDisk.read=({:dir=>dir,:file=>file,:content=>content})
+    would be better as
+    @stubDisk[dir+file] = content
+    relies on dir's always ending in a /
+  StubDiskFile is better named as StubDisk
+  StubDiskGit is better named as StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIP
    default state can be showing a message saying

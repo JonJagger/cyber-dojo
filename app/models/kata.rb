@@ -38,11 +38,11 @@ class Kata
   end
   
   def avatars
-    Avatar.names.map { |name|
-      Avatar.new(self, name)
+    Avatar.names.map{ |name|
+      Avatar.new(self,name)
     }.select { |avatar|
-      @file.exists? avatar.dir
-    }    
+      avatar.exists?
+    }
   end
   
   def language
