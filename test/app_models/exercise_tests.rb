@@ -4,13 +4,12 @@ require File.dirname(__FILE__) + '/stub_disk'
 class ExerciseTests < ActionController::TestCase
     
   def setup
-    Thread.current[:file] = @disk = StubDisk.new
-    dir = '/stubbed'
-    @exercise = Dojo.new(dir).exercise('Yahtzee')
+    Thread.current[:disk] = @disk = StubDisk.new
+    @exercise = Dojo.new('stubbed').exercise('Yahtzee')
   end
   
   def teardown
-    Thread.current[:file] = nil
+    Thread.current[:disk] = nil
   end
     
   #- - - - - - - - - - - - - - - - - - - - - - - - - -

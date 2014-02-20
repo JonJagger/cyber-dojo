@@ -24,7 +24,7 @@ class Dojo
   end
 
   def create_kata(manifest)
-    file = Thread.current[:file] || DiskFile.new
+    file = Thread.current[:disk] || DiskFile.new
     kata = self[manifest[:id]]
     file.write(kata.dir, 'manifest.rb', manifest)
     kata

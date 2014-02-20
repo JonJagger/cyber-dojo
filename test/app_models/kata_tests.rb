@@ -5,16 +5,15 @@ require File.dirname(__FILE__) + '/stub_disk_git'
 class KataTests < ActionController::TestCase
 
   def setup
-    Thread.current[:file] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = StubDisk.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
-    root_dir = '/anywhere'
-    @dojo = Dojo.new(root_dir)
+    @dojo = Dojo.new('stubbed')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]    
   end
   
   def teardown
-    Thread.current[:file] = nil
+    Thread.current[:disk] = nil
     Thread.current[:git] = nil
   end
 

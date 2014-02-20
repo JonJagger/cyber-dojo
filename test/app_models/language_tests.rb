@@ -4,13 +4,12 @@ require File.dirname(__FILE__) + '/stub_disk'
 class LanguageTests < ActionController::TestCase
   
   def setup
-    Thread.current[:file] = @disk = StubDisk.new
-    dir = '/stubbed'
-    @language = Dojo.new(dir).language('Ruby')
+    Thread.current[:disk] = @disk = StubDisk.new
+    @language = Dojo.new('stubbed').language('Ruby')
   end
 
   def teardown
-    Thread.current[:file] = nil
+    Thread.current[:disk] = nil
   end
   
   def stub_manifest(manifest)

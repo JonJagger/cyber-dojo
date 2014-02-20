@@ -24,7 +24,7 @@ class Avatar
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def initialize(kata, name)
-    @file = Thread.current[:file] || DiskFile.new
+    @file = Thread.current[:disk] || DiskFile.new
     @git = Thread.current[:git] || DiskGit.new
     @kata = kata
     @name = name

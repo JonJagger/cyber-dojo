@@ -6,7 +6,7 @@ class Sandbox
   
   def initialize(avatar)
     @avatar = avatar
-    @file = Thread.current[:file] || DiskFile.new
+    @file = Thread.current[:disk] || DiskFile.new
     @git  = Thread.current[:git]  || DiskGit.new
     @task = Thread.current[:task] || TimeBoxedTask.new
   end

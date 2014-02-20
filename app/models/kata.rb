@@ -4,7 +4,7 @@ require 'DiskFile'
 class Kata
   
   def initialize(dojo, id)
-    @file = Thread.current[:file] || DiskFile.new
+    @file = Thread.current[:disk] || DiskFile.new
     @dojo = dojo
     @id = Uuid.new(id)
   end

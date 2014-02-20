@@ -3,7 +3,7 @@ require 'DiskFile'
 class Language
     
   def initialize(dojo, name)
-    @file = Thread.current[:file] || DiskFile.new
+    @file = Thread.current[:disk] || DiskFile.new
     @dojo = dojo
     @name = name
   end

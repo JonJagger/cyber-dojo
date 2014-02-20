@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    Thread.current[:file] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = StubDisk.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
     root_dir = '/roach'
@@ -19,7 +19,7 @@ class SandboxTests < ActionController::TestCase
   end
 
   def teardown
-    Thread.current[:file] = nil
+    Thread.current[:disk] = nil
     Thread.current[:git] = nil
     Thread.current[:task] = nil
   end
