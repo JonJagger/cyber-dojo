@@ -9,6 +9,7 @@ git pull
 # don't chmod or chgrp the katas folder (no need and very large)
 for folder in app config exercises languages lib log notes public script spec test
 do
+  echo "chown/chgrp www-data ${folder}"
   eval "chown -R www-data /var/www/cyberdojo/$folder"
   eval "chgrp -R www-data /var/www/cyberdojo/$folder"
 done
