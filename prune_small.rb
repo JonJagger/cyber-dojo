@@ -21,7 +21,10 @@ prune(do_delete) { |traffic_light_count,days_old|
 
 puts '============================================'
 puts 'This could have pruned the refactoring dojos'
-puts 'Restore with'
-puts '#unzip refactoring_dojos.zip'
+puts 'Restore by unzipping'
+puts '   refactoring_dojos.zip'
+puts 'making sure the unzipped files are'
+puts '   chown -R www-data'
+puts '   chgrp -R www-data'
 puts '============================================'
 puts
