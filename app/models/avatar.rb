@@ -1,6 +1,6 @@
 
 require 'Disk'
-require 'DiskGit'
+require 'Git'
 
 class Avatar
 
@@ -25,7 +25,7 @@ class Avatar
   
   def initialize(kata, name)
     @disk = Thread.current[:disk] || Disk.new
-    @git = Thread.current[:git] || DiskGit.new
+    @git = Thread.current[:git] || Git.new
     @kata = kata
     @name = name
   end

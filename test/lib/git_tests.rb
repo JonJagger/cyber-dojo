@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'DiskGit'
+require 'Git'
 
-class DiskGitTests < ActionController::TestCase
+class GitTests < ActionController::TestCase
 
   def setup
     super
     id = '12345ABCDE'
     @dir = @dojo.dir + '/' + id
     system("mkdir #{@dir}")
-    @git = DiskGit.new
+    @git = Git.new
   end
   
   def teardown

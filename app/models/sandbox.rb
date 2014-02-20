@@ -1,5 +1,6 @@
 
 require 'Disk'
+require 'Git'
 require 'TimeBoxedTask'
 
 class Sandbox
@@ -7,7 +8,7 @@ class Sandbox
   def initialize(avatar)
     @avatar = avatar
     @disk = Thread.current[:disk] || Disk.new
-    @git  = Thread.current[:git]  || DiskGit.new
+    @git  = Thread.current[:git]  || Git.new
     @task = Thread.current[:task] || TimeBoxedTask.new
   end
      

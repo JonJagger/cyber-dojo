@@ -1,5 +1,5 @@
 
-class DiskGit
+class Git
 
   def init(dir, args)  
     run(dir, 'init', args)
