@@ -4,13 +4,17 @@ require File.dirname(__FILE__) + '/stub_disk_file'
 class LanguageTests < ActionController::TestCase
   
   def setup
-    Thread.current[:file] = @stub_file = StubDiskFile.new
-    dir = '/blah'
+    Thread.current[:file] = @disk = StubDiskFile.new
+    dir = '/stubbed'
     @language = Dojo.new(dir).language('Ruby')
   end
 
   def teardown
     Thread.current[:file] = nil
+  end
+  
+  def stub_manifest(manifest)
+    @disk[@language.dir, 'manifest.json'] = JSON.unparse(manifest)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
@@ -23,11 +27,7 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "exists? is true when language folder exists" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => ""
-    })
+    @disk[@language.dir] = true
     assert @language.exists?
   end
 
@@ -46,56 +46,36 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "dir does not end in a slash" do
-    assert !@language.dir.end_with?(@stub_file.separator),
-          "!#{@language.dir}.end_with?(#{@stub_file.separator})"
+    assert !@language.dir.end_with?(@disk.separator),
+          "!#{@language.dir}.end_with?(#{@disk.separator})"
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "dir does not have doubled separator" do
-    doubled_separator = @stub_file.separator * 2
+    doubled_separator = @disk.separator * 2
     assert_equal 0, @language.dir.scan(doubled_separator).length
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "when :visible_filenames is not in manifest then visible_files is empty hash" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({})
-    })
+    stub_manifest({})
     assert_equal({ }, @language.visible_files)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "when :visible_filenames is empty array in manifest then visible_files is empty hash" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'visible_filenames' => [ ]
-      })
-    })
+    stub_manifest({ 'visible_filenames' => [ ] })
     assert_equal({ }, @language.visible_files)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "when :visible_filenames is non-empty array in manifest then visible_files are loaded but not output and not instructions" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'visible_filenames' => [ 'test_untitled.rb' ]
-      })
-    })
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'test_untitled.rb',
-      :content => 'content'
-    })    
+    stub_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
+    @disk[@language.dir, 'test_untitled.rb'] = 'content'
     visible_files = @language.visible_files
     assert_equal( { 'test_untitled.rb' => 'content' }, visible_files)
     assert_nil visible_files['output']
@@ -105,13 +85,7 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "support_filenames defaults to [ ]" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'visible_filenames' => [ 'test_untitled.rb' ]
-      })
-    })        
+    stub_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
     assert_equal [ ], @language.support_filenames    
   end
   
@@ -119,26 +93,14 @@ class LanguageTests < ActionController::TestCase
 
   test "support_filenames set if not defaulted" do
     support_filenames = [ 'x.jar', 'y.dll' ]
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'support_filenames' => support_filenames
-      })
-    })        
+    stub_manifest({ 'support_filenames' => support_filenames })
     assert_equal support_filenames, @language.support_filenames        
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "highlight_filenames defaults to [ ]" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'visible_filenames' => [ 'test_untitled.rb' ]
-      })
-    })        
+    stub_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
     assert_equal [ ], @language.support_filenames        
   end
 
@@ -147,14 +109,10 @@ class LanguageTests < ActionController::TestCase
   test "highlight_filenames set if not defaulted" do
     visible_filenames = [ 'x.hpp', 'x.cpp' ]
     highlight_filenames = [ 'x.hpp' ]
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
+    stub_manifest({
         'visible_filenames' => visible_filenames,
         'highlight_filenames' => highlight_filenames
       })
-    })        
     assert_equal highlight_filenames, @language.highlight_filenames            
   end
 
@@ -162,13 +120,7 @@ class LanguageTests < ActionController::TestCase
 
   test "unit_test_framework is set" do
     unit_test_framework = 'Satchmo'
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'unit_test_framework' => unit_test_framework
-      })
-    })        
+    stub_manifest({ 'unit_test_framework' => unit_test_framework })
     assert_equal unit_test_framework, @language.unit_test_framework
   end
 
@@ -176,24 +128,14 @@ class LanguageTests < ActionController::TestCase
 
   test "tab_size is set if not defaulted" do
     tab_size = 42
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'tab_size' => tab_size
-      })
-    })            
+    stub_manifest({ 'tab_size' => tab_size })
     assert_equal tab_size, @language.tab_size
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "tab_size defaults to 4" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({ })
-    })            
+    stub_manifest({ })
     assert_equal 4, @language.tab_size    
   end
 
@@ -201,44 +143,22 @@ class LanguageTests < ActionController::TestCase
 
   test "tab is 7 spaces if tab_size is 7" do
     tab_size = 7
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'tab_size' => tab_size
-      })
-    })            
+    stub_manifest({ 'tab_size' => tab_size })
     assert_equal " "*tab_size, @language.tab
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "tab defaults to 4 spaces" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({ })
-    })            
+    stub_manifest({ })
     assert_equal " "*4, @language.tab
   end  
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "if manifest.rb and manifest.json exist, json is used" do
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.json',
-      :content => JSON.unparse({
-        'tab_size' => 4
-      })
-    })
-    @stub_file.read=({
-      :dir => @language.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :tab_size => 8
-      }.inspect
-    })            
+    @disk[@language.dir,'manifest.json'] = JSON.unparse({'tab_size' => 4})
+    @disk[@language.dir,'manifest.rb'] = { :tab_size => 8 }.inspect
     assert_equal " "*4, @language.tab    
   end
   

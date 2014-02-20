@@ -37,6 +37,12 @@ REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
+  Thread.current[:file] = @disk = StubDiskFile.new (eg test/app_models/test_kata.rb)
+  should be
+  Thread.current[:disk] = @disk = StubDisk.new
+  ...
+  stub_file.separator -> disk.file_separator
+  ...
   ContentHashDiffer.diff should be called makeDelta
     its about previous and current (not incoming outgoing)
   ...
@@ -48,14 +54,6 @@ REFACTORING
   ...
   app_lib/Choose methods -> Dojo methods
   ...
-  StubDiskFile can verify read= settings were actually read
-    they can do this in teardown methods!
-  @stubDisk.read=({:dir=>dir,:file=>file,:content=>content})
-    would be better as
-      @stubDisk[dir+file] = content
-    relies on dir's always ending in a /
-    Also allow this.. possible? 
-      @stubDisk[dir] = true
   StubDiskFile is better named as StubDisk
     so two classes are DiskFile and StubFile
   StubDiskGit is better named as StubGit

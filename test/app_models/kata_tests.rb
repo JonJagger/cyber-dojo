@@ -5,14 +5,12 @@ require File.dirname(__FILE__) + '/stub_disk_git'
 class KataTests < ActionController::TestCase
 
   def setup
-    Thread.current[:file] = @stub_disk = StubDiskFile.new
+    Thread.current[:file] = @disk = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     root_dir = '/anywhere'
     @dojo = Dojo.new(root_dir)
     @id = '45ED23A2F1'
-    @kata = @dojo[@id]
-    
-    @disk = @stub_disk
+    @kata = @dojo[@id]    
   end
   
   def teardown
@@ -37,14 +35,14 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    assert !@kata.dir.end_with?(@stub_disk.separator),
-          "!#{@kata.dir}.end_with?(#{@stub_disk.separator})"       
+    assert !@kata.dir.end_with?(@disk.separator),
+          "!#{@kata.dir}.end_with?(#{@disk.separator})"       
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not have doubled separator" do
-    doubled_separator = @stub_disk.separator * 2
+    doubled_separator = @disk.separator * 2
     assert_equal 0, @kata.dir.scan(doubled_separator).length    
   end
   
@@ -62,8 +60,8 @@ class KataTests < ActionController::TestCase
   test "creation saves manifest in kata dir" do
     manifest = { :id => @id }    
     kata = @dojo.create_kata(manifest)
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @stub_disk.write_log[@kata.dir]    
-    assert_equal nil, @stub_disk.read_log[@kata.dir]
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk.write_log[@kata.dir]    
+    assert_equal nil, @disk.read_log[@kata.dir]
   end
     
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    Thread.current[:file] = @stub_file = StubDiskFile.new
+    Thread.current[:file] = @disk = StubDiskFile.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
     root_dir = '/roach'
@@ -27,20 +27,20 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    assert !@sandbox.dir.end_with?(@stub_file.separator)
+    assert !@sandbox.dir.end_with?(@disk.separator)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir does not have doubled separator" do
-    doubled_separator = @stub_file.separator * 2
+    doubled_separator = @disk.separator * 2
     assert_equal 0, @sandbox.dir.scan(doubled_separator).length    
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir is not created until file is saved" do
-    assert !@stub_file.exists?(@sandbox.dir)
+    assert !@disk.exists?(@sandbox.dir)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -50,12 +50,12 @@ class SandboxTests < ActionController::TestCase
       'untitled.rb' => 'content for code file',
       'untitled_test.rb' => 'content for test file'
     }    
-    assert_equal nil, @stub_file.write_log[@sandbox.dir]    
+    assert_equal nil, @disk.write_log[@sandbox.dir]    
     @sandbox.save(visible_files)    
     assert_equal [
       [ 'untitled.rb', 'content for code file'.inspect ],
       [ 'untitled_test.rb', 'content for test file'.inspect ]
-    ], @stub_file.write_log[@sandbox.dir]    
+    ], @disk.write_log[@sandbox.dir]    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -67,23 +67,6 @@ class SandboxTests < ActionController::TestCase
       'untitled.test.c' => 'content for test file',
       'cyber-dojo.sh' => 'make'
     }
-    # run-tests also pulls avatar.kata.language.support_filenames
-    language_name = 'C'
-    language = @dojo.language(language_name)    
-    @stub_file.read=({
-      :dir => @kata.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :language => language_name
-      }.inspect
-    })    
-    @stub_file.read=({
-      :dir => language.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :support_filenames => [ ],
-      }.inspect      
-    })
     assert !visible_files.keys.include?('output')    
     delta = {
       :changed => [ 'untitled.c' ],
@@ -95,7 +78,7 @@ class SandboxTests < ActionController::TestCase
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber".inspect], @stub_file.write_log[@sandbox.dir].last    
+    assert_equal ['output',"amber".inspect], @disk.write_log[@sandbox.dir].last    
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,7 +96,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @stub_file.write_log[@sandbox.dir]
+    log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(log)    
     assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort    
     assert log.include?(
@@ -139,7 +122,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @stub_file.write_log[@sandbox.dir]
+    log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(log)
     assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
     assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
@@ -160,7 +143,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ 'wibble.cs' ]
     }
     @sandbox.test(delta, visible_files)
-    write_log = @stub_file.write_log[@sandbox.dir]
+    write_log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(write_log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
     
@@ -183,7 +166,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    write_log = @stub_file.write_log[@sandbox.dir]
+    write_log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(write_log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
     
