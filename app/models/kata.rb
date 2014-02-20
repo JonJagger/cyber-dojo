@@ -42,11 +42,7 @@ class Kata
   end
   
   def avatars
-    Avatar.names.map{ |name|
-      Avatar.new(self,name)
-    }.select { |avatar|
-      avatar.exists?
-    }
+    Avatar.names.map{ |name| self[name] }.select { |avatar| avatar.exists? }
   end
   
   def language

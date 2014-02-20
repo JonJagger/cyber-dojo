@@ -6,7 +6,7 @@ class Avatar
 
   def self.create(kata, name)
     # To start an animal in a kata, call this.
-    avatar = Avatar.new(kata, name)
+    avatar = kata[name]
     avatar.setup
     avatar
   end
