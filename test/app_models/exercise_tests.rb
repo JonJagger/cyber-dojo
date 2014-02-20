@@ -41,14 +41,13 @@ class ExerciseTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in a slash" do
-    assert !@exercise.dir.end_with?(@disk.separator),
-          "!#{@exercise.dir}.end_with?(#{@disk.separator})"
+    assert !@exercise.dir.end_with?(@disk.file_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir does not have doubled separator" do
-    doubled_separator = @disk.separator * 2
+    doubled_separator = @disk.file_separator * 2
     assert_equal 0, @exercise.dir.scan(doubled_separator).length
   end
   

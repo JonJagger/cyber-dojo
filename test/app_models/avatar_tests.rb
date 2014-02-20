@@ -69,8 +69,8 @@ class AvatarTests < ActionController::TestCase
     assert log.include?([visible_filename, visible_filename_content.inspect]), log.inspect    
     expected_symlink = [
       'symlink',
-      language.dir + @disk.separator + support_filename,
-      sandbox.dir + @disk.separator + support_filename
+      language.dir + @disk.file_separator + support_filename,
+      sandbox.dir + @disk.file_separator + support_filename
     ]
     assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect    
   end
@@ -190,7 +190,7 @@ class AvatarTests < ActionController::TestCase
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)    
     avatar = Avatar.create(kata, 'wolf')    
-    sandbox_dir = avatar.dir + @disk.separator + 'sandbox' 
+    sandbox_dir = avatar.dir + @disk.file_separator + 'sandbox' 
     visible_files.each do |filename,content|
       assert_equal content.inspect, @disk.read(sandbox_dir, filename)
     end    

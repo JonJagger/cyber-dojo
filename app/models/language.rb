@@ -1,15 +1,16 @@
-require 'DiskFile'
+
+require 'Disk'
 
 class Language
     
   def initialize(dojo, name)
-    @file = Thread.current[:disk] || DiskFile.new
+    @disk = Thread.current[:disk] || Disk.new
     @dojo = dojo
     @name = name
   end
      
   def exists?
-    @file.exists?(dir)
+    @disk.exists?(dir)
   end
   
   def name
@@ -17,11 +18,11 @@ class Language
   end
 
   def dir
-    @dojo.dir + @file.separator + 'languages' + @file.separator + name
+    @dojo.dir + file_separator + 'languages' + file_separator + name
   end
     
   def visible_files
-    Hash[visible_filenames.collect{|filename| [filename, @file.read(dir, filename)]}]
+    Hash[visible_filenames.collect{|filename| [filename, @disk.read(dir, filename)]}]
   end
 
   def support_filenames
@@ -46,12 +47,16 @@ class Language
   
 private
 
+  def file_separator
+    @disk.file_separator  
+  end
+  
   def visible_filenames
     manifest['visible_filenames'] || [ ]
   end
 
   def manifest
-    @manifest = JSON.parse(@file.read(dir, 'manifest.json'))
+    @manifest = JSON.parse(@disk.read(dir, 'manifest.json'))
   end
   
 end

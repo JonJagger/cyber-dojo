@@ -19,8 +19,7 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "exists? is false when language folder does not exist" do
-    dir = '/salmon'
-    assert !Dojo.new(dir).language('xxxx').exists?
+    assert !Dojo.new('stubbed').language('xxxx').exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,14 +44,13 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "dir does not end in a slash" do
-    assert !@language.dir.end_with?(@disk.separator),
-          "!#{@language.dir}.end_with?(#{@disk.separator})"
+    assert !@language.dir.end_with?(@disk.file_separator)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -   
 
   test "dir does not have doubled separator" do
-    doubled_separator = @disk.separator * 2
+    doubled_separator = @disk.file_separator * 2
     assert_equal 0, @language.dir.scan(doubled_separator).length
   end
   

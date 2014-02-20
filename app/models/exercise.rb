@@ -1,19 +1,19 @@
-require 'DiskFile'
+require 'Disk'
 
 class Exercise
   
   def initialize(dojo, name)
-    @file = Thread.current[:disk] || DiskFile.new
+    @disk = Thread.current[:disk] || Disk.new
     @dojo = dojo
     @name = name
   end
 
   def exists?
-    @file.exists?(dir)
+    @disk.exists?(dir)
   end
   
   def dir
-    @dojo.dir + @file.separator + 'exercises' + @file.separator + name
+    @dojo.dir + file_separator + 'exercises' + file_separator + name
   end
 
   def name
@@ -21,7 +21,13 @@ class Exercise
   end
   
   def instructions
-    @file.read(dir, 'instructions')
+    @disk.read(dir, 'instructions')
   end
 
+private
+
+  def file_separator
+    @disk.file_separator
+  end
+  
 end

@@ -1,13 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'DiskFile'
+require 'Disk'
 
-class DiskFileTests < ActionController::TestCase
+class DiskTests < ActionController::TestCase
 
   def setup
     super
     id = 'ABCDE12345'
-    @disk_file = DiskFile.new
-    @dir = @dojo.dir + @disk_file.separator + id
+    @disk = Disk.new
+    @dir = @dojo.dir + @disk.file_separator + id
     system("mkdir #{@dir}")
   end
   
@@ -18,44 +18,44 @@ class DiskFileTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "directory? true because it exists" do
-    assert @disk_file.directory?(@dir)
+    assert @disk.directory?(@dir)
   end
 
   test "directory? false because it does not exist" do
-    assert !@disk_file.directory?(@dir + 'XX')
+    assert !@disk.directory?(@dir + 'XX')
   end
 
   test "directory? false because its a file" do
-    @disk_file.write(@dir, 'filename', "content")
-    assert !@disk_file.directory?(@dir + @disk_file.separator + 'filename')
+    @disk.write(@dir, 'filename', "content")
+    assert !@disk.directory?(@dir + @disk.file_separator + 'filename')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "exists?(file) true" do
-    @disk_file.write(@dir, 'filename', "content")
-    assert @disk_file.exists?(@dir, 'filename')
+    @disk.write(@dir, 'filename', "content")
+    assert @disk.exists?(@dir, 'filename')
   end
   
   test "exists?(file) false" do
-    assert !@disk_file.exists?(@dir, 'filename')
+    assert !@disk.exists?(@dir, 'filename')
   end
 
   test "exists?(dir) true" do
-    @disk_file.write(@dir, 'filename', "content")
-    assert @disk_file.exists?(@dir)
+    @disk.write(@dir, 'filename', "content")
+    assert @disk.exists?(@dir)
   end
   
   test "exists?(dir) false" do
-    assert !@disk_file.exists?(@dir + 'XX')
+    assert !@disk.exists?(@dir + 'XX')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "reads back what was written" do
     expected = "content"
-    @disk_file.write(@dir, 'filename', expected)
-    actual = @disk_file.read(@dir, 'filename')
+    @disk.write(@dir, 'filename', expected)
+    actual = @disk.read(@dir, 'filename')
     assert_equal expected, actual 
   end
 
@@ -65,7 +65,7 @@ class DiskFileTests < ActionController::TestCase
     block_run = false
     exception_throw = false
     begin
-      result = @disk_file.lock('dir_does_not_exist') do 
+      result = @disk.lock('dir_does_not_exist') do 
         block_run = true
       end
     rescue
@@ -80,7 +80,7 @@ class DiskFileTests < ActionController::TestCase
   test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
     block_run = false
     begin
-      result = @disk_file.lock(@dir) {
+      result = @disk.lock(@dir) {
         block_run = true; 'Hello'
       }
       assert block_run, 'block_run'
@@ -91,11 +91,11 @@ class DiskFileTests < ActionController::TestCase
   test "outer_lock_is_blocking_so_inner_lock_blocks" do
     outer_run = false
     inner_run = false
-    @disk_file.lock(@dir) do
+    @disk.lock(@dir) do
       outer_run = true
       
       inner_thread = Thread.new {
-        @disk_file.lock(@dir) do
+        @disk.lock(@dir) do
           inner_run = true
         end
       }
@@ -111,15 +111,15 @@ class DiskFileTests < ActionController::TestCase
   end
     
   test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
-    parent = @dir + @disk_file.separator + 'parent'
-    child = parent + @disk_file.separator + 'child'
+    parent = @dir + @disk.file_separator + 'parent'
+    child = parent + @disk.file_separator + 'child'
     `mkdir #{parent}`
     `mkdir #{child}`
     parent_run = false
     child_run = false
-    @disk_file.lock(parent) do
+    @disk.lock(parent) do
       parent_run = true
-      @disk_file.lock(child) do
+      @disk.lock(child) do
         child_run = true
       end
     end
@@ -131,10 +131,10 @@ class DiskFileTests < ActionController::TestCase
   
   test "symlink" do
     expected = "content"
-    @disk_file.write(@dir, 'filename', expected)
+    @disk.write(@dir, 'filename', expected)
     oldname = @dir + '/' + 'filename'
     newname = @dir + '/' + 'linked'
-    output = @disk_file.symlink(oldname, newname)
+    output = @disk.symlink(oldname, newname)
     assert !File.symlink?(oldname)
     assert File.symlink?(newname)
   end
@@ -154,9 +154,9 @@ class DiskFileTests < ActionController::TestCase
   test "saving a file with a folder creates the subfolder and the file in it" do
     pathed_filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
-    @disk_file.write(@dir, pathed_filename, content)
+    @disk.write(@dir, pathed_filename, content)
 
-    full_pathed_filename = @dir + File::SEPARATOR + pathed_filename    
+    full_pathed_filename = @dir + @disk.file_separator + pathed_filename    
     assert File.exists?(full_pathed_filename),
           "File.exists?(#{full_pathed_filename})"
     assert_equal content, IO.read(full_pathed_filename)          
@@ -179,8 +179,8 @@ class DiskFileTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       
   def check_save_file(filename, content, expected_content, executable = false)
-    @disk_file.write(@dir, filename, content)
-    pathed_filename = @dir + File::SEPARATOR + filename    
+    @disk.write(@dir, filename, content)
+    pathed_filename = @dir + @disk.file_separator + filename    
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)

@@ -1,12 +1,12 @@
 
-class DiskFile
+class Disk
 
-  def separator
+  def file_separator
     File::SEPARATOR
   end
   
   def write(dir, filename, object)
-    pathed_filename = dir + separator + filename
+    pathed_filename = dir + file_separator + filename
     make_dir(pathed_filename)
     if object.is_a? String
       File.open(pathed_filename, 'w') do |fd|
@@ -21,7 +21,7 @@ class DiskFile
   end
   
   def read(dir, filename)
-    IO.read(dir + separator + filename)
+    IO.read(dir + file_separator + filename)
   end
   
   def symlink(old_name, new_name)
@@ -33,7 +33,7 @@ class DiskFile
   end
   
   def exists?(dir, filename = "")    
-    File.exists?(dir + separator + filename)
+    File.exists?(dir + file_separator + filename)
   end
   
   def lock(dir, &block)
@@ -42,7 +42,7 @@ class DiskFile
     # the controller needs to wait to acquire a lock on
     # the dojo folder before choosing an avatar.    
     result = nil
-    File.open(dir + separator + 'f.lock', "w") do |fd|
+    File.open(dir + file_separator + 'f.lock', "w") do |fd|
       if fd.flock(File::LOCK_EX)
         begin
           result = block.call()

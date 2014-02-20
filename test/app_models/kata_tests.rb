@@ -34,14 +34,13 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    assert !@kata.dir.end_with?(@disk.separator),
-          "!#{@kata.dir}.end_with?(#{@disk.separator})"       
+    assert !@kata.dir.end_with?(@disk.file_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not have doubled separator" do
-    doubled_separator = @disk.separator * 2
+    doubled_separator = @disk.file_separator * 2
     assert_equal 0, @kata.dir.scan(doubled_separator).length    
   end
   

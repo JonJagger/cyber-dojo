@@ -26,13 +26,13 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    assert !@sandbox.dir.end_with?(@disk.separator)
+    assert !@sandbox.dir.end_with?(@disk.file_separator)
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir does not have doubled separator" do
-    doubled_separator = @disk.separator * 2
+    doubled_separator = @disk.file_separator * 2
     assert_equal 0, @sandbox.dir.scan(doubled_separator).length    
   end
   

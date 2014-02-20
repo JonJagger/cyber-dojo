@@ -1,5 +1,5 @@
 
-require 'DiskFile'
+require 'Disk'
 
 class Dojo
   
@@ -24,9 +24,9 @@ class Dojo
   end
 
   def create_kata(manifest)
-    file = Thread.current[:disk] || DiskFile.new
+    disk = Thread.current[:disk] || Disk.new
     kata = self[manifest[:id]]
-    file.write(kata.dir, 'manifest.rb', manifest)
+    disk.write(kata.dir, 'manifest.rb', manifest)
     kata
   end
 

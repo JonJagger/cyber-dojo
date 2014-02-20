@@ -1,5 +1,5 @@
 
-require 'DiskFile'
+require 'Disk'
 require 'DiskGit'
 
 class Avatar
@@ -24,23 +24,23 @@ class Avatar
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   def initialize(kata, name)
-    @file = Thread.current[:disk] || DiskFile.new
+    @disk = Thread.current[:disk] || Disk.new
     @git = Thread.current[:git] || DiskGit.new
     @kata = kata
     @name = name
   end
   
   def exists?
-    @file.exists?(dir)        
+    @disk.exists?(dir)        
   end
   
   def dir
-    @kata.dir + @file.separator + name
+    @kata.dir + file_separator + name
   end
   
   def setup
-    @file.write(dir, visible_files_filename, @kata.visible_files)
-    @file.write(dir, traffic_lights_filename, [ ])
+    @disk.write(dir, visible_files_filename, @kata.visible_files)
+    @disk.write(dir, traffic_lights_filename, [ ])
     sandbox.save(@kata.visible_files) # includes output and instructions
     language = @kata.language
     sandbox.link(language.dir, language.support_filenames)
@@ -60,14 +60,14 @@ class Avatar
       
   def save_run_tests(visible_files, traffic_light)    
     traffic_lights = nil
-    @file.lock(dir) do
-      text = @file.read(dir, traffic_lights_filename)
+    @disk.lock(dir) do
+      text = @disk.read(dir, traffic_lights_filename)
       traffic_lights = JSON.parse(JSON.unparse(eval text)) 
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light['number'] = tag
-      @file.write(dir, traffic_lights_filename, traffic_lights)
-      @file.write(dir, visible_files_filename, visible_files)
+      @disk.write(dir, traffic_lights_filename, traffic_lights)
+      @disk.write(dir, visible_files_filename, visible_files)
       git_commit(visible_files, tag)
     end
     traffic_lights
@@ -96,6 +96,10 @@ class Avatar
   
 private
 
+  def file_separator
+    @disk.file_separator
+  end
+  
   def git_commit(visible_files, tag)
     visible_files.keys.each do |filename|
       @git.add(dir, "sandbox/#{filename}")
@@ -106,7 +110,7 @@ private
   end
   
   def unlocked_read(filename, tag)
-    @file.lock(dir) {
+    @disk.lock(dir) {
       locked_read(filename, tag)
     }
   end
@@ -115,7 +119,7 @@ private
     if tag != nil
       @git.show(dir, "#{tag}:#{filename}")
     else
-      @file.read(dir, filename)
+      @disk.read(dir, filename)
     end
   end
   

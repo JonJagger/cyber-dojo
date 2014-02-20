@@ -1,22 +1,22 @@
 
-require 'DiskFile'
+require 'Disk'
 
 class Kata
   
   def initialize(dojo, id)
-    @file = Thread.current[:disk] || DiskFile.new
+    @disk = Thread.current[:disk] || Disk.new
     @dojo = dojo
     @id = Uuid.new(id)
   end
   
   def exists?
-    @file.exists?(dir)
+    @disk.exists?(dir)
   end
   
   def dir
-    @dojo.dir + separator +
-      'katas'   + separator +
-        @id.inner + separator +
+    @dojo.dir + file_separator +
+      'katas'   + file_separator +
+        @id.inner + file_separator +
           @id.outer    
   end
 
@@ -30,7 +30,7 @@ class Kata
 
   def start_avatar
     avatar = nil
-    @file.lock(dir) do
+    @disk.lock(dir) do
       started_avatar_names = avatars.collect { |avatar| avatar.name }
       unstarted_avatar_names = Avatar.names - started_avatar_names
       if unstarted_avatar_names != [ ]
@@ -67,16 +67,16 @@ class Kata
   
 private
 
+  def file_separator
+    @disk.file_separator
+  end
+  
   def random(array)
     array.shuffle[0]
   end
-
-  def separator
-    @file.separator
-  end
   
   def manifest
-    @manifest ||= eval @file.read(dir, 'manifest.rb')
+    @manifest ||= eval @disk.read(dir, 'manifest.rb')
   end
   
 end

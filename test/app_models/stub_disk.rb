@@ -21,7 +21,7 @@ class StubDisk
     @symlink_log
   end
   
-  def separator
+  def file_separator
     '/'
   end
   
