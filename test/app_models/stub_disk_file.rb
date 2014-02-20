@@ -34,20 +34,9 @@ class StubDiskFile
       dir,file,content = p1,p2,p3
       filename = p2
       content = p3
-    end
-    self.read=({
-      :dir => dir,
-      :filename => filename,
-      :content => content
-    })
-  end
-  
-  def read=(hash) #TODO Phase out
-    dir = hash[:dir]
-    filename = hash[:filename]
-    content = hash[:content]
+    end    
     @read_repo[dir] ||= { }
-    @read_repo[dir][filename] = content
+    @read_repo[dir][filename] = content    
   end
   
   def read(dir, filename)
