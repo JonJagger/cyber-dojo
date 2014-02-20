@@ -4,8 +4,8 @@ require File.dirname(__FILE__) + '/stub_disk_file'
 class ExerciseTests < ActionController::TestCase
     
   def setup
-    Thread.current[:file] = @stub_file = StubDiskFile.new
-    dir = '/blah'
+    Thread.current[:file] = @disk = StubDiskFile.new
+    dir = '/stubbed'
     @exercise = Dojo.new(dir).exercise('Yahtzee')
   end
   
@@ -23,11 +23,7 @@ class ExerciseTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? is true when exercise folder exists" do
-    @stub_file.read=({
-      :dir => @exercise.dir,
-      :filename => 'instructions',
-      :content => ""
-    })
+    @disk[@exercise.dir,'instructions'] = "your task..."
     assert @exercise.exists?
   end
 
@@ -46,25 +42,21 @@ class ExerciseTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in a slash" do
-    assert !@exercise.dir.end_with?(@stub_file.separator),
-          "!#{@exercise.dir}.end_with?(#{@stub_file.separator})"
+    assert !@exercise.dir.end_with?(@disk.separator),
+          "!#{@exercise.dir}.end_with?(#{@disk.separator})"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "dir does not have doubled separator" do
-    doubled_separator = @stub_file.separator * 2
+    doubled_separator = @disk.separator * 2
     assert_equal 0, @exercise.dir.scan(doubled_separator).length
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "instructions are loaded" do
-    @stub_file.read=({
-      :dir => @exercise.dir,
-      :filename => 'instructions',
-      :content => 'Fishing on the Verdal'
-    })    
+    @disk[@exercise.dir,'instructions'] = 'Fishing on the Verdal'
     instructions = @exercise.instructions
     assert_not_nil instructions
     assert instructions.start_with? "Fishing on the Verdal"
