@@ -164,6 +164,25 @@ class KataTests < ActionController::TestCase
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
+  test "kata[avatar] when avatar does not exist" do
+    avatar = @kata['lion']
+    assert !avatar.exists?
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "kata[avatar] when avatar does exist" do
+    avatar = @kata['lion']
+    @stub_file.read= ({
+      :dir => avatar.dir,
+      :filename => 'dummy',
+      :content => ''
+    })
+    assert avatar.exists?    
+  end
+  
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "you can create an avatar in a kata" do
     language = @dojo.language('C')
     manifest = {

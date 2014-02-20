@@ -24,6 +24,10 @@ class Kata
     @id.to_s
   end
     
+  def [](avatar_name)
+    Avatar.new(self,avatar_name)
+  end
+
   def start_avatar
     avatar = nil
     @file.lock(dir) do

@@ -5,7 +5,8 @@ class ForkerController < ApplicationController
     result = { :forked => false }    
     error = false    
     kata = dojo[params['id']]
-    avatar = Avatar.new(kata, params['avatar']) ###
+    avatar = kata[params['avatar']]
+    #light = avatar.lights[params['tag']]   ?
     
     if !error && !kata.exists?
       result[:reason] = "id"
@@ -23,7 +24,7 @@ class ForkerController < ApplicationController
       error = true
     end
 
-    if !error
+    if !error # && !light.exists?
       traffic_lights = avatar.traffic_lights
       is_tag = params['tag'].match(/^\d+$/)
       tag = params['tag'].to_i;
