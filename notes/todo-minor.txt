@@ -37,12 +37,6 @@ REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
-  Thread.current[:file] = @disk = StubDiskFile.new (eg test/app_models/test_kata.rb)
-  should be
-  Thread.current[:disk] = @disk = StubDisk.new
-  ...
-  stub_file.separator -> disk.file_separator
-  ...
   ContentHashDiffer.diff should be called makeDelta
     its about previous and current (not incoming outgoing)
   ...
@@ -53,11 +47,6 @@ REFACTORING
   avatar = kata['hippo']
   ...
   app_lib/Choose methods -> Dojo methods
-  ...
-  StubDiskFile is better named as StubDisk
-    so two classes are DiskFile and StubFile
-  StubDiskGit is better named as StubGit
-    so two classes are DiskGit and StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIP
    default state can be showing a message saying
