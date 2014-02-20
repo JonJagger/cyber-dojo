@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk'
-require File.dirname(__FILE__) + '/stub_disk_git'
+require File.dirname(__FILE__) + '/stub_git'
 
 class KataTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = StubDisk.new
-    Thread.current[:git] = @stub_git = StubDiskGit.new
+    Thread.current[:git] = @git = StubGit.new
     @dojo = Dojo.new('stubbed')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]    

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk'
-require File.dirname(__FILE__) + '/stub_disk_git'
+require File.dirname(__FILE__) + '/stub_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
 
@@ -8,10 +8,9 @@ class SandboxTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = StubDisk.new
-    Thread.current[:git] = @stub_git = StubDiskGit.new
+    Thread.current[:git] = @git = StubGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
-    root_dir = '/roach'
-    @dojo = Dojo.new(root_dir)
+    @dojo = Dojo.new('stubbed')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
     @avatar = @kata['hippo']
@@ -147,7 +146,7 @@ class SandboxTests < ActionController::TestCase
     saved_files = filenames_in(write_log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
     
-    git_log = @stub_git.log[@sandbox.dir]
+    git_log = @git.log[@sandbox.dir]
     assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
   end
   
@@ -170,7 +169,7 @@ class SandboxTests < ActionController::TestCase
     saved_files = filenames_in(write_log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
     
-    git_log = @stub_git.log[@sandbox.dir]
+    git_log = @git.log[@sandbox.dir]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
   end
   

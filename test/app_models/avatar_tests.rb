@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/stub_disk'
-require File.dirname(__FILE__) + '/stub_disk_git'
+require File.dirname(__FILE__) + '/stub_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
 
@@ -8,8 +8,8 @@ class AvatarTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = StubDisk.new
-    Thread.current[:git] = @stub_git = StubDiskGit.new
-    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
+    Thread.current[:git] = @git = StubGit.new
+    Thread.current[:task] = @task = StubTimeBoxedTask.new
     @dojo = Dojo.new('stubbed')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]    
@@ -100,7 +100,7 @@ class AvatarTests < ActionController::TestCase
           [ 'commit', "-a -m '0' --quiet" ],
           [ 'commit', "-m '0' 0 HEAD" ]
         ], 
-      @stub_git.log[avatar.dir]      
+      @git.log[avatar.dir]      
     assert_equal nil, @disk.read_log[avatar.dir]    
     assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk.write_log[kata.dir]         
     assert_equal [ [ 'manifest.rb' ] ], @disk.read_log[kata.dir]
@@ -261,7 +261,7 @@ class AvatarTests < ActionController::TestCase
   test "diff_lines" do
     avatar = @kata['lion']
     output = avatar.diff_lines(was_tag=3,now_tag=4)
-    assert @stub_git.log[avatar.dir].include?(
+    assert @git.log[avatar.dir].include?(
       [
        'diff',
        '--ignore-space-at-eol --find-copies-harder 3 4 sandbox'
@@ -273,7 +273,7 @@ class AvatarTests < ActionController::TestCase
   test "locked_read with tag" do
     avatar = @kata['lion']
     output = avatar.visible_files(tag=4)
-    assert @stub_git.log[avatar.dir].include?(
+    assert @git.log[avatar.dir].include?(
       [
        'show',
        '4:manifest.rb'

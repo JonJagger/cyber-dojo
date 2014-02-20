@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class StubDiskGit
+class StubGit
   
   def initialize
     @log = { }
