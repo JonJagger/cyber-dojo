@@ -24,14 +24,13 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? is false when its folder doesn't exist" do
-    avatar = Avatar.new(@dojo[@id], 'hippo')
-    assert_equal false, avatar.exists?
+    assert_equal false, @dojo[@id]['hippo'].exists?
   end
   
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   
   test "exists? is true when its folder does exist" do
-    avatar = Avatar.new(@dojo[@id], 'hippo')
+    avatar = @dojo[@id]['hippo']
     @stub_file.read = {
       :dir => avatar.dir,
       :filename => '',
@@ -336,7 +335,7 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "diff_lines" do
-    avatar = Avatar.new(@dojo[@id], 'lion')
+    avatar = @dojo[@id]['lion']
     output = avatar.diff_lines(was_tag=3,now_tag=4)
     assert @stub_git.log[avatar.dir].include?(
       [
@@ -348,7 +347,7 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "locked_read with tag" do
-    avatar = Avatar.new(@dojo[@id], 'lion')
+    avatar = @dojo[@id]['lion']
     output = avatar.visible_files(tag=4)
     assert @stub_git.log[avatar.dir].include?(
       [

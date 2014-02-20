@@ -153,7 +153,7 @@ class ForkerControllerTest < IntegrationTest
       :content => "dummy"
     })    
     avatar_name = 'hippo'
-    avatar = Avatar.new(kata, avatar_name)
+    avatar = kata[avatar_name]
     @stub_file.read=({
       :dir => avatar.dir,
       :filename => 'increments.rb',

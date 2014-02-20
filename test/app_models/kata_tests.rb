@@ -200,9 +200,7 @@ class KataTests < ActionController::TestCase
       :content => JSON.unparse({ })
     }      
     kata = @dojo.create_kata(manifest)
-    avatar_name = 'hippo'
-    avatar = Avatar.new(kata, avatar_name) ###
-    assert avatar_name, avatar.name
+    assert 'hippo', kata['hippo'].name
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
