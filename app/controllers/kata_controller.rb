@@ -8,7 +8,7 @@ class KataController < ApplicationController
   
   def edit
     @kata = dojo[id]
-    @avatar = Avatar.new(@kata, params[:avatar])
+    @avatar = @kata[params[:avatar]]
     @tab = @kata.language.tab    
     @visible_files = @avatar.visible_files
     @new_files = { }
@@ -24,7 +24,7 @@ class KataController < ApplicationController
     delta = ContentHashDiffer.diff(incoming_hashes, outgoing_hashes)
     
     @kata   = dojo[id]
-    @avatar = Avatar.new(@kata, params[:avatar])
+    @avatar = @kata[params[:avatar]]
     visible_files = received_files
     previous_files = visible_files.keys
     

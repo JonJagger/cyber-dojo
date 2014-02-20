@@ -2,13 +2,10 @@
 class ReverterController < ApplicationController
     
   def revert
-	kata = dojo[id]
-	avatar = Avatar.new(kata, params[:avatar])
-	visible_files = avatar.visible_files(params[:tag])
-	traffic_lights = avatar.traffic_lights(params[:tag])
+	avatar = dojo[id][params[:avatar]]
 	render :json => {
-      :visibleFiles => visible_files,
-	  :inc => traffic_lights.last          
+      :visibleFiles => avatar.visible_files(params[:tag]),
+	  :inc => avatar.traffic_lights(params[:tag]).last
 	}
   end
 
