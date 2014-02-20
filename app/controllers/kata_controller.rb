@@ -19,7 +19,6 @@ class KataController < ApplicationController
   end
 
   def run_tests
-Rails.logger.warn("KataController:run_tests")
     incoming_hashes = params[:file_hashes_incoming]
     outgoing_hashes = params[:file_hashes_outgoing]
     delta = ContentHashDiffer.diff(incoming_hashes, outgoing_hashes)
