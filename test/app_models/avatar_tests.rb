@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk_file'
+require File.dirname(__FILE__) + '/stub_disk'
 require File.dirname(__FILE__) + '/stub_disk_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class AvatarTests < ActionController::TestCase
 
   def setup
-    Thread.current[:file] = @disk = StubDiskFile.new
+    Thread.current[:file] = @disk = StubDisk.new
     Thread.current[:git] = @stub_git = StubDiskGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
     root_dir = '/stubbed'

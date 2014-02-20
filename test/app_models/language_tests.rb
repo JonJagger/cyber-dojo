@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk_file'
+require File.dirname(__FILE__) + '/stub_disk'
 
 class LanguageTests < ActionController::TestCase
   
   def setup
-    Thread.current[:file] = @disk = StubDiskFile.new
+    Thread.current[:file] = @disk = StubDisk.new
     dir = '/stubbed'
     @language = Dojo.new(dir).language('Ruby')
   end

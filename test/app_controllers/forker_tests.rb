@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/../app_models/stub_disk_file'
+require File.dirname(__FILE__) + '/../app_models/stub_disk'
 require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
@@ -69,7 +69,7 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if language folder no longer exists the fork fails and reason is given as language" do
-    Thread.current[:file] = @disk = StubDiskFile.new  
+    Thread.current[:file] = @disk = StubDisk.new  
     id = '1234512345'
     language = @dojo.language('xxxx')
     kata = @dojo[id]
@@ -90,7 +90,7 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if avatar not started the fork fails and reason is given as avatar" do
-    Thread.current[:file] = @disk = StubDiskFile.new  
+    Thread.current[:file] = @disk = StubDisk.new  
     id = '1234512345'
     language = @dojo.language('Ruby-installed-and-working')
     kata = @dojo[id]
@@ -121,7 +121,7 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def bad_tag_test(bad_tag)
-    Thread.current[:file] = @disk = StubDiskFile.new  
+    Thread.current[:file] = @disk = StubDisk.new  
     id = '1234512345'
     language_name = 'Ruby-installed-and-working'
     kata = @dojo[id]
