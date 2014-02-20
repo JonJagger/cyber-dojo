@@ -45,7 +45,6 @@ fr:
       traffic_light: "feu"      
       language: "langue"
       exercise: "exercice"
-      file: "fichier"
       
     buttons:
       setup: "créer"

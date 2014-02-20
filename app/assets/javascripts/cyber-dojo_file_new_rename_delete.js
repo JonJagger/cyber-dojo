@@ -26,8 +26,13 @@ var cyberDojo = (function(cd, $) {
 			$(this).remove();
 		  }
 		}
-	  });    
-    div.append(cd.centeredDiv(cd.fakeFilenameButton(filename)));
+	  });
+    var input = $('<input>', {
+      type: 'text',
+      value: filename,
+	  disabled: "disabled"
+    });	  
+    div.append(input);
 	deleter.dialog('open');
   };
 
@@ -89,7 +94,7 @@ var cyberDojo = (function(cd, $) {
 		buttons: [ okButton, cancelButton ]
       });
 	
-    div.append(cd.centeredDiv(input));		
+    div.append(input);
 	
 	input.keyup(function(event) {
       var ok = $('#new_file_ok');
@@ -168,7 +173,7 @@ var cyberDojo = (function(cd, $) {
 		buttons: [ okButton, cancelButton ]
       });
 	
-    div.append(cd.centeredDiv(input));		
+    div.append(input);
 	
 	input.keyup(function(event) {
 	  var newFilename = $.trim(input.val());
@@ -237,23 +242,23 @@ var cyberDojo = (function(cd, $) {
   cd.isValidFilename = function(filename) {
 	var tipWindow = $('#tip_window');
     if (filename === "") {
-	  cd.showTip('No filename', tipWindow);	  
+	  cd.showTip('no filename', tipWindow);	  
       return false;
     }
     if (cd.filenameAlreadyExists(filename)) {
-	  cd.showTip('Already exists', tipWindow);
+	  cd.showTip('already exists', tipWindow);
       return false;
     }
     if (filename.indexOf("\\") !== -1) {
-	  cd.showTip("Can't contain \\", tipWindow);
+	  cd.showTip("can't contain \\", tipWindow);
       return false;
     }
     if (filename[0] === '/') {
-	  cd.showTip("Can't start with /", tipWindow);
+	  cd.showTip("can't start with /", tipWindow);
       return false;      
     }
     if (filename.indexOf("..") !== -1) {
-	  cd.showTip("Can't contain ..", tipWindow);
+	  cd.showTip("can't contain ..", tipWindow);
       return false;      
     }
     return true;    	

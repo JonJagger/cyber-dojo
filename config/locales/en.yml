@@ -45,7 +45,6 @@ en:
       traffic_light: "traffic light"
       language: "language"
       exercise: "exercise"
-      file: "file"      
       
     buttons:
       setup: "setup"
