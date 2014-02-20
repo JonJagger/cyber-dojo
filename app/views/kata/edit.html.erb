@@ -35,7 +35,7 @@ $(document).ready(function() {
     var message = "\n    Please wait while the tests are run...";
     cd.fileContentFor('output').val(message);
     cd.loadFile('output');
-    $('#test').attr('disabled', true);
+    $('#test_button').attr('disabled', true);
     $('.spinner').show();
     cd.testForm().submit();
   } else {

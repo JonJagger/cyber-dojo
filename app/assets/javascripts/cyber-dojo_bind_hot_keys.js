@@ -4,7 +4,7 @@ var cyberDojo = (function(cd, $) {
   "use strict";
   
   cd.testForm = function() {
-    return $('#test').closest("form");    
+    return $('#test_button').closest("form");    
   };
   
   cd.bindRunTests = function(event) {
