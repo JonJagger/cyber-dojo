@@ -6,11 +6,11 @@ class ForkerControllerTest < IntegrationTest
 
   def setup
     super
-    Thread.current[:file] = @stub_file = nil
+    Thread.current[:file] = @disk = nil
   end
   
   def teardown
-    Thread.current[:file] = @stub_file = nil
+    Thread.current[:file] = @disk = nil
     super
   end
 
@@ -69,16 +69,11 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if language folder no longer exists the fork fails and reason is given as language" do
-    Thread.current[:file] = @stub_file = StubDiskFile.new  
+    Thread.current[:file] = @disk = StubDiskFile.new  
     id = '1234512345'
     language = @dojo.language('xxxx')
-    @stub_file.read=({
-      :dir => @dojo[id].dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :language => language.name
-      }.inspect
-    })
+    kata = @dojo[id]
+    @disk[kata.dir, 'manifest.rb'] = { :language => language.name }.inspect
     get "forker/fork", {
       :format => :json,      
       :id => id,
@@ -95,21 +90,12 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if avatar not started the fork fails and reason is given as avatar" do
-    Thread.current[:file] = @stub_file = StubDiskFile.new  
+    Thread.current[:file] = @disk = StubDiskFile.new  
     id = '1234512345'
     language = @dojo.language('Ruby-installed-and-working')
-    @stub_file.read=({
-      :dir => @dojo[id].dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :language => language.name
-      }.inspect
-    })
-    @stub_file.read=({
-      :dir => language.dir,
-      :filename => 'instructions',
-      :content => "dummy"
-    })    
+    kata = @dojo[id]
+    @disk[kata.dir, 'manifest.rb'] = { :language => language.name }.inspect
+    @disk[language.dir, 'instructions'] = 'dummy'
     get "forker/fork", {
       :format => :json,      
       :id => id,
@@ -135,33 +121,20 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def bad_tag_test(bad_tag)
-    Thread.current[:file] = @stub_file = StubDiskFile.new  
+    Thread.current[:file] = @disk = StubDiskFile.new  
     id = '1234512345'
     language_name = 'Ruby-installed-and-working'
     kata = @dojo[id]
-    @stub_file.read=({
-      :dir => kata.dir,
-      :filename => 'manifest.rb',
-      :content => {
-        :language => language_name
-      }.inspect
-    })
+    @disk[kata.dir, 'manifest.rb'] = { :language => language_name }.inspect
     language = @dojo.language(language_name)
-    @stub_file.read=({
-      :dir => language.dir,
-      :filename => 'instructions',
-      :content => "dummy"
-    })    
+    @disk[language.dir, 'instructions'] = 'dummy'
     avatar_name = 'hippo'
     avatar = kata[avatar_name]
-    @stub_file.read=({
-      :dir => avatar.dir,
-      :filename => 'increments.rb',
-      :content => [{
-        "colour"=>"red",
-        "time"=>[2014, 2, 15, 8, 54, 6],
-        "number"=>1}].inspect
-    })        
+    @disk[avatar.dir, 'increments.rb'] = [{
+        "colour" => "red",
+        "time" => [2014, 2, 15, 8, 54, 6],
+        "number" => 1
+      }].inspect    
     get "forker/fork", {
       :format => :json,      
       :id => id,
