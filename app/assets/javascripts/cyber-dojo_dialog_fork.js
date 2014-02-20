@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_fork = function(title, close, id, avatarName, tag, maxTag) {    
+  cd.dialog_fork = function(title, cancel, id, avatarName, tag, maxTag) {    
     // There is a lot commonality in the fork and revert dialogs.
 	// And both could be improved by showing the red/green
 	// lines added/removed (like on the diff)
@@ -89,7 +89,7 @@ var cyberDojo = (function(cd, $) {
 	  modal: true,
 	  buttons: [
 		{
-		  text: close,
+		  text: cancel,
 		  click: function() {
 		    $(this).remove();
 		  }

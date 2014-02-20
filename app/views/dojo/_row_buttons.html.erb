@@ -5,10 +5,10 @@ $(document).ready(function () {
 
   $('.show-dialog-button').click(function () {
     var name = $(this).attr('id');
-    var ok = $(this).data('ok');
+    var close = $(this).data('close');
     var title = $(this).text();
     $.get('/dojo/button_dialog/' + name, function(html) {
-      cd.dialog(html, title, ok).dialog('open');
+      cd.dialog(html, title, close).dialog('open');
     });
   });
 
@@ -24,7 +24,7 @@ $(document).ready(function () {
 <% buttons.each do |action, text| %>
   <button type="button"
           class="show-dialog-button"
-          data-ok="<%= t('views.buttons.ok') %>"
+          data-close="<%= t('views.buttons.close') %>"
           id="<%= action %>">
     <%= text %>
   </button>

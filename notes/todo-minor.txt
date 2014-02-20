@@ -37,6 +37,8 @@ REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
+  Disk.rb can do same as StubDisk viz disk[dir,filename] = content
+  ...
   ContentHashDiffer.diff should be called makeDelta
     its about previous and current (not incoming outgoing)
   ...

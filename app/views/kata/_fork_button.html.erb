@@ -5,12 +5,12 @@ $(document).ready(function() {
     
   $('#fork_button').click(function() {
     var title = $(this).data('title');
-    var close = $(this).data('close');
+    var cancel = $(this).data('cancel');
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var maxTag = parseInt($('.traffic_light_count').text());        
     var tag = maxTag;
-    cd.dialog_fork(title, close, id, avatarName, tag, maxTag);  
+    cd.dialog_fork(title, cancel, id, avatarName, tag, maxTag);  
   });
   
 });
@@ -21,7 +21,7 @@ $(document).ready(function() {
         id="fork_button"
         class="tipped"
         data-title="<%= t('views.buttons.fork') %>"
-        data-close="<%= t('views.buttons.close') %>">
+        data-cancel="<%= t('views.buttons.cancel') %>">
   <%= t('views.buttons.fork') %>
   <div class="tooltip">
     forks a new dojo<br>from any traffic-light

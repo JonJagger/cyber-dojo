@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(title, close, id, avatarName, tag, maxTag) {    
+  cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {    
     // This is virtually identical to
 	// cyber-dojo_dialog_fork.js
 	// except for the command executed when ok is pressed
@@ -118,7 +118,7 @@ var cyberDojo = (function(cd, $) {
 	  modal: true,
 	  buttons: [
 		{
-		  text: close,
+		  text: cancel,
 		  click: function() {
 			$(this).remove();
 		  }
@@ -274,7 +274,7 @@ var cyberDojo = (function(cd, $) {
 	revertDialog.dialog('open');
 	refresh();
 	
-  }; // cd.dialog_revert = function(title, id, avatarName, tag, maxTag) {
+  }; // cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
 
 
   return cd;
