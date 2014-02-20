@@ -25,7 +25,24 @@ class StubDiskFile
     '/'
   end
   
-  def read=(hash)
+  def []=(p1,p2,p3=nil)
+    dir,filename,content = p1,'',''
+    if p3 == nil # disk[dir] = true
+      filename = 'dummy',
+      content = ''
+    else # disk[dir,filename] = content
+      dir,file,content = p1,p2,p3
+      filename = p2
+      content = p3
+    end
+    self.read=({
+      :dir => dir,
+      :filename => filename,
+      :content => content
+    })
+  end
+  
+  def read=(hash) #TODO Phase out
     dir = hash[:dir]
     filename = hash[:filename]
     content = hash[:content]
