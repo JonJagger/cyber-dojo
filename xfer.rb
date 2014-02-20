@@ -20,7 +20,7 @@ hi = (ARGV[2] || "10000").to_i
   rags = matches[1].to_i
   if lo <= rags && rags <= hi
     p id + " " + rags.to_s
-    xfer_cmd = "wget -q -O #{id}.tar.gz http://cyber-dojo.com/dashboard/download/#{id}"
+    xfer_cmd = "wget -q -O #{id}.tar.gz http://cyber-dojo.com/downloader/download/#{id}"
     `#{xfer_cmd}`
   end
 end

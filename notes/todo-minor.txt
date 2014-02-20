@@ -6,17 +6,41 @@
     5783 katas not deleted
   >df
   reports no inodes regained?
+  Wrong partition!
+  Fixed etc/fstab so instead of
+      /mnt/katas /var/www/cyberdojo/katas
+      it does
+      /mnt/cyberdojo /var/www/cyberdojo
+  which transfers about 7G from the 10G-fs to the 100G-fs :-)
+  that is much better.
+  ...
+  Copied tar.gz files back from cyber-katas to cyber-dojo.com
+  Now untarring them on cyber-dojo.com
+    find . -name '*.tar.gz' -print0 | xargs -0 -n1 tar xf
+  Getting some errors...
+    gzip: stdin: not in gzip format
+    tar: Child returned status 1
+    tar: Exiting with failure status due to previous errors
+  Need to find out which ids are causing failures.
+  Moved them back to separate downloads folder.
+  Will write a script tomorrow.
+  ...
+  The xfer.rb script could take the URL as a parameter
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+  A0FCF4CCBF is a nice dojo (to redo the dashboard screenshot)
+  It shows the ellision at the rhs is not quite right yet.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   make content area slightly wider and deeper to match fork/revert
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ContentHashDiffer.diff should be called makeDelta
-  its about previous and current (not incoming outgoing)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
+  ContentHashDiffer.diff should be called makeDelta
+    its about previous and current (not incoming outgoing)
+  ...
+  prune_large.rb and prune_small.rb rework to used Dojo.each function
   Dojo.create_kata(manifest)
     add 2nd parameter specifying format, no default, on call use "rb"
   ...
