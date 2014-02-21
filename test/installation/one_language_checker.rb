@@ -1,14 +1,11 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'Folders'
 
-class OneLanguageChecker < ActionController::TestCase
-  
+class OneLanguageChecker
+
   def initialize(option = "noisy")
     @verbose = (option == "noisy")
     @max_duration = 60
-    @root_dir = Rails.root.to_s + '/test/cyberdojo'    
   end
-    
+
   def check(
         language,
         installed_and_working = [ ],
@@ -16,62 +13,74 @@ class OneLanguageChecker < ActionController::TestCase
         installed_but_not_working = [ ]
     )
     @language = language
-    @language_dir = @root_dir + '/languages/' + language + "/"
-    
-    @manifest_filename = @language_dir + 'manifest.json'    
-    check_manifest_file_exists
+    @language_dir = root_dir + '/languages/' + language + "/"
+
+    print "  #{language} "
+
+    @manifest_filename = @language_dir + 'manifest.json'
+    return false if !manifest_file_exists?
     @manifest = JSON.parse(IO.read(@manifest_filename))
-    
-    check_required_keys_exist
-    check_no_unknown_keys_exist
-    check_no_duplicate_visible_filenames
-    check_no_duplicate_support_filenames
-    check_cyberdojo_sh_exists
-    check_cyberdojo_sh_has_execute_permission
-    check_named_files_exist(:visible_filenames)
-    check_unit_test_framework_has_parse_method
-      
+
+    return false if !required_keys_exist?
+    return false if unknown_keys_exist?
+    return false if duplicate_visible_filenames?
+    return false if duplicate_support_filenames?
+    return false if !cyberdojo_sh_exists?
+    return false if !cyberdojo_sh_has_execute_permission?
+    return false if !all_visible_files_exist?
+    return false if !all_support_files_exist?
+    return false if !parse_method_for_unit_test_framework_output_exists?
+    return false if !filename_42_exists?
+
     t1 = Time.now
-    rag = red_amber_green(get_filename_42)
+    rag = red_amber_green
     t2 = Time.now
+    print " #{rag.inspect} "
     took = ((t2 - t1) / 3).round(2)
     if rag == ['red','amber','green']
       installed_and_working << language
-      puts "  #{language} - #{rag.inspect}  installed and working (~#{took} seconds)"
+      print "installed and working"
     elsif rag == ['amber', 'amber', 'amber']
       not_installed << language
-      puts "  #{language} - #{rag.inspect}  not installed (~ #{took} seconds)"
+      print " not installed"
     else
       installed_but_not_working << language
-      puts "  #{language} - #{rag.inspect}  installed but not working (~ #{took} seconds)"
+      print "installed but not working"
     end
+    print " (~ #{took} seconds)\n"
     took
   end
-    
+
 private
 
-  def check_manifest_file_exists    
+  def manifest_file_exists?
     if !File.exists? @manifest_filename
       message =
-        alert + 
+        alert +
         "#{@manifest_filename} does not exist"
-      assert false, message
+      puts message if @verbose
+      return false
     end
+    print "."
+    true
   end
-  
-  def check_required_keys_exist
+
+  def required_keys_exist?
     required_keys = [ 'visible_filenames', 'unit_test_framework' ]
     required_keys.each do |key|
       if !@manifest.keys.include? key
         message =
-          alert + 
+          alert +
           "#{@manifest_filename} must contain key '#{key}'"
-        assert false, message
+        puts message if @verbose
+        return false
       end
     end
+    print "."
+    true
   end
-  
-  def check_no_unknown_keys_exist
+
+  def unknown_keys_exist?
     known = [ 'visible_filenames',
               'support_filenames',
               'unit_test_framework',
@@ -80,71 +89,97 @@ private
     @manifest.keys.each do |key|
       if !known.include? key
         message =
-          alert + 
+          alert +
           "#{@manifest_filename} contains unknown key '#{key}'"
-        assert false, message
+        puts message if @verbose
+        return true
       end
-    end    
+    end
+    print "."
+    false
   end
-  
-  def check_no_duplicate_visible_filenames
+
+  def duplicate_visible_filenames?
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
           alert +
           "  #{@manifest_filename}'s 'visible_filenames' contains #{filename} more than once"
-        assert false, message
+        puts message if @verbose
+        return true
       end
     end
+    print "."
+    false
   end
-  
-  def check_no_duplicate_support_filenames
+
+  def duplicate_support_filenames?
     support_filenames.each do |filename|
       if support_filenames.count(filename) > 1
         message =
           alert +
           "  #{@manifest_filename}'s 'support_filenames' contains #{filename} more than once"
-        assert false, message
+        puts message if @verbose
+        return true
       end
     end
-  end  
-  
-  def check_named_files_exist(symbol)
+    print "."
+    false
+  end
+
+  def all_visible_files_exist?
+    all_files_exist?(:visible_filenames)
+  end
+
+  def all_support_files_exist?
+    all_files_exist?(:support_filenames)
+  end
+
+  def all_files_exist?(symbol)
     (@manifest[symbol] || [ ]).each do |filename|
       if !File.exists?(@language_dir + filename)
         message =
-          alert + 
+          alert +
           "  #{@manifest_filename} contains a '#{symbol}' entry [#{filename}]\n" +
           "  but the #{@language_dir}/ dir does not contain a file called #{filename}"
-        assert false, message
+        puts message if @verbose
+        return false
       end
-    end    
+    end
+    print "."
+    true
   end
-  
-  def check_cyberdojo_sh_exists
+
+  def cyberdojo_sh_exists?
     filenames = visible_filenames + support_filenames
     if filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
       message =
-        alert + 
+        alert +
         "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
         "  'visible_filenames' or 'support_filenames'"
-      assert false, message
+      puts message if @verbose
+      return false
     end
+    print "."
+    true
   end
-  
-  def check_cyberdojo_sh_has_execute_permission
+
+  def cyberdojo_sh_has_execute_permission?
     if !File.stat(@language_dir + 'cyber-dojo.sh').executable?
       message =
         alert +
           " 'cyber-dojo.sh does not have execute permission"
-        assert false, message
+        puts message if @verbose
+        return false
     end
+    print "."
+    true
   end
 
-  def check_unit_test_framework_has_parse_method
+  def parse_method_for_unit_test_framework_output_exists?
     has_parse_method = true
     begin
-      OutputParser::parse(unit_test_framework, "xx")    
+      OutputParser::parse(unit_test_framework, "xx")
     rescue
       has_parse_method = false
     end
@@ -153,79 +188,128 @@ private
         alert +
           "app/lib/CodeOutputParser.rb does not contain a " +
           "parse_#{unit_test_framework}(output) method"
-        assert false, message
+      puts message if @verbose
+      return false
     end
-  end  
+    print "."
+    true
+  end
 
-  def visible_filenames
-    @manifest['visible_filenames'] || [ ]
+  def filename_42_exists?
+    filename_42 != ""
   end
-  
-  def support_filenames
-    @manifest['support_filenames'] || [ ]
-  end
-    
-  def unit_test_framework
-    @manifest['unit_test_framework'] || [ ]
-  end
-  
-  def alert
-    "\n>>>>>>>#{@language}<<<<<<<\n"
-  end
-  
-  def get_filename_42
+
+  def filename_42
     filenames = visible_filenames.select { |visible_filename|
       IO.read(@language_dir + visible_filename).include? '42'
-    }    
+    }
     if filenames == [ ]
       message = alert + " no 42-file"
-      assert false, message
+      puts message if @verbose
+      return ""
     end
     if filenames.length > 1
       message = alert + " multiple 42-files " + filenames.inspect
-      assert false, message
+      puts message if @verbose
+      return ""
     end
+    print "."
     filenames[0]
   end
-  
-  def red_amber_green(filename)
+
+  def red_amber_green
+    filename = filename_42
       red = language_test(filename, '42')
     amber = language_test(filename, '4typo2')
     green = language_test(filename, '54')
     [ red, amber, green ]
   end
-  
+
   def language_test(filename, replacement)
     kata = make_kata(@language, 'Yahtzee')
     avatar = Avatar.create(kata, 'hippo')
     visible_files = avatar.visible_files
     test_code = visible_files[filename]
-    assert_not_nil test_code
     visible_files[filename] = test_code.sub('42', replacement)
-    
+
     if @verbose
-      puts avatar.dir
-      puts "------<test_code>------"
+      puts "\n------<test_code>------"
       puts visible_files[filename]
       puts "------</test_code>-----"
     end
-    
+
     delta = {
       :changed => [filename],
       :unchanged => visible_files.keys - [filename],
       :deleted => [ ],
-      :new => [ ]      
-    }    
+      :new => [ ]
+    }
     output = run_test(delta, avatar, visible_files, @max_duration)
     colour = avatar.traffic_lights.last['colour']
-    
+
     if @verbose
       puts "-------<output>-----------"
       puts output
-      puts "-------</output>----------"      
+      puts "-------</output>----------"
     end
-    
+
     colour
-  end    
+  end
+
+private
+
+  def visible_filenames
+    @manifest['visible_filenames'] || [ ]
+  end
+
+  def support_filenames
+    @manifest['support_filenames'] || [ ]
+  end
+
+  def unit_test_framework
+    @manifest['unit_test_framework'] || [ ]
+  end
+
+  def alert
+    "\n>>>>>>>#{@language}<<<<<<<\n"
+  end
+
+private
+
+  def root_dir
+    (Rails.root + 'test/cyberdojo').to_s
+  end
+
+  def dojo
+    Dojo.new(root_dir)
+  end
+
+  def make_kata(language_name, exercise_name)
+    language = dojo.language(language_name)
+    manifest = {
+      :created => make_time(Time.now),
+      :id => Uuid.new.to_s,
+      :language => language.name,
+      :exercise => exercise_name,
+      :visible_files => language.visible_files,
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
+    }
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = 'practice'
+    dojo.create_kata(manifest)
+  end
+
+  def make_time(at)
+    [at.year, at.month, at.day, at.hour, at.min, at.sec]
+  end
+
+  def run_test(delta, avatar, visible_files, timeout)
+    output = avatar.sandbox.test(delta, visible_files, timeout)
+    language = avatar.kata.language
+    traffic_light = OutputParser::parse(language.unit_test_framework, output)
+    avatar.save_run_tests(visible_files, traffic_light)
+    output
+  end
 
 end

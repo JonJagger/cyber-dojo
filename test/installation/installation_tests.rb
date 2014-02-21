@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/one_language_checker'
 
 class InstallationTests < ActionController::TestCase
@@ -5,7 +6,7 @@ class InstallationTests < ActionController::TestCase
   test "installed languages" do
     root_dir = Rails.root.to_s + '/test/cyberdojo'
     puts "Checking installed languages (this may take a while)"
-    
+
     installed_and_working = [ ]
     not_installed = [ ]
     installed_but_not_working = [ ]
@@ -22,11 +23,10 @@ class InstallationTests < ActionController::TestCase
       )
     end
 
-    puts "\nSummary...."    
+    puts "\nSummary...."
     puts 'not_installed:' + not_installed.inspect
     puts 'installed-and-working:' + installed_and_working.inspect
-    puts 'installed-but-not-working:' + installed_but_not_working.inspect    
+    puts 'installed-but-not-working:' + installed_but_not_working.inspect
   end
-    
-end
 
+end
