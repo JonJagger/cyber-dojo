@@ -10,7 +10,7 @@ class Avatar
     avatar.setup
     avatar
   end
-  
+
   def self.names
     # no two animals start with the same letter
     %w(
@@ -22,47 +22,46 @@ class Avatar
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def initialize(kata, name)
     @disk = Thread.current[:disk] || Disk.new
     @git = Thread.current[:git] || Git.new
     @kata = kata
     @name = name
   end
-  
+
   def exists?
-    @disk.exists?(dir)        
+    @disk.exists?(dir)
   end
-  
+
   def dir
     @kata.dir + file_separator + name
   end
-  
+
   def setup
     @disk.write(dir, visible_files_filename, @kata.visible_files)
     @disk.write(dir, traffic_lights_filename, [ ])
     sandbox.save(@kata.visible_files) # includes output and instructions
-    language = @kata.language
-    sandbox.link(language.dir, language.support_filenames)
+    sandbox.link(@kata.language)
     @git.init(dir, "--quiet")
     @git.add(dir, traffic_lights_filename)
-    @git.add(dir, visible_files_filename)      
+    @git.add(dir, visible_files_filename)
     git_commit(@kata.visible_files, tag = 0)
   end
-  
+
   def kata
     @kata
   end
-  
+
   def name
     @name
   end
-      
-  def save_run_tests(visible_files, traffic_light)    
+
+  def save_run_tests(visible_files, traffic_light)
     traffic_lights = nil
     @disk.lock(dir) do
       text = @disk.read(dir, traffic_lights_filename)
-      traffic_lights = JSON.parse(JSON.unparse(eval text)) 
+      traffic_lights = JSON.parse(JSON.unparse(eval text))
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light['number'] = tag
@@ -77,29 +76,29 @@ class Avatar
     text = unlocked_read(visible_files_filename, tag)
     JSON.parse(JSON.unparse(eval text))
   end
-  
+
   def traffic_lights(tag = nil)
-    text = unlocked_read(traffic_lights_filename, tag)    
-    JSON.parse(JSON.unparse(eval text))    
+    text = unlocked_read(traffic_lights_filename, tag)
+    JSON.parse(JSON.unparse(eval text))
   end
 
   def diff_lines(was_tag, now_tag)
     # visible_files are saved to the sandbox dir individually.
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
     output = @git.diff(dir, command)
-    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)        
+    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
-  
+
   def sandbox
     Sandbox.new(self)
   end
-  
+
 private
 
   def file_separator
     @disk.file_separator
   end
-  
+
   def git_commit(visible_files, tag)
     visible_files.keys.each do |filename|
       @git.add(dir, "sandbox/#{filename}")
@@ -108,21 +107,21 @@ private
     @git.commit(dir, "-a -m '#{tag}' --quiet")
     @git.tag(dir, "-m '#{tag}' #{tag} HEAD")
   end
-  
+
   def unlocked_read(filename, tag)
     @disk.lock(dir) {
       locked_read(filename, tag)
     }
   end
-  
-  def locked_read(filename, tag)    
+
+  def locked_read(filename, tag)
     if tag != nil
       @git.show(dir, "#{tag}:#{filename}")
     else
       @disk.read(dir, filename)
     end
   end
-  
+
   def traffic_lights_filename
     # Used to display the traffic-lights at the bottom of the
     # animals test page, and also to display the traffic-lights for
@@ -130,7 +129,7 @@ private
     # It is part of the git repository and is committed every run-test.
     'increments.rb'
   end
-  
+
   def visible_files_filename
     # Used to retrieve (via a single file access) the visible
     # files needed when resuming an animal.
@@ -139,5 +138,3 @@ private
   end
 
 end
-
-
