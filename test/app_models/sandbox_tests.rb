@@ -44,23 +44,6 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-  test "save(visible_files) creates dir and saves files" do
-    visible_files = {
-      'untitled.rb' => 'content for code file',
-      'untitled_test.rb' => 'content for test file'
-    }
-    assert_equal nil, @disk.write_log[@sandbox.dir]
-    @sandbox.save(visible_files)
-    assert_equal [
-      [ 'untitled.rb', 'content for code file'.inspect ],
-      [ 'untitled_test.rb', 'content for test file'.inspect ]
-    ], @disk.write_log[@sandbox.dir]
-  end
-=end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "after run_tests() a file called output is saved in sandbox " +
          "and an output file is not inserted into the visible_files argument" do
     visible_files = {

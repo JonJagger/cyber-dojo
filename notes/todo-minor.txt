@@ -1,5 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Once Avatar.create is refactored into kata.start_avatar
+   o) create External object holding disk,git,task
+   o) External has .dojo(dir)
+        which passes disk,git,task to Dojo.ctor
+   o) Dojo has [id]
+        which passes disk,git,task to Kata.ctor
+   o) Kata has .create_avatar
+        which passes disk,git,task to Avatar.ctor
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Deployment
   Locally
     1. Run all tests
@@ -17,7 +26,7 @@ SPEC
   Get them running again!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Refactoring dojos
-  Put tennis ones into zip  tar.gz ?
+  Put tennis ones into zip / tar.gz ?
   ...
   Write script to unzip and ensure chown/chgrp www-data
   ...
