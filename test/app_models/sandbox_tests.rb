@@ -14,7 +14,7 @@ class SandboxTests < ActionController::TestCase
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
     @avatar = @kata['hippo']
-    @sandbox = @avatar.sandbox    
+    @sandbox = @avatar.sandbox
   end
 
   def teardown
@@ -28,37 +28,39 @@ class SandboxTests < ActionController::TestCase
   test "dir does not end in slash" do
     assert !@sandbox.dir.end_with?(@disk.file_separator)
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "dir does not have doubled separator" do
     doubled_separator = @disk.file_separator * 2
-    assert_equal 0, @sandbox.dir.scan(doubled_separator).length    
+    assert_equal 0, @sandbox.dir.scan(doubled_separator).length
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "dir is not created until file is saved" do
     assert !@disk.exists?(@sandbox.dir)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "save(visible_files) creates dir and saves files" do
     visible_files = {
       'untitled.rb' => 'content for code file',
       'untitled_test.rb' => 'content for test file'
-    }    
-    assert_equal nil, @disk.write_log[@sandbox.dir]    
-    @sandbox.save(visible_files)    
+    }
+    assert_equal nil, @disk.write_log[@sandbox.dir]
+    @sandbox.save(visible_files)
     assert_equal [
       [ 'untitled.rb', 'content for code file'.inspect ],
       [ 'untitled_test.rb', 'content for test file'.inspect ]
-    ], @disk.write_log[@sandbox.dir]    
+    ], @disk.write_log[@sandbox.dir]
   end
+=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "after run_tests() a file called output is saved in sandbox " +
          "and an output file is not inserted into the visible_files argument" do
     visible_files = {
@@ -66,18 +68,18 @@ class SandboxTests < ActionController::TestCase
       'untitled.test.c' => 'content for test file',
       'cyber-dojo.sh' => 'make'
     }
-    assert !visible_files.keys.include?('output')    
+    assert !visible_files.keys.include?('output')
     delta = {
       :changed => [ 'untitled.c' ],
       :unchanged => [ 'untitled.test.c' ],
       :deleted => [ ],
       :new => [ ]
     }
-    output = @sandbox.test(delta, visible_files)    
+    output = @sandbox.test(delta, visible_files)
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber".inspect], @disk.write_log[@sandbox.dir].last    
+    assert_equal ['output',"amber".inspect], @disk.write_log[@sandbox.dir].last
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,18 +98,18 @@ class SandboxTests < ActionController::TestCase
     }
     @sandbox.test(delta, visible_files)
     log = @disk.write_log[@sandbox.dir]
-    saved_files = filenames_in(log)    
-    assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort    
+    saved_files = filenames_in(log)
+    assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
     assert log.include?(
-      ['untitled.cs', 'content for code file'.inspect ]                                                 
+      ['untitled.cs', 'content for code file'.inspect ]
     ), log.inspect
     assert log.include?(
-      ['untitled.test.cs', 'content for test file'.inspect ]                                                 
+      ['untitled.test.cs', 'content for test file'.inspect ]
     ), log.inspect
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "test():delta[:unchanged] files are not saved" do
     visible_files = {
       'untitled.cs' => 'content for code file',
@@ -128,7 +130,7 @@ class SandboxTests < ActionController::TestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
+
   test "test():delta[:new] files are saved and git added" do
     visible_files = {
       'wibble.cs' => 'content for code file',
@@ -145,13 +147,13 @@ class SandboxTests < ActionController::TestCase
     write_log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(write_log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
-    
+
     git_log = @git.log[@sandbox.dir]
     assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-      
+
   test "test():delta[:deleted] files are git rm'd" do
     visible_files = {
       'untitled.cs' => 'content for code file',
@@ -168,16 +170,15 @@ class SandboxTests < ActionController::TestCase
     write_log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(write_log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
-    
+
     git_log = @git.log[@sandbox.dir]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def filenames_in(log)
     log.collect{ |entry| entry.first }
   end
-  
-end
 
+end

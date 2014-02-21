@@ -41,12 +41,23 @@ class Avatar
   def setup
     @disk.write(dir, visible_files_filename, @kata.visible_files)
     @disk.write(dir, traffic_lights_filename, [ ])
-    sandbox.save(@kata.visible_files) # includes output and instructions
-    sandbox.link(@kata.language)
+
     @git.init(dir, "--quiet")
+
+    @kata.visible_files.each do |filename,content|
+      @disk.write(sandbox.dir, filename, content)
+      @git.add(sandbox.dir, filename)
+    end
+
+    @kata.language.support_filenames.each do |filename|
+      old_name = @kata.language.dir + file_separator + filename
+      new_name = sandbox.dir + file_separator + filename
+      @disk.symlink(old_name, new_name)
+    end
+
     @git.add(dir, traffic_lights_filename)
     @git.add(dir, visible_files_filename)
-    git_commit(@kata.visible_files, tag = 0)
+    git_commit(tag = 0)
   end
 
   def kata
@@ -67,7 +78,7 @@ class Avatar
       traffic_light['number'] = tag
       @disk.write(dir, traffic_lights_filename, traffic_lights)
       @disk.write(dir, visible_files_filename, visible_files)
-      git_commit(visible_files, tag)
+      git_commit(tag)
     end
     traffic_lights
   end
@@ -99,10 +110,7 @@ private
     @disk.file_separator
   end
 
-  def git_commit(visible_files, tag)
-    visible_files.keys.each do |filename|
-      @git.add(dir, "sandbox/#{filename}")
-    end
+  def git_commit(tag)
     # the -a is important for .txt files in approval style tests
     @git.commit(dir, "-a -m '#{tag}' --quiet")
     @git.tag(dir, "-m '#{tag}' #{tag} HEAD")

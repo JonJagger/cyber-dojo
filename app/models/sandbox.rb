@@ -16,19 +16,19 @@ class Sandbox
     @avatar.dir + file_separator + 'sandbox'
   end
 
-  def save(files)
-    files.each do |filename,content|
-      @disk.write(dir, filename, content)
-    end
-  end
+  #def save(files)
+  #  files.each do |filename,content|
+  #    @disk.write(dir, filename, content)
+  #  end
+  #end
 
-  def link(language)
-    language.support_filenames.each do |filename|
-      old_name = language.dir + file_separator + filename
-      new_name = dir + file_separator + filename
-      @disk.symlink(old_name, new_name)
-    end
-  end
+  #def link(language)
+  #  language.support_filenames.each do |filename|
+  #    old_name = language.dir + file_separator + filename
+  #    new_name = dir + file_separator + filename
+  #    @disk.symlink(old_name, new_name)
+  #  end
+  #end
 
   def test(delta, visible_files, max_duration = 15)
     delta[:changed].each do |filename|
