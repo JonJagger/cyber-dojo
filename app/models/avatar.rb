@@ -39,10 +39,14 @@ class Avatar
   end
 
   def setup
-    @disk.write(dir, visible_files_filename, @kata.visible_files)
-    @disk.write(dir, traffic_lights_filename, [ ])
-
+    @disk.make_dir(dir + '/')
     @git.init(dir, "--quiet")
+
+    @disk.write(dir, visible_files_filename, @kata.visible_files)
+    @git.add(dir, visible_files_filename)
+
+    @disk.write(dir, traffic_lights_filename, [ ])
+    @git.add(dir, traffic_lights_filename)
 
     @kata.visible_files.each do |filename,content|
       @disk.write(sandbox.dir, filename, content)
@@ -55,8 +59,6 @@ class Avatar
       @disk.symlink(old_name, new_name)
     end
 
-    @git.add(dir, traffic_lights_filename)
-    @git.add(dir, visible_files_filename)
     git_commit(tag = 0)
   end
 

@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class StubDisk
-  
+
   def initialize
     @read_log = { }
     @write_log = { }
@@ -12,19 +12,19 @@ class StubDisk
   def read_log
     @read_log
   end
-  
+
   def write_log
     @write_log
   end
-  
+
   def symlink_log
     @symlink_log
   end
-  
+
   def file_separator
     '/'
   end
-  
+
   def []=(p1,p2,p3=nil)
     dir,filename,content = p1,'',''
     if p3 == nil # disk[dir] = true
@@ -34,11 +34,11 @@ class StubDisk
       dir,file,content = p1,p2,p3
       filename = p2
       content = p3
-    end    
+    end
     @read_repo[dir] ||= { }
-    @read_repo[dir][filename] = content    
+    @read_repo[dir][filename] = content
   end
-  
+
   def read(dir, filename)
     @read_log[dir] ||= [ ]
     @read_log[dir] << [filename]
@@ -46,22 +46,26 @@ class StubDisk
     if @read_repo[dir] == nil
       puts "stub_disk_file:nil  read(#{dir},#{filename})"
     end
-    
+
     @read_repo[dir][filename]
   end
-  
+
   def write(dir, filename, object)
     @write_log[dir] ||= [ ]
     @write_log[dir] << [filename, object.inspect]
-    
+
     @read_repo[dir] ||= { }
     @read_repo[dir][filename] = object.inspect
   end
-  
+
+  def make_dir(dir)
+    self[dir] = true
+  end
+
   def directory?(dir)
     @write_log[dir] != nil || @read_repo[dir] != nil
   end
-  
+
   def exists?(dir, filename = "")
     wdir = @write_log[dir]
     rdir = @read_repo[dir]
@@ -72,14 +76,13 @@ class StubDisk
              (rdir != nil && rdir[filename] != nil)
     end
   end
-  
+
   def lock(dir, &block)
     block.call()
   end
-  
-  def symlink(old_name, new_name)
-    @symlink_log << ['symlink', old_name, new_name]    
-  end
-  
-end
 
+  def symlink(old_name, new_name)
+    @symlink_log << ['symlink', old_name, new_name]
+  end
+
+end
