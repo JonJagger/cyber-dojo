@@ -33,7 +33,7 @@ a:link, a:visited
   color: $text-color;
   @include font-size-small();
 }
-#setup
+#setup_button
 {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: lighten($red, 10%);
@@ -41,12 +41,12 @@ a:link, a:visited
   color: $text-color;
   @include font-size-large();
 }
-  
+
 .kata_id_input
 {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: lighten($green, 20%);
-  @include gradient-lighten($green, 30%, 25%, 20%);    
+  @include gradient-lighten($green, 30%, 25%, 20%);
   color: $darker-color;
   @include font-size-medium();
   text-align: center;
@@ -62,19 +62,19 @@ a:link, a:visited
 #get_a_new_practice_id
 {
   color: $text-color;
-  @include font-size-tiny();  
+  @include font-size-tiny();
 }
 
 #enter_the_practice_id
 {
   color: lighten($green, 30%);
-  @include font-size-tiny();  
+  @include font-size-tiny();
 }
 
 #and
 {
   color: $text_color;
-  @include font-size-tiny();  
+  @include font-size-tiny();
 }
 
 #full_dojo_text, #empty_dojo_text
@@ -93,7 +93,7 @@ a:link, a:visited
 
 #please_donate
 {
-  color: darken($lighter-color, 10%);  
+  color: darken($lighter-color, 10%);
   @include font-size-tiny();
 }
 
@@ -101,4 +101,3 @@ a:link, a:visited
 {
   cursor: pointer;
 }
-

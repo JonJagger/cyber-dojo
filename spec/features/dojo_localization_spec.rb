@@ -1,7 +1,8 @@
 # encoding: utf-8
-require 'spec_helper'
+require File.dirname(__FILE__) + '/../spec_helper'
 
 feature "dojo localization:" do
+
   before(:each) do
     visit '/?locale=fr'
   end
@@ -22,14 +23,14 @@ feature "dojo localization:" do
   end
 
   scenario "setup page is localized" do
-    find('#setup').click
+    find('#setup_button').click
     visit '/setup/show?locale=fr'
     page.should have_text 'language?'
     page.should have_text 'exercice?'
     page.should have_text 'ok'
     page.should have_text 'annuler'
-
     find('#ok').click
     page.should have_text 'créer'
   end
+  
 end

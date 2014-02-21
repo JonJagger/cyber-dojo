@@ -2,13 +2,13 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
-  $('#setup').click(function() {
+
+  $('#setup_button').click(function() {
     var id = $('#kata_id_input').val();
     var url = '/setup/show/' + id;
     window.location = url;
   });
-  
+
 });
 
 //--></script>
@@ -19,7 +19,7 @@ $(document).ready(function() {
 
 <button type="button"
         class="tipped"
-        id="setup">
+        id="setup_button">
   <%= t('views.buttons.setup') %>
   <div class="tooltip">
      sets up your programming language and your exercise

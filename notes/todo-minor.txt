@@ -11,7 +11,10 @@ Deployment
     2. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard
   On cyber-dojo.com
     0. Pull
-    1. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard  
+    1. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SPEC
+  Get them running again!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Refactoring dojos
   Put tennis ones into zip  tar.gz ?
@@ -24,9 +27,9 @@ Refactoring dojos
   refactoring URLs below
   ...
   Yahtzee
-    Java   9D5B580C30 deer 1   
+    Java   9D5B580C30 deer 1
     C#     8BD04E035C elephant 1
-    Python 5C5B71C765 hippo 37 
+    Python 5C5B71C765 hippo 37
     C++    76DD58DE08 frog 1   this has a manifest :language='C++'
                                which is now :language='C++-assert'
   Tennis
@@ -34,10 +37,10 @@ Refactoring dojos
     C#     672E047F5D buffalo 8
     Python 435E5C1C88 moose 5
     Ruby   3367E4B0E9 raccoon 4
-    C++    A06DCDA217 wolf 5    
+    C++    A06DCDA217 wolf 5
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 19th Feb 2014: On cyber-dojo.com ran
-  > ruby prune_small.rb true 3 7 
+  > ruby prune_small.rb true 3 7
     2764 katas deleted
     5783 katas not deleted
   >df
@@ -62,7 +65,7 @@ Refactoring dojos
   Will write a script tomorrow.
   ...
   The xfer.rb script could take the URL as a parameter
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   A0FCF4CCBF is a nice dojo (to redo the dashboard screenshot)
   It shows the ellision at the rhs is not quite right yet.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -74,6 +77,8 @@ REVERT
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
   Disk.rb can do same as StubDisk viz disk[dir,filename] = content
+  disk[dir].read(file)
+  disk[dir].write(file)
   ...
   ContentHashDiffer.diff should be called makeDelta
     its about previous and current (not incoming outgoing)
@@ -89,7 +94,6 @@ TOOL-TIP
    hover over any element to reveal its tooltip?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSTALLATION-TESTS
-  Copy make_kata and make_manifest out of test-helper so there is no dependency
   Create script that can pass root_dir and optional language to remainder
     it will check languages off the root_dir
     if language supplied will check only that
@@ -137,13 +141,13 @@ TOOL-TIPS
   for fork-dialog
   for revert-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I18N  
+I18N
   Need to be i18n'd on the setup page.
   ...
   On dialog buttons
     cancel: new-file,rename-file,delete-file
     close: diff
-  ...  
+  ...
   Lots more.
   Have promises for Russian and Ukranian.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -185,7 +189,7 @@ MISC
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIALOGS
   change .close() calls to .remove()
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HTML
   s/fork/forker/
   s/revert/reverter/ ?
@@ -218,7 +222,7 @@ RESUME/FORK? FROM RENAMED LANGUAGE
   But the name of the language has changed from
   Java-ApprovalTests
   to
-  Java-Approval  
+  Java-Approval
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
   Dynamically change width from <99 to 100+
@@ -257,11 +261,11 @@ app/helpers
   not enough coverage on
     translation_helper.rb
     application_helper.rb
-  
+
 app/controllers
   application_controller.set_locale
   locales_controller.change
-  
+
 -------------------------------------------------------------
 Thinking about how I could reduce the number of clicks to get started...
 Suppose there were 4 rooms, each of a different colour.
