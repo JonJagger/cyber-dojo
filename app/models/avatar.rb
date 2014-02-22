@@ -4,13 +4,6 @@ require 'Git'
 
 class Avatar
 
-  def self.create(kata, name)
-    # To start an animal in a kata, call this.
-    avatar = kata[name]
-    avatar.setup
-    avatar
-  end
-
   def self.names
     # no two animals start with the same letter
     %w(

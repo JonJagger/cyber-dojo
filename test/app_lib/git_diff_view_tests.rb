@@ -4,27 +4,25 @@ require 'GitDiff'
 class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
-  
+
   test "building diff view from git repo with modified file" do
     kata = make_kata('Ruby-installed-and-working')
-    avatar = Avatar.create(kata, 'wolf')    
-    # that will have created tag 0 in the repo
+    avatar = kata.start_avatar # tag 0
 
     visible_files =
       {
         'cyber-dojo.sh'    => cyberdojo_sh,
         'untitled.rb'      => untitled_rb,
         'test_untitled.rb' => test_untitled_rb,
-        'output'           => '' 
+        'output'           => ''
       }
     delta = {
       :changed => visible_files.keys,
       :unchanged => [ ],
       :deleted => [ ],
-      :new => [ ]      
+      :new => [ ]
     }
-    # create tag 1 in the repo
-    run_test(delta, avatar, visible_files)
+    run_test(delta, avatar, visible_files) # tag 1
     assert_equal 'red', avatar.traffic_lights.last['colour'], avatar.visible_files["output"]
 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
@@ -32,24 +30,23 @@ class GitDiffViewTests < ActionController::TestCase
       :changed => [ 'untitled.rb' ],
       :unchanged => visible_files.keys - [ 'untitled.rb' ],
       :deleted => [ ],
-      :new => [ ]      
+      :new => [ ]
     }
-    
-    # create tag 2 in the repo     
-    run_test(delta, avatar, visible_files)
+
+    run_test(delta, avatar, visible_files) # tag 2
     assert_equal 'green', avatar.traffic_lights.last['colour']
-    
+
     was_tag = 1
-    now_tag = 2    
+    now_tag = 2
     view = git_diff_view(avatar, was_tag, now_tag)
     view.delete('output')
-    
+
     expected =
     {
       'untitled.rb' =>
       [
         { :line => "def answer", :type => :same,    :number => 1 },
-        { :type => :section, :index => 0 },        
+        { :type => :section, :index => 0 },
         { :line => "  42",       :type => :deleted, :number => 2 },
         { :line => "  54",       :type => :added,   :number => 2 },
         { :line => "end",        :type => :same,    :number => 3 },
@@ -57,23 +54,23 @@ class GitDiffViewTests < ActionController::TestCase
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh' => sameify(cyberdojo_sh)
     }
-    
+
     assert_equal expected, view
-    
-    
+
+
     class MockUuidFactory
-      
+
       def initialize(mock_uuids)
         @n = -1
         @mock_uuids = mock_uuids
       end
-      
+
       def create_uuid
         @mock_uuids[@n += 1]
       end
-      
+
     end
-    
+
     diffs = git_diff_prepare(view, MockUuidFactory.new(["1","2","3"]))
     expected_diffs = [
       {
@@ -96,7 +93,7 @@ class GitDiffViewTests < ActionController::TestCase
         "<same>require 'test/unit'</same>" +
         "<same>&thinsp;</same>" +
         "<same>class TestUntitled &lt; Test::Unit::TestCase</same>" +
-        "<same>&thinsp;</same>" + 
+        "<same>&thinsp;</same>" +
         "<same>  def test_simple</same>" +
         "<same>    assert_equal 9 * 6, answer</same>" +
         "<same>  end</same>" +
@@ -107,12 +104,12 @@ class GitDiffViewTests < ActionController::TestCase
         "<same><ln>2</ln></same>" +
         "<same><ln>3</ln></same>" +
         "<same><ln>4</ln></same>" +
-        "<same><ln>5</ln></same>" + 
+        "<same><ln>5</ln></same>" +
         "<same><ln>6</ln></same>" +
         "<same><ln>7</ln></same>" +
         "<same><ln>8</ln></same>" +
         "<same><ln>9</ln></same>" +
-        "<same><ln>10</ln></same>"    
+        "<same><ln>10</ln></same>"
       },
       {
         :id => "id_3",
@@ -129,39 +126,37 @@ class GitDiffViewTests < ActionController::TestCase
         "<same><ln>1</ln></same>" +
         "<deleted><ln>2</ln></deleted>" +
         "<added><ln>2</ln></added>" +
-        "<same><ln>3</ln></same>"        
+        "<same><ln>3</ln></same>"
       }
     ]
 
-    assert_equal expected_diffs[0], diffs[0], "0"    
-    assert_equal expected_diffs[1], diffs[1], "1"    
+    assert_equal expected_diffs[0], diffs[0], "0"
+    assert_equal expected_diffs[1], diffs[1], "1"
     assert_equal expected_diffs[2], diffs[2], "2"
 
   end
-  
+
   #-----------------------------------------------
-  
+
   test "building git diff view from repo with deleted file" do
     kata = make_kata('Ruby-installed-and-working')
-    avatar = Avatar.create(kata, 'wolf')    
-    # that will have created tag 0 in the repo
+    avatar = kata.start_avatar # tag 0
 
     visible_files =
       {
         'cyber-dojo.sh'    => cyberdojo_sh,
         'untitled.rb'      => untitled_rb,
         'test_untitled.rb' => test_untitled_rb,
-        'output'           => '' 
+        'output'           => ''
       }
     delta = {
       :changed => visible_files.keys,
       :unchanged => [ ],
       :deleted => [ ],
-      :new => [ ]      
+      :new => [ ]
     }
 
-    # create tag 1 in the repo
-    run_test(delta, avatar, visible_files)
+    run_test(delta, avatar, visible_files) # tag 1
     assert_equal 'red', avatar.traffic_lights.last['colour'], avatar.visible_files["output"]
 
     visible_files.delete('untitled.rb')
@@ -169,15 +164,14 @@ class GitDiffViewTests < ActionController::TestCase
       :changed => [ ],
       :unchanged => visible_files.keys - [ 'untitled.rb' ],
       :deleted => [ 'untitled.rb' ],
-      :new => [ ]      
+      :new => [ ]
     }
-    
-    # create tag 2 in the repo 
-    run_test(delta, avatar, visible_files)
+
+    run_test(delta, avatar, visible_files) # tag 2
     assert_equal 'amber', avatar.traffic_lights.last['colour']
-    
+
     from_tag = 1
-    to_tag = 2    
+    to_tag = 2
     view = git_diff_view(avatar, from_tag, to_tag)
     view.delete('output')
 
@@ -187,17 +181,17 @@ class GitDiffViewTests < ActionController::TestCase
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh'    => sameify(cyberdojo_sh)
     }
-    
+
     assert_equal expected, view
   end
 
   #-----------------------------------------------
 
-  test "only visible files are commited and are seen in diff_lines" do    
+  test "only visible files are commited and are seen in diff_lines" do
     kata = make_kata('Java-JUnit')
-    avatar = Avatar.create(kata, 'wolf')  # tag 0
+    avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
-    
+
     cyber_dojo_sh = visible_files['cyber-dojo.sh']
     cyber_dojo_sh += "\n"
     cyber_dojo_sh += "echo xxx > jj.x"
@@ -206,24 +200,24 @@ class GitDiffViewTests < ActionController::TestCase
       :changed => [ ],
       :unchanged => visible_files.keys,
       :deleted => [ ],
-      :new => [ ]            
+      :new => [ ]
     }
     run_test(delta, avatar, visible_files) # tag 1
-    
+
     from_tag = 0
-    to_tag = 1  
+    to_tag = 1
     view = git_diff_view(avatar, from_tag, to_tag)
-    
+
     view.keys.each do |filename|
       assert visible_files.keys.include?(filename),
             "visible_files.keys.include?(#{filename})"
     end
-    
+
     assert_equal view.length, visible_files.length
   end
 
   #-----------------------------------------------
-  
+
   test "uuid_factory" do
     factory = UuidFactory.new
     (1..5).each { |n|
@@ -242,10 +236,10 @@ class GitDiffViewTests < ActionController::TestCase
 ruby test_untitled.rb
 HERE
   end
-  
+
   #-----------------------------------------------
-  
-  def test_untitled_rb 
+
+  def test_untitled_rb
 <<HERE
 require './untitled'
 require 'test/unit'
@@ -261,19 +255,19 @@ HERE
   end
 
   #-----------------------------------------------
-  
+
   def untitled_rb
 <<HERE
 def answer
   42
 end
 HERE
-  end  
-  
+  end
+
   #-----------------------------------------------
 
   test "sameify with joined newlines" do
-    
+
     expected =
     [
       { :line => "once",        :type => :same, :number => 1 },
@@ -284,9 +278,9 @@ HERE
       { :line => "",            :type => :same, :number => 6 },
     ]
     assert_equal expected, sameify(great_great_film + "\n\n")
-    
+
   end
-  
+
   test "sameify" do
     expected =
     [
@@ -297,7 +291,7 @@ HERE
     ]
     assert_equal expected, sameify(great_great_film)
   end
-  
+
   test "deleteify" do
     expected =
     [
@@ -310,7 +304,7 @@ HERE
   end
 
 
-  def great_great_film 
+  def great_great_film
 <<HERE
 once
 upon a
@@ -318,5 +312,5 @@ time
 in the west
 HERE
   end
-  
+
 end

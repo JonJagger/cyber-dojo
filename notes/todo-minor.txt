@@ -1,6 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Make default that lines are on.
+file_separator is really a dir_separator
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+move sandbox.test into avatar.
+Delete sandbox
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Once Avatar.create is refactored into kata.start_avatar
    o) create External object holding disk,git,task

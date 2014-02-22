@@ -59,7 +59,7 @@ class AvatarTests < ActionController::TestCase
         "support_filenames" => [ support_filename ]
       })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     assert_not_nil @disk.write_log[avatar.dir]
     assert @disk.write_log[avatar.dir].include?(['manifest.rb', visible_files.inspect])
     assert @disk.write_log[avatar.dir].include?(['increments.rb', [ ].inspect])
@@ -91,17 +91,23 @@ class AvatarTests < ActionController::TestCase
     @disk[@kata.dir, 'manifest.rb'] = manifest.inspect
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
 
-    assert_equal [
-          [ 'init', '--quiet'],
-          [ 'add', 'increments.rb' ],
-          [ 'add', 'manifest.rb'],
-          #[ 'add', 'sandbox/name'],
-          [ 'commit', "-a -m '0' --quiet" ],
-          [ 'commit', "-m '0' 0 HEAD" ]
-        ],
-      @git.log[avatar.dir]
+    log = @git.log[avatar.dir]
+    assert_equal [ 'init', '--quiet'], log[0]
+    add1_index = log.index([ 'add', 'increments.rb' ])
+    assert add1_index != nil
+    add2_index = log.index([ 'add', 'manifest.rb'])
+    assert add2_index != nil
+    commit1_index = log.index([ 'commit', "-a -m '0' --quiet" ])
+    assert commit1_index != nil
+    commit2_index = log.index([ 'commit', "-m '0' 0 HEAD" ])
+    assert commit2_index != nil
+
+    assert add1_index < commit1_index
+    assert add1_index < commit2_index
+    assert add2_index < commit1_index
+    assert add2_index < commit2_index
 
     assert_equal [
       [ 'add', 'name']
@@ -133,7 +139,7 @@ class AvatarTests < ActionController::TestCase
     @disk[@kata.dir, 'manifest.rb'] = manifest.inspect
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     assert_equal [ ], avatar.traffic_lights
   end
 
@@ -152,7 +158,7 @@ class AvatarTests < ActionController::TestCase
     @disk[@kata.dir, 'manifest.rb'] = manifest.inspect
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     assert_equal kata, avatar.kata
   end
 
@@ -172,7 +178,7 @@ class AvatarTests < ActionController::TestCase
     @disk[@kata.dir, 'manifest.rb'] = manifest.inspect
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     visible_files = avatar.visible_files
     assert visible_files.keys.include?('output'),
           "visible_files.keys.include?('output')"
@@ -195,7 +201,7 @@ class AvatarTests < ActionController::TestCase
     @disk[@kata.dir, 'manifest.rb'] = manifest.inspect
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     sandbox_dir = avatar.dir + @disk.file_separator + 'sandbox'
     visible_files.each do |filename,content|
       assert_equal content.inspect, @disk.read(sandbox_dir, filename)
@@ -218,7 +224,7 @@ class AvatarTests < ActionController::TestCase
     @disk[@kata.dir, 'manifest.rb'] = manifest.inspect
     @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
     kata = @dojo.create_kata(manifest)
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     sandbox = avatar.sandbox
     assert_equal visible_files['cyber-dojo.sh'].inspect,
       @disk.read(sandbox.dir, 'cyber-dojo.sh')
@@ -246,7 +252,7 @@ class AvatarTests < ActionController::TestCase
       })
     @disk[language.dir, 'untitled.c'] = 'content for visible file'
     @disk[language.dir, 'cyber-dojo.sh'] = 'make'
-    avatar = Avatar.create(kata, 'wolf')
+    avatar = kata.start_avatar
     delta = {
       :changed => [ 'untitled.c' ],
       :unchanged => [ 'cyber-dojo.sh' ],
