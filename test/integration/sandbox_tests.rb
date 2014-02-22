@@ -5,10 +5,9 @@ class SandboxTests < ActionController::TestCase
   test "defect-driven: filename containing space is not accidentally retained" do
     # retained means stays in the sandbox
     kata = make_kata('Java-JUnit', exercise='Dummy')
-    avatar_name = Avatar::names.shuffle[0]
-    avatar = Avatar.create(kata, avatar_name)
+    avatar = kata.start_avatar
     sandbox = avatar.sandbox
-    
+
     visible_files = {
       'Untitled.java'     => content_for_untitled_java,
       'UntitledTest.java' => content_for_untitled_test_java,
@@ -20,11 +19,11 @@ class SandboxTests < ActionController::TestCase
       :deleted   => [ ],
       :new       => [ ]
     }
-    output = sandbox.test(delta, visible_files)    
+    output = sandbox.test(delta, visible_files)
     traffic_light = OutputParser::parse('junit', output)
     avatar.save_run_tests(visible_files, traffic_light)
     assert_equal 'green', traffic_light['colour']
-    
+
     visible_files = {
       'Untitled .java'    => content_for_untitled_java,
       'UntitledTest.java' => content_for_untitled_test_java,
@@ -37,10 +36,10 @@ class SandboxTests < ActionController::TestCase
       :new       => [ 'Untitled .java' ]
     }
     output = sandbox.test(delta, visible_files)
-    avatar.save_run_tests(visible_files, traffic_light)      
+    avatar.save_run_tests(visible_files, traffic_light)
     traffic_light = OutputParser::parse('junit', output)
     assert_equal 'amber', traffic_light['colour']
-    
+
     # put it back the way it was
     visible_files = {
       'Untitled.java'     => content_for_untitled_java,
@@ -53,15 +52,15 @@ class SandboxTests < ActionController::TestCase
       :deleted   => [ 'Untitled .java' ],
       :new       => [ 'Untitled.java' ]
     }
-    output = sandbox.test(delta, visible_files)    
+    output = sandbox.test(delta, visible_files)
     traffic_light = OutputParser::parse('junit', output)
     avatar.save_run_tests(visible_files, traffic_light)
     # if the file whose name contained a space has been retained
     # this will be :amber instead of :green
-    assert_equal 'green', traffic_light['colour'], kata.id + ":" + avatar_name
-    
+    assert_equal 'green', traffic_light['colour'], kata.id + ":" + avatar.name
+
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def content_for_untitled_java
@@ -73,14 +72,14 @@ class SandboxTests < ActionController::TestCase
       "}"
     ].join("\n")
   end
-  
+
   def content_for_untitled_test_java
     [
       "import org.junit.*;",
       "import static org.junit.Assert.*;",
       "",
       "public class UntitledTest {",
-      "",    
+      "",
       "    @Test",
       "    public void hitch_hiker() {",
       "        int expected = 6 * 7;",
@@ -90,7 +89,7 @@ class SandboxTests < ActionController::TestCase
       "}"
     ].join("\n")
   end
-  
+
   def content_for_cyber_dojo_sh
     [
       "rm -f *.class",
@@ -100,6 +99,5 @@ class SandboxTests < ActionController::TestCase
       "fi"
     ].join("\n")
   end
-  
-end
 
+end

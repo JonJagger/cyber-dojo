@@ -2,17 +2,23 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 file_separator is really a dir_separator
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-move sandbox.test into avatar.
-Delete sandbox
+move sandbox.test into avatar?
+Delete sandbox?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Once Avatar.create is refactored into kata.start_avatar
-   o) create External object holding disk,git,task
-   o) External has .dojo(dir)
-        which passes disk,git,task to Dojo.ctor
-   o) Dojo has [id]
-        which passes disk,git,task to Kata.ctor
-   o) Kata has .create_avatar
-        which passes disk,git,task to Avatar.ctor
+  o) create External object holding disk,git,task
+  o) External has .dojo(dir)
+       which passes disk,git,task to Dojo.ctor
+  o) Dojo has [id]
+       which passes disk,git,task to Kata.ctor
+  o) Kata has .create_avatar
+       which passes disk,git,task to Avatar.ctor
+  Problem with this is controller_tests. Eg before this
+      get 'dojo/start_json', {
+        :format => :json,
+        :id => id
+      }
+    how can I control what externals are set in application_controller?
+    With Thread[:disk] I can intercept...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Deployment
   Locally

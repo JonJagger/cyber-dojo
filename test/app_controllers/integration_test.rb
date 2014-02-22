@@ -3,10 +3,10 @@ require File.dirname(__FILE__) + '/../test_helper'
 class IntegrationTest  < ActionController::IntegrationTest
 
   def setup
-    super
-    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'    
+    super  # calls test_helper's ActiveSupport::TestCase::setup
+    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
   end
-  
+
   def json
     ActiveSupport::JSON.decode @response.body
   end
@@ -18,5 +18,5 @@ class IntegrationTest  < ActionController::IntegrationTest
     }
     json['id']
   end
-    
+
 end

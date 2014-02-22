@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
   def id
     Folders::id_complete(root_dir, params[:id]) || ""
   end
-    
+
   def dojo
     Dojo.new(root_dir)
   end
-  
+
   def make_manifest(language_name, exercise_name)
     language = dojo.language(language_name)
     {
@@ -30,11 +30,11 @@ class ApplicationController < ActionController::Base
       :tab_size => language.tab_size
     }
   end
-  
+
   def bind(filename)
     filename = Rails.root.to_s + filename
     ERB.new(File.read(filename)).result(binding)
-  end  
+  end
 
   def set_locale
     if params[:locale].present?
@@ -49,5 +49,9 @@ private
   def root_dir
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
   end
-  
+
+  def external
+    External.new(Disk.new, Git.new, TimeBoxedTask.new)
+  end
+
 end

@@ -6,44 +6,40 @@ class ZombieShellTests < ActionController::TestCase
     # See comments in app/lib/TimeBoxedTask.rb
     `ps`.scan(/<defunct>/).length
   end
-  
+
   test "check running tests does not accumulate zombie defunct shell processes" do
-    language = 'Ruby-installed-and-working'
-    avatar_count = 4
-    run_tests_count = 4
+    kata = make_kata('Ruby-installed-and-working')
 
-    kata = make_kata(language)
-
-    visible_files_set = { }
     avatars = [ ]
-    
+    visible_files_set = { }
+    avatar_count = 4
     avatar_count.times do |n|
-      avatar = Avatar.create(kata, Avatar.names[n])
+      avatar = kata.start_avatar
       visible_files_set[avatar.name] = avatar.visible_files
       avatars << avatar
     end
 
+    run_tests_count = 4
     run_tests_count.times do |n|
       avatars.each do |avatar|
-        visible_files = visible_files_set[avatar.name]        
+        visible_files = visible_files_set[avatar.name]
         defunct_before = defunct_count
         delta = {
           :changed => visible_files.keys,
           :unchanged => [ ],
           :deleted => [ ],
-          :new => [ ]      
-        }            
-        output = run_test(delta, avatar, visible_files, timeout=5)        
+          :new => [ ]
+        }
+        output = run_test(delta, avatar, visible_files, timeout=5)
         defunct_after = defunct_count
-        
-        assert_equal defunct_before, defunct_after, 'run_test(delta, avatar, visible_files)' 
-        
+
+        assert_equal defunct_before, defunct_after, 'run_test(delta, avatar, visible_files)'
+
         info = avatar.name + ', red'
         assert_equal 'red', avatar.traffic_lights.last['colour'], info + ', red,' + output
         print 's'
       end
     end
   end
-  
-end
 
+end
