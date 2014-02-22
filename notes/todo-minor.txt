@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Make default that lines are on.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Once Avatar.create is refactored into kata.start_avatar
    o) create External object holding disk,git,task
    o) External has .dojo(dir)
@@ -69,11 +71,11 @@ Refactoring dojos
     gzip: stdin: not in gzip format
     tar: Child returned status 1
     tar: Exiting with failure status due to previous errors
-  Need to find out which ids are causing failures.
+  Need to find out which ids are causing failures and why.
   Moved them back to separate downloads folder.
-  Will write a script tomorrow.
   ...
-  The xfer.rb script could take the URL as a parameter
+  The xfer.rb script could take the URL as a parameter.
+  Will probably want to xfer in both directions.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   A0FCF4CCBF is a nice dojo (to redo the dashboard screenshot)
   It shows the ellision at the rhs is not quite right yet.
@@ -86,11 +88,11 @@ REVERT
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
   Disk.rb can do same as StubDisk viz disk[dir,filename] = content
-  disk[dir].read(file)
-  disk[dir].write(file)
+  content = disk[dir].read(file)
+  disk[dir].write(file,content)
   ...
   ContentHashDiffer.diff should be called makeDelta
-    its about previous and current (not incoming outgoing)
+    its about current and next (not incoming outgoing)
   ...
   prune_large.rb and prune_small.rb rework to used Dojo.each function
   Dojo.create_kata(manifest)

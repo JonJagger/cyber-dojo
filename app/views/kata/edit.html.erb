@@ -2,21 +2,21 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
+
   cd.tabExpansion = function() {
     return "<%= @tab %>";
   };
-    
+
   cd.supportFilenames = function() {
     return $.parseJSON('<%= @kata.language.support_filenames.inspect.html_safe %>');
   };
-  
+
   cd.highlightFilenames = function() {
     return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
   };
-  
-  cd.storeIncomingFileHashes();    
-  cd.storeOutgoingFileHashes();  
+
+  cd.storeIncomingFileHashes();
+  cd.storeOutgoingFileHashes();
 
   cd.tipify($('.tipped'), $('#tip_window'));
 
@@ -27,10 +27,10 @@ $(document).ready(function() {
     if (filename !== 'output') {
       cd.tabber(file);
     }
-  });  
+  });
   cd.bindAllLineNumbers();
   cd.rebuildFilenameList();
-  
+
   if (<%= @traffic_lights.length === 0 %>) {
     var message = "\n    Please wait while the tests are run...";
     cd.fileContentFor('output').val(message);
@@ -43,9 +43,7 @@ $(document).ready(function() {
     $('.spinner').hide();
     cd.loadFile(filename);
   }
-  
-  $('[id$=line_numbers]').hide();
-  
+
 });
 
 //--></script>
@@ -54,30 +52,30 @@ $(document).ready(function() {
                 :id     => @kata.id,
                 :avatar => @avatar.name
               },
-                :remote => true ) do %>  
+                :remote => true ) do %>
 
   <%= render :partial => 'current_filename' %>
   <%= render :partial => 'file_hashes_incoming' %>
   <%= render :partial => 'file_hashes_outgoing' %>
-  
+
 <div id="kata_page">
   <table>
     <tr class="valign-top">
       <td>
         <div class="panel">
-          <%= render :partial => 'shared/info' %>          
+          <%= render :partial => 'shared/info' %>
         </div>
         <div class="panel">
-          <%= render :partial => 'test_button' %>		
+          <%= render :partial => 'test_button' %>
         </div>
-        <div class="panel">        
+        <div class="panel">
           <%= render :partial => 'file_new_rename_delete' %>
-        </div>        
-        <div class="panel">        
+        </div>
+        <div class="panel">
           <%= render :partial => 'filename_list' %>
         </div>
         <div class="panel">
-          <%= render :partial => 'misc_buttons' %>          
+          <%= render :partial => 'misc_buttons' %>
         </div>
       </td>
       <td>
@@ -93,5 +91,5 @@ $(document).ready(function() {
       </td>
     </tr>
   </table>
-</div>  
+</div>
 <% end %>
