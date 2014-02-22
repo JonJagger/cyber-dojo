@@ -36,7 +36,6 @@ $(document).ready(function() {
     cd.fileContentFor('output').val(message);
     cd.loadFile('output');
     $('#test_button').attr('disabled', true);
-    $('.spinner').show();
     cd.testForm().submit();
   } else {
     var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
@@ -75,7 +74,18 @@ $(document).ready(function() {
           <%= render :partial => 'filename_list' %>
         </div>
         <div class="panel">
-          <%= render :partial => 'misc_buttons' %>
+          <div class="table-row">
+            <%= render :partial => 'line_numbers_checkbox' %>
+          </div>
+          <div class="table-row">
+            <%= render :partial => 'revert_button' %>
+          </div>
+          <div class="table-row">
+            <%= render :partial => 'fork_button' %>
+          </div>
+          <div class="table-row">
+            <%= render :partial => 'help_button' %>
+          </div>
         </div>
       </td>
       <td>

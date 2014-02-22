@@ -8,7 +8,7 @@ $(document).ready(function() {
   $('#line_numbers_checkbox').click(function() {
     var nodes = $('[id$=line_numbers]');
     if ($(this).is(':checked')) {
-      nodes.show();      
+      nodes.show();
     } else {
       nodes.hide();
     }
@@ -30,6 +30,7 @@ $(document).ready(function() {
     </td>
     <td>
       <input type="checkbox"
+             checked="true"
              id="line_numbers_checkbox"/>
     </td>
   </tr>
