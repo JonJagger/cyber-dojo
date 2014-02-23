@@ -240,7 +240,7 @@ private
     visible_files[filename] = test_code.sub('42', replacement)
 
     if @verbose
-      puts "\n\n\n<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>"
+      puts "\n\n<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>"
       puts visible_files[filename]
       puts "</test_code>"
     end
@@ -257,7 +257,7 @@ private
     if @verbose
       puts "<output>"
       puts output
-      puts "</output>"
+      puts "</output>\n\n"
     end
 
     colour
