@@ -7,7 +7,7 @@ feature "Start a practice" do
   scenario "Practice doesn't exist yet" do
     visit "/"
     find('#setup_button').click
-    find('#language_ruby_rspec').click
+    find('[data-language="Ruby-Rspec"]').click
     find('#ok').click
     find('#start_button').click
     click_button('ok')

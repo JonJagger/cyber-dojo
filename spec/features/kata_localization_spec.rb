@@ -6,7 +6,7 @@ feature "kata localization:" do
   before(:each) do
     visit '/?locale=fr'
     find('#setup_button').click
-    find('#language_ruby_rspec').click
+    find('[data-language="Ruby-Rspec"]').click
     find('#ok').click
     find('#start_button').click
     click_button('ok')
@@ -27,10 +27,9 @@ feature "kata localization:" do
         page.should have_text 'renommer'
         page.should have_text 'effacer'
       end
-      page.should have_text 'aide'
-      page.should have_text 'renommer'
-      page.should have_text 'réactions'
+      page.should have_text 'revenir'   # revert
+      page.should have_text 'bifurquer' # fork
     end
   end
-  
+
 end
