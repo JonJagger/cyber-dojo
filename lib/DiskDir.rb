@@ -1,5 +1,5 @@
 
-class Dir
+class DiskDir
 
   def initialize(disk,dir)
     @disk,@dir = disk,dir

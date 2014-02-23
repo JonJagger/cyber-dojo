@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/dir'
 
 class Disk
 
@@ -7,7 +6,7 @@ class Disk
   end
 
   def [](dir)
-    Dir.new(self,dir)
+    DiskDir.new(self,dir)
   end
 
   def symlink(old_name, new_name)
