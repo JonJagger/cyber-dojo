@@ -24,31 +24,31 @@ class Avatar
   end
 
   def exists?
-    @disk.exists?(dir)
+    @disk[dir].exists?
   end
 
   def dir
-    @kata.dir + file_separator + name
+    @kata.dir + dir_separator + name
   end
 
   def setup
-    @disk.make_dir(dir + '/')
+    @disk[dir + '/'].make
     @git.init(dir, "--quiet")
 
-    @disk.write(dir, visible_files_filename, @kata.visible_files)
+    @disk[dir].write(visible_files_filename, @kata.visible_files)
     @git.add(dir, visible_files_filename)
 
-    @disk.write(dir, traffic_lights_filename, [ ])
+    @disk[dir].write(traffic_lights_filename, [ ])
     @git.add(dir, traffic_lights_filename)
 
     @kata.visible_files.each do |filename,content|
-      @disk.write(sandbox.dir, filename, content)
+      @disk[sandbox.dir].write(filename, content)
       @git.add(sandbox.dir, filename)
     end
 
     @kata.language.support_filenames.each do |filename|
-      old_name = @kata.language.dir + file_separator + filename
-      new_name = sandbox.dir + file_separator + filename
+      old_name = @kata.language.dir + dir_separator + filename
+      new_name = sandbox.dir + dir_separator + filename
       @disk.symlink(old_name, new_name)
     end
 
@@ -65,14 +65,14 @@ class Avatar
 
   def save_run_tests(visible_files, traffic_light)
     traffic_lights = nil
-    @disk.lock(dir) do
-      text = @disk.read(dir, traffic_lights_filename)
+    @disk[dir].lock do
+      text = @disk[dir].read(traffic_lights_filename)
       traffic_lights = JSON.parse(JSON.unparse(eval text))
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light['number'] = tag
-      @disk.write(dir, traffic_lights_filename, traffic_lights)
-      @disk.write(dir, visible_files_filename, visible_files)
+      @disk[dir].write(traffic_lights_filename, traffic_lights)
+      @disk[dir].write(visible_files_filename, visible_files)
       git_commit(tag)
     end
     traffic_lights
@@ -101,8 +101,8 @@ class Avatar
 
 private
 
-  def file_separator
-    @disk.file_separator
+  def dir_separator
+    @disk.dir_separator
   end
 
   def git_commit(tag)
@@ -112,7 +112,7 @@ private
   end
 
   def unlocked_read(filename, tag)
-    @disk.lock(dir) {
+    @disk[dir].lock {
       locked_read(filename, tag)
     }
   end
@@ -121,7 +121,7 @@ private
     if tag != nil
       @git.show(dir, "#{tag}:#{filename}")
     else
-      @disk.read(dir, filename)
+      @disk[dir].read(filename)
     end
   end
 

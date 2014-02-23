@@ -10,13 +10,13 @@ class Kata
   end
 
   def exists?
-    @disk.exists?(dir)
+    @disk[dir].exists?
   end
 
   def dir
-    @dojo.dir + file_separator +
-      'katas'   + file_separator +
-        @id.inner + file_separator +
+    @dojo.dir + dir_separator +
+      'katas'   + dir_separator +
+        @id.inner + dir_separator +
           @id.outer
   end
 
@@ -30,7 +30,7 @@ class Kata
 
   def start_avatar
     avatar = nil
-    @disk.lock(dir) do
+    @disk[dir].lock do
       started_avatar_names = avatars.collect { |avatar| avatar.name }
       unstarted_avatar_names = Avatar.names - started_avatar_names
       if unstarted_avatar_names != [ ]
@@ -68,8 +68,8 @@ class Kata
 
 private
 
-  def file_separator
-    @disk.file_separator
+  def dir_separator
+    @disk.dir_separator
   end
 
   def random(array)
@@ -77,7 +77,7 @@ private
   end
 
   def manifest
-    @manifest ||= eval @disk.read(dir, 'manifest.rb')
+    @manifest ||= eval @disk[dir].read('manifest.rb')
   end
 
 end

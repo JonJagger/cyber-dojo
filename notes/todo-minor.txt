@@ -1,7 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-file_separator is really a dir_separator
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move sandbox.test into avatar?
 Delete sandbox?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,9 +94,8 @@ REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
-  Disk.rb can do same as StubDisk viz disk[dir,filename] = content
-  content = disk[dir].read(file)
-  disk[dir].write(file,content)
+  app_models/stub_disk.rb to become spy_disk and do spying
+    in combination with spy_dir
   ...
   ContentHashDiffer.diff should be called makeDelta
     its about current and next (not incoming outgoing)

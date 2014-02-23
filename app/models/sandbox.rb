@@ -13,15 +13,15 @@ class Sandbox
   end
 
   def dir
-    @avatar.dir + file_separator + 'sandbox'
+    @avatar.dir + dir_separator + 'sandbox'
   end
 
   def test(delta, visible_files, max_duration = 15)
     delta[:changed].each do |filename|
-      @disk.write(dir, filename, visible_files[filename])
+      @disk[dir].write(filename, visible_files[filename])
     end
     delta[:new].each do |filename|
-      @disk.write(dir, filename, visible_files[filename])
+      @disk[dir].write(filename, visible_files[filename])
       @git.add(dir, filename)
     end
     delta[:deleted].each do |filename|
@@ -31,14 +31,14 @@ class Sandbox
                "./cyber-dojo.sh"
     output = @task.execute(command, max_duration)
     # create output file so it appears in diff-view
-    @disk.write(dir, 'output', output)
+    @disk[dir].write('output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
 private
 
-  def file_separator
-    @disk.file_separator
+  def dir_separator
+    @disk.dir_separator
   end
 
 end

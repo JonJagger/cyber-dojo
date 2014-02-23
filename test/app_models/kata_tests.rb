@@ -27,20 +27,20 @@ class KataTests < ActionController::TestCase
 
   test "exists? false then true when kata's dir exists" do
     assert !@kata.exists?
-    @disk[@kata.dir] = true
+    @disk[@kata.dir].make
     assert @kata.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not end in slash" do
-    assert !@kata.dir.end_with?(@disk.file_separator)
+    assert !@kata.dir.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir does not have doubled separator" do
-    doubled_separator = @disk.file_separator * 2
+    doubled_separator = @disk.dir_separator * 2
     assert_equal 0, @kata.dir.scan(doubled_separator).length
   end
 
@@ -70,7 +70,7 @@ class KataTests < ActionController::TestCase
       :created => now,
       :id => @id
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
     assert_equal Time.mktime(*now), @kata.created
   end
 
@@ -82,7 +82,7 @@ class KataTests < ActionController::TestCase
       :created => now,
       :id => @id
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
     seconds = 5
     now = now[0...-1] + [now.last + seconds ]
     assert_equal seconds, @kata.age_in_seconds(Time.mktime(*now))
@@ -96,7 +96,7 @@ class KataTests < ActionController::TestCase
       :language => language,
       :id => @id
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
     assert_equal language, @kata.language.name
   end
 
@@ -108,7 +108,7 @@ class KataTests < ActionController::TestCase
       :exercise => exercise,
       :id => @id
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
     assert_equal exercise, @kata.exercise.name
   end
 
@@ -123,7 +123,7 @@ class KataTests < ActionController::TestCase
       :id => @id,
       :visible_files => visible_files
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
     assert_equal visible_files, @kata.visible_files
   end
 
@@ -138,16 +138,10 @@ class KataTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "kata[avatar] when avatar does not exist" do
+  test "kata['lion'] exists when its dir exists" do
     avatar = @kata['lion']
     assert !avatar.exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "kata[avatar] when avatar does exist" do
-    avatar = @kata['lion']
-    @disk[avatar.dir] = true
+    @disk[avatar.dir].make
     assert avatar.exists?
   end
 
@@ -159,8 +153,8 @@ class KataTests < ActionController::TestCase
       :id => @id,
       :language => language.name
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
-    @disk[language.dir,'manifest.json'] = JSON.unparse({ })
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     assert 'hippo', kata['hippo'].name
   end
@@ -176,8 +170,8 @@ class KataTests < ActionController::TestCase
       },
       :language => language.name
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
-    @disk[language.dir,'manifest.json'] = JSON.unparse({ })
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     animal1 = kata.start_avatar
     animal2 = kata.start_avatar
@@ -197,8 +191,8 @@ class KataTests < ActionController::TestCase
         'wibble.h' => '#include <stdio.h>'
       }
     }
-    @disk[@kata.dir,'manifest.rb'] = manifest.inspect
-    @disk[language.dir, 'manifest.json'] = JSON.unparse({ })
+    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     created = [ ]
     Avatar.names.length.times do |n|

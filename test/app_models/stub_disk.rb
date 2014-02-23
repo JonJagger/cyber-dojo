@@ -1,3 +1,4 @@
+require File.dirname(__FILE__) + '/spy_dir'
 
 class StubDisk
 
@@ -7,6 +8,20 @@ class StubDisk
     @symlink_log = [ ]
     @read_repo = { }
   end
+
+  def dir_separator
+    '/'
+  end
+
+  def [](dir)
+    SpyDir.new(self,dir)
+  end
+
+  def symlink(old_name, new_name)
+    @symlink_log << ['symlink', old_name, new_name]
+  end
+
+#- - - - - - - - - - - -
 
   def read_log
     @read_log
@@ -18,10 +33,6 @@ class StubDisk
 
   def symlink_log
     @symlink_log
-  end
-
-  def file_separator
-    '/'
   end
 
   def []=(p1,p2,p3=nil)
@@ -37,6 +48,19 @@ class StubDisk
     @read_repo[dir] ||= { }
     @read_repo[dir][filename] = content
   end
+
+  def exists?(dir, filename = "")
+    wdir = @write_log[dir]
+    rdir = @read_repo[dir]
+    if filename == ""
+      return wdir != nil || rdir != nil
+    else
+      return (wdir != nil && wdir[filename] != nil) ||
+             (rdir != nil && rdir[filename] != nil)
+    end
+  end
+
+#- - - - - - - - - - - -
 
   def read(dir, filename)
     @read_log[dir] ||= [ ]
@@ -57,31 +81,8 @@ class StubDisk
     @read_repo[dir][filename] = object.inspect
   end
 
-  def make_dir(dir)
-    self[dir] = true
-  end
-
-  def directory?(dir)
-    @write_log[dir] != nil || @read_repo[dir] != nil
-  end
-
-  def exists?(dir, filename = "")
-    wdir = @write_log[dir]
-    rdir = @read_repo[dir]
-    if filename == ""
-      return wdir != nil || rdir != nil
-    else
-      return (wdir != nil && wdir[filename] != nil) ||
-             (rdir != nil && rdir[filename] != nil)
-    end
-  end
-
   def lock(dir, &block)
     block.call()
-  end
-
-  def symlink(old_name, new_name)
-    @symlink_log << ['symlink', old_name, new_name]
   end
 
 end

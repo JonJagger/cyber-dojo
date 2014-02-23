@@ -1,7 +1,7 @@
 require 'Disk'
 
 class Exercise
-  
+
   def initialize(dojo, name)
     @disk = Thread.current[:disk] || Disk.new
     @dojo = dojo
@@ -11,23 +11,23 @@ class Exercise
   def exists?
     @disk.exists?(dir)
   end
-  
+
   def dir
-    @dojo.dir + file_separator + 'exercises' + file_separator + name
+    @dojo.dir + dir_separator + 'exercises' + dir_separator + name
   end
 
   def name
     @name
   end
-  
+
   def instructions
-    @disk.read(dir, 'instructions')
+    @disk[dir].read('instructions')
   end
 
 private
 
-  def file_separator
-    @disk.file_separator
+  def dir_separator
+    @disk.dir_separator
   end
-  
+
 end
