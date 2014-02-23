@@ -1,9 +1,15 @@
+cyberdojo_root = File.absolute_path(File.dirname(__FILE__) + '/../../')
+# needed because app/models/Disk required app/models/DiskDir
+$LOAD_PATH.unshift(cyberdojo_root + '/lib')
+
 require 'JSON'
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../')
-require 'app/lib/OutputParser'
-require 'app/models/Dojo'
-require 'app/models/Kata'
-require 'lib/Uuid'
+require "#{cyberdojo_root}/app/models/Avatar"
+require "#{cyberdojo_root}/app/models/Dojo"
+require "#{cyberdojo_root}/app/models/Kata"
+require "#{cyberdojo_root}/app/models/Language"
+require "#{cyberdojo_root}/app/models/Sandbox"
+require "#{cyberdojo_root}/app/lib/OutputParser"
+require "#{cyberdojo_root}/lib/Uuid"
 
 class OneLanguageChecker
 
