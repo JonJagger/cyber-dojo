@@ -1,11 +1,7 @@
 
-require File.dirname(__FILE__) + '/../../lib/Disk'
-require File.dirname(__FILE__) + '/../../lib/Git'
-require File.dirname(__FILE__) + '/../../lib/TimeBoxedTask'
-
-#require 'Disk'
-#require 'Git'
-#require 'TimeBoxedTask'
+require 'Disk'
+require 'Git'
+require 'TimeBoxedTask'
 
 class Sandbox
 

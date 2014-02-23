@@ -1,7 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Running test/installation/check_language on non-test cyber-dojo root
+shows some of the languages do not pass the checks.
+  Java-Cucumber ...... ["red", "red", "green"] installed but not working (~ 4.64 seconds)
+  Java-JUnit-Mockito . ["red", "amber", "red"] installed but not working (~ 3.05 seconds)
+  Ruby-Approval ...... ["red", "red", "green"] installed but not working (~ 1.63 seconds)
+  Ruby-Cucumber ...... multiple 42-files ["untitled.rb", "untitled.feature"]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Refactoring
-  ensure dirs end in '/' 
+  ensure dirs end in '/'
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move sandbox.test into avatar?
 Delete sandbox?

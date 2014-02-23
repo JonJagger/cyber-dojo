@@ -1,5 +1,5 @@
 
-require File.dirname(__FILE__) + '/../../lib/Disk'
+require 'Disk'
 
 class Exercise
 

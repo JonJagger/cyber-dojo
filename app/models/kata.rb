@@ -1,6 +1,5 @@
 
-require File.dirname(__FILE__) + '/../../lib/Disk'
-require File.dirname(__FILE__) + '/Avatar'
+require 'Disk'
 
 class Kata
 
