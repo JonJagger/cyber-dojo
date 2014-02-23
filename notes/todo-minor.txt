@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Refactoring
+  ensure dirs end in '/' 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move sandbox.test into avatar?
 Delete sandbox?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -20,7 +23,7 @@ Delete sandbox?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Deployment
   Locally
-    1. Run all tests
+    1. Run all tests (including installation and rspec)
     2. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard
     3. Push
   On test server

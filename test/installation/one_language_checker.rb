@@ -1,7 +1,14 @@
+require 'JSON'
+$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../')
+require 'app/lib/OutputParser'
+require 'app/models/Dojo'
+require 'app/models/Kata'
+require 'lib/Uuid'
 
 class OneLanguageChecker
 
-  def initialize(option = "noisy")
+  def initialize(root_dir,option)
+    @root_dir = root_dir
     @verbose = (option == "noisy")
     @max_duration = 60
   end
@@ -13,9 +20,9 @@ class OneLanguageChecker
         installed_but_not_working = [ ]
     )
     @language = language
-    @language_dir = root_dir + '/languages/' + language + "/"
+    @language_dir = @root_dir + '/languages/' + language + "/"
 
-    print "  #{language} "
+    print "  #{language} " + ('.' * (35-language.to_s.length))
 
     @manifest_filename = @language_dir + 'manifest.json'
     return false if !manifest_file_exists?
@@ -58,7 +65,7 @@ private
       message =
         alert +
         "#{@manifest_filename} does not exist"
-      puts message if @verbose
+      puts message
       return false
     end
     print "."
@@ -72,7 +79,7 @@ private
         message =
           alert +
           "#{@manifest_filename} must contain key '#{key}'"
-        puts message if @verbose
+        puts message
         return false
       end
     end
@@ -91,7 +98,7 @@ private
         message =
           alert +
           "#{@manifest_filename} contains unknown key '#{key}'"
-        puts message if @verbose
+        puts message
         return true
       end
     end
@@ -105,7 +112,7 @@ private
         message =
           alert +
           "  #{@manifest_filename}'s 'visible_filenames' contains #{filename} more than once"
-        puts message if @verbose
+        puts message
         return true
       end
     end
@@ -119,7 +126,7 @@ private
         message =
           alert +
           "  #{@manifest_filename}'s 'support_filenames' contains #{filename} more than once"
-        puts message if @verbose
+        puts message
         return true
       end
     end
@@ -142,7 +149,7 @@ private
           alert +
           "  #{@manifest_filename} contains a '#{symbol}' entry [#{filename}]\n" +
           "  but the #{@language_dir}/ dir does not contain a file called #{filename}"
-        puts message if @verbose
+        puts message
         return false
       end
     end
@@ -157,7 +164,7 @@ private
         alert +
         "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
         "  'visible_filenames' or 'support_filenames'"
-      puts message if @verbose
+      puts message
       return false
     end
     print "."
@@ -169,7 +176,7 @@ private
       message =
         alert +
           " 'cyber-dojo.sh does not have execute permission"
-        puts message if @verbose
+        puts message
         return false
     end
     print "."
@@ -188,7 +195,7 @@ private
         alert +
           "app/lib/CodeOutputParser.rb does not contain a " +
           "parse_#{unit_test_framework}(output) method"
-      puts message if @verbose
+      puts message
       return false
     end
     print "."
@@ -205,12 +212,12 @@ private
     }
     if filenames == [ ]
       message = alert + " no 42-file"
-      puts message if @verbose
+      puts message
       return ""
     end
     if filenames.length > 1
       message = alert + " multiple 42-files " + filenames.inspect
-      puts message if @verbose
+      puts message
       return ""
     end
     print "."
@@ -219,13 +226,13 @@ private
 
   def red_amber_green
     filename = filename_42
-      red = language_test(filename, '42')
-    amber = language_test(filename, '4typo2')
-    green = language_test(filename, '54')
+      red = language_test(filename, 'red', '42')
+    amber = language_test(filename, 'amber', '4typo2')
+    green = language_test(filename, 'green', '54')
     [ red, amber, green ]
   end
 
-  def language_test(filename, replacement)
+  def language_test(filename, expected_colour, replacement)
     kata = make_kata(@language, 'Yahtzee')
     avatar = kata.start_avatar
     visible_files = avatar.visible_files
@@ -233,9 +240,9 @@ private
     visible_files[filename] = test_code.sub('42', replacement)
 
     if @verbose
-      puts "\n------<test_code>------"
+      puts "\n\n\n<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>"
       puts visible_files[filename]
-      puts "------</test_code>-----"
+      puts "</test_code>"
     end
 
     delta = {
@@ -248,9 +255,9 @@ private
     colour = avatar.traffic_lights.last['colour']
 
     if @verbose
-      puts "-------<output>-----------"
+      puts "<output>"
       puts output
-      puts "-------</output>----------"
+      puts "</output>"
     end
 
     colour
@@ -276,12 +283,8 @@ private
 
 private
 
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
   def dojo
-    Dojo.new(root_dir)
+    Dojo.new(@root_dir)
   end
 
   def make_kata(language_name, exercise_name)

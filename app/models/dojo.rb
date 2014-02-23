@@ -1,5 +1,7 @@
 
-require 'Disk'
+require File.dirname(__FILE__) + '/../../lib/Disk'
+require File.dirname(__FILE__) + '/../../app/models/Language'
+require File.dirname(__FILE__) + '/../../app/models/Exercise'
 
 class Dojo
 

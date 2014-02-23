@@ -1,5 +1,5 @@
 
-require 'Disk'
+require File.dirname(__FILE__) + '/../../lib/Disk'
 
 class Language
 

@@ -1,6 +1,9 @@
 
-require 'Disk'
-require 'Git'
+#require 'Disk'
+#require 'Git'
+require File.dirname(__FILE__) + '/../../lib/Disk'
+require File.dirname(__FILE__) + '/../../lib/Git'
+require File.dirname(__FILE__) + '/Sandbox'
 
 class Avatar
 

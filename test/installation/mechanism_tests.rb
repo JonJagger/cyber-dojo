@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/one_language_checker'
 class MechanismTests < ActionController::TestCase
 
   test "the (red,amber,green) language mechanism" do
+    root_dir = File.absolute_path(File.dirname(__FILE__)) + '/../cyberdojo'
     installed_and_working = [ ]
     not_installed = [ ]
     installed_but_not_working = [ ]
@@ -16,7 +17,7 @@ class MechanismTests < ActionController::TestCase
       ]
 
     languages.each do |language|
-      took = OneLanguageChecker.new("quiet").check(
+      took = OneLanguageChecker.new(root_dir,"quiet").check(
         language,
         installed_and_working,
         not_installed,
