@@ -1,4 +1,6 @@
 
+require 'DiskDir'
+
 class Disk
 
   def dir_separator
