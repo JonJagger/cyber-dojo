@@ -7,7 +7,7 @@ class KataTests < ActionController::TestCase
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
-    @dojo = Dojo.new('stubbed')
+    @dojo = Dojo.new('spied')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
   end

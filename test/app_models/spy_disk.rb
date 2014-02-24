@@ -29,26 +29,29 @@ class SpyDisk
 
   def exists?(dir, filename = "")
     rdir = @read_repo[dir]
-    return rdir != nil && (filename == "" || rdir[filename] != nil)
+    rdir != nil && (filename == "" || rdir[filename] != nil)
   end
 
   def read(dir, filename)
     @read_log[dir] ||= [ ]
     @read_log[dir] << [filename]
-
-    if @read_repo[dir] == nil
-      raise "SpyDisk:nil  read(#{dir},#{filename})"
-    end
-
+    assert @read_repo[dir] != nil, "read(#{dir},#{filename}) not primed"
     @read_repo[dir][filename]
   end
 
-  def write(dir, filename, object)
+  def write(dir, filename, content)
     @write_log[dir] ||= [ ]
-    @write_log[dir] << [filename, object.inspect]
-
-    make_dir(dir) #@read_repo[dir] ||= { }
-    @read_repo[dir][filename] = object.inspect
+    make_dir(dir)
+    if filename.end_with?(".rb")
+      assert content.class != String, "write(#{dir},#{filename},content.class != String)"
+      content = content.inspect
+    end
+    if filename.end_with?(".json")
+      assert content.class != String, "write(#{dir},#{filename},content.class != String)"
+      content = JSON.unparse(content)
+    end
+    @write_log[dir] << [filename, content]
+    @read_repo[dir][filename] = content
   end
 
   def lock(dir, &block)
@@ -72,6 +75,12 @@ class SpyDisk
 
   def symlink_log
     @symlink_log
+  end
+
+  def assert(truth, message)
+    if !truth
+      raise "SpyDisk.#{message}"
+    end
   end
 
 end

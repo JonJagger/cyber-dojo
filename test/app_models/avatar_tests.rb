@@ -10,7 +10,7 @@ class AvatarTests < ActionController::TestCase
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
     Thread.current[:task] = @task = StubTimeBoxedTask.new
-    @dojo = Dojo.new('stubbed')
+    @dojo = Dojo.new('spied')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
   end
@@ -61,7 +61,7 @@ class AvatarTests < ActionController::TestCase
     sandbox = avatar.sandbox
     log = @disk.write_log[sandbox.dir]
     assert_not_nil log
-    assert log.include?([visible_filename, visible_filename_content.inspect]), log.inspect
+    assert log.include?([visible_filename, visible_filename_content]), log.inspect
     expected_symlink = [
       'symlink',
       language.dir + @disk.dir_separator + support_filename,
@@ -199,7 +199,7 @@ class AvatarTests < ActionController::TestCase
     avatar = kata.start_avatar
     sandbox_dir = avatar.dir + @disk.dir_separator + 'sandbox'
     visible_files.each do |filename,content|
-      assert_equal content.inspect, @disk[sandbox_dir].read(filename)
+      assert_equal content, @disk[sandbox_dir].read(filename)
     end
   end
 
@@ -221,7 +221,7 @@ class AvatarTests < ActionController::TestCase
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
-    assert_equal visible_files['cyber-dojo.sh'].inspect, @disk[sandbox.dir].read('cyber-dojo.sh')
+    assert_equal visible_files['cyber-dojo.sh'], @disk[sandbox.dir].read('cyber-dojo.sh')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

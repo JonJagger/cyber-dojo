@@ -62,7 +62,7 @@ class SandboxTests < ActionController::TestCase
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber".inspect], @disk.write_log[@sandbox.dir].last
+    assert_equal ['output',"amber"], @disk.write_log[@sandbox.dir].last
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -83,12 +83,8 @@ class SandboxTests < ActionController::TestCase
     log = @disk.write_log[@sandbox.dir]
     saved_files = filenames_in(log)
     assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
-    assert log.include?(
-      ['untitled.cs', 'content for code file'.inspect ]
-    ), log.inspect
-    assert log.include?(
-      ['untitled.test.cs', 'content for test file'.inspect ]
-    ), log.inspect
+    assert log.include?(['untitled.cs', 'content for code file' ]), log.inspect
+    assert log.include?(['untitled.test.cs', 'content for test file' ]), log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

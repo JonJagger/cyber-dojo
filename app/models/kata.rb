@@ -67,9 +67,9 @@ class Kata
   end
 
   def manifest_filename
-    new_name = 'manifest.json'
-    old_name = 'manifest.rb'
-    @disk[dir].exists?(new_name) ? new_name : old_name
+    @disk[dir].exists?(new_manifest_filename) ?
+      new_manifest_filename :
+      old_manifest_filename
   end
 
 private
@@ -84,6 +84,14 @@ private
 
   def manifest
     @manifest ||= eval @disk[dir].read(manifest_filename)
+  end
+
+  def old_manifest_filename
+    'manifest.rb'
+  end
+
+  def new_manifest_filename
+    'manifest.json'
   end
 
 end
