@@ -1,5 +1,5 @@
 
-require 'DiskDir'
+require 'Dir'
 
 class Disk
 
@@ -8,7 +8,7 @@ class Disk
   end
 
   def [](dir)
-    DiskDir.new(self,dir)
+    Dir.new(self,dir)
   end
 
   def symlink(old_name, new_name)

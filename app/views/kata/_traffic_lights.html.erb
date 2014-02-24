@@ -2,7 +2,7 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
+
   var trafficLights = $('.diff-traffic-light');
   cd.setupTrafficLightOpensDiffDialogHandlers(trafficLights);
   cd.tipify($('.tipped'), $('#tip_window'));
@@ -14,37 +14,36 @@ $(document).ready(function() {
 <div id="traffic_lights">
   <table>
     <tr class="row">
-      
-      <% max_lights = 40 %>                
+
+      <% max_lights = 40 %>
       <% recent(@traffic_lights, max_lights).each do |light| %>
         <td>
-		  <%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>			
+		  <%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>
         </td>
       <% end %>
-      
+
       <td>
 		<%= render :partial => 'shared/traffic_light_bulb_counts',
 				   :locals  => { :traffic_lights => @traffic_lights,
 							 	 :avatar_name    => translate_avatar(@avatar.name)
 							   } %>
       </td>
-	  
+
       <td>
 		<%= render :partial => 'shared/traffic_light_count',
 				   :locals  => { :traffic_lights => @traffic_lights,
 								 :avatar_name    => translate_avatar(@avatar.name)
 							   } %>
       </td>
-	  
+
 	  <td>
 		<%= render :partial => 'avatar_image' %>
-		
+
 		<%= render :partial => 'shared/avatar_name',
-				   :locals  => { :avatar_name => @avatar.name 
-							   } %>		
+				   :locals  => { :avatar_name => @avatar.name
+							   } %>
 	  </td>
-	  
-    </tr>      
+
+    </tr>
   </table>
 </div>
-

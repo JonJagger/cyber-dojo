@@ -5,7 +5,7 @@
     height: 23em;
     overflow-y: auto;
   }
-  
+
   #file_operations {
     #new, #rename, #delete {
       @include font-size-tiny();
@@ -15,17 +15,17 @@
       }
     }
   }
-  
+
   #revert_button,
   #fork_button,
   #help_button {
-    @include font-size-tiny();  
+    @include font-size-tiny();
   }
-  
+
   #help_button {
-    @include rounded-corner(14px);    
+    @include rounded-corner(14px);
   }
-  
+
   #traffic_lights {
     width: 50em;
     margin-top: 5px;
@@ -58,4 +58,3 @@
      margin-right: 0.3em;
   }
 }
-
