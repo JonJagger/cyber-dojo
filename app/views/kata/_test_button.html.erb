@@ -2,24 +2,29 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-    
+
   var spinners = $('.spinner');
   var testButton = $('#test_button');
-  var tipWindow = $('#tip_window');
-  var trafficLightCount = function() {
-    // cannot be cached as it is replaced by run_tests.js.erb
-    return $('.current_traffic_light_count');
+
+  var ajaxAfter = function() {
+    var allTheWay = 100000;
+    $('#traffic_lights').scrollLeft(allTheWay);
+    spinners.hide();
+    cd.loadFile('output');
+    testButton.attr('disabled', false);
+    tipWindow.hide();
+    tipWindow.empty();
   };
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
+    var tipWindow = $('#tip_window');
     testButton.attr('disabled', true);
     tipWindow.hide();
     tipWindow.empty();
     spinners.show();
-    trafficLightCount().hide();
     cd.storeOutgoingFileHashes();
   });
-  
+
   $('form').bind('ajax:error', function(evt, data, status, xhr) {
     var errorMessage = "" +
       "Files not sent files to the cyber-dojo server." + "\n" +
@@ -27,7 +32,7 @@ $(document).ready(function() {
     cd.fileContentFor('output').val(errorMessage);
     ajaxAfter();
   });
-  
+
   $('form').bind('ajax:success', function(evt, data, status, xhr) {
     cd.rebuildFilenameList();
     // when the ajax replaces output the shortcuts
@@ -37,17 +42,8 @@ $(document).ready(function() {
     cd.bindAllLineNumbers();
     cd.storeIncomingFileHashes();
     ajaxAfter();
-  });  
-  
-  var ajaxAfter = function() {
-    trafficLightCount().show();
-    spinners.hide();    
-    cd.loadFile('output');
-    testButton.attr('disabled', false);
-    tipWindow.hide();
-    tipWindow.empty();    
-  };
-  
+  });
+
 });
 
 //--></script>
@@ -60,7 +56,7 @@ $(document).ready(function() {
     <td>
       <button type="submit"
               id="test_button"
-              class="tipped"                          
+              class="tipped"
               value="<%= t('views.buttons.test') %>">
         <%= t('views.buttons.test') %>
         <div class="tooltip">

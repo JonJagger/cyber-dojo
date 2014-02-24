@@ -3,47 +3,46 @@
 
 $(document).ready(function() {
 
-  var trafficLights = $('.diff-traffic-light');
-  cd.setupTrafficLightOpensDiffDialogHandlers(trafficLights);
+  cd.setupTrafficLightOpensDiffDialogHandlers($('.diff-traffic-light'));
   cd.tipify($('.tipped'), $('#tip_window'));
+  var allTheWay = 100000;
+  $('#traffic_lights').scrollLeft(allTheWay);
 
 });
 
 //--></script>
 
-<div id="traffic_lights">
-  <table>
-    <tr class="row">
+<table>
+  <tr class="row">
 
-      <% max_lights = 40 %>
-      <% recent(@traffic_lights, max_lights).each do |light| %>
-        <td>
-		  <%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>
-        </td>
-      <% end %>
-
-      <td>
-		<%= render :partial => 'shared/traffic_light_bulb_counts',
-				   :locals  => { :traffic_lights => @traffic_lights,
-							 	 :avatar_name    => translate_avatar(@avatar.name)
-							   } %>
-      </td>
-
-      <td>
-		<%= render :partial => 'shared/traffic_light_count',
-				   :locals  => { :traffic_lights => @traffic_lights,
-								 :avatar_name    => translate_avatar(@avatar.name)
-							   } %>
-      </td>
-
+	<% @traffic_lights.each do |light| %>
 	  <td>
-		<%= render :partial => 'avatar_image' %>
-
-		<%= render :partial => 'shared/avatar_name',
-				   :locals  => { :avatar_name => @avatar.name
-							   } %>
+		<%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>
 	  </td>
+	<% end %>
 
-    </tr>
-  </table>
-</div>
+	<td>
+	  <%= render :partial => 'shared/traffic_light_bulb_counts',
+				 :locals  => { :traffic_lights => @traffic_lights,
+							   :avatar_name    => translate_avatar(@avatar.name)
+							 } %>
+	</td>
+
+	<td>
+	  <%= render :partial => 'shared/traffic_light_count',
+				 :locals  => { :traffic_lights => @traffic_lights,
+							   :avatar_name    => translate_avatar(@avatar.name)
+							 } %>
+	</td>
+
+	<td>
+	  <%= render :partial => 'avatar_image' %>
+
+	  <%= render :partial => 'shared/avatar_name',
+				 :locals  => { :avatar_name => @avatar.name
+							 } %>
+	</td>
+
+  </tr>
+</table>
+
