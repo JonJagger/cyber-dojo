@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/../app_models/stub_disk'
+require File.dirname(__FILE__) + '/../app_models/spy_disk'
 require File.dirname(__FILE__) + '/../app_models/stub_git'
 require './integration_test'
 
@@ -53,7 +53,7 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if id is bad then fork fails and reason is given as id" do
-    Thread.current[:disk] = StubDisk.new
+    Thread.current[:disk] = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     get "forker/fork", {
       :format => :json,
@@ -71,12 +71,12 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if language folder no longer exists the fork fails and reason is given as language" do
-    Thread.current[:disk] = disk = StubDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     id = '1234512345'
     language = @dojo.language('xxxx')
     kata = @dojo[id]
-    disk[kata.dir, 'manifest.rb'] = { :language => language.name }.inspect
+    disk[kata.dir].spy_read('manifest.rb', { :language => language.name }.inspect)
     get "forker/fork", {
       :format => :json,
       :id => id,
@@ -94,13 +94,13 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if avatar not started the fork fails and reason is given as avatar" do
-    Thread.current[:disk] = disk = StubDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     id = '1234512345'
     language = @dojo.language('Ruby-installed-and-working')
     kata = @dojo[id]
-    disk[kata.dir, 'manifest.rb'] = { :language => language.name }.inspect
-    disk[language.dir, 'exists'] = 'dummy'
+    disk[kata.dir].spy_read('manifest.rb', { :language => language.name }.inspect)
+    disk[language.dir].make
     get "forker/fork", {
       :format => :json,
       :id => id,
@@ -127,21 +127,21 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def bad_tag_test(bad_tag)
-    Thread.current[:disk] = disk = StubDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     id = '1234512345'
     language_name = 'Ruby-installed-and-working'
     kata = @dojo[id]
-    disk[kata.dir, 'manifest.rb'] = { :language => language_name }.inspect
+    disk[kata.dir].spy_read('manifest.rb', { :language => language_name }.inspect)
     language = @dojo.language(language_name)
-    disk[language.dir, 'exists'] = 'dummy'
+    disk[language.dir].make
     avatar_name = 'hippo'
     avatar = kata[avatar_name]
-    disk[avatar.dir, 'increments.rb'] = [{
+    disk[avatar.dir].spy_read('increments.rb', [{
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],
         "number" => 1
-      }].inspect
+      }].inspect)
     get "forker/fork", {
       :format => :json,
       :id => id,
@@ -158,20 +158,20 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when id,language,avatar,tag all ok fork works new dojo's id is returned" do
-    Thread.current[:disk] = disk = StubDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     id = '1234512345'
     language_name = 'Ruby-installed-and-working'
     kata = @dojo[id]
-    disk[kata.dir, 'manifest.rb'] = { :language => language_name }.inspect
+    disk[kata.dir].spy_read('manifest.rb', { :language => language_name }.inspect)
     language = @dojo.language(language_name)
-    disk[language.dir, 'manifest.json'] = JSON.unparse(
+    disk[language.dir].spy_read('manifest.json', JSON.unparse(
       {
         'unit_test_framework' => 'fake'
-      })
+      }))
     avatar_name = 'hippo'
     avatar = kata[avatar_name]
-    disk[avatar.dir, 'increments.rb'] = [
+    disk[avatar.dir].spy_read('increments.rb', [
       {
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],
@@ -182,7 +182,7 @@ class ForkerControllerTest < IntegrationTest
         "time" => [2014, 2, 15, 8, 54, 34],
         "number" => 2
       },
-      ].inspect
+      ].inspect)
     get "forker/fork", {
       :format => :json,
       :id => id,

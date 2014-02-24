@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk'
+require File.dirname(__FILE__) + '/spy_disk'
 require File.dirname(__FILE__) + '/stub_git'
 
 class KataTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
     @dojo = Dojo.new('stubbed')
     @id = '45ED23A2F1'
@@ -25,7 +25,7 @@ class KataTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? false then true when kata's dir exists" do
+  test "exists? false when dir does not exist, true when dir does exist" do
     assert !@kata.exists?
     @disk[@kata.dir].make
     assert @kata.exists?

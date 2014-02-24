@@ -3,8 +3,8 @@ require 'Disk'
 
 class Dojo
 
-  def initialize(dir)
-    @dir = dir
+  def initialize(dir, format="rb")
+    @dir,@format = dir,format
   end
 
   def dir
@@ -26,7 +26,7 @@ class Dojo
   def create_kata(manifest)
     disk = Thread.current[:disk] || Disk.new
     kata = self[manifest[:id]]
-    disk[kata.dir].write('manifest.rb', manifest)
+    disk[kata.dir].write('manifest.' + @format, manifest)
     kata
   end
 

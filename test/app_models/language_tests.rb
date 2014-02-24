@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk'
+require File.dirname(__FILE__) + '/spy_disk'
 
 class LanguageTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = SpyDisk.new
     @language = Dojo.new('stubbed').language('Ruby')
   end
 
@@ -12,20 +12,20 @@ class LanguageTests < ActionController::TestCase
     Thread.current[:disk] = nil
   end
 
-  def stub_manifest(manifest)
-    @disk[@language.dir, 'manifest.json'] = JSON.unparse(manifest)
+  def spy_manifest(manifest)
+    @disk[@language.dir].spy_read('manifest.json', JSON.unparse(manifest))
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false when language folder does not exist" do
+  test "exists? is false when language dir does not exist" do
     assert !Dojo.new('stubbed').language('xxxx').exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is true when language folder exists" do
-    @disk[@language.dir] = true
+  test "exists? is true when language dir exists" do
+    @disk[@language.dir].make
     assert @language.exists?
   end
 
@@ -57,22 +57,22 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when :visible_filenames is not in manifest then visible_files is empty hash" do
-    stub_manifest({})
+    spy_manifest({})
     assert_equal({ }, @language.visible_files)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when :visible_filenames is empty array in manifest then visible_files is empty hash" do
-    stub_manifest({ 'visible_filenames' => [ ] })
+    spy_manifest({ 'visible_filenames' => [ ] })
     assert_equal({ }, @language.visible_files)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when :visible_filenames is non-empty array in manifest then visible_files are loaded but not output and not instructions" do
-    stub_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-    @disk[@language.dir, 'test_untitled.rb'] = 'content'
+    spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
+    @disk[@language.dir].spy_read('test_untitled.rb', 'content')
     visible_files = @language.visible_files
     assert_equal( { 'test_untitled.rb' => 'content' }, visible_files)
     assert_nil visible_files['output']
@@ -82,7 +82,7 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "support_filenames defaults to [ ]" do
-    stub_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
+    spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
     assert_equal [ ], @language.support_filenames
   end
 
@@ -90,14 +90,14 @@ class LanguageTests < ActionController::TestCase
 
   test "support_filenames set if not defaulted" do
     support_filenames = [ 'x.jar', 'y.dll' ]
-    stub_manifest({ 'support_filenames' => support_filenames })
+    spy_manifest({ 'support_filenames' => support_filenames })
     assert_equal support_filenames, @language.support_filenames
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "highlight_filenames defaults to [ ]" do
-    stub_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
+    spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
     assert_equal [ ], @language.support_filenames
   end
 
@@ -106,7 +106,7 @@ class LanguageTests < ActionController::TestCase
   test "highlight_filenames set if not defaulted" do
     visible_filenames = [ 'x.hpp', 'x.cpp' ]
     highlight_filenames = [ 'x.hpp' ]
-    stub_manifest({
+    spy_manifest({
         'visible_filenames' => visible_filenames,
         'highlight_filenames' => highlight_filenames
       })
@@ -117,7 +117,7 @@ class LanguageTests < ActionController::TestCase
 
   test "unit_test_framework is set" do
     unit_test_framework = 'Satchmo'
-    stub_manifest({ 'unit_test_framework' => unit_test_framework })
+    spy_manifest({ 'unit_test_framework' => unit_test_framework })
     assert_equal unit_test_framework, @language.unit_test_framework
   end
 
@@ -125,14 +125,14 @@ class LanguageTests < ActionController::TestCase
 
   test "tab_size is set if not defaulted" do
     tab_size = 42
-    stub_manifest({ 'tab_size' => tab_size })
+    spy_manifest({ 'tab_size' => tab_size })
     assert_equal tab_size, @language.tab_size
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "tab_size defaults to 4" do
-    stub_manifest({ })
+    spy_manifest({ })
     assert_equal 4, @language.tab_size
   end
 
@@ -140,22 +140,22 @@ class LanguageTests < ActionController::TestCase
 
   test "tab is 7 spaces if tab_size is 7" do
     tab_size = 7
-    stub_manifest({ 'tab_size' => tab_size })
+    spy_manifest({ 'tab_size' => tab_size })
     assert_equal " "*tab_size, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "tab defaults to 4 spaces" do
-    stub_manifest({ })
+    spy_manifest({ })
     assert_equal " "*4, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if manifest.rb and manifest.json exist, json is used" do
-    @disk[@language.dir,'manifest.json'] = JSON.unparse({'tab_size' => 4})
-    @disk[@language.dir,'manifest.rb'] = { :tab_size => 8 }.inspect
+    @disk[@language.dir].spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
+    @disk[@language.dir].spy_read('manifest.rb', { :tab_size => 8 }.inspect)
     assert_equal " "*4, @language.tab
   end
 

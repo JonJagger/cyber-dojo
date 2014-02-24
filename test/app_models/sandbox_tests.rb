@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk'
+require File.dirname(__FILE__) + '/spy_disk'
 require File.dirname(__FILE__) + '/stub_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
     @dojo = Dojo.new('stubbed')

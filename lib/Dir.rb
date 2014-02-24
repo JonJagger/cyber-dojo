@@ -9,8 +9,12 @@ class Dir
     end
   end
 
-  def exists?
-    File.directory?(@dir)
+  def exists?(filename = nil)
+    if filename == nil
+      return File.directory?(@dir)
+    else
+      return File.exists?(@dir + filename)
+    end
   end
 
   def make

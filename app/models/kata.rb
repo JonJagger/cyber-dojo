@@ -66,6 +66,12 @@ class Kata
     (now - created).to_i
   end
 
+  def manifest_filename
+    new_name = 'manifest.json'
+    old_name = 'manifest.rb'
+    @disk[dir].exists?(new_name) ? new_name : old_name
+  end
+
 private
 
   def dir_separator
@@ -77,7 +83,7 @@ private
   end
 
   def manifest
-    @manifest ||= eval @disk[dir].read('manifest.rb')
+    @manifest ||= eval @disk[dir].read(manifest_filename)
   end
 
 end

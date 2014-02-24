@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk'
+require File.dirname(__FILE__) + '/spy_disk'
 
 class ExerciseTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = SpyDisk.new
     @exercise = Dojo.new('stubbed').exercise('Yahtzee')
   end
 
@@ -14,15 +14,9 @@ class ExerciseTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false when exercise folder does not exist" do
-    dir = '/perch'
-    assert !Dojo.new(dir).exercise('xxxx').exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "exists? is true when exercise folder exists" do
-    @disk[@exercise.dir,'instructions'] = "your task..."
+  test "exists? is false when dir does not exist, true when dir exists" do
+    assert !@exercise.exists?
+    @disk[@exercise.dir].make
     assert @exercise.exists?
   end
 
@@ -54,7 +48,7 @@ class ExerciseTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "instructions are loaded" do
-    @disk[@exercise.dir,'instructions'] = 'Fishing on the Verdal'
+    @disk[@exercise.dir].spy_read('instructions', 'Fishing on the Verdal')
     instructions = @exercise.instructions
     assert_not_nil instructions
     assert instructions.start_with? "Fishing on the Verdal"

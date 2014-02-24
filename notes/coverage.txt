@@ -1,6 +1,6 @@
 app_helpers
-   16 tests, 43 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 1.814287s, 8.8189 tests/s, 23.7008 assertions/s.   
+   13 tests, 35 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 1.646875s, 7.8937 tests/s, 21.2524 assertions/s.
    Coverage = 100.0%
 
 app_lib
@@ -9,29 +9,29 @@ app_lib
    Coverage = 98.50%
 
 app_models
-   67 tests, 114 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 0.622674s, 107.6004 tests/s, 183.0814 assertions/s.   
+   67 tests, 123 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 0.622674s, 107.6004 tests/s, 183.0814 assertions/s.
    Coverage = 100.0%
 
 lib
-   44 tests, 282 assertions, 0 failures, 0 errors, 0 skips
+   38 tests, 277 assertions, 0 failures, 0 errors, 0 skips
    Finished tests in 8.751550s, 5.0277 tests/s, 32.2229 assertions/s.
-   Coverage = 100.0%      
-   
+   Coverage = 99.07%
+
 integration
    8 tests, 46 assertions, 0 failures, 0 errors, 0 skips
    Finished tests in 48.720147s, 0.1642 tests/s, 0.9442 assertions/s.
      Coverage is set of coverages for the *other* modules....
-     49.12%  app/helpers 
-     25.60%  app/lib 
-     88.11%  app/models 
-     89.11%  lib 
+     49.12%  app/helpers
+     25.60%  app/lib
+     88.11%  app/models
+     89.11%  lib
 
 app_controllers
-   35 tests, 198 assertions, 0 failures, 0 errors, 0 skips
+   36 tests, 212 assertions, 0 failures, 0 errors, 0 skips
    Finished tests in 51.045977s, 0.6857 tests/s, 3.8789 assertions/s.
-   Coverage = 98.43%
-     95.12%  app/helpers 
-     65.38%  app/lib 
-     96.10%  app/models 
-     95.10%  lib 
+   Coverage = 97.98%
+     94.59%  app/helpers
+     65.38%  app/lib
+     96.15%  app/models
+     95.33%  lib

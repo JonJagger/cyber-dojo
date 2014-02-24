@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/stub_disk'
+require File.dirname(__FILE__) + '/spy_disk'
 require File.dirname(__FILE__) + '/stub_git'
 require File.dirname(__FILE__) + '/stub_time_boxed_task'
 
@@ -7,7 +7,7 @@ require File.dirname(__FILE__) + '/stub_time_boxed_task'
 class AvatarTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = @disk = StubDisk.new
+    Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
     Thread.current[:task] = @task = StubTimeBoxedTask.new
     @dojo = Dojo.new('stubbed')
@@ -23,16 +23,11 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false when its folder doesn't exist" do
-    assert_equal false, @dojo[@id]['hippo'].exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "exists? is true when its folder does exist" do
+  test "exists? is false when dir doesn't exist, true when dir does exist" do
     avatar = @dojo[@id]['hippo']
+    assert !avatar.exists?
     @disk[avatar.dir].make
-    assert_equal true, avatar.exists?
+    assert avatar.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
