@@ -132,7 +132,7 @@ laptop as a new laptop can instantly replace it.
    VERY VERY IMPORTANT
    VERY VERY IMPORTANT
 ===========================================================
-cyber-dojo clients have full rights on the cyber-dojo server. If you 
+cyber-dojo clients have full rights on the cyber-dojo server. If you
 setup your own server you are strongly advised to consider using
 o) a dedicated server.
 o) a virtual box.
@@ -164,7 +164,7 @@ Add port 12320 to the URL you put into your browser above, eg
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 Then grab the latest cyber-dojo source code from github and install it.
-  >cd /var/www/cyberdojo 
+  >cd /var/www/cyberdojo
   >git pull origin master
   >chmod +x ./pull.sh
   >./pull.sh
@@ -175,7 +175,7 @@ pull.sh performs the following tasks...
   o) checks for any gemfile changes
   o) restarts apache
 
-   
+
 Versions
 ========
 After Johannes Brodwall's sterling upgrade work my server reports...
@@ -295,7 +295,7 @@ Disk space
 ==========
 The design of cyber-dojo is very heavy on inodes. You will almost certainly
 run out of inodes before running out of disk space. The folder that eats
-the inodes is katas/ 
+the inodes is katas/
 
 
 Adding a new exercise
@@ -341,15 +341,11 @@ Check that running cyber-dojo.sh behaves as required:
 or maybe
   #strace sudo -u www-data ./cyber-dojo.sh
 
-You can also create a test for your new language in cyberdojo/test/installation
-by copying an existing language test rb file. Eg
-  #cp clojure_tests.rb lisp_tests.rb
-Edit it match the folder name you created
-  s/Clojure/Lisp/
-Then
-  #sudo -u www-data ruby lisp_tests.rb
-or
-  #strace sudo -u www-data ruby lisp_tests.rb
+You can test the setup of a new language using a ruby script.
+For example: if the new language is Lisp installed
+at cyberdojo/test/cyberdojo/languages/Lisp then
+  #cd test/installation
+  #ruby check_language.rb ../cyberdojo Lisp
 Once this passes make it live by moving it to the live languages folder:
 #mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
@@ -364,7 +360,7 @@ manifest.json Parameters
   of the shell file assumed by the ruby code (in the server) to be the start
   point for running the tests. You can write any actions in the cyber-dojo.sh
   file but clearly any programs it tries to run must be installed on the server.
-  For example, if cyber-dojo.sh runs gcc to compile C files then gcc has 
+  For example, if cyber-dojo.sh runs gcc to compile C files then gcc has
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 
@@ -380,10 +376,10 @@ manifest.json Parameters
    {
      &[class~='highlight'] {
        &:before { content: ">"; }
-     }  
+     }
    }
   in the file app/assets/stylesheets/cyber-dojo.css.scss
-  
+
 "support_filenames": [ ... ]
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
@@ -391,10 +387,10 @@ manifest.json Parameters
   Despite the name "support_filenames" you can symlink a folder if required
   which can be very handy.
   Not required if you do not need support files.
-  
+
 "unit_test_framework": string
-  The name of the unit test framework used. This name partially determines the 
-  name of the ruby function (in the cyber-dojo server) used to parse the 
+  The name of the unit test framework used. This name partially determines the
+  name of the ruby function (in the cyber-dojo server) used to parse the
   test output (to see if the increment generates a red/green/amber
   traffic light). For example, if the value is 'cassert' then
       cyberdojo/lib/CodeOutputParser.rb
@@ -425,7 +421,7 @@ Git Repositories
 Each started animal has its own git respository, eg
   cyberdojo/katas/82/B583C347/wolf/.git
 The starting files (as loaded from the wolf/manifests.rb file) form
-tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a 
+tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a
 message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses the 'test' button causes
 >git commit -a -m '4'
@@ -434,9 +430,9 @@ From an animal's directory you can issue the following commands:
 To look at filename for tag 4
 >git show 4:sandbox/filename
 To look at filename's differences between tag 4 and tag 5
->git diff 4 5 sandbox/filename 
+>git diff 4 5 sandbox/filename
 It's much easier and more informative to just click on dashboard traffic light.
-  
+
 
 
 
@@ -473,7 +469,7 @@ o) If the three tests return three amber traffic-lights then
 o) If the three tests return any other combination of traffic-lights
    it will assume the language is installed but not working.
 
-This approach has a flaw: what if two or more files contain '42'...
+This approach has a flaw: two or more files can contain '42'...
 This tends to happen for BDD style testing.
 
 
@@ -536,4 +532,3 @@ o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    Michel - I really appreciate all your help and encouragement.
 o) James Grenning uses cyber-dojo a lot, via his own Turnkey S3 cloud servers,
    and has provided awesome feedback and made several very generous donations.
-   
