@@ -7,9 +7,9 @@ class DiskTests < ActionController::TestCase
     super
     Thread.current[:disk] = @disk = Disk.new
     id = 'ABCDE12345'
-    @dir = root_path + @disk.dir_separator + id
+    @dir = root_path + 'tmp/' + id
     system("rm -rf #{@dir}")
-    system("mkdir #{@dir}")
+    system("mkdir -p #{@dir}")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
