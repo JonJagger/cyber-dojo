@@ -5,7 +5,7 @@ class ExerciseTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
-    @exercise = Dojo.new('spied').exercise('Yahtzee')
+    @exercise = Dojo.new('spied/').exercise('Yahtzee')
   end
 
   def teardown
@@ -42,8 +42,8 @@ class ExerciseTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path does not end in a slash" do
-    assert !@exercise.path.end_with?(@disk.dir_separator)
+  test "path ends in a slash" do
+    assert @exercise.path.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - -

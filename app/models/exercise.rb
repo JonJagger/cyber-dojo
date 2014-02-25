@@ -3,8 +3,7 @@ class Exercise
 
   def initialize(dojo, name)
     @disk = Thread.current[:disk] || fatal
-    @dojo = dojo
-    @name = name
+    @dojo,@name = dojo,name
   end
 
   def name
@@ -12,11 +11,11 @@ class Exercise
   end
 
   def path
-    dir.path
+    @dojo.path + 'exercises' + dir_separator + name + dir_separator
   end
 
   def dir
-    @disk[@dojo.path + dir_separator + 'exercises' + dir_separator + name]
+    @disk[path]
   end
 
   def exists?

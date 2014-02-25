@@ -16,8 +16,7 @@ class Avatar
   def initialize(kata, name)
     @disk = Thread.current[:disk] || fatal("no disk")
     @git = Thread.current[:git] || fatal("no git")
-    @kata = kata
-    @name = name
+    @kata,@name = kata,name
   end
 
   def kata

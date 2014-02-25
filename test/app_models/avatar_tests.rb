@@ -10,7 +10,7 @@ class AvatarTests < ActionController::TestCase
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
     Thread.current[:task] = @task = StubTimeBoxedTask.new
-    @dojo = Dojo.new('spied')
+    @dojo = Dojo.new('spied/')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
   end

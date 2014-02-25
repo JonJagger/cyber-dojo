@@ -5,7 +5,7 @@ class LanguageTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
-    @language = Dojo.new('spied').language('Ruby')
+    @language = Dojo.new('spied/').language('Ruby')
   end
 
   def teardown

@@ -3,8 +3,7 @@ class Language
 
   def initialize(dojo, name)
     @disk = Thread.current[:disk] || fatal
-    @dojo = dojo
-    @name = name
+    @dojo,@name = dojo,name
   end
 
   def name
