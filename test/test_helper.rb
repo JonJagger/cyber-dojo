@@ -69,7 +69,7 @@ class ActiveSupport::TestCase
   end
 
   def root_path
-    (Rails.root + 'test/cyberdojo').to_s
+    (Rails.root + 'test/cyberdojo/').to_s
   end
 
 end

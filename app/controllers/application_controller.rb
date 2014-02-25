@@ -35,8 +35,8 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  def bind(filename)
-    filename = Rails.root.to_s + filename
+  def bind(pathed_filename)
+    filename = Rails.root.to_s + pathed_filename
     ERB.new(File.read(filename)).result(binding)
   end
 
@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   def root_path
-    Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
+    Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
   end
 
 end

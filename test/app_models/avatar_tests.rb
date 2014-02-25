@@ -81,8 +81,8 @@ class AvatarTests < ActionController::TestCase
     assert sandbox_write_log.include?([visible_filename, visible_filename_content]), sandbox_write_log.inspect
     expected_symlink = [
       'symlink',
-      language.path + @disk.dir_separator + support_filename,
-      sandbox.path + @disk.dir_separator + support_filename
+      language.path + support_filename,
+      sandbox.path + support_filename
     ]
     assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
   end

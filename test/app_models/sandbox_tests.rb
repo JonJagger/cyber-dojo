@@ -41,8 +41,8 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path does not end in slash" do
-    assert !@sandbox.path.end_with?(@disk.dir_separator)
+  test "path ends in slash" do
+    assert @sandbox.path.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

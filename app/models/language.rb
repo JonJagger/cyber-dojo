@@ -12,7 +12,7 @@ class Language
   end
 
   def path
-    @dojo.path + dir_separator + 'languages' + dir_separator + name
+    @dojo.path + 'languages' + dir_separator + name + dir_separator
   end
 
   def dir

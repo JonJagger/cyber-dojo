@@ -29,7 +29,7 @@ class Avatar
   end
 
   def path
-    @kata.path + dir_separator + name
+    @kata.path + name + @disk.dir_separator
   end
 
   def dir
@@ -41,7 +41,7 @@ class Avatar
   end
 
   def setup
-    @disk[path + '/'].make
+    @disk[path].make
     @git.init(path, "--quiet")
 
     dir.write(visible_files_filename, @kata.visible_files)
@@ -56,8 +56,8 @@ class Avatar
     end
 
     @kata.language.support_filenames.each do |filename|
-      old_name = @kata.language.path + dir_separator + filename
-      new_name = sandbox.path + dir_separator + filename
+      old_name = @kata.language.path + filename
+      new_name = sandbox.path + filename
       @disk.symlink(old_name, new_name)
     end
 
@@ -104,10 +104,6 @@ private
 
   def fatal(diagnostic)
     raise diagnostic
-  end
-
-  def dir_separator
-    @disk.dir_separator
   end
 
   def git_commit(tag)

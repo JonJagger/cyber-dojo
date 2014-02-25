@@ -4,7 +4,7 @@ require 'Git'
 class GitTests < ActionController::TestCase
 
   def setup
-    @dir = root_path + '/tmp'
+    @dir = root_path + 'tmp/'
     system("rm -rf #{@dir}")
     system("mkdir #{@dir}")
     @git = Git.new
@@ -13,13 +13,13 @@ class GitTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "git init" do
-    expected = "Initialized empty Git repository in #{@dir}/.git/\n"
+    expected = "Initialized empty Git repository in #{@dir}.git/\n"
     assert_equal expected, @git.init(@dir, '')
   end
 
   test "git add" do
     @git.init(@dir, '')
-    File.open(@dir + '/hello.txt', 'w') do |fd|
+    File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
     end
     assert_equal "", @git.add(@dir, 'hello.txt')
@@ -29,7 +29,7 @@ class GitTests < ActionController::TestCase
 
   test "git commit" do
     @git.init(@dir, '')
-    File.open(@dir + '/hello.txt', 'w') do |fd|
+    File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
     end
     @git.add(@dir, 'hello.txt')
@@ -39,7 +39,7 @@ class GitTests < ActionController::TestCase
 
   test "git rm" do
     @git.init(@dir, '')
-    File.open(@dir + '/hello.txt', 'w') do |fd|
+    File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
     end
     @git.add(@dir, 'hello.txt')
@@ -50,7 +50,7 @@ class GitTests < ActionController::TestCase
 
   test "git tag and show" do
     @git.init(@dir, '')
-    File.open(@dir + '/hello.txt', 'w') do |fd|
+    File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
     end
     @git.add(@dir, 'hello.txt')
@@ -62,14 +62,14 @@ class GitTests < ActionController::TestCase
 
   test "git diff" do
     @git.init(@dir, '')
-    File.open(@dir + '/hello.txt', 'w') do |fd|
+    File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("aaaaa")
     end
     @git.add(@dir, 'hello.txt')
     @git.commit(@dir, '-am "one"')
     @git.tag(@dir, "-m '1' 1 HEAD")
     @git.show(@dir, "1:hello.txt")
-    File.open(@dir + '/hello.txt', 'w') do |fd|
+    File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("bbbbb")
     end
     @git.add(@dir, 'hello.txt')

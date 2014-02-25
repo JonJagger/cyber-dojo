@@ -7,7 +7,7 @@ class KataTests < ActionController::TestCase
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
-    @dojo = Dojo.new('spied')
+    @dojo = Dojo.new('spied/')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
   end
@@ -32,17 +32,8 @@ class KataTests < ActionController::TestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "exists? false when dir does not exist, true when dir does exist" do
-    assert !@kata.exists?, "!@kata.exists?"
-    @kata.dir.make
-    assert @kata.exists?, "@kata.exists?"
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path does not end in slash" do
-    assert !@kata.path.end_with?(@disk.dir_separator)
+  test "path ends in slash" do
+    assert @kata.path.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,6 +50,14 @@ class KataTests < ActionController::TestCase
     uuid = Uuid.new(@id)
     assert @kata.path.match(uuid.inner), "id.inner"
     assert @kata.path.match(uuid.outer), "id.outer"
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "exists? false when dir does not exist, true when dir does exist" do
+    assert !@kata.exists?, "!@kata.exists?"
+    @kata.dir.make
+    assert @kata.exists?, "@kata.exists?"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

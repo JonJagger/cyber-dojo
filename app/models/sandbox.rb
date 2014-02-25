@@ -15,7 +15,7 @@ class Sandbox
   end
 
   def path
-    @avatar.path + dir_separator + 'sandbox'
+    @avatar.path + 'sandbox' + @disk.dir_separator
   end
 
   def test(delta, visible_files, max_duration = 15)
@@ -41,10 +41,6 @@ private
 
   def fatal(diagnostic)
     raise diagnostic
-  end
-
-  def dir_separator
-    @disk.dir_separator
   end
 
 end

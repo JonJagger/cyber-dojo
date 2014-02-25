@@ -46,8 +46,8 @@ class LanguageTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path does not end in a slash" do
-    assert !@language.path.end_with?(@disk.dir_separator)
+  test "path ends in a slash" do
+    assert @language.path.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

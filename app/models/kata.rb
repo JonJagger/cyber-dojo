@@ -12,10 +12,9 @@ class Kata
   end
 
   def path
-    @dojo.path + dir_separator +
-      'katas'   + dir_separator +
+    @dojo.path + 'katas' + dir_separator +
         @id.inner + dir_separator +
-          @id.outer
+          @id.outer + dir_separator
   end
 
   def dir

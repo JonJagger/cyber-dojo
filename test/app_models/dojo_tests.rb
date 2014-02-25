@@ -11,7 +11,7 @@ class DojoTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = SpyDisk.new
-    @path = 'spied'
+    @path = 'spied/'
     @dojo = Dojo.new(@path)
   end
 
@@ -31,7 +31,7 @@ class DojoTests < ActionController::TestCase
 
   test "[id] gives you kata which knows its path" do
     kata = @dojo['1234567890']
-    assert_equal @path+'/katas/12/34567890', kata.path
+    assert_equal @path+'katas/12/34567890/', kata.path
   end
 
   test "language gives you language which knows its name" do
