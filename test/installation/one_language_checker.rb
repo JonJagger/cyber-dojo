@@ -10,6 +10,7 @@ require "#{cyberdojo_root}/app/models/Language"
 require "#{cyberdojo_root}/app/models/Sandbox"
 require "#{cyberdojo_root}/app/lib/OutputParser"
 require "#{cyberdojo_root}/lib/Disk"
+require "#{cyberdojo_root}/lib/Git"
 require "#{cyberdojo_root}/lib/Uuid"
 
 class OneLanguageChecker
@@ -292,6 +293,7 @@ private
 
   def dojo
     Thread.current[:disk] ||= Disk.new
+    Thread.current[:git] ||= Git.new
     Dojo.new(@root_path)
   end
 

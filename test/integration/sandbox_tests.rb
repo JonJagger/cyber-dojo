@@ -1,10 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Disk'
+require 'Git'
 
 class SandboxTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = Disk.new
+    Thread.current[:git] = Git.new
     @dojo = Dojo.new(root_path)
   end
 

@@ -1,6 +1,4 @@
 
-require 'Git'
-
 class Avatar
 
   def self.names
@@ -16,8 +14,8 @@ class Avatar
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def initialize(kata, name)
-    @disk = Thread.current[:disk] || fatal
-    @git = Thread.current[:git] || Git.new
+    @disk = Thread.current[:disk] || fatal("no disk")
+    @git = Thread.current[:git] || fatal("no git")
     @kata = kata
     @name = name
   end
@@ -104,8 +102,8 @@ class Avatar
 
 private
 
-  def fatal
-    raise "no disk"
+  def fatal(diagnostic)
+    raise diagnostic
   end
 
   def dir_separator

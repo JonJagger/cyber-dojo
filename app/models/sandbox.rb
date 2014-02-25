@@ -1,12 +1,11 @@
 
-require 'Git'
 require 'TimeBoxedTask'
 
 class Sandbox
 
   def initialize(avatar)
-    @disk = Thread.current[:disk] || fatal
-    @git  = Thread.current[:git]  || Git.new
+    @disk = Thread.current[:disk] || fatal("no disk")
+    @git  = Thread.current[:git]  || fatal("no git")
     @task = Thread.current[:task] || TimeBoxedTask.new
     @avatar = avatar
   end
@@ -40,8 +39,8 @@ class Sandbox
 
 private
 
-  def fatal
-    raise "no disk"
+  def fatal(diagnostic)
+    raise diagnostic
   end
 
   def dir_separator

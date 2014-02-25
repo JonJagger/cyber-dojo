@@ -23,7 +23,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when no disk on thread ctor raises" do
+  test "when no disk on thread the ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
     assert_equal "no disk", error.message
@@ -31,8 +31,16 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "when no git on thread the ctor raises" do
+    Thread.current[:git] = nil
+    error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
+    assert_equal "no git", error.message
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "exists? is false when dir doesn't exist, true when dir does exist" do
-    avatar = @dojo[@id]['hippo']
+    avatar = @kata['hippo']
     assert !avatar.exists?
     avatar.dir.make
     assert avatar.exists?
@@ -97,15 +105,15 @@ class AvatarTests < ActionController::TestCase
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
 
-    log = @git.log[avatar.path]
-    assert_equal [ 'init', '--quiet'], log[0]
-    add1_index = log.index([ 'add', 'increments.rb' ])
+    git_log = @git.log[avatar.path]
+    assert_equal [ 'init', '--quiet'], git_log[0]
+    add1_index = git_log.index([ 'add', 'increments.rb' ])
     assert add1_index != nil
-    add2_index = log.index([ 'add', 'manifest.rb'])
+    add2_index = git_log.index([ 'add', 'manifest.rb'])
     assert add2_index != nil
-    commit1_index = log.index([ 'commit', "-a -m '0' --quiet" ])
+    commit1_index = git_log.index([ 'commit', "-a -m '0' --quiet" ])
     assert commit1_index != nil
-    commit2_index = log.index([ 'commit', "-m '0' 0 HEAD" ])
+    commit2_index = git_log.index([ 'commit', "-m '0' 0 HEAD" ])
     assert commit2_index != nil
 
     assert add1_index < commit1_index

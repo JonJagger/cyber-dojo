@@ -33,6 +33,14 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "when no git on thread the ctor raises" do
+    Thread.current[:git] = nil
+    error = assert_raises(RuntimeError) { Sandbox.new(nil) }
+    assert_equal "no git", error.message
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "path does not end in slash" do
     assert !@sandbox.path.end_with?(@disk.dir_separator)
   end
