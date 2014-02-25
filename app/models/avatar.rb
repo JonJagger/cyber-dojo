@@ -11,8 +11,6 @@ class Avatar
       )
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def initialize(kata, name)
     @disk = Thread.current[:disk] || fatal("no disk")
     @git = Thread.current[:git] || fatal("no git")

@@ -75,7 +75,7 @@ module OutputParser
   end
 
   def self.parse_ruby_rspec(output)
-	if /\A\.+$/ =~ output
+    if /\A\.+$/ =~ output
       :green
     elsif /\A[\.F]+$/ =~ output
       :red
@@ -108,12 +108,12 @@ module OutputParser
     if match = green_pattern.match(output)
       :green
     else
-	  amber_pattern0 = Regexp.new('groovyc: command not found')
+      amber_pattern0 = Regexp.new('groovyc: command not found')
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
       if amber_pattern0.match(output) ||
-		 amber_pattern1.match(output) ||
-		 amber_pattern2.match(output)
+         amber_pattern1.match(output) ||
+         amber_pattern2.match(output)
         :amber
       else
         :red
@@ -134,10 +134,10 @@ module OutputParser
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
       if amber_pattern0.match(output) ||
-		 amber_pattern1.match(output) ||
-		 amber_pattern2.match(output)
-		:amber
-	  else
+         amber_pattern1.match(output) ||
+         amber_pattern2.match(output)
+        :amber
+      else
         :red
       end
     end
@@ -213,11 +213,11 @@ module OutputParser
 
   def self.parse_scala_test(output)
     scala_pattern = /Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/
-	if scala_pattern.match(output)
-	  return $2 == "0" ? :green : :red
-	else
-	  :amber
-	end
+    if scala_pattern.match(output)
+      return $2 == "0" ? :green : :red
+    else
+      :amber
+    end
   end
 
 =begin
