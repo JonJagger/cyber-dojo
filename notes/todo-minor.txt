@@ -1,10 +1,12 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
-  app_models/stub_disk.rb to become spy_disk and do spying
-    in combination with spy_dir
+  ...
+  test/app_models/spy_disk & spy_dir to do spying via teardown's
   ...
   ContentHashDiffer.diff should be called makeDelta
     its about current and next (not incoming outgoing)

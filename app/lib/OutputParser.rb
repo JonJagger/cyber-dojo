@@ -4,13 +4,13 @@ module OutputParser
   #  'red'   - this means the tests ran but at least one failed
   #  'amber' - this means the tests could not be run (eg syntax error)
   #  'green' - this means the tests ran and all passed
-  
+
   def self.parse(unit_test_framework, output)
     inc = { }
     if Regexp.new("Terminated by the cyber-dojo server after").match(output)
       inc['colour'] = 'amber'
     else
-      inc['colour'] = (eval "parse_#{unit_test_framework}(output)").to_s
+      inc['colour'] = self.send("parse_#{unit_test_framework}", output).to_s
     end
     inc
   end
@@ -32,30 +32,30 @@ module OutputParser
     return :red
   end
 
-  def self.parse_eunit(output) 
+  def self.parse_eunit(output)
     return :red   if /Failed: /.match(output)
     return :green if /passed./.match(output)
     return :amber
   end
-	
-  def self.parse_python_unittest(output) 
+
+  def self.parse_python_unittest(output)
     return :red   if /FAILED \(failures=/.match(output)
     return :green if /OK/.match(output)
     return :amber
   end
-	
-  def self.parse_catch(output)    
+
+  def self.parse_catch(output)
     return :red   if /failed \(\d* assertion/.match(output)
     return :green if /All tests passed/.match(output)
     return :amber
   end
-  
+
   def self.parse_cassert(output)
     red_pattern = Regexp.new('(.*)Assertion(.*)failed.')
     syntax_error_pattern = Regexp.new(':(\d*): error')
     make_error_pattern = Regexp.new('^make:')
     makefile_error_pattern = Regexp.new('^makefile:')
-    
+
     return :red   if red_pattern.match(output)
     return :amber if make_error_pattern.match(output)
     return :amber if makefile_error_pattern.match(output)
@@ -81,7 +81,7 @@ module OutputParser
       :red
     else
       :amber
-    end	
+    end
   end
 
   def self.parse_nunit(output)
@@ -96,7 +96,7 @@ module OutputParser
       :amber
     end
   end
-  
+
   def self.parse_junit(output)
     return :green if /^OK \((\d*) test/.match(output)
     return :red   if /^Tests run: (\d*),  Failures: (\d*)/.match(output)
@@ -110,7 +110,7 @@ module OutputParser
     else
 	  amber_pattern0 = Regexp.new('groovyc: command not found')
       amber_pattern1 = Regexp.new('groovy\.lang')
-      amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')      
+      amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
       if amber_pattern0.match(output) ||
 		 amber_pattern1.match(output) ||
 		 amber_pattern2.match(output)
@@ -124,18 +124,18 @@ module OutputParser
   def self.parse_groovy_spock(output)
     green_pattern = Regexp.new('^OK \((\d*) test')
     if match = green_pattern.match(output)
-      if match[1] != "0" 
+      if match[1] != "0"
         :green
       else # treat zero passes as a fail
-        :red 
+        :red
       end
     else
-      amber_pattern0 = Regexp.new('groovyc: command not found')    	
+      amber_pattern0 = Regexp.new('groovyc: command not found')
       amber_pattern1 = Regexp.new('groovy\.lang')
       amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
       if amber_pattern0.match(output) ||
 		 amber_pattern1.match(output) ||
-		 amber_pattern2.match(output)		 
+		 amber_pattern2.match(output)
 		:amber
 	  else
         :red
@@ -161,11 +161,11 @@ module OutputParser
     return :amber if /\[build failed\]/.match(output)
     return :red   if /FAIL/.match(output)
     return :green if /PASS/.match(output)
-    return :amber  
+    return :amber
   end
-  
+
   def self.parse_clojure_test(output)
-    syntax_error_pattern = /Exception in thread/	
+    syntax_error_pattern = /Exception in thread/
     ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
     if syntax_error_pattern.match(output)
       :amber
@@ -175,7 +175,7 @@ module OutputParser
       :green
     else
       :amber
-    end    
+    end
   end
 
   def self.parse_node(output)
@@ -192,7 +192,7 @@ module OutputParser
     elsif passed_pattern.match(output)
       :green
     else
-      :amber  
+      :amber
     end
   end
 
@@ -232,8 +232,7 @@ module OutputParser
       :green
     end
   end
- 
+
 =end
 
 end
-
