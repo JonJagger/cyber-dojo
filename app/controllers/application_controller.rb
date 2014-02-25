@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
+require 'Disk'
 require 'make_time_helper'
 require 'Folders'
 require 'Uuid'
@@ -16,6 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
+    Thread.current[:disk] ||= Disk.new
     Dojo.new(root_dir)
   end
 
@@ -48,10 +50,6 @@ private
 
   def root_dir
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
-  end
-
-  def external
-    External.new(Disk.new, Git.new, TimeBoxedTask.new)
   end
 
 end

@@ -23,10 +23,18 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "if no disk on thread ctor raises" do
+    Thread.current[:disk] = nil
+    error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
+    assert_equal "no disk", error.message
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "exists? is false when dir doesn't exist, true when dir does exist" do
     avatar = @dojo[@id]['hippo']
     assert !avatar.exists?
-    @disk[avatar.dir].make
+    avatar.dir.make
     assert avatar.exists?
   end
 
@@ -48,25 +56,25 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     support_filename = 'wibble.dll'
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({
+    language.dir.spy_read('manifest.json', JSON.unparse({
         "support_filenames" => [ support_filename ]
       }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
-    avatar_write_log = @disk[avatar.dir].write_log
+    avatar_write_log = avatar.dir.write_log
     assert_not_nil avatar_write_log
     assert avatar_write_log.include?(['manifest.rb', visible_files.inspect])
     assert avatar_write_log.include?(['increments.rb', [ ].inspect])
     sandbox = avatar.sandbox
-    sandbox_write_log = @disk[sandbox.dir].write_log
+    sandbox_write_log = sandbox.dir.write_log
     assert_not_nil sandbox_write_log
     assert sandbox_write_log.include?([visible_filename, visible_filename_content]), sandbox_write_log.inspect
     expected_symlink = [
       'symlink',
-      language.dir + @disk.dir_separator + support_filename,
-      sandbox.dir + @disk.dir_separator + support_filename
+      language.path + @disk.dir_separator + support_filename,
+      sandbox.path + @disk.dir_separator + support_filename
     ]
     assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
   end
@@ -84,12 +92,12 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
 
-    log = @git.log[avatar.dir]
+    log = @git.log[avatar.path]
     assert_equal [ 'init', '--quiet'], log[0]
     add1_index = log.index([ 'add', 'increments.rb' ])
     assert add1_index != nil
@@ -107,11 +115,11 @@ class AvatarTests < ActionController::TestCase
 
     assert_equal [
       [ 'add', 'name']
-    ], @git.log[avatar.sandbox.dir]
+    ], @git.log[avatar.sandbox.path], @git.log.inspect
 
-    assert_equal [ ], @disk[avatar.dir].read_log
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk[kata.dir].write_log
-    assert_equal [ [ 'manifest.rb' ] ], @disk[kata.dir].read_log
+    assert_equal [ ], avatar.dir.read_log
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], kata.dir.write_log
+    assert_equal [ [ 'manifest.rb' ] ], kata.dir.read_log
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -132,8 +140,8 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
     assert_equal [ ], avatar.traffic_lights
@@ -151,8 +159,8 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
     assert_equal kata, avatar.kata
@@ -171,8 +179,8 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
     visible_files = avatar.visible_files
@@ -194,13 +202,13 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
-    sandbox_dir = avatar.dir + @disk.dir_separator + 'sandbox'
+    #sandbox_dir = avatar.path + @disk.dir_separator + 'sandbox'
     visible_files.each do |filename,content|
-      assert_equal content, @disk[sandbox_dir].read(filename)
+      assert_equal content, avatar.sandbox.dir.read(filename)
     end
   end
 
@@ -217,12 +225,12 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
-    assert_equal visible_files['cyber-dojo.sh'], @disk[sandbox.dir].read('cyber-dojo.sh')
+    assert_equal visible_files['cyber-dojo.sh'], sandbox.dir.read('cyber-dojo.sh')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,14 +247,14 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     kata = @dojo.create_kata(manifest)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({
+    language.dir.spy_read('manifest.json', JSON.unparse({
         "visible_files" => visible_files,
         "unit_test_framework" => "cassert"
       }))
-    @disk[language.dir].spy_read('untitled.c', 'content for visible file')
-    @disk[language.dir].spy_read('cyber-dojo.sh', 'make')
+    language.dir.spy_read('untitled.c', 'content for visible file')
+    language.dir.spy_read('cyber-dojo.sh', 'make')
     avatar = kata.start_avatar
     delta = {
       :changed => [ 'untitled.c' ],
@@ -268,7 +276,7 @@ class AvatarTests < ActionController::TestCase
   test "diff_lines" do
     avatar = @kata['lion']
     output = avatar.diff_lines(was_tag=3,now_tag=4)
-    assert @git.log[avatar.dir].include?(
+    assert @git.log[avatar.path].include?(
       [
        'diff',
        '--ignore-space-at-eol --find-copies-harder 3 4 sandbox'
@@ -280,7 +288,7 @@ class AvatarTests < ActionController::TestCase
   test "locked_read with tag" do
     avatar = @kata['lion']
     output = avatar.visible_files(tag=4)
-    assert @git.log[avatar.dir].include?(
+    assert @git.log[avatar.path].include?(
       [
        'show',
        '4:manifest.rb'

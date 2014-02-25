@@ -1,10 +1,16 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'Disk'
 
 class SandboxTests < ActionController::TestCase
 
+  def setup
+    Thread.current[:disk] = Disk.new
+    @dojo = Dojo.new(root_path)
+  end
+
   test "defect-driven: filename containing space is not accidentally retained" do
     # retained means stays in the sandbox
-    kata = make_kata('Java-JUnit', exercise='Dummy')
+    kata = make_kata(@dojo, 'Java-JUnit', exercise='Dummy')
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
 

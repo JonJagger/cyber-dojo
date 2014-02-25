@@ -19,6 +19,14 @@ class KataTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "if no disk on thread ctor raises" do
+    Thread.current[:disk] = nil
+    error = assert_raises(RuntimeError) { Kata.new(nil,nil) }
+    assert_equal "no disk", error.message
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "id is from ctor" do
     assert_equal @id, @kata.id
   end
@@ -27,30 +35,30 @@ class KataTests < ActionController::TestCase
 
   test "exists? false when dir does not exist, true when dir does exist" do
     assert !@kata.exists?, "!@kata.exists?"
-    @disk[@kata.dir].make
+    @kata.dir.make
     assert @kata.exists?, "@kata.exists?"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir does not end in slash" do
-    assert !@kata.dir.end_with?(@disk.dir_separator)
+  test "path does not end in slash" do
+    assert !@kata.path.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir does not have doubled separator" do
+  test "path does not have doubled separator" do
     doubled_separator = @disk.dir_separator * 2
-    assert_equal 0, @kata.dir.scan(doubled_separator).length
+    assert_equal 0, @kata.path.scan(doubled_separator).length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir is based on cyberdojo root_dir and id" do
-    assert @kata.dir.match(@dojo.dir), "root_dir"
+  test "path is based on cyberdojo root_dir and id" do
+    assert @kata.path.match(@dojo.path), "root_dir"
     uuid = Uuid.new(@id)
-    assert @kata.dir.match(uuid.inner), "id.inner"
-    assert @kata.dir.match(uuid.outer), "id.outer"
+    assert @kata.path.match(uuid.inner), "id.inner"
+    assert @kata.path.match(uuid.outer), "id.outer"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,8 +66,8 @@ class KataTests < ActionController::TestCase
   test "creation saves manifest in kata dir" do
     manifest = { :id => @id }
     kata = @dojo.create_kata(manifest)
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk[@kata.dir].write_log
-    assert_equal [ ], @disk[@kata.dir].read_log
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @kata.dir.write_log
+    assert_equal [ ], @kata.dir.read_log
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -70,7 +78,7 @@ class KataTests < ActionController::TestCase
       :created => now,
       :id => @id
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     assert_equal Time.mktime(*now), @kata.created
   end
 
@@ -82,7 +90,7 @@ class KataTests < ActionController::TestCase
       :created => now,
       :id => @id
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     seconds = 5
     now = now[0...-1] + [now.last + seconds ]
     assert_equal seconds, @kata.age_in_seconds(Time.mktime(*now))
@@ -96,7 +104,7 @@ class KataTests < ActionController::TestCase
       :language => language,
       :id => @id
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     assert_equal language, @kata.language.name
   end
 
@@ -108,7 +116,7 @@ class KataTests < ActionController::TestCase
       :exercise => exercise,
       :id => @id
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     assert_equal exercise, @kata.exercise.name
   end
 
@@ -123,7 +131,7 @@ class KataTests < ActionController::TestCase
       :id => @id,
       :visible_files => visible_files
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
     assert_equal visible_files, @kata.visible_files
   end
 
@@ -141,7 +149,7 @@ class KataTests < ActionController::TestCase
   test "kata['lion'] exists when its dir exists" do
     avatar = @kata['lion']
     assert !avatar.exists?, "!avatar.exists?"
-    @disk[avatar.dir].make
+    avatar.dir.make
     assert avatar.exists?, "avatar.exists?"
   end
 
@@ -153,8 +161,8 @@ class KataTests < ActionController::TestCase
       :id => @id,
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     assert 'hippo', kata['hippo'].name
   end
@@ -170,8 +178,8 @@ class KataTests < ActionController::TestCase
       },
       :language => language.name
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     animal1 = kata.start_avatar
     animal2 = kata.start_avatar
@@ -191,8 +199,8 @@ class KataTests < ActionController::TestCase
         'wibble.h' => '#include <stdio.h>'
       }
     }
-    @disk[@kata.dir].spy_read('manifest.rb', manifest.inspect)
-    @disk[language.dir].spy_read('manifest.json', JSON.unparse({ }))
+    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     created = [ ]
     Avatar.names.length.times do |n|

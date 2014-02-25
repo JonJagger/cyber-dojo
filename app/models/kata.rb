@@ -1,27 +1,29 @@
 
-require 'Disk'
-
 class Kata
 
   def initialize(dojo, id)
-    @disk = Thread.current[:disk] || Disk.new
+    @disk = Thread.current[:disk] || fatal
     @dojo = dojo
     @id = Uuid.new(id)
   end
 
-  def exists?
-    @disk[dir].exists?
+  def id
+    @id.to_s
   end
 
-  def dir
-    @dojo.dir + dir_separator +
+  def path
+    @dojo.path + dir_separator +
       'katas'   + dir_separator +
         @id.inner + dir_separator +
           @id.outer
   end
 
-  def id
-    @id.to_s
+  def dir
+    @disk[path]
+  end
+
+  def exists?
+    dir.exists?
   end
 
   def [](avatar_name)
@@ -30,7 +32,7 @@ class Kata
 
   def start_avatar
     avatar = nil
-    @disk[dir].lock do
+    dir.lock do
       started_avatar_names = avatars.collect { |avatar| avatar.name }
       unstarted_avatar_names = Avatar.names - started_avatar_names
       if unstarted_avatar_names != [ ]
@@ -67,12 +69,16 @@ class Kata
   end
 
   def manifest_filename
-    @disk[dir].exists?(new_manifest_filename) ?
+    dir.exists?(new_manifest_filename) ?
       new_manifest_filename :
       old_manifest_filename
   end
 
 private
+
+  def fatal
+    raise "no disk"
+  end
 
   def dir_separator
     @disk.dir_separator
@@ -83,7 +89,7 @@ private
   end
 
   def manifest
-    @manifest ||= eval @disk[dir].read(manifest_filename)
+    @manifest ||= eval dir.read(manifest_filename)
   end
 
   def old_manifest_filename

@@ -7,6 +7,10 @@ class SpyDir
     @write_log = [ ]
   end
 
+  def path
+    @dir
+  end
+
   def exists?(filename = "")
     @read_repo != nil && (filename == "" || @read_repo[filename] != nil)
   end

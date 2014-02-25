@@ -1,10 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'Disk'
 
 class AvatarTests < ActionController::TestCase
 
   def setup
-    super
-    @kata = make_kata('Ruby-installed-and-working')
+    Thread.current[:disk] = Disk.new
+    @dojo = Dojo.new(root_path)
+    @kata = make_kata(@dojo, 'Ruby-installed-and-working')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -138,7 +140,7 @@ class AvatarTests < ActionController::TestCase
 
   test "output is correct on refresh" do
     language = 'Ruby-installed-and-working'
-    kata = make_kata(language)
+    kata = make_kata(@dojo, language)
     avatar = kata.start_avatar
     visible_files = avatar.visible_files
     delta = {

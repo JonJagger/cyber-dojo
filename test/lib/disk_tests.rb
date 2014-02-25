@@ -5,20 +5,17 @@ class DiskTests < ActionController::TestCase
 
   def setup
     super
+    Thread.current[:disk] = @disk = Disk.new
     id = 'ABCDE12345'
-    @disk = Disk.new
-    @dir = @dojo.dir + @disk.dir_separator + id
-    system("mkdir #{@dir}")
-  end
-
-  def teardown
+    @dir = root_path + @disk.dir_separator + id
     system("rm -rf #{@dir}")
+    system("mkdir #{@dir}")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists?(dir) false when dir does not exist, true when it does" do
-    teardown
+    system("rm -rf #{@dir}")
     assert !@disk[@dir].exists?
     @disk[@dir].make
     assert @disk[@dir].exists?

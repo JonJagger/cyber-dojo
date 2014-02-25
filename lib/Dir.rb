@@ -9,6 +9,10 @@ class Dir
     end
   end
 
+  def path
+    @dir
+  end
+
   def exists?(filename = nil)
     if filename == nil
       return File.directory?(@dir)

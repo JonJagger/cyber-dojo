@@ -4,17 +4,12 @@ require 'Git'
 class GitTests < ActionController::TestCase
 
   def setup
-    super
-    id = '12345ABCDE'
-    @dir = @dojo.dir + '/' + id
+    @dir = root_path + '/tmp'
+    system("rm -rf #{@dir}")
     system("mkdir #{@dir}")
     @git = Git.new
   end
-  
-  def teardown
-    system("rm -rf #{@dir}")
-  end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "git init" do
@@ -29,9 +24,9 @@ class GitTests < ActionController::TestCase
     end
     assert_equal "", @git.add(@dir, 'hello.txt')
     status = `cd #{@dir};git status`
-    assert status.include?('new file:   hello.txt')    
+    assert status.include?('new file:   hello.txt')
   end
-  
+
   test "git commit" do
     @git.init(@dir, '')
     File.open(@dir + '/hello.txt', 'w') do |fd|
@@ -39,9 +34,9 @@ class GitTests < ActionController::TestCase
     end
     @git.add(@dir, 'hello.txt')
     output = @git.commit(@dir, '-am "one"')
-    assert output.include?('create mode 100644 hello.txt')    
+    assert output.include?('create mode 100644 hello.txt')
   end
-  
+
   test "git rm" do
     @git.init(@dir, '')
     File.open(@dir + '/hello.txt', 'w') do |fd|
@@ -50,9 +45,9 @@ class GitTests < ActionController::TestCase
     @git.add(@dir, 'hello.txt')
     @git.commit(@dir, '-am "one"')
     output = @git.rm(@dir, 'hello.txt')
-    assert output.include?("rm 'hello.txt'")        
+    assert output.include?("rm 'hello.txt'")
   end
-  
+
   test "git tag and show" do
     @git.init(@dir, '')
     File.open(@dir + '/hello.txt', 'w') do |fd|
@@ -71,14 +66,14 @@ class GitTests < ActionController::TestCase
       fd.write("aaaaa")
     end
     @git.add(@dir, 'hello.txt')
-    @git.commit(@dir, '-am "one"')    
+    @git.commit(@dir, '-am "one"')
     @git.tag(@dir, "-m '1' 1 HEAD")
     @git.show(@dir, "1:hello.txt")
     File.open(@dir + '/hello.txt', 'w') do |fd|
       fd.write("bbbbb")
     end
     @git.add(@dir, 'hello.txt')
-    @git.commit(@dir, '-am "two"')    
+    @git.commit(@dir, '-am "two"')
     @git.tag(@dir, "-m '2' 2 HEAD")
     diff = @git.diff(@dir, '1 2')
     assert diff.include?("diff --git a/hello.txt b/hello.txt")
@@ -87,6 +82,5 @@ class GitTests < ActionController::TestCase
     assert diff.include?("-aaaaa")
     assert diff.include?("+bbbbb")
   end
-  
-end
 
+end

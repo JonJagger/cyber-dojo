@@ -1,12 +1,20 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'Disk'
 require 'GitDiff'
 
 class GitDiffViewTests < ActionController::TestCase
 
   include GitDiff
 
+  def setup
+    super
+    Thread.current[:disk] = Disk.new
+    @dojo = Dojo.new(root_path)
+  end
+
   test "building diff view from git repo with modified file" do
-    kata = make_kata('Ruby-installed-and-working')
+
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar # tag 0
 
     visible_files =
@@ -139,7 +147,7 @@ class GitDiffViewTests < ActionController::TestCase
   #-----------------------------------------------
 
   test "building git diff view from repo with deleted file" do
-    kata = make_kata('Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar # tag 0
 
     visible_files =
@@ -188,7 +196,7 @@ class GitDiffViewTests < ActionController::TestCase
   #-----------------------------------------------
 
   test "only visible files are commited and are seen in diff_lines" do
-    kata = make_kata('Java-JUnit')
+    kata = make_kata(@dojo, 'Java-JUnit')
     avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
 

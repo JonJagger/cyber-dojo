@@ -11,7 +11,7 @@ class DojoTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
-    @dir = '/spied'
+    @dir = 'spied'
     @dojo = Dojo.new(@dir)
   end
 
@@ -19,12 +19,19 @@ class DojoTests < ActionController::TestCase
     Thread.current[:disk] = nil
   end
 
-  test "dir is as set in ctor" do
-    assert_equal @dir, @dojo.dir
+  test "if no disk on thread ctor raises" do
+    Thread.current[:disk] = nil
+    error = assert_raises(RuntimeError) { Dojo.new('spying') }
+    assert_equal "no disk", error.message
   end
 
-  test "[id] gives you kata which knows its dir" do
-    assert_equal @dir+'/katas/12/34567890', @dojo['1234567890'].dir
+  test "path is as set in ctor" do
+    assert_equal @dir, @dojo.path
+  end
+
+  test "[id] gives you kata which knows its dir_path" do
+    kata = @dojo['1234567890']
+    assert_equal @dir+'/katas/12/34567890', kata.path
   end
 
   test "language gives you language which knows its name" do
@@ -35,24 +42,24 @@ class DojoTests < ActionController::TestCase
     assert_equal 'yyy', @dojo.exercise('yyy').name
   end
 
-  test "dojo has option to specify format as .rb which controls kata's manifest format" do
+  test "create_kata has option to specify .rb format which controls kata's manifest format" do
     dir = 'spied'
     dojo = Dojo.new(dir, "rb")
     id = '45ED23A2F1'
     manifest = { :id => id }
     kata = @dojo.create_kata(manifest)
     assert_equal "manifest.rb", kata.manifest_filename
-    assert @disk[kata.dir].write_log.include?(['manifest.rb', manifest.inspect])
+    assert kata.dir.write_log.include?(['manifest.rb', manifest.inspect]), kata.dir.write_log.inspect
   end
 
-  test "dojo has option to specify format as .json which controls kata's manifest format" do
+  test "create_kata has option to specify .json format which controls kata's manifest format" do
     dir = 'spied'
     dojo = Dojo.new(dir, "json")
     id = '45ED23A2F1'
     manifest = { :id => id }
     kata = dojo.create_kata(manifest)
     assert_equal "manifest.json", kata.manifest_filename
-    assert @disk[kata.dir].write_log.include?(['manifest.json', JSON.unparse(manifest)]), @disk[kata.dir].write_log.inspect
+    assert kata.dir.write_log.include?(['manifest.json', JSON.unparse(manifest)]), kata.dir.write_log.inspect
   end
 
 end

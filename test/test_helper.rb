@@ -37,36 +37,17 @@ class ActiveSupport::TestCase
   include MakeTimeHelper
 
   def setup
-    system("rm -rf #{root_dir}/katas/*")
-    @dojo = dojo
+    system("rm -rf #{root_path}/katas/*")
   end
 
-  def make_kata(language_name, exercise_name = 'Yahtzee')
-    manifest = make_manifest(language_name, exercise_name)
+  def make_kata(dojo, language_name, exercise_name = 'Yahtzee')
+    manifest = make_manifest(dojo,language_name, exercise_name)
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = 'practice'
     dojo.create_kata(manifest)
   end
 
-  def run_test(delta, avatar, visible_files, timeout = 15)
-    output = avatar.sandbox.test(delta, visible_files, timeout)
-    language = avatar.kata.language
-    traffic_light = OutputParser::parse(language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, traffic_light)
-    output
-  end
-
-private
-
-  def root_dir
-    (Rails.root + 'test/cyberdojo').to_s
-  end
-
-  def dojo
-    Dojo.new(root_dir)
-  end
-
-  def make_manifest(language_name, exercise_name)
+  def make_manifest(dojo, language_name, exercise_name)
     language = dojo.language(language_name)
     {
       :created => now = make_time(Time.now),
@@ -77,6 +58,18 @@ private
       :unit_test_framework => language.unit_test_framework,
       :tab_size => language.tab_size
     }
+  end
+
+  def run_test(delta, avatar, visible_files, timeout = 15)
+    output = avatar.sandbox.test(delta, visible_files, timeout)
+    language = avatar.kata.language
+    traffic_light = OutputParser::parse(language.unit_test_framework, output)
+    avatar.save_run_tests(visible_files, traffic_light)
+    output
+  end
+
+  def root_path
+    (Rails.root + 'test/cyberdojo').to_s
   end
 
 end

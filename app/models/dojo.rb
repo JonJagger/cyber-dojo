@@ -1,14 +1,17 @@
 
-require 'Disk'
-
 class Dojo
 
-  def initialize(dir, format="rb")
-    @dir,@format = dir,format
+  def initialize(path, format="rb")
+    @disk = Thread.current[:disk] || fatal
+    @path,@format = path,format
+  end
+
+  def path
+    @path
   end
 
   def dir
-    @dir
+    @disk[path]
   end
 
   def [](id)
@@ -24,10 +27,15 @@ class Dojo
   end
 
   def create_kata(manifest)
-    disk = Thread.current[:disk] || Disk.new
     kata = self[manifest[:id]]
-    disk[kata.dir].write('manifest.' + @format, manifest)
+    kata.dir.write('manifest.' + @format, manifest)
     kata
+  end
+
+private
+
+  def fatal
+    raise "no disk"
   end
 
 end

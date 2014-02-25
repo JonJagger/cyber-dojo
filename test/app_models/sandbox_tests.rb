@@ -25,21 +25,29 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir does not end in slash" do
-    assert !@sandbox.dir.end_with?(@disk.dir_separator)
+  test "if no disk on thread ctor raises" do
+    Thread.current[:disk] = nil
+    error = assert_raises(RuntimeError) { Sandbox.new(nil) }
+    assert_equal "no disk", error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir does not have doubled separator" do
+  test "path does not end in slash" do
+    assert !@sandbox.path.end_with?(@disk.dir_separator)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "path does not have doubled separator" do
     doubled_separator = @disk.dir_separator * 2
-    assert_equal 0, @sandbox.dir.scan(doubled_separator).length
+    assert_equal 0, @sandbox.path.scan(doubled_separator).length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir is not created until file is saved" do
-    assert !@disk[@sandbox.dir].exists?
+    assert !@sandbox.dir.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,7 +70,7 @@ class SandboxTests < ActionController::TestCase
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber"], @disk[@sandbox.dir].write_log.last
+    assert_equal ['output',"amber"], @sandbox.dir.write_log.last
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -80,7 +88,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @disk[@sandbox.dir].write_log
+    log = @sandbox.dir.write_log
     saved_files = filenames_in(log)
     assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
     assert log.include?(['untitled.cs', 'content for code file' ]), log.inspect
@@ -102,8 +110,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @disk[@sandbox.dir].write_log
-    saved_files = filenames_in(log)
+    saved_files = filenames_in(@sandbox.dir.write_log)
     assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
     assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
   end
@@ -123,11 +130,10 @@ class SandboxTests < ActionController::TestCase
       :new => [ 'wibble.cs' ]
     }
     @sandbox.test(delta, visible_files)
-    write_log = @disk[@sandbox.dir].write_log
-    saved_files = filenames_in(write_log)
+    saved_files = filenames_in(@sandbox.dir.write_log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
 
-    git_log = @git.log[@sandbox.dir]
+    git_log = @git.log[@sandbox.path]
     assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
   end
 
@@ -146,11 +152,10 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    write_log = @disk[@sandbox.dir].write_log
-    saved_files = filenames_in(write_log)
+    saved_files = filenames_in(@sandbox.dir.write_log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
 
-    git_log = @git.log[@sandbox.dir]
+    git_log = @git.log[@sandbox.path]
     assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
   end
 

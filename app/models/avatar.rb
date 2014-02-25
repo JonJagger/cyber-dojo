@@ -1,5 +1,4 @@
 
-require 'Disk'
 require 'Git'
 
 class Avatar
@@ -17,42 +16,10 @@ class Avatar
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def initialize(kata, name)
-    @disk = Thread.current[:disk] || Disk.new
+    @disk = Thread.current[:disk] || fatal
     @git = Thread.current[:git] || Git.new
     @kata = kata
     @name = name
-  end
-
-  def exists?
-    @disk[dir].exists?
-  end
-
-  def dir
-    @kata.dir + dir_separator + name
-  end
-
-  def setup
-    @disk[dir + '/'].make
-    @git.init(dir, "--quiet")
-
-    @disk[dir].write(visible_files_filename, @kata.visible_files)
-    @git.add(dir, visible_files_filename)
-
-    @disk[dir].write(traffic_lights_filename, [ ])
-    @git.add(dir, traffic_lights_filename)
-
-    @kata.visible_files.each do |filename,content|
-      @disk[sandbox.dir].write(filename, content)
-      @git.add(sandbox.dir, filename)
-    end
-
-    @kata.language.support_filenames.each do |filename|
-      old_name = @kata.language.dir + dir_separator + filename
-      new_name = sandbox.dir + dir_separator + filename
-      @disk.symlink(old_name, new_name)
-    end
-
-    git_commit(tag = 0)
   end
 
   def kata
@@ -63,16 +30,52 @@ class Avatar
     @name
   end
 
+  def path
+    @kata.path + dir_separator + name
+  end
+
+  def dir
+    @disk[path]
+  end
+
+  def exists?
+    dir.exists?
+  end
+
+  def setup
+    @disk[path + '/'].make
+    @git.init(path, "--quiet")
+
+    dir.write(visible_files_filename, @kata.visible_files)
+    @git.add(path, visible_files_filename)
+
+    dir.write(traffic_lights_filename, [ ])
+    @git.add(path, traffic_lights_filename)
+
+    @kata.visible_files.each do |filename,content|
+      sandbox.dir.write(filename, content)
+      @git.add(sandbox.path, filename)
+    end
+
+    @kata.language.support_filenames.each do |filename|
+      old_name = @kata.language.path + dir_separator + filename
+      new_name = sandbox.path + dir_separator + filename
+      @disk.symlink(old_name, new_name)
+    end
+
+    git_commit(tag = 0)
+  end
+
   def save_run_tests(visible_files, traffic_light)
     traffic_lights = nil
-    @disk[dir].lock do
-      text = @disk[dir].read(traffic_lights_filename)
+    dir.lock do
+      text = dir.read(traffic_lights_filename)
       traffic_lights = JSON.parse(JSON.unparse(eval text))
       traffic_lights << traffic_light
       tag = traffic_lights.length
       traffic_light['number'] = tag
-      @disk[dir].write(traffic_lights_filename, traffic_lights)
-      @disk[dir].write(visible_files_filename, visible_files)
+      dir.write(traffic_lights_filename, traffic_lights)
+      dir.write(visible_files_filename, visible_files)
       git_commit(tag)
     end
     traffic_lights
@@ -91,7 +94,7 @@ class Avatar
   def diff_lines(was_tag, now_tag)
     # visible_files are saved to the sandbox dir individually.
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-    output = @git.diff(dir, command)
+    output = @git.diff(path, command)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
@@ -101,27 +104,31 @@ class Avatar
 
 private
 
+  def fatal
+    raise "no disk"
+  end
+
   def dir_separator
     @disk.dir_separator
   end
 
   def git_commit(tag)
     # the -a is important for .txt files in approval style tests
-    @git.commit(dir, "-a -m '#{tag}' --quiet")
-    @git.tag(dir, "-m '#{tag}' #{tag} HEAD")
+    @git.commit(path, "-a -m '#{tag}' --quiet")
+    @git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
   def unlocked_read(filename, tag)
-    @disk[dir].lock {
+    dir.lock {
       locked_read(filename, tag)
     }
   end
 
   def locked_read(filename, tag)
     if tag != nil
-      @git.show(dir, "#{tag}:#{filename}")
+      @git.show(path, "#{tag}:#{filename}")
     else
-      @disk[dir].read(filename)
+      dir.read(filename)
     end
   end
 

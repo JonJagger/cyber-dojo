@@ -1,28 +1,30 @@
 
-require 'Disk'
-
 class Language
 
   def initialize(dojo, name)
-    @disk = Thread.current[:disk] || Disk.new
+    @disk = Thread.current[:disk] || fatal
     @dojo = dojo
     @name = name
-  end
-
-  def exists?
-    @disk[dir].exists?
   end
 
   def name
     @name
   end
 
+  def path
+    @dojo.dir.path + dir_separator + 'languages' + dir_separator + name
+  end
+
   def dir
-    @dojo.dir + dir_separator + 'languages' + dir_separator + name
+    @disk[path]
+  end
+
+  def exists?
+    dir.exists?
   end
 
   def visible_files
-    Hash[visible_filenames.collect{|filename| [filename, @disk[dir].read(filename)]}]
+    Hash[visible_filenames.collect{|filename| [filename, dir.read(filename)]}]
   end
 
   def support_filenames
@@ -47,6 +49,10 @@ class Language
 
 private
 
+  def fatal
+    raise "no disk"
+  end
+
   def dir_separator
     @disk.dir_separator
   end
@@ -56,7 +62,7 @@ private
   end
 
   def manifest
-    @manifest = JSON.parse(@disk[dir].read('manifest.json'))
+    @manifest = JSON.parse(dir.read('manifest.json'))
   end
 
 end

@@ -3,16 +3,16 @@ require 'Folders'
 require 'Choose'
 
 class SetupController < ApplicationController
-  
+
   def show
-    @languages = Folders::in(dojo.dir + '/languages').sort    
-    @exercises = Folders::in(dojo.dir + '/exercises').sort
+    @languages = Folders::in(dojo.path + '/languages').sort
+    @exercises = Folders::in(dojo.path + '/exercises').sort
     @instructions = { }
     @exercises.each do |name|
       @instructions[name] = dojo.exercise(name).instructions
     end
-    @selected_language_index = Choose::language(@languages, params[:id], id, dojo.dir)                                              
-    @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, dojo.dir)
+    @selected_language_index = Choose::language(@languages, params[:id], id, dojo.path)
+    @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, dojo.path)
     @id = id
     @title = 'Setup'
   end
@@ -25,7 +25,7 @@ class SetupController < ApplicationController
     vis['output'] = ''
     vis['instructions'] = exercise.instructions
     dojo.create_kata(manifest)
-    
+
     logger.info("Created dojo " + manifest[:id] +
                 ", " + language.name +
                 ", " + exercise.name +
@@ -33,7 +33,7 @@ class SetupController < ApplicationController
 
     render :json => {
       :id => manifest[:id]
-    }    
-  end  
+    }
+  end
 
 end

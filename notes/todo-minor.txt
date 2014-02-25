@@ -1,5 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Refactoring
+  ensure dirs end in '/'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dir method can return dir object. Enables direct access to read_log and write_log...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Nice dojos for screen shots
   A0FCF4CCBF  (shows the ellision at the rhs is not quite right yet?)
   4048EC
@@ -18,11 +26,6 @@ shows some of the languages do not pass the checks.
   Java-JUnit-Mockito . ["red", "amber", "red"] installed but not working (~ 3.05 seconds)
   Ruby-Approval ...... ["red", "red", "green"] installed but not working (~ 1.63 seconds)
   Ruby-Cucumber ...... multiple 42-files ["untitled.rb", "untitled.feature"]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Refactoring
-  ensure dirs end in '/'
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dir method can return dir object. Enables direct access to read_log and write_log...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move sandbox.test into avatar?
 Delete sandbox?

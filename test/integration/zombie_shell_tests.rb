@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'Disk'
 
 class ZombieShellTests < ActionController::TestCase
+
+  def setup
+    Thread.current[:disk] = Disk.new
+    @dojo = Dojo.new(root_path)
+  end
 
   def defunct_count
     # See comments in app/lib/TimeBoxedTask.rb
@@ -8,7 +14,7 @@ class ZombieShellTests < ActionController::TestCase
   end
 
   test "check running tests does not accumulate zombie defunct shell processes" do
-    kata = make_kata('Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
 
     avatars = [ ]
     visible_files_set = { }

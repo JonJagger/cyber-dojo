@@ -1,15 +1,15 @@
 
 module Choose
-  
+
   # When the [setup] button is clicked (on home page) then if
   # there is an id present make the initial selection of the
   # language and the exercise on the setup page the same as the
   # kata with that id - if they still exist.
-  
+
   #TODO: put these two methods in app/models/Dojo
-  
-  def self.language(languages, params_id, id, root_dir)
-    dojo = Dojo.new(root_dir)
+
+  def self.language(languages, params_id, id, root_path)
+    dojo = Dojo.new(root_path)
     kata = dojo[id]
     choice = [*0..languages.length-1].shuffle[0]
     if params_id && kata.exists?
@@ -21,9 +21,9 @@ module Choose
     choice
   end
 
-  def self.exercise(exercises, params_id, id, root_dir)
-    dojo = Dojo.new(root_dir)
-    kata = dojo[id]    
+  def self.exercise(exercises, params_id, id, root_path)
+    dojo = Dojo.new(root_path)
+    kata = dojo[id]
     choice = [*0..exercises.length-1].shuffle[0]
     if params_id && kata.exists?
       exercise_index = exercises.index(kata.exercise.name)

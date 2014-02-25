@@ -1,9 +1,15 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'Disk'
 
 class TimeOutTests < ActionController::TestCase
 
+  def setup
+    Thread.current[:disk] = Disk.new
+    @dojo = Dojo.new(root_path)
+  end
+
   test "that code with infinite loop times out to amber and doesnt leak processes" do
-    kata = make_kata('Ruby-installed-and-working', exercise='Dummy')
+    kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise='Dummy')
     avatar = kata.start_avatar
     visible_files = avatar.visible_files
     filename = 'untitled.rb'

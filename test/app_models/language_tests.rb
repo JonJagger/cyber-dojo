@@ -5,7 +5,7 @@ class LanguageTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
-    @language = Dojo.new('stubbed').language('Ruby')
+    @language = Dojo.new('spied').language('Ruby')
   end
 
   def teardown
@@ -13,19 +13,22 @@ class LanguageTests < ActionController::TestCase
   end
 
   def spy_manifest(manifest)
-    @disk[@language.dir].spy_read('manifest.json', JSON.unparse(manifest))
+    @language.dir.spy_read('manifest.json', JSON.unparse(manifest))
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false when language dir does not exist" do
-    assert !Dojo.new('stubbed').language('xxxx').exists?
+  test "if no disk on thread ctor raises" do
+    Thread.current[:disk] = nil
+    error = assert_raises(RuntimeError) { Language.new(nil,nil) }
+    assert_equal "no disk", error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is true when language dir exists" do
-    @disk[@language.dir].make
+  test "exists? is false when dir does not exist, true when dir does" do
+    assert !@language.exists?
+    @language.dir.make
     assert @language.exists?
   end
 
@@ -37,21 +40,21 @@ class LanguageTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir is based on name" do
-    assert @language.dir.match(@language.name), @language.dir
+  test "path is based on name" do
+    assert @language.path.match(@language.name), @language.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir does not end in a slash" do
-    assert !@language.dir.end_with?(@disk.dir_separator)
+  test "path does not end in a slash" do
+    assert !@language.path.end_with?(@disk.dir_separator)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dir does not have doubled separator" do
+  test "path does not have doubled separator" do
     doubled_separator = @disk.dir_separator * 2
-    assert_equal 0, @language.dir.scan(doubled_separator).length
+    assert_equal 0, @language.path.scan(doubled_separator).length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -72,7 +75,7 @@ class LanguageTests < ActionController::TestCase
 
   test "when :visible_filenames is non-empty array in manifest then visible_files are loaded but not output and not instructions" do
     spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-    @disk[@language.dir].spy_read('test_untitled.rb', 'content')
+    @language.dir.spy_read('test_untitled.rb', 'content')
     visible_files = @language.visible_files
     assert_equal( { 'test_untitled.rb' => 'content' }, visible_files)
     assert_nil visible_files['output']
@@ -154,8 +157,8 @@ class LanguageTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if manifest.rb and manifest.json exist, json is used" do
-    @disk[@language.dir].spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
-    @disk[@language.dir].spy_read('manifest.rb', { :tab_size => 8 }.inspect)
+    @language.dir.spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
+    @language.dir.spy_read('manifest.rb', { :tab_size => 8 }.inspect)
     assert_equal " "*4, @language.tab
   end
 
