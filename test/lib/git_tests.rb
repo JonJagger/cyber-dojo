@@ -12,6 +12,12 @@ class GitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "git init raises exception if dir does not exist" do
+    bad_dir = 'notThere'
+    error = assert_raises(RuntimeError) { @git.init(bad_dir,'') }
+    assert error.message.start_with?("Cannot `cd #{bad_dir}")
+  end
+
   test "git init" do
     expected = "Initialized empty Git repository in #{@dir}.git/\n"
     assert_equal expected, @git.init(@dir, '')

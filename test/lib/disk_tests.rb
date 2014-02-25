@@ -13,11 +13,27 @@ class DiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "[dir] always has path ending in /" do
+    assert_equal "ABC/", @disk['ABC'].path
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "exists?(dir) false when dir does not exist, true when it does" do
     `rm -rf #{@dir}`
     assert !@disk[@dir].exists?
     @disk[@dir].make
     assert @disk[@dir].exists?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "exists?(filename) false when file exists, true when it does" do
+    `rm -rf #{@dir}`
+    filename = 'hello.txt'
+    assert !@disk[@dir].exists?(filename)
+    @disk[@dir].write(filename, "content")
+    assert @disk[@dir].exists?(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

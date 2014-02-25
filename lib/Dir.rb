@@ -1,34 +1,34 @@
 
 class Dir
 
-  def initialize(disk,dir)
-    @disk,@dir = disk,dir
+  def initialize(disk,path)
+    @disk,@path = disk,path
     dir_separator = @disk.dir_separator
-    if @dir[-1] != dir_separator
-      @dir += dir_separator
+    if @path[-1] != dir_separator
+      @path += dir_separator
     end
   end
 
   def path
-    @dir
+    @path
   end
 
   def exists?(filename = nil)
     if filename == nil
-      return File.directory?(@dir)
+      return File.directory?(path)
     else
-      return File.exists?(@dir + filename)
+      return File.exists?(path + filename)
     end
   end
 
   def make
     # the -p option creates intermediate dirs as required
-    `mkdir -p #{@dir}`
+    `mkdir -p #{path}`
   end
 
   def write(filename, object)
     # filename could be pathed...
-    pathed_filename = @dir + filename
+    pathed_filename = path + filename
     `mkdir -p #{File.dirname(pathed_filename)}`
     if object.is_a? String
       File.open(pathed_filename, 'w') do |fd|
@@ -43,7 +43,7 @@ class Dir
   end
 
   def read(filename)
-    IO.read(@dir + filename)
+    IO.read(path + filename)
   end
 
   def lock(&block)
@@ -52,7 +52,7 @@ class Dir
     # the controller needs to wait to acquire a lock on
     # the dojo folder before choosing an avatar.
     result = nil
-    File.open(@dir + 'f.lock', 'w') do |fd|
+    File.open(path + 'f.lock', 'w') do |fd|
       if fd.flock(File::LOCK_EX)
         begin
           result = block.call()

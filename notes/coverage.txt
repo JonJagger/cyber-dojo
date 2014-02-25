@@ -7,6 +7,7 @@ app_lib
    210 tests, 371 assertions, 0 failures, 0 errors, 0 skips
    Finished tests in 16.194970s, 12.9670 tests/s, 22.9083 assertions/s.
    Coverage = 98.50%
+   (Missing parse_cpputest coverage)
 
 app_models
    67 tests, 123 assertions, 0 failures, 0 errors, 0 skips
@@ -14,9 +15,9 @@ app_models
    Coverage = 100.0%
 
 lib
-   38 tests, 277 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 8.751550s, 5.0277 tests/s, 32.2229 assertions/s.
-   Coverage = 99.07%
+   41 tests, 282 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 10.484555s, 3.9105 tests/s, 26.8967 assertions/s.
+   Coverage = 100.0%
 
 integration
    8 tests, 46 assertions, 0 failures, 0 errors, 0 skips
