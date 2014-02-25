@@ -12,3 +12,7 @@ cp -R ../../coverage/* .
 ruby ../perc.rb index.html integration > coverage.tmp
 cat coverage.tmp
 echo
+
+rm run_all.tmp
+rm run_all_log.tmp
+rm coverage.tmp
