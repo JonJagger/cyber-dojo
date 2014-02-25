@@ -19,7 +19,7 @@ module OutputParser
     return :amber if /PHP Parse error:/.match(output)
     return :red   if /FAILURES!/.match(output)
     return :green if /OK \(/.match(output)
-	return :amber
+    return :amber
   end
 
   def self.parse_perl_test_simple(output)
@@ -197,18 +197,18 @@ module OutputParser
   end
 
   def self.parse_jasmine(output)
-     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
-     if jasmine_pattern.match(output)
-        return $3 == "0" ? :green : :red
-     else
-        :amber
-     end
+    jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
+    if jasmine_pattern.match(output)
+      return $3 == "0" ? :green : :red
+    else
+      :amber
+    end
   end
 
   def self.parse_google_test(output)
-     return :red   if /\[  FAILED  \]/.match(output)
-     return :green if /\[  PASSED  \]/.match(output)
-     return :amber
+    return :red   if /\[  FAILED  \]/.match(output)
+    return :green if /\[  PASSED  \]/.match(output)
+    return :amber
   end
 
   def self.parse_scala_test(output)
