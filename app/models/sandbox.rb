@@ -30,7 +30,7 @@ class Sandbox
     delta[:deleted].each do |filename|
       @git.rm(path, filename)
     end
-    command  = "cd '#{dir.path}';" +
+    command  = "cd '#{path}';" +
                "./cyber-dojo.sh"
     output = @task.execute(command, max_duration)
     # create output file so it appears in diff-view

@@ -10,28 +10,28 @@ require File.dirname(__FILE__) + '/spy_disk'
 class DojoTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = @disk = SpyDisk.new
-    @dir = 'spied'
-    @dojo = Dojo.new(@dir)
+    Thread.current[:disk] = SpyDisk.new
+    @path = 'spied'
+    @dojo = Dojo.new(@path)
   end
 
   def teardown
     Thread.current[:disk] = nil
   end
 
-  test "if no disk on thread ctor raises" do
+  test "when no disk on thread ctor raises exception" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Dojo.new('spying') }
     assert_equal "no disk", error.message
   end
 
   test "path is as set in ctor" do
-    assert_equal @dir, @dojo.path
+    assert_equal @path, @dojo.path
   end
 
-  test "[id] gives you kata which knows its dir_path" do
+  test "[id] gives you kata which knows its path" do
     kata = @dojo['1234567890']
-    assert_equal @dir+'/katas/12/34567890', kata.path
+    assert_equal @path+'/katas/12/34567890', kata.path
   end
 
   test "language gives you language which knows its name" do
@@ -43,20 +43,15 @@ class DojoTests < ActionController::TestCase
   end
 
   test "create_kata has option to specify .rb format which controls kata's manifest format" do
-    dir = 'spied'
-    dojo = Dojo.new(dir, "rb")
-    id = '45ED23A2F1'
-    manifest = { :id => id }
+    manifest = { :id => '45ED23A2F1' }
     kata = @dojo.create_kata(manifest)
     assert_equal "manifest.rb", kata.manifest_filename
     assert kata.dir.write_log.include?(['manifest.rb', manifest.inspect]), kata.dir.write_log.inspect
   end
 
   test "create_kata has option to specify .json format which controls kata's manifest format" do
-    dir = 'spied'
-    dojo = Dojo.new(dir, "json")
-    id = '45ED23A2F1'
-    manifest = { :id => id }
+    dojo = Dojo.new(@path, "json")
+    manifest = { :id => '45ED23A2F1' }
     kata = dojo.create_kata(manifest)
     assert_equal "manifest.json", kata.manifest_filename
     assert kata.dir.write_log.include?(['manifest.json', JSON.unparse(manifest)]), kata.dir.write_log.inspect

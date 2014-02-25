@@ -10,7 +10,7 @@ class SandboxTests < ActionController::TestCase
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
     Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
-    @dojo = Dojo.new('stubbed')
+    @dojo = Dojo.new('spied')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
     @avatar = @kata['hippo']
@@ -25,7 +25,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if no disk on thread ctor raises" do
+  test "when no disk on thread the ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Sandbox.new(nil) }
     assert_equal "no disk", error.message

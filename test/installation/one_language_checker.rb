@@ -13,8 +13,8 @@ require "#{cyberdojo_root}/lib/Uuid"
 
 class OneLanguageChecker
 
-  def initialize(root_dir,option)
-    @root_dir = root_dir
+  def initialize(root_path,option)
+    @root_path = root_path
     @verbose = (option == "noisy")
     @max_duration = 60
   end
@@ -26,7 +26,7 @@ class OneLanguageChecker
         installed_but_not_working = [ ]
     )
     @language = language
-    @language_dir = @root_dir + '/languages/' + language + "/"
+    @language_dir = @root_path + '/languages/' + language + "/"
 
     print "  #{language} " + ('.' * (35-language.to_s.length))
 
@@ -290,7 +290,7 @@ private
 private
 
   def dojo
-    Dojo.new(@root_dir)
+    Dojo.new(@root_path)
   end
 
   def make_kata(language_name, exercise_name)

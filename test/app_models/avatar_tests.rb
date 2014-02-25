@@ -23,7 +23,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if no disk on thread ctor raises" do
+  test "when no disk on thread ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
     assert_equal "no disk", error.message
@@ -56,7 +56,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     support_filename = 'wibble.dll'
     language.dir.spy_read('manifest.json', JSON.unparse({
         "support_filenames" => [ support_filename ]
@@ -92,7 +92,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -140,7 +140,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -159,7 +159,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -179,7 +179,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -202,11 +202,10 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
-    #sandbox_dir = avatar.path + @disk.dir_separator + 'sandbox'
     visible_files.each do |filename,content|
       assert_equal content, avatar.sandbox.dir.read(filename)
     end
@@ -225,7 +224,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -247,7 +246,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    @kata.dir.spy_read('manifest.rb', manifest.inspect)
+    kata_manifest_spy_read(manifest)
     kata = @dojo.create_kata(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({
         "visible_files" => visible_files,
@@ -293,6 +292,12 @@ class AvatarTests < ActionController::TestCase
        'show',
        '4:manifest.rb'
       ])
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def kata_manifest_spy_read(spied)
+    @kata.dir.spy_read('manifest.rb', spied.inspect)
   end
 
 end

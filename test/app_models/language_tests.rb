@@ -18,7 +18,7 @@ class LanguageTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if no disk on thread ctor raises" do
+  test "when no disk on thread the ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Language.new(nil,nil) }
     assert_equal "no disk", error.message

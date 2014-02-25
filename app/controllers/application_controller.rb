@@ -13,12 +13,12 @@ class ApplicationController < ActionController::Base
   include MakeTimeHelper
 
   def id
-    Folders::id_complete(root_dir, params[:id]) || ""
+    Folders::id_complete(root_path, params[:id]) || ""
   end
 
   def dojo
     Thread.current[:disk] ||= Disk.new
-    Dojo.new(root_dir)
+    Dojo.new(root_path)
   end
 
   def make_manifest(language_name, exercise_name)
@@ -46,9 +46,7 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
   end
 
-private
-
-  def root_dir
+  def root_path
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo' : '')
   end
 
