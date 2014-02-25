@@ -6,16 +6,15 @@ class DiskTests < ActionController::TestCase
   def setup
     super
     Thread.current[:disk] = @disk = Disk.new
-    id = 'ABCDE12345'
-    @dir = root_path + 'tmp/' + id
-    system("rm -rf #{@dir}")
-    system("mkdir -p #{@dir}")
+    @dir = root_path + 'tmp/'
+    `rm -rf #{@dir}`
+    `mkdir -p #{@dir}`
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists?(dir) false when dir does not exist, true when it does" do
-    system("rm -rf #{@dir}")
+    `rm -rf #{@dir}`
     assert !@disk[@dir].exists?
     @disk[@dir].make
     assert @disk[@dir].exists?
@@ -82,8 +81,8 @@ class DiskTests < ActionController::TestCase
   end
 
   test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
-    parent_dir = @dir + @disk.dir_separator + 'parent'
-    child_dir = parent_dir + @disk.dir_separator + 'child'
+    parent_dir = @dir + 'parent' + @disk.dir_separator
+    child_dir = parent_dir + 'child' + @disk.dir_separator
     `mkdir #{parent_dir}`
     `mkdir #{child_dir}`
     parent_run = false
@@ -103,8 +102,8 @@ class DiskTests < ActionController::TestCase
   test "symlink" do
     expected = "content"
     @disk[@dir].write('filename', expected)
-    oldname = @dir + '/' + 'filename'
-    newname = @dir + '/' + 'linked'
+    oldname = @dir + 'filename'
+    newname = @dir + 'linked'
     output = @disk.symlink(oldname, newname)
     assert !File.symlink?(oldname)
     assert File.symlink?(newname)
@@ -131,7 +130,7 @@ class DiskTests < ActionController::TestCase
     content = 'Hello world'
     @disk[@dir].write(pathed_filename, content)
 
-    full_pathed_filename = @dir + @disk.dir_separator + pathed_filename
+    full_pathed_filename = @dir + pathed_filename
     assert File.exists?(full_pathed_filename),
           "File.exists?(#{full_pathed_filename})"
     assert_equal content, IO.read(full_pathed_filename)
@@ -161,7 +160,7 @@ class DiskTests < ActionController::TestCase
 
   def check_save_file(filename, content, expected_content, executable = false)
     @disk[@dir].write(filename, content)
-    pathed_filename = @dir + @disk.dir_separator + filename
+    pathed_filename = @dir + filename
     assert File.exists?(pathed_filename),
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)
