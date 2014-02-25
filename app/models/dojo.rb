@@ -10,10 +10,6 @@ class Dojo
     @path
   end
 
-  def dir
-    @disk[path]
-  end
-
   def [](id)
     Kata.new(self,id)
   end

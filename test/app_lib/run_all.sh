@@ -11,7 +11,6 @@ ruby run_all.tmp 2>&1 | tee -a run_all_log.tmp
 cp -R ../../coverage/* .
 ruby ../perc.rb index.html app/lib > coverage.tmp
 cat coverage.tmp
-echo
 
 rm run_all.tmp
 rm run_all_log.tmp
