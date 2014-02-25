@@ -1,5 +1,17 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Nice dojos for screen shots
+  A0FCF4CCBF  (shows the ellision at the rhs is not quite right yet?)
+  4048EC
+  B049D5
+  89F073
+  These are all in downloads/ folder on cyber-dojo.com and need untarring.
+  They won't unzip (tar -ztvf) Says
+    gzip: stdin: not in gzip format
+    tar: Child returned status 1
+    tar: Exiting with failure status due to previous errors
+  On cyber-katas.org they are ok.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Running test/installation/check_language on non-test cyber-dojo root
 shows some of the languages do not pass the checks.
   Java-Cucumber ...... ["red", "red", "green"] installed but not working (~ 4.64 seconds)
@@ -93,9 +105,6 @@ Refactoring dojos
   ...
   The xfer.rb script could take the URL as a parameter.
   Will probably want to xfer in both directions.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  A0FCF4CCBF is a nice dojo (to redo the dashboard screenshot)
-  It shows the ellision at the rhs is not quite right yet.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   make content area slightly wider and deeper to match fork/revert

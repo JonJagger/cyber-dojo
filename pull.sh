@@ -4,6 +4,9 @@
 # get latest source from https://github.com/JonJagger/cyberdojo
 # if it asks for a password just hit return
 git pull
+if [$? != 0]; then
+  exit
+fi
 
 # ensure pulled files have correct rights
 # don't chmod or chgrp the katas folder (no need and very large)
@@ -14,8 +17,11 @@ do
   eval "chgrp -R www-data /var/www/cyberdojo/$folder"
 done
 
+echo "chown/chgrp www-data *"
 eval "chown www-data /var/www/cyberdojo/*"
 eval "chgrp www-data /var/www/cyberdojo/*"
+
+echo "chown/chgrp www-data .*"
 eval "chown www-data /var/www/cyberdojo/.*"
 eval "chgrp www-data /var/www/cyberdojo/.*"
 
