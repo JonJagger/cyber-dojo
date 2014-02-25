@@ -55,13 +55,14 @@ class AvatarTests < ActionController::TestCase
       }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
-    assert_not_nil @disk.write_log[avatar.dir]
-    assert @disk.write_log[avatar.dir].include?(['manifest.rb', visible_files.inspect])
-    assert @disk.write_log[avatar.dir].include?(['increments.rb', [ ].inspect])
+    avatar_write_log = @disk[avatar.dir].write_log
+    assert_not_nil avatar_write_log
+    assert avatar_write_log.include?(['manifest.rb', visible_files.inspect])
+    assert avatar_write_log.include?(['increments.rb', [ ].inspect])
     sandbox = avatar.sandbox
-    log = @disk.write_log[sandbox.dir]
-    assert_not_nil log
-    assert log.include?([visible_filename, visible_filename_content]), log.inspect
+    sandbox_write_log = @disk[sandbox.dir].write_log
+    assert_not_nil sandbox_write_log
+    assert sandbox_write_log.include?([visible_filename, visible_filename_content]), sandbox_write_log.inspect
     expected_symlink = [
       'symlink',
       language.dir + @disk.dir_separator + support_filename,
@@ -108,9 +109,9 @@ class AvatarTests < ActionController::TestCase
       [ 'add', 'name']
     ], @git.log[avatar.sandbox.dir]
 
-    assert_equal nil, @disk.read_log[avatar.dir]
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk.write_log[kata.dir]
-    assert_equal [ [ 'manifest.rb' ] ], @disk.read_log[kata.dir]
+    assert_equal [ ], @disk[avatar.dir].read_log
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk[kata.dir].write_log
+    assert_equal [ [ 'manifest.rb' ] ], @disk[kata.dir].read_log
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

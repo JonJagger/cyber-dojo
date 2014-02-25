@@ -10,7 +10,7 @@ class Exercise
   end
 
   def exists?
-    @disk.exists?(dir)
+    @disk[dir].exists?
   end
 
   def dir

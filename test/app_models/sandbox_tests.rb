@@ -39,7 +39,7 @@ class SandboxTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir is not created until file is saved" do
-    assert !@disk.exists?(@sandbox.dir)
+    assert !@disk[@sandbox.dir].exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,7 +62,7 @@ class SandboxTests < ActionController::TestCase
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber"], @disk.write_log[@sandbox.dir].last
+    assert_equal ['output',"amber"], @disk[@sandbox.dir].write_log.last
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -80,7 +80,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @disk.write_log[@sandbox.dir]
+    log = @disk[@sandbox.dir].write_log
     saved_files = filenames_in(log)
     assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
     assert log.include?(['untitled.cs', 'content for code file' ]), log.inspect
@@ -102,7 +102,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @disk.write_log[@sandbox.dir]
+    log = @disk[@sandbox.dir].write_log
     saved_files = filenames_in(log)
     assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
     assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
@@ -123,7 +123,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ 'wibble.cs' ]
     }
     @sandbox.test(delta, visible_files)
-    write_log = @disk.write_log[@sandbox.dir]
+    write_log = @disk[@sandbox.dir].write_log
     saved_files = filenames_in(write_log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
 
@@ -146,7 +146,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    write_log = @disk.write_log[@sandbox.dir]
+    write_log = @disk[@sandbox.dir].write_log
     saved_files = filenames_in(write_log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
 

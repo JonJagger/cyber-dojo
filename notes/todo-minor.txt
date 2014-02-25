@@ -22,6 +22,8 @@ shows some of the languages do not pass the checks.
 Refactoring
   ensure dirs end in '/'
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dir method can return dir object. Enables direct access to read_log and write_log...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move sandbox.test into avatar?
 Delete sandbox?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

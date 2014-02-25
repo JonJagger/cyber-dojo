@@ -42,7 +42,7 @@ class DojoTests < ActionController::TestCase
     manifest = { :id => id }
     kata = @dojo.create_kata(manifest)
     assert_equal "manifest.rb", kata.manifest_filename
-    assert @disk.write_log[kata.dir].include?(['manifest.rb', manifest.inspect])
+    assert @disk[kata.dir].write_log.include?(['manifest.rb', manifest.inspect])
   end
 
   test "dojo has option to specify format as .json which controls kata's manifest format" do
@@ -52,7 +52,7 @@ class DojoTests < ActionController::TestCase
     manifest = { :id => id }
     kata = dojo.create_kata(manifest)
     assert_equal "manifest.json", kata.manifest_filename
-    assert @disk.write_log[kata.dir].include?(['manifest.json', JSON.unparse(manifest)]), @disk.write_log.inspect
+    assert @disk[kata.dir].write_log.include?(['manifest.json', JSON.unparse(manifest)]), @disk[kata.dir].write_log.inspect
   end
 
 end

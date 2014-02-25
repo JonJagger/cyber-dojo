@@ -1,5 +1,5 @@
 cyberdojo_root = File.absolute_path(File.dirname(__FILE__) + '/../../')
-# needed because app/models/Disk required app/models/DiskDir
+# needed because app/models/Disk requires app/models/DiskDir
 $LOAD_PATH.unshift(cyberdojo_root + '/lib')
 
 require 'JSON'

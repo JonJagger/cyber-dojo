@@ -26,9 +26,9 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? false when dir does not exist, true when dir does exist" do
-    assert !@kata.exists?
+    assert !@kata.exists?, "!@kata.exists?"
     @disk[@kata.dir].make
-    assert @kata.exists?
+    assert @kata.exists?, "@kata.exists?"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -58,8 +58,8 @@ class KataTests < ActionController::TestCase
   test "creation saves manifest in kata dir" do
     manifest = { :id => @id }
     kata = @dojo.create_kata(manifest)
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk.write_log[@kata.dir]
-    assert_equal nil, @disk.read_log[@kata.dir]
+    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @disk[@kata.dir].write_log
+    assert_equal [ ], @disk[@kata.dir].read_log
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -140,9 +140,9 @@ class KataTests < ActionController::TestCase
 
   test "kata['lion'] exists when its dir exists" do
     avatar = @kata['lion']
-    assert !avatar.exists?
+    assert !avatar.exists?, "!avatar.exists?"
     @disk[avatar.dir].make
-    assert avatar.exists?
+    assert avatar.exists?, "avatar.exists?"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
