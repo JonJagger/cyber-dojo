@@ -264,9 +264,9 @@ class AvatarTests < ActionController::TestCase
         "visible_files" => visible_files,
         "unit_test_framework" => "cassert"
       }))
-    #language.dir.spy_write('untitled.c', 'content for visible file')
-    #language.dir.spy_write('cyber-dojo.sh', 'make')
     avatar = kata.start_avatar
+    avatar.sandbox.dir.spy_write('untitled.c', 'content for visible file')
+    avatar.sandbox.dir.spy_write('cyber-dojo.sh', 'make')
     delta = {
       :changed => [ 'untitled.c' ],
       :unchanged => [ 'cyber-dojo.sh' ],

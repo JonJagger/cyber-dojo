@@ -9,9 +9,7 @@ class SpyDir
 
   def teardown
     @stub_log.each do |entry|
-      assert entry[0]=='read', "entry[0] != 'read'"
-      filename = entry[1]
-      assert log.include?(entry), "spy_read('#{filename}') but no .read('#{filename}')"
+      assert log.include?(entry), "log.include?(#{entry})"
     end
   end
 
@@ -59,6 +57,10 @@ class SpyDir
     make
     @repo[filename] = content
     @stub_log << ['read',filename,content]
+  end
+
+  def spy_write(filename, content)
+    @stub_log << ['write',filename,content]
   end
 
   def log

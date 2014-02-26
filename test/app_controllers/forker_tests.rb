@@ -167,7 +167,7 @@ class ForkerControllerTest < IntegrationTest
     assert_not_equal id, json['id']
     assert dojo[json['id']].exists?
     # need to be able to properly stub in StubGit so I can return manifest
-    # and this assert new dojo has same settings as one forked from
+    # and assert new dojo has same settings as one forked from
     assert_equal({avatar.path => [ ["show", "2:manifest.rb"]]}, git.log)
     disk.teardown
   end

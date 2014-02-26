@@ -6,5 +6,15 @@ do
     echo "========================================== $module "
     cd $module
     ./run_all.sh
+    cat coverage.tmp
     cd ..
 done
+echo
+echo
+
+for module in ${modules[@]}
+do
+    echo -n "$module: "
+    cat $module/coverage.tmp
+done
+echo

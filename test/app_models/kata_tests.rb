@@ -160,9 +160,8 @@ class KataTests < ActionController::TestCase
       :id => @id,
       :language => language.name
     }
-    #kata_manifest_spy_write(manifest)
-    #language.dir.spy_write('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
+    kata.dir.spy_write('manifest.rb',manifest.inspect)
     assert 'hippo', kata['hippo'].name
   end
 
