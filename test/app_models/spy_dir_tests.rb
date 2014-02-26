@@ -59,15 +59,7 @@ class SpyDirTests < ActionController::TestCase
     assert_equal content, @dir.read(filename)
   end
 
-  test "teardown when read_log and write_log both empty raises" do
-    error = assert_raises(RuntimeError) { @dir.teardown }
-    assert_equal "SpyDir['#{@path}'].read/write() never called", error.message
-  end
-
-  test "teardown when just read() does not raise" do
-    filename = 'wibble.js'
-    @dir.spy_read(filename, 'content')
-    @dir.read(filename)
+  test "teardown when no read()s and no write()s does not raise" do
     @dir.teardown
   end
 
@@ -77,21 +69,18 @@ class SpyDirTests < ActionController::TestCase
     @dir.teardown
   end
 
-=begin
-  #test "spy_read(filename), read(filename), teardown does not raise" do
-  #  filename = 'film.txt'
-  #  @dir.spy_read(filename, 'the princess bride')
-  #  @dir.read(filename)
-  #  @dir.teardown
-  #end
+  test "when all spy_read(filename) have read(filename), teardown does not raise" do
+    filename = 'film.txt'
+    @dir.spy_read(filename, 'the princess bride')
+    @dir.read(filename)
+    @dir.teardown
+  end
 
-  test "spy_read(filename), no read(filename), teardown raises" do
+  test "when some spy_read(filename) have no read(filename), teardown raises" do
     filename = 'great_film.txt'
     @dir.spy_read(filename, 'the princess bride')
     error = assert_raises(RuntimeError) { @dir.teardown }
-    assert_equal "SpyDir['#{@path}'].no .read('#{filename}')", error.message
+    assert_equal "SpyDir['#{@path}'].spy_read('#{filename}') but no .read('#{filename}')", error.message
   end
-=end
-
 
 end

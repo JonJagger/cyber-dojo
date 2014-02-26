@@ -17,6 +17,9 @@ class OneLanguageChecker
 
   def initialize(root_path,option)
     @root_path = root_path
+    if @root_path[-1] != '/'
+      @root_path += '/'
+    end
     @verbose = (option == "noisy")
     @max_duration = 60
   end

@@ -15,7 +15,7 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if id is bad then fork fails and reason is given as id" do
-    Thread.current[:disk] = SpyDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     get "forker/fork", {
       :format => :json,
@@ -28,12 +28,13 @@ class ForkerControllerTest < IntegrationTest
     assert_equal 'id', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
     assert_equal({ }, git.log)
+    disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if language folder no longer exists the fork fails and reason is given as language" do
-    Thread.current[:disk] = SpyDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     dojo = Dojo.new(root_path)
     language = dojo.language('xxxx')
@@ -52,12 +53,13 @@ class ForkerControllerTest < IntegrationTest
     assert_equal language.name, json['language'], json.inspect
     assert_nil json['id'], "json['id']==nil"
     assert_equal({ }, git.log)
+    disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if avatar not started the fork fails and reason is given as avatar" do
-    Thread.current[:disk] = SpyDisk.new
+    Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
     dojo = Dojo.new(root_path)
     id = '1234512345'
@@ -76,6 +78,7 @@ class ForkerControllerTest < IntegrationTest
     assert_equal 'avatar', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
     assert_equal({ }, git.log)
+    disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,6 +121,7 @@ class ForkerControllerTest < IntegrationTest
     assert_equal 'tag', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
     assert_equal({ }, git.log)
+    disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -165,6 +169,7 @@ class ForkerControllerTest < IntegrationTest
     # need to be able to properly stub in StubGit so I can return manifest
     # and this assert new dojo has same settings as one forked from
     assert_equal({avatar.path => [ ["show", "2:manifest.rb"]]}, git.log)
+    disk.teardown
   end
 
 end

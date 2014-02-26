@@ -9,7 +9,7 @@ class LanguageTests < ActionController::TestCase
   end
 
   def teardown
-    #@disk.teardown
+    @disk.teardown
     Thread.current[:disk] = nil
   end
 
@@ -157,10 +157,10 @@ class LanguageTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if manifest.rb and manifest.json exist, json is used" do
-    @language.dir.spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
-    @language.dir.spy_read('manifest.rb', { :tab_size => 8 }.inspect)
-    assert_equal " "*4, @language.tab
-  end
+  #test "if manifest.rb and manifest.json exist, json is used" do
+  #  #@language.dir.spy_write('manifest.json', JSON.unparse({'tab_size' => 4}))
+  #  #@language.dir.spy_write('manifest.rb', { :tab_size => 8 }.inspect)
+  #  assert_equal " "*4, @language.tab
+  #end
 
 end

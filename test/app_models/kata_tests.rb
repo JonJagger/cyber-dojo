@@ -13,7 +13,7 @@ class KataTests < ActionController::TestCase
   end
 
   def teardown
-    #@disk.teardown
+    @disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
   end
@@ -160,8 +160,8 @@ class KataTests < ActionController::TestCase
       :id => @id,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
+    #kata_manifest_spy_write(manifest)
+    #language.dir.spy_write('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     assert 'hippo', kata['hippo'].name
   end

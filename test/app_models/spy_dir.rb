@@ -4,14 +4,15 @@ class SpyDir
   def initialize(dir)
     @dir = dir
     @log = [ ]
+    @stub_log = [ ]
   end
 
   def teardown
-    assert @log != [ ], "read/write() never called"
-    #@repo.keys.each do |filename|
-    #  assert @read_log.include?(filename),
-    #        "spy_read('#{filename}',...) but no .read('#{filename}')"
-    #end
+    @stub_log.each do |entry|
+      assert entry[0]=='read', "entry[0] != 'read'"
+      filename = entry[1]
+      assert log.include?(entry), "spy_read('#{filename}') but no .read('#{filename}')"
+    end
   end
 
   def path
@@ -57,6 +58,7 @@ class SpyDir
   def spy_read(filename,content)
     make
     @repo[filename] = content
+    @stub_log << ['read',filename,content]
   end
 
   def log

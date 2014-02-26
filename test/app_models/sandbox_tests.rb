@@ -18,7 +18,7 @@ class SandboxTests < ActionController::TestCase
   end
 
   def teardown
-    #@disk.teardown
+    @disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
     Thread.current[:task] = nil
