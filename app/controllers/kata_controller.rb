@@ -1,7 +1,7 @@
 
 require 'Approval'
 require 'OutputParser'
-require 'ContentHashDiffer'
+require 'FileDeltaMaker'
 require 'MakefileFilter'
 
 class KataController < ApplicationController
@@ -19,9 +19,9 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    incoming_hashes = params[:file_hashes_incoming]
-    outgoing_hashes = params[:file_hashes_outgoing]
-    delta = ContentHashDiffer.diff(incoming_hashes, outgoing_hashes)
+    was = params[:file_hashes_incoming]
+    now = params[:file_hashes_outgoing]
+    delta = FileDeltaMaker.make_delta(was, now)
 
     @kata   = dojo[id]
     @avatar = @kata[params[:avatar]]

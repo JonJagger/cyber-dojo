@@ -8,9 +8,6 @@ REFACTORING
   ...
   test/app_models/spy_disk & spy_dir to do spying via teardown's
   ...
-  ContentHashDiffer.diff should be called makeDelta
-    its about current and next (not incoming outgoing)
-  ...
   prune_large.rb and prune_small.rb rework to used Dojo.each function
   Dojo.create_kata(manifest)
     add 2nd parameter specifying format, no default, on call use "rb"
