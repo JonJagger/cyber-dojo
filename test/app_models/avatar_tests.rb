@@ -16,6 +16,7 @@ class AvatarTests < ActionController::TestCase
   end
 
   def teardown
+    #@disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
     Thread.current[:task] = nil
@@ -71,14 +72,16 @@ class AvatarTests < ActionController::TestCase
       }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
-    avatar_write_log = avatar.dir.write_log
-    assert_not_nil avatar_write_log
-    assert avatar_write_log.include?(['manifest.rb', visible_files.inspect])
-    assert avatar_write_log.include?(['increments.rb', [ ].inspect])
+    assert_not_nil avatar
+    assert_not_nil avatar.dir
+    assert_not_nil avatar.dir.log
+    assert avatar.dir.log.include?(['write','manifest.rb', visible_files.inspect])
+    assert avatar.dir.log.include?(['write','increments.rb', [ ].inspect])
     sandbox = avatar.sandbox
-    sandbox_write_log = sandbox.dir.write_log
-    assert_not_nil sandbox_write_log
-    assert sandbox_write_log.include?([visible_filename, visible_filename_content]), sandbox_write_log.inspect
+    assert_not_nil sandbox
+    assert_not_nil sandbox.dir
+    assert_not_nil sandbox.dir.log
+    assert sandbox.dir.log.include?(['write',visible_filename, visible_filename_content]), sandbox.dir.log.inspect
     expected_symlink = [
       'symlink',
       language.path + support_filename,
@@ -125,9 +128,10 @@ class AvatarTests < ActionController::TestCase
       [ 'add', 'name']
     ], @git.log[avatar.sandbox.path], @git.log.inspect
 
-    assert_equal [ ], avatar.dir.read_log
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], kata.dir.write_log
-    assert_equal [ [ 'manifest.rb' ] ], kata.dir.read_log
+    assert avatar.dir.log.include?([ 'write', 'manifest.rb', visible_files.inspect ]), avatar.dir.log.inspect
+    assert avatar.dir.log.include?([ 'write', 'increments.rb', [ ].inspect ]), avatar.dir.log.inspect
+    assert kata.dir.log.include?([ 'write','manifest.rb', manifest.inspect ]), kata.dir.log.inspect
+    assert kata.dir.log.include?([ 'read','manifest.rb',manifest.inspect ]), kata.dir.log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

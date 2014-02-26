@@ -9,6 +9,7 @@ class LanguageTests < ActionController::TestCase
   end
 
   def teardown
+    #@disk.teardown
     Thread.current[:disk] = nil
   end
 

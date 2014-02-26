@@ -13,6 +13,7 @@ class KataTests < ActionController::TestCase
   end
 
   def teardown
+    #@disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
   end
@@ -65,8 +66,7 @@ class KataTests < ActionController::TestCase
   test "create_kata saves manifest in kata dir" do
     manifest = { :id => @id }
     kata = @dojo.create_kata(manifest)
-    assert_equal [ [ 'manifest.rb', manifest.inspect ] ], @kata.dir.write_log
-    assert_equal [ ], @kata.dir.read_log
+    assert @kata.dir.log.include? [ 'write', 'manifest.rb', manifest.inspect ]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

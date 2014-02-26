@@ -7,6 +7,10 @@ class SpyDisk
     @dir_spies = { }
   end
 
+  def teardown
+    @dir_spies.each { |dir,spy| spy.teardown }
+  end
+
   def dir_separator
     '/'
   end

@@ -3,8 +3,15 @@ class SpyDir
 
   def initialize(dir)
     @dir = dir
-    @read_log = [ ]
-    @write_log = [ ]
+    @log = [ ]
+  end
+
+  def teardown
+    assert @log != [ ], "read/write() never called"
+    #@repo.keys.each do |filename|
+    #  assert @read_log.include?(filename),
+    #        "spy_read('#{filename}',...) but no .read('#{filename}')"
+    #end
   end
 
   def path
@@ -12,31 +19,33 @@ class SpyDir
   end
 
   def exists?(filename = "")
-    @read_repo != nil && (filename == "" || @read_repo[filename] != nil)
+    @repo != nil && (filename == "" || @repo[filename] != nil)
   end
 
   def make
-    @read_repo ||= { }
+    @repo ||= { }
   end
 
   def write(filename, content)
     if filename.end_with?(".rb")
-      assert content.class != String, "write(#{filename},content.class != String)"
+      assert content.class != String, "write('#{filename}',content.class != String)"
       content = content.inspect
     end
     if filename.end_with?(".json")
-      assert content.class != String, "write(#{filename},content.class != String)"
+      assert content.class != String, "write('#{filename}',content.class != String)"
       content = JSON.unparse(content)
     end
-    @write_log << [filename, content]
+    @log << ['write',filename,content]
     make
-    @read_repo[filename] = content
+    @repo[filename] = content
   end
 
   def read(filename)
-    assert @read_repo != nil, "read(#{filename}) not stubbed"
-    @read_log << [filename]
-    @read_repo[filename]
+    assert @repo != nil, "read('#{filename}') no files stubbed"
+    assert @repo[filename] != nil, "read('#{filename}') not stubbed"
+    content  = @repo[filename]
+    @log << ['read',filename,content]
+    content
   end
 
   def lock(&block)
@@ -47,22 +56,18 @@ class SpyDir
 
   def spy_read(filename,content)
     make
-    @read_repo[filename] = content
+    @repo[filename] = content
   end
 
-  def write_log
-    @write_log
-  end
-
-  def read_log
-    @read_log
+  def log
+    @log
   end
 
 private
 
   def assert(truth, message)
     if !truth
-      raise "SpyDir[#{@dir}].#{message}"
+      raise "SpyDir['#{@dir}'].#{message}"
     end
   end
 

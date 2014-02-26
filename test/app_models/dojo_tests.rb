@@ -10,12 +10,13 @@ require File.dirname(__FILE__) + '/spy_disk'
 class DojoTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = SpyDisk.new
+    Thread.current[:disk] = @disk = SpyDisk.new
     @path = 'spied/'
     @dojo = Dojo.new(@path)
   end
 
   def teardown
+    #@disk.teardown
     Thread.current[:disk] = nil
   end
 
@@ -46,7 +47,7 @@ class DojoTests < ActionController::TestCase
     manifest = { :id => '45ED23A2F1' }
     kata = @dojo.create_kata(manifest)
     assert_equal "manifest.rb", kata.manifest_filename
-    assert kata.dir.write_log.include?(['manifest.rb', manifest.inspect]), kata.dir.write_log.inspect
+    assert kata.dir.log.include?(['write','manifest.rb', manifest.inspect]), kata.dir.log.inspect
   end
 
   test "create_kata has option to specify .json format which controls kata's manifest format" do
@@ -54,7 +55,7 @@ class DojoTests < ActionController::TestCase
     manifest = { :id => '45ED23A2F1' }
     kata = dojo.create_kata(manifest)
     assert_equal "manifest.json", kata.manifest_filename
-    assert kata.dir.write_log.include?(['manifest.json', JSON.unparse(manifest)]), kata.dir.write_log.inspect
+    assert kata.dir.log.include?(['write','manifest.json', JSON.unparse(manifest)]), kata.dir.log.inspect
   end
 
 end

@@ -9,6 +9,7 @@ class ExerciseTests < ActionController::TestCase
   end
 
   def teardown
+    #@disk.teardown
     Thread.current[:disk] = nil
   end
 
@@ -56,10 +57,11 @@ class ExerciseTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "instructions are loaded" do
-    @exercise.dir.spy_read('instructions', 'Fishing on the Verdal')
-    instructions = @exercise.instructions
-    assert_not_nil instructions
-    assert instructions.start_with? "Fishing on the Verdal"
+    filename = 'instructions'
+    content = 'fish for Salmon on the Verdal'
+    @exercise.dir.spy_read(filename, content)
+    assert_equal content, @exercise.instructions
+    assert @exercise.dir.log.include?(['read',filename,content])
   end
 
 end

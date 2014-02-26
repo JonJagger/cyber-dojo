@@ -18,6 +18,7 @@ class SandboxTests < ActionController::TestCase
   end
 
   def teardown
+    #@disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
     Thread.current[:task] = nil
@@ -78,7 +79,7 @@ class SandboxTests < ActionController::TestCase
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
     assert_equal "amber", output
-    assert_equal ['output',"amber"], @sandbox.dir.write_log.last
+    assert_equal ['write','output',"amber"], @sandbox.dir.log.last
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -96,11 +97,11 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    log = @sandbox.dir.write_log
-    saved_files = filenames_in(log)
+    log = @sandbox.dir.log
+    saved_files = filenames_written_to_in(log)
     assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
-    assert log.include?(['untitled.cs', 'content for code file' ]), log.inspect
-    assert log.include?(['untitled.test.cs', 'content for test file' ]), log.inspect
+    assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
+    assert log.include?(['write','untitled.test.cs', 'content for test file' ]), log.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -118,7 +119,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    saved_files = filenames_in(@sandbox.dir.write_log)
+    saved_files = filenames_written_to_in(@sandbox.dir.log)
     assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
     assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
   end
@@ -138,7 +139,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ 'wibble.cs' ]
     }
     @sandbox.test(delta, visible_files)
-    saved_files = filenames_in(@sandbox.dir.write_log)
+    saved_files = filenames_written_to_in(@sandbox.dir.log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
 
     git_log = @git.log[@sandbox.path]
@@ -160,7 +161,7 @@ class SandboxTests < ActionController::TestCase
       :new => [ ]
     }
     @sandbox.test(delta, visible_files)
-    saved_files = filenames_in(@sandbox.dir.write_log)
+    saved_files = filenames_written_to_in(@sandbox.dir.log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
 
     git_log = @git.log[@sandbox.path]
@@ -169,8 +170,10 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def filenames_in(log)
-    log.collect{ |entry| entry.first }
+  def filenames_written_to_in(log)
+    # each log entry is of the form
+    #  [ 'read'/'write',  filename, content ]
+    log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
   end
 
 end
