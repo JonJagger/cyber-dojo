@@ -18,7 +18,7 @@ class Sandbox
     @avatar.path + 'sandbox' + @disk.dir_separator
   end
 
-  def test(delta, visible_files, max_duration = 15)
+  def write(delta, visible_files)
     delta[:changed].each do |filename|
       dir.write(filename, visible_files[filename])
     end
@@ -29,11 +29,12 @@ class Sandbox
     delta[:deleted].each do |filename|
       @git.rm(path, filename)
     end
+  end
+
+  def test(max_duration = 15)
     command  = "cd '#{path}';" +
                "./cyber-dojo.sh"
     output = @task.execute(command, max_duration)
-    # create output file so it appears in diff-view
-    dir.write('output', output)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

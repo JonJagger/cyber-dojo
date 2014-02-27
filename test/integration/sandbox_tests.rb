@@ -27,9 +27,12 @@ class SandboxTests < ActionController::TestCase
       :deleted   => [ ],
       :new       => [ ]
     }
-    output = sandbox.test(delta, visible_files)
+    sandbox.write(delta, visible_files)
+    output = sandbox.test();
     traffic_light = OutputParser::parse('junit', output)
-    avatar.save_run_tests(visible_files, traffic_light)
+    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    avatar.git_commit(traffic_lights.length)
+
     assert_equal 'green', traffic_light['colour']
 
     visible_files = {
@@ -43,9 +46,12 @@ class SandboxTests < ActionController::TestCase
       :deleted   => [ 'Untitled.java' ],
       :new       => [ 'Untitled .java' ]
     }
-    output = sandbox.test(delta, visible_files)
-    avatar.save_run_tests(visible_files, traffic_light)
+    sandbox.write(delta, visible_files)
+    output = sandbox.test()
     traffic_light = OutputParser::parse('junit', output)
+    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    avatar.git_commit(traffic_lights.length)
+
     assert_equal 'amber', traffic_light['colour']
 
     # put it back the way it was
@@ -60,9 +66,12 @@ class SandboxTests < ActionController::TestCase
       :deleted   => [ 'Untitled .java' ],
       :new       => [ 'Untitled.java' ]
     }
-    output = sandbox.test(delta, visible_files)
+    sandbox.write(delta, visible_files)
+    output = sandbox.test()
     traffic_light = OutputParser::parse('junit', output)
-    avatar.save_run_tests(visible_files, traffic_light)
+    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    avatar.git_commit(traffic_lights.length)
+
     # if the file whose name contained a space has been retained
     # this will be :amber instead of :green
     assert_equal 'green', traffic_light['colour'], kata.id + ":" + avatar.name

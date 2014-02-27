@@ -75,16 +75,19 @@ class SandboxTests < ActionController::TestCase
       :deleted => [ ],
       :new => [ ]
     }
-    output = @sandbox.test(delta, visible_files)
+    @sandbox.write(delta, visible_files)
+    output = @sandbox.test()
+    assert_equal "stubbed-output", output
+    @avatar.sandbox.dir.write('output', output) # so output appears in diff-view
+
     assert !visible_files.keys.include?('output')
     assert output.class == String, "output.class == String"
-    assert_equal "amber", output
-    assert_equal ['write','output',"amber"], @sandbox.dir.log.last
+    assert_equal ['write','output',output], @sandbox.dir.log.last
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "test():delta[:changed] files are saved" do
+  test "write():delta[:changed] files are saved" do
     visible_files = {
       'untitled.cs' => 'content for code file',
       'untitled.test.cs' => 'content for test file',
@@ -96,7 +99,10 @@ class SandboxTests < ActionController::TestCase
       :deleted => [ ],
       :new => [ ]
     }
-    @sandbox.test(delta, visible_files)
+    @sandbox.write(delta, visible_files)
+    @output = @sandbox.test()
+    @sandbox.dir.write('output', @output)
+
     log = @sandbox.dir.log
     saved_files = filenames_written_to_in(log)
     assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
@@ -106,7 +112,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "test():delta[:unchanged] files are not saved" do
+  test "write():delta[:unchanged] files are not saved" do
     visible_files = {
       'untitled.cs' => 'content for code file',
       'untitled.test.cs' => 'content for test file',
@@ -118,7 +124,7 @@ class SandboxTests < ActionController::TestCase
       :deleted => [ ],
       :new => [ ]
     }
-    @sandbox.test(delta, visible_files)
+    @sandbox.write(delta, visible_files)
     saved_files = filenames_written_to_in(@sandbox.dir.log)
     assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
     assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
@@ -126,7 +132,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "test():delta[:new] files are saved and git added" do
+  test "write():delta[:new] files are saved and git added" do
     visible_files = {
       'wibble.cs' => 'content for code file',
       'untitled.test.cs' => 'content for test file',
@@ -138,7 +144,7 @@ class SandboxTests < ActionController::TestCase
       :deleted => [ ],
       :new => [ 'wibble.cs' ]
     }
-    @sandbox.test(delta, visible_files)
+    @sandbox.write(delta, visible_files)
     saved_files = filenames_written_to_in(@sandbox.dir.log)
     assert saved_files.include?('wibble.cs'), saved_files.inspect
 
@@ -148,7 +154,7 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "test():delta[:deleted] files are git rm'd" do
+  test "write():delta[:deleted] files are git rm'd" do
     visible_files = {
       'untitled.cs' => 'content for code file',
       'untitled.test.cs' => 'content for test file',
@@ -160,7 +166,7 @@ class SandboxTests < ActionController::TestCase
       :deleted => [ 'wibble.cs' ],
       :new => [ ]
     }
-    @sandbox.test(delta, visible_files)
+    @sandbox.write(delta, visible_files)
     saved_files = filenames_written_to_in(@sandbox.dir.log)
     assert !saved_files.include?('wibble.cs'), saved_files.inspect
 

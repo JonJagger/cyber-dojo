@@ -7,7 +7,7 @@ class StubTimeBoxedTask
 
   def execute(command, max_run_tests_duration)
     @log << command
-    "amber"
+    "stubbed-output"
   end
 
   def log

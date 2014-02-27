@@ -19,26 +19,28 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    was = params[:file_hashes_incoming]
-    now = params[:file_hashes_outgoing]
-    delta = FileDeltaMaker.make_delta(was, now)
-
     @kata   = dojo[id]
     @avatar = @kata[params[:avatar]]
     visible_files = received_files
     previous_files = visible_files.keys
-
     visible_files.delete('output')
-    @output = @avatar.sandbox.test(delta, visible_files)
+
+    was = params[:file_hashes_incoming]
+    now = params[:file_hashes_outgoing]
+    delta = FileDeltaMaker.make_delta(was, now)
+    @avatar.sandbox.write(delta, visible_files)
+    @output = @avatar.sandbox.test()
+    @avatar.sandbox.dir.write('output', @output) # so output appears in diff-view
     visible_files['output'] = @output
 
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.path, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.path, visible_files)
 
-    language = @kata.language
-    traffic_light = OutputParser::parse(language.unit_test_framework, @output)
+    traffic_light = OutputParser::parse(@kata.language.unit_test_framework, @output)
     traffic_light['time'] = make_time(Time.now)
     @traffic_lights = @avatar.save_run_tests(visible_files, traffic_light)
+    @avatar.git_commit(@traffic_lights.length)
+
     @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
     @files_to_remove = previous_files.select {|filename| ! @avatar.visible_files.keys.include?(filename)}
     @visible_files = @avatar.visible_files

@@ -64,14 +64,12 @@ class Avatar
   def save_run_tests(visible_files, traffic_light)
     traffic_lights = nil
     dir.lock do
+      dir.write(visible_files_filename, visible_files)
       text = dir.read(traffic_lights_filename)
       traffic_lights = JSON.parse(JSON.unparse(eval text))
       traffic_lights << traffic_light
-      tag = traffic_lights.length
-      traffic_light['number'] = tag
+      traffic_light['number'] = traffic_lights.length
       dir.write(traffic_lights_filename, traffic_lights)
-      dir.write(visible_files_filename, visible_files)
-      git_commit(tag)
     end
     traffic_lights
   end
@@ -97,16 +95,16 @@ class Avatar
     Sandbox.new(self)
   end
 
-private
-
-  def fatal(diagnostic)
-    raise diagnostic
-  end
-
   def git_commit(tag)
     # the -a is important for .txt files in approval style tests
     @git.commit(path, "-a -m '#{tag}' --quiet")
     @git.tag(path, "-m '#{tag}' #{tag} HEAD")
+  end
+
+private
+
+  def fatal(diagnostic)
+    raise diagnostic
   end
 
   def unlocked_read(filename, tag)

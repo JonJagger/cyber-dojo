@@ -273,9 +273,9 @@ class AvatarTests < ActionController::TestCase
       :deleted => [ 'wibble.cs' ],
       :new => [ ]
     }
-    output = avatar.sandbox.test(delta, avatar.visible_files, timeout=15)
-    language = avatar.kata.language
-    traffic_light = OutputParser::parse(language.unit_test_framework, output)
+    avatar.sandbox.write(delta, avatar.visible_files)
+    output = avatar.sandbox.test(timeout=15)
+    traffic_light = OutputParser::parse(kata.language.unit_test_framework, output)
     avatar.save_run_tests(visible_files, traffic_light)
     traffic_lights = avatar.traffic_lights
     assert_equal 1, traffic_lights.length

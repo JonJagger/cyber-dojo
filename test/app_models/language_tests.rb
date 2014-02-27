@@ -13,10 +13,6 @@ class LanguageTests < ActionController::TestCase
     Thread.current[:disk] = nil
   end
 
-  def spy_manifest(manifest)
-    @language.dir.spy_read('manifest.json', JSON.unparse(manifest))
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when no disk on thread the ctor raises" do
@@ -162,6 +158,12 @@ class LanguageTests < ActionController::TestCase
     @language.dir.write('manifest.rb', { :tab_size => 8 })
     @language.dir.spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
     assert_equal " "*4, @language.tab
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  
+  def spy_manifest(manifest)
+    @language.dir.spy_read('manifest.json', JSON.unparse(manifest))
   end
 
 end

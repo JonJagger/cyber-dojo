@@ -169,7 +169,7 @@ class GitDiffViewTests < ActionController::TestCase
     run_test(delta, avatar, visible_files) # tag 1
     assert_equal 'red', avatar.traffic_lights.last['colour'], avatar.visible_files["output"]
 
-    visible_files.delete('untitled.rb')
+    visible_files.delete('untitled.rb') # will cause amber
     delta = {
       :changed => [ ],
       :unchanged => visible_files.keys - [ 'untitled.rb' ],
