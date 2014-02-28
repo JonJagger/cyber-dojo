@@ -27,7 +27,7 @@ class AvatarTests < ActionController::TestCase
   test "when no disk on thread the ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
-    assert_equal "no disk", error.message
+    assert_equal 'no disk', error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -35,7 +35,7 @@ class AvatarTests < ActionController::TestCase
   test "when no git on thread the ctor raises" do
     Thread.current[:git] = nil
     error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
-    assert_equal "no git", error.message
+    assert_equal 'no git', error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -68,7 +68,7 @@ class AvatarTests < ActionController::TestCase
     kata_manifest_spy_read(manifest)
     support_filename = 'wibble.dll'
     language.dir.spy_read('manifest.json', JSON.unparse({
-        "support_filenames" => [ support_filename ]
+        'support_filenames' => [ support_filename ]
       }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar

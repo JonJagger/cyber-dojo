@@ -17,8 +17,8 @@ class SpyDir
     @dir
   end
 
-  def exists?(filename = "")
-    @repo != nil && (filename == "" || @repo[filename] != nil)
+  def exists?(filename = '')
+    @repo != nil && (filename == '' || @repo[filename] != nil)
   end
 
   def make
@@ -26,7 +26,7 @@ class SpyDir
   end
 
   def write(filename, content)
-    if filename.end_with?(".rb")
+    if filename.end_with?('.rb')
       assert content.class != String, "write('#{filename}',content.class != String)"
       content = content.inspect
     end

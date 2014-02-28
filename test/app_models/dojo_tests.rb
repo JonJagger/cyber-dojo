@@ -23,7 +23,7 @@ class DojoTests < ActionController::TestCase
   test "when no disk on thread ctor raises exception" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Dojo.new('spying') }
-    assert_equal "no disk", error.message
+    assert_equal 'no disk', error.message
   end
 
   test "path is as set in ctor" do
@@ -46,12 +46,12 @@ class DojoTests < ActionController::TestCase
   test "create_kata has option to specify .rb format which controls kata's manifest format" do
     manifest = { :id => '45ED23A2F1' }
     kata = @dojo.create_kata(manifest)
-    assert_equal "manifest.rb", kata.manifest_filename
+    assert_equal 'manifest.rb', kata.manifest_filename
     assert kata.dir.log.include?(['write','manifest.rb', manifest.inspect]), kata.dir.log.inspect
   end
 
   test "create_kata has option to specify .json format which controls kata's manifest format" do
-    dojo = Dojo.new(@path, "json")
+    dojo = Dojo.new(@path, 'json')
     manifest = { :id => '45ED23A2F1' }
     kata = dojo.create_kata(manifest)
     assert_equal "manifest.json", kata.manifest_filename

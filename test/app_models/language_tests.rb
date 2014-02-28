@@ -141,14 +141,14 @@ class LanguageTests < ActionController::TestCase
   test "tab is 7 spaces if tab_size is 7" do
     tab_size = 7
     spy_manifest({ 'tab_size' => tab_size })
-    assert_equal " "*tab_size, @language.tab
+    assert_equal ' '*tab_size, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "tab defaults to 4 spaces" do
     spy_manifest({ })
-    assert_equal " "*4, @language.tab
+    assert_equal ' '*4, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -157,11 +157,11 @@ class LanguageTests < ActionController::TestCase
     @language.dir.write('manifest.json', {'tab_size' => 4})
     @language.dir.write('manifest.rb', { :tab_size => 8 })
     @language.dir.spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
-    assert_equal " "*4, @language.tab
+    assert_equal ' '*4, @language.tab
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   def spy_manifest(manifest)
     @language.dir.spy_read('manifest.json', JSON.unparse(manifest))
   end

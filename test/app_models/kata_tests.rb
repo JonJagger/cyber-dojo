@@ -23,7 +23,7 @@ class KataTests < ActionController::TestCase
   test "when no disk on thread ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Kata.new(nil,nil) }
-    assert_equal "no disk", error.message
+    assert_equal 'no disk', error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -47,18 +47,18 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "path is based on cyberdojo root_dir and id" do
-    assert @kata.path.match(@dojo.path), "root_dir"
+    assert @kata.path.match(@dojo.path), 'root_dir'
     uuid = Uuid.new(@id)
-    assert @kata.path.match(uuid.inner), "id.inner"
-    assert @kata.path.match(uuid.outer), "id.outer"
+    assert @kata.path.match(uuid.inner), 'id.inner'
+    assert @kata.path.match(uuid.outer), 'id.outer'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? false when dir does not exist, true when dir does exist" do
-    assert !@kata.exists?, "!@kata.exists?"
+    assert !@kata.exists?, '!@kata.exists?'
     @kata.dir.make
-    assert @kata.exists?, "@kata.exists?"
+    assert @kata.exists?, '@kata.exists?'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -137,19 +137,19 @@ class KataTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? returns false before kata is created then true after kata is created" do
-    assert !@kata.exists?, "!kata.exists? before created"
+    assert !@kata.exists?, '!kata.exists? before created'
     manifest = { :id => @id }
     @dojo.create_kata(manifest)
-    assert @kata.exists?, "Kata.exists? after created"
+    assert @kata.exists?, 'Kata.exists? after created'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "kata['lion'] exists when its dir exists" do
     avatar = @kata['lion']
-    assert !avatar.exists?, "!avatar.exists?"
+    assert !avatar.exists?, '!avatar.exists?'
     avatar.dir.make
-    assert avatar.exists?, "avatar.exists?"
+    assert avatar.exists?, 'avatar.exists?'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

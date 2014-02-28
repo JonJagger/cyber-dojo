@@ -29,7 +29,7 @@ class SandboxTests < ActionController::TestCase
   test "when no disk on thread the ctor raises" do
     Thread.current[:disk] = nil
     error = assert_raises(RuntimeError) { Sandbox.new(nil) }
-    assert_equal "no disk", error.message
+    assert_equal 'no disk', error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,7 +37,7 @@ class SandboxTests < ActionController::TestCase
   test "when no git on thread the ctor raises" do
     Thread.current[:git] = nil
     error = assert_raises(RuntimeError) { Sandbox.new(nil) }
-    assert_equal "no git", error.message
+    assert_equal 'no git', error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -81,7 +81,7 @@ class SandboxTests < ActionController::TestCase
     @avatar.sandbox.dir.write('output', output) # so output appears in diff-view
 
     assert !visible_files.keys.include?('output')
-    assert output.class == String, "output.class == String"
+    assert output.class == String, 'output.class == String'
     assert_equal ['write','output',output], @sandbox.dir.log.last
   end
 
