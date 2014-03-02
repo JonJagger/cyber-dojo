@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/spy_disk'
 require File.dirname(__FILE__) + '/stub_git'
-require File.dirname(__FILE__) + '/stub_time_boxed_task'
+require File.dirname(__FILE__) + '/stub_runner'
 
 
 class AvatarTests < ActionController::TestCase
@@ -9,7 +9,7 @@ class AvatarTests < ActionController::TestCase
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
-    Thread.current[:task] = @task = StubTimeBoxedTask.new
+    Thread.current[:runner] = @runner = StubRunner.new
     @dojo = Dojo.new('spied/')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
@@ -19,7 +19,7 @@ class AvatarTests < ActionController::TestCase
     @disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
-    Thread.current[:task] = nil
+    Thread.current[:runner] = nil
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

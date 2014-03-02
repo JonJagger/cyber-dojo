@@ -1,12 +1,12 @@
 
-class StubTimeBoxedTask
+class StubRunner
 
   def initialize
     @log = [ ]
   end
 
-  def execute(command, max_run_tests_duration)
-    @log << command
+  def run(path, command, max_duration)
+    @log << ("cd '#{path}';" + command)
     'stubbed-output'
   end
 

@@ -1,15 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/spy_disk'
 require File.dirname(__FILE__) + '/stub_git'
-require File.dirname(__FILE__) + '/stub_time_boxed_task'
-
+require File.dirname(__FILE__) + '/stub_runner'
 
 class SandboxTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
-    Thread.current[:task] = @stub_task = StubTimeBoxedTask.new
+    Thread.current[:runner] = @stub_runner = StubRunner.new
     @dojo = Dojo.new('spied')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
@@ -21,7 +20,7 @@ class SandboxTests < ActionController::TestCase
     @disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
-    Thread.current[:task] = nil
+    Thread.current[:runner] = nil
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -38,6 +37,14 @@ class SandboxTests < ActionController::TestCase
     Thread.current[:git] = nil
     error = assert_raises(RuntimeError) { Sandbox.new(nil) }
     assert_equal 'no git', error.message
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "when no runner on thread the ctor raises" do
+    Thread.current[:runner] = nil
+    error = assert_raises(RuntimeError) { Sandbox.new(nil) }
+    assert_equal 'no runner', error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -61,8 +68,8 @@ class SandboxTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "after run_tests() a file called output is saved in sandbox " +
-         "and an output file is not inserted into the visible_files argument" do
+  test "after test() output-file has to be explicitly saved in sandbox " +
+         "and output-file is not inserted into the visible_files argument" do
     visible_files = {
       'untitled.c' => 'content for code file',
       'untitled.test.c' => 'content for test file',

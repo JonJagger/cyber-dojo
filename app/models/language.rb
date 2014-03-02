@@ -2,7 +2,7 @@
 class Language
 
   def initialize(dojo, name)
-    @disk = Thread.current[:disk] || fatal
+    @disk = Thread.current[:disk] || fatal("no disk")
     @dojo,@name = dojo,name
   end
 
@@ -48,8 +48,8 @@ class Language
 
 private
 
-  def fatal
-    raise "no disk"
+  def fatal(diagnostic)
+    raise diagnostic
   end
 
   def dir_separator

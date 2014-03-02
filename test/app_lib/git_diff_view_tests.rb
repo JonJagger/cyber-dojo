@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'Disk'
 require 'Git'
 require 'GitDiff'
+require 'Runner'
 
 class GitDiffViewTests < ActionController::TestCase
 
@@ -11,6 +12,7 @@ class GitDiffViewTests < ActionController::TestCase
     super
     Thread.current[:disk] = Disk.new
     Thread.current[:git] = Git.new
+    Thread.current[:runner] = Runner.new
     @dojo = Dojo.new(root_path)
   end
 

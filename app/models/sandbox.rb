@@ -1,12 +1,10 @@
 
-require 'TimeBoxedTask'
-
 class Sandbox
 
   def initialize(avatar)
-    @disk = Thread.current[:disk] || fatal("no disk")
-    @git  = Thread.current[:git]  || fatal("no git")
-    @task = Thread.current[:task] || TimeBoxedTask.new
+    @disk   = Thread.current[:disk]   || fatal("no disk")
+    @git    = Thread.current[:git]    || fatal("no git")
+    @runner = Thread.current[:runner] || fatal("no runner")
     @avatar = avatar
   end
 
@@ -32,9 +30,7 @@ class Sandbox
   end
 
   def test(max_duration = 15)
-    command  = "cd '#{path}';" +
-               "./cyber-dojo.sh"
-    output = @task.execute(command, max_duration)
+    output = @runner.run(path, "./cyber-dojo.sh", max_duration)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

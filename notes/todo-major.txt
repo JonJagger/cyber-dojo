@@ -1,8 +1,17 @@
 
+o) refactor so disk object becomes a paas.
+   It has file read/write and also git commands (and time-boxed-task-run).
+   Work towards being able to substitute in a docker paas.
+   root path will need to move from Dojo ctor into paas ctor.
+   dojo.languages() will need to exist and forward to paas.
+   dojo.exercises() will need to exist and forward to paas.
+   kata should not decide to split id in inner/outer - paas should.
+
+
 o) refactor so new dojos are saved in json format and also save sha1 hashes
    and also includes URL of server dojo is on.
    Old dojos are still usable in old format.
-   
+
 o) write a script to convert a dojo in old-rb format into new-json format
    This will need to detect if the :language named in the katas manifest.rb
    (not the animals manifest) still exists on the server.
@@ -20,15 +29,15 @@ o) write a script to convert a dojo in old-rb format into new-json format
    If language is patched - will cyber-katas still be able to
    detect the fork from the sha1's? It needs to be able to.
    So sha1's must be solely from file contents. Sounds ok.
-      
+
 o) add buttons on cyber-dojo to publish a dojo to cyber-kata with tags
    on the sending server check format of dojo
    if its old-rb format then convert it *in-place* (on sending server) using script above
    send it in new-json format (tar.gz) to cyber-katas
-   
+
 o) can offer fork on cyber-katas if I know URL of originating dojo
    can can make with $.getJSON('forker/fork'...) to it
-   
+
 o) this means we could get a cycle
   I publish a dojo
   Someone else links back to my dojo and adds some more traffic-lights
@@ -41,9 +50,9 @@ o) this means we could get a cycle
   Tags should be recorded with the publish-event not the dojo.
   Can then see a history of "tags" added.
   Allow tags to be editable on cyber-katas?
-  Want re-publish of unchanged dojo to be low-overhead 
+  Want re-publish of unchanged dojo to be low-overhead
   Should be enough to check, URL,id,animals,traffic-lights per animal.
-  
+
 o) another problem is it opens up the possibility of
    two people trying to edit the same code at the same time
    as the same animal.
@@ -55,7 +64,7 @@ o) another problem is it opens up the possibility of
    figure out which old traffic-light the new dojo was forked from.
    New dojo will not be tied to old dojo until new dojo is published back
    onto cyber-katas
-   
+
 o) old dojos that have had their language name changed cannot be forked.
    Need to fix this.
    Or at least detect it and either
@@ -63,7 +72,7 @@ o) old dojos that have had their language name changed cannot be forked.
       or figure out what the new name is and patch
    Patching should really be done on the old-new conversion.
    This is because it will (I think) affect the sha1 identity.
-   
+
 o) must be careful not to expose the ids of the original dojos
    when viewing diffs on cyber-katas.org
    Create a simple fake-id->id mapping table.
@@ -76,12 +85,12 @@ o) if traffic-light's files' hashes match traffic-light 1 for
    this dojo then reverts have occured.
 
 o) open cyber-katas.org
-   
+
 
 ------------------------------------------------------
 I'd like an automated process that moves dojos that have
 a minimum number of traffic lights and are at least N days
-old onto a separate read-only cyber-dojo server. 
+old onto a separate read-only cyber-dojo server.
 Ideally, one that has a list of id's not to delete (eg the
 refactoring dojo's ids). Info about these dojos' would be stored
 in a database holding various details such as id, language, exercise,
@@ -185,7 +194,7 @@ Strategies?
  o)   use git branch for this work
  o)   only problem is harvested dojos still need initial evals
  o)   that's why second part of the work is...
- 
+
  o) on cyber-dojo.com
  o)   support inspect on old dojos
  o)   but use JSON on new dojos
@@ -198,8 +207,8 @@ Strategies?
  o)   harvest all dojos to cyber-katas
  o)   convert them to JSON on cyber-katas as above
  o)   forward [review]s to cyber-katas (not button on test page?)
- 
- 
+
+
 ------------------------------------------------------
 url = 'http://cyber-katas.org/dojo/valid_id'
 $.getJSON(url, { id: id }).done(function(theId) {

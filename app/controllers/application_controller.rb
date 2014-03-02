@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../../config/environment.rb'
 
 require 'Disk'
 require 'Git'
+require 'Runner'
 require 'make_time_helper'
 require 'Folders'
 require 'Uuid'
@@ -20,6 +21,7 @@ class ApplicationController < ActionController::Base
   def dojo
     Thread.current[:disk] ||= Disk.new
     Thread.current[:git] ||= Git.new
+    Thread.current[:runner] ||= Runner.new
     Dojo.new(root_path)
   end
 

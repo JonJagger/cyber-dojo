@@ -1,10 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'Disk'
+require 'Git'
+require 'Runner'
 
 class TimeOutTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = Disk.new
+    Thread.current[:git] = Git.new
+    Thread.current[:runner] = Runner.new
     @dojo = Dojo.new(root_path)
   end
 

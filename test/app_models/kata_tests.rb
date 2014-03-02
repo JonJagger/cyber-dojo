@@ -1,12 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/spy_disk'
 require File.dirname(__FILE__) + '/stub_git'
+require File.dirname(__FILE__) + '/stub_runner'
 
 class KataTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
     Thread.current[:git] = @git = StubGit.new
+    Thread.current[:runner] = StubRunner.new
     @dojo = Dojo.new('spied/')
     @id = '45ED23A2F1'
     @kata = @dojo[@id]
@@ -16,6 +18,7 @@ class KataTests < ActionController::TestCase
     @disk.teardown
     Thread.current[:disk] = nil
     Thread.current[:git] = nil
+    Thread.current[:runner] = nil
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
