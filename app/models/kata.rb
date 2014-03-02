@@ -48,19 +48,19 @@ class Kata
   end
 
   def language
-    @dojo.language(manifest[:language])
+    @dojo.language(manifest['language'])
   end
 
   def exercise
-    @dojo.exercise(manifest[:exercise])
+    @dojo.exercise(manifest['exercise'])
   end
 
   def visible_files
-    manifest[:visible_files]
+    manifest['visible_files']
   end
 
   def created
-    Time.mktime(*manifest[:created])
+    Time.mktime(*manifest['created'])
   end
 
   def age_in_seconds(now = Time.now)
@@ -88,7 +88,13 @@ private
   end
 
   def manifest
-    @manifest ||= eval dir.read(manifest_filename)
+    text = dir.read(manifest_filename)
+    if manifest_filename.end_with?('rb')
+      return @manifest ||= JSON.parse(JSON.unparse(eval(text)))
+    end
+    if manifest_filename.end_with?('json')
+      return @manifest ||= JSON.parse(text)
+    end
   end
 
   def old_manifest_filename
