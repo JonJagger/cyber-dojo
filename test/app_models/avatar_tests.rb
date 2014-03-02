@@ -41,7 +41,16 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? is false when dir doesn't exist, true when dir does exist" do
-    avatar = @kata['hippo']
+    exists_is_false_when_dir_doesnt_exist_true_when_dir_does_exist('rb')
+    teardown
+    setup
+    exists_is_false_when_dir_doesnt_exist_true_when_dir_does_exist('json')
+  end
+
+  def exists_is_false_when_dir_doesnt_exist_true_when_dir_does_exist(format)
+    dojo = Dojo.new('spied', format)
+    kata = dojo[@id]
+    avatar = kata['hippo']
     assert !avatar.exists?
     avatar.dir.make
     assert avatar.exists?
@@ -49,7 +58,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar creation saves " +
+  test "in rb format avatar creation saves " +
           "visible_files in avatar/manifest.rb, and " +
           "empty avatar/increments.rb, and " +
           "each visible_file into avatar/sandbox, and " +
@@ -59,13 +68,15 @@ class AvatarTests < ActionController::TestCase
     visible_files = {
       visible_filename => visible_filename_content
     }
+    @dojo = Dojo.new('spied/','rb')
     language = @dojo.language('C#')
     manifest = {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    @kata = @dojo[@id]
+    kata_manifest_spy_read('rb',manifest)
     support_filename = 'wibble.dll'
     language.dir.spy_read('manifest.json', JSON.unparse({
         'support_filenames' => [ support_filename ]
@@ -77,6 +88,50 @@ class AvatarTests < ActionController::TestCase
     assert_not_nil avatar.dir.log
     assert avatar.dir.log.include?(['write','manifest.rb', visible_files.inspect])
     assert avatar.dir.log.include?(['write','increments.rb', [ ].inspect])
+    sandbox = avatar.sandbox
+    assert_not_nil sandbox
+    assert_not_nil sandbox.dir
+    assert_not_nil sandbox.dir.log
+    assert sandbox.dir.log.include?(['write',visible_filename, visible_filename_content]), sandbox.dir.log.inspect
+    expected_symlink = [
+      'symlink',
+      language.path + support_filename,
+      sandbox.path + support_filename
+    ]
+    assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "in json format avatar creation saves " +
+          "visible_files in avatar/manifest.json, and " +
+          "empty avatar/increments.json, and " +
+          "each visible_file into avatar/sandbox, and " +
+          "links each support_filename into avatar/sandbox" do
+    visible_filename = 'visible.txt'
+    visible_filename_content = 'content for visible.txt'
+    visible_files = {
+      visible_filename => visible_filename_content
+    }
+    @dojo = Dojo.new('spied/','json')
+    language = @dojo.language('C#')
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name
+    }
+    kata_manifest_spy_read('json',manifest)
+    support_filename = 'wibble.dll'
+    language.dir.spy_read('manifest.json', JSON.unparse({
+        'support_filenames' => [ support_filename ]
+      }))
+    kata = @dojo.create_kata(manifest)
+    avatar = kata.start_avatar
+    assert_not_nil avatar
+    assert_not_nil avatar.dir
+    assert_not_nil avatar.dir.log
+    assert avatar.dir.log.include?(['write','manifest.json', JSON.unparse(visible_files)])
+    assert avatar.dir.log.include?(['write','increments.json', JSON.unparse([ ])])
     sandbox = avatar.sandbox
     assert_not_nil sandbox
     assert_not_nil sandbox.dir
@@ -103,7 +158,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    kata_manifest_spy_read('rb',manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -152,7 +207,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    kata_manifest_spy_read('rb',manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -171,7 +226,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    kata_manifest_spy_read('rb',manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -191,7 +246,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    kata_manifest_spy_read('rb',manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -203,7 +258,13 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "after avatar is created sandbox contains visible_files" do
+  test "after avatar is created sandbox contains separate visible_files" do
+    after_avatar_is_created_sandbox_contains_separate_visible_files('rb')
+    after_avatar_is_created_sandbox_contains_separate_visible_files('json')
+  end
+
+  def after_avatar_is_created_sandbox_contains_separate_visible_files(format)
+    @dojo = Dojo.new('spied/',format)
     visible_files = {
       'name' => 'content for name',
       'output' => ''
@@ -214,12 +275,43 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    @kata = @dojo[@id]
+    kata_manifest_spy_read(format,manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
     visible_files.each do |filename,content|
       assert_equal content, avatar.sandbox.dir.read(filename)
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "after avatar is created avatar dir contains all visible_files in manifest" do
+    after_avatar_is_created_avatar_dir_contains_manifest_holding_all_visible_files('rb')
+    after_avatar_is_created_avatar_dir_contains_manifest_holding_all_visible_files('json')
+  end
+
+  def after_avatar_is_created_avatar_dir_contains_manifest_holding_all_visible_files(format)
+    @dojo = Dojo.new('spied/',format)
+    visible_files = {
+      'name' => 'content for name',
+      'output' => ''
+    }
+    language = @dojo.language('C')
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name
+    }
+    @kata = @dojo[@id]
+    kata_manifest_spy_read(format,manifest)
+    language.dir.spy_read('manifest.json', JSON.unparse({ }))
+    kata = @dojo.create_kata(manifest)
+    avatar = kata.start_avatar
+    avatar.visible_files.each do |filename,content|
+      assert visible_files.keys.include?(filename)
+      assert_equal visible_files[filename], content
     end
   end
 
@@ -236,7 +328,7 @@ class AvatarTests < ActionController::TestCase
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    kata_manifest_spy_read('rb',manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({ }))
     kata = @dojo.create_kata(manifest)
     avatar = kata.start_avatar
@@ -248,23 +340,30 @@ class AvatarTests < ActionController::TestCase
 
   test "after first test() traffic_lights contains one traffic-light " +
         "which does not contain output" do
+    after_first_test_traffic_lights_contains_one_traffic_light('rb')
+    after_first_test_traffic_lights_contains_one_traffic_light('rb')
+  end
+
+  def after_first_test_traffic_lights_contains_one_traffic_light(format)
     visible_files = {
       'untitled.c' => 'content for visible file',
       'cyber-dojo.sh' => 'make',
     }
+    @dojo = Dojo.new('spied/', format)
     language = @dojo.language('C')
     manifest = {
       :id => @id,
       :visible_files => visible_files,
       :language => language.name
     }
-    kata_manifest_spy_read(manifest)
+    @kata = @dojo[@id]
+    kata_manifest_spy_read(format,manifest)
     kata = @dojo.create_kata(manifest)
     language.dir.spy_read('manifest.json', JSON.unparse({
         "visible_files" => visible_files,
         "unit_test_framework" => "cassert"
       }))
-    avatar = kata.start_avatar
+    avatar = @kata.start_avatar
     avatar.sandbox.dir.spy_write('untitled.c', 'content for visible file')
     avatar.sandbox.dir.spy_write('cyber-dojo.sh', 'make')
     delta = {
@@ -278,11 +377,45 @@ class AvatarTests < ActionController::TestCase
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
 
-    traffic_light = OutputParser::parse(kata.language.unit_test_framework, output)
+    traffic_light = OutputParser::parse(@kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     assert_equal 1, traffic_lights.length
     assert_equal nil, traffic_lights.last[:run_tests_output]
     assert_equal nil, traffic_lights.last[:output]
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "one more traffic light each test() call" do
+    one_more_traffic_light_each_test('rb')
+    teardown
+    setup
+    one_more_traffic_light_each_test('json')
+  end
+
+  def one_more_traffic_light_each_test(format)
+    @dojo = Dojo.new('spied/', format)
+    @kata = @dojo[@id]
+    language = @dojo.language('C')
+    manifest = {
+      :id => @id,
+      :language => language.name,
+      :visible_files => [ ]
+    }
+    kata_manifest_spy_read(format,manifest)
+    @kata = @dojo.create_kata(manifest)
+    language.dir.spy_read('manifest.json', JSON.unparse({
+        "visible_files" => [ ],
+        "unit_test_framework" => "cassert"
+      }))
+    avatar = @kata.start_avatar
+    output = 'stubbed'
+    traffic_light = OutputParser::parse('cassert', output)
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
+    assert_equal 1, traffic_lights.length
+    traffic_light = OutputParser::parse('cassert', output)
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
+    assert_equal 2, traffic_lights.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -311,8 +444,13 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def kata_manifest_spy_read(spied)
-    @kata.dir.spy_read('manifest.rb', spied.inspect)
+  def kata_manifest_spy_read(format, spied)
+    if format == 'rb'
+      @kata.dir.spy_read('manifest.rb', spied.inspect)
+    end
+    if format == 'json'
+      @kata.dir.spy_read('manifest.json', JSON.unparse(spied))
+    end
   end
 
 end

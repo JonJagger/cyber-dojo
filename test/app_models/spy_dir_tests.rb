@@ -82,7 +82,7 @@ class SpyDirTests < ActionController::TestCase
     @dir.teardown
   end
 
-  test "when some spy_read(filename) have no read(filename), teardown raises" do
+  test "when a spy_read(filename) has no read(filename), teardown raises" do
     filename = 'great_film.txt'
     content = 'the princess bride'
     @dir.spy_read(filename, content)
@@ -99,7 +99,7 @@ class SpyDirTests < ActionController::TestCase
     @dir.teardown
   end
 
-  test "when some spy_write(filename,content) have no write(filename,content), teardown raises" do
+  test "when a spy_write(filename,content) has no write(filename,content), teardown raises" do
     filename = 'film.txt'
     content = 'the princess bride'
     @dir.spy_write(filename, content)

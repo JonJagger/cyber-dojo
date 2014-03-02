@@ -62,13 +62,12 @@ class Avatar
   end
 
   def save_traffic_light(traffic_light, now)
-    text = dir.read(traffic_lights_filename)
-    traffic_lights = JSON.parse(JSON.unparse(eval text))
-    traffic_lights << traffic_light
-    traffic_light['number'] = traffic_lights.length
+    lights = traffic_lights
+    lights << traffic_light
+    traffic_light['number'] = lights.length
     traffic_light['time'] = now
-    dir.write(traffic_lights_filename, traffic_lights)
-    traffic_lights
+    dir.write(traffic_lights_filename, lights)
+    lights
   end
 
   def save_visible_files(visible_files)
@@ -76,13 +75,11 @@ class Avatar
   end
 
   def visible_files(tag = nil)
-    text = unlocked_read(visible_files_filename, tag)
-    JSON.parse(JSON.unparse(eval text))
+    parsed(unlocked_read(visible_files_filename, tag))
   end
 
   def traffic_lights(tag = nil)
-    text = unlocked_read(traffic_lights_filename, tag)
-    JSON.parse(JSON.unparse(eval text))
+    parsed(unlocked_read(traffic_lights_filename, tag))
   end
 
   def diff_lines(was_tag, now_tag)
@@ -108,6 +105,16 @@ private
     raise diagnostic
   end
 
+  def parsed(text)
+    if format == 'rb'
+      return JSON.parse(JSON.unparse(eval(text)))
+    end
+    if format == 'json'
+      return JSON.parse(text)
+    end
+  end
+
+
   def unlocked_read(filename, tag)
     dir.lock {
       locked_read(filename, tag)
@@ -127,14 +134,19 @@ private
     # animals test page, and also to display the traffic-lights for
     # an animal on the dashboard page.
     # It is part of the git repository and is committed every run-test.
-    'increments.rb'
+    'increments.' + format
   end
 
   def visible_files_filename
     # Used to retrieve (via a single file access) the visible
     # files needed when resuming an animal.
     # It is part of the git repository and is committed every run-test.
-    'manifest.rb'
+    'manifest.' + format
+  end
+
+  def format
+    return 'rb'   if kata.manifest_filename.end_with?('.rb')
+    return 'json' if kata.manifest_filename.end_with?('.json')
   end
 
 end
