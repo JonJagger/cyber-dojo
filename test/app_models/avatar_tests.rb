@@ -275,11 +275,14 @@ class AvatarTests < ActionController::TestCase
     }
     avatar.sandbox.write(delta, avatar.visible_files)
     output = avatar.sandbox.test(timeout=15)
+    visible_files['output'] = output
+    avatar.save_visible_files(visible_files)
+
     traffic_light = OutputParser::parse(kata.language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, traffic_light)
-    traffic_lights = avatar.traffic_lights
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     assert_equal 1, traffic_lights.length
     assert_equal nil, traffic_lights.last[:run_tests_output]
+    assert_equal nil, traffic_lights.last[:output]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

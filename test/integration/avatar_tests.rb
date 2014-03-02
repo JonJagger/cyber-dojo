@@ -155,8 +155,7 @@ class AvatarTests < ActionController::TestCase
     }
     output = run_test(delta, avatar, visible_files)
     visible_files['output'] = output
-    traffic_light = { :colour => 'amber' }
-    avatar.save_run_tests(visible_files, traffic_light)
+    avatar.save_visible_files(visible_files)
     # now refresh
     avatar = kata[avatar.name]
     assert_equal output, avatar.visible_files['output']

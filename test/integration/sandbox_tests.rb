@@ -32,7 +32,7 @@ class SandboxTests < ActionController::TestCase
     sandbox.write(delta, visible_files)
     output = sandbox.test();
     traffic_light = OutputParser::parse('junit', output)
-    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.git_commit(traffic_lights.length)
 
     assert_equal 'green', traffic_light['colour']
@@ -51,7 +51,7 @@ class SandboxTests < ActionController::TestCase
     sandbox.write(delta, visible_files)
     output = sandbox.test()
     traffic_light = OutputParser::parse('junit', output)
-    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.git_commit(traffic_lights.length)
 
     assert_equal 'amber', traffic_light['colour']
@@ -71,7 +71,7 @@ class SandboxTests < ActionController::TestCase
     sandbox.write(delta, visible_files)
     output = sandbox.test()
     traffic_light = OutputParser::parse('junit', output)
-    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.git_commit(traffic_lights.length)
 
     # if the file whose name contained a space has been retained

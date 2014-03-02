@@ -64,9 +64,9 @@ class ActiveSupport::TestCase
     avatar.sandbox.write(delta, visible_files)
     output = avatar.sandbox.test(timeout)
     avatar.sandbox.dir.write('output', output)
-    language = avatar.kata.language
-    traffic_light = OutputParser::parse(language.unit_test_framework, output)
-    traffic_lights = avatar.save_run_tests(visible_files, traffic_light)
+    avatar.save_visible_files(visible_files)
+    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
+    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.git_commit(traffic_lights.length)
     output
   end

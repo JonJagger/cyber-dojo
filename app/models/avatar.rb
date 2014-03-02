@@ -61,17 +61,18 @@ class Avatar
     git_commit(tag = 0)
   end
 
-  def save_run_tests(visible_files, traffic_light)
-    traffic_lights = nil
-    dir.lock do
-      dir.write(visible_files_filename, visible_files)
-      text = dir.read(traffic_lights_filename)
-      traffic_lights = JSON.parse(JSON.unparse(eval text))
-      traffic_lights << traffic_light
-      traffic_light['number'] = traffic_lights.length
-      dir.write(traffic_lights_filename, traffic_lights)
-    end
+  def save_traffic_light(traffic_light, now)
+    text = dir.read(traffic_lights_filename)
+    traffic_lights = JSON.parse(JSON.unparse(eval text))
+    traffic_lights << traffic_light
+    traffic_light['number'] = traffic_lights.length
+    traffic_light['time'] = now
+    dir.write(traffic_lights_filename, traffic_lights)
     traffic_lights
+  end
+
+  def save_visible_files(visible_files)
+    dir.write(visible_files_filename, visible_files)
   end
 
   def visible_files(tag = nil)

@@ -11,6 +11,7 @@ require "#{cyberdojo_root}/app/models/Sandbox"
 require "#{cyberdojo_root}/app/lib/OutputParser"
 require "#{cyberdojo_root}/lib/Disk"
 require "#{cyberdojo_root}/lib/Git"
+require "#{cyberdojo_root}/lib/Runner"
 require "#{cyberdojo_root}/lib/Uuid"
 
 class OneLanguageChecker
@@ -297,6 +298,7 @@ private
   def dojo
     Thread.current[:disk] ||= Disk.new
     Thread.current[:git] ||= Git.new
+    Thread.current[:runner] ||= Runner.new
     Dojo.new(@root_path)
   end
 
@@ -321,10 +323,11 @@ private
   end
 
   def run_test(delta, avatar, visible_files, timeout)
-    output = avatar.sandbox.test(delta, visible_files, timeout)
-    language = avatar.kata.language
-    traffic_light = OutputParser::parse(language.unit_test_framework, output)
-    avatar.save_run_tests(visible_files, traffic_light)
+    avatar.sandbox.write(delta, visible_files)
+    output = avatar.sandbox.test(timeout)
+    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
+    avatar.save_traffic_light(traffic_light)
+    avatar.save_visible_files(visible_files)
     output
   end
 
