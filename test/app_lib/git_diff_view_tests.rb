@@ -13,11 +13,30 @@ class GitDiffViewTests < ActionController::TestCase
     Thread.current[:disk] = Disk.new
     Thread.current[:git] = Git.new
     Thread.current[:runner] = Runner.new
-    @dojo = Dojo.new(root_path)
   end
 
-  test "building diff view from git repo with modified file" do
+  class MockUuidFactory
 
+    def initialize(mock_uuids)
+      @n = -1
+      @mock_uuids = mock_uuids
+    end
+
+    def create_uuid
+      @mock_uuids[@n += 1]
+    end
+
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "building diff view from git repo with modified file" do
+    building_diff_view_from_git_repo_with_modified_file('rb')
+    building_diff_view_from_git_repo_with_modified_file('json')
+  end
+
+  def building_diff_view_from_git_repo_with_modified_file(format)
+    @dojo = Dojo.new(root_path, format)
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar # tag 0
 
@@ -68,20 +87,6 @@ class GitDiffViewTests < ActionController::TestCase
     }
 
     assert_equal expected, view
-
-
-    class MockUuidFactory
-
-      def initialize(mock_uuids)
-        @n = -1
-        @mock_uuids = mock_uuids
-      end
-
-      def create_uuid
-        @mock_uuids[@n += 1]
-      end
-
-    end
 
     diffs = git_diff_prepare(view, MockUuidFactory.new(["1","2","3"]))
     expected_diffs = [
@@ -151,6 +156,12 @@ class GitDiffViewTests < ActionController::TestCase
   #-----------------------------------------------
 
   test "building git diff view from repo with deleted file" do
+    building_git_diff_view_from_repo_with_deleted_file('rb')
+    building_git_diff_view_from_repo_with_deleted_file('json')
+  end
+
+  def building_git_diff_view_from_repo_with_deleted_file(format)
+    @dojo = Dojo.new(root_path, format)
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar # tag 0
 
@@ -200,6 +211,12 @@ class GitDiffViewTests < ActionController::TestCase
   #-----------------------------------------------
 
   test "only visible files are commited and are seen in diff_lines" do
+    only_visible_files_are_committed_and_are_seen_in_diff_lines('rb')
+    only_visible_files_are_committed_and_are_seen_in_diff_lines('json')
+  end
+
+  def only_visible_files_are_committed_and_are_seen_in_diff_lines(format)
+    @dojo = Dojo.new(root_path, format)
     kata = make_kata(@dojo, 'Java-JUnit')
     avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files

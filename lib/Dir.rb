@@ -37,8 +37,14 @@ class Dir
       execute_permission = 0755
       File.chmod(execute_permission, pathed_filename) if pathed_filename =~ /\.sh/
     else
-      # The newline is to silence git's "\ No newline at end of file"
-      File.open(pathed_filename, 'w') { |file| file.write(object.inspect + "\n") }
+      File.open(pathed_filename, 'w') { |file|
+        if filename.end_with?('.rb')
+          file.write(object.inspect)
+        end
+        if filename.end_with?('.json')
+          file.write(JSON.unparse(object))
+        end
+      }
     end
   end
 

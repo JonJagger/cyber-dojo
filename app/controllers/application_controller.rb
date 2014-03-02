@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     Thread.current[:disk] ||= Disk.new
     Thread.current[:git] ||= Git.new
     Thread.current[:runner] ||= Runner.new
-    Dojo.new(root_path)
+    Dojo.new(root_path, 'json')
   end
 
   def make_manifest(language_name, exercise_name)

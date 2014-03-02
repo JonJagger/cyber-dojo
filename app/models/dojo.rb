@@ -1,7 +1,7 @@
 
 class Dojo
 
-  def initialize(path, format="rb")
+  def initialize(path, format='rb')
     @disk = Thread.current[:disk] || fatal("no disk")
     @path,@format = path,format
   end
