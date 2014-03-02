@@ -8,8 +8,8 @@ module Choose
 
   #TODO: put these two methods in app/models/Dojo
 
-  def self.language(languages, params_id, id, root_path)
-    dojo = Dojo.new(root_path)
+  def self.language(languages, params_id, id, dojo) #root_path)
+    #dojo = Dojo.new(root_path)
     kata = dojo[id]
     choice = [*0..languages.length-1].shuffle[0]
     if params_id && kata.exists?
@@ -21,8 +21,8 @@ module Choose
     choice
   end
 
-  def self.exercise(exercises, params_id, id, root_path)
-    dojo = Dojo.new(root_path)
+  def self.exercise(exercises, params_id, id, dojo) #root_path)
+    #dojo = Dojo.new(root_path)
     kata = dojo[id]
     choice = [*0..exercises.length-1].shuffle[0]
     if params_id && kata.exists?

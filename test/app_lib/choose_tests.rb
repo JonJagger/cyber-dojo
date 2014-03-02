@@ -19,7 +19,7 @@ class ChooseTests < ActionController::TestCase
       @dojo = Dojo.new(root_path, format)
       languages = ['C', 'Ruby', 'Python', 'C++']
       params_id = nil
-      actual = Choose::language(languages, params_id, :unused, :unused)
+      actual = Choose::language(languages, params_id, :unused, @dojo)
       assert actual.is_a? Numeric
       assert actual >= 0 && actual < languages.length
     }
@@ -32,7 +32,7 @@ class ChooseTests < ActionController::TestCase
       languages = ['C', 'Ruby', 'Python', 'C++']
       params_id = '012345'
       id = '0123456789'
-      actual = Choose::language(languages, params_id, id, @dojo.path)
+      actual = Choose::language(languages, params_id, id, @dojo)
       assert actual.is_a? Numeric
       assert actual >= 0 && actual < languages.length
     }
@@ -45,7 +45,7 @@ class ChooseTests < ActionController::TestCase
       language = 'Ruby-installed-and-working'
       languages = [ 'C', 'Python', language, 'C++', 'Clojure' ]
       kata = make_kata(@dojo, language, 'Yahtzee')
-      actual = Choose::language(languages, kata.id, kata.id, @dojo.path)
+      actual = Choose::language(languages, kata.id, kata.id, @dojo)
       assert actual.is_a? Numeric
       assert_equal languages.index(language), actual
     }
@@ -58,7 +58,7 @@ class ChooseTests < ActionController::TestCase
       language = 'Ruby-installed-and-working'
       languages = [ 'C', 'Python', 'Ruby', 'Clojure', 'Java' ]
       kata = make_kata(@dojo, language, 'Yahtzee')
-      actual = Choose::language(languages, kata.id, kata.id, @dojo.path)
+      actual = Choose::language(languages, kata.id, kata.id, @dojo)
       assert actual.is_a? Numeric
       assert actual >= 0 && actual < languages.length
     }
@@ -68,11 +68,15 @@ class ChooseTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when no params[:id] then choose random entry from exercises" do
-    exercises = ['Yahtzee', 'Roman Numerals', 'Leap Years', 'Fizz Buzz']
-    params_id = nil
-    actual = Choose::exercise(exercises, params_id, :unused, :unused)
-    assert actual.is_a? Numeric
-    assert actual >= 0 && actual < exercises.length
+    rb_and_json = Proc.new{|format|
+      @dojo = Dojo.new(root_path, format)
+      exercises = ['Yahtzee', 'Roman Numerals', 'Leap Years', 'Fizz Buzz']
+      params_id = nil
+      actual = Choose::exercise(exercises, params_id, :unused, @dojo)
+      assert actual.is_a? Numeric
+      assert actual >= 0 && actual < exercises.length
+    }
+    check(rb_and_json)
   end
 
   test "when params[:id] but kata(id) does not exist then choose random entry from exercises" do
@@ -81,7 +85,7 @@ class ChooseTests < ActionController::TestCase
       exercises = ['Yahtzee', 'Roman Numerals', 'Leap Years', 'Fizz Buzz']
       params_id = '012345'
       id = '0123456789'
-      actual = Choose::exercise(exercises, params_id, id, @dojo.path)
+      actual = Choose::exercise(exercises, params_id, id, @dojo)
       assert actual.is_a? Numeric
       assert actual >= 0 && actual < exercises.length
     }
@@ -94,7 +98,7 @@ class ChooseTests < ActionController::TestCase
       exercise = 'Yahtzee'
       exercises = [ 'Leap Years', 'Roman Numerals', exercise, 'Fizz Buzz', 'Zeckendorf' ]
       kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise)
-      actual = Choose::exercise(exercises, kata.id, kata.id, @dojo.path)
+      actual = Choose::exercise(exercises, kata.id, kata.id, @dojo)
       assert actual.is_a? Numeric
       assert_equal exercises.index(exercise), actual
     }
@@ -107,7 +111,7 @@ class ChooseTests < ActionController::TestCase
       exercise = 'Yahtzee'
       exercises = [ 'Leap Years', 'Roman Numerals', 'Fizz Buzz', 'Zeckendorf' ]
       kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise)
-      actual = Choose::exercise(exercises, kata.id, kata.id, @dojo.path)
+      actual = Choose::exercise(exercises, kata.id, kata.id, @dojo)
       assert actual.is_a? Numeric
       assert actual >= 0 && actual < exercises.length
     }
