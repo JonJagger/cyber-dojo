@@ -9,7 +9,7 @@ class ZombieShellTests < ActionController::TestCase
     Thread.current[:disk] = Disk.new
     Thread.current[:git] = Git.new
     Thread.current[:runner] = Runner.new
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
   end
 
   def defunct_count

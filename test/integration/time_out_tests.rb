@@ -9,7 +9,7 @@ class TimeOutTests < ActionController::TestCase
     Thread.current[:disk] = Disk.new
     Thread.current[:git] = Git.new
     Thread.current[:runner] = Runner.new
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
   end
 
   test "that code with infinite loop times out to amber and doesnt leak processes" do

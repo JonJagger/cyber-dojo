@@ -36,7 +36,7 @@ class ForkerControllerTest < IntegrationTest
   test "if language folder no longer exists the fork fails and reason is given as language" do
     Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new(root_path,'json')
     language = dojo.language('xxxx')
     id = '1234512345'
     kata = dojo[id]
@@ -61,7 +61,7 @@ class ForkerControllerTest < IntegrationTest
   test "if avatar not started the fork fails and reason is given as avatar" do
     Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new(root_path,'json')
     id = '1234512345'
     kata = dojo[id]
     language = dojo.language('Ruby-installed-and-working')
@@ -96,7 +96,7 @@ class ForkerControllerTest < IntegrationTest
   def bad_tag_test(bad_tag)
     Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new(root_path,'json')
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
     kata = dojo[id]
@@ -129,7 +129,7 @@ class ForkerControllerTest < IntegrationTest
   test "when id,language,avatar,tag all ok fork works new dojo's id is returned" do
     Thread.current[:disk] = disk = SpyDisk.new
     Thread.current[:git] = git = StubGit.new
-    dojo = Dojo.new(root_path)
+    dojo = Dojo.new(root_path,'json')
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
     kata = dojo[id]

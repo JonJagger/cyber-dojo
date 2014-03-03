@@ -6,7 +6,7 @@ class FoldersTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = Disk.new
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path, 'rb')
   end
 
   test "test languages folder doesn't contain . or .." do

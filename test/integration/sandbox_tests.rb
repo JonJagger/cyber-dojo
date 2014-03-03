@@ -9,75 +9,83 @@ class SandboxTests < ActionController::TestCase
     Thread.current[:disk] = Disk.new
     Thread.current[:git] = Git.new
     Thread.current[:runner] = Runner.new
-    @dojo = Dojo.new(root_path)
+  end
+
+  def rb_and_json(&block)
+    block.call('rb')
+    teardown
+    setup
+    block.call('json')
   end
 
   test "defect-driven: filename containing space is not accidentally retained" do
-    # retained means stays in the sandbox
-    kata = make_kata(@dojo, 'Java-JUnit', exercise='Dummy')
-    avatar = kata.start_avatar
-    sandbox = avatar.sandbox
+    rb_and_json(&Proc.new{|format|
+      dojo = Dojo.new(root_path,format)
+      # retained means stays in the sandbox
+      kata = make_kata(dojo, 'Java-JUnit', exercise='Dummy')
+      avatar = kata.start_avatar
+      sandbox = avatar.sandbox
 
-    visible_files = {
-      'Untitled.java'     => content_for_untitled_java,
-      'UntitledTest.java' => content_for_untitled_test_java,
-      'cyber-dojo.sh'     => content_for_cyber_dojo_sh
-    }
-    delta = {
-      :unchanged => [ ],
-      :changed   => [ 'cyber-dojo.sh', 'UntitledTest.java', 'Untitled.java' ],
-      :deleted   => [ ],
-      :new       => [ ]
-    }
-    sandbox.write(delta, visible_files)
-    output = sandbox.test();
-    traffic_light = OutputParser::parse('junit', output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.git_commit(traffic_lights.length)
+      visible_files = {
+        'Untitled.java'     => content_for_untitled_java,
+        'UntitledTest.java' => content_for_untitled_test_java,
+        'cyber-dojo.sh'     => content_for_cyber_dojo_sh
+      }
+      delta = {
+        :unchanged => [ ],
+        :changed   => [ 'cyber-dojo.sh', 'UntitledTest.java', 'Untitled.java' ],
+        :deleted   => [ ],
+        :new       => [ ]
+      }
+      sandbox.write(delta, visible_files)
+      output = sandbox.test();
+      traffic_light = OutputParser::parse('junit', output)
+      traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
+      avatar.git_commit(traffic_lights.length)
 
-    assert_equal 'green', traffic_light['colour']
+      assert_equal 'green', traffic_light['colour']
 
-    visible_files = {
-      'Untitled .java'    => content_for_untitled_java,
-      'UntitledTest.java' => content_for_untitled_test_java,
-      'cyber-dojo.sh'     => content_for_cyber_dojo_sh
-    }
-    delta = {
-      :unchanged => [ 'cyber-dojo.sh', 'UntitledTest.java' ],
-      :changed   => [ ],
-      :deleted   => [ 'Untitled.java' ],
-      :new       => [ 'Untitled .java' ]
-    }
-    sandbox.write(delta, visible_files)
-    output = sandbox.test()
-    traffic_light = OutputParser::parse('junit', output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.git_commit(traffic_lights.length)
+      visible_files = {
+        'Untitled .java'    => content_for_untitled_java,
+        'UntitledTest.java' => content_for_untitled_test_java,
+        'cyber-dojo.sh'     => content_for_cyber_dojo_sh
+      }
+      delta = {
+        :unchanged => [ 'cyber-dojo.sh', 'UntitledTest.java' ],
+        :changed   => [ ],
+        :deleted   => [ 'Untitled.java' ],
+        :new       => [ 'Untitled .java' ]
+      }
+      sandbox.write(delta, visible_files)
+      output = sandbox.test()
+      traffic_light = OutputParser::parse('junit', output)
+      traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
+      avatar.git_commit(traffic_lights.length)
 
-    assert_equal 'amber', traffic_light['colour']
+      assert_equal 'amber', traffic_light['colour']
 
-    # put it back the way it was
-    visible_files = {
-      'Untitled.java'     => content_for_untitled_java,
-      'UntitledTest.java' => content_for_untitled_test_java,
-      'cyber-dojo.sh'     => content_for_cyber_dojo_sh
-    }
-    delta = {
-      :changed   => [ ],
-      :unchanged => [ 'cyber-dojo.sh', 'UntitledTest.java', 'Untitled.java' ],
-      :deleted   => [ 'Untitled .java' ],
-      :new       => [ 'Untitled.java' ]
-    }
-    sandbox.write(delta, visible_files)
-    output = sandbox.test()
-    traffic_light = OutputParser::parse('junit', output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.git_commit(traffic_lights.length)
+      # put it back the way it was
+      visible_files = {
+        'Untitled.java'     => content_for_untitled_java,
+        'UntitledTest.java' => content_for_untitled_test_java,
+        'cyber-dojo.sh'     => content_for_cyber_dojo_sh
+      }
+      delta = {
+        :changed   => [ ],
+        :unchanged => [ 'cyber-dojo.sh', 'UntitledTest.java', 'Untitled.java' ],
+        :deleted   => [ 'Untitled .java' ],
+        :new       => [ 'Untitled.java' ]
+      }
+      sandbox.write(delta, visible_files)
+      output = sandbox.test()
+      traffic_light = OutputParser::parse('junit', output)
+      traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
+      avatar.git_commit(traffic_lights.length)
 
-    # if the file whose name contained a space has been retained
-    # this will be :amber instead of :green
-    assert_equal 'green', traffic_light['colour'], kata.id + ":" + avatar.name
-
+      # if the file whose name contained a space has been retained
+      # this will be :amber instead of :green
+      assert_equal 'green', traffic_light['colour'], kata.id + ":" + avatar.name
+    })
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -299,7 +299,7 @@ private
     Thread.current[:disk] ||= Disk.new
     Thread.current[:git] ||= Git.new
     Thread.current[:runner] ||= Runner.new
-    Dojo.new(@root_path)
+    Dojo.new(@root_path,'json')
   end
 
   def make_kata(language_name, exercise_name)
@@ -326,7 +326,7 @@ private
     avatar.sandbox.write(delta, visible_files)
     output = avatar.sandbox.test(timeout)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    avatar.save_traffic_light(traffic_light)
+    avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.save_visible_files(visible_files)
     output
   end
