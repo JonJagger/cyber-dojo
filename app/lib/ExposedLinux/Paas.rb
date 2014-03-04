@@ -8,15 +8,24 @@ module ExposedLinux
       Dojo.new(self,root_path,format)
     end
 
-    def languages_each
-      yield "Java"
-      yield "Ruby"
+    def languages_each(dojo)
+      ["Java","Ruby"].each do |name|
+        yield name
+      end
     end
 
-    def exercises_each
-      yield "Fizz Buzz"
-      yield "Roman Numerals"
+    def exercises_each(dojo)
+      ["Fizz Buzz","Roman Numerals"].each do |name|
+        yield name
+      end
     end
+
+    def make_kata(language,name)
+      #here we know
+      #language.class == ExposedLinux::Language
+      #exercise.class == ExposedLinux::Exercise
+    end
+
   end
 
 end

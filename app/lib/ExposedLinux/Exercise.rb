@@ -3,8 +3,8 @@ module ExposedLinux
 
   class Exercise
 
-    def initialize(name)
-      @name = name
+    def initialize(dojo,name)
+      @dojo,@name = dojo,name
     end
 
     def name

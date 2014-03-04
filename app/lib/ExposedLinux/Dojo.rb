@@ -7,18 +7,17 @@ module ExposedLinux
       @paas,@root_dir,@format = paas,root_dir,format
     end
 
-    def paas
-      @paas
-    end
-
     def languages
-      Languages.new(self)
+      Languages.new(@paas,self)
     end
 
     def exercises
-      Exercises.new(self)
+      Exercises.new(@paas,self)
     end
 
+    def make_kata(language,exercise)
+      @paas.make_kata(language,exercise)
+    end
   end
 
 end

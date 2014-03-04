@@ -9,4 +9,12 @@ class ExercisesTests < ActionController::TestCase
     assert_equal ["Fizz Buzz","Roman Numerals"], dojo.exercises.map {|exercise| exercise.name}
   end
 
+  test "dojo.exercises[name]" do
+    paas = ExposedLinux::Paas.new
+    dojo = paas.create_dojo(root_path,'rb')
+    exercise = dojo.exercises["Fizz Buzz"]
+    assert_equal ExposedLinux::Exercise, exercise.class
+    assert_equal "Fizz Buzz", exercise.name
+  end
+
 end

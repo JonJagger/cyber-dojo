@@ -4,12 +4,18 @@ module ExposedLinux
   class Exercises
     include Enumerable
 
-    def initialize(dojo)
-      @dojo = dojo
+    def initialize(paas,dojo)
+      @paas,@dojo = paas,dojo
     end
 
     def each
-      @dojo.paas.exercises_each {|name| yield Exercise.new(name) }
+      @paas.exercises_each(@dojo) do |name|
+        yield self[name]
+      end
+    end
+
+    def [](name)
+      Exercise.new(@dojo,name)
     end
 
   end

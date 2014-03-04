@@ -9,4 +9,12 @@ class LanguagesTests < ActionController::TestCase
     assert_equal ["Java","Ruby"], dojo.languages.map {|language| language.name}
   end
 
+  test "dojo.languages[name]" do
+    paas = ExposedLinux::Paas.new
+    dojo = paas.create_dojo(root_path,'rb')
+    language = dojo.languages["Ruby"]
+    assert_equal ExposedLinux::Language, language.class
+    assert_equal "Ruby", language.name
+  end
+
 end
