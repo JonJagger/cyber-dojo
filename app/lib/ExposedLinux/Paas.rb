@@ -1,4 +1,3 @@
-require 'Dojo'
 
 module ExposedLinux
 
@@ -9,14 +8,16 @@ module ExposedLinux
     end
 
     def languages_each(dojo)
-      ["Java","Ruby"].each do |name|
-        yield name
+      pathed = dojo.root_path + '/languages/'
+      Dir.entries(pathed).select do |name|
+        yield name if is_dir?(File.join(pathed,name))
       end
     end
 
     def exercises_each(dojo)
-      ["Fizz Buzz","Roman Numerals"].each do |name|
-        yield name
+      pathed = dojo.root_path + '/exercises/'
+      Dir.entries(pathed).each do |name|
+        yield name if is_dir?(File.join(pathed,name))
       end
     end
 
@@ -24,6 +25,50 @@ module ExposedLinux
       #here we know
       #language.class == ExposedLinux::Language
       #exercise.class == ExposedLinux::Exercise
+      #language.dojo == exercise.dojo
+      #do everything needed to create new kata with id==uuid
+      id = 'ABCDE12345'
+      Kata.new(self,id)
+    end
+
+    def katas_each(dojo)
+      pathed = dojo.root_path + '../../katas/'
+      Dir.entries(pathed).each do |outer_dir|
+        outer_path = File.join(pathed,outer_dir)
+        if is_dir?(outer_path)
+          Dir.entries(outer_path).each do |inner_dir|
+            inner_path = File.join(outer_path,inner_dir)
+            yield outer_dir+inner_dir if is_dir?(inner_path)
+          end
+        end
+      end
+    end
+
+    def start_avatar
+      #do what needs to be done
+      Avatar.new(self,'lion')
+    end
+
+    def avatars_each(kata)
+      #
+    end
+
+    def avatar_test(delta,visible_files)
+      #...
+    end
+
+    def avatar_visible_files(tag)
+      #...
+    end
+
+    def avatar_traffic_lights(tag)
+      #...
+    end
+
+  private
+
+    def is_dir?(name)
+      File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')
     end
 
   end

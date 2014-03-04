@@ -6,15 +6,15 @@ class ExercisesTests < ActionController::TestCase
   test "dojo.exercises.each forwards to exercises_each on paas" do
     paas = ExposedLinux::Paas.new
     dojo = paas.create_dojo(root_path,'rb')
-    assert_equal ["Fizz Buzz","Roman Numerals"], dojo.exercises.map {|exercise| exercise.name}
+    assert_equal ["Yahtzee"], dojo.exercises.map {|exercise| exercise.name}
   end
 
   test "dojo.exercises[name]" do
     paas = ExposedLinux::Paas.new
     dojo = paas.create_dojo(root_path,'rb')
-    exercise = dojo.exercises["Fizz Buzz"]
+    exercise = dojo.exercises["Yahtzee"]
     assert_equal ExposedLinux::Exercise, exercise.class
-    assert_equal "Fizz Buzz", exercise.name
+    assert_equal "Yahtzee", exercise.name
   end
 
 end

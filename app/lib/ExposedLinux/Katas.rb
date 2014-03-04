@@ -1,7 +1,7 @@
 
 module ExposedLinux
 
-  class Exercises
+  class Katas
     include Enumerable
 
     def initialize(dojo)
@@ -13,13 +13,13 @@ module ExposedLinux
     end
 
     def each
-      dojo.paas.exercises_each(dojo) do |name|
-        yield self[name]
+      dojo.paas.katas_each(dojo) do |id|
+        yield self[id]
       end
     end
 
-    def [](name)
-      Exercise.new(dojo,name)
+    def [](id)
+      Kata.new(dojo,id)
     end
 
   end

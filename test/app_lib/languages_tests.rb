@@ -6,15 +6,17 @@ class LanguagesTests < ActionController::TestCase
   test "dojo.languages.each forwards to languages_each on paas" do
     paas = ExposedLinux::Paas.new
     dojo = paas.create_dojo(root_path,'rb')
-    assert_equal ["Java","Ruby"], dojo.languages.map {|language| language.name}
+    languages = dojo.languages.map {|language| language.name}
+    assert languages.include?('C#')
+    assert languages.include?('Ruby-installed-and-working')
   end
 
   test "dojo.languages[name]" do
     paas = ExposedLinux::Paas.new
     dojo = paas.create_dojo(root_path,'rb')
-    language = dojo.languages["Ruby"]
+    language = dojo.languages["Ruby-Cucumber"]
     assert_equal ExposedLinux::Language, language.class
-    assert_equal "Ruby", language.name
+    assert_equal "Ruby-Cucumber", language.name
   end
 
 end

@@ -4,12 +4,12 @@ module ExposedLinux
   class Languages
     include Enumerable
 
-    def initialize(paas,dojo)
-      @paas,@dojo = paas,dojo
+    def initialize(dojo)
+      @dojo = dojo
     end
 
     def each
-      @paas.languages_each(@dojo) do |name|
+      @dojo.paas.languages_each(@dojo) do |name|
         yield self[name]
       end
     end

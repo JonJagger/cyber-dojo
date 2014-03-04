@@ -7,6 +7,10 @@ module ExposedLinux
       @dojo,@name = dojo,name
     end
 
+    def dojo
+      @dojo
+    end
+
     def name
       @name
     end
