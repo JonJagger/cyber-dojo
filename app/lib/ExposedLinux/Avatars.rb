@@ -8,9 +8,7 @@ module ExposedLinux
       @kata = kata
     end
 
-    def kata
-      @kata
-    end
+    attr_reader :kata
 
     def each
       kata.dojo.paas.avatars_each(kata) do |name|

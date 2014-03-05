@@ -7,13 +7,7 @@ module ExposedLinux
       @dojo,@id = dojo,id
     end
 
-    def dojo
-      @dojo
-    end
-
-    def id
-      @id
-    end
+    attr_reader :dojo, :id
 
     def start_avatar
       dojo.paas.start_avatar

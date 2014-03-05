@@ -8,14 +8,16 @@ module ExposedLinux
       @dojo = dojo
     end
 
+    attr_reader :dojo
+
     def each
-      @dojo.paas.languages_each(@dojo) do |name|
+      dojo.paas.languages_each(dojo) do |name|
         yield self[name]
       end
     end
 
     def [](name)
-      Language.new(@dojo,name)
+      Language.new(dojo,name)
     end
   end
 

@@ -7,18 +7,8 @@ module ExposedLinux
       @paas,@root_path,@format = paas,root_path,format
     end
 
-    def paas
-      @paas
-    end
+    attr_reader :paas, :root_path, :format
 
-    def root_path
-      @root_path
-    end
-
-    def format
-      @format
-    end
-    
     def languages
       Languages.new(self)
     end
@@ -28,7 +18,7 @@ module ExposedLinux
     end
 
     def make_kata(language,exercise)
-      @paas.make_kata(language,exercise)
+      paas.make_kata(language,exercise)
     end
 
     def katas

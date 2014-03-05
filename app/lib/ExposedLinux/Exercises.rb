@@ -8,9 +8,7 @@ module ExposedLinux
       @dojo = dojo
     end
 
-    def dojo
-      @dojo
-    end
+    attr_reader :dojo
 
     def each
       dojo.paas.exercises_each(dojo) do |name|

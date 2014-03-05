@@ -7,13 +7,7 @@ module ExposedLinux
       @dojo,@name = dojo,name
     end
 
-    def dojo
-      @dojo
-    end
-
-    def name
-      @name
-    end
+    attr_reader :dojo, :name
 
   end
 
