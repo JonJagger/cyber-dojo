@@ -1,11 +1,18 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
+require File.dirname(__FILE__) + '/../app_models/spy_disk'
+
 
 class ExercisesTests < ActionController::TestCase
 
   def setup
-    paas = ExposedLinux::Paas.new
+    @disk = SpyDisk.new
+    paas = ExposedLinux::Paas.new(@disk)
     @dojo = paas.create_dojo(root_path + '../../','rb')
+  end
+
+  def teardown
+    @disk.teardown
   end
 
   test "dojo.exercises.each forwards to exercises_each on paas" do
@@ -16,9 +23,17 @@ class ExercisesTests < ActionController::TestCase
   end
 
   test "dojo.exercises[name]" do
-    exercise = @dojo.exercises["Print_Diamond"]
+    name = 'Print_Diamond'
+    exercise = @dojo.exercises[name]
     assert_equal ExposedLinux::Exercise, exercise.class
-    assert_equal "Print_Diamond", exercise.name
+    assert_equal name, exercise.name
+  end
+
+  test "dojo.exercise.instructions" do
+    name = 'Print Diamond'
+    @disk[@dojo.root + 'exercises/'+name].spy_read('instructions','your task...')
+    exercise = @dojo.exercises[name]
+    assert_equal 'your task...', exercise.instructions
   end
 
 end

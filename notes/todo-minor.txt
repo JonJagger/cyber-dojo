@@ -1,6 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+DEFECT
+  Refactoring page on blog no longer works because
+  forker/fork is now an ajax call returning json.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   line-numbers appear momentarily
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -87,6 +90,7 @@ Refactoring dojos
     Python 435E5C1C88 moose 5
     Ruby   3367E4B0E9 raccoon 4
     C++    A06DCDA217 wolf 5
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 19th Feb 2014: On cyber-dojo.com ran
   > ruby prune_small.rb true 3 7

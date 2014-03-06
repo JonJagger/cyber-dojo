@@ -1,11 +1,17 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
+require File.dirname(__FILE__) + '/../app_models/spy_disk'
 
 class LanguagesTests < ActionController::TestCase
 
   def setup
-    paas = ExposedLinux::Paas.new
+    @disk = SpyDisk.new
+    paas = ExposedLinux::Paas.new(@disk)
     @dojo = paas.create_dojo(root_path + '../../','rb')
+  end
+
+  def teardown
+    @disk.teardown
   end
 
   test "dojo.languages.each forwards to languages_each on paas" do

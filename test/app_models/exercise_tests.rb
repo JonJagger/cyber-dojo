@@ -5,7 +5,6 @@ class ExerciseTests < ActionController::TestCase
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
-    #@exercise = Dojo.new('spied/').exercise('Yahtzee')
   end
 
   def teardown

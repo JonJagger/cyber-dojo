@@ -9,6 +9,10 @@ module ExposedLinux
 
     attr_reader :dojo, :name
 
+    def instructions
+      dojo.paas.instructions(self)
+    end
+
   end
 
 end

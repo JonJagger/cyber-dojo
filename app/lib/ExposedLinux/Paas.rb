@@ -3,22 +3,30 @@ module ExposedLinux
 
   class Paas
 
-    def create_dojo(root_path, format)
-      Dojo.new(self,root_path,format)
+    def initialize(disk)
+      @disk = disk
+    end
+
+    def create_dojo(root, format)
+      Dojo.new(self,root,format)
     end
 
     def languages_each(dojo)
-      pathed = dojo.root_path + '/languages/'
+      pathed = dojo.root + '/languages/'
       Dir.entries(pathed).select do |name|
         yield name if is_dir?(File.join(pathed,name))
       end
     end
 
     def exercises_each(dojo)
-      pathed = dojo.root_path + '/exercises/'
+      pathed = dojo.root + '/exercises/'
       Dir.entries(pathed).each do |name|
         yield name if is_dir?(File.join(pathed,name))
       end
+    end
+
+    def instructions(exercise)
+      @disk[exercise.dojo.root + 'exercises/' + exercise.name].read('instructions')
     end
 
     def make_kata(language,name)
@@ -32,7 +40,7 @@ module ExposedLinux
     end
 
     def katas_each(dojo)
-      pathed = dojo.root_path + '/katas/'
+      pathed = dojo.root + '/katas/'
       Dir.entries(pathed).each do |outer_dir|
         outer_path = File.join(pathed,outer_dir)
         if is_dir?(outer_path)
@@ -53,7 +61,7 @@ module ExposedLinux
     def avatars_each(kata)
       inner = kata.id[0..1]
       outer = kata.id[2..-1]
-      pathed = kata.dojo.root_path + '/katas/' + inner + '/' + outer + '/'
+      pathed = kata.dojo.root + '/katas/' + inner + '/' + outer + '/'
       Dir.entries(pathed).each do |name|
         yield name if is_dir? File.join(pathed,name)
       end
@@ -85,6 +93,9 @@ end
 # services namely: disk, git, shell.
 # And I will create another implementation IsolatedDockerPaas
 # Design notes
+#
+# o) in controller I can see if IsolatedDockerPaas is available and if it is
+#    use that, otherwise drop back to using ExposedLinuxPaas
 #
 # o) each model object; kata, avatar, sandbox, should know
 #    its identity but should not catenate id's together - that

@@ -3,11 +3,11 @@ module ExposedLinux
 
   class Dojo
 
-    def initialize(paas,root_path,format)
-      @paas,@root_path,@format = paas,root_path,format
+    def initialize(paas,root,format)
+      @paas,@root,@format = paas,root,format
     end
 
-    attr_reader :paas, :root_path, :format
+    attr_reader :paas, :root, :format
 
     def languages
       Languages.new(self)

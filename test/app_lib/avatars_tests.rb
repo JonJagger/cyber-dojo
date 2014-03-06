@@ -1,12 +1,18 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
+require File.dirname(__FILE__) + '/../app_models/spy_disk'
 
 class AvatarTests < ActionController::TestCase
 
   def setup
-    paas = ExposedLinux::Paas.new
+    @disk = SpyDisk.new
+    paas = ExposedLinux::Paas.new(@disk)
     @id = 'FCF27D87F1'
     @dojo = paas.create_dojo(root_path + '../../','rb')
+  end
+
+  def teardown
+    @disk.teardown
   end
 
   test "dojo.katas[id].avatars" do
