@@ -9,8 +9,12 @@ module ExposedLinux
 
     attr_reader :kata, :name
 
-    def test(delta,visible_files)
-      kata.dojo.paas.avatar_test(self,delta,visible_files)
+    def save(visible_files)
+      kata.dojo.paas.avatar_save(self,delta,visible_files)
+    end
+
+    def test()
+      kata.dojo.paas.avatar_test(self)
     end
 
     def visible_files(tag)

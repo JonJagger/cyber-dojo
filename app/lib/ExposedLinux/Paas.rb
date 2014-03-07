@@ -35,6 +35,39 @@ module ExposedLinux
       #exercise.class == ExposedLinux::Exercise
       #language.dojo == exercise.dojo
       #do everything needed to create new kata with id==uuid
+      #
+      # dojo.create_kata(manifest)
+      #    Kata.new(self,id)
+      #          def initialize(dojo, id)
+      #             @disk = Thread.current[:disk] || fatal("no disk")
+      #             @dojo = dojo
+      #             @id = Uuid.new(id)
+      #          end
+      #    kata.dir.write('manifest.' + @format, manifest)
+      #
+      # where does manifest come from?
+      # setup_controller.rb
+      #    manifest = make_manifest(params['language'], params['exercise'])
+      #    language = dojo.language(manifest[:language])
+      #    exercise = dojo.exercise(manifest[:exercise])
+      #    vis = manifest[:visible_files] = language.visible_files
+      #    vis['output'] = ''
+      #    vis['instructions'] = exercise.instructions
+      #    dojo.create_kata(manifest)
+      #
+      #  def make_manifest(language_name, exercise_name)
+      #    language = dojo.language(language_name)
+      #    {
+      #      :created => make_time(Time.now),
+      #      :id => Uuid.new.to_s,
+      #      :language => language.name,
+      #      :exercise => exercise_name, # used only for display
+      #      :unit_test_framework => language.unit_test_framework,
+      #      :tab_size => language.tab_size
+      #    }
+      #  end
+
+
       id = 'ABCDE12345'
       Kata.new(self,id)
     end
@@ -53,8 +86,45 @@ module ExposedLinux
     end
 
     def start_avatar
-      #do what needs to be done
-      #need locking here
+      #
+      #  def kata.start_avatar
+      #    avatar = nil
+      #    dir.lock do
+      #      started_avatar_names = avatars.collect { |avatar| avatar.name }
+      #      unstarted_avatar_names = Avatar.names - started_avatar_names
+      #      if unstarted_avatar_names != [ ]
+      #        avatar_name = random(unstarted_avatar_names)
+      #        avatar = self[avatar_name]
+      #        avatar.setup
+      #      end
+      #    end
+      #    avatar
+      #  end
+      #
+      #  def avatar.setup
+      #    @disk[path].make
+      #    @git.init(path, "--quiet")
+      #
+      #    dir.write(visible_files_filename, @kata.visible_files)
+      #    @git.add(path, visible_files_filename)
+      #
+      #    dir.write(traffic_lights_filename, [ ])
+      #    @git.add(path, traffic_lights_filename)
+      #
+      #    @kata.visible_files.each do |filename,content|
+      #      sandbox.dir.write(filename, content)
+      #      @git.add(sandbox.path, filename)
+      #    end
+      #
+      #    @kata.language.support_filenames.each do |filename|
+      #      old_name = @kata.language.path + filename
+      #      new_name = sandbox.path + filename
+      #      @disk.symlink(old_name, new_name)
+      #    end
+      #
+      #    git_commit(tag = 0)
+      #  end
+
       Avatar.new(self,'lion')
     end
 
@@ -67,15 +137,25 @@ module ExposedLinux
       end
     end
 
-    def avatar_test(avatar,delta,visible_files)
+    def avatar_save(avatar,delta,visible_files)
+      #...
+      #...
+      #...
+    end
+
+    def avatar_test(avatar)
       #...returns output
     end
 
     def avatar_visible_files(avatar,tag)
       #...
+      #...
+      #...
     end
 
     def avatar_traffic_lights(avatar,tag)
+      #...
+      #...
       #...
     end
 
