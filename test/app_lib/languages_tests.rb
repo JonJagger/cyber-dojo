@@ -1,12 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
 require File.dirname(__FILE__) + '/../app_models/spy_disk'
+require File.dirname(__FILE__) + '/../app_models/stub_git'
 
 class LanguagesTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
-    @paas = ExposedLinux::Paas.new(@disk)
+    @git = StubGit.new
+    @paas = ExposedLinux::Paas.new(@disk,@git)
     @dojo = @paas.create_dojo(root_path + '../../','rb')
   end
 
@@ -28,7 +30,7 @@ class LanguagesTests < ActionController::TestCase
 
   test "language.visible_files" do
     language = @dojo.languages["Ruby-Cucumber"]
-    visible_filenames = [ 'wibble.h', 'wibble.c' ]
+    visible_filenames = [ 'wibble.rb', 'wibble_tests.rb' ]
     @paas.dir(language).spy_read('manifest.json', JSON.unparse({
       'visible_filenames' => visible_filenames
     }))

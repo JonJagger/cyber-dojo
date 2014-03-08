@@ -47,6 +47,14 @@ module ExposedLinux
       kata.dojo.paas.commit(self,tag)
     end
 
+    def traffic_lights_filename
+      'increments.' + kata.dojo.format
+    end
+
+    def visible_files_filename
+      'manifest.' + kata.dojo.format
+    end
+
   end
 
 end

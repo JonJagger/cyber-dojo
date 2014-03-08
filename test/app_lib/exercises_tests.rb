@@ -1,13 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
 require File.dirname(__FILE__) + '/../app_models/spy_disk'
-
+require File.dirname(__FILE__) + '/../app_models/stub_git'
 
 class ExercisesTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
-    @paas = ExposedLinux::Paas.new(@disk)
+    @git = StubGit.new
+    @paas = ExposedLinux::Paas.new(@disk,@git)
     @dojo = @paas.create_dojo(root_path + '../../','rb')
   end
 
@@ -17,9 +18,9 @@ class ExercisesTests < ActionController::TestCase
 
   test "dojo.exercises.each forwards to exercises_each on paas" do
     exercises = @dojo.exercises.map {|exercise| exercise.name}
-    assert exercises.include? "Unsplice"
-    assert exercises.include? "Verbal"
-    assert exercises.include? "Yatzy"
+    assert exercises.include? 'Unsplice'
+    assert exercises.include? 'Verbal'
+    assert exercises.include? 'Yatzy'
   end
 
   test "dojo.exercises[name]" do

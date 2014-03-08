@@ -3,14 +3,8 @@ module ExposedLinux
 
   class Paas
 
-    def initialize(disk)
-      @disk = disk
-    end
-
-    #- - - - - - - - - - - - - - - - - - - - - - - -
-
-    def dir(obj)
-      @disk[path(obj)]
+    def initialize(disk,git)
+      @disk,@git = disk,git
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -22,9 +16,8 @@ module ExposedLinux
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def languages_each(languages)
-      pathed = path(languages)
-      Dir.entries(pathed).select do |name|
-        yield name if is_dir?(File.join(pathed,name))
+      Dir.entries(path(languages)).select do |name|
+        yield name if is_dir?(File.join(path(languages),name))
       end
     end
 
@@ -35,9 +28,8 @@ module ExposedLinux
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def exercises_each(exercises)
-      pathed = path(exercises)
-      Dir.entries(pathed).each do |name|
-        yield name if is_dir?(File.join(pathed,name))
+      Dir.entries(path(exercises)).each do |name|
+        yield name if is_dir?(File.join(path(exercises),name))
       end
     end
 
@@ -62,6 +54,8 @@ module ExposedLinux
     end
 
     def make_kata(language, exercise, now = make_time(Time.now), id = Uuid.new.to_s)
+      kata = Kata.new(language.dojo,id)
+      dir(kata).make
       manifest = {
         :created => now,
         :id => id,
@@ -73,10 +67,12 @@ module ExposedLinux
       manifest[:visible_files] = language.visible_files
       manifest[:visible_files]['output'] = ''
       manifest[:visible_files]['instructions'] = exercise.instructions
-      kata = Kata.new(language.dojo,manifest[:id])
-      dir(kata).make
-      dir(kata).write('manifest.' + language.dojo.format, manifest)
+      dir(kata).write(kata.manifest_filename, manifest)
       kata
+    end
+
+    def kata_read(kata,filename)
+      dir(kata).read(filename)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -88,47 +84,47 @@ module ExposedLinux
     end
 
     def start_avatar(kata)
-      #
-      #  def kata.start_avatar
-      #    avatar = nil
-      #    dir.lock do
-      #      started_avatar_names = avatars.collect { |avatar| avatar.name }
-      #      unstarted_avatar_names = Avatar.names - started_avatar_names
-      #      if unstarted_avatar_names != [ ]
-      #        avatar_name = unstarted_avatar_names.shuffle[0]
-      #        avatar = Avatar.new(kata,avatar_name)
-      #        avatar.setup
-      #      end
-      #    end
-      #    avatar
-      #  end
+      avatar = nil
+      dir(kata).lock do
+        started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
+        unstarted_avatar_names = Avatar.names - started_avatar_names
+        if unstarted_avatar_names != [ ]
+          avatar_name = unstarted_avatar_names.shuffle[0]
+          avatar = Avatar.new(kata,avatar_name)
 
-      Avatar.new(self,'lion')
+#         @disk[path].make
+          dir[path(avatar)].make
 
-      #  def avatar.setup
-      #    @disk[path].make
-      #    @git.init(path, "--quiet")
-      #
-      #    dir.write(visible_files_filename, @kata.visible_files)
-      #    @git.add(path, visible_files_filename)
-      #
-      #    dir.write(traffic_lights_filename, [ ])
-      #    @git.add(path, traffic_lights_filename)
-      #
-      #    @kata.visible_files.each do |filename,content|
-      #      sandbox.dir.write(filename, content)
-      #      @git.add(sandbox.path, filename)
-      #    end
-      #
-      #    @kata.language.support_filenames.each do |filename|
-      #      old_name = @kata.language.path + filename
-      #      new_name = sandbox.path + filename
-      #      @disk.symlink(old_name, new_name)
-      #    end
-      #
-      #    git_commit(tag = 0)
-      #  end
+#         @git.init(path, "--quiet")
+          @git.init(path(avatar), '--quiet')
 
+#         dir.write(visible_files_filename, @kata.visible_files)
+          dir[path(avatar)].write(avatar.visible_files_filename, kata.visible_files)
+
+#         @git.add(path, visible_files_filename)
+          @git.add(path(avatar), avatar.visible_files_filename)
+
+#         dir.write(traffic_lights_filename, [ ])
+          dir[path(avatar)].write(avatar.traffic_lights_filename, [ ])
+
+#         @git.add(path, traffic_lights_filename)
+          @git.add(path(avatar), avatar.traffic_lights_filename)
+#
+#         @kata.visible_files.each do |filename,content|
+#           sandbox.dir.write(filename, content)
+#           @git.add(sandbox.path, filename)
+#         end
+#
+#         @kata.language.support_filenames.each do |filename|
+#           old_name = @kata.language.path + filename
+#           new_name = sandbox.path + filename
+#           @disk.symlink(old_name, new_name)
+#         end
+#
+#         git_commit(tag = 0)
+        end #if
+      end #dir.lock do
+    avatar
     end
 
     def save_traffic_light(avatar,traffic_light,now)
@@ -159,7 +155,11 @@ module ExposedLinux
       #...
     end
 
-  private
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
+    def dir(obj)
+      @disk[path(obj)]
+    end
 
     def path(obj)
       case obj
@@ -177,6 +177,8 @@ module ExposedLinux
           path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
       end
     end
+
+  private
 
     def is_dir?(name)
       File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')

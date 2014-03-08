@@ -39,12 +39,12 @@ module ExposedLinux
       manifest['visible_filenames'] || [ ]
     end
 
+  private
+
     def manifest
       @manifest ||= JSON.parse(read('manifest.json'))
     end
-
-  private
-
+    
     def read(filename)
       dojo.paas.language_read(self,filename)
     end
