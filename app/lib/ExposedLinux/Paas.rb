@@ -93,19 +93,19 @@ module ExposedLinux
           avatar = Avatar.new(kata,avatar_name)
 
 #         @disk[path].make
-          dir[path(avatar)].make
+          dir(avatar).make
 
 #         @git.init(path, "--quiet")
           @git.init(path(avatar), '--quiet')
 
 #         dir.write(visible_files_filename, @kata.visible_files)
-          dir[path(avatar)].write(avatar.visible_files_filename, kata.visible_files)
+          dir(avatar).write(avatar.visible_files_filename, kata.visible_files)
 
 #         @git.add(path, visible_files_filename)
           @git.add(path(avatar), avatar.visible_files_filename)
 
 #         dir.write(traffic_lights_filename, [ ])
-          dir[path(avatar)].write(avatar.traffic_lights_filename, [ ])
+          dir(avatar).write(avatar.traffic_lights_filename, [ ])
 
 #         @git.add(path, traffic_lights_filename)
           @git.add(path(avatar), avatar.traffic_lights_filename)
@@ -114,14 +114,19 @@ module ExposedLinux
 #           sandbox.dir.write(filename, content)
 #           @git.add(sandbox.path, filename)
 #         end
-#
+          #kata.visible_files.each do |filename,content|
+          #  dir(avatar.sandbox).write(filename,content)
+          #  @git.add(path(avatar.sandbox), filename)
+          #end
+
 #         @kata.language.support_filenames.each do |filename|
 #           old_name = @kata.language.path + filename
 #           new_name = sandbox.path + filename
 #           @disk.symlink(old_name, new_name)
 #         end
-#
-#         git_commit(tag = 0)
+
+#         git_commit(tag=0)
+          commit(avatar,tag=0)
         end #if
       end #dir.lock do
     avatar
@@ -175,6 +180,8 @@ module ExposedLinux
           obj.dojo.path + 'katas/'
         when ExposedLinux::Kata
           path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
+        when ExposedLinux::Avatar
+          path(obj.kata) + obj.name + '/'
       end
     end
 

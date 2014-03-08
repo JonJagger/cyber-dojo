@@ -66,14 +66,12 @@ class KatasTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - -
 
-=begin
   test "dojo.katas[id].start_avatar" do
-    kata = @dojo.katas['ABCDE12345']
+    kata = @dojo.make_kata(@language,@exercise)
     avatar = kata.start_avatar
-    assert_equal ExposedLinux::Avatar, avatar.class
-    assert_equal 'lion', avatar.name
+    #assert_equal ExposedLinux::Avatar, avatar.class
+    #assert_equal 'lion', avatar.name
   end
-=end
 
 
 end

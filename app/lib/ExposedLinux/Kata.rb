@@ -25,6 +25,10 @@ module ExposedLinux
       Avatars.new(self)
     end
 
+    def visible_files
+      manifest['visible_files']
+    end
+
     def manifest_filename
       'manifest.' + format
     end

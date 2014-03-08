@@ -16,22 +16,20 @@ class AvatarTests < ActionController::TestCase
     `rm -rf #{@paas.path(@dojo.katas)}`
   end
 
-  #test "dojo.katas[id].avatars" do
-  #  avatars = @dojo.katas[@id].avatars.map{|avatar| avatar.name}
-  #  assert avatars.include? 'alligator'
-  #  assert avatars.include? 'buffalo'
-  #  assert avatars.include? 'cheetah'
-  #end
+  test "dojo.katas[id].avatars" do
+    kata = @dojo.make_kata(@language,@exercise)
+    avatar = kata.start_avatar
+    avatar = kata.start_avatar
+    avatars = @dojo.katas[kata.id].avatars.map{|avatar| avatar.name}
+    assert_equal 2, avatars.length
+  end
 
-  #test "dojo.katas[id].avatars[alligator]" do
-  #  avatar = @dojo.katas[@id].avatars['alligator']
-  #  assert_equal 'alligator', avatar.name
-  #end
+  test "dojo.katas[id].avatars[name]" do
+    kata = @dojo.make_kata(@language,@exercise)
+    name = kata.start_avatar.name
+    avatar = @dojo.katas[kata.id].avatars[name]
+    assert_equal name, avatar.name
+  end
 
-  #test "dojo.katas[id].start_avatar" do
-  #  @kata = @dojo.make_kata(@language,@exercise)
-  #  avatar = @kata.start_avatar
-  #  puts avatar.name
-  #end
 
 end
