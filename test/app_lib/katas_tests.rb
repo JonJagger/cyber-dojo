@@ -2,13 +2,15 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
 require File.dirname(__FILE__) + '/../../lib/disk'
 require File.dirname(__FILE__) + '/../../lib/git'
+require File.dirname(__FILE__) + '/../../lib/runner'
 
 class KatasTests < ActionController::TestCase
 
   def setup
     @disk = Disk.new
     @git = Git.new
-    @paas = ExposedLinux::Paas.new(@disk,@git)
+    @runer = Runner.new
+    @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
     @format = 'json'
     @dojo = @paas.create_dojo(root_path,@format)
     @language = @dojo.languages['Java-JUnit']
@@ -21,7 +23,8 @@ class KatasTests < ActionController::TestCase
   test "dojo.make_kata in .rb format" do
     @disk = Disk.new
     @git = Git.new
-    @paas = ExposedLinux::Paas.new(@disk,@git)
+    @runer = Runner.new
+    @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
     @format = 'rb'
     @dojo = @paas.create_dojo(root_path,@format)
     language_name = 'Java-JUnit'
@@ -69,8 +72,7 @@ class KatasTests < ActionController::TestCase
   test "dojo.katas[id].start_avatar" do
     kata = @dojo.make_kata(@language,@exercise)
     avatar = kata.start_avatar
-    #assert_equal ExposedLinux::Avatar, avatar.class
-    #assert_equal 'lion', avatar.name
+    assert_not_nil avatar
   end
 
 

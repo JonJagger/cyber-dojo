@@ -2,13 +2,15 @@ require File.dirname(__FILE__) + '/../test_helper'
 require 'ExposedLinux/Paas'
 require File.dirname(__FILE__) + '/../app_models/spy_disk'
 require File.dirname(__FILE__) + '/../app_models/stub_git'
+require File.dirname(__FILE__) + '/../app_models/stub_runner'
 
 class ExercisesTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
     @git = StubGit.new
-    @paas = ExposedLinux::Paas.new(@disk,@git)
+    @runner = StubRunner.new
+    @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
     @dojo = @paas.create_dojo(root_path + '../../','rb')
   end
 

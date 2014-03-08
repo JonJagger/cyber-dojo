@@ -3,8 +3,8 @@ module ExposedLinux
 
   class Paas
 
-    def initialize(disk,git)
-      @disk,@git = disk,git
+    def initialize(disk,git,runner)
+      @disk,@git,@runner = disk,git,runner
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -114,16 +114,21 @@ module ExposedLinux
 #           sandbox.dir.write(filename, content)
 #           @git.add(sandbox.path, filename)
 #         end
-          #kata.visible_files.each do |filename,content|
-          #  dir(avatar.sandbox).write(filename,content)
-          #  @git.add(path(avatar.sandbox), filename)
-          #end
+          kata.visible_files.each do |filename,content|
+            dir(avatar.sandbox).write(filename,content)
+            @git.add(path(avatar.sandbox), filename)
+          end
 
 #         @kata.language.support_filenames.each do |filename|
 #           old_name = @kata.language.path + filename
 #           new_name = sandbox.path + filename
 #           @disk.symlink(old_name, new_name)
 #         end
+          kata.language.support_filenames.each do |filename|
+            old_name = path(kata.language) + filename
+            new_name = path(avatar.sandbox) + filename
+            @disk.symlink(old_name, new_name)
+          end
 
 #         git_commit(tag=0)
           commit(avatar,tag=0)
@@ -132,32 +137,94 @@ module ExposedLinux
     avatar
     end
 
-    def save_traffic_light(avatar,traffic_light,now)
-      #...
-    end
-
     def save(avatar,delta,visible_files)
       #...
+      #from sandbox.
+      #delta[:changed].each do |filename|
+      #  dir.write(filename, visible_files[filename])
+      #end
+      delta[:changed].each do |filename|
+        dir(avatar.sandbox).write(filename, visible_files[filename])
+      end
+
+      #delta[:new].each do |filename|
+      #  dir.write(filename, visible_files[filename])
+      #  @git.add(path, filename)
+      #end
+      delta[:new].each do |filename|
+        dir(avatar.sandbox).write(filename, visible_files[filename])
+        @git.add(path, filename)
+      end
+
+      #delta[:deleted].each do |filename|
+      #  @git.rm(path, filename)
+      #end
+      delta[:deleted].each do |filename|
+        @git.rm(path(avatar.sandbox), filename)
+      end
     end
 
-    def test(avatar)
-      #...returns output
+    def test(avatar, max_duration)
+      #output = @runner.run(path, "./cyber-dojo.sh", max_duration)
+      #output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
-    def visible_files(avatar,tag)
+    def save_traffic_light(avatar,traffic_light,now)
       #...
-    end
-
-    def traffic_lights(avatar,tag)
-      #...
-    end
-
-    def diff_lines(avatar,was_tag, now_tag)
-      #...
+      #lights = traffic_lights
+      #lights << traffic_light
+      #traffic_light['number'] = lights.length
+      #traffic_light['time'] = now
+      #dir.write(traffic_lights_filename, lights)
+      #lights
     end
 
     def commit(avatar,tag)
-      #...
+      #...from avatar
+      #@git.commit(path, "-a -m '#{tag}' --quiet")
+      #@git.tag(path, "-m '#{tag}' #{tag} HEAD")
+    end
+
+    # - - - - - - - - - - - - - - - - - -
+
+    def visible_files(avatar,tag)
+      #...from avatar
+      #parse(unlocked_read(visible_files_filename, tag))
+    end
+
+    def traffic_lights(avatar,tag)
+      #...from avatar
+      #parse(unlocked_read(traffic_lights_filename, tag))
+    end
+
+    #def avatar.unlocked_read(filename, tag)
+    #  dir.lock {
+    #    locked_read(filename, tag)
+    #  }
+    #end
+    #
+    #def avatar.locked_read(filename, tag)
+    #  if tag != nil
+    #    @git.show(path, "#{tag}:#{filename}")
+    #  else
+    #    dir.read(filename)
+    #  end
+    #end
+    #def avatar.parse(text)
+    #  if format == 'rb'
+    #    return JSON.parse(JSON.unparse(eval(text)))
+    #  end
+    #  if format == 'json'
+    #    return JSON.parse(text)
+    #  end
+    #end
+
+
+    def diff_lines(avatar,was_tag, now_tag)
+      #...from avatar
+      #command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
+      #output = @git.diff(path, command)
+      #output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -182,6 +249,8 @@ module ExposedLinux
           path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
         when ExposedLinux::Avatar
           path(obj.kata) + obj.name + '/'
+        when ExposedLinux::Sandbox
+          path(obj.avatar) + 'sandbox/'
       end
     end
 
@@ -204,17 +273,15 @@ end
 # And I will create another implementation IsolatedDockerPaas
 # Design notes
 #
+# o) locking is not right.
+#    I need a 'Paas::Session' object which can scope the lifetime
+#    of a sequence of action.
+#
 # o) IsolatedDockerPaas.disk will have smarts to know if reads/writes
 #    are local to disk (eg exercises) or need to go into container.
 #    ExposedLinuxPaas.disk can have several dojos (different root-dirs eg testing)
 #    so parent refs need to link back to dojo which
 #    will be used by paas to determine paths.
-#
-# o) in controller I can see if IsolatedDockerPaas is available and if it is
-#    use that, otherwise drop back to using ExposedLinuxPaas
-#
-# o) each model will not expose a dir method. Instead I will
-#    access the dirs off the paas.disk object.
 #
 # o) how will IsolatedDockerPaas know a languages'
 #    initial visible_files? use same manifest format?

@@ -114,7 +114,6 @@ private
     end
   end
 
-
   def unlocked_read(filename, tag)
     dir.lock {
       locked_read(filename, tag)

@@ -9,13 +9,13 @@ module ExposedLinux
 
     attr_reader :dojo, :id
 
-    #def language
-    #  dojo.languages[manifest['language']]
-    #end
+    def language
+      dojo.languages[manifest['language']]
+    end
 
-    #def exercise
-    #  dojo.exercises[manifest['exercise']]
-    #end
+    def exercise
+      dojo.exercises[manifest['exercise']]
+    end
 
     def start_avatar
       dojo.paas.start_avatar(self)

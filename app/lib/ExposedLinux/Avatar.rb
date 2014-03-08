@@ -19,6 +19,10 @@ module ExposedLinux
 
     attr_reader :kata, :name
 
+    def sandbox
+      Sandbox.new(self)
+    end
+
     def save_traffic_light(traffic_light,now)
       kata.dojo.paas.save_traffic_light(self,traffic_light,now)
     end
@@ -27,15 +31,15 @@ module ExposedLinux
       kata.dojo.paas.save(self,delta,visible_files)
     end
 
-    def test()
-      kata.dojo.paas.test(self)
+    def test(max_duration = 15)
+      kata.dojo.paas.test(self,max_duration)
     end
 
-    def visible_files(tag)
+    def visible_files(tag = nil)
       kata.dojo.paas.visible_files(self,tag)
     end
 
-    def traffic_lights(tag)
+    def traffic_lights(tag = nil)
       kata.dojo.paas.traffic_lights(self,tag)
     end
 
