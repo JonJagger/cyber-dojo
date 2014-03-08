@@ -3,25 +3,25 @@ module ExposedLinux
 
   class Paas
 
-    def initialize(disk,git,runner)
+    def initialize(disk, git, runner)
       @disk,@git,@runner = disk,git,runner
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
-    def create_dojo(root,format)
-      Dojo.new(self,root,format)
+    def create_dojo(root, format)
+      Dojo.new(self, root, format)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def languages_each(languages)
       Dir.entries(path(languages)).select do |name|
-        yield name if is_dir?(File.join(path(languages),name))
+        yield name if is_dir?(File.join(path(languages), name))
       end
     end
 
-    def language_read(language,filename)
+    def language_read(language, filename)
       dir(language).read(filename)
     end
 
@@ -29,11 +29,11 @@ module ExposedLinux
 
     def exercises_each(exercises)
       Dir.entries(path(exercises)).each do |name|
-        yield name if is_dir?(File.join(path(exercises),name))
+        yield name if is_dir?(File.join(path(exercises), name))
       end
     end
 
-    def exercise_read(exercise,filename)
+    def exercise_read(exercise, filename)
       dir(exercise).read(filename)
     end
 
@@ -41,12 +41,12 @@ module ExposedLinux
 
     def katas_each(katas)
       Dir.entries(path(katas)).each do |outer_dir|
-        outer_path = File.join(path(katas),outer_dir)
+        outer_path = File.join(path(katas), outer_dir)
         if is_dir?(outer_path)
           Dir.entries(outer_path).each do |inner_dir|
-            inner_path = File.join(outer_path,inner_dir)
+            inner_path = File.join(outer_path, inner_dir)
             if is_dir?(inner_path)
-              yield outer_dir+inner_dir
+              yield outer_dir + inner_dir
             end
           end
         end
@@ -54,7 +54,7 @@ module ExposedLinux
     end
 
     def make_kata(language, exercise, now = make_time(Time.now), id = Uuid.new.to_s)
-      kata = Kata.new(language.dojo,id)
+      kata = Kata.new(language.dojo, id)
       dir(kata).make
       manifest = {
         :created => now,
@@ -71,7 +71,7 @@ module ExposedLinux
       kata
     end
 
-    def kata_read(kata,filename)
+    def kata_read(kata, filename)
       dir(kata).read(filename)
     end
 
@@ -79,7 +79,7 @@ module ExposedLinux
 
     def avatars_each(kata)
       Dir.entries(path(kata)).each do |name|
-        yield name if is_dir?(File.join(path(kata),name))
+        yield name if is_dir?(File.join(path(kata), name))
       end
     end
 
@@ -92,73 +92,40 @@ module ExposedLinux
           avatar_name = unstarted_avatar_names.shuffle[0]
           avatar = Avatar.new(kata,avatar_name)
 
-#         @disk[path].make
           dir(avatar).make
-
-#         @git.init(path, "--quiet")
           @git.init(path(avatar), '--quiet')
 
-#         dir.write(visible_files_filename, @kata.visible_files)
           dir(avatar).write(avatar.visible_files_filename, kata.visible_files)
-
-#         @git.add(path, visible_files_filename)
           @git.add(path(avatar), avatar.visible_files_filename)
 
-#         dir.write(traffic_lights_filename, [ ])
           dir(avatar).write(avatar.traffic_lights_filename, [ ])
-
-#         @git.add(path, traffic_lights_filename)
           @git.add(path(avatar), avatar.traffic_lights_filename)
-#
-#         @kata.visible_files.each do |filename,content|
-#           sandbox.dir.write(filename, content)
-#           @git.add(sandbox.path, filename)
-#         end
+
           kata.visible_files.each do |filename,content|
             dir(avatar.sandbox).write(filename,content)
             @git.add(path(avatar.sandbox), filename)
           end
 
-#         @kata.language.support_filenames.each do |filename|
-#           old_name = @kata.language.path + filename
-#           new_name = sandbox.path + filename
-#           @disk.symlink(old_name, new_name)
-#         end
           kata.language.support_filenames.each do |filename|
             old_name = path(kata.language) + filename
             new_name = path(avatar.sandbox) + filename
             @disk.symlink(old_name, new_name)
           end
 
-#         git_commit(tag=0)
           commit(avatar,tag=0)
         end #if
       end #dir.lock do
     avatar
     end
 
-    def save(avatar,delta,visible_files)
-      #...
-      #from sandbox.
-      #delta[:changed].each do |filename|
-      #  dir.write(filename, visible_files[filename])
-      #end
+    def save(avatar, delta, visible_files)
       delta[:changed].each do |filename|
         dir(avatar.sandbox).write(filename, visible_files[filename])
       end
-
-      #delta[:new].each do |filename|
-      #  dir.write(filename, visible_files[filename])
-      #  @git.add(path, filename)
-      #end
       delta[:new].each do |filename|
         dir(avatar.sandbox).write(filename, visible_files[filename])
         @git.add(path, filename)
       end
-
-      #delta[:deleted].each do |filename|
-      #  @git.rm(path, filename)
-      #end
       delta[:deleted].each do |filename|
         @git.rm(path(avatar.sandbox), filename)
       end
@@ -169,7 +136,7 @@ module ExposedLinux
       output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
-    def save_traffic_light(avatar,traffic_light,now)
+    def save_traffic_light(avatar, traffic_light, now)
       #...
       #lights = traffic_lights
       #lights << traffic_light
@@ -182,57 +149,26 @@ module ExposedLinux
       lights << traffic_light
       traffic_light['number'] = lights.length
       traffic_light['time'] = now
-      dir(avatar).write(avatar.raffic_lights_filename, lights)
+      dir(avatar).write(avatar.traffic_lights_filename, lights)
       lights
     end
 
-    def commit(avatar,tag)
-      #...from avatar
+    def commit(avatar, tag)
       @git.commit(path(avatar), "-a -m '#{tag}' --quiet")
       @git.tag(path(avatar), "-m '#{tag}' #{tag} HEAD")
     end
 
     # - - - - - - - - - - - - - - - - - -
 
-    def visible_files(avatar,tag)
-      #...from avatar
-      #parse(unlocked_read(visible_files_filename, tag))
-      #...
-      #parse(unlocked_read(avatar.visible_files_filename, tag))
+    def visible_files(avatar, tag)
+      parse(avatar, unlocked_read(avatar, avatar.visible_files_filename, tag))
     end
 
-    def traffic_lights(avatar,tag)
-      #...from avatar
-      #parse(unlocked_read(traffic_lights_filename, tag))
-      #...
-      #parse(unlocked_read(avatar.traffic_lights_filename, tag))
+    def traffic_lights(avatar, tag)
+      parse(avatar, unlocked_read(avatar, avatar.traffic_lights_filename, tag))
     end
 
-    #def avatar.unlocked_read(filename, tag)
-    #  dir.lock {
-    #    locked_read(filename, tag)
-    #  }
-    #end
-    #
-    #def avatar.locked_read(filename, tag)
-    #  if tag != nil
-    #    @git.show(path, "#{tag}:#{filename}")
-    #  else
-    #    dir.read(filename)
-    #  end
-    #end
-    #def avatar.parse(text)
-    #  if format == 'rb'
-    #    return JSON.parse(JSON.unparse(eval(text)))
-    #  end
-    #  if format == 'json'
-    #    return JSON.parse(text)
-    #  end
-    #end
-
-
-    def diff_lines(avatar,was_tag, now_tag)
-      #...from avatar
+    def diff_lines(avatar, was_tag, now_tag)
       command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
       output = @git.diff(path(avatar), command)
       output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
@@ -266,6 +202,29 @@ module ExposedLinux
     end
 
   private
+
+    def unlocked_read(avatar, filename, tag)
+      dir(avatar).lock {
+        locked_read(avatar, filename, tag)
+      }
+    end
+
+    def locked_read(avatar, filename, tag)
+      if tag != nil
+        @git.show(path(avatar), "#{tag}:#{filename}")
+      else
+        dir(avatar).read(filename)
+      end
+    end
+
+    def parse(avatar, text)
+      if avatar.format_is_rb?
+        return JSON.parse(JSON.unparse(eval(text)))
+      end
+      if avatar.format_is_json?
+        return JSON.parse(text)
+      end
+    end
 
     def is_dir?(name)
       File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')

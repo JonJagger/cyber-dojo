@@ -17,7 +17,7 @@ module ExposedLinux
     end
 
     def [](name)
-      Exercise.new(dojo,name)
+      Exercise.new(dojo, name)
     end
 
   end

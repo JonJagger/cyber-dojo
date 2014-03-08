@@ -10,9 +10,9 @@ class ExercisesTests < ActionController::TestCase
     @disk = SpyDisk.new
     @git = StubGit.new
     @runner = StubRunner.new
-    @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
+    @paas = ExposedLinux::Paas.new(@disk, @git, @runner)
     @format = 'rb'
-    @dojo = @paas.create_dojo(root_path + '../../',@format)
+    @dojo = @paas.create_dojo(root_path + '../../', @format)
   end
 
   def teardown
@@ -36,7 +36,7 @@ class ExercisesTests < ActionController::TestCase
   test "dojo.exercise.instructions" do
     name = 'Print_Diamond'
     exercise = @dojo.exercises[name]
-    @paas.dir(exercise).spy_read('instructions','your task...')
+    @paas.dir(exercise).spy_read('instructions', 'your task...')
     exercise = @dojo.exercises[name]
     assert_equal 'your task...', exercise.instructions
   end

@@ -3,7 +3,7 @@ module ExposedLinux
 
   class Language
 
-    def initialize(dojo,name)
+    def initialize(dojo, name)
       @dojo,@name = dojo,name
     end
 
@@ -44,9 +44,9 @@ module ExposedLinux
     def manifest
       @manifest ||= JSON.parse(read('manifest.json'))
     end
-    
+
     def read(filename)
-      dojo.paas.language_read(self,filename)
+      dojo.paas.language_read(self, filename)
     end
 
   end

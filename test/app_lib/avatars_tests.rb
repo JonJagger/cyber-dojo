@@ -10,13 +10,13 @@ class AvatarTests < ActionController::TestCase
     @disk = Disk.new
     @git = Git.new
     @runner = Runner.new
-    @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
+    @paas = ExposedLinux::Paas.new(@disk, @git, @runner)
     @format = 'json'
-    @dojo = @paas.create_dojo(root_path,@format)
+    @dojo = @paas.create_dojo(root_path, @format)
     @language = @dojo.languages['Java-JUnit']
     @exercise = @dojo.exercises['Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
-    @kata = @dojo.make_kata(@language,@exercise)
+    @kata = @dojo.make_kata(@language, @exercise)
   end
 
   test "kata.avatars() returns all avatars started in the kata" do
@@ -50,10 +50,28 @@ class AvatarTests < ActionController::TestCase
     assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
   end
 
-  test "avatar.save_() then avatar.test()" do
+  test "avatar.save_().test().commit().diff_lines()" do
     avatar = @kata.start_avatar
-    #avatar.save(delta,visible_files)
-    #output = avatar.test()
+    visible_files = avatar.visible_files
+    filename = 'UntitledTest.java'
+    test_code = visible_files[filename];
+    assert test_code.include?('6 * 9')
+    test_code.sub!('6 * 9', '6 * 7')
+    visible_files[filename] = test_code
+    delta = {
+      :deleted => [ ],
+      :changed => [ filename ],
+      :new => [ ],
+      :unchanged => visible_files.keys - [ filename ]
+    }
+    avatar.save(delta, visible_files)
+    output = avatar.test()
+    assert output.include?('OK (1 test)')
+    avatar.commit(1)
+    diff = avatar.diff_lines(0, 1)
+    assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
+    assert diff.include?('-        int expected = 6 * 9;'), diff
+    assert diff.include?('+        int expected = 6 * 7;'), diff
   end
 
 end

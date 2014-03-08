@@ -17,7 +17,7 @@ module ExposedLinux
     end
 
     def [](name)
-      Language.new(dojo,name)
+      Language.new(dojo, name)
     end
   end
 

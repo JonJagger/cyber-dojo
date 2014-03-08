@@ -13,42 +13,54 @@ module ExposedLinux
           )
     end
 
-    def initialize(kata,name)
+    def initialize(kata, name)
       @kata,@name = kata,name
     end
 
     attr_reader :kata, :name
 
+    def format
+      kata.format
+    end
+
+    def format_is_rb?
+      kata.format_is_rb?
+    end
+
+    def format_is_json?
+      kata.format_is_json?
+    end
+
     def sandbox
       Sandbox.new(self)
     end
 
-    def save(delta,visible_files)
-      kata.dojo.paas.save(self,delta,visible_files)
+    def save(delta, visible_files)
+      kata.dojo.paas.save(self, delta, visible_files)
     end
 
     def test(max_duration = 15)
-      kata.dojo.paas.test(self,max_duration)
+      kata.dojo.paas.test(self, max_duration)
     end
 
-    def save_traffic_light(traffic_light,now)
-      kata.dojo.paas.save_traffic_light(self,traffic_light,now)
+    def save_traffic_light(traffic_light, now)
+      kata.dojo.paas.save_traffic_light(self, traffic_light,now)
     end
 
     def visible_files(tag = nil)
-      kata.dojo.paas.visible_files(self,tag)
+      kata.dojo.paas.visible_files(self, tag)
     end
 
     def traffic_lights(tag = nil)
-      kata.dojo.paas.traffic_lights(self,tag)
+      kata.dojo.paas.traffic_lights(self, tag)
     end
 
-    def diff_lines(was_tag,now_tag)
-      kata.dojo.paas.diff_lines(self,was_tag,now_tag)
+    def diff_lines(was_tag, now_tag)
+      kata.dojo.paas.diff_lines(self, was_tag, now_tag)
     end
 
     def commit(tag)
-      kata.dojo.paas.commit(self,tag)
+      kata.dojo.paas.commit(self, tag)
     end
 
     def traffic_lights_filename
@@ -57,12 +69,6 @@ module ExposedLinux
 
     def visible_files_filename
       'manifest.' + format
-    end
-
-  private
-
-    def format
-      kata.dojo.format
     end
 
   end
