@@ -11,21 +11,22 @@ class ExercisesTests < ActionController::TestCase
     @git = StubGit.new
     @runner = StubRunner.new
     @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
-    @dojo = @paas.create_dojo(root_path + '../../','rb')
+    @format = 'rb'
+    @dojo = @paas.create_dojo(root_path + '../../',@format)
   end
 
   def teardown
     @disk.teardown
   end
 
-  test "dojo.exercises.each forwards to exercises_each on paas" do
+  test "dojo.exercises.each() forwards to paas.exercises_each()" do
     exercises = @dojo.exercises.map {|exercise| exercise.name}
     assert exercises.include? 'Unsplice'
     assert exercises.include? 'Verbal'
     assert exercises.include? 'Yatzy'
   end
 
-  test "dojo.exercises[name]" do
+  test "dojo.exercises[name] returns exercise with given name" do
     name = 'Print_Diamond'
     exercise = @dojo.exercises[name]
     assert_equal ExposedLinux::Exercise, exercise.class

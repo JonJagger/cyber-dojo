@@ -16,42 +16,44 @@ class AvatarTests < ActionController::TestCase
     @language = @dojo.languages['Java-JUnit']
     @exercise = @dojo.exercises['Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
+    @kata = @dojo.make_kata(@language,@exercise)
   end
 
-  test "kata.avatars" do
-    kata = @dojo.make_kata(@language,@exercise)
-    avatar1 = kata.start_avatar
-    avatar2 = kata.start_avatar
+  test "kata.avatars() returns all avatars started in the kata" do
+    avatar1 = @kata.start_avatar
+    avatar2 = @kata.start_avatar
     expected_names = [avatar1.name, avatar2.name]
-    names = kata.avatars.map{|avatar| avatar.name}
+    names = @kata.avatars.map{|avatar| avatar.name}
     assert_equal expected_names.sort, names.sort
   end
 
-  test "dojo.katas[id].avatars" do
-    kata = @dojo.make_kata(@language,@exercise)
-    avatar1 = kata.start_avatar
-    avatar2 = kata.start_avatar
+  test "dojo.katas[id].avatars() returns all avatars started in kata with given id" do
+    avatar1 = @kata.start_avatar
+    avatar2 = @kata.start_avatar
     expected_names = [avatar1.name, avatar2.name]
-    names = @dojo.katas[kata.id].avatars.map{|avatar| avatar.name}
+    names = @dojo.katas[@kata.id].avatars.map{|avatar| avatar.name}
     assert_equal expected_names.sort, names.sort
   end
 
-  test "dojo.katas[id].avatars[name]" do
-    kata = @dojo.make_kata(@language,@exercise)
-    avatar = kata.start_avatar
+  test "dojo.katas[id].avatars[name] finds avatar with given name" do
+    avatar = @kata.start_avatar
     name = avatar.name
-    names = kata.avatars.map{|avatar| avatar.name}
+    names = @kata.avatars.map{|avatar| avatar.name}
     assert_equal [name], names
-    avatar = @dojo.katas[kata.id].avatars[name]
+    avatar = @dojo.katas[@kata.id].avatars[name]
     assert_equal name, avatar.name
   end
 
-  test "avatar.save_and_run" do
-    kata = @dojo.make_kata(@language,@exercise)
-    avatar = kata.start_avatar
-    #....
+  test "avatar.test() initial output" do
+    avatar = @kata.start_avatar
+    output = avatar.test()
+    assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
+  end
 
-
+  test "avatar.save_() then avatar.test()" do
+    avatar = @kata.start_avatar
+    #avatar.save(delta,visible_files)
+    #output = avatar.test()
   end
 
 end

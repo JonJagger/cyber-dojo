@@ -23,16 +23,16 @@ module ExposedLinux
       Sandbox.new(self)
     end
 
-    def save_traffic_light(traffic_light,now)
-      kata.dojo.paas.save_traffic_light(self,traffic_light,now)
-    end
-
     def save(delta,visible_files)
       kata.dojo.paas.save(self,delta,visible_files)
     end
 
     def test(max_duration = 15)
       kata.dojo.paas.test(self,max_duration)
+    end
+
+    def save_traffic_light(traffic_light,now)
+      kata.dojo.paas.save_traffic_light(self,traffic_light,now)
     end
 
     def visible_files(tag = nil)

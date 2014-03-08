@@ -11,20 +11,21 @@ class LanguagesTests < ActionController::TestCase
     @git = StubGit.new
     @runner = StubRunner.new
     @paas = ExposedLinux::Paas.new(@disk,@git,@runner)
-    @dojo = @paas.create_dojo(root_path + '../../','rb')
+    @format = 'rb'
+    @dojo = @paas.create_dojo(root_path + '../../',@format)
   end
 
   def teardown
     @disk.teardown
   end
 
-  test "dojo.languages.each forwards to languages_each on paas" do
+  test "dojo.languages.each() forwards to paas.languages_each()" do
     languages = @dojo.languages.map {|language| language.name}
     assert languages.include?('C#')
     assert languages.include?('Ruby')
   end
 
-  test "dojo.languages[name]" do
+  test "dojo.languages[name] returns language with given name" do
     language = @dojo.languages["Ruby-Cucumber"]
     assert_equal ExposedLinux::Language, language.class
     assert_equal "Ruby-Cucumber", language.name

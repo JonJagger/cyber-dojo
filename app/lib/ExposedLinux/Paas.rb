@@ -165,8 +165,8 @@ module ExposedLinux
     end
 
     def test(avatar, max_duration)
-      #output = @runner.run(path, "./cyber-dojo.sh", max_duration)
-      #output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+      output = @runner.run(path(avatar.sandbox), "./cyber-dojo.sh", max_duration)
+      output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
     def save_traffic_light(avatar,traffic_light,now)
@@ -177,12 +177,19 @@ module ExposedLinux
       #traffic_light['time'] = now
       #dir.write(traffic_lights_filename, lights)
       #lights
+      #...
+      lights = traffic_lights(avatar)
+      lights << traffic_light
+      traffic_light['number'] = lights.length
+      traffic_light['time'] = now
+      dir(avatar).write(avatar.raffic_lights_filename, lights)
+      lights
     end
 
     def commit(avatar,tag)
       #...from avatar
-      #@git.commit(path, "-a -m '#{tag}' --quiet")
-      #@git.tag(path, "-m '#{tag}' #{tag} HEAD")
+      @git.commit(path(avatar), "-a -m '#{tag}' --quiet")
+      @git.tag(path(avatar), "-m '#{tag}' #{tag} HEAD")
     end
 
     # - - - - - - - - - - - - - - - - - -
@@ -190,11 +197,15 @@ module ExposedLinux
     def visible_files(avatar,tag)
       #...from avatar
       #parse(unlocked_read(visible_files_filename, tag))
+      #...
+      #parse(unlocked_read(avatar.visible_files_filename, tag))
     end
 
     def traffic_lights(avatar,tag)
       #...from avatar
       #parse(unlocked_read(traffic_lights_filename, tag))
+      #...
+      #parse(unlocked_read(avatar.traffic_lights_filename, tag))
     end
 
     #def avatar.unlocked_read(filename, tag)
@@ -222,9 +233,9 @@ module ExposedLinux
 
     def diff_lines(avatar,was_tag, now_tag)
       #...from avatar
-      #command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-      #output = @git.diff(path, command)
-      #output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+      command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
+      output = @git.diff(path(avatar), command)
+      output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -274,8 +285,8 @@ end
 # Design notes
 #
 # o) locking is not right.
-#    I need a 'Paas::Session' object which can scope the lifetime
-#    of a sequence of action.
+#    I need a 'Paas::Session' object which can scope the lock/unlock
+#    over a sequence of actions.
 #
 # o) IsolatedDockerPaas.disk will have smarts to know if reads/writes
 #    are local to disk (eg exercises) or need to go into container.
