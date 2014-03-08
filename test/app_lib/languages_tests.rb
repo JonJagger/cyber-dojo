@@ -26,4 +26,13 @@ class LanguagesTests < ActionController::TestCase
     assert_equal "Ruby-Cucumber", language.name
   end
 
+  test "language.visible_files" do
+    language = @dojo.languages["Ruby-Cucumber"]
+    visible_filenames = [ 'wibble.h', 'wibble.c' ]
+    @disk[language.path].spy_read('manifest.json', JSON.unparse({
+      'visible_filenames' => visible_filenames
+    }))
+    assert_equal visible_filenames, language.visible_filenames
+  end
+
 end

@@ -30,8 +30,9 @@ class ExercisesTests < ActionController::TestCase
   end
 
   test "dojo.exercise.instructions" do
-    name = 'Print Diamond'
-    @disk[@dojo.root + 'exercises/'+name].spy_read('instructions','your task...')
+    name = 'Print_Diamond'
+    exercise = @dojo.exercises[name]
+    @disk[exercise.path].spy_read('instructions','your task...')
     exercise = @dojo.exercises[name]
     assert_equal 'your task...', exercise.instructions
   end

@@ -10,8 +10,12 @@ module ExposedLinux
 
     attr_reader :dojo
 
+    def path
+      dojo.path + 'languages' + '/'
+    end
+
     def each
-      dojo.paas.languages_each(dojo) do |name|
+      dojo.paas.languages_each(self) do |name|
         yield self[name]
       end
     end

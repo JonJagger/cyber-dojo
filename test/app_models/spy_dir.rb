@@ -40,8 +40,8 @@ class SpyDir
   end
 
   def read(filename)
-    assert @repo != nil, "read('#{filename}') no files stubbed"
-    assert @repo[filename] != nil, "read('#{filename}') not stubbed"
+    assert @repo != nil, "read('#{filename}') no stub file"
+    assert @repo[filename] != nil, "read('#{filename}') no stub file"
     content  = @repo[filename]
     @log << ['read',filename,content]
     content

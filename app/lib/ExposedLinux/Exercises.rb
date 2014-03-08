@@ -10,8 +10,12 @@ module ExposedLinux
 
     attr_reader :dojo
 
+    def path
+      dojo.path + 'exercises' + '/'
+    end
+
     def each
-      dojo.paas.exercises_each(dojo) do |name|
+      dojo.paas.exercises_each(self) do |name|
         yield self[name]
       end
     end

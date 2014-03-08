@@ -8,8 +8,10 @@ module ExposedLinux
       @dojo = dojo
     end
 
-    def dojo
-      @dojo
+    attr_reader :dojo
+
+    def path
+      dojo.path + 'katas' + '/'
     end
 
     def each

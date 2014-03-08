@@ -3,11 +3,12 @@ module ExposedLinux
 
   class Dojo
 
-    def initialize(paas,root,format)
-      @paas,@root,@format = paas,root,format
+    def initialize(paas,path,format)
+      @paas,@path,@format = paas,path,format
+      raise RuntimeError.new("path must end in /") if !path.end_with?('/')
     end
 
-    attr_reader :paas, :root, :format
+    attr_reader :paas, :path, :format
 
     def languages
       Languages.new(self)

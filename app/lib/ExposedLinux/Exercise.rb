@@ -10,7 +10,17 @@ module ExposedLinux
     attr_reader :dojo, :name
 
     def instructions
-      dojo.paas.instructions(self)
+      dir.read('instructions')
+    end
+
+    def path
+      Exercises.new(dojo).path + name + '/'
+    end
+
+  private
+  
+    def dir
+      dojo.paas.disk[path]
     end
 
   end

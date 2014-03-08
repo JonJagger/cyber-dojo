@@ -16,6 +16,7 @@ module ExposedLinux
     def test()
       kata.dojo.paas.avatar_test(self)
     end
+    #will need commit too?
 
     def visible_files(tag)
       kata.dojo.paas.avatar_visible_files(self,tag)
