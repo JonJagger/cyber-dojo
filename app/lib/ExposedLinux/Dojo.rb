@@ -26,12 +26,18 @@ module ExposedLinux
       Exercises.new(self)
     end
 
-    def make_kata(language, exercise)
-      paas.make_kata(language, exercise)
+    def make_kata(language, exercise, id = Uuid.new.to_s, now = make_time(Time.now))
+      paas.make_kata(language, exercise, id, now)
     end
 
     def katas
       Katas.new(self)
+    end
+
+  private
+  
+    def make_time(now)
+      [now.year, now.month, now.day, now.hour, now.min, now.sec]
     end
 
   end

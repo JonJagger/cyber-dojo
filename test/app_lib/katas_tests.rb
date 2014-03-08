@@ -26,8 +26,11 @@ class KatasTests < ActionController::TestCase
     kata = @dojo.make_kata(@language, @exercise)
     #
     manifest = kata.manifest
+    assert_equal manifest['id'], kata.id
     assert_equal manifest['exercise'], @exercise.name
     assert_equal manifest['language'], @language.name
+    assert_equal manifest['unit_test_framework'], @language.unit_test_framework
+    assert_equal manifest['tab_size'], @language.tab_size
   end
 
   #- - - - - - - - - - - - - - - -
@@ -36,8 +39,11 @@ class KatasTests < ActionController::TestCase
     set_paas('json')
     kata = @dojo.make_kata(@language, @exercise)
     manifest = kata.manifest
+    assert_equal manifest['id'], kata.id
     assert_equal manifest['exercise'], @exercise.name
     assert_equal manifest['language'], @language.name
+    assert_equal manifest['unit_test_framework'], @language.unit_test_framework
+    assert_equal manifest['tab_size'], @language.tab_size
   end
 
   #- - - - - - - - - - - - - - - -

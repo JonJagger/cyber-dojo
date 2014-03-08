@@ -50,7 +50,7 @@ class AvatarTests < ActionController::TestCase
     assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
   end
 
-  test "avatar.save_().test().commit().diff_lines()" do
+  test "avatar.save().test().save_traffic_light().commit().diff_lines()" do
     avatar = @kata.start_avatar
     visible_files = avatar.visible_files
     filename = 'UntitledTest.java'
@@ -64,11 +64,19 @@ class AvatarTests < ActionController::TestCase
       :new => [ ],
       :unchanged => visible_files.keys - [ filename ]
     }
+    visible_files.delete('output')
     avatar.save(delta, visible_files)
     output = avatar.test()
     assert output.include?('OK (1 test)')
-    avatar.commit(1)
-    diff = avatar.diff_lines(0, 1)
+    @paas.dir(avatar.sandbox).write('output', output)
+    visible_files['output'] = output
+    avatar.save_visible_files(visible_files)
+    traffic_light = { 'colour' => 'green' }
+    traffic_lights = avatar.save_traffic_light(traffic_light)
+    assert_not_nil traffic_lights
+    assert_equal 1, traffic_lights.length
+    avatar.commit(traffic_lights.length)
+    diff = avatar.diff_lines(was_tag=0, now_tag=1)
     assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
     assert diff.include?('-        int expected = 6 * 9;'), diff
     assert diff.include?('+        int expected = 6 * 7;'), diff

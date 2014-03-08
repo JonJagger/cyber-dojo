@@ -43,8 +43,12 @@ module ExposedLinux
       kata.dojo.paas.test(self, max_duration)
     end
 
-    def save_traffic_light(traffic_light, now)
-      kata.dojo.paas.save_traffic_light(self, traffic_light,now)
+    def save_visible_files(visible_files)
+      kata.dojo.paas.save_visible_files(self, visible_files)
+    end
+
+    def save_traffic_light(traffic_light, now = make_time(Time.now))
+      kata.dojo.paas.save_traffic_light(self, traffic_light, now)
     end
 
     def visible_files(tag = nil)
@@ -69,6 +73,12 @@ module ExposedLinux
 
     def visible_files_filename
       'manifest.' + format
+    end
+
+  private
+  
+    def make_time(now)
+      [now.year, now.month, now.day, now.hour, now.min, now.sec]
     end
 
   end

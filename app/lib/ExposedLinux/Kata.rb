@@ -47,12 +47,8 @@ module ExposedLinux
 
     def manifest
       text = read(manifest_filename)
-      if format_is_rb?
-        return @manifest ||= JSON.parse(JSON.unparse(eval(text)))
-      end
-      if format_is_json?
-        return @manifest ||= JSON.parse(text)
-      end
+      return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
+      return @manifest ||= JSON.parse(text) if format_is_json?
     end
 
   private

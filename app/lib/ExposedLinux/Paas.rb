@@ -53,7 +53,7 @@ module ExposedLinux
       end
     end
 
-    def make_kata(language, exercise, now = make_time(Time.now), id = Uuid.new.to_s)
+    def make_kata(language, exercise, id, now)
       kata = Kata.new(language.dojo, id)
       dir(kata).make
       manifest = {
@@ -85,37 +85,29 @@ module ExposedLinux
 
     def start_avatar(kata)
       avatar = nil
-      dir(kata).lock do
-        started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
-        unstarted_avatar_names = Avatar.names - started_avatar_names
-        if unstarted_avatar_names != [ ]
-          avatar_name = unstarted_avatar_names.shuffle[0]
-          avatar = Avatar.new(kata,avatar_name)
-
-          dir(avatar).make
-          @git.init(path(avatar), '--quiet')
-
-          dir(avatar).write(avatar.visible_files_filename, kata.visible_files)
-          @git.add(path(avatar), avatar.visible_files_filename)
-
-          dir(avatar).write(avatar.traffic_lights_filename, [ ])
-          @git.add(path(avatar), avatar.traffic_lights_filename)
-
-          kata.visible_files.each do |filename,content|
-            dir(avatar.sandbox).write(filename,content)
-            @git.add(path(avatar.sandbox), filename)
-          end
-
-          kata.language.support_filenames.each do |filename|
-            old_name = path(kata.language) + filename
-            new_name = path(avatar.sandbox) + filename
-            @disk.symlink(old_name, new_name)
-          end
-
-          commit(avatar,tag=0)
-        end #if
-      end #dir.lock do
-    avatar
+      started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
+      unstarted_avatar_names = Avatar.names - started_avatar_names
+      if unstarted_avatar_names != [ ]
+        avatar_name = unstarted_avatar_names.shuffle[0]
+        avatar = Avatar.new(kata,avatar_name)
+        dir(avatar).make
+        @git.init(path(avatar), '--quiet')
+        dir(avatar).write(avatar.visible_files_filename, kata.visible_files)
+        @git.add(path(avatar), avatar.visible_files_filename)
+        dir(avatar).write(avatar.traffic_lights_filename, [ ])
+        @git.add(path(avatar), avatar.traffic_lights_filename)
+        kata.visible_files.each do |filename,content|
+          dir(avatar.sandbox).write(filename,content)
+          @git.add(path(avatar.sandbox), filename)
+        end
+        kata.language.support_filenames.each do |filename|
+          old_name = path(kata.language) + filename
+          new_name = path(avatar.sandbox) + filename
+          @disk.symlink(old_name, new_name)
+        end
+        commit(avatar,tag=0)
+      end
+      avatar
     end
 
     def save(avatar, delta, visible_files)
@@ -136,15 +128,11 @@ module ExposedLinux
       output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
+    def save_visible_files(avatar, visible_files)
+      dir(avatar).write(avatar.visible_files_filename, visible_files)
+    end
+
     def save_traffic_light(avatar, traffic_light, now)
-      #...
-      #lights = traffic_lights
-      #lights << traffic_light
-      #traffic_light['number'] = lights.length
-      #traffic_light['time'] = now
-      #dir.write(traffic_lights_filename, lights)
-      #lights
-      #...
       lights = traffic_lights(avatar)
       lights << traffic_light
       traffic_light['number'] = lights.length
@@ -160,12 +148,12 @@ module ExposedLinux
 
     # - - - - - - - - - - - - - - - - - -
 
-    def visible_files(avatar, tag)
-      parse(avatar, unlocked_read(avatar, avatar.visible_files_filename, tag))
+    def visible_files(avatar, tag = nil)
+      avatar_read(avatar, avatar.visible_files_filename, tag)
     end
 
-    def traffic_lights(avatar, tag)
-      parse(avatar, unlocked_read(avatar, avatar.traffic_lights_filename, tag))
+    def traffic_lights(avatar, tag = nil)
+      avatar_read(avatar, avatar.traffic_lights_filename, tag)
     end
 
     def diff_lines(avatar, was_tag, now_tag)
@@ -203,35 +191,15 @@ module ExposedLinux
 
   private
 
-    def unlocked_read(avatar, filename, tag)
-      dir(avatar).lock {
-        locked_read(avatar, filename, tag)
-      }
-    end
-
-    def locked_read(avatar, filename, tag)
-      if tag != nil
-        @git.show(path(avatar), "#{tag}:#{filename}")
-      else
-        dir(avatar).read(filename)
-      end
-    end
-
-    def parse(avatar, text)
-      if avatar.format_is_rb?
-        return JSON.parse(JSON.unparse(eval(text)))
-      end
-      if avatar.format_is_json?
-        return JSON.parse(text)
-      end
+    def avatar_read(avatar, filename, tag)
+      text = dir(avatar).read(filename) if tag == nil
+      text = @git.show(path(avatar), "#{tag}:#{filename}") if tag != nil
+      return JSON.parse(JSON.unparse(eval(text))) if avatar.format_is_rb?
+      return JSON.parse(text) if avatar.format_is_json?
     end
 
     def is_dir?(name)
       File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')
-    end
-
-    def make_time(now)
-      [now.year, now.month, now.day, now.hour, now.min, now.sec]
     end
 
   end
