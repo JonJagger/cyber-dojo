@@ -7,30 +7,66 @@ module ExposedLinux
       @disk = disk
     end
 
-    attr_reader :disk
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
+    def dir(obj)
+      @disk[path(obj)]
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def create_dojo(root,format)
       Dojo.new(self,root,format)
     end
 
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
     def languages_each(languages)
-      Dir.entries(languages.path).select do |name|
-        yield name if is_dir?(File.join(languages.path,name))
+      pathed = path(languages)
+      Dir.entries(pathed).select do |name|
+        yield name if is_dir?(File.join(pathed,name))
       end
     end
+
+    def language_read(language,filename)
+      dir(language).read(filename)
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def exercises_each(exercises)
-      Dir.entries(exercises.path).each do |name|
-        yield name if is_dir?(File.join(exercises.path,name))
+      pathed = path(exercises)
+      Dir.entries(pathed).each do |name|
+        yield name if is_dir?(File.join(pathed,name))
       end
     end
 
-    def make_kata(language,exercise)
+    def exercise_read(exercise,filename)
+      dir(exercise).read(filename)
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
+    def katas_each(katas)
+      Dir.entries(path(katas)).each do |outer_dir|
+        outer_path = File.join(path(katas),outer_dir)
+        if is_dir?(outer_path)
+          Dir.entries(outer_path).each do |inner_dir|
+            inner_path = File.join(outer_path,inner_dir)
+            if is_dir?(inner_path)
+              yield outer_dir+inner_dir
+            end
+          end
+        end
+      end
+    end
+
+    def make_kata(language, exercise, now = make_time(Time.now), id = Uuid.new.to_s)
       manifest = {
-        :created => make_time(Time.now),
-        :id => Uuid.new.to_s,
+        :created => now,
+        :id => id,
         :language => language.name,
-        :exercise => exercise.name, # used only for display
+        :exercise => exercise.name,
         :unit_test_framework => language.unit_test_framework,
         :tab_size => language.tab_size
       }
@@ -38,20 +74,16 @@ module ExposedLinux
       manifest[:visible_files]['output'] = ''
       manifest[:visible_files]['instructions'] = exercise.instructions
       kata = Kata.new(language.dojo,manifest[:id])
-      @disk[kata.path].write('manifest.' + language.dojo.format, manifest)
+      dir(kata).make
+      dir(kata).write('manifest.' + language.dojo.format, manifest)
       kata
     end
 
-    def katas_each(dojo)
-      pathed = Katas.new(dojo).path
-      Dir.entries(pathed).each do |outer_dir|
-        outer_path = File.join(pathed,outer_dir)
-        if is_dir?(outer_path)
-          Dir.entries(outer_path).each do |inner_dir|
-            inner_path = File.join(outer_path,inner_dir)
-            yield outer_dir+inner_dir if is_dir?(inner_path)
-          end
-        end
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
+    def avatars_each(kata)
+      Dir.entries(path(kata)).each do |name|
+        yield name if is_dir?(File.join(path(kata),name))
       end
     end
 
@@ -63,14 +95,16 @@ module ExposedLinux
       #      started_avatar_names = avatars.collect { |avatar| avatar.name }
       #      unstarted_avatar_names = Avatar.names - started_avatar_names
       #      if unstarted_avatar_names != [ ]
-      #        avatar_name = random(unstarted_avatar_names)
-      #        avatar = self[avatar_name]
+      #        avatar_name = unstarted_avatar_names.shuffle[0]
+      #        avatar = Avatar.new(kata,avatar_name)
       #        avatar.setup
       #      end
       #    end
       #    avatar
       #  end
-      #
+
+      Avatar.new(self,'lion')
+
       #  def avatar.setup
       #    @disk[path].make
       #    @git.init(path, "--quiet")
@@ -95,32 +129,54 @@ module ExposedLinux
       #    git_commit(tag = 0)
       #  end
 
-      Avatar.new(self,'lion')
     end
 
-    def avatars_each(kata)
-      Dir.entries(kata.path).each do |name|
-        yield name if is_dir?(File.join(kata.path,name))
-      end
-    end
-
-    def avatar_save(avatar,delta,visible_files)
+    def save_traffic_light(avatar,traffic_light,now)
       #...
     end
 
-    def avatar_test(avatar)
+    def save(avatar,delta,visible_files)
+      #...
+    end
+
+    def test(avatar)
       #...returns output
     end
 
-    def avatar_visible_files(avatar,tag)
+    def visible_files(avatar,tag)
       #...
     end
 
-    def avatar_traffic_lights(avatar,tag)
+    def traffic_lights(avatar,tag)
+      #...
+    end
+
+    def diff_lines(avatar,was_tag, now_tag)
+      #...
+    end
+
+    def commit(avatar,tag)
       #...
     end
 
   private
+
+    def path(obj)
+      case obj
+        when ExposedLinux::Languages
+          obj.dojo.path + 'languages/'
+        when ExposedLinux::Language
+          path(obj.dojo.languages) + obj.name + '/'
+        when ExposedLinux::Exercises
+          obj.dojo.path + 'exercises/'
+        when ExposedLinux::Exercise
+          path(obj.dojo.exercises) + obj.name + '/'
+        when ExposedLinux::Katas
+          obj.dojo.path + 'katas/'
+        when ExposedLinux::Kata
+          path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
+      end
+    end
 
     def is_dir?(name)
       File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')

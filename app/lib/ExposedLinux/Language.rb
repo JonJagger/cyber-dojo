@@ -11,7 +11,7 @@ module ExposedLinux
 
     def visible_files
       Hash[visible_filenames.collect{ |filename|
-        [ filename, dir.read(filename) ]
+        [ filename, read(filename) ]
       }]
     end
 
@@ -40,19 +40,15 @@ module ExposedLinux
     end
 
     def manifest
-      @manifest ||= JSON.parse(dir.read('manifest.json'))
-    end
-
-    def path
-      Languages.new(dojo).path + name + '/'
+      @manifest ||= JSON.parse(read('manifest.json'))
     end
 
   private
 
-    def dir
-      dojo.paas.disk[path]
+    def read(filename)
+      dojo.paas.language_read(self,filename)
     end
-    
+
   end
 
 end

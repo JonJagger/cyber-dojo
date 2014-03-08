@@ -6,8 +6,8 @@ class LanguagesTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
-    paas = ExposedLinux::Paas.new(@disk)
-    @dojo = paas.create_dojo(root_path + '../../','rb')
+    @paas = ExposedLinux::Paas.new(@disk)
+    @dojo = @paas.create_dojo(root_path + '../../','rb')
   end
 
   def teardown
@@ -29,7 +29,7 @@ class LanguagesTests < ActionController::TestCase
   test "language.visible_files" do
     language = @dojo.languages["Ruby-Cucumber"]
     visible_filenames = [ 'wibble.h', 'wibble.c' ]
-    @disk[language.path].spy_read('manifest.json', JSON.unparse({
+    @paas.dir(language).spy_read('manifest.json', JSON.unparse({
       'visible_filenames' => visible_filenames
     }))
     assert_equal visible_filenames, language.visible_filenames

@@ -6,9 +6,9 @@ class AvatarTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
-    paas = ExposedLinux::Paas.new(@disk)
+    @paas = ExposedLinux::Paas.new(@disk)
     @id = 'FCF27D87F1'
-    @dojo = paas.create_dojo(root_path + '../../','rb')
+    @dojo = @paas.create_dojo(root_path + '../../','rb')
   end
 
   def teardown
@@ -25,6 +25,10 @@ class AvatarTests < ActionController::TestCase
   test "dojo.katas[id].avatars[alligator]" do
     avatar = @dojo.katas[@id].avatars['alligator']
     assert_equal 'alligator', avatar.name
+  end
+
+  test "dojo.katas[id].start_avatar" do
+
   end
 
 end

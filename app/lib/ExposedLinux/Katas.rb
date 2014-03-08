@@ -10,12 +10,8 @@ module ExposedLinux
 
     attr_reader :dojo
 
-    def path
-      dojo.path + 'katas' + '/'
-    end
-
     def each
-      dojo.paas.katas_each(dojo) do |id|
+      dojo.paas.katas_each(self) do |id|
         yield self[id]
       end
     end

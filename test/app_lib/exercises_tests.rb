@@ -7,8 +7,8 @@ class ExercisesTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
-    paas = ExposedLinux::Paas.new(@disk)
-    @dojo = paas.create_dojo(root_path + '../../','rb')
+    @paas = ExposedLinux::Paas.new(@disk)
+    @dojo = @paas.create_dojo(root_path + '../../','rb')
   end
 
   def teardown
@@ -32,7 +32,7 @@ class ExercisesTests < ActionController::TestCase
   test "dojo.exercise.instructions" do
     name = 'Print_Diamond'
     exercise = @dojo.exercises[name]
-    @disk[exercise.path].spy_read('instructions','your task...')
+    @paas.dir(exercise).spy_read('instructions','your task...')
     exercise = @dojo.exercises[name]
     assert_equal 'your task...', exercise.instructions
   end

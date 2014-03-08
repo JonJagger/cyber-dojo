@@ -6,9 +6,9 @@ class KatasTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
+    @paas = ExposedLinux::Paas.new(@disk)
     @format = 'rb'
-    paas = ExposedLinux::Paas.new(@disk)
-    @dojo = paas.create_dojo(root_path + '../../',@format)
+    @dojo = @paas.create_dojo(root_path + '../../',@format)
   end
 
   def teardown
@@ -37,15 +37,15 @@ class KatasTests < ActionController::TestCase
   test "dojo.make_kata in .rb format" do
     language_name = 'Ruby-Cucumber'
     language = @dojo.languages[language_name]
-    @disk[language.path].spy_read('manifest.json', JSON.unparse({
+    @paas.dir(language).spy_read('manifest.json', JSON.unparse({
       :unit_test_framework => 'cucumber'
     }))
     exercise_name = 'Print_Diamond'
     exercise = @dojo.exercises[exercise_name]
-    @disk[exercise.path].spy_read('instructions', 'your task...')
+    @paas.dir(exercise).spy_read('instructions', 'your task...')
 
     kata = @dojo.make_kata(language,exercise)
-    manifest = eval(@disk[kata.path].read('manifest.' + @format))
+    manifest = eval(@paas.dir(kata).read('manifest.' + @format))
     assert_equal manifest[:exercise], exercise_name
     assert_equal manifest[:language], language_name
   end
@@ -53,20 +53,20 @@ class KatasTests < ActionController::TestCase
 
   test "dojo.make_kata in .json format" do
     @disk = SpyDisk.new
+    @paas = ExposedLinux::Paas.new(@disk)
     @format = 'json'
-    paas = ExposedLinux::Paas.new(@disk)
-    @dojo = paas.create_dojo(root_path + '../../',@format)
+    @dojo = @paas.create_dojo(root_path + '../../',@format)
     language_name = 'Ruby-Cucumber'
     language = @dojo.languages[language_name]
-    @disk[language.path].spy_read('manifest.json', JSON.unparse({
+    @paas.dir(language).spy_read('manifest.json', JSON.unparse({
       :unit_test_framework => 'cucumber'
     }))
     exercise_name = 'Print_Diamond'
     exercise = @dojo.exercises[exercise_name]
-    @disk[exercise.path].spy_read('instructions', 'your task...')
+    @paas.dir(exercise).spy_read('instructions', 'your task...')
 
     kata = @dojo.make_kata(language,exercise)
-    manifest = JSON.parse(@disk[kata.path].read('manifest.' + @format))
+    manifest = JSON.parse(@paas.dir(kata).read('manifest.' + @format))
     assert_equal manifest['exercise'], exercise_name
     assert_equal manifest['language'], language_name
   end
