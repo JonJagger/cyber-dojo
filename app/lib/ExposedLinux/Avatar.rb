@@ -39,7 +39,7 @@ module ExposedLinux
       kata.dojo.paas.traffic_lights(self,tag)
     end
 
-    def diff_lines(was_tag, now_tag)
+    def diff_lines(was_tag,now_tag)
       kata.dojo.paas.diff_lines(self,was_tag,now_tag)
     end
 
@@ -48,11 +48,17 @@ module ExposedLinux
     end
 
     def traffic_lights_filename
-      'increments.' + kata.dojo.format
+      'increments.' + format
     end
 
     def visible_files_filename
-      'manifest.' + kata.dojo.format
+      'manifest.' + format
+    end
+
+  private
+
+    def format
+      kata.dojo.format
     end
 
   end
