@@ -116,7 +116,7 @@ module ExposedLinux
       end
       delta[:new].each do |filename|
         dir(avatar.sandbox).write(filename, visible_files[filename])
-        @git.add(path, filename)
+        @git.add(path(avatar.sandbox), filename)
       end
       delta[:deleted].each do |filename|
         @git.rm(path(avatar.sandbox), filename)
