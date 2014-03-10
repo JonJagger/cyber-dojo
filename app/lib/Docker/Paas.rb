@@ -1,5 +1,5 @@
 
-module ExposedLinux
+module Docker
 
   class Paas
 
@@ -17,9 +17,7 @@ module ExposedLinux
     # each() iteration
 
     def languages_each(languages)
-      Dir.entries(path(languages)).select do |name|
-        yield name if is_dir?(File.join(path(languages), name))
-      end
+      # iterate through a docker languages-registry
     end
 
     def exercises_each(exercises)
@@ -29,23 +27,11 @@ module ExposedLinux
     end
 
     def katas_each(katas)
-      Dir.entries(path(katas)).each do |outer_dir|
-        outer_path = File.join(path(katas), outer_dir)
-        if is_dir?(outer_path)
-          Dir.entries(outer_path).each do |inner_dir|
-            inner_path = File.join(outer_path, inner_dir)
-            if is_dir?(inner_path)
-              yield outer_dir + inner_dir
-            end
-          end
-        end
-      end
+      # iterate through a docker katas-registry
     end
 
     def avatars_each(kata)
-      Dir.entries(path(kata)).each do |name|
-        yield name if is_dir?(File.join(path(kata), name))
-      end
+      # iterate through avatars in a single kata-docker-container
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -88,15 +74,50 @@ module ExposedLinux
     # disk-helpers
 
     def disk_make_dir(object)
-      dir(object).make
+      #dir(object).make
+      #
+      #make dir in avatars-current-container-image
+      #save created container-id ready for next docker-command in this transaction
     end
 
     def disk_read(object, filename)
-      dir(object).read(filename)
+      ########## dir(object).read(filename)
+
+      # cids = [ 'base' ]  # base will need to be current-image for kata-avatar
+      
+      # image = cids.last
+      # cidfile = 'docker.cid'
+      # filename = ???? # needs appropriate dirname prefix?
+      # `rm -f #{cidfile}`
+      # read = `sudo docker run -cidfile="#{cidfile}" -i #{image} /bin/bash -c "cat '#{filename}'"`
+      # cid = `cat #{cidfile}`
+      # `sudo docker commit #{cid} #{cid}`
+      # cids << cid
+      # read
     end
 
     def disk_write(object, filename, content)
-      dir(object).write(filename, content)
+      ####### dir(object).write(filename, content)
+
+      # cids = [ 'base' ]  # base will need to be current-image for kata-avatar
+
+      # image = cids.last
+      # cidfile = 'docker.cid'   # needs to be kata.id+avatar.name specific
+      # `rm  -f #{cidfile}
+      # filename = ??????  # needs appropriate dirname prefix?
+      # `echo '#{content}' | sudo docker run -cidfile="#{cidfile}" -i #{image} /bin/bash -c "cat > '#{filename}'"`
+      # cid = `cat #{cidfile}`
+      # `sudo docker commit #{cid} #{cid}`
+      # cids << cid
+
+      # at end of docker-transaction
+      #   last container needs to become the current one
+      #   all temporary containers (in cids) need to be deleted
+      #   all temporary images (in cids) need to be deleted
+
+      # if I cat to a file in a new dir will the folder be created? NO
+      # so I need a command to create the dir first.
+
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -209,5 +230,3 @@ end
 #    eg one that spies completely
 #    eg one that uses ExposedLinuxPaas
 #    eg one that uses IsolatedDockerPaas
-
-
