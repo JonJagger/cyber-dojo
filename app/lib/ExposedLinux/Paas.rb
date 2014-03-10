@@ -8,14 +8,13 @@ module ExposedLinux
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
-    # Dojo
 
     def create_dojo(root, format)
       Dojo.new(self, root, format)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
-    # Language
+    # each() iteration
 
     def languages_each(languages)
       Dir.entries(path(languages)).select do |name|
@@ -23,17 +22,11 @@ module ExposedLinux
       end
     end
 
-    #- - - - - - - - - - - - - - - - - - - - - - - -
-    # Exercise
-
     def exercises_each(exercises)
       Dir.entries(path(exercises)).each do |name|
         yield name if is_dir?(File.join(path(exercises), name))
       end
     end
-
-    #- - - - - - - - - - - - - - - - - - - - - - - -
-    # Kata
 
     def katas_each(katas)
       Dir.entries(path(katas)).each do |outer_dir|
@@ -49,14 +42,13 @@ module ExposedLinux
       end
     end
 
-    #- - - - - - - - - - - - - - - - - - - - - - - -
-    # Avatar
-
     def avatars_each(kata)
       Dir.entries(path(kata)).each do |name|
         yield name if is_dir?(File.join(path(kata), name))
       end
     end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def start_avatar(kata)
       avatar = nil
@@ -90,11 +82,6 @@ module ExposedLinux
         avatar.commit(tag=0)
       end
       avatar
-    end
-
-    def test(avatar, max_duration)
-      output = @runner.run(path(avatar.sandbox), "./cyber-dojo.sh", max_duration)
-      output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,6 +131,13 @@ module ExposedLinux
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # runner-helper
+
+    def runner_run(object, command, max_duration)
+      @runner.run(path(object), command, max_duration)
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def dir(obj)
       @disk[path(obj)]
@@ -187,7 +181,13 @@ end
 #
 # o) locking is not right.
 #    I need a 'Paas::Session' object which can scope the lock/unlock
-#    over a sequence of actions.
+#    over a sequence of actions. The paas object can hold this itself
+#    since a new Paas object is created for each controller-action
+#    CHECK THAT IS INDEED TRUE and that the same paas object is remembered
+#    inside the controller
+#         def paas
+#           @paas ||= expression
+#         end
 #
 # o) IsolatedDockerPaas.disk will have smarts to know if reads/writes
 #    are local to disk (eg exercises) or need to go into container.

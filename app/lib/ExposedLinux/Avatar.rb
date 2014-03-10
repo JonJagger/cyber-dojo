@@ -40,7 +40,8 @@ module ExposedLinux
     end
 
     def test(max_duration = 15)
-      paas.test(self, max_duration)
+      output = paas.runner_run(sandbox, "./cyber-dojo.sh", max_duration)
+      output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
     def save_visible_files(visible_files)
@@ -71,7 +72,6 @@ module ExposedLinux
     end
 
     def commit(tag)
-      #paas.commit(self, tag)
       paas.git_commit(self, "-a -m '#{tag}' --quiet")
       paas.git_tag(self, "-m '#{tag}' #{tag} HEAD")
     end
