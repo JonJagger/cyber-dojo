@@ -58,11 +58,11 @@ module ExposedLinux
     end
 
     def visible_files(tag = nil)
-      read(visible_files_filename, tag)
+      parse(visible_files_filename, tag)
     end
 
     def traffic_lights(tag = nil)
-      read(traffic_lights_filename, tag)
+      parse(traffic_lights_filename, tag)
     end
 
     def diff_lines(was_tag, now_tag)
@@ -94,7 +94,7 @@ module ExposedLinux
       [now.year, now.month, now.day, now.hour, now.min, now.sec]
     end
 
-    def read(filename, tag)
+    def parse(filename, tag)
       text = paas.disk_read(self, filename) if tag == nil
       text = paas.git_show(self, "#{tag}:#{filename}") if tag != nil
       return JSON.parse(JSON.unparse(eval(text))) if format_is_rb?

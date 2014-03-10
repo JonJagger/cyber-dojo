@@ -62,6 +62,10 @@ class AvatarTests < ActionController::TestCase
   test "avatar.save(:changed).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
     avatar = @kata.start_avatar
     visible_files = avatar.visible_files
+    assert_equal visible_files, avatar.visible_files(tag=0)
+    assert_equal [ ], avatar.traffic_lights
+    assert_equal [ ], avatar.traffic_lights(tag=0)
+
     filename = 'UntitledTest.java'
     test_code = visible_files[filename];
     assert test_code.include?('6 * 9')
@@ -77,15 +81,21 @@ class AvatarTests < ActionController::TestCase
     avatar.save(delta, visible_files)
     output = avatar.test()
     assert output.include?('OK (1 test)')
-    @paas.dir(avatar.sandbox).write('output', output)
+
+    avatar.sandbox.write('output',output)
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
     traffic_light = { 'colour' => 'green' }
     traffic_lights = avatar.save_traffic_light(traffic_light)
+
     assert_equal traffic_lights, avatar.traffic_lights
     assert_not_nil traffic_lights
     assert_equal 1, traffic_lights.length
+
     avatar.commit(traffic_lights.length)
+    assert_equal traffic_lights, avatar.traffic_lights
+    assert_equal traffic_lights, avatar.traffic_lights(tag=1)
+
     diff = avatar.diff_lines(was_tag=0, now_tag=1)
     assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
     assert diff.include?('-        int expected = 6 * 9;'), diff
@@ -109,7 +119,8 @@ class AvatarTests < ActionController::TestCase
     avatar.save(delta, visible_files)
     output = avatar.test()
     assert output.include?('UntitledTest.java:9: cannot find symbol')
-    @paas.dir(avatar.sandbox).write('output', output)
+
+    avatar.sandbox.write('output',output)
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
     traffic_light = { 'colour' => 'amber' }
@@ -140,7 +151,8 @@ class AvatarTests < ActionController::TestCase
     avatar.save(delta, visible_files)
     output = avatar.test()
     assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
-    @paas.dir(avatar.sandbox).write('output', output)
+
+    avatar.sandbox.write('output',output)
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
     traffic_light = { 'colour' => 'red' }

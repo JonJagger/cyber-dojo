@@ -92,10 +92,9 @@ class KatasTests < ActionController::TestCase
     kata = @dojo.make_kata(@language, @exercise)
     avatar = kata.start_avatar
     assert_not_nil avatar
-    text = @paas.dir(avatar).read(avatar.visible_files_filename)
-    visible_files = JSON.parse(text)
+    visible_files = avatar.visible_files
     assert visible_files.keys.include?('cyber-dojo.sh')
-    text = @paas.dir(avatar.sandbox).read('cyber-dojo.sh')
+    text = @paas.disk_read(avatar.sandbox, 'cyber-dojo.sh')
     assert_not_nil text
   end
 
