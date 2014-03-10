@@ -1,8 +1,9 @@
-require File.dirname(__FILE__) + '/../test_helper'
+__DIR__ = File.dirname(__FILE__)
+require __DIR__ + '/../test_helper'
+require __DIR__ + '/../app_models/spy_disk'
+require __DIR__ + '/../app_models/stub_git'
+require __DIR__ + '/../app_models/stub_runner'
 require 'ExposedLinux/Paas'
-require File.dirname(__FILE__) + '/../app_models/spy_disk'
-require File.dirname(__FILE__) + '/../app_models/stub_git'
-require File.dirname(__FILE__) + '/../app_models/stub_runner'
 
 class LanguagesTests < ActionController::TestCase
 

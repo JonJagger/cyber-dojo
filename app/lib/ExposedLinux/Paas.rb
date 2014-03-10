@@ -126,7 +126,7 @@ module ExposedLinux
       @git.diff(path(object), args)
     end
 
-    def git_show(object, args) # no coverage of this...
+    def git_show(object, args)
       @git.show(path(object), args)
     end
 

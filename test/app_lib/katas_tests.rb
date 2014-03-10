@@ -1,8 +1,9 @@
-require File.dirname(__FILE__) + '/../test_helper'
+__DIR__ = File.dirname(__FILE__)
+require __DIR__ + '/../test_helper'
+require __DIR__ + '/../../lib/disk'
+require __DIR__ + '/../../lib/git'
+require __DIR__ + '/../../lib/runner'
 require 'ExposedLinux/Paas'
-require File.dirname(__FILE__) + '/../../lib/disk'
-require File.dirname(__FILE__) + '/../../lib/git'
-require File.dirname(__FILE__) + '/../../lib/runner'
 
 class KatasTests < ActionController::TestCase
 
