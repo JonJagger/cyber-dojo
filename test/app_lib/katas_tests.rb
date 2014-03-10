@@ -99,7 +99,4 @@ class KatasTests < ActionController::TestCase
     assert_not_nil text
   end
 
-  #- - - - - - - - - - - - - - - -
-
-
 end

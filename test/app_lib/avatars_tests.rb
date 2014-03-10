@@ -123,6 +123,7 @@ class AvatarTests < ActionController::TestCase
     assert diff.include?('+++ /dev/null'), diff
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar.save(:new).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
     avatar = @kata.start_avatar

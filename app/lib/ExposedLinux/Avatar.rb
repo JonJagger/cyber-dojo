@@ -2,6 +2,7 @@
 module ExposedLinux
 
   class Avatar
+    extend Forwardable
 
     def self.names
         # no two animals start with the same letter
@@ -19,17 +20,7 @@ module ExposedLinux
 
     attr_reader :kata, :name
 
-    def format
-      kata.format
-    end
-
-    def format_is_rb?
-      kata.format_is_rb?
-    end
-
-    def format_is_json?
-      kata.format_is_json?
-    end
+    def_delegators :kata, :format, :format_is_rb?, :format_is_json?
 
     def sandbox
       Sandbox.new(self)
@@ -76,7 +67,7 @@ module ExposedLinux
     end
 
   private
-  
+
     def make_time(now)
       [now.year, now.month, now.day, now.hour, now.min, now.sec]
     end

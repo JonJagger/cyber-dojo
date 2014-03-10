@@ -2,6 +2,7 @@
 module ExposedLinux
 
   class Kata
+    extend Forwardable
 
     def initialize(dojo, id)
       @dojo,@id = dojo,id
@@ -9,17 +10,7 @@ module ExposedLinux
 
     attr_reader :dojo, :id
 
-    def format
-      dojo.format
-    end
-
-    def format_is_rb?
-      dojo.format_is_rb?
-    end
-
-    def format_is_json?
-      dojo.format_is_json?
-    end
+    def_delegators :dojo, :format, :format_is_rb?, :format_is_json?
 
     def language
       dojo.languages[manifest['language']]
@@ -54,7 +45,7 @@ module ExposedLinux
   private
 
     def read(filename)
-      dojo.paas.kata_read(self, filename)
+      dojo.paas.read(self, filename)
     end
 
   end

@@ -22,7 +22,7 @@ class KataController < ApplicationController
     @kata   = dojo[id]
     @avatar = @kata[params[:avatar]]
     visible_files = received_files
-    previous_files = visible_files.keys
+    previous_files = visible_files.keys # should be previous_filenames
     visible_files.delete('output')
 
     was = params[:file_hashes_incoming]
@@ -33,6 +33,7 @@ class KataController < ApplicationController
     @avatar.sandbox.dir.write('output', @output) # so output appears in diff-view
     visible_files['output'] = @output
 
+    #should really only do this if kata is using approval-style test-framework
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.path, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.path, visible_files)
 

@@ -8,12 +8,14 @@ module ExposedLinux
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # Dojo
 
     def create_dojo(root, format)
       Dojo.new(self, root, format)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # Language
 
     def languages_each(languages)
       Dir.entries(path(languages)).select do |name|
@@ -21,11 +23,8 @@ module ExposedLinux
       end
     end
 
-    def language_read(language, filename)
-      dir(language).read(filename)
-    end
-
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # Exercise
 
     def exercises_each(exercises)
       Dir.entries(path(exercises)).each do |name|
@@ -33,11 +32,8 @@ module ExposedLinux
       end
     end
 
-    def exercise_read(exercise, filename)
-      dir(exercise).read(filename)
-    end
-
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # Kata
 
     def katas_each(katas)
       Dir.entries(path(katas)).each do |outer_dir|
@@ -71,11 +67,8 @@ module ExposedLinux
       kata
     end
 
-    def kata_read(kata, filename)
-      dir(kata).read(filename)
-    end
-
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # Avatar
 
     def avatars_each(kata)
       Dir.entries(path(kata)).each do |name|
@@ -146,8 +139,6 @@ module ExposedLinux
       @git.tag(path(avatar), "-m '#{tag}' #{tag} HEAD")
     end
 
-    # - - - - - - - - - - - - - - - - - -
-
     def visible_files(avatar, tag = nil)
       avatar_read(avatar, avatar.visible_files_filename, tag)
     end
@@ -163,6 +154,11 @@ module ExposedLinux
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # helpers
+
+    def read(object, filename)
+      dir(object).read(filename)
+    end
 
     def dir(obj)
       @disk[path(obj)]

@@ -46,7 +46,7 @@ module ExposedLinux
     end
 
     def read(filename)
-      dojo.paas.language_read(self, filename)
+      dojo.paas.read(self, filename)
     end
 
   end
