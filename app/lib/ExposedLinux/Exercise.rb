@@ -10,7 +10,7 @@ module ExposedLinux
     attr_reader :dojo, :name
 
     def instructions
-      dojo.paas.read(self,'instructions')
+      dojo.paas.disk_read(self,'instructions')
     end
 
   end

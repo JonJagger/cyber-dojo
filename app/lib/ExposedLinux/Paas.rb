@@ -49,24 +49,6 @@ module ExposedLinux
       end
     end
 
-    def make_kata(language, exercise, id, now)
-      kata = Kata.new(language.dojo, id)
-      dir(kata).make
-      manifest = {
-        :created => now,
-        :id => id,
-        :language => language.name,
-        :exercise => exercise.name,
-        :unit_test_framework => language.unit_test_framework,
-        :tab_size => language.tab_size
-      }
-      manifest[:visible_files] = language.visible_files
-      manifest[:visible_files]['output'] = ''
-      manifest[:visible_files]['instructions'] = exercise.instructions
-      dir(kata).write(kata.manifest_filename, manifest)
-      kata
-    end
-
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # Avatar
 
@@ -83,37 +65,31 @@ module ExposedLinux
       if unstarted_avatar_names != [ ]
         avatar_name = unstarted_avatar_names.shuffle[0]
         avatar = Avatar.new(kata,avatar_name)
-        dir(avatar).make
-        @git.init(path(avatar), '--quiet')
-        dir(avatar).write(avatar.visible_files_filename, kata.visible_files)
-        @git.add(path(avatar), avatar.visible_files_filename)
-        dir(avatar).write(avatar.traffic_lights_filename, [ ])
-        @git.add(path(avatar), avatar.traffic_lights_filename)
+
+        disk_make_dir(avatar)
+        git_init(avatar, '--quiet')
+
+        disk_write(avatar, avatar.visible_files_filename, kata.visible_files)
+        git_add(avatar, avatar.visible_files_filename)
+
+        disk_write(avatar, avatar.traffic_lights_filename, [ ])
+        git_add(avatar, avatar.traffic_lights_filename)
+
         kata.visible_files.each do |filename,content|
-          dir(avatar.sandbox).write(filename,content)
-          @git.add(path(avatar.sandbox), filename)
+          disk_write(avatar.sandbox, filename,content)
+          git_add(avatar.sandbox, filename)
         end
+
+        # don't think support_filenames will be need for DockerPaas
         kata.language.support_filenames.each do |filename|
           old_name = path(kata.language) + filename
           new_name = path(avatar.sandbox) + filename
           @disk.symlink(old_name, new_name)
         end
-        commit(avatar,tag=0)
+
+        avatar.commit(tag=0)
       end
       avatar
-    end
-
-    def save(avatar, delta, visible_files)
-      delta[:changed].each do |filename|
-        dir(avatar.sandbox).write(filename, visible_files[filename])
-      end
-      delta[:new].each do |filename|
-        dir(avatar.sandbox).write(filename, visible_files[filename])
-        @git.add(path(avatar.sandbox), filename)
-      end
-      delta[:deleted].each do |filename|
-        @git.rm(path(avatar.sandbox), filename)
-      end
     end
 
     def test(avatar, max_duration)
@@ -121,44 +97,53 @@ module ExposedLinux
       output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
-    def save_visible_files(avatar, visible_files)
-      dir(avatar).write(avatar.visible_files_filename, visible_files)
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+    # disk-helpers
+
+    def disk_make_dir(object)
+      dir(object).make
     end
 
-    def save_traffic_light(avatar, traffic_light, now)
-      lights = traffic_lights(avatar)
-      lights << traffic_light
-      traffic_light['number'] = lights.length
-      traffic_light['time'] = now
-      dir(avatar).write(avatar.traffic_lights_filename, lights)
-      lights
+    def disk_read(object, filename)
+      dir(object).read(filename)
     end
 
-    def commit(avatar, tag)
-      @git.commit(path(avatar), "-a -m '#{tag}' --quiet")
-      @git.tag(path(avatar), "-m '#{tag}' #{tag} HEAD")
-    end
-
-    def visible_files(avatar, tag = nil)
-      avatar_read(avatar, avatar.visible_files_filename, tag)
-    end
-
-    def traffic_lights(avatar, tag = nil)
-      avatar_read(avatar, avatar.traffic_lights_filename, tag)
-    end
-
-    def diff_lines(avatar, was_tag, now_tag)
-      command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-      output = @git.diff(path(avatar), command)
-      output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    def disk_write(object, filename, content)
+      dir(object).write(filename, content)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
-    # helpers
+    # git-helpers
 
-    def read(object, filename)
-      dir(object).read(filename)
+    def git_init(object, args)
+      @git.init(path(object), args)
     end
+
+    def git_add(object, filename)
+      @git.add(path(object), filename)
+    end
+
+    def git_rm(object, filename)
+      @git.rm(path(object), filename)
+    end
+
+    def git_commit(object, args)
+      @git.commit(path(object), args)
+    end
+
+    def git_tag(object, args)
+      @git.tag(path(object), args)
+    end
+
+    def git_diff(object, args)
+      @git.diff(path(object), args)
+    end
+
+    def git_show(object, args)
+      @git.show(path(object), args)
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def dir(obj)
       @disk[path(obj)]
@@ -186,13 +171,6 @@ module ExposedLinux
     end
 
   private
-
-    def avatar_read(avatar, filename, tag)
-      text = dir(avatar).read(filename) if tag == nil
-      text = @git.show(path(avatar), "#{tag}:#{filename}") if tag != nil
-      return JSON.parse(JSON.unparse(eval(text))) if avatar.format_is_rb?
-      return JSON.parse(text) if avatar.format_is_json?
-    end
 
     def is_dir?(name)
       File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')

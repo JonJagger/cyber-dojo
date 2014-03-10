@@ -27,35 +27,53 @@ module ExposedLinux
     end
 
     def save(delta, visible_files)
-      kata.dojo.paas.save(self, delta, visible_files)
+      delta[:changed].each do |filename|
+        paas.disk_write(sandbox, filename, visible_files[filename])
+      end
+      delta[:new].each do |filename|
+        paas.disk_write(sandbox, filename, visible_files[filename])
+        paas.git_add(sandbox, filename)
+      end
+      delta[:deleted].each do |filename|
+        paas.git_rm(sandbox, filename)
+      end
     end
 
     def test(max_duration = 15)
-      kata.dojo.paas.test(self, max_duration)
+      paas.test(self, max_duration)
     end
 
     def save_visible_files(visible_files)
-      kata.dojo.paas.save_visible_files(self, visible_files)
+      paas.disk_write(self, visible_files_filename, visible_files)
     end
 
     def save_traffic_light(traffic_light, now = make_time(Time.now))
-      kata.dojo.paas.save_traffic_light(self, traffic_light, now)
+      lights = traffic_lights
+      lights << traffic_light
+      traffic_light['number'] = lights.length
+      traffic_light['time'] = now
+      paas.disk_write(self, traffic_lights_filename, lights)
+      lights
     end
 
     def visible_files(tag = nil)
-      kata.dojo.paas.visible_files(self, tag)
+      read(visible_files_filename, tag)
     end
 
     def traffic_lights(tag = nil)
-      kata.dojo.paas.traffic_lights(self, tag)
+      read(traffic_lights_filename, tag)
     end
 
     def diff_lines(was_tag, now_tag)
-      kata.dojo.paas.diff_lines(self, was_tag, now_tag)
+      command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
+      output = paas.git_diff(self, command)
+      output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     end
 
     def commit(tag)
-      kata.dojo.paas.commit(self, tag)
+      #paas.commit(self, tag)
+      paas.git_commit(self, "-a -m '#{tag}' --quiet")
+      paas.git_tag(self, "-m '#{tag}' #{tag} HEAD")
     end
 
     def traffic_lights_filename
@@ -68,8 +86,19 @@ module ExposedLinux
 
   private
 
+    def paas
+      kata.dojo.paas
+    end
+
     def make_time(now)
       [now.year, now.month, now.day, now.hour, now.min, now.sec]
+    end
+
+    def read(filename, tag)
+      text = paas.disk_read(self, filename) if tag == nil
+      text = paas.git_show(self, "#{tag}:#{filename}") if tag != nil
+      return JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
+      return JSON.parse(text) if format_is_json?
     end
 
   end

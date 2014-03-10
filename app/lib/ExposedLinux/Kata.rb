@@ -21,7 +21,7 @@ module ExposedLinux
     end
 
     def start_avatar
-      dojo.paas.start_avatar(self)
+      paas.start_avatar(self)
     end
 
     def avatars
@@ -37,15 +37,15 @@ module ExposedLinux
     end
 
     def manifest
-      text = read(manifest_filename)
+      text = paas.disk_read(self, manifest_filename)
       return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
       return @manifest ||= JSON.parse(text) if format_is_json?
     end
 
   private
 
-    def read(filename)
-      dojo.paas.read(self, filename)
+    def paas
+      dojo.paas
     end
 
   end

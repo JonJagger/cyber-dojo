@@ -39,14 +39,14 @@ module ExposedLinux
       manifest['visible_filenames'] || [ ]
     end
 
-  private
-
     def manifest
       @manifest ||= JSON.parse(read('manifest.json'))
     end
 
+  private
+
     def read(filename)
-      dojo.paas.read(self, filename)
+      dojo.paas.disk_read(self, filename)
     end
 
   end
