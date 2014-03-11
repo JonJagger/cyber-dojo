@@ -163,15 +163,15 @@ module ExposedLinux
     def path(obj)
       case obj
         when ExposedLinux::Languages
-          obj.dojo.path + 'languages/'
+          root(obj) + 'languages/'
         when ExposedLinux::Language
           path(obj.dojo.languages) + obj.name + '/'
         when ExposedLinux::Exercises
-          obj.dojo.path + 'exercises/'
+          root(obj) + 'exercises/'
         when ExposedLinux::Exercise
           path(obj.dojo.exercises) + obj.name + '/'
         when ExposedLinux::Katas
-          obj.dojo.path + 'katas/'
+          root(obj) + 'katas/'
         when ExposedLinux::Kata
           path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
         when ExposedLinux::Avatar
@@ -179,6 +179,10 @@ module ExposedLinux
         when ExposedLinux::Sandbox
           path(obj.avatar) + 'sandbox/'
       end
+    end
+
+    def root(obj)
+      obj.dojo.path
     end
 
   private

@@ -66,14 +66,13 @@ module Docker
     end
 
     def katas_each(katas)
-      # iterate through docker katas-registry for katas
       # txt = `sudo docker images`
-      # need to iterate and parse txt and yield TAG?
+      # iterate through docker katas-registry for images starting 'kata_'
     end
 
     def avatars_each(kata)
-      # iterate through docker katas-registry for avatars in kata
       # txt = `sudo docker images`
+      # iterate through docker katas-registry for images starting 'avatar_' + kata.id
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -106,7 +105,7 @@ module Docker
         kata.language.support_filenames.each do |filename|
           old_name = path(kata.language) + filename
           new_name = path(avatar.sandbox) + filename
-          @disk.symlink(old_name, new_name)
+          @disk.symlink(old_name, new_name) ####
         end
 
         avatar.commit(tag=0)
@@ -124,9 +123,10 @@ module Docker
 
     def docker(object, command)
       image = @cids.last
-      `rm  -f #{cidfile}`
-      result = `sudo docker run -cidfile="#{cidfile(object)}" -i #{image} /bin/bash -c "#{command}"`
-      cid = `cat #{cidfile(object)}`
+      dot_cidfile = cidfile(object)
+      `rm  -f #{dot_cidfile}`
+      result = `sudo docker run -cidfile="#{dot_cidfile}" -i #{image} /bin/bash -c "#{command}"`
+      cid = `cat #{dot_cidfile}`
       `sudo docker commit #{cid} #{cid}`
       @cids << cid
       result
@@ -150,84 +150,77 @@ module Docker
 
     def disk_write(object, filename, content)
       ####### dir(object).write(filename, content)
-
-      # cids = [ 'base' ]  # base will need to be current-image for kata-avatar
-
-      # image = @cids.last
-      # cidfile = 'docker.cid'   # needs to be kata.id+avatar.name specific
-      # `rm  -f #{cidfile}
-      # filename = ??????  # needs appropriate dirname prefix?
+      #
       # `echo '#{content}' | sudo docker run -cidfile="#{cidfile}" -i #{image} /bin/bash -c "cat > '#{filename}'"`
-      # cid = `cat #{cidfile}`
-      # `sudo docker commit #{cid} #{cid}`
-      # @cids << cid
-
+      #
       # if I cat to a file in a new dir will the folder be created? NO
       # so I need a command to create the dir first.
-
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # git-helpers
     # object always avatar or avatar.sandbox
+    #
+    # container will be called something like 'avatar_BCE34DE552_cheetah_0'
+    # this will have ~ folder
+    # off this mimic the ExposedLinux directory structure. Viz
+    # ~/cyber-dojo/katas/BC/E34DE552/cheetah
+    # This should help when .tar.gz files are created and merged.
+    #
 
     def git_init(object, args)
-      # @git.init(path(object), args)
-      #
-      # dir = path(object)
-      # cmd = 'init'
-      docker(object, 'cd #{dir}; git {cmd} #{args}')
+      git_cmd(object, 'init', args)
     end
 
     def git_add(object, filename)
-      @git.add(path(object), filename)
+      git_cmd(object, 'add', args)
     end
 
     def git_rm(object, filename)
-      @git.rm(path(object), filename)
+      git_cmd(object, 'rm', args)
     end
 
     def git_commit(object, args)
-      @git.commit(path(object), args)
+      git_cmd(object, 'commit', args)
     end
 
     def git_tag(object, args)
-      @git.tag(path(object), args)
+      git_cmd(object, 'tag', args)
     end
 
     def git_diff(object, args)
-      @git.diff(path(object), args)
+      git_cmd(object, 'diff', args)
     end
 
     def git_show(object, args)
-      @git.show(path(object), args)
+      git_cmd(object, 'show', args)
+    end
+
+    def git_cmd(object,cmd,args)
+      docker(object, "cd #{path(object)}; git #{cmd} #{args}")
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # runner-helper
 
     def runner_run(object, command, max_duration)
-      @runner.run(path(object), command, max_duration)
+      #@runner.run(path(object), command, max_duration)
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
-    def dir(obj)
-      @disk[path(obj)]
-    end
-
     def path(obj)
       case obj
         when ExposedLinux::Languages
-          obj.dojo.path + 'languages/'
+          root + 'languages/'
         when ExposedLinux::Language
           path(obj.dojo.languages) + obj.name + '/'
         when ExposedLinux::Exercises
-          obj.dojo.path + 'exercises/'
+          root + 'exercises/'
         when ExposedLinux::Exercise
           path(obj.dojo.exercises) + obj.name + '/'
         when ExposedLinux::Katas
-          obj.dojo.path + 'katas/'
+          root + 'katas/'
         when ExposedLinux::Kata
           path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
         when ExposedLinux::Avatar
@@ -235,6 +228,10 @@ module Docker
         when ExposedLinux::Sandbox
           path(obj.avatar) + 'sandbox/'
       end
+    end
+
+    def root
+      '~/cyber-dojo/'
     end
 
   private
