@@ -5,12 +5,50 @@ module Docker
 
     def initialize(disk, git, runner)
       @disk,@git,@runner = disk,git,runner
+      @cids = [ ]
+      # at end of docker-transaction
+      #   all cids inside @cids need to be deleted
+      #   that means images and containers
+      #   None of them should start with 'kata_' or 'avatar_'
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def create_dojo(root, format)
       Dojo.new(self, root, format)
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
+    def make_kata(language, exercise, id, now)
+      # this will need to find the image for the language
+      # language image will have familiar folder structure...
+      #    ~/cyber-dojo/languages/NAME/manifest.json
+      #    ~/cyber-dojo/languages/NAME/cyber-dojo.sh
+      #
+
+      kata = Kata.new(language.dojo, id)
+      manifest = {
+        :created => now,
+        :id => id,
+        :language => language.name,
+        :exercise => exercise.name,
+        :unit_test_framework => language.unit_test_framework,
+        :tab_size => language.tab_size
+      }
+      manifest[:visible_files] = language.visible_files
+      manifest[:visible_files]['output'] = ''
+      manifest[:visible_files]['instructions'] = exercise.instructions
+
+      # write the manifest file to the language-image
+      # commit the new container with a name
+      #      kata_#{id}
+      # don't put container's id into @cids
+      #
+      #     paas.disk_make_dir(kata)
+      #     paas.disk_write(kata, kata.manifest_filename, manifest)
+
+      kata
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -21,22 +59,28 @@ module Docker
     end
 
     def exercises_each(exercises)
+      # could stay on local disk?
       Dir.entries(path(exercises)).each do |name|
         yield name if is_dir?(File.join(path(exercises), name))
       end
     end
 
     def katas_each(katas)
-      # iterate through a docker katas-registry
+      # iterate through docker katas-registry for katas
+      # txt = `sudo docker images`
+      # need to iterate and parse txt and yield TAG?
     end
 
     def avatars_each(kata)
-      # iterate through avatars in a single kata-docker-container
+      # iterate through docker katas-registry for avatars in kata
+      # txt = `sudo docker images`
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def start_avatar(kata)
+      # image = 'kata_' + kata.id
+
       avatar = nil
       started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
       unstarted_avatar_names = Avatar.names - started_avatar_names
@@ -44,6 +88,7 @@ module Docker
         avatar_name = unstarted_avatar_names.shuffle[0]
         avatar = Avatar.new(kata,avatar_name)
 
+        # write avatar-dir on kata-image to create new container-id
         disk_make_dir(avatar)
         git_init(avatar, '--quiet')
 
@@ -58,7 +103,6 @@ module Docker
           git_add(avatar.sandbox, filename)
         end
 
-        # don't think support_filenames will be need for DockerPaas
         kata.language.support_filenames.each do |filename|
           old_name = path(kata.language) + filename
           new_name = path(avatar.sandbox) + filename
@@ -67,7 +111,25 @@ module Docker
 
         avatar.commit(tag=0)
       end
+      # commit final container as 'avatar_' + kata.id + '_' + avatar.name + '_0'
       avatar
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+
+    def cidfile(object)
+       # needs to be kata.id+avatar.name specific and local
+      'docker.cid'
+    end
+
+    def docker(object, command)
+      image = @cids.last
+      `rm  -f #{cidfile}`
+      result = `sudo docker run -cidfile="#{cidfile(object)}" -i #{image} /bin/bash -c "#{command}"`
+      cid = `cat #{cidfile(object)}`
+      `sudo docker commit #{cid} #{cid}`
+      @cids << cid
+      result
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -82,18 +144,8 @@ module Docker
 
     def disk_read(object, filename)
       ########## dir(object).read(filename)
-
       # cids = [ 'base' ]  # base will need to be current-image for kata-avatar
-      
-      # image = cids.last
-      # cidfile = 'docker.cid'
-      # filename = ???? # needs appropriate dirname prefix?
-      # `rm -f #{cidfile}`
-      # read = `sudo docker run -cidfile="#{cidfile}" -i #{image} /bin/bash -c "cat '#{filename}'"`
-      # cid = `cat #{cidfile}`
-      # `sudo docker commit #{cid} #{cid}`
-      # cids << cid
-      # read
+      docker(object, "cat '#{filename}'")
     end
 
     def disk_write(object, filename, content)
@@ -101,19 +153,14 @@ module Docker
 
       # cids = [ 'base' ]  # base will need to be current-image for kata-avatar
 
-      # image = cids.last
+      # image = @cids.last
       # cidfile = 'docker.cid'   # needs to be kata.id+avatar.name specific
       # `rm  -f #{cidfile}
       # filename = ??????  # needs appropriate dirname prefix?
       # `echo '#{content}' | sudo docker run -cidfile="#{cidfile}" -i #{image} /bin/bash -c "cat > '#{filename}'"`
       # cid = `cat #{cidfile}`
       # `sudo docker commit #{cid} #{cid}`
-      # cids << cid
-
-      # at end of docker-transaction
-      #   last container needs to become the current one
-      #   all temporary containers (in cids) need to be deleted
-      #   all temporary images (in cids) need to be deleted
+      # @cids << cid
 
       # if I cat to a file in a new dir will the folder be created? NO
       # so I need a command to create the dir first.
@@ -122,9 +169,14 @@ module Docker
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # git-helpers
+    # object always avatar or avatar.sandbox
 
     def git_init(object, args)
-      @git.init(path(object), args)
+      # @git.init(path(object), args)
+      #
+      # dir = path(object)
+      # cmd = 'init'
+      docker(object, 'cd #{dir}; git {cmd} #{args}')
     end
 
     def git_add(object, filename)
@@ -194,6 +246,7 @@ module Docker
   end
 
 end
+
 
 # idea is that this will hold methods that forward to external
 # services namely: disk, git, shell.

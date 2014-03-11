@@ -27,21 +27,7 @@ module ExposedLinux
     end
 
     def make_kata(language, exercise, id = Uuid.new.to_s, now = make_time(Time.now))
-      kata = Kata.new(language.dojo, id)
-      paas.disk_make_dir(kata)
-      manifest = {
-        :created => now,
-        :id => id,
-        :language => language.name,
-        :exercise => exercise.name,
-        :unit_test_framework => language.unit_test_framework,
-        :tab_size => language.tab_size
-      }
-      manifest[:visible_files] = language.visible_files
-      manifest[:visible_files]['output'] = ''
-      manifest[:visible_files]['instructions'] = exercise.instructions
-      paas.disk_write(kata, kata.manifest_filename, manifest)
-      kata
+      paas.make_kata(language, exercise, id, now)
     end
 
     def katas

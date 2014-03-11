@@ -13,6 +13,24 @@ module ExposedLinux
       Dojo.new(self, root, format)
     end
 
+    def make_kata(language, exercise, id, now)
+      kata = Kata.new(language.dojo, id)
+      manifest = {
+        :created => now,
+        :id => id,
+        :language => language.name,
+        :exercise => exercise.name,
+        :unit_test_framework => language.unit_test_framework,
+        :tab_size => language.tab_size
+      }
+      manifest[:visible_files] = language.visible_files
+      manifest[:visible_files]['output'] = ''
+      manifest[:visible_files]['instructions'] = exercise.instructions
+      disk_make_dir(kata)
+      disk_write(kata, kata.manifest_filename, manifest)
+      kata
+    end
+
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # each() iteration
 
@@ -72,7 +90,6 @@ module ExposedLinux
           git_add(avatar.sandbox, filename)
         end
 
-        # don't think support_filenames will be need for DockerPaas
         kata.language.support_filenames.each do |filename|
           old_name = path(kata.language) + filename
           new_name = path(avatar.sandbox) + filename
@@ -209,5 +226,3 @@ end
 #    eg one that spies completely
 #    eg one that uses ExposedLinuxPaas
 #    eg one that uses IsolatedDockerPaas
-
-
