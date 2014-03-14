@@ -14,17 +14,19 @@ class DashboardController < ApplicationController
       @now_tag = params['now_tag']
       @max_tag = @kata[@avatar_name].traffic_lights.length
     end
+   @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
   end
 
   def heartbeat
     gather
+    @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
     respond_to do |format|
       format.js if request.xhr?
     end
   end
-  
+
   def help_dialog
-    render :layout => false    
+    render :layout => false
   end
 
 private
@@ -33,9 +35,9 @@ private
     @kata = dojo[id]
     @minute_columns = bool('minute_columns')
     @auto_refresh = bool('auto_refresh')
-    @seconds_per_column = seconds_per_column    
+    @seconds_per_column = seconds_per_column
   end
-  
+
   def bool(attribute)
     tf = params[attribute]
     return tf if tf == "true"
@@ -48,8 +50,8 @@ private
     if !flag || flag == "true"
       return 60
     else
-      return 60*60*24*365*1000 
+      return 60*60*24*365*1000
     end
   end
- 
+
 end

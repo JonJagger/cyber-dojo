@@ -13,70 +13,61 @@ $(document).ready(function() {
 
 //--></script>
 
- <table>
+<table>
+  <% seconds_per_td = @seconds_per_column %>
+  <% maximum_seconds_uncollapsed = seconds_per_td * 60 %>
+  <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) %>
+  <% gapped = gapper.fully_gapped(@all_lights, make_time(Time.now)) %>
+  <% index = 0 %>
+  <% @all_lights.keys.sort.each do |avatar_name| %>
+	<% lights = @all_lights[avatar_name] %>
+	<% if lights.length > 1 %>
+	  <% index += 1 %>
+	  <tr class="<%= parity(index) %> row">
+		<% td_map = gapped[avatar_name] %>
+		<% td_map.keys.sort.each do |td_no| %>
+		  <% td = td_map[td_no] %>
+		  <td align="right">
+		  <% if td.class == Hash %>
+			<span class="omission"></span>
+		  <% end %>
+		  <% if td.class == Array %>
+			<% if td.length == 0 %>
+			  <div class="gap">.</div>
+			<% else %>
+			  <table>
+				<tr>
+				  <% td.each do |light| %>
+					<td>
+					  <%= diff_traffic_light(@kata, avatar_name, light, lights.length) %>
+					</td>
+				  <% end %>
+				</tr>
+			  </table>
+			<% end %>
+		  <% end %>
+		  </td>
+		<% end %>
+		<td>
+		  <%= render :partial => 'shared/traffic_light_bulb_counts',
+					 :locals  => { :traffic_lights => lights,
+								   :avatar_name    => avatar_name
+								 } %>
+		</td>
+		<td class="align-right">
+		  <%= render :partial => 'shared/traffic_light_count',
+					 :locals  => { :traffic_lights => lights,
+								   :avatar_name    => avatar_name
+								 } %>
+		</td>
+		<td class="align-center valign-center">
+		  <%= no_diff_avatar_image(@kata, avatar_name, lights.last, lights.length) %>
 
-   <% seconds_per_td = @seconds_per_column %>
-   <% maximum_seconds_uncollapsed = seconds_per_td * 60 %>
-   <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) %>
-
-   <% all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}] %>
-   <% gapped = gapper.fully_gapped(all_lights, make_time(Time.now)) %>
-
-   <% index = 0 %>
-   <% all_lights.keys.sort.each do |avatar_name| %>
-     <% lights = all_lights[avatar_name] %>
-     <% if lights.length > 1 %>
-       <% index += 1 %>
-       <tr class="<%= parity(index) %> row">
-         <% td_map = gapped[avatar_name] %>
-         <% td_map.keys.sort.each do |td_no| %>
-           <% td = td_map[td_no] %>
-           <td align="right">
-           <% if td.class == Hash %>
-             <span class="omission"></span>
-           <% end %>
-           <% if td.class == Array %>
-             <% if td.length == 0 %>
-               <div class="gap">.</div>
-             <% else %>
-               <table>
-                 <tr>
-                   <% td.each do |light| %>
-                     <td>
-      	               <%= diff_traffic_light(@kata, avatar_name, light, lights.length) %>
-                     </td>
-                   <% end %>
-                 </tr>
-               </table>
-             <% end %>
-           <% end %>
-           </td>
-         <% end %>
-
-         <td>
-           <%= render :partial => 'shared/traffic_light_bulb_counts',
-                      :locals  => { :traffic_lights => lights,
-                                    :avatar_name    => avatar_name
-                                  } %>
-         </td>
-
-         <td class="align-right">
-           <%= render :partial => 'shared/traffic_light_count',
-                      :locals  => { :traffic_lights => lights,
-                                    :avatar_name    => avatar_name
-                                  } %>
-         </td>
-
-         <td class="align-center valign-center">
-      	   <%= no_diff_avatar_image(@kata, avatar_name, lights.last, lights.length) %>
-
-           <%= render :partial => 'shared/avatar_name',
-                      :locals  => { :avatar_name => avatar_name
-                                  } %>
-         </td>
-
-       </tr>
-     <% end %>
-   <% end %>
-
- </table>
+		  <%= render :partial => 'shared/avatar_name',
+					 :locals  => { :avatar_name => avatar_name
+								 } %>
+		</td>
+	  </tr>
+	<% end %>
+  <% end %>
+</table>

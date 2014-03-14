@@ -3,13 +3,13 @@ module Docker
 
   class Paas
 
-    def initialize(disk, git, runner)
-      @disk,@git,@runner = disk,git,runner
+    def initialize(disk)
+      @disk = disk
       @cids = [ ]
       # at end of docker-transaction
       #   all cids inside @cids need to be deleted
       #   that means images and containers
-      #   None of them should start with 'kata_' or 'avatar_'
+      #   Not ones that start with 'kata_' or 'avatar_'
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -23,8 +23,8 @@ module Docker
     def make_kata(language, exercise, id, now)
       # this will need to find the image for the language
       # language image will have familiar folder structure...
-      #    ~/cyber-dojo/languages/NAME/manifest.json
-      #    ~/cyber-dojo/languages/NAME/cyber-dojo.sh
+      #    ~/cyberdojo/languages/NAME/manifest.json
+      #    ~/cyberdojo/languages/NAME/cyber-dojo.sh
       #
 
       kata = Kata.new(language.dojo, id)
@@ -40,14 +40,8 @@ module Docker
       manifest[:visible_files]['output'] = ''
       manifest[:visible_files]['instructions'] = exercise.instructions
 
-      # write the manifest file to the language-image
-      # commit the new container with a name
-      #      kata_#{id}
-      # don't put container's id into @cids
-      #
-      #     paas.disk_make_dir(kata)
-      #     paas.disk_write(kata, kata.manifest_filename, manifest)
-
+      disk_write(kata, kata.manifest_filename, manifest)
+      `sudo docker commit #{@cids.last} kata_#{kata.id}`
       kata
     end
 
@@ -56,10 +50,20 @@ module Docker
 
     def languages_each(languages)
       # iterate through a docker languages-registry
+      # txt = `sudo docker images`
+      # iterate through docker registry for images starting 'language_'
+      #
+      # Or, create images and push them to cyberdojo user on https://index.docker.io/
+      # sudo docker commit $CONTAINER_ID cyberdojo/perl
+      # sudo docker push cyberdojo/perl
+      # then
+      # sudo docker search cyberdojo
+      #
     end
 
     def exercises_each(exercises)
-      # could stay on local disk?
+      # Keep on local disk?
+      # Or give Exercise a manifest like Language?
       Dir.entries(path(exercises)).each do |name|
         yield name if is_dir?(File.join(path(exercises), name))
       end
@@ -67,18 +71,19 @@ module Docker
 
     def katas_each(katas)
       # txt = `sudo docker images`
-      # iterate through docker katas-registry for images starting 'kata_'
+      # iterate through local docker registry for images starting 'kata_'
     end
 
     def avatars_each(kata)
       # txt = `sudo docker images`
-      # iterate through docker katas-registry for images starting 'avatar_' + kata.id
+      # iterate through docker registry for images starting 'avatar_' + kata.id
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
 
     def start_avatar(kata)
       # image = 'kata_' + kata.id
+      # @cids << image
 
       avatar = nil
       started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
@@ -87,8 +92,6 @@ module Docker
         avatar_name = unstarted_avatar_names.shuffle[0]
         avatar = Avatar.new(kata,avatar_name)
 
-        # write avatar-dir on kata-image to create new container-id
-        disk_make_dir(avatar)
         git_init(avatar, '--quiet')
 
         disk_write(avatar, avatar.visible_files_filename, kata.visible_files)
@@ -105,68 +108,28 @@ module Docker
         kata.language.support_filenames.each do |filename|
           old_name = path(kata.language) + filename
           new_name = path(avatar.sandbox) + filename
-          @disk.symlink(old_name, new_name) ####
+          #@disk.symlink(old_name, new_name) ########### <---------------------
         end
 
         avatar.commit(tag=0)
       end
-      # commit final container as 'avatar_' + kata.id + '_' + avatar.name + '_0'
+      `sudo docker commit #{@cids.last} avatar_#{kata.id}_#{avatar.name}_0`
       avatar
-    end
-
-    #- - - - - - - - - - - - - - - - - - - - - - - -
-
-    def cidfile(object)
-       # needs to be kata.id+avatar.name specific and local
-      'docker.cid'
-    end
-
-    def docker(object, command)
-      image = @cids.last
-      dot_cidfile = cidfile(object)
-      `rm  -f #{dot_cidfile}`
-      result = `sudo docker run -cidfile="#{dot_cidfile}" -i #{image} /bin/bash -c "#{command}"`
-      cid = `cat #{dot_cidfile}`
-      `sudo docker commit #{cid} #{cid}`
-      @cids << cid
-      result
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # disk-helpers
 
-    def disk_make_dir(object)
-      #dir(object).make
-      #
-      #make dir in avatars-current-container-image
-      #save created container-id ready for next docker-command in this transaction
-    end
-
     def disk_read(object, filename)
-      ########## dir(object).read(filename)
-      # cids = [ 'base' ]  # base will need to be current-image for kata-avatar
       docker(object, "cat '#{filename}'")
     end
 
     def disk_write(object, filename, content)
-      ####### dir(object).write(filename, content)
-      #
-      # `echo '#{content}' | sudo docker run -cidfile="#{cidfile}" -i #{image} /bin/bash -c "cat > '#{filename}'"`
-      #
-      # if I cat to a file in a new dir will the folder be created? NO
-      # so I need a command to create the dir first.
+      docker(object, "cat > '#{filename}'", "echo '#{content}' | ")
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # git-helpers
-    # object always avatar or avatar.sandbox
-    #
-    # container will be called something like 'avatar_BCE34DE552_cheetah_0'
-    # this will have ~ folder
-    # off this mimic the ExposedLinux directory structure. Viz
-    # ~/cyber-dojo/katas/BC/E34DE552/cheetah
-    # This should help when .tar.gz files are created and merged.
-    #
 
     def git_init(object, args)
       git_cmd(object, 'init', args)
@@ -186,6 +149,8 @@ module Docker
 
     def git_tag(object, args)
       git_cmd(object, 'tag', args)
+      # I think this will be the last command
+      # and so will require docker commit to new image
     end
 
     def git_diff(object, args)
@@ -196,18 +161,53 @@ module Docker
       git_cmd(object, 'show', args)
     end
 
-    def git_cmd(object,cmd,args)
-      docker(object, "cd #{path(object)}; git #{cmd} #{args}")
+    def git_cmd(object, cmd, args)
+      docker(object, "git #{cmd} #{args}")
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
     # runner-helper
 
     def runner_run(object, command, max_duration)
-      #@runner.run(path(object), command, max_duration)
+      docker(object, "timeout #{max_duration}s #{command}")
     end
 
     #- - - - - - - - - - - - - - - - - - - - - - - -
+    # docker-helpers
+    # https://blog.codecentric.de/en/2014/02/docker-registry-run-private-docker-image-repository/
+    # Every single command in a Dockerfile yields a new Docker
+    # image with an individual id similar to a commit in git.
+    # This commit can be tagged for easy reference with a Docker Tag.
+    # In addition, tags are the means to share images on public and private repositories.
+    # You can tag any image with docker tag <image> <tag>.
+    # The expression tag has evolved in Docker quite a lot and its meaning blurred.
+    # The syntax for a tag is repository:[tag].
+    # In general, a repository is a collection of images which are hosted in a registry.
+
+    def cid_filename(object)
+      `mkdir -p #{path(object)}`
+      name = path(object) + 'docker.cid'
+      `rm -f #{name}`
+      name
+    end
+
+    def docker(object, command, pre_pipe = "")
+      image = @cids.last
+      cidfile = cid_filename(object)
+      dir = path(object)
+      command = "cd #{dir};" + command
+      result = `#{pre_pipe} sudo docker run --cidfile #{cidfile} -w #{dir} -i #{image} /bin/bash -c "#{command}"`
+      cid = `cat #{cidfile}`
+      `sudo docker commit #{cid} #{cid}`
+      @cids << cid
+      result
+    end
+
+    #- - - - - - - - - - - - - - - - - - - - - - - -
+    # container will be called something like 'avatar_BCE34DE552_cheetah_0'
+    # and will mimic ExposedLinux dir structure.
+    # Viz   ~/cyberdojo/katas/BC/E34DE552/cheetah
+    # This should help when .tar.gz files are created and merged.
 
     def path(obj)
       case obj
@@ -231,7 +231,8 @@ module Docker
     end
 
     def root
-      '~/cyber-dojo/'
+      # ??? is ~ path ok or does it have to start at /
+      '~/cyberdojo/'
     end
 
   private

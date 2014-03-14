@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   cd.tipify($('.tipped'), $('#tip_window'));
-  
+
   if ("<%=@avatar_name%>" !== "") {
     var title = "<%= t('views.buttons.diff_review') %>";
     var id = "<%=@id%>";
@@ -12,7 +12,7 @@ $(document).ready(function() {
     var wasTag = parseInt("<%=@was_tag%>");
     var nowTag = parseInt("<%=@now_tag%>");
     var maxTag = parseInt("<%=@max_tag%>");
-    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);    
+    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   }
 
 });
@@ -27,10 +27,13 @@ $(document).ready(function() {
           <%= render :partial => 'shared/info' %>
         </div>
         <div class="panel">
-          <%= render :partial => 'controls' %>      
+          <%= render :partial => 'controls' %>
         </div>
-        <div class="panel" id="age">      
+        <div class="panel" id="age">
           <%= render :partial => 'age' %>
+        </div>
+        <div class="panel" id="team_bulb_counts">
+          <%= render :partial => 'team_bulb_counts' %>
         </div>
         <div class="panel">
           <%= render :partial => 'help_button' %>
@@ -41,14 +44,13 @@ $(document).ready(function() {
           <%= render :partial => 'traffic_lights' %>
         </div>
       </td>
-    </tr>    
+    </tr>
     <tr>
       <td class="valign-bottom">
         <div>
           <%= render :partial => 'shared/tip_window' %>
-        </div>        
+        </div>
       </td>
-    </tr>    
-  </table>    
+    </tr>
+  </table>
 </div>
-
