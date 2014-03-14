@@ -7,7 +7,9 @@ $(document).ready(function() {
 
 //--></script>
 
-<% if @all_lights.keys.count > 1 %>
+<%# See _traffic_lights.html.erb for explanation of {lights.count > 1} %>
+
+<% if @all_lights.select{|avatar_name,lights| lights.count > 1}.count > 1 %>
   <div class="panel">
     <table>
       <tr>
@@ -15,7 +17,9 @@ $(document).ready(function() {
           <% counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
           <% ['red','amber','green'].each do |bulb| %>
             <% @all_lights.each do |avatar_name,lights| %>
-              <% counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
+              <% if lights.count > 1 %>
+                <% counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
+              <% end %>
             <% end %>
             <div class="tipped <%= bulb %> bulb_count">
               <%= counts[bulb] %>
@@ -28,7 +32,7 @@ $(document).ready(function() {
           <% end %>
           <% lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
           <% @all_lights.each do |avatar_name,lights| %>
-            <% if lights.count > 0 %>
+            <% if lights.count > 1 %>
               <% lasts[lights.last['colour']] += 1 %>
             <% end %>
           <% end %>

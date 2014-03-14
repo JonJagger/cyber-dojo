@@ -13,6 +13,11 @@ $(document).ready(function() {
 
 //--></script>
 
+<%# An animal has properly started when it has more than one traffic-light. Why? %>
+<%# Because people commonly start two animals on the same computer and use one   %>
+<%# animal solely to read the instructions. Hence below you will find:           %>
+<%# if lights.length > 1 %>
+
 <table>
   <% seconds_per_td = @seconds_per_column %>
   <% maximum_seconds_uncollapsed = seconds_per_td * 60 %>
