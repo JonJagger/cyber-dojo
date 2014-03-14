@@ -26,12 +26,12 @@ $(document).ready(function() {
               </div>
             </div>
           <% end %>
-
           <% lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
           <% @all_lights.each do |avatar_name,lights| %>
-            <% lasts[lights.last['colour']] += 1 %>
+            <% if lights.count > 0 %>
+              <% lasts[lights.last['colour']] += 1 %>
+            <% end %>
           <% end %>
-
         </td>
         <td>
           <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
