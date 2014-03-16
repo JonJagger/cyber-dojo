@@ -8,11 +8,11 @@
   margin: 0;
   margin-top: 0.5em;
   .tag_red {
-    color: $red;  
+    color: $red;
   }
   .tag_amber {
-    color: $amber;  
-  }  
+    color: $amber;
+  }
   .tag_green {
     color: $green;
   }
@@ -27,7 +27,6 @@
 #diff_content
 {
   width: 40em;
-  height: 25em;
   font: {
     size: 1.5em;
     family: monospace;
@@ -46,18 +45,18 @@
 
 @mixin pre-block {
   white-space: pre;
-  display: block;  
+  display: block;
 }
 
 .diff_line_numbers, .diff_sheet {
   height: 25em;
   margin: 0;
   padding: 0;
-  @include code-font;    
+  @include code-font;
   ln {
     margin-left: 4px;
     margin-right: 3px;
-    font-weight: normal;    
+    font-weight: normal;
   }
   added, deleted, same { @include pre-block; }
   added   ln { color: $diff-added-color; }
@@ -72,22 +71,22 @@
     style: dotted;
     width: 1px;
     color: lighten($darker-color, 25%);
-  }  
+  }
 }
 
 .diff_sheet {
   width: 40em;
   overflow: auto;
   color: $darker-color;
-  background: $lighter-color;  
+  background: $lighter-color;
   added, deleted, same { padding-left: 3px; }
   added {
     background: $diff-added-color;
-  }  
+  }
   deleted {
     background: $diff-deleted-color;
-    text-decoration: line-through;    
-  }  
+    text-decoration: line-through;
+  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -108,7 +107,7 @@
   color: $darker-color;
   @include line-count;
   border: 2px solid $darker-color;
-  @include rounded-corner(4px);  
+  @include rounded-corner(4px);
 }
 
 .diff-deleted-line-count {
@@ -136,6 +135,3 @@
   height: 18em;
   overflow-y: auto;
 }
-
-
-
