@@ -3,13 +3,13 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {    
+  cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
     // This is virtually identical to
 	// cyber-dojo_dialog_fork.js
 	// except for the command executed when ok is pressed
 	// and refresh().
   	var minTag = 1;
-  
+
     var makeRevertInfo = function() {
 	  return '' +
 	    '<table class="align-center">' +
@@ -27,46 +27,46 @@ var cyberDojo = (function(cd, $) {
 			'<td>' +
 			  '<input type="text" ' +
 			        ' id="revert_tag_number"' +
-					' value="" />' +			  
+					' value="" />' +
 			'</td>' +
 		  '</tr>' +
-		'</table>';	  
+		'</table>';
     };
-    	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-	
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var makeReverterDiv = function()  {
-      var div = $('<div>', {    
+      var div = $('<div>', {
         'id': 'revert_dialog'
       });
       var table = $('<table>');
       table.append(
-        "<tr valign='top'>" +		  
+        "<tr valign='top'>" +
           "<td valign='top'>" +
-		  
+
 		    "<table>" +
-			  "<tr valign='top'>" + 
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 			      makeRevertInfo() +
 			    "</td>" +
 			  "</tr>" +
-			  
-			  "<tr valign='top'>" + 
+
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  cd.makeNavigateButtons(avatarName) +
 				"</td>" +
 			  "</tr>" +
-			  
-			  "<tr valign='top'>" + 
+
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  "<div id='revert_filenames'" +
 					   "class='panel'>" +
 				  "</div>" +
 				"</td>" +
 			  "</tr>" +
-			  
+
 			"</table>" +
-			
+
           "</td>" +
           "<td>" +
            "<textarea id='revert_content'" +
@@ -76,11 +76,11 @@ var cyberDojo = (function(cd, $) {
 		   "</textarea>" +
           "</td>" +
 	    "</tr>");
-	  
-      div.append(table);	   
+
+      div.append(table);
       return div;
     };
-	
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var revertDiv = makeReverterDiv();
@@ -98,21 +98,21 @@ var cyberDojo = (function(cd, $) {
 		if (filename !== 'output') {
 		  cd.doDelete(filename);
 		}
-	  });					  
+	  });
 	};
-	
+
 	var data = undefined;
-	
+
 	var copyRevertFilesToCurrentFiles = function() {
 	  var filename;
 	  for (filename in data.visibleFiles) {
 		if (filename !== 'output') {
 		  cd.newFileContent(filename, data.visibleFiles[filename]);
 		}
-	  }	  
-	};		  
+	  }
+	};
 
-	var revertDialog = revertDiv.dialog({	  
+	var revertDialog = revertDiv.dialog({
 	  autoOpen: false,
 	  width: 1200,
 	  modal: true,
@@ -125,7 +125,7 @@ var cyberDojo = (function(cd, $) {
 	    }
 	  ]
 	});
-	
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var trafficLight = $('#traffic_light', revertDiv);
@@ -137,11 +137,11 @@ var cyberDojo = (function(cd, $) {
 		     "width='15'" +
 		     "height='46'/>";
 	};
-	
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
+
 	var trafficLightNumber = $('#revert_tag_number', revertDiv);
-		
+
 	var tagEdit = function(event) {
 	  if (event.keyCode === $.ui.keyCode.ENTER) {
 		var newTag = parseInt(trafficLightNumber.val(), 10);
@@ -149,15 +149,15 @@ var cyberDojo = (function(cd, $) {
 		  trafficLightNumber.val(tag);
 		} else {
 		  tag = newTag;
-		  refresh();		
+		  refresh();
 		}
-	  }        
+	  }
 	};
-		
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-		  	
+
 	var revertFilenames = $('#revert_filenames', revertDiv);
-		  
+
     var makeRevertFilenames = function(visibleFiles) {
       var div = $('<div>');
 	  var filenames = [ ];
@@ -177,12 +177,12 @@ var cyberDojo = (function(cd, $) {
       return div.html();
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-  
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var revertContent = $('#revert_content', revertDiv);
-	
+
 	var currentFilename = undefined;
-	
+
 	var showCurrentFile = function() {
 	  var i, filename, filenames = [ ];
 	  var files = $('.filename', revertDiv);
@@ -197,9 +197,9 @@ var cyberDojo = (function(cd, $) {
 	  if (i === files.length) {
 		i = cd.nonBoringFilenameIndex(filenames);
 	  }
-      files[i].click();		
+      files[i].click();
 	};
-		
+
 	var showContentOnFilenameClick = function(visibleFiles) {
 	  var previous = undefined;
 	  $('.filename', revertDiv).each(function() {
@@ -212,19 +212,19 @@ var cyberDojo = (function(cd, $) {
 		  }
 		  $(this).addClass('selected');
 		  currentFilename = filename;
-		  previous = $(this);                            
+		  previous = $(this);
 		});
 	  });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
+
 	var firstButton = $('#first_button', revertDiv);
 	var prevButton  = $('#prev_button',  revertDiv);
 	var nextButton  = $('#next_button',  revertDiv);
 	var lastButton  = $('#last_button',  revertDiv);
-	  
-    var resetNavigateButtonHandlers = function() {	  
+
+    var resetNavigateButtonHandlers = function() {
 	  var resetHandler = function(button, onOff, newTag) {
 		button
 		  .attr('disabled', onOff)
@@ -235,21 +235,21 @@ var cyberDojo = (function(cd, $) {
 			  refresh();
 			}
 		  }
-		);			  		
-	  };	  
+		);
+	  };
 	  var atMin = (tag === minTag);
 	  var atMax = (tag === maxTag);
-	  
+
 	  resetHandler(firstButton, atMin, minTag);
 	  resetHandler(prevButton,  atMin, tag-1);
 	  resetHandler(nextButton,  atMax, tag+1);
 	  resetHandler(lastButton,  atMax, maxTag);
-	  
-	  trafficLightNumber.unbind().keyup(function(event) { tagEdit(event); });  	  
+
+	  trafficLightNumber.unbind().keyup(function(event) { tagEdit(event); });
 	};
-	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-	
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
 	var refresh = function() {
 	  $.getJSON('/reverter/revert',
 		{
@@ -264,19 +264,18 @@ var cyberDojo = (function(cd, $) {
 		  trafficLightNumber.val(data.inc.number);
 		  revertFilenames.html(makeRevertFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
-          showCurrentFile();		  
+          showCurrentFile();
 		}
 	  );
 	};
-	  
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
+
 	revertDialog.dialog('open');
 	refresh();
-	
+
   }; // cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
 
 
   return cd;
 })(cyberDojo || {}, $);
-
