@@ -1,12 +1,11 @@
 
 <div id="visible_files_container"
-     class="edgeless panel">
-  
+     class="edgeless">
+
   <% @visible_files.each do |filename,content| %>
     <%= render :partial => 'visible_file',
                :locals  => { :filename => filename,
-                             :content  => content} %>                
+                             :content  => content} %>
   <% end %>
-  
-</div>
 
+</div>

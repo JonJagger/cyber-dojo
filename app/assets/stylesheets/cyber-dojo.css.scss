@@ -13,7 +13,7 @@ table { border-spacing: 0; }
 body
 {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $darker-color;  
+  background: $darker-color;
   padding: none;
   margin: 0em;
 }
@@ -22,9 +22,15 @@ body
 {
   margin-left: 0.2em;
   margin-right: 0.2em;
-  margin-top: 0em;  
+  margin-top: 0em;
   margin-bottom: 0em;
   cursor: pointer;
+}
+
+.vertical_padded
+{
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .panel
@@ -37,7 +43,7 @@ body
     color: lighten($darker-color, 25%);
     left: none;
     right: none;
-    bottom: none;    
+    bottom: none;
   }
   margin: none;
   padding: 0.5em;
@@ -55,8 +61,8 @@ $filename_and_button_border_size: 2px;
 
 button
 {
-  background: darken($lighter-color, 10%);  
-  color: $darker-color;    
+  background: darken($lighter-color, 10%);
+  color: $darker-color;
   cursor: pointer;
   padding: {
     left: 0.5em;
@@ -65,7 +71,7 @@ button
   }
   text-decoration: none;
   font-weight: normal;
-  border: $filename_and_button_border_size solid $darker-color;  
+  border: $filename_and_button_border_size solid $darker-color;
   @include rounded-corner(4px);
   display: inline-block;
 }
@@ -77,11 +83,11 @@ button[disabled]
   font-style: italic;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 div[class~='filename']
 {
-  @include font-size-small();  
+  @include font-size-small();
   background: $darker-color;
   color: $lighter-color;
   margin: none;
@@ -92,7 +98,7 @@ div[class~='filename']
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
-    
+
   &[class~='selected']
   {
     // See app/assets/javascripts/cyber-dojo_file_load.js
@@ -101,10 +107,10 @@ div[class~='filename']
     color: $darker-color;
     cursor: default;
   }
-  
+
   &[class~='highlight'] {
     &:before { content: ">"; }
-  }  
+  }
 }
 
 div[class~="filename"]:hover, button:hover
@@ -117,7 +123,7 @@ div[class~="filename"], button[disabled]:hover
   border: $filename_and_button_border_size solid $darker-color;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .filename_div { display: none; }
 
@@ -171,9 +177,9 @@ div[class~="filename"], button[disabled]:hover
   margin-left: 45px;
   margin-right: 45px;
   a:link, a:visited {
-    color: $lighter-color;  
+    color: $lighter-color;
   }
-  
+
   &.title
   {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;

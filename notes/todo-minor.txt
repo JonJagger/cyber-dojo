@@ -11,7 +11,18 @@ FORK/REVERT.
   traffic-light brings up a dialog with << < > >> movement
   and you can also revert/fork from the left/right traffic-light.
   Or, how about if the was_tag and the now_tag are the same then
-  revert and fork buttons appear. YES. Like that.
+  revert and fork buttons appear. YES. Like that. I think.
+  Too clever? Looking at diff-view dialog and imagining how
+  might look. Too clever I think.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE
+  would be nice if it had a heartbeat so it could detect and
+  auto-enable the resume/review buttons.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE
+  add a [publish] button. Perhaps layout as
+  [ start] [ review]
+  [resume] [publish]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-VIEW
   put line numbers back in. I find I quite often look at the
