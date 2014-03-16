@@ -28,6 +28,10 @@ class KataController < ApplicationController
     was = params[:file_hashes_incoming]
     now = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(was, now)
+    # there are a lot of steps below that could be collapsed into one
+    # command. I don't do that because later on I am going to need to
+    # convert old format katas to new format katas which means I will
+    # need to miss out the step that does the actual test()
     @avatar.sandbox.write(delta, visible_files)
     @output = @avatar.sandbox.test()
     @avatar.sandbox.dir.write('output', @output) # so output appears in diff-view

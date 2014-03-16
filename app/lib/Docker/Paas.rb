@@ -25,7 +25,6 @@ module Docker
       # language image will have familiar folder structure...
       #    ~/cyberdojo/languages/NAME/manifest.json
       #    ~/cyberdojo/languages/NAME/cyber-dojo.sh
-      #
 
       kata = Kata.new(language.dojo, id)
       manifest = {
@@ -63,7 +62,10 @@ module Docker
 
     def exercises_each(exercises)
       # Keep on local disk?
-      # Or give Exercise a manifest like Language?
+      # Maybe later give Exercise a manifest like Language
+      # and allow an Exercise image to have its own additional
+      # set of exercises. This would work very well for James
+      # for example.
       Dir.entries(path(exercises)).each do |name|
         yield name if is_dir?(File.join(path(exercises), name))
       end
@@ -108,7 +110,10 @@ module Docker
         kata.language.support_filenames.each do |filename|
           old_name = path(kata.language) + filename
           new_name = path(avatar.sandbox) + filename
-          #@disk.symlink(old_name, new_name) ########### <---------------------
+          # I think this can just become a mv.
+          # Files are not shared with anyone
+          # else because of the union file system.
+          #@disk.symlink(old_name, new_name)  <---------------------
         end
 
         avatar.commit(tag=0)
@@ -232,6 +237,12 @@ module Docker
 
     def root
       # ??? is ~ path ok or does it have to start at /
+      # and what user do I want the commands to be run under?
+      # one option is to make usernames for each animal!
+      # Quite like that. Suggests possibility of them talking
+      # to each other. Note that a chat-like facility would need
+      # a very different implementation because of the genuine
+      # isolation.
       '~/cyberdojo/'
     end
 

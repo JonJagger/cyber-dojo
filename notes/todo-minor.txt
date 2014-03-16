@@ -1,5 +1,24 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FORK/REVERT.
+  Now that all traffic-lights appear at bottom pressing
+  traffic-light could bring up a dialog asking
+  What you want to do with traffic-light 34
+  o) view its diff
+  o) revert to it
+  o) fork a new dojo from it
+  Don't like this design though. I'd prefer that pressing a
+  traffic-light brings up a dialog with << < > >> movement
+  and you can also revert/fork from the left/right traffic-light.
+  Or, how about if the was_tag and the now_tag are the same then
+  revert and fork buttons appear. YES. Like that.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-VIEW
+  put line numbers back in. I find I quite often look at the
+  output and it names a file and a line-number and I want to
+  look at that line-number.
+  Ideally, line-numbes are toggleable on/off.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DEFECT
   Refactoring page on blog no longer works because
   forker/fork is now an ajax call returning json.
@@ -33,9 +52,6 @@ shows some of the languages do not pass the checks.
   Java-JUnit-Mockito . ["red", "amber", "red"] installed but not working (~ 3.05 seconds)
   Ruby-Approval ...... ["red", "red", "green"] installed but not working (~ 1.63 seconds)
   Ruby-Cucumber ...... multiple 42-files ["untitled.rb", "untitled.feature"]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-move sandbox.test into avatar?
-Delete sandbox?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   o) create External object holding disk,git,task
   o) External has .dojo(dir)
