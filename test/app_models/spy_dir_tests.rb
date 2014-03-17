@@ -1,11 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/spy_dir'
+require File.dirname(__FILE__) + '/spy_disk'
 
 class SpyDirTests < ActionController::TestCase
 
   def setup
+    @disk = SpyDisk.new
     @path = 'spied/'
-    @dir = SpyDir.new(@path)
+    @dir = SpyDir.new(@disk,@path)
   end
 
   test "path is as set in ctor" do
@@ -48,14 +50,14 @@ class SpyDirTests < ActionController::TestCase
   test "read(filename) raises if no files stubbed or written" do
     filename = 'wibble.rb'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
-    assert_equal "SpyDir['#{@path}'].read('#{filename}') no files stubbed", error.message
+    assert_equal "SpyDir['#{@path}'].read('#{filename}') no stub file", error.message
   end
 
   test "read(filename) raises if different filename stubbed" do
     @dir.spy_read('wibble.h', '#include <stdio.h>')
     filename = 'wibble.cpp'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
-    assert_equal "SpyDir['#{@path}'].read('#{filename}') not stubbed", error.message
+    assert_equal "SpyDir['#{@path}'].read('#{filename}') no stub file", error.message
   end
 
   test "read(filename) returns stubbed content" do
@@ -108,6 +110,12 @@ class SpyDirTests < ActionController::TestCase
     error = assert_raise(RuntimeError) { @dir.teardown }
     expected = ['write',filename,content]
     assert_equal "SpyDir['#{@path}'].log.include?(#{expected})", error.message
+  end
+
+  test "each" do
+    @disk[@path + 'a']
+    @disk[@path + 'b']
+    assert_equal ['a','b'], @disk[@path].entries.sort
   end
 
 end

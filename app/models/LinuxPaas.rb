@@ -34,6 +34,10 @@ class LinuxPaas
   # each() iteration
 
   def languages_each(languages)
+    #dir(languages).entries.select do |name|
+    #   means SpyDir needs each() DONE
+    #   now how to handle is_dir?
+    
     Dir.entries(path(languages)).select do |name|
       yield name if is_dir?(File.join(path(languages), name))
     end

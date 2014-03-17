@@ -1,40 +1,14 @@
-#__DIR__ = File.dirname(__FILE__)
-#require __DIR__ + '/../test_helper'
-#require __DIR__ + '/../app_models/spy_disk'
-#require __DIR__ + '/../app_models/stub_git'
-#require __DIR__ + '/../app_models/stub_runner'
-
-#class LinuxPaasKataTests < ActionController::TestCase
-
 require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
 class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   def setup
     super()
-    @language = @dojo.languages['Java-JUnit']
-    @exercise = @dojo.exercises['Yahtzee']
+    #@language = @dojo.languages['Java-JUnit']
+    #@exercise = @dojo.exercises['Yahtzee']
     #@kata = @dojo.make_kata(@language, @exercise)
     @id = '45ED23A2F1'
   end
-
-=begin
-
-  def setup
-    Thread.current[:disk] = @disk = SpyDisk.new
-    Thread.current[:git] = @git = StubGit.new
-    Thread.current[:runner] = StubRunner.new
-    @id = '45ED23A2F1'
-  end
-
-  def teardown
-    @disk.teardown
-    Thread.current[:disk] = nil
-    Thread.current[:git] = nil
-    Thread.current[:runner] = nil
-  end
-=end
-
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -48,30 +22,48 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-=begin
-  test "create_kata saves manifest in kata dir (rb)" do
-    @dojo = Dojo.new('spied/', 'rb')
-    manifest = { :id => @id }
-    @kata = @dojo.create_kata(manifest)
-    assert @kata.dir.log.include? [ 'write', 'manifest.rb', manifest.inspect ]
-  end
+  test "create_kata saves manifest in kata dir" do
+    rb_and_json(&Proc.new{|format|
+      @language = @dojo.languages['Java-JUnit']
+      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({
+        :unit_test_framework => 'waffle'
+      }))
+      @exercise = @dojo.exercises['Yahtzee']
+      @paas.dir(@exercise).spy_read('instructions', 'your task...')
+      now = [2014,7,17,21,15,45]
+      @kata = @dojo.make_kata(@language, @exercise, @id, now)
 
-  test "create_kata saves manifest in kata dir (json)" do
-    @dojo = Dojo.new('spied/', 'json')
-    manifest = { :id => @id }
-    @kata = @dojo.create_kata(manifest)
-    assert @kata.dir.log.include? [ 'write', 'manifest.json', JSON.unparse(manifest) ]
+      expected_manifest = {
+        :created => now,
+        :id => @id,
+        :language => @language.name,
+        :exercise => @exercise.name,
+        :unit_test_framework => 'waffle',
+        :tab_size => 4,
+        :visible_files => {
+          'output' => '',
+          'instructions' => 'your task...'
+        }
+      }
+      if format == 'rb'
+        assert @paas.dir(@kata).log.include?([ 'write', 'manifest.rb', expected_manifest.inspect ]),
+          @paas.dir(@kata).log.inspect
+      end
+      if format == 'json'
+        assert @paas.dir(@kata).log.include?([ 'write', 'manifest.json', JSON.unparse(expected_manifest) ]),
+          @paas.dir(@kata).log.inspect
+      end
+    })
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "created date is read from manifest" do
     rb_and_json(&Proc.new{|format|
-      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
       @language = @dojo.languages['Java-JUnit']
-      @paas.dir(@exercise).spy_read('instructions', 'your task...')
+      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
       @exercise = @dojo.exercises['Yahtzee']
+      @paas.dir(@exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       @kata = @dojo.make_kata(@language, @exercise, @id, now)
       assert_equal Time.mktime(*now), @kata.created
@@ -80,66 +72,21 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "kata.id, kata.language.name, kata.exercise.name all read from manifest" do
+    rb_and_json(&Proc.new{|format|
+      @language = @dojo.languages['Ruby-Rspec']
+      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
+      @exercise = @dojo.exercises['Yahtzee']
+      @paas.dir(@exercise).spy_read('instructions', 'your task...')
+      now = [2014,7,17,21,15,45]
+      @kata = @dojo.make_kata(@language, @exercise, @id, now)
+      assert_equal @id, @kata.id
+      assert_equal @language.name, @kata.language.name
+      assert_equal @exercise.name, @kata.exercise.name
+    })
+  end
+
 =begin
-  test "age_in_seconds is calculated from creation date in manifest" do
-    age_in_seconds_test('rb')
-    age_in_seconds_test('json')
-  end
-
-  def age_in_seconds_test(format)
-    now = [2013,6,29,14,24,51]
-    manifest = {
-      :created => now,
-      :id => @id
-    }
-    seconds = 5
-    @dojo = Dojo.new('spied/',format)
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    @kata = @dojo.create_kata(manifest)
-    now[-1] += seconds
-    assert_equal seconds, @kata.age_in_seconds(Time.mktime(*now))
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "language name is read from manifest" do
-    language_name_is_read_from_manifest_test('rb')
-    language_name_is_read_from_manifest_test('json')
-  end
-
-  def language_name_is_read_from_manifest_test(format)
-    language = 'Wibble'
-    manifest = {
-      :language => language,
-      :id => @id
-    }
-    @dojo = Dojo.new('spied/',format)
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    @kata = @dojo.create_kata(manifest)
-    assert_equal language, @kata.language.name
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "exercise name is read from manifest" do
-    exercise_name_is_read_from_manifest_test('rb')
-    exercise_name_is_read_from_manifest_test('json')
-  end
-
-  def exercise_name_is_read_from_manifest_test(format)
-    exercise = 'Tweedle'
-    manifest = {
-      :exercise => exercise,
-      :id => @id
-    }
-    @dojo = Dojo.new('spied/',format)
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    @kata = @dojo.create_kata(manifest)
-    assert_equal exercise, @kata.exercise.name
-  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -162,43 +109,6 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
     kata_manifest_spy_read(format,manifest)
     @kata = @dojo.create_kata(manifest)
     assert_equal visible_files, @kata.visible_files
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "exists? returns false before kata is created then true after kata is created" do
-    exists_returns_false_before_kata_is_created_then_true_after_kata_is_created('rb')
-    teardown
-    setup
-    exists_returns_false_before_kata_is_created_then_true_after_kata_is_created('json')
-  end
-
-  def exists_returns_false_before_kata_is_created_then_true_after_kata_is_created(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    assert !@kata.exists?, '!kata.exists? before created'
-    manifest = { :id => @id }
-    @kata = @dojo.create_kata(manifest)
-    assert @kata.exists?, 'Kata.exists? after created'
-    kata_manifest_spy_write(format,manifest)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "kata['lion'] exists when its dir exists" do
-    kata_lion_exists_when_its_dir_exists('rb')
-    teardown
-    setup
-    kata_lion_exists_when_its_dir_exists('json')
-  end
-
-  def kata_lion_exists_when_its_dir_exists(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    avatar = @kata['lion']
-    assert !avatar.exists?, '!avatar.exists?'
-    avatar.dir.make
-    assert avatar.exists?, 'avatar.exists?'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

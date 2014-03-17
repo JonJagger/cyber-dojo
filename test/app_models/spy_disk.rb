@@ -15,8 +15,16 @@ class SpyDisk
     '/'
   end
 
+  def dirs_each(from)
+    @dir_spies.each do |dir,spy|
+      if dir != from.path && dir.start_with?(from.path)
+        yield dir[from.path.length..-1]
+      end
+    end
+  end
+
   def [](dir)
-    @dir_spies[dir] ||= SpyDir.new(dir)
+    @dir_spies[dir] ||= SpyDir.new(self,dir)
   end
 
   def symlink(old_name, new_name)

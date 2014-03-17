@@ -1,8 +1,9 @@
 
 class SpyDir
+  include Enumerable
 
-  def initialize(dir)
-    @dir = dir
+  def initialize(disk,dir)
+    @disk,@dir = disk,dir
     @log = [ ]
     @stub_log = [ ]
   end
@@ -15,6 +16,12 @@ class SpyDir
 
   def path
     @dir
+  end
+
+  def each
+    @disk.dirs_each(self) do |subdir|
+      yield subdir
+    end
   end
 
   def exists?(filename = '')
