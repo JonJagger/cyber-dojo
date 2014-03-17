@@ -12,6 +12,7 @@ class LinuxPaas
   end
 
   def make_kata(language, exercise, id, now)
+    #TODO: don't like this. should be Kata.new(dojo,id) -> pass dojo in as extra 1st param
     kata = Kata.new(language.dojo, id)
     manifest = {
       :created => now,
@@ -191,38 +192,3 @@ private
 
 end
 
-# idea is that this will hold methods that forward to external
-# services namely: disk, git, shell.
-# And I will create another implementation IsolatedDockerPaas
-# Design notes
-#
-# o) locking is not right.
-#    I need a 'Paas::Session' object which can scope the lock/unlock
-#    over a sequence of actions. The paas object can hold this itself
-#    since a new Paas object is created for each controller-action
-#    CHECK THAT IS INDEED TRUE and that the same paas object is remembered
-#    inside the controller
-#         def paas
-#           @paas ||= expression
-#         end
-#
-# o) IsolatedDockerPaas.disk will have smarts to know if reads/writes
-#    are local to disk (eg exercises) or need to go into container.
-#    ExposedLinuxPaas.disk can have several dojos (different root-dirs eg testing)
-#    so parent refs need to link back to dojo which
-#    will be used by paas to determine paths.
-#
-# o) how will IsolatedDockerPaas know a languages'
-#    initial visible_files? use same manifest format?
-#    seems reasonable. Could even repeat the languages subfolder
-#    pattern. No reason a Docker container could not support
-#    several variations of language/unit-test.
-#       - the docker container could have ruby code installed to
-#         initialize an avatar from a language. All internally.
-#         would save many docker run calls. Optimization.
-#
-# o) tests could be passed a paas object which they will use
-#    idea is to repeat same test for several paas objects
-#    eg one that spies completely
-#    eg one that uses ExposedLinuxPaas
-#    eg one that uses IsolatedDockerPaas

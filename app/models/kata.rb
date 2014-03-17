@@ -26,6 +26,10 @@ class Kata
     Avatars.new(self)
   end
 
+  def created
+    Time.mktime(*manifest['created'])
+  end
+
   def visible_files
     manifest['visible_files']
   end

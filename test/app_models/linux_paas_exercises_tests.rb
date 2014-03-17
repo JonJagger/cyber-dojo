@@ -3,7 +3,6 @@ require __DIR__ + '/../test_helper'
 require __DIR__ + '/../app_models/spy_disk'
 require __DIR__ + '/../app_models/stub_git'
 require __DIR__ + '/../app_models/stub_runner'
-require 'LinuxPaas'
 
 class LinuxPaasExercisesTests < ActionController::TestCase
 

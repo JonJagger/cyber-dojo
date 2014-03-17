@@ -1,9 +1,24 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/spy_disk'
-require File.dirname(__FILE__) + '/stub_git'
-require File.dirname(__FILE__) + '/stub_runner'
+#__DIR__ = File.dirname(__FILE__)
+#require __DIR__ + '/../test_helper'
+#require __DIR__ + '/../app_models/spy_disk'
+#require __DIR__ + '/../app_models/stub_git'
+#require __DIR__ + '/../app_models/stub_runner'
 
-class KataTests < ActionController::TestCase
+#class LinuxPaasKataTests < ActionController::TestCase
+
+require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+
+class LinuxPaasKataTests < LinuxPaasModelTestCase
+
+  def setup
+    super()
+    @language = @dojo.languages['Java-JUnit']
+    @exercise = @dojo.exercises['Yahtzee']
+    #@kata = @dojo.make_kata(@language, @exercise)
+    @id = '45ED23A2F1'
+  end
+
+=begin
 
   def setup
     Thread.current[:disk] = @disk = SpyDisk.new
@@ -18,88 +33,22 @@ class KataTests < ActionController::TestCase
     Thread.current[:git] = nil
     Thread.current[:runner] = nil
   end
+=end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "when no disk on thread ctor raises" do
-    Thread.current[:disk] = nil
-    error = assert_raises(RuntimeError) { Kata.new(nil,nil) }
-    assert_equal 'no disk', error.message
-  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "id is from ctor" do
-    id_is_from_ctor_test('rb')
-    id_is_from_ctor_test('json')
-  end
-
-  def id_is_from_ctor_test(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    assert_equal @id, @kata.id
+    rb_and_json(&Proc.new{|format|
+      @kata = @dojo.katas[@id]
+      assert_equal @id, @kata.id
+    })
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path ends in slash" do
-    path_ends_in_slash_test('rb')
-    path_ends_in_slash_test('json')
-  end
 
-  def path_ends_in_slash_test(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    assert @kata.path.end_with?(@disk.dir_separator)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path does not have doubled separator" do
-    path_does_not_have_doubled_separator_test('rb')
-    path_does_not_have_doubled_separator_test('json')
-  end
-
-  def path_does_not_have_doubled_separator_test(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    doubled_separator = @disk.dir_separator * 2
-    assert_equal 0, @kata.path.scan(doubled_separator).length
-  end
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path is based on cyberdojo root_dir and id" do
-    path_is_based_on_cyberdojo_root_dir_and_id_test('rb')
-    path_is_based_on_cyberdojo_root_dir_and_id_test('json')
-  end
-
-  def path_is_based_on_cyberdojo_root_dir_and_id_test(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    assert @kata.path.match(@dojo.path), 'root_dir'
-    uuid = Uuid.new(@id)
-    assert @kata.path.match(uuid.inner), 'id.inner'
-    assert @kata.path.match(uuid.outer), 'id.outer'
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "exists? false when dir does not exist, true when dir does exist" do
-    exists_false_when_dir_does_not_exist_true_when_dir_does_exist_test('rb')
-    teardown
-    setup
-    exists_false_when_dir_does_not_exist_true_when_dir_does_exist_test('json')
-  end
-
-  def exists_false_when_dir_does_not_exist_true_when_dir_does_exist_test(format)
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    assert !@kata.exists?, '!@kata.exists?'
-    @kata.dir.make
-    assert @kata.exists?, '@kata.exists?'
-  end
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+=begin
   test "create_kata saves manifest in kata dir (rb)" do
     @dojo = Dojo.new('spied/', 'rb')
     manifest = { :id => @id }
@@ -113,29 +62,25 @@ class KataTests < ActionController::TestCase
     @kata = @dojo.create_kata(manifest)
     assert @kata.dir.log.include? [ 'write', 'manifest.json', JSON.unparse(manifest) ]
   end
+=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "created date is read from manifest" do
-    created_date_test('rb')
-    created_date_test('json')
-  end
-
-  def created_date_test(format)
-    now = [2013,6,29,14,24,51]
-    manifest = {
-      :created => now,
-      :id => @id
-    }
-    @dojo = Dojo.new('spied/', format)
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    @kata = @dojo.create_kata(manifest)
-    assert_equal Time.mktime(*now), @kata.created
+    rb_and_json(&Proc.new{|format|
+      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
+      @language = @dojo.languages['Java-JUnit']
+      @paas.dir(@exercise).spy_read('instructions', 'your task...')
+      @exercise = @dojo.exercises['Yahtzee']
+      now = [2014,7,17,21,15,45]
+      @kata = @dojo.make_kata(@language, @exercise, @id, now)
+      assert_equal Time.mktime(*now), @kata.created
+    })
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "age_in_seconds is calculated from creation date in manifest" do
     age_in_seconds_test('rb')
     age_in_seconds_test('json')
@@ -342,20 +287,21 @@ class KataTests < ActionController::TestCase
 
   def kata_manifest_spy_read(format, spied)
     if (format == 'rb')
-      @kata.dir.spy_read('manifest.rb', spied.inspect)
+      @paas.dir(@kata).spy_read('manifest.rb', spied.inspect)
     end
     if (format == 'json')
-      @kata.dir.spy_read('manifest.json', JSON.unparse(spied))
+      @paas.dir(@kata).spy_read('manifest.json', JSON.unparse(spied))
     end
   end
 
   def kata_manifest_spy_write(format, spied)
     if (format == 'rb')
-      @kata.dir.spy_write('manifest.rb', spied.inspect)
+      @paas.dir(@kata).spy_write('manifest.rb', spied.inspect)
     end
     if (format == 'json')
-      @kata.dir.spy_write('manifest.json', JSON.unparse(spied))
+      @paas.dir(@kata).spy_write('manifest.json', JSON.unparse(spied))
     end
   end
+=end
 
 end

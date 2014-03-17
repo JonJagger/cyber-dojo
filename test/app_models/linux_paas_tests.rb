@@ -1,89 +1,54 @@
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../test_helper'
-require __DIR__ + '/../app_models/spy_disk'
-require __DIR__ + '/../app_models/stub_git'
-require __DIR__ + '/../app_models/stub_runner'
-require 'LinuxPaas'
+require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
-class LinxuPaasTests < ActionController::TestCase
+class LinuxPaasTests < LinuxPaasModelTestCase
 
-  def setup
-    setup_format('rb')
+  def path_ends_in_slash?(object)
+    @paas.path(object).end_with?(@disk.dir_separator)
   end
 
-  def setup_format(format)
-    @disk = SpyDisk.new
-    @git = StubGit.new
-    @runner = StubRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = format
-    @dojo = @paas.create_dojo(root_path + '../../', @format)
+  def path_has_adjacent_separators?(object)
+    doubled_separator = @disk.dir_separator * 2
+    @paas.path(object).scan(doubled_separator).length > 0
   end
 
-  def teardown
-    @disk.teardown
+  def path_includes_dojo_path?(object)
+    @paas.path(object).include?(@dojo.path)
   end
 
-  def rb_and_json(&block)
-    block.call('rb')
-    teardown
-    setup_format('json')
-    block.call('json')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path(exercise) is based on exercise.name" do
+  test "path(exercise)" do
     rb_and_json(&Proc.new{|format|
       exercise = @dojo.exercises['Yahtzee']
       assert @paas.path(exercise).match(exercise.name)
-    })
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path(exercise) ends in a slash" do
-    rb_and_json(&Proc.new{|format|
-      exercise = @dojo.exercises['Yahtzee']
-      assert @paas.path(exercise).end_with?(@disk.dir_separator)
-    })
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path(exercise) does not have doubled separator" do
-    rb_and_json(&Proc.new{|format|
-      exercise = @dojo.exercises['Yahtzee']
-      doubled_separator = @disk.dir_separator * 2
-      assert_equal 0, @paas.path(exercise).scan(doubled_separator).length
+      assert path_ends_in_slash?(exercise)
+      assert !path_has_adjacent_separators?(exercise)
+      assert path_includes_dojo_path?(exercise)
     })
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(language) is based on language.name" do
+  test "path(language)" do
     rb_and_json(&Proc.new{|format|
       language = @dojo.languages['Ruby']
       assert @paas.path(language).match(language.name)
+      assert path_ends_in_slash?(language)
+      assert !path_has_adjacent_separators?(language)
+      assert path_includes_dojo_path?(language)
     })
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(language) ends in a slash" do
+  test "path(kata)" do
     rb_and_json(&Proc.new{|format|
-      language = @dojo.languages['Ruby']
-      assert @paas.path(language).end_with?(@disk.dir_separator)
-    })
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path(language) does not have doubled separator" do
-    rb_and_json(&Proc.new{|format|
-      language = @dojo.languages['Ruby']
-      doubled_separator = @disk.dir_separator * 2
-      assert_equal 0, @paas.path(language).scan(doubled_separator).length
+      id = '123456789A'
+      kata = @dojo.katas[id]
+      uuid = Uuid.new(id)
+      assert @paas.path(kata).include?(uuid.inner)
+      assert @paas.path(kata).include?(uuid.outer)
+      assert path_ends_in_slash?(kata)
+      assert !path_has_adjacent_separators?(kata)
+      assert path_includes_dojo_path?(kata)
     })
   end
 

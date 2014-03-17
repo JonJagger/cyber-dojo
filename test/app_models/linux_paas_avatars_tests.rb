@@ -3,7 +3,6 @@ require __DIR__ + '/../test_helper'
 require __DIR__ + '/../../lib/disk'
 require __DIR__ + '/../../lib/git'
 require __DIR__ + '/../../lib/runner'
-require 'LinuxPaas'
 
 class LinuxPaasAvatarTests < ActionController::TestCase
 
