@@ -3,15 +3,15 @@ require __DIR__ + '/../test_helper'
 require __DIR__ + '/../app_models/spy_disk'
 require __DIR__ + '/../app_models/stub_git'
 require __DIR__ + '/../app_models/stub_runner'
-require 'ExposedLinux/Paas'
+require 'LinuxPaas'
 
-class LanguagesTests < ActionController::TestCase
+class LinuxPaasLanguagesTests < ActionController::TestCase
 
   def setup
     @disk = SpyDisk.new
     @git = StubGit.new
     @runner = StubRunner.new
-    @paas = ExposedLinux::Paas.new(@disk, @git, @runner)
+    @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'rb'
     @dojo = @paas.create_dojo(root_path + '../../', @format)
   end
@@ -28,7 +28,7 @@ class LanguagesTests < ActionController::TestCase
 
   test "dojo.languages[name] returns language with given name" do
     language = @dojo.languages["Ruby-Cucumber"]
-    assert_equal ExposedLinux::Language, language.class
+    assert_equal Language, language.class
     assert_equal "Ruby-Cucumber", language.name
   end
 

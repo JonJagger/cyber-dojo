@@ -3,15 +3,15 @@ require __DIR__ + '/../test_helper'
 require __DIR__ + '/../../lib/disk'
 require __DIR__ + '/../../lib/git'
 require __DIR__ + '/../../lib/runner'
-require 'ExposedLinux/Paas'
+require 'LinuxPaas'
 
-class KatasTests < ActionController::TestCase
+class LinuxPaasKatasTests < ActionController::TestCase
 
   def set_paas(format)
     @disk = Disk.new
     @git = Git.new
     @runer = Runner.new
-    @paas = ExposedLinux::Paas.new(@disk, @git, @runner)
+    @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = format
     @dojo = @paas.create_dojo(root_path, @format)
     @language = @dojo.languages['Java-JUnit']

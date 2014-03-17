@@ -1,37 +1,42 @@
 
 class Dojo
 
-  def initialize(path, format)
-    @disk = Thread.current[:disk] || fatal("no disk")
-    @path,@format = path,format
+  def initialize(paas, path, format)
+    @paas,@path,@format = paas,path,format
+    raise RuntimeError.new("path must end in /") if !path.end_with?('/')
   end
 
-  def path
-    @path
+  attr_reader :paas, :path, :format
+
+  def format_is_rb?
+    format == 'rb'
   end
 
-  def [](id)
-    Kata.new(self,id)
+  def format_is_json?
+    format == 'json'
   end
 
-  def language(name)
-    Language.new(self,name)
+  def languages
+    Languages.new(self)
   end
 
-  def exercise(name)
-    Exercise.new(self,name)
+  def exercises
+    Exercises.new(self)
   end
 
-  def create_kata(manifest)
-    kata = self[manifest[:id]]
-    kata.dir.write('manifest.' + @format, manifest)
-    kata
+  def make_kata(language, exercise, id = Uuid.new.to_s, now = make_time(Time.now))
+    paas.make_kata(language, exercise, id, now)
+  end
+
+  def katas
+    Katas.new(self)
   end
 
 private
 
-  def fatal(diagnostic)
-    raise diagnostic
+  def make_time(now)
+    [now.year, now.month, now.day, now.hour, now.min, now.sec]
   end
 
 end
+

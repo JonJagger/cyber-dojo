@@ -1,151 +1,102 @@
 
 class Avatar
+  extend Forwardable
 
   def self.names
-    # no two animals start with the same letter
-    %w(
-        alligator buffalo cheetah deer
-        elephant frog gorilla hippo
-        koala lion moose panda
-        raccoon snake wolf zebra
-      )
+      # no two animals start with the same letter
+      %w(
+          alligator buffalo cheetah deer
+          elephant frog gorilla hippo
+          koala lion moose panda
+          raccoon snake wolf zebra
+        )
   end
 
   def initialize(kata, name)
-    @disk = Thread.current[:disk] || fatal("no disk")
-    @git = Thread.current[:git] || fatal("no git")
     @kata,@name = kata,name
   end
 
-  def kata
-    @kata
-  end
+  attr_reader :kata, :name
 
-  def name
-    @name
-  end
-
-  def path
-    @kata.path + name + @disk.dir_separator
-  end
-
-  def dir
-    @disk[path]
-  end
-
-  def exists?
-    dir.exists?
-  end
-
-  def setup
-    @disk[path].make
-    @git.init(path, "--quiet")
-
-    dir.write(visible_files_filename, @kata.visible_files)
-    @git.add(path, visible_files_filename)
-
-    dir.write(traffic_lights_filename, [ ])
-    @git.add(path, traffic_lights_filename)
-
-    @kata.visible_files.each do |filename,content|
-      sandbox.dir.write(filename, content)
-      @git.add(sandbox.path, filename)
-    end
-
-    @kata.language.support_filenames.each do |filename|
-      old_name = @kata.language.path + filename
-      new_name = sandbox.path + filename
-      @disk.symlink(old_name, new_name)
-    end
-
-    git_commit(tag = 0)
-  end
-
-  def save_traffic_light(traffic_light, now)
-    lights = traffic_lights
-    lights << traffic_light
-    traffic_light['number'] = lights.length
-    traffic_light['time'] = now
-    dir.write(traffic_lights_filename, lights)
-    lights
-  end
-
-  def save_visible_files(visible_files)
-    dir.write(visible_files_filename, visible_files)
-  end
-
-  def visible_files(tag = nil)
-    parsed(unlocked_read(visible_files_filename, tag))
-  end
-
-  def traffic_lights(tag = nil)
-    parsed(unlocked_read(traffic_lights_filename, tag))
-  end
-
-  def diff_lines(was_tag, now_tag)
-    # visible_files are saved to the sandbox dir individually.
-    command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-    output = @git.diff(path, command)
-    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
-  end
+  def_delegators :kata, :format, :format_is_rb?, :format_is_json?
 
   def sandbox
     Sandbox.new(self)
   end
 
-  def git_commit(tag)
-    # the -a is important for .txt files in approval style tests
-    @git.commit(path, "-a -m '#{tag}' --quiet")
-    @git.tag(path, "-m '#{tag}' #{tag} HEAD")
-  end
-
-private
-
-  def fatal(diagnostic)
-    raise diagnostic
-  end
-
-  def parsed(text)
-    if format == 'rb'
-      return JSON.parse(JSON.unparse(eval(text)))
+  def save(delta, visible_files)
+    delta[:changed].each do |filename|
+      paas.disk_write(sandbox, filename, visible_files[filename])
     end
-    if format == 'json'
-      return JSON.parse(text)
+    delta[:new].each do |filename|
+      paas.disk_write(sandbox, filename, visible_files[filename])
+      paas.git_add(sandbox, filename)
+    end
+    delta[:deleted].each do |filename|
+      paas.git_rm(sandbox, filename)
     end
   end
 
-  def unlocked_read(filename, tag)
-    dir.lock {
-      locked_read(filename, tag)
-    }
+  def test(max_duration = 15)
+    output = paas.runner_run(sandbox, "./cyber-dojo.sh", max_duration)
+    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
-  def locked_read(filename, tag)
-    if tag != nil
-      @git.show(path, "#{tag}:#{filename}")
-    else
-      dir.read(filename)
-    end
+  def save_visible_files(visible_files)
+    paas.disk_write(self, visible_files_filename, visible_files)
+  end
+
+  def save_traffic_light(traffic_light, now = make_time(Time.now))
+    lights = traffic_lights
+    lights << traffic_light
+    traffic_light['number'] = lights.length
+    traffic_light['time'] = now
+    paas.disk_write(self, traffic_lights_filename, lights)
+    lights
+  end
+
+  def visible_files(tag = nil)
+    parse(visible_files_filename, tag)
+  end
+
+  def traffic_lights(tag = nil)
+    parse(traffic_lights_filename, tag)
+  end
+
+  def diff_lines(was_tag, now_tag)
+    command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
+    output = paas.git_diff(self, command)
+    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+  end
+
+  def commit(tag)
+    paas.git_commit(self, "-a -m '#{tag}' --quiet")
+    paas.git_tag(self, "-m '#{tag}' #{tag} HEAD")
   end
 
   def traffic_lights_filename
-    # Used to display the traffic-lights at the bottom of the
-    # animals test page, and also to display the traffic-lights for
-    # an animal on the dashboard page.
-    # It is part of the git repository and is committed every run-test.
     'increments.' + format
   end
 
   def visible_files_filename
-    # Used to retrieve (via a single file access) the visible
-    # files needed when resuming an animal.
-    # It is part of the git repository and is committed every run-test.
     'manifest.' + format
   end
 
-  def format
-    return 'rb'   if kata.manifest_filename.end_with?('.rb')
-    return 'json' if kata.manifest_filename.end_with?('.json')
+private
+
+  def paas
+    kata.dojo.paas
+  end
+
+  def make_time(now)
+    [now.year, now.month, now.day, now.hour, now.min, now.sec]
+  end
+
+  def parse(filename, tag)
+    text = paas.disk_read(self, filename) if tag == nil
+    text = paas.git_show(self, "#{tag}:#{filename}") if tag != nil
+    return JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
+    return JSON.parse(text) if format_is_json?
   end
 
 end

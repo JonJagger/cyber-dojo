@@ -1,39 +1,14 @@
 
 class Exercise
 
-  def initialize(dojo, name)
-    @disk = Thread.current[:disk] || fatal("no disk")
+  def initialize(dojo,name)
     @dojo,@name = dojo,name
   end
 
-  def name
-    @name
-  end
-
-  def path
-    @dojo.path + 'exercises' + dir_separator + name + dir_separator
-  end
-
-  def dir
-    @disk[path]
-  end
-
-  def exists?
-    dir.exists?
-  end
+  attr_reader :dojo, :name
 
   def instructions
-    dir.read('instructions')
-  end
-
-private
-
-  def fatal(diagnostic)
-    raise diagnostic
-  end
-
-  def dir_separator
-    @disk.dir_separator
+    dojo.paas.disk_read(self,'instructions')
   end
 
 end

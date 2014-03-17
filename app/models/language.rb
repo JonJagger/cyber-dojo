@@ -2,28 +2,15 @@
 class Language
 
   def initialize(dojo, name)
-    @disk = Thread.current[:disk] || fatal("no disk")
     @dojo,@name = dojo,name
   end
 
-  def name
-    @name
-  end
-
-  def path
-    @dojo.path + 'languages' + dir_separator + name + dir_separator
-  end
-
-  def dir
-    @disk[path]
-  end
-
-  def exists?
-    dir.exists?
-  end
+  attr_reader :dojo, :name
 
   def visible_files
-    Hash[visible_filenames.collect{|filename| [filename, dir.read(filename)]}]
+    Hash[visible_filenames.collect{ |filename|
+      [ filename, read(filename) ]
+    }]
   end
 
   def support_filenames
@@ -46,22 +33,18 @@ class Language
     manifest['tab_size'] || 4
   end
 
-private
-
-  def fatal(diagnostic)
-    raise diagnostic
-  end
-
-  def dir_separator
-    @disk.dir_separator
-  end
-
   def visible_filenames
     manifest['visible_filenames'] || [ ]
   end
 
   def manifest
-    @manifest = JSON.parse(dir.read('manifest.json'))
+    @manifest ||= JSON.parse(read('manifest.json'))
+  end
+
+private
+
+  def read(filename)
+    dojo.paas.disk_read(self, filename)
   end
 
 end

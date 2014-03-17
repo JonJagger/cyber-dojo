@@ -3,6 +3,12 @@
 CSS
   it seems that the common style is like-this and not like_this
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
+  filenames: add * marker if files have changed since last [test] ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FORK/REVERT
+  remove obvious and complete duplication
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK/REVERT.
   Now that all traffic-lights appear at bottom pressing
   traffic-light could bring up a dialog asking
@@ -212,7 +218,6 @@ I18N
   Have promises for Russian and Ukranian.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
-  filenames: add * marker if files have changed since last [test] ?
   ...
   If [test] pressed and nothing has changed since last traffic-light
   pop up a dialog? Saying nothing different since last time.
