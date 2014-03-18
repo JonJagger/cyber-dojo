@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  increase size of checkboxes (one for line-numbers on edit page too)
+  http://www.jotform.org/html-elements/how-to-change-checkbox-size-css/
+  s/|60s|columns/|60s|/
+  s/auto refresh/???/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
   it seems that the common style is like-this and not like_this
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

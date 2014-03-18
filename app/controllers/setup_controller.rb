@@ -1,38 +1,33 @@
 
-require 'Folders'
 require 'Choose'
 
 class SetupController < ApplicationController
 
   def show
-    @languages = Folders::in(dojo.path + '/languages').sort
-    @exercises = Folders::in(dojo.path + '/exercises').sort
+    @languages_names = dojo.languages.map{|language| language.name}
+    @exercises_names = dojo.exercises.map{|exercise| exercise.name}
     @instructions = { }
-    @exercises.each do |name|
-      @instructions[name] = dojo.exercise(name).instructions
+    @exercises_names.each do |name|
+      @instructions[name] = dojo.exercises[name].instructions
     end
-    @selected_language_index = Choose::language(@languages, params[:id], id, dojo)
-    @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, dojo)
+    @selected_language_index = Choose::language(@languages_names, params[:id], id, dojo)
+    @selected_exercise_index = Choose::exercise(@exercises_names, params[:id], id, dojo)
     @id = id
     @title = 'Setup'
   end
 
   def save
-    manifest = make_manifest(params['language'], params['exercise'])
-    language = dojo.language(manifest[:language])
-    exercise = dojo.exercise(manifest[:exercise])
-    vis = manifest[:visible_files] = language.visible_files
-    vis['output'] = ''
-    vis['instructions'] = exercise.instructions
-    dojo.create_kata(manifest)
+    language = dojo.languages[params['language']]
+    exercise = dojo.exercises[params['exercise']]
+    kata = dojo.make_kata(language, exercise)
 
-    logger.info("Created dojo " + manifest[:id] +
+    logger.info("Created dojo " + kata.id +
                 ", " + language.name +
                 ", " + exercise.name +
                 ", " + make_time(Time.now).to_s)
 
     render :json => {
-      :id => manifest[:id]
+      :id => kata.id
     }
   end
 

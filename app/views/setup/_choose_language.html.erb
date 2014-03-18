@@ -17,7 +17,7 @@ $(document).ready(function() {
       previousLanguage = node;
     });
   });
-  
+
   selected.click();
   // ensure visible
   container.animate({
@@ -33,11 +33,11 @@ $(document).ready(function() {
 </div>
 
 <div id="div_languages">
-  <% @languages.each_with_index do |choice,index| %>
-    <div class="filename" 
+  <% @languages_names.each_with_index do |choice,index| %>
+    <div class="filename"
          id="language_<%= index %>"
          data-language="<%= choice %>">
       <%= choice.gsub('-',' ') %>
-    </div>    
-  <% end %>    
+    </div>
+  <% end %>
 </div>

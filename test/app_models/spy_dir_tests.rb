@@ -115,6 +115,7 @@ class SpyDirTests < ActionController::TestCase
   test "each" do
     @disk[@path + 'a']
     @disk[@path + 'b']
+    @disk[@path + 'b/c']
     assert_equal ['a','b'], @disk[@path].entries.sort
   end
 

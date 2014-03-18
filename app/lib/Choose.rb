@@ -8,9 +8,8 @@ module Choose
 
   #TODO: put these two methods in app/models/Dojo
 
-  def self.language(languages, params_id, id, dojo) #root_path)
-    #dojo = Dojo.new(root_path)
-    kata = dojo[id]
+  def self.language(languages, params_id, id, dojo)
+    kata = dojo.katas[id]
     choice = [*0..languages.length-1].shuffle[0]
     if params_id && kata.exists?
       language_index = languages.index(kata.language.name)
@@ -21,9 +20,8 @@ module Choose
     choice
   end
 
-  def self.exercise(exercises, params_id, id, dojo) #root_path)
-    #dojo = Dojo.new(root_path)
-    kata = dojo[id]
+  def self.exercise(exercises, params_id, id, dojo)
+    kata = dojo.katas[id]
     choice = [*0..exercises.length-1].shuffle[0]
     if params_id && kata.exists?
       exercise_index = exercises.index(kata.exercise.name)

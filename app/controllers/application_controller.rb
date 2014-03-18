@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
+require 'LinuxPaas'
 require 'Disk'
 require 'Git'
 require 'Runner'
@@ -18,11 +19,13 @@ class ApplicationController < ActionController::Base
     Folders::id_complete(root_path, params[:id]) || ""
   end
 
+  def paas
+    @paas ||= LinuxPaas.new(Disk.new, Git.new, Runner.new)
+  end
+
   def dojo
-    Thread.current[:disk] ||= Disk.new
-    Thread.current[:git] ||= Git.new
-    Thread.current[:runner] ||= Runner.new
-    Dojo.new(root_path, 'json')
+    format = 'json'
+    paas.create_dojo(root_path, format)
   end
 
   def make_manifest(language_name, exercise_name)

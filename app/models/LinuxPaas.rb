@@ -35,23 +35,26 @@ class LinuxPaas
 
   def languages_each(languages)
     #dir(languages).entries.select do |name|
-    #   means SpyDir needs each() DONE
+    #   means SpyDir needs each() .DONE
     #   now how to handle is_dir?
-    
-    Dir.entries(path(languages)).select do |name|
-      yield name if is_dir?(File.join(path(languages), name))
+
+    pathed = path(languages)
+    Dir.entries(pathed).select do |name|
+      yield name if is_dir?(File.join(pathed, name))
     end
   end
 
   def exercises_each(exercises)
-    Dir.entries(path(exercises)).each do |name|
-      yield name if is_dir?(File.join(path(exercises), name))
+    pathed = path(exercises)
+    Dir.entries(pathed).each do |name|
+      yield name if is_dir?(File.join(pathed, name))
     end
   end
 
   def katas_each(katas)
-    Dir.entries(path(katas)).each do |outer_dir|
-      outer_path = File.join(path(katas), outer_dir)
+    pathed = path(katas)
+    Dir.entries(pathed).each do |outer_dir|
+      outer_path = File.join(pathed, outer_dir)
       if is_dir?(outer_path)
         Dir.entries(outer_path).each do |inner_dir|
           inner_path = File.join(outer_path, inner_dir)

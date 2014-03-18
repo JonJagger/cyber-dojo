@@ -1,21 +1,21 @@
 
 class DojoController < ApplicationController
-  
+
   def index
     @title = 'Home'
     @id = id
   end
- 
+
   def button_dialog
     name = params[:id]
     render :partial => "/dojo/dialog_#{name}",
            :layout => false
   end
- 
+
   #------------------------------------------------
-  
+
   def valid_id
-    kata = dojo[id]
+    kata = dojo.katas[id]
     exists = params[:id].length >= 6 && kata.exists?
     started = exists ? kata.avatars.length : 0
     render :json => {
@@ -23,12 +23,12 @@ class DojoController < ApplicationController
       :started => started
     }
   end
-  
+
   #------------------------------------------------
-  
+
   def start_json
-    kata = dojo[id]
-    avatar = (kata.exists? ? kata.start_avatar : nil)    
+    kata = dojo.katas[id]
+    avatar = (kata.exists? ? kata.start_avatar : nil)
     full = kata.exists? && avatar.nil?
     start_html = kata.exists? && avatar ? start_dialog_html(avatar.name) : ''
     full_html = full ? full_dialog_html() : ''
@@ -40,21 +40,21 @@ class DojoController < ApplicationController
       :full_dialog_html => full_html
     }
   end
-  
+
   def start_dialog_html(avatar_name)
     @avatar_name = avatar_name
     bind('/app/views/dojo/start_dialog.html.erb')
   end
-  
+
   def full_dialog_html()
-    @all_avatar_names = Avatar.names   
+    @all_avatar_names = Avatar.names
     bind('/app/views/dojo/full_dialog.html.erb')
   end
 
   #------------------------------------------------
-  
+
   def resume_json
-    kata = dojo[id]
+    kata = dojo.katas[id]
     exists = kata.exists?
     started_avatar_names = exists ? kata.avatars.collect{|avatar| avatar.name} : [ ]
     empty = (started_avatar_names == [ ])
