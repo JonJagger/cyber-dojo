@@ -32,7 +32,7 @@ class DashboardController < ApplicationController
 private
 
   def gather
-    @kata = dojo[id]
+    @kata = dojo.katas[id]
     @minute_columns = bool('minute_columns')
     @auto_refresh = bool('auto_refresh')
     @seconds_per_column = seconds_per_column

@@ -4,8 +4,8 @@ class ForkerController < ApplicationController
   def fork
     result = { :forked => false }
     error = false
-    kata = dojo[params['id']]
-    avatar = kata[params['avatar']]
+    kata = dojo.katas[params['id']]
+    avatar = kata.avatars[params['avatar']]
     #light = avatar.lights[params['tag']]   ?
 
     if !error && !kata.exists?
