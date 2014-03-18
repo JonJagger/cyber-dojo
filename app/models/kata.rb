@@ -10,6 +10,10 @@ class Kata
 
   def_delegators :dojo, :format, :format_is_rb?, :format_is_json?
 
+  def exists?
+    true
+  end
+  
   def language
     dojo.languages[manifest['language']]
   end
