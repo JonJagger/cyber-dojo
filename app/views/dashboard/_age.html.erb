@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-  var age = parseInt("<%= @kata.age_in_seconds %>");
+  var age = parseInt("<%= (Time.now - @kata.created).to_i %>");
 
   var seconds = function() {
     return age % 60;

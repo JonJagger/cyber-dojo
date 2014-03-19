@@ -2,19 +2,19 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
+
   var id = function() {
     return "<%= @kata.id %>";
   };
-  
+
   var minuteColumns = function() {
-    return $('#minute_columns_checkbox').is(':checked');    
+    return $('#minute_columns_checkbox').is(':checked');
   };
-  
+
   var autoRefresh = function() {
     return $('#auto_refresh_checkbox').is(':checked');
   };
-  
+
   var dashboardHeartbeat = function() {
     if (autoRefresh()) {
       $.ajax({
@@ -33,24 +33,24 @@ $(document).ready(function() {
     var url = '/dashboard/show/' + id() + '?' +
               'minute_columns=' + minuteColumns() + '&' +
               'auto_refresh=' + autoRefresh();
-    window.location = url;    
+    window.location = url;
   };
 
-  var seconds = 1000;    
+  var seconds = 1000;
   setInterval(dashboardHeartbeat, 10*seconds);
-  
+
   $('#minute_columns_checkbox')
     .attr('checked', "<%= @minute_columns %>" === "true")
-    .click(function() {  
+    .click(function() {
       refreshDashboard();
     });
-  
+
   $('#auto_refresh_checkbox')
     .attr('checked', "<%= @auto_refresh %>" === "true")
-    .click(function() {  
+    .click(function() {
       refreshDashboard();
     });
-  
+
 });
 
 //--></script>
@@ -65,8 +65,12 @@ $(document).ready(function() {
       </div>
     </td>
     <td>
-      <input type="checkbox"
+      &nbsp;
+    </td>
+    <td>
+      <input type="checkbox" class="regular-checkbox"
              id="minute_columns_checkbox"/>
+        <label for="minute_columns_checkbox"></label>
     </td>
   </tr>
   <tr>
@@ -76,12 +80,16 @@ $(document).ready(function() {
         <div class="tooltip">
           toggles the 10 second<br>
           auto-refresh on/off
-        </div>        
+        </div>
       </div>
     </td>
     <td>
-      <input type="checkbox"
-             id="auto_refresh_checkbox"/>
+      &nbsp;
     </td>
-  </tr>  
+    <td>
+      <input type="checkbox" class="regular-checkbox"
+             id="auto_refresh_checkbox"/>
+        <label for="auto_refresh_checkbox"></label>
+    </td>
+  </tr>
 </table>

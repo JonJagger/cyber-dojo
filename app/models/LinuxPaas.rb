@@ -51,6 +51,10 @@ class LinuxPaas
     end
   end
 
+  def kata_exists?(kata)
+    dir(kata).exists?
+  end
+
   def katas_each(katas)
     pathed = path(katas)
     Dir.entries(pathed).each do |outer_dir|

@@ -11,7 +11,7 @@ class Kata
   def_delegators :dojo, :format, :format_is_rb?, :format_is_json?
 
   def exists?
-    true #TODO:
+    paas.kata_exists?(self)
   end
 
   def language
@@ -32,10 +32,6 @@ class Kata
 
   def created
     Time.mktime(*manifest['created'])
-  end
-
-  def age_in_seconds(now = Time.now)
-    (now - created).to_i
   end
 
   def visible_files

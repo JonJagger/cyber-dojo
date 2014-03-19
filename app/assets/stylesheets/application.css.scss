@@ -13,15 +13,16 @@
  *
  *= depend_on color_gradients.css.scss
  *= depend_on rounded-corner.css.scss
+ *= depend_on big-checkbox.css.scss
  *= depend_on colors.css.scss
  *= depend_on fonts.css.scss
  *= depend_on force_scrollbars.css.scss
- *= depend_on tooltip.css.scss 
+ *= depend_on tooltip.css.scss
  *= depend_on shared.css.scss
  *= depend_on cyber-dojo.css.scss
  *= depend_on home.css.scss
  *= depend_on setup.css.scss
- *= depend_on kata.css.scss 
+ *= depend_on kata.css.scss
  *= depend_on dashboard.css.scss
  *= depend_on reverter.css.scss
  *= depend_on differ.css.scss
@@ -33,6 +34,7 @@
 
 @import "color_gradients.css.scss";
 @import "rounded-corner.css.scss";
+@import "big-checkbox.css.scss";
 @import "colors.css.scss";
 @import "fonts.css.scss";
 @import "force_scrollbars.css.scss";
