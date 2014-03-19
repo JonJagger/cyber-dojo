@@ -4,19 +4,19 @@ $ellipsis: "\2026";
 #dashboard_page {
 
   #download_button, #help_button {
-    @include font-size-tiny();    
+    @include font-size-tiny();
   }
-  
+
   #help_button {
-    @include rounded-corner(14px);    
+    @include rounded-corner(14px);
   }
 
   #traffic_lights {
     width: 65em;
     overflow-x: auto;
-    height: 45em;
+    height: 46em;
     overflow-y: auto;
-    
+
     img {
       padding: {
         left: 1px;
@@ -43,4 +43,3 @@ $ellipsis: "\2026";
     }
   }
 }
-
