@@ -80,12 +80,17 @@
   color: $darker-color;
   background: $lighter-color;
   added, deleted, same { padding-left: 3px; }
+  same {
+    &:hover { background: lighten($lighter-color, 5%); }
+  }
   added {
     background: $diff-added-color;
+    &:hover { background: lighten($diff-added-color, 10%); }
   }
   deleted {
     background: $diff-deleted-color;
     text-decoration: line-through;
+    &:hover { background: lighten($diff-deleted-color, 5%); }
   }
 }
 

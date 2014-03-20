@@ -23,8 +23,7 @@ DIFF-VIEW
   Ideally, line-numbes are toggleable on/off.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-VIEW
-  put line numbers back in and use jQuery so that hovering over
-  a line or line-number highlights the whole line.
+  Put line numbers back in.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
   it seems that the common id/class name style is like-this
@@ -79,21 +78,6 @@ shows some of the languages do not pass the checks.
   Java-JUnit-Mockito . ["red", "amber", "red"] installed but not working (~ 3.05 seconds)
   Ruby-Approval ...... ["red", "red", "green"] installed but not working (~ 1.63 seconds)
   Ruby-Cucumber ...... multiple 42-files ["untitled.rb", "untitled.feature"]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  o) create External object holding disk,git,task
-  o) External has .dojo(dir)
-       which passes disk,git,task to Dojo.ctor
-  o) Dojo has [id]
-       which passes disk,git,task to Kata.ctor
-  o) Kata has .create_avatar
-       which passes disk,git,task to Avatar.ctor
-  Problem with this is controller_tests. Eg before this
-      get 'dojo/start_json', {
-        :format => :json,
-        :id => id
-      }
-    how can I control what externals are set in application_controller?
-    With Thread[:disk] I can intercept...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Deployment
   Locally
@@ -171,9 +155,9 @@ INSTALLATION-TESTS
   Save run-tests outputs to log file?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK-REVERT
-  make it look the same as diff-dialog
-    show the filenames with red/green line-counts
-    show the content with the red/green deleted/added lines
+  make it look similar to diff-dialog
+    don't show the red/green line-counts
+    do show the content with the red/green deleted/added lines
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
   Hashes of the files, together with filenames, could be used
