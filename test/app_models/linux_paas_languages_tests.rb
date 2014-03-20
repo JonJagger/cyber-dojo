@@ -27,7 +27,6 @@ class LinuxPaasLanguagesTests < ActionController::TestCase
     assert languages_names.include?('Ruby'), 'Ruby: ' + languages_names.inspect
   end
 
-=begin
   test "dojo.languages[name] returns language with given name" do
     language = @dojo.languages["Ruby-Cucumber"]
     assert_equal Language, language.class
@@ -81,6 +80,5 @@ class LinuxPaasLanguagesTests < ActionController::TestCase
     assert_equal 5, language.tab_size
     assert_equal "     ", language.tab
   end
-=end
 
 end

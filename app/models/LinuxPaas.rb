@@ -67,7 +67,9 @@ class LinuxPaas
   end
 
   def avatars_each(kata)
-    Dir.entries(path(kata)).each do |name|
+    #Dir.entries(path(kata)).each do |name|
+    pathed = path(kata)
+    dir(kata).entries.select do |name|
       yield name if @disk.is_dir?(File.join(path(kata), name))
     end
   end

@@ -1,13 +1,13 @@
 __DIR__ = File.dirname(__FILE__)
 require __DIR__ + '/../test_helper'
-require __DIR__ + '/../../lib/disk'
-require __DIR__ + '/../../lib/git'
-require __DIR__ + '/../../lib/runner'
+require __DIR__ + '/../../lib/OsDisk'
+require __DIR__ + '/../../lib/Git'
+require __DIR__ + '/../../lib/Runner'
 
 class LinuxPaasAvatarTests < ActionController::TestCase
 
   def setup
-    @disk = Disk.new
+    @disk = OsDisk.new
     @git = Git.new
     @runner = Runner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)

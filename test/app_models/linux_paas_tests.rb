@@ -41,11 +41,31 @@ class LinuxPaasTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test "path(avatar)" do
-    json_and_rb do
+    json_and_rb do |format|
       id = '123456789A'
       kata = @dojo.katas[id]
+
+      language = @dojo.languages['C']
+      language_manifest = {
+        :unit_test_framework => 'assert'
+      }
+      @paas.dir(language).spy_read('manifest.json', JSON.unparse(language_manifest))
+
+      kata_manifest = {
+        :id => id,
+        :visible_files => {
+          'name' => 'content for name'
+        },
+        :language => language.name
+      }
+      if (format == 'rb')
+        @paas.dir(kata).spy_read('manifest.rb', kata_manifest.inspect)
+      end
+      if (format == 'json')
+        @paas.dir(kata).spy_read('manifest.json', JSON.unparse(kata_manifest))
+      end
+
       avatar = kata.start_avatar(Avatars.names)
       assert_equal 'alligator', avatar.name
       assert path_ends_in_slash?(avatar)
@@ -53,7 +73,6 @@ class LinuxPaasTests < LinuxPaasModelTestCase
       assert path_includes_dojo_path?(avatar)
     end
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
