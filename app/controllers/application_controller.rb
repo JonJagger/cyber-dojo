@@ -20,7 +20,12 @@ class ApplicationController < ActionController::Base
   end
 
   def paas
-    @paas ||= LinuxPaas.new(Disk.new, Git.new, Runner.new)
+    # allow controller_tests to tunnel through rails stack
+    thread = Thread.current
+    @disk = thread[:disk] || Disk.new
+    @git = thread[:git] || Git.new
+    @runner = thread[:runner] || Runner.new
+    @paas ||= LinuxPaas.new(@disk, @git, @runner)
   end
 
   def dojo

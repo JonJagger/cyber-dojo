@@ -23,7 +23,7 @@ class LinuxPaasModelTestCase < ActionController::TestCase
     @disk.teardown
   end
 
-  def rb_and_json(&block)
+  def rb_and_json(&block) # deprecated
     block.call('rb')
     teardown
     setup_format('json')
