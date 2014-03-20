@@ -1,7 +1,22 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
+  Id.rb with .inner and .outer should be a model file.
+  Make kata.id return an Id object which has .inner and .outer properties
+  but also has a .to_s which combines them back together
+  Remove id[0..1] id[2..-1] duplication eg from LinuxPaas.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LINUX-PAAS-FORKING
+  # How to do this...
+  manifest = make_manifest(kata.language.name, kata.exercise.name) #????
+  manifest[:visible_files] = avatar.visible_files(params['tag'])   #????
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 QUESTION
   Can .entries take a parameter in general? In combination with .each
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
+  light = avatar.lights[params['tag']]   ?in forker_controller?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-VIEW
   put line numbers back in. I find I quite often look at the
   output and it names a file and a line-number and I want to

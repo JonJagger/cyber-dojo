@@ -2,7 +2,7 @@
 class SpyDir
   include Enumerable
 
-  def initialize(disk,dir)
+  def initialize(disk, dir)
     @disk,@dir = disk,dir
     @log = [ ]
     @stub_log = [ ]
@@ -60,7 +60,7 @@ class SpyDir
 
   # - - - - - - - - - - - - - - -
 
-  def spy_read(filename,content)
+  def spy_read(filename, content)
     make
     @repo[filename] = content
     @stub_log << ['read',filename,content]

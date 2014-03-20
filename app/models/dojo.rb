@@ -25,7 +25,7 @@ class Dojo
   end
 
   def make_kata(language, exercise, id = Uuid.new.to_s, now = make_time(Time.now))
-    paas.make_kata(language, exercise, id, now)
+    paas.make_kata(self, language, exercise, id, now)
   end
 
   def katas
@@ -39,4 +39,3 @@ private
   end
 
 end
-

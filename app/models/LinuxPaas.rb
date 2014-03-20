@@ -11,9 +11,8 @@ class LinuxPaas
     Dojo.new(self, root, format)
   end
 
-  def make_kata(language, exercise, id, now)
-    #TODO: don't like this. should be Kata.new(dojo,id) -> pass dojo in as extra 1st param
-    kata = Kata.new(language.dojo, id)
+  def make_kata(dojo, language, exercise, id, now)
+    kata = Kata.new(dojo, id)
     manifest = {
       :created => now,
       :id => id,
@@ -53,10 +52,10 @@ class LinuxPaas
 
   def katas_each(katas)
     pathed = path(katas)
-    Dir.entries(pathed).each do |outer_dir|
+    Dir.entries(pathed).each do |outer_dir|      # ???????
       outer_path = File.join(pathed, outer_dir)
       if @disk.is_dir?(outer_path)
-        Dir.entries(outer_path).each do |inner_dir|
+        Dir.entries(outer_path).each do |inner_dir|    # ???????
           inner_path = File.join(outer_path, inner_dir)
           if @disk.is_dir?(inner_path)
             yield outer_dir + inner_dir
@@ -67,22 +66,21 @@ class LinuxPaas
   end
 
   def avatars_each(kata)
-    #Dir.entries(path(kata)).each do |name|
     pathed = path(kata)
     dir(kata).entries.select do |name|
-      yield name if @disk.is_dir?(File.join(path(kata), name))
+      yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def start_avatar(kata, names)
+  def start_avatar(kata, avatar_names)
     avatar = nil
     started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
-    unstarted_avatar_names = names - started_avatar_names
+    unstarted_avatar_names = avatar_names - started_avatar_names
     if unstarted_avatar_names != [ ]
       avatar_name = unstarted_avatar_names[0]
-      avatar = Avatar.new(kata,avatar_name)
+      avatar = Avatar.new(kata, avatar_name)
 
       disk_make_dir(avatar)
       git_init(avatar, '--quiet')

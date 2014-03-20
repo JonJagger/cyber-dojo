@@ -18,13 +18,13 @@ class DockerPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def make_kata(language, exercise, id, now)
+  def make_kata(dojo, language, exercise, id, now)
     # this will need to find the image for the language
     # language image will have familiar folder structure...
     #    ~/cyberdojo/languages/NAME/manifest.json
     #    ~/cyberdojo/languages/NAME/cyber-dojo.sh
 
-    kata = Kata.new(language.dojo, id)
+    kata = Kata.new(dojo, id)
     manifest = {
       :created => now,
       :id => id,
@@ -81,15 +81,15 @@ class DockerPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def start_avatar(kata)
+  def start_avatar(kata, avatar_names)
     # image = 'kata_' + kata.id
     # @cids << image
 
     avatar = nil
     started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
-    unstarted_avatar_names = Avatar.names - started_avatar_names
+    unstarted_avatar_names = avatar_names - started_avatar_names
     if unstarted_avatar_names != [ ]
-      avatar_name = unstarted_avatar_names.shuffle[0]
+      avatar_name = unstarted_avatar_names[0]
       avatar = Avatar.new(kata,avatar_name)
 
       git_init(avatar, '--quiet')
@@ -112,6 +112,7 @@ class DockerPaas
         # Files are not shared with anyone
         # else because of the union file system.
         #@disk.symlink(old_name, new_name)  <---------------------
+        # But does symlinking save disk-space?
       end
 
       avatar.commit(tag=0)
@@ -214,21 +215,21 @@ class DockerPaas
 
   def path(obj)
     case obj
-      when ExposedLinux::Languages
+      when Languages
         root + 'languages/'
-      when ExposedLinux::Language
+      when Language
         path(obj.dojo.languages) + obj.name + '/'
-      when ExposedLinux::Exercises
+      when Exercises
         root + 'exercises/'
-      when ExposedLinux::Exercise
+      when Exercise
         path(obj.dojo.exercises) + obj.name + '/'
-      when ExposedLinux::Katas
+      when Katas
         root + 'katas/'
-      when ExposedLinux::Kata
+      when Kata
         path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
-      when ExposedLinux::Avatar
+      when Avatar
         path(obj.kata) + obj.name + '/'
-      when ExposedLinux::Sandbox
+      when Sandbox
         path(obj.avatar) + 'sandbox/'
     end
   end
@@ -244,15 +245,7 @@ class DockerPaas
     '~/cyberdojo/'
   end
 
-private
-
-  def is_dir?(name)
-    File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')
-  end
-
 end
-
-
 
 # idea is that this will hold methods that forward to external
 # services namely: disk, git, shell.

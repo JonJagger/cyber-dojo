@@ -4,16 +4,16 @@ class ForkerController < ApplicationController
   def fork
     result = { :forked => false }
     error = false
+
     kata = dojo.katas[params['id']]
     avatar = kata.avatars[params['avatar']]
-    #light = avatar.lights[params['tag']]   ?
 
     if !error && !kata.exists?
       result[:reason] = 'id'
       error = true
     end
 
-    if !error && !dojo.language(kata.language.name).exists?
+    if !error && !dojo.languages['kata.language.name'].exists?
       result[:reason] = 'language'
       result[:language] = kata.language.name
       error = true
@@ -35,8 +35,8 @@ class ForkerController < ApplicationController
     end
 
     if !error
-      manifest = make_manifest(kata.language.name, kata.exercise.name)
-      manifest[:visible_files] = avatar.visible_files(params['tag'])
+      manifest = make_manifest(kata.language.name, kata.exercise.name) #????
+      manifest[:visible_files] = avatar.visible_files(params['tag'])   #????
       dojo.create_kata(manifest)
       result[:forked] = true
       result[:id] = manifest[:id]
