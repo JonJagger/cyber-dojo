@@ -10,8 +10,9 @@ LINUX-PAAS-FORKING
   # How to do this...
   manifest = make_manifest(kata.language.name, kata.exercise.name) #????
   manifest[:visible_files] = avatar.visible_files(params['tag'])   #????
+  Need to split paas::make_kata into two so there is also a paas::make_manifest
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-QUESTION
+RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
