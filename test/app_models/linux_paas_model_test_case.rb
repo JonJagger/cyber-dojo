@@ -30,4 +30,11 @@ class LinuxPaasModelTestCase < ActionController::TestCase
     block.call('json')
   end
 
+  def json_and_rb
+    yield 'rb'
+    teardown
+    setup_format('json')
+     yield 'json'
+  end
+
 end

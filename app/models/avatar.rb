@@ -2,16 +2,6 @@
 class Avatar
   extend Forwardable
 
-  def self.names
-      # no two animals start with the same letter
-      %w(
-          alligator buffalo cheetah deer
-          elephant frog gorilla hippo
-          koala lion moose panda
-          raccoon snake wolf zebra
-        )
-  end
-
   def initialize(kata, name)
     @kata,@name = kata,name
   end

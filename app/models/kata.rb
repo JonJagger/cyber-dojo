@@ -22,8 +22,8 @@ class Kata
     dojo.exercises[manifest['exercise']]
   end
 
-  def start_avatar
-    paas.start_avatar(self)
+  def start_avatar(names = Avatars.names.shuffle)
+    paas.start_avatar(self, names)
   end
 
   def avatars

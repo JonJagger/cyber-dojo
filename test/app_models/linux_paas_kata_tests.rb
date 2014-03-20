@@ -13,17 +13,16 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "id is from ctor" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb do
       @kata = @dojo.katas[@id]
       assert_equal @id, @kata.id
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   test "create_kata saves manifest in kata dir" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb do |format|
       @language = @dojo.languages['Java-JUnit']
       @paas.dir(@language).spy_read('manifest.json', JSON.unparse({
         :unit_test_framework => 'waffle'
@@ -53,13 +52,13 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
         assert @paas.dir(@kata).log.include?([ 'write', 'manifest.json', JSON.unparse(expected_manifest) ]),
           @paas.dir(@kata).log.inspect
       end
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "created date is read from manifest" do
-    rb_and_json(&Proc.new{|format|
+  test "kata.created is from manifest" do
+    json_and_rb do
       @language = @dojo.languages['Java-JUnit']
       @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
       @exercise = @dojo.exercises['Yahtzee']
@@ -67,13 +66,13 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       now = [2014,7,17,21,15,45]
       @kata = @dojo.make_kata(@language, @exercise, @id, now)
       assert_equal Time.mktime(*now), @kata.created
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "kata.id, kata.language.name, kata.exercise.name all read from manifest" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb do
       @language = @dojo.languages['Ruby-Rspec']
       @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
       @exercise = @dojo.exercises['Yahtzee']
@@ -83,7 +82,7 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       assert_equal @id, @kata.id
       assert_equal @language.name, @kata.language.name
       assert_equal @exercise.name, @kata.exercise.name
-    })
+    end
   end
 
 =begin

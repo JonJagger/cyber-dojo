@@ -80,12 +80,12 @@ class LinuxPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def start_avatar(kata)
+  def start_avatar(kata, names)
     avatar = nil
     started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
-    unstarted_avatar_names = Avatar.names - started_avatar_names
+    unstarted_avatar_names = names - started_avatar_names
     if unstarted_avatar_names != [ ]
-      avatar_name = unstarted_avatar_names.shuffle[0]
+      avatar_name = unstarted_avatar_names[0]
       avatar = Avatar.new(kata,avatar_name)
 
       disk_make_dir(avatar)
