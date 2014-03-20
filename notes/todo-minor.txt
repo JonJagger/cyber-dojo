@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  not centering on the page.
+  make content area slightly wider and deeper to match fork/revert
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   Id.rb with .inner and .outer should be a model file.
   Make kata.id return an Id object which has .inner and .outer properties
@@ -10,7 +14,8 @@ LINUX-PAAS-FORKING
   # How to do this...
   manifest = make_manifest(kata.language.name, kata.exercise.name) #????
   manifest[:visible_files] = avatar.visible_files(params['tag'])   #????
-  Need to split paas::make_kata into two so there is also a paas::make_manifest
+  Need to split paas::make_kata into two so there is
+  also a paas::make_kata_manifest
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
@@ -163,9 +168,6 @@ Refactoring dojos
   ...
   The xfer.rb script could take the URL as a parameter.
   Will probably want to xfer in both directions.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIP
    default state can be showing a message saying
