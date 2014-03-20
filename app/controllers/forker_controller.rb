@@ -13,7 +13,7 @@ class ForkerController < ApplicationController
       error = true
     end
 
-    if !error && !dojo.languages['kata.language.name'].exists?
+    if !error && !dojo.languages[kata.language.name].exists?
       result[:reason] = 'language'
       result[:language] = kata.language.name
       error = true
@@ -35,11 +35,17 @@ class ForkerController < ApplicationController
     end
 
     if !error
-      manifest = make_manifest(kata.language.name, kata.exercise.name) #????
-      manifest[:visible_files] = avatar.visible_files(params['tag'])   #????
-      dojo.create_kata(manifest)
+      language = kata.language
+      exercise = kata.exercise
+      id = Uuid.new.to_s
+      now = make_time(Time.now)
+      manifest = @paas.make_kata_manifest(dojo, language, exercise, id, now)
+      manifest[:visible_files] = avatar.visible_files(params['tag'])
+      kata = Kata.new(dojo, id)
+      paas.disk_make_dir(kata)
+      paas.disk_write(kata, kata.manifest_filename, manifest)
       result[:forked] = true
-      result[:id] = manifest[:id]
+      result[:id] = id
     end
 
     render :json => result

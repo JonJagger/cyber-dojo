@@ -7,6 +7,10 @@ class Language
 
   attr_reader :dojo, :name
 
+  def exists?
+    paas.language_exists?(self)
+  end
+
   def visible_files
     Hash[visible_filenames.collect{ |filename|
       [ filename, read(filename) ]
@@ -44,7 +48,11 @@ class Language
 private
 
   def read(filename)
-    dojo.paas.disk_read(self, filename)
+    paas.disk_read(self, filename)
+  end
+
+  def paas
+    dojo.paas
   end
 
 end

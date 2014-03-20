@@ -10,6 +10,10 @@ class Avatar
 
   def_delegators :kata, :format, :format_is_rb?, :format_is_json?
 
+  def exists?
+    paas.avatar_exists?(self)
+  end
+  
   def sandbox
     Sandbox.new(self)
   end

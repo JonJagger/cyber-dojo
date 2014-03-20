@@ -11,9 +11,8 @@ class LinuxPaas
     Dojo.new(self, root, format)
   end
 
-  def make_kata(dojo, language, exercise, id, now)
-    kata = Kata.new(dojo, id)
-    manifest = {
+  def make_kata_manifest(dojo, language, exercise, id, now)
+    {
       :created => now,
       :id => id,
       :language => language.name,
@@ -21,12 +20,32 @@ class LinuxPaas
       :unit_test_framework => language.unit_test_framework,
       :tab_size => language.tab_size
     }
+  end
+
+  def make_kata(dojo, language, exercise, id, now)
+    manifest = make_kata_manifest(dojo, language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
+    kata = Kata.new(dojo, id)
     disk_make_dir(kata)
     disk_write(kata, kata.manifest_filename, manifest)
     kata
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+  # exists?
+
+  def language_exists?(language)
+    dir(language).exists?
+  end
+
+  def kata_exists?(kata)
+    dir(kata).exists?
+  end
+
+  def avatar_exists?(avatar)
+    dir(avatar).exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,10 +63,6 @@ class LinuxPaas
     dir(exercises).entries.select do |name|
       yield name if @disk.is_dir?(File.join(pathed, name))
     end
-  end
-
-  def kata_exists?(kata)
-    dir(kata).exists?
   end
 
   def katas_each(katas)

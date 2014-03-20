@@ -10,13 +10,6 @@ MODEL
   but also has a .to_s which combines them back together
   Remove id[0..1] id[2..-1] duplication eg from LinuxPaas.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINUX-PAAS-FORKING
-  # How to do this...
-  manifest = make_manifest(kata.language.name, kata.exercise.name) #????
-  manifest[:visible_files] = avatar.visible_files(params['tag'])   #????
-  Need to split paas::make_kata into two so there is
-  also a paas::make_kata_manifest
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
