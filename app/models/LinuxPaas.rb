@@ -42,7 +42,7 @@ class LinuxPaas
 
   def exercises_each(exercises)
     pathed = path(exercises)
-    Dir.entries(pathed).each do |name|
+    dir(exercises).entries.select do |name|
       yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end

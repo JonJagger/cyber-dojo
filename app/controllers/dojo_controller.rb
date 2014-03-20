@@ -68,7 +68,7 @@ class DojoController < ApplicationController
   def resume_dialog_html(kata, started_avatar_names)
     @kata = kata
     @started_avatar_names = started_avatar_names
-    @all_avatar_names = Avatar.names
+    @all_avatar_names = Avatars.names
     bind('/app/views/dojo/resume_dialog.html.erb')
   end
 
