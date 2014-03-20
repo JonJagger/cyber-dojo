@@ -53,24 +53,24 @@ class LinuxPaas
 
   def languages_each(languages)
     pathed = path(languages)
-    dir(languages).entries.select do |name|
+    @disk[pathed].entries.select do |name|
       yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end
 
   def exercises_each(exercises)
     pathed = path(exercises)
-    dir(exercises).entries.select do |name|
+    @disk[pathed].entries.select do |name|
       yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end
 
   def katas_each(katas)
     pathed = path(katas)
-    Dir.entries(pathed).each do |outer_dir|      # ???????
+    @disk[pathed].each do |outer_dir|
       outer_path = File.join(pathed, outer_dir)
       if @disk.is_dir?(outer_path)
-        Dir.entries(outer_path).each do |inner_dir|    # ???????
+        @disk[outer_path].each do |inner_dir|
           inner_path = File.join(outer_path, inner_dir)
           if @disk.is_dir?(inner_path)
             yield outer_dir + inner_dir
@@ -82,7 +82,7 @@ class LinuxPaas
 
   def avatars_each(kata)
     pathed = path(kata)
-    dir(kata).entries.select do |name|
+    @disk[pathed].entries.select do |name|
       yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end

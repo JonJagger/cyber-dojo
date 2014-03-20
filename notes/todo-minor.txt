@@ -1,8 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
-  not centering on the page.
-  make content area slightly wider and deeper to match fork/revert
+  Put line numbers back in. I find I quite often look at the
+    output and it names a file and a line-number and I want to
+    look at that line-number.
+    Ideally, line-numbes are toggleable on/off.
+  Put line numbers back in.
+  Not centering on the page.
+  Make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   Id.rb with .inner and .outer should be a model file.
@@ -15,15 +20,6 @@ RUBY-QUESTION
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   light = avatar.lights[params['tag']]   ?in forker_controller?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-VIEW
-  put line numbers back in. I find I quite often look at the
-  output and it names a file and a line-number and I want to
-  look at that line-number.
-  Ideally, line-numbes are toggleable on/off.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-VIEW
-  Put line numbers back in.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
   it seems that the common id/class name style is like-this
@@ -50,7 +46,7 @@ DEFECT
   forker/fork is now an ajax call returning json.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT
-  line-numbers appear momentarily
+  line-numbers appear momentarily - fault
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTORING
   ...

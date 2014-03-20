@@ -78,11 +78,10 @@ class LinuxPaasKatasTests < ActionController::TestCase
 
   test "dojo.katas.each() returns all currently created katas by forwarding to paas.katas_each()" do
     set_paas('json')
-    kata = @dojo.make_kata(@language, @exercise)
-    kata = @dojo.make_kata(@language, @exercise)
-    katas = @dojo.katas.map {|kata| kata.id}
-    assert_equal 2, katas.size
-    assert katas.all?{|id| id.length == 10}
+    kata1 = @dojo.make_kata(@language, @exercise, Uuid.new.to_s)
+    kata2 = @dojo.make_kata(@language, @exercise, Uuid.new.to_s)
+    katas_ids = @dojo.katas.map {|kata| kata.id}
+    assert_equal [kata1.id,kata2.id].sort, @dojo.katas.map{|kata| kata.id}.sort
   end
 
   #- - - - - - - - - - - - - - - -
