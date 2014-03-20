@@ -22,10 +22,13 @@ class LinuxPaasExercisesTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - -
 
   test "dojo.exercises.each() forwards to paas.exercises_each()" do
-    exercises = @dojo.exercises.map {|exercise| exercise.name}
-    assert exercises.include? 'Unsplice'
-    assert exercises.include? 'Verbal'
-    assert exercises.include? 'Yatzy'
+    @paas.dir(@dojo.exercises['Unsplice'])
+    @paas.dir(@dojo.exercises['Verbal'])
+    @paas.dir(@dojo.exercises['Yatzy'])
+    exercises_names = @dojo.exercises.map {|exercise| exercise.name}
+    assert exercises_names.include?('Unsplice'), 'Unsplice: ' + exercises_names.inspect
+    assert exercises_names.include?('Verbal'), 'Verbal: ' + exercises_names.inspect
+    assert exercises_names.include?('Yatzy'), 'Yatzy: ' + exercises_names.inspect
   end
 
   test "dojo.exercises[name] returns exercise with given name" do

@@ -20,9 +20,11 @@ class LinuxPaasLanguagesTests < ActionController::TestCase
   end
 
   test "dojo.languages.each() forwards to paas.languages_each()" do
-    languages = @dojo.languages.map {|language| language.name}
-    assert languages.include?('C#')
-    assert languages.include?('Ruby')
+    @paas.dir(@dojo.languages['C#'])
+    @paas.dir(@dojo.languages['Ruby'])
+    languages_names = @dojo.languages.map {|language| language.name}
+    assert languages_names.include?('C#'), 'C#: ' + languages_names.inspect
+    assert languages_names.include?('Ruby'), 'Ruby: ' + languages_names.inspect
   end
 
   test "dojo.languages[name] returns language with given name" do

@@ -34,20 +34,22 @@ class LinuxPaas
   # each() iteration
 
   def languages_each(languages)
+    #pathed = path(languages)
     #dir(languages).entries.select do |name|
-    #   means SpyDir needs each() .DONE
-    #   now how to handle is_dir?
-
+    #  yield name if @disk.is_dir?(File.join(pathed, name))
+    #end
+    #STILL need to switch Dir.entries(pathed) to dir(languages).entries
+    #Hmmm. Can .entries take a parameter in general? In combination with .each
     pathed = path(languages)
     Dir.entries(pathed).select do |name|
-      yield name if is_dir?(File.join(pathed, name))
+      yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end
 
   def exercises_each(exercises)
     pathed = path(exercises)
     Dir.entries(pathed).each do |name|
-      yield name if is_dir?(File.join(pathed, name))
+      yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end
 
@@ -59,10 +61,10 @@ class LinuxPaas
     pathed = path(katas)
     Dir.entries(pathed).each do |outer_dir|
       outer_path = File.join(pathed, outer_dir)
-      if is_dir?(outer_path)
+      if @disk.is_dir?(outer_path)
         Dir.entries(outer_path).each do |inner_dir|
           inner_path = File.join(outer_path, inner_dir)
-          if is_dir?(inner_path)
+          if @disk.is_dir?(inner_path)
             yield outer_dir + inner_dir
           end
         end
@@ -72,7 +74,7 @@ class LinuxPaas
 
   def avatars_each(kata)
     Dir.entries(path(kata)).each do |name|
-      yield name if is_dir?(File.join(path(kata), name))
+      yield name if @disk.is_dir?(File.join(path(kata), name))
     end
   end
 
@@ -193,12 +195,6 @@ class LinuxPaas
 
   def root(obj)
     obj.dojo.path
-  end
-
-private
-
-  def is_dir?(name)
-    File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')
   end
 
 end

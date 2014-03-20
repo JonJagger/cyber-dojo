@@ -1,34 +1,24 @@
 
+DIFF-VIEW
+  put line numbers back in. I find I quite often look at the
+  output and it names a file and a line-number and I want to
+  look at that line-number.
+  Ideally, line-numbes are toggleable on/off.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  increase size of checkboxes (one for line-numbers on edit page too)
-  http://www.jotform.org/html-elements/how-to-change-checkbox-size-css/
-  s/|60s|columns/|60s|/
-  s/auto refresh/???/
+DIFF-VIEW
+  put line numbers back in and use jQuery so that hovering over
+  a line or line-number highlights the whole line.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
-  it seems that the common style is like-this and not like_this
+  it seems that the common id/class name style is like-this
+  and not like_this
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   filenames: add * marker if files have changed since last [test] ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK/REVERT
-  remove obvious and complete duplication
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FORK/REVERT.
-  Now that all traffic-lights appear at bottom pressing
-  traffic-light could bring up a dialog asking
-  What you want to do with traffic-light 34
-  o) view its diff
-  o) revert to it
-  o) fork a new dojo from it
-  Don't like this design though. I'd prefer that pressing a
-  traffic-light brings up a dialog with << < > >> movement
-  and you can also revert/fork from the left/right traffic-light.
-  Or, how about if the was_tag and the now_tag are the same then
-  revert and fork buttons appear. YES. Like that. I think.
-  Too clever? Looking at diff-view dialog and imagining how
-  might look. Too clever I think.
+  remove obvious and complete duplication. Pass in callback function
+  that does the fork/revert.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   would be nice if it had a heartbeat so it could detect and
@@ -38,12 +28,6 @@ HOME-PAGE
   add a [publish] button. Perhaps layout as
   [ start] [ review]
   [resume] [publish]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-VIEW
-  put line numbers back in. I find I quite often look at the
-  output and it names a file and a line-number and I want to
-  look at that line-number.
-  Ideally, line-numbes are toggleable on/off.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DEFECT
   Refactoring page on blog no longer works because

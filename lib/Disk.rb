@@ -7,8 +7,12 @@ class Disk
     File::SEPARATOR
   end
 
-  def [](dir)
-    Dir.new(self,dir)
+  def is_dir?(name)
+    File.directory?(name) && !name.end_with?('.') && !name.end_with?('..')
+  end
+
+  def [](name)
+    Dir.new(self, name)
   end
 
   def symlink(old_name, new_name)
