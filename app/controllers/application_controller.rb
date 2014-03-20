@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
 require 'LinuxPaas'
-require 'Disk'
+require 'OsDisk'
 require 'Git'
 require 'Runner'
 require 'make_time_helper'
@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   def paas
     # allow controller_tests to tunnel through rails stack
     thread = Thread.current
-    @disk = thread[:disk] || Disk.new
+    @disk = thread[:disk] || OsDisk.new
     @git = thread[:git] || Git.new
     @runner = thread[:runner] || Runner.new
     @paas ||= LinuxPaas.new(@disk, @git, @runner)

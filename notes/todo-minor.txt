@@ -1,4 +1,7 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+QUESTION
+  Can .entries take a parameter in general? In combination with .each
 DIFF-VIEW
   put line numbers back in. I find I quite often look at the
   output and it names a file and a line-number and I want to

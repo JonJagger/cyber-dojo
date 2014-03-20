@@ -23,7 +23,10 @@ class SpyDisk
     @dir_spies.each do |dir,spy|
       if dir != from.path && dir.start_with?(from.path)
         sub = dir[from.path.length..-1]
-        yield sub if !sub.include?(dir_separator)
+        if sub.end_with?(dir_separator)
+          sub = sub[0..-2]
+        end
+        yield sub
       end
     end
   end

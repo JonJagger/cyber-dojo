@@ -34,14 +34,8 @@ class LinuxPaas
   # each() iteration
 
   def languages_each(languages)
-    #pathed = path(languages)
-    #dir(languages).entries.select do |name|
-    #  yield name if @disk.is_dir?(File.join(pathed, name))
-    #end
-    #STILL need to switch Dir.entries(pathed) to dir(languages).entries
-    #Hmmm. Can .entries take a parameter in general? In combination with .each
     pathed = path(languages)
-    Dir.entries(pathed).select do |name|
+    dir(languages).entries.select do |name|
       yield name if @disk.is_dir?(File.join(pathed, name))
     end
   end

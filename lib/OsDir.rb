@@ -1,5 +1,6 @@
 
-class Dir
+class OsDir
+  include Enumerable
 
   def initialize(disk,path)
     @disk,@path = disk,path
@@ -11,6 +12,12 @@ class Dir
 
   def path
     @path
+  end
+
+  def each
+    Dir.entries(path).select do |name|
+      yield name  # if @disk.is_dir?(File.join(path, name))
+    end
   end
 
   def exists?(filename = nil)
