@@ -57,7 +57,7 @@ class LinuxPaasKatasTests < ActionController::TestCase
     assert_equal @exercise.name, kata.exercise.name
     #
     manifest = kata.manifest
-    assert_equal manifest['id'], kata.id
+    assert_equal manifest['id'], kata.id.to_s
     assert_equal manifest['exercise'], @exercise.name
     assert_equal manifest['language'], @language.name
     assert_equal manifest['unit_test_framework'], @language.unit_test_framework
@@ -71,7 +71,7 @@ class LinuxPaasKatasTests < ActionController::TestCase
     kata = @dojo.make_kata(@language, @exercise)
     k = @dojo.katas[kata.id.to_s]
     assert_not_nil k
-    assert_equal k.id, kata.id
+    assert_equal k.id.to_s, kata.id.to_s
   end
 
   #- - - - - - - - - - - - - - - -
@@ -81,7 +81,7 @@ class LinuxPaasKatasTests < ActionController::TestCase
     kata1 = @dojo.make_kata(@language, @exercise, Id.new.to_s)
     kata2 = @dojo.make_kata(@language, @exercise, Id.new.to_s)
     katas_ids = @dojo.katas.map {|kata| kata.id.to_s}
-    assert_equal [kata1.id,kata2.id].sort, @dojo.katas.map{|kata| kata.id}.sort
+    assert_equal [kata1.id.to_s,kata2.id.to_s].sort, @dojo.katas.map{|kata| kata.id.to_s}.sort
   end
 
   #- - - - - - - - - - - - - - - -

@@ -38,7 +38,7 @@ class LinuxPaasAvatarTests < ActionController::TestCase
     avatar1 = @kata.start_avatar
     avatar2 = @kata.start_avatar
     expected_names = [avatar1.name, avatar2.name]
-    names = @dojo.katas[@kata.id].avatars.map{|avatar| avatar.name}
+    names = @dojo.katas[@kata.id.to_s].avatars.map{|avatar| avatar.name}
     assert_equal expected_names.sort, names.sort
   end
 
@@ -47,7 +47,7 @@ class LinuxPaasAvatarTests < ActionController::TestCase
     name = avatar.name
     names = @kata.avatars.map{|avatar| avatar.name}
     assert_equal [name], names
-    avatar = @dojo.katas[@kata.id].avatars[name]
+    avatar = @dojo.katas[@kata.id.to_s].avatars[name]
     assert_equal name, avatar.name
   end
 
