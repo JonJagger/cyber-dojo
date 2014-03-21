@@ -1,92 +1,10 @@
 
-#diff_dialog {
-
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $darker-color;
-  color: $lighter-color;
-  padding: none;
-  margin: 0;
-  margin-top: 0.5em;
-
-  #was-traffic-light { margin-right: 0.3em; }
-  #now-traffic-light { margin-left: 0.3em; }
-}
-
-#diff_content
-{
-  width: 40em;
-  font: {
-    size: 1.5em;
-    family: monospace;
-  }
-}
-
-#was-tag-number, #now-tag-number {
-  @include editable_tag_number;
-}
-
-#tag-gap-number {
-  @include font-size-tiny();
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-@mixin pre-block {
+@mixin diff-pre-block {
   white-space: pre;
   display: block;
 }
 
-.diff_line_numbers, .diff_sheet {
-  height: 27em;
-  margin: 0;
-  padding: 0;
-  @include code-font;
-
-  ln {
-    margin-left: 4px;
-    margin-right: 3px;
-    font-weight: normal;
-  }
-
-  added, deleted, same { @include pre-block; }
-  added   ln { color: $diff-added-color; }
-  deleted ln { color: $diff-deleted-color; }
-  same    ln { color: lighten($darker-color, 30%); }
-}
-
-.diff_line_numbers {
-  overflow: hidden;
-  background: $darker-color;
-  border-left: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 25%);
-  }
-}
-
-.diff_sheet {
-  width: 40em;
-  overflow: auto;
-  color: $darker-color;
-  background: $lighter-color;
-  added, deleted, same { padding-left: 3px; }
-  same {
-    &:hover { background: lighten($lighter-color, 5%); }
-  }
-  added {
-    background: $diff-added-color;
-    &:hover { background: lighten($diff-added-color, 10%); }
-  }
-  deleted {
-    background: $diff-deleted-color;
-    text-decoration: line-through;
-    &:hover { background: lighten($diff-deleted-color, 5%); }
-  }
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-@mixin line-count {
+@mixin diff-line-count {
   text-align: right;
   margin: none;
   padding: {
@@ -98,35 +16,110 @@
   @include font-size-small();
 }
 
-.diff-deleted-line-count, .diff-added-line-count {
-  color: $darker-color;
-  @include line-count;
-  border: 2px solid $darker-color;
-  @include rounded-corner(4px);
-}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.diff-deleted-line-count {
-  background: $diff-deleted-color;
-  cursor: pointer;
-  border-left: 3px solid $darker-color;
+#diff-dialog {
 
-  &[disabled] {
-    background: lighten($darker-color, 20%);
-    cursor: default;
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  background: $darker-color;
+  color: $lighter-color;
+  padding: none;
+  margin: 0;
+  margin-top: 0.5em;
+
+  #was-traffic-light { margin-right: 0.3em; }
+  #now-traffic-light { margin-left: 0.3em; }
+
+  #was-tag-number, #now-tag-number { @include editable_tag_number; }
+  #tag-gap-number { @include font-size-tiny(); }
+
+  #diff-filenames {
+    height: 18em;
+    overflow-y: auto;
   }
-}
 
-.diff-added-line-count {
-  background: $diff-added-color;
-  cursor: pointer;
-
-  &[disabled] {
-    background: lighten($darker-color, 20%);
-    cursor: default;
+  #diff-content {
+    width: 40em;
+    font: {
+      size: 1.5em;
+      family: monospace;
+    }
   }
-}
 
-#diff_filenames {
-  height: 18em;
-  overflow-y: auto;
+  .diff-line-numbers, .diff-sheet {
+    height: 27em;
+    margin: 0;
+    padding: 0;
+    @include code-font;
+
+    ln {
+      margin-left: 4px;
+      margin-right: 3px;
+      font-weight: normal;
+    }
+
+    added, deleted, same { @include diff-pre-block; }
+    added   ln { color: $diff-added-color; }
+    deleted ln { color: $diff-deleted-color; }
+    same    ln { color: lighten($darker-color, 30%); }
+  }
+
+  .diff-line-numbers {
+    overflow: hidden;
+    background: $darker-color;
+    border-left: {
+      style: dotted;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
+  }
+
+  .diff-sheet {
+    width: 40em;
+    overflow: auto;
+    color: $darker-color;
+    background: $lighter-color;
+    added, deleted, same { padding-left: 3px; }
+    same {
+      &:hover { background: lighten($lighter-color, 5%); }
+    }
+    added {
+      background: $diff-added-color;
+      &:hover { background: lighten($diff-added-color, 10%); }
+    }
+    deleted {
+      background: $diff-deleted-color;
+      text-decoration: line-through;
+      &:hover { background: lighten($diff-deleted-color, 5%); }
+    }
+  }
+
+  .diff-deleted-line-count, .diff-added-line-count {
+    color: $darker-color;
+    @include diff-line-count;
+    border: 2px solid $darker-color;
+    @include rounded-corner(4px);
+  }
+
+  .diff-deleted-line-count {
+    background: $diff-deleted-color;
+    cursor: pointer;
+    border-left: 3px solid $darker-color;
+
+    &[disabled] {
+      background: lighten($darker-color, 20%);
+      cursor: default;
+    }
+  }
+
+  .diff-added-line-count {
+    background: $diff-added-color;
+    cursor: pointer;
+
+    &[disabled] {
+      background: lighten($darker-color, 20%);
+      cursor: default;
+    }
+  }
+
 }

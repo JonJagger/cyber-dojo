@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffDiv = function()  {
       var div = $('<div>', {
-        'id': 'diff_dialog'
+        'id': 'diff-dialog'
       });
       var table = $('<table>');
       table.append(
@@ -80,7 +80,7 @@ var cyberDojo = (function(cd, $) {
 
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-				  "<div id='diff_filenames'" +
+				  "<div id='diff-filenames'" +
 					   "class='panel'>" +
 				  "</div>" +
 				"</td>" +
@@ -90,7 +90,7 @@ var cyberDojo = (function(cd, $) {
 
           "</td>" +
           "<td>" +
-            "<div id='diff_content'>" +
+            "<div id='diff-content'>" +
 		    "</div>" +
           "</td>" +
 	    "</tr>");
@@ -186,7 +186,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var diffContent = $('#diff_content', diffDiv);
+	var diffContent = $('#diff-content', diffDiv);
 
     var makeDiffContent = function(diffs) {
 	  var span = $('<span>');
@@ -197,7 +197,7 @@ var cyberDojo = (function(cd, $) {
 		});
 		var div = $('<div>', {
 		  id: 'diff_file_content_for_' + diff.filename,
-		  'class': 'diff_sheet'
+		  'class': 'diff-sheet'
 		});
 		div.html(diff.content);
 		divHolder.append(div);
@@ -296,7 +296,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var diffFilenames = $('#diff_filenames', diffDiv);
+	var diffFilenames = $('#diff-filenames', diffDiv);
 
     var makeDiffFilenames = function(diffs) {
 
