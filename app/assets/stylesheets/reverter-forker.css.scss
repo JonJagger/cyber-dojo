@@ -15,19 +15,9 @@
     margin-bottom: 0.3em;
   }
 
-  #traffic_light {
+  #traffic-light {
      margin-left: 0.3em;
      margin-right: 0.3em;
-  }
-
-  .tag_red {
-    color: $red;
-  }
-  .tag_amber {
-    color: $amber;
-  }
-  .tag_green {
-    color: $green;
   }
 
   #revert-fork-filenames {
@@ -47,9 +37,4 @@
       family: monospace;
     }
   }
-
 }
-
-
-
-

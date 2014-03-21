@@ -18,7 +18,7 @@ var cyberDojo = (function(cd, $) {
 			  '</button>' +
 			'</td>' +
 		    '<td>' +
-	          '<div id="traffic_light">' +
+	          '<div id="traffic-light">' +
 			  '</div>' +
 		    '</td>' +
 			'<td>' +
@@ -125,7 +125,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var trafficLight = $('#traffic_light', revertForkDiv);
+	var trafficLight = $('#traffic-light', revertForkDiv);
 
 	var makeTrafficLight = function(trafficLight) {
       var filename = 'traffic_light_' + trafficLight.colour;
