@@ -10,7 +10,6 @@ DIFF-DIALOG
     look at that line-number.
     Ideally, line-numbes are toggleable on/off.
   Put line numbers back in.
-  Not centering on the page.
   Make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL

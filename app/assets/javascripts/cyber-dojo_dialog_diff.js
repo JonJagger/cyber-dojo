@@ -385,7 +385,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var refresh = function() {
+	var refresh = function(open) {
 	  $.getJSON('/differ/diff',
 		{
 		  id: id,
@@ -407,14 +407,21 @@ var cyberDojo = (function(cd, $) {
 		  diffContent.html(makeDiffContent(data.diffs));
           buildDiffFilenameHandlers(data.idsAndSectionCounts);
           showCurrentFile(data.currentFilenameId);
+		  if (open !== undefined) {
+			open();
+		  }
 		}
 	  );
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	diffDialog.dialog('open');
-	refresh();
+	refresh(function() {
+	  // only open after all html-loaded otherwise
+	  // dialog may not center on the page.
+	  diffDialog.dialog('open');
+	});
+
 
   }; // cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag) {
 
