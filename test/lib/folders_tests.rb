@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Disk'
+require 'OsDisk'
 require 'Folders'
 
 class FoldersTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = Disk.new
+    Thread.current[:disk] = OsDisk.new
     @dojo = Dojo.new(root_path, 'rb')
   end
 

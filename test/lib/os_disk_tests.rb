@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Disk'
+require 'OsDisk'
 
-class DiskTests < ActionController::TestCase
+class OsDiskTests < ActionController::TestCase
 
   def setup
     super
-    Thread.current[:disk] = @disk = Disk.new
+    Thread.current[:disk] = @disk = OsDisk.new
     @dir = root_path + 'tmp/'
     `rm -rf #{@dir}`
     `mkdir -p #{@dir}`
