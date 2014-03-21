@@ -30,9 +30,8 @@ class LinuxPaasTests < LinuxPaasModelTestCase
     json_and_rb do
       id = '123456789A'
       kata = @dojo.katas[id]
-      uuid = Uuid.new(id)
-      assert @paas.path(kata).include?(uuid.inner)
-      assert @paas.path(kata).include?(uuid.outer)
+      assert @paas.path(kata).include?(kata.id.inner)
+      assert @paas.path(kata).include?(kata.id.outer)
       assert path_ends_in_slash?(kata)
       assert !path_has_adjacent_separators?(kata)
       assert path_includes_dojo_path?(kata)

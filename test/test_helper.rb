@@ -29,7 +29,6 @@ SimpleCov.root '/Users/jonjagger/Desktop/Repos/cyberdojo'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'make_time_helper'
-require 'Uuid'
 
 class ActiveSupport::TestCase
 
@@ -51,7 +50,7 @@ class ActiveSupport::TestCase
     language = dojo.language(language_name)
     {
       :created => now = make_time(Time.now),
-      :id => Uuid.new.to_s,
+      :id => Id.new.to_s,
       :language => language.name,
       :exercise => exercise_name,
       :visible_files => language.visible_files,

@@ -6,7 +6,6 @@ require 'Git'
 require 'Runner'
 require 'make_time_helper'
 require 'Folders'
-require 'Uuid'
 
 class ApplicationController < ActionController::Base
   before_filter :set_locale
@@ -37,7 +36,7 @@ class ApplicationController < ActionController::Base
     language = dojo.language(language_name)
     {
       :created => make_time(Time.now),
-      :id => Uuid.new.to_s,
+      :id => Id.new.to_s,
       :language => language.name,
       :exercise => exercise_name, # used only for display
       :unit_test_framework => language.unit_test_framework,

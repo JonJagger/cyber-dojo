@@ -8,12 +8,6 @@ DIFF-DIALOG
   When line is hovered, make it so the line-number is also highlit
   Make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MODEL
-  Id.rb with .inner and .outer should be a model file.
-  Make kata.id return an Id object which has .inner and .outer properties
-  but also has a .to_s which combines them back together
-  Remove id[0..1] id[2..-1] duplication eg from LinuxPaas.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

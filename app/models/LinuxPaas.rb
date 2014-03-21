@@ -194,7 +194,7 @@ class LinuxPaas
       when Katas
         root(obj) + 'katas/'
       when Kata
-        path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
+        path(obj.dojo.katas) + obj.id.inner + '/' + obj.id.outer + '/'
       when Avatar
         path(obj.kata) + obj.name + '/'
       when Sandbox

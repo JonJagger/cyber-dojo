@@ -15,7 +15,7 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
   test "id is from ctor" do
     json_and_rb do
       @kata = @dojo.katas[@id]
-      assert_equal @id, @kata.id
+      assert_equal @id, @kata.id.to_s
     end
   end
 
@@ -79,7 +79,7 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       @paas.dir(@exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       @kata = @dojo.make_kata(@language, @exercise, @id, now)
-      assert_equal @id, @kata.id
+      assert_equal @id, @kata.id.to_s
       assert_equal @language.name, @kata.language.name
       assert_equal @exercise.name, @kata.exercise.name
     end

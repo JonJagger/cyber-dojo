@@ -6,12 +6,16 @@ class Kata
     @dojo,@id = dojo,id
   end
 
-  attr_reader :dojo, :id
+  attr_reader :dojo
 
   def_delegators :dojo, :format, :format_is_rb?, :format_is_json?
 
   def exists?
     paas.kata_exists?(self)
+  end
+
+  def id
+    Id.new(@id)
   end
 
   def language

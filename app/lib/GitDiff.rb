@@ -1,33 +1,32 @@
 require 'GitDiffBuilder'
 require 'GitDiffParser'
 require 'LineSplitter'
-require 'Uuid'
 
 module GitDiff
-  
+
   # Top level functions used by diff_controller.rb to create data structure
-  # (to build view from) containing diffs for all files, for a given avatar, 
+  # (to build view from) containing diffs for all files, for a given avatar,
   # for a given tag.
-  
+
   def git_diff_view(avatar, was_tag, now_tag, visible_files = nil)
-      visible_files ||= avatar.visible_files(now_tag)      
-      diff_lines = avatar.diff_lines(was_tag, now_tag)      
+      visible_files ||= avatar.visible_files(now_tag)
+      diff_lines = avatar.diff_lines(was_tag, now_tag)
       unit_testable_git_diff_view(diff_lines, visible_files)
   end
-  
+
   def unit_testable_git_diff_view(diff_lines, visible_files)
-      view = { }      
-      diffs = GitDiffParser.new(diff_lines).parse_all           
-      diffs.each do |sandbox_name,diff|        
+      view = { }
+      diffs = GitDiffParser.new(diff_lines).parse_all
+      diffs.each do |sandbox_name,diff|
         md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
         if md
           filename = md[2]
-          if deleted_file?(md[1])              
+          if deleted_file?(md[1])
             file_content = [ ]
             if diff[:chunks] != [ ] #[ ] indicates empty file was deleted
               file_content = diff[:chunks][0][:sections][0][:deleted_lines]
-            end              
-            view[filename] = deleteify(file_content)            
+            end
+            view[filename] = deleteify(file_content)
           else
             file_content = visible_files[filename]
             view[filename] = GitDiffBuilder.new().build(diff, LineSplitter.line_split(file_content))
@@ -36,26 +35,26 @@ module GitDiff
         end
       end
 
-      # other files have not changed...      
+      # other files have not changed...
       visible_files.each do |filename,content|
         view[filename] = sameify(content)
       end
-      
+
       view
   end
 
-  #-----------------------------------------------------------  
-  
-  class UuidFactory
-    def create_uuid
-      Uuid.new.to_s
+  #-----------------------------------------------------------
+
+  class IdFactory
+    def create_id
+      Id.new.to_s
     end
   end
-  
-  def git_diff_prepare(diffed_files, uuid_factory = UuidFactory.new)
+
+  def git_diff_prepare(diffed_files, id_factory = IdFactory.new)
     diffs = [ ]
     diffed_files.sort.each do |filename,diff|
-      id = 'id_' + uuid_factory.create_uuid
+      id = 'id_' + id_factory.create_id
       diffs << {
         :id => id,
         :filename => filename,
@@ -66,32 +65,32 @@ module GitDiff
         :line_numbers => git_diff_html_line_numbers(diff)
       }
     end
-    diffs    
+    diffs
   end
 
   #-----------------------------------------------------------
-  
+
   def deleted_file?(ch)
     # GitDiffParser uses names beginning with
-    # a/... to indicate a deleted file 
+    # a/... to indicate a deleted file
     # b/... to indicate a new/modified file
     # This mirrors the git diff command output
     ch == 'a'
   end
-  
+
   #-----------------------------------------------------------
-  
+
   def most_changed_lines_file_id(diffs, current_filename)
-    # prefers to stay on the same file if it still exists    
+    # prefers to stay on the same file if it still exists
     # in the now_tag (it could have been deleted or renamed)
     # and has at least one red or green change.
     chosen_diff = nil
     current_filename_diff = diffs.find { |diff| diff[:filename] == current_filename }
-    
+
     files = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != current_filename }
     files = files.select { |diff| change_count(diff) > 0 }
     most_changed_diff = files.max { |lhs,rhs| change_count(lhs) <=> change_count(rhs) }
-    
+
     if current_filename_diff != nil
       if change_count(current_filename_diff) > 0 || most_changed_diff == nil
         chosen_diff = current_filename_diff
@@ -104,22 +103,22 @@ module GitDiff
       diffs = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != 'instructions' }
       chosen_diff = diffs.max_by { |diff| diff[:content].size }
     end
-    
+
     chosen_diff[:id]
   end
-  
+
   #-----------------------------------------------------------
-  
+
   def change_count(diff)
     diff[:deleted_line_count] + diff[:added_line_count]
   end
-  
+
   #-----------------------------------------------------------
-  
+
   def git_diff_html(id, diff)
     lines = diff.map {|n| diff_htmlify(id, n) }.join("")
   end
-  
+
   def diff_htmlify(id, n)
     result = ""
     if n[:type] == :section
@@ -148,11 +147,11 @@ module GitDiff
   # In practice I've decided this is not worth worrying about
   # since the overwhelming feeling you get when switching files
   # is the change of content anyway.
-  
+
   def git_diff_html_line_numbers(diff)
     line_numbers = diff.map {|n| diff_htmlify_line_numbers(n) }.join("")
   end
-    
+
   def diff_htmlify_line_numbers(n)
     result = ""
     if n[:type] != :section

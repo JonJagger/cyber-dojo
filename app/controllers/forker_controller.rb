@@ -37,7 +37,7 @@ class ForkerController < ApplicationController
     if !error
       language = kata.language
       exercise = kata.exercise
-      id = Uuid.new.to_s
+      id = Id.new.to_s
       now = make_time(Time.now)
       manifest = @paas.make_kata_manifest(dojo, language, exercise, id, now)
       manifest[:visible_files] = avatar.visible_files(params['tag'])

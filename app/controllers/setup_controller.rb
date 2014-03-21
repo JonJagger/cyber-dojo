@@ -21,13 +21,13 @@ class SetupController < ApplicationController
     exercise = dojo.exercises[params['exercise']]
     kata = dojo.make_kata(language, exercise)
 
-    logger.info("Created dojo " + kata.id +
+    logger.info("Created dojo " + kata.id.to_s +
                 ", " + language.name +
                 ", " + exercise.name +
                 ", " + make_time(Time.now).to_s)
 
     render :json => {
-      :id => kata.id
+      :id => kata.id.to_s
     }
   end
 

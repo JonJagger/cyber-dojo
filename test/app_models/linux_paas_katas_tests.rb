@@ -34,7 +34,7 @@ class LinuxPaasKatasTests < ActionController::TestCase
     assert_equal @exercise.name, kata.exercise.name
     #
     manifest = kata.manifest
-    assert_equal manifest['id'], kata.id
+    assert_equal manifest['id'], kata.id.to_s
     assert_equal manifest['exercise'], @exercise.name
     assert_equal manifest['language'], @language.name
     assert_equal manifest['unit_test_framework'], @language.unit_test_framework
@@ -69,7 +69,7 @@ class LinuxPaasKatasTests < ActionController::TestCase
   test "dojo.katas[id] returns previously created kata with given id" do
     set_paas('json')
     kata = @dojo.make_kata(@language, @exercise)
-    k = @dojo.katas[kata.id]
+    k = @dojo.katas[kata.id.to_s]
     assert_not_nil k
     assert_equal k.id, kata.id
   end
@@ -78,9 +78,9 @@ class LinuxPaasKatasTests < ActionController::TestCase
 
   test "dojo.katas.each() returns all currently created katas by forwarding to paas.katas_each()" do
     set_paas('json')
-    kata1 = @dojo.make_kata(@language, @exercise, Uuid.new.to_s)
-    kata2 = @dojo.make_kata(@language, @exercise, Uuid.new.to_s)
-    katas_ids = @dojo.katas.map {|kata| kata.id}
+    kata1 = @dojo.make_kata(@language, @exercise, Id.new.to_s)
+    kata2 = @dojo.make_kata(@language, @exercise, Id.new.to_s)
+    katas_ids = @dojo.katas.map {|kata| kata.id.to_s}
     assert_equal [kata1.id,kata2.id].sort, @dojo.katas.map{|kata| kata.id}.sort
   end
 
