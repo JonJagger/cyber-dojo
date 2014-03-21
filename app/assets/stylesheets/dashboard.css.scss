@@ -3,8 +3,8 @@ $ellipsis: "\2026";
 
 #dashboard_page {
 
-  #download_button, #help_button {
-    @include font-size-tiny();
+  #help_button {
+    @include font-size-small();
   }
 
   #help_button {

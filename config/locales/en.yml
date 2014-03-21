@@ -112,7 +112,7 @@ en:
       opens_a_diff_review: "opens a<br/>diff<br/>dialog"
       results_go_to: "results go to"
       the_tests_ran_but_one_or_more_failed: "the tests ran but one or more failed"
-      the_tests_could_not_be_run: "the tests could not be run"
+      the_tests_could_not_be_run: "the tests did not run (eg bad syntax)"
       the_tests_ran_and_all_passed: "the tests ran and all passed"
       filename: "filename"
       opens_the_filename: "opens filename"

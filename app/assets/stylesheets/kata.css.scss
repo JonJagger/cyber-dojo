@@ -16,10 +16,12 @@
     }
   }
 
-  #revert_button,
-  #fork_button,
-  #help_button {
+  #revert_button, #fork_button {
     @include font-size-tiny();
+  }
+
+  #help_button {
+    @include font-size-small();
   }
 
   #help_button {
