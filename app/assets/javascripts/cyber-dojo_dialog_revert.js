@@ -4,19 +4,16 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
-    // This is virtually identical to
-	// cyber-dojo_dialog_fork.js
-	// except for the command executed when ok is pressed
-	// and refresh().
+
   	var minTag = 1;
 
-    var makeRevertInfo = function() {
+    var makeInfo = function() {
 	  return '' +
 	    '<table class="align-center">' +
 		  '<tr>' +
 			'<td>' +
 			  '<button type="button"' +
-			          'id="revert_button">' +
+			          'id="revert-fork-button">' +
 				  title +
 			  '</button>' +
 			'</td>' +
@@ -26,7 +23,7 @@ var cyberDojo = (function(cd, $) {
 		    '</td>' +
 			'<td>' +
 			  '<input type="text" ' +
-			        ' id="revert_tag_number"' +
+			        ' id="revert-fork-tag-number"' +
 					' value="" />' +
 			'</td>' +
 		  '</tr>' +
@@ -35,9 +32,9 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var makeReverterDiv = function()  {
+    var makeRevertForkDiv = function()  {
       var div = $('<div>', {
-        'id': 'revert_dialog'
+        'id': 'revert-fork-dialog'
       });
       var table = $('<table>');
       table.append(
@@ -47,7 +44,7 @@ var cyberDojo = (function(cd, $) {
 		    "<table>" +
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-			      makeRevertInfo() +
+			      makeInfo() +
 			    "</td>" +
 			  "</tr>" +
 
@@ -59,7 +56,7 @@ var cyberDojo = (function(cd, $) {
 
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-				  "<div id='revert_filenames'" +
+				  "<div id='revert-fork-filenames'" +
 					   "class='panel'>" +
 				  "</div>" +
 				"</td>" +
@@ -69,7 +66,7 @@ var cyberDojo = (function(cd, $) {
 
           "</td>" +
           "<td>" +
-           "<textarea id='revert_content'" +
+           "<textarea id='revert-fork-content'" +
 		             "class='file_content'" +
 					 "readonly='readonly'" +
 		             "wrap='off'>" +
@@ -83,13 +80,13 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var revertDiv = makeReverterDiv();
+    var revertForkDiv = makeRevertForkDiv();
 
-	$('#revert_button', revertDiv).click(function() {
+	$('#revert-fork-button', revertForkDiv).click(function() {
 	  deleteAllCurrentFiles();
 	  copyRevertFilesToCurrentFiles();
 	  cd.testForm().submit();
-	  revertDialog.remove();
+	  revertForkDialog.remove();
 	});
 
 	var deleteAllCurrentFiles = function() {
@@ -112,7 +109,7 @@ var cyberDojo = (function(cd, $) {
 	  }
 	};
 
-	var revertDialog = revertDiv.dialog({
+	var revertForkDialog = revertForkDiv.dialog({
 	  autoOpen: false,
 	  width: 1200,
 	  modal: true,
@@ -128,7 +125,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var trafficLight = $('#traffic_light', revertDiv);
+	var trafficLight = $('#traffic_light', revertForkDiv);
 
 	var makeTrafficLight = function(trafficLight) {
       var filename = 'traffic_light_' + trafficLight.colour;
@@ -140,7 +137,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var trafficLightNumber = $('#revert_tag_number', revertDiv);
+	var trafficLightNumber = $('#revert-fork-tag-number', revertForkDiv);
 
 	var tagEdit = function(event) {
 	  if (event.keyCode === $.ui.keyCode.ENTER) {
@@ -156,9 +153,9 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var revertFilenames = $('#revert_filenames', revertDiv);
+	var revertForkFilenames = $('#revert-fork-filenames', revertForkDiv);
 
-    var makeRevertFilenames = function(visibleFiles) {
+    var makeRevertForkFilenames = function(visibleFiles) {
       var div = $('<div>');
 	  var filenames = [ ];
       var filename;
@@ -179,13 +176,13 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var revertContent = $('#revert_content', revertDiv);
+    var revertForkContent = $('#revert-fork-content', revertForkDiv);
 
 	var currentFilename = undefined;
 
 	var showCurrentFile = function() {
 	  var i, filename, filenames = [ ];
-	  var files = $('.filename', revertDiv);
+	  var files = $('.filename', revertForkDiv);
 	  for (i = 0; i < files.length; i++) {
 		filename = $(files[i]).text();
 		if (filename === currentFilename) {
@@ -202,11 +199,11 @@ var cyberDojo = (function(cd, $) {
 
 	var showContentOnFilenameClick = function(visibleFiles) {
 	  var previous = undefined;
-	  $('.filename', revertDiv).each(function() {
+	  $('.filename', revertForkDiv).each(function() {
 		$(this).click(function() {
 		  var filename = $(this).text();
 		  var content = visibleFiles[filename];
-		  revertContent.val(content);
+		  revertForkContent.val(content);
 		  if (previous !== undefined) {
 			previous.removeClass('selected');
 		  }
@@ -219,10 +216,10 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var firstButton = $('#first_button', revertDiv);
-	var prevButton  = $('#prev_button',  revertDiv);
-	var nextButton  = $('#next_button',  revertDiv);
-	var lastButton  = $('#last_button',  revertDiv);
+	var firstButton = $('#first_button', revertForkDiv);
+	var prevButton  = $('#prev_button',  revertForkDiv);
+	var nextButton  = $('#next_button',  revertForkDiv);
+	var lastButton  = $('#last_button',  revertForkDiv);
 
     var resetNavigateButtonHandlers = function() {
 	  var resetHandler = function(button, onOff, newTag) {
@@ -262,7 +259,7 @@ var cyberDojo = (function(cd, $) {
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
 		  trafficLightNumber.val(data.inc.number);
-		  revertFilenames.html(makeRevertFilenames(data.visibleFiles));
+		  revertForkFilenames.html(makeRevertForkFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
           showCurrentFile();
 		}
@@ -271,8 +268,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	revertDialog.dialog('open');
 	refresh();
+	revertForkDialog.dialog('open');
 
   }; // cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
 

@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REVERT-FORK-DIALOG
+  http://localhost:3000/kata/edit/7F0D0F11B2?avatar=snake
+  click revert and it opens the only file that is empty!?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   Put line numbers back in. I find I quite often look at the
     output and it names a file and a line-number and I want to
