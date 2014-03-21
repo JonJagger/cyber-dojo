@@ -189,28 +189,36 @@ var cyberDojo = (function(cd, $) {
 	var diffContent = $('#diff-content', diffDiv);
 
     var makeDiffContent = function(diffs) {
-	  var span = $('<span>');
+	  var holder = $('<span>');
 	  $.each(diffs, function(_, diff) {
-		var divHolder = $('<div>', {
-		  id: diff.filename + '_diff_div',
-		  'class': 'filename_div'
-		});
-		var div = $('<div>', {
-		  id: 'diff_file_content_for_' + diff.filename,
-		  'class': 'diff-sheet'
-		});
-		div.html(diff.content);
-		divHolder.append(div);
-		span.append(divHolder);
+		var table = $('' +
+		  '<div id="' + diff.filename + '_diff_div" class="filename_div">' +
+		  '<table>' +
+		    '<tr class="valign-top">' +
+		      '<td>' +
+		        '<div class="diff-line-numbers">' +
+				'</div>' +
+		      '</td>' +
+		      '<td>' +
+		        '<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
+				'</div>' +
+		      '</td>' +
+		    '</tr>' +
+		  '</table>' +
+		  '</div>'
+	    );
+		$('.diff-line-numbers', table).html(diff.line_numbers);
+		$('.diff-sheet', table).html(diff.content);
+		holder.append(table);
 	  });
-	  return span;
+	  return holder;
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var buildDiffFilenameHandlers = function(diffs) {
 	  // Builds the diff filename click handlers for a given kata-id,
-	  // given animal-name, and given traffic-light was/now numbers.
+	  // given animal-name, and given traffic-light was-tag/now-tag numbers.
 	  // Clicking on the filename brings it into view by hiding the
 	  // previously selected file and showing the selected one.
 	  //

@@ -1,15 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT-FORK-DIALOG
-  http://localhost:3000/kata/edit/7F0D0F11B2?avatar=snake
-  click revert and it opens the only file that is empty!?
+  Better selection of nonBoringFilenameIndex()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
-  Put line numbers back in. I find I quite often look at the
-    output and it names a file and a line-number and I want to
-    look at that line-number.
-    Ideally, line-numbes are toggleable on/off.
-  Put line numbers back in.
+  Make line-numbes are toggleable on/off?
+  When line is hovered, make it so the line-number is also highlit
   Make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
@@ -33,7 +29,7 @@ TEST-PAGE
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORK/REVERT
   remove obvious and complete duplication. Pass in callback function
-  that does the fork/revert.
+  that does the fork/revert. Not quite that easy an inspection...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   would be nice if it had a heartbeat so it could detect and

@@ -2,7 +2,7 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
+
   cd.fileContentFor = function(filename) {
     return cd.id('file_content_for_' + filename);
   };
@@ -38,12 +38,12 @@ var cyberDojo = (function(cd, $) {
     return cd.inArray(filename, cd.filenames()) ||
            cd.inArray(filename, cd.supportFilenames());
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.rebuildFilenameList = function() {
     var filenameList = $('#filename_list');
-    var filenames = cd.filenames();    
+    var filenames = cd.filenames();
     filenameList.empty();
     filenames.sort();
     $.each(filenames, function(n, filename) {
@@ -52,10 +52,10 @@ var cyberDojo = (function(cd, $) {
     });
     return filenames;
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  cd.filenames = function() {  
+
+  cd.filenames = function() {
     var prefix = 'file_content_for_';
     var filenames = [ ];
     $('textarea[id^=' + prefix + ']').each(function(index) {
@@ -76,13 +76,13 @@ var cyberDojo = (function(cd, $) {
     });
     if (cd.inArray(filename, cd.highlightFilenames())) {
       div.addClass('highlight');
-    }      
+    }
     div.click(function() {
       cd.loadFile(filename);
-    });    
-    return div;  
+    });
+    return div;
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.makeNewFile = function(filename, content) {
@@ -113,8 +113,8 @@ var cyberDojo = (function(cd, $) {
     // it still wraps at the textarea width. So instead I do it
     // like this, which works in FireFox?!
     text.attr('wrap', 'off');
-    
-    text.val(content);    
+
+    text.val(content);
     td1.append(lines);
     tr.append(td1);
     td2.append(text);
@@ -142,6 +142,9 @@ var cyberDojo = (function(cd, $) {
         break;
       }
     }
+    // This could select a filename whose content is empty
+    // Ideally I'd look at the content too.
+    // And possibly also look at the file that changed the most.
     if (i === filenames.length) {
       i = 0;
     }
@@ -149,9 +152,6 @@ var cyberDojo = (function(cd, $) {
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   return cd;
 })(cyberDojo || {}, $);
-
-
-

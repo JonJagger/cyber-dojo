@@ -4,7 +4,7 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
-
+	// Intend to refactor this so it can both revert and fork.
   	var minTag = 1;
 
     var makeInfo = function() {
