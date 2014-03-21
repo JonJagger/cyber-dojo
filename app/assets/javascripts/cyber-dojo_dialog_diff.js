@@ -26,17 +26,17 @@ var cyberDojo = (function(cd, $) {
 	    '<table class="align-center">' +
 		  '<tr>' +
 		    '<td>' +
-			  '<div id="was_traffic_light">' +
+			  '<div id="was-traffic-light">' +
 			  '</div>' +
 		    '</td>' +
 			'<td>' +
-			  '<input type="text" id="was_tag_number" value="' + wasTag + '" />' +
+			  '<input type="text" id="was-tag-number" value="' + wasTag + '" />' +
 			'</td>' +
 			'<td>' +
 			  '&thinsp;&larr;' +
 			'</td>' +
 			'<td>' +
-			  '<div id="tag_gap_number">' +
+			  '<div id="tag-gap-number">' +
 			    tagGap +
 			  '</div>' +
 			'</td>' +
@@ -44,10 +44,10 @@ var cyberDojo = (function(cd, $) {
 			  '&rarr;&thinsp;' +
 			'</td>' +
 			'<td>' +
-			  '<input type="text" id="now_tag_number" value="' + nowTag + '" />' +
+			  '<input type="text" id="now-tag-number" value="' + nowTag + '" />' +
 			'</td>' +
 		    '<td>' +
-			  '<div id="now_traffic_light">' +
+			  '<div id="now-traffic-light">' +
 			  '</div>' +
 		    '</td>' +
 		  '</tr>' +
@@ -103,12 +103,12 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var wasTagNumber = $('#was_tag_number', diffDiv);
-	var tagGapNumber = $('#tag_gap_number', diffDiv);
-	var nowTagNumber = $('#now_tag_number', diffDiv);
+	var wasTagNumber = $('#was-tag-number', diffDiv);
+	var tagGapNumber = $('#tag-gap-number', diffDiv);
+	var nowTagNumber = $('#now-tag-number', diffDiv);
 
-	var wasTrafficLight = $('#was_traffic_light', diffDiv);
-	var nowTrafficLight = $('#now_traffic_light', diffDiv);
+	var wasTrafficLight = $('#was-traffic-light', diffDiv);
+	var nowTrafficLight = $('#now-traffic-light', diffDiv);
 
 	var firstButton = $('#first_button', diffDiv);
 	var prevButton  = $('#prev_button',  diffDiv);
@@ -158,8 +158,8 @@ var cyberDojo = (function(cd, $) {
 
 	  // The wasTagNumber and nowTagNumber may have been edited since the
 	  // refresh but before a navigation button is pressed. However, the
-	  // navigation buttons do _not_ look at the current state of the
-	  // wasTagNumber/nowTagNumbers, but use the values set on refresh.
+	  // navigation buttons do _not_ look at the current state of
+	  // wasTagNumber/nowTagNumber, but use the values set on refresh.
 	  // This is the simplest way to ensure the navigation buttons are
 	  // not incorrectly enabled/disabled.
 	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);

@@ -1,27 +1,15 @@
 
-#diff_dialog
-{
+#diff_dialog {
+
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
   color: $lighter-color;
   padding: none;
   margin: 0;
   margin-top: 0.5em;
-  .tag_red {
-    color: $red;
-  }
-  .tag_amber {
-    color: $amber;
-  }
-  .tag_green {
-    color: $green;
-  }
-  #was_traffic_light {
-    margin-right: 0.3em;
-  }
-  #now_traffic_light {
-    margin-left: 0.3em;
-  }
+
+  #was-traffic-light { margin-right: 0.3em; }
+  #now-traffic-light { margin-left: 0.3em; }
 }
 
 #diff_content
@@ -33,11 +21,11 @@
   }
 }
 
-#was_tag_number, #now_tag_number {
+#was-tag-number, #now-tag-number {
   @include editable_tag_number;
 }
 
-#tag_gap_number {
+#tag-gap-number {
   @include font-size-tiny();
 }
 
@@ -53,11 +41,13 @@
   margin: 0;
   padding: 0;
   @include code-font;
+
   ln {
     margin-left: 4px;
     margin-right: 3px;
     font-weight: normal;
   }
+
   added, deleted, same { @include pre-block; }
   added   ln { color: $diff-added-color; }
   deleted ln { color: $diff-deleted-color; }
