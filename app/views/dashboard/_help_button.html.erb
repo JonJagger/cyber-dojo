@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  $('#help_button').click(function() {
+  $('#help-button').click(function() {
     var title = $(this).data('title');
     var close = $(this).data('close');
     $.get('/dashboard/help_dialog', function(html) {
@@ -19,10 +19,9 @@ $(document).ready(function() {
         class="tipped"
         data-title="?"
         data-close="<%= t('views.buttons.close') %>"
-        id="help_button">
+        id="help-button">
   ?
   <div class="tooltip">
     shows help
   </div>
 </button>
-

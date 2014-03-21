@@ -8,10 +8,10 @@
   text-align: right;
   margin: none;
   padding: {
-    top: 0em;
-    right: 0.2em;
+       top: 0em;
+     right: 0.2em;
     bottom: 0em;
-    left: 0.2em;
+      left: 0.2em;
   }
   @include font-size-small();
 }
@@ -28,9 +28,10 @@
   margin-top: 0.5em;
 
   #was-traffic-light { margin-right: 0.3em; }
-  #now-traffic-light { margin-left: 0.3em; }
+  #now-traffic-light { margin-left : 0.3em; }
 
-  #was-tag-number, #now-tag-number { @include editable_tag_number; }
+  #was-tag-number { @include editable_tag_number; }
+  #now-tag-number { @include editable_tag_number; }
   #tag-gap-number { @include font-size-tiny(); }
 
   #diff-filenames {
@@ -53,7 +54,7 @@
     @include code-font;
 
     ln {
-      margin-left: 4px;
+      margin-left : 4px;
       margin-right: 3px;
       font-weight: normal;
     }
@@ -81,9 +82,6 @@
     color: $darker-color;
     background: $lighter-color;
     added, deleted, same { padding-left: 3px; }
-    same {
-      &:hover { background: lighten($lighter-color, 5%); }
-    }
     added {
       background: $diff-added-color;
       &:hover { background: lighten($diff-added-color, 10%); }
@@ -92,6 +90,9 @@
       background: $diff-deleted-color;
       text-decoration: line-through;
       &:hover { background: lighten($diff-deleted-color, 5%); }
+    }
+    same {
+      &:hover { background: lighten($lighter-color, 5%); }
     }
   }
 
