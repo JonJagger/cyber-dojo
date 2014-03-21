@@ -11,12 +11,12 @@
  * Force sass to regenerate
  * http://stackoverflow.com/questions/7046495/rails-3-1-asset-pipeline-doesnt-pick-up-changes-to-importd-sheets
  *
- *= depend_on color_gradients.css.scss
+ *= depend_on color-gradients.css.scss
  *= depend_on rounded-corner.css.scss
  *= depend_on colors.css.scss
  *= depend_on big-checkbox.css.scss
  *= depend_on fonts.css.scss
- *= depend_on force_scrollbars.css.scss
+ *= depend_on force-scrollbars.css.scss
  *= depend_on tooltip.css.scss
  *= depend_on shared.css.scss
  *= depend_on cyber-dojo.css.scss
@@ -24,20 +24,19 @@
  *= depend_on setup.css.scss
  *= depend_on kata.css.scss
  *= depend_on dashboard.css.scss
- *= depend_on reverter.css.scss
+ *= depend_on reverter-forker.css.scss
  *= depend_on differ.css.scss
- *= depend_on forker.css.scss
  *= depend_on jquery-ui-1.8.16.custom.css.scss
  *= require locales
  *= require_self
 */
 
-@import "color_gradients.css.scss";
+@import "color-gradients.css.scss";
 @import "rounded-corner.css.scss";
 @import "colors.css.scss";
 @import "big-checkbox.css.scss";
 @import "fonts.css.scss";
-@import "force_scrollbars.css.scss";
+@import "force-scrollbars.css.scss";
 @import "tooltip.css.scss";
 @import "shared.css.scss";
 @import "cyber-dojo.css.scss";
@@ -45,7 +44,6 @@
 @import "setup.css.scss";
 @import "kata.css.scss";
 @import "dashboard.css.scss";
-@import "reverter.css.scss";
+@import "reverter-forker.css.scss";
 @import "differ.css.scss";
-@import "forker.css.scss";
 @import "jquery-ui-1.8.16.custom.css.scss";

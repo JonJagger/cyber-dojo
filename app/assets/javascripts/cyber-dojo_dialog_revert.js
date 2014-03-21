@@ -268,8 +268,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	refresh();
 	revertForkDialog.dialog('open');
+	refresh();
 
   }; // cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
 
