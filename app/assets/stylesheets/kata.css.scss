@@ -21,7 +21,7 @@
   }
 
   #help-button {
-    @include font-size-small();
+    @include font-size-tiny();
     @include rounded-corner(14px);
   }
 

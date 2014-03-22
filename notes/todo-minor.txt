@@ -1,6 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT-FORK-DIALOG
+  Put line-numbers in?
   Better selection of nonBoringFilenameIndex()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG

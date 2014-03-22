@@ -21,7 +21,7 @@ $(document).ready(function() {
                 <% counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
               <% end %>
             <% end %>
-            <div class="tipped <%= bulb %> bulb_count">
+            <div class="tipped <%= bulb %> bulb-count">
               <%= counts[bulb] %>
               <div class='tooltip'>
                  animals have<br>
@@ -41,7 +41,7 @@ $(document).ready(function() {
           <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
           <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
           <% colour = 'amber' if lasts['amber'] >  0 %>
-          <div class="tipped traffic_light_count <%= colour %>" >
+          <div class="tipped traffic-light-count <%= colour %>" >
             <%= total = counts['red'] + counts['amber'] + counts['green'] %>
             <div class='tooltip'>
                animals have<br>

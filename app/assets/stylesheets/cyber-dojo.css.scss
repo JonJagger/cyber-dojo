@@ -1,8 +1,7 @@
 
 table { border-spacing: 0; }
 
-#cyber_dojo_page
-{
+#cyber_dojo_page {
   margin: {
     top: 0.3em;
     left: 0.3em;
@@ -10,16 +9,14 @@ table { border-spacing: 0; }
   color: $lighter-color;
 }
 
-body
-{
+body {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
   padding: none;
   margin: 0em;
 }
 
-.avatar_image
-{
+.avatar_image {
   margin-left: 0.2em;
   margin-right: 0.2em;
   margin-top: 0em;
@@ -27,14 +24,12 @@ body
   cursor: pointer;
 }
 
-.vertical-padded
-{
+.vertical-padded {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
 
-.panel
-{
+.panel {
   background: $darker-color;
   color: $lighter-color;
   border: {
@@ -59,8 +54,7 @@ body
 
 $filename_and_button_border_size: 2px;
 
-button
-{
+button {
   background: darken($lighter-color, 10%);
   color: $darker-color;
   cursor: pointer;
@@ -76,8 +70,7 @@ button
   display: inline-block;
 }
 
-button[disabled]
-{
+button[disabled] {
   background: lighten($darker-color, 20%);
   cursor: default;
   font-style: italic;
@@ -85,8 +78,7 @@ button[disabled]
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-div[class~='filename']
-{
+div[class~='filename'] {
   @include font-size-small();
   background: $darker-color;
   color: $lighter-color;
@@ -99,8 +91,7 @@ div[class~='filename']
   white-space: nowrap;
   @include rounded-corner(4px);
 
-  &[class~='selected']
-  {
+  &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
     background: darken($lighter-color, 10%);
@@ -113,13 +104,11 @@ div[class~='filename']
   }
 }
 
-div[class~="filename"]:hover, button:hover
-{
+div[class~="filename"]:hover, button:hover {
   border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
 }
 
-div[class~="filename"], button[disabled]:hover
-{
+div[class~="filename"], button[disabled]:hover {
   border: $filename_and_button_border_size solid $darker-color;
 }
 
@@ -127,8 +116,7 @@ div[class~="filename"], button[disabled]:hover
 
 .filename_div { display: none; }
 
-.file_content
-{
+.file_content {
   background: $lighter-color;
   color: $darker-color;
   width: 50em;
@@ -139,8 +127,7 @@ div[class~="filename"], button[disabled]:hover
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
-.line_numbers, .file_content
-{
+.line_numbers, .file_content {
   border: 0;
   border-left: {
     style: dotted;
@@ -154,8 +141,7 @@ div[class~="filename"], button[disabled]:hover
   overflow: auto;
 }
 
-.line_numbers
-{
+.line_numbers {
   background: $darker-color;
   color: lighten($darker-color, 30%);
   font-weight: 100;
@@ -168,8 +154,7 @@ div[class~="filename"], button[disabled]:hover
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.dialog
-{
+.dialog {
   background: $lighter-color;
   color: $darker-color;
   display: table;
@@ -180,8 +165,7 @@ div[class~="filename"], button[disabled]:hover
     color: $lighter-color;
   }
 
-  &.title
-  {
+  &.title {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     position: relative;
     left: -45px;
@@ -190,22 +174,19 @@ div[class~="filename"], button[disabled]:hover
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.started-avatar-name
-{
+.started-avatar-name {
   font-weight: bold;
   font-size: 70%;
   text-align: center;
 }
 
-.unstarted-avatar-name
-{
+.unstarted-avatar-name {
   color: Gray;
   font-weight: bold;
   font-size: 70%;
   text-align: center;
 }
 
-img[class~="flag"]
-{
+img[class~="flag"] {
   margin: 5px;
 }
