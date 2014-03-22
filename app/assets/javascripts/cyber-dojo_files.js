@@ -29,7 +29,7 @@ var cyberDojo = (function(cd, $) {
     // the scrollTop and scrollLeft positions of a file when it is
     // switched out of the editor by a call to hide().
 
-    return $('#current_filename').val();
+    return $('#current-filename').val();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
