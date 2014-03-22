@@ -2,18 +2,18 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
+
   cd.testForm = function() {
-    return $('#test_button').closest("form");    
+    return $('#test-button').closest("form");
   };
-  
+
   cd.bindRunTests = function(event) {
     event.stopPropagation();
     event.preventDefault();
     cd.testForm().submit();
-    return false;    
+    return false;
   };
-  
+
   cd.bindLoadNextFile = function(event) {
     event.stopPropagation();
     event.preventDefault();
@@ -38,11 +38,11 @@ var cyberDojo = (function(cd, $) {
   cd.runTestsHotKey = function() {
     return 'Alt+t';
   };
-  
+
   cd.loadNextFileHotKey = function() {
     return 'Alt+f';
   };
-  
+
   cd.loadPreviousFileHotKey = function() {
     return 'Alt+b';
   };
@@ -57,6 +57,6 @@ var cyberDojo = (function(cd, $) {
     node.bind('keydown', cd.loadPreviousFileHotKey(), cd.bindLoadPreviousFile);
     node.bind('keydown', cd.showOutputFileHotKey(), cd.bindShowOutputFile);
   };
-  
+
   return cd;
 })(cyberDojo || {}, $);

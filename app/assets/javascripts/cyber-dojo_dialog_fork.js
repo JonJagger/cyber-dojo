@@ -97,7 +97,7 @@ var cyberDojo = (function(cd, $) {
 	  ]
 	});
 
-	$('#fork_button', forkDiv).click(function() {
+	$('#revert-fork-button', forkDiv).click(function() {
 	  $.getJSON('/forker/fork', {
 		id: id,
 		avatar: avatarName,

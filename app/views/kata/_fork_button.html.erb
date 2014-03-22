@@ -8,7 +8,7 @@ $(document).ready(function() {
     var cancel = $(this).data('cancel');
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
-    var maxTag = parseInt($('.traffic_light_count').text());
+    var maxTag = parseInt($('.traffic-light-count').text());
     var tag = maxTag;
     cd.dialog_fork(title, cancel, id, avatarName, tag, maxTag);
   });

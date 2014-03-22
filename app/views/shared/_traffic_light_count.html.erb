@@ -1,7 +1,7 @@
 
 <% if traffic_lights.length != 0 %>
     <% colour = traffic_lights[-1]['colour'].to_s %>
-    <div class="tipped traffic_light_count <%= colour %>"
+    <div class="tipped traffic-light-count <%= colour %>"
          data-animal-name="<%= avatar_name %>"
          data-bulb-count="<%= traffic_lights.length %>"
          data-current-colour="<%=colour %>">
@@ -11,6 +11,6 @@
          <%= pluralize(traffic_lights.length, 'traffic-light') %><br>
          so far and is<br>
          currently at <%= colour %>
-      </div>        
+      </div>
     </div>
 <% end %>

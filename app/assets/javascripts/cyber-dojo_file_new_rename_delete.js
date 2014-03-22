@@ -2,11 +2,11 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // delete file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.deleteFile = function(title) {
     var filename = cd.currentFilename();
     var div = $(cd.divPanel(''));
@@ -31,7 +31,7 @@ var cyberDojo = (function(cd, $) {
       type: 'text',
       value: filename,
 	  disabled: "disabled"
-    });	  
+    });
     div.append(input);
 	deleter.dialog('open');
   };
@@ -39,8 +39,8 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.doDelete = function(filename) {
-	// Also used in cyber-dojo_dialog_revert.js	
-    cd.fileDiv(filename).remove();    
+	// Also used in cyber-dojo_dialog_revert.js
+    cd.fileDiv(filename).remove();
     var filenames = cd.rebuildFilenameList();
 	var i = cd.nonBoringFilenameIndex(filenames);
     cd.loadFile(filenames[i]);
@@ -49,7 +49,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // new file
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.newFile = function(title) {
     var newFilename = 'filename';
     var div = $('<div>', {
@@ -65,18 +65,18 @@ var cyberDojo = (function(cd, $) {
 	{
 	  id: 'new_file_ok',
 	  text: 'ok',
-	  disabled: !cd.isValidFilename(newFilename),	  
+	  disabled: !cd.isValidFilename(newFilename),
 	  click: function() {
 		var newFilename = $.trim(input.val())
 		cd.newFileContent(newFilename, '');
 		// hack to ensure if line-numbers are off
 		// then they are not initially displayed
 		$('#line_numbers_button').click();
-		$('#line_numbers_button').click();		
+		$('#line_numbers_button').click();
 		$(this).remove();
-	  }	  
+	  }
 	};
-	var cancelButton = 
+	var cancelButton =
 	{
 	  id: 'new_file_cancel',
 	  text: 'cancel',
@@ -93,9 +93,9 @@ var cyberDojo = (function(cd, $) {
 		modal: true,
 		buttons: [ okButton, cancelButton ]
       });
-	
+
     div.append(input);
-	
+
 	input.keyup(function(event) {
       var ok = $('#new_file_ok');
 	  newFilename = $.trim(input.val());
@@ -103,14 +103,14 @@ var cyberDojo = (function(cd, $) {
 	  if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
 		if (event.keyCode === $.ui.keyCode.ENTER) {
-          cd.newFileContent(newFilename, '');				  
+          cd.newFileContent(newFilename, '');
 		  newFileDialog.remove();
-		}  		
+		}
 	  } else {
         ok.button('disable');
 	  }
     });
-		
+
 	// Don't refactor to newFileDialog.dialog('open')
 	// If you do that the dialog only works the first time. See
 	// http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
@@ -123,8 +123,8 @@ var cyberDojo = (function(cd, $) {
   cd.newFileContent = function(filename, content) {
 	// Also used in cyber-dojo_dialog_revert.js
 	var newFile = cd.makeNewFile(filename, content);
-    $('#visible_files_container').append(newFile);
-    cd.bindLineNumbers(filename);      
+    $('#visible-files-container').append(newFile);
+    cd.bindLineNumbers(filename);
     cd.rebuildFilenameList();
     cd.loadFile(filename);
   };
@@ -153,9 +153,9 @@ var cyberDojo = (function(cd, $) {
 		var newFilename = $.trim(input.val());
 		cd.renameFileFromTo(oldFilename, newFilename);
 		$(this).remove();
-	  }	  
+	  }
 	};
-	var cancelButton = 
+	var cancelButton =
 	{
 	  id: 'rename_file_cancel',
 	  text: 'cancel',
@@ -172,9 +172,9 @@ var cyberDojo = (function(cd, $) {
 		modal: true,
 		buttons: [ okButton, cancelButton ]
       });
-	
+
     div.append(input);
-	
+
 	input.keyup(function(event) {
 	  var newFilename = $.trim(input.val());
       var ok = $('#rename_file_ok');
@@ -182,14 +182,14 @@ var cyberDojo = (function(cd, $) {
 	  if (cd.isValidFilename(newFilename))  {
         ok.button('enable');
 		if (event.keyCode === $.ui.keyCode.ENTER) {
-		 cd.renameFileFromTo(oldFilename, newFilename);		
+		 cd.renameFileFromTo(oldFilename, newFilename);
 		 renameFileDialog.remove();
-		}  		
+		}
 	  } else {
         ok.button('disable');
 	  }
     });
-		
+
 	// Don't refactor to renamer.dialog('open')
 	// If you do that the dialog only works the first time. See
 	// http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
@@ -200,18 +200,18 @@ var cyberDojo = (function(cd, $) {
     }
     input[0].setSelectionRange(0, end);
   };
-  
+
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-  
+
   cd.renameFileFromTo = function(oldFilename, newFilename) {
     cd.saveScrollPosition(oldFilename);
-	cd.rewireFileFromTo(oldFilename, newFilename);	  
+	cd.rewireFileFromTo(oldFilename, newFilename);
 	cd.rebuildFilenameList();
 	cd.loadFile(newFilename);
   };
-  
+
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-  
+
   cd.rewireFileFromTo = function(oldFilename, newFilename) {
     // I used to delete the old file and then create
     // a new one with the deleted file's content.
@@ -236,13 +236,13 @@ var cyberDojo = (function(cd, $) {
     ta.attr('name', "file_content[" + newFilename + "]");
     ta.attr('id', 'file_content_for_' + newFilename);
   };
-  
+
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-  
+
   cd.isValidFilename = function(filename) {
-	var tipWindow = $('#tip_window');
+	var tipWindow = $('#tip-window');
     if (filename === "") {
-	  cd.showTip('no filename', tipWindow);	  
+	  cd.showTip('no filename', tipWindow);
       return false;
     }
     if (cd.filenameAlreadyExists(filename)) {
@@ -255,14 +255,14 @@ var cyberDojo = (function(cd, $) {
     }
     if (filename[0] === '/') {
 	  cd.showTip("can't start with /", tipWindow);
-      return false;      
+      return false;
     }
     if (filename.indexOf("..") !== -1) {
 	  cd.showTip("can't contain ..", tipWindow);
-      return false;      
+      return false;
     }
-    return true;    	
+    return true;
   };
-  
+
   return cd;
 })(cyberDojo || {}, $);
