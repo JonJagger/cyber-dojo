@@ -4,11 +4,12 @@
 $(document).ready(function() {
 
   var spinners = $('.spinner');
-  var testButton = $('#test_button');
+  var testButton = $('#test-button');
+  var tipWindow = $('#tip-window');
 
   var ajaxAfter = function() {
     var allTheWay = 100000;
-    $('#traffic_lights').scrollLeft(allTheWay);
+    $('#traffic-lights').scrollLeft(allTheWay);
     spinners.hide();
     cd.loadFile('output');
     testButton.attr('disabled', false);
@@ -17,7 +18,6 @@ $(document).ready(function() {
   };
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
-    var tipWindow = $('#tip_window');
     testButton.attr('disabled', true);
     tipWindow.hide();
     tipWindow.empty();
@@ -55,7 +55,7 @@ $(document).ready(function() {
     </td>
     <td>
       <button type="submit"
-              id="test_button"
+              id="test-button"
               class="tipped"
               value="<%= t('views.buttons.test') %>">
         <%= t('views.buttons.test') %>

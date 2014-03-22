@@ -3,30 +3,30 @@
 
 $(document).ready(function() {
 
-  var fileButtons =  $('#file_operations');
-      
+  var fileButtons =  $('#file-operations');
+
   fileButtons.find('#new').click(function() {
     var title = $(this).data('title');
     cd.newFile(title);
   });
-  
+
   fileButtons.find('#rename').click(function() {
     var title = $(this).data('title');
     cd.renameFile(title);
   });
-  
+
   fileButtons.find('#delete').click(function() {
-    var title = $(this).data('title');        
+    var title = $(this).data('title');
     cd.deleteFile(title);
   });
-  
+
 });
 
 //--></script>
 
-<div id="file_operations">    
+<div id="file-operations">
   <table>
-    <tr>        
+    <tr>
       <td>
         <button type="button"
                 id="new"
@@ -38,7 +38,7 @@ $(document).ready(function() {
           </div>
         </button>
       </td>
-        
+
       <td>
         <button type="button"
                 id="rename"
@@ -47,22 +47,21 @@ $(document).ready(function() {
           <%= t('views.buttons.rename_file') %>
           <div class="tooltip">
             renames the<br>current file
-          </div>                
+          </div>
         </button>
       </td>
 
       <td>
         <button type="button"
                 id="delete"
-                data-title="<%= t('views.buttons.delete_file') %>" 
+                data-title="<%= t('views.buttons.delete_file') %>"
                 class="tipped">
           <%= t('views.buttons.delete_file') %>
           <div class="tooltip">
             deletes the<br>current file
-          </div>                        
-        </button>    
+          </div>
+        </button>
       </td>
     </tr>
   </table>
 </div>
-

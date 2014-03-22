@@ -1,12 +1,12 @@
 
-#kata_page {
+#kata-page {
 
-  #filename_list {
+  #filename-list {
     height: 21em;
     overflow-y: auto;
   }
 
-  #file_operations {
+  #file-operations {
     #new, #rename, #delete {
       @include font-size-tiny();
       padding: {
@@ -16,16 +16,16 @@
     }
   }
 
-  #revert_button, #fork_button {
+  #revert-button, #fork-button {
     @include font-size-tiny();
   }
 
-  #help_button {
+  #help-button {
     @include font-size-small();
     @include rounded-corner(14px);
   }
 
-  #traffic_lights {
+  #traffic-lights {
     width: 63em;
     overflow-x: auto;
     margin-top: 5px;
@@ -33,8 +33,8 @@
   }
 }
 
-#kata_page, #help_dialog {
-  #test_button {
+#kata-page, #help-dialog {
+  #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     padding: {
@@ -43,4 +43,3 @@
     }
   }
 }
-

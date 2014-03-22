@@ -42,7 +42,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.rebuildFilenameList = function() {
-    var filenameList = $('#filename_list');
+    var filenameList = $('#filename-list');
     var filenames = cd.filenames();
     filenameList.empty();
     filenames.sort();

@@ -18,7 +18,7 @@ $(document).ready(function() {
   cd.storeIncomingFileHashes();
   cd.storeOutgoingFileHashes();
 
-  cd.tipify($('.tipped'), $('#tip_window'));
+  cd.tipify($('.tipped'), $('#tip-window'));
 
   var filenames = cd.filenames();
   $.each(filenames, function(index,filename) {
@@ -35,7 +35,7 @@ $(document).ready(function() {
     var message = "\n    Please wait while the tests are run...";
     cd.fileContentFor('output').val(message);
     cd.loadFile('output');
-    $('#test_button').attr('disabled', true);
+    $('#test-button').attr('disabled', true);
     cd.testForm().submit();
   } else {
     var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
@@ -57,11 +57,11 @@ $(document).ready(function() {
   <%= render :partial => 'file_hashes_incoming' %>
   <%= render :partial => 'file_hashes_outgoing' %>
 
-<div id="kata_page">
+<div id="kata-page">
   <table>
     <tr class="valign-top">
       <td>
-        <div class="vertical_padded">
+        <div class="vertical-padded">
           <%= render :partial => 'shared/info' %>
         </div>
         <div class="panel">
@@ -97,7 +97,7 @@ $(document).ready(function() {
         <%= render :partial => 'shared/tip_window' %>
       </td>
       <td>
-        <div class="valign-top" id="traffic_lights">
+        <div class="valign-top" id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
       </td>

@@ -2,26 +2,25 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-    
-  $('#revert_button').click(function() {
+
+  $('#revert-button').click(function() {
     var title = $(this).data('title');
 	var cancel = $(this).data('cancel');
-    var maxTag = parseInt($('.traffic_light_count').text());    
+    var maxTag = parseInt($('.traffic_light_count').text());
     cd.dialog_revert(title, cancel, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag);
-  });    
+  });
 
 });
 
 //--></script>
 
 <button type="button"
-        id="revert_button"
+        id="revert-button"
 		class="tipped"
 		data-title="<%= t('views.buttons.revert') %>"
 		data-cancel="<%= t('views.buttons.cancel') %>">
-  <%= t('views.buttons.revert') %>	   
+  <%= t('views.buttons.revert') %>
   <div class="tooltip">
     reverts to any<br>previous<br>traffic-light
   </div>
 </button>
-
