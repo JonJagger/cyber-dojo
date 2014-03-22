@@ -6,6 +6,10 @@ class Id
     @id = id
   end
 
+  def ==(rhs)
+    self.to_s == rhs.to_s
+  end
+
   def to_s
     @id
   end

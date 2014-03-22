@@ -4,9 +4,6 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   def setup
     super()
-    #@language = @dojo.languages['Java-JUnit']
-    #@exercise = @dojo.exercises['Yahtzee']
-    #@kata = @dojo.make_kata(@language, @exercise)
     @id = '45ED23A2F1'
   end
 
@@ -15,13 +12,44 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
   test "id is from ctor" do
     json_and_rb do
       @kata = @dojo.katas[@id]
-      assert_equal @id, @kata.id.to_s
+      assert_equal Id.new(@id), @kata.id
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "create_kata saves manifest in kata dir" do
+  test "exists? is false before dir is made" do
+    json_and_rb do
+      @kata = @dojo.katas[@id]
+      assert !@kata.exists?
+      @paas.dir(@kata).make
+      assert @kata.exists?
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "make_kata with default-id and default-now creates unique-id and uses-time-now" do
+    json_and_rb do
+      @language = @dojo.languages['Java-JUnit']
+      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({
+        :unit_test_framework => 'JUnit'
+      }))
+      @exercise = @dojo.exercises['Yahtzee']
+      @paas.dir(@exercise).spy_read('instructions', 'your task...')
+      now = Time.now
+      past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
+      @kata = @dojo.make_kata(@language, @exercise)
+      assert_not_equal @id, @kata.id
+      created = Time.mktime(*@kata.created)
+      diff = created - past
+      assert 0 <= diff && diff < 1
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "make_kata saves manifest in kata dir" do
     json_and_rb do |format|
       @language = @dojo.languages['Java-JUnit']
       @paas.dir(@language).spy_read('manifest.json', JSON.unparse({
@@ -57,61 +85,40 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "kata.created is from manifest" do
+  test "kata.id, kata.created, kata.language.name, kata.exercise.name, kata.visible_files all read from manifest" do
     json_and_rb do
-      @language = @dojo.languages['Java-JUnit']
-      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
-      @exercise = @dojo.exercises['Yahtzee']
-      @paas.dir(@exercise).spy_read('instructions', 'your task...')
-      now = [2014,7,17,21,15,45]
-      @kata = @dojo.make_kata(@language, @exercise, @id, now)
-      assert_equal Time.mktime(*now), @kata.created
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "kata.id, kata.language.name, kata.exercise.name all read from manifest" do
-    json_and_rb do
-      @language = @dojo.languages['Ruby-Rspec']
-      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({ }))
+      @language = @dojo.languages['C']
+      visible_files = {
+          'wibble.h' => '#include <stdio.h>',
+          'wibble.c' => '#include "wibble.h"'
+      }
+      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({
+        :id => @id,
+        :visible_filenames => visible_files.keys
+      }))
+      @paas.dir(@language).spy_read('wibble.h', visible_files['wibble.h'])
+      @paas.dir(@language).spy_read('wibble.c', visible_files['wibble.c'])
       @exercise = @dojo.exercises['Yahtzee']
       @paas.dir(@exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       @kata = @dojo.make_kata(@language, @exercise, @id, now)
       assert_equal @id, @kata.id.to_s
+      assert_equal Time.mktime(*now), @kata.created
       assert_equal @language.name, @kata.language.name
       assert_equal @exercise.name, @kata.exercise.name
+      expected_visible_files = {
+        'output' => '',
+        'instructions' => 'your task...',
+        'wibble.h' => visible_files['wibble.h'],
+        'wibble.c' => visible_files['wibble.c'],
+      }
+      assert_equal expected_visible_files, @kata.visible_files
     end
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 =begin
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "visible_files are read from manifest" do
-    visible_files_are_read_from_manifest_test('rb')
-    visible_files_are_read_from_manifest_test('json')
-  end
-
-  def visible_files_are_read_from_manifest_test(format)
-    visible_files = {
-        'wibble.h' => '#include <stdio.h>',
-        'wibble.c' => '#include "wibble.h"'
-    }
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files
-    }
-    @dojo = Dojo.new('spied/',format)
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    @kata = @dojo.create_kata(manifest)
-    assert_equal visible_files, @kata.visible_files
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "you can create an avatar in a kata" do
     you_can_create_an_avatar_in_a_kata('rb')
     you_can_create_an_avatar_in_a_kata('json')

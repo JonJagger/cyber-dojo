@@ -11,6 +11,17 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "exists? is false before dir is made" do
+    json_and_rb do
+      @language = @dojo.languages['Erlang']
+      assert !@language.exists?
+      @paas.dir(@language).make
+      assert @language.exists?
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "when :visible_filenames is not in manifest then visible_files is empty hash" do
     json_and_rb do
       @language = @dojo.languages['Ruby']
