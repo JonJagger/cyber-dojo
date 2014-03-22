@@ -207,8 +207,11 @@ var cyberDojo = (function(cd, $) {
 		  '</table>' +
 		  '</div>'
 	    );
-		$('.diff-line-numbers', table).html(diff.line_numbers);
-		$('.diff-sheet', table).html(diff.content);
+		var content = $('.diff-sheet', table);
+		var numbers = $('.diff-line-numbers', table);
+		content.html(diff.content);
+		numbers.html(diff.line_numbers);
+		cd.bindLineNumbersFromTo(content, numbers);
 		holder.append(table);
 	  });
 	  return holder;

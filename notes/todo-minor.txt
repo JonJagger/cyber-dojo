@@ -4,9 +4,8 @@ REVERT-FORK-DIALOG
   Better selection of nonBoringFilenameIndex()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
-  >>>>>>>Line numbers need to scroll when content scrolls<<<<<<<<
   Make line-numbes are toggleable on/off?
-  When line is hovered, make it so the line-number is also highlit
+  When line is hovered, make it so the line-number is also highlit?
   Make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
