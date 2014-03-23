@@ -4,8 +4,8 @@ require 'Choose'
 class SetupController < ApplicationController
 
   def show
-    @languages_names = dojo.languages.map{|language| language.name}
-    @exercises_names = dojo.exercises.map{|exercise| exercise.name}
+    @languages_names = dojo.languages.map{|language| language.name}.sort
+    @exercises_names = dojo.exercises.map{|exercise| exercise.name}.sort
     @instructions = { }
     @exercises_names.each do |name|
       @instructions[name] = dojo.exercises[name].instructions
