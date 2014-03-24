@@ -40,14 +40,18 @@ class ActiveSupport::TestCase
   end
 
   def make_kata(dojo, language_name, exercise_name = 'Yahtzee')
-    manifest = make_manifest(dojo,language_name, exercise_name)
-    manifest[:visible_files]['output'] = ''
-    manifest[:visible_files]['instructions'] = 'practice'
-    dojo.create_kata(manifest)
+    #manifest = make_manifest(dojo,language_name, exercise_name)
+    #manifest[:visible_files]['output'] = ''
+    #manifest[:visible_files]['instructions'] = 'practice'
+    #dojo.make_kata(manifest)
+    language = dojo.languages[language_name]
+    exercise = dojo.exercises[exercise_name]
+    dojo.make_kata(language, exercise)
   end
 
   def make_manifest(dojo, language_name, exercise_name)
-    language = dojo.language(language_name)
+    #language = dojo.language(language_name)
+    language = dojo.languages[language_name]
     {
       :created => now = make_time(Time.now),
       :id => Id.new.to_s,
@@ -63,20 +67,11 @@ class ActiveSupport::TestCase
     avatar.save(delta, visible_files)
     output = avatar.test(timeout)
     avatar.sandbox.write('output', output)
-    #visible_files['output'] = @output
     avatar.save_visible_files(visible_files)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.commit(traffic_lights.length)
     output
-    #avatar.sandbox.write(delta, visible_files)
-    #output = avatar.sandbox.test(timeout)
-    #avatar.sandbox.dir.write('output', output)
-    #avatar.save_visible_files(visible_files)
-    #traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    #traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    #avatar.git_commit(traffic_lights.length)
-    #output
   end
 
   def root_path
