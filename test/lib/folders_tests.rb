@@ -5,12 +5,17 @@ require 'Folders'
 class FoldersTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = OsDisk.new
-    @dojo = Dojo.new(root_path, 'rb')
+    @disk = OsDisk.new
+    @git = Git.new
+    @runner = Runner.new
+    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @format = 'json'
+    @dojo = @paas.create_dojo(root_path, @format)
+    `rm -rf #{@paas.path(@dojo.katas)}`
   end
 
   test "test languages folder doesn't contain . or .." do
-    folders = Folders::in(@dojo.path + '/languages')
+    folders = Folders::in(@dojo.path + 'languages')
     assert_equal 0, folders.count('.')
     assert_equal 0, folders.count('..')
   end
@@ -30,19 +35,19 @@ class FoldersTests < ActionController::TestCase
   end
 
   test "id_complete with no matching id is unchanged id" do
-    make_dir(@dojo.path + '/katas/12/345ABCDE/wolf')
+    make_dir(@dojo.path + 'katas/12/345ABCDE/wolf')
     assert_equal '123AEEE', Folders::id_complete(@dojo.path, '123AEEE')
   end
 
   test "id_complete with one matching id is found and returned as id" do
-    make_dir(@dojo.path + '/katas/12/3579BCDE/wolf')
+    make_dir(@dojo.path + 'katas/12/3579BCDE/wolf')
     assert_equal '123579BCDE', Folders::id_complete(@dojo.path, '1235')
   end
 
   test "id_complete with two matching ids found is unchanged id" do
     # 12/345... and 12/346... diff is in 5th character
-    make_dir(@dojo.path + '/katas/12/345ABCDE/wolf')
-    make_dir(@dojo.path + '/katas/12/346ABCDE/wolf')
+    make_dir(@dojo.path + 'katas/12/345ABCDE/wolf')
+    make_dir(@dojo.path + 'katas/12/346ABCDE/wolf')
     assert_equal '1234', Folders::id_complete(@dojo.path, '1234')
   end
 
