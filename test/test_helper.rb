@@ -40,17 +40,13 @@ class ActiveSupport::TestCase
   end
 
   def make_kata(dojo, language_name, exercise_name = 'Yahtzee')
-    #manifest = make_manifest(dojo,language_name, exercise_name)
-    #manifest[:visible_files]['output'] = ''
-    #manifest[:visible_files]['instructions'] = 'practice'
-    #dojo.make_kata(manifest)
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
     dojo.make_kata(language, exercise)
   end
 
   def make_manifest(dojo, language_name, exercise_name)
-    #language = dojo.language(language_name)
+    # used anywhere anymore?
     language = dojo.languages[language_name]
     {
       :created => now = make_time(Time.now),
