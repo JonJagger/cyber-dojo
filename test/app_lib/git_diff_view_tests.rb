@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Disk'
+require 'OsDisk'
 require 'Git'
 require 'GitDiff'
 require 'Runner'
@@ -10,36 +10,32 @@ class GitDiffViewTests < ActionController::TestCase
 
   def setup
     super
-    Thread.current[:disk] = Disk.new
-    Thread.current[:git] = Git.new
-    Thread.current[:runner] = Runner.new
+    @disk = OsDisk.new
+    @git = Git.new
+    @runner = Runner.new
+    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @format = 'json'
+    @dojo = @paas.create_dojo(root_path, @format)
   end
 
-  class MockUuidFactory
-
-    def initialize(mock_uuids)
+  class MockIdFactory
+    def initialize(mock_ids)
       @n = -1
-      @mock_uuids = mock_uuids
+      @mock_ids = mock_ids
     end
-
-    def create_uuid
-      @mock_uuids[@n += 1]
+    def create_id
+      @mock_ids[@n += 1]
     end
-
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "building diff view from git repo with modified file" do
-    building_diff_view_from_git_repo_with_modified_file('rb')
-    building_diff_view_from_git_repo_with_modified_file('json')
-  end
-
-  def building_diff_view_from_git_repo_with_modified_file(format)
-    @dojo = Dojo.new(root_path, format)
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    language = @dojo.languages['Ruby-installed-and-working']
+    exercise = @dojo.exercises['Yahtzee']
+    `rm -rf #{@paas.path(@dojo.katas)}`
+    kata = @dojo.make_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
-
     visible_files =
       {
         'cyber-dojo.sh'    => cyberdojo_sh,
@@ -88,7 +84,7 @@ class GitDiffViewTests < ActionController::TestCase
 
     assert_equal expected, view
 
-    diffs = git_diff_prepare(view, MockUuidFactory.new(["1","2","3"]))
+    diffs = git_diff_prepare(view, MockIdFactory.new(["1","2","3"]))
     expected_diffs = [
       {
         :id => "id_1",
@@ -150,21 +146,16 @@ class GitDiffViewTests < ActionController::TestCase
     assert_equal expected_diffs[0], diffs[0], "0"
     assert_equal expected_diffs[1], diffs[1], "1"
     assert_equal expected_diffs[2], diffs[2], "2"
-
   end
 
   #-----------------------------------------------
 
   test "building git diff view from repo with deleted file" do
-    building_git_diff_view_from_repo_with_deleted_file('rb')
-    building_git_diff_view_from_repo_with_deleted_file('json')
-  end
-
-  def building_git_diff_view_from_repo_with_deleted_file(format)
-    @dojo = Dojo.new(root_path, format)
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    language = @dojo.languages['Ruby-installed-and-working']
+    exercise = @dojo.exercises['Yahtzee']
+    `rm -rf #{@paas.path(@dojo.katas)}`
+    kata = @dojo.make_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
-
     visible_files =
       {
         'cyber-dojo.sh'    => cyberdojo_sh,
@@ -204,20 +195,16 @@ class GitDiffViewTests < ActionController::TestCase
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh'    => sameify(cyberdojo_sh)
     }
-
     assert_equal expected, view
   end
 
   #-----------------------------------------------
 
   test "only visible files are commited and are seen in diff_lines" do
-    only_visible_files_are_committed_and_are_seen_in_diff_lines('rb')
-    only_visible_files_are_committed_and_are_seen_in_diff_lines('json')
-  end
-
-  def only_visible_files_are_committed_and_are_seen_in_diff_lines(format)
-    @dojo = Dojo.new(root_path, format)
-    kata = make_kata(@dojo, 'Java-JUnit')
+    language = @dojo.languages['Java-JUnit']
+    exercise = @dojo.exercises['Yahtzee']
+    `rm -rf #{@paas.path(@dojo.katas)}`
+    kata = @dojo.make_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
 
@@ -247,15 +234,67 @@ class GitDiffViewTests < ActionController::TestCase
 
   #-----------------------------------------------
 
-  test "uuid_factory" do
-    factory = UuidFactory.new
+  test "id_factory" do
+    factory = IdFactory.new
     (1..5).each { |n|
-      uuid = factory.create_uuid
+      uuid = factory.create_id
       assert_equal 10, uuid.length
       uuid.chars { |ch|
         assert_not_nil "0123456789ABCDEF".index(ch)
       }
     }
+  end
+
+  #-----------------------------------------------
+
+  test "sameify with joined newlines" do
+    expected =
+    [
+      { :line => "once",        :type => :same, :number => 1 },
+      { :line => "upon a",      :type => :same, :number => 2 },
+      { :line => "time",        :type => :same, :number => 3 },
+      { :line => "in the west", :type => :same, :number => 4 },
+      { :line => "",            :type => :same, :number => 5 },
+      { :line => "",            :type => :same, :number => 6 },
+    ]
+    assert_equal expected, sameify(great_great_film + "\n\n")
+  end
+
+  #-----------------------------------------------
+
+  test "sameify" do
+    expected =
+    [
+      { :line => "once",        :type => :same, :number => 1 },
+      { :line => "upon a",      :type => :same, :number => 2 },
+      { :line => "time",        :type => :same, :number => 3 },
+      { :line => "in the west", :type => :same, :number => 4 },
+    ]
+    assert_equal expected, sameify(great_great_film)
+  end
+
+  #-----------------------------------------------
+
+  test "deleteify" do
+    expected =
+    [
+      { :line => "once",        :type => :deleted, :number => 1 },
+      { :line => "upon a",      :type => :deleted, :number => 2 },
+      { :line => "time",        :type => :deleted, :number => 3 },
+      { :line => "in the west", :type => :deleted, :number => 4 },
+    ]
+    assert_equal expected, deleteify(LineSplitter.line_split(great_great_film))
+  end
+
+  #-----------------------------------------------
+
+  def great_great_film
+<<HERE
+once
+upon a
+time
+in the west
+HERE
   end
 
   #-----------------------------------------------
@@ -290,55 +329,6 @@ HERE
 def answer
   42
 end
-HERE
-  end
-
-  #-----------------------------------------------
-
-  test "sameify with joined newlines" do
-
-    expected =
-    [
-      { :line => "once",        :type => :same, :number => 1 },
-      { :line => "upon a",      :type => :same, :number => 2 },
-      { :line => "time",        :type => :same, :number => 3 },
-      { :line => "in the west", :type => :same, :number => 4 },
-      { :line => "",            :type => :same, :number => 5 },
-      { :line => "",            :type => :same, :number => 6 },
-    ]
-    assert_equal expected, sameify(great_great_film + "\n\n")
-
-  end
-
-  test "sameify" do
-    expected =
-    [
-      { :line => "once",        :type => :same, :number => 1 },
-      { :line => "upon a",      :type => :same, :number => 2 },
-      { :line => "time",        :type => :same, :number => 3 },
-      { :line => "in the west", :type => :same, :number => 4 },
-    ]
-    assert_equal expected, sameify(great_great_film)
-  end
-
-  test "deleteify" do
-    expected =
-    [
-      { :line => "once",        :type => :deleted, :number => 1 },
-      { :line => "upon a",      :type => :deleted, :number => 2 },
-      { :line => "time",        :type => :deleted, :number => 3 },
-      { :line => "in the west", :type => :deleted, :number => 4 },
-    ]
-    assert_equal expected, deleteify(LineSplitter.line_split(great_great_film))
-  end
-
-
-  def great_great_film
-<<HERE
-once
-upon a
-time
-in the west
 HERE
   end
 

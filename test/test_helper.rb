@@ -60,14 +60,23 @@ class ActiveSupport::TestCase
   end
 
   def run_test(delta, avatar, visible_files, timeout = 15)
-    avatar.sandbox.write(delta, visible_files)
-    output = avatar.sandbox.test(timeout)
-    avatar.sandbox.dir.write('output', output)
+    avatar.save(delta, visible_files)
+    output = avatar.test(timeout)
+    avatar.sandbox.write('output', output)
+    #visible_files['output'] = @output
     avatar.save_visible_files(visible_files)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.git_commit(traffic_lights.length)
+    avatar.commit(traffic_lights.length)
     output
+    #avatar.sandbox.write(delta, visible_files)
+    #output = avatar.sandbox.test(timeout)
+    #avatar.sandbox.dir.write('output', output)
+    #avatar.save_visible_files(visible_files)
+    #traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
+    #traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
+    #avatar.git_commit(traffic_lights.length)
+    #output
   end
 
   def root_path

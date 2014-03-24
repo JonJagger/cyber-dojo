@@ -1,12 +1,12 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Disk'
+require 'OsDisk'
 require 'Choose'
 
 class ChooseTests < ActionController::TestCase
 
   def setup
     super
-    Thread.current[:disk] = Disk.new
+    Thread.current[:disk] = OsDisk.new
   end
 
   def check(rb_and_json)

@@ -2,7 +2,7 @@
 class Runner
 
   def run(path, command, max_seconds)
-    # replace with Linux timeout(command)?!
+    # Should I kill the parent (after getting its pid) before killing the children?
     pipe = IO::popen(with_stderr("cd '#{path}';" + command))
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }
