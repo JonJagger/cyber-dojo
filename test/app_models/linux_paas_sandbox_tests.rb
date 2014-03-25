@@ -24,15 +24,12 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
-
   # These all belong in avatar_tests now
 
-  test "after test() output-file has to be explicitly saved in sandbox " +
+  test "after test() output-file is not saved in sandbox " +
          "and output-file is not inserted into the visible_files argument" do
     json_and_rb do
-      id = '45ED23A2F1'
-      kata = @dojo.katas[id]
+      kata = @dojo.katas['45ED23A2F1']
       avatar = kata.avatars['hippo']
       sandbox = avatar.sandbox
       visible_files = {
@@ -47,24 +44,20 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :deleted => [ ],
         :new => [ ]
       }
-      sandbox.write(delta, visible_files)
-      output = sandbox.test()
-      assert_equal "stubbed-output", output
-      avatar.sandbox.dir.write('output', output) # so output appears in diff-view
-
+      avatar.save(delta, visible_files)
+      output = avatar.test()
+      assert_equal 'stubbed-output', output
       assert !visible_files.keys.include?('output')
-      assert output.class == String, 'output.class == String'
-      assert_equal ['write','output',output], sandbox.dir.log.last
+      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      assert !saved_filenames.include?('output')
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "write():delta[:changed] files are saved" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+  test "save():delta[:changed] files are saved" do
+    json_and_rb do
+      avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
       sandbox = avatar.sandbox
       visible_files = {
         'untitled.cs' => 'content for code file',
@@ -77,25 +70,21 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :deleted => [ ],
         :new => [ ]
       }
-      sandbox.write(delta, visible_files)
-      output = sandbox.test()
-      sandbox.dir.write('output', output)
-
-      log = sandbox.dir.log
-      saved_files = filenames_written_to_in(log)
-      assert_equal ['output', 'untitled.cs', 'untitled.test.cs'], saved_files.sort
+      avatar.save(delta, visible_files)
+      output = avatar.test()
+      log = @paas.dir(sandbox).log
+      saved_filenames = filenames_written_to_in(log)
+      assert_equal delta[:changed].sort, saved_filenames.sort
       assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
       assert log.include?(['write','untitled.test.cs', 'content for test file' ]), log.inspect
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "write():delta[:unchanged] files are not saved" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+  test "save():delta[:unchanged] files are not saved" do
+    json_and_rb do
+      avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
       sandbox = avatar.sandbox
       visible_files = {
         'untitled.cs' => 'content for code file',
@@ -108,20 +97,17 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :deleted => [ ],
         :new => [ ]
       }
-      sandbox.write(delta, visible_files)
-      saved_files = filenames_written_to_in(sandbox.dir.log)
-      assert !saved_files.include?('cyber-dojo.sh'), saved_files.inspect
-      assert !saved_files.include?('untitled.test.cs'), saved_files.inspect
-    })
+      avatar.save(delta, visible_files)
+      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      assert_equal delta[:changed].sort, saved_filenames
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "write():delta[:new] files are saved and git added" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+  test "save():delta[:new] files are saved and git added" do
+    json_and_rb do
+      avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
       sandbox = avatar.sandbox
       visible_files = {
         'wibble.cs' => 'content for code file',
@@ -134,22 +120,19 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :deleted => [ ],
         :new => [ 'wibble.cs' ]
       }
-      sandbox.write(delta, visible_files)
-      saved_files = filenames_written_to_in(sandbox.dir.log)
-      assert saved_files.include?('wibble.cs'), saved_files.inspect
-
-      git_log = @git.log[sandbox.path]
+      avatar.save(delta, visible_files)
+      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      assert_equal delta[:new].sort, saved_filenames.sort
+      git_log = @git.log[@paas.path(sandbox)]
       assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "write():delta[:deleted] files are git rm'd" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+  test "save():delta[:deleted] files are git rm'd" do
+    json_and_rb do
+      avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
       sandbox = avatar.sandbox
       visible_files = {
         'untitled.cs' => 'content for code file',
@@ -162,13 +145,13 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :deleted => [ 'wibble.cs' ],
         :new => [ ]
       }
-      sandbox.write(delta, visible_files)
-      saved_files = filenames_written_to_in(sandbox.dir.log)
-      assert !saved_files.include?('wibble.cs'), saved_files.inspect
+      avatar.save(delta, visible_files)
+      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 
-      git_log = @git.log[sandbox.path]
+      git_log = @git.log[@paas.path(sandbox)]
       assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -178,6 +161,5 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
     #  [ 'read'/'write',  filename, content ]
     log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
   end
-=end
 
 end

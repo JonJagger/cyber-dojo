@@ -11,7 +11,7 @@ class Kata
   def_delegators :dojo, :format, :format_is_rb?, :format_is_json?
 
   def exists?
-    paas.kata_exists?(self)
+    paas.exists?(self)
   end
 
   def id

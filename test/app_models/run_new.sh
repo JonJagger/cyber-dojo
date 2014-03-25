@@ -10,6 +10,7 @@ cat linux_paas_language_tests.rb >> run_all.tmp
 cat linux_paas_languages_tests.rb >> run_all.tmp
 cat linux_paas_kata_tests.rb >> run_all.tmp
 cat linux_paas_tests.rb >> run_all.tmp
+cat linux_paas_sandbox_tests.rb >> run_all.tmp
 
 ruby run_all.tmp 2>&1 | tee -a log.tmp
 cp -R ../../coverage/* .

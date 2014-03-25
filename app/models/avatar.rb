@@ -11,9 +11,9 @@ class Avatar
   def_delegators :kata, :format, :format_is_rb?, :format_is_json?
 
   def exists?
-    paas.avatar_exists?(self)
+    paas.exists?(self)
   end
-  
+
   def sandbox
     Sandbox.new(self)
   end
@@ -32,7 +32,7 @@ class Avatar
   end
 
   def test(max_duration = 15)
-    output = paas.runner_run(sandbox, "./cyber-dojo.sh", max_duration)
+    output = paas.runner_run(sandbox, './cyber-dojo.sh', max_duration)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

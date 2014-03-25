@@ -8,7 +8,7 @@ class Language
   attr_reader :dojo, :name
 
   def exists?
-    paas.language_exists?(self)
+    paas.exists?(self)
   end
 
   def visible_files

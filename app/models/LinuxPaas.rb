@@ -27,6 +27,7 @@ class LinuxPaas
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
+
     kata = Kata.new(dojo, id)
     disk_make_dir(kata)
     disk_write(kata, kata.manifest_filename, manifest)
@@ -34,18 +35,9 @@ class LinuxPaas
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # exists?
 
-  def language_exists?(language)
-    dir(language).exists?
-  end
-
-  def kata_exists?(kata)
-    dir(kata).exists?
-  end
-
-  def avatar_exists?(avatar)
-    dir(avatar).exists?
+  def exists?(object)
+    dir(object).exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
