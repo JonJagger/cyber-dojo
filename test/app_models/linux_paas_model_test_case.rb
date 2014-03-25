@@ -37,4 +37,10 @@ class LinuxPaasModelTestCase < ActionController::TestCase
      yield 'json'
   end
 
+  def filenames_written_to_in(log)
+    # each log entry is of the form
+    #  [ 'read'/'write',  filename, content ]
+    log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
+  end
+
 end
