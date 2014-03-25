@@ -1,23 +1,6 @@
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../test_helper'
-require __DIR__ + '/../app_models/spy_disk'
-require __DIR__ + '/../app_models/stub_git'
-require __DIR__ + '/../app_models/stub_runner'
+require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
-class LinuxPaasLanguagesTests < ActionController::TestCase
-
-  def setup
-    @disk = SpyDisk.new
-    @git = StubGit.new
-    @runner = StubRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = 'rb'
-    @dojo = @paas.create_dojo(root_path + '../../', @format)
-  end
-
-  def teardown
-    @disk.teardown
-  end
+class LinuxPaasLanguagesTests < LinuxPaasModelTestCase
 
   test "dojo.languages.each() forwards to paas.languages_each()" do
     @paas.dir(@dojo.languages['C#'])

@@ -2,17 +2,10 @@ require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
 class LinuxPaasKataTests < LinuxPaasModelTestCase
 
-  def setup
-    super()
-    @id = '45ED23A2F1'
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "id is from ctor" do
     json_and_rb do
-      kata = @dojo.katas[@id]
-      assert_equal Id.new(@id), kata.id
+      kata = @dojo.katas[id]
+      assert_equal Id.new(id), kata.id
     end
   end
 
@@ -20,7 +13,7 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   test "exists? is false before dir is made" do
     json_and_rb do
-      kata = @dojo.katas[@id]
+      kata = @dojo.katas[id]
       assert !kata.exists?
       @paas.dir(kata).make
       assert kata.exists?
@@ -40,7 +33,7 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       now = Time.now
       past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
       kata = @dojo.make_kata(language, exercise)
-      assert_not_equal @id, kata.id
+      assert_not_equal id, kata.id
       created = Time.mktime(*kata.created)
       diff = created - past
       assert 0 <= diff && diff < 1
@@ -58,11 +51,11 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       exercise = @dojo.exercises['Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
-      kata = @dojo.make_kata(language, exercise, @id, now)
+      kata = @dojo.make_kata(language, exercise, id, now)
 
       expected_manifest = {
         :created => now,
-        :id => @id,
+        :id => id,
         :language => language.name,
         :exercise => exercise.name,
         :unit_test_framework => 'waffle',
@@ -100,8 +93,8 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       exercise = @dojo.exercises['Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
-      kata = @dojo.make_kata(language, exercise, @id, now)
-      assert_equal @id, kata.id.to_s
+      kata = @dojo.make_kata(language, exercise, id, now)
+      assert_equal id, kata.id.to_s
       assert_equal Time.mktime(*now), kata.created
       assert_equal language.name, kata.language.name
       assert_equal exercise.name, kata.exercise.name
@@ -171,6 +164,12 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
     exercise = @dojo.exercises['Yahtzee']
     @paas.dir(exercise).spy_read('instructions', 'your task...')
     @dojo.make_kata(language, exercise)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def id
+    '45ED23A2F1'
   end
 
 end
