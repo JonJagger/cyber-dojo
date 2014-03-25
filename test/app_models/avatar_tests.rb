@@ -1,152 +1,86 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/spy_disk'
-require File.dirname(__FILE__) + '/stub_git'
-require File.dirname(__FILE__) + '/stub_runner'
+require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
-
-class AvatarTests < ActionController::TestCase
-
-  def setup
-    Thread.current[:disk] = @disk = SpyDisk.new
-    Thread.current[:git] = @git = StubGit.new
-    Thread.current[:runner] = @runner = StubRunner.new
-    @id = '45ED23A2F1'
-  end
-
-  def teardown
-    @disk.teardown
-    Thread.current[:disk] = nil
-    Thread.current[:git] = nil
-    Thread.current[:runner] = nil
-  end
-
-  def rb_and_json(&block)
-    block.call('rb')
-    teardown
-    setup
-    block.call('json')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "when no disk on thread the ctor raises" do
-    Thread.current[:disk] = nil
-    error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
-    assert_equal 'no disk', error.message
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "when no git on thread the ctor raises" do
-    Thread.current[:git] = nil
-    error = assert_raises(RuntimeError) { Avatar.new(nil,nil) }
-    assert_equal 'no git', error.message
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+class AvatarTests < LinuxPaasModelTestCase
 
   test "exists? is false when dir doesn't exist, true when dir does exist" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+    json_and_rb do
+      kata = @dojo.katas[id]
+      avatar = kata.avatars['hippo']
       assert !avatar.exists?
-      avatar.dir.make
+      @paas.dir(avatar).make
       assert avatar.exists?
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "in rb format avatar creation saves " +
-          "visible_files in avatar/manifest.rb, and " +
-          "empty avatar/increments.rb, and " +
+  test "avatar creation saves " +
+          "visible_files in avatar/manifest.rb/json, and " +
+          "empty avatar/increments.rb/json, and " +
           "each visible_file into avatar/sandbox, and " +
           "links each support_filename into avatar/sandbox" do
-    @dojo = Dojo.new('spied/','rb')
-    @kata = @dojo[@id]
-    visible_filename = 'visible.txt'
-    visible_filename_content = 'content for visible.txt'
-    visible_files = {
-      visible_filename => visible_filename_content
-    }
-    language = @dojo.language('C#')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read('rb',manifest)
-    support_filename = 'wibble.dll'
-    language.dir.spy_read('manifest.json', JSON.unparse({
-        'support_filenames' => [ support_filename ]
+    json_and_rb do |fmt|
+      language = @dojo.languages['C']
+
+      visible_files = {
+        'wibble.h' => '#include <stdio.h>',
+        'wibble.c' => '#include "wibble.h"'
+      }
+      visible_files.each do |filename,content|
+        @paas.dir(language).spy_read(filename, content)
+      end
+
+      support_filename = 'lib.a'
+      @paas.dir(language).spy_read('manifest.json', JSON.unparse({
+        :unit_test_framework => 'assert',
+        :visible_filenames => visible_files.keys,
+        :support_filenames => [ support_filename ]
       }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    assert_not_nil avatar
-    assert_not_nil avatar.dir
-    assert_not_nil avatar.dir.log
-    assert avatar.dir.log.include?(['write','manifest.rb', visible_files.inspect])
-    assert avatar.dir.log.include?(['write','increments.rb', [ ].inspect])
-    sandbox = avatar.sandbox
-    assert_not_nil sandbox
-    assert_not_nil sandbox.dir
-    assert_not_nil sandbox.dir.log
-    assert sandbox.dir.log.include?(['write',visible_filename, visible_filename_content]), sandbox.dir.log.inspect
-    expected_symlink = [
-      'symlink',
-      language.path + support_filename,
-      sandbox.path + support_filename
-    ]
-    assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
+      exercise = @dojo.exercises['Yahtzee']
+      @paas.dir(exercise).spy_read('instructions', 'your task...')
+
+      kata = @dojo.make_kata(language, exercise)
+      avatar = kata.start_avatar
+      sandbox = avatar.sandbox
+
+      visible_files.each do |filename,content|
+        assert @paas.dir(sandbox).log.include?(['write',filename,content]),
+          @paas.dir(sandbox).log.inspect
+      end
+
+      avatar = kata.start_avatar
+      expected_manifest = { }
+      visible_files.each do |filename,content|
+        expected_manifest[filename] = content
+      end
+      expected_manifest['output'] = ''
+      expected_manifest['instructions'] = 'your task...'
+
+      if (fmt == 'rb')
+        assert @paas.dir(avatar).log.include?(['write','manifest.rb', expected_manifest.inspect]),
+            @paas.dir(avatar).log.inspect
+        assert @paas.dir(avatar).log.include?(['write','increments.rb', [ ].inspect]),
+            @paas.dir(avatar).log.inspect
+      end
+      if (fmt == 'json')
+        assert @paas.dir(avatar).log.include?(['write','manifest.json', JSON.unparse(expected_manifest)]),
+            @paas.dir(avatar).log.inspect
+        assert @paas.dir(avatar).log.include?(['write','increments.json', JSON.unparse([ ])]),
+            @paas.dir(avatar).log.inspect
+      end
+
+      expected_symlink = [
+        'symlink',
+        @paas.path(language) + support_filename,
+        @paas.path(sandbox) + support_filename
+      ]
+      assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "in json format avatar creation saves " +
-          "visible_files in avatar/manifest.json, and " +
-          "empty avatar/increments.json, and " +
-          "each visible_file into avatar/sandbox, and " +
-          "links each support_filename into avatar/sandbox" do
-    @dojo = Dojo.new('spied/','json')
-    @kata = @dojo[@id]
-    visible_filename = 'visible.txt'
-    visible_filename_content = 'content for visible.txt'
-    visible_files = {
-      visible_filename => visible_filename_content
-    }
-    language = @dojo.language('C#')
-    manifest = {
-      :id => @id,
-      :visible_files => visible_files,
-      :language => language.name
-    }
-    kata_manifest_spy_read('json',manifest)
-    support_filename = 'wibble.dll'
-    language.dir.spy_read('manifest.json', JSON.unparse({
-        'support_filenames' => [ support_filename ]
-      }))
-    kata = @dojo.create_kata(manifest)
-    avatar = kata.start_avatar
-    assert_not_nil avatar
-    assert_not_nil avatar.dir
-    assert_not_nil avatar.dir.log
-    assert avatar.dir.log.include?(['write','manifest.json', JSON.unparse(visible_files)])
-    assert avatar.dir.log.include?(['write','increments.json', JSON.unparse([ ])])
-    sandbox = avatar.sandbox
-    assert_not_nil sandbox
-    assert_not_nil sandbox.dir
-    assert_not_nil sandbox.dir.log
-    assert sandbox.dir.log.include?(['write',visible_filename, visible_filename_content]), sandbox.dir.log.inspect
-    expected_symlink = [
-      'symlink',
-      language.path + support_filename,
-      sandbox.path + support_filename
-    ]
-    assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+=begin
 
   test "avatar (rb) creation sets up initial git repo of visible files " +
         "but not support_files" do
@@ -503,13 +437,19 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def kata_manifest_spy_read(format, spied)
+  def kata_manifest_spy_read(format, manifest)
     if format == 'rb'
-      @kata.dir.spy_read('manifest.rb', spied.inspect)
+      @paas.dir(@kata).spy_read('manifest.rb', manifest.inspect)
     end
     if format == 'json'
-      @kata.dir.spy_read('manifest.json', JSON.unparse(spied))
+      @paas.dir(@kata).spy_read('manifest.json', JSON.unparse(manifest))
     end
+  end
+
+=end
+
+  def id
+    '45ED23A2F1'
   end
 
 end
