@@ -63,4 +63,9 @@ class IdTests < ActionController::TestCase
     assert_equal 'C', id.outer
   end
 
+  test "operator==" do
+    assert Id.new('ABCDEABCDE') == Id.new('ABCDEABCDE')
+    assert Id.new('ABCDEABCDE') != Id.new('1234512345')
+  end
+
 end
