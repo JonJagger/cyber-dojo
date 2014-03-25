@@ -40,7 +40,7 @@ class LinuxPaasTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(avatar)" do
+  test "path(avatar) and path(sandbox)" do
     json_and_rb do |format|
       id = '123456789A'
       kata = @dojo.katas[id]
@@ -70,6 +70,12 @@ class LinuxPaasTests < LinuxPaasModelTestCase
       assert path_ends_in_slash?(avatar)
       assert !path_has_adjacent_separators?(avatar)
       assert path_includes_dojo_path?(avatar)
+      
+      sandbox = avatar.sandbox
+      assert path_ends_in_slash?(sandbox)
+      assert !path_has_adjacent_separators?(sandbox)
+      assert path_includes_dojo_path?(avatar)
+      assert @paas.path(sandbox).include?('sandbox')
     end
   end
 

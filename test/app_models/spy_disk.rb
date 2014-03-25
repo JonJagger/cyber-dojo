@@ -20,14 +20,16 @@ class SpyDisk
   end
 
   def dirs_each(from)
-    @dir_spies.each do |dir,spy|
+    dirs = [ ]
+    @dir_spies.each_key{ |dir|
       if dir != from.path && dir.start_with?(from.path)
         sub = dir[from.path.length..-1]
-        if sub.end_with?(dir_separator)
-          sub = sub[0..-2]
-        end
-        yield sub
+        last = sub.index(dir_separator) || 0
+        dirs << sub[0..(last-1)]
       end
+    }
+    dirs.sort.uniq.each do |dir|
+      yield dir
     end
   end
 

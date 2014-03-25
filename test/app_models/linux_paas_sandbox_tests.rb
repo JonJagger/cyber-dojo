@@ -1,100 +1,39 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/spy_disk'
-require File.dirname(__FILE__) + '/stub_git'
-require File.dirname(__FILE__) + '/stub_runner'
+require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
-class SandboxTests < ActionController::TestCase
+class LinuxPaasSandboxTests < LinuxPaasModelTestCase
 
-  def setup
-    Thread.current[:disk] = @disk = SpyDisk.new
-    Thread.current[:git] = @git = StubGit.new
-    Thread.current[:runner] = @stub_runner = StubRunner.new
-    @id = '45ED23A2F1'
-  end
-
-  def teardown
-    @disk.teardown
-    Thread.current[:disk] = nil
-    Thread.current[:git] = nil
-    Thread.current[:runner] = nil
-  end
-
-  def rb_and_json(&block)
-    block.call('rb')
-    teardown
-    setup
-    block.call('json')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "when no disk on thread the ctor raises" do
-    Thread.current[:disk] = nil
-    error = assert_raises(RuntimeError) { Sandbox.new(nil) }
-    assert_equal 'no disk', error.message
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "when no git on thread the ctor raises" do
-    Thread.current[:git] = nil
-    error = assert_raises(RuntimeError) { Sandbox.new(nil) }
-    assert_equal 'no git', error.message
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "when no runner on thread the ctor raises" do
-    Thread.current[:runner] = nil
-    error = assert_raises(RuntimeError) { Sandbox.new(nil) }
-    assert_equal 'no runner', error.message
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path ends in slash" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+  test "avatar's sandbox -- sandbox's avatar" do
+    json_and_rb do
+      kata = @dojo.katas['45ED23A2F1']
+      avatar = kata.avatars['hippo']
       sandbox = avatar.sandbox
-      assert sandbox.path.end_with?(@disk.dir_separator)
-    })
+      assert_equal avatar, sandbox.avatar
+    end
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "path does not have doubled separator" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
-      sandbox = avatar.sandbox
-      doubled_separator = @disk.dir_separator * 2
-      assert_equal 0, sandbox.path.scan(doubled_separator).length
-    })
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dir is not created until file is saved" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+    json_and_rb do
+      kata = @dojo.katas['45ED23A2F1']
+      avatar = kata.avatars['hippo']
       sandbox = avatar.sandbox
-      assert !sandbox.dir.exists?
-    })
+      assert !@paas.dir(sandbox).exists?
+      sandbox.write('filename', 'content')
+      assert @paas.dir(sandbox).exists?
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+=begin
+
+  # These all belong in avatar_tests now
 
   test "after test() output-file has to be explicitly saved in sandbox " +
          "and output-file is not inserted into the visible_files argument" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new('spied/', format)
-      kata = dojo[@id]
-      avatar = kata['hippo']
+    json_and_rb do
+      id = '45ED23A2F1'
+      kata = @dojo.katas[id]
+      avatar = kata.avatars['hippo']
       sandbox = avatar.sandbox
       visible_files = {
         'untitled.c' => 'content for code file',
@@ -116,7 +55,7 @@ class SandboxTests < ActionController::TestCase
       assert !visible_files.keys.include?('output')
       assert output.class == String, 'output.class == String'
       assert_equal ['write','output',output], sandbox.dir.log.last
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -239,5 +178,6 @@ class SandboxTests < ActionController::TestCase
     #  [ 'read'/'write',  filename, content ]
     log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
   end
+=end
 
 end

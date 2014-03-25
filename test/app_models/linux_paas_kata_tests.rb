@@ -119,108 +119,58 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   test "you can create an avatar in a kata" do
     json_and_rb do
-      language = @dojo.languages['C']
-      visible_files = {
-          'wibble.h' => '#include <stdio.h>',
-          'wibble.c' => '#include "wibble.h"'
-      }
-      @paas.dir(language).spy_read('manifest.json', JSON.unparse({
-        :visible_filenames => visible_files.keys
-      }))
-      @paas.dir(language).spy_read('wibble.h', visible_files['wibble.h'])
-      @paas.dir(language).spy_read('wibble.c', visible_files['wibble.c'])
-      exercise = @dojo.exercises['Yahtzee']
-      @paas.dir(exercise).spy_read('instructions', 'your task...')
-      kata = @dojo.make_kata(language, exercise)
+      kata = make_kata
       avatar = kata.start_avatar(['hippo'])
       assert_equal 'hippo', avatar.name
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-=begin
 
   test "multiple avatars in a kata are all seen" do
-    multiple_avatars_in_a_kata_are_all_seen('rb')
-    teardown
-    setup
-    multiple_avatars_in_a_kata_are_all_seen('json')
-  end
-
-  def multiple_avatars_in_a_kata_are_all_seen(format)
-    @dojo = Dojo.new('spied/', format)
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :visible_files => {
-        'name' => 'content for name'
-      },
-      :language => language.name
-    }
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    animal1 = kata.start_avatar
-    animal2 = kata.start_avatar
-    avatars = kata.avatars
-    assert_equal 2, avatars.length
-    assert_equal [animal1.name,animal2.name].sort, avatars.collect{|avatar| avatar.name}.sort
+    json_and_rb do
+      kata = make_kata
+      names = [ 'panda', 'lion' ]
+      panda = kata.start_avatar(names)
+      lion = kata.start_avatar(names)
+      avatars_names = kata.avatars.map {|avatar| avatar.name}
+      assert_equal ['lion','panda'], avatars_names.sort
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "start_avatar succeeds once for each avatar name then fails" do
-    start_avatar_succeeds_once_for_each_avatar_then_fails('rb')
-    teardown
-    setup
-    start_avatar_succeeds_once_for_each_avatar_then_fails('json')
-  end
-
-  def start_avatar_succeeds_once_for_each_avatar_then_fails(format)
-    @dojo = Dojo.new('spied/', format)
-    language = @dojo.language('C')
-    manifest = {
-      :id => @id,
-      :language => language.name,
-      :visible_files => {
-        'wibble.h' => '#include <stdio.h>'
-      }
-    }
-    @kata = @dojo[@id]
-    kata_manifest_spy_read(format,manifest)
-    language.dir.spy_read('manifest.json', JSON.unparse({ }))
-    kata = @dojo.create_kata(manifest)
-    created = [ ]
-    Avatar.names.length.times do |n|
+    json_and_rb do
+      kata = make_kata
+      created = [ ]
+      Avatars.names.length.times do |n|
+        avatar = kata.start_avatar
+        assert_not_nil avatar
+        created << avatar
+      end
+      assert_equal Avatars.names.sort, created.collect{|avatar| avatar.name}.sort
       avatar = kata.start_avatar
-      assert_not_nil avatar
-      created << avatar
+      assert_nil avatar
     end
-    assert_equal Avatar.names.length, created.collect{|avatar| avatar.name}.uniq.length
-    avatar = kata.start_avatar
-    assert_nil avatar
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def kata_manifest_spy_read(format, spied)
-    if (format == 'rb')
-      @paas.dir(@kata).spy_read('manifest.rb', spied.inspect)
-    end
-    if (format == 'json')
-      @paas.dir(@kata).spy_read('manifest.json', JSON.unparse(spied))
-    end
+  def make_kata
+    language = @dojo.languages['C']
+    visible_files = {
+        'wibble.h' => '#include <stdio.h>',
+        'wibble.c' => '#include "wibble.h"'
+    }
+    @paas.dir(language).spy_read('manifest.json', JSON.unparse({
+      :visible_filenames => visible_files.keys
+    }))
+    @paas.dir(language).spy_read('wibble.h', visible_files['wibble.h'])
+    @paas.dir(language).spy_read('wibble.c', visible_files['wibble.c'])
+    exercise = @dojo.exercises['Yahtzee']
+    @paas.dir(exercise).spy_read('instructions', 'your task...')
+    @dojo.make_kata(language, exercise)
   end
-
-  def kata_manifest_spy_write(format, spied)
-    if (format == 'rb')
-      @paas.dir(@kata).spy_write('manifest.rb', spied.inspect)
-    end
-    if (format == 'json')
-      @paas.dir(@kata).spy_write('manifest.json', JSON.unparse(spied))
-    end
-  end
-=end
 
 end
