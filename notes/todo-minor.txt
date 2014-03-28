@@ -1,5 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+GIT-COMMANDS
+  paas.git_add(object,filename)
+  paas.git_rm(object,filename)
+  lot of duplication. Collapse to
+  paas.git('add', object, filename)
+  paas.git('rm',  object, filename)
+  Also
+  git.init should make the directory?
+  Also
+  disk_write() already makes the directory
+    so call to disk_make_dir() in forker_controller is not needed
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT-FORK-DIALOG
   Put line-numbers in?
   Better selection of nonBoringFilenameIndex()

@@ -1,4 +1,7 @@
 
+# Paas on top of Linux
+# no isolation, no protection, no security, nothing.
+
 class LinuxPaas
 
   def initialize(disk, git, runner)
@@ -27,9 +30,7 @@ class LinuxPaas
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
-
     kata = Kata.new(dojo, id)
-    disk_make_dir(kata)
     disk_write(kata, kata.manifest_filename, manifest)
     kata
   end
@@ -176,15 +177,15 @@ class LinuxPaas
   def path(obj)
     case obj
       when Languages
-        root(obj) + 'languages/'
+        root(obj.dojo) + 'languages/'
       when Language
         path(obj.dojo.languages) + obj.name + '/'
       when Exercises
-        root(obj) + 'exercises/'
+        root(obj.dojo) + 'exercises/'
       when Exercise
         path(obj.dojo.exercises) + obj.name + '/'
       when Katas
-        root(obj) + 'katas/'
+        root(obj.dojo) + 'katas/'
       when Kata
         path(obj.dojo.katas) + obj.id.inner + '/' + obj.id.outer + '/'
       when Avatar
@@ -194,8 +195,8 @@ class LinuxPaas
     end
   end
 
-  def root(obj)
-    obj.dojo.path
+  def root(dojo)
+    dojo.path
   end
 
 end

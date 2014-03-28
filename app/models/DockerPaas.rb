@@ -1,13 +1,19 @@
 
+# Paas on top of Docker: http://www.docker.io/
+# provides security and isolation.
+
 class DockerPaas
 
   def initialize(disk)
     @disk = disk
     @cids = [ ]
-    # at end of docker-transaction
-    #   all cids inside @cids need to be deleted
-    #   that means images and containers
-    #   Not ones that start with 'kata_' or 'avatar_'
+    # at end of docker-transaction *all*
+    # cids inside @cids need to be deleted with `docker rm #{@cids.join(' ')}`
+    # Note that if a container is used to create an image
+    # then the container still needs to be deleted.
+    # I choose not to do this...
+    #   docker ps -a -q | xargs docker rm
+    # as that way two sessions could both try to delete the same containers.
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -32,7 +38,7 @@ class DockerPaas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_kata(dojo, language, exercise, id, now)
-    # this will need to find the image for the language
+    # this will need to find the docker-image for the language
     # language image could have familiar folder structure inside itself...
     #    var/www/cyberdojo/languages/NAME/manifest.json
     #    var/www/cyberdojo/languages/NAME/cyber-dojo.sh
@@ -52,6 +58,7 @@ class DockerPaas
   # exists?
 
   def exists?(object)
+    # this will need to check the result of `docker images`
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -59,7 +66,7 @@ class DockerPaas
 
   def languages_each(languages)
     # iterate through a docker languages-registry
-    # txt = `sudo docker images`
+    # txt = `docker images`
     # iterate through docker registry for images starting 'language_'
     #
     # Or, create images and push them to cyberdojo user on https://index.docker.io/
@@ -67,6 +74,9 @@ class DockerPaas
     # sudo docker push cyberdojo/perl
     # then
     # sudo docker search cyberdojo
+    # No.
+    # That is separate functionality. Checking if new language image
+    # exists in the cyberdojo index.
     #
   end
 
@@ -82,13 +92,13 @@ class DockerPaas
   end
 
   def katas_each(katas)
-    # txt = `sudo docker images`
-    # iterate through local docker registry for images starting 'kata_'
+    # txt = `docker images`
+    # find any starting 'kata_'
   end
 
   def avatars_each(kata)
-    # txt = `sudo docker images`
-    # iterate through docker registry for images starting 'avatar_' + kata.id
+    # txt = `docker images`
+    # find any starting 'kata_' + kata.id + '_avatar_'
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -125,22 +135,35 @@ class DockerPaas
         # else because of the union file system.
         #@disk.symlink(old_name, new_name)  <---------------------
         # But does symlinking save disk-space?
+        # Why do a move/link at all?
+        # Why not just rename the underlying folder!
+        # We're in a new image!
       end
 
       avatar.commit(tag=0)
     end
-    `sudo docker commit #{@cids.last} avatar_#{kata.id}_#{avatar.name}_0`
+    `docker commit #{@cids.last} avatar_#{kata.id}_#{avatar.name}_0`
     avatar
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
   # disk-helpers
 
+  #def disk_make_dir(object)
+  #  LinuxPaas also has this.
+  #  Uses in start_avatar() only
+  #end
+
   def disk_read(object, filename)
     docker(object, "cat '#{filename}'")
   end
 
   def disk_write(object, filename, content)
+    # There is a whole lot of extra stuff that LinuxPaas does here via OsDir
+    # Viz makes the directory
+    #     saves content.inspect if filename.end_with? '.rb'
+    #     saves JSON.unparse(content) if filename.end_with? '.json'
+    #     chmod +x filename if filename.end_with? '.sh'
     docker(object, "cat > '#{filename}'", "echo '#{content}' | ")
   end
 
@@ -190,39 +213,48 @@ class DockerPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
   # docker-helpers
-  # https://blog.codecentric.de/en/2014/02/docker-registry-run-private-docker-image-repository/
-  # Every single command in a Dockerfile yields a new Docker
-  # image with an individual id similar to a commit in git.
-  # This commit can be tagged for easy reference with a Docker Tag.
-  # In addition, tags are the means to share images on public and private repositories.
-  # You can tag any image with docker tag <image> <tag>.
-  # The expression tag has evolved in Docker quite a lot and its meaning blurred.
-  # The syntax for a tag is repository:[tag].
-  # In general, a repository is a collection of images which are hosted in a registry.
 
   def cid_filename(object)
+    # TODO: don't use deeply nested path. Use a single name based
+    #       on the object as the cidfile inside a cid dir.
+    #       eg kata_2345612AE2.cid
+    #       eg kata_2345612AE2_lion.cid
+    #       make sure the cidfile is deleted at end of session.
     `mkdir -p #{path(object)}`
     name = path(object) + 'docker.cid'
+    # docker run command complains if cidfile already exists
     `rm -f #{name}`
     name
   end
 
+  def current_image_for(object)
+    if @cids == [ ]
+      # the initial image for object
+      # mostly object == avatar, but can be eg kata-id (if creating avatar or dashboard)
+      'to-do'
+    else
+      @cids.last
+    end
+  end
+
+  # TODO: this is external. Needs to be injected from outside.
+  # TODO: don't think the sudo will be needed if www-data is in docker group
   def docker(object, command, pre_pipe = "")
-    image = @cids.last
+    image = current_image_for(object)
     cidfile = cid_filename(object)
     dir = path(object)
     command = "cd #{dir};" + command
-    result = `#{pre_pipe} sudo docker run --cidfile #{cidfile} -w #{dir} -i #{image} /bin/bash -c "#{command}"`
+    result = `#{pre_pipe} docker run --cidfile #{cidfile} -w #{dir} -i #{image} /bin/bash -c "#{command}"`
     cid = `cat #{cidfile}`
-    `sudo docker commit #{cid} #{cid}`
+    `docker commit #{cid} #{cid}`
     @cids << cid
     result
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # container will be called something like 'avatar_BCE34DE552_cheetah_0'
-  # and will mimic ExposedLinux dir structure.
-  # Viz   ~/cyberdojo/katas/BC/E34DE552/cheetah
+  # image will be called something like 'avatar_BCE34DE552_cheetah'
+  # and will mimic LinuxPaas dir structure.
+  # Viz   /var/www/cyberdojo/katas/BC/E34DE552/cheetah
   # This should help when .tar.gz files are created and merged.
 
   def path(obj)
@@ -254,7 +286,7 @@ class DockerPaas
     # to each other. Note that a chat-like facility would need
     # a very different implementation because of the genuine
     # isolation.
-    '~/cyberdojo/'
+    '/var/www/cyberdojo/'
   end
 
 end
@@ -264,15 +296,38 @@ end
 # And I will create another implementation IsolatedDockerPaas
 # Design notes
 #
-# o) locking is not right.
-#    I need a 'Paas::Session' object which can scope the lock/unlock
-#    over a sequence of actions. The paas object can hold this itself
+# o) PaasSession
+#    I need a session-object which can scope the lock/unlock
+#    over a sequence of actions. And also ensure the temporary
+#    containers are deleted. The paas object can hold this itself
 #    since a new Paas object is created for each controller-action
 #    CHECK THAT IS INDEED TRUE and that the same paas object is remembered
 #    inside the controller
 #         def paas
 #           @paas ||= expression
 #         end
+#    Design for this will be via a Proc, similar to how I did the
+#    file locking - so it can have an ensure block which deleted
+#    all the temporary containers. Note that even read-operations
+#    on the current image will generate a new container.
+#    Note that the idea of a session is also useful for plain LinuxPaas
+#    for locking.
+#
+#    def session(object, &block)
+#      raise exception if @paas != nil
+#      raise exception if @cids != nil
+#      @paas = ...
+#      @cids = [ current_image_for(object) ]
+#      begin
+#        block.call()
+#      ensure
+#        teardown
+#      end
+#    end
+#
+#    I will need this at the start of every controller method.
+#    Is there a way to do that automatically? Probably.
+#
 #
 # o) IsolatedDockerPaas.disk will have smarts to know if reads/writes
 #    are local to disk (eg exercises) or need to go into container.
@@ -294,3 +349,21 @@ end
 #    eg one that spies completely
 #    eg one that uses ExposedLinuxPaas
 #    eg one that uses IsolatedDockerPaas
+#
+# o) MISC
+#   https://blog.codecentric.de/en/2014/02/docker-registry-run-private-docker-image-repository/
+#   Every single command in a Dockerfile yields a new Docker
+#   image with an individual id similar to a commit in git.
+#   This commit can be tagged for easy reference with a Docker Tag.
+#   In addition, tags are the means to share images on public and private repositories.
+#   You can tag any image with docker tag <image> <tag>.
+#   The expression tag has evolved in Docker quite a lot and its meaning blurred.
+#   The syntax for a tag is repository:[tag].
+#   In general, a repository is a collection of images which are hosted in a registry.
+#   docker tag --help
+#   Usage: docker tag [OPTIONS] IMAGE [REGISTRYHOST/][USERNAME/]NAME[:TAGG
+#
+#   Note that images are different to containers.
+#   I think every docker run command is on an image and creates a new container
+#   The container has to be committed to an image to be able to run a new command
+#   on top of it.

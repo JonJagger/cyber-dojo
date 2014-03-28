@@ -16,7 +16,7 @@ class OsDir
 
   def each
     Dir.entries(path).select do |name|
-      yield name  # if @disk.is_dir?(File.join(path, name))
+      yield name
     end
   end
 
