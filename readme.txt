@@ -31,7 +31,7 @@ Traffic Lights
 The result of each pressing the [test] button is displayed in the 'output' file
 and also as a new traffic-light (at the bottom). Clicking on a traffic-light
 opens a diff-view of the files associated with that traffic-light.
-The meanings for the colours on each traffic-light are as follows:
+The meanings for the colours on each traffic-light are:
   (o) red   - tests ran but at least one failed
   (o) amber - syntax error somewhere, tests not run
   (o) green - tests ran and all passed
@@ -45,9 +45,8 @@ overloaded with too many concurrent practice sessions)
 
 Dashboard-Review
 ================
-You can get to the dashboard page in three ways.
+You can get to the dashboard page in two ways.
 o) from the test page, click the animal image at the bottom right
-o) from the test page, click the dashboard button on the left.
 o) from the home page, enter the practice id and click the [review] button.
 
 Each horizontal row corresponds to one animal and displays, from left to right,
@@ -317,7 +316,7 @@ Note the above are
 and not
   cyberdojo/test/cyberdojo/languages
 Each manifest.json file contains an ruby object in JSON format
-Example: the one for Java looks like this:
+Example: the one for Java+JUnit looks like this:
 <quote>
 {
   "visible_filenames": [
@@ -328,6 +327,8 @@ Example: the one for Java looks like this:
   "support_filenames": [
     "junit-4.7.jar"
   ],
+  "language_name": "Java",
+  "test_name": "JUnit",
   "unit_test_framework": "junit",
   "tab_size": 4
 }
@@ -387,6 +388,16 @@ manifest.json Parameters
   Despite the name "support_filenames" you can symlink a folder if required
   which can be very handy.
   Not required if you do not need support files.
+
+"language_name": string
+  The name of the language as it appears in the setup page and also in the info
+  displayed at the top-left of the test page and the dashboard page.
+  Optional. Defaults to the name of the folder holding the manifest.json file.
+
+"test_name": string
+  The name of the unit-test-framework as it appears in the setup page and also in
+  in the info displayed at the top-left of the test page and the dashboard page.
+  Optional. Defaults to the same as the unit_test_framework setting (next).
 
 "unit_test_framework": string
   The name of the unit test framework used. This name partially determines the
