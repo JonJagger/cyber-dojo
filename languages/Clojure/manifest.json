@@ -5,11 +5,12 @@
     "test_untitled.clj",
     "cyber-dojo.sh"
   ],
-  
+
   "support_filenames": [
     "clojure-1.4.0.jar"
   ],
-  
+
+  "language_name": "Clojure",
+  "test_name": ".test",
   "unit_test_framework": "clojure_test"
 }
-

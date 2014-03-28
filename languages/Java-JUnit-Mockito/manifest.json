@@ -11,7 +11,8 @@
     "junit-4.11.jar",
     "mockito-all-1.9.5.jar"
   ],
-  
+
+  "language_name": "Java",
+  "test_name": "Mockito",
   "unit_test_framework": "junit"
 }
-

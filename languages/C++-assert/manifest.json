@@ -7,8 +7,7 @@
     "makefile",
     "cyber-dojo.sh"
   ],
-
+  "language_name": "C++",
+  "test_name": "assert",
   "unit_test_framework": "cassert"
 }
-
-

@@ -9,7 +9,6 @@ $(document).ready(function() {
   var halfSecond = 500;
   var selected = $('#language_' + <%= @selected_language_index %>);
 
-
   $('[id^=language_]').each(function(index) {
     var node = $(this);
     node.click(function() {
@@ -33,11 +32,11 @@ $(document).ready(function() {
 </div>
 
 <div id="div_languages">
-  <% @languages_names.each_with_index do |choice,index| %>
+  <% @languages.each_with_index do |atts,index| %>
     <div class="filename"
          id="language_<%= index %>"
-         data-language="<%= choice %>">
-      <%= choice.gsub('-',' ') %>
+         data-language="<%= atts[2] %>">
+      <%= atts[0] %>|<%= atts[1] %>
     </div>
   <% end %>
 </div>

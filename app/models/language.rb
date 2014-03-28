@@ -11,6 +11,14 @@ class Language
     paas.exists?(self)
   end
 
+  def display_name
+    manifest['language_name'] || @name
+  end
+
+  def display_unit_test_framework
+    manifest['test_name'] || unit_test_framework
+  end
+
   def visible_files
     Hash[visible_filenames.collect{ |filename|
       [ filename, read(filename) ]

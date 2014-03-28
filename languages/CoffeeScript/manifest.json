@@ -6,8 +6,9 @@
     "cyber-dojo.sh"
   ],
 
+  "language_name": "CoffeeScript",
+  "test_name": "jasmine",
   "unit_test_framework": "jasmine",
-  
+
   "tab_size": 2
 }
-

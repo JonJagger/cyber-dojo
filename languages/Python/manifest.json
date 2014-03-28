@@ -6,8 +6,9 @@
     "cyber-dojo.sh"
   ],
 
+  "language_name": "Python",
+  "test_name": "unittest",
   "unit_test_framework": "python_unittest",
-  
+
   "tab_size": 4
 }
-

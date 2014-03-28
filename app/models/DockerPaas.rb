@@ -68,6 +68,12 @@ class DockerPaas
     # iterate through a docker languages-registry
     # txt = `docker images`
     # iterate through docker registry for images starting 'language_'
+    # Issue: docker image names cannot contains characters such as +#
+    #        which affects languages such as C++ and C#
+    #        The LinuxPaas setup_controller needs to be refactored
+    #        so that the name displayed is not necessarily the same
+    #        as the folder the language came from.
+    #
     #
     # Or, create images and push them to cyberdojo user on https://index.docker.io/
     # sudo docker commit $CONTAINER_ID cyberdojo/perl

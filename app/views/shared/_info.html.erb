@@ -12,9 +12,15 @@
         </div>
       </div>
       <div class="tipped table-row">
-        <%= @kata.language.name.sub('-',' ') %>
+        <%= @kata.language.display_name %>
         <div class="tooltip">
-          this dojo's<br>chosen language
+          this dojo's<br>language
+        </div>
+      </div>
+      <div class="tipped table-row">
+        <%= @kata.language.display_unit_test_framework %>
+        <div class="tooltip">
+          this dojo's<br>unit test framework
         </div>
       </div>
       <div class="tipped table-row">
