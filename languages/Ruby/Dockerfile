@@ -14,5 +14,9 @@ ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/
 ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/test_untitled.rb /var/www/cyberdojo/katas/00/00000000/
 ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/untitled.rb      /var/www/cyberdojo/katas/00/00000000/
 
-# docker build -t cyberdojo/language_ruby-1.9.3  .
-# docker push cyberdojo/language_ruby-1.9.3
+RUN chmod +r /var/www/cyberdojo/katas/00/00000000/*
+RUN chmod +x /var/www/cyberdojo/katas/00/00000000/cyber-dojo.sh
+
+# docker build -t  cyberdojo/language_ruby-1.9.3  .
+# docker push      cyberdojo/language_ruby-1.9.3
+# docker run -i -t cyberdojo/language_ruby-1.9.3 /bin/bash
