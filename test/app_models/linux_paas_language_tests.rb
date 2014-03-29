@@ -102,6 +102,56 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "display_name is language_name if set" do
+    json_and_rb do
+      name = 'Ruby-RSpec'
+      @language = @dojo.languages[name]
+      language_name = 'Ruby'
+      spy_manifest({ 'language_name' => language_name })
+      assert_equal name, @language.name
+      assert_equal language_name, @language.display_name
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "display_name defaults to name" do
+    json_and_rb do
+      name = 'Ruby-Approval'
+      @language = @dojo.languages[name]
+      spy_manifest({ })
+      assert_equal name, @language.name
+      assert_equal name, @language.display_name
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "display_unit_test_framework is test_name if set" do
+    json_and_rb do
+      name = 'Java-Mockito'
+      @language = @dojo.languages[name]
+      expected = 'Mockito'
+      spy_manifest({ 'test_name' => expected,
+                     'unit_test_framework' => 'JUnit' })
+      assert_equal expected, @language.display_unit_test_framework
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "display_unit_test_framework defaults to unit_test_framework" do
+    json_and_rb do
+      name = 'Java-Mockito'
+      @language = @dojo.languages[name]
+      expected = 'JUnit'
+      spy_manifest({ 'unit_test_framework' => expected })
+      assert_equal expected, @language.display_unit_test_framework
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "unit_test_framework is set" do
     json_and_rb do
       @language = @dojo.languages['Ruby']
