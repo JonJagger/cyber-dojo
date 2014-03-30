@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   include MakeTimeHelper
 
   def id
-    # Folders:: not refactored for Docker yet...
+    # lib/Folders:: not refactored for Docker yet...
     Folders::id_complete(root_path, params[:id]) || ""
   end
 

@@ -106,9 +106,7 @@ class DockerPaas < Paas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def languages_each(languages)
-    `docker images`.lines.each.collect{|line| line.split[0]}.select{|repo|
-      repo.start_with? 'cyberdojo/language_'
-    }
+    docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
   end
 
   def exercises_each(exercises)
@@ -118,8 +116,7 @@ class DockerPaas < Paas
   end
 
   def katas_each(katas)
-    # txt = `docker images`
-    # find any matching 'cyberdojo/kata_(\h{10})'
+    docker_images_names.select{|repo| repo.match(%r'cyberdojo/katas_(\h){10}$')}
   end
 
   def avatars_each(kata)
@@ -167,7 +164,7 @@ class DockerPaas < Paas
   def git_tag(object, args)
     avatar = object
     git_cmd(object, 'tag', args)
-    # `docker commit #{@cids.last} cyberdojo/avatar_#{avatar.kata.id}_#{avatar.name}`
+    # `docker commit #{@cids.last} cyberdojo/avatar_#{avatar.kata.id.to_s}_#{avatar.name}`
   end
 
   def git_diff(object, args)
@@ -211,23 +208,24 @@ class DockerPaas < Paas
     if @cids != [ ]
       @cids.last
     else
-      # the initial image for object. Similar to path(object) in base pass
+      # the image_name for object. Similar to path(object) in base Paas
       'to-do'
     end
   end
 
-  # TODO: this is external. Needs to be injected from outside.
-  # TODO: don't think the sudo will be needed if www-data is in docker group
-  def docker(object, command, pre_pipe = "")
-    image_name = docker_image_name(object)
+  def docker(object, command, pre_pipe = '')
     cidfile = cid_filename(object)
+    image_name = docker_image_name(object)
     dir = path(object)
     command = "cd #{dir};" + command
-    result = `#{pre_pipe} docker run --cidfile #{cidfile} -w #{dir} -i #{image_name} /bin/bash -c "#{command}"`
+    `#{pre_pipe} docker run --cidfile #{cidfile} -i #{image_name} /bin/bash -c "#{command}"`
     cid = `cat #{cidfile}`
-    `docker commit #{cid} #{cid}`
     @cids << cid
-    result
+    `docker logs #{cid}`
+  end
+
+  def docker_images_names
+    `docker images`.lines.each.collect{|line| line.split[0]}
   end
 
 end

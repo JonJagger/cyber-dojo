@@ -1,4 +1,8 @@
 
+DOCKER REFACTOR app/lib/Choose.rb
+DOCKER REFACTOR lib/Folders.rb
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 PAAS.SESSION
   paas.teardown() suggests resume_json is called twice when animal is resumed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

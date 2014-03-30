@@ -6,7 +6,7 @@ module Choose
   # language and the exercise on the setup page the same as the
   # kata with that id - if they still exist.
 
-  #TODO: put these two methods in app/models/Dojo
+  #TODO: put into app/models/Languages?
 
   def self.language(languages, params_id, id, dojo)
     kata = dojo.katas[id]
@@ -19,6 +19,8 @@ module Choose
     end
     choice
   end
+
+  #TODO: put into app/models/Exercises?
 
   def self.exercise(exercises, params_id, id, dojo)
     kata = dojo.katas[id]

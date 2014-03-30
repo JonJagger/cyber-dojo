@@ -31,12 +31,13 @@ class DojoController < ApplicationController
   def start_json
     paas.session('dojo:start_json') do
       kata = dojo.katas[id]
-      avatar = (kata.exists? ? kata.start_avatar : nil)
-      full = kata.exists? && avatar.nil?
-      start_html = kata.exists? && avatar ? start_dialog_html(avatar.name) : ''
+      exists = kata.exists?
+      avatar = (exists ? kata.start_avatar : nil)
+      full = exists && avatar.nil?
+      start_html = exists && avatar ? start_dialog_html(avatar.name) : ''
       full_html = full ? full_dialog_html() : ''
       render :json => {
-        :exists => kata.exists?,
+        :exists => exists,
         :avatar_name => avatar ? avatar.name : nil,
         :full => full,
         :start_dialog_html => start_html,

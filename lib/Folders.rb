@@ -1,10 +1,12 @@
 
 module Folders
-  
+
   def self.in(path)
+    # Used only in app/lib/Approval.rb
     Dir.entries(path).select { |name| name != '.' and name != '..' }
   end
-  
+
+  # Move into app/models/Katas.complete(id)
   def self.id_complete(root_dir, id)
     if id != nil
       id = id[0..9].upcase
@@ -16,11 +18,11 @@ module Folders
         dirs = Dir[root_dir + '/katas/' + id[0..1] + '/' + id[2..-1] + '*']
         if dirs.length == 1
           dir = dirs[0]
-          id = dir[dir.length-12..-1].tr("//","")
+          id = dir[dir.length-12..-1].tr('//', '')
         end
       end
     end
-    id   
+    id
   end
-  
+
 end
