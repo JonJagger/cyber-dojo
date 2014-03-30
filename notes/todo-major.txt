@@ -1,11 +1,10 @@
 
-o) refactor so disk object becomes a paas.
-   It has file read/write and also git commands (and time-boxed-task-run).
-   Work towards being able to substitute in a docker paas.
-   root path will need to move from Dojo ctor into paas ctor.
-   dojo.languages() will need to exist and forward to paas.
-   dojo.exercises() will need to exist and forward to paas.
-   kata should not decide to split id in inner/outer - paas should.
+o) Use docker run with volume mount to create docker-runner.
+   docker run -t -i --rm -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox:/sandbox:rw
+         -w /sandbox
+         cyberdojo/language_gcc-4.8.1_assert /bin/bash -c "./cyber-dojo.sh"
+   Now just have to get the output.
+   Can I do that via `docker logs`
 
 
 o) refactor so new dojos are saved in json format and also save sha1 hashes

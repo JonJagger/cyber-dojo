@@ -6,20 +6,6 @@ class DockerPaas < Paas
 
   def initialize(disk)
     @disk = disk
-    @cids = [ ]
-  end
-
-  def teardown(name)
-    `docker rm #{@cids.join(' ')}`
-    @cids = [ ]
-  end
-
-  def session(name, &block)
-    begin
-      block.call
-    ensure
-      teardown(name)
-    end
   end
 
   def create_dojo(root, format)
@@ -39,12 +25,6 @@ class DockerPaas < Paas
 
   def make_kata(dojo, language, exercise, id, now)
     # this will need to find the docker-image for the language.
-    # language image folder structure looks like this...
-    #    var/www/cyberdojo/languages/00/000000/manifest.json
-    #    var/www/cyberdojo/languages/00/000000/cyber-dojo.sh
-    # idea is that I simply need to create a new image by
-    # replacing 00/00000000/ by id.inner/id.outer/
-
     manifest = make_kata_manifest(dojo, language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''

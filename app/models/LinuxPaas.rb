@@ -8,18 +8,6 @@ class LinuxPaas < Paas
     @disk,@git,@runner = disk,git,runner
   end
 
-  def teardown(name)
-    p "teardown:#{name}"
-  end
-
-  def session(name, &block)
-    begin
-      block.call
-    ensure
-      teardown(name)
-    end
-  end
-
   def create_dojo(root, format)
     Dojo.new(self, root, format)
   end
