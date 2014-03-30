@@ -10,7 +10,7 @@
     "nunit.framework.dll"
   ],
 
-  "language_name": "C#",
-  "test_name": "NUnit",
+  "display_name": "C#",
+  "display_test_name": "NUnit",
   "unit_test_framework": "nunit"
 }

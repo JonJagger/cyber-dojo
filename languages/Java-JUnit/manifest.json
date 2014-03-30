@@ -10,7 +10,7 @@
     "junit-4.11.jar"
   ],
 
-  "language_name": "Java",
-  "test_name": "JUnit",
+  "display_name": "Java",
+  "display_test_name": "JUnit",
   "unit_test_framework": "junit"
 }

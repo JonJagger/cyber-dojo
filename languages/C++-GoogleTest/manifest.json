@@ -13,7 +13,7 @@
     "gtest_main.a"
   ],
 
-  "language_name": "C++",
-  "test_name": "GoogleTest",
+  "display_name": "C++",
+  "display_test_name": "GoogleTest",
   "unit_test_framework": "google_test"
 }

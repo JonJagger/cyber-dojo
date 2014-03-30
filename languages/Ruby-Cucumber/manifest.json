@@ -7,8 +7,8 @@
     "cyber-dojo.sh"
   ],
 
-  "language_name": "Ruby",
-  "test_name": "Cucumber",
+  "display_name": "Ruby",
+  "display_test_name": "Cucumber",
   "unit_test_framework": "ruby_rspec",
 
   "tab_size": 2

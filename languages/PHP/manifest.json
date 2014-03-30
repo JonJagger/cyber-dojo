@@ -6,8 +6,8 @@
     "cyber-dojo.sh"
   ],
 
-  "language_name": "PHP",
-  "test_name": "PHPUnit",
+  "display__name": "PHP",
+  "display_test_name": "PHPUnit",
   "unit_test_framework": "php_unit",
 
   "tab_size": 4

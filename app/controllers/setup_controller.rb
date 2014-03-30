@@ -5,7 +5,7 @@ class SetupController < ApplicationController
 
   def show
     @languages = dojo.languages.map{|language|
-      [language.display_name,language.display_unit_test_framework,language.name]
+      [language.display_name,language.display_test_name,language.name]
     }.sort
     @languages_names = @languages.map{|array| array[2]}
     @exercises_names = dojo.exercises.map{|exercise| exercise.name}.sort

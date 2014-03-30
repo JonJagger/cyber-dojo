@@ -12,7 +12,7 @@
     "mockito-all-1.9.5.jar"
   ],
 
-  "language_name": "Java",
-  "test_name": "Mockito",
+  "display_name": "Java",
+  "display_test_name": "Mockito",
   "unit_test_framework": "junit"
 }

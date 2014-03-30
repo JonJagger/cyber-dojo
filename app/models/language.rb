@@ -12,11 +12,11 @@ class Language
   end
 
   def display_name
-    manifest['language_name'] || @name
+    manifest['display_name'] || @name
   end
 
-  def display_unit_test_framework
-    manifest['test_name'] || unit_test_framework
+  def display_test_name
+    manifest['display_test_name'] || unit_test_framework
   end
 
   def visible_files

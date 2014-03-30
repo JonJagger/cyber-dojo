@@ -12,7 +12,7 @@
     "ApprovalTests.012.jar"
   ],
 
-  "language_name": "Java",
-  "test_name": "Approval",
+  "display_name": "Java",
+  "display_test_name": "Approval",
   "unit_test_framework": "junit"
 }

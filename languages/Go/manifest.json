@@ -6,8 +6,8 @@
     "cyber-dojo.sh"
   ],
 
-  "language_name": "Go",
-  "test_name": "testing",
+  "display_name": "Go",
+  "display_test_name": "testing",
   "unit_test_framework": "go_testing",
 
   "tab_size": 4

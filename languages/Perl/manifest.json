@@ -6,8 +6,8 @@
     "cyber-dojo.sh"
   ],
 
-  "language_name": "Perl",
-  "test_name": "Test::Simple",
+  "display_name": "Perl",
+  "display_test_name": "Test::Simple",
   "unit_test_framework": "perl_test_simple",
 
   "tab_size": 4

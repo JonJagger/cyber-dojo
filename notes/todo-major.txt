@@ -4,11 +4,18 @@ o) Use docker run with volume mount to create docker-runner.
          -w /sandbox
          cyberdojo/language_gcc-4.8.1_assert /bin/bash -c "./cyber-dojo.sh"
    Now just have to get the output.
-   Can I do that via `docker logs`
+   Can I do that via `docker logs` even with --rm option.
+   What if I add --cidfile CID_FILENAME
+   This means
+   -- creation of tar.gz files is much easier
+   -- if docker is enabled I need two language_each iterations
+      one for the subdirs of cyberdojo/languages
+      one for the cyberdojo/language_* docker images
+      Only display a language if it's manifest's image_name value
+      is present in the docker images list.
 
-
-o) refactor so new dojos are saved in json format and also save sha1 hashes
-   and also includes URL of server dojo is on.
+o) refactor so new katas save sha1 hashes
+   and also put URL of server dojo into kata's manifest.
    Old dojos are still usable in old format.
 
 o) write a script to convert a dojo in old-rb format into new-json format

@@ -9,14 +9,6 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y ruby
 
-ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/cyber-dojo.sh    /var/www/cyberdojo/languages/Ruby/
-ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/manifest.json    /var/www/cyberdojo/languages/Ruby/
-ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/test_untitled.rb /var/www/cyberdojo/languages/Ruby/
-ADD https://raw.githubusercontent.com/JonJagger/cyberdojo/master/languages/Ruby/untitled.rb      /var/www/cyberdojo/languages/Ruby/
-
-RUN chmod +r /var/www/cyberdojo/languages/Ruby/*
-RUN chmod +x /var/www/cyberdojo/languages/Ruby//cyber-dojo.sh
-
-# docker build -t  cyberdojo/language_ruby-1.9.3  .
-# docker push      cyberdojo/language_ruby-1.9.3
-# docker run -i -t cyberdojo/language_ruby-1.9.3 /bin/bash
+# docker build -t  cyberdojo/language_ruby-1.9.3_test_unit  .
+# docker push      cyberdojo/language_ruby-1.9.3_test_unit
+# docker run -i -t cyberdojo/language_ruby-1.9.3_test_unit /bin/bash

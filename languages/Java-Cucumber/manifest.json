@@ -20,7 +20,7 @@
     "gherkin-jvm-deps-1.0.2.jar",
     "hamcrest-all-1.3.jar"
   ],
-  "language_name": "Java",
-  "test_name": "Cucumber",
+  "display_name": "Java",
+  "display_test_name": "Cucumber",
   "unit_test_framework": "junit"
 }
