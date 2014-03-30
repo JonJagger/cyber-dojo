@@ -6,7 +6,7 @@
     "cyber-dojo.sh"
   ],
 
-  "display__name": "PHP",
+  "display_name": "PHP",
   "display_test_name": "PHPUnit",
   "unit_test_framework": "php_unit",
 
