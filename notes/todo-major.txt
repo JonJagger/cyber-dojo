@@ -8,6 +8,26 @@ o) LinuxPaas needs method to determine if docker is installed
    end
    Use this to select the appropriate Runner
 
+o) Suppose a language used linked support files.
+   Will these still be visible (to `docker run`) in the mounted docker volume?
+   If not I will have to copy them.
+   Test this with Java. It's dockerfile needs to be
+   # 13.10=(saucy)
+   FROM       ubuntu:13.10
+   MAINTAINER Jon Jagger <jon@jaggersoft.com>
+   RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
+   RUN apt-get update
+   RUN apt-get upgrade -y
+   RUN apt-get install -y default-jdk
+   # docker build -t  cyberdojo/language_java-X.Y.Z  .
+   # docker push      cyberdojo/language_java-X.Y.Z
+   # docker run -i -t cyberdojo/language_java-X.Y.Z /bin/bash
+
+
+o) Is the new Java out?
+   If so, use that as base language-image
+   I think all the Java-XXX languages will use the same docker image.
+
 o) Use docker run with volume mount to create docker-runner.
    CHECK THIS IS OK WITH TRAILING SLASH--------------------------------------|
    docker run -t -i --rm -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw

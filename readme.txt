@@ -353,6 +353,10 @@ Once this passes make it live by moving it to the live languages folder:
 
 manifest.json Parameters
 ======================
+"image_name": string
+  The name of docker image to execute cyber-dojo.sh.
+  Optional. Not required if docker is not being used.
+
 "visible_filenames": [ ... ]
   The names of the text files that will be visible in the browser's editor
   at startup. Each of these files must exist in the directory.
