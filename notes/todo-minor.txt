@@ -1,4 +1,7 @@
 
+PAAS.SESSION
+  paas.teardown() suggests resume_json is called twice when animal is resumed.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-MANIFEST
   give Exercise a manifest like Language?
   would allow an Exercise image to have its own additional

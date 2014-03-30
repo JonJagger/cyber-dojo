@@ -7,13 +7,19 @@ class DockerPaas < Paas
   def initialize(disk)
     @disk = disk
     @cids = [ ]
-    # at end of docker-transaction *all*
-    # cids inside @cids need to be deleted with `docker rm #{@cids.join(' ')}`
-    # Note that if a container is used to create an image
-    # then the container still needs to be deleted.
-    # Don't do this...
-    #   docker ps -a -q | xargs docker rm
-    # because two sessions could both try to delete the same containers.
+  end
+
+  def teardown(name)
+    `docker rm #{@cids.join(' ')}`
+    @cids = [ ]
+  end
+
+  def session(name, &block)
+    begin
+      block.call
+    ensure
+      teardown(name)
+    end
   end
 
   def create_dojo(root, format)
@@ -32,7 +38,7 @@ class DockerPaas < Paas
   end
 
   def make_kata(dojo, language, exercise, id, now)
-    # this will need to find the docker-image for the language
+    # this will need to find the docker-image for the language.
     # language image folder structure looks like this...
     #    var/www/cyberdojo/languages/00/000000/manifest.json
     #    var/www/cyberdojo/languages/00/000000/cyber-dojo.sh
@@ -100,13 +106,12 @@ class DockerPaas < Paas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def languages_each(languages)
-    # iterate through a docker languages-registry
-    # txt = `docker images`
-    # find any matching 'cyberdojo/language_(.*)'
+    `docker images`.lines.each.collect{|line| line.split[0]}.select{|repo|
+      repo.start_with? 'cyberdojo/language_'
+    }
   end
 
   def exercises_each(exercises)
-    # Kept on local disk?
     Dir.entries(path(exercises)).each do |name|
       yield name if is_dir?(File.join(path(exercises), name))
     end
@@ -198,28 +203,27 @@ class DockerPaas < Paas
     name
   end
 
-  def current_image_for(object)
+  def docker_image_name(object)
     # animal image will be called something like 'avatar_BCE34DE552_cheetah'
     # and will mimic LinuxPaas dir structure.
     # Viz   /var/www/cyberdojo/katas/BC/E34DE552/cheetah
     # This should help when .tar.gz files are created and merged.
-    if @cids == [ ]
-      # the initial image for object
-      # mostly object == avatar, but can be eg kata-id (if creating avatar or dashboard)
-      'to-do'
-    else
+    if @cids != [ ]
       @cids.last
+    else
+      # the initial image for object. Similar to path(object) in base pass
+      'to-do'
     end
   end
 
   # TODO: this is external. Needs to be injected from outside.
   # TODO: don't think the sudo will be needed if www-data is in docker group
   def docker(object, command, pre_pipe = "")
-    image = current_image_for(object)
+    image_name = docker_image_name(object)
     cidfile = cid_filename(object)
     dir = path(object)
     command = "cd #{dir};" + command
-    result = `#{pre_pipe} docker run --cidfile #{cidfile} -w #{dir} -i #{image} /bin/bash -c "#{command}"`
+    result = `#{pre_pipe} docker run --cidfile #{cidfile} -w #{dir} -i #{image_name} /bin/bash -c "#{command}"`
     cid = `cat #{cidfile}`
     `docker commit #{cid} #{cid}`
     @cids << cid

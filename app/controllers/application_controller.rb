@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
 require 'LinuxPaas'
+require 'DockerPaas'
 require 'OsDisk'
 require 'Git'
 require 'Runner'
@@ -15,33 +16,31 @@ class ApplicationController < ActionController::Base
   include MakeTimeHelper
 
   def id
+    # Folders:: not refactored for Docker yet...
     Folders::id_complete(root_path, params[:id]) || ""
   end
 
   def paas
+    ENV['CYBERDOJO_DOCKER'] ? docker_paas : linux_paas
+  end
+
+  def linux_paas
     # allow controller_tests to tunnel through rails stack
     thread = Thread.current
-    @disk = thread[:disk] || OsDisk.new
-    @git = thread[:git] || Git.new
-    @runner = thread[:runner] || Runner.new
-    @paas ||= LinuxPaas.new(@disk, @git, @runner)
+    @disk   ||= thread[:disk]   || OsDisk.new
+    @git    ||= thread[:git]    || Git.new
+    @runner ||= thread[:runner] || Runner.new
+    @paas   ||= LinuxPaas.new(@disk, @git, @runner)
+  end
+
+  def docker_paas
+    thread = Thread.current
+    @disk   ||= thread[:disk]   || OsDisk.new
+    @paas   ||= DockerPaas.new(@disk)
   end
 
   def dojo
-    format = 'json'
     paas.create_dojo(root_path, format)
-  end
-
-  def make_manifest(language_name, exercise_name)
-    language = dojo.language(language_name)
-    {
-      :created => make_time(Time.now),
-      :id => Id.new.to_s,
-      :language => language.name,
-      :exercise => exercise_name, # used only for display
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
-    }
   end
 
   def bind(pathed_filename)
@@ -59,6 +58,10 @@ class ApplicationController < ActionController::Base
 
   def root_path
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
+  end
+
+  def format
+    'json'
   end
 
 end
