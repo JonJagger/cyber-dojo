@@ -2,13 +2,11 @@
 # Paas on top of Linux
 # no isolation, no protection, no security, nothing.
 
-class LinuxPaas
+class LinuxPaas < Paas
 
   def initialize(disk, git, runner)
     @disk,@git,@runner = disk,git,runner
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def create_dojo(root, format)
     Dojo.new(self, root, format)
@@ -31,8 +29,41 @@ class LinuxPaas
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
     kata = Kata.new(dojo, id)
-    disk_write(kata, kata.manifest_filename, manifest)
+    write(kata, kata.manifest_filename, manifest)
     kata
+  end
+
+  def start_avatar(kata, avatar_names)
+    avatar = nil
+    started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
+    unstarted_avatar_names = avatar_names - started_avatar_names
+    if unstarted_avatar_names != [ ]
+      avatar_name = unstarted_avatar_names[0]
+      avatar = Avatar.new(kata, avatar_name)
+
+      make_dir(avatar)
+      git_init(avatar, '--quiet')
+
+      write(avatar, avatar.visible_files_filename, kata.visible_files)
+      git_add(avatar, avatar.visible_files_filename)
+
+      write(avatar, avatar.traffic_lights_filename, [ ])
+      git_add(avatar, avatar.traffic_lights_filename)
+
+      kata.visible_files.each do |filename,content|
+        write(avatar.sandbox, filename,content)
+        git_add(avatar.sandbox, filename)
+      end
+
+      kata.language.support_filenames.each do |filename|
+        old_name = path(kata.language) + filename
+        new_name = path(avatar.sandbox) + filename
+        @disk.symlink(old_name, new_name)
+      end
+
+      avatar.commit(tag=0)
+    end
+    avatar
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -42,7 +73,6 @@ class LinuxPaas
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # each() iteration
 
   def languages_each(languages)
     pathed = path(languages)
@@ -82,56 +112,23 @@ class LinuxPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def start_avatar(kata, avatar_names)
-    avatar = nil
-    started_avatar_names = kata.avatars.collect { |avatar| avatar.name }
-    unstarted_avatar_names = avatar_names - started_avatar_names
-    if unstarted_avatar_names != [ ]
-      avatar_name = unstarted_avatar_names[0]
-      avatar = Avatar.new(kata, avatar_name)
-
-      disk_make_dir(avatar)
-      git_init(avatar, '--quiet')
-
-      disk_write(avatar, avatar.visible_files_filename, kata.visible_files)
-      git_add(avatar, avatar.visible_files_filename)
-
-      disk_write(avatar, avatar.traffic_lights_filename, [ ])
-      git_add(avatar, avatar.traffic_lights_filename)
-
-      kata.visible_files.each do |filename,content|
-        disk_write(avatar.sandbox, filename,content)
-        git_add(avatar.sandbox, filename)
-      end
-
-      kata.language.support_filenames.each do |filename|
-        old_name = path(kata.language) + filename
-        new_name = path(avatar.sandbox) + filename
-        @disk.symlink(old_name, new_name)
-      end
-
-      avatar.commit(tag=0)
-    end
-    avatar
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-  # disk-helpers
-
-  def disk_make_dir(object)
+  def make_dir(object)
     dir(object).make
   end
 
-  def disk_read(object, filename)
+  def read(object, filename)
     dir(object).read(filename)
   end
 
-  def disk_write(object, filename, content)
+  def write(object, filename, content)
     dir(object).write(filename, content)
   end
 
+  def dir(obj)
+    @disk[path(obj)]
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # git-helpers
 
   def git_init(object, args)
     @git.init(path(object), args)
@@ -162,41 +159,9 @@ class LinuxPaas
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # runner-helper
 
   def runner_run(object, command, max_duration)
     @runner.run(path(object), command, max_duration)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  def dir(obj)
-    @disk[path(obj)]
-  end
-
-  def path(obj)
-    case obj
-      when Languages
-        root(obj.dojo) + 'languages/'
-      when Language
-        path(obj.dojo.languages) + obj.name + '/'
-      when Exercises
-        root(obj.dojo) + 'exercises/'
-      when Exercise
-        path(obj.dojo.exercises) + obj.name + '/'
-      when Katas
-        root(obj.dojo) + 'katas/'
-      when Kata
-        path(obj.dojo.katas) + obj.id.inner + '/' + obj.id.outer + '/'
-      when Avatar
-        path(obj.kata) + obj.name + '/'
-      when Sandbox
-        path(obj.avatar) + 'sandbox/'
-    end
-  end
-
-  def root(dojo)
-    dojo.path
   end
 
 end

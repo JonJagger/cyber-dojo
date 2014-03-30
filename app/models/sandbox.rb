@@ -8,7 +8,7 @@ class Sandbox
   attr_reader :avatar
 
   def write(filename, content)
-    paas.disk_write(self, filename, content)
+    paas.write(self, filename, content)
   end
 
 private

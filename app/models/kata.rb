@@ -47,7 +47,7 @@ class Kata
   end
 
   def manifest
-    text = paas.disk_read(self, manifest_filename)
+    text = paas.read(self, manifest_filename)
     return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
     return @manifest ||= JSON.parse(text) if format_is_json?
   end

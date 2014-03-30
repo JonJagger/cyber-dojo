@@ -56,7 +56,7 @@ class Language
 private
 
   def read(filename)
-    paas.disk_read(self, filename)
+    paas.read(self, filename)
   end
 
   def paas

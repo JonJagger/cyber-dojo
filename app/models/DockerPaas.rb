@@ -2,7 +2,7 @@
 # Paas on top of Docker: http://www.docker.io/
 # provides security and isolation.
 
-class DockerPaas
+class DockerPaas < Paas
 
   def initialize(disk)
     @disk = disk
@@ -11,18 +11,14 @@ class DockerPaas
     # cids inside @cids need to be deleted with `docker rm #{@cids.join(' ')}`
     # Note that if a container is used to create an image
     # then the container still needs to be deleted.
-    # I choose not to do this...
+    # Don't do this...
     #   docker ps -a -q | xargs docker rm
-    # as that way two sessions could both try to delete the same containers.
+    # because two sessions could both try to delete the same containers.
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def create_dojo(root, format)
     Dojo.new(self, root, format)
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_kata_manifest(dojo, language, exercise, id, now)
     {
@@ -35,13 +31,13 @@ class DockerPaas
     }
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
   def make_kata(dojo, language, exercise, id, now)
     # this will need to find the docker-image for the language
-    # language image could have familiar folder structure inside itself...
-    #    var/www/cyberdojo/languages/NAME/manifest.json
-    #    var/www/cyberdojo/languages/NAME/cyber-dojo.sh
+    # language image folder structure looks like this...
+    #    var/www/cyberdojo/languages/00/000000/manifest.json
+    #    var/www/cyberdojo/languages/00/000000/cyber-dojo.sh
+    # idea is that I simply need to create a new image by
+    # replacing 00/00000000/ by id.inner/id.outer/
 
     manifest = make_kata_manifest(dojo, language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
@@ -49,65 +45,10 @@ class DockerPaas
     manifest[:visible_files]['instructions'] = exercise.instructions
 
     kata = Kata.new(dojo, id)
-    disk_write(kata, kata.manifest_filename, manifest)
-    `sudo docker commit #{@cids.last} kata_#{kata.id}`
+    write(kata, kata.manifest_filename, manifest)
+    `docker commit #{@cids.last} cyberdojo/kata_#{kata.id}`
     kata
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-  # exists?
-
-  def exists?(object)
-    # this will need to check the result of `docker images`
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-  # each() iteration
-
-  def languages_each(languages)
-    # iterate through a docker languages-registry
-    # txt = `docker images`
-    # iterate through docker registry for images starting 'language_'
-    # Issue: docker image names cannot contains characters such as +#
-    #        which affects languages such as C++ and C#
-    #        The LinuxPaas setup_controller needs to be refactored
-    #        so that the name displayed is not necessarily the same
-    #        as the folder the language came from.
-    #
-    #
-    # Or, create images and push them to cyberdojo user on https://index.docker.io/
-    # sudo docker commit $CONTAINER_ID cyberdojo/perl
-    # sudo docker push cyberdojo/perl
-    # then
-    # sudo docker search cyberdojo
-    # No.
-    # That is separate functionality. Checking if new language image
-    # exists in the cyberdojo index.
-    #
-  end
-
-  def exercises_each(exercises)
-    # Keep on local disk?
-    # Maybe later give Exercise a manifest like Language
-    # and allow an Exercise image to have its own additional
-    # set of exercises. This would work very well for James
-    # for example.
-    Dir.entries(path(exercises)).each do |name|
-      yield name if is_dir?(File.join(path(exercises), name))
-    end
-  end
-
-  def katas_each(katas)
-    # txt = `docker images`
-    # find any starting 'kata_'
-  end
-
-  def avatars_each(kata)
-    # txt = `docker images`
-    # find any starting 'kata_' + kata.id + '_avatar_'
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def start_avatar(kata, avatar_names)
     # image = 'kata_' + kata.id
@@ -120,16 +61,17 @@ class DockerPaas
       avatar_name = unstarted_avatar_names[0]
       avatar = Avatar.new(kata,avatar_name)
 
+      make_dir(avatar)
       git_init(avatar, '--quiet')
 
-      disk_write(avatar, avatar.visible_files_filename, kata.visible_files)
+      write(avatar, avatar.visible_files_filename, kata.visible_files)
       git_add(avatar, avatar.visible_files_filename)
 
-      disk_write(avatar, avatar.traffic_lights_filename, [ ])
+      write(avatar, avatar.traffic_lights_filename, [ ])
       git_add(avatar, avatar.traffic_lights_filename)
 
       kata.visible_files.each do |filename,content|
-        disk_write(avatar.sandbox, filename,content)
+        write(avatar.sandbox, filename,content)
         git_add(avatar.sandbox, filename)
       end
 
@@ -148,33 +90,58 @@ class DockerPaas
 
       avatar.commit(tag=0)
     end
-    `docker commit #{@cids.last} avatar_#{kata.id}_#{avatar.name}_0`
     avatar
   end
 
+  def exists?(object)
+    # this will need to check the result of `docker images`
+  end
+
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # disk-helpers
 
-  #def disk_make_dir(object)
-  #  LinuxPaas also has this.
-  #  Uses in start_avatar() only
-  #end
+  def languages_each(languages)
+    # iterate through a docker languages-registry
+    # txt = `docker images`
+    # find any matching 'cyberdojo/language_(.*)'
+  end
 
-  def disk_read(object, filename)
+  def exercises_each(exercises)
+    # Kept on local disk?
+    Dir.entries(path(exercises)).each do |name|
+      yield name if is_dir?(File.join(path(exercises), name))
+    end
+  end
+
+  def katas_each(katas)
+    # txt = `docker images`
+    # find any matching 'cyberdojo/kata_(\h{10})'
+  end
+
+  def avatars_each(kata)
+    # txt = `docker images`
+    # find any starting 'cyberdojo/kata_' + kata.id + '_avatar_' + *
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  def make_dir(object)
+    # Used in start_avatar() only
+  end
+
+  def read(object, filename)
     docker(object, "cat '#{filename}'")
   end
 
-  def disk_write(object, filename, content)
+  def write(object, filename, content)
     # There is a whole lot of extra stuff that LinuxPaas does here via OsDir
-    # Viz makes the directory
-    #     saves content.inspect if filename.end_with? '.rb'
-    #     saves JSON.unparse(content) if filename.end_with? '.json'
-    #     chmod +x filename if filename.end_with? '.sh'
+    # Viz o) makes the directory
+    #     o) saves content.inspect if filename.end_with? '.rb'
+    #     o) saves JSON.unparse(content) if filename.end_with? '.json'
+    #     o) chmod +x filename if filename.end_with? '.sh'
     docker(object, "cat > '#{filename}'", "echo '#{content}' | ")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # git-helpers
 
   def git_init(object, args)
     git_cmd(object, 'init', args)
@@ -193,9 +160,9 @@ class DockerPaas
   end
 
   def git_tag(object, args)
+    avatar = object
     git_cmd(object, 'tag', args)
-    # I think this will be the last command
-    # and so will require docker commit to new image
+    # `docker commit #{@cids.last} cyberdojo/avatar_#{avatar.kata.id}_#{avatar.name}`
   end
 
   def git_diff(object, args)
@@ -211,14 +178,12 @@ class DockerPaas
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
-  # runner-helper
 
   def runner_run(object, command, max_duration)
     docker(object, "timeout #{max_duration}s #{command}")
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-  # docker-helpers
+  #= = = = = = = = = = = = = = = = = = = = = = = = =
 
   def cid_filename(object)
     # TODO: don't use deeply nested path. Use a single name based
@@ -234,6 +199,10 @@ class DockerPaas
   end
 
   def current_image_for(object)
+    # animal image will be called something like 'avatar_BCE34DE552_cheetah'
+    # and will mimic LinuxPaas dir structure.
+    # Viz   /var/www/cyberdojo/katas/BC/E34DE552/cheetah
+    # This should help when .tar.gz files are created and merged.
     if @cids == [ ]
       # the initial image for object
       # mostly object == avatar, but can be eg kata-id (if creating avatar or dashboard)
@@ -257,45 +226,9 @@ class DockerPaas
     result
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-  # image will be called something like 'avatar_BCE34DE552_cheetah'
-  # and will mimic LinuxPaas dir structure.
-  # Viz   /var/www/cyberdojo/katas/BC/E34DE552/cheetah
-  # This should help when .tar.gz files are created and merged.
-
-  def path(obj)
-    case obj
-      when Languages
-        root + 'languages/'
-      when Language
-        path(obj.dojo.languages) + obj.name + '/'
-      when Exercises
-        root + 'exercises/'
-      when Exercise
-        path(obj.dojo.exercises) + obj.name + '/'
-      when Katas
-        root + 'katas/'
-      when Kata
-        path(obj.dojo.katas) + obj.id[0..1] + '/' + obj.id[2..-1] + '/'
-      when Avatar
-        path(obj.kata) + obj.name + '/'
-      when Sandbox
-        path(obj.avatar) + 'sandbox/'
-    end
-  end
-
-  def root
-    # ??? is ~ path ok or does it have to start at /
-    # and what user do I want the commands to be run under?
-    # one option is to make usernames for each animal!
-    # Quite like that. Suggests possibility of them talking
-    # to each other. Note that a chat-like facility would need
-    # a very different implementation because of the genuine
-    # isolation.
-    '/var/www/cyberdojo/'
-  end
-
 end
+
+
 
 # idea is that this will hold methods that forward to external
 # services namely: disk, git, shell.

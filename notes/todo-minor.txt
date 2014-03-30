@@ -1,4 +1,8 @@
 
+EXERCISE-MANIFEST
+  give Exercise a manifest like Language?
+  would allow an Exercise image to have its own additional
+  set of exercises.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 GIT-COMMANDS
   Should git.init make the directory?

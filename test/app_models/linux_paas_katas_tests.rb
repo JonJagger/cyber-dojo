@@ -93,7 +93,7 @@ class LinuxPaasKatasTests < ActionController::TestCase
     assert_not_nil avatar
     visible_files = avatar.visible_files
     assert visible_files.keys.include?('cyber-dojo.sh')
-    text = @paas.disk_read(avatar.sandbox, 'cyber-dojo.sh')
+    text = @paas.read(avatar.sandbox, 'cyber-dojo.sh')
     assert_not_nil text
   end
 

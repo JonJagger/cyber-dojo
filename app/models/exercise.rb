@@ -8,7 +8,7 @@ class Exercise
   attr_reader :dojo, :name
 
   def instructions
-    dojo.paas.disk_read(self,'instructions')
+    dojo.paas.read(self,'instructions')
   end
 
 end

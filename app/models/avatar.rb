@@ -20,10 +20,10 @@ class Avatar
 
   def save(delta, visible_files)
     delta[:changed].each do |filename|
-      paas.disk_write(sandbox, filename, visible_files[filename])
+      paas.write(sandbox, filename, visible_files[filename])
     end
     delta[:new].each do |filename|
-      paas.disk_write(sandbox, filename, visible_files[filename])
+      paas.write(sandbox, filename, visible_files[filename])
       paas.git_add(sandbox, filename)
     end
     delta[:deleted].each do |filename|
@@ -37,7 +37,7 @@ class Avatar
   end
 
   def save_visible_files(visible_files)
-    paas.disk_write(self, visible_files_filename, visible_files)
+    paas.write(self, visible_files_filename, visible_files)
   end
 
   def save_traffic_light(traffic_light, now = make_time(Time.now))
@@ -45,7 +45,7 @@ class Avatar
     lights << traffic_light
     traffic_light['number'] = lights.length
     traffic_light['time'] = now
-    paas.disk_write(self, traffic_lights_filename, lights)
+    paas.write(self, traffic_lights_filename, lights)
     lights
   end
 
@@ -87,7 +87,7 @@ private
   end
 
   def parse(filename, tag)
-    text = paas.disk_read(self, filename) if tag == nil
+    text = paas.read(self, filename) if tag == nil
     text = paas.git_show(self, "#{tag}:#{filename}") if tag != nil
     return JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
     return JSON.parse(text) if format_is_json?
