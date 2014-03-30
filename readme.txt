@@ -327,8 +327,8 @@ Example: the one for Java+JUnit looks like this:
   "support_filenames": [
     "junit-4.7.jar"
   ],
-  "language_name": "Java",
-  "test_name": "JUnit",
+  "display_name": "Java",
+  "display_test_name": "JUnit",
   "unit_test_framework": "junit",
   "tab_size": 4
 }
@@ -389,22 +389,22 @@ manifest.json Parameters
   which can be very handy.
   Not required if you do not need support files.
 
-"language_name": string
+"display_name": string
   The name of the language as it appears in the setup page and also in the info
   displayed at the top-left of the test page and the dashboard page.
   Optional. Defaults to the name of the folder holding the manifest.json file.
 
-"test_name": string
+"display_test_name": string
   The name of the unit-test-framework as it appears in the setup page and also in
   in the info displayed at the top-left of the test page and the dashboard page.
   Optional. Defaults to the same as the unit_test_framework setting (next).
 
 "unit_test_framework": string
-  The name of the unit test framework used. This name partially determines the
+  The name of the unit test framework which partially determines the
   name of the ruby function (in the cyber-dojo server) used to parse the
-  test output (to see if the increment generates a red/green/amber
-  traffic light). For example, if the value is 'cassert' then
-      cyberdojo/lib/CodeOutputParser.rb
+  test output (to see if the traffic-light is red/green/amber).
+  For example, if the value is 'cassert' then
+      cyberdojo/app/lib/OutputParser.rb
   must contain a method called parse_cassert() and will be called to parse the
   output of running the tests via the cyber-dojo.sh shell file.
   Required. No default.

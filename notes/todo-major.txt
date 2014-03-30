@@ -1,10 +1,11 @@
 
 o) Use docker run with volume mount to create docker-runner.
-   docker run -t -i --rm -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox:/sandbox:rw
+   CHECK THIS IS OK WITH TRAILING SLASH--------------------------------------|
+   docker run -t -i --rm -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw
          -w /sandbox
          cyberdojo/language_gcc-4.8.1_assert /bin/bash -c "./cyber-dojo.sh"
    Now just have to get the output.
-   Can I do that via `docker logs` even with --rm option.
+   Can I do that via `docker logs` even with --rm option?
    What if I add --cidfile CID_FILENAME
    This means
    -- creation of tar.gz files is much easier
@@ -13,6 +14,22 @@ o) Use docker run with volume mount to create docker-runner.
       one for the cyberdojo/language_* docker images
       Only display a language if it's manifest's image_name value
       is present in the docker images list.
+
+  def docker_images_names
+    `docker images`.lines.each.collect{|line| line.split[0]}
+  end
+  def languages_each
+    docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
+  end
+  def runner_run(sandbox, command, max_duration)
+    cmd = "docker run -t -i --rm -v #{path(sandbox)}:/sandbox:rw " +
+          "-w /sandbox " +
+          "#{sandbox.avatar.kata.language.image_name} /bin/bash -c \"#{command}\""
+    `#{cmd}`
+    # NEED TO ADD MAX-DURATION
+  end
+
+
 
 o) refactor so new katas save sha1 hashes
    and also put URL of server dojo into kata's manifest.
@@ -42,7 +59,7 @@ o) add buttons on cyber-dojo to publish a dojo to cyber-kata with tags
    send it in new-json format (tar.gz) to cyber-katas
 
 o) can offer fork on cyber-katas if I know URL of originating dojo
-   can can make with $.getJSON('forker/fork'...) to it
+   can make with $.getJSON('forker/fork'...) to it
 
 o) this means we could get a cycle
   I publish a dojo

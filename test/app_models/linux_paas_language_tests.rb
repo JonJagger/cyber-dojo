@@ -152,6 +152,30 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "image_name if set" do
+    json_and_rb do
+      name = 'Ruby-Test::Unit'
+      @language = @dojo.languages[name]
+      expected = 'cyberdojo/language_ruby-1.9.3_test_unit'
+      spy_manifest({ 'image_name' => expected })
+      assert_equal expected, @language.image_name
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "image_name is nil if not set" do
+    json_and_rb do
+      name = 'Ruby-Test::Unit'
+      @language = @dojo.languages[name]
+      expected = nil
+      spy_manifest({ })
+      assert_equal expected, @language.image_name
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "unit_test_framework is set" do
     json_and_rb do
       @language = @dojo.languages['Ruby']

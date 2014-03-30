@@ -19,6 +19,10 @@ class Language
     manifest['display_test_name'] || unit_test_framework
   end
 
+  def image_name
+    manifest['image_name']
+  end
+
   def visible_files
     Hash[visible_filenames.collect{ |filename|
       [ filename, read(filename) ]
