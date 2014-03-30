@@ -1,16 +1,12 @@
 
 public class Untitled {
 
-    public Untitled() {    
-        helper = new UntitledHelper();
-    }
-        
-    public int answer() {
-        return helper.answer();
+    public Untitled(UntitledHelper helper) {
+        this.helper = helper;
     }
 
-    public void setHelper(UntitledHelper helper) {
-        this.helper = helper;
+    public int answer() {
+        return helper.answer();
     }
 
     private UntitledHelper helper;
