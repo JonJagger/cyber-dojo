@@ -1,10 +1,7 @@
 
-DOCKER REFACTOR app/lib/Choose.rb
-DOCKER REFACTOR lib/Folders.rb
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-PAAS.SESSION
-  paas.teardown() suggests resume_json is called twice when animal is resumed.
+REFACTOR
+  app/lib/Choose.rb
+  lib/Folders.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-MANIFEST
   give Exercise a manifest like Language?
