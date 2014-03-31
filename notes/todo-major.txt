@@ -10,32 +10,32 @@ o) LinuxPaas needs method to determine if docker is installed
 
 o) Suppose a language used linked support files.
    Will these still be visible (to `docker run`) in the mounted docker volume?
-   If not I will have to copy them.
-   Test this with Java. It's dockerfile needs to be
-   # 13.10=(saucy)
-   FROM       ubuntu:13.10
-   MAINTAINER Jon Jagger <jon@jaggersoft.com>
-   RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
-   RUN apt-get update
-   RUN apt-get upgrade -y
-   RUN apt-get install -y default-jdk
-   # docker build -t  cyberdojo/language_java-X.Y.Z  .
-   # docker push      cyberdojo/language_java-X.Y.Z
-   # docker run -i -t cyberdojo/language_java-X.Y.Z /bin/bash
-
+   NO.
+   So I need to copy the link'd files
+   Or mount both locations?
+   Yes this works...
+   docker run -t -i --rm
+         -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw
+         -v /var/www/cyberdojo/languages/Java-JUnit/:/var/www/cyberdojo/languages/Java-JUnit/:ro
+         -w /sandbox
+         cyberdojo/language_gcc-4.8.1 /bin/bash -c "./cyber-dojo.sh"
+   So now I just need to get the output...
+   Yup it works. So
+   $ rm cid.txt
+   $ docker run -t -i --rm
+         -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw
+         -v /var/www/cyberdojo/languages/Java-JUnit/:/var/www/cyberdojo/languages/Java-JUnit/:ro
+         -w /sandbox
+         --cidfile="cid.txt"
+         cyberdojo/language_gcc-4.8.1 /bin/bash -c "./cyber-dojo.sh"
+   $ cid = `cat cid.txt`
+   $ output = `docker logs #{cid}`
 
 o) Is the new Java out?
    If so, use that as base language-image
    I think all the Java-XXX languages will use the same docker image.
 
 o) Use docker run with volume mount to create docker-runner.
-   CHECK THIS IS OK WITH TRAILING SLASH--------------------------------------|
-   docker run -t -i --rm -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw
-         -w /sandbox
-         cyberdojo/language_gcc-4.8.1_assert /bin/bash -c "./cyber-dojo.sh"
-   Now just have to get the output.
-   Can I do that via `docker logs` even with --rm option?
-   What if I add --cidfile CID_FILENAME
    This means
    -- creation of tar.gz files is much easier
    -- if docker is enabled I need two language_each iterations
@@ -51,11 +51,22 @@ o) Use docker run with volume mount to create docker-runner.
     docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
   end
   def runner_run(sandbox, command, max_duration)
-    cmd = "docker run -t -i --rm -v #{path(sandbox)}:/sandbox:rw " +
-          "-w /sandbox " +
-          "#{sandbox.avatar.kata.language.image_name} /bin/bash -c \"#{command}\""
+    kill = 9
+    timed_out = 124
+    cid_filename = ...
+    `rm #{cid_filename}`
+    language = sandbox.avatar.kata.language
+    cmd = "docker run -t -i --rm" +
+          " -v #{path(sandbox)}:/sandbox:rw" +
+          " -v #{path(language)}:#{path(language)}:ro"
+          " -w /sandbox" +
+          " --cidfile=\"#{cid_filename}\"" +
+          " #{language.image_name} /bin/bash -c \"timeout --signal=#{kill} #{max_duration}s #{command}\""
     `#{cmd}`
-    # NEED TO ADD MAX-DURATION
+    exitstatus = $?.exitstatus
+    cid = `cat #{cid_filename}`
+    (exitstatus != #{timed_out}) ? `docker logs #{cid}` :
+       "Terminated by the cyber-dojo server after #{max_duration} seconds."
   end
 
 

@@ -1,4 +1,7 @@
 
+HOME-PAGE
+  clicking yin-yang icon resets back to home page page with no id.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTOR
   app/lib/Choose.rb
   lib/Folders.rb
