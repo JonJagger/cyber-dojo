@@ -1,4 +1,7 @@
 
+REFACTOR
+  Move Paas.rb and LinuxPaas.rb from app/models into /lib ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   have rever/fork buttons above was_tag on diff-dialog
   have rever/fork buttons above now_tag on diff-dialog
