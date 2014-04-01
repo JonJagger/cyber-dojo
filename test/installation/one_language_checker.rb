@@ -11,7 +11,7 @@ require "#{cyberdojo_root}/app/models/Sandbox"
 require "#{cyberdojo_root}/app/lib/OutputParser"
 require "#{cyberdojo_root}/lib/Disk"
 require "#{cyberdojo_root}/lib/Git"
-require "#{cyberdojo_root}/lib/Runner"
+require "#{cyberdojo_root}/lib/RawRunner"
 require "#{cyberdojo_root}/lib/Uuid"
 
 class OneLanguageChecker
@@ -103,7 +103,10 @@ private
     known = [ 'visible_filenames',
               'support_filenames',
               'unit_test_framework',
-              'tab_size'
+              'tab_size',
+              'display_name',
+              'display_test_name',
+              'image_name'
             ]
     @manifest.keys.each do |key|
       if !known.include? key
@@ -296,9 +299,9 @@ private
 private
 
   def dojo
-    Thread.current[:disk] ||= Disk.new
-    Thread.current[:git] ||= Git.new
-    Thread.current[:runner] ||= Runner.new
+    Thread.current[:disk]   ||= Disk.new
+    Thread.current[:git]    ||= Git.new
+    Thread.current[:runner] ||= RawRunner.new
     Dojo.new(@root_path,'json')
   end
 
