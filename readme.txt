@@ -547,3 +547,7 @@ o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    Michel - I really appreciate all your help and encouragement.
 o) James Grenning uses cyber-dojo a lot, via his own Turnkey S3 cloud servers,
    and has provided awesome feedback and made several very generous donations.
+   Thank you James.
+o) Jerry Weinberg showed me the power of experiential learning on all
+   of his courses and conferences, notably PSL, which strongly influenced
+   the way I designed cyber-dojo. Thank you Jerry.
