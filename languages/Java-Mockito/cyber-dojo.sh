@@ -1,4 +1,4 @@
-rm -f *Test*.class
+rm -f *.class
 CLASSES=.:`ls *.jar | tr '\n' ':'`
 javac -Xlint:unchecked -cp $CLASSES  *.java
 if [ $? -eq 0 ]; then

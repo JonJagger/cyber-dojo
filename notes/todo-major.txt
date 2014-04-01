@@ -1,47 +1,11 @@
 
-o) lib/Runner.rb needs renaming. To??? RawRunner.rb ?
-
-o) create lib/DockerRunner.rb
-
-o) LinuxPaas needs method to determine if docker is installed
-   def docker?
-   end
-   Use this to select the appropriate Runner
-
-o) Suppose a language used linked support files.
-   Will these still be visible (to `docker run`) in the mounted docker volume?
-   NO.
-   So I need to copy the link'd files
-   Or mount both locations?
-   Yes this works...
-   docker run -t -i --rm
-         -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw
-         -v /var/www/cyberdojo/languages/Java-JUnit/:/var/www/cyberdojo/languages/Java-JUnit/:ro
-         -w /sandbox
-         cyberdojo/language_gcc-4.8.1 /bin/bash -c "./cyber-dojo.sh"
-   So now I just need to get the output...
-   Yup it works. So
-   $ rm cid.txt
-   $ docker run -t -i --rm
-         -v /var/www/cyberdojo/katas/3E/12ED56A0/lion/sandbox/:/sandbox:rw
-         -v /var/www/cyberdojo/languages/Java-JUnit/:/var/www/cyberdojo/languages/Java-JUnit/:ro
-         -w /sandbox
-         --cidfile="cid.txt"
-         cyberdojo/language_gcc-4.8.1 /bin/bash -c "./cyber-dojo.sh"
-   $ cid = `cat cid.txt`
-   $ output = `docker logs #{cid}`
-
-o) Is the new Java out?
-   If so, use that as base language-image
-   I think all the Java-XXX languages will use the same docker image.
-
 o) Use docker run with volume mount to create docker-runner.
    This means
    -- creation of tar.gz files is much easier
    -- if docker is enabled I need two language_each iterations
       one for the subdirs of cyberdojo/languages
       one for the cyberdojo/language_* docker images
-      Only display a language if it's manifest's image_name value
+      On setup only display a language if it's manifest's image_name
       is present in the docker images list.
 
   def docker_images_names
@@ -69,6 +33,18 @@ o) Use docker run with volume mount to create docker-runner.
        "Terminated by the cyber-dojo server after #{max_duration} seconds."
   end
 
+o) LinuxPaas needs method to determine if docker is installed
+   def docker?
+   end
+   Use this to select the appropriate Runner
+
+o) lib/Runner.rb needs renaming. To??? RawRunner.rb ?
+
+o) create lib/DockerRunner.rb
+
+o) Is the new Java out?
+   If so, use that as base language-image
+   I think all the Java-XXX languages will use the same docker image.
 
 
 o) refactor so new katas save sha1 hashes
@@ -128,20 +104,20 @@ o) another problem is it opens up the possibility of
    New dojo will not be tied to old dojo until new dojo is published back
    onto cyber-katas
 
-o) old dojos that have had their language name changed cannot be forked.
+o) dojos that have had their language name changed cannot be forked.
    Need to fix this.
    Or at least detect it and either
       not publish them on cyber-katas.org
       or figure out what the new name is and patch
-   Patching should really be done on the old-new conversion.
-   This is because it will (I think) affect the sha1 identity.
+   Do patching on the old->new conversion?
+   No since there could still be post publish name changes.
 
-o) must be careful not to expose the ids of the original dojos
+o) be careful not to expose the ids of the original dojos
    when viewing diffs on cyber-katas.org
    Create a simple fake-id->id mapping table.
 
 o) if traffic-light's files' hashes match traffic-light 1 for
-   others dojo then those other dojos were forked from this
+   other dojo(s) then those other dojos were forked from this
    traffic-light. Could simply offer a count of this on dashboard/diff
    Or simpler, a mark which can reveal information about the forks.
    if traffic-light's files' hashes match other traffic-lights for
