@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../../config/environment.rb'
 require 'LinuxPaas'
 require 'OsDisk'
 require 'Git'
-require 'Runner'
+require 'RawRunner'
 require 'make_time_helper'
 require 'Folders'
 
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     thread = Thread.current
     @disk   ||= thread[:disk]   || OsDisk.new
     @git    ||= thread[:git]    || Git.new
-    @runner ||= thread[:runner] || Runner.new
+    @runner ||= thread[:runner] || RawRunner.new
     @paas   ||= LinuxPaas.new(@disk, @git, @runner)
   end
 

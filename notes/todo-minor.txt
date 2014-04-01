@@ -3,6 +3,13 @@ HOME-PAGE
   clicking yin-yang icon resets back to home page page with no id.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTOR
+  application_controller does this...
+    def root_path
+      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
+    end
+  make it so root_path is always set via ENV far from shell.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
   app/lib/Choose.rb
   lib/Folders.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -10,9 +17,6 @@ EXERCISE-MANIFEST
   give Exercise a manifest like Language?
   would allow an Exercise image to have its own additional
   set of exercises.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-GIT-COMMANDS
-  Should git.init make the directory?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REVERT-FORK-DIALOG
   Put line-numbers in?

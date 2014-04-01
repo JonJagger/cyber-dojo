@@ -1,3 +1,4 @@
+o) create lib/DockerRunner.rb
 
 o) Use docker run with volume mount to create docker-runner.
    This means
@@ -35,12 +36,11 @@ o) Use docker run with volume mount to create docker-runner.
 
 o) LinuxPaas needs method to determine if docker is installed
    def docker?
+     `docker --help`
+     $?exitstatus
    end
    Use this to select the appropriate Runner
 
-o) lib/Runner.rb needs renaming. To??? RawRunner.rb ?
-
-o) create lib/DockerRunner.rb
 
 o) Is the new Java out?
    If so, use that as base language-image

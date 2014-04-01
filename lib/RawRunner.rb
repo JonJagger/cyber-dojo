@@ -1,5 +1,5 @@
 
-class Runner
+class RawRunner
 
   def run(path, command, max_seconds)
     # Should I kill the parent (after getting its pid) before killing the children?

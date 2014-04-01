@@ -1,13 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Folders'
+require 'RawRunner'
 
 class FoldersTests < ActionController::TestCase
 
   def setup
-    @disk = OsDisk.new
-    @git = Git.new
-    @runner = Runner.new
+    @disk   = OsDisk.new
+    @git    = Git.new
+    @runner = RawRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'json'
     @dojo = @paas.create_dojo(root_path, @format)

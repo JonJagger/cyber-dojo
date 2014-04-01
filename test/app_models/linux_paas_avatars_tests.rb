@@ -2,14 +2,14 @@ __DIR__ = File.dirname(__FILE__)
 require __DIR__ + '/../test_helper'
 require __DIR__ + '/../../lib/OsDisk'
 require __DIR__ + '/../../lib/Git'
-require __DIR__ + '/../../lib/Runner'
+require __DIR__ + '/../../lib/RawRunner'
 
 class LinuxPaasAvatarTests < ActionController::TestCase
 
   def setup
-    @disk = OsDisk.new
-    @git = Git.new
-    @runner = Runner.new
+    @disk   = OsDisk.new
+    @git    = Git.new
+    @runner = RawRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'json'
     @dojo = @paas.create_dojo(root_path, @format)

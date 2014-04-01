@@ -1,15 +1,16 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'Disk'
+require 'OsDisk'
 require 'Git'
-require 'Runner'
+require 'RawRunner'
 
 class TimeOutTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk] = Disk.new
-    Thread.current[:git] = Git.new
-    Thread.current[:runner] = Runner.new
-    @dojo = Dojo.new(root_path,'json')
+    Thread.current[:disk]   = OsDisk.new
+    Thread.current[:git]    = Git.new
+    Thread.current[:runner] = RawRunner.new
+    format = 'json'
+    @dojo = Dojo.new(root_path, format)
   end
 
   test "that code with infinite loop times out to amber and doesnt leak processes" do

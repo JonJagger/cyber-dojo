@@ -11,8 +11,8 @@ class LinuxPaasModelTestCase < ActionController::TestCase
   end
 
   def setup_format(format)
-    @disk = SpyDisk.new
-    @git = StubGit.new
+    @disk   = SpyDisk.new
+    @git    = StubGit.new
     @runner = StubRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = format
