@@ -1,4 +1,3 @@
-o) create lib/DockerRunner.rb
 
 o) Use docker run with volume mount to create docker-runner.
    This means
@@ -14,24 +13,6 @@ o) Use docker run with volume mount to create docker-runner.
   end
   def languages_each
     docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
-  end
-  def runner_run(sandbox, command, max_duration)
-    kill = 9
-    timed_out = 124
-    cid_filename = ...
-    `rm #{cid_filename}`
-    language = sandbox.avatar.kata.language
-    cmd = "docker run -t -i --rm" +
-          " -v #{path(sandbox)}:/sandbox:rw" +
-          " -v #{path(language)}:#{path(language)}:ro"
-          " -w /sandbox" +
-          " --cidfile=\"#{cid_filename}\"" +
-          " #{language.image_name} /bin/bash -c \"timeout --signal=#{kill} #{max_duration}s #{command}\""
-    `#{cmd}`
-    exitstatus = $?.exitstatus
-    cid = `cat #{cid_filename}`
-    (exitstatus != #{timed_out}) ? `docker logs #{cid}` :
-       "Terminated by the cyber-dojo server after #{max_duration} seconds."
   end
 
 o) LinuxPaas needs method to determine if docker is installed

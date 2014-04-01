@@ -1,7 +1,8 @@
 
 class RawRunner
 
-  def run(path, command, max_seconds)
+  def run(paas, sandbox, command, max_seconds)
+    path = paas.path(sandbox)
     # Should I kill the parent (after getting its pid) before killing the children?
     pipe = IO::popen(with_stderr("cd '#{path}';" + command))
     output = ""
