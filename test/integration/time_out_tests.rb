@@ -6,15 +6,16 @@ require 'RawRunner'
 class TimeOutTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk]   = OsDisk.new
-    Thread.current[:git]    = Git.new
-    Thread.current[:runner] = RawRunner.new
+    disk   = OsDisk.new
+    git    = Git.new
+    runner = RawRunner.new
+    paas = LinuxPaas.new(disk, git, runner)
     format = 'json'
-    @dojo = Dojo.new(root_path, format)
+    @dojo = paas.create_dojo(root_path, format)
   end
 
   test "that code with infinite loop times out to amber and doesnt leak processes" do
-    kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise='Dummy')
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar
     visible_files = avatar.visible_files
     filename = 'untitled.rb'
