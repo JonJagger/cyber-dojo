@@ -17,7 +17,7 @@ class RawRunnerTests < ActionController::TestCase
     assert_equal "Hello\n", RawRunner.new.run(paas, sandbox, command,max_duration)
   end
 
-  test "command times-out returns termination output" do
+  test "when command times-out output includes termination output" do
     paas = StubPaas.new
     sandbox = Object.new
     command = 'sleep 10000'

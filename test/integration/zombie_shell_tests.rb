@@ -6,15 +6,15 @@ require 'RawRunner'
 class ZombieShellTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk]   = OsDisk.new
-    Thread.current[:git]    = Git.new
-    Thread.current[:runner] = RawRunner.new
+    disk   = OsDisk.new
+    git    = Git.new
+    runner = RawRunner.new
+    paas = LinuxPaas.new(disk, git, runner)
     format = 'json'
-    @dojo = Dojo.new(root_path, format)
+    @dojo = paas.create_dojo(root_path, format)
   end
 
   def defunct_count
-    # See comments in app/lib/TimeBoxedTask.rb
     `ps`.scan(/<defunct>/).length
   end
 

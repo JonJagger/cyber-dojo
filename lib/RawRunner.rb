@@ -3,17 +3,17 @@ class RawRunner
 
   def run(paas, sandbox, command, max_seconds)
     path = paas.path(sandbox)
-    # Should I kill the parent (after getting its pid) before killing the children?
     pipe = IO::popen(with_stderr("cd '#{path}';" + command))
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }
     result = sandbox_thread.join(max_seconds);
     timed_out = (result == nil)
 
-    kill(descendant_pids_of(pipe.pid))
     if sandbox_thread != nil
       Thread.kill(sandbox_thread)
     end
+    pid = pipe.pid
+    kill(descendant_pids_of(pid))
     pipe.close
     if timed_out
       output += "Terminated by the cyber-dojo server after #{max_seconds} seconds."
