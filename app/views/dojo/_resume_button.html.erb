@@ -2,14 +2,14 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
+
   $('#resume_button').click(function() {
-    var id = $('#kata_id_input').val();    
+    var id = $('#kata_id_input').val();
     var title = "<%= t('views.buttons.resume') %>";
     var cancel = "<%= t('views.buttons.cancel') %>";
-    $.getJSON('/dojo/resume_json' , { id: id }, function(dojo) {    
-      cd.dialog_resumeCoding(title, cancel, dojo.resume_dialog_html).dialog('open');          
-    }); 
+    $.getJSON('/dojo/resume_json' , { id: id }, function(dojo) {
+      cd.dialog_resumeCoding(title, cancel, dojo.resume_dialog_html).dialog('open');
+    });
   });
 
 });
@@ -21,6 +21,6 @@ $(document).ready(function() {
         id="resume_button">
   <%= t("views.buttons.resume") %>
   <div class="tooltip">
-     resumes coding as a specific avatar
+     resumes coding as a specific animal
   <div>
 </button>
