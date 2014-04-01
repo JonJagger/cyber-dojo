@@ -6,183 +6,162 @@ require 'RawRunner'
 class AvatarTests < ActionController::TestCase
 
   def setup
-    Thread.current[:disk]   = OsDisk.new
-    Thread.current[:git]    = Git.new
-    Thread.current[:runner] = RawRunner.new
+    disk   = OsDisk.new
+    git    = Git.new
+    runner = RawRunner.new
+    paas = LinuxPaas.new(disk, git, runner)
+    format = 'json'
+    @dojo = paas.create_dojo(root_path, format)
   end
-
-  def rb_and_json(&block)
-    block.call('rb')
-    teardown
-    setup
-    block.call('json')
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "deleted file is deleted from that repo tag" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new(root_path, format)
-      kata = make_kata(dojo, 'Ruby-installed-and-working')
-      avatar = kata.start_avatar # tag 0
-      visible_files = avatar.visible_files
-      deleted_filename = 'instructions'
-      visible_files[deleted_filename] = 'Whatever'
-      delta = {
-        :changed => [ ],
-        :unchanged => visible_files.keys,
-        :deleted => [ ],
-        :new => [ ]
-      }
-      run_test(delta, avatar, visible_files)  # tag 1
-      visible_files.delete(deleted_filename)
-      delta = {
-        :changed => [ ],
-        :unchanged => visible_files.keys - [ deleted_filename ],
-        :deleted => [ deleted_filename ],
-        :new => [ ]
-      }
-      run_test(delta, avatar, visible_files)  # tag 2
-      before = avatar.visible_files(tag=1)
-      assert before.keys.include?("#{deleted_filename}"),
-            "before.keys.include?(#{deleted_filename})"
-      after = avatar.visible_files(tag=2)
-      assert !after.keys.include?("#{deleted_filename}"),
-            "!after.keys.include?(#{deleted_filename})"
-    })
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
+    visible_files = avatar.visible_files
+    deleted_filename = 'instructions'
+    visible_files[deleted_filename] = 'Whatever'
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys,
+      :deleted => [ ],
+      :new => [ ]
+    }
+    run_test(delta, avatar, visible_files)  # tag 1
+    visible_files.delete(deleted_filename)
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys - [ deleted_filename ],
+      :deleted => [ deleted_filename ],
+      :new => [ ]
+    }
+    run_test(delta, avatar, visible_files)  # tag 2
+    before = avatar.visible_files(tag=1)
+    assert before.keys.include?("#{deleted_filename}"),
+          "before.keys.include?(#{deleted_filename})"
+    after = avatar.visible_files(tag=2)
+    assert !after.keys.include?("#{deleted_filename}"),
+          "!after.keys.include?(#{deleted_filename})"
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "diff_lines is not empty when change in files" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new(root_path, format)
-      kata = make_kata(dojo, 'Ruby-installed-and-working')
-      avatar = kata.start_avatar # tag 0
-      visible_files = avatar.visible_files
-      delta = {
-        :changed => [ ],
-        :unchanged => visible_files.keys,
-        :deleted => [ ],
-        :new => [ ]
-       }
-      run_test(delta, avatar, visible_files) # tag 1
-      visible_files['cyber-dojo.sh'] += 'xxxx'
-      delta = {
-        :changed => [ 'cyber-dojo.sh' ],
-        :unchanged => visible_files.keys - [ 'cyber-dojo.sh' ],
-        :deleted => [ ],
-        :new => [ ]
-       }
-      run_test(delta, avatar, visible_files) # tag 2
-      traffic_lights = avatar.traffic_lights
-      assert_equal 2, traffic_lights.length
-      was_tag = nil
-      now_tag = nil
-      actual = avatar.diff_lines(was_tag = 1, now_tag = 2)
-      assert actual.match(/^diff --git/)
-    })
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
+    visible_files = avatar.visible_files
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys,
+      :deleted => [ ],
+      :new => [ ]
+     }
+    run_test(delta, avatar, visible_files) # tag 1
+    visible_files['cyber-dojo.sh'] += 'xxxx'
+    delta = {
+      :changed => [ 'cyber-dojo.sh' ],
+      :unchanged => visible_files.keys - [ 'cyber-dojo.sh' ],
+      :deleted => [ ],
+      :new => [ ]
+     }
+    run_test(delta, avatar, visible_files) # tag 2
+    traffic_lights = avatar.traffic_lights
+    assert_equal 2, traffic_lights.length
+    was_tag = nil
+    now_tag = nil
+    actual = avatar.diff_lines(was_tag = 1, now_tag = 2)
+    assert actual.match(/^diff --git/)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
   test "diff_lines shows added file" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new(root_path, format)
-      kata = make_kata(dojo, 'Ruby-installed-and-working')
-      avatar = kata.start_avatar # tag 0
-      visible_files = avatar.visible_files
-      added_filename = 'unforgiven.txt'
-      content = 'starring Clint Eastwood'
-      visible_files[added_filename] = content
-      delta = {
-        :changed => [ ],
-        :unchanged => visible_files.keys - [ added_filename ],
-        :deleted => [ ],
-        :new => [ added_filename ]
-      }
-      run_test(delta, avatar, visible_files) # 1
-      actual = avatar.diff_lines(was_tag=0, now_tag=1)
-      expected =
-        [
-          "diff --git a/sandbox/#{added_filename} b/sandbox/#{added_filename}",
-          "new file mode 100644",
-          "index 0000000..1bdc268",
-          "--- /dev/null",
-          "+++ b/sandbox/#{added_filename}",
-          "@@ -0,0 +1 @@",
-          "+#{content}"
-        ].join("\n")
-      assert actual.include?(expected)
-    })
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
+    visible_files = avatar.visible_files
+    added_filename = 'unforgiven.txt'
+    content = 'starring Clint Eastwood'
+    visible_files[added_filename] = content
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys - [ added_filename ],
+      :deleted => [ ],
+      :new => [ added_filename ]
+    }
+    run_test(delta, avatar, visible_files) # 1
+    actual = avatar.diff_lines(was_tag=0, now_tag=1)
+    expected =
+      [
+        "diff --git a/sandbox/#{added_filename} b/sandbox/#{added_filename}",
+        "new file mode 100644",
+        "index 0000000..1bdc268",
+        "--- /dev/null",
+        "+++ b/sandbox/#{added_filename}",
+        "@@ -0,0 +1 @@",
+        "+#{content}"
+      ].join("\n")
+    assert actual.include?(expected)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "diff_lines shows deleted file" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new(root_path, format)
-      kata = make_kata(dojo, 'Ruby-installed-and-working')
-      avatar = kata.start_avatar # tag 0
-      visible_files = avatar.visible_files
-      deleted_filename = 'instructions'
-      content = 'tweedle_dee'
-      visible_files[deleted_filename] = content
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
+    visible_files = avatar.visible_files
+    deleted_filename = 'instructions'
+    content = 'tweedle_dee'
+    visible_files[deleted_filename] = content
 
-      delta = {
-        :changed => [ deleted_filename ],
-        :unchanged => visible_files.keys - [ deleted_filename ],
-        :deleted => [ ],
-        :new => [ ]
-      }
-      run_test(delta, avatar, visible_files)  # tag 1
-      #- - - - -
-      visible_files.delete(deleted_filename)
-      delta = {
-        :changed => [ ],
-        :unchanged => visible_files.keys - [ deleted_filename ],
-        :deleted => [ deleted_filename ],
-        :new => [ ]
-      }
-      run_test(delta, avatar, visible_files)  # tag 2
-      #- - - - -
-      actual = avatar.diff_lines(was_tag=1, now_tag=2)
-      expected =
-        [
-          "diff --git a/sandbox/#{deleted_filename} b/sandbox/#{deleted_filename}",
-          "deleted file mode 100644",
-          "index f68a37c..0000000",
-          "--- a/sandbox/#{deleted_filename}",
-          "+++ /dev/null",
-          "@@ -1 +0,0 @@",
-          "-#{content}"
-        ].join("\n")
-      assert actual.include?(expected), actual
-    })
+    delta = {
+      :changed => [ deleted_filename ],
+      :unchanged => visible_files.keys - [ deleted_filename ],
+      :deleted => [ ],
+      :new => [ ]
+    }
+    run_test(delta, avatar, visible_files)  # tag 1
+    #- - - - -
+    visible_files.delete(deleted_filename)
+    delta = {
+      :changed => [ ],
+      :unchanged => visible_files.keys - [ deleted_filename ],
+      :deleted => [ deleted_filename ],
+      :new => [ ]
+    }
+    run_test(delta, avatar, visible_files)  # tag 2
+    #- - - - -
+    actual = avatar.diff_lines(was_tag=1, now_tag=2)
+    expected =
+      [
+        "diff --git a/sandbox/#{deleted_filename} b/sandbox/#{deleted_filename}",
+        "deleted file mode 100644",
+        "index f68a37c..0000000",
+        "--- a/sandbox/#{deleted_filename}",
+        "+++ /dev/null",
+        "@@ -1 +0,0 @@",
+        "-#{content}"
+      ].join("\n")
+    assert actual.include?(expected), actual
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "output is correct on refresh" do
-    rb_and_json(&Proc.new{|format|
-      dojo = Dojo.new(root_path, format)
-      kata = make_kata(dojo, 'Ruby-installed-and-working')
-      avatar = kata.start_avatar
-      visible_files = avatar.visible_files
-      delta = {
-        :changed => visible_files.keys,
-        :unchanged => [ ],
-        :deleted => [ ],
-        :new => [ ]
-      }
-      output = run_test(delta, avatar, visible_files)
-      visible_files['output'] = output
-      avatar.save_visible_files(visible_files)
-      # now refresh
-      avatar = kata[avatar.name]
-      assert_equal output, avatar.visible_files['output']
-    })
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar
+    visible_files = avatar.visible_files
+    delta = {
+      :changed => visible_files.keys,
+      :unchanged => [ ],
+      :deleted => [ ],
+      :new => [ ]
+    }
+    output = run_test(delta, avatar, visible_files)
+    visible_files['output'] = output
+    avatar.save_visible_files(visible_files)
+    # now refresh
+    avatar = kata.avatars[avatar.name]
+    assert_equal output, avatar.visible_files['output']
   end
 
 end
