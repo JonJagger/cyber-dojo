@@ -6,15 +6,15 @@ class DockerRunner
   def run(paas, sandbox, command, max_seconds)
     Rails.logger.warn("DockerRunner")
     # TODO: move this out of katas/ subfolder
-    #cid_filename = paas.path(sandbox) + 'store.cid'
+    cid_filename = paas.path(sandbox) + 'store.cid'
 
-    #`rm -f #{cid_filename}`
+    `rm -f #{cid_filename}`
     language = sandbox.avatar.kata.language
-    cmd = "docker run -u www-data -i --rm" +
+    cmd = "docker run -u www-data --rm" +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           " -w /sandbox" +
-          #" --cidfile=\"#{cid_filename}\"" +
+          " --cidfile=\"#{cid_filename}\"" +
           " #{language.image_name} /bin/bash -c \"#{command}\""
 
     # timeout must go on 'docker run' command and not on
@@ -26,17 +26,15 @@ class DockerRunner
     Rails.logger.warn("DockerRunner.run " + cmd)
 
     kill = 9
-    output = `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
+    `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
 
+    Rails.logger.warn("cid = #{cid_filename}")
+    log = `docker logs #{cid}`
+    Rails.logger.warn("docker logs cid = #{log}")
     exitstatus = $?.exitstatus
     killed_by_timeout = 128+kill
-
-    #output = (exitstatus != killed_by_timeout) ? `docker logs #{cid}` :
-    #
-    if exitstatus == killed_by_timeout
-      output = "Terminated by the cyber-dojo server after #{max_seconds} seconds."
-    end
-    output
+    timed_out_message = "Terminated by the cyber-dojo server after #{max_seconds} seconds."
+    (exitstatus != killed_by_timeout) ? log : timed_out_message
   end
 
 end
