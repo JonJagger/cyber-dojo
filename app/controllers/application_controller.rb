@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../../config/environment.rb'
 
-require 'LinuxPaas'
-require 'OsDisk'
-require 'Git'
-require 'RawRunner'
 require 'DockerRunner'
 require 'Folders'
+require 'Git'
+require 'LinuxPaas'
+require 'OsDisk'
+require 'RawRunner'
 
 class ApplicationController < ActionController::Base
   before_filter :set_locale
@@ -25,15 +25,6 @@ class ApplicationController < ActionController::Base
     @git    ||= thread[:git]    || Git.new
     @runner ||= thread[:runner] || runner
     @paas   ||= LinuxPaas.new(@disk, @git, @runner)
-  end
-
-  def runner
-    docker? ? DockerRunner.new : RawRunner.new
-  end
-
-  def docker?
-    `docker info`
-    $?.exitstatus === 0 && ENV['CYBERDOJO_USE_HOST'] === nil
   end
 
   def dojo
@@ -57,8 +48,19 @@ class ApplicationController < ActionController::Base
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
   end
 
+private
+
   def format
     'json'
+  end
+
+  def runner
+    docker? ? DockerRunner.new : RawRunner.new
+  end
+
+  def docker?
+    `docker info`
+    $?.exitstatus === 0 && ENV['CYBERDOJO_USE_HOST'] === nil
   end
 
 end
