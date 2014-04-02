@@ -5,13 +5,11 @@
 class RawRunner
 
   def run(paas, sandbox, command, max_seconds)
-    Rails.logger.warn("RawRunner")
     path = paas.path(sandbox)
     pipe_run("cd '#{path}';" + command, max_seconds)
   end
 
   def pipe_run(command, max_seconds)
-    Rails.logger.warn("RawRunner: " + command)
     pipe = IO::popen(with_stderr(command))
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }
