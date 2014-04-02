@@ -10,7 +10,7 @@ class DockerRunner
 
     `rm -f #{cid_filename}`
     language = sandbox.avatar.kata.language
-    cmd = "docker run -u www-data" +
+    cmd = "docker run -u www-data -t" +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           " -w /sandbox" +
@@ -26,10 +26,11 @@ class DockerRunner
     Rails.logger.warn("DockerRunner.run " + cmd)
 
     kill = 9
-    `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
+    raw = `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
     exitstatus = $?.exitstatus
     killed_by_timeout = 128+kill
 
+    Rails.logger.warn("raw = #{raw}")
     cid = `cat #{cid_filename}`
     Rails.logger.warn("cid = #{cid}")
     log = `docker logs #{cid}`
