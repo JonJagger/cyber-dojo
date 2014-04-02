@@ -6,8 +6,6 @@ module Choose
   # language and the exercise on the setup page the same as the
   # kata with that id - if they still exist.
 
-  #TODO: put into app/models/Languages?
-
   def self.language(languages, params_id, id, dojo)
     kata = dojo.katas[id]
     choice = [*0..languages.length-1].shuffle[0]
@@ -19,8 +17,6 @@ module Choose
     end
     choice
   end
-
-  #TODO: put into app/models/Exercises?
 
   def self.exercise(exercises, params_id, id, dojo)
     kata = dojo.katas[id]

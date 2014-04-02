@@ -6,7 +6,6 @@ module Folders
     Dir.entries(path).select { |name| name != '.' and name != '..' }
   end
 
-  # Move into app/models/Katas.complete(id) ?
   def self.id_complete(root_dir, id)
     if id != nil
       id = id[0..9].upcase

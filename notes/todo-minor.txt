@@ -5,6 +5,13 @@ TEST-FAILING
 REFACTOR
   is make_manifest in test_helper.rb used anywhere anymore?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  move app/lib/Choose.language into app/models/Languages?
+  move app/lib/Choose.exercise into app/models/Exercises?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   Have three tabs: one for diff, one for fork, one for revert
   On dashboard page don't show revert tab.
@@ -20,7 +27,6 @@ REFACTOR
   make it so root_path is always set via ENV far from shell.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTOR
-  app/lib/Choose.rb
   lib/Folders.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-MANIFEST
