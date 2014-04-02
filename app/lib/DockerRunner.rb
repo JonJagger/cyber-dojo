@@ -1,11 +1,9 @@
 
-# runner that provides some isolation, some protection, some security.
+# runner that provides some isolation/protection/security.
 
 class DockerRunner
 
   def run(paas, sandbox, command, max_seconds)
-    kill = 9
-    timed_out = 124
 
     # TODO: move this out of katas/ subfolder
     cid_filename = paas.path(sandbox) + 'store.cid'
@@ -17,11 +15,22 @@ class DockerRunner
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           " -w /sandbox" +
           " --cidfile=\"#{cid_filename}\"" +
-          " #{language.image_name} /bin/bash -c \"timeout --signal=#{kill} #{max_seconds}s #{command}\""
-    puts cmd
-    `#{cmd}`
+          " #{language.image_name} /bin/bash -c \"#{command}\""
+
+    # timeout must go on 'docker run' command and not on
+    # the command passed to docker run. This is to ensure
+    # the docker run command does not start doing a docker pull
+    # from the docker index which could easily take considerably
+    # longer than the max_seconds limit.
+
+    kill = 9
+    # timeout not available on OSX ...
+    `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
+
     exitstatus = $?.exitstatus
+    timed_out = 124
     cid = `cat #{cid_filename}`
+
     (exitstatus != timed_out) ? `docker logs #{cid}` :
        "Terminated by the cyber-dojo Docker server after #{max_seconds} seconds."
   end

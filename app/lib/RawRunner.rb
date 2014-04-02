@@ -1,12 +1,16 @@
 
-# no isolation, no protection, no security, nothing.
+# no isolation/protection/security, nothing.
 # See DockerRunner.rb
 
 class RawRunner
 
   def run(paas, sandbox, command, max_seconds)
     path = paas.path(sandbox)
-    pipe = IO::popen(with_stderr("cd '#{path}';" + command))
+    pipe_run("cd '#{path}';" + command, max_seconds)
+  end
+
+  def pipe_run(command, max_seconds)
+    pipe = IO::popen(with_stderr(command))
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }
     result = sandbox_thread.join(max_seconds);
