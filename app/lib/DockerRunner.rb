@@ -27,16 +27,19 @@ class DockerRunner
 
     kill = 9
     `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
+    exitstatus = $?.exitstatus
+    killed_by_timeout = 128+kill
 
     cid = `cat #{cid_filename}`
     Rails.logger.warn("cid = #{cid}")
     log = `docker logs #{cid}`
+    Rails.logger.warn("log = #{log}")
     `docker rm #{cid}`
-    Rails.logger.warn("docker logs 'cid' = #{log}")
-    exitstatus = $?.exitstatus
-    killed_by_timeout = 128+kill
+
     timed_out_message = "Terminated by the cyber-dojo server after #{max_seconds} seconds."
-    (exitstatus != killed_by_timeout) ? log : timed_out_message
+    output = (exitstatus != killed_by_timeout) ? log : timed_out_message
+    Rails.logger.warn("output = #{output}")
+    output
   end
 
 end
