@@ -3,12 +3,8 @@ REFACTOR
   Move Paas.rb and LinuxPaas.rb from app/models into /lib ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
-  have rever/fork buttons above was_tag on diff-dialog
-  have rever/fork buttons above now_tag on diff-dialog
-  Drop revert button from kata-page
-  Drop fork button from kata-page
-  What about from dashboard page?
-  From dashboard you only want fork buttons on the diff-dialog.
+  Have three tabs: one for diff, one for fork, one for revert
+  On dashboard page don't show revert tab.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   clicking yin-yang icon resets back to home page page with no id.
