@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
     `docker info`
     exit_status = $?.exitstatus
     result = exit_status === 0
-    Rails.logger.info("$?.exitstatus == #{exit_status}")
+    Rails.logger.debug("$?.exitstatus == #{exit_status}")
     result
   end
 

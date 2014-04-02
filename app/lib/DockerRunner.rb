@@ -4,7 +4,7 @@
 class DockerRunner
 
   def run(paas, sandbox, command, max_seconds)
-    Rails.logger.info("DockerRunner")
+    Rails.logger.debug("DockerRunner")
     # TODO: move this out of katas/ subfolder
     cid_filename = paas.path(sandbox) + 'store.cid'
 
@@ -23,7 +23,7 @@ class DockerRunner
     # from the docker index which could easily take considerably
     # longer than the max_seconds limit.
 
-    Rails.logger.info("DockerRunner.run " + cmd)
+    Rails.logger.debug("DockerRunner.run " + cmd)
 
     kill = 9
     `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
