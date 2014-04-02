@@ -15,12 +15,8 @@ o) Use docker run with volume mount to create docker-runner.
     docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
   end
 
-o) LinuxPaas needs method to determine if docker is installed
-   def docker?
-     `docker --help`
-     $?exitstatus
-   end
-   Use this to select the appropriate Runner
+o) Have option to force RawRunner even if docker is installed.
+   Useful on local machine.
 
 
 o) Is the new Java out?
