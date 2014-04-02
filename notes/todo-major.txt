@@ -15,9 +15,6 @@ o) Use docker run with volume mount to create docker-runner.
     docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
   end
 
-o) Have option to force RawRunner even if docker is installed.
-   Useful on local machine.
-
 o) Is the new Java out?
    If so, use that as base language-image
    I think all the Java-XXX languages will use the same docker image.

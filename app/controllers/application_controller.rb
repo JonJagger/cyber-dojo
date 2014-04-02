@@ -28,12 +28,12 @@ class ApplicationController < ActionController::Base
   end
 
   def runner
-    (ENV['CYBERDOJO_USE_HOST'] != nil || !docker?) ? RawRunner.new : DockerRunner.new
+    docker? ? DockerRunner.new : RawRunner.new
   end
 
   def docker?
     `docker info`
-    $?.exitstatus === 0
+    $?.exitstatus === 0 && ENV['CYBERDOJO_USE_HOST'] === nil
   end
 
   def dojo
