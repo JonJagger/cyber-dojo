@@ -1,9 +1,8 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OutputParser'
 
 class OutputCppGoogleTestTests < ActionController::TestCase
-  
+
   include OutputParser
 
   test "initial red is red" do
@@ -31,9 +30,9 @@ class OutputCppGoogleTestTests < ActionController::TestCase
       " 1 FAILED TEST",
       "make: *** [run.tests.output] Error 1"
     ].join("\n")
-    assert_equal :red, colour_of(output)                                             
+    assert_equal :red, colour_of(output)
   end
-  
+
   test "initial amber is amber" do
     output =
     [
@@ -41,12 +40,12 @@ class OutputCppGoogleTestTests < ActionController::TestCase
       "untitled.cpp:5:12: error: unable to find numeric literal operator 'operator\"\" typo2'",
       "untitled.cpp:6:1: error: control reaches end of non-void function [-Werror=return-type]",
       "cc1plus: all warnings being treated as errors",
-      "make: *** [run.tests] Error 1"     
+      "make: *** [run.tests] Error 1"
     ].join("\n")
-    assert_equal :amber, colour_of(output)                                            
+    assert_equal :amber, colour_of(output)
   end
 
-  test " initial green is green" do  
+  test " initial green is green" do
     output =
     [
       "Running main() from gmock_main.cc",
@@ -61,13 +60,11 @@ class OutputCppGoogleTestTests < ActionController::TestCase
       "[==========] 1 test from 1 test case ran. (0 ms total)",
       "[  PASSED  ] 1 test."
     ].join("\n")
-    assert_equal :green, colour_of(output)                                        
+    assert_equal :green, colour_of(output)
   end
-  
+
   def colour_of(output)
-    OutputParser::parse_google_test(output)       
+    OutputParser::parse_google_test(output)
   end
-  
+
 end
-
-

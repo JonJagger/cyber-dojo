@@ -1,9 +1,8 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OutputParser'
 
 class OutputGroovySpockTests < ActionController::TestCase
-  
+
   include OutputParser
 
   test "groovyc not installed is amber" do
@@ -26,9 +25,9 @@ class OutputGroovySpockTests < ActionController::TestCase
       "FAILURES!!!",
       "Tests run: 1,  Failures: 1"
     ].join("\n")
-    assert_equal :amber, colour_of(output)                           
+    assert_equal :amber, colour_of(output)
   end
-  
+
   test "syntax error of the second kind is amber" do
     output =
     [
@@ -39,7 +38,7 @@ class OutputGroovySpockTests < ActionController::TestCase
       "",
       "1 error"
     ].join("\n")
-    assert_equal :amber, colour_of(output)                                 
+    assert_equal :amber, colour_of(output)
   end
 
   test "one fail is red" do
@@ -63,9 +62,9 @@ class OutputGroovySpockTests < ActionController::TestCase
       "FAILURES!!!",
       "Tests run: 1,  Failures: 1"
     ].join("\n")
-    assert_equal :red, colour_of(output)                                        
+    assert_equal :red, colour_of(output)
   end
-  
+
   test "one pass is red" do
     output =
     [
@@ -75,9 +74,9 @@ class OutputGroovySpockTests < ActionController::TestCase
       "",
       "OK (1 test)"
     ].join("\n")
-    assert_equal :green, colour_of(output)                                  
+    assert_equal :green, colour_of(output)
   end
-  
+
   test "no assertions is red" do
     output =
     [
@@ -87,13 +86,11 @@ class OutputGroovySpockTests < ActionController::TestCase
       "",
       "OK (0 tests)"
     ].join("\n")
-    assert_equal :red, colour_of(output)                                    
+    assert_equal :red, colour_of(output)
   end
-  
+
   def colour_of(output)
-    OutputParser::parse_groovy_spock(output)    
+    OutputParser::parse_groovy_spock(output)
   end
-  
+
 end
-
-

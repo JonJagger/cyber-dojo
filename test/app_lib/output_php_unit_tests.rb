@@ -1,9 +1,8 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OutputParser'
 
 class OutputPhpUnitTests < ActionController::TestCase
-  
+
   include OutputParser
 
   test "one fail is red" do
@@ -26,7 +25,7 @@ class OutputPhpUnitTests < ActionController::TestCase
         "FAILURES!",
         "Tests: 1, Assertions: 1, Failures: 1."
       ].join("\n")
-    assert_equal :red, colour_of(output)      
+    assert_equal :red, colour_of(output)
   end
 
   test "one pass is green" do
@@ -39,17 +38,17 @@ class OutputPhpUnitTests < ActionController::TestCase
         "",
         "Time: 0 seconds, Memory: 4.00Mb",
         "",
-        "OK (1 test, 1 assertion)"        
+        "OK (1 test, 1 assertion)"
       ].join("\n")
-    assert_equal :green, colour_of(output)             
+    assert_equal :green, colour_of(output)
   end
-  
+
   test "syntax error is amber" do
     output =
       [
-        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"        
+        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"
       ].join("\n")
-    assert_equal :amber, colour_of(output)                  
+    assert_equal :amber, colour_of(output)
   end
 
   test "one pass one fail is red" do
@@ -70,9 +69,9 @@ class OutputPhpUnitTests < ActionController::TestCase
         "/var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php:15",
         "",
         "FAILURES!",
-        "Tests: 2, Assertions: 2, Failures: 1."        
+        "Tests: 2, Assertions: 2, Failures: 1."
       ].join("\n")
-    assert_equal :red, colour_of(output)      
+    assert_equal :red, colour_of(output)
   end
 
   test "multiple calls in cyber-dojo.sh and one overall-pass and one overall-fail" do
@@ -104,7 +103,7 @@ class OutputPhpUnitTests < ActionController::TestCase
         "",
         "OK (1 test, 1 assertion)",
       ].join("\n")
-    assert_equal :red, colour_of(output)          
+    assert_equal :red, colour_of(output)
   end
 
   test "red output then amber output is amber" do
@@ -127,9 +126,9 @@ class OutputPhpUnitTests < ActionController::TestCase
         "FAILURES!",
         "Tests: 1, Assertions: 1, Failures: 1.",
         "",
-        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"        
+        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"
       ].join("\n")
-    assert_equal :amber, colour_of(output)               
+    assert_equal :amber, colour_of(output)
   end
 
   test "green output then amber output is amber" do
@@ -144,18 +143,18 @@ class OutputPhpUnitTests < ActionController::TestCase
         "",
         "OK (1 test, 1 assertion)",
         "",
-        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"        
+        "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"
       ].join("\n")
-    assert_equal :amber, colour_of(output)              
+    assert_equal :amber, colour_of(output)
   end
 
   test "phpunit not installed is amber" do
     output = "./cyber-dojo.sh: line 1: phpunit: command not found"
-    assert_equal :amber, colour_of(output)         
+    assert_equal :amber, colour_of(output)
   end
-  
+
   def colour_of(output)
-    OutputParser::parse_php_unit(output)  
+    OutputParser::parse_php_unit(output)
   end
-  
+
 end

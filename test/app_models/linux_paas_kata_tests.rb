@@ -36,7 +36,7 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
       assert_not_equal id, kata.id
       created = Time.mktime(*kata.created)
       diff = created - past
-      assert 0 <= diff && diff < 1
+      assert 0 <= diff && diff < 1, "created=#{created}, past=#{past}, diff=#{past}"
     end
   end
 

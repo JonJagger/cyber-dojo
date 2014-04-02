@@ -1,8 +1,8 @@
 __DIR__ = File.dirname(__FILE__)
 require __DIR__ + '/../test_helper'
-require __DIR__ + '/../app_models/spy_disk'
-require __DIR__ + '/../app_models/stub_git'
-require __DIR__ + '/../app_models/stub_runner'
+require __DIR__ + '/spy_disk'
+require __DIR__ + '/stub_git'
+require __DIR__ + '/stub_runner'
 
 class LinuxPaasModelTestCase < ActionController::TestCase
 
@@ -21,13 +21,6 @@ class LinuxPaasModelTestCase < ActionController::TestCase
 
   def teardown
     @disk.teardown
-  end
-
-  def rb_and_json(&block) # deprecated
-    block.call('rb')
-    teardown
-    setup_format('json')
-    block.call('json')
   end
 
   def json_and_rb

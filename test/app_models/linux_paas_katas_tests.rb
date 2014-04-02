@@ -1,8 +1,8 @@
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../test_helper'
-require __DIR__ + '/../../lib/OsDisk'
-require __DIR__ + '/../../lib/Git'
-require __DIR__ + '/../../lib/RawRunner'
+__DIR__ = File.dirname(__FILE__) + '/../../'
+require __DIR__ + 'test/test_helper'
+require __DIR__ + 'lib/OsDisk'
+require __DIR__ + 'lib/Git'
+require __DIR__ + 'app/lib/RawRunner'
 
 class LinuxPaasKatasTests < ActionController::TestCase
 

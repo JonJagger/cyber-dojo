@@ -1,11 +1,10 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OutputParser'
 
 class OutputJavaJUnitTests < ActionController::TestCase
-  
+
   include OutputParser
-  
+
   test "failing test is red" do
     output =
       [
@@ -20,7 +19,7 @@ class OutputJavaJUnitTests < ActionController::TestCase
         "FAILURES!!!",
         "Tests run: 1,  Failures: 1"
       ].join("\n")
-    assert_equal :red, colour_of(output)             
+    assert_equal :red, colour_of(output)
   end
 
   test "syntax error is amber" do
@@ -29,11 +28,11 @@ class OutputJavaJUnitTests < ActionController::TestCase
         "UntitledTest.java:8: ';' expected",
         "        int expected = 6 * 7s;",
         "                            ^",
-        "1 error"        
+        "1 error"
       ].join("\n")
-    assert_equal :amber, colour_of(output)                 
+    assert_equal :amber, colour_of(output)
   end
-  
+
   test "passing test is green" do
     output =
       [
@@ -43,11 +42,11 @@ class OutputJavaJUnitTests < ActionController::TestCase
         "",
         "OK (1 test)"
       ].join("\n")
-    assert_equal :green, colour_of(output)         
+    assert_equal :green, colour_of(output)
   end
-     
+
   def colour_of(output)
-    OutputParser::parse_junit(output)  
+    OutputParser::parse_junit(output)
   end
-  
+
 end

@@ -1,8 +1,4 @@
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OsDisk'
-require 'Git'
-require 'GitDiff'
-require 'Runner'
 
 class GitDiffViewTests < ActionController::TestCase
 
@@ -12,7 +8,7 @@ class GitDiffViewTests < ActionController::TestCase
     super
     @disk = OsDisk.new
     @git = Git.new
-    @runner = Runner.new
+    @runner = RawRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'json'
     @dojo = @paas.create_dojo(root_path, @format)

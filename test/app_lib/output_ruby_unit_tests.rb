@@ -1,9 +1,8 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OutputParser'
 
 class OutputRubyUnitTests < ActionController::TestCase
-  
+
   include OutputParser
 
   test "was a red ruby case" do
@@ -32,7 +31,7 @@ class OutputRubyUnitTests < ActionController::TestCase
         '17 tests, 17 assertions, 3 failures, 0 errors',
         '[[" _ ", " _ "], ["  |", " _|"], ["  |", "|_ "]]'
       ].join("\n")
-    assert_equal :red, colour_of(output)  
+    assert_equal :red, colour_of(output)
   end
 
   test "one failing test no passing tests is red" do
@@ -53,7 +52,7 @@ class OutputRubyUnitTests < ActionController::TestCase
         "",
         "1 tests, 1 assertions, 1 failures, 0 errors, 0 skips"
       ].join("\n")
-    assert_equal :red, colour_of(output)  
+    assert_equal :red, colour_of(output)
   end
 
   test "one passing test no failing test is green" do
@@ -69,9 +68,9 @@ class OutputRubyUnitTests < ActionController::TestCase
         "",
         "1 tests, 1 assertions, 0 failures, 0 errors, 0 skips"
       ].join("\n")
-    assert_equal :green, colour_of(output)     
+    assert_equal :green, colour_of(output)
   end
-  
+
   test "one passing test one failing test is red" do
     output =
       [
@@ -88,9 +87,9 @@ class OutputRubyUnitTests < ActionController::TestCase
         "<54> expected but was",
         "<42>.",
         "",
-        "2 tests, 2 assertions, 1 failures, 0 errors, 0 skips"       
+        "2 tests, 2 assertions, 1 failures, 0 errors, 0 skips"
       ].join("\n")
-    assert_equal :red, colour_of(output)     
+    assert_equal :red, colour_of(output)
   end
 
   test "syntax error of the first kind is amber" do
@@ -99,17 +98,17 @@ class OutputRubyUnitTests < ActionController::TestCase
         "test_untitled.rb:5:in `<class:TestUntitled>': undefined local variable or method `ddd' for TestUntitled:Class (NameError)",
         "	from test_untitled.rb:4:in `<main>'",
       ].join("\n")
-    assert_equal :amber, colour_of(output)         
+    assert_equal :amber, colour_of(output)
   end
-  
+
   test "syntax error of the second kind is amber" do
     output =
       [
-        "test_untitled.rb:7: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('"    
+        "test_untitled.rb:7: syntax error, unexpected tIDENTIFIER, expecting keyword_do or '{' or '('"
       ].join("\n")
-    assert_equal :amber, colour_of(output)      
+    assert_equal :amber, colour_of(output)
   end
-  
+
   test "syntax error of the third kind is amber" do
     output =
       [
@@ -129,12 +128,10 @@ class OutputRubyUnitTests < ActionController::TestCase
         "",
         "1 tests, 0 assertions, 0 failures, 1 errors, 0 skips"
       ].join("\n")
-    assert_equal :amber, colour_of(output)          
+    assert_equal :amber, colour_of(output)
   end
-  
+
   def colour_of(output)
-    OutputParser::parse_ruby_test_unit(output) 
+    OutputParser::parse_ruby_test_unit(output)
   end
 end
-
-

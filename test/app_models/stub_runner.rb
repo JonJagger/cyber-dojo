@@ -5,7 +5,8 @@ class StubRunner
     @log = [ ]
   end
 
-  def run(path, command, max_duration)
+  def run(paas, sandbox, command, max_duration)
+    path = paas.path(sandbox)
     @log << ("cd '#{path}';" + command)
     'stubbed-output'
   end

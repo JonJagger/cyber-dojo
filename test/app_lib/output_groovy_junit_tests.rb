@@ -1,16 +1,15 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'OutputParser'
 
 class OutputGroovyJUnitTests < ActionController::TestCase
-  
+
   include OutputParser
 
   test "groovyc not installed is amber" do
     output = [ "groovyc: command not found" ].join("\n")
     assert_equal :amber, colour_of(output)
   end
-  
+
   test "initial red is red" do
     output =
     [
@@ -27,10 +26,10 @@ class OutputGroovyJUnitTests < ActionController::TestCase
       "FAILURES!!!",
       "Tests run: 1,  Failures: 1",
     ].join("\n")
-    assert_equal :red, colour_of(output)                                             
+    assert_equal :red, colour_of(output)
   end
-  
-  test " initial green is green" do  
+
+  test " initial green is green" do
     output =
     [
       "JUnit version 4.11",
@@ -39,9 +38,9 @@ class OutputGroovyJUnitTests < ActionController::TestCase
       "",
       "OK (1 test)"
     ].join("\n")
-    assert_equal :green, colour_of(output)                                        
+    assert_equal :green, colour_of(output)
   end
-  
+
   test "syntax error of the first kind is amber" do
     output =
     [
@@ -52,9 +51,9 @@ class OutputGroovyJUnitTests < ActionController::TestCase
       "",
       "1 error"
     ].join("\n")
-    assert_equal :amber, colour_of(output)                                            
+    assert_equal :amber, colour_of(output)
   end
-  
+
   test "two passes and no fail is green" do
     output =
     [
@@ -64,7 +63,7 @@ class OutputGroovyJUnitTests < ActionController::TestCase
       "",
       "OK (2 tests)"
     ].join("\n")
-    assert_equal :green, colour_of(output)                                                 
+    assert_equal :green, colour_of(output)
   end
 
   test "one pass one fail is red" do
@@ -83,13 +82,11 @@ class OutputGroovyJUnitTests < ActionController::TestCase
       "FAILURES!!!",
       "Tests run: 2,  Failures: 1"
     ].join("\n")
-    assert_equal :red, colour_of(output)                             
+    assert_equal :red, colour_of(output)
   end
 
   def colour_of(output)
-    OutputParser::parse_groovy_junit(output)       
+    OutputParser::parse_groovy_junit(output)
   end
-  
+
 end
-
-

@@ -83,7 +83,7 @@ class AvatarTests < LinuxPaasModelTestCase
 =begin
 
   test "avatar (rb) creation sets up initial git repo of visible files " +
-        "but not support_files" do
+        "(but support_files are not in git repo)" do
     @dojo = Dojo.new('spied/','rb')
     @kata = @dojo[@id]
     visible_files = {
@@ -181,7 +181,7 @@ class AvatarTests < LinuxPaasModelTestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar has no traffic-lights before first test-run" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]
       visible_files = {
@@ -198,13 +198,13 @@ class AvatarTests < LinuxPaasModelTestCase
       kata = @dojo.create_kata(manifest)
       avatar = kata.start_avatar
       assert_equal [ ], avatar.traffic_lights
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar returns kata it was created with" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]
       visible_files = {
@@ -221,13 +221,13 @@ class AvatarTests < LinuxPaasModelTestCase
       kata = @dojo.create_kata(manifest)
       avatar = kata.start_avatar
       assert_equal kata, avatar.kata
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar's tag 0 repo contains an empty output file only if kata-manifest does" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]
       visible_files = {
@@ -248,13 +248,13 @@ class AvatarTests < LinuxPaasModelTestCase
       assert visible_files.keys.include?('output'),
             "visible_files.keys.include?('output')"
       assert_equal "", visible_files['output']
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after avatar is created sandbox contains separate visible_files" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]
       visible_files = {
@@ -274,13 +274,13 @@ class AvatarTests < LinuxPaasModelTestCase
       visible_files.each do |filename,content|
         assert_equal content, avatar.sandbox.dir.read(filename)
       end
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after avatar is created avatar dir contains all visible_files in manifest" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]
       visible_files = {
@@ -301,13 +301,13 @@ class AvatarTests < LinuxPaasModelTestCase
         assert visible_files.keys.include?(filename)
         assert_equal visible_files[filename], content
       end
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after avatar is created sandbox contains cyber-dojo.sh" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]
       visible_files = {
@@ -326,14 +326,14 @@ class AvatarTests < LinuxPaasModelTestCase
       avatar = kata.start_avatar
       sandbox = avatar.sandbox
       assert_equal visible_files['cyber-dojo.sh'], sandbox.dir.read('cyber-dojo.sh')
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "after first test() traffic_lights contains one traffic-light " +
         "which does not contain output" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/', format)
       @kata = @dojo[@id]
       visible_files = {
@@ -371,13 +371,13 @@ class AvatarTests < LinuxPaasModelTestCase
       assert_equal 1, traffic_lights.length
       assert_equal nil, traffic_lights.last[:run_tests_output]
       assert_equal nil, traffic_lights.last[:output]
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "one more traffic light each test() call" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/', format)
       @kata = @dojo[@id]
       language = @dojo.language('C')
@@ -400,13 +400,13 @@ class AvatarTests < LinuxPaasModelTestCase
       traffic_light = OutputParser::parse('cassert', output)
       traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
       assert_equal 2, traffic_lights.length
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "diff_lines" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/', format)
       @kata = @dojo[@id]
       avatar = @kata['lion']
@@ -416,13 +416,13 @@ class AvatarTests < LinuxPaasModelTestCase
          'diff',
          '--ignore-space-at-eol --find-copies-harder 3 4 sandbox'
         ])
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "locked_read with tag" do
-    rb_and_json(&Proc.new{|format|
+    json_and_rb |format|
       @dojo = Dojo.new('spied/', format)
       @kata = @dojo[@id]
       avatar = @kata['lion']
@@ -432,7 +432,7 @@ class AvatarTests < LinuxPaasModelTestCase
          'show',
          '4:manifest.rb'
         ])
-    })
+    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

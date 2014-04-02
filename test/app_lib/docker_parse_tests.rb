@@ -1,5 +1,4 @@
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class DockerParseTests < ActionController::TestCase
 
