@@ -10,12 +10,12 @@ class DockerRunner
 
     `rm -f #{cid_filename}`
     language = sandbox.avatar.kata.language
-    cmd = "docker run -u www-data -t" +
+    cmd = "docker run -u www-data" +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           " -w /sandbox" +
           " --cidfile=\"#{cid_filename}\"" +
-          " #{language.image_name} /bin/bash -c \"#{command}\""
+          " #{language.image_name} /bin/bash -c \"#{with_stderr(command)}\""
 
     # timeout must go on 'docker run' command and not on
     # the command passed to docker run. This is to ensure
@@ -41,6 +41,10 @@ class DockerRunner
     output = (exitstatus != killed_by_timeout) ? log : timed_out_message
     Rails.logger.warn("output = #{output}")
     output
+  end
+
+  def with_stderr(cmd)
+    cmd + " " + "2>&1"
   end
 
 end
