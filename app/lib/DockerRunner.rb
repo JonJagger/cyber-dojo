@@ -10,7 +10,7 @@ class DockerRunner
 
     `rm -f #{cid_filename}`
     language = sandbox.avatar.kata.language
-    cmd = "docker run -u www-data --rm" +
+    cmd = "docker run -u www-data" +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           " -w /sandbox" +
@@ -28,9 +28,11 @@ class DockerRunner
     kill = 9
     `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
 
-    Rails.logger.warn("cid = #{cid_filename}")
-    log = `docker logs #{cid_filename}`
-    Rails.logger.warn("docker logs cid = #{log}")
+    cid = `cat #{cid_filename}`
+    Rails.logger.warn("cid = #{cid}")
+    log = `docker logs #{cid}`
+    `docker rm #{cid}`
+    Rails.logger.warn("docker logs 'cid' = #{log}")
     exitstatus = $?.exitstatus
     killed_by_timeout = 128+kill
     timed_out_message = "Terminated by the cyber-dojo server after #{max_seconds} seconds."
