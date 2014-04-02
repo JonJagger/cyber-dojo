@@ -29,7 +29,7 @@ class DockerRunner
     `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
 
     Rails.logger.warn("cid = #{cid_filename}")
-    log = `docker logs #{cid}`
+    log = `docker logs #{cid_filename}`
     Rails.logger.warn("docker logs cid = #{log}")
     exitstatus = $?.exitstatus
     killed_by_timeout = 128+kill
