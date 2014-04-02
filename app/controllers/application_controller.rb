@@ -32,9 +32,10 @@ class ApplicationController < ActionController::Base
   end
 
   def docker?
-    `docker info`
+    info = `docker info`
     exit_status = $?.exitstatus
     result = exit_status === 0
+    Rails.logger.warn("docker info -> " + info)
     Rails.logger.warn("$?.exitstatus == #{exit_status}")
     result
   end
