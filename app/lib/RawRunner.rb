@@ -3,6 +3,7 @@
 # See DockerRunner.rb
 
 class RawRunner
+  include Runner
 
   def run(paas, sandbox, command, max_seconds)
     path = paas.path(sandbox)
@@ -23,16 +24,12 @@ class RawRunner
     kill(descendant_pids_of(pid))
     pipe.close
     if timed_out
-      output += "Terminated by the cyber-dojo server after #{max_seconds} seconds."
+      output += terminated(max_seconds)
     end
     output
   end
 
 private
-
-  def with_stderr(cmd)
-    cmd + " " + "2>&1"
-  end
 
   def kill(pids)
     return if pids == [ ]

@@ -1,5 +1,5 @@
 cyberdojo_root = File.absolute_path(File.dirname(__FILE__) + '/../../')
-# needed because app/models/Disk requires app/models/DiskDir
+# needed because app/lib/OsDisk requires app/lib/OsDir
 $LOAD_PATH.unshift(cyberdojo_root + '/lib')
 
 require 'JSON'
@@ -9,7 +9,7 @@ require "#{cyberdojo_root}/app/models/Kata"
 require "#{cyberdojo_root}/app/models/Language"
 require "#{cyberdojo_root}/app/models/Sandbox"
 require "#{cyberdojo_root}/app/lib/OutputParser"
-require "#{cyberdojo_root}/lib/Disk"
+require "#{cyberdojo_root}/lib/OsDisk"
 require "#{cyberdojo_root}/lib/Git"
 require "#{cyberdojo_root}/lib/RawRunner"
 require "#{cyberdojo_root}/lib/Uuid"
@@ -21,7 +21,7 @@ class OneLanguageChecker
     if @root_path[-1] != '/'
       @root_path += '/'
     end
-    @verbose = (option == "noisy")
+    @verbose = (option == 'noisy')
     @max_duration = 60
   end
 
@@ -208,7 +208,7 @@ private
     if !has_parse_method
       message =
         alert +
-          "app/lib/CodeOutputParser.rb does not contain a " +
+          "app/lib/OutputParser.rb does not contain a " +
           "parse_#{unit_test_framework}(output) method"
       puts message
       return false

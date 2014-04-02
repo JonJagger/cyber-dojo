@@ -23,18 +23,17 @@ class ApplicationController < ActionController::Base
     thread = Thread.current
     @disk   ||= thread[:disk]   || OsDisk.new
     @git    ||= thread[:git]    || Git.new
-    @runner ||= thread[:runner] || choose_runner
+    @runner ||= thread[:runner] || runner
     @paas   ||= LinuxPaas.new(@disk, @git, @runner)
   end
 
-  def choose_runner
-    docker? ? DockerRunner.new : RawRunner.new
+  def runner
+    (ENV['CYBERDOJO_USE_HOST'] != nil || !docker?) ? RawRunner.new : DockerRunner.new
   end
 
   def docker?
-    info = `docker info`
-    exit_status = $?.exitstatus
-    exit_status === 0
+    `docker info`
+    $?.exitstatus === 0
   end
 
   def dojo

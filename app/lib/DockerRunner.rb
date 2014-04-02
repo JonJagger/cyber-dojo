@@ -2,13 +2,14 @@
 # runner that provides some isolation/protection/security.
 
 class DockerRunner
+  include Runner
 
   def run(paas, sandbox, command, max_seconds)
     language = sandbox.avatar.kata.language
-    cmd = "docker run -u www-data --rm" +
+    cmd = 'docker run -u www-data --rm' +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
-          " -w /sandbox" +
+          ' -w /sandbox' +
           " #{language.image_name} /bin/bash -c \"#{with_stderr(command)}\""
 
     # timeout must go on 'docker run' command and not on
@@ -22,14 +23,7 @@ class DockerRunner
     fatal_error_signal = 128
     killed_by_timeout = fatal_error_signal + kill
 
-    timed_out_message = "Terminated by the cyber-dojo server after #{max_seconds} seconds."
-    exit_status != killed_by_timeout ? output : timed_out_message
-  end
-
-private
-
-  def with_stderr(cmd)
-    cmd + " " + "2>&1"
+    exit_status != killed_by_timeout ? output : terminated(max_seconds)
   end
 
 end
