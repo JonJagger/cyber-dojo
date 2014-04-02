@@ -38,7 +38,7 @@ class DockerRunner
     #`docker rm #{cid}`
 
     timed_out_message = "Terminated by the cyber-dojo server after #{max_seconds} seconds."
-    output = timed_out_message if exit_status == killed_by_timeout
+    exit_status != killed_by_timeout ? output : timed_out_message
   end
 
   def with_stderr(cmd)
