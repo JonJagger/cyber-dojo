@@ -10,7 +10,7 @@ class DockerRunner
 
     `rm -f #{cid_filename}`
     language = sandbox.avatar.kata.language
-    cmd = "docker run -t -i --rm" +
+    cmd = "docker run -u www-data -t -i --rm" +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           " -w /sandbox" +
