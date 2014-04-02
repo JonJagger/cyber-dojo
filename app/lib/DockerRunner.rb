@@ -8,7 +8,7 @@ class DockerRunner
     # TODO: move this out of katas/ subfolder
     #cid_filename = paas.path(sandbox) + 'store.cid'
 
-    `rm -f #{cid_filename}`
+    #`rm -f #{cid_filename}`
     language = sandbox.avatar.kata.language
     cmd = "docker run -u www-data --rm" +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
