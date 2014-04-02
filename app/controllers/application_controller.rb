@@ -4,7 +4,7 @@ require 'LinuxPaas'
 require 'OsDisk'
 require 'Git'
 require 'RawRunner'
-require 'make_time_helper'
+require 'DockerRunner'
 require 'Folders'
 
 class ApplicationController < ActionController::Base
@@ -23,8 +23,17 @@ class ApplicationController < ActionController::Base
     thread = Thread.current
     @disk   ||= thread[:disk]   || OsDisk.new
     @git    ||= thread[:git]    || Git.new
-    @runner ||= thread[:runner] || RawRunner.new
+    @runner ||= thread[:runner] || choose_runner
     @paas   ||= LinuxPaas.new(@disk, @git, @runner)
+  end
+
+  def choose_runner
+    docker? ? DockerRunner.new : RawRunner.new
+  end
+
+  def docker?
+    `docker info`
+    $?.exitstatus === 0
   end
 
   def dojo
