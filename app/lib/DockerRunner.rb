@@ -28,15 +28,11 @@ class DockerRunner
     `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
 
     exitstatus = $?.exitstatus
-    timed_out = 124
+    killed_by_timeout = 128+kill
     cid = `cat #{cid_filename}`
 
-    output = (exitstatus != timed_out) ? `docker logs #{cid}` :
+    output = (exitstatus != killed_by_timeout) ? `docker logs #{cid}` :
        "Terminated by the cyber-dojo Docker server after #{max_seconds} seconds."
-
-    output += "\n"
-    output += exitstatus.to_s
-    output
   end
 
 private
