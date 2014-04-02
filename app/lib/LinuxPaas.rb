@@ -1,8 +1,5 @@
 
-# Paas on top of Linux
-# no isolation, no protection, no security, nothing.
-
-class LinuxPaas < Paas
+class LinuxPaas
 
   def initialize(disk, git, runner)
     @disk,@git,@runner = disk,git,runner
@@ -166,6 +163,33 @@ class LinuxPaas < Paas
 
   def runner_run(sandbox, command, max_duration)
     @runner.run(self, sandbox, command, max_duration)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  def path(obj)
+    case obj
+      when Languages
+        root(obj.dojo) + 'languages/'
+      when Language
+        path(obj.dojo.languages) + obj.name + '/'
+      when Exercises
+        root(obj.dojo) + 'exercises/'
+      when Exercise
+        path(obj.dojo.exercises) + obj.name + '/'
+      when Katas
+        root(obj.dojo) + 'katas/'
+      when Kata
+        path(obj.dojo.katas) + obj.id.inner + '/' + obj.id.outer + '/'
+      when Avatar
+        path(obj.kata) + obj.name + '/'
+      when Sandbox
+        path(obj.avatar) + 'sandbox/'
+    end
+  end
+
+  def root(dojo)
+    dojo.path
   end
 
 end

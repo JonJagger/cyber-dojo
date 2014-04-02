@@ -1,4 +1,7 @@
 
+# no isolation, no protection, no security, nothing.
+# See DockerRunner.rb
+
 class RawRunner
 
   def run(paas, sandbox, command, max_seconds)

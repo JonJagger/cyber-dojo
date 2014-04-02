@@ -1,4 +1,6 @@
 
+# runner that provides some isolation, some protection, some security.
+
 class DockerRunner
 
   def run(paas, sandbox, command, max_seconds)
