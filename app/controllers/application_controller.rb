@@ -33,7 +33,10 @@ class ApplicationController < ActionController::Base
 
   def docker?
     `docker info`
-    $?.exitstatus === 0
+    exit_status = $?.exitstatus
+    result = exit_status === 0
+    Rails.logger.info("$?.exitstatus == #{exit_status}")
+    result
   end
 
   def dojo
