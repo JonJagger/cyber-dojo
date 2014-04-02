@@ -2,6 +2,9 @@
 TEST-FAILING
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  is make_manifest in test_helper.rb used anywhere anymore?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   Have three tabs: one for diff, one for fork, one for revert
   On dashboard page don't show revert tab.

@@ -19,7 +19,7 @@ class Avatars
   attr_reader :kata
 
   def each
-    kata.dojo.paas.avatars_each(kata) do |name|
+    paas.avatars_each(kata) do |name|
       yield self[name]
     end
   end
@@ -28,4 +28,9 @@ class Avatars
     Avatar.new(kata,name)
   end
 
+private
+
+  def paas
+    kata.dojo.paas
+  end
 end

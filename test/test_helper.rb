@@ -15,7 +15,7 @@ SimpleCov.start do
   add_group 'app/models'      do |src_file|
       # for some reason SimpleCov is seeing
       # cyberdojo/app/models/Dojo.rb and
-      # cyberdojo/app/models/Ddjo.rb
+      # cyberdojo/app/models/dojo.rb
       # when the later file does not exist!
       src_file.filename.include?('cyberdojo/app/models') &&
       !src_file.filename.include?('dojo.rb')
@@ -52,7 +52,6 @@ class ActiveSupport::TestCase
   end
 
   def make_manifest(dojo, language_name, exercise_name)
-    # used anywhere anymore?
     language = dojo.languages[language_name]
     {
       :created => now = make_time(Time.now),
