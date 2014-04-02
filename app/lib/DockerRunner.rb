@@ -4,7 +4,7 @@
 class DockerRunner
 
   def run(paas, sandbox, command, max_seconds)
-    max_seconds = 30
+    max_seconds = 60
     Rails.logger.warn("DockerRunner")
     # TODO: move this out of katas/ subfolder
     cid_filename = paas.path(sandbox) + 'store.cid'
