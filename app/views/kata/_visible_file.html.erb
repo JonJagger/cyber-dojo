@@ -2,7 +2,7 @@
     <div class="filename_div"
          id="<%= filename %>_div">
       <table>
-        <tr>
+        <tr class="valign-top">
           <td>
             <textarea class="line_numbers"
                       id="<%= filename %>_line_numbers">
@@ -15,9 +15,9 @@
                         name="file_content[<%= filename %>]"
                         id="file_content_for_<%= filename %>"
                         wrap="off">
-<%= h content %></textarea>                                     
-            <% else %>            
-              <%= render :partial => 'output' %>        
+<%= h content %></textarea>
+            <% else %>
+              <%= render :partial => 'output' %>
             <% end %>
           </td>
         </tr>

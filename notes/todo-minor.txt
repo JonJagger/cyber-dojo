@@ -20,10 +20,6 @@ WRAPPING
   only on output window turn textarea wrap=on to cater for
   looooong lines from gcc output.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINE-NUMBERS
-  need vertical-align = top so that line-numbers align when
-  content area is resized.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-FAILING
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
