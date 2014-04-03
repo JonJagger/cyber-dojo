@@ -75,9 +75,7 @@ class LinuxPaas
     pathed = path(languages)
     @disk[pathed].entries.select do |name|
       if @disk.is_dir?(File.join(pathed, name))
-        if @runner.runnable?(languages[name])
-          yield name
-        end
+        yield name
       end
     end
   end

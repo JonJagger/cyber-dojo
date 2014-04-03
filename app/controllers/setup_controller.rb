@@ -4,7 +4,7 @@ require 'Choose'
 class SetupController < ApplicationController
 
   def show
-    @languages = dojo.languages.map{|language|
+    @languages = dojo.languages.select{|language| language.runnable?}.map{|language|
       [language.display_name,language.display_test_name,language.name]
     }.sort
     @languages_names = @languages.map{|array| array[2]}

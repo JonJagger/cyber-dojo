@@ -11,6 +11,10 @@ class Language
     paas.exists?(self)
   end
 
+  def runnable?
+    paas.runnable?(self)
+  end
+
   def display_name
     manifest['display_name'] || @name
   end

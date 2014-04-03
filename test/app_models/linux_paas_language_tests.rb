@@ -241,6 +241,35 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "language can be asked if it is runnable" do
+    json_and_rb do
+      @language = @dojo.languages['Ruby']
+      assert @language.runnable?
+    end
+  end
+
+  class CustomRunner
+    def initialize(installed)
+      @installed = installed
+    end
+    def runnable?(language)
+      @installed.include?(language.name)
+    end
+  end
+
+  test "custom runner that filters the language.runnable?" do
+    @disk   = SpyDisk.new
+    @git    = StubGit.new
+    @runner = CustomRunner.new(['yes'])
+    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @format = 'json'
+    @dojo = @paas.create_dojo(root_path + '../../', @format)
+    assert @dojo.languages['yes'].runnable?
+    assert !@dojo.languages['no'].runnable?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def spy_manifest(manifest)
     @paas.dir(@language).spy_read('manifest.json', JSON.unparse(manifest))
   end
