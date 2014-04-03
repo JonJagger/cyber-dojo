@@ -1,7 +1,16 @@
 
-CUSTOM-DOMAIN-NAMES
-  James has found out how to spin up custom names for clients
-  eg  cisco.cyberdojo.org - from amazon r53
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOTKEY
+  Alt-o hotkey cycles between most recently opened non-output file
+  and the output file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+OUTPUT-HOTLINK
+  if outout file is selected
+    hot key (ALT-E perhaps) causes...
+    javascript to matches the output for *first*
+      file+line-number in error message (in pattern of output)
+    auto opens that file
+    scrolls to the line-number.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SEARCH-REPLACE
   button just below new/rename/delete
@@ -11,11 +20,30 @@ SEARCH-REPLACE
   replace: defaults to content selected in editor (or "")
   and [button]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAULT
-  katas/34/87780530/hippo/sandbox
-  delete jj.txt on browser
-  hit [test]
-  it is not being gm rm'd on the server
+ROGUE-CHARACTERS-ON-INPUT
+  in Avatar.rb the output is encoded to strip rogue characters.
+  Sometimes you get these rogue characters on input.
+  So what I really need to do is to strip the rogue characters on INPUT!
+  Shift-Alt-T will put a rogue character in to generate a test. Eg in a ruby file.
+  One option is to filter the input on each character press in the browser.
+  http://stackoverflow.com/questions/3552301/preventing-special-character-input-to-html-text-field?rq=1
+  Note this will not handle pasted-in code.
+  ...
+  var isPrintable = function(e) {
+      return e.which !== 0 &&
+      e.charCode !== 0 &&
+      !e.ctrlKey &&
+      !e.metaKey &&
+      !e.altKey
+  }
+  $("input").keypress(function (e) {
+      if (!isPrintable(e)) {
+          e.preventDefault();
+      }
+  });
+  Also, to remove non-printable characters from string s on rails server
+  s.gsub!(/[^[:print:]]/i, '')
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXTRA-INFO
   on the animal display (eg on dashboard) show the number of passing
@@ -23,28 +51,53 @@ EXTRA-INFO
   has an exercise where he has created all the tests and the task
   is to work through them.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ROGUE-CHARACTERS-ON-INPUT
-  in Avatar.rb the outout is encoded to strip rogue characters.
-  Sometimes you get these rogue characters on input.
-  So what I really need to do is to strip the rogue characters on INPUT!
-  Shift-Option-T will put a rogue character in to generate a test.
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-OUTPUT-HOTLINK
-  if outout file is selected hot key (ALT-E) pattern matches
-  the output for _first_ file+line-number and auto opens
-  that file and scrolls to the line-number.
+SETUP-JAMES
+  so he can run with a local server
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CUSTOM-DOMAIN-NAMES
+  James has found out how to spin up custom names for clients
+  eg  cisco.cyber-dojo.org - from amazon route 53
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  When Approval txt file is auto opened after pressing [test]
+  it does not honour the line-numbers state.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  katas/34/87780530/hippo/sandbox
+  this has a cyber-dojo.sh file with the line
+     echo 'Hello' > jj.txt
+  delete jj.txt on browser
+  hit [test]
+  it is not being gm rm'd on the server
+  I think the problem here is that the generated .txt file is
+  sent back to the browser but it is not git added to the sandbox.
+  And similarly approval .txt files that are deleted are also
+  not git rm'd.
+  Ponder this...
+  How about this...
+  o) avatar.save()   does disk file commands but *not* git commands
+  o) avatar.test()
+  o) output is saved to disk
+  o) now newly created .txt files are added to visible_files
+     and 'add' info is added to object holding git info
+  o) now deleted .txt files are removed from visible_files
+     and 'rm' info is added to object holding git into
+  o) avatar.save(visible_files)
+  o) parse output
+  o) avatar.save(traffic_lights)
+  o) now all accumulated git commands are executed
+  o) not git commit and git tag commands are executed
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-FAILING
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTOR
   is make_manifest in test_helper.rb used anywhere anymore?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   move app/lib/Choose.language into app/models/Languages?
   move app/lib/Choose.exercise into app/models/Exercises?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
@@ -60,9 +113,6 @@ REFACTOR
       Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
     end
   make it so root_path is always set via ENV far from shell.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
-  lib/Folders.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-MANIFEST
   give Exercise a manifest like Language?
@@ -291,10 +341,6 @@ REFACTORING
     eg reverter->reverter_dialog
     eg diff->diff_dialog
     don't forget to update application.css.scss
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-APPROVAL
-  When Approval txt file is auto opened after pressing [test]
-  it does not honour the line-numbers state.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   add ghosting when traffic-light is hovered over.
