@@ -1,6 +1,8 @@
 
 # runner that provides some isolation/protection/security.
 
+require 'Runner'
+
 class DockerRunner
   include Runner
 

@@ -2,6 +2,8 @@
 # no isolation/protection/security, nothing.
 # See DockerRunner.rb
 
+require 'Runner'
+
 class RawRunner
   include Runner
 
