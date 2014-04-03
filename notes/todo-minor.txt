@@ -1,4 +1,18 @@
 
+SEARCH-REPLACE
+  button just below new/rename/delete
+  opens dialog
+  files?  defaults to current file, can enter regex if you want
+  search: defaults to content selected in editor (or "")
+  replace: defaults to content selected in editor (or "")
+  and [button]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  katas/34/87780530/hippo/sandbox
+  delete jj.txt on browser
+  hit [test]
+  it is not being gm rm'd on the server
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXTRA-INFO
   on the animal display (eg on dashboard) show the number of passing
   tests (if at green). This is very useful for situations where (eg James)
