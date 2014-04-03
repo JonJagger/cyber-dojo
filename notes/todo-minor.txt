@@ -16,10 +16,6 @@ OUTPUT-HOTLINK
   the output for _first_ file+line-number and auto opens
   that file and scrolls to the line-number.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-WRAPPING
-  only on output window turn textarea wrap=on to cater for
-  looooong lines from gcc output.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-FAILING
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
