@@ -5,6 +5,10 @@
 class RawRunner
   include Runner
 
+  def runnable?(language)
+    true
+  end
+
   def run(paas, sandbox, command, max_seconds)
     path = paas.path(sandbox)
     pipe_run("cd '#{path}';" + command, max_seconds)

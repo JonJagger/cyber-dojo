@@ -70,12 +70,21 @@ class LinuxPaasTests < LinuxPaasModelTestCase
       assert path_ends_in_slash?(avatar)
       assert !path_has_adjacent_separators?(avatar)
       assert path_includes_dojo_path?(avatar)
-      
+
       sandbox = avatar.sandbox
       assert path_ends_in_slash?(sandbox)
       assert !path_has_adjacent_separators?(sandbox)
       assert path_includes_dojo_path?(avatar)
       assert @paas.path(sandbox).include?('sandbox')
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "in RawRunner runnable? always returns true" do
+    json_and_rb do |format|
+      language = @dojo.languages['Java-JUnit']
+      assert @paas.runnable?(language)
     end
   end
 

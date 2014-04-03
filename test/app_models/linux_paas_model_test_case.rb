@@ -27,7 +27,7 @@ class LinuxPaasModelTestCase < ActionController::TestCase
     yield 'rb'
     teardown
     setup_format('json')
-     yield 'json'
+    yield 'json'
   end
 
   def filenames_written_to_in(log)

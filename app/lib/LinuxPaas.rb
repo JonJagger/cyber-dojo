@@ -74,7 +74,11 @@ class LinuxPaas
   def languages_each(languages)
     pathed = path(languages)
     @disk[pathed].entries.select do |name|
-      yield name if @disk.is_dir?(File.join(pathed, name))
+      if @disk.is_dir?(File.join(pathed, name))
+        if @runner.runnable?(languages[name])
+          yield name
+        end
+      end
     end
   end
 
@@ -160,6 +164,10 @@ class LinuxPaas
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  def runnable?(language)
+    @runner.runnable?(language)
+  end
 
   def runner_run(sandbox, command, max_duration)
     @runner.run(self, sandbox, command, max_duration)
