@@ -5,18 +5,6 @@ EXTRA-INFO
   has an exercise where he has created all the tests and the task
   is to work through them.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LAYOUT-CHANGE
-  When looking code on a students machine it would be nice to
-  see the animal on the top of the screen and not have to squint
-  at the URL to know they are the hippos. The hippo image (and the
-  traffic-light info) is at the bottom and often this is not visible
-  because they have maximized the screen.
-  Possible solutions:
-  1) use think coloured border around the textarea in current colour
-  2) move the animal image and info to the top somewhere.
-  3) move the whole traffic-light sequence to the top.
-  I LIKE 3.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ROGUE-CHARACTERS-ON-INPUT
   in Avatar.rb the outout is encoded to strip rogue characters.
   Sometimes you get these rogue characters on input.
