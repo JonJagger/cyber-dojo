@@ -164,11 +164,11 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "image_name is nil if not set" do
+  test "image_name is empty string if not set" do
     json_and_rb do
       name = 'Ruby-Test::Unit'
       @language = @dojo.languages[name]
-      expected = nil
+      expected = ""
       spy_manifest({ })
       assert_equal expected, @language.image_name
     end
@@ -248,6 +248,8 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
     end
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   class CustomRunner
     def initialize(installed)
       @installed = installed
@@ -263,9 +265,23 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
     @runner = CustomRunner.new(['yes'])
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'json'
-    @dojo = @paas.create_dojo(root_path + '../../', @format)
+    @dojo = @paas.create_dojo(root_path, @format)
     assert @dojo.languages['yes'].runnable?
     assert !@dojo.languages['no'].runnable?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "DockerRunner.runnable?(language) is false if language does not have image_name set in manifest" do
+    @disk   = SpyDisk.new
+    @git    = StubGit.new
+    @runner = DockerRunner.new
+    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @format = 'json'
+    @dojo = @paas.create_dojo(root_path, @format)
+    ruby = @dojo.languages['Ruby']
+    @paas.dir(ruby).write('manifest.json', { })
+    assert !ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

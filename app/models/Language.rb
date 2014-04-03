@@ -24,7 +24,7 @@ class Language
   end
 
   def image_name
-    manifest['image_name']
+    manifest['image_name'] || ""
   end
 
   def visible_files
