@@ -1,7 +1,7 @@
 
 CUSTOM-DOMAIN-NAMES
   James has found out how to spin up custom names for clients
-  eg  cisco.cyberdojo.org
+  eg  cisco.cyberdojo.org - from amazon r53
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SEARCH-REPLACE
   button just below new/rename/delete

@@ -1,11 +1,11 @@
-require File.dirname(__FILE__) + '/../../config/environment.rb'
-
-require 'DockerRunner'
+__DIR__ = File.dirname(__FILE__) + '/../'
+require __DIR__ + '/../config/environment.rb'
+require __DIR__ + '/lib/DockerRunner'
+require __DIR__ + '/lib/LinuxPaas'
+require __DIR__ + '/lib/RawRunner'
 require 'Folders'
 require 'Git'
-require 'LinuxPaas'
 require 'OsDisk'
-require 'RawRunner'
 
 class ApplicationController < ActionController::Base
   before_filter :set_locale
