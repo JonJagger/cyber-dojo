@@ -86,20 +86,14 @@ $(document).ready(function() {
           <div class="table-row">
             <%= render :partial => 'help_button' %>
           </div>
+          <%= render :partial => 'shared/tip_window' %>
         </div>
-      </td>
-      <td>
-        <%= render :partial => 'editor' %>
-      </td>
-    </tr>
-    <tr class="valign-top">
-      <td>
-        <%= render :partial => 'shared/tip_window' %>
       </td>
       <td>
         <div class="valign-top" id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
+        <%= render :partial => 'editor' %>
       </td>
     </tr>
   </table>

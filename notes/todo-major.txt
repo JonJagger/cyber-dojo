@@ -7,6 +7,7 @@ o) Use docker run with volume mount to create docker-runner.
       one for the cyberdojo/language_* docker images
       On setup only display a language if it's manifest's image_name
       is present in the docker images list.
+   -- collect all language names. select{} each one using runner.predicate
 
   def docker_images_names
     `docker images`.lines.each.collect{|line| line.split[0]}

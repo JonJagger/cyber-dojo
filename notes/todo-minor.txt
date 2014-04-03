@@ -1,4 +1,41 @@
 
+EXTRA-INFO
+  on the animal display (eg on dashboard) show the number of passing
+  tests (if at green). This is very useful for situations where (eg James)
+  has an exercise where he has created all the tests and the task
+  is to work through them.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LAYOUT-CHANGE
+  When looking code on a students machine it would be nice to
+  see the animal on the top of the screen and not have to squint
+  at the URL to know they are the hippos. The hippo image (and the
+  traffic-light info) is at the bottom and often this is not visible
+  because they have maximized the screen.
+  Possible solutions:
+  1) use think coloured border around the textarea in current colour
+  2) move the animal image and info to the top somewhere.
+  3) move the whole traffic-light sequence to the top.
+  I LIKE 3.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ROGUE-CHARACTERS-ON-INPUT
+  in Avatar.rb the outout is encoded to strip rogue characters.
+  Sometimes you get these rogue characters on input.
+  So what I really need to do is to strip the rogue characters on INPUT!
+  Shift-Option-T will put a rogue character in to generate a test.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+OUTPUT-HOTLINK
+  if outout file is selected hot key (ALT-E) pattern matches
+  the output for _first_ file+line-number and auto opens
+  that file and scrolls to the line-number.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+WRAPPING
+  only on output window turn textarea wrap=on to cater for
+  looooong lines from gcc output.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LINE-NUMBERS
+  need vertical-align = top so that line-numbers align when
+  content area is resized.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-FAILING
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
