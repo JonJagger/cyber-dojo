@@ -405,18 +405,20 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
   border: 1px solid $darker-color;
 }
 
-.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset
+{
   float: none;
 }
 
-.ui-dialog .ui-dialog-buttonpane {
+.ui-dialog .ui-dialog-buttonpane
+{
   text-align: left; /* left/center/right */
   margin-left: 1em;
 }
 
-#ui-dialog-title-diff-dialog {
-  display: none;
-}
-.ui-dialog-titlebar-close {
+.ui-dialog-titlebar-close,
+#ui-dialog-title-diff-dialog,
+#ui-dialog-title-revert-fork-dialog
+{
   display: none;
 }
