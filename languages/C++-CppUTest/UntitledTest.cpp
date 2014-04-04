@@ -1,11 +1,9 @@
-#include "Untitled.h"
-
-//CppUTest includes should be after your and system includes
+#include "Untitled.hpp"
 #include "CppUTest/TestHarness.h"
 
 TEST_GROUP(Untitled)
 {
-    Untitled* untitled;
+    Untitled * untitled;
 
     void setup()
     {
