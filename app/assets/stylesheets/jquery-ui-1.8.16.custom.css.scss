@@ -414,11 +414,9 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
   margin-left: 1em;
 }
 
-/* this does not work.
-   the titlebar is the outer dom-node
-   the diff-dialog is the inner dom-node
-   Can CSS do ancestor matches?
- */
-#diff-dialog .ui-dialog-titlebar {
+#ui-dialog-title-diff-dialog {
+  display: none;
+}
+.ui-dialog-titlebar-close {
   display: none;
 }
