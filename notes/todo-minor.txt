@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CPP-TEST
+  install it on docker server
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOTKEY
   Alt-o hotkey cycles between most recently opened non-output file
   and the output file.
