@@ -44,7 +44,9 @@ var cyberDojo = (function(cd, $) {
   cd.rebuildFilenameList = function() {
     var filenameList = $('#filename-list');
     var filenames = cd.filenames();
+    filenames.splice(filenames.indexOf('output'), 1);
     filenameList.empty();
+    filenameList.append(cd.makeFileListEntry('output'));
     filenames.sort();
     $.each(filenames, function(n, filename) {
       var fileListEntry = cd.makeFileListEntry(filename);
