@@ -64,6 +64,15 @@ $(document).ready(function() {
         <div class="vertical-padded">
           <%= render :partial => 'shared/info' %>
         </div>
+      </td>
+      <td>
+        <div id="traffic-lights">
+          <%= render :partial => 'traffic_lights' %>
+        </div>
+      </td>
+    </tr>
+    <tr class="valign-top">
+      <td>
         <div class="panel">
           <%= render :partial => 'test_button' %>
         </div>
@@ -90,9 +99,6 @@ $(document).ready(function() {
         </div>
       </td>
       <td>
-        <div class="valign-top" id="traffic-lights">
-          <%= render :partial => 'traffic_lights' %>
-        </div>
         <div>
           <%= render :partial => 'editor' %>
         </div>

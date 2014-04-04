@@ -3,6 +3,13 @@
 CPP-TEST
   install it on docker server
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOCKER
+  o) make sure swapdisk is setup
+  o) make sure 100MB EBS is available to /katas folder
+  o) move server to new region (save £)
+  o) reboot to get faster server
+  o) or do you have to clone? (ask James)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOTKEY
   Alt-o hotkey cycles between most recently opened non-output file
   and the output file.
