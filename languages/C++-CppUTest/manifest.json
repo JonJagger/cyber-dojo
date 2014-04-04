@@ -5,7 +5,7 @@
        "Untitled.h",
        "UntitledTest.cpp",
        "cyber-dojo.sh",
-       "makefile",
+       "makefile"
     ],
     "unit_test_framework":  "cpputest",
 

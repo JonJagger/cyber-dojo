@@ -10,5 +10,5 @@ RUN apt-get install -y cpputest
 
 
 # docker build -t  cyberdojo/language_gpp-1.8_cpputest .
-# docker push      cyberdojo/language_gpp-1.8
-# docker run -i -t cyberdojo/language_gpp-1.8 /bin/bash
+# docker push      cyberdojo/language_gpp-1.8_cpputest
+# docker run -i -t cyberdojo/language_gpp-1.8_cpputest /bin/bash
