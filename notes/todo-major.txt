@@ -1,14 +1,16 @@
 
 DOCKER
-  o) pay to reserve server holding new cyber-dojo.org?
 
-  o) Java-1.7 and Java-1.8 and Ruby-1.9.3 images need to be
-     rebuilt from new build-essential container that now contains git
+o) zip up katas/ folder from cyber-dojo.com
+   and ftp to cyber-dojo.org
 
-  o) zip up katas/ folder from cyber-dojo.org
-     and ftp to cyber-dojo.org
-  o) make micro server with large-hard disk
-     and copy katas.zip file to that too. The stop the server.
+o) make micro server with large-hard disk
+   and copy katas.zip file from cyber-dojo.com to that too.
+
+o) Destroy server cyber-dojo.com
+
+o) See if reserved instance switches to cyber-dojo.org
+o) If not pay to reserve server holding new cyber-dojo.org?
 
 o) Using docker run with volume mount to create docker-runner.
    This means...
@@ -19,8 +21,6 @@ o) Using docker run with volume mount to create docker-runner.
       On setup only display a language if it's manifest's image_name
       is present in the docker images list.
    -- collect all language names. select{} each one using runner.predicate
-
-o) Use java.1.8 image as base language-image
 
 //--------------------------------------------------
 
