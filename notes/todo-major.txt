@@ -1,12 +1,6 @@
 
 DOCKER
-  o) redirect ANAME record on freeola so cyber-dojo.org points to new server
-  o) pay to reserve server holding new cyber-dojo.org
-  o) build-essentials docker image does not appear to have
-     automake present. Need to change
-        RUN apt-get install -y build-essential
-     to
-        RUN apt-get install -y build-essential automake
+  o) pay to reserve server holding new cyber-dojo.org?
 
   o) Java-1.7 and Java-1.8 and Ruby-1.9.3 images need to be
      rebuilt from new build-essential container that now contains git
