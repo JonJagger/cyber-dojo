@@ -6,8 +6,15 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/s
 RUN apt-get update
 RUN apt-get upgrade -y
 
-RUN apt-get install -y cpputest
-
+RUN mkdir /cpputest
+RUN cd /
+RUN git clone https://github.com/cpputest/cpputest.git
+RUN cd cpputest && git checkout tags/v3.5
+RUN cd cpputest && ./configure
+RUN cd cpputest && make
+RUN cd cpputest && make check
+RUN chown -R www-data cpputest
+RUN chgrp -R www-data cpputest
 
 # docker build -t  cyberdojo/language_gpp-1.8_cpputest .
 # docker push      cyberdojo/language_gpp-1.8_cpputest

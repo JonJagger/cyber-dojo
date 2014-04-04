@@ -24,6 +24,5 @@ TEST(Untitled, Create)
     CHECK_TRUE(1);
     CHECK_FALSE(0);
     STRCMP_EQUAL("hey", "hey");
-//    FAIL("Start here");
+    FAIL("Start here");
 }
-

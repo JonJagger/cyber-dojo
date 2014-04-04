@@ -1,9 +1,22 @@
 
+FAULT
+  need to use more precise CSS to turn off dialog titlebar only
+  in the diff-dialog (not in the home page button dialogs for example)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CPP-UTEST
-  install it on docker server
+  o) install it on docker server
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
+  o) build-essentials docker image does not appear to have
+     automake present. Need to change
+        RUN apt-get install -y build-essential
+     to
+        RUN apt-get install -y build-essential automake
+     
+  o) Java-1.7 and Java-1.8 and Ruby-1.9.3 images need to be
+     rebuilt from new build-essential container that now contains git
+
   o) make sure swapdisk is setup
   o) make sure 100MB EBS is available to /katas folder
   o) move server to new region (save £)
