@@ -1,6 +1,23 @@
 
-o) Use docker run with volume mount to create docker-runner.
-   This means
+DOCKER
+  o) redirect ANAME record on freeola so cyber-dojo.org points to new server
+  o) pay to reserve server holding new cyber-dojo.org
+  o) build-essentials docker image does not appear to have
+     automake present. Need to change
+        RUN apt-get install -y build-essential
+     to
+        RUN apt-get install -y build-essential automake
+
+  o) Java-1.7 and Java-1.8 and Ruby-1.9.3 images need to be
+     rebuilt from new build-essential container that now contains git
+
+  o) zip up katas/ folder from cyber-dojo.org
+     and ftp to cyber-dojo.org
+  o) make micro server with large-hard disk
+     and copy katas.zip file to that too. The stop the server.
+
+o) Using docker run with volume mount to create docker-runner.
+   This means...
    -- creation of tar.gz files is much easier
    -- if docker is enabled I need two language_each iterations
       one for the subdirs of cyberdojo/languages
@@ -9,17 +26,9 @@ o) Use docker run with volume mount to create docker-runner.
       is present in the docker images list.
    -- collect all language names. select{} each one using runner.predicate
 
-  def docker_images_names
-    `docker images`.lines.each.collect{|line| line.split[0]}
-  end
-  def languages_each
-    docker_images_names.select{|repo| repo.start_with?('cyberdojo/language_')}
-  end
+o) Use java.1.8 image as base language-image
 
-o) Is the new Java out?
-   If so, use that as base language-image
-   I think all the Java-XXX languages will use the same docker image.
-
+//--------------------------------------------------
 
 o) refactor so new katas save sha1 hashes
    and also put URL of server dojo into kata's manifest.

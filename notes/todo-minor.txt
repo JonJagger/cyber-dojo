@@ -1,95 +1,57 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REFACTOR
   add in example of each primitive useable in the unit-test-framework
   chosen. As an example see the starting test code for James' cpputest.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  is make_manifest in test_helper.rb used anywhere anymore?
+  move app/lib/Choose.language into app/models/Languages?
+  move app/lib/Choose.exercise into app/models/Exercises?
+  move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  application_controller does this...
+    def root_path
+      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
+    end
+  make it so root_path is always set via ENV far from shell.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  ...
+  prune_large.rb and prune_small.rb rework to used Dojo.each function
+  Dojo.create_kata(manifest)
+    add 2nd parameter specifying format, no default, on call use "rb"
+  ...
+  app_lib/Choose methods -> Dojo methods
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  Revert and fork javascript is virtually identical.
+  ...
+  Can i18n yml files be split?
+  ...
+  Exception_controller_test.rb needs some assertions!
+  ...
+  Rename css files,
+    eg forker->forker_dialog
+    eg reverter->reverter_dialog
+    eg diff->diff_dialog
+    don't forget to update application.css.scss
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   need to use more precise CSS to turn off dialog titlebar only
   in the diff-dialog (not in the home page button dialogs for example)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CPP-UTEST
-  o) install it on docker server
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOCKER
-  o) build-essentials docker image does not appear to have
-     automake present. Need to change
-        RUN apt-get install -y build-essential
-     to
-        RUN apt-get install -y build-essential automake
-
-  o) Java-1.7 and Java-1.8 and Ruby-1.9.3 images need to be
-     rebuilt from new build-essential container that now contains git
-
-  o) make sure swapdisk is setup
-  o) make sure 100MB EBS is available to /katas folder
-  o) move server to new region (save £)
-  o) reboot to get faster server
-  o) or do you have to clone? (ask James)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOTKEY
-  Alt-o hotkey cycles between most recently opened non-output file
-  and the output file.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-OUTPUT-HOTLINK
-  if outout file is selected
-    hot key (ALT-E perhaps) causes...
-    javascript to matches the output for *first*
-      file+line-number in error message (in pattern of output)
-    auto opens that file
-    scrolls to the line-number.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SEARCH-REPLACE
-  button just below new/rename/delete
-  opens dialog
-  files?  defaults to current file, can enter regex if you want
-  search: defaults to content selected in editor (or "")
-  replace: defaults to content selected in editor (or "")
-  and [button]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ROGUE-CHARACTERS-ON-INPUT
-  in Avatar.rb the output is encoded to strip rogue characters.
-  Sometimes you get these rogue characters on input.
-  So what I really need to do is to strip the rogue characters on INPUT!
-  Shift-Alt-T will put a rogue character in to generate a test. Eg in a ruby file.
-  One option is to filter the input on each character press in the browser.
-  http://stackoverflow.com/questions/3552301/preventing-special-character-input-to-html-text-field?rq=1
-  Note this will not handle pasted-in code.
-  ...
-  var isPrintable = function(e) {
-      return e.which !== 0 &&
-      e.charCode !== 0 &&
-      !e.ctrlKey &&
-      !e.metaKey &&
-      !e.altKey
-  }
-  $("input").keypress(function (e) {
-      if (!isPrintable(e)) {
-          e.preventDefault();
-      }
-  });
-  Also, to remove non-printable characters from string s on rails server
-  s.gsub!(/[^[:print:]]/i, '')
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-EXTRA-INFO
-  on the animal display (eg on dashboard) show the number of passing
-  tests (if at green). This is very useful for situations where (eg James)
-  has an exercise where he has created all the tests and the task
-  is to work through them.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SETUP-JAMES
-  so he can run with a local server
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CUSTOM-DOMAIN-NAMES
-  James has found out how to spin up custom names for clients
-  eg  cisco.cyber-dojo.org - from amazon route 53
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   When Approval txt file is auto opened after pressing [test]
   it does not honour the line-numbers state.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  line-numbers appear momentarily when you press [revert]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   katas/34/87780530/hippo/sandbox
@@ -117,42 +79,118 @@ FAULT
   o) now all accumulated git commands are executed
   o) not git commit and git tag commands are executed
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-FAILING
+FAULT
+  Refactoring page on blog no longer works because
+  forker/fork is now an ajax call returning json.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FAULT
+  test-failing...
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
-  is make_manifest in test_helper.rb used anywhere anymore?
-  move app/lib/Choose.language into app/models/Languages?
-  move app/lib/Choose.exercise into app/models/Exercises?
-  move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
+
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   Have three tabs: one for diff, one for fork, one for revert
   On dashboard page don't show revert tab.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK-DIALOG
+  Put line-numbers in?
+  Better selection of nonBoringFilenameIndex()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK-DIALOG
+  Make line-numbes are toggleable on/off?
+  When line is hovered, make it so the line-number is also highlit?
+  Make content area slightly wider and deeper to match fork/revert
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK-DIALOG
+  remove obvious and complete duplication. Pass in callback function
+  that does the fork/revert. Not quite that easy an inspection...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK-DIALOG
+  make it look similar to diff-dialog
+    don't show the red/green line-counts
+    do show the content with the red/green deleted/added lines
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK-DIALOG
+  Hashes of the files, together with filenames, could be used
+  to determine if a traffic-light is reverted.
+  ...
+  Store the hashes in increments.rb ?
+  Yes. Do this as part of .rb -> .json file refactoring towards
+  read-only server?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK-DIALOG
+  Add its own tool-tips
+  ...
+  if you press < > and the next diff has no actual diff
+  then repeat (automatically) the < > until you get an actual diff?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   clicking yin-yang icon resets back to home page page with no id.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
-  application_controller does this...
-    def root_path
-      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
-    end
-  make it so root_path is always set via ENV far from shell.
+HOME-PAGE
+  would be nice if it had a heartbeat so it could detect and
+  auto-enable the resume/review buttons.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE
+  add a [publish] button. Perhaps layout as
+  [ start] [ review]
+  [resume] [publish]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE
+  Perhaps disable resume/review buttons until dojo is 30 seconds old?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
+  filenames: add * marker if files have changed since last [test] ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
+  ...
+  If [test] pressed and nothing has changed since last traffic-light
+  pop up a dialog? Saying nothing different since last time.
+  ...
+  Should clicking avatar image on [test] page open dashboard? or home?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-PAGE
+  Rename zips folder to downloads folder
+  Figure out how to have download tests and gz file is rm'd on server
+  Install download button
+  Later I can add a publish button which exports the dojo to cyber-katas.org
+  Dashboard on read-only server won't need heartbeat
+  Dashboard on read-only server won't need age (use creation date instead)
+  ...
+  Dont refresh dashboard when refresh goes from on->off?
+  ...
+  Maybe show ticks on top row to indicate where columns are
+  Or perhaps try subtle alternate "vertical-stripe" shading on rows.
+  ...
+  Nicer help dialog content (same format as on test page)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SETUP-PAGE
+  Hitting escape key on setup page should be a cancel
+  ...
+  Use a dialog?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-MANIFEST
   give Exercise a manifest like Language?
   would allow an Exercise image to have its own additional
   set of exercises.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REVERT-FORK-DIALOG
-  Put line-numbers in?
-  Better selection of nonBoringFilenameIndex()
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  Make line-numbes are toggleable on/off?
-  When line is hovered, make it so the line-number is also highlit?
-  Make content area slightly wider and deeper to match fork/revert
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
@@ -164,37 +202,7 @@ CSS
   it seems that the common id/class name style is like-this
   and not like_this
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE
-  filenames: add * marker if files have changed since last [test] ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FORK/REVERT
-  remove obvious and complete duplication. Pass in callback function
-  that does the fork/revert. Not quite that easy an inspection...
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOME-PAGE
-  would be nice if it had a heartbeat so it could detect and
-  auto-enable the resume/review buttons.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOME-PAGE
-  add a [publish] button. Perhaps layout as
-  [ start] [ review]
-  [resume] [publish]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DEFECT
-  Refactoring page on blog no longer works because
-  forker/fork is now an ajax call returning json.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REVERT
-  line-numbers appear momentarily - fault
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTORING
-  ...
-  prune_large.rb and prune_small.rb rework to used Dojo.each function
-  Dojo.create_kata(manifest)
-    add 2nd parameter specifying format, no default, on call use "rb"
-  ...
-  app_lib/Choose methods -> Dojo methods
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MISC
   Nice dojos for screen shots
   A0FCF4CCBF  (shows the ellision at the rhs is not quite right yet?)
   4048EC
@@ -206,6 +214,9 @@ REFACTORING
     tar: Child returned status 1
     tar: Exiting with failure status due to previous errors
   On cyber-katas.org they are ok.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MISC
+  add ghosting when traffic-light is hovered over.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Running test/installation/check_language on non-test cyber-dojo root
 shows some of the languages do not pass the checks.
@@ -281,47 +292,9 @@ Refactoring dojos
   The xfer.rb script could take the URL as a parameter.
   Will probably want to xfer in both directions.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TOOL-TIP
+TOOL-TIPS
    default state can be showing a message saying
    hover over any element to reveal its tooltip?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-INSTALLATION-TESTS
-  Install cpputest and get app/lib coverage to 100%
-  Save run-tests outputs to log file?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FORK-REVERT
-  make it look similar to diff-dialog
-    don't show the red/green line-counts
-    do show the content with the red/green deleted/added lines
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REVERT
-  Hashes of the files, together with filenames, could be used
-  to determine if a traffic-light is reverted.
-  ...
-  Store the hashes in increments.rb ?
-  Yes. Do this as part of .rb -> .json file refactoring towards
-  read-only server
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  Add its own tool-tips
-  ...
-  if you press < > and the next diff has no actual diff
-  then repeat (automatically) the < > until you get an actual diff?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  Rename zips folder to downloads folder
-  Figure out how to have download tests and gz file is rm'd on server
-  Install download button
-  Later I can add a publish button which exports the dojo to cyber-katas.org
-  Dashboard on read-only server won't need heartbeat
-  Dashboard on read-only server won't need age (use creation date instead)
-  ...
-  Dont refresh dashboard when refresh goes from on->off?
-  ...
-  Maybe show ticks on top row to indicate where columns are
-  Or perhaps try subtle alternate "vertical-stripe" shading on rows.
-  ...
-  Nicer help dialog content (same format as on test page)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   on dashboard  |60s|columns
@@ -329,6 +302,10 @@ TOOL-TIPS
   for diff-dialog
   for fork-dialog
   for revert-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+INSTALLATION-TESTS
+  Install cpputest and get app/lib coverage to 100%
+  Save run-tests outputs to log file?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I18N
   Need to be i18n'd on the setup page.
@@ -339,37 +316,6 @@ I18N
   ...
   Lots more.
   Have promises for Russian and Ukranian.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE
-  ...
-  If [test] pressed and nothing has changed since last traffic-light
-  pop up a dialog? Saying nothing different since last time.
-  ...
-  Should clicking avatar image on [test] page open dashboard? or home?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SETUP
-  Hitting escape key on setup page should be a cancel
-  ...
-  Use a dialog?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOME
-  Perhaps disable resume/review buttons until dojo is 30 seconds old?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTORING
-  Revert and fork javascript is virtually identical.
-  ...
-  Can i18n yml files be split?
-  ...
-  Exception_controller_test.rb needs some assertions!
-  ...
-  Rename css files,
-    eg forker->forker_dialog
-    eg reverter->reverter_dialog
-    eg diff->diff_dialog
-    don't forget to update application.css.scss
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MISC
-  add ghosting when traffic-light is hovered over.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIALOGS
   change .close() calls to .remove()
@@ -422,7 +368,6 @@ FORWARDS-BACKWARDS
 NEW-LANGUAGES
   https://github.com/gdunn/cyberdojo
   Add UnitTest++ C/C++
-  Also add James Grenning's CppTest for C/C++
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 feedback from Derek Graham.
 o) devs seem very reluctant to change the names of the untitled. files

@@ -1,0 +1,82 @@
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1. HOTKEY  (5)
+  A) Alt-o hotkey cycles between most recently opened non-output file
+     and the output file.
+  Maximise depth of filenames list.
+  Make output file a button? Interesting idea.
+  How about output and cyber-dojo.sh are listed first and slightly
+  separated from the main files. Hmmm. And by default you do
+  not cycle through those two when you do forward/backward.
+  Yes. And if there are a lot of filenames, output and cyber-dojo.sh
+  never go out of view (so that output is always clickable) as if it
+  was a button.
+
+  B) Forward and Backward hot-key cycles through highlighted files
+    (if there are any) and output?
+
+  Can you name output (or instructions) as highlighted files in
+  the manifest? I think not and it would be good if you could.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2. ROGUE-CHARACTERS-ON-INPUT (3)
+  in Avatar.rb the output is encoded to strip rogue characters.
+  Sometimes you get these rogue characters on input.
+  So what I really need to do is to strip the rogue characters on INPUT!
+  Shift-Alt-T will put a rogue character in to generate a test. Eg in a ruby file.
+  One option is to filter the input on each character press in the browser.
+  http://stackoverflow.com/questions/3552301/preventing-special-character-input-to-html-text-field?rq=1
+  Note this will not handle pasted-in code.
+  ...
+  var isPrintable = function(e) {
+      return e.which !== 0 &&
+      e.charCode !== 0 &&
+      !e.ctrlKey &&
+      !e.metaKey &&
+      !e.altKey
+  }
+  $("input").keypress(function (e) {
+      if (!isPrintable(e)) {
+          e.preventDefault();
+      }
+  });
+  Also, to remove non-printable characters from string s on rails server
+  s.gsub!(/[^[:print:]]/i, '')
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+3. OUTPUT-HOTLINK (7)
+  if outout file is selected
+    hot key (ALT-E perhaps) causes...
+    javascript to matches the output for *first*
+      file+line-number in error message (in pattern of output)
+    auto opens that file
+    scrolls to the line-number.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+4. SEARCH-REPLACE (15)
+  button just below new/rename/delete
+  opens dialog
+  files?  defaults to current file, can enter regex if you want
+  search: defaults to content selected in editor (or "")
+  replace: defaults to content selected in editor (or "")
+  and [button]
+  SED ?
+  As you enter the search pattern the filenames listed
+  are dynamically enabled/disabled (checkboxes).
+  And if you don't hit replace, then this gives you a way
+  to search!
+  Should the filenames displayed be all the files, or
+  if highlighted files are marked, only the marked ones?
+  Hmmmm. No, because the files the dev creates are bound to be
+  the ones they want to search inside.
+  Also, is output included in the filename list?
+  Also, is cyber-dojo.sh included in the filename list?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+5. EXTRA-INFO (20)
+  on the animal display (eg on dashboard) show the number of passing
+  tests (if at green). This is very useful for situations where (eg James)
+  has an exercise where he has created all the tests and the task
+  is to work through them.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CUSTOM-DOMAIN-NAMES
+  James has found out how to spin up custom names for clients
+  eg  cisco.cyber-dojo.org - from amazon route 53
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
