@@ -1,6 +1,8 @@
 
 DOCKER
 
+o) create containers for C#, Haskell, Erlang, Go, Groovy, PHP, Perl, Python, etc.
+
 o) zip up katas/ folder from cyber-dojo.com
    and ftp to cyber-dojo.org
 
