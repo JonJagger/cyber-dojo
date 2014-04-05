@@ -48,10 +48,21 @@ var cyberDojo = (function(cd, $) {
     filenameList.empty();
     filenameList.append(cd.makeFileListEntry('output'));
     filenames.sort();
+
     $.each(filenames, function(n, filename) {
-      var fileListEntry = cd.makeFileListEntry(filename);
-      filenameList.append(fileListEntry);
+      if (!cd.inArray(filename, cd.lowlightFilenames())) {
+        var fileListEntry = cd.makeFileListEntry(filename);
+        filenameList.append(fileListEntry);
+      }
     });
+
+    $.each(filenames, function(n, filename) {
+      if (cd.inArray(filename, cd.lowlightFilenames())) {
+        var fileListEntry = cd.makeFileListEntry(filename);
+        filenameList.append(fileListEntry);
+      }
+    });
+
     return filenames;
   };
 
@@ -78,6 +89,9 @@ var cyberDojo = (function(cd, $) {
     });
     if (cd.inArray(filename, cd.highlightFilenames())) {
       div.addClass('highlight');
+    }
+    if (cd.inArray(filename, cd.lowlightFilenames())) {
+      div.addClass('lowlight');
     }
     div.click(function() {
       cd.loadFile(filename);

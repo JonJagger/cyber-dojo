@@ -12,3 +12,7 @@ EXERCISE-HAS-MANIFEST
   How about allowing a language folder to have its own exercise folders.
   And give Exercise a manifest like Language?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CUSTOM-DOMAIN-NAMES
+  James has found out how to spin up custom names for clients
+  eg  cisco.cyber-dojo.org - from amazon route 53
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

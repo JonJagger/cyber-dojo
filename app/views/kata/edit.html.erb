@@ -15,6 +15,10 @@ $(document).ready(function() {
     return $.parseJSON('<%= @kata.language.highlight_filenames.inspect.html_safe %>');
   };
 
+  cd.lowlightFilenames = function() {
+    return $.parseJSON('<%= @kata.language.lowlight_filenames.inspect.html_safe %>');
+  };
+
   cd.storeIncomingFileHashes();
   cd.storeOutgoingFileHashes();
 

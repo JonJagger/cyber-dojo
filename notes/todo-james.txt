@@ -76,7 +76,3 @@
   has an exercise where he has created all the tests and the task
   is to work through them.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CUSTOM-DOMAIN-NAMES
-  James has found out how to spin up custom names for clients
-  eg  cisco.cyber-dojo.org - from amazon route 53
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

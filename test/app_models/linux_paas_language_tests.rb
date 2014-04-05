@@ -68,8 +68,8 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   test "support_filenames set if not defaulted" do
     json_and_rb do
-      @language = @dojo.languages['Ruby']
-      support_filenames = [ 'x.jar', 'y.dll' ]
+      @language = @dojo.languages['Java']
+      support_filenames = [ 'x.jar', 'y.jar' ]
       spy_manifest({ 'support_filenames' => support_filenames })
       assert_equal support_filenames, @language.support_filenames
     end
@@ -89,7 +89,7 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   test "highlight_filenames set if not defaulted" do
     json_and_rb do
-      @language = @dojo.languages['Ruby']
+      @language = @dojo.languages['C']
       visible_filenames = [ 'x.hpp', 'x.cpp' ]
       highlight_filenames = [ 'x.hpp' ]
       spy_manifest({
@@ -97,6 +97,34 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
           'highlight_filenames' => highlight_filenames
         })
       assert_equal highlight_filenames, @language.highlight_filenames
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "lowlight_filenames defaults to ['cyberdojo.sh','makefile'] if there is no entry for highlight_filenames" do
+    json_and_rb do
+      @language = @dojo.languages['C']
+      visible_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
+      spy_manifest({
+          'visible_filenames' => visible_filenames,
+        })
+      assert_equal ['cyber-dojo.sh','makefile'], @language.lowlight_filenames.sort
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "lowlight_filenames is visible_filenames - highlight_filenames if there is an entry for highlight_filenames" do
+    json_and_rb do
+      @language = @dojo.languages['C']
+      visible_filenames = [ 'wibble.hpp', 'wibble.cpp', 'fubar.hpp', 'fubar.cpp' ]
+      highlight_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
+      spy_manifest({
+          'visible_filenames' => visible_filenames,
+          'highlight_filenames' => highlight_filenames
+        })
+      assert_equal ['fubar.cpp','fubar.hpp'], @language.lowlight_filenames.sort
     end
   end
 
