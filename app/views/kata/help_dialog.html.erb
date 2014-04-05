@@ -22,18 +22,6 @@
               <table>
                 <tr>
                   <td>
-                    <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
-                  </td>
-                  <td>
-                    <%= raw t("views.kata_help.opens_a_dashboard_page") %>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td>
-              <table>
-                <tr>
-                  <td>
                     <%= traffic_light_image('red',22,65) %>
                   </td>
                   <td>
@@ -47,6 +35,18 @@
                   </td>
                   <td>
                     <%= raw t("views.kata_help.opens_a_diff_review") %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table>
+                <tr>
+                  <td>
+                    <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
+                  </td>
+                  <td>
+                    <%= raw t("views.kata_help.opens_a_dashboard_page") %>
                   </td>
                 </tr>
               </table>
@@ -70,16 +70,7 @@
                 </button>
               </td>
               <td>
-                &nbsp;<%= t("views.kata_help.results_go_to") %>
-              </td>
-              <td>
-                <div class="filename selected" id="radio_output">
-                  <input style="display:none;"
-                         type="radio"
-                         checked="checked"
-                         value="filename"/>
-                  <label>output</label>
-                </div>
+                &nbsp;<%= t("views.kata_help.runs_the_tests") %>
               </td>
             </tr>
           </table>
@@ -145,16 +136,16 @@
         <div class="panel">
           <table>
             <tr>
-              <td><b>alt-t</b></td> <td>&nbsp;</td> <td><%= t('views.kata_help.runs_the_tests') %></td>
+              <td><b>alt-t</b></td> <td>&nbsp;</td> <td><%= raw t('views.kata_help.runs_the_tests') %></td>
             </tr>
             <tr>
-              <td><b>alt-o</b></td> <td>&nbsp;</td> <td><%= t('views.kata_help.open_the_output_file') %></td>
+              <td><b>alt-o</b></td> <td>&nbsp;</td> <td><%= raw t('views.kata_help.open_the_output_file') %></td>
             </tr>
             <tr>
-              <td><b>alt-f</b></td> <td>&nbsp;</td> <td><%= t('views.kata_help.open_the_next_file') %></td>
+              <td><b>alt-f</b></td> <td>&nbsp;</td> <td><%= raw t('views.kata_help.open_the_next_lit_file') %></td>
             </tr>
             <tr>
-              <td><b>alt-b</b></td> <td>&nbsp;</td> <td><%= t('views.kata_help.open_the_previous_file') %></td>
+              <td><b>alt-b</b></td> <td>&nbsp;</td> <td><%= raw t('views.kata_help.open_the_previous_lit_file') %></td>
             </tr>
           </table>
         </div>

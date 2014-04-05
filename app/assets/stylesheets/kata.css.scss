@@ -1,17 +1,6 @@
 
 #kata-page {
 
-  #filename-list {
-    height: 23em;
-    overflow-y: auto;
-    div[class~='filename'][class~='highlight'] {
-      &:before { content: ">"; }
-    }
-    div[class~='filename'][class~='lowlight'] {
-      color: lighten($darker-color, 20%);
-    }
-  }
-
   #file-operations {
     #new, #rename, #delete {
       @include font-size-tiny();
@@ -19,6 +8,21 @@
           left: 0.3em;
           right: 0.3em;
       }
+    }
+  }
+
+  #filename-list {
+    height: 23em;
+    overflow-y: auto;
+    #radio_output {
+      margin-bottom: 0.5em;
+      font-style: italic;
+    }
+    div[class~='filename'][class~='highlight'] {
+      &:before { content: ">"; }
+    }
+    div[class~='filename'][class~='lowlight'] {
+      color: lighten($darker-color, 20%);
     }
   }
 

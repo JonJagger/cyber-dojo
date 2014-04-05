@@ -21,6 +21,9 @@ var cyberDojo = (function(cd, $) {
     cd.fileContentFor(filename).focus();
     cd.restoreScrollPosition(filename);
     $('#current-filename').val(filename);
+    if (filename !== 'output') {
+      $('#last-non-output-filename').val(filename);
+    }
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -144,6 +147,18 @@ var cyberDojo = (function(cd, $) {
     }
     cd.loadFile(hilightFilenames[index]);
   };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.toggleOutputFile = function() {
+    if (cd.currentFilename() !== 'output') {
+      cd.loadFile('output');
+    } else {
+      cd.loadFile($('#last-non-output-filename').val());
+    }
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   return cd;
 })(cyberDojo || {}, $);

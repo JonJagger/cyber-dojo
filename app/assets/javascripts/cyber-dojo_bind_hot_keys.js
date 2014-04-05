@@ -31,7 +31,7 @@ var cyberDojo = (function(cd, $) {
   cd.bindShowOutputFile = function(event) {
     event.stopPropagation();
     event.preventDefault();
-    cd.loadFile('output');
+    cd.toggleOutputFile();
     return false;
   };
 
