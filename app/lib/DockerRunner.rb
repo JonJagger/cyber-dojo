@@ -7,9 +7,7 @@ class DockerRunner
   include Runner
 
   def runnable?(language)
-    @installed ||= `docker images`.lines.each.collect{|line| line.split[0]}.select{|repo|
-      repo.start_with?('cyberdojo/language_')
-    }
+    @installed ||= `docker images`.lines.each.collect{|line| line.split[0]}
     @installed.include?(language.image_name)
   end
 
