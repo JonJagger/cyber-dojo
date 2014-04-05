@@ -107,19 +107,42 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.loadNextFile = function() {
-    var filenames = cd.filenames().sort();
-    var index = $.inArray(cd.currentFilename(), filenames);
-    var nextFilename = filenames[(index + 1) % filenames.length];
-    cd.loadFile(nextFilename);
+  cd.notLowlightFilenames = function() {
+    var hilightFilenames = ['output'];
+    var all = cd.filenames();
+    all.sort();
+    $.each(all, function(n, filename) {
+      if (!cd.inArray(filename, cd.lowlightFilenames()) && filename !== 'output') {
+        hilightFilenames.push(filename);
+      }
+    });
+    return hilightFilenames;
   };
 
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  cd.loadNextFile = function() {
+    var hilightFilenames = cd.notLowlightFilenames();
+    var index = $.inArray(cd.currentFilename(), hilightFilenames);
+    if (index === -1) {
+      index = 0; // output
+    } else {
+      index = (index + 1) % hilightFilenames.length;
+    }
+    cd.loadFile(hilightFilenames[index]);
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   cd.loadPreviousFile = function() {
-    var filenames = cd.filenames().sort();
-    var index = $.inArray(cd.currentFilename(), filenames);
-    var previousIndex = (index === 0) ? filenames.length - 1 : index - 1;
-    var previousFilename = filenames[previousIndex];
-    cd.loadFile(previousFilename);
+    var hilightFilenames = cd.notLowlightFilenames();
+    var index = $.inArray(cd.currentFilename(), hilightFilenames);
+    if (index === 0 || index === -1) {
+      index = hilightFilenames.length - 1;
+    } else {
+      index -= 1;
+    }
+    cd.loadFile(hilightFilenames[index]);
   };
 
   return cd;

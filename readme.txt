@@ -210,24 +210,25 @@ manifest.json Parameters
 "highlight_filenames": [ ... ]
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
-  files form the focus of the practice. A subset of visible_filenames (but you
-  can also use the filename "instructions").
+  files form the focus of the practice. A subset of visible_filenames.
+  You can also put "instructions" in.
+  You can also put "output" in.
   For example
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
   Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
+  in the file app/assets/stylesheets/kata-dojo.css.scss
     div[class~='filename'][class~='highlight'] {
       ...
     }
-  in the file app/assets/stylesheets/kata-dojo.css.scss
   The highlight_filenames entry also interacts with the lowlights_filenames
   appearance in the same CSS file...
     div[class~='filename'][class~='lowlight'] {
       ...
     }
-  If there is a highlight_filenames entry, the lowlight-filenames
-  will be the visible_filenames - highlight_filenames.
-  If there is no highlight_filenames entry, the lowlight-filenames
+  If there is a highlight_filenames entry, then lowlight-filenames
+  will be [visible_filenames] - [highlight_filenames].
+  If there is no highlight_filenames entry, then lowlight-filenames
   will default to ['cyber-dojo','makefile']
 
 "display_name": string
