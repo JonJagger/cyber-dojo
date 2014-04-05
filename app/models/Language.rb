@@ -42,11 +42,11 @@ class Language
   end
 
   def lowlight_filenames
-    # Catering for the two uses
+    # Catering for two uses
     # 1. carefully constructed set of start files (like James Grenning uses)
-    #    (with explicitly set highlight_filenames entry in manifest)
+    #    with explicitly set highlight_filenames entry in manifest
     # 2. default set of files direct from languages/
-    #    (no highlight_filenames entry in manifest)
+    #    viz, no highlight_filenames entry in manifest
     if highlight_filenames.length > 0
       return visible_filenames - highlight_filenames
     else
