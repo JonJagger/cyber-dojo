@@ -73,7 +73,7 @@ seconds. If no animals press the [test] button during those 60 seconds the
 column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
 When not checked the traffic-lights of different animals are not
-vertically aligned.
+vertically time-aligned.
 
 
 Diff-Review
@@ -124,6 +124,125 @@ You can resume at any animals' most recent traffic-light by pressing
 the resume button (from the home page) and then clicking
 the animal. This is handy if a participant has to leave and take their
 laptop as a new laptop can instantly replace it.
+
+
+Adding a new exercise
+=====================
+1. Create a new sub-directory under cyberdojo/exercises/
+  Example: cyberdojo/exercises/FizzBuzz
+2. Create a text file called instructions in this directory.
+  Example: cyberdojo/exercises/FizzBuzz/instructions
+
+
+Adding a new language
+=====================
+Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
+  For example: cyberdojo/test/cyberdojo/languages/Lisp
+Create a manifest.json file in this directory.
+  For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
+Note the above are
+  cyberdojo/languages
+and not
+  cyberdojo/test/cyberdojo/languages
+Each manifest.json file contains an ruby object in JSON format
+Example: the one for Java-JUnit looks like this:
+<quote>
+{
+  "visible_filenames": [
+    "Untitled.java",
+    "UntitledTest.java",
+    "cyber-dojo.sh"
+  ],
+  "support_filenames": [
+    "junit-4.7.jar"
+  ],
+  "display_name": "Java",
+  "display_test_name": "JUnit",
+  "unit_test_framework": "junit",
+  "tab_size": 4
+}
+</quote>
+Make sure all the named files are in the new folder, including cyber-dojo.sh
+  #chmod +x cyber-dojo.sh
+  #chown www-data *
+  #chgrp www-data *
+Check that running cyber-dojo.sh behaves as required:
+  #sudo -u www-data ./cyber-dojo.sh
+or maybe
+  #strace sudo -u www-data ./cyber-dojo.sh
+
+You can test the setup of a new language using a ruby script.
+For example: if the new language is Lisp installed
+at cyberdojo/test/cyberdojo/languages/Lisp then
+  #cd test/installation
+  #ruby check_language.rb ../cyberdojo Lisp
+Once this passes make it live by moving it to the live languages folder:
+#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
+
+
+manifest.json Parameters
+======================
+"image_name": string
+  The name of docker image to execute cyber-dojo.sh.
+  Optional. Not required if docker is not being used.
+
+"visible_filenames": [ ... ]
+  Filenames that will be visible in the browser's editor at startup.
+  Each of these files must exist in the directory.
+  The filename cyber-dojo.sh must be present as a "visible_filenames" entry
+  or as a "support_filenames" entry. This is because cyber-dojo.sh is the name
+  of the shell file assumed by the ruby code (on the server) to be the start
+  point for running the tests. You can write any actions in the cyber-dojo.sh
+  file but clearly any programs it tries to run must be installed on the server.
+  For example, if cyber-dojo.sh runs gcc to compile C files then gcc has
+  to be installed. If cyber-dojo.sh runs javac to compile java files then
+  javac has to be installed.
+
+"higlight_filenames": [ ... ]
+  Filenames whose appearance are to be highlighted in the browser.
+  This can be useful if you have many "visible_filenames" and want to mark which
+  files form the focus of the practice. A subset of visible_filenames, except
+  that you can also use the filename "instructions".
+  For example
+  "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
+  Not required. Defaults to empty.
+  The apperance of "highlight_filenames" is controlled by the CSS
+    div[class~='filename'][class~='highlight'] {
+      &:before { content: ">"; }
+    }
+  in the file app/assets/stylesheets/kata-dojo.css.scss
+
+"support_filenames": [ ... ]
+  The names of necessary supporting files. Each of these files must
+  exist in the directory. For example, junit jar files or nunit assemblies.
+  These are symlinked from the /languages folder to each animals /katas folder.
+  Despite the name "support_filenames" you can symlink a folder if required
+  which can be very handy.
+  Not required if you do not need support files.
+
+"display_name": string
+  The name of the language as it appears in the setup page and also in the info
+  displayed at the top-left of the test page and the dashboard page.
+  Optional. Defaults to the name of the folder holding the manifest.json file.
+
+"display_test_name": string
+  The name of the unit-test-framework as it appears in the setup page and also in
+  in the info displayed at the top-left of the test page and the dashboard page.
+  Optional. Defaults to the same as the unit_test_framework setting (next).
+
+"unit_test_framework": string
+  The name of the unit test framework which partially determines the
+  name of the ruby function (in the cyber-dojo server) used to parse the
+  test output (to see if the traffic-light is red/green/amber).
+  For example, if the value is 'cassert' then
+      cyberdojo/app/lib/OutputParser.rb
+  must contain a method called parse_cassert() and will be called to parse the
+  output of running the tests via the cyber-dojo.sh shell file.
+  Required. No default.
+
+"tab_size": int
+  This is the number of spaces a tab character expands to in the editor
+  textarea. Not required. Defaults to 4 spaces.
 
 
 
@@ -295,127 +414,6 @@ Disk space
 The design of cyber-dojo is very heavy on inodes. You will almost certainly
 run out of inodes before running out of disk space. The folder that eats
 the inodes is katas/
-
-
-Adding a new exercise
-=====================
-1. Create a new sub-directory under cyberdojo/exercises/
-  Example: cyberdojo/exercises/FizzBuzz
-2. Create a text file called instructions in this directory.
-  Example: cyberdojo/exercises/FizzBuzz/instructions
-
-
-Adding a new language
-=====================
-Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
-  For example: cyberdojo/test/cyberdojo/languages/Lisp
-Create a manifest.json file in this directory.
-  For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
-Note the above are
-  cyberdojo/languages
-and not
-  cyberdojo/test/cyberdojo/languages
-Each manifest.json file contains an ruby object in JSON format
-Example: the one for Java+JUnit looks like this:
-<quote>
-{
-  "visible_filenames": [
-    "Untitled.java",
-    "UntitledTest.java",
-    "cyber-dojo.sh"
-  ],
-  "support_filenames": [
-    "junit-4.7.jar"
-  ],
-  "display_name": "Java",
-  "display_test_name": "JUnit",
-  "unit_test_framework": "junit",
-  "tab_size": 4
-}
-</quote>
-Make sure all the named files are in the new folder, including cyber-dojo.sh
-  #chmod +x cyber-dojo.sh
-  #chown www-data *
-  #chgrp www-data *
-Check that running cyber-dojo.sh behaves as required:
-  #sudo -u www-data ./cyber-dojo.sh
-or maybe
-  #strace sudo -u www-data ./cyber-dojo.sh
-
-You can test the setup of a new language using a ruby script.
-For example: if the new language is Lisp installed
-at cyberdojo/test/cyberdojo/languages/Lisp then
-  #cd test/installation
-  #ruby check_language.rb ../cyberdojo Lisp
-Once this passes make it live by moving it to the live languages folder:
-#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
-
-
-manifest.json Parameters
-======================
-"image_name": string
-  The name of docker image to execute cyber-dojo.sh.
-  Optional. Not required if docker is not being used.
-
-"visible_filenames": [ ... ]
-  The names of the text files that will be visible in the browser's editor
-  at startup. Each of these files must exist in the directory.
-  The filename cyber-dojo.sh must be present as a "visible_filenames" entry
-  or as a "support_filenames" entry. This is because cyber-dojo.sh is the name
-  of the shell file assumed by the ruby code (in the server) to be the start
-  point for running the tests. You can write any actions in the cyber-dojo.sh
-  file but clearly any programs it tries to run must be installed on the server.
-  For example, if cyber-dojo.sh runs gcc to compile C files then gcc has
-  to be installed. If cyber-dojo.sh runs javac to compile java files then
-  javac has to be installed.
-
-"higlight_filenames": [ ... ]
-  A subset of "visible_filenames" nameing filenames whose appearance
-  are to be highlighted in the browser. This can be useful if you have
-  many "visible_filenames" and want to mark which files form the focus
-  of the practice. For example
-  "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
-  Not required. Defaults to empty.
-  The apperance of "highlight_filenames" is controlled by the CSS
-   div[class~='filename']
-   {
-     &[class~='highlight'] {
-       &:before { content: ">"; }
-     }
-   }
-  in the file app/assets/stylesheets/cyber-dojo.css.scss
-
-"support_filenames": [ ... ]
-  The names of necessary supporting files. Each of these files must
-  exist in the directory. For example, junit jar files or nunit assemblies.
-  These are symlinked from the /languages folder to each animals /katas folder.
-  Despite the name "support_filenames" you can symlink a folder if required
-  which can be very handy.
-  Not required if you do not need support files.
-
-"display_name": string
-  The name of the language as it appears in the setup page and also in the info
-  displayed at the top-left of the test page and the dashboard page.
-  Optional. Defaults to the name of the folder holding the manifest.json file.
-
-"display_test_name": string
-  The name of the unit-test-framework as it appears in the setup page and also in
-  in the info displayed at the top-left of the test page and the dashboard page.
-  Optional. Defaults to the same as the unit_test_framework setting (next).
-
-"unit_test_framework": string
-  The name of the unit test framework which partially determines the
-  name of the ruby function (in the cyber-dojo server) used to parse the
-  test output (to see if the traffic-light is red/green/amber).
-  For example, if the value is 'cassert' then
-      cyberdojo/app/lib/OutputParser.rb
-  must contain a method called parse_cassert() and will be called to parse the
-  output of running the tests via the cyber-dojo.sh shell file.
-  Required. No default.
-
-"tab_size": int
-  This is the number of spaces a tab character expands to in the editor
-  textarea. Not required. Defaults to 4 spaces.
 
 
 Katas Directory Structure

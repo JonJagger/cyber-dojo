@@ -98,10 +98,6 @@ div[class~='filename'] {
     color: $darker-color;
     cursor: default;
   }
-
-  &[class~='highlight'] {
-    &:before { content: ">"; }
-  }
 }
 
 div[class~="filename"]:hover, button:hover {
@@ -200,4 +196,3 @@ img[class~="flag"] {
   margin-bottom: 0.5em;
   font-style: italic;
 }
-

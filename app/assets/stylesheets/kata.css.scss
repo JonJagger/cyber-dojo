@@ -4,6 +4,9 @@
   #filename-list {
     height: 23em;
     overflow-y: auto;
+    div[class~='filename'][class~='highlight'] {
+      &:before { content: ">"; }
+    }
   }
 
   #file-operations {
