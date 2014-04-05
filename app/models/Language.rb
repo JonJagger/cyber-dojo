@@ -71,7 +71,11 @@ class Language
   end
 
   def manifest
-    @manifest ||= JSON.parse(read('manifest.json'))
+    begin
+      @manifest ||= JSON.parse(read('manifest.json'))
+    rescue
+      raise "JSON.parse() exception from language:" + name
+    end
   end
 
 private
