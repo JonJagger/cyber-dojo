@@ -1,6 +1,0 @@
-FROM       cyberdojo/build-essential
-MAINTAINER Jon Jagger <jon@jaggersoft.com>
-
-# docker build -t  cyberdojo/language_gcc-4.8.1 .
-# docker push      cyberdojo/language_gcc-4.8.1
-# docker run -i -t cyberdojo/language_gcc-4.8.1 /bin/bash
