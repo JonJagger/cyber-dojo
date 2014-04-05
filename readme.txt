@@ -186,7 +186,7 @@ manifest.json Parameters
 "image_name": string
   The name of docker image to execute cyber-dojo.sh.
   Optional. Not required if docker is not being used.
-
+- - - - - - - - - - - - - - - - - - - -
 "visible_filenames": [ ... ]
   Filenames that will be visible in the browser's editor at startup.
   Each of these files must exist in the directory.
@@ -198,7 +198,7 @@ manifest.json Parameters
   For example, if cyber-dojo.sh runs gcc to compile C files then gcc has
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
-
+- - - - - - - - - - - - - - - - - - - -
 "support_filenames": [ ... ]
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
@@ -206,7 +206,7 @@ manifest.json Parameters
   Despite the name "support_filenames" you can symlink a folder if required
   which can be very handy.
   Not required if you do not need support files.
-
+- - - - - - - - - - - - - - - - - - - -
 "highlight_filenames": [ ... ]
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
@@ -221,7 +221,9 @@ manifest.json Parameters
     div[class~='filename'][class~='highlight'] {
       ...
     }
-  The highlight_filenames entry also interacts with the lowlights_filenames
+  The highlight_filenames entry also interacts with lowlights_filenames
+  (see Language.lowlight_filenames() in app/models/Language.rb)
+  (see cd.notLowlightFilenames() in app/assets/javascripts/cyber-dojo_file_load.js)
   appearance in the same CSS file...
     div[class~='filename'][class~='lowlight'] {
       ...
@@ -230,17 +232,17 @@ manifest.json Parameters
   will be [visible_filenames] - [highlight_filenames].
   If there is no highlight_filenames entry, then lowlight-filenames
   will default to ['cyber-dojo','makefile']
-
+- - - - - - - - - - - - - - - - - - - -
 "display_name": string
   The name of the language as it appears in the setup page and also in the info
-  displayed at the top-left of the test page and the dashboard page.
+  displayed at the top-left of the test and dashboard pages.
   Optional. Defaults to the name of the folder holding the manifest.json file.
-
+- - - - - - - - - - - - - - - - - - - -
 "display_test_name": string
   The name of the unit-test-framework as it appears in the setup page and also in
-  in the info displayed at the top-left of the test page and the dashboard page.
-  Optional. Defaults to the same as the unit_test_framework setting (next).
-
+  in the info displayed at the top-left of the test and dashboard pages.
+  Optional. Defaults to "unit_test_framework" (see next).
+- - - - - - - - - - - - - - - - - - - -
 "unit_test_framework": string
   The name of the unit test framework which partially determines the
   name of the ruby function (in the cyber-dojo server) used to parse the
@@ -250,9 +252,9 @@ manifest.json Parameters
   must contain a method called parse_cassert() and will be called to parse the
   output of running the tests via the cyber-dojo.sh shell file.
   Required. No default.
-
+- - - - - - - - - - - - - - - - - - - -
 "tab_size": int
-  This is the number of spaces a tab character expands to in the editor
+  The number of spaces a tab character expands to in the editor
   textarea. Not required. Defaults to 4 spaces.
 
 
@@ -262,33 +264,33 @@ DOCKER'D SERVER   https://www.docker.io/
 cyber-dojo probes the host server to see if docker is installed.
 If it is then...
 o) it will only offer languages/ whose manifest.json file
-   has an "image_name" entry that exists. For example,
-   if languages/Java-JUnit/manifest.json contains this...
+   has an "image_name" entry that exists. For example, if
+   languages/Java-JUnit/manifest.json contains this...
      { ...
        "image_name": "cyberdojo/language_java-1.8"
      }
    then Java-JUnit will only be offered as a language on the
-   initial setup page if cyberdojo/language_java-1.8 exists
+   initial setup page if "cyberdojo/language_java-1.8" exists
    on the host server (as determined by running `docker images`)
 o) it will use the docker "image_name" container to execute an animals
    cyber-dojo.sh file each time the animal presses the [test] button.
-o) However, if the environment variable CYBERDOJO_USE_HOST
-   is set then cyber-dojo will use the raw host server even if
-   docker is installed.
+o) however, if the environment variable CYBERDOJO_USE_HOST
+   is set (to anything) then cyber-dojo will use the raw host server
+   even if docker is installed.
 
 -------------------------------------------
 Running your own Docker'd cyber-dojo server
 -------------------------------------------
 Use the TurnKey Linux Rails image.
   http://www.turnkeylinux.org/rails
-Install cyber-dojo and docker into it using the
-setup_docker_server.sh file. Now..
+Install cyber-dojo and docker into it using the setup_docker_server.sh file...
+https://raw.githubusercontent.com/JonJagger/cyberdojo/master/setup_docker_server.sh
+Now..
 $ docker search cyberdojo
-will tell you the names of the docker container images
-in the cloud. Now do a
+will tell you the names of the docker container images in the cloud. Now do a
 $ docker pull IMAGE_NAME
 for each IMAGE_NAME matching the image_name entry in
-the languages/manifest.json file that you wish to use.
+each languages/manifest.json file that you wish to use.
 
 
 ===========================================================
