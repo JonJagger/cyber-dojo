@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+README UPDATE
+  For lowlight_filenames entry in languages/ manifest.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FORWARD-BACKWARD HOT-KEYS
+  Should only cycle through the non-lowlight_filenames (and output)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

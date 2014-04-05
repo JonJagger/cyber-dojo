@@ -159,10 +159,11 @@ Example: the one for Java-JUnit looks like this:
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",
+  "image_name": "cyberdojo/language_java-1.8"
   "tab_size": 4
 }
 </quote>
-Make sure all the named files are in the new folder, including cyber-dojo.sh
+Make sure all the filenames are in the new folder, including cyber-dojo.sh
   #chmod +x cyber-dojo.sh
   #chown www-data *
   #chgrp www-data *
@@ -198,20 +199,6 @@ manifest.json Parameters
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 
-"higlight_filenames": [ ... ]
-  Filenames whose appearance are to be highlighted in the browser.
-  This can be useful if you have many "visible_filenames" and want to mark which
-  files form the focus of the practice. A subset of visible_filenames, except
-  that you can also use the filename "instructions".
-  For example
-  "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
-  Not required. Defaults to empty.
-  The apperance of "highlight_filenames" is controlled by the CSS
-    div[class~='filename'][class~='highlight'] {
-      &:before { content: ">"; }
-    }
-  in the file app/assets/stylesheets/kata-dojo.css.scss
-
 "support_filenames": [ ... ]
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit jar files or nunit assemblies.
@@ -219,6 +206,29 @@ manifest.json Parameters
   Despite the name "support_filenames" you can symlink a folder if required
   which can be very handy.
   Not required if you do not need support files.
+
+"highlight_filenames": [ ... ]
+  Filenames whose appearance are to be highlighted in the browser.
+  This can be useful if you have many "visible_filenames" and want to mark which
+  files form the focus of the practice. A subset of visible_filenames (but you
+  can also use the filename "instructions").
+  For example
+  "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
+  Not required. Defaults to empty.
+  The apperance of "highlight_filenames" is controlled by the CSS
+    div[class~='filename'][class~='highlight'] {
+      ...
+    }
+  in the file app/assets/stylesheets/kata-dojo.css.scss
+  The highlight_filenames entry also interacts with the lowlights_filenames
+  appearance in the same CSS file...
+    div[class~='filename'][class~='lowlight'] {
+      ...
+    }
+  If there is a highlight_filenames entry, the lowlight-filenames
+  will be the visible_filenames - highlight_filenames.
+  If there is no highlight_filenames entry, the lowlight-filenames
+  will default to ['cyber-dojo','makefile']
 
 "display_name": string
   The name of the language as it appears in the setup page and also in the info
@@ -245,22 +255,59 @@ manifest.json Parameters
   textarea. Not required. Defaults to 4 spaces.
 
 
+===========================================================
+DOCKER'D SERVER   https://www.docker.io/
+===========================================================
+cyber-dojo probes the host server to see if docker is installed.
+If it is then...
+o) it will only offer languages/ whose manifest.json file
+   has an "image_name" entry that exists. For example,
+   if languages/Java-JUnit/manifest.json contains this...
+     { ...
+       "image_name": "cyberdojo/language_java-1.8"
+     }
+   then Java-JUnit will only be offered as a language on the
+   initial setup page if cyberdojo/language_java-1.8 exists
+   on the host server (as determined by running `docker images`)
+o) it will use the docker "image_name" container to execute an animals
+   cyber-dojo.sh file each time the animal presses the [test] button.
+o) However, if the environment variable CYBERDOJO_USE_HOST
+   is set then cyber-dojo will use the raw host server even if
+   docker is installed.
+
+-------------------------------------------
+Running your own Docker'd cyber-dojo server
+-------------------------------------------
+Use the TurnKey Linux Rails image.
+  http://www.turnkeylinux.org/rails
+Install cyber-dojo and docker into it using the
+setup_docker_server.sh file. Now..
+$ docker search cyberdojo
+will tell you the names of the docker container images
+in the cloud. Now do a
+$ docker pull IMAGE_NAME
+for each IMAGE_NAME matching the image_name entry in
+the languages/manifest.json file that you wish to use.
+
 
 ===========================================================
-   VERY VERY IMPORTANT
-   VERY VERY IMPORTANT
+RAW SERVER
 ===========================================================
-cyber-dojo clients have full rights on the cyber-dojo server. If you
-setup your own server you are strongly advised to consider using
+This is how cyber-dojo runs if docker is not installed or if
+the environment variable CYBERDOJO_USE_HOST is set.
+In this mode, there is
+   NO PROTECTION, NO ISOLATION, NO SECURITY.
+   NO PROTECTION, NO ISOLATION, NO SECURITY.
+   NO PROTECTION, NO ISOLATION, NO SECURITY.
+In this mode cyber-dojo clients have full rights on the cyber-dojo server.
+If you setup your own server you are strongly advised to consider using
 o) a dedicated server.
 o) a virtual box.
 o) a dedicated network segment.
-A technology that looks very promising for creating isolated
-sandboxes on the server is http://www.docker.io/
 
-
-Running your own VirtualBox TurnKey Linux cyber-dojo server
-==========================================================
+--------------------------------------
+Running your own RAW cyber-dojo server
+--------------------------------------
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova
@@ -275,16 +322,16 @@ Detailed instructions on building your own Turnkey server from scratch are here
 http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 
 
+================================================================
 Pulling the latest github source onto your own cyber-dojo server
 ================================================================
-Add port 12320 to the URL you put into your browser above, eg
+Docker'd or raw...
+Add port 12320 to the server's URL in your browser above, eg
 192.168.2.13:12320
 Now you need the username and password.
 I will happily tell you these if you email me: jon@jaggersoft.com
 Then grab the latest cyber-dojo source code from github and install it.
   >cd /var/www/cyberdojo
-  >git pull origin master
-  >chmod +x ./pull.sh
   >./pull.sh
 If pull.sh asks for a password just hit return.
 pull.sh performs the following tasks...
@@ -305,8 +352,8 @@ Rails version             3.2.3
 JavaScript Runtime        therubyracer (V8)
 
 
-Installing Languages
-====================
+Installing Languages on a RAW Server
+====================================
 The base rails3 image is available here (417MB)
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.base.ova
 (see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
@@ -447,43 +494,6 @@ To look at filename's differences between tag 4 and tag 5
 It's much easier and more informative to just click on dashboard traffic light.
 
 
-
-
-Only offering installed languages
-=================================
-The intention is (maybe) to use a specific structure for the contents of the
-languages' manifests to enable an automated check to see what is correctly
-installed and working, and to only offer installed and working languages when
-you setup a new coding practice. At the moment when you setup a
-new coding practice all languages/ subfolders are offered.
-
-You can test if a languages' initial fileset is correctly setup as follows
->cd cyberdojo/test/installation
->ruby installation_tests.rb
-
-For each language...
-o) cyber-dojo searches through its manifests' :visible_filenames,
-   in sequence, looking for any that contain the string '42'
-o) If it doesn't find any it will report than language is not
-   configured correcty.
-o) If it finds at least one file containing '42' it will pick the
-   first one as "the-42-file"
-o) It will then use the manifest to [create a kata and run-the-tests]
-   three times as follows:
-   test-1 - with the files unchanged.
-   test-2 - with the 42 in the-42-file replaced by 54
-   test-3 - with the 42 replaced by 4typo2
-o) If test-1 generates a red traffic-light and
-      test-2 generates a green traffic-light and
-      test-3 generates an amber traffic-light then
-   then it will assume the language is installed and working.
-o) If the three tests return three amber traffic-lights then
-   it will assume the language is not configured correctly.
-o) If the three tests return any other combination of traffic-lights
-   it will assume the language is installed but not working.
-
-This approach has a flaw: two or more files can contain '42'...
-This tends to happen for BDD style testing.
 
 
 Getting dojos off the VirtualBox TurnKey Linux server
