@@ -1,0 +1,14 @@
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+  have them open up in popup right next to the item they are tipping.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+EXERCISE-HAS-MANIFEST
+  At the moment the instructions come from exercises/ and
+  everything else comes from languages/ via manifest.rb
+  This means if I want to create a special exercise with
+  :highlight_filenames I have to do it as an exercise.
+  And then I have to know to select it only with a specific language.
+  How about allowing a language folder to have its own exercise folders.
+  And give Exercise a manifest like Language?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

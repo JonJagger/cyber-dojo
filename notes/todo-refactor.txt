@@ -1,4 +1,55 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  add in example of each primitive useable in the unit-test-framework
+  chosen. As an example see the starting test code for James' cpputest.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  is make_manifest in test_helper.rb used anywhere anymore?
+  move app/lib/Choose.language into app/models/Languages?
+  move app/lib/Choose.exercise into app/models/Exercises?
+  move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  application_controller does this...
+    def root_path
+      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
+    end
+  make it so root_path is always set via ENV far from shell.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  prune_large.rb and prune_small.rb rework to used Dojo.each function
+  Dojo.create_kata(manifest)
+    add 2nd parameter specifying format, no default, on call use "rb"
+  ...
+  app_lib/Choose methods -> Dojo methods
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  Revert and fork javascript is virtually identical.
+  ...
+  Can i18n yml files be split?
+  ...
+  Exception_controller_test.rb needs some assertions!
+  ...
+  Rename css files,
+    eg forker->forker_dialog
+    eg reverter->reverter_dialog
+    eg diff->diff_dialog
+    don't forget to update application.css.scss
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  It would be simpler if output and instructions were not mixed
+  into kata.language and avatar.setup did an explicit
+  save(kata.exercise.instructions)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REFACTOR
+  Check for uses of system('x') and `x` that should
+  also have an external class representation
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
 In app/models/avatar.rb
 #
 # idea is that instead of doing this
@@ -16,17 +67,6 @@ In app/models/avatar.rb
 # which seems much more cohesive.
 #
 # If doing this on DiskFile check out the symlink() function though
-#
-# Also check for uses of system('x') and `x` that should
-# also have an external class representation
-#
-# DiskFile- can it open the file in "rw" mode and
-# then pass the fd back to the calling block.
-# This would enable a cleaner API.
-# Argument should always be a file and never a dir (I think)
-# and so the locking can be on the file itself and hence
-# I do not need to create the f.lock files.
-
 
 In test/installation/one_language_checker.rb
 # currently get_filename_42() uses an algorithm to find the
@@ -175,7 +215,7 @@ I'd like the rightmost column of avatar images on the dashboard
 -----
 allow initial manifest.rb setup of initial exercise/language to
   contain subfolders. Do I need this? Could it already be done
-  with links? 
+  with links?
 -----
 once a dojo has been created it should be independent of the
   initial language filesets it was created from.
@@ -191,7 +231,7 @@ diff-filename-click cycles to the next diff but it loses the current red/green
 -----
 in diff page when you go back to a file with diff it should not cycle to next
   diff change it should only cycle to next diff change if you click the filename
-  when the filename is already selected. 
+  when the filename is already selected.
 -----
 in firefox clicking on the ova hyperlink in the sources dialog doesn't start a download
 -----

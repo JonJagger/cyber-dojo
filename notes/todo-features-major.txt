@@ -1,18 +1,30 @@
 
 DOCKER
+======
 
-o) create containers for C#, Haskell, Erlang, Go, Groovy, PHP, Perl, Python, etc.
+o) fix image for Ruby
 
 o) zip up katas/ folder from cyber-dojo.com
    and ftp to cyber-dojo.org
 
-o) make micro server with large-hard disk
-   and copy katas.zip file from cyber-dojo.com to that too.
+o) copy files I zipped up before when moving server.
+   Eg check out tl_25_age_14.txt
+   That zip file is also saved on cyber-dojo.com
+
+o) redirect cyber-dojo.com to cyber-dojo.org
+   We are live.
+
+o) make micro server with large-hard disk and
+   copy katas.zip file from cyber-dojo.com to it.
+   copy tl_25_age_14'd katas too.
 
 o) Destroy server cyber-dojo.com
 
 o) See if reserved instance switches to cyber-dojo.org
+
 o) If not pay to reserve server holding new cyber-dojo.org?
+
+o) create containers for C#, Haskell, Erlang, Go, Groovy, PHP, Perl, Python, etc.
 
 o) Using docker run with volume mount to create docker-runner.
    This means...
@@ -24,8 +36,8 @@ o) Using docker run with volume mount to create docker-runner.
       is present in the docker images list.
    -- collect all language names. select{} each one using runner.predicate
 
-//--------------------------------------------------
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 o) refactor so new katas save sha1 hashes
    and also put URL of server dojo into kata's manifest.
    Old dojos are still usable in old format.
@@ -190,11 +202,11 @@ It will also mean the manifests for all languages and exercises
 will need to be JSON'd ... but not, I don't think, on the readonly server.
 DiskFile.rb could go from
   File.open(pathed_filename, 'w') { |file|
-    file.write(object.inspect + "\n")
+    file.write(object.inspect)
   }
 to
   File.open(pathed_filename, 'w') { |file|
-      file.write(JSON.unparse(object) + "\n")
+      file.write(JSON.unparse(object))
     }
   }
 
@@ -235,7 +247,49 @@ $.getJSON(url, { id: id }).done(function(theId) {
   }
 });
 ------------------------------------------------------
-Look into using PStore instead of DiskFile?
-------------------------------------------------------
-Offer a fork button on the diff-dialog?
-------------------------------------------------------
+
+
+READONLY PRACTICE VIEW WITH VOTING
+  Start to think about opening up the done katas so people
+  can see them and vote on them.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ANIMATION
+  keeping on the same file and showing its content in a rapid
+  sequence of updates would be a nice feature?
+  Do on dialog not showing diffs.
+  Reduce font a lot so you can see outline. Auto? Slider-control?
+  Stay on same file.
+  Would be even better if it could detect a rename.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+4-DOJO-ROOMS-TO-LIMIT-CONCURRENT-USE
+Thinking about how I could reduce the number of clicks to get started...
+Suppose there were 4 rooms, each of a different colour.
+Then players would not need to type in an ID. The room could have an ID
+which they could use to get back to the session at a later time.
+But at the start one person configures the blue room and then all the
+players have to do is press the start button in the blue room.
+Then they get a dialog saying "You are the panda". And you have to click
+the ok button. Could I get rid of even that? Instead of a start button you
+could have 16 animal buttons and you have to choose your animal by clicking it.
+This also opens up the potential for not doing a setup, and then if you click
+an animal, you get a random language+exercise combination.
+The downside of this, of course, is that the blue room could be full when you
+want to join it. But the upside is tremendous. You can see what people are
+doing all the time without needing an ID.
+I think this approach would definitely need each room to have a time-limit.
+That way the room would become free again some time later.
+Would mean the room-session could also have a name.
+How about allowing a session to be either public or private.
+If it's public then you can click a refresh button in your chosen room
+(or ideally it appears all by itself) and a button for your session,
+with its language,exercise,name,id is displayed. Click on it and you start.
+This would also allow a history of previous sessions (by room perhaps).
+Also, at the setup page, you could show all sessions that match the combination
+you have chosen. And you could view those.
+Or here's a possibly nice variation. Instead of public/private.
+Have only public. But if you want you can delay (say by 1 hour) the public
+appearance of the id.
+Obviously a big design criteria for having private IDs is that it means
+I don't really have to worry about 2+ computers using the same animal
+at the same time. The resume feature means this is a definite possibility
+if the ID is public.

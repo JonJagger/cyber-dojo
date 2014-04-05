@@ -3,17 +3,17 @@
 
 Deliberate Practice
 -------------------
-I believe that the role of deliberate practice has huge untapped potential 
-in the field of software development. My particularly passion is doing deliberate 
+I believe that the role of deliberate practice has huge untapped potential
+in the field of software development. My particularly passion is doing deliberate
 software practice in a collaborative way, both at the pair level and at the
-team level. Hence Cyber-Dojo.  
+team level. Hence Cyber-Dojo.
 
 
 Education
 ---------
 I would like to see students using Cyber-Dojo, and their tutors reviewing
 their work not just based on a static snapshot of how it ends up but also
-on the dynamic way it changed as it was worked on. And possibly during 
+on the dynamic way it changed as it was worked on. And possibly during
 several explicit repetitions.
 
 
@@ -41,11 +41,11 @@ I'm now not entirely sure I want this. There is something to be said for the
 'emphemeral' nature of genuine practice.
 
 
-Federated Cyber-Dojos 
---------------------
+Federated Cyber-Dojos
+---------------------
 I would like lots of Cyber-Dojo servers setup across the world.
 They could be specialized to particular areas. For example Mikes Cyber-Dojo
-could be run from Oslo and host just C katas. 
+could be run from Oslo and host just C katas.
 
 
 Concurrent players as one avatar
@@ -55,5 +55,4 @@ a computer presses test-button their files are committed and pushed
 to all other laptops (via ajax). If there is a merge conflict the
 commit is rejected. Or... player A can edit and commit a file before
 player B and thus player B loses his edits as the edited file is
-overwritten be being pushed from the server.
-
+overwritten by being pushed to him/her from the server.
