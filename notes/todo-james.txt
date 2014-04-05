@@ -44,7 +44,7 @@
   s.gsub!(/[^[:print:]]/i, '')
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 3. OUTPUT-HOTLINK (7)
-  if outout file is selected
+  if output file is selected
     hot key (ALT-E perhaps) causes...
     javascript to matches the output for *first*
       file+line-number in error message (in pattern of output)
