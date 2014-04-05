@@ -8,7 +8,8 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 RUN apt-get install -y ruby
+RUN apt-get install -y ruby-dev
 
-# docker build -t  cyberdojo/language_ruby-1.9.3_test_unit  .
-# docker push      cyberdojo/language_ruby-1.9.3_test_unit
-# docker run -i -t cyberdojo/language_ruby-1.9.3_test_unit /bin/bash
+# docker build -t  cyberdojo/language_ruby-1.9.3  .
+# docker push      cyberdojo/language_ruby-1.9.3
+# docker run -i -t cyberdojo/language_ruby-1.9.3 /bin/bash

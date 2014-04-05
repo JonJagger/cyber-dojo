@@ -1,6 +1,6 @@
 # build-essential was built from 13.10 (saucy)
 
-FROM       cyberdojo/language_ruby-1.9.3_test_unit
+FROM       cyberdojo/language_ruby-1.9.3
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
