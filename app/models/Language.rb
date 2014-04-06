@@ -74,7 +74,7 @@ class Language
     begin
       @manifest ||= JSON.parse(read('manifest.json'))
     rescue
-      raise "JSON.parse() exception from language:" + name
+      raise "JSON.parse('manifest.json') exception from language:" + name
     end
   end
 

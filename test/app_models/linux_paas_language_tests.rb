@@ -259,6 +259,8 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   # test "if manifest.json does not exist..." do
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "if manifest.rb and manifest.json exist, json is used" do
     json_and_rb do
       @language = @dojo.languages['Ruby']
