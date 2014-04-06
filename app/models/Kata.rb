@@ -8,7 +8,19 @@ class Kata
 
   attr_reader :dojo
 
-  def_delegators :dojo, :format, :format_is_rb?, :format_is_json?
+  def format
+    return 'json' if paas.exists?(self, 'manifest.json')
+    return 'rb'   if paas.exists?(self, 'manifest.rb')
+    return dojo.format
+  end
+
+  def format_is_rb?
+    format === 'rb'
+  end
+
+  def format_is_json?
+    format === 'json'
+  end
 
   def exists?
     paas.exists?(self)
@@ -43,7 +55,7 @@ class Kata
   end
 
   def manifest_filename
-    'manifest.' + dojo.format
+    'manifest.' + format
   end
 
   def manifest

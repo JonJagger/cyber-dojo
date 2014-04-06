@@ -16,7 +16,7 @@ class LinuxPaasModelTestCase < ActionController::TestCase
     @runner = StubRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = format
-    @dojo = @paas.create_dojo(root_path + '../../', @format)
+    @dojo = @paas.create_dojo(root_path, @format)
   end
 
   def teardown

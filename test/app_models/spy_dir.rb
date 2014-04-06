@@ -24,12 +24,31 @@ class SpyDir
     end
   end
 
-  def exists?(filename = '')
-    @repo != nil && (filename == '' || @repo[filename] != nil)
-  end
-
   def make
     @repo ||= { }
+  end
+
+  # - - - - - - - - - - - - - - -
+
+  def spy_exists?(filename)
+    @stub_log << ['exists',filename]
+  end
+
+  def exists?(filename = '')
+    if @repo === nil
+      return false # no mk_dir -> dir().make yet
+    end
+    if filename === ''
+      return true # the repo exists for the dir
+    end
+    @log << ['exists',filename]
+    @repo[filename] != nil || @stub_log.include?(['exists',filename])
+  end
+
+  # - - - - - - - - - - - - - - -
+
+  def spy_write(filename, content)
+    @stub_log << ['write',filename,content]
   end
 
   def write(filename, content)
@@ -46,18 +65,6 @@ class SpyDir
     @repo[filename] = content
   end
 
-  def read(filename)
-    assert @repo != nil, "read('#{filename}') no stub file"
-    assert @repo[filename] != nil, "read('#{filename}') no stub file"
-    content  = @repo[filename]
-    @log << ['read',filename,content]
-    content
-  end
-
-  def lock(&block)
-    block.call
-  end
-
   # - - - - - - - - - - - - - - -
 
   def spy_read(filename, content)
@@ -66,8 +73,18 @@ class SpyDir
     @stub_log << ['read',filename,content]
   end
 
-  def spy_write(filename, content)
-    @stub_log << ['write',filename,content]
+  def read(filename)
+    assert @repo != nil, "read('#{filename}') no stub file"
+    assert @repo[filename] != nil, "read('#{filename}') no stub file"
+    content  = @repo[filename]
+    @log << ['read',filename,content]
+    content
+  end
+
+  # - - - - - - - - - - - - - - -
+
+  def lock(&block)
+    block.call
   end
 
   def log

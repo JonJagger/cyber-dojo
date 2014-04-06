@@ -150,6 +150,31 @@ class LinuxPaasKataTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "old kata with rb manifest file will report its format is rb" do
+    json_and_rb do
+      id = '12345ABCDE'
+      kata = Kata.new(@dojo, id)
+      @paas.dir(kata).make
+      @paas.dir(kata).spy_exists?('manifest.rb')
+      assert_equal 'rb', kata.format
+      assert kata.format_is_rb?
+      assert !kata.format_is_json?
+      assert_equal 'manifest.rb', kata.manifest_filename
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "kata without manifest yet will report its manifest_filename in dojo's format" do
+    json_and_rb do |format|
+      id = '12345ABCDE'
+      kata = Kata.new(@dojo, id)
+      assert_equal format, kata.format
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def make_kata
     language = @dojo.languages['C']
     visible_files = {

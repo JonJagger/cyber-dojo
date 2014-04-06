@@ -4,7 +4,7 @@ class LinuxPaasDojoTests < LinuxPaasModelTestCase
 
   test "path is as set in ctor" do
     json_and_rb do
-      assert_equal root_path + '../../', @dojo.path
+      assert_equal root_path, @dojo.path
     end
   end
 

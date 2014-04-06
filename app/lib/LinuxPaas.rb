@@ -65,8 +65,8 @@ class LinuxPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def exists?(object)
-    dir(object).exists?
+  def exists?(object, filename='')
+    dir(object).exists?(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
