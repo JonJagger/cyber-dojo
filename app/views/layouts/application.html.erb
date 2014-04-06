@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
   <head>
+    <meta http-equiv="cache-control" content="no-transform">
     <meta http-equiv="content-type"  content="text/html;charset=UTF-8" />
     <meta name="description" content="Free Online Coding Dojo" />
     <meta name="keywords" content="Free Online Coding Dojo Kata Deliberate Software Team Practice" />
     <meta name="author" content="Jon Jagger" />
-    <title><%= @title %></title>  
-    
+    <title><%= @title %></title>
+
     <%= csrf_meta_tag %>
     <%= favicon_link_tag %>
     <%= stylesheet_link_tag :application %>
     <%= javascript_include_tag :application %>
     <script type="text/javascript">var cd = cyberDojo;</script>
   </head>
-  
+
   <body>
     <div id="cyber_dojo_page">
       <%= yield %>
@@ -21,5 +22,3 @@
     </div>
   </body>
 </html>
-
-
