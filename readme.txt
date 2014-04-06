@@ -43,7 +43,7 @@ o) click the [setup] button
 o) click your chosen language (eg C++)
 o) click your chosen exercise (eg Prime Factors)
 o) click the [ok] button
-o) You will get a case-insensitive 6-character hex-id (the full id is actually
+o) you will get a case-insensitive 6-character hex-id (the full id is actually
    ten characters long but statistically 6 chars is enough for uniqueness)
 
 
@@ -54,15 +54,13 @@ o) on <em>each</em> participating computer
 o) enter the 6-character id into the green input box
 o) click the [start] button
 o) the server will tell you which animal you are (eg Panda).
-o) click [ok] 
-
-o) on each computer do the chosen exercise...
+o) click [ok]
 o) edit the test files and the code files...
 o) press the [test] button to see if the tests pass or not...
 o) every time the [test] button is pressed a new traffic-light appears
-o) traffic-lights progress left-to-right, oldest-to-newest.
+o) traffic-lights progress along the top, left-to-right, oldest-to-newest.
 o) clicking on any traffic-light opens a dialog showing the diffs for
-   that traffic-light with << < > >> buttons to navigate forwards and backwards.
+   that traffic-light plus << < > >> buttons to navigate forwards and backwards.
 
 
 ==============
