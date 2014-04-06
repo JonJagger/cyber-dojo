@@ -63,8 +63,8 @@ o) Every time the [test] button is pressed a new traffic-light appears at
    the bottom.
 o) Traffic-lights progress left-to-right, oldest-to-newest.
 o) Clicking on any traffic-light opens a dialog showing the diffs for
-   that traffic-light for that animal together with << < > >> buttons to step
-   backwards and forwards.
+   that traffic-light for that animal together with << < > >> buttons to
+   navigate forwards and backwards.
 
 
 ==============
@@ -84,8 +84,8 @@ You will also get an amber traffic-light if the tests do not complete within
 15 seconds (eg you've accidentally coded an infinite loop or the server is
 overloaded with too many concurrent practice sessions)
 Clicking on any traffic-light opens a dialog showing the diffs for
-that traffic-light for that animal together with << < > >> buttons to step
-backwards and forwards.
+that traffic-light for that animal together with << < > >> buttons to
+navifate forwards and backwards.
 
 
 ================
@@ -101,8 +101,8 @@ o) its total number of red,amber,green traffic-lights so far (in red,amber,green
 o) its total number of traffic-lights (in the current colour).
 o) its animal
 o) as always clicking on any traffic-light opens a dialog showing the diffs for
-   that traffic-light for that animal together with << < > >> buttons to step
-   backwards and forwards.
+   that traffic-light for that animal together with << < > >> buttons to
+   navigate forwards and backwards.
 
 -------------
 auto refresh?
@@ -130,10 +130,9 @@ vertically time-aligned.
 ===================
 reviewing the diffs
 ===================
-Clicking on any traffic-light opens a dialog showing the diffs for
-that traffic-light for that animal together with << < > >> buttons to step
-backwards and forwards. As you move forwards and backwards using the
-<< < > >> buttons the server will stay on the same file if it continues to
+Clicking on any traffic-light opens a dialog showing the diffs for that
+traffic-light for that animal. As you navigate forwards and backwards using
+the << < > >> buttons the server will stay on the same file if it continues to
 have a diff. If it cannot do this (because the file has been renamed or
 deleted or has not changed) the server will open the file with the most changes.
 When a file is initially opened it autoscrolls to that file's first diff-chunk.
@@ -219,9 +218,9 @@ Example: the one for Java-JUnit looks like this:
 }
 </quote>
 Make sure all the filenames are in the new folder, including cyber-dojo.sh
-  #chmod +x cyber-dojo.sh
-  #chown www-data *
-  #chgrp www-data *
+  $ chmod +x cyber-dojo.sh
+  $ chown www-data *
+  $ chgrp www-data *
 
 
 ========================
