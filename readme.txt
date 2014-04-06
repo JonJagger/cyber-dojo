@@ -1,7 +1,43 @@
 
-=======================
-Setup a coding practice
-=======================
+------------------------------------------------------------------------
+CONTENTS
+------------------------------------------------------------------------
+o) setting up a coding practice
+o) starting coding
+o) traffic lights
+o) dashboard review
+      auto refresh?
+      |60s| columns?
+o) deviewing the diffs
+o) resuming coding
+------------------------------------------------------------------------
+o) adding a new exercise
+o) adding a new language
+      manifest.json parameters
+------------------------------------------------------------------------
+DOCKER'D SERVER
+  running your own Docker'd cyber-dojo server
+  installing Languages on a docker server
+  pulling from the cyberdojo github repo
+------------------------------------------------------------------------
+RAW SERVER
+  running your own raw cyber-dojo server
+  installing Languages on a raw server
+  pulling from the cyberdojo github repo
+------------------------------------------------------------------------
+o) turning off spell-checking in your browser
+o) disk space
+o) katas directory structure
+o) git repositories
+o) misc notes
+o) thank you
+------------------------------------------------------------------------
+
+
+
+============================
+setting up a coding practice
+============================
 o) from the home page, click the [setup] button
 o) choose your language (eg C++)
    Each language corresponds to a sub-directory of cyberdojo/languages/
@@ -14,9 +50,9 @@ o) You will get a 6-character id (the full id is actually 10 characters
    long but statistically 6 chars is enough for uniqueness).
 
 
-============
-Start coding
-============
+===============
+starting coding
+===============
 o) Enter the 6-character id (case insensitive) on <em>each</em> participating
    computer and click the [start] button.
 o) The server will assign each computer an animal (eg Panda).
@@ -26,15 +62,18 @@ o) On each computer do the chosen exercise by editing the test files and the
 o) Every time the [test] button is pressed a new traffic-light appears at
    the bottom.
 o) Traffic-lights progress left-to-right, oldest-to-newest.
+o) Clicking on any traffic-light opens a dialog showing the diffs for
+   that traffic-light for that animal together with << < > >> buttons to step
+   backwards and forwards.
 
 
 ==============
-Traffic Lights
+traffic lights
 ==============
 The result of each pressing the [test] button is displayed in the 'output' file
 and also as a new traffic-light (at the top). Clicking on a traffic-light
 opens a diff-view of the files associated with that traffic-light.
-The meanings for the colours on each traffic-light are:
+Each traffic-light is coloured as follows:
   (o) red   - tests ran but at least one failed
   (o) amber - syntax error somewhere, tests not run
   (o) green - tests ran and all passed
@@ -44,10 +83,13 @@ display if you are colour blind.
 You will also get an amber traffic-light if the tests do not complete within
 15 seconds (eg you've accidentally coded an infinite loop or the server is
 overloaded with too many concurrent practice sessions)
+Clicking on any traffic-light opens a dialog showing the diffs for
+that traffic-light for that animal together with << < > >> buttons to step
+backwards and forwards.
 
 
 ================
-Dashboard-Review
+dashboard review
 ================
 You can get to the dashboard page in two ways.
 o) from the home page, enter the practice id and click the [review] button.
@@ -58,6 +100,9 @@ o) its oldest-to-newest traffic lights
 o) its total number of red,amber,green traffic-lights so far (in red,amber,green).
 o) its total number of traffic-lights (in the current colour).
 o) its animal
+o) as always clicking on any traffic-light opens a dialog showing the diffs for
+   that traffic-light for that animal together with << < > >> buttons to step
+   backwards and forwards.
 
 -------------
 auto refresh?
@@ -82,9 +127,9 @@ When not checked the traffic-lights of different animals are not
 vertically time-aligned.
 
 
-===========
-Diff-Review
-===========
+===================
+reviewing the diffs
+===================
 Clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to step
 backwards and forwards. As you move forwards and backwards using the
@@ -126,7 +171,7 @@ of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
 ===============
-Resuming Coding
+resuming coding
 ===============
 You can resume at any animals' most recent traffic-light by pressing
 the resume button (from the home page) and then clicking
@@ -135,7 +180,7 @@ laptop as a new laptop can instantly replace it.
 
 
 =====================
-Adding a new exercise
+adding a new exercise
 =====================
 1. Create a new sub-directory under cyberdojo/exercises/
   Example: cyberdojo/exercises/FizzBuzz
@@ -144,7 +189,7 @@ Adding a new exercise
 
 
 =====================
-Adding a new language
+adding a new language
 =====================
 Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
   For example: cyberdojo/test/cyberdojo/languages/Lisp
@@ -169,7 +214,7 @@ Example: the one for Java-JUnit looks like this:
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/language_java-1.8"
+  "image_name": "cyberdojo/java-1.8"
   "tab_size": 4
 }
 </quote>
@@ -177,22 +222,10 @@ Make sure all the filenames are in the new folder, including cyber-dojo.sh
   #chmod +x cyber-dojo.sh
   #chown www-data *
   #chgrp www-data *
-Check that running cyber-dojo.sh behaves as required:
-  #sudo -u www-data ./cyber-dojo.sh
-or maybe
-  #strace sudo -u www-data ./cyber-dojo.sh
-
-You can test the setup of a new language using a ruby script.
-For example: if the new language is Lisp installed
-at cyberdojo/test/cyberdojo/languages/Lisp then
-  #cd test/installation
-  #ruby check_language.rb ../cyberdojo Lisp
-Once this passes make it live by moving it to the live languages folder:
-#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
 
 ========================
-manifest.json Parameters
+manifest.json parameters
 ========================
 "image_name": string
   The name of docker image to execute cyber-dojo.sh.
@@ -205,14 +238,15 @@ manifest.json Parameters
   or as a "support_filenames" entry. This is because cyber-dojo.sh is the name
   of the shell file assumed by the ruby code (on the server) to be the start
   point for running the tests. You can write any actions in the cyber-dojo.sh
-  file but clearly any programs it tries to run must be installed on the server.
+  file but clearly any programs it tries to run must be installed in the
+  environment cyber-dojo.sh is running in.
   For example, if cyber-dojo.sh runs gcc to compile C files then gcc has
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 - - - - - - - - - - - - - - - - - - - -
 "support_filenames": [ ... ]
   The names of necessary supporting files. Each of these files must
-  exist in the directory. For example, junit jar files or nunit assemblies.
+  exist in the directory. For example, junit .jar files or nunit .dll assemblies.
   These are symlinked from the /languages folder to each animals /katas folder.
   Despite the name "support_filenames" you can symlink a folder if required
   which can be very handy.
@@ -222,20 +256,20 @@ manifest.json Parameters
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
   files form the focus of the practice. A subset of visible_filenames.
-  You can also put "instructions" in.
-  You can also put "output" in.
+  You can also name "instructions" (from exercises/)
+  You can also name "output" (always present)
   For example
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
   Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
-  in the file app/assets/stylesheets/kata-dojo.css.scss
+  in app/assets/stylesheets/kata-dojo.css.scss
     div[class~='filename'][class~='highlight'] {
       ...
     }
   The highlight_filenames entry also interacts with lowlights_filenames
   (see Language.lowlight_filenames() in app/models/Language.rb)
   (see cd.notLowlightFilenames() in app/assets/javascripts/cyber-dojo_file_load.js)
-  appearance in the same CSS file...
+  Again, its appearance in controlled from the same CSS file...
     div[class~='filename'][class~='lowlight'] {
       ...
     }
@@ -252,7 +286,7 @@ manifest.json Parameters
 "display_test_name": string
   The name of the unit-test-framework as it appears in the setup page and also in
   in the info displayed at the top-left of the test and dashboard pages.
-  Optional. Defaults to "unit_test_framework" (see next).
+  Optional. Defaults to the "unit_test_framework" value.
 - - - - - - - - - - - - - - - - - - - -
 "unit_test_framework": string
   The name of the unit test framework which partially determines the
@@ -278,10 +312,10 @@ o) it will only offer languages/ whose manifest.json file
    has an "image_name" entry that exists. For example, if
    languages/Java-JUnit/manifest.json contains this...
      { ...
-       "image_name": "cyberdojo/language_java-1.8"
+       "image_name": "cyberdojo/java-1.8"
      }
    then Java-JUnit will only be offered as a language on the
-   initial setup page if "cyberdojo/language_java-1.8" exists
+   initial setup page if "cyberdojo/java-1.8" exists
    on the host server (as determined by running `docker images`)
 o) it will use the docker "image_name" container to execute an animals
    cyber-dojo.sh file each time the animal presses the [test] button.
@@ -295,13 +329,32 @@ Running your own Docker'd cyber-dojo server
 Use the TurnKey Linux Rails image.
   http://www.turnkeylinux.org/rails
 Install cyber-dojo and docker into it using the setup_docker_server.sh file...
-https://raw.githubusercontent.com/JonJagger/cyberdojo/master/setup_docker_server.sh
-Now..
+https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh
+
+
+---------------------------------------
+installing languages on a docker server
+---------------------------------------
 $ docker search cyberdojo
-will tell you the names of the docker container images in the cloud. Now do a
+will tell you the names of the docker container images held in the
+docker cyberdojo index at https://index.docker.io/u/cyberdojo/
+Now do a
 $ docker pull IMAGE_NAME
 for each IMAGE_NAME matching the image_name entry in
-each languages/manifest.json file that you wish to use.
+each languages/LANG/manifest.json file that you wish to use.
+
+
+--------------------------------------
+pulling from the cyberdojo github repo
+--------------------------------------
+  $ cd /var/www/cyberdojo
+  $ ./pull.sh
+If pull.sh asks for a password just hit return.
+pull.sh performs the following tasks...
+  o) pulls the latest source from the cyberdojo github repo
+  o) ensures any new files and folders have the correct group and owner
+  o) checks for any gemfile changes
+  o) restarts apache
 
 
 ===========================================================
@@ -320,7 +373,7 @@ o) a virtual box.
 o) a dedicated network segment.
 
 --------------------------------------
-Running your own RAW cyber-dojo server
+running your own raw cyber-dojo server
 --------------------------------------
 Install VirtualBox from http://www.virtualbox.org/
 Download the TurnKey Linux image from
@@ -336,41 +389,9 @@ Detailed instructions on building your own Turnkey server from scratch are here
 http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 
 
-================================================================
-Pulling the latest github source onto your own cyber-dojo server
-================================================================
-Docker'd or raw...
-Add port 12320 to the server's URL in your browser above, eg
-192.168.2.13:12320
-Now you need the username and password.
-I will happily tell you these if you email me: jon@jaggersoft.com
-Then grab the latest cyber-dojo source code from github and install it.
-  >cd /var/www/cyberdojo
-  >./pull.sh
-If pull.sh asks for a password just hit return.
-pull.sh performs the following tasks...
-  o) pulls the latest source from the cyberdojo github repo
-  o) ensures any new files and folders have the correct group and owner
-  o) checks for any gemfile changes
-  o) restarts apache
-
-
-========
-Versions
-========
-After Johannes Brodwall's sterling upgrade work my server reports...
->rake about
-Ruby version              1.9.3 (i686-linux)
-RubyGems version          1.8.24
-Rack version              1.4
-Rails version             3.2.3
-JavaScript Runtime        therubyracer (V8)
-
-
-
-====================================
-Installing Languages on a RAW Server
-====================================
+------------------------------------
+installing languages on a raw server
+------------------------------------
 The base rails3 image is available here (417MB)
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.base.ova
 (see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
@@ -473,17 +494,36 @@ this gave me the spock jar I needed.
 (thanks to Schalk Cronje)
 
 
-==========
-Disk space
-==========
+----------------------------------------
+pulling the latest cyberdojo github repo
+----------------------------------------
+You'll need the username and password. I will happily tell you these if
+you email me: jon@jaggersoft.com
+
+
+------------------------------------------
+turning off spell-checking in your browser
+------------------------------------------
+and avoid annoying red underlines the code editor...
+In Chrome
+  1. Right click in the editor
+  2. Under Spell-checker Options>
+  3. Deselect 'Check Spelling in this Field'
+In Opera/Firefox
+  1. Right click in the editor
+  2. Deselect 'Check spelling'
+
+----------
+disk space
+----------
 The design of cyber-dojo is very heavy on inodes. You will almost certainly
 run out of inodes before running out of disk space. The folder that eats
 the inodes is katas/
 
 
-=========================
-Katas Directory Structure
-=========================
+-------------------------
+katas directory structure
+-------------------------
 The rails code does NOT use a database.
 Instead each practice session lives in a git-like directory structure based
 on its 10 character id. For example the session with id 82B583C347 lives at
@@ -494,10 +534,9 @@ Each started animal has a sandbox sub-directory where its files are held, eg
   cyberdojo/katas/82/B583C347/wolf/sandbox
 
 
-
-================
-Git Repositories
-================
+----------------
+git repositories
+----------------
 Each started animal has its own git respository, eg
   cyberdojo/katas/82/B583C347/wolf/.git
 The starting files (as loaded from the wolf/manifests.rb file) form
@@ -514,25 +553,9 @@ To look at filename's differences between tag 4 and tag 5
 It's much easier and more informative to just click on dashboard traffic light.
 
 
-
-
-How to Turn off Chrome Spell-Checking in Chrome
-===============================================
-To turn it off (and avoid annoying red underlines the code editor)
-1. Right click in the editor
-2. Under Spell-checker Options>
-3. Deselect 'Check Spelling in this Field'
-
-
-How to Turn off Spell-checking in Opera/Firefox
-===============================================
-To turn it off (and avoid annoying red underlines the code editor)
-1. Right click in the editor
-2. Deselect 'Check spelling'
-
-
-Misc Notes
-==========
+----------
+misc notes
+----------
 o) http://vimeo.com/15104374 has a video of me doing the Roman Numerals
    exercise in Ruby in a very early version of cyber-dojo
 o) http://vimeo.com/8630305 has a video of an even earlier version of
@@ -550,8 +573,10 @@ o) I work hard to <em>remove</em> features from cyber-dojo.
    The aim of cyber-dojo is to deliberately practice developing software
    collaboratively.
 
-Thanks
-======
+
+---------
+thank you
+---------
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
    Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and

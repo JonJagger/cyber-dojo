@@ -1,5 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CUT FROM README (AFFECTED BY DOCKER)
+Check that running cyber-dojo.sh behaves as required:
+  #sudo -u www-data ./cyber-dojo.sh
+or maybe
+  #strace sudo -u www-data ./cyber-dojo.sh
+
+You can test the setup of a new language using a ruby script.
+For example: if the new language is Lisp installed
+at cyberdojo/test/cyberdojo/languages/Lisp then
+  #cd test/installation
+  #ruby check_language.rb ../cyberdojo Lisp
+Once this passes make it live by moving it to the live languages folder:
+#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
