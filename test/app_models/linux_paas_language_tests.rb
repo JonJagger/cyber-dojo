@@ -257,6 +257,8 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  # test "if manifest.json does not exist..." do
+
   test "if manifest.rb and manifest.json exist, json is used" do
     json_and_rb do
       @language = @dojo.languages['Ruby']
@@ -273,6 +275,24 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
     json_and_rb do
       @language = @dojo.languages['Ruby']
       assert @language.runnable?
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "JSON.parse error raises exception naming the language" do
+    json_and_rb do
+      name = 'Ruby'
+      @language = @dojo.languages[name]
+      any_bad_json = "42"
+      @paas.dir(@language).spy_read('manifest.json', any_bad_json)
+      named = false
+      begin
+        @language.tab_size
+      rescue Exception => ex
+        named = ex.to_s.include?(name)
+      end
+      assert named
     end
   end
 
