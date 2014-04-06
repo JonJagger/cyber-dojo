@@ -17,12 +17,12 @@ o) adding a new language
 ------------------------------------------------------------------------
 DOCKER'D SERVER
   running your own Docker'd cyber-dojo server
-  installing Languages on a docker server
+  installing languages on a docker server
   pulling from the cyberdojo github repo
 ------------------------------------------------------------------------
 RAW SERVER
   running your own raw cyber-dojo server
-  installing Languages on a raw server
+  installing languages on a raw server
   pulling from the cyberdojo github repo
 ------------------------------------------------------------------------
 o) turning off spell-checking in your browser
@@ -38,33 +38,31 @@ o) thank you
 ============================
 setting up a coding practice
 ============================
-o) from the home page, click the [setup] button
-o) choose your language (eg C++)
-   Each language corresponds to a sub-directory of cyberdojo/languages/
-   (see below)
-o) choose your exercise (eg Prime Factors)
-   Each exercise corresponds to a sub-directory of cyberdojo/exercises/
-   (see below)
-o) click the [ok] button.
-o) You will get a 6-character id (the full id is actually 10 characters
-   long but statistically 6 chars is enough for uniqueness).
+o) from the home page...
+o) click the [setup] button
+o) click your chosen language (eg C++)
+o) click your chosen exercise (eg Prime Factors)
+o) click the [ok] button
+o) You will get a case-insensitive 6-character hex-id (the full id is actually
+   ten characters long but statistically 6 chars is enough for uniqueness)
 
 
 ===============
 starting coding
 ===============
-o) Enter the 6-character id (case insensitive) on <em>each</em> participating
-   computer and click the [start] button.
-o) The server will assign each computer an animal (eg Panda).
-   The animal provides identity for each participating computer.
-o) On each computer do the chosen exercise by editing the test files and the
-   code files, and pressing the [test] button to see if the tests pass or not.
-o) Every time the [test] button is pressed a new traffic-light appears at
-   the bottom.
-o) Traffic-lights progress left-to-right, oldest-to-newest.
-o) Clicking on any traffic-light opens a dialog showing the diffs for
-   that traffic-light for that animal together with << < > >> buttons to
-   navigate forwards and backwards.
+o) on <em>each</em> participating computer
+o) enter the 6-character id into the green input box
+o) click the [start] button
+o) the server will tell you which animal you are (eg Panda).
+o) click [ok] 
+
+o) on each computer do the chosen exercise...
+o) edit the test files and the code files...
+o) press the [test] button to see if the tests pass or not...
+o) every time the [test] button is pressed a new traffic-light appears
+o) traffic-lights progress left-to-right, oldest-to-newest.
+o) clicking on any traffic-light opens a dialog showing the diffs for
+   that traffic-light with << < > >> buttons to navigate forwards and backwards.
 
 
 ==============
