@@ -1,9 +1,9 @@
 #!/bin/bash
 cp Dockerfile_haskell Dockerfile
-docker build -t cyberdojo/erlang  .
+docker build -t cyberdojo/haskell  .
 
 cp Dockerfile_haskell_hunit Dockerfile
-docker build -t cyberdojo/erlang_eunit .
+docker build -t cyberdojo/haskell_hunit .
 
 docker push cyberdojo/haskell
 docker push cyberdojo/haskell_hunit
