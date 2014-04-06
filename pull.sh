@@ -1,5 +1,5 @@
 #!/bin/bash
-# Use to install the latest cyberdojo git repo onto cyber-dojo.com
+# Use to install the latest cyberdojo git repo onto a cyber-dojo server
 
 # get latest source from https://github.com/JonJagger/cyberdojo
 # if it asks for a password just hit return
