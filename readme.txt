@@ -1,4 +1,5 @@
 
+=======================
 Setup a coding practice
 =======================
 o) from the home page, click the [setup] button
@@ -13,6 +14,7 @@ o) You will get a 6-character id (the full id is actually 10 characters
    long but statistically 6 chars is enough for uniqueness).
 
 
+============
 Start coding
 ============
 o) Enter the 6-character id (case insensitive) on <em>each</em> participating
@@ -26,10 +28,11 @@ o) Every time the [test] button is pressed a new traffic-light appears at
 o) Traffic-lights progress left-to-right, oldest-to-newest.
 
 
+==============
 Traffic Lights
 ==============
 The result of each pressing the [test] button is displayed in the 'output' file
-and also as a new traffic-light (at the bottom). Clicking on a traffic-light
+and also as a new traffic-light (at the top). Clicking on a traffic-light
 opens a diff-view of the files associated with that traffic-light.
 The meanings for the colours on each traffic-light are:
   (o) red   - tests ran but at least one failed
@@ -43,11 +46,12 @@ You will also get an amber traffic-light if the tests do not complete within
 overloaded with too many concurrent practice sessions)
 
 
+================
 Dashboard-Review
 ================
 You can get to the dashboard page in two ways.
-o) from the test page, click the animal image at the bottom right
 o) from the home page, enter the practice id and click the [review] button.
+o) from the test page, click the animal image at the top right
 
 Each horizontal row corresponds to one animal and displays, from left to right,
 o) its oldest-to-newest traffic lights
@@ -55,6 +59,7 @@ o) its total number of red,amber,green traffic-lights so far (in red,amber,green
 o) its total number of traffic-lights (in the current colour).
 o) its animal
 
+-------------
 auto refresh?
 -------------
 The dashboard page auto-refreshes every 10 seconds. As more and more tests
@@ -64,6 +69,7 @@ o) old ones are scrolled out of view to the left
 o) the animal image is always visible.
 The idea is to turn off auto-refresh before starting a dashboard review.
 
+---------------
 |60s| columns?
 ---------------
 When this is checked, each vertical column corresponds to 60 seconds.
@@ -76,6 +82,7 @@ When not checked the traffic-lights of different animals are not
 vertically time-aligned.
 
 
+===========
 Diff-Review
 ===========
 Clicking on any traffic-light opens a dialog showing the diffs for
@@ -118,6 +125,7 @@ Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
+===============
 Resuming Coding
 ===============
 You can resume at any animals' most recent traffic-light by pressing
@@ -126,6 +134,7 @@ the animal. This is handy if a participant has to leave and take their
 laptop as a new laptop can instantly replace it.
 
 
+=====================
 Adding a new exercise
 =====================
 1. Create a new sub-directory under cyberdojo/exercises/
@@ -134,6 +143,7 @@ Adding a new exercise
   Example: cyberdojo/exercises/FizzBuzz/instructions
 
 
+=====================
 Adding a new language
 =====================
 Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
@@ -181,8 +191,9 @@ Once this passes make it live by moving it to the live languages folder:
 #mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
 
 
+========================
 manifest.json Parameters
-======================
+========================
 "image_name": string
   The name of docker image to execute cyber-dojo.sh.
   Optional. Not required if docker is not being used.
@@ -344,6 +355,7 @@ pull.sh performs the following tasks...
   o) restarts apache
 
 
+========
 Versions
 ========
 After Johannes Brodwall's sterling upgrade work my server reports...
@@ -355,6 +367,8 @@ Rails version             3.2.3
 JavaScript Runtime        therubyracer (V8)
 
 
+
+====================================
 Installing Languages on a RAW Server
 ====================================
 The base rails3 image is available here (417MB)
@@ -459,6 +473,7 @@ this gave me the spock jar I needed.
 (thanks to Schalk Cronje)
 
 
+==========
 Disk space
 ==========
 The design of cyber-dojo is very heavy on inodes. You will almost certainly
@@ -466,6 +481,7 @@ run out of inodes before running out of disk space. The folder that eats
 the inodes is katas/
 
 
+=========================
 Katas Directory Structure
 =========================
 The rails code does NOT use a database.
@@ -479,6 +495,7 @@ Each started animal has a sandbox sub-directory where its files are held, eg
 
 
 
+================
 Git Repositories
 ================
 Each started animal has its own git respository, eg
@@ -496,26 +513,6 @@ To look at filename's differences between tag 4 and tag 5
 >git diff 4 5 sandbox/filename
 It's much easier and more informative to just click on dashboard traffic light.
 
-
-
-
-Getting dojos off the VirtualBox TurnKey Linux server
-=====================================================
-From the review dashboard page click the [download .zip] button.
-Zip button now removed. Wanted to see if anyone missed it.
-No one did. As usual, it was a feature too far.
-
-If you want to do it from within the actual server you will need
-the username and password info to SSH and SFTP.
-I will happily tell you it if you email me: jon@jaggersoft.com
-1. SSH onto the server
-2. cd /var/www/cyberdojo
-3. to create a zip file of all dojos
-     #ruby zipup.rb true 0 0
-   will create zipped_dojos.zip
-4. to create a zip file of just one dojo, eg 2F725592E3
-     #zip -r zipped_dojo.zip katas/2F/725592E3
-5. SFTP the zip file off the server
 
 
 
@@ -546,12 +543,15 @@ o) When I started cyber-dojo I didn't know any ruby, any rails, or any
    I've have no-one to pair with (except google) while developing this
    in my limited spare time. Some of what you find is likely to be
    non-idiomatic. Caveat emptor!
-o) I have worked hard to <em>remove</em> features from cyber-dojo.
+o) I work hard to <em>remove</em> features from cyber-dojo.
    The simpler the environment the more players will concentrate on
    the practice and the more they will need to collaborate with each other.
    Remember the aim of a cyber-dojo is <em>not</em> to ship something!
    The aim of cyber-dojo is to deliberately practice developing software
    collaboratively.
+
+Thanks
+======
 o) Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
    cyber-dojo and have provided lots of help right from the very early days.
    Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
@@ -560,5 +560,6 @@ o) James Grenning uses cyber-dojo a lot, via his own Turnkey S3 cloud servers,
    and has provided awesome feedback and made several very generous donations.
    Thank you James.
 o) Jerry Weinberg showed me the power of experiential learning on all
-   of his courses and conferences, notably PSL, which strongly influenced
-   the way I designed cyber-dojo. Thank you Jerry.
+   of his courses and conferences, notably PSL,
+   http://www.estherderby.com/problem-solving-leadership-psl
+   which strongly influenced the way I designed cyber-dojo. Thank you Jerry.

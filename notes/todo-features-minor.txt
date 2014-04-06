@@ -1,10 +1,5 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-README UPDATE
-  For lowlight_filenames entry in languages/ manifest.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FORWARD-BACKWARD HOT-KEYS
-  Should only cycle through the non-lowlight_filenames (and output)
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
@@ -19,6 +14,12 @@ EXERCISE-HAS-MANIFEST
   And give Exercise a manifest like Language?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CUSTOM-DOMAIN-NAMES
-  James has found out how to spin up custom names for clients
+  James spins up custom names for clients
   eg  cisco.cyber-dojo.org - from amazon route 53
+  Nice idea.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REPEAT
+  next to the [setup] button have a [repeat] button
+  which automatically sets up a new dojo with the same
+  language and exercise as last time.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
