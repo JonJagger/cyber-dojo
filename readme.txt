@@ -40,21 +40,22 @@ setting up a coding practice
 ============================
 o) from the home page...
 o) click the [setup] button
-o) click your chosen language (eg C++)
+o) click your chosen language|unit-test-framework (eg C++|assert)
 o) click your chosen exercise (eg Prime Factors)
 o) click the [ok] button
-o) you will get a case-insensitive 6-character hex-id (the full id is actually
+o) you'll get a case-insensitive 6-character hex-id (the full id is actually
    ten characters long but statistically 6 chars is enough for uniqueness)
 
 
 ===============
 starting coding
 ===============
-o) on <em>each</em> participating computer
+o) on <em>each</em> participating computer...
 o) enter the 6-character id into the green input box
 o) click the [start] button
 o) the server will tell you which animal you are (eg Panda).
 o) click [ok]
+o) a new [test] page/tab will open in your browser
 o) edit the test files and the code files...
 o) press the [test] button to see if the tests pass or not...
 o) every time the [test] button is pressed a new traffic-light appears
@@ -81,7 +82,7 @@ You will also get an amber traffic-light if the tests do not complete within
 overloaded with too many concurrent practice sessions)
 Clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to
-navifate forwards and backwards.
+navigate forwards and backwards.
 
 
 ================
@@ -107,13 +108,13 @@ The dashboard page auto-refreshes every 10 seconds. As more and more tests
 are run, more and more traffic-lights appear taking up more and more
 horizontal space. These traffic-lights auto scroll:
 o) old ones are scrolled out of view to the left
-o) the animal image is always visible.
+o) the animal image is always visible to the right.
 The idea is to turn off auto-refresh before starting a dashboard review.
 
 ---------------
 |60s| columns?
 ---------------
-When this is checked, each vertical column corresponds to 60 seconds.
+When this is checked each vertical column corresponds to 60 seconds.
 Every 6 auto-refreshes a new rightmost column will appear
 containing all the traffic-lights created by all the animals in those 60
 seconds. If no animals press the [test] button during those 60 seconds the
@@ -132,23 +133,22 @@ the << < > >> buttons the server will stay on the same file if it continues to
 have a diff. If it cannot do this (because the file has been renamed or
 deleted or has not changed) the server will open the file with the most changes.
 When a file is initially opened it autoscrolls to that file's first diff-chunk.
-Reclicking on the filename auto-scrolls to the next diff-chunk in the file
-Clicking the red no-of-lines-deleted button (to the right of the filename)
+Reclicking on the filename auto-scrolls to the next diff-chunk in the file.
+Clicking the red number-of-lines-deleted button (to the right of the filename)
 will toggle the deleted lines on/off for that file's diff.
-Clicking the green no-of-lines-added button (to the right of the filename)
+Clicking the green number-of-lines-added button (to the right of the filename)
 will toggle the added lines on/off for that file's diff.
 
 The diff is a diff between two traffic-lights. If you click on an animals 13th
-traffic-light (on the dashboard) then the diff page will show the diff between
-traffic-lights 12 and 13, and the values 12 and 13 will appear at the top left
-next to their respective traffic-lights.
+traffic-light the diff dialog shows the diff between traffic-lights 12 and 13,
+and 12 and 13 appear at the top left next to their respective traffic-lights.
 You can show the diff between any two traffic-lights by simply editing these
-numbers. For example, if you edit the 13 to a 15 and press return the page will
-update to display the diff between traffic-lights 12 and 15.
+numbers. For example, if you edit the 13 to a 15 and press return the dialog
+will update to display the diff between traffic-lights 12 and 15.
 Below the two traffic-lights are  <<  <  >  >>  buttons.
 These buttons move forwards and backwards whilst maintaining the traffic-light
 gap (eg 12 <-> 15 == 3).
-Pressing
+For example, pressing
 o) << moves back to the first traffic-light, so if the gap is 3
    it will display the diff of 1 <-> 4
 o) <  moves one traffic-light back, so if the gap is 3
