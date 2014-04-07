@@ -9,8 +9,8 @@ class Kata
   attr_reader :dojo
 
   def format
-    return 'json' if paas.exists?(self, 'manifest.json')
-    return 'rb'   if paas.exists?(self, 'manifest.rb')
+    return 'json' if paas.exists?(self, manifest_prefix + 'json')
+    return 'rb'   if paas.exists?(self, manifest_prefix + 'rb')
     return dojo.format
   end
 
@@ -55,7 +55,7 @@ class Kata
   end
 
   def manifest_filename
-    'manifest.' + format
+    manifest_prefix + format
   end
 
   def manifest
@@ -68,6 +68,10 @@ private
 
   def paas
     dojo.paas
+  end
+
+  def manifest_prefix
+    'manifest.'
   end
 
 end

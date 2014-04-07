@@ -9,7 +9,7 @@ FAULT
      katas/03/gorilla/.git
   instead of
      katas/03/53EDF831/gorilla/.git
-  Look into this.
+  Look into this. It appears to be a problem starting an animal.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   katas/34/87780530/hippo/sandbox
