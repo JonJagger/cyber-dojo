@@ -12,5 +12,6 @@
 
   "display_name": "C#",
   "display_test_name": "NUnit",
-  "unit_test_framework": "nunit"
+  "unit_test_framework": "nunit",
+  "image_name": "cyberdojo/csharp_nunit"
 }
