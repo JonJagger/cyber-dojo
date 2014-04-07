@@ -22,8 +22,6 @@ ROGUE-CHARACTERS-ON-INPUT (3)
           e.preventDefault();
       }
   });
-  Also, to remove non-printable characters from string s on rails server
-  s.gsub!(/[^[:print:]]/i, '')
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OUTPUT-HOTLINK (7)
   if output file is selected
@@ -32,29 +30,34 @@ OUTPUT-HOTLINK (7)
       file+line-number in error message (in pattern of output)
     auto opens that file
     scrolls to the line-number.
+  Why require output file to be selected.
+  Require only that there is an error in the output file.
+  That takes care of itself - the pattern matches or it doesn't.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SEARCH-REPLACE (15)
   button just below new/rename/delete
   opens dialog
   files?  defaults to current file, can enter regex if you want
-  search: defaults to content selected in editor (or "")
-  replace: defaults to content selected in editor (or "")
+  --search-for: defaults to content selected in editor (or "")
+  replace-with: defaults to content selected in editor (or "")
+  both have dropdown history
   and [button]
   SED ?
   As you enter the search pattern the filenames listed
-  are dynamically enabled/disabled (checkboxes).
+  are dynamically enabled/disabled (checkboxes). Or shown/not-shown?
+  Show a count of how many matches the search-for regex has for each file
   And if you don't hit replace, then this gives you a way
   to search!
   Should the filenames displayed be all the files, or
   if highlighted files are marked, only the marked ones?
   Hmmmm. No, because the files the dev creates are bound to be
   the ones they want to search inside.
-  Also, is output included in the filename list?
+  Also, is output included in the filename list? No. Its readonly
   Also, is cyber-dojo.sh included in the filename list?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXTRA-INFO (20)
   on the animal display (eg on dashboard) show the number of passing
-  tests (if at green). This is very useful for situations where (eg James)
-  has an exercise where he has created all the tests and the task
+  tests (if at green). This is very useful for situations in
+  exercises where you pre-create all the tests and the task
   is to work through them.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
