@@ -13,7 +13,7 @@ class DockerRunner
 
   def run(paas, sandbox, command, max_seconds)
     language = sandbox.avatar.kata.language
-    cmd = 'docker run -u www-data --rm' +
+    cmd = 'docker run -u root --rm' +
           " -v #{paas.path(sandbox)}:/sandbox:rw" +
           " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
           ' -w /sandbox' +
