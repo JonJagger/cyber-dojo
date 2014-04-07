@@ -1,0 +1,9 @@
+FROM       cyberdojo/csharp
+MAINTAINER Jon Jagger <jon@jaggersoft.com>
+
+RUN apt-get install -y monodevelop-nunit
+RUN apt-get install -y nunit-console
+
+# docker build -t  cyberdojo/csharp_nunit .
+# docker push      cyberdojo/csharp_nunit
+# docker run -i -t cyberdojo/csharp_nunit /bin/bash
