@@ -1,4 +1,2 @@
-I install mono on Ubuntu as follows
-
->sudo apt-get install mono-gmcs
->sudo apt-get install nunit-console
+The nunit.framework.dll in this directory is for running
+on a raw server (and not a docker server). 
