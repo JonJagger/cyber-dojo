@@ -27,6 +27,7 @@ FAULT
   Need to switch from using `mkdir -p #{...}` to
   require 'fileutils'
   FileUtils.mkdir_p("#{...}")
+  Only `mkdir` calls are in lib/OsDir.rb (two of them)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   test-failing...
@@ -38,6 +39,7 @@ FAULT
   instead of
      katas/03/53EDF831/gorilla/.git
   Look into this. It appears to be a problem starting an animal.
+  Could this be a www-data/root issue as well?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   katas/34/87780530/hippo/sandbox
@@ -94,7 +96,4 @@ FAULT
   If you specify ?locale=fr at the end of the dashboard URL
   it changes the animals names but then resets to english
   when the auto-refresh happens.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAULT
-  The Diff view doesn't work properly in IE8.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
