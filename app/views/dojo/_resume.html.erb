@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  $('#resume_button').click(function() {
+  $('#resume').click(function() {
     var id = $('#kata_id_input').val();
     var title = "<%= t('views.buttons.resume') %>";
     var cancel = "<%= t('views.buttons.cancel') %>";
@@ -16,11 +16,11 @@ $(document).ready(function() {
 
 //--></script>
 
-<button type="button"
-        class="tipped"
-        id="resume_button">
-  <%= t("views.buttons.resume") %>
+<div class="tipped" id="resume">
+
+  <a href="#">resume</a> a previously started session
+
   <div class="tooltip">
      resumes coding as a specific animal
   <div>
-</button>
+</div>

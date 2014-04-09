@@ -9,42 +9,18 @@ $(document).ready(function() {
 
 //--></script>
 
-<div style="font-size: 1.5em;">
-
-  <div class="align-center">
-      <%= home_page_logo() %>
-      <span id="cyber-dojo">cyber-dojo</span>
-      <div id="custom_message">
-        <%= render :partial => 'custom_message' %>
-      </div>
-  </div>
-
-  <div class="row" id="a_place_to_practice">
-      <%= raw t("views.labels.a_place_to_practice") %>
-  </div>
-
-  <div class="row">
-    <%= render :partial => 'setup_button' %>
-  </div>
-
-  <div class="row">
-    <%= render :partial => 'row_enter_id' %>
-  </div>
-
-  <div class="row">
-    <%= render :partial => 'row_code' %>
-  </div>
-
-  <div class="row">
-    <%= render :partial => 'row_donate' %>
-  </div>
-
-  <div class="row">
-    <%= render :partial => 'row_buttons' %>
-  </div>
-
-  <div class="row">
-    <%= render :partial => 'shared/tip_window' %>
-  </div>
-
+<div id="home-page">
+  <table width="90%">
+    <tr class="valign-top">
+      <td id="column-left">
+        <%= render :partial => 'column_left' %>
+      </td>
+      <td id="column-middle">
+        <%= render :partial => 'column_middle' %>
+      </td>
+      <td id="column-right">
+        <%= render :partial => 'column_right' %>
+      </td>
+    </tr>
+  </table>
 </div>

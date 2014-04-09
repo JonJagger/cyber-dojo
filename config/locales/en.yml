@@ -19,15 +19,13 @@ en:
       zebra: "zebra"
       
     labels:
-      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practicing</a> programming"
+      a_place_to_practice: "the place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       get_a_new_practice_id: "get a new id"
-      enter_the_practice_id: "on <em>each</em> computer<br>enter the id"
-      and: "and"
-      please_donate: "If you find cyber-dojo useful please<br/>make a donation.
-                      All donations are<br/>used solely to buy
-                      <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
-                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>.
-                      Thank you."      
+      enter_the_practice_id: "on <em>each</em> computer enter the same id"
+      please_donate: "If you find cyber-dojo useful please make a donation.
+                      All donations are used solely to buy
+                      <a href='http://www.raspberrypi.org/'>raspberry pi'es</a>
+                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>for children</a>."
       your_animal_is: "your animal is the"
       revert: "revert"
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"

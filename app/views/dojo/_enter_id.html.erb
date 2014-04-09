@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   var kata_id_input = $('#kata_id_input');
-  
+
   var enableIf = function(button, condition) {
     if (condition) {
       button.removeAttr('disabled');
@@ -12,28 +12,24 @@ $(document).ready(function() {
       button.attr('disabled', true);
     }
   };
-  
+
   cd.enableDisableStartResumeReview = function() {
     var id = kata_id_input.val();
     $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
       enableIf($('#start_button'), dojo.exists);
       enableIf($('#resume_button'), dojo.started > 0);
       enableIf($('#review_button'), dojo.started > 0);
-    });    
+    });
   };
-  
+
   kata_id_input.keyup(function() {
     cd.enableDisableStartResumeReview();
   });
-  
+
   cd.enableDisableStartResumeReview();
 });
 
 //--></script>
-
-<div id="enter_the_practice_id">
-  <%= raw t("views.labels.enter_the_practice_id") %>
-</div>
 
 <input class="tipped kata_id_input"
        type="text"
@@ -45,7 +41,3 @@ $(document).ready(function() {
     and letters ABCDEF, and is case insensitive
   </div>
 </input>
-
-<div id="and">
-  <%= raw t("views.labels.and") %>...
-</div>
