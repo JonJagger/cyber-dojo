@@ -63,7 +63,10 @@ $text-color: darken($lighter-color, 10%);
     margin-left: 20px;
     //@include gradient-lighten($amber, 20%, 10%, 5%);
   }
-
+  #resume_button {
+    margin-top: 30px;
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  }
   #raspberry-pi-logo {
     padding-bottom: 10px;
   }

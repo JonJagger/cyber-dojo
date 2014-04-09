@@ -19,10 +19,13 @@
       |
       |
 Here I'll put...
+    o) picture from CoderDojo in Ireland. AS BACKGROUND?
+
+
+
     o) [donate] . Use button, not paypal image
     o) what money is used for
     o) raspberry pi logo
-    o) picture from CoderDojo in Ireland
     o) amount currently raised.
     Then underneath
     o) example of testimonial
