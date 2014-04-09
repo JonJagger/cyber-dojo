@@ -27,7 +27,7 @@ FAULT
   Need to switch from using `mkdir -p #{...}` to
   require 'fileutils'
   FileUtils.mkdir_p("#{...}")
-  Only `mkdir` calls are in lib/OsDir.rb (two of them)
+  The only `mkdir` calls are in lib/OsDir.rb (two of them)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   test-failing...

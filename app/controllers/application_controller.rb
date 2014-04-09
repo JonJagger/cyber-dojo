@@ -59,7 +59,7 @@ private
   end
 
   def docker?
-    `docker info`
+    `docker info > /dev/null 2>&1`
     $?.exitstatus === 0 && ENV['CYBERDOJO_USE_HOST'] === nil
   end
 
