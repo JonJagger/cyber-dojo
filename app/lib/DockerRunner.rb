@@ -2,6 +2,7 @@
 # runner that provides some isolation/protection/security.
 
 require 'Runner'
+require 'timeout'
 
 class DockerRunner
   include Runner
@@ -19,22 +20,48 @@ class DockerRunner
           ' -w /sandbox' +
           " #{language.image_name} /bin/bash -c \"#{with_stderr(command)}\""
 
-    # timeout must go on 'docker run' command and not on
-    # the command passed to docker run. This is to ensure
-    # the docker run command does not start doing a docker pull
-    # from the docker index which could easily take considerably
-    # longer than the max_seconds limit.
+    pipe = nil
+    begin
+      pipe = IO::popen(cmd, 'r')
+    rescue Exception => e
+      Rails.logger.warn "Execution of command #{cmd} unsuccessful"
+    end
+
+    output = ''
+    begin
+      status = Timeout::timeout(max_seconds) {
+        Process.waitpid2(pipe.pid)
+        output = pipe.gets(nil)
+      }
+    rescue Timeout::Error
+      Process.kill('-KILL', pipe.pid)
+      output = terminated(max_seconds)
+    end
+    pipe.close
+    output
+
+
+=begin
     kill = 9
+    pid = Process.spawn(cmd)
+    begin
+      Timeout.timeout(max_seconds) do
+        Process.wait(pid)
+      end
+    rescue TimeoutError
+      Process.kill("-#{kill}", pid)
+    end
+
+
     output = `timeout --signal=#{kill} --kill-after=1 #{max_seconds}s #{cmd}`
     exit_status = $?.exitstatus
     # kill process and all children
-    Rails.logger.warn("kill -TERM -#{$?.pid}")
     msg = `kill -TERM -#{$?.pid}`
-    Rails.logger.warn("output = " + msg)
     fatal_error_signal = 128
     killed_by_timeout = fatal_error_signal + kill
 
     exit_status != killed_by_timeout ? output : terminated(max_seconds)
+=end
   end
 
 end
