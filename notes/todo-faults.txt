@@ -1,35 +1,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
-  few times I've encountered clicking [ok] on the setup
-  page failing. Just hangs there. Looking at the log it
-  appears that after app/lib/LinuxPaas.rb
-    def LinuxPaas.make_kata(...)
-      ...
-      write(kata, kata.manifest_filename, manifest)
-      ...
-    end
-  which calls lib/OsDir.rb
-    def write(filename, object)
-      ...
-      `mkdir -p #{File.dirname(pathed_filename)}`
-      ...
-    end
-  the intermediate directories have not been created.
-  For example if kata.id == '345ADEF671'
-  Then the folder katas/34/5ADEF671/ should be created
-  but wasn't. Hmmm. Could this be a rights issue.
-  Suppose katas/34 was only visible to root...
-  Yes that was it! I unzipped the tgz files as root
-  so they were not visible when DockerRunner was running
-  as www-data but were when DockerRunner was running as
-  root. So...
-  Need to switch from using `mkdir -p #{...}` to
-  require 'fileutils'
-  FileUtils.mkdir_p("#{...}")
-  The only `mkdir` calls are in lib/OsDir.rb (two of them)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAULT
   test-failing...
   test/app_lib/git_diff_parser_tests.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
