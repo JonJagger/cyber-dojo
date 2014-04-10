@@ -34,6 +34,5 @@ class DockerRunner
 
     exit_status != killed_by_timeout ? output : terminated(max_seconds)
   end
-=end
 
 end
