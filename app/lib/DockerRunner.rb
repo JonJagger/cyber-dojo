@@ -1,7 +1,7 @@
 
 # runner that provides some isolation/protection/security.
 
-require 'RawRuner'
+require 'RawRunner'
 require 'Runner'
 
 class DockerRunner
