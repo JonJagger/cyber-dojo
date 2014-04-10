@@ -13,11 +13,11 @@ class RawRunner
 
   def run(paas, sandbox, command, max_seconds)
     path = paas.path(sandbox)
-    pipe_run("cd '#{path}';" + command, max_seconds)
+    pipe_run("cd '#{path}';" + with_stderr(command), max_seconds)
   end
 
   def pipe_run(command, max_seconds)
-    pipe = IO::popen(with_stderr(command))
+    pipe = IO::popen(command)
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }
     result = sandbox_thread.join(max_seconds);

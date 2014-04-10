@@ -1,6 +1,7 @@
 
 # runner that provides some isolation/protection/security.
 
+require 'RawRuner'
 require 'Runner'
 
 class DockerRunner
@@ -19,6 +20,11 @@ class DockerRunner
           ' -w /sandbox' +
           " #{language.image_name} /bin/bash -c \"#{with_stderr(command)}\""
 
+    RawRunner.new.pipe_run(cmd, max_seconds)
+  end
+
+
+=begin
     # timeout must go on 'docker run' command and not on
     # the command passed to docker run. This is to ensure
     # the docker run command does not start doing a docker pull
@@ -32,5 +38,6 @@ class DockerRunner
 
     exit_status != killed_by_timeout ? output : terminated(max_seconds)
   end
+=end
 
 end
