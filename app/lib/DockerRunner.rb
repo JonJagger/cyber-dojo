@@ -2,7 +2,6 @@
 # runner that provides some isolation/protection/security.
 
 require 'Runner'
-require 'timeout'
 
 class DockerRunner
   include Runner
@@ -23,7 +22,12 @@ class DockerRunner
           ' -w /sandbox' +
           " #{language.image_name} /bin/bash -c \"#{inner_cmd}\""
 
-    `#{outer_cmd}`
+    output = `#{outer_cmd}`
+    exit_status = $?.exitstatus
+    fatal_error_signal = 128
+    killed_by_timeout = fatal_error_signal + kill
+
+    exit_status != killed_by_timeout ? output : terminated(max_seconds)
   end
 
 end
