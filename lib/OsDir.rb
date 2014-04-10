@@ -1,3 +1,4 @@
+require 'fileutils'
 
 class OsDir
   include Enumerable
@@ -29,14 +30,13 @@ class OsDir
   end
 
   def make
-    # the -p option creates intermediate dirs as required
-    `mkdir -p #{path}`
+    # the p option creates intermediate dirs as required
+    FileUtils.mkdir_p(path)
   end
 
   def write(filename, object)
-    # filename could be pathed...
     pathed_filename = path + filename
-    `mkdir -p #{File.dirname(pathed_filename)}`
+    FileUtils.mkdir_p(File.dirname(pathed_filename))
     if object.is_a? String
       File.open(pathed_filename, 'w') do |fd|
         fd.write(object)
