@@ -20,11 +20,6 @@ class DockerRunner
           ' -w /sandbox' +
           " #{language.image_name} /bin/bash -c \"#{with_stderr(command)}\""
 
-    RawRunner.new.pipe_run(cmd, max_seconds)
-  end
-
-
-=begin
     # timeout must go on 'docker run' command and not on
     # the command passed to docker run. This is to ensure
     # the docker run command does not start doing a docker pull
@@ -33,6 +28,7 @@ class DockerRunner
     kill = 9
     output = `timeout --signal=#{kill} --kill-after=1 #{max_seconds}s #{cmd}`
     exit_status = $?.exitstatus
+    RawRunner.new.kill_including_decendants($?.pid)
     fatal_error_signal = 128
     killed_by_timeout = fatal_error_signal + kill
 

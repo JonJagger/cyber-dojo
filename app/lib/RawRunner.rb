@@ -35,6 +35,10 @@ class RawRunner
     output
   end
 
+  def kill_including_decendants(pid)
+    kill(descendant_pids_of(pid))
+  end
+
 private
 
   def kill(pids)
