@@ -25,7 +25,7 @@ class DockerRunner
     # from the docker index which could easily take considerably
     # longer than the max_seconds limit.
     kill = 9
-    output = `timeout --signal=#{kill} #{max_seconds}s #{cmd}`
+    output = `timeout --signal=#{kill} --kill-after=1 #{max_seconds}s #{cmd}`
     exit_status = $?.exitstatus
     fatal_error_signal = 128
     killed_by_timeout = fatal_error_signal + kill
