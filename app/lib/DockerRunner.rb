@@ -1,7 +1,6 @@
 
 # runner that provides some isolation/protection/security.
 
-require 'RawRunner'
 require 'Runner'
 
 class DockerRunner
@@ -28,7 +27,8 @@ class DockerRunner
     kill = 9
     output = `timeout --signal=#{kill} --kill-after=1 #{max_seconds}s #{cmd}`
     exit_status = $?.exitstatus
-    RawRunner.new.kill_including_decendants($?.pid)
+    # kill process and all children
+    `kill -TERM -#{$?.pid}`
     fatal_error_signal = 128
     killed_by_timeout = fatal_error_signal + kill
 
