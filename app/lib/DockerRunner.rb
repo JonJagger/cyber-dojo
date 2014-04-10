@@ -13,7 +13,6 @@ class DockerRunner
 
   def run(paas, sandbox, command, max_seconds)
     language = sandbox.avatar.kata.language
-    kill = 9
     inner_cmd = "timeout --signal=#{kill} #{max_seconds}s #{with_stderr(command)}"
 
     outer_cmd = 'docker run -u root --rm' +
@@ -23,11 +22,17 @@ class DockerRunner
           " #{language.image_name} /bin/bash -c \"#{inner_cmd}\""
 
     output = `#{outer_cmd}`
-    exit_status = $?.exitstatus
-    fatal_error_signal = 128
-    killed_by_timeout = fatal_error_signal + kill
+    $?.exitstatus != fatal_error(kill) ? output : terminated(max_seconds)
+  end
 
-    exit_status != killed_by_timeout ? output : terminated(max_seconds)
+private
+
+  def fatal_error(signal)
+    128 + signal
+  end
+
+  def kill
+    9
   end
 
 end
