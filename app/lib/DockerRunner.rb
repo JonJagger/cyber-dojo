@@ -23,7 +23,7 @@ class DockerRunner
           ' -w /sandbox' +
           " #{language.image_name} /bin/bash -c \"#{inner_cmd}\""
 
-    `outer_cmd`
+    `#{outer_cmd}`
   end
 
 end
