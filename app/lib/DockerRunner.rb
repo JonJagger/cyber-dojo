@@ -28,7 +28,9 @@ class DockerRunner
     output = `timeout --signal=#{kill} --kill-after=1 #{max_seconds}s #{cmd}`
     exit_status = $?.exitstatus
     # kill process and all children
-    `kill -TERM -#{$?.pid}`
+    Rails.logger.warn("kill -TERM -#{$?.pid}")
+    msg = `kill -TERM -#{$?.pid}`
+    Rails.logger.warn("output = " + msg)
     fatal_error_signal = 128
     killed_by_timeout = fatal_error_signal + kill
 
