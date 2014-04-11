@@ -8,7 +8,7 @@ o) traffic lights
 o) dashboard review
       auto refresh?
       |60s| columns?
-o) deviewing the diffs
+o) reviewing the diffs
 o) resuming coding
 ------------------------------------------------------------------------
 o) adding a new exercise
@@ -16,8 +16,8 @@ o) adding a new language
       manifest.json parameters
 ------------------------------------------------------------------------
 DOCKER'D SERVER
-  running your own Docker'd cyber-dojo server
-  installing languages on a docker server
+  running your own docker'd cyber-dojo server
+  installing languages on a docker'd server
   pulling from the cyberdojo github repo
 ------------------------------------------------------------------------
 RAW SERVER
@@ -43,8 +43,8 @@ o) click the [setup] button
 o) click your chosen language|unit-test-framework (eg C++|assert)
 o) click your chosen exercise (eg Prime Factors)
 o) click the [ok] button
-o) you'll get a case-insensitive 6-character hex-id (the full id is actually
-   ten characters long but statistically 6 chars is enough for uniqueness)
+o) you'll get a case-insensitive 6-character hex-id. The full id is ten
+   characters long (in the URL) but 6 is enough for uniqueness.
 
 
 ===============
@@ -169,9 +169,8 @@ of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 resuming coding
 ===============
 You can resume at any animals' most recent traffic-light by pressing
-the resume button (from the home page) and then clicking
-the animal. This is handy if a participant has to leave and take their
-laptop as a new laptop can instantly replace it.
+the resume button (from the home page, very small, bottom left) and
+then clicking the animal.
 
 
 =====================
@@ -224,7 +223,8 @@ manifest.json parameters
 ========================
 "image_name": string
   The name of docker image to execute cyber-dojo.sh.
-  Optional. Not required if docker is not being used.
+  Optional. Not required if you're using a raw-server instead
+  of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
 "visible_filenames": [ ... ]
   Filenames that will be visible in the browser's editor at startup.
@@ -243,14 +243,13 @@ manifest.json parameters
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit .jar files or nunit .dll assemblies.
   These are symlinked from the /languages folder to each animals /katas folder.
-  Despite the name "support_filenames" you can symlink a folder if required
-  which can be very handy.
+  Despite the name "support_filenames" you can symlink a folder if required.
   Not required if you do not need support files.
 - - - - - - - - - - - - - - - - - - - -
 "highlight_filenames": [ ... ]
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
-  files form the focus of the practice. A subset of visible_filenames.
+  files form the focus of the practice. A subset of visible_filenames, but...
   You can also name "instructions" (from exercises/)
   You can also name "output" (always present)
   For example
