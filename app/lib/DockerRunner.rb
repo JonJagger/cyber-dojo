@@ -1,10 +1,7 @@
 
-# runner that provides some isolation/protection/security.
-
-require 'Runner'
+# runner providing some isolation/protection/security
 
 class DockerRunner
-  include Runner
 
   def runnable?(language)
     @installed ||= `docker images`.lines.each.collect{|line| line.split[0]}
@@ -12,20 +9,26 @@ class DockerRunner
   end
 
   def run(paas, sandbox, command, max_seconds)
+    inner_command = "timeout --signal=#{kill} #{max_seconds}s #{stderr2stdout(command)}"
     language = sandbox.avatar.kata.language
-    inner_cmd = "timeout --signal=#{kill} #{max_seconds}s #{with_stderr(command)}"
+    outer_command =
+      "docker run" +
+        " -u root" +
+        " --rm" +
+        " -v #{paas.path(sandbox)}:/sandbox:#{read_write}" +
+        " -v #{paas.path(language)}:#{paas.path(language)}:#{read_only}" +
+        " -w /sandbox" +
+        " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 
-    outer_cmd = 'docker run -u root --rm' +
-          " -v #{paas.path(sandbox)}:/sandbox:rw" +
-          " -v #{paas.path(language)}:#{paas.path(language)}:ro" +
-          ' -w /sandbox' +
-          " #{language.image_name} /bin/bash -c \"#{inner_cmd}\""
-
-    output = `#{outer_cmd}`
-    $?.exitstatus != fatal_error(kill) ? output : terminated(max_seconds)
+    output = `#{outer_command}`
+    $?.exitstatus != fatal_error(kill) ? output : terminated_after(max_seconds)
   end
 
 private
+
+  def stderr2stdout(cmd)
+    cmd + ' 2>&1'
+  end
 
   def fatal_error(signal)
     128 + signal
@@ -33,6 +36,18 @@ private
 
   def kill
     9
+  end
+
+  def terminated_after(max_seconds)
+    "Terminated by the cyber-dojo server after #{max_seconds} seconds."
+  end
+
+  def read_write
+    'rw'
+  end
+
+  def read_only
+    'ro'
   end
 
 end

@@ -13,7 +13,7 @@ class RawRunner
 
   def run(paas, sandbox, command, max_seconds)
     path = paas.path(sandbox)
-    pipe_run("cd '#{path}';" + with_stderr(command), max_seconds)
+    pipe_run("cd '#{path}';" + stderr2stdout(command), max_seconds)
   end
 
   def pipe_run(command, max_seconds)
@@ -30,13 +30,9 @@ class RawRunner
     kill(descendant_pids_of(pid))
     pipe.close
     if timed_out
-      output += terminated(max_seconds)
+      output += terminated_after(max_seconds)
     end
     output
-  end
-
-  def kill_including_decendants(pid)
-    kill(descendant_pids_of(pid))
   end
 
 private
