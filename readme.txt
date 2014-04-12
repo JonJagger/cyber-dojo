@@ -318,7 +318,7 @@ o) however, if the environment variable CYBERDOJO_USE_HOST
    even if docker is installed.
 
 -------------------------------------------
-Running your own Docker'd cyber-dojo server
+running your own docker'd cyber-dojo server
 -------------------------------------------
 Use the TurnKey Linux Rails image.
   http://www.turnkeylinux.org/rails
@@ -349,6 +349,7 @@ pull.sh performs the following tasks...
   o) ensures any new files and folders have the correct group and owner
   o) checks for any gemfile changes
   o) restarts apache
+
 
 
 ===========================================================
