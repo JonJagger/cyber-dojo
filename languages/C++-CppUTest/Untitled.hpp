@@ -7,9 +7,8 @@ class Untitled
     explicit Untitled();
     ~Untitled();
 
-  private:
-    Untitled(const Untitled &);
-    Untitled & operator=(const Untitled &);
+    Untitled(const Untitled &) = delete;
+    Untitled & operator=(const Untitled &) = delete;
 };
 
 #endif
