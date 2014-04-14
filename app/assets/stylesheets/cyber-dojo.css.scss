@@ -1,8 +1,7 @@
 
 table { border-spacing: 0; }
 
-#cyber_dojo_page
-{
+#cyber_dojo_page {
   margin: {
     top: 0.3em;
     left: 0.3em;
@@ -10,25 +9,27 @@ table { border-spacing: 0; }
   color: $lighter-color;
 }
 
-body
-{
+body {
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $darker-color;  
+  background: $darker-color;
   padding: none;
   margin: 0em;
 }
 
-.avatar_image
-{
+.avatar_image {
   margin-left: 0.2em;
   margin-right: 0.2em;
-  margin-top: 0em;  
+  margin-top: 0em;
   margin-bottom: 0em;
   cursor: pointer;
 }
 
-.panel
-{
+.vertical-padded {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.panel {
   background: $darker-color;
   color: $lighter-color;
   border: {
@@ -37,7 +38,7 @@ body
     color: lighten($darker-color, 25%);
     left: none;
     right: none;
-    bottom: none;    
+    bottom: none;
   }
   margin: none;
   padding: 0.5em;
@@ -53,10 +54,9 @@ body
 
 $filename_and_button_border_size: 2px;
 
-button
-{
-  background: darken($lighter-color, 10%);  
-  color: $darker-color;    
+button {
+  background: darken($lighter-color, 10%);
+  color: $darker-color;
   cursor: pointer;
   padding: {
     left: 0.5em;
@@ -65,82 +65,66 @@ button
   }
   text-decoration: none;
   font-weight: normal;
-  border: $filename_and_button_border_size solid $darker-color;  
+  border: $filename_and_button_border_size solid $darker-color;
   @include rounded-corner(4px);
   display: inline-block;
 }
 
-button[disabled]
-{
+button[disabled] {
   background: lighten($darker-color, 20%);
   cursor: default;
   font-style: italic;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-div[class~='filename']
-{
-  @include font-size-small();  
+div[class~='filename'] {
+  @include font-size-small();
   background: $darker-color;
   color: $lighter-color;
   margin: none;
   padding: {
-    left: 0.5em;
-    right: 0.5em;
+    left: 0.3em;
+    right: 0.3em;
   }
   cursor: pointer;
   white-space: nowrap;
   @include rounded-corner(4px);
-    
-  &[class~='selected']
-  {
+
+  &[class~='selected'] {
     // See app/assets/javascripts/cyber-dojo_file_load.js
     // function radioEntrySwitch()
     background: darken($lighter-color, 10%);
     color: $darker-color;
     cursor: default;
   }
-  
-  &[class~='highlight'] {
-    &:before { content: ">"; }
-  }  
 }
 
-div[class~="filename"]:hover, button:hover
-{
+div[class~="filename"]:hover, button:hover {
   border: $filename_and_button_border_size dotted lighten($darker-color, 20%);
 }
 
-div[class~="filename"], button[disabled]:hover
-{
+div[class~="filename"], button[disabled]:hover {
   border: $filename_and_button_border_size solid $darker-color;
 }
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 .filename_div { display: none; }
 
-.file_content
-{
+.file_content {
   background: $lighter-color;
   color: $darker-color;
   width: 50em;
   font-weight: 500;
 }
 
-.line_numbers, .file_content { height: 34em; }
+.line_numbers, .file_content { height: 32em; }
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
-.line_numbers, .file_content
-{
+.line_numbers, .file_content {
   border: 0;
-  border-left: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 25%);
-  }
   margin: 0;
   padding: 0;
   padding-left: 2px;
@@ -148,8 +132,7 @@ div[class~="filename"], button[disabled]:hover
   overflow: auto;
 }
 
-.line_numbers
-{
+.line_numbers {
   background: $darker-color;
   color: lighten($darker-color, 30%);
   font-weight: 100;
@@ -158,12 +141,21 @@ div[class~="filename"], button[disabled]:hover
   display: block;
   padding-right: 2px;
   width: 2em;
+  border-left: {
+    style: dotted;
+    width: 1px;
+    color: lighten($darker-color, 25%);
+  }
+  border-top: {
+    style: dotted;
+    width: 1px;
+    color: lighten($darker-color, 25%);
+  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.dialog
-{
+.dialog {
   background: $lighter-color;
   color: $darker-color;
   display: table;
@@ -171,11 +163,10 @@ div[class~="filename"], button[disabled]:hover
   margin-left: 45px;
   margin-right: 45px;
   a:link, a:visited {
-    color: $lighter-color;  
+    color: $lighter-color;
   }
-  
-  &.title
-  {
+
+  &.title {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     position: relative;
     left: -45px;
@@ -184,22 +175,19 @@ div[class~="filename"], button[disabled]:hover
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.started-avatar-name
-{
+.started-avatar-name {
   font-weight: bold;
   font-size: 70%;
   text-align: center;
 }
 
-.unstarted-avatar-name
-{
+.unstarted-avatar-name {
   color: Gray;
   font-weight: bold;
   font-size: 70%;
   text-align: center;
 }
 
-img[class~="flag"]
-{
+img[class~="flag"] {
   margin: 5px;
 }

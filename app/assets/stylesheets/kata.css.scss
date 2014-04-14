@@ -1,42 +1,55 @@
 
-#kata_page {
+#kata-page {
 
-  #filename_list {
-    height: 18em;
-    overflow-y: auto;
-  }
-  
-  #file_operations {
+  #file-operations {
     #new, #rename, #delete {
-      @include font-size-tiny();  
+      @include font-size-tiny();
+      padding: {
+          left: 0.3em;
+          right: 0.3em;
+      }
     }
   }
-  
-  #dashboard_button,
-  #diff_review_button,
-  #fork_button,
-  #line_numbers_button,
-  #revert_button,
-  #help_button {
-    @include font-size-tiny();  
+
+  #filename-list {
+    height: 23em;
+    overflow-y: auto;
+    #radio_output {
+      margin-bottom: 0.5em;
+      font-style: italic;
+    }
+    div[class~='filename'][class~='highlight'] {
+      &:before { content: ">"; }
+    }
+    div[class~='filename'][class~='lowlight'] {
+      color: lighten($darker-color, 20%);
+    }
   }
-  
-  #help_button {
-    @include rounded-corner(14px);    
+
+  #revert-button, #fork-button {
+    @include font-size-tiny();
   }
-  
-  #test {
+
+  #help-button {
+    @include font-size-tiny();
+    @include rounded-corner(14px);
+  }
+
+  #traffic-lights {
+    width: 64em;
+    overflow-x: auto;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+}
+
+#kata-page, #help-dialog {
+  #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-large();
+    @include font-size-largest();
     padding: {
       left: 0.2em;
       right: 0.2em;
     }
-  }
-  
-  #traffic_lights {
-    width: 50em;
-    margin-top: 5px;
-    margin-left: 5px;
   }
 }

@@ -7,8 +7,9 @@
     "cyber-dojo.sh"
   ],
 
+  "display_name": "Ruby",
+  "display_test_name": "Cucumber",
   "unit_test_framework": "ruby_rspec",
-
+  "image_name": "cyberdojo/ruby-1.9.3_cucumber",
   "tab_size": 2
 }
-

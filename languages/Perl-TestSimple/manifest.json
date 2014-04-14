@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "untitled.perl",
+    "untitled.t",
+    "cyber-dojo.sh"
+  ],
+
+  "display_name": "Perl",
+  "display_test_name": "Test::Simple",
+  "unit_test_framework": "perl_test_simple",
+  "image_name": "cyberdojo/perl_test_simple",
+  "tab_size": 4
+}

@@ -1,30 +1,111 @@
 
-.row
-{
-  text-align: center;
-  padding-top: 0.4em;
-  padding-bottom: 0.4em;
-}
-
 $text-color: darken($lighter-color, 10%);
 
-#cyber-dojo
-{
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  color: $text-color;
-  font-size: 4.2em;
-  margin-bottom: 0em;
-  padding-bottom: 0em;
+#home-page {
+
+  font-size: 1.15em;
+  margin-top: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+
+  #home-page-logo {
+    text-align: center;
+    margin: 0 auto 48px auto;
+  }
+  #cyber-dojo {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    font-size: 7em;
+    color: $text-color;
+    margin-bottom: 0em;
+    padding-bottom: 0em;
+    position: relative;
+    top: -20px;
+  }
+  #a_place_to_practice {
+    font-size: 1.3em;
+    color: $text-color;
+    margin-top: -40px;
+    margin-bottom: 1em;
+  }
+  td#column-middle {
+    padding-left: 2em;
+    padding-right: 2em;
+    margin-top: -20px;
+  }
+  td#column-left, td#column-right {
+    padding: 1em;
+    background-color: lighten($darker-color, 20%);
+    border: dotted 1px LightGray;
+    width: 130px;
+    position: relative;
+    top: 20px;
+  }
+  .show-dialog-button {
+    display: block;
+    margin: 0 auto 12px auto;
+    border: solid 1px Gray;
+    width: 120px;
+  }
+  #kata-id-input {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    background: lighten($green, 20%);
+    @include gradient-lighten($green, 30%, 25%, 20%);
+    color: $darker-color;
+    @include font-size-largest();
+    text-align: center;
+    width: 264px;
+    margin-bottom: 2px;
+  }
+  #enter_id_info {
+    color: lighten($green, 30%);
+  }
+  #setup-button, #start-button, #resume-button,  #review-button {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    color: $darker-color;
+    @include font-size-largest();
+    text-align: center;
+    width: 270px;
+    margin-left: 20px;
+    //@include gradient-lighten($amber, 20%, 10%, 5%);
+  }
+  #setup-button {
+    margin-bottom: 30px;
+  }
+  #raspberry-pi-logo {
+    padding-bottom: 30px;
+  }
+  #please_donate {
+    color: darken($darker-color, 10%);
+    @include font-size-tiny();
+  }
+  #total-raised {
+    color: darken($darker-color, 10%);
+    @include font-size-tiny();
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  #donate-button {
+    padding-top: 20px;
+  }
+  #testimonial {
+    @include font-size-tiny();
+    text-align: left;
+    color: darken($darker-color, 10%);
+  }
+}
+
+.kata-id-input {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    background: lighten($green, 20%);
+    color: $darker-color;
+    text-align: center;
+    width: 270px;
+    margin-left: 0px;
+    //@include gradient-lighten($amber, 20%, 10%, 5%);
 }
 
 a:link, a:visited
 {
-  color: $text-color;
-}
-
-#a_place_to_practice
-{
-  font-size: 1em;
   color: $text-color;
 }
 
@@ -33,48 +114,21 @@ a:link, a:visited
   color: $text-color;
   @include font-size-small();
 }
-#setup
-{
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: lighten($red, 10%);
-  @include gradient-lighten($red, 20%, 10%, 5%);
-  color: $text-color;
-  @include font-size-large();
-}
-  
-.kata_id_input
-{
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: lighten($green, 20%);
-  @include gradient-lighten($green, 30%, 25%, 20%);    
-  color: $darker-color;
-  @include font-size-medium();
-  text-align: center;
-}
 
-#start_button, #resume_button, #review_button
-{
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  color: $darker-color;
-  @include font-size-large();
-}
+
+
+
 
 #get_a_new_practice_id
 {
   color: $text-color;
-  @include font-size-tiny();  
+  @include font-size-tiny();
 }
 
 #enter_the_practice_id
 {
   color: lighten($green, 30%);
-  @include font-size-tiny();  
-}
-
-#and
-{
-  color: $text_color;
-  @include font-size-tiny();  
+  @include font-size-small();
 }
 
 #full_dojo_text, #empty_dojo_text
@@ -83,20 +137,16 @@ a:link, a:visited
   @include font-size-medium();
 }
 
-#about, #basics, #donations, #faqs, #feedback,
+#about, #basics, #donators, #faqs, #feedback,
 #links, #source, #tips, #why
 {
-  @include font-size-tiny();
-}
-
-#please_donate
-{
-  color: darken($lighter-color, 10%);  
-  @include font-size-tiny();
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include font-size-small();
+  padding-left: 0.3em;
+  padding-right: 0.3em;
 }
 
 [data-cursor=pointer]
 {
   cursor: pointer;
 }
-

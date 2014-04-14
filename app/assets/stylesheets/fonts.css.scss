@@ -4,7 +4,7 @@
 @mixin font-size-small()   { font-size: 1.20em; }
 @mixin font-size-medium()  { font-size: 1.45em; }
 @mixin font-size-large()   { font-size: 1.85em; }
-@mixin font-size-largest() { font-size: 2.50em; }
+@mixin font-size-largest() { font-size: 3.00em; }
 
 .micro  { @include font-size-micro();  }
 .tiny   { @include font-size-tiny();   }

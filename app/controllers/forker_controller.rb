@@ -2,21 +2,52 @@
 class ForkerController < ApplicationController
 
   def fork
-    kata = Kata.new(root_dir, params['id'])
-    avatar = Avatar.new(kata, params['avatar'])
-    # gather_info requres params['language] and params['exercise']
-    params['language'] = kata.language.name
-    params['exercise'] = kata.exercise.name
-    info = gather_info
-    tag = params[:tag] || avatar.traffic_lights.length;
-    info[:visible_files] = avatar.visible_files(tag)    
-    Kata.create(root_dir, info)
-    
-    redirect_to :controller => :dojo,
-                :action => :index, 
-                :id => info[:id]
+    result = { :forked => false }
+    error = false
+
+    kata = dojo.katas[params['id']]
+    avatar = kata.avatars[params['avatar']]
+
+    if !error && !kata.exists?
+      result[:reason] = 'id'
+      error = true
+    end
+
+    if !error && !dojo.languages[kata.language.name].exists?
+      result[:reason] = 'language'
+      result[:language] = kata.language.name
+      error = true
+    end
+
+    if !error && !avatar.exists?
+      result[:reason] = 'avatar'
+      error = true
+    end
+
+    if !error # && !light.exists?
+      traffic_lights = avatar.traffic_lights
+      is_tag = params['tag'].match(/^\d+$/)
+      tag = params['tag'].to_i;
+      if !is_tag || tag <= 0 || tag > traffic_lights.length
+        result[:reason] = 'tag'
+        error = true
+      end
+    end
+
+    if !error
+      language = kata.language
+      exercise = kata.exercise
+      id = Id.new.to_s
+      now = make_time(Time.now)
+      manifest = @paas.make_kata_manifest(dojo, language, exercise, id, now)
+      manifest[:visible_files] = avatar.visible_files(params['tag'])
+      kata = Kata.new(dojo, id)
+      paas.write(kata, kata.manifest_filename, manifest)
+      result[:forked] = true
+      result[:id] = id
+    end
+
+    render :json => result
   end
-   
+
 end
-
-

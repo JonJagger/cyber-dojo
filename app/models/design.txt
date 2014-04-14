@@ -1,0 +1,56 @@
+
+A key cyber-dojo feature is the ability to review the [test]
+events, diff by diff. Each [test] event causes a 'git commit'
+plus a 'git tag' to execute in the animals git repo.
+The [test] <-> [test] diffs are obtained via a 'git diff' command.
+Thus cyber-dojo implements persistence using plain disk files and
+does not use a database.
+
+From a paas object you create a dojo object like this...
+
+<code>
+dojo = paas.create_dojo(root_path,format)
+</code>
+
+A paas can have several dojo's...
+For example the live one off
+  /var/www/cyberdojo
+and a test one off
+  /var/www/cyberdojo/test/cyberdojo
+The formats are 'rb' (and old format that required 'eval's)
+and 'json' (requiring only the safer JSON.parse())
+
+From a dojo object you list all its languages or
+use [ ] to select a specific language.
+From a dojo object you can list all its exercises or
+use [ ] to select a specific exercise.
+From a dojo object you can list all the katas (practice sessions) or
+use [ ] to select a specific kata.
+From a kata object you can list all the avatars or
+use [ ] to select a specific avatar.
+
+<code>
+dojo.languages.each {|language| ... }
+java = dojo.language['Java-JUnit']
+...
+dojo.exercises.each {|exercise| ... }
+diamond = dojo.exercises['Print-Diamond']
+...
+dojo.katas.each {|kata| ... }
+kata = dojo.katas['34D6E7823E']
+...
+dojo.katas.each {|kata| ... }
+kata = dojo.katas['34D6E7823E']
+...
+kata.avatars.each {|avatar| ... }
+lion = kata.avatars['lion']
+...
+</code>
+
+Note that none of the above checks that the object is 'valid', that the
+underlying disk paths exists. This allows you to write code like this...
+
+<code>
+dojo.katas['34D6E7823E'].avatars['lion'].exists?
+</code>
+

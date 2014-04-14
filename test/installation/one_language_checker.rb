@@ -1,14 +1,30 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'Folders'
+cyberdojo_root = File.absolute_path(File.dirname(__FILE__) + '/../../')
+# needed because app/lib/OsDisk requires app/lib/OsDir
+$LOAD_PATH.unshift(cyberdojo_root + '/lib')
 
-class OneLanguageChecker < ActionController::TestCase
-  
-  def initialize(options = { :verbose => true, :max_duration => 5 })
-    @verbose = options[:verbose] || false
-    @max_duration = options[:max_duration] || 5
-    @root_dir = Rails.root.to_s + '/test/cyberdojo'    
+require 'JSON'
+require "#{cyberdojo_root}/app/models/Avatar"
+require "#{cyberdojo_root}/app/models/Dojo"
+require "#{cyberdojo_root}/app/models/Kata"
+require "#{cyberdojo_root}/app/models/Language"
+require "#{cyberdojo_root}/app/models/Sandbox"
+require "#{cyberdojo_root}/app/lib/OutputParser"
+require "#{cyberdojo_root}/lib/OsDisk"
+require "#{cyberdojo_root}/lib/Git"
+require "#{cyberdojo_root}/lib/RawRunner"
+require "#{cyberdojo_root}/lib/Uuid"
+
+class OneLanguageChecker
+
+  def initialize(root_path,option)
+    @root_path = root_path
+    if @root_path[-1] != '/'
+      @root_path += '/'
+    end
+    @verbose = (option == 'noisy')
+    @max_duration = 60
   end
-    
+
   def check(
         language,
         installed_and_working = [ ],
@@ -16,172 +32,306 @@ class OneLanguageChecker < ActionController::TestCase
         installed_but_not_working = [ ]
     )
     @language = language
-    @language_dir = root_dir + '/languages/' + language + "/"
-    
-    @manifest_filename = @language_dir + 'manifest.json'    
-    check_manifest_file_exists
+    @language_dir = @root_path + '/languages/' + language + "/"
+
+    print "  #{language} " + ('.' * (35-language.to_s.length))
+
+    @manifest_filename = @language_dir + 'manifest.json'
+    return false if !manifest_file_exists?
     @manifest = JSON.parse(IO.read(@manifest_filename))
-    
-    check_required_keys_exist
-    check_no_unknown_keys_exist
-    check_no_duplicates_in_visible_filenames
-    check_cyberdojo_sh_exists
-    check_cyberdojo_sh_has_execute_permission
-    check_named_files_exist(:visible_filenames)      
-      
-    rag = red_amber_green(get_filename_42)
+
+    return false if !required_keys_exist?
+    return false if unknown_keys_exist?
+    return false if duplicate_visible_filenames?
+    return false if duplicate_support_filenames?
+    return false if !cyberdojo_sh_exists?
+    return false if !cyberdojo_sh_has_execute_permission?
+    return false if !all_visible_files_exist?
+    return false if !all_support_files_exist?
+    return false if !parse_method_for_unit_test_framework_output_exists?
+    return false if !filename_42_exists?
+
+    t1 = Time.now
+    rag = red_amber_green
+    t2 = Time.now
+    print " #{rag.inspect} "
+    took = ((t2 - t1) / 3).round(2)
     if rag == ['red','amber','green']
       installed_and_working << language
-      puts "  #{language} - #{rag.inspect}  installed and working"
+      print "installed and working"
     elsif rag == ['amber', 'amber', 'amber']
       not_installed << language
-      puts "  #{language} - #{rag.inspect}  not installed"
+      print " not installed"
     else
       installed_but_not_working << language
-      puts "  #{language} - #{rag.inspect}  installed but not working"          
+      print "installed but not working"
     end
+    print " (~ #{took} seconds)\n"
+    took
   end
-    
-  def check_manifest_file_exists    
+
+private
+
+  def manifest_file_exists?
     if !File.exists? @manifest_filename
       message =
-        alert + 
+        alert +
         "#{@manifest_filename} does not exist"
-      assert false, message
+      puts message
+      return false
     end
+    print "."
+    true
   end
-  
-  def check_required_keys_exist
+
+  def required_keys_exist?
     required_keys = [ 'visible_filenames', 'unit_test_framework' ]
     required_keys.each do |key|
       if !@manifest.keys.include? key
         message =
-          alert + 
+          alert +
           "#{@manifest_filename} must contain key '#{key}'"
-        assert false, message
+        puts message
+        return false
       end
     end
+    print "."
+    true
   end
-  
-  def check_no_unknown_keys_exist
+
+  def unknown_keys_exist?
     known = [ 'visible_filenames',
               'support_filenames',
               'unit_test_framework',
-              'tab_size'
+              'tab_size',
+              'display_name',
+              'display_test_name',
+              'image_name'
             ]
     @manifest.keys.each do |key|
       if !known.include? key
         message =
-          alert + 
+          alert +
           "#{@manifest_filename} contains unknown key '#{key}'"
-        assert false, message
+        puts message
+        return true
       end
-    end    
+    end
+    print "."
+    false
   end
-  
-  def check_no_duplicates_in_visible_filenames
+
+  def duplicate_visible_filenames?
     visible_filenames.each do |filename|
       if visible_filenames.count(filename) > 1
         message =
           alert +
           "  #{@manifest_filename}'s 'visible_filenames' contains #{filename} more than once"
-        assert false, message
+        puts message
+        return true
       end
     end
+    print "."
+    false
   end
-  
-  def check_named_files_exist(symbol)
+
+  def duplicate_support_filenames?
+    support_filenames.each do |filename|
+      if support_filenames.count(filename) > 1
+        message =
+          alert +
+          "  #{@manifest_filename}'s 'support_filenames' contains #{filename} more than once"
+        puts message
+        return true
+      end
+    end
+    print "."
+    false
+  end
+
+  def all_visible_files_exist?
+    all_files_exist?(:visible_filenames)
+  end
+
+  def all_support_files_exist?
+    all_files_exist?(:support_filenames)
+  end
+
+  def all_files_exist?(symbol)
     (@manifest[symbol] || [ ]).each do |filename|
       if !File.exists?(@language_dir + filename)
         message =
-          alert + 
+          alert +
           "  #{@manifest_filename} contains a '#{symbol}' entry [#{filename}]\n" +
           "  but the #{@language_dir}/ dir does not contain a file called #{filename}"
-        assert false, message
+        puts message
+        return false
       end
-    end    
-  end
-  
-  def check_cyberdojo_sh_exists
-    if visible_filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
-      message =
-        alert + 
-        "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
-        "  'visible_filenames'"
-      assert false, message
     end
+    print "."
+    true
   end
-  
-  def check_cyberdojo_sh_has_execute_permission
+
+  def cyberdojo_sh_exists?
+    filenames = visible_filenames + support_filenames
+    if filenames.select{ |filename| filename == "cyber-dojo.sh" } == [ ]
+      message =
+        alert +
+        "  #{@manifest_filename} must contain ['cyber-dojo.sh'] in \n" +
+        "  'visible_filenames' or 'support_filenames'"
+      puts message
+      return false
+    end
+    print "."
+    true
+  end
+
+  def cyberdojo_sh_has_execute_permission?
     if !File.stat(@language_dir + 'cyber-dojo.sh').executable?
       message =
         alert +
           " 'cyber-dojo.sh does not have execute permission"
-        assert false, message
+        puts message
+        return false
     end
+    print "."
+    true
   end
 
-  def visible_filenames
-    @manifest['visible_filenames'] || [ ]
+  def parse_method_for_unit_test_framework_output_exists?
+    has_parse_method = true
+    begin
+      OutputParser::parse(unit_test_framework, "xx")
+    rescue
+      has_parse_method = false
+    end
+    if !has_parse_method
+      message =
+        alert +
+          "app/lib/OutputParser.rb does not contain a " +
+          "parse_#{unit_test_framework}(output) method"
+      puts message
+      return false
+    end
+    print "."
+    true
   end
-    
-  def alert
-    "\n>>>>>>>#{@language}<<<<<<<\n"
+
+  def filename_42_exists?
+    filename_42 != ""
   end
-  
-  def get_filename_42
+
+  def filename_42
     filenames = visible_filenames.select { |visible_filename|
       IO.read(@language_dir + visible_filename).include? '42'
-    }    
+    }
     if filenames == [ ]
       message = alert + " no 42-file"
-      assert false, message
+      puts message
+      return ""
     end
     if filenames.length > 1
       message = alert + " multiple 42-files " + filenames.inspect
-      assert false, message
+      puts message
+      return ""
     end
+    print "."
     filenames[0]
   end
-  
-  def red_amber_green(filename)
-      red = language_test(filename, '42')
-    amber = language_test(filename, '4typo2')
-    green = language_test(filename, '54')
+
+  def red_amber_green
+    filename = filename_42
+      red = language_test(filename, 'red', '42')
+    amber = language_test(filename, 'amber', '4typo2')
+    green = language_test(filename, 'green', '54')
     [ red, amber, green ]
   end
-  
-  def language_test(filename, replacement)
-    kata = make_kata(@language, 'Yahtzee', Uuid.new.to_s)
-    avatar = Avatar.create(kata, 'hippo')
+
+  def language_test(filename, expected_colour, replacement)
+    kata = make_kata(@language, 'Yahtzee')
+    avatar = kata.start_avatar
     visible_files = avatar.visible_files
     test_code = visible_files[filename]
-    assert_not_nil test_code
     visible_files[filename] = test_code.sub('42', replacement)
-    
+
     if @verbose
-      puts avatar.dir
-      puts "------<test_code>------"
+      puts "\n\n<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>"
       puts visible_files[filename]
-      puts "------</test_code>-----"
+      puts "</test_code>"
     end
-    
+
     delta = {
       :changed => [filename],
       :unchanged => visible_files.keys - [filename],
       :deleted => [ ],
-      :new => [ ]      
-    }    
+      :new => [ ]
+    }
     output = run_test(delta, avatar, visible_files, @max_duration)
     colour = avatar.traffic_lights.last['colour']
-    
+
     if @verbose
-      puts "-------<output>-----------"
+      puts "<output>"
       puts output
-      puts "-------</output>----------"      
+      puts "</output>\n\n"
     end
-    
+
     colour
-  end    
+  end
+
+private
+
+  def visible_filenames
+    @manifest['visible_filenames'] || [ ]
+  end
+
+  def support_filenames
+    @manifest['support_filenames'] || [ ]
+  end
+
+  def unit_test_framework
+    @manifest['unit_test_framework'] || [ ]
+  end
+
+  def alert
+    "\n>>>>>>>#{@language}<<<<<<<\n"
+  end
+
+private
+
+  def dojo
+    Thread.current[:disk]   ||= Disk.new
+    Thread.current[:git]    ||= Git.new
+    Thread.current[:runner] ||= RawRunner.new
+    Dojo.new(@root_path,'json')
+  end
+
+  def make_kata(language_name, exercise_name)
+    language = dojo.language(language_name)
+    manifest = {
+      :created => make_time(Time.now),
+      :id => Uuid.new.to_s,
+      :language => language.name,
+      :exercise => exercise_name,
+      :visible_files => language.visible_files,
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
+    }
+    manifest[:visible_files]['output'] = ''
+    manifest[:visible_files]['instructions'] = 'practice'
+    dojo.create_kata(manifest)
+  end
+
+  def make_time(at)
+    [at.year, at.month, at.day, at.hour, at.min, at.sec]
+  end
+
+  def run_test(delta, avatar, visible_files, timeout)
+    avatar.sandbox.write(delta, visible_files)
+    output = avatar.sandbox.test(timeout)
+    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
+    avatar.save_traffic_light(traffic_light, make_time(Time.now))
+    avatar.save_visible_files(visible_files)
+    output
+  end
 
 end

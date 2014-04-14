@@ -1,39 +1,31 @@
 
-require 'Folders'
 require 'Choose'
 
 class SetupController < ApplicationController
-  
+
   def show
-    @languages = Folders::in(root_dir + '/languages').sort    
-    @exercises = Folders::in(root_dir + '/exercises').sort
+    @languages = dojo.languages.select{|language| language.runnable?}.map{|language|
+      [language.display_name,language.display_test_name,language.name]
+    }.sort
+    @languages_names = @languages.map{|array| array[2]}
+    @exercises_names = dojo.exercises.map{|exercise| exercise.name}.sort
     @instructions = { }
-    @exercises.each do |exercise|
-      @instructions[exercise] = Exercise.new(root_dir, exercise).instructions
+    @exercises_names.each do |name|
+      @instructions[name] = dojo.exercises[name].instructions
     end
-    @selected_language_index = Choose::language(@languages, params[:id], id, root_dir)                                              
-    @selected_exercise_index = Choose::exercise(@exercises, params[:id], id, root_dir)
+    @selected_language_index = Choose::language(@languages_names, params[:id], id, dojo)
+    @selected_exercise_index = Choose::exercise(@exercises_names, params[:id], id, dojo)
     @id = id
     @title = 'Setup'
   end
 
   def save
-    info = gather_info
-    language = Language.new(root_dir, info[:language])
-    exercise = Exercise.new(root_dir, info[:exercise])
-    vis = info[:visible_files] = language.visible_files
-    vis['output'] = ''
-    vis['instructions'] = exercise.instructions
-    Kata.create(root_dir, info)
-    
-    logger.warn("Created dojo " + info[:id] +
-                ", " + language.name +
-                ", " + exercise.name +
-                ", " + make_time(Time.now).to_s)
-
+    language = dojo.languages[params['language']]
+    exercise = dojo.exercises[params['exercise']]
+    kata = dojo.make_kata(language, exercise)
     render :json => {
-      :id => info[:id]
-    }    
-  end  
+      :id => kata.id.to_s
+    }
+  end
 
 end

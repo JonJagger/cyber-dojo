@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "untitled.go",
+    "untitled_test.go",
+    "cyber-dojo.sh"
+  ],
+
+  "display_name": "Go",
+  "display_test_name": "testing",
+  "unit_test_framework": "go_testing",
+
+  "tab_size": 4
+}

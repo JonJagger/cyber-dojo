@@ -3,11 +3,11 @@
 
 $(document).ready(function() {
 
-  $('#help_button').click(function() {
+  $('#help-button').click(function() {
     var title = $(this).data('title');
-    var ok = $(this).data('ok');
+    var close = $(this).data('close');
     $.get('/dashboard/help_dialog', function(html) {
-      cd.dialog(html, title, ok).dialog('open');
+      cd.dialog(html, title, close).dialog('open');
     });
   });
 
@@ -17,12 +17,11 @@ $(document).ready(function() {
 
 <button type="button"
         class="tipped"
-        data-title="?"        
-        data-ok="<%= t('views.buttons.ok') %>"
-        id="help_button">
+        data-title="?"
+        data-close="<%= t('views.buttons.close') %>"
+        id="help-button">
   ?
   <div class="tooltip">
     shows help
   </div>
 </button>
-

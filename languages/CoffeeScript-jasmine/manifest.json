@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "untitled.coffee",
+    "untitled_spec.coffee",
+    "cyber-dojo.sh"
+  ],
+
+  "display_name": "CoffeeScript",
+  "display_test_name": "jasmine",
+  "unit_test_framework": "jasmine",
+
+  "tab_size": 2
+}

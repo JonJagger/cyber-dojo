@@ -5,11 +5,13 @@
     "UntitledTest.java",
     "cyber-dojo.sh"
   ],
-  
+
   "support_filenames": [
     "junit-4.11.jar"
   ],
-  
-  "unit_test_framework": "junit"
-}
 
+  "display_name": "Java",
+  "display_test_name": "JUnit",
+  "unit_test_framework": "junit",
+  "image_name": "cyberdojo/java-1.8"
+}

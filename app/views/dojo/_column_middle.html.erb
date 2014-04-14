@@ -1,0 +1,72 @@
+
+<table class="align-right">
+  <tr>
+    <td colspan="2">
+      <table>
+        <tr>
+          <td><span id="cyber-dojo">cyber&#8209;dojo</span></td>
+        </tr>
+      </table>
+      <div id="custom_message">
+        <%= render :partial => 'custom_message' %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <div id="a_place_to_practice">
+        <%= raw t("views.labels.a_place_to_practice") %>
+      </div>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div id="setup_info">
+        select your language + exercise<br/>
+        (on <em>one</em> computer)
+      </div>
+    </td>
+    <td>
+      <%= render :partial => 'setup_button' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <div id="enter_id_info">
+        enter your dojo's-id<br/>
+        (on <em>each</em> computer)
+      </div>
+    </td>
+    <td>
+      <%= render :partial => 'enter_id' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+    </td>
+    <td>
+      <%= render :partial => 'start_button' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+    </td>
+    <td>
+      <%= render :partial => 'resume_button' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+    </td>
+    <td>
+      <%= render :partial => 'review_button' %>
+    </td>
+  </tr>
+
+</table>

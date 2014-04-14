@@ -2,30 +2,26 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
-  $('#start_button').click(function() {
-    var id = $('#kata_id_input').val();  
+
+  $('#start-button').click(function() {
+    var id = $('#kata-id-input').val();
     var ok = "<%= t('views.buttons.ok') %>";
-    var title = "<%= t('views.buttons.start') %>";    
-    $.getJSON('/dojo/start_json' , { id: id }, function(dojo) {    
-      if (dojo.full) {        
+    var title = "<%= t('views.buttons.start') %>";
+    $.getJSON('/dojo/start_json' , { id: id }, function(dojo) {
+      if (dojo.full) {
         cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
       } else {
         cd.dialog_startCoding(title, id, ok, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
-        cd.enableDisableStartResumeReview();        
+        cd.enableDisableStartResumeReview();
       }
     });
   });
-  
+
 });
 
 //--></script>
 
 <button type="button"
-        class="tipped"
-        id="start_button">
+        id="start-button">
   <%= t("views.buttons.start") %>
-  <div class="tooltip">
-     assigns you an avatar and starts your coding practice
-  </div>
 </button>

@@ -1,37 +1,32 @@
 
 $ellipsis: "\2026";
 
-#dashboard_page {
+#dashboard-page {
 
-  #help_button {
-    @include font-size-tiny();  
-    @include rounded-corner(14px);    
+  #help-button {
+    @include font-size-tiny();
+    @include rounded-corner(14px);
   }
 
-  #traffic_lights {
+  #traffic-lights {
     width: 65em;
     overflow-x: auto;
-    height: 45em;
+    height: 46em;
     overflow-y: auto;
-    
+
     img {
       padding: {
         left: 1px;
         right: 1px;
       }
     }
-    .row td {
-      padding: 0em;
-    }
-    .row.odd td {
-      background: lighten($darker-color, 5%);
-    }
+    .row      td { padding: 0em; }
+    .row.odd  td { background: lighten($darker-color, 5% ); }
+    .row.even td { background: lighten($darker-color, 10%); }
     .omission {
       font-size: 0.7em;
       color: White;
-    }
-    .omission:after {
-      content: $ellipsis;
+      &:after { content: $ellipsis; }
     }
     .gap {
       font-size: 0.5em;
@@ -40,4 +35,3 @@ $ellipsis: "\2026";
     }
   }
 }
-

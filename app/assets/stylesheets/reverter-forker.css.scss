@@ -1,0 +1,40 @@
+
+#revert-fork-dialog {
+
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  background: $darker-color;
+  padding: none;
+  margin: 0;
+  margin-top: 0.5em;
+
+  #revert-fork-button {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include font-size-large();
+    margin-left: 0em;
+    margin-right: 0em;
+    margin-bottom: 0.3em;
+  }
+
+  #traffic-light {
+     margin-left: 0.3em;
+     margin-right: 0.3em;
+  }
+
+  #revert-fork-filenames {
+    height: 18em;
+    overflow-y: auto;
+  }
+
+  #revert-fork-tag-number {
+    @include editable_tag_number;
+  }
+
+  #revert-fork-content {
+    width: 40em;
+    height: 25em;
+    font: {
+      size: 1.5em;
+      family: monospace;
+    }
+  }
+}

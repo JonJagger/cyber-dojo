@@ -1,0 +1,33 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function () {
+
+  $('.show-dialog-button').click(function () {
+    var name = $(this).attr('id');
+    var close = $(this).data('close');
+    var title = $(this).text();
+    $.get('/dojo/button_dialog/' + name, function(html) {
+      cd.dialog(html, title, close).dialog('open');
+    });
+  });
+
+});
+
+//--></script>
+
+<% buttons = ['about', 'basics', 'donators',
+              'faqs', 'feedback', 'links',
+              'tips','why'
+             ].map{ |action| [action, t("views.buttons.#{action}")] } %>
+
+<% buttons.each do |action, text| %>
+  <button type="button"
+          class="show-dialog-button"
+          data-close="<%= t('views.buttons.close') %>"
+          id="<%= action %>">
+    <%= text %>
+  </button>
+  <div style="clear:both">
+  </div>
+<% end %>

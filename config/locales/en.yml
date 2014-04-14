@@ -19,15 +19,13 @@ en:
       zebra: "zebra"
       
     labels:
-      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practising</a> programming"
+      a_place_to_practice: "the place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       get_a_new_practice_id: "get a new id"
-      enter_the_practice_id: "on <em>each</em> computer<br>enter the id"
-      and: "and"
-      please_donate: "If you find cyber-dojo useful please<br/>make a donation.
-                      All donations are<br/>used solely to buy
-                      <a href='http://www.raspberrypi.org/'>raspberry pi</a><br/>
-                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>computers for children</a>.
-                      Thank you."      
+      enter_the_practice_id: "on <em>each</em> computer enter the same id"
+      please_donate: "If you find cyber-dojo useful please make a donation.
+                      All donations are used solely to buy
+                      <a href='http://www.raspberrypi.org/'>raspberry pi'es</a>
+                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>for children</a>."
       your_animal_is: "your animal is the"
       revert: "revert"
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
@@ -47,32 +45,29 @@ en:
       exercise: "exercise"
       
     buttons:
-      setup: "setup"
+      setup: "create"
       ok: "ok"
+      close: "close"
       cancel: "cancel"
-      start: "start"
-      resume: "resume"
+      start: "enter"
+      resume: "re-enter"
       review: "review"
-      dashboard: "dashboard"
-      diff_review: "diff-review"
-      revert: "revert"
       about: "about"
       basics: "basics"
-      donations: "donations"
+      donators: "donators"
       faqs: "faqs"
       feedback: "feedback"
       source: "source"
       links: "links"
       tips: "tips"
       why: "why"
-      new_file: "new file"
-      rename_file: "rename file"
-      delete_file: "delete file"
-      fork: "fork"
       test: "test"
+      new_file: "new"
+      rename_file: "rename"
+      delete_file: "delete"
+      fork: "fork"
+      revert: "revert"
       download: "download"
-      disable: "disable"
-      enable: "enable"
 
     feedback:
       id_really_appreciate_it_if_you_could: "I'd really appreciate it if you could"
@@ -112,16 +107,15 @@ en:
     kata_help:
       opens_a_home_page: "opens a<br/>home<br/>page"
       opens_a_dashboard_page: "opens a<br/>dashboard<br/>page"
-      opens_a_diff_review: "opens a<br/>diff-review<br/>dialog"
-      results_go_to: "results go to"
-      the_tests_ran_but_one_or_more_failed: "the tests ran but one or more failed"
-      the_tests_could_not_be_run: "the tests could not be run"
-      the_tests_ran_and_all_passed: "the tests ran and all passed"
+      opens_a_diff_review: "opens a<br/>diff<br/>dialog"
+      runs_the_tests: "runs the tests"
+      the_tests_ran_but_one_or_more_failed: "tests ran but one or more failed"
+      the_tests_could_not_be_run: "tests did not run (eg syntax error)"
+      the_tests_ran_and_all_passed: "tests ran and all passed"
       filename: "filename"
       opens_the_filename: "opens filename"
-      runs_the_tests: "runs the tests"
-      open_the_output_file: "opens the output file"
-      open_the_next_file: "opens the next file"
-      open_the_previous_file: "opens the previous file"
+      open_the_output_file: "toggles to-from the <u>o</u>utput file"
+      open_the_next_lit_file: "cycles <u>f</u>orwards through the lit files"
+      open_the_previous_lit_file: "cycles <u>b</u>ackwards through the lit files"
       
     dashboard:

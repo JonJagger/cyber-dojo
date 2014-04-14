@@ -1,8 +1,8 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
-  var age = parseInt("<%= @kata.age_in_seconds %>");
+
+  var age = parseInt("<%= (Time.now - @kata.created).to_i %>");
 
   var seconds = function() {
     return age % 60;
@@ -11,7 +11,7 @@ $(document).ready(function() {
     return Math.floor((age / 60) % 60);
   };
   var hours = function() {
-    return Math.floor((age / (60*60)) % 24); 
+    return Math.floor((age / (60*60)) % 24);
   };
   var days = function() {
     return Math.floor(age / (60*60*24));
@@ -20,14 +20,14 @@ $(document).ready(function() {
     return ('00' + n).slice(-2);
   };
   var sep = '&thinsp;:&thinsp;';
-  
+
   if (days() > 0) {
     $('#days_label').html("<%= t('views.labels.days') %>" + sep);
     $('#days').text(days());
   }
   if (days() > 0 || hours() > 0) {
     $('#hours_label').html("<%= t('views.labels.hours') %>" + sep);
-    $('#hours').text(zerod(hours()));      
+    $('#hours').text(zerod(hours()));
   }
   if (days() > 0 || hours() > 0 || minutes() > 0) {
     $('#minutes_label').html("<%= t('views.labels.minutes') %>" + sep);
@@ -40,7 +40,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="age">
+<div>
   <table>
     <tr>
       <td id="days_label" class="align-right"></td>
@@ -49,14 +49,14 @@ $(document).ready(function() {
     <tr>
       <td id="hours_label" class="align-right"></td>
       <td id="hours" class="align-left"></td>
-    </tr>    
+    </tr>
     <tr>
       <td id="minutes_label" class="align-right"></td>
       <td id="minutes" class="align-left"></td>
-    </tr>    
+    </tr>
     <tr>
       <td id="seconds_label" class="align-right"></td>
       <td id="seconds" class="align-left"></td>
-    </tr>    
+    </tr>
   </table>
 </div>

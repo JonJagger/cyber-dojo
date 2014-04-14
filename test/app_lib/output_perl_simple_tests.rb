@@ -1,10 +1,9 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
 
 class OutputPerlTests < ActionController::TestCase
-  
-  include CodeOutputParser
+
+  include OutputParser
 
   test "one failing test is red" do
     output =
@@ -25,20 +24,20 @@ class OutputPerlTests < ActionController::TestCase
         "Result: FAIL",
         "Failed 1/1 test programs. 1/1 subtests failed."
      ].join("\n")
-    assert_equal :red, colour_of(output)                     
+    assert_equal :red, colour_of(output)
   end
-  
+
   test "one passing test is green" do
     output =
       [
         "untitled.t .. ok",
         "All tests successful.",
         "Files=1, Tests=1,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.02 cusr  0.01 csys =  0.05 CPU)",
-        "Result: PASS"    
+        "Result: PASS"
       ].join("\n")
-    assert_equal :green, colour_of(output)                        
+    assert_equal :green, colour_of(output)
   end
-  
+
   test "one passing test and one failing test is red" do
     output =
       [
@@ -56,11 +55,11 @@ class OutputPerlTests < ActionController::TestCase
         "  Non-zero exit status: 1",
         "Files=1, Tests=2,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.02 cusr  0.01 csys =  0.05 CPU)",
         "Result: FAIL",
-        "Failed 1/1 test programs. 1/2 subtests failed."      
+        "Failed 1/1 test programs. 1/2 subtests failed."
       ].join("\n")
-    assert_equal :red, colour_of(output)                            
+    assert_equal :red, colour_of(output)
   end
-  
+
   test "syntax error is amber" do
     output =
       [
@@ -80,11 +79,11 @@ class OutputPerlTests < ActionController::TestCase
         "  Parse errors: No plan found in TAP output",
         "Files=1, Tests=0,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.02 cusr  0.01 csys =  0.06 CPU)",
         "Result: FAIL",
-        "Failed 1/1 test programs. 0/0 subtests failed.",      
+        "Failed 1/1 test programs. 0/0 subtests failed.",
       ].join("\n")
-    assert_equal :amber, colour_of(output)                               
+    assert_equal :amber, colour_of(output)
   end
-  
+
   test "aborted due to compilation errors is amber" do
     output =
       [
@@ -104,13 +103,11 @@ class OutputPerlTests < ActionController::TestCase
         "Result: FAIL",
         "Failed 1/1 test programs. 0/0 subtests failed."
       ].join("\n")
-    assert_equal :amber, colour_of(output)                                  
+    assert_equal :amber, colour_of(output)
   end
-   
+
   def colour_of(output)
-    CodeOutputParser::parse_perl_test_simple(output) 
+    OutputParser::parse_perl_test_simple(output)
   end
-  
+
 end
-
-

@@ -3,25 +3,24 @@
 
 $(document).ready(function() {
 
-  $('#yin_yang_logo').click(function() {
+  $('#yin-yang-logo').click(function() {
     var id = $(this).data('id');
     var url = '/dojo/index/' + id;
     window.open(url);
   });
-  
+
 });
 
 //--></script>
 
-<div id="yin_yang_logo"
+<div id="yin-yang-logo"
      data-id="<%= @kata.id %>"
      class="tipped">
   <img alt="cyber-dojo yin-yang logo"
        src="/images/avatars/cyber-dojo.png"
-       height="48"
-       width="48" />
+       height="54"
+       width="54" />
   <div class="tooltip">
     opens a new<br>home page
   </div>
 </div>
-

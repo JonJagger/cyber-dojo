@@ -1,10 +1,9 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
 
 class OutputNUnitTests < ActionController::TestCase
-  
-  include CodeOutputParser
+
+  include OutputParser
 
   test "nunit RED" do
     # There are two NUnit output formats depending on what
@@ -22,16 +21,14 @@ class OutputNUnitTests < ActionController::TestCase
     output_2 = 'Tests run: 3, Errors: 0, Failures: 0'
     assert_equal :green, colour_of(output_2)
   end
-  
+
   test "nunit AMBER" do
     output = 'error CS1525: Unexpected symbol ss'
     assert_equal :amber, colour_of(output)
   end
-  
+
   def colour_of(output)
-    CodeOutputParser::parse_nunit(output)
+    OutputParser::parse_nunit(output)
   end
-  
+
 end
-
-

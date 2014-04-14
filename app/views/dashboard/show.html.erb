@@ -3,8 +3,8 @@
 
 $(document).ready(function() {
 
-  cd.tipify($('.tipped'), $('#tip_window'));
-  
+  cd.tipify($('.tipped'), $('#tip-window'));
+
   if ("<%=@avatar_name%>" !== "") {
     var title = "<%= t('views.buttons.diff_review') %>";
     var id = "<%=@id%>";
@@ -12,43 +12,45 @@ $(document).ready(function() {
     var wasTag = parseInt("<%=@was_tag%>");
     var nowTag = parseInt("<%=@now_tag%>");
     var maxTag = parseInt("<%=@max_tag%>");
-    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);    
+    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
   }
 
 });
 
 //--></script>
 
-<div id="dashboard_page">
+<div id="dashboard-page">
   <table>
     <tr>
       <td class="valign-top">
-        <div class="panel">
+        <div class="vertical-padded">
           <%= render :partial => 'shared/info' %>
         </div>
         <div class="panel">
-          <%= render :partial => 'column_controls' %>      
+          <%= render :partial => 'controls' %>
         </div>
-        <div class="panel" id="age">      
+        <div class="panel" id="age">
           <%= render :partial => 'age' %>
         </div>
-        <div class="panel">      
+        <div id="team-bulb-counts">
+          <%= render :partial => 'team_bulb_counts' %>
+        </div>
+        <div class="panel">
           <%= render :partial => 'help_button' %>
         </div>
       </td>
       <td class="valign-top" rowspan="2">
-        <div id="traffic_lights">
+        <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
       </td>
-    </tr>    
+    </tr>
     <tr>
       <td class="valign-bottom">
         <div>
           <%= render :partial => 'shared/tip_window' %>
-        </div>        
+        </div>
       </td>
-    </tr>    
-  </table>    
+    </tr>
+  </table>
 </div>
-

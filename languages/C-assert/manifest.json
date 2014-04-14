@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+     "untitled.c",
+     "untitled.h",
+     "makefile",
+     "untitled.tests.c",
+     "cyber-dojo.sh"
+  ],
+  "display_name": "C",
+  "display_test_name": "assert",
+  "unit_test_framework": "cassert",
+  "image_name": "cyberdojo/gcc-4.8.1_assert"
+}

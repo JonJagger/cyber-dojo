@@ -1,13 +1,12 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
 
 class OutputPythonTests < ActionController::TestCase
-  
-  include CodeOutputParser
-  
+
+  include OutputParser
+
   test "failing test is red" do
-    output = 
+    output =
       [
         "F",
         "======================================================================",
@@ -24,11 +23,11 @@ class OutputPythonTests < ActionController::TestCase
         "",
         "FAILED (failures=1)"
       ].join("\n")
-    assert_equal :red, colour_of(output)  
+    assert_equal :red, colour_of(output)
   end
-  
+
   test "one test passed and none failing is green" do
-    output = 
+    output =
       [
         ".",
         "----------------------------------------------------------------------",
@@ -36,11 +35,11 @@ class OutputPythonTests < ActionController::TestCase
         "",
         "OK"
       ].join("\n")
-    assert_equal :green, colour_of(output)  
+    assert_equal :green, colour_of(output)
   end
-  
-  test "two tests passed and none failing is green" do    
-    output = 
+
+  test "two tests passed and none failing is green" do
+    output =
       [
         "..",
         "----------------------------------------------------------------------",
@@ -48,11 +47,11 @@ class OutputPythonTests < ActionController::TestCase
         "",
         "OK"
       ].join("\n")
-    assert_equal :green, colour_of(output)    
+    assert_equal :green, colour_of(output)
   end
-  
+
   test "one passing test and one failing test is red" do
-    output = 
+    output =
       [
         ".F",
         "======================================================================",
@@ -69,9 +68,9 @@ class OutputPythonTests < ActionController::TestCase
         "",
         "FAILED (failures=1)"
       ].join("\n")
-    assert_equal :red, colour_of(output)             
+    assert_equal :red, colour_of(output)
   end
-  
+
   test "syntax error is amber" do
     output =
     [
@@ -81,15 +80,13 @@ class OutputPythonTests < ActionController::TestCase
       '  File "/Users/jonjagger/Desktop/Repos/cyberdojo/sandboxes/AB/2ED984F2/hippo/untitled.py", line 4',
       "    return 42sdsdsdsd",
       "                    ^",
-      "SyntaxError: invalid syntax"      
+      "SyntaxError: invalid syntax"
     ].join("\n")
-    assert_equal :amber, colour_of(output)               
+    assert_equal :amber, colour_of(output)
   end
-      
+
   def colour_of(output)
-    CodeOutputParser::parse_python_unittest(output) 
+    OutputParser::parse_python_unittest(output)
   end
-  
+
 end
-
-

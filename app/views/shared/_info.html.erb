@@ -6,15 +6,21 @@
     </td>
     <td>
       <div class="tipped table-row">
-        <%= @kata.id[0..5] %>
+        <%= @kata.id.to_s[0..5] %>
         <div class="tooltip">
           this dojo's<br>unique id
         </div>
       </div>
       <div class="tipped table-row">
-        <%= @kata.language.name.sub('-',' ') %>
+        <%= @kata.language.display_name %>
         <div class="tooltip">
-          this dojo's<br>chosen language
+          this dojo's<br>language
+        </div>
+      </div>
+      <div class="tipped table-row">
+        <%= @kata.language.display_test_name %>
+        <div class="tooltip">
+          this dojo's<br>unit test framework
         </div>
       </div>
       <div class="tipped table-row">

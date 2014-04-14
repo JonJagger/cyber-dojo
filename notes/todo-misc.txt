@@ -1,0 +1,226 @@
+
+
+
+-------------------------------------------
+building your own docker language container
+-------------------------------------------
+o) choose a base-container to build on top of.
+   For example cyberdojo/build-essential
+   at https://index.docker.io/u/cyberdojo/
+o) write a dockerfile containing all the
+   commands (eg apt-get install's) required.
+   For example /languages/C#-NUnit/Dockerfile_csharp_nunit
+o) use the dockerfile to build your container
+   For example
+   $ docker build -t cyberdojo/my_container .
+   which creates a new container called cyberdojo/my_container
+   using the dockerfile in the current folder (.)
+o) fire up the new container in interactive mode
+   $ docker run -i -t cyberdojo/my_container /bin/bash
+   Try it out!
+   43ce90aa9f14:/#
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CUT FROM README (AFFECTED BY DOCKER)
+Check that running cyber-dojo.sh behaves as required:
+  #sudo -u www-data ./cyber-dojo.sh
+or maybe
+  #strace sudo -u www-data ./cyber-dojo.sh
+
+You can test the setup of a new language using a ruby script.
+For example: if the new language is Lisp installed
+at cyberdojo/test/cyberdojo/languages/Lisp then
+  #cd test/installation
+  #ruby check_language.rb ../cyberdojo Lisp
+Once this passes make it live by moving it to the live languages folder:
+#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+RUBY-QUESTION
+  Can .entries take a parameter in general? In combination with .each
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
+  light = avatar.lights[params['tag']]   ?in forker_controller?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CSS
+  it seems that the common id/class name style is like-this
+  and not like_this
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MISC
+  Nice dojos for screen shots
+  A0FCF4CCBF  (shows the ellision at the rhs is not quite right yet?)
+  4048EC
+  B049D5
+  89F073
+  These are all in downloads/ folder on cyber-dojo.com and need untarring.
+  They won't unzip (tar -ztvf) Says
+    gzip: stdin: not in gzip format
+    tar: Child returned status 1
+    tar: Exiting with failure status due to previous errors
+  On cyber-katas.org they are ok.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MISC
+  add ghosting when traffic-light is hovered over.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Running test/installation/check_language on non-test cyber-dojo root
+shows some of the languages do not pass the checks.
+  Java-Cucumber ...... ["red", "red", "green"] installed but not working (~ 4.64 seconds)
+  Java-JUnit-Mockito . ["red", "amber", "red"] installed but not working (~ 3.05 seconds)
+  Ruby-Approval ...... ["red", "red", "green"] installed but not working (~ 1.63 seconds)
+  Ruby-Cucumber ...... multiple 42-files ["untitled.rb", "untitled.feature"]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Deployment
+  Locally
+    1. Run all tests (including installation and rspec)
+    2. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard
+    3. Push
+  On test server
+    0. Pull
+    1. Run all tests
+    2. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard
+  On cyber-dojo.com
+    0. Pull
+    1. Create new dojo, new animal, edit->amber, edit->green, resume, dashboard
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SPEC
+  Get them running again!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Refactoring dojos
+  Put tennis ones into zip / tar.gz ?
+  ...
+  Write script to unzip and ensure chown/chgrp www-data
+  ...
+  Auto unzip refactoring dojos after a prune_small/large true
+  ...
+  Add refactoring button on front page and its dialog has all
+  refactoring URLs below
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+19th Feb 2014: On cyber-dojo.com ran
+  > ruby prune_small.rb true 3 7
+    2764 katas deleted
+    5783 katas not deleted
+  >df
+  reports no inodes regained?
+  Wrong partition!
+  Fixed etc/fstab so instead of
+      /mnt/katas /var/www/cyberdojo/katas
+      it does
+      /mnt/cyberdojo /var/www/cyberdojo
+  which transfers about 7G from the 10G-fs to the 100G-fs :-)
+  that is much better.
+  ...
+  Copied tar.gz files back from cyber-katas to cyber-dojo.com
+  Now untarring them on cyber-dojo.com
+    find . -name '*.tar.gz' -print0 | xargs -0 -n1 tar xf
+  Getting some errors...
+    gzip: stdin: not in gzip format
+    tar: Child returned status 1
+    tar: Exiting with failure status due to previous errors
+  Need to find out which ids are causing failures and why.
+  Moved them back to separate downloads folder.
+  ...
+  The xfer.rb script could take the URL as a parameter.
+  Will probably want to xfer in both directions.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+   default state can be showing a message saying
+   hover over any element to reveal its tooltip?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+  on dashboard  |60s|columns
+  on dashboard  age
+  for diff-dialog
+  for fork-dialog
+  for revert-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+INSTALLATION-TESTS
+  Get app/lib coverage to 100%
+  Save run-tests outputs to log file?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I18N
+  Need to be i18n'd on the setup page.
+  ...
+  On dialog buttons
+    cancel: new-file,rename-file,delete-file
+    close: diff
+  ...
+  Lots more.
+  Have promises for Russian and Ukranian.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HTML
+  s/fork/forker/
+  s/revert/reverter/ ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+RESUME/FORK? FROM RENAMED LANGUAGE
+  http://localhost:3000/kata/edit/11870BBD9F?avatar=elephant
+  This will not resume.
+     lib/DiskFile.rb:27:in `read'
+     lib/DiskFile.rb:27:in `read'
+     app/models/language.rb:58:in `manifest'
+     app/models/language.rb:48:in `tab_size'
+     app/models/language.rb:44:in `tab'
+     app/controllers/kata_controller.rb:11:in `edit'
+  katas/11/870BBD9F/manifest.rb contains this...
+     :language=>"Java-ApprovalTests"
+  And thus models/language.rb is its trying to load
+     /Users/jonjagger/Desktop/Repos/cyberdojo/languages/Java-ApprovalTests/manifest.rb
+  But the name of the language has changed from
+  Java-ApprovalTests
+  to
+  Java-Approval
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LINE-NUMBERS
+  Dynamically change width from <99 to 100+
+  Make the left padding on the line-numbers (on test page)
+  a bit thinner. Only if its >99 lines long use extra padding.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+NEW-LANGUAGES
+  https://github.com/gdunn/cyberdojo
+  Add UnitTest++ C/C++
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+feedback from Derek Graham.
+o) devs seem very reluctant to change the names of the untitled. files
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+not enough coverage on
+  app/helpers
+    translation_helper.rb
+    application_helper.rb
+
+  app/controllers
+    application_controller.set_locale
+    locales_controller.change
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Only offering installed languages
+...
+The intention is (maybe) to use a specific structure for the contents of the
+languages' manifests to enable an automated check to see what is correctly
+installed and working, and to only offer installed and working languages when
+you setup a new coding practice. At the moment when you setup a
+new coding practice all languages/ subfolders are offered.
+
+You can test if a languages' initial fileset is correctly setup as follows
+>cd cyberdojo/test/installation
+>ruby installation_tests.rb
+
+For each language...
+o) cyber-dojo searches through its manifests' :visible_filenames,
+   in sequence, looking for any that contain the string '42'
+o) If it doesn't find any it will report than language is not
+   configured correcty.
+o) If it finds at least one file containing '42' it will pick the
+   first one as "the-42-file"
+o) It will then use the manifest to [create a kata and run-the-tests]
+   three times as follows:
+   test-1 - with the files unchanged.
+   test-2 - with the 42 in the-42-file replaced by 54
+   test-3 - with the 42 replaced by 4typo2
+o) If test-1 generates a red traffic-light and
+      test-2 generates a green traffic-light and
+      test-3 generates an amber traffic-light then
+   then it will assume the language is installed and working.
+o) If the three tests return three amber traffic-lights then
+   it will assume the language is not configured correctly.
+o) If the three tests return any other combination of traffic-lights
+   it will assume the language is installed but not working.
+
+This approach has a flaw: two or more files can contain '42'...
+This tends to happen for BDD style testing.

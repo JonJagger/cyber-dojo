@@ -1,135 +1,127 @@
 
-#diff_dialog
-{
+@mixin diff-pre-block {
+  white-space: pre;
+  display: block;
+}
+
+@mixin diff-line-count {
+  text-align: right;
+  margin: none;
+  padding: {
+       top: 0em;
+     right: 0.2em;
+    bottom: 0em;
+      left: 0.2em;
+  }
+  @include font-size-small();
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+#diff-dialog {
+
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
   color: $lighter-color;
   padding: none;
   margin: 0;
   margin-top: 0.5em;
-  .tag_red {
-    color: $red;  
+
+  #was-traffic-light { margin-right: 0.3em; }
+  #now-traffic-light { margin-left : 0.3em; }
+
+  #was-tag-number { @include editable_tag_number; }
+  #now-tag-number { @include editable_tag_number; }
+  #tag-gap-number { @include font-size-tiny(); }
+
+  #diff-filenames {
+    height: 18em;
+    overflow-y: auto;
   }
-  .tag_amber {
-    color: $amber;  
-  }  
-  .tag_green {
-    color: $green;
+
+  #diff-content {
+    width: 40em;
+    font: {
+      size: 1.5em;
+      family: monospace;
+    }
   }
-}
 
-#diff_content
-{
-  height: 26em;
-  width: 40em;
-  font: {
-    size: 1.5em;
-    family: monospace;
+  .diff-line-numbers, .diff-sheet {
+    height: 29em;
+    margin: 0;
+    padding: 0;
+    @include code-font;
+
+    ln {
+      margin-left : 4px;
+      margin-right: 3px;
+      font-weight: normal;
+    }
+
+    added, deleted, same { @include diff-pre-block; }
+    added   ln { color: $diff-added-color; }
+    deleted ln { color: $diff-deleted-color; }
+    same    ln { color: lighten($darker-color, 30%); }
   }
-}
 
-#was_tag_number, #now_tag_number {
-  @include editable_tag_number;
-}
-
-#tag_gap_number {
-  @include font-size-tiny();
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-@mixin pre-block {
-  white-space: pre;
-  display: block;  
-}
-
-.diff_line_numbers, .diff_sheet {
-  height: 26em;
-  margin: 0;
-  padding: 0;
-  @include code-font;    
-  ln {
-    margin-left: 4px;
-    margin-right: 3px;
-    font-weight: normal;    
+  .diff-line-numbers {
+    text-align: right;
+    overflow: hidden;
+    background: $darker-color;
+    border-left: {
+      style: dotted;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
   }
-  added, deleted, same { @include pre-block; }
-  added   ln { color: $diff-added-color; }
-  deleted ln { color: $diff-deleted-color; }
-  same    ln { color: lighten($darker-color, 30%); }
-}
 
-.diff_line_numbers {
-  overflow: hidden;
-  background: $darker-color;
-  border-left: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 25%);
-  }  
-}
+  .diff-sheet {
+    width: 40em;
+    overflow: auto;
+    color: $darker-color;
+    background: $lighter-color;
+    added, deleted, same { padding-left: 3px; }
+    added {
+      background: $diff-added-color;
+      &:hover { background: lighten($diff-added-color, 10%); }
+    }
+    deleted {
+      background: $diff-deleted-color;
+      text-decoration: line-through;
+      &:hover { background: lighten($diff-deleted-color, 5%); }
+    }
+    same {
+      &:hover { background: lighten($lighter-color, 5%); }
+    }
+  }
 
-.diff_sheet {
-  overflow: auto;
-  width: 40em;
-  color: $darker-color;
-  background: $lighter-color;  
-  added, deleted, same { padding-left: 3px; }
-  added {
-    background: $diff-added-color;
-  }  
-  deleted {
+  .diff-deleted-line-count, .diff-added-line-count {
+    color: $darker-color;
+    @include diff-line-count;
+    border: 2px solid $darker-color;
+    @include rounded-corner(4px);
+  }
+
+  .diff-deleted-line-count {
     background: $diff-deleted-color;
-    text-decoration: line-through;    
-  }  
-}
+    cursor: pointer;
+    border-left: 3px solid $darker-color;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-@mixin line-count {
-  text-align: right;
-  margin: none;
-  padding: {
-    top: 0em;
-    right: 0.2em;
-    bottom: 0em;
-    left: 0.2em;
+    &[disabled] {
+      background: lighten($darker-color, 20%);
+      cursor: default;
+    }
   }
-  @include font-size-small();
-}
 
-.diff-deleted-line-count, .diff-added-line-count {
-  color: $darker-color;
-  @include line-count;
-  border: 2px solid $darker-color;
-  @include rounded-corner(4px);  
-}
+  .diff-added-line-count {
+    background: $diff-added-color;
+    cursor: pointer;
 
-.diff-deleted-line-count {
-  background: $diff-deleted-color;
-  cursor: pointer;
-  border-left: 3px solid $darker-color;
-
-  &[disabled] {
-    background: lighten($darker-color, 20%);
-    cursor: default;
+    &[disabled] {
+      background: lighten($darker-color, 20%);
+      cursor: default;
+    }
   }
+
 }
-
-.diff-added-line-count {
-  background: $diff-added-color;
-  cursor: pointer;
-
-  &[disabled] {
-    background: lighten($darker-color, 20%);
-    cursor: default;
-  }
-}
-
-#diff_filenames {
-  height: 18em;
-  overflow-y: auto;
-}
-
-
-

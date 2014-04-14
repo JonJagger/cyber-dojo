@@ -1,0 +1,43 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  var kataIdInput = $('#kata-id-input');
+
+  var enableIf = function(button, condition) {
+    if (condition) {
+      button.removeAttr('disabled');
+    } else {
+      button.attr('disabled', true);
+    }
+  };
+
+  cd.enableDisableStartResumeReview = function() {
+    var id = kataIdInput.val();
+    $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
+      enableIf($('#start-button'), dojo.exists);
+      enableIf($('#resume-button'), dojo.started > 0);
+      enableIf($('#review-button'), dojo.started > 0);
+    });
+  };
+
+  kataIdInput.keyup(function() {
+    cd.enableDisableStartResumeReview();
+  });
+
+  cd.enableDisableStartResumeReview();
+});
+
+//--></script>
+
+<input class="tipped"
+       type="text"
+       id="kata-id-input"
+       size="8"
+       value="<%= @id[0..5] %>">
+  <div class="tooltip">
+    an id contains only the digits 0123456789
+    and letters ABCDEF, and is case insensitive
+  </div>
+</input>

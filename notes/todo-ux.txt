@@ -1,0 +1,41 @@
+
+            |     @ CYBER-DOJO                          |
+            |     practicing programming                | about
+            |                                           | help me get started
+            |     |               |   create_an_id      | donators
+            |     | enter your id |   repeat            | frequently asked questions
+            |     |_______________|                     | useful links
+            |                                           | testimonials
+            |     |               |                     | tips
+            |     | start coding  |   resume_coding     | why?
+            |     |_______________|                     |
+            |                                           |
+            |     |               |                     |
+            |     | do a review   |   publish!          |
+            |     |_______________|                     |
+
+     / \
+      |
+      |
+      |
+Here I'll put...
+    o) picture from CoderDojo in Ireland. AS BACKGROUND?
+
+
+
+    o) [donate] . Use button, not paypal image
+    o) what money is used for
+    o) raspberry pi logo
+    o) amount currently raised.
+    Then underneath
+    o) example of testimonial
+    o) button asking for feedback
+
+[enter your id] text box font size is same as [start coding] button font size
+perhaps to the right of [do a review] I could show a mini image of the dashboard
+perhaps resume-coding could be a mini-image of the started animals!
+I like the idea of getting some pictures of the animals on the home page.
+create_an_id is hyperlink
+repeat is hyperlink
+resume_coding is hyperlink
+publish is hyperlink

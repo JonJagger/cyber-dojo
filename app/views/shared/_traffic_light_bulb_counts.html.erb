@@ -1,13 +1,12 @@
 
 <% ['red','amber','green'].each do |bulb| %>
   <%  bulb_tally = traffic_lights.count{ |light| light['colour'] == bulb } %>
-  <div class="tipped <%= bulb %> bulb_count">
+  <div class="tipped <%= bulb %> bulb-count">
     <%= bulb_tally %>
     <div class='tooltip'>
        <%= avatar_name %> has<br>
        <%= pluralize(bulb_tally, bulb.to_s + ' traffic-light') %><br>
        so far
     </div>
-  </div>       
+  </div>
 <% end %>
-

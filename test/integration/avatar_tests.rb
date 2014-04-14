@@ -1,15 +1,22 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'OsDisk'
+require 'Git'
+require 'RawRunner'
 
 class AvatarTests < ActionController::TestCase
 
   def setup
-    @kata = make_kata('Ruby-installed-and-working')
+    disk   = OsDisk.new
+    git    = Git.new
+    runner = RawRunner.new
+    paas = LinuxPaas.new(disk, git, runner)
+    format = 'json'
+    @dojo = paas.create_dojo(root_path, format)
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "deleted file is deleted from that repo tag" do
-    avatar = Avatar.create(@kata, 'wolf')  # creates tag-0
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
     deleted_filename = 'instructions'
     visible_files[deleted_filename] = 'Whatever'
@@ -17,57 +24,60 @@ class AvatarTests < ActionController::TestCase
       :changed => [ ],
       :unchanged => visible_files.keys,
       :deleted => [ ],
-      :new => [ ]                                    
+      :new => [ ]
     }
-    run_test(delta, avatar, visible_files)  # creates tag-1
+    run_test(delta, avatar, visible_files)  # tag 1
     visible_files.delete(deleted_filename)
     delta = {
       :changed => [ ],
       :unchanged => visible_files.keys - [ deleted_filename ],
       :deleted => [ deleted_filename ],
-      :new => [ ]                                          
-    }    
-    run_test(delta, avatar, visible_files)  # creates tag-2    
+      :new => [ ]
+    }
+    run_test(delta, avatar, visible_files)  # tag 2
     before = avatar.visible_files(tag=1)
     assert before.keys.include?("#{deleted_filename}"),
-          "before.keys.include?(#{deleted_filename})"          
+          "before.keys.include?(#{deleted_filename})"
     after = avatar.visible_files(tag=2)
     assert !after.keys.include?("#{deleted_filename}"),
           "!after.keys.include?(#{deleted_filename})"
   end
-  
+
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "diff_lines is not empty when change in files" do
-    avatar = Avatar.create(@kata, 'wolf') # 0
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
     delta = {
       :changed => [ ],
       :unchanged => visible_files.keys,
       :deleted => [ ],
-      :new => [ ]                              
-     }    
-    run_test(delta, avatar, visible_files) # 1
+      :new => [ ]
+     }
+    run_test(delta, avatar, visible_files) # tag 1
     visible_files['cyber-dojo.sh'] += 'xxxx'
     delta = {
       :changed => [ 'cyber-dojo.sh' ],
       :unchanged => visible_files.keys - [ 'cyber-dojo.sh' ],
       :deleted => [ ],
-      :new => [ ]                              
+      :new => [ ]
      }
-    run_test(delta, avatar, visible_files) # 2    
+    run_test(delta, avatar, visible_files) # tag 2
     traffic_lights = avatar.traffic_lights
     assert_equal 2, traffic_lights.length
     was_tag = nil
     now_tag = nil
-    actual = avatar.diff_lines(was_tag = 1, now_tag = 2)    
+    actual = avatar.diff_lines(was_tag = 1, now_tag = 2)
     assert actual.match(/^diff --git/)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
+
   test "diff_lines shows added file" do
-    avatar = Avatar.create(@kata, 'wolf') # 0
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
     added_filename = 'unforgiven.txt'
     content = 'starring Clint Eastwood'
@@ -76,7 +86,7 @@ class AvatarTests < ActionController::TestCase
       :changed => [ ],
       :unchanged => visible_files.keys - [ added_filename ],
       :deleted => [ ],
-      :new => [ added_filename ]                        
+      :new => [ added_filename ]
     }
     run_test(delta, avatar, visible_files) # 1
     actual = avatar.diff_lines(was_tag=0, now_tag=1)
@@ -96,28 +106,29 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "diff_lines shows deleted file" do
-    avatar = Avatar.create(@kata, 'wolf') # 0
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
     deleted_filename = 'instructions'
     content = 'tweedle_dee'
     visible_files[deleted_filename] = content
-    
+
     delta = {
       :changed => [ deleted_filename ],
       :unchanged => visible_files.keys - [ deleted_filename ],
       :deleted => [ ],
-      :new => [ ]                  
-    }    
-    run_test(delta, avatar, visible_files)  # 1
+      :new => [ ]
+    }
+    run_test(delta, avatar, visible_files)  # tag 1
     #- - - - -
-    visible_files.delete(deleted_filename)    
+    visible_files.delete(deleted_filename)
     delta = {
       :changed => [ ],
       :unchanged => visible_files.keys - [ deleted_filename ],
       :deleted => [ deleted_filename ],
-      :new => [ ]                        
+      :new => [ ]
     }
-    run_test(delta, avatar, visible_files)  # 2    
+    run_test(delta, avatar, visible_files)  # tag 2
     #- - - - -
     actual = avatar.diff_lines(was_tag=1, now_tag=2)
     expected =
@@ -128,7 +139,7 @@ class AvatarTests < ActionController::TestCase
         "--- a/sandbox/#{deleted_filename}",
         "+++ /dev/null",
         "@@ -1 +0,0 @@",
-        "-#{content}"       
+        "-#{content}"
       ].join("\n")
     assert actual.include?(expected), actual
   end
@@ -136,23 +147,21 @@ class AvatarTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "output is correct on refresh" do
-    language = 'Ruby-installed-and-working'
-    kata = make_kata(language)
-    avatar = Avatar.create(kata, 'lion')
+    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    avatar = kata.start_avatar
     visible_files = avatar.visible_files
     delta = {
       :changed => visible_files.keys,
       :unchanged => [ ],
       :deleted => [ ],
-      :new => [ ]      
-    }        
+      :new => [ ]
+    }
     output = run_test(delta, avatar, visible_files)
-    visible_files['output'] = output    
-    traffic_light = { :colour => 'amber' }
-    avatar.save_run_tests(visible_files, traffic_light)    
+    visible_files['output'] = output
+    avatar.save_visible_files(visible_files)
     # now refresh
-    avatar = Avatar.new(kata, 'lion')
+    avatar = kata.avatars[avatar.name]
     assert_equal output, avatar.visible_files['output']
-  end    
+  end
 
 end

@@ -6,7 +6,7 @@
   <style type="text/css">
 	body
 	{
-	  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;		
+	  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
 	  background-color: #666;
 	  color: Khaki;
 	  text-align: center;
@@ -20,18 +20,18 @@
 	{
 	  text-align: center;
 	  margin-left: auto;
-	  margin-right: auto;		
+	  margin-right: auto;
 	}
   </style>
 </head>
 
 <body class="panel">
 
-  <% avatars = Avatar.names.shuffle %>
+  <% avatars = Avatars.names.shuffle %>
   <% size = 125 %>
 
   <h1>we're sorry - we can't do that</h1>
-	
+
   <table class="align-center">
 	<% (0..3).each do |row| %>
 	<tr>
@@ -42,12 +42,12 @@
 		       class="avatar_image"
 			   height="<%= size %>"
 			   width="<%= size %>"
-		       src="/images/avatars/<%= avatars[n]%>.jpg" />		  
+		       src="/images/avatars/<%= avatars[n]%>.jpg" />
 		 </td>
-	  <% end %>	  	  
-	</tr>	
+	  <% end %>
+	</tr>
 	<% end %>
-  </table>      
+  </table>
 
 </body>
-</html>  
+</html>

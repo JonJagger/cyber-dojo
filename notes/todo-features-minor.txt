@@ -1,0 +1,31 @@
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DEFAULT-PARAMETERS
+  Lose them. They just create dependencies.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LANGUAGE-CHECKER
+  Split off red/amber/green testing into separate tester class.
+  Make dedicated language_manifest_checker.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+  have them open up in popup right next to the item they are tipping.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+EXERCISE-HAS-MANIFEST
+  At the moment the instructions come from exercises/ and
+  everything else comes from languages/ via manifest.rb
+  This means if I want to create a special exercise with
+  :highlight_filenames I have to do it as an exercise.
+  And then I have to know to select it only with a specific language.
+  How about allowing a language folder to have its own exercise folders.
+  And give Exercise a manifest like Language?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CUSTOM-DOMAIN-NAMES
+  James spins up custom names for clients
+  eg  cisco.cyber-dojo.org - from amazon route 53
+  Nice idea.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+REPEAT
+  next to the [setup] button have a [repeat] button
+  which automatically sets up a new dojo with the same
+  language and exercise as last time.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

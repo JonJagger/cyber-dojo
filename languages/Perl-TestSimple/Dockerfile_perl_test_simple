@@ -1,0 +1,6 @@
+FROM  cyberdojo/perl
+MAINTAINER Jon Jagger <jon@jaggersoft.com>
+
+# docker build -t  cyberdojo/perl_test_simple .
+# docker push      cyberdojo/perl_test_simple
+# docker run -i -t cyberdojo/perl_test_simple /bin/bash

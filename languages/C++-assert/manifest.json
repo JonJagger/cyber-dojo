@@ -7,8 +7,8 @@
     "makefile",
     "cyber-dojo.sh"
   ],
-
-  "unit_test_framework": "cassert"
+  "display_name": "C++",
+  "display_test_name": "assert",
+  "unit_test_framework": "cassert",
+  "image_name": "cyberdojo/gpp-4.8.1_assert"
 }
-
-

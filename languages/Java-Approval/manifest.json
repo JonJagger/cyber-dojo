@@ -6,12 +6,14 @@
     "cyber-dojo.sh",
     "UntitledTest.hitch_hiker.approved.txt"
   ],
-  
+
   "support_filenames": [
     "junit-4.11.jar",
     "ApprovalTests.012.jar"
   ],
-  
-  "unit_test_framework": "junit"
-}
 
+  "display_name": "Java",
+  "display_test_name": "Approval",
+  "unit_test_framework": "junit",
+  "image_name": "cyberdojo/java-1.8"
+}

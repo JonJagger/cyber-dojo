@@ -1,10 +1,9 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
-require 'CodeOutputParser'
 
 class OutputCatchTests < ActionController::TestCase
-  
-  include CodeOutputParser
+
+  include OutputParser
 
   test "RED" do
     output =
@@ -32,7 +31,7 @@ class OutputCatchTests < ActionController::TestCase
 
   test "AMBER" do
     output =
-      [       
+      [
         "untitled.cpp: In function 'int hhg()':",
         "untitled.cpp:5:12: error: unable to find numeric literal operator 'operator\"\" typo2'",
         "untitled.cpp:6:1: error: control reaches end of non-void function [-Werror=return-type]",
@@ -40,19 +39,17 @@ class OutputCatchTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
-  
+
   test "GREEN" do
     output =
       [
         "All tests passed (1 assertion in 1 test case)"
       ].join("\n")
     assert_equal :green, colour_of(output)
-  end  
-  
-  def colour_of(output)
-    CodeOutputParser::parse_catch(output)
   end
-  
+
+  def colour_of(output)
+    OutputParser::parse_catch(output)
+  end
+
 end
-
-

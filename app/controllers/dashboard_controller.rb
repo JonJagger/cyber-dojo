@@ -12,49 +12,32 @@ class DashboardController < ApplicationController
       @avatar_name = params['avatar']
       @was_tag = params['was_tag']
       @now_tag = params['now_tag']
-      @max_tag = Avatar.new(@kata, @avatar_name).traffic_lights.length
+      @max_tag = @kata[@avatar_name].traffic_lights.length
     end
+   @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
   end
 
   def heartbeat
     gather
+    @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
     respond_to do |format|
       format.js if request.xhr?
     end
   end
-  
+
   def help_dialog
-    render :layout => false    
-  end
-  
-  # left because will be used to xfer dojos to readonly 2nd server
-  # reinstate if anyone asks for this?
-  def download
-    # an id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
-    uuid = Uuid.new(id)
-    inner = uuid.inner
-    outer = uuid.outer
-    cd_cmd = "cd #{root_dir}/katas"
-    tar_cmd = "tar -zcf ../zips/#{id}.tar.gz #{inner}/#{outer}"
-    system(cd_cmd + ";" + tar_cmd)
-    zip_filename = "#{root_dir}/zips/#{id}.tar.gz"
-    send_file zip_filename
-    # would like to delete this zip file
-    # but download tests unzip them to verify
-    # unzipped zip is identical to original 
-    #rm_cmd = "rm #{zip_filename}"
-    #system(rm_cmd)
+    render :layout => false
   end
 
 private
 
   def gather
-    @kata = Kata.new(root_dir, id)
+    @kata = dojo.katas[id]
     @minute_columns = bool('minute_columns')
     @auto_refresh = bool('auto_refresh')
-    @seconds_per_column = seconds_per_column    
+    @seconds_per_column = seconds_per_column
   end
-  
+
   def bool(attribute)
     tf = params[attribute]
     return tf if tf == "true"
@@ -67,8 +50,8 @@ private
     if !flag || flag == "true"
       return 60
     else
-      return 60*60*24*365*1000 
+      return 60*60*24*365*1000
     end
   end
- 
+
 end

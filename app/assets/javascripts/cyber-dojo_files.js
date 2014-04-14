@@ -2,7 +2,7 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
+
   cd.fileContentFor = function(filename) {
     return cd.id('file_content_for_' + filename);
   };
@@ -29,7 +29,7 @@ var cyberDojo = (function(cd, $) {
     // the scrollTop and scrollLeft positions of a file when it is
     // switched out of the editor by a call to hide().
 
-    return $('#current_filename').val();
+    return $('#current-filename').val();
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -38,24 +38,37 @@ var cyberDojo = (function(cd, $) {
     return cd.inArray(filename, cd.filenames()) ||
            cd.inArray(filename, cd.supportFilenames());
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.rebuildFilenameList = function() {
-    var filenameList = $('#filename_list');
-    var filenames = cd.filenames();    
+    var filenameList = $('#filename-list');
+    var filenames = cd.filenames();
+    filenames.splice(filenames.indexOf('output'), 1);
     filenameList.empty();
+    filenameList.append(cd.makeFileListEntry('output'));
     filenames.sort();
+
     $.each(filenames, function(n, filename) {
-      var fileListEntry = cd.makeFileListEntry(filename);
-      filenameList.append(fileListEntry);
+      if (!cd.inArray(filename, cd.lowlightFilenames())) {
+        var fileListEntry = cd.makeFileListEntry(filename);
+        filenameList.append(fileListEntry);
+      }
     });
+
+    $.each(filenames, function(n, filename) {
+      if (cd.inArray(filename, cd.lowlightFilenames())) {
+        var fileListEntry = cd.makeFileListEntry(filename);
+        filenameList.append(fileListEntry);
+      }
+    });
+
     return filenames;
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  cd.filenames = function() {  
+
+  cd.filenames = function() {
     var prefix = 'file_content_for_';
     var filenames = [ ];
     $('textarea[id^=' + prefix + ']').each(function(index) {
@@ -76,13 +89,16 @@ var cyberDojo = (function(cd, $) {
     });
     if (cd.inArray(filename, cd.highlightFilenames())) {
       div.addClass('highlight');
-    }      
+    }
+    if (cd.inArray(filename, cd.lowlightFilenames())) {
+      div.addClass('lowlight');
+    }
     div.click(function() {
       cd.loadFile(filename);
-    });    
-    return div;  
+    });
+    return div;
   };
-  
+
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.makeNewFile = function(filename, content) {
@@ -113,8 +129,8 @@ var cyberDojo = (function(cd, $) {
     // it still wraps at the textarea width. So instead I do it
     // like this, which works in FireFox?!
     text.attr('wrap', 'off');
-    
-    text.val(content);    
+
+    text.val(content);
     td1.append(lines);
     tr.append(td1);
     td2.append(text);
@@ -142,6 +158,9 @@ var cyberDojo = (function(cd, $) {
         break;
       }
     }
+    // This could select a filename whose content is empty
+    // Ideally I'd look at the content too.
+    // And possibly also look at the file that changed the most.
     if (i === filenames.length) {
       i = 0;
     }
@@ -149,9 +168,6 @@ var cyberDojo = (function(cd, $) {
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   return cd;
 })(cyberDojo || {}, $);
-
-
-

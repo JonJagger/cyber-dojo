@@ -1,0 +1,6 @@
+FROM  cyberdojo/erlang
+MAINTAINER Jon Jagger <jon@jaggersoft.com>
+
+# docker build -t  cyberdojo/erlang_eunit  .
+# docker push      cyberdojo/erlang_eunit
+# docker run -i -t cyberdojo/erlang_eunit /bin/bash

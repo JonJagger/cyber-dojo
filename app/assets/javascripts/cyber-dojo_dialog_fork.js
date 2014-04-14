@@ -3,103 +3,186 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {    
-    // This is virtually identical to
-	// cyber-dojo_dialog_revert.js
-	// except for the command executed when ok is pressed
-	// and refresh().
-	
+  cd.dialog_fork = function(title, cancel, id, avatarName, tag, maxTag) {
+    // There is a lot commonality in the fork and revert dialogs.
+	// And both could be improved by showing the red/green
+	// lines added/removed (like on the diff)
+
   	var minTag = 1;
-  
+
     var makeForkInfo = function() {
 	  return '' +
 	    '<table class="align-center">' +
 		  '<tr>' +
+			'<td>' +
+			  '<button type="button"' +
+			          'id="revert-fork-button">' +
+				  title +
+			  '</button>' +
+			'</td>' +
 		    '<td>' +
-	          '<div id="traffic_light">' +
+	          '<div id="traffic-light">' +
 			  '</div>' +
 		    '</td>' +
 			'<td>' +
-			  '<input type="text" id="fork_tag_number" value="" />' +			  
-			'</td>' +			
+			  '<input type="text" id="revert-fork-tag-number" value="" />' +
+			'</td>' +
 		  '</tr>' +
-		'</table>';	  
+		'</table>';
     };
-    
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-	  
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
     var makeForkerDiv = function()  {
-      var div = $('<div>', {    
-        'id': 'fork_dialog'
+      var div = $('<div>', {
+        'id': 'revert-fork-dialog'
       });
       var table = $('<table>');
       table.append(
-        "<tr valign='top'>" +		  
+        "<tr valign='top'>" +
           "<td valign='top'>" +
-		  
+
 		    "<table>" +
-			  "<tr valign='top'>" + 
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 			      makeForkInfo() +
 			    "</td>" +
 			  "</tr>" +
-			  
-			  "<tr valign='top'>" + 
+
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  cd.makeNavigateButtons(avatarName) +
 				"</td>" +
 			  "</tr>" +
-			  
-			  "<tr valign='top'>" + 
+
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-				  "<div id='fork_filenames'" +
+				  "<div id='revert-fork-filenames'" +
 					   "class='panel'>" +
 				  "</div>" +
 				"</td>" +
 			  "</tr>" +
-			  
+
 			"</table>" +
-			
+
           "</td>" +
           "<td>" +
-           "<textarea id='fork_content'" +
+           "<textarea id='revert-fork-content'" +
 		             "class='file_content'" +
 					 "readonly='readonly'" +
 		             "wrap='off'>" +
 		   "</textarea>" +
           "</td>" +
 	    "</tr>");
-	  
-      div.append(table);	   
+
+      div.append(table);
       return div;
     };
-	
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var forkDiv = makeForkerDiv();
-	
-	var forkDialog = forkDiv.dialog({	  
-	  title: cd.dialogTitle(title + '?'),
+
+	var forkDialog = forkDiv.dialog({
 	  autoOpen: false,
-	  width: 1100,
+	  width: 1200,
 	  modal: true,
-	  buttons: {
-		fork: function() {
-		  var url = '/forker/fork/' + id + '?' +
-		            'avatar=' + avatarName + '&' +
-					'tag=' + tag;
-		  window.open(url);
-		  $(this).remove();
-		},
-		'cancel': function() {
-		  $(this).remove();
-		}
-	  }
+	  buttons: [
+		{
+		  text: cancel,
+		  click: function() {
+		    $(this).remove();
+		  }
+	    }
+	  ]
 	});
-	
+
+	$('#revert-fork-button', forkDiv).click(function() {
+	  $.getJSON('/forker/fork', {
+		id: id,
+		avatar: avatarName,
+		tag: tag
+	  }, function(data) {
+		if (data.forked) {
+		  // important not to do window.open(url) directly from here
+		  // as it will open in a new window and not a new tab ***
+		  forkSucceededDialog(data);
+		} else {
+		  forkFailedDialog(data);
+		}
+	  });
+	  forkDialog.remove();
+	});
+
+	var forkSucceededDialog = function(fork) {
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1.5em;'>" +
+	        "your forked dojo's id is" +
+			"<div class='align-center'>" +
+              "<span class='kata-id-input'>" +
+			  "&nbsp;" +
+			  fork.id.substring(0,6) +
+			  "&nbsp;" +
+			  "</span>" +
+			"</div>" +
+		  "</div>" +
+		"</div>";
+	  var succeeded = $('<div>').html(html).dialog({
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			// *** whereas here it will open in a new tab
+			var url = '/dojo/index/' + fork.id;
+			window.open(url);
+			$(this).remove();
+		  }
+		}
+	  });
+	  succeeded.dialog('open');
+	};
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var trafficLight = $('#traffic_light', forkDiv);
+	var forkFailedDialog = function(data) {
+	  var diagnostic = " an unknown failure occurred";
+	  if (data.reason === 'id') {
+		diagnostic = "the practice session no longer exists";
+	  } else if (data.reason === 'language') {
+		diagnostic = "the language " + data['language'] + " no longer exists";
+	  } else if (data.reason === 'avatar') {
+		diagnostic = "there is no " + avatarName +
+		             " in the practice session";
+	  } else  if (data.reason === 'tag') {
+		diagnostic = avatarName +
+		            " doesn't have traffic-light[" + tag + "]" +
+		            " in the practice session";
+	  }
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1em;'>" +
+	        "On the originating server " + diagnostic + "."
+		  "</div>" +
+		"</div>";
+	  var failed = $('<div>').html(html).dialog({
+		title: cd.dialogTitle('could not fork'),
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			$(this).remove();
+		  }
+		}
+	  });
+	  failed.dialog('open');
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var trafficLight = $('#traffic-light', forkDiv);
 
 	var makeTrafficLight = function(trafficLight) {
       var filename = 'traffic_light_' + trafficLight.colour;
@@ -108,11 +191,11 @@ var cyberDojo = (function(cd, $) {
 		     "width='15'" +
 		     "height='46'/>";
 	};
-	
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
-	var trafficLightNumber = $('#fork_tag_number', forkDiv);
-		
+
+	var trafficLightNumber = $('#revert-fork-tag-number', forkDiv);
+
 	var tagEdit = function(event) {
 	  if (event.keyCode === $.ui.keyCode.ENTER) {
 		var newTag = parseInt(trafficLightNumber.val(), 10);
@@ -120,15 +203,15 @@ var cyberDojo = (function(cd, $) {
 		  trafficLightNumber.val(tag);
 		} else {
 		  tag = newTag;
-		  refresh();		
+		  refresh();
 		}
-	  }        
+	  }
 	};
-		
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-		  	
-	var forkFilenames = $('#fork_filenames', forkDiv);
-		  
+
+	var forkFilenames = $('#revert-fork-filenames', forkDiv);
+
     var makeForkFilenames = function(visibleFiles) {
       var div = $('<div>');
 	  var filenames = [ ];
@@ -148,12 +231,12 @@ var cyberDojo = (function(cd, $) {
       return div.html();
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-  
-    var forkContent = $('#fork_content', forkDiv);
-	
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var forkContent = $('#revert-fork-content', forkDiv);
+
 	var currentFilename = undefined;
-		
+
 	var showCurrentFile = function() {
 	  var i, filename, filenames = [ ];
 	  var files = $('.filename', forkDiv);
@@ -165,12 +248,12 @@ var cyberDojo = (function(cd, $) {
 		  filenames.push(filename);
 		}
 	  }
-	  if (i === files.length) {	  
+	  if (i === files.length) {
 	    i = cd.nonBoringFilenameIndex(filenames);
 	  }
-      files[i].click();		
+      files[i].click();
 	};
-	
+
 	var showContentOnFilenameClick = function(visibleFiles) {
 	  var previous = undefined;
 	  $('.filename', forkDiv).each(function() {
@@ -183,19 +266,19 @@ var cyberDojo = (function(cd, $) {
 		  }
 		  $(this).addClass('selected');
 		  currentFilename = filename;
-		  previous = $(this);                            
+		  previous = $(this);
 		});
 	  });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
+
 	var firstButton = $('#first_button', forkDiv);
 	var prevButton  = $('#prev_button',  forkDiv);
 	var nextButton  = $('#next_button',  forkDiv);
 	var lastButton  = $('#last_button',  forkDiv);
-	  
-    var resetNavigateButtonHandlers = function() {	  
+
+    var resetNavigateButtonHandlers = function() {
 	  var resetHandler = function(button, onOff, newTag) {
 		button
 		  .attr('disabled', onOff)
@@ -206,21 +289,21 @@ var cyberDojo = (function(cd, $) {
 			  refresh();
 			}
 		  }
-		);			  		
-	  };	  
+		);
+	  };
 	  var atMin = (tag === minTag);
 	  var atMax = (tag === maxTag);
-	  
+
 	  resetHandler(firstButton, atMin, minTag);
 	  resetHandler(prevButton,  atMin, tag-1);
 	  resetHandler(nextButton,  atMax, tag+1);
 	  resetHandler(lastButton,  atMax, maxTag);
-	  
-	  trafficLightNumber.unbind().keyup(function(event) { tagEdit(event); });  	  
+
+	  trafficLightNumber.unbind().keyup(function(event) { tagEdit(event); });
 	};
-	
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -	
-	
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
 	var refresh = function() {
 	  $.getJSON('/reverter/revert',
 		{
@@ -234,19 +317,18 @@ var cyberDojo = (function(cd, $) {
 		  trafficLightNumber.val(data.inc.number);
 		  forkFilenames.html(makeForkFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
-          showCurrentFile();		  
+          showCurrentFile();
 		}
 	  );
 	};
-	  
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	
+
 	forkDialog.dialog('open');
 	refresh();
-	
-  }; // cd.dialog_fork = function(title, id, avatarName, tag, maxTag) {
+
+  }; // cd.dialog_fork = function(title, close, id, avatarName, tag, maxTag) {
 
 
   return cd;
 })(cyberDojo || {}, $);
-
