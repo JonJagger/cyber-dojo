@@ -94,7 +94,15 @@ $text-color: darken($lighter-color, 10%);
   }
 }
 
-
+.kata-id-input {
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    background: lighten($green, 20%);
+    color: $darker-color;
+    text-align: center;
+    width: 270px;
+    margin-left: 0px;
+    //@include gradient-lighten($amber, 20%, 10%, 5%);
+}
 
 a:link, a:visited
 {

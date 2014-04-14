@@ -120,7 +120,7 @@ var cyberDojo = (function(cd, $) {
 		  "<div class='panel' style='font-size:1.5em;'>" +
 	        "your forked dojo's id is" +
 			"<div class='align-center'>" +
-              "<span class='kata_id_input'>" +
+              "<span class='kata-id-input'>" +
 			  "&nbsp;" +
 			  fork.id.substring(0,6) +
 			  "&nbsp;" +
