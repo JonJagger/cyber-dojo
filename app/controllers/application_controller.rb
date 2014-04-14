@@ -8,7 +8,7 @@ require __DIR__ + '/lib/Git'
 require __DIR__ + '/lib/OsDisk'
 
 class ApplicationController < ActionController::Base
-  before_filter :set_locale
+  before_filter :set_locale, :set_header_expires
 
   protect_from_forgery
 
@@ -42,6 +42,10 @@ class ApplicationController < ActionController::Base
     end
     original_locale = I18n.locale
     I18n.locale = params[:locale] || session[:locale] || I18n.default_locale
+  end
+
+  def set_header_expires
+    response.headers['Expires"'] = 1.year.from_now.httpdate
   end
 
   def root_path
