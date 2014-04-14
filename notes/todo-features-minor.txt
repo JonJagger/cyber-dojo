@@ -1,5 +1,11 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DEFAULT-PARAMETERS
+  Lose them. They just create dependencies.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LANGUAGE-CHECKER
+  Split off red/amber/green testing into separate tester class.
+  Make dedicated language_manifest_checker.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.

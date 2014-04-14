@@ -7,7 +7,7 @@ DIFF-REVERT-FORK-DIALOG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   Put line-numbers in?
-  Better selection of nonBoringFilenameIndex()
+  Better selection of nonBoringFilenameIndex() ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   Make line-numbes are toggleable on/off?
