@@ -45,12 +45,12 @@ en:
       exercise: "exercise"
       
     buttons:
-      setup: "setup"
+      setup: "create"
       ok: "ok"
       close: "close"
       cancel: "cancel"
-      start: "start"
-      resume: "resume"
+      start: "enter"
+      resume: "re-enter"
       review: "review"
       about: "about"
       basics: "basics"

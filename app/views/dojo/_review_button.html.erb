@@ -3,8 +3,8 @@
 
 $(document).ready(function() {
 
-  $('#review_button').click(function() {
-    var id = $('#kata_id_input').val();
+  $('#review-button').click(function() {
+    var id = $('#kata-id-input').val();
     var url = '/dashboard/show/' + id;
     window.open(url)
   });
@@ -16,7 +16,7 @@ $(document).ready(function() {
 <button type="button"
         class="tipped"
         data-ok="<%= t('views.buttons.ok') %>"
-        id="review_button">
+        id="review-button">
   <%= t("views.buttons.review") %>
   <div class="tooltip">
      reviews all the animals' code

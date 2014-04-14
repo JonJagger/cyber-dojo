@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  var kata_id_input = $('#kata_id_input');
+  var kataIdInput = $('#kata-id-input');
 
   var enableIf = function(button, condition) {
     if (condition) {
@@ -14,15 +14,15 @@ $(document).ready(function() {
   };
 
   cd.enableDisableStartResumeReview = function() {
-    var id = kata_id_input.val();
+    var id = kataIdInput.val();
     $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
-      enableIf($('#start_button'), dojo.exists);
-      enableIf($('#resume_button'), dojo.started > 0);
-      enableIf($('#review_button'), dojo.started > 0);
+      enableIf($('#start-button'), dojo.exists);
+      enableIf($('#resume-button'), dojo.started > 0);
+      enableIf($('#review-button'), dojo.started > 0);
     });
   };
 
-  kata_id_input.keyup(function() {
+  kataIdInput.keyup(function() {
     cd.enableDisableStartResumeReview();
   });
 
@@ -31,9 +31,9 @@ $(document).ready(function() {
 
 //--></script>
 
-<input class="tipped kata_id_input"
+<input class="tipped"
        type="text"
-       id="kata_id_input"
+       id="kata-id-input"
        size="8"
        value="<%= @id[0..5] %>">
   <div class="tooltip">

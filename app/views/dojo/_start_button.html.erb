@@ -3,8 +3,8 @@
 
 $(document).ready(function() {
 
-  $('#start_button').click(function() {
-    var id = $('#kata_id_input').val();
+  $('#start-button').click(function() {
+    var id = $('#kata-id-input').val();
     var ok = "<%= t('views.buttons.ok') %>";
     var title = "<%= t('views.buttons.start') %>";
     $.getJSON('/dojo/start_json' , { id: id }, function(dojo) {
@@ -22,6 +22,6 @@ $(document).ready(function() {
 //--></script>
 
 <button type="button"
-        id="start_button">
+        id="start-button">
   <%= t("views.buttons.start") %>
 </button>
