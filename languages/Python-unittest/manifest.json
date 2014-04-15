@@ -9,6 +9,6 @@
   "display_name": "Python",
   "display_test_name": "unittest",
   "unit_test_framework": "python_unittest",
-
+  "image_name": "cyberdojo/python-3.3.5_unittest",
   "tab_size": 4
 }
