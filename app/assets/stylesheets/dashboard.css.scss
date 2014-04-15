@@ -3,6 +3,9 @@ $ellipsis: "\2026";
 
 #dashboard-page {
 
+  margin-top: 2em;
+  margin-left: 1em;
+
   #help-button {
     @include font-size-tiny();
     @include rounded-corner(14px);
