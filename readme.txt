@@ -2,14 +2,14 @@
 ------------------------------------------------------------------------
 CONTENTS
 ------------------------------------------------------------------------
-o) setting up a coding practice
-o) starting coding
+o) creating your coding dojo
+o) enter your coding dojo
 o) traffic lights
-o) dashboard review
+o) reviewing your coding dojo
       auto refresh?
       |60s| columns?
 o) reviewing the diffs
-o) resuming coding
+o) re-entering your coding dojo
 ------------------------------------------------------------------------
 o) adding a new exercise
 o) adding a new language
@@ -35,11 +35,11 @@ o) thank you
 
 
 
-============================
-setting up a coding practice
-============================
+=========================
+creating your coding dojo
+=========================
 o) from the home page...
-o) click the [setup] button
+o) click the [create] button
 o) click your chosen language|unit-test-framework (eg C++|assert)
 o) click your chosen exercise (eg Prime Factors)
 o) click the [ok] button
@@ -47,12 +47,12 @@ o) you'll get a case-insensitive 6-character hex-id. The full id is ten
    characters long (in the URL) but 6 is enough for uniqueness.
 
 
-===============
-starting coding
-===============
+======================
+enter your coding dojo
+======================
 o) on <em>each</em> participating computer...
 o) enter the 6-character id into the green input box
-o) click the [start] button
+o) click the [enter] button
 o) the server will tell you which animal you are (eg Panda).
 o) click [ok]
 o) a new [test] page/tab will open in your browser
@@ -85,9 +85,9 @@ that traffic-light for that animal together with << < > >> buttons to
 navigate forwards and backwards.
 
 
-================
-dashboard review
-================
+==========================
+reviewing your coding dojo
+==========================
 You can get to the dashboard page in two ways.
 o) from the home page, enter the practice id and click the [review] button.
 o) from the test page, click the animal image at the top right
@@ -165,12 +165,14 @@ Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
-===============
-resuming coding
-===============
-You can resume at any animals' most recent traffic-light by pressing
-the resume button (from the home page, very small, bottom left) and
-then clicking the animal.
+============================
+re-entering your coding dojo
+============================
+You can re-enter at any animals' most recent traffic-light by pressing
+the re-enter button (from the home page) and then clicking the animal.
+This is occasionally useful if one computer has to replace another (eg
+if your doing an evening dojo and someone has to leave early).
+
 
 
 =====================
@@ -309,7 +311,7 @@ o) it will only offer languages/ whose manifest.json file
        "image_name": "cyberdojo/java-1.8"
      }
    then Java-JUnit will only be offered as a language on the
-   initial setup page if "cyberdojo/java-1.8" exists
+   initial setup page if the docker image "cyberdojo/java-1.8" exists
    on the host server (as determined by running `docker images`)
 o) it will use the docker "image_name" container to execute an animals
    cyber-dojo.sh file each time the animal presses the [test] button.
