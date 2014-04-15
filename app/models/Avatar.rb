@@ -31,7 +31,7 @@ class Avatar
     end
   end
 
-  def test(max_duration = 15)
+  def test(max_duration)
     output = paas.runner_run(sandbox, './cyber-dojo.sh', max_duration)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
@@ -40,7 +40,7 @@ class Avatar
     paas.write(self, visible_files_filename, visible_files)
   end
 
-  def save_traffic_light(traffic_light, now = make_time(Time.now))
+  def save_traffic_light(traffic_light, now)
     lights = traffic_lights
     lights << traffic_light
     traffic_light['number'] = lights.length
@@ -80,10 +80,6 @@ private
 
   def paas
     kata.dojo.paas
-  end
-
-  def make_time(now)
-    [now.year, now.month, now.day, now.hour, now.min, now.sec]
   end
 
   def parse(filename, tag)

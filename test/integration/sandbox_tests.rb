@@ -33,7 +33,8 @@ class SandboxTests < ActionController::TestCase
     }
 
     avatar.save(delta, visible_files)
-    output = avatar.test()
+    max_duration = 15
+    output = avatar.test(max_duration)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.commit(traffic_lights.length)
@@ -54,7 +55,7 @@ class SandboxTests < ActionController::TestCase
     }
 
     avatar.save(delta, visible_files)
-    output = avatar.test()
+    output = avatar.test(max_duration)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.commit(traffic_lights.length)
@@ -75,7 +76,7 @@ class SandboxTests < ActionController::TestCase
     }
 
     avatar.save(delta, visible_files)
-    output = avatar.test()
+    output = avatar.test(max_duration)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
     avatar.commit(traffic_lights.length)

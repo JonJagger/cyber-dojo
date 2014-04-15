@@ -17,6 +17,12 @@ class LinuxPaasAvatarTests < ActionController::TestCase
     @exercise = @dojo.exercises['Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
     @kata = @dojo.make_kata(@language, @exercise)
+    @max_duration = 15
+  end
+
+  def now
+    tn = Time.now
+    [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
   end
 
   test "format" do
@@ -53,7 +59,7 @@ class LinuxPaasAvatarTests < ActionController::TestCase
 
   test "avatar.test() initial output" do
     avatar = @kata.start_avatar
-    output = avatar.test()
+    output = avatar.test(@max_duration)
     assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
   end
 
@@ -79,14 +85,14 @@ class LinuxPaasAvatarTests < ActionController::TestCase
     }
     visible_files.delete('output')
     avatar.save(delta, visible_files)
-    output = avatar.test()
+    output = avatar.test(@max_duration)
     assert output.include?('OK (1 test)')
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
     traffic_light = { 'colour' => 'green' }
-    traffic_lights = avatar.save_traffic_light(traffic_light)
+    traffic_lights = avatar.save_traffic_light(traffic_light, now)
 
     assert_equal traffic_lights, avatar.traffic_lights
     assert_not_nil traffic_lights
@@ -117,14 +123,14 @@ class LinuxPaasAvatarTests < ActionController::TestCase
     }
     visible_files.delete('output')
     avatar.save(delta, visible_files)
-    output = avatar.test()
+    output = avatar.test(@max_duration)
     assert output.include?('UntitledTest.java:9: cannot find symbol')
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
     traffic_light = { 'colour' => 'amber' }
-    traffic_lights = avatar.save_traffic_light(traffic_light)
+    traffic_lights = avatar.save_traffic_light(traffic_light, now)
     assert_equal traffic_lights, avatar.traffic_lights
     assert_not_nil traffic_lights
     assert_equal 1, traffic_lights.length
@@ -149,14 +155,14 @@ class LinuxPaasAvatarTests < ActionController::TestCase
     }
     visible_files.delete('output')
     avatar.save(delta, visible_files)
-    output = avatar.test()
+    output = avatar.test(@max_duration)
     assert output.include?('java.lang.AssertionError: expected:<54> but was:<42>')
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
     avatar.save_visible_files(visible_files)
     traffic_light = { 'colour' => 'red' }
-    traffic_lights = avatar.save_traffic_light(traffic_light)
+    traffic_lights = avatar.save_traffic_light(traffic_light, now)
     assert_equal traffic_lights, avatar.traffic_lights
     assert_not_nil traffic_lights
     assert_equal 1, traffic_lights.length
