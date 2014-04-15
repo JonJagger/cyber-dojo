@@ -62,7 +62,7 @@ $text-color: darken($lighter-color, 10%);
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
-    width: 234px;
+    width: 254px;
     margin-bottom: 2px;
   }
   #create-button, #enter-button, #reenter-button,  #review-button {
@@ -70,7 +70,7 @@ $text-color: darken($lighter-color, 10%);
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
-    width: 240px;
+    width: 260px;
     margin-left: 10px;
     //@include gradient-lighten($amber, 20%, 10%, 5%);
   }

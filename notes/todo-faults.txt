@@ -3,16 +3,21 @@
 REFACTORING-DOJOS
   Yahtzee
     C#     8BD04E035C elephant 1  FAILS ON cyber-dojo.org
+                                  manifest :language=>"C#"  patched to "C#-NUnit"
+    Java   9D5B580C30 deer 1      OK
+    C++    76DD58DE08 frog 1      FAILS on cyber-dojo.org
+                                  manifest :language='C++' patched to 'C++-assert'
     Python 5C5B71C765 hippo 37    FAILS ON cyber-dojo.org
-    Java   9D5B580C30 deer 1
-    C++    76DD58DE08 frog 1   this has a manifest :language='C++'
-                               which is now :language='C++-assert'
+                                  not installed yet
   Tennis
     C#     672E047F5D buffalo 8   FAILS ON cyber-dojo.org
-    Python 435E5C1C88 moose 5     FAILS ON cyber-dojo.org
+                                  manifest :language=>"C#"  patched to "C#-NUnit"
     Ruby   3367E4B0E9 raccoon 4   FAILS ON cyber-dojo.org
-    Java   B22DCD17C3 buffalo 11
-    C++    A06DCDA217 wolf 5
+                                  manifest :language=>"Ruby" patched to "Ruby-TestUnit"
+    Java   B22DCD17C3 buffalo 11  OK
+    C++    A06DCDA217 wolf 5      OK
+    Python 435E5C1C88 moose 5     FAILS ON cyber-dojo.org
+                                  not installed yet
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   test-failing...
