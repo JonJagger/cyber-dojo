@@ -1,3 +1,3 @@
-# run from admin_scripts dir
+# run from cyberdojo dir
 
-`tar xf ../refactoring_dojo.tgz -C ..`
+`tar xf refactoring_dojos.tgz -C .`
