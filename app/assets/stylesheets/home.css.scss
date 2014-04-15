@@ -10,7 +10,7 @@ $text-color: darken($lighter-color, 10%);
 
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    font-size: 7em;
+    font-size: 7.5em;
     color: $text-color;
     margin-bottom: 0em;
     padding-bottom: 0em;
@@ -49,7 +49,7 @@ $text-color: darken($lighter-color, 10%);
   }
 
   #create-button-info, #enter-id-info, #enter-info, #reenter-info, #review-info {
-    font-size: 0.80em;
+    font-size: 0.90em;
     width: 340px;
   }
   #enter-id-info {
@@ -76,6 +76,13 @@ $text-color: darken($lighter-color, 10%);
   }
   #create-button {
     margin-bottom: 30px;
+  }
+  #review-button {
+    margin-bottom: 30px;
+  }
+  #reenter-button {
+    Xbackground: darken($lighter-color, 25%);
+    background: LightGray;
   }
   #raspberry-pi-logo {
     padding-bottom: 10px;

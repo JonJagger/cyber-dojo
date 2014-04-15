@@ -15,12 +15,12 @@ $(document).ready(function() {
 
   cd.enableDisableStartResumeReview = function() {
     var id = kataIdInput.val();
-    enableIf($('#start-button'), false);
-    enableIf($('#resume-button'), false);
+    enableIf($('#enter-button'), false);
+    enableIf($('#reenter-button'), false);
     enableIf($('#review-button'), false);
     $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
-      enableIf($('#start-button'), dojo.exists);
-      enableIf($('#resume-button'), dojo.started > 0);
+      enableIf($('#enter-button'), dojo.exists);
+      enableIf($('#reenter-button'), dojo.started > 0);
       enableIf($('#review-button'), dojo.started > 0);
     });
   };

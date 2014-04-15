@@ -1,8 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
-  Split off red/amber/green testing into separate tester class.
   Make dedicated language_manifest_checker.
+  Split off red/amber/green testing into separate tester class.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
@@ -22,7 +22,7 @@ CUSTOM-DOMAIN-NAMES
   Nice idea.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REPEAT
-  next to the [setup] button have a [repeat] button
+  next to the [create] button have a [repeat] button
   which automatically sets up a new dojo with the same
-  language and exercise as last time.
+  language and exercise as last time? Too clever?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
