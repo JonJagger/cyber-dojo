@@ -8,10 +8,6 @@ $text-color: darken($lighter-color, 10%);
   margin-left: 4em;
   margin-right: 4em;
 
-  #home-page-logo {
-    text-align: center;
-    margin: 0 auto 48px auto;
-  }
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     font-size: 7em;
@@ -20,6 +16,10 @@ $text-color: darken($lighter-color, 10%);
     padding-bottom: 0em;
     position: relative;
     top: -20px;
+  }
+  #home-page-logo {
+    text-align: center;
+    padding-bottom: 10px;
   }
   #a_place_to_practice {
     font-size: 1.3em;
@@ -36,7 +36,7 @@ $text-color: darken($lighter-color, 10%);
     padding: 1em;
     background-color: lighten($darker-color, 20%);
     border: dotted 1px LightGray;
-    width: 130px;
+    width: 135px;
     position: relative;
     top: 20px;
   }
@@ -45,6 +45,15 @@ $text-color: darken($lighter-color, 10%);
     margin: 0 auto 12px auto;
     border: solid 1px Gray;
     width: 120px;
+    font-size: 1em;
+  }
+
+  #create-button-info, #enter-id-info, #enter-info, #reenter-info, #review-info {
+    font-size: 0.80em;
+    width: 340px;
+  }
+  #enter-id-info {
+    color: lighten($green, 30%);
   }
   #kata-id-input {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -53,26 +62,23 @@ $text-color: darken($lighter-color, 10%);
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
-    width: 264px;
+    width: 234px;
     margin-bottom: 2px;
   }
-  #enter_id_info {
-    color: lighten($green, 30%);
-  }
-  #setup-button, #start-button, #resume-button,  #review-button {
+  #create-button, #enter-button, #reenter-button,  #review-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
-    width: 270px;
-    margin-left: 20px;
+    width: 240px;
+    margin-left: 10px;
     //@include gradient-lighten($amber, 20%, 10%, 5%);
   }
-  #setup-button {
+  #create-button {
     margin-bottom: 30px;
   }
   #raspberry-pi-logo {
-    padding-bottom: 30px;
+    padding-bottom: 10px;
   }
   #please_donate {
     color: darken($darker-color, 10%);
@@ -83,6 +89,9 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-tiny();
     padding-top: 10px;
     padding-bottom: 10px;
+  }
+  #donate-form {
+    height: 40px;
   }
   #donate-button {
     padding-top: 20px;

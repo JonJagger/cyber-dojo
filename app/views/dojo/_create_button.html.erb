@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  $('#setup-button').click(function() {
+  $('#create-button').click(function() {
     var id = $('#kata-id-input').val();
     var url = '/setup/show/' + id;
     window.location = url;
@@ -14,6 +14,6 @@ $(document).ready(function() {
 //--></script>
 
 <button type="button"
-        id="setup-button">
-  <%= t("views.buttons.setup") %>
+        id="create-button">
+  <%= t("views.buttons.create") %>
 </button>

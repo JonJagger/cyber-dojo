@@ -2,11 +2,7 @@
 <table class="align-right">
   <tr>
     <td colspan="2">
-      <table>
-        <tr>
-          <td><span id="cyber-dojo">cyber&#8209;dojo</span></td>
-        </tr>
-      </table>
+      <div id="cyber-dojo">cyber&#8209;dojo</span></div>
       <div id="custom_message">
         <%= render :partial => 'custom_message' %>
       </div>
@@ -21,23 +17,26 @@
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
-      <div id="setup_info">
-        select your language + exercise<br/>
-        (on <em>one</em> computer)
+      <div id="create-button-info">
+        First <i><u>create</u></i> your programming dojo.<br/>
+        You choose the language and exercise.<br/>
+        Do this on <em>one</em> computer.
       </div>
     </td>
     <td>
-      <%= render :partial => 'setup_button' %>
+      <%= render :partial => 'create_button' %>
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
-      <div id="enter_id_info">
-        enter your dojo's-id<br/>
-        (on <em>each</em> computer)
+      <div id="enter-id-info">
+        Each dojo has an id
+        (eg <span style="font-size:1.2em;">3AF65A</span>).<br/>
+        Type in your dojo's id here.<br/>
+        Do this on <em>each</em> computer.
       </div>
     </td>
     <td>
@@ -45,24 +44,39 @@
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
+      <div id="enter-info">
+        As each computer <i><u>enters</u></i> your dojo it is<br/>
+        randomly assigned animal (eg lion, wolf)
+      </div>
     </td>
     <td>
-      <%= render :partial => 'start_button' %>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-    </td>
-    <td>
-      <%= render :partial => 'resume_button' %>
+      <%= render :partial => 'enter_button' %>
     </td>
   </tr>
 
-  <tr>
+<% if false %>
+  <tr valign="top">
     <td>
+      <div id="reenter-info">
+        A computer can <i><u>reenter</u></i> the dojo as a<br/>
+        specific animal.
+
+      </div>
+    </td>
+    <td>
+      <%= render :partial => 'reenter_button' %>
+    </td>
+  </tr>
+<% end %>
+
+  <tr valign="top">
+    <td>
+      <div id="review-info">
+        When time is up do a <i><u>review</u></i>. Click any<br/>
+        animals traffic-light to see its diffs.
+      </div>
     </td>
     <td>
       <%= render :partial => 'review_button' %>
