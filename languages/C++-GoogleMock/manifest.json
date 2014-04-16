@@ -16,6 +16,6 @@
 
   "display_name": "C++",
   "display_test_name": "GoogleMock",
-  "unit_test_framework": "google_test",
+  "unit_test_framework": "google_test"
 }
 
