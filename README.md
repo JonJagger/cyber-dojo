@@ -17,18 +17,18 @@ entering your programming dojo
   * on *each* participating computer...
   * enter the dojo's 6-character id into the green input box
   * click the `[enter]` button
-  * the server will tell you which animal you are (eg Panda).
-  * click `[ok]`
+  * a dialog will appear telling you which animal you are (eg Panda).
+  * click `[ok]` to dismiss the dialaog
   * a new test page/tab will open in your browser
-  * edit the test files and the code files...
-  * press the `[test]` button to see if the tests pass or not...
-  * every time the [test] button is pressed a new traffic-light appears
+  * edit the test files...
+  * edit the code files...
+  * every time you press the [test] button a new traffic-light appears
   * traffic-lights progress along the top, left-to-right, oldest-to-newest.
   * clicking on any traffic-light opens a dialog showing the diffs for
    that traffic-light plus << < > >> buttons to navigate forwards and backwards.
 
 You can also re-enter at any animals' most recent traffic-light by pressing
-the re-enter button (from the home page) and then clicking the animal.
+the `[re-enter]` button (from the home page) and then clicking the animal.
 This is occasionally useful if one computer has to replace another (eg
 if your doing an evening dojo and someone has to leave early).
 
@@ -36,7 +36,7 @@ if your doing an evening dojo and someone has to leave early).
 
 ### traffic lights
 
-The result of pressing the [test] button is displayed in the 'output' file
+The result of pressing the `[test]` button is displayed in the `output` file
 and also as a new traffic-light (at the top).
 Each traffic-light is coloured as follows:
   * red   - tests ran but at least one failed
@@ -57,7 +57,7 @@ navigate forwards and backwards.
 reviewing your programming dojo
 -------------------------------
 You can get to the dashboard page in two ways.
-  * from the home page, enter the dojo's id and click the [review] button.
+  * from the home page, enter the dojo's id and click the `[review]` button.
   * from the test page, click the animal image at the top right
 
 Each horizontal row corresponds to one animal and displays, from left to right,
@@ -79,7 +79,7 @@ horizontal space. These traffic-lights auto scroll:
   * the animal image is always visible to the right.
 
 The idea is to leave auto-refresh on *during* the dojo
-and to turn it *off* before starting a dashboard review.
+and to turn it *off* just before starting a dashboard review.
 
 
 ### |60s| columns?
@@ -87,7 +87,7 @@ and to turn it *off* before starting a dashboard review.
 When this is checked each vertical column corresponds to 60 seconds.
 Every 6 auto-refreshes a new rightmost column will appear
 containing all the traffic-lights created by all the animals in those 60
-seconds. If no animals press the [test] button during those 60 seconds the
+seconds. If no animals press the `[test]` button during those 60 seconds the
 column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
 When not checked the traffic-lights of different animals are not
@@ -141,8 +141,8 @@ docker on the cyber-dojo server
 ===============================
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
-  * it will only offer languages/ whose manifest.json file
-    has an "image_name" entry that exists. For example, if
+  * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
+    has an `image_name` entry that exists. For example, if
     ```
     languages/Java-JUnit/manifest.json
     ```
@@ -154,16 +154,16 @@ is installed. If it is then...
     }
     ```
     then Java-JUnit will only be offered as a language on the
-    initial setup page if the docker image "cyberdojo/java-1.8" exists
-    on the host server, as determined by running
+    initial setup page if the docker image `cyberdojo/java-1.8` exists
+    on the server, as determined by running
     ```bash
     $ docker images
     ```
-  * it will use the docker "image_name" container to execute an animals
-    cyber-dojo.sh file each time the animal presses the [test] button.
-  * however, if the environment variable CYBERDOJO_USE_HOST
-    is set (to anything) then cyber-dojo will use the raw host server
-    even if docker is installed.
+  * it will use the docker `image_name` container to execute an animals
+    `cyber-dojo.sh` file each time the animal presses the `[test]` button.
+  * however, if the environment variable `CYBERDOJO_USE_HOST`
+    is set (to anything) then cyber-dojo will attempt to use the raw
+    host server even if docker is installed.
 
 
 running your own docker'd cyber-dojo server
@@ -252,7 +252,7 @@ $ chgrp www-data *
     languages' `manifest.json` file.
 
 
-### add a parse function to
+### write a parse function
 
   * the `unit_test_framework` entry in the languages' `manifest.json`
     file is the name of the function inside `OutputParser.rb` which is
@@ -268,15 +268,15 @@ $ chgrp www-data *
     [output_python_pytest_tests.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/output_python_pytest_tests.rb)
 
 
-### manifest.json parameters
+### language manifest.json parameters
 
-"image_name": string
+`"image_name": string`
 
   The name of docker image to execute `cyber-dojo.sh`.
   Optional. Not required if you're using a raw-server instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
-"visible_filenames": [ string* ]
+`"visible_filenames": [ string* ]`
 
   Filenames that will be visible in the browser's editor at startup.
   Each of these files must exist in the directory.
