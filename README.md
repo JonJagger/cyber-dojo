@@ -155,7 +155,7 @@ and not
   cyberdojo/test/cyberdojo/languages
 Each manifest.json file contains an ruby object in JSON format
 Example: the one for Java-JUnit looks like this:
-<quote>
+```
 {
   "visible_filenames": [
     "Untitled.java",
@@ -171,12 +171,13 @@ Example: the one for Java-JUnit looks like this:
   "image_name": "cyberdojo/java-1.8"
   "tab_size": 4
 }
-</quote>
+```
 Make sure all the filenames are in the new folder, including cyber-dojo.sh
-  $ chmod +x cyber-dojo.sh
-  $ chown www-data *
-  $ chgrp www-data *
-
+```
+$ chmod +x cyber-dojo.sh
+$ chown www-data *
+$ chgrp www-data *
+```
 
 
 manifest.json parameters
@@ -217,7 +218,9 @@ manifest.json parameters
   You can also name "instructions" (from exercises/)
   You can also name "output" (always present)
   For example
+```
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
+```
   Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
   in app/assets/stylesheets/kata-dojo.css.scss
