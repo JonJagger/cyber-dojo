@@ -173,13 +173,13 @@ Install cyber-dojo and docker into it using
 [setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
 
 
-installing languages on a docker'd cyber-dojo server
-----------------------------------------------------
+pulling pre-built language containers onto a docker'd cyber-dojo server
+-----------------------------------------------------------------------
 ```bash
 $ docker search cyberdojo
 ```
 will tell you the names of the docker container images held in the
-[docker cyberdojo index](https://index.docker.io/u/cyberdojo/)
+[cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
 Now do a
 ```bash
 $ docker pull IMAGE_NAME
@@ -189,8 +189,11 @@ each languages/LANG/manifest.json file that you wish to use.
 
 
 
-adding a new language
----------------------
+adding a new language to a docker'd cyber-dojo server
+-----------------------------------------------------
+
+### create the language manifest
+
 Create a new sub-directory under cyberdojo/languages/
   For example:
   ```
@@ -226,6 +229,43 @@ $ chmod +x cyber-dojo.sh
 $ chown www-data *
 $ chgrp www-data *
 ```
+
+### build the docker image
+
+  * choose a docker-container to build on top of. For example
+    `cyberdojo/build-essential`
+    at the [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
+    which was built using this [dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/C-assert/Dockerfile_build_essential)
+
+  * write a dockerfile containing all the
+    required commands (eg `apt-get install`).
+    For example
+    [cyberdojo/languages/C#-NUnit/Dockerfile_csharp_nunit](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile_csharp_nunit)
+
+  * use the dockerfile to build your container. For example
+    ```bash
+    $ docker build -t cyberdojo/my_container .
+    ```
+    which creates a new container called `cyberdojo/my_container`
+    using `Dockerfile` in the current folder `.`
+    where `cyberdojo/my_container` is the `image_name` in your
+    languages' `manifest.json` file.
+
+
+### add a parse function to
+
+  * the `unit_test_framework` entry in the languages' `manifest.json`
+    file is the name of the function inside `OutputParser.rb` which is
+    used to determine if the result of running `cyber-dojo.sh` in your container
+    on the current files parses as a red traffic-light, an amber traffic-light,
+    or a green traffic-light.
+    There are lots of examples in
+    [cyberdojo/app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+
+  * There are lots of example tests in
+    [cyberdojo/test/app_lib](https://github.com/JonJagger/cyberdojo/tree/master/test/app_lib)
+    eg
+    [output_python_pytest_tests.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/output_python_pytest_tests.rb)
 
 
 ### manifest.json parameters
@@ -271,7 +311,7 @@ $ chgrp www-data *
 ```
   Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
-  in app/assets/stylesheets/kata.css.scss
+  in `app/assets/stylesheets/kata.css.scss`
 ```css
     div[class~='filename'][class~='highlight']
     {
@@ -338,12 +378,12 @@ pull.sh performs the following tasks...
 
 adding a new exercise
 ---------------------
-  * Create a new sub-directory under cyberdojo/exercises/
+  * Create a new sub-directory under `cyberdojo/exercises/`
     Example:
     ```
     cyberdojo/exercises/FizzBuzz
     ```
-  * Create a text file called instructions in this directory.
+  * Create a text file called `instructions` in this directory.
     Example:
     ```
     cyberdojo/exercises/FizzBuzz/instructions
@@ -364,7 +404,7 @@ katas directory structure
 -------------------------
 The rails code does NOT use a database.
 Instead each practice session lives in a git-like directory structure based
-on its 10 character id. For example the session with id 82B583C347 lives at
+on its 10 character id. For example the session with id `82B583C347` lives at
 ```
   cyberdojo/katas/82/B583C347
 ```
@@ -384,7 +424,7 @@ Each started animal has its own git respository, eg
 ```
   cyberdojo/katas/82/B583C347/wolf/.git
 ```
-The starting files (as loaded from the wolf/manifests.rb file) form
+The starting files (as loaded from the `wolf/manifests.json` file) form
 tag 0 (zero). Each [test] event causes a new git commit and tag, with a
 message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses [test] causes
@@ -401,7 +441,7 @@ To look at filename's differences between tag 4 and tag 5
 ```
 $ git diff 4 5 sandbox/filename
 ```
-It's much easier and more informative to just click on dashboard traffic light.
+It's much easier and more informative to just click on a dashboard traffic light.
 
 
 
