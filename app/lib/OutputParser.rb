@@ -44,6 +44,10 @@ module OutputParser
     return :amber
   end
 
+  def self.parse_pytest(output)
+    return :amber
+  end
+
   def self.parse_catch(output)
     return :red   if /failed \(\d* assertion/.match(output)
     return :green if /All tests passed/.match(output)

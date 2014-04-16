@@ -1,0 +1,14 @@
+
+{
+  "visible_filenames": [
+    "untitled.py",
+    "test_untitled.py",
+    "cyber-dojo.sh"
+  ],
+
+  "display_name": "Python",
+  "display_test_name": "pytest",
+  "unit_test_framework": "python_pytest",
+  "image_name": "cyberdojo/python-3.3.5_pytest",
+  "tab_size": 4
+}
