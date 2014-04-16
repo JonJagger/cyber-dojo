@@ -33,7 +33,8 @@ class KataController < ApplicationController
     # convert old format katas to new format katas which means I will
     # need to miss out the step that does the actual test()
     @avatar.save(delta, visible_files)
-    @output = @avatar.test()
+    max_duration = 15
+    @output = @avatar.test(max_duration)
     @avatar.sandbox.write('output', @output) # so output appears in diff-view
     visible_files['output'] = @output
 

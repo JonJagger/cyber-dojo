@@ -22,10 +22,10 @@ en:
       a_place_to_practice: "the place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer enter the same id"
-      please_donate: "If you find cyber-dojo useful please make a donation.
-                      All donations are used solely to buy
-                      <a href='http://www.raspberrypi.org/'>raspberry pi'es</a>
-                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>for children</a>."
+      please_donate: "if you find cyber&#8209;dojo useful please donate.
+                      donations are used solely to buy
+                      <a href='http://www.raspberrypi.org/' target='_blank'>raspberry pi'es</a>
+                      <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html' target='_blank'>for kids</a>."
       your_animal_is: "your animal is the"
       revert: "revert"
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
@@ -45,22 +45,24 @@ en:
       exercise: "exercise"
       
     buttons:
-      setup: "create"
       ok: "ok"
       close: "close"
       cancel: "cancel"
-      start: "enter"
-      resume: "re-enter"
+      
+      create: "create"
+      enter: "enter"
+      reenter: "re-enter"
       review: "review"
+      
       about: "about"
-      basics: "basics"
-      donators: "donators"
       faqs: "faqs"
-      feedback: "feedback"
-      source: "source"
-      links: "links"
+      help: "help"
       tips: "tips"
       why: "why"
+      
+      donators: "donators"
+      feedback: "feedback"
+      
       test: "test"
       new_file: "new"
       rename_file: "rename"
@@ -72,14 +74,9 @@ en:
     feedback:
       id_really_appreciate_it_if_you_could: "I'd really appreciate it if you could"
       email_me: "email me"
-      what_did_you_like: "What did you like?"
-      what_did_you_dislike: "What did you dislike?"
-      what_worked: "What worked?"
-      what_didnt: "What didn't?"
-      what_should_i_add: "What should I add?"
-      what_should_i_remove: "What should I remove?"
-      please_tell_me_about_your_use_of_cyberdojo_and_ill_add_it_to_the: "Please tell me about your use of cyber-dojo and I'll add it to the"
-      blog_page: "blog page"
+      what_did_you_like_dislike: "What did you like? What did you dislike?"
+      what_worked_failed: "What worked? What failed?"
+      what_should_i_add_remove: "What should I add? What should I remove?"
       
     tips:
       think_about_improving_not_finishing: "Think about improving, not finishing"
@@ -93,16 +90,15 @@ en:
                      bright future. Thank for you contribution to our training
                      efforts. We are delighted to sponsor the cyber-dojo project
                      by contributing $1000."
-      thank_you: "thank you"
       
     faqs:
-      why_dont_you_add_syntax_highlighting: "Why don't you add syntax highlighting ?"
-      why_dont_you_add_auto_refactoring: "Why don't you add auto-refactoring ?"
-      why_dont_you_add_dot_dot_dot: "Why don't you add ... ?"
-      no_listen: "No. Listen. Stop trying to go faster, start trying to go <em>slower</em>."
-      dont_think_about_finishing: "Don't think about finishing, think about <em>improving</em>."
-      think_about_practising: "Think about <em>practising</em> as a <em>team</em>."
-      thats_what_cyberdojo_is_built_for: "That's what cyber-dojo is built for."
+      why_dont_you_add_syntax_highlighting: "why don't you add syntax highlighting ?"
+      why_dont_you_add_auto_refactoring: "why don't you add auto-refactoring ?"
+      why_dont_you_add_dot_dot_dot: "why don't you add ... ?"
+      no_listen: "no. listen. stop trying to go faster, start trying to go <em>slower</em>."
+      dont_think_about_finishing: "don't think about finishing, think about <em>improving</em>."
+      think_about_practising: "think about <em>practising</em> as a <em>team</em>."
+      thats_what_cyberdojo_is_built_for: "that's what cyber-dojo is built for."
       
     kata_help:
       opens_a_home_page: "opens a<br/>home<br/>page"

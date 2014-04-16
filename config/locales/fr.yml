@@ -47,22 +47,24 @@ fr:
       exercise: "exercice"
       
     buttons:
-      setup: "créer"
       ok: "ok"
       close: "proche"
-      cancel: "annuler"      
-      start: "commencer"
-      resume: "reproduire"
+      cancel: "annuler"
+      
+      create: "créer"
+      enter: "entrer"
+      reenter: "rentrer"
       review: "réviser"
+      
       about: "à propos"
       basics: "base"
-      donations: "donations"
+      donators: "donators"
       faqs: "faqs"
       feedback: "réactions"
       source: "source"
-      links: "liens"
       tips: "conseil"
       why: "pourquoi"
+      
       test: "tester"
       new_file: "neuf"
       rename_file: "renommer"
@@ -95,7 +97,6 @@ fr:
                      brillant avenir. Merci de votre contribution à nos efforts
                      de formation. Nous sommes ravis de parrainer le projet
                      cyber-dojo en contribuant de 1000 $."
-      thank_you: "merci"
       
     faqs:
       why_dont_you_add_syntax_highlighting: "Pourquoi n'avez-vous pas ajouter la coloration syntaxique?"

@@ -1,1 +1,1 @@
-python *test*.py
+python -m unittest *test*.py

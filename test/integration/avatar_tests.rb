@@ -74,7 +74,6 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
   test "diff_lines shows added file" do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar # tag 0

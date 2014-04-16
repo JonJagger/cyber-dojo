@@ -45,7 +45,7 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :new => [ ]
       }
       avatar.save(delta, visible_files)
-      output = avatar.test()
+      output = avatar.test(@max_duration)
       assert_equal 'stubbed-output', output
       assert !visible_files.keys.include?('output')
       saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
@@ -71,7 +71,7 @@ class LinuxPaasSandboxTests < LinuxPaasModelTestCase
         :new => [ ]
       }
       avatar.save(delta, visible_files)
-      output = avatar.test()
+      output = avatar.test(@max_duration)
       log = @paas.dir(sandbox).log
       saved_filenames = filenames_written_to_in(log)
       assert_equal delta[:changed].sort, saved_filenames.sort

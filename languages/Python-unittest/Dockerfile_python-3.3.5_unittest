@@ -1,0 +1,6 @@
+FROM cyberdojo/python-3.3.5
+MAINTAINER Jon Jagger <jon@jaggersoft.com>
+
+# docker build -t  cyberdojo/python-3.3.5_unittest  .
+# docker push      cyberdojo/python-3.3.5_unittest
+# docker run -i -t cyberdojo/python-3.3.5_unittest /bin/bash

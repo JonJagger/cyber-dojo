@@ -1,11 +1,41 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DEFAULT-PARAMETERS
-  Lose them. They just create dependencies.
+README.md
+  split into three
+  o) using cyber-dojo.org
+  o) cyber-dojo and docker
+  o) adding a new language
+  o) raw server (deprecated)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+OUTPUT-PARSER
+  in app/lib/
+  Refactor so patterns are matched for red and green
+  and default after those two is amber.
+  Use /regexp/ syntax.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+JAVA-LANGUAGE-MANIFEST
+  cyberdojo/java-1.8
+  should be
+  cyberdojo/java-1.8_junit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
+  in Language.rb patch the name method so it converts old-names
+  to new-names (and add comment on why)
+  eg Ruby   -->  Ruby-TestUnit
+  eg C++    -->  C++-assert
+  eg C#     -->  C#-NUnit
+  eg Python --> Python-unittest
+  find entries in /katas that do not match existing language
+  (use ruby script employing new paas->dojo->katas enumerator)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CSS
+  use cursor: not-allowed
+  for disabled buttons.
+  Do on jQuery dialog buttons too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
-  Split off red/amber/green testing into separate tester class.
   Make dedicated language_manifest_checker.
+  Split off red/amber/green testing into separate tester class.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
@@ -25,7 +55,7 @@ CUSTOM-DOMAIN-NAMES
   Nice idea.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 REPEAT
-  next to the [setup] button have a [repeat] button
+  next to the [create] button have a [repeat] button
   which automatically sets up a new dojo with the same
-  language and exercise as last time.
+  language and exercise as last time? Too clever?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

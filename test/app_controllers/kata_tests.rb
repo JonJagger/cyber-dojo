@@ -5,17 +5,17 @@ class KataControllerTest  < IntegrationTest
 
   test "edit and then run-tests" do
     id = checked_save_id
-    
+
     get 'dojo/start_json', {
       :id => id
     }
-    avatar_name = json['avatar_name']    
-    
+    avatar_name = json['avatar_name']
+
     post '/kata/edit', {
       :id => id,
       :avatar => avatar_name
     }
-       
+
     post 'kata/run_tests', { # 1
       :id => id,
       :avatar => avatar_name,
@@ -27,9 +27,9 @@ class KataControllerTest  < IntegrationTest
       },
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
-      }      
+      }
     }
-    
+
     post 'kata/run_tests', { # 2
       :id => id,
       :avatar => avatar_name,
@@ -41,18 +41,13 @@ class KataControllerTest  < IntegrationTest
       },
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
-      }      
+      }
     }
   end
-    
+
   test "help dialog" do
     get "/kata/help_dialog", { :avatar_name => 'lion' }
-    assert_response :success            
-  end
-  
-  test "fork dialog" do
-    get "/kata/fork_dialog"
-    assert_response :success            
+    assert_response :success
   end
   
 end

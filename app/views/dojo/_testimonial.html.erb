@@ -1,0 +1,30 @@
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  $('#send-me-feedback').click(function(event) {
+    var title = $(this).text();
+    var close = $(this).data('close');
+    $.get('/dojo/button_dialog/feedback', function(html) {
+      cd.dialog(html, title, close).dialog('open');
+    });
+    event.preventDefault();
+  });
+
+});
+
+//--></script>
+
+<div id="testimonial">
+  <div id="title">testimonial</div>
+  much learning has taken place
+  at the alumni of
+  <a href="http://codecraftsmansaturdays.blogspot.com/" target="_blank">code craftsman saturdays</a>
+  in large part thanks to cyber&#8209;dojo
+</div>
+
+<hr/>
+
+<a id="send-me-feedback"
+       href=""
+       data-close="<%= t('views.buttons.close') %>">send&#8209;me&#8209;feedback</a>

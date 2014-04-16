@@ -7,7 +7,7 @@ class DojoControllerTest  < IntegrationTest
     get 'dojo/index'
     assert_response :success
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test "valid_id exists=false if no kata for id" do
@@ -16,7 +16,7 @@ class DojoControllerTest  < IntegrationTest
       :format => :json,
       :id => id
     }
-    assert !json['exists']    
+    assert !json['exists']
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -30,7 +30,7 @@ class DojoControllerTest  < IntegrationTest
     }
     assert !json['exists']
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test "valid_id exists=true if id.length == 6 and kata exists" do
@@ -54,9 +54,9 @@ class DojoControllerTest  < IntegrationTest
     }
     assert json['exists']
   end
-  
+
   # - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "start_json with id that does not exist" do
     bad_id = 'ab00ab11ab'
     get 'dojo/start_json', {
@@ -67,7 +67,7 @@ class DojoControllerTest  < IntegrationTest
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
-  
+
   test "start_json with id that does exist" do
     id = checked_save_id
     get 'dojo/start_json', {
@@ -83,7 +83,7 @@ class DojoControllerTest  < IntegrationTest
 
   test "start-coding succeeds once for each avatar name, then dojo is full" do
     id = checked_save_id
-    Avatar.names.each do |avatar_name|      
+    Avatars.names.each do |avatar_name|
       get '/dojo/start_json', {
         :format => :json,
         :id => id
@@ -144,13 +144,13 @@ class DojoControllerTest  < IntegrationTest
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test "button dialogs" do
-    buttons = %w( about basics donations faqs feedback links source tips why )
+    buttons = %w( about basics donators faqs feedback tips why )
     buttons.each do |name|
       get 'dojo/button_dialog', {
         :id => name
       }
-      assert_response :success    
+      assert_response :success
     end
   end
-  
+
 end

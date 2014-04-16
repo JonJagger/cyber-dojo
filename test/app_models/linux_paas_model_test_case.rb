@@ -17,6 +17,7 @@ class LinuxPaasModelTestCase < ActionController::TestCase
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = format
     @dojo = @paas.create_dojo(root_path, @format)
+    @max_duration = 15
   end
 
   def teardown

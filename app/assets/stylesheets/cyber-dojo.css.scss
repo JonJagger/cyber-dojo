@@ -1,7 +1,7 @@
 
 table { border-spacing: 0; }
 
-#cyber_dojo_page {
+#cyber-dojo-page {
   margin: {
     top: 0.3em;
     left: 0.3em;
@@ -29,6 +29,10 @@ body {
   padding-bottom: 0.5em;
 }
 
+.panel-title {
+  margin-top: 10px;
+  @include font-size-small();
+}
 .panel {
   background: $darker-color;
   color: $lighter-color;
@@ -68,6 +72,7 @@ button {
   border: $filename_and_button_border_size solid $darker-color;
   @include rounded-corner(4px);
   display: inline-block;
+  @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
 }
 
 button[disabled] {

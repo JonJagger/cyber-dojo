@@ -1,4 +1,22 @@
 
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  $('#donators').click(function(event) {
+    var name = $(this).attr('id');
+    var title = $(this).text();
+    var close = $(this).data('close');
+    $.get('/dojo/button_dialog/' + name, function(html) {
+      cd.dialog(html, title, close).dialog('open');
+    });
+    event.preventDefault();
+  });
+
+});
+
+//--></script>
+
 <table class="align-center">
   <tr>
     <td id="raspberry-pi-logo">
@@ -19,21 +37,14 @@
   </tr>
   <tr>
     <td id="total-raised">
-      &pound;2420 raised so far.<br>
-      Thank you.
+      &pound;2438 raised so far<br>
+      thank you <a id="donators"
+         href=""
+         data-close="<%= t('views.buttons.close') %>">donators</a>
     </td>
   </tr>
-
-  <tr>
-    <td id="testimonial">
-      <hr/>
-      <h3>testimonial</h3>
-    So glad to have such a magnificent resource online.
-    Much learning has taken place
-    at the alumni of
-    <a href="http://codecraftsmansaturdays.blogspot.com/">Code Craftsman Saturdays</a>
-    in large part thanks to cyber-dojo.org
-    </td>
-  </tr>
-
 </table>
+
+<hr/>
+
+<%= render :partial => 'accu' %>

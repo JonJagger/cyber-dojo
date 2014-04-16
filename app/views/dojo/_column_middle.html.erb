@@ -2,11 +2,7 @@
 <table class="align-right">
   <tr>
     <td colspan="2">
-      <table>
-        <tr>
-          <td><span id="cyber-dojo">cyber&#8209;dojo</span></td>
-        </tr>
-      </table>
+      <div id="cyber-dojo">cyber&#8209;dojo</span></div>
       <div id="custom_message">
         <%= render :partial => 'custom_message' %>
       </div>
@@ -21,23 +17,23 @@
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
-      <div id="setup_info">
-        select your language + exercise<br/>
-        (on <em>one</em> computer)
+      <div id="create-button-info">
+        <i><u>Create</u></i> your programming dojo.<br/>
+        You choose a language and an exercise.<br/>
       </div>
     </td>
     <td>
-      <%= render :partial => 'setup_button' %>
+      <%= render :partial => 'create_button' %>
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
-      <div id="enter_id_info">
-        enter your dojo's-id<br/>
-        (on <em>each</em> computer)
+      <div id="enter-id-info">
+        Type in your dojo's id on <em>each</em> computer.<br/>
+        A dojo's id has 6 hex chars, eg <span style="font-size:1.1em;">3AF65A</span>.
       </div>
     </td>
     <td>
@@ -45,27 +41,40 @@
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
+      <div id="enter-info">
+        <i><u>Enter</u></i> your dojo on <em>each</em> computer.<br/>
+        It will be assigned an animal, eg wolf.
+      </div>
     </td>
     <td>
-      <%= render :partial => 'start_button' %>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-    </td>
-    <td>
-      <%= render :partial => 'resume_button' %>
+      <%= render :partial => 'enter_button' %>
     </td>
   </tr>
 
-  <tr>
+  <tr valign="top">
     <td>
+      <div id="review-info">
+        <i><u>Review</u></i> your code. Click any animal's<br/>
+        traffic-light to replay its diffs.
+      </div>
     </td>
     <td>
       <%= render :partial => 'review_button' %>
+    </td>
+  </tr>
+
+  <tr valign="top">
+    <td>
+      <div id="reenter-info">
+        A computer can <i><u>re-enter</u></i> your dojo as a<br/>
+        specific animal. Occasionally useful.
+
+      </div>
+    </td>
+    <td>
+      <%= render :partial => 'reenter_button' %>
     </td>
   </tr>
 

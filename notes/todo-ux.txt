@@ -23,12 +23,6 @@ Here I'll put...
 
 
 
-    o) [donate] . Use button, not paypal image
-    o) what money is used for
-    o) raspberry pi logo
-    o) amount currently raised.
-    Then underneath
-    o) example of testimonial
     o) button asking for feedback
 
 [enter your id] text box font size is same as [start coding] button font size

@@ -5,7 +5,13 @@ class Language
     @dojo,@name = dojo,name
   end
 
-  attr_reader :dojo, :name
+  attr_reader :dojo
+
+  def name
+    # TODO: patch the name method so it converts old-names
+    # to new-names (to cater for renamed language folders)
+    @name
+  end
 
   def exists?
     paas.exists?(self)

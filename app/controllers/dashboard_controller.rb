@@ -12,7 +12,7 @@ class DashboardController < ApplicationController
       @avatar_name = params['avatar']
       @was_tag = params['was_tag']
       @now_tag = params['now_tag']
-      @max_tag = @kata[@avatar_name].traffic_lights.length
+      @max_tag = @kata.avatars[@avatar_name].traffic_lights.length
     end
    @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
   end

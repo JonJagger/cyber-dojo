@@ -3,7 +3,7 @@
 
 $(document).ready(function () {
 
-  $('.show-dialog-button').click(function () {
+  $('.show-dialog-button').click(function() {
     var name = $(this).attr('id');
     var close = $(this).data('close');
     var title = $(this).text();
@@ -16,18 +16,18 @@ $(document).ready(function () {
 
 //--></script>
 
-<% buttons = ['about', 'basics', 'donators',
-              'faqs', 'feedback', 'links',
-              'tips','why'
-             ].map{ |action| [action, t("views.buttons.#{action}")] } %>
+<div id="buttons-container">
+  <% buttons = ['about', 'faqs', 'help', 'tips','why'
+               ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
-<% buttons.each do |action, text| %>
-  <button type="button"
-          class="show-dialog-button"
-          data-close="<%= t('views.buttons.close') %>"
-          id="<%= action %>">
-    <%= text %>
-  </button>
-  <div style="clear:both">
-  </div>
-<% end %>
+  <% buttons.each do |action, text| %>
+    <button type="button"
+            class="show-dialog-button"
+            data-close="<%= t('views.buttons.close') %>"
+            id="<%= action %>">
+      <%= text %><% if text == 'why' %>?<% end %>
+    </button>
+    <div style="clear:both">
+    </div>
+  <% end %>
+</div>
