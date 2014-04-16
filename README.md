@@ -10,8 +10,8 @@ creating your programming dojo
     characters long (in the URL) but 6 is enough for uniqueness.
 
 
-enter your programming dojo
-===========================
+entering your programming dojo
+==============================
   * on *each* participating computer...
   * enter the 6-character id into the green input box
   * click the [enter] button
@@ -47,8 +47,8 @@ that traffic-light for that animal together with << < > >> buttons to
 navigate forwards and backwards.
 
 
-reviewing your coding dojo
-==========================
+reviewing your programming dojo
+===============================
 You can get to the dashboard page in two ways.
   * from the home page, enter the practice id and click the [review] button.
   * from the test page, click the animal image at the top right
@@ -126,8 +126,8 @@ Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
-re-entering your coding dojo
-============================
+re-entering your programming dojo
+=================================
 You can re-enter at any animals' most recent traffic-light by pressing
 the re-enter button (from the home page) and then clicking the animal.
 This is occasionally useful if one computer has to replace another (eg
@@ -289,12 +289,12 @@ running your own docker'd cyber-dojo server
 -------------------------------------------
 Use the TurnKey Linux Rails image.
   http://www.turnkeylinux.org/rails
-Install cyber-dojo and docker into it using the setup_docker_server.sh file...
-https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh
+Install cyber-dojo and docker into it using
+[setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
 
 
-installing languages on a docker server
----------------------------------------
+installing languages on a docker'd cyber-dojo server
+----------------------------------------------------
 $ docker search cyberdojo
 will tell you the names of the docker container images held in the
 [docker cyberdojo index](https://index.docker.io/u/cyberdojo/)
@@ -342,9 +342,9 @@ git repositories
 Each started animal has its own git respository, eg
   cyberdojo/katas/82/B583C347/wolf/.git
 The starting files (as loaded from the wolf/manifests.rb file) form
-tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a
+tag 0 (zero). Each [test] event causes a new git commit and tag, with a
 message and tag which is simply the increment number. For example, the fourth
-time the wolf computer presses the 'test' button causes
+time the wolf computer presses [test] causes
 >git commit -a -m '4'
 >git tag -m '4' 4 HEAD
 From an animal's directory you can issue the following commands:
@@ -550,38 +550,4 @@ In Opera/Firefox
   2. Deselect 'Check spelling'
 
 
-
-------------------------------------------------------------------------
-CONTENTS
-------------------------------------------------------------------------
-o) creating your coding dojo
-o) enter your coding dojo
-o) traffic lights
-o) reviewing your coding dojo
-      auto refresh?
-      |60s| columns?
-o) reviewing the diffs
-o) re-entering your coding dojo
-------------------------------------------------------------------------
-o) adding a new exercise
-o) adding a new language
-      manifest.json parameters
-------------------------------------------------------------------------
-DOCKER'D SERVER
-  running your own docker'd cyber-dojo server
-  installing languages on a docker'd server
-  pulling from the cyberdojo github repo
-------------------------------------------------------------------------
-RAW SERVER
-  running your own raw cyber-dojo server
-  installing languages on a raw server
-  pulling from the cyberdojo github repo
-------------------------------------------------------------------------
-o) turning off spell-checking in your browser
-o) disk space
-o) katas directory structure
-o) git repositories
-o) misc notes
-o) thank you
-------------------------------------------------------------------------
 
