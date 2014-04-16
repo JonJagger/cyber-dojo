@@ -5,8 +5,8 @@ running a programming dojo on cyber-dojo.org
 creating your programming dojo
 ------------------------------
   * click the `[create]` button
-  * click your chosen language|unit-test-framework (eg `C++|assert`)
-  * click your chosen exercise (eg `Prime Factors`)
+  * click your chosen language|unit-test-framework, eg `C++|assert`
+  * click your chosen exercise, eg `Prime Factors`
   * click the `[ok]` button
   * you'll get a case-insensitive 6-character hex-id. The full id is ten
     characters long (in the URL) but 6 is enough for uniqueness.
@@ -18,14 +18,15 @@ entering your programming dojo
   * enter the dojo's 6-character id into the green input box
   * click the `[enter]` button
   * a dialog will appear telling you which animal you are (eg Panda).
-  * click `[ok]` to dismiss the dialaog
+  * click `[ok]` to dismiss the dialog
   * a new test page/tab will open in your browser
   * edit the test files...
   * edit the code files...
-  * every time you press the [test] button a new traffic-light appears
-  * traffic-lights progress along the top, left-to-right, oldest-to-newest.
+  * press the [test] button
+  * a new traffic-light appears
+  * traffic-lights progress along the top, left-to-right, oldest-to-newest
   * clicking on any traffic-light opens a dialog showing the diffs for
-   that traffic-light plus << < > >> buttons to navigate forwards and backwards.
+   that traffic-light plus << < > >> buttons to navigate forwards and backwards
 
 You can also re-enter at any animals' most recent traffic-light by pressing
 the `[re-enter]` button (from the home page) and then clicking the animal.
@@ -48,7 +49,7 @@ amber in the middle, green at the bottom. This means you can still read the
 display if you are colour blind.
 You will also get an amber traffic-light if the tests do not complete within
 15 seconds (eg you've accidentally coded an infinite loop or the server is
-overloaded with too many concurrent practice sessions)
+overloaded with too many concurrent programming dojos)
 Clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to
 navigate forwards and backwards.
@@ -56,7 +57,7 @@ navigate forwards and backwards.
 
 reviewing your programming dojo
 -------------------------------
-You can get to the dashboard page in two ways.
+You can get to the dashboard page in two ways
   * from the home page, enter the dojo's id and click the `[review]` button.
   * from the test page, click the animal image at the top right
 
@@ -256,8 +257,8 @@ $ chgrp www-data *
 
   * the `unit_test_framework` entry in the languages' `manifest.json`
     file is the name of the function inside `OutputParser.rb` which is
-    used to determine if the result of running `cyber-dojo.sh` in your container
-    on the current files parses as a red traffic-light, an amber traffic-light,
+    used to determine if the output from running `cyber-dojo.sh` in your container
+    on the current files parses qualifies as a red traffic-light, an amber traffic-light,
     or a green traffic-light.
     There are lots of examples in
     [cyberdojo/app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
