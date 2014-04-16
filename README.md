@@ -109,6 +109,7 @@ will update to display the diff between traffic-lights 12 and 15.
 Below the two traffic-lights are  <<  <  >  >>  buttons.
 These buttons move forwards and backwards whilst maintaining the traffic-light
 gap (eg 12 <-> 15 == 3).
+
 For example, pressing
   * << moves back to the first traffic-light, so if the gap is 3
     it will display the diff of 1 <-> 4
@@ -138,24 +139,40 @@ if your doing an evening dojo and someone has to leave early).
 adding a new exercise
 =====================
   * Create a new sub-directory under cyberdojo/exercises/
-    Example: cyberdojo/exercises/FizzBuzz
+    Example:
+    ```
+    cyberdojo/exercises/FizzBuzz
+    ```
   * Create a text file called instructions in this directory.
-    Example: cyberdojo/exercises/FizzBuzz/instructions
+    Example:
+    ```
+    cyberdojo/exercises/FizzBuzz/instructions
+    ```
 
 
 adding a new language
 =====================
 Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
-  For example: cyberdojo/test/cyberdojo/languages/Lisp
+  For example:
+  ```
+  cyberdojo/test/cyberdojo/languages/Lisp
+  ```
 Create a manifest.json file in this directory.
-  For example: cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
+  For example:
+  ```
+  cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
+  ```
 Note the above are
+  ```
   cyberdojo/languages
+  ```
 and not
+  ```
   cyberdojo/test/cyberdojo/languages
+  ```
 Each manifest.json file contains an ruby object in JSON format
 Example: the one for Java-JUnit looks like this:
-```
+```json
 {
   "visible_filenames": [
     "Untitled.java",
@@ -173,7 +190,7 @@ Example: the one for Java-JUnit looks like this:
 }
 ```
 Make sure all the filenames are in the new folder, including cyber-dojo.sh
-```
+```bash
 $ chmod +x cyber-dojo.sh
 $ chown www-data *
 $ chgrp www-data *
@@ -218,22 +235,26 @@ manifest.json parameters
   You can also name "instructions" (from exercises/)
   You can also name "output" (always present)
   For example
-```
+```json
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
 ```
   Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
   in app/assets/stylesheets/kata-dojo.css.scss
+```css
     div[class~='filename'][class~='highlight'] {
       ...
     }
+```
   The highlight_filenames entry also interacts with lowlights_filenames
   (see Language.lowlight_filenames() in app/models/Language.rb)
   (see cd.notLowlightFilenames() in app/assets/javascripts/cyber-dojo_file_load.js)
   Again, its appearance in controlled from the same CSS file...
+```css
     div[class~='filename'][class~='lowlight'] {
       ...
     }
+```
   If there is a highlight_filenames entry, then lowlight-filenames
   will be [visible_filenames] - [highlight_filenames].
   If there is no highlight_filenames entry, then lowlight-filenames
@@ -276,9 +297,11 @@ is installed. If it is then...
   * it will only offer languages/ whose manifest.json file
     has an "image_name" entry that exists. For example, if
     languages/Java-JUnit/manifest.json contains this...
+```json
       { ...
         "image_name": "cyberdojo/java-1.8"
       }
+```
     then Java-JUnit will only be offered as a language on the
     initial setup page if the docker image "cyberdojo/java-1.8" exists
     on the host server (as determined by running `docker images`)
@@ -290,33 +313,38 @@ is installed. If it is then...
 
 running your own docker'd cyber-dojo server
 -------------------------------------------
-Use the TurnKey Linux Rails image.
-  http://www.turnkeylinux.org/rails
+Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
 Install cyber-dojo and docker into it using
 [setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
 
 
 installing languages on a docker'd cyber-dojo server
 ----------------------------------------------------
+```bash
 $ docker search cyberdojo
+```
 will tell you the names of the docker container images held in the
 [docker cyberdojo index](https://index.docker.io/u/cyberdojo/)
 Now do a
+```bash
 $ docker pull IMAGE_NAME
+```
 for each IMAGE_NAME matching the image_name entry in
 each languages/LANG/manifest.json file that you wish to use.
 
 
 pulling from the cyberdojo github repo
 --------------------------------------
+```bash
   $ cd /var/www/cyberdojo
   $ ./pull.sh
+```
 If pull.sh asks for a password just hit return.
 pull.sh performs the following tasks...
-  o) pulls the latest source from the cyberdojo github repo
-  o) ensures any new files and folders have the correct group and owner
-  o) checks for any gemfile changes
-  o) restarts apache
+  * pulls the latest source from the cyberdojo github repo
+  * ensures any new files and folders have the correct group and owner
+  * checks for any gemfile changes
+  * restarts apache
 
 
 
@@ -333,28 +361,42 @@ katas directory structure
 The rails code does NOT use a database.
 Instead each practice session lives in a git-like directory structure based
 on its 10 character id. For example the session with id 82B583C347 lives at
+```
   cyberdojo/katas/82/B583C347
+```
 Each started animal has a sub-directory underneath this, eg
+```
   cyberdojo/katas/82/B583C347/wolf
+```
 Each started animal has a sandbox sub-directory where its files are held, eg
+```
   cyberdojo/katas/82/B583C347/wolf/sandbox
+```
 
 
 git repositories
 ----------------
 Each started animal has its own git respository, eg
+```
   cyberdojo/katas/82/B583C347/wolf/.git
+```
 The starting files (as loaded from the wolf/manifests.rb file) form
 tag 0 (zero). Each [test] event causes a new git commit and tag, with a
 message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses [test] causes
+```
 >git commit -a -m '4'
 >git tag -m '4' 4 HEAD
+```
 From an animal's directory you can issue the following commands:
 To look at filename for tag 4
+```
 >git show 4:sandbox/filename
+```
 To look at filename's differences between tag 4 and tag 5
+```
 >git diff 4 5 sandbox/filename
+```
 It's much easier and more informative to just click on dashboard traffic light.
 
 
@@ -390,7 +432,10 @@ thank you
   * Jerry Weinberg showed me the power of experiential learning on all
    of his courses and conferences, notably PSL,
    http://www.estherderby.com/problem-solving-leadership-psl
-   which strongly influenced the way I designed cyber-dojo. Thank you Jerry.
+   which strongly influenced the way I designed cyber-dojo.
+   Thank you Jerry.
+
+
 
 
 
