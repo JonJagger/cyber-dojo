@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+JAVA-LANGUAGE-MANIFEST
+  cyberdojo/java-1.8
+  should be
+  cyberdojo/java-1.8_junit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in Language.rb patch the name method so it converts old-names
   to new-names (and add comment on why)

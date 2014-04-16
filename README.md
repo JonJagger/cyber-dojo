@@ -70,7 +70,8 @@ horizontal space. These traffic-lights auto scroll:
   * old ones are scrolled out of view to the left
   * the animal image is always visible to the right.
 
-The idea is to turn off auto-refresh before starting a dashboard review.
+The idea is to leave auto-refresh on *during* the dojo
+and to turn it *off* before starting a dashboard review.
 
 
 |60s| columns?
@@ -457,9 +458,9 @@ RAW SERVER - DEPRECATED
 This is how cyber-dojo runs if docker is not installed or if
 the environment variable CYBERDOJO_USE_HOST is set.
 In this mode, there is
-   NO PROTECTION, NO ISOLATION, NO SECURITY.
-   NO PROTECTION, NO ISOLATION, NO SECURITY.
-   NO PROTECTION, NO ISOLATION, NO SECURITY.
+  * NO PROTECTION, NO ISOLATION, NO SECURITY.
+  * NO PROTECTION, NO ISOLATION, NO SECURITY.
+  * NO PROTECTION, NO ISOLATION, NO SECURITY.
 In this mode cyber-dojo clients have full rights on the cyber-dojo server.
 If you setup your own server you are strongly advised to consider using
   * a dedicated server.
@@ -493,7 +494,9 @@ for details on how I built it) and supports C, C++, Python, Perl and Ruby.
 I installed the other 8+ languages onto this baseline rails 3 image (some of
 which are included in the larger 817MB ova file above) as follows...
 
-$apt-get update
+```
+$ apt-get update
+```
 -----
 Java (125MB)
 ```
@@ -593,7 +596,6 @@ CoffeeScript (3MB)
 ```
 $ npm install --global jasmine-node
 ```
-(thanks to Johannes Brodwall)
 -----
 PHP (3MB)
 ```
@@ -627,7 +629,9 @@ I then added the following line to the end of /etc/apache2/envvars/
 export PATH=$PATH:${location-of-groovy-bin}
 ```
 This also gave me the three jars I needed.
-  junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
+junit-4.11.jar
+groovy-all-2.1.5.jar
+hamcrest-core-1.3.jar
 ------
 Groovy-Spock
 ```
