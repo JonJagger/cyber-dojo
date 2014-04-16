@@ -192,7 +192,7 @@ each `cyberdojo/languages/*/manifest.json` file that you wish to use.
 adding a new language to a docker'd cyber-dojo server
 -----------------------------------------------------
 
-### create the language manifest
+### write the languages' manifest.json file
 
 Create a new sub-directory under `cyberdojo/languages/`
   For example:
@@ -252,7 +252,7 @@ $ chgrp www-data *
     languages' `manifest.json` file.
 
 
-### write a parse function
+### write an output parse function
 
   * the `unit_test_framework` entry in the languages' `manifest.json`
     file is the name of the function inside `OutputParser.rb` which is
@@ -280,37 +280,38 @@ $ chgrp www-data *
 
   Filenames that will be visible in the browser's editor at startup.
   Each of these files must exist in the directory.
-  The filename cyber-dojo.sh must be present as a "visible_filenames" entry
-  or as a "support_filenames" entry. This is because cyber-dojo.sh is the name
+  The filename `cyber-dojo.sh` must be present as a `"visible_filenames"` entry
+  or as a `"support_filenames"` entry. This is because `cyber-dojo.sh` is the name
   of the shell file assumed by the ruby code (on the server) to be the start
-  point for running the tests. You can write any actions in the cyber-dojo.sh
-  file but clearly any programs it tries to run must be installed in the
-  environment cyber-dojo.sh is running in.
-  For example, if cyber-dojo.sh runs gcc to compile C files then gcc has
-  to be installed. If cyber-dojo.sh runs javac to compile java files then
-  javac has to be installed.
+  point for running the tests. You can write any actions in the `cyber-dojo.sh`
+  file but clearly any programs it tries to run must be installed in this
+  languages docker container.
+  For example, if `cyber-dojo.sh` runs `gcc` to compile C files then `gcc` has
+  to be installed. If `cyber-dojo.sh` runs `javac` to compile java files then
+  `javac` has to be installed.
 - - - - - - - - - - - - - - - - - - - -
-"support_filenames": [ string* ]
+`"support_filenames": [ string* ]`
 
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit .jar files or nunit .dll assemblies.
-  These are symlinked from the /languages folder to each animals /katas folder.
-  Despite the name "support_filenames" you can symlink a folder if required.
+  These are symlinked from the `cyberdojo/languages` folder to each animals
+  `cyberdojo/katas/...` subfolder.
+  Despite the name `"support_filenames"` you can symlink a folder if required.
   Not required if you do not need support files.
 - - - - - - - - - - - - - - - - - - - -
-"highlight_filenames": [ string* ]
+`"highlight_filenames": [ string* ]`
 
   Filenames whose appearance are to be highlighted in the browser.
-  This can be useful if you have many "visible_filenames" and want to mark which
-  files form the focus of the practice. A subset of visible_filenames, but...
+  This can be useful if you have many `"visible_filenames"` and want to mark which
+  files form the focus of the practice. A subset of `"visible_filenames"`, but...
   You can also name `instructions` (from the chosen exercise)
   You can also name `output` (always present)
   For example
 ```json
-  "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
+  "highlight_filenames": [ "buffer.cpp", "buffer.hpp", "instructions" ]
 ```
-  The apperance of "highlight_filenames" is controlled by the CSS
-  in `app/assets/stylesheets/kata.css.scss`
+  The apperance of `"highlight_filenames"` is controlled by the CSS
+  in `cyberdojo/app/assets/stylesheets/kata.css.scss`
 ```css
     div[class~='filename'][class~='highlight']
     {
@@ -318,8 +319,8 @@ $ chgrp www-data *
     }
 ```
   The highlight_filenames entry also interacts with lowlights_filenames
-  (see Language.lowlight_filenames() in app/models/Language.rb)
-  (see cd.notLowlightFilenames() in app/assets/javascripts/cyber-dojo_file_load.js)
+  (see Language.lowlight_filenames() in cyberdojo/app/models/Language.rb)
+  (see cd.notLowlightFilenames() in cyberdojo/app/assets/javascripts/cyber-dojo_file_load.js)
   Again, its appearance in controlled from the same CSS file...
 ```css
     div[class~='filename'][class~='lowlight']
@@ -327,25 +328,31 @@ $ chgrp www-data *
       ...
     }
 ```
-  If there is a highlight_filenames entry, then lowlight-filenames
-  will be [visible_filenames] - [highlight_filenames].
+  If there is a `"highlight_filenames"` entry, then lowlight-filenames
+  will be
+  ```
+  [visible_filenames] - [highlight_filenames]
+  ```
   If there is no highlight_filenames entry, then lowlight-filenames
-  will default to ['cyber-dojo','makefile']
+  will default to
+  ```
+  [ 'cyber-dojo', 'makefile' ]
+  ```
   Not required. Defaults to empty.
 - - - - - - - - - - - - - - - - - - - -
-"display_name": string
+`"display_name": string`
 
   The name of the language as it appears in the setup page and also in the info
   displayed at the top-left of the test and dashboard pages.
-  Optional. Defaults to the name of the folder holding the manifest.json file.
+  Optional. Defaults to the name of the folder holding the `manifest.json` file.
 - - - - - - - - - - - - - - - - - - - -
-"display_test_name": string
+`"display_test_name": string`
 
   The name of the unit-test-framework as it appears in the setup page and also in
   in the info displayed at the top-left of the test and dashboard pages.
-  Optional. Defaults to the "unit_test_framework" value.
+  Optional. Defaults to the `"unit_test_framework"` value.
 - - - - - - - - - - - - - - - - - - - -
-"unit_test_framework": string
+`"unit_test_framework": string`
 
   The name of the unit test framework which partially determines the
   name of the ruby function (on the cyber-dojo server) used to parse the
@@ -356,7 +363,7 @@ $ chgrp www-data *
   output of running the tests via the `cyber-dojo.sh` shell file.
   Required. No default.
 - - - - - - - - - - - - - - - - - - - -
-"tab_size": int
+`"tab_size": int`
 
   The number of spaces a tab character expands to in the editor
   textarea. Not required. Defaults to 4 spaces.
