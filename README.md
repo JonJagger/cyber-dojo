@@ -365,7 +365,7 @@ Misc
 
 disk space
 ----------
-The design of cyber-dojo is very heavy on inodes. You will almost certainly
+cyber-dojo is very heavy on inodes. You will almost certainly
 run out of inodes before running out of disk space. The folder that eats
 the inodes is katas/
 
@@ -450,9 +450,16 @@ thank you
    Thank you Jerry.
 
 
-
-
-
+-------------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------
+-------------------------
 
 
 RAW SERVER - DEPRECATED
