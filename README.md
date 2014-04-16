@@ -632,7 +632,11 @@ I then added the following line to the end of /etc/apache2/envvars/
 export PATH=$PATH:${location-of-groovy-bin}
 ```
 This also gave me the three jars I needed.
-junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
+```
+junit-4.11.jar
+groovy-all-2.1.5.jar
+hamcrest-core-1.3.jar
+```
 ------
 Groovy-Spock
 ```
