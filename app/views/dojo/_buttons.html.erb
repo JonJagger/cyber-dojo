@@ -17,8 +17,7 @@ $(document).ready(function () {
 //--></script>
 
 <% buttons = ['about', 'basics', 'donators',
-              'faqs', 'feedback', 
-              'tips','why'
+              'faqs', 'feedback', 'tips','why'
              ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
 <% buttons.each do |action, text| %>
@@ -26,7 +25,7 @@ $(document).ready(function () {
           class="show-dialog-button"
           data-close="<%= t('views.buttons.close') %>"
           id="<%= action %>">
-    <%= text %>
+    <%= text %><% if text == 'why' %>?<% end %>
   </button>
   <div style="clear:both">
   </div>

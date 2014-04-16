@@ -48,6 +48,11 @@ class ForkerController < ApplicationController
     end
 
     render :json => result
+
+    #respond_to do |format|
+    #  format.js if request.xhr?
+    #end
+
   end
 
 end
