@@ -1,5 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
+  in Language.rb patch the name method so it converts old-names
+  to new-names (and add comment on why)
+  eg Ruby   -->  Ruby-TestUnit
+  eg C++    -->  C++-assert
+  eg C#     -->  C#-NUnit
+  eg Python --> Python-unittest
+  find entries in /katas that do not match existing language
+  (use ruby script employing new paas->dojo->katas enumerator)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
   use cursor: not-allowed
   for disabled buttons.
