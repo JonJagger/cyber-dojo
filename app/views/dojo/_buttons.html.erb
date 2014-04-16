@@ -17,8 +17,7 @@ $(document).ready(function () {
 //--></script>
 
 <div id="buttons-container">
-  <% buttons = ['about', 'basics', 'faqs',
-                'feedback', 'tips','why'
+  <% buttons = ['about', 'faqs', 'help', 'tips','why'
                ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
   <% buttons.each do |action, text| %>

@@ -84,18 +84,17 @@ $text-color: darken($lighter-color, 10%);
     padding-bottom: 10px;
   }
   #please_donate {
-    color: darken($darker-color, 15%);
+    color: $lighter-color;
     @include font-size-tiny();
   }
   #total-raised {
-    color: darken($darker-color, 15%);
+    color: $lighter-color;
     @include font-size-tiny();
     padding-top: 10px;
     padding-bottom: 10px;
   }
   #donate-form {
     height: 40px;
-    color: darken($darker-color, 15%);
   }
   #donate-button {
     padding-top: 20px;
@@ -106,7 +105,7 @@ $text-color: darken($lighter-color, 10%);
   #accu {
     @include font-size-tiny();
     margin-top: 20px;
-    color: darken($darker-color, 15%);
+    color: $lighter-color;
     #image {
       margin-bottom: 10px;
       text-align: center;
@@ -115,18 +114,22 @@ $text-color: darken($lighter-color, 10%);
   #testimonial {
     @include font-size-tiny();
     text-align: left;
-    color: darken($darker-color, 10%);
+    color: $lighter-color;
     #title {
       @include font-size-small();
       font-weight: bold;
+      color: darken($lighter-color, 10%);
       margin-bottom: 10px;
     }
+  }
+  #please-send-me-feedback {
+    @include font-size-tiny();
   }
   hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px dotted $darker-color;
+    border-top: 1px dotted $lighter-color;
     margin: 1em 0;
     padding: 0;
   }
@@ -175,7 +178,7 @@ a:link, a:visited
   @include font-size-medium();
 }
 
-#about, #basics, #faqs, #feedback, #source, #tips, #why
+#about, #faqs,  #help, #tips, #why
 {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   @include font-size-small();

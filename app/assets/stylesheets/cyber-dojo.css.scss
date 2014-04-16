@@ -29,6 +29,10 @@ body {
   padding-bottom: 0.5em;
 }
 
+.panel-title {
+  margin-top: 10px;
+  @include font-size-small();
+}
 .panel {
   background: $darker-color;
   color: $lighter-color;
