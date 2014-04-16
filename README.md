@@ -4,10 +4,10 @@ running a programming dojo on cyber-dojo.org
 
 creating your programming dojo
 ------------------------------
-  * click the [create] button
-  * click your chosen language|unit-test-framework (eg C++|assert)
-  * click your chosen exercise (eg Prime Factors)
-  * click the [ok] button
+  * click the `[create]` button
+  * click your chosen language|unit-test-framework (eg `C++|assert`)
+  * click your chosen exercise (eg `Prime Factors`)
+  * click the `[ok]` button
   * you'll get a case-insensitive 6-character hex-id. The full id is ten
     characters long (in the URL) but 6 is enough for uniqueness.
 
@@ -16,12 +16,12 @@ entering your programming dojo
 ------------------------------
   * on *each* participating computer...
   * enter the dojo's 6-character id into the green input box
-  * click the [enter] button
+  * click the `[enter]` button
   * the server will tell you which animal you are (eg Panda).
-  * click [ok]
-  * a new [test] page/tab will open in your browser
+  * click `[ok]`
+  * a new test page/tab will open in your browser
   * edit the test files and the code files...
-  * press the [test] button to see if the tests pass or not...
+  * press the `[test]` button to see if the tests pass or not...
   * every time the [test] button is pressed a new traffic-light appears
   * traffic-lights progress along the top, left-to-right, oldest-to-newest.
   * clicking on any traffic-light opens a dialog showing the diffs for
@@ -184,8 +184,8 @@ Now do a
 ```bash
 $ docker pull IMAGE_NAME
 ```
-for each IMAGE_NAME matching the image_name entry in
-each languages/LANG/manifest.json file that you wish to use.
+for each IMAGE_NAME matching the `image_name` entry in
+each `cyberdojo/languages/*/manifest.json` file that you wish to use.
 
 
 
@@ -194,17 +194,17 @@ adding a new language to a docker'd cyber-dojo server
 
 ### create the language manifest
 
-Create a new sub-directory under cyberdojo/languages/
+Create a new sub-directory under `cyberdojo/languages/`
   For example:
   ```
   cyberdojo/languages/Lisp
   ```
-Create a manifest.json file in this directory.
+Create a `manifest.json` file in this directory.
   For example:
   ```
   cyberdojo/languages/Lisp/manifest.json
   ```
-Each manifest.json file contains an ruby object in JSON format
+Each `manifest.json` file contains an ruby object in JSON format
 Example: the one for Java-JUnit looks like this:
 ```json
 {
@@ -272,7 +272,7 @@ $ chgrp www-data *
 
 "image_name": string
 
-  The name of docker image to execute cyber-dojo.sh.
+  The name of docker image to execute `cyber-dojo.sh`.
   Optional. Not required if you're using a raw-server instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
@@ -303,13 +303,12 @@ $ chgrp www-data *
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
   files form the focus of the practice. A subset of visible_filenames, but...
-  You can also name "instructions" (from exercises/)
-  You can also name "output" (always present)
+  You can also name `instructions` (from the chosen exercise)
+  You can also name `output` (always present)
   For example
 ```json
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp" ]
 ```
-  Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
   in `app/assets/stylesheets/kata.css.scss`
 ```css
@@ -332,6 +331,7 @@ $ chgrp www-data *
   will be [visible_filenames] - [highlight_filenames].
   If there is no highlight_filenames entry, then lowlight-filenames
   will default to ['cyber-dojo','makefile']
+  Not required. Defaults to empty.
 - - - - - - - - - - - - - - - - - - - -
 "display_name": string
 
@@ -348,12 +348,12 @@ $ chgrp www-data *
 "unit_test_framework": string
 
   The name of the unit test framework which partially determines the
-  name of the ruby function (in the cyber-dojo server) used to parse the
+  name of the ruby function (on the cyber-dojo server) used to parse the
   test output (to see if the traffic-light is red/green/amber).
-  For example, if the value is 'cassert' then
-      cyberdojo/app/lib/OutputParser.rb
-  must contain a method called parse_cassert() and will be called to parse the
-  output of running the tests via the cyber-dojo.sh shell file.
+  For example, if the value is `cassert` then
+      [cyberdojo/app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+  must contain a method called `parse_cassert()` and will be called to parse the
+  output of running the tests via the `cyber-dojo.sh` shell file.
   Required. No default.
 - - - - - - - - - - - - - - - - - - - -
 "tab_size": int
