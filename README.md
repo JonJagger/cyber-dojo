@@ -205,7 +205,7 @@ manifest.json parameters
   Optional. Not required if you're using a raw-server instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
-"visible_filenames": [ ... ]
+"visible_filenames": [ string* ]
 
   Filenames that will be visible in the browser's editor at startup.
   Each of these files must exist in the directory.
@@ -219,7 +219,7 @@ manifest.json parameters
   to be installed. If cyber-dojo.sh runs javac to compile java files then
   javac has to be installed.
 - - - - - - - - - - - - - - - - - - - -
-"support_filenames": [ ... ]
+"support_filenames": [ string* ]
 
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit .jar files or nunit .dll assemblies.
@@ -227,7 +227,7 @@ manifest.json parameters
   Despite the name "support_filenames" you can symlink a folder if required.
   Not required if you do not need support files.
 - - - - - - - - - - - - - - - - - - - -
-"highlight_filenames": [ ... ]
+"highlight_filenames": [ string* ]
 
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
@@ -242,7 +242,8 @@ manifest.json parameters
   The apperance of "highlight_filenames" is controlled by the CSS
   in app/assets/stylesheets/kata-dojo.css.scss
 ```css
-    div[class~='filename'][class~='highlight'] {
+    div[class~='filename'][class~='highlight']
+    {
       ...
     }
 ```
@@ -251,7 +252,8 @@ manifest.json parameters
   (see cd.notLowlightFilenames() in app/assets/javascripts/cyber-dojo_file_load.js)
   Again, its appearance in controlled from the same CSS file...
 ```css
-    div[class~='filename'][class~='lowlight'] {
+    div[class~='filename'][class~='lowlight']
+    {
       ...
     }
 ```
@@ -298,9 +300,10 @@ is installed. If it is then...
     has an "image_name" entry that exists. For example, if
     languages/Java-JUnit/manifest.json contains this...
 ```json
-      { ...
-        "image_name": "cyberdojo/java-1.8"
-      }
+{
+  ...
+  "image_name": "cyberdojo/java-1.8"
+}
 ```
     then Java-JUnit will only be offered as a language on the
     initial setup page if the docker image "cyberdojo/java-1.8" exists
@@ -310,6 +313,7 @@ is installed. If it is then...
   * however, if the environment variable CYBERDOJO_USE_HOST
     is set (to anything) then cyber-dojo will use the raw host server
     even if docker is installed.
+
 
 running your own docker'd cyber-dojo server
 -------------------------------------------
@@ -385,17 +389,17 @@ tag 0 (zero). Each [test] event causes a new git commit and tag, with a
 message and tag which is simply the increment number. For example, the fourth
 time the wolf computer presses [test] causes
 ```
->git commit -a -m '4'
->git tag -m '4' 4 HEAD
+$ git commit -a -m '4'
+$ git tag -m '4' 4 HEAD
 ```
 From an animal's directory you can issue the following commands:
 To look at filename for tag 4
 ```
->git show 4:sandbox/filename
+$ git show 4:sandbox/filename
 ```
 To look at filename's differences between tag 4 and tag 5
 ```
->git diff 4 5 sandbox/filename
+$ git diff 4 5 sandbox/filename
 ```
 It's much easier and more informative to just click on dashboard traffic light.
 
@@ -441,10 +445,8 @@ thank you
 
 
 
-
-
-RAW SERVER
-==========
+RAW SERVER - DEPRECATED
+=======================
 This is how cyber-dojo runs if docker is not installed or if
 the environment variable CYBERDOJO_USE_HOST is set.
 In this mode, there is
@@ -458,9 +460,10 @@ If you setup your own server you are strongly advised to consider using
   * a dedicated network segment.
 
 
+
 running your own raw cyber-dojo server
 --------------------------------------
-Install VirtualBox from http://www.virtualbox.org/
+Install [VirtualBox](http://www.virtualbox.org/)
 Download the TurnKey Linux image from
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova
 (817MB) This image supports 13 languages (C, C++, C#, Coffeescript, Erlang,
@@ -483,97 +486,151 @@ for details on how I built it) and supports C, C++, Python, Perl and Ruby.
 I installed the other 8+ languages onto this baseline rails 3 image (some of
 which are included in the larger 817MB ova file above) as follows...
 
-#apt-get update
------Java (125MB)
-#apt-get install default-jdk
--------C# (27MB)
-#apt-get install mono-gmcs
-#apt-get install nunit-console
-#cd /var/www/cyberdojo/languages/C#
-#rm *.dll
-#cp /usr/lib/cli/nunit.framework-2.4/nunit.framework.dll .
-I edited the /var/www/cyberdojo/languages/C#/manifest.rb file this
+$apt-get update
+-----
+Java (125MB)
+```
+$ apt-get install default-jdk
+```
+-------
+C# (27MB)
+```
+$ apt-get install mono-gmcs
+$ apt-get install nunit-console
+$ cd /var/www/cyberdojo/languages/C#
+$ rm *.dll
+$ cp /usr/lib/cli/nunit.framework-2.4/nunit.framework.dll .
+```
+I edited the /var/www/cyberdojo/languages/C#/manifest.rb file thus
+```
    :support_filenames => %w( nunit.framework.dll )
+```
 There was a permission issue. Using strace suggested the following
 which fixed the problem
-#mkdir /var/www/.mono
-#chgrp www-data .mono
-#chown www-data .mono
--------C# NUnit upgrade
+```
+$ mkdir /var/www/.mono
+$ chgrp www-data .mono
+$ chown www-data .mono
+```
+-------
+C# NUnit upgrade
 I upgraded mono as follows (the server is Ubuntu 10.04 LTS)
-#sudo bash -c "echo deb http://badgerports.org lucid main >> /etc/apt/sources.list"
-#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E1FAD0C
-#sudo apt-get update
-#sudo apt-get install libmono-corlib2.0-cil libmono-system-runtime2.0-cil libmono-system-web2.0-cil libmono-i18n2.0-cil libgdiplus
+```
+$ sudo bash -c "echo deb http://badgerports.org lucid main >> /etc/apt/sources.list"
+$ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0E1FAD0C
+$ sudo apt-get update
+$ sudo apt-get install libmono-corlib2.0-cil libmono-system-runtime2.0-cil libmono-system-web2.0-cil libmono-i18n2.0-cil libgdiplus
+```
 I tried to get NUnit 2.6 to work but it failed with
+```
 System.ApplicationException: Exception in TestRunnerThread --->
    System.NotImplementedException: The requested feature is not implemented.
    at NUnit.Core.TestExecutionContext.Save () [0x00000] in <filename unknown>:0
+```
 Googling seems to show this is a known problem!
 So I backed up and backed up... until NUnit 2.5.10 which seems to work ok
 and still supports the [TestFixture] attribute.
 I installed all the new dlls into the gac
-#gacutil -i *.dll
+```
+$ gacutil -i *.dll
+```
 nunit-console (the command in cyber-dojo.sh) is simply a  script file
 which calls nunit-console.exe which is itself a CLI assembly. Viz
+```
   #!/bin/sh
   exec /usr/bin/cli /usr/lib/nunit/nunit-console.exe "$@"
+```
 strace showed that nunit wanted to create some shadow folders...
-#chown -R www-data /tmp/nunit20/ShadowCopyCache
-#chgrp -R www-data /tmp/nunit20/ShadowCopyCache
+```
+$ chown -R www-data /tmp/nunit20/ShadowCopyCache
+$ chgrp -R www-data /tmp/nunit20/ShadowCopyCache
+```
 
--------Erlang(26MB)
-#apt-get install erlang
+-------
+Erlang(26MB)
+```
+$ apt-get install erlang
+```
 (thanks to Kalervo Kujala)
-------Haskell (111MB)
-#apt-get install libghc6-hunit-dev
+------
+Haskell (111MB)
+```
+$ apt-get install libghc6-hunit-dev
+```
 (thanks to Miika-Petteri Matikainen)
-------Go (44MB)
-#cd ~
-#wget http://go.googlecode.com/files/go.go1.linux-386.tar.gz
-#tar -C /usr/local -xzf go.go1.linux-386.tar.gz
-#rm go.go1.linux-386.tar.gz
+------
+Go (44MB)
+```
+$ cd ~
+$ wget http://go.googlecode.com/files/go.go1.linux-386.tar.gz
+$ tar -C /usr/local -xzf go.go1.linux-386.tar.gz
+$ rm go.go1.linux-386.tar.gz
+```
 I then added the following line to the end of /etc/apache2/envvars/
-#export PATH=$PATH:/usr/local/go/bin
------Javascript (63MB)
-#cd ~
-#git clone git://github.com/joyent/node.git
-#cd node
-#git checkout v0.6.17
-#./configure
-#make
-#make install
-#cd ~
-#rm -r node
+```
+$ export PATH=$PATH:/usr/local/go/bin
+```
+-----
+Javascript (63MB)
+```
+$ cd ~
+$ git clone git://github.com/joyent/node.git
+$ cd node
+$ git checkout v0.6.17
+$ ./configure
+$ make
+$ make install
+$ cd ~
+$ rm -r node
+```
 (see https://github.com/joyent/node/wiki/Installation)
------CoffeeScript (3MB)
-#npm install --global jasmine-node
+-----
+CoffeeScript (3MB)
+```
+$ npm install --global jasmine-node
+```
 (thanks to Johannes Brodwall)
 (ensure JavaScript node is installed first as per instructions above)
------PHP (3MB)
-#apt-get install phpunit
------C/C++ upgrade (80MB)
-#sudo apt-get install python-software-properties
-#sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-#sudo apt-get update
-#sudo apt-get install gcc-4.7 g++-4.7
-#sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.4 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.4
-#sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
-#sudo update-alternatives --config gcc
+-----
+PHP (3MB)
+```
+$ apt-get install phpunit
+```
+-----
+C/C++ upgrade (80MB)
+```
+$ sudo apt-get install python-software-properties
+$ sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+$ sudo apt-get update
+$ sudo apt-get install gcc-4.7 g++-4.7
+$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.4 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.4
+$ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
+$ sudo update-alternatives --config gcc
+```
 and select 2. Finally (39MB)
-#sudo apt-get install valgrind
-------Groovy-JUnit
-#apt-get update
-#apt-get install curl
-#curl -s get.gvmtool.net | bash
-#gvm install groovy
+```
+$ sudo apt-get install valgrind
+```
+------
+Groovy-JUnit
+```
+$ apt-get update
+$ apt-get install curl
+$ curl -s get.gvmtool.net | bash
+$ gvm install groovy
+```
 I then added the following line to the end of /etc/apache2/envvars/
-#export PATH=$PATH:${location-of-groovy-bin}
+```
+export PATH=$PATH:${location-of-groovy-bin}
+```
 This also gave me the three jars I needed.
   junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
 (thanks to Schalk Cronje)
-------Groovy-Spock
-#grape -Dgrape.root=$(pwd) install org.spockframework spock-core 0.7-groovy-2.0
+------
+Groovy-Spock
+```
+$ grape -Dgrape.root=$(pwd) install org.spockframework spock-core 0.7-groovy-2.0
+```
 this gave me the spock jar I needed.
 (thanks to Schalk Cronje)
 
