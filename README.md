@@ -1,7 +1,9 @@
 
+running a programming dojo on cyber-dojo.org
+============================================
+
 creating your programming dojo
-==============================
-  * from the home page...
+------------------------------
   * click the [create] button
   * click your chosen language|unit-test-framework (eg C++|assert)
   * click your chosen exercise (eg Prime Factors)
@@ -11,7 +13,7 @@ creating your programming dojo
 
 
 entering your programming dojo
-==============================
+------------------------------
   * on *each* participating computer...
   * enter the dojo's 6-character id into the green input box
   * click the [enter] button
@@ -26,7 +28,7 @@ entering your programming dojo
    that traffic-light plus << < > >> buttons to navigate forwards and backwards.
 
 
-## traffic lights
+### traffic lights
 
 The result of pressing the [test] button is displayed in the 'output' file
 and also as a new traffic-light (at the top).
@@ -47,7 +49,7 @@ navigate forwards and backwards.
 
 
 reviewing your programming dojo
-===============================
+-------------------------------
 You can get to the dashboard page in two ways.
   * from the home page, enter the dojo's id and click the [review] button.
   * from the test page, click the animal image at the top right
@@ -62,8 +64,8 @@ Each horizontal row corresponds to one animal and displays, from left to right,
     navigate forwards and backwards.
 
 
-auto refresh?
--------------
+### auto refresh?
+
 The dashboard page auto-refreshes every 10 seconds. As more and more tests
 are run, more and more traffic-lights appear taking up more and more
 horizontal space. These traffic-lights auto scroll:
@@ -74,8 +76,8 @@ The idea is to leave auto-refresh on *during* the dojo
 and to turn it *off* before starting a dashboard review.
 
 
-|60s| columns?
----------------
+### |60s| columns?
+
 When this is checked each vertical column corresponds to 60 seconds.
 Every 6 auto-refreshes a new rightmost column will appear
 containing all the traffic-lights created by all the animals in those 60
@@ -87,7 +89,7 @@ vertically time-aligned.
 
 
 reviewing the diffs
-===================
+-------------------
 Clicking on any traffic-light opens a dialog showing the diffs for that
 traffic-light for that animal. As you navigate forwards and backwards using
 the << < > >> buttons the server will stay on the same file if it continues to
@@ -127,7 +129,7 @@ Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
-## re-entering your programming dojo
+### re-entering your programming dojo
 
 You can re-enter at any animals' most recent traffic-light by pressing
 the re-enter button (from the home page) and then clicking the animal.
@@ -202,10 +204,8 @@ pull.sh performs the following tasks...
 
 
 
-
-
 adding a new language
-=====================
+---------------------
 Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
   For example:
   ```
@@ -251,7 +251,7 @@ $ chgrp www-data *
 ```
 
 
-## manifest.json parameters
+### manifest.json parameters
 
 "image_name": string
 
@@ -347,7 +347,7 @@ $ chgrp www-data *
 
 
 adding a new exercise
-=====================
+---------------------
   * Create a new sub-directory under cyberdojo/exercises/
     Example:
     ```
@@ -360,6 +360,8 @@ adding a new exercise
     ```
 
 
+Misc
+====
 
 disk space
 ----------
@@ -412,8 +414,8 @@ $ git diff 4 5 sandbox/filename
 It's much easier and more informative to just click on dashboard traffic light.
 
 
-misc notes
-----------
+notes
+-----
   * http://vimeo.com/15104374 has a video of me doing the Roman Numerals
    exercise in Ruby in a very early version of cyber-dojo
   * http://vimeo.com/8630305 has a video of an even earlier version of
