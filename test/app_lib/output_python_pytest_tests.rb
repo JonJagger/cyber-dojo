@@ -117,6 +117,16 @@ class OutputPythonPyTestTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - -
 
+  test "error in cyber-dojo.sh is amber" do
+    output =
+    [
+      "./cyber-dojo.sh: 1: ./cyber-dojo.sh: sdpython: not found"
+    ].join("\n")
+    assert_equal :amber, colour_of(output)
+  end
+
+  #- - - - - - - - - - - - - - - -
+
   def colour_of(output)
     OutputParser::parse_python_pytest(output)
   end

@@ -46,8 +46,8 @@ module OutputParser
 
   def self.parse_python_pytest(output)
     return :red   if /=== FAILURES ===/.match(output)
-    return :amber if /=== ERRORS ===/.match(output)
-    return :green
+    return :green if /=== (\d*) passed/.match(output)
+    return :amber
   end
 
   def self.parse_catch(output)
