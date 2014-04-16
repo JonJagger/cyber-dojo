@@ -22,8 +22,8 @@ en:
       a_place_to_practice: "the place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer enter the same id"
-      please_donate: "If you find cyber-dojo useful please donate.
-                      Donations are used solely to buy
+      please_donate: "if you find cyber&#8209;dojo useful please donate.
+                      donations are used solely to buy
                       <a href='http://www.raspberrypi.org/'>raspberry pi'es</a>
                       <a href='http://jonjagger.blogspot.co.uk/2013/04/cyber-dojo-raspberry-pies-in-action.html'>for kids</a>."
       your_animal_is: "your animal is the"
@@ -45,22 +45,24 @@ en:
       exercise: "exercise"
       
     buttons:
-      create: "create"
       ok: "ok"
       close: "close"
       cancel: "cancel"
+      
+      create: "create"
       enter: "enter"
       reenter: "re-enter"
       review: "review"
+      
       about: "about"
       basics: "basics"
       donators: "donators"
       faqs: "faqs"
       feedback: "feedback"
       source: "source"
-      links: "links"
       tips: "tips"
       why: "why"
+      
       test: "test"
       new_file: "new"
       rename_file: "rename"
@@ -93,7 +95,6 @@ en:
                      bright future. Thank for you contribution to our training
                      efforts. We are delighted to sponsor the cyber-dojo project
                      by contributing $1000."
-      thank_you: "thank you"
       
     faqs:
       why_dont_you_add_syntax_highlighting: "Why don't you add syntax highlighting ?"
