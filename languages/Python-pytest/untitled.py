@@ -1,3 +1,5 @@
 
-def answer():
-    return 42
+class Untitled:
+
+    def answer(self):
+        return 42

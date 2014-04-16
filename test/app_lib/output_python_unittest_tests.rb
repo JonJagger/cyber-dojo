@@ -1,7 +1,7 @@
 # encoding: iso-8859-1
 require File.dirname(__FILE__) + '/../test_helper'
 
-class OutputPythonTests < ActionController::TestCase
+class OutputPythonUnitTestTests < ActionController::TestCase
 
   include OutputParser
 
@@ -26,6 +26,8 @@ class OutputPythonTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - -
+
   test "one test passed and none failing is green" do
     output =
       [
@@ -38,6 +40,8 @@ class OutputPythonTests < ActionController::TestCase
     assert_equal :green, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - -
+
   test "two tests passed and none failing is green" do
     output =
       [
@@ -49,6 +53,8 @@ class OutputPythonTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - -
 
   test "one passing test and one failing test is red" do
     output =
@@ -71,6 +77,8 @@ class OutputPythonTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - -
+
   test "syntax error is amber" do
     output =
     [
@@ -84,6 +92,8 @@ class OutputPythonTests < ActionController::TestCase
     ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_python_unittest(output)

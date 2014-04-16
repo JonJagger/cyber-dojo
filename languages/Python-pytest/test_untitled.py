@@ -1,5 +1,6 @@
+import untitled
 
-def test_untitled():
+def test_answer():
     '''simple example to start you off'''
-    assert answer() = (6 * 9)
-
+    obj = untitled.Untitled()
+    assert obj.answer() == 6*7
