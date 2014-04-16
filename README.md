@@ -217,11 +217,11 @@ Create a manifest.json file in this directory.
   ```
 Note the above are
   ```
-  cyberdojo/languages
+  cyberdojo/test/cyberdojo/languages/...
   ```
 and not
   ```
-  cyberdojo/test/cyberdojo/languages
+  cyberdojo/languages
   ```
 Each manifest.json file contains an ruby object in JSON format
 Example: the one for Java-JUnit looks like this:
@@ -558,13 +558,11 @@ Erlang(26MB)
 ```
 $ apt-get install erlang
 ```
-(thanks to Kalervo Kujala)
 ------
 Haskell (111MB)
 ```
 $ apt-get install libghc6-hunit-dev
 ```
-(thanks to Miika-Petteri Matikainen)
 ------
 Go (44MB)
 ```
@@ -590,14 +588,12 @@ $ make install
 $ cd ~
 $ rm -r node
 ```
-(see https://github.com/joyent/node/wiki/Installation)
 -----
 CoffeeScript (3MB)
 ```
 $ npm install --global jasmine-node
 ```
 (thanks to Johannes Brodwall)
-(ensure JavaScript node is installed first as per instructions above)
 -----
 PHP (3MB)
 ```
@@ -632,14 +628,12 @@ export PATH=$PATH:${location-of-groovy-bin}
 ```
 This also gave me the three jars I needed.
   junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
-(thanks to Schalk Cronje)
 ------
 Groovy-Spock
 ```
 $ grape -Dgrape.root=$(pwd) install org.spockframework spock-core 0.7-groovy-2.0
 ```
 this gave me the spock jar I needed.
-(thanks to Schalk Cronje)
 
 
 
