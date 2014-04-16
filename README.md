@@ -27,6 +27,12 @@ entering your programming dojo
   * clicking on any traffic-light opens a dialog showing the diffs for
    that traffic-light plus << < > >> buttons to navigate forwards and backwards.
 
+You can also re-enter at any animals' most recent traffic-light by pressing
+the re-enter button (from the home page) and then clicking the animal.
+This is occasionally useful if one computer has to replace another (eg
+if your doing an evening dojo and someone has to leave early).
+
+
 
 ### traffic lights
 
@@ -128,13 +134,6 @@ no diffs at all. The  << < > >> buttons still work and maintain the "no-diff".
 Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
-
-### re-entering your programming dojo
-
-You can re-enter at any animals' most recent traffic-light by pressing
-the re-enter button (from the home page) and then clicking the animal.
-This is occasionally useful if one computer has to replace another (eg
-if your doing an evening dojo and someone has to leave early).
 
 
 
