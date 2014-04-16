@@ -34,7 +34,7 @@ $text-color: darken($lighter-color, 10%);
   }
   td#column-left, td#column-right {
     padding: 1em;
-    background-color: lighten($darker-color, 15%);
+    background-color: lighten($darker-color, 10%);
     border: dotted 1px DarkGray;
     width: 140px;
     position: relative;

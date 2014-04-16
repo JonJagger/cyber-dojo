@@ -22,7 +22,7 @@ entering your programming dojo
   * a new test page/tab will open in your browser
   * edit the test files...
   * edit the code files...
-  * press the [test] button
+  * press the `[test]` button
   * a new traffic-light appears
   * traffic-lights progress along the top, left-to-right, oldest-to-newest
   * clicking on any traffic-light opens a dialog showing the diffs for
