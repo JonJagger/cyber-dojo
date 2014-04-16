@@ -126,8 +126,8 @@ Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
 
 
-re-entering your programming dojo
-=================================
+## re-entering your programming dojo
+
 You can re-enter at any animals' most recent traffic-light by pressing
 the re-enter button (from the home page) and then clicking the animal.
 This is occasionally useful if one computer has to replace another (eg
@@ -135,18 +135,72 @@ if your doing an evening dojo and someone has to leave early).
 
 
 
-adding a new exercise
-=====================
-  * Create a new sub-directory under cyberdojo/exercises/
-    Example:
+docker on the cyber-dojo server
+===============================
+cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
+is installed. If it is then...
+  * it will only offer languages/ whose manifest.json file
+    has an "image_name" entry that exists. For example, if
     ```
-    cyberdojo/exercises/FizzBuzz
+    languages/Java-JUnit/manifest.json
     ```
-  * Create a text file called instructions in this directory.
-    Example:
+    contains this...
+    ```json
+    {
+
+      "image_name": "cyberdojo/java-1.8"
+    }
     ```
-    cyberdojo/exercises/FizzBuzz/instructions
+    then Java-JUnit will only be offered as a language on the
+    initial setup page if the docker image "cyberdojo/java-1.8" exists
+    on the host server, as determined by running
+    ```bash
+    $ docker images
     ```
+  * it will use the docker "image_name" container to execute an animals
+    cyber-dojo.sh file each time the animal presses the [test] button.
+  * however, if the environment variable CYBERDOJO_USE_HOST
+    is set (to anything) then cyber-dojo will use the raw host server
+    even if docker is installed.
+
+
+running your own docker'd cyber-dojo server
+-------------------------------------------
+Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
+Install cyber-dojo and docker into it using
+[setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
+
+
+installing languages on a docker'd cyber-dojo server
+----------------------------------------------------
+```bash
+$ docker search cyberdojo
+```
+will tell you the names of the docker container images held in the
+[docker cyberdojo index](https://index.docker.io/u/cyberdojo/)
+Now do a
+```bash
+$ docker pull IMAGE_NAME
+```
+for each IMAGE_NAME matching the image_name entry in
+each languages/LANG/manifest.json file that you wish to use.
+
+
+pulling from the cyberdojo github repo
+--------------------------------------
+```bash
+  $ cd /var/www/cyberdojo
+  $ ./pull.sh
+```
+If pull.sh asks for a password just hit return.
+pull.sh performs the following tasks...
+  * pulls the latest source from the cyberdojo github repo
+  * ensures any new files and folders have the correct group and owner
+  * checks for any gemfile changes
+  * restarts apache
+
+
+
 
 
 adding a new language
@@ -196,8 +250,8 @@ $ chgrp www-data *
 ```
 
 
-manifest.json parameters
-========================
+## manifest.json parameters
+
 "image_name": string
 
   The name of docker image to execute cyber-dojo.sh.
@@ -291,64 +345,18 @@ manifest.json parameters
 
 
 
-DOCKER'D SERVER
-===============
-cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
-is installed. If it is then...
-  * it will only offer languages/ whose manifest.json file
-    has an "image_name" entry that exists. For example, if
-    languages/Java-JUnit/manifest.json contains this...
-    ```json
-    {
-      
-      "image_name": "cyberdojo/java-1.8"
-    }
+adding a new exercise
+=====================
+  * Create a new sub-directory under cyberdojo/exercises/
+    Example:
     ```
-    then Java-JUnit will only be offered as a language on the
-    initial setup page if the docker image "cyberdojo/java-1.8" exists
-    on the host server (as determined by running `docker images`)
-  * it will use the docker "image_name" container to execute an animals
-    cyber-dojo.sh file each time the animal presses the [test] button.
-  * however, if the environment variable CYBERDOJO_USE_HOST
-    is set (to anything) then cyber-dojo will use the raw host server
-    even if docker is installed.
-
-
-running your own docker'd cyber-dojo server
--------------------------------------------
-Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
-Install cyber-dojo and docker into it using
-[setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
-
-
-installing languages on a docker'd cyber-dojo server
-----------------------------------------------------
-```bash
-$ docker search cyberdojo
-```
-will tell you the names of the docker container images held in the
-[docker cyberdojo index](https://index.docker.io/u/cyberdojo/)
-Now do a
-```bash
-$ docker pull IMAGE_NAME
-```
-for each IMAGE_NAME matching the image_name entry in
-each languages/LANG/manifest.json file that you wish to use.
-
-
-pulling from the cyberdojo github repo
---------------------------------------
-```bash
-  $ cd /var/www/cyberdojo
-  $ ./pull.sh
-```
-If pull.sh asks for a password just hit return.
-pull.sh performs the following tasks...
-  * pulls the latest source from the cyberdojo github repo
-  * ensures any new files and folders have the correct group and owner
-  * checks for any gemfile changes
-  * restarts apache
-
+    cyberdojo/exercises/FizzBuzz
+    ```
+  * Create a text file called instructions in this directory.
+    Example:
+    ```
+    cyberdojo/exercises/FizzBuzz/instructions
+    ```
 
 
 
