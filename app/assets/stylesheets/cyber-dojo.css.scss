@@ -68,6 +68,7 @@ button {
   border: $filename_and_button_border_size solid $darker-color;
   @include rounded-corner(4px);
   display: inline-block;
+  @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
 }
 
 button[disabled] {

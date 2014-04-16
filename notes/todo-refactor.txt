@@ -1,40 +1,35 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
+  Now server responds in json the hyperlinks no longer work. Fix.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   make sure the new home page looks ok if the browser shows it
   in various sizes after doing CTL+ and CTL-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   There should be a dependency on the language manifest file
   only for startup. Once started a kata should have a *copy* of
   the manifest. Eg, I edit the manifest's highlight_filenames settings
   it should affects only those katas started after the edit.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   add in example of each primitive useable in the unit-test-framework
   chosen. As an example see the starting test code for James' cpputest.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   is make_manifest in test_helper.rb used anywhere anymore?
   move app/lib/Choose.language into app/models/Languages?
   move app/lib/Choose.exercise into app/models/Exercises?
   move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   application_controller does this...
     def root_path
       Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
     end
   make it so root_path is always set via ENV far from shell.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   prune_large.rb and prune_small.rb rework to used Dojo.each function
   Dojo.create_kata(manifest)
     add 2nd parameter specifying format, no default, on call use "rb"
   ...
   app_lib/Choose methods -> Dojo methods
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   Revert and fork javascript is virtually identical.
   ...
   Can i18n yml files be split?
@@ -47,12 +42,10 @@ REFACTOR
     eg diff->diff_dialog
     don't forget to update application.css.scss
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   It would be simpler if output and instructions were not mixed
   into kata.language and avatar.setup did an explicit
   save(kata.exercise.instructions)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTOR
   Check for uses of system('x') and `x` that should
   also have an external class representation
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CSS
+  use cursor: not-allowed
+  for disabled buttons.
+  Do on jQuery dialog buttons too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
   Make dedicated language_manifest_checker.
   Split off red/amber/green testing into separate tester class.

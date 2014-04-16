@@ -4,9 +4,9 @@ $text-color: darken($lighter-color, 10%);
 #home-page {
 
   font-size: 1.15em;
-  margin-top: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
+  margin-top: 1.5em;
+  margin-left: 3em;
+  margin-right: 3em;
 
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -15,7 +15,7 @@ $text-color: darken($lighter-color, 10%);
     margin-bottom: 0em;
     padding-bottom: 0em;
     position: relative;
-    top: -20px;
+    top: -28px;
   }
   #home-page-logo {
     text-align: center;
@@ -23,9 +23,9 @@ $text-color: darken($lighter-color, 10%);
   }
   #a_place_to_practice {
     font-size: 1.3em;
-    color: $text-color;
-    margin-top: -40px;
-    margin-bottom: 1em;
+    color: lighten($text-color, 5%);
+    margin-top: -50px;
+    margin-bottom: 2em;
   }
   td#column-middle {
     padding-left: 2em;
@@ -58,12 +58,12 @@ $text-color: darken($lighter-color, 10%);
   #kata-id-input {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     background: lighten($green, 20%);
-    @include gradient-lighten($green, 30%, 25%, 20%);
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
     width: 254px;
     margin-bottom: 2px;
+    @include gradient-lighten($green, 40%, 30%, 20%);
   }
   #create-button, #enter-button, #reenter-button,  #review-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -71,18 +71,13 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-largest();
     text-align: center;
     width: 260px;
-    margin-left: 10px;
-    //@include gradient-lighten($amber, 20%, 10%, 5%);
+    margin-left: 0px;
   }
   #create-button {
     margin-bottom: 30px;
   }
   #review-button {
-    margin-bottom: 30px;
-  }
-  #reenter-button {
-    Xbackground: darken($lighter-color, 25%);
-    background: LightGray;
+    margin-bottom: 40px;
   }
   #raspberry-pi-logo {
     padding-bottom: 10px;
@@ -117,7 +112,7 @@ $text-color: darken($lighter-color, 10%);
     text-align: center;
     width: 270px;
     margin-left: 0px;
-    //@include gradient-lighten($amber, 20%, 10%, 5%);
+    @include gradient-lighten($green, 40%, 30%, 20%);
 }
 
 a:link, a:visited

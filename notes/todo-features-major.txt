@@ -1,41 +1,17 @@
 
-DOCKER
-======
 
-o) fix image for Ruby
-
-o) zip up katas/ folder from cyber-dojo.com
-   and ftp to cyber-dojo.org
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+docker
 o) copy files I zipped up before when moving server.
    Eg check out tl_25_age_14.txt
    That zip file is also saved on cyber-dojo.com
-
-o) redirect cyber-dojo.com to cyber-dojo.org
-   We are live.
-
 o) make micro server with large-hard disk and
    copy katas.zip file from cyber-dojo.com to it.
    copy tl_25_age_14'd katas too.
-
 o) Destroy server cyber-dojo.com
-
 o) See if reserved instance switches to cyber-dojo.org
-
 o) If not pay to reserve server holding new cyber-dojo.org?
-
-o) create containers for C#, Haskell, Erlang, Go, Groovy, PHP, Perl, Python, etc.
-
-o) Using docker run with volume mount to create docker-runner.
-   This means...
-   -- creation of tar.gz files is much easier
-   -- if docker is enabled I need two language_each iterations
-      one for the subdirs of cyberdojo/languages
-      one for the cyberdojo/language_* docker images
-      On setup only display a language if it's manifest's image_name
-      is present in the docker images list.
-   -- collect all language names. select{} each one using runner.predicate
-
+o) create containers for Go, Groovy, PHP, etc.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 o) refactor so new katas save sha1 hashes
