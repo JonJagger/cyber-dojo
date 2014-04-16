@@ -414,6 +414,20 @@ $ git diff 4 5 sandbox/filename
 It's much easier and more informative to just click on dashboard traffic light.
 
 
+
+turning off spell-checking in your browser
+------------------------------------------
+and avoid annoying red underlines the code editor...
+In Chrome
+  1. Right click in the editor
+  2. Under Spell-checker Options>
+  3. Deselect 'Check Spelling in this Field'
+In Opera/Firefox
+  1. Right click in the editor
+  2. Deselect 'Check spelling'
+
+
+
 notes
 -----
   * http://vimeo.com/15104374 has a video of me doing the Roman Numerals
@@ -658,18 +672,6 @@ pulling the latest cyberdojo github repo
 You'll need the username and password. I will happily tell you these if
 you email me: jon@jaggersoft.com
 
-
-
-turning off spell-checking in your browser
-------------------------------------------
-and avoid annoying red underlines the code editor...
-In Chrome
-  1. Right click in the editor
-  2. Under Spell-checker Options>
-  3. Deselect 'Check Spelling in this Field'
-In Opera/Firefox
-  1. Right click in the editor
-  2. Deselect 'Check spelling'
 
 
 
