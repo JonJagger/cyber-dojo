@@ -1,6 +1,6 @@
 
-creating your coding dojo
-=========================
+creating your programming dojo
+==============================
   * from the home page...
   * click the [create] button
   * click your chosen language|unit-test-framework (eg C++|assert)
@@ -10,8 +10,8 @@ creating your coding dojo
     characters long (in the URL) but 6 is enough for uniqueness.
 
 
-enter your coding dojo
-======================
+enter your programming dojo
+===========================
   * on *each* participating computer...
   * enter the 6-character id into the green input box
   * click the [enter] button
@@ -26,15 +26,16 @@ enter your coding dojo
    that traffic-light plus << < > >> buttons to navigate forwards and backwards.
 
 
-traffic lights
-==============
-The result of each pressing the [test] button is displayed in the 'output' file
+## traffic lights
+
+The result of pressing the [test] button is displayed in the 'output' file
 and also as a new traffic-light (at the top). Clicking on a traffic-light
 opens a diff-view of the files associated with that traffic-light.
 Each traffic-light is coloured as follows:
   * red   - tests ran but at least one failed
   * amber - syntax error somewhere, tests not run
   * green - tests ran and all passed
+
 The colours on the traffic-light are positional, red at the top,
 amber in the middle, green at the bottom. This means you can still read the
 display if you are colour blind.
@@ -61,6 +62,7 @@ Each horizontal row corresponds to one animal and displays, from left to right,
     that traffic-light for that animal together with << < > >> buttons to
     navigate forwards and backwards.
 
+
 auto refresh?
 -------------
 The dashboard page auto-refreshes every 10 seconds. As more and more tests
@@ -68,7 +70,9 @@ are run, more and more traffic-lights appear taking up more and more
 horizontal space. These traffic-lights auto scroll:
   * old ones are scrolled out of view to the left
   * the animal image is always visible to the right.
+
 The idea is to turn off auto-refresh before starting a dashboard review.
+
 
 |60s| columns?
 ---------------
@@ -178,11 +182,13 @@ Make sure all the filenames are in the new folder, including cyber-dojo.sh
 manifest.json parameters
 ========================
 "image_name": string
+
   The name of docker image to execute cyber-dojo.sh.
   Optional. Not required if you're using a raw-server instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
 "visible_filenames": [ ... ]
+
   Filenames that will be visible in the browser's editor at startup.
   Each of these files must exist in the directory.
   The filename cyber-dojo.sh must be present as a "visible_filenames" entry
@@ -196,6 +202,7 @@ manifest.json parameters
   javac has to be installed.
 - - - - - - - - - - - - - - - - - - - -
 "support_filenames": [ ... ]
+
   The names of necessary supporting files. Each of these files must
   exist in the directory. For example, junit .jar files or nunit .dll assemblies.
   These are symlinked from the /languages folder to each animals /katas folder.
@@ -203,6 +210,7 @@ manifest.json parameters
   Not required if you do not need support files.
 - - - - - - - - - - - - - - - - - - - -
 "highlight_filenames": [ ... ]
+
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many "visible_filenames" and want to mark which
   files form the focus of the practice. A subset of visible_filenames, but...
@@ -229,16 +237,19 @@ manifest.json parameters
   will default to ['cyber-dojo','makefile']
 - - - - - - - - - - - - - - - - - - - -
 "display_name": string
+
   The name of the language as it appears in the setup page and also in the info
   displayed at the top-left of the test and dashboard pages.
   Optional. Defaults to the name of the folder holding the manifest.json file.
 - - - - - - - - - - - - - - - - - - - -
 "display_test_name": string
+
   The name of the unit-test-framework as it appears in the setup page and also in
   in the info displayed at the top-left of the test and dashboard pages.
   Optional. Defaults to the "unit_test_framework" value.
 - - - - - - - - - - - - - - - - - - - -
 "unit_test_framework": string
+
   The name of the unit test framework which partially determines the
   name of the ruby function (in the cyber-dojo server) used to parse the
   test output (to see if the traffic-light is red/green/amber).
@@ -249,14 +260,16 @@ manifest.json parameters
   Required. No default.
 - - - - - - - - - - - - - - - - - - - -
 "tab_size": int
+
   The number of spaces a tab character expands to in the editor
   textarea. Not required. Defaults to 4 spaces.
 
 
-DOCKER'D SERVER   https://www.docker.io/
-========================================
-cyber-dojo probes the host server to see if docker is installed.
-If it is then...
+
+DOCKER'D SERVER
+===============
+cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
+is installed. If it is then...
   * it will only offer languages/ whose manifest.json file
     has an "image_name" entry that exists. For example, if
     languages/Java-JUnit/manifest.json contains this...
@@ -284,7 +297,7 @@ installing languages on a docker server
 ---------------------------------------
 $ docker search cyberdojo
 will tell you the names of the docker container images held in the
-docker cyberdojo index at https://index.docker.io/u/cyberdojo/
+[docker cyberdojo index](https://index.docker.io/u/cyberdojo/)
 Now do a
 $ docker pull IMAGE_NAME
 for each IMAGE_NAME matching the image_name entry in
@@ -301,6 +314,84 @@ pull.sh performs the following tasks...
   o) ensures any new files and folders have the correct group and owner
   o) checks for any gemfile changes
   o) restarts apache
+
+
+
+
+disk space
+----------
+The design of cyber-dojo is very heavy on inodes. You will almost certainly
+run out of inodes before running out of disk space. The folder that eats
+the inodes is katas/
+
+
+katas directory structure
+-------------------------
+The rails code does NOT use a database.
+Instead each practice session lives in a git-like directory structure based
+on its 10 character id. For example the session with id 82B583C347 lives at
+  cyberdojo/katas/82/B583C347
+Each started animal has a sub-directory underneath this, eg
+  cyberdojo/katas/82/B583C347/wolf
+Each started animal has a sandbox sub-directory where its files are held, eg
+  cyberdojo/katas/82/B583C347/wolf/sandbox
+
+
+git repositories
+----------------
+Each started animal has its own git respository, eg
+  cyberdojo/katas/82/B583C347/wolf/.git
+The starting files (as loaded from the wolf/manifests.rb file) form
+tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a
+message and tag which is simply the increment number. For example, the fourth
+time the wolf computer presses the 'test' button causes
+>git commit -a -m '4'
+>git tag -m '4' 4 HEAD
+From an animal's directory you can issue the following commands:
+To look at filename for tag 4
+>git show 4:sandbox/filename
+To look at filename's differences between tag 4 and tag 5
+>git diff 4 5 sandbox/filename
+It's much easier and more informative to just click on dashboard traffic light.
+
+
+misc notes
+----------
+  * http://vimeo.com/15104374 has a video of me doing the Roman Numerals
+   exercise in Ruby in a very early version of cyber-dojo
+  * http://vimeo.com/8630305 has a video of an even earlier version of
+   cyber-dojo I submitted as a proposal to the Software Craftsmanship
+   conference 2010.
+  * When I started cyber-dojo I didn't know any ruby, any rails, or any
+   javascript (and not much css or html either). I'm self employed so
+   I've have no-one to pair with (except google) while developing this
+   in my limited spare time. Some of what you find is likely to be
+   non-idiomatic. Caveat emptor!
+  * I work hard to *remove* features from cyber-dojo.
+   The simpler the environment the more players will concentrate on
+   the practice and the more they will need to collaborate with each other.
+   Remember the aim of a cyber-dojo is *not* to ship something!
+   The aim of cyber-dojo is to deliberately practice developing software
+   collaboratively.
+
+
+thank you
+---------
+  * Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
+   cyber-dojo and have provided lots of help right from the very early days.
+   Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
+   Michel - I really appreciate all your help and encouragement.
+  * James Grenning uses cyber-dojo a lot, via his own Turnkey S3 cloud servers,
+   and has provided awesome feedback and made several very generous donations.
+   Thank you James.
+  * Jerry Weinberg showed me the power of experiential learning on all
+   of his courses and conferences, notably PSL,
+   http://www.estherderby.com/problem-solving-leadership-psl
+   which strongly influenced the way I designed cyber-dojo. Thank you Jerry.
+
+
+
+
 
 
 
@@ -457,78 +548,6 @@ In Chrome
 In Opera/Firefox
   1. Right click in the editor
   2. Deselect 'Check spelling'
-
-
-disk space
-----------
-The design of cyber-dojo is very heavy on inodes. You will almost certainly
-run out of inodes before running out of disk space. The folder that eats
-the inodes is katas/
-
-
-katas directory structure
--------------------------
-The rails code does NOT use a database.
-Instead each practice session lives in a git-like directory structure based
-on its 10 character id. For example the session with id 82B583C347 lives at
-  cyberdojo/katas/82/B583C347
-Each started animal has a sub-directory underneath this, eg
-  cyberdojo/katas/82/B583C347/wolf
-Each started animal has a sandbox sub-directory where its files are held, eg
-  cyberdojo/katas/82/B583C347/wolf/sandbox
-
-
-git repositories
-----------------
-Each started animal has its own git respository, eg
-  cyberdojo/katas/82/B583C347/wolf/.git
-The starting files (as loaded from the wolf/manifests.rb file) form
-tag 0 (zero). Each run-the-tests event causes a new git commit and tag, with a
-message and tag which is simply the increment number. For example, the fourth
-time the wolf computer presses the 'test' button causes
->git commit -a -m '4'
->git tag -m '4' 4 HEAD
-From an animal's directory you can issue the following commands:
-To look at filename for tag 4
->git show 4:sandbox/filename
-To look at filename's differences between tag 4 and tag 5
->git diff 4 5 sandbox/filename
-It's much easier and more informative to just click on dashboard traffic light.
-
-
-misc notes
-----------
-  * http://vimeo.com/15104374 has a video of me doing the Roman Numerals
-   exercise in Ruby in a very early version of cyber-dojo
-  * http://vimeo.com/8630305 has a video of an even earlier version of
-   cyber-dojo I submitted as a proposal to the Software Craftsmanship
-   conference 2010.
-  * When I started cyber-dojo I didn't know any ruby, any rails, or any
-   javascript (and not much css or html either). I'm self employed so
-   I've have no-one to pair with (except google) while developing this
-   in my limited spare time. Some of what you find is likely to be
-   non-idiomatic. Caveat emptor!
-  * I work hard to *remove* features from cyber-dojo.
-   The simpler the environment the more players will concentrate on
-   the practice and the more they will need to collaborate with each other.
-   Remember the aim of a cyber-dojo is *not* to ship something!
-   The aim of cyber-dojo is to deliberately practice developing software
-   collaboratively.
-
-
-thank you
----------
-  * Olve Maudal, Mike Long and Johannes Brodwall have been enthusiastic about
-   cyber-dojo and have provided lots of help right from the very early days.
-   Mike Sutton and Michel Grootjans too. Olve, Mike, Johannes, Mike and
-   Michel - I really appreciate all your help and encouragement.
-  * James Grenning uses cyber-dojo a lot, via his own Turnkey S3 cloud servers,
-   and has provided awesome feedback and made several very generous donations.
-   Thank you James.
-  * Jerry Weinberg showed me the power of experiential learning on all
-   of his courses and conferences, notably PSL,
-   http://www.estherderby.com/problem-solving-leadership-psl
-   which strongly influenced the way I designed cyber-dojo. Thank you Jerry.
 
 
 
