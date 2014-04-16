@@ -22,24 +22,6 @@ REFACTORING-DOJOS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
--------------------------------------------
-building your own docker language container
--------------------------------------------
-o) choose a base-container to build on top of.
-   For example cyberdojo/build-essential
-   at https://index.docker.io/u/cyberdojo/
-o) write a dockerfile containing all the
-   commands (eg apt-get install's) required.
-   For example /languages/C#-NUnit/Dockerfile_csharp_nunit
-o) use the dockerfile to build your container
-   For example
-   $ docker build -t cyberdojo/my_container .
-   which creates a new container called cyberdojo/my_container
-   using the dockerfile in the current folder (.)
-o) fire up the new container in interactive mode
-   $ docker run -i -t cyberdojo/my_container /bin/bash
-   Try it out!
-   43ce90aa9f14:/#
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CUT FROM README (AFFECTED BY DOCKER)

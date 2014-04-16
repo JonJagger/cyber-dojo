@@ -1,5 +1,18 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+README.md
+  split into three
+  o) using cyber-dojo.org
+  o) cyber-dojo and docker
+  o) adding a new language
+  o) raw server (deprecated)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+OUTPUT-PARSER
+  in app/lib/
+  Refactor so patterns are matched for red and green
+  and default after those two is amber.
+  Use /regexp/ syntax.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 JAVA-LANGUAGE-MANIFEST
   cyberdojo/java-1.8
   should be
