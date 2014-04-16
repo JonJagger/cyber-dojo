@@ -13,7 +13,7 @@ creating your programming dojo
 entering your programming dojo
 ==============================
   * on *each* participating computer...
-  * enter the 6-character id into the green input box
+  * enter the dojo's 6-character id into the green input box
   * click the [enter] button
   * the server will tell you which animal you are (eg Panda).
   * click [ok]
@@ -29,8 +29,7 @@ entering your programming dojo
 ## traffic lights
 
 The result of pressing the [test] button is displayed in the 'output' file
-and also as a new traffic-light (at the top). Clicking on a traffic-light
-opens a diff-view of the files associated with that traffic-light.
+and also as a new traffic-light (at the top).
 Each traffic-light is coloured as follows:
   * red   - tests ran but at least one failed
   * amber - syntax error somewhere, tests not run
@@ -50,7 +49,7 @@ navigate forwards and backwards.
 reviewing your programming dojo
 ===============================
 You can get to the dashboard page in two ways.
-  * from the home page, enter the practice id and click the [review] button.
+  * from the home page, enter the dojo's id and click the [review] button.
   * from the test page, click the animal image at the top right
 
 Each horizontal row corresponds to one animal and displays, from left to right,
@@ -185,7 +184,7 @@ Example: the one for Java-JUnit looks like this:
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8"
+  "image_name": "cyberdojo/java-1.8",
   "tab_size": 4
 }
 ```
@@ -240,7 +239,7 @@ manifest.json parameters
 ```
   Not required. Defaults to empty.
   The apperance of "highlight_filenames" is controlled by the CSS
-  in app/assets/stylesheets/kata-dojo.css.scss
+  in app/assets/stylesheets/kata.css.scss
 ```css
     div[class~='filename'][class~='highlight']
     {
@@ -299,12 +298,12 @@ is installed. If it is then...
   * it will only offer languages/ whose manifest.json file
     has an "image_name" entry that exists. For example, if
     languages/Java-JUnit/manifest.json contains this...
-```json
-{
-  ...
-  "image_name": "cyberdojo/java-1.8"
-}
-```
+    ```json
+    {
+      
+      "image_name": "cyberdojo/java-1.8"
+    }
+    ```
     then Java-JUnit will only be offered as a language on the
     initial setup page if the docker image "cyberdojo/java-1.8" exists
     on the host server (as determined by running `docker images`)
