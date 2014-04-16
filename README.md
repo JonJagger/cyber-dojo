@@ -463,6 +463,7 @@ In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
+
 In this mode cyber-dojo clients have full rights on the cyber-dojo server.
 If you setup your own server you are strongly advised to consider using
   * a dedicated server.
@@ -631,9 +632,7 @@ I then added the following line to the end of /etc/apache2/envvars/
 export PATH=$PATH:${location-of-groovy-bin}
 ```
 This also gave me the three jars I needed.
-junit-4.11.jar
-groovy-all-2.1.5.jar
-hamcrest-core-1.3.jar
+junit-4.11.jar groovy-all-2.1.5.jar hamcrest-core-1.3.jar
 ------
 Groovy-Spock
 ```
