@@ -1,7 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Now server responds in json the hyperlinks no longer work. Fix.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   make sure the new home page looks ok if the browser shows it
   in various sizes after doing CTL+ and CTL-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -47,11 +47,12 @@ class ForkerController < ApplicationController
       result[:id] = id
     end
 
-    render :json => result
-
-    #respond_to do |format|
-    #  format.js if request.xhr?
-    #end
+    respond_to do |format|
+      format.json { render :json => result }
+      format.html { redirect_to :controller => 'dojo',
+                                :action => 'index',
+                                :id => result[:id] }
+    end
 
   end
 
