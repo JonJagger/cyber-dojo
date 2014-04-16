@@ -14,6 +14,8 @@
     "gmock_main.a"
   ],
 
-  "unit_test_framework": "google_test"
+  "display_name": "C++",
+  "display_test_name": "GoogleMock",
+  "unit_test_framework": "google_test",
 }
 
