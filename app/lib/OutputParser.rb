@@ -44,7 +44,7 @@ module OutputParser
     return :amber
   end
 
-  def self.parse_pytest(output)
+  def self.parse_python_pytest(output)
     return :amber
   end
 
