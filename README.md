@@ -188,40 +188,18 @@ for each IMAGE_NAME matching the image_name entry in
 each languages/LANG/manifest.json file that you wish to use.
 
 
-pulling from the cyberdojo github repo
---------------------------------------
-```bash
-  $ cd /var/www/cyberdojo
-  $ ./pull.sh
-```
-If pull.sh asks for a password just hit return.
-pull.sh performs the following tasks...
-  * pulls the latest source from the cyberdojo github repo
-  * ensures any new files and folders have the correct group and owner
-  * checks for any gemfile changes
-  * restarts apache
-
-
 
 adding a new language
 ---------------------
-Create a new sub-directory under cyberdojo/test/cyberdojo/languages/
+Create a new sub-directory under cyberdojo/languages/
   For example:
   ```
-  cyberdojo/test/cyberdojo/languages/Lisp
+  cyberdojo/languages/Lisp
   ```
 Create a manifest.json file in this directory.
   For example:
   ```
-  cyberdojo/test/cyberdojo/languages/Lisp/manifest.json
-  ```
-Note the above are
-  ```
-  cyberdojo/test/cyberdojo/languages/...
-  ```
-and not
-  ```
-  cyberdojo/languages
+  cyberdojo/languages/Lisp/manifest.json
   ```
 Each manifest.json file contains an ruby object in JSON format
 Example: the one for Java-JUnit looks like this:
@@ -238,7 +216,7 @@ Example: the one for Java-JUnit looks like this:
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8",
+  "image_name": "cyberdojo/java-1.8_junit",
   "tab_size": 4
 }
 ```
@@ -344,6 +322,19 @@ $ chgrp www-data *
   textarea. Not required. Defaults to 4 spaces.
 
 
+pulling from the cyberdojo github repo
+--------------------------------------
+```bash
+  $ cd /var/www/cyberdojo
+  $ ./pull.sh
+```
+If pull.sh asks for a password just hit return.
+pull.sh performs the following tasks...
+  * pulls the latest source from the cyberdojo github repo
+  * ensures any new files and folders have the correct group and owner
+  * checks for any gemfile changes
+  * restarts apache
+
 
 adding a new exercise
 ---------------------
@@ -359,7 +350,7 @@ adding a new exercise
     ```
 
 
-Misc
+misc
 ====
 
 disk space
@@ -670,7 +661,3 @@ pulling the latest cyberdojo github repo
 ----------------------------------------
 You'll need the username and password. I will happily tell you these if
 you email me: jon@jaggersoft.com
-
-
-
-
