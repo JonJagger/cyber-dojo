@@ -1,4 +1,11 @@
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOCKER IMAGES
+  this command is run inside DockerRunner
+  Is there a way to run it without the first line label?
+  And what if there are no images installed.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_models
+  drop linux_paas_ prefix from all test files that stub.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 README.md
   split into three

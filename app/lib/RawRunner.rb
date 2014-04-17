@@ -2,10 +2,7 @@
 # no isolation/protection/security, nothing.
 # See DockerRunner.rb
 
-require 'Runner'
-
 class RawRunner
-  include Runner
 
   def runnable?(language)
     true
@@ -53,6 +50,14 @@ private
     pid_map.each{ |pid,ppid| descendants[ppid] << descendants[pid] }
     # Flatten away the generations
     descendants[base].flatten - [base]
+  end
+
+  def terminated_after(max_seconds)
+    "Terminated by the cyber-dojo server after #{max_seconds} seconds."
+  end
+
+  def stderr2stdout(cmd)
+    cmd + ' 2>&1'
   end
 
 end

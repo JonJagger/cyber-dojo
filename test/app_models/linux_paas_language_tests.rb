@@ -13,6 +13,14 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "name is not translated if language dir has not been renamed" do
+    json_and_rb do
+      assert_equal 'Java-JUnit', @dojo.languages['Java-JUnit'].name
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "exists? is false before dir is made" do
     json_and_rb do
       @language = @dojo.languages['Erlang']

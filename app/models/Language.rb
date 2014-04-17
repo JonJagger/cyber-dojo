@@ -13,7 +13,7 @@ class Language
     # before the language-folder rename that you now
     # wish to fork from. Particularly for sessions with
     # well known id's such as the refactoring dojos.
-    # So patch to the new-name.
+    # So patch to the language new-name.
     return 'Ruby-TestUnit'   if @name === 'Ruby'
     return 'C++-assert'      if @name === 'C++'
     return 'C#-NUnit'        if @name === 'C#'
