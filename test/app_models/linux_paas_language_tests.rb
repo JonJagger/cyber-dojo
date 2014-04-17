@@ -4,10 +4,16 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   test "name is translated if old language dir has been renamed" do
     json_and_rb do
-      assert_equal 'Ruby-TestUnit', @dojo.languages['Ruby'].name
+      assert_equal 'C-assert', @dojo.languages['C'].name
       assert_equal 'C++-assert', @dojo.languages['C++'].name
       assert_equal 'C#-NUnit', @dojo.languages['C#'].name
+      assert_equal 'Erlang-eunit', @dojo.languages['Erlang'].name
+      assert_equal 'Haskell-hunit', @dojo.languages['Haskell'].name
+      assert_equal 'Java-JUnit', @dojo.languages['Java'].name
+      assert_equal 'Java-Mockito', @dojo.languages['Java-JUnit-Mockito'].name
+      assert_equal 'Perl-TestSimple', @dojo.languages['Perl'].name
       assert_equal 'Python-unittest', @dojo.languages['Python'].name
+      assert_equal 'Ruby-TestUnit', @dojo.languages['Ruby'].name
     end
   end
 
