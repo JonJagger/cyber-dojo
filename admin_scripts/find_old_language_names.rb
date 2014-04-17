@@ -22,7 +22,10 @@ dojo.katas.each do |kata|
       missing[kata.language.name] << kata.id
     end
   rescue SyntaxError => error
-    puts "Exception from kata #{kata.id}"
+    puts "SyntaxError from kata #{kata.id}"
+    puts error.message
+  rescue Encoding::InvalidByteSequenceError => error
+    puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
     puts error.message
   end
 end
