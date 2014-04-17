@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_header_expires
-    response.headers['Expires"'] = 1.year.from_now.httpdate
+    response.headers['Expires'] = 1.year.from_now.httpdate
   end
 
   def root_path

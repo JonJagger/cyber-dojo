@@ -14,25 +14,31 @@ class Language
     # wish to fork from. Particularly for sessions with
     # well known id's such as the refactoring dojos.
     # So patch to the language new-name.
-    return 'C-assert'        if @name === 'C'
-    return 'C++-assert'      if @name === 'C++'
-    return 'C#-NUnit'        if @name === 'C#'
-    return 'Erlang-eunit'    if @name === 'Erlang'
-    return 'Haskell-hunit'   if @name === 'Haskell'
-    return 'Java-JUnit'      if @name === 'Java'
-    return 'Java-Mockito'    if @name === 'Java-JUnit-Mockito'
-    return 'Perl-TestSimple' if @name === 'Perl'
-    return 'Python-unittest' if @name === 'Python'
-    return 'Ruby-TestUnit'   if @name === 'Ruby'
+    case @name
+    when 'C'       then return 'C-assert'
+    when 'C++'     then return 'C++-assert'
+    when 'C#'      then return 'C#-NUnit'
+    when 'Erlang'  then return 'Erlang-eunit'
+    when 'Haskell' then return 'Haskell-hunit'
+    when 'Java'    then return 'Java-JUnit'
+    when 'Java-JUnit-Mockito' then return 'Java-Mockito'
+    when 'Perl'    then return 'Perl-TestSimple'
+    when 'Python'  then return 'Python-unittest'
+    when 'Ruby'    then return 'Ruby-TestUnit'
+    else                return @name
+    end
+
     # Still to build docker image
-    # return 'Clojure-.test'        if @name === 'Clojure'
-    # return 'CoffeeScript-jasmine' if @name === 'CoffeeScript'
-    # return 'Go-testing'           if @name === 'Go'
-    # return 'Javascript-node'      if @name === 'Javascript'
-    # return 'PHP-PHPUnit'          if @name === 'PHP'
+    # when 'Clojure'      then return 'Clojure-.test'
+    # when 'CoffeeScript' then return 'CoffeeScript-jasmine'
+    # when 'Go'           then return 'Go-testing'
+    # when 'Javascript'   then return 'Javascript-node'
+    # when 'PHP'          then return 'PHP-PHPUnit'
+
     # Ok but no docker image yet...
     #"C++-Catch"            --> C++-Catch
-    @name
+
+    #@name
   end
 
   def exists?

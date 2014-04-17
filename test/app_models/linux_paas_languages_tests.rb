@@ -3,11 +3,11 @@ require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 class LinuxPaasLanguagesTests < LinuxPaasModelTestCase
 
   test "dojo.languages.each() forwards to paas.languages_each()" do
-    @paas.dir(@dojo.languages['C#'])
-    @paas.dir(@dojo.languages['Ruby'])
+    @paas.dir(@dojo.languages['C#-NUnit'])
+    @paas.dir(@dojo.languages['Ruby-TestUnit'])
     languages_names = @dojo.languages.map {|language| language.name}
-    assert languages_names.include?('C#'), 'C#: ' + languages_names.inspect
-    assert languages_names.include?('Ruby'), 'Ruby: ' + languages_names.inspect
+    assert languages_names.include?('C#-NUnit'), 'C#-NUnit: ' + languages_names.inspect
+    assert languages_names.include?('Ruby-TestUnit'), 'Ruby-TestUnit: ' + languages_names.inspect
   end
 
   test "dojo.languages[name] returns language with given name" do

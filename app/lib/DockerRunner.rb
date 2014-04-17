@@ -6,7 +6,9 @@
 class DockerRunner
 
   def runnable?(language)
-    @installed ||= `docker images`.lines.each.collect{|line| line.split[0]}
+    command = stderr2stdout('docker images')
+    output = `#{command}`
+    @installed ||= output.lines.each.collect{|line| line.split[0]}
     @installed.include?(language.image_name)
   end
 

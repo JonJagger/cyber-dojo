@@ -46,33 +46,7 @@ MODEL
   from the language?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
-  in Language.rb patch the name method so it converts old-names
-  to new-names (and add comment on why)
-  eg Ruby   -->  Ruby-TestUnit  DONE
-  eg C++    -->  C++-assert     DONE
-  eg C#     -->  C#-NUnit       DONE
-  eg Python --> Python-unittest DONE
-  find entries in /katas that do not match existing language
-  (use ruby script employing new paas->dojo->katas enumerator)
-  Ran find_old_language_names.rb on cyber-dojo.org
-  It returned
-  [
-  Docker image built
-   "Java-JUnit-Mockito",  --> Java-Mockito
-   "C",                   --> C-assert
-   "Erlang",              --> Erlang-eunit
-   "Java",                --> Java-JUnit
-   "Perl",                --> Perl-TestSimple
-   "Haskell",             --> Haskell-hunit
-  Still to build docker image
-   "C++-Catch"            --> C++-Catch
-   "Clojure",             --> Clojure-.test
-   "CoffeeScript",        --> CoffeeScript-jasmine
-   "Go",                  --> Go-testing
-   "Javascript",          --> Javascript-node
-   "PHP",                 --> PHP-PHPUnit
-  ]
-
+  in Language.rb patch remaining names so it converts old-names to new-names
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
   use cursor: not-allowed

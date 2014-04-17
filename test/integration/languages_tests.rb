@@ -18,7 +18,7 @@ class LanguagesTests < ActionController::TestCase
     languages = @dojo.languages.entries
     actual = languages.map{|language| language.name}.sort
     expected = [
-     "C#",
+     "C#-NUnit",
      "C++-Catch",
      "C++-GoogleTest",
      "Clojure",
