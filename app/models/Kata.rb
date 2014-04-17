@@ -1,4 +1,6 @@
 
+require 'Forwardable'
+
 class Kata
   extend Forwardable
 
