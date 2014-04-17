@@ -1,4 +1,6 @@
 
+require 'OsDir'
+
 class OsDisk
 
   def dir_separator

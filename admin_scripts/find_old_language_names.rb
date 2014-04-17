@@ -1,26 +1,8 @@
 
-me = File.expand_path(File.dirname(__FILE__))
-CYBERDOJO_HOME_DIR = File.expand_path('..', me) + '/'
-$LOAD_PATH.unshift CYBERDOJO_HOME_DIR + 'lib'
-$LOAD_PATH.unshift CYBERDOJO_HOME_DIR + 'app/lib'
-$LOAD_PATH.unshift CYBERDOJO_HOME_DIR + 'app/models'
+# First post-LinuxPaas-refactoring script to use
+# the app/models classes to navigate the domain
 
-require 'OsDisk'
-require 'OsDir'
-require 'Git'
-require 'LinuxPaas'
-require 'DockerRunner'
-require 'Dojo'
-require 'Languages'
-require 'Language'
-require 'Exercises'
-require 'Exercise'
-require 'Katas'
-require 'Kata'
-require 'Id'
-require 'JSON'
-
-#- - - - - - - - - - - - - - - - - - - - - - - - - - -
+require './domain_lib'
 
 disk = OsDisk.new
 git = Git.new

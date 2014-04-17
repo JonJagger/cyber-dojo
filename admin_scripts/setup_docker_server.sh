@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# running this on the Turnkey Rails image installs cyberdojo from
+# its git repo and also to apt-get installs docker.
+
 cd /var/www
 rm index.html
 rm -rf railsapp
