@@ -1,8 +1,5 @@
 
-require 'Forwardable'
-
 class Kata
-  extend Forwardable
 
   def initialize(dojo, id)
     @dojo,@id = dojo,id
