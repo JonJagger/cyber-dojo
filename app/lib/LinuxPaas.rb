@@ -53,9 +53,9 @@ class LinuxPaas
       end
 
       kata.language.support_filenames.each do |filename|
-        old_name = path(kata.language) + filename
-        new_name = path(avatar.sandbox) + filename
-        symlink(old_name, new_name)
+        from = path(kata.language) + filename
+        to = path(avatar.sandbox) + filename
+        symlink(from, to)
       end
 
       avatar.commit(tag=0)
@@ -123,8 +123,8 @@ class LinuxPaas
     dir(object).write(filename, content)
   end
 
-  def symlink(old_name, new_name)
-    @disk.symlink(old_name, new_name)
+  def symlink(from, to)
+    @disk.symlink(from, to)
   end
 
   def dir(obj)

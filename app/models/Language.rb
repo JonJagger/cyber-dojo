@@ -8,8 +8,16 @@ class Language
   attr_reader :dojo
 
   def name
-    # TODO: patch the name method so it converts old-names
-    # to new-names (to cater for renamed language folders)
+    # Some language folders have been renamed.
+    # This creates a problem for practice-sessions done
+    # before the language-folder rename that you now
+    # wish to fork from. Particularly for sessions with
+    # well known id's such as the refactoring dojos.
+    # So patch to the new-name.
+    return 'Ruby-TestUnit'   if @name === 'Ruby'
+    return 'C++-assert'      if @name === 'C++'
+    return 'C#-NUnit'        if @name === 'C#'
+    return 'Python-unittest' if @name === 'Python'
     @name
   end
 

@@ -2,10 +2,12 @@ require File.dirname(__FILE__) + '/linux_paas_model_test_case'
 
 class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
-  test "name is as set in ctor" do
+  test "name is translated if old language dir has been renamed" do
     json_and_rb do
-      language = @dojo.languages['Ruby']
-      assert_equal 'Ruby', language.name
+      assert_equal 'Ruby-TestUnit', @dojo.languages['Ruby'].name
+      assert_equal 'C++-assert', @dojo.languages['C++'].name
+      assert_equal 'C#-NUnit', @dojo.languages['C#'].name
+      assert_equal 'Python-unittest', @dojo.languages['Python'].name
     end
   end
 

@@ -19,12 +19,28 @@ JAVA-LANGUAGE-MANIFEST
   cyberdojo/java-1.8_junit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
+  in app/lib/LinuxPaas.rb
+  def make_kata_manifest(dojo, language, exercise, id, now)
+    {
+      :created => now,
+      :id => id,
+      :language => language.name,
+      :exercise => exercise.name,
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
+    }
+  end
+  Do I need to put :unit_test_framework and :tab_size
+  into the kata's manifest? Why not retrieve them
+  from the language?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
   in Language.rb patch the name method so it converts old-names
   to new-names (and add comment on why)
-  eg Ruby   -->  Ruby-TestUnit
-  eg C++    -->  C++-assert
-  eg C#     -->  C#-NUnit
-  eg Python --> Python-unittest
+  eg Ruby   -->  Ruby-TestUnit  DONE
+  eg C++    -->  C++-assert     DONE
+  eg C#     -->  C#-NUnit       DONE
+  eg Python --> Python-unittest DONE
   find entries in /katas that do not match existing language
   (use ruby script employing new paas->dojo->katas enumerator)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -33,8 +49,13 @@ CSS
   for disabled buttons.
   Do on jQuery dialog buttons too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LANGUAGE MANIFEST.JSON
+  s/image_name/docker_image_name/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
   Make dedicated language_manifest_checker.
+  Do I still need a cyberdojo/test/cyberdojo/languages folder?
+  Now I use docker I can simply wait to install the image_name
   Split off red/amber/green testing into separate tester class.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
@@ -53,9 +74,4 @@ CUSTOM-DOMAIN-NAMES
   James spins up custom names for clients
   eg  cisco.cyber-dojo.org - from amazon route 53
   Nice idea.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REPEAT
-  next to the [create] button have a [repeat] button
-  which automatically sets up a new dojo with the same
-  language and exercise as last time? Too clever?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
