@@ -58,7 +58,8 @@ class Kata
   end
 
   def manifest
-    text = paas.read(self, manifest_filename)
+    raw = paas.read(self, manifest_filename)
+    text = raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
     return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
     return @manifest ||= JSON.parse(text) if format_is_json?
   end
