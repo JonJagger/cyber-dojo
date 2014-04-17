@@ -1,5 +1,26 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+JAVA-LANGUAGE-MANIFEST
+  cyberdojo/java-1.8
+  should be
+  cyberdojo/java-1.8_junit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MODEL
+  in app/lib/LinuxPaas.rb
+  def make_kata_manifest(dojo, language, exercise, id, now)
+    {
+      :created => now,
+      :id => id,
+      :language => language.name,
+      :exercise => exercise.name,
+      :unit_test_framework => language.unit_test_framework,
+      :tab_size => language.tab_size
+    }
+  end
+  Do I need to put :unit_test_framework and :tab_size
+  into the kata's manifest? Why not retrieve them
+  from the language?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORKER-CONTROLLER
   for .html format I'm not checking if the fork worked.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -23,27 +44,6 @@ OUTPUT-PARSER
   Refactor so patterns are matched for red and green
   and default after those two is amber.
   Use /regexp/ syntax.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-JAVA-LANGUAGE-MANIFEST
-  cyberdojo/java-1.8
-  should be
-  cyberdojo/java-1.8_junit
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MODEL
-  in app/lib/LinuxPaas.rb
-  def make_kata_manifest(dojo, language, exercise, id, now)
-    {
-      :created => now,
-      :id => id,
-      :language => language.name,
-      :exercise => exercise.name,
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
-    }
-  end
-  Do I need to put :unit_test_framework and :tab_size
-  into the kata's manifest? Why not retrieve them
-  from the language?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in Language.rb patch remaining names so it converts old-names to new-names
