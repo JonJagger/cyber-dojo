@@ -2,6 +2,7 @@
 table { border-spacing: 0; }
 
 #cyber-dojo-page {
+  font-size: 0.9em;
   margin: {
     top: 0.3em;
     left: 0.3em;
@@ -120,11 +121,11 @@ div[class~="filename"], button[disabled]:hover {
 .file_content {
   background: $lighter-color;
   color: $darker-color;
-  width: 50em;
+  width: 48em;
   font-weight: 500;
 }
 
-.line_numbers, .file_content { height: 32em; }
+.line_numbers, .file_content { height: 30em; }
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
