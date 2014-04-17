@@ -95,7 +95,8 @@ class Language
 private
 
   def read(filename)
-    paas.read(self, filename)
+    raw = paas.read(self, filename)
+    raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
   def paas
