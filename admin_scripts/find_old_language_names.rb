@@ -15,11 +15,15 @@ languages_names = dojo.languages.collect {|language| language.name}
 
 missing = { }
 dojo.katas.each do |kata|
+  print '.'
   if !languages_names.include? kata.language.name
     missing[kata.language.name] ||= [ ]
     missing[kata.language.name] << kata.id
   end
 end
-
+print "\n"
+print "\n"
 p missing
+print "\n"
+print "\n"
 p missing.keys
