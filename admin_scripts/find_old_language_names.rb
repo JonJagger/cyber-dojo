@@ -16,9 +16,13 @@ languages_names = dojo.languages.collect {|language| language.name}
 missing = { }
 dojo.katas.each do |kata|
   print '.'
-  if !languages_names.include? kata.language.name
-    missing[kata.language.name] ||= [ ]
-    missing[kata.language.name] << kata.id
+  begin
+    if !languages_names.include? kata.language.name
+      missing[kata.language.name] ||= [ ]
+      missing[kata.language.name] << kata.id
+    end
+  rescue
+    puts "Exception from kata #{kata.id}"
   end
 end
 print "\n"
