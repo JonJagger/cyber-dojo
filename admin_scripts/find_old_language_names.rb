@@ -21,8 +21,9 @@ dojo.katas.each do |kata|
       missing[kata.language.name] ||= [ ]
       missing[kata.language.name] << kata.id
     end
-  rescue
+  rescue SyntaxError => error
     puts "Exception from kata #{kata.id}"
+    puts error.message
   end
 end
 print "\n"
