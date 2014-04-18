@@ -19,6 +19,7 @@ class Language
     when 'C++'     then return 'C++-assert'
     when 'C#'      then return 'C#-NUnit'
     when 'Erlang'  then return 'Erlang-eunit'
+    when 'Go'      then return 'Go-testing'
     when 'Haskell' then return 'Haskell-hunit'
     when 'Java'    then return 'Java-JUnit'
     when 'Java-JUnit-Mockito' then return 'Java-Mockito'
@@ -31,7 +32,6 @@ class Language
     # Still to build docker image
     # when 'Clojure'      then return 'Clojure-.test'
     # when 'CoffeeScript' then return 'CoffeeScript-jasmine'
-    # when 'Go'           then return 'Go-testing'
     # when 'Javascript'   then return 'Javascript-node'
     # when 'PHP'          then return 'PHP-PHPUnit'
     #
