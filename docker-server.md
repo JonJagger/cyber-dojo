@@ -4,7 +4,8 @@ docker on the cyber-dojo server
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
   * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
-    has an `image_name` entry that exists. For example, if
+    has an `image_name` entry that exists.
+    <br>For example, if
     ```
     languages/Java-JUnit/manifest.json
     ```
@@ -57,17 +58,17 @@ adding a new language
 ### write the languages' manifest.json file
 
 Create a new sub-directory under `cyberdojo/languages/`
-  For example:
+<br>For example:
   ```
   cyberdojo/languages/Lisp
   ```
 Create a `manifest.json` file in this directory.
-  For example:
+<br>For example:
   ```
   cyberdojo/languages/Lisp/manifest.json
   ```
 Each `manifest.json` file contains an ruby object in JSON format
-Example: the one for Java-JUnit looks like this:
+<br>Example: the one for Java-JUnit looks like this:
 ```json
 {
   "visible_filenames": [
@@ -235,12 +236,12 @@ $ chgrp www-data *
 adding a new exercise
 ---------------------
   * Create a new sub-directory under `cyberdojo/exercises/`
-    Example:
+    <br>Example:
     ```
     cyberdojo/exercises/FizzBuzz
     ```
   * Create a text file called `instructions` in this directory.
-    Example:
+    <br>Example:
     ```
     cyberdojo/exercises/FizzBuzz/instructions
     ```
