@@ -16,7 +16,7 @@ is installed. If it is then...
     }
     ```
     then Java-JUnit will only be offered as a language on the
-    initial setup page if the docker image `cyberdojo/java-1.8` exists
+    initial create page if the docker image `cyberdojo/java-1.8` exists
     on the server, as determined by running
     ```bash
     $ docker images
@@ -30,13 +30,13 @@ is installed. If it is then...
 
 running your own docker'd cyber-dojo server
 -------------------------------------------
-Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
-Install cyber-dojo and docker into it using
-[setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
+  * Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
+  * Install cyber-dojo and docker into it using
+    [setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
 
 
 pulling pre-built docker language containers
------------------------------------------------------------------------
+--------------------------------------------
 ```bash
 $ docker search cyberdojo
 ```
@@ -51,8 +51,8 @@ each `cyberdojo/languages/*/manifest.json` file that you wish to use.
 
 
 
-adding a new language to a docker'd cyber-dojo server
------------------------------------------------------
+adding a new language
+---------------------
 
 ### write the languages' manifest.json file
 
@@ -119,7 +119,7 @@ $ chgrp www-data *
   * the `unit_test_framework` entry in the languages' `manifest.json`
     file is the name of the function inside `OutputParser.rb` which is
     used to determine if the output from running `cyber-dojo.sh` in your container
-    on the current files parses qualifies as a red traffic-light, an amber traffic-light,
+    on the current files qualifies as a red traffic-light, an amber traffic-light,
     or a green traffic-light.
     There are lots of examples in
     [cyberdojo/app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
@@ -204,13 +204,14 @@ $ chgrp www-data *
 - - - - - - - - - - - - - - - - - - - -
 `"display_name": string`
 
-  The name of the language as it appears in the setup page and also in the info
+  The name of the language as it appears in the create page (where you select
+  your language and exercis) and also in the info
   displayed at the top-left of the test and dashboard pages.
   Optional. Defaults to the name of the folder holding the `manifest.json` file.
 - - - - - - - - - - - - - - - - - - - -
 `"display_test_name": string`
 
-  The name of the unit-test-framework as it appears in the setup page and also in
+  The name of the unit-test-framework as it appears in the create page and also in
   in the info displayed at the top-left of the test and dashboard pages.
   Optional. Defaults to the `"unit_test_framework"` value.
 - - - - - - - - - - - - - - - - - - - -
@@ -257,5 +258,3 @@ pull.sh performs the following tasks...
   * ensures any new files and folders have the correct group and owner
   * checks for any gemfile changes
   * restarts apache
-
-
