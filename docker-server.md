@@ -43,7 +43,7 @@ $ docker search cyberdojo
 ```
 will tell you the names of the docker container images held in the
 [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
-Now do a
+<br>Now do a
 ```bash
 $ docker pull IMAGE_NAME
 ```
@@ -136,7 +136,7 @@ $ chgrp www-data *
 `"image_name": string`
 
   The name of docker image to execute `cyber-dojo.sh`.
-  <br>Optional. Not required if you're using a raw-server instead
+  <br>Optional. Not required if you're using a [raw-server](raw-server.md) instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
 `"visible_filenames": [ string* ]`
@@ -166,9 +166,10 @@ $ chgrp www-data *
 
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many `"visible_filenames"` and want to mark which
-  files form the focus of the practice. A subset of `"visible_filenames"`, but...
-  <br>You can also name `instructions` (from the chosen exercise)
-  <br>You can also name `output` (always present)
+  files form the focus of the practice.
+  <br>A subset of `"visible_filenames"`, but...
+  <br>you can also name `instructions` (from the chosen exercise)
+  <br>you can also name `output` (always present)
   <br>For example
 ```json
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp", "instructions" ]
@@ -206,7 +207,7 @@ $ chgrp www-data *
 `"display_name": string`
 
   The name of the language as it appears in the create page (where you select
-  your language and exercis) and also in the info
+  your language and exercise) and also in the info
   displayed at the top-left of the test and dashboard pages.
   <br>Optional. Defaults to the name of the folder holding the `manifest.json` file.
 - - - - - - - - - - - - - - - - - - - -

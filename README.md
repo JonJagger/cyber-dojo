@@ -1,6 +1,8 @@
 
 [Running a dojo](running-a-dojo.md)
   * creating your programming dojo
+    * chose your language|unit-test-framework, eg `C++|assert`
+    * chosen your exercise, eg `Prime Factors`
   * entering your programming dojo
     * traffic lights
   * reviewing your programming dojo
@@ -22,5 +24,5 @@
   * turning off spell-checking in your browser
   * notes
   * thank you
-  
+
 [Raw Server (deprecated)](raw-server.md)

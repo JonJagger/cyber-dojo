@@ -82,9 +82,8 @@ and to turn it *off* just before starting a dashboard review.
 
 ### |60s| columns?
 
-When this is checked each vertical column corresponds to 60 seconds.
-Every 6 auto-refreshes a new rightmost column will appear
-containing all the traffic-lights created by all the animals in those 60
+When this is checked each vertical column corresponds to 60 seconds
+and contains all the traffic-lights created by all the animals in those 60
 seconds. If no animals press the `[test]` button during those 60 seconds the
 column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
@@ -131,5 +130,3 @@ You can also do a "no-diff" by simply entering the same value (eg 23) twice.
 no diffs at all. The  << < > >> buttons still work and maintain the "no-diff".
 Eg pressing the < button will move back one traffic-light and show the diff
 of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
-
-
