@@ -123,7 +123,7 @@ $ chgrp www-data *
     on the current files qualifies as a red traffic-light, an amber traffic-light,
     or a green traffic-light.
     There are lots of examples in
-    [cyberdojo/app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+    [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
 
   * There are lots of example tests in
     [cyberdojo/test/app_lib](https://github.com/JonJagger/cyberdojo/tree/master/test/app_lib)
@@ -136,7 +136,7 @@ $ chgrp www-data *
 `"image_name": string`
 
   The name of docker image to execute `cyber-dojo.sh`.
-  Optional. Not required if you're using a raw-server instead
+  <br>Optional. Not required if you're using a raw-server instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
 `"visible_filenames": [ string* ]`
@@ -160,21 +160,21 @@ $ chgrp www-data *
   These are symlinked from the `cyberdojo/languages` folder to each animals
   `cyberdojo/katas/...` subfolder.
   Despite the name `"support_filenames"` you can symlink a folder if required.
-  Not required if you do not need support files.
+  <br>Not required if you do not need support files.
 - - - - - - - - - - - - - - - - - - - -
 `"highlight_filenames": [ string* ]`
 
   Filenames whose appearance are to be highlighted in the browser.
   This can be useful if you have many `"visible_filenames"` and want to mark which
   files form the focus of the practice. A subset of `"visible_filenames"`, but...
-  You can also name `instructions` (from the chosen exercise)
-  You can also name `output` (always present)
-  For example
+  <br>You can also name `instructions` (from the chosen exercise)
+  <br>You can also name `output` (always present)
+  <br>For example
 ```json
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp", "instructions" ]
 ```
   The apperance of `"highlight_filenames"` is controlled by the CSS
-  in `cyberdojo/app/assets/stylesheets/kata.css.scss`
+  in [kata.css.scss](https://github.com/JonJagger/cyberdojo/blob/master/app/assets/stylesheets/kata.css.scss)
 ```css
     div[class~='filename'][class~='highlight']
     {
@@ -182,9 +182,9 @@ $ chgrp www-data *
     }
 ```
   The highlight_filenames entry also interacts with lowlights_filenames
-  (see Language.lowlight_filenames() in cyberdojo/app/models/Language.rb)
-  (see cd.notLowlightFilenames() in cyberdojo/app/assets/javascripts/cyber-dojo_file_load.js)
-  Again, its appearance in controlled from the same CSS file...
+  <br>see Language.lowlight_filenames() in [Language.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/models/Language.rb)
+  <br>see cd.notLowlightFilenames() in [cyber-dojo_file_load.js](https://github.com/JonJagger/cyberdojo/blob/master/app/assets/javascripts/cyber-dojo_file_load.js)
+  <br>Again, its appearance in controlled from the same CSS file...
 ```css
     div[class~='filename'][class~='lowlight']
     {
@@ -208,13 +208,13 @@ $ chgrp www-data *
   The name of the language as it appears in the create page (where you select
   your language and exercis) and also in the info
   displayed at the top-left of the test and dashboard pages.
-  Optional. Defaults to the name of the folder holding the `manifest.json` file.
+  <br>Optional. Defaults to the name of the folder holding the `manifest.json` file.
 - - - - - - - - - - - - - - - - - - - -
 `"display_test_name": string`
 
   The name of the unit-test-framework as it appears in the create page and also in
   in the info displayed at the top-left of the test and dashboard pages.
-  Optional. Defaults to the `"unit_test_framework"` value.
+  <br>Optional. Defaults to the `"unit_test_framework"` value.
 - - - - - - - - - - - - - - - - - - - -
 `"unit_test_framework": string`
 
@@ -222,15 +222,15 @@ $ chgrp www-data *
   name of the ruby function (on the cyber-dojo server) used to parse the
   test output (to see if the traffic-light is red/green/amber).
   For example, if the value is `cassert` then
-      [cyberdojo/app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+      [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
   must contain a method called `parse_cassert()` and will be called to parse the
   output of running the tests via the `cyber-dojo.sh` shell file.
-  Required. No default.
+  <br>Required. No default.
 - - - - - - - - - - - - - - - - - - - -
 `"tab_size": int`
 
-  The number of spaces a tab character expands to in the editor
-  textarea. Not required. Defaults to 4 spaces.
+  The number of spaces a tab character expands to in the editor textarea.
+  <br>Not required. Defaults to 4 spaces.
 
 
 adding a new exercise
