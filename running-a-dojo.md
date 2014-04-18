@@ -91,7 +91,7 @@ When not checked the traffic-lights of different animals are not
 vertically time-aligned.
 
 
-reviewing the diffs
+replaying the diffs
 -------------------
 Clicking on any traffic-light opens a dialog showing the diffs for that
 traffic-light for that animal. As you navigate forwards and backwards using

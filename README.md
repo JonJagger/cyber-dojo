@@ -1,26 +1,30 @@
 
 [Running a dojo](running-a-dojo.md)
   * creating your programming dojo
-    * chose your language|unit-test-framework, eg `C++|assert`
-    * chosen your exercise, eg `Prime Factors`
+    * chose your language|unit-test-framework, eg C++|assert
+    * chose your exercise, eg Prime Factors
   * entering your programming dojo
     * traffic lights
   * reviewing your programming dojo
     * auto refresh?
     * |60s| columns?
-  * reviewing the diffs
+  * replaying the diffs
 
 [Docker on the server](docker-server.md)
   * running your own docker'd cyber-dojo server
   * pulling pre-built docker language containers
   * adding a new language
+    * write the languages' manifest.json file
+    * build the docker image
+    * write an output parse function
   * adding a new exercise
   * pulling from the cyberdojo github repo
 
 [Misc](misc.md)
-  * disk space
+  * language manifest.json parameters
   * katas directory structure
   * git repositories
+  * disk space
   * turning off spell-checking in your browser
   * notes
   * thank you
