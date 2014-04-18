@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TOOL-TIPS
+  have them open up in popup right next to the item they are tipping.
+  Look at how its done in jQuery book.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 JAVA-LANGUAGE-MANIFEST
   cyberdojo/java-1.8
   should be
@@ -61,9 +65,6 @@ LANGUAGE-CHECKER
   Do I still need a cyberdojo/test/cyberdojo/languages folder?
   Now I use docker I can simply wait to install the image_name
   Split off red/amber/green testing into separate tester class.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TOOL-TIPS
-  have them open up in popup right next to the item they are tipping.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-HAS-MANIFEST
   At the moment the instructions come from exercises/ and

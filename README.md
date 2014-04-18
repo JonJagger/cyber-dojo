@@ -220,7 +220,7 @@ Example: the one for Java-JUnit looks like this:
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_junit",
+  "image_name": "cyberdojo/java-1.8",
   "tab_size": 4
 }
 ```
@@ -513,6 +513,7 @@ thank you
 -------------------------
 -------------------------
 
+[Raw Server](raw-server.md)
 
 RAW SERVER - DEPRECATED
 =======================
