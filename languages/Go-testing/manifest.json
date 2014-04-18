@@ -9,6 +9,6 @@
   "display_name": "Go",
   "display_test_name": "testing",
   "unit_test_framework": "go_testing",
-
+  "image_name": "cyberdojo/go_testing",
   "tab_size": 4
 }
