@@ -13,14 +13,21 @@ class DockerParseTests < ActionController::TestCase
       "ubuntu                                saucy               9f676bd305a4        7 weeks ago         178 MB",
     ].join("\n")
 
-    repos = output.lines.each.collect{|line| line.split[0]}.select{|repo|
-      repo.start_with? 'cyberdojo/language_'
-    }
     assert_equal [
+      'cyberdojo/build-essential',
       'cyberdojo/language_ruby-1.9.3',
       'cyberdojo/language_gcc-4.8.1_assert',
       'cyberdojo/language_gpp-4.8.1_assert',
-    ].sort, repos.sort
+      'ubuntu'
+    ].sort, DockerRunner.new.image_names(output)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "parse 'docker images' when none installed" do
+    output =
+      "REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE"
+    assert_equal [ ], DockerRunner.new.image_names(output)
   end
 
 end

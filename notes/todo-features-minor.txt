@@ -9,6 +9,9 @@ JAVA-LANGUAGE-MANIFEST
   should be
   cyberdojo/java-1.8_junit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOCKER IMAGE NAMES
+  put version-number on all container names
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in app/lib/LinuxPaas.rb
   def make_kata_manifest(dojo, language, exercise, id, now)
@@ -23,25 +26,14 @@ MODEL
   end
   Do I need to put :unit_test_framework and :tab_size
   into the kata's manifest? Why not retrieve them
-  from the language?
+  from the language? Is there a dependency on the
+  language name? What if I rename a language?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FORKER-CONTROLLER
   for .html format I'm not checking if the fork worked.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOCKER IMAGES
-  this command is run inside DockerRunner
-  Is there a way to run it without the first line label?
-  And what if there are no images installed.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_models
   drop linux_paas_ prefix from all test files that stub.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-README.md
-  split into three
-  o) using cyber-dojo.org
-  o) cyber-dojo and docker
-  o) adding a new language
-  o) raw server (deprecated)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OUTPUT-PARSER
   in app/lib/
@@ -58,7 +50,7 @@ CSS
   Do on jQuery dialog buttons too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE MANIFEST.JSON
-  s/image_name/docker_image_name/
+  s/image_name/docker_image_name/  ??
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
   Make dedicated language_manifest_checker.

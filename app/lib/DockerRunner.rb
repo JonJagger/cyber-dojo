@@ -7,8 +7,7 @@ class DockerRunner
 
   def runnable?(language)
     command = stderr2stdout('docker images')
-    output = `#{command}`
-    @installed ||= output.lines.each.collect{|line| line.split[0]}
+    @installed ||= image_names(`#{command}`)
     @installed.include?(language.image_name)
   end
 
@@ -26,6 +25,10 @@ class DockerRunner
 
     output = `#{outer_command}`
     $?.exitstatus != fatal_error(kill) ? output : terminated_after(max_seconds)
+  end
+
+  def image_names(output)
+    output.split("\n")[1..-1].collect{|line| line.split[0]}.sort.uniq
   end
 
 private
