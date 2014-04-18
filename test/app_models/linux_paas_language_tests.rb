@@ -7,6 +7,7 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
       assert_equal 'C-assert', @dojo.languages['C'].name
       assert_equal 'C++-assert', @dojo.languages['C++'].name
       assert_equal 'C#-NUnit', @dojo.languages['C#'].name
+      assert_equal 'Clojure-.test', @dojo.languages['Clojure'].name
       assert_equal 'Erlang-eunit', @dojo.languages['Erlang'].name
       assert_equal 'Go-testing', @dojo.languages['Go'].name
       assert_equal 'Haskell-hunit', @dojo.languages['Haskell'].name
