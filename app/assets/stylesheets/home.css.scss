@@ -72,7 +72,7 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-largest();
     text-align: center;
     width: 260px;
-    margin-left: 0px;
+    margin-left: 10px;
   }
   #create-button {
     margin-bottom: 30px;
