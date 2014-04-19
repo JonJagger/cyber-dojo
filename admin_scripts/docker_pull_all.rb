@@ -31,4 +31,3 @@ containers.each do |container|
   p container
   `docker pull cyberdojo/#{container}`
 end
-

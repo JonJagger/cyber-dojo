@@ -38,8 +38,9 @@ running your own docker'd cyber-dojo server
 
 pulling pre-built docker language containers
 --------------------------------------------
+From the docker'd cyber-dojo server
 ```bash
-$ docker search cyberdojo
+$ docker search cyberdojo | sort
 ```
 will tell you the names of the docker container images held in the
 [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
@@ -49,7 +50,11 @@ $ docker pull IMAGE_NAME
 ```
 for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
-
+<br>
+Alternatively, if you want to pull them all
+```bash
+$ ruby admin_scripts/docker_pull_all.rb
+```
 
 
 adding a new language
