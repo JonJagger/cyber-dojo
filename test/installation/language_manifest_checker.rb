@@ -203,7 +203,7 @@ private
   end
 
   def any_files_owner_is_root?
-    (visible_filenames + support_filenames).each do |filename|
+    (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
       uid = File.stat(@language_dir + '/' + filename).uid
       owner = Etc.getpwuid(uid).name
       if owner == 'root'
@@ -219,7 +219,7 @@ private
   end
 
   def any_files_group_is_root?
-    (visible_filenames + support_filenames).each do |filename|
+    (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
       gid = File.stat(@language_dir + '/' + filename).gid
       owner = Etc.getgrgid(gid).name
       if owner == 'root'
@@ -235,7 +235,7 @@ private
   end
 
   def any_file_is_unreadable?
-    (visible_filenames + support_filenames).each do |filename|
+    (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
       if !File.stat(@language_dir + '/' + filename).world_readable?
         message =
           alert +
