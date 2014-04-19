@@ -1,26 +1,17 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
-  Make dedicated language_manifest_checker.
-  Do I still need a cyberdojo/test/cyberdojo/languages folder?
-  Now I use docker I can simply wait to install the image_name
-  Split off red/amber/green testing into separate tester class.
-  TODO: check rights of files. Should be www-data (not root)
+  tes/installation red/amber/green testing need TLC
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
   Look at how its done in jQuery book.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-JAVA-LANGUAGE-MANIFEST
-  cyberdojo/java-1.8
-  should be
-  cyberdojo/java-1.8_junit
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER IMAGE NAMES
   put version-number on all container names
-
+  give each language its own docker image even if its simply a tag
+   on an existing one. eg clojure
   Clojure --> 1.4.0   (from jar file) (currently java-1.8)
-  Java-JUnit   -> java-1.8_junit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in app/lib/LinuxPaas.rb

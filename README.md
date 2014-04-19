@@ -14,9 +14,10 @@
   * running your own docker'd cyber-dojo server
   * pulling pre-built docker language containers
   * adding a new language
-    * write the languages' manifest.json file
     * build the docker image
     * write an output parse function
+    * write the languages' manifest.json file
+    * check the languages' manifest.json file
   * adding a new exercise
   * pulling from the cyberdojo github repo
 

@@ -60,44 +60,6 @@ $ ruby admin_scripts/docker_pull_all.rb
 adding a new language
 ---------------------
 
-### write the languages' manifest.json file
-
-Create a new sub-directory under `cyberdojo/languages/`
-<br>For example:
-  ```
-  cyberdojo/languages/Lisp
-  ```
-Create a `manifest.json` file in this directory.
-<br>For example:
-  ```
-  cyberdojo/languages/Lisp/manifest.json
-  ```
-Each `manifest.json` file contains an ruby object in JSON format
-<br>Example: the one for Java-JUnit looks like this:
-```json
-{
-  "visible_filenames": [
-    "Untitled.java",
-    "UntitledTest.java",
-    "cyber-dojo.sh"
-  ],
-  "support_filenames": [
-    "junit-4.7.jar"
-  ],
-  "display_name": "Java",
-  "display_test_name": "JUnit",
-  "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8_junit",
-  "tab_size": 4
-}
-```
-Make sure all the filenames are in the new folder, including cyber-dojo.sh
-```bash
-$ chmod +x cyber-dojo.sh
-$ chown www-data *
-$ chgrp www-data *
-```
-
 ### build the docker image
 
   * choose a docker-container to build on top of. For example
@@ -135,6 +97,47 @@ $ chgrp www-data *
     eg
     [output_python_pytest_tests.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/output_python_pytest_tests.rb)
 
+### write the languages' manifest.json file
+
+Create a new sub-directory under `cyberdojo/languages/`
+<br>For example:
+  ```
+  cyberdojo/languages/Lisp
+  ```
+Create a `manifest.json` file in this directory.
+See [manifest.json details](misc.md)
+<br>For example:
+  ```
+  cyberdojo/languages/Lisp/manifest.json
+  ```
+Each `manifest.json` file contains an ruby object in JSON format
+<br>Example: the one for Java-JUnit looks like this:
+```json
+{
+  "visible_filenames": [
+    "Untitled.java",
+    "UntitledTest.java",
+    "cyber-dojo.sh"
+  ],
+  "support_filenames": [
+    "junit-4.7.jar"
+  ],
+  "display_name": "Java",
+  "display_test_name": "JUnit",
+  "unit_test_framework": "junit",
+  "image_name": "cyberdojo/java-1.8_junit",
+  "tab_size": 4
+}
+```
+
+### check the languages' manifest.json file
+There is a ruby script to do this
+```bash
+$ cd cyberdojo/test/installation
+$ ruby check_language_manifest.rb ../.. [language-dir]
+```
+where [language-dir] is the directory of the language you are checking
+which contains the `manifest.json` file.
 
 
 adding a new exercise
