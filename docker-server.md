@@ -85,10 +85,10 @@ adding a new language
 ### write an output parse function
 
   * the `unit_test_framework` entry in the languages' `manifest.json`
-    file is the name of the function inside `OutputParser.rb` which is
-    used to determine if the output from running `cyber-dojo.sh` in your container
-    on the current files qualifies as a red traffic-light, an amber traffic-light,
-    or a green traffic-light.
+    file is the name of the function inside `OutputParser.rb`
+    used to determine if the output from running `cyber-dojo.sh` in your docker
+    container on the animals current files qualifies as a red traffic-light, an amber
+    traffic-light, or a green traffic-light.
     There are lots of examples in
     [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
 
@@ -120,7 +120,7 @@ Each `manifest.json` file contains an ruby object in JSON format
     "cyber-dojo.sh"
   ],
   "support_filenames": [
-    "junit-4.7.jar"
+    "junit-4.11.jar"
   ],
   "display_name": "Java",
   "display_test_name": "JUnit",

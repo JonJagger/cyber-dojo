@@ -1,11 +1,16 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-docker_pull_all.rb
+DOCKER
+  It would be a good idea if the setup screen/dialog
+  indicated which Runner was being used, Docker or Raw.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ADMIN-SCRIPTS
+  docker_pull_all.rb
   contains duplication. Better to iterate through the languages/
   and extract the image_name entries from the manifest.json files.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
-  tes/installation red/amber/green testing need TLC
+  test/installation red/amber/green testing need TLC
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
@@ -39,6 +44,7 @@ FORKER-CONTROLLER
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_models
   drop linux_paas_ prefix from all test files that stub.
+  Make commented out tests in test/app_model/avatar_tests.rb live
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OUTPUT-PARSER
   in app/lib/
@@ -48,6 +54,8 @@ OUTPUT-PARSER
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in Language.rb patch remaining names so it converts old-names to new-names
+  Delete few Objective-C katas on cyber-dojo.org ?
+  Create docker image for Objective-C ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 CSS
   use cursor: not-allowed
