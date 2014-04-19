@@ -1,4 +1,4 @@
-FROM cyberdojo/build-essential
+FROM       cyberdojo/build-essential
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
@@ -16,4 +16,3 @@ RUN cd ./Python-3.3.5 && ./configure --prefix=/opt/python3.3
 RUN cd ./Python-3.3.5 && make
 RUN cd ./Python-3.3.5 && make install
 RUN ln -s /opt/python3.3/bin/python3.3 /bin/python
-

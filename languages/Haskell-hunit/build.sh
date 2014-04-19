@@ -1,10 +1,9 @@
 #!/bin/bash
 
-cp Dockerfile_haskell Dockerfile
-docker build -t cyberdojo/haskell  .
+cp Dockerfile_haskell_7.6.3 Dockerfile
+docker build -t cyberdojo/haskell-7.6.3  .
 rm Dockerfile
 
-cp Dockerfile_haskell_hunit Dockerfile
-docker build -t cyberdojo/haskell_hunit .
+cp Dockerfile_haskell_7.6.3_hunit Dockerfile
+docker build -t cyberdojo/haskell-7.6.3_hunit .
 rm Dockerfile
-

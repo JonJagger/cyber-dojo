@@ -19,11 +19,14 @@ JAVA-LANGUAGE-MANIFEST
 DOCKER IMAGE NAMES
   put version-number on all container names
   C#      -->  2.10.8.1  (mono 4.0)
-  Clojure --> 1.4.0   (from jar file) (currently java-1.8)
   Erlang  --> 5.10.2  (erl -v)
   Haskell --> 7.6.3 (-v)
   Perl    --> 5.14.2
   Go      --> 1.1.2
+
+  Clojure --> 1.4.0   (from jar file) (currently java-1.8)
+  Java-JUnit   -> java-1.8_junit
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in app/lib/LinuxPaas.rb

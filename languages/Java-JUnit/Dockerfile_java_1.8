@@ -1,5 +1,5 @@
 
-FROM ubuntu:13.10
+FROM       ubuntu:13.10
 MAINTAINER Luca B <blmlcu [at] gmail {dot} org>
 
 RUN apt-get -y --force-yes -qq install wget
@@ -28,4 +28,3 @@ RUN ["update-alternatives", "--install", "/usr/bin/java", "java", "/usr/lib/jvm/
 
 RUN ["update-alternatives", "--set", "javac", "/usr/lib/jvm/jdk1.8.0/bin/javac"]
 RUN ["update-alternatives", "--set", "java", "/usr/lib/jvm/jdk1.8.0/bin/java"]
-

@@ -1,11 +1,9 @@
 #!/bin/bash
-cp Dockerfile_csharp Dockerfile
-docker build -t cyberdojo/csharp  .
+
+cp Dockerfile_csharp_2.10.8.1 Dockerfile
+docker build -t cyberdojo/csharp-2.10.8.1  .
 rm Dockerfile
 
-cp Dockerfile_csharp_nunit Dockerfile
-docker build -t cyberdojo/csharp_nunit .
+cp Dockerfile_csharp_2.10.8.1_nunit Dockerfile
+docker build -t cyberdojo/csharp-2.10.8.1_nunit .
 rm Dockerfile
-
-docker push cyberdojo/csharp
-docker push cyberdojo/csharp_nunit
