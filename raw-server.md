@@ -1,19 +1,16 @@
 
-RAW SERVER - DEPRECATED
-=======================
+Raw Server
+==========
 This is how cyber-dojo runs if docker is not installed or if
-the environment variable CYBERDOJO_USE_HOST is set.
-In this mode, there is
+it is but the environment variable CYBERDOJO_USE_HOST is set.
+This is useful primarily for running a personal cyber-dojo on
+a laptop. In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
 
-In this mode cyber-dojo clients have full rights on the cyber-dojo server.
-If you setup your own server you are strongly advised to consider using
-  * a dedicated server.
-  * a virtual box.
-  * a dedicated network segment.
-
+All development is now focused on running cyber-dojo using a
+[docker'd server](docker-server.md)
 
 
 running your own raw cyber-dojo server

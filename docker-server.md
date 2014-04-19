@@ -1,6 +1,6 @@
 
-docker on the cyber-dojo server
-===============================
+Docker Server
+=============
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
   * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
@@ -50,7 +50,7 @@ $ docker pull IMAGE_NAME
 ```
 for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
-Alternatively, if you want to pull them all
+Alternatively, you can pull them all
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ruby docker_pull_all.rb
@@ -100,15 +100,16 @@ adding a new language
 ### write the languages' manifest.json file
 
 Create a new sub-directory under `cyberdojo/languages/`
+<br>By convention name it $languageName-$testFrameworkName
 <br>For example:
   ```
-  cyberdojo/languages/Lisp
+  cyberdojo/languages/Lisp-5.6
   ```
 Create a `manifest.json` file in this directory.
 See [manifest.json details](misc.md)
 <br>For example:
   ```
-  cyberdojo/languages/Lisp/manifest.json
+  cyberdojo/languages/Lisp-5.6/manifest.json
   ```
 Each `manifest.json` file contains an ruby object in JSON format
 <br>Example: the one for Java-JUnit looks like this:
@@ -138,11 +139,15 @@ $ ruby check_language_manifest.rb ../.. [language-dir]
 ```
 where [language-dir] is the directory of the language you are checking
 which contains the `manifest.json` file.
+<br>Example
+```bash
+$ ruby check_language_manifest.rb ../.. Lisp-5.6
+```
 
 
 adding a new exercise
 ---------------------
-  * Create a new sub-directory under `cyberdojo/exercises/`
+  * Create a new sub-directory under `/var/www/cyberdojo/exercises/`
     <br>Example:
     ```
     /var/www/cyberdojo/exercises/FizzBuzz

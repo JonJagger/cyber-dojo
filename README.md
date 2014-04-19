@@ -1,5 +1,5 @@
 
-[Running a dojo](running-a-dojo.md)
+[Running a Dojo](running-a-dojo.md)
   * creating your programming dojo
     * chose your language|unit-test-framework, eg C++|assert
     * chose your exercise, eg Prime Factors
@@ -10,7 +10,7 @@
     * |60s| columns?
   * replaying the diffs
 
-[Docker on the server](docker-server.md)
+[Docker Server](docker-server.md)
   * running your own docker'd cyber-dojo server
   * pulling pre-built docker language containers
   * adding a new language
@@ -30,4 +30,5 @@
   * notes
   * thank you
 
-[Raw Server (deprecated)](raw-server.md)
+[Raw Server](raw-server.md)
+  * deprecated
