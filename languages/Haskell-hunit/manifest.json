@@ -7,7 +7,6 @@
   "display_name": "Haskell",
   "display_test_name": "hunit",
   "unit_test_framework": "hunit",
-  "image_name": "cyberdojo/haskell_hunit",
+  "image_name": "cyberdojo/haskell-7.6.3_hunit",
   "tab_size": 4
 }
-

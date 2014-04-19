@@ -9,6 +9,6 @@
   "display_name": "Erlang",
   "display_test_name": "eunit",
   "unit_test_framework": "eunit",
-  "image_name": "cyberdojo/erlang_eunit",
+  "image_name": "cyberdojo/erlang-5.10.2_eunit",
   "tab_size": 2
 }

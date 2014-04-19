@@ -27,4 +27,8 @@ containers = %w(
   ruby-1.9.3_test_unit
 )
 
-containers.each{|container| `docker pull cyberdojo/#{container}`}
+containers.each do |container|
+  p container
+  `docker pull cyberdojo/#{container}`
+end
+
