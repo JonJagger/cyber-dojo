@@ -120,14 +120,15 @@ class LinuxPaasLanguageTests < LinuxPaasModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "lowlight_filenames defaults to ['cyberdojo.sh','makefile'] if there is no entry for highlight_filenames" do
+  test "lowlight_filenames defaults to ['cyberdojo.sh','makefile','Makefile'] if there is no entry for highlight_filenames" do
     json_and_rb do
       @language = @dojo.languages['C']
       visible_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
       spy_manifest({
           'visible_filenames' => visible_filenames,
         })
-      assert_equal ['cyber-dojo.sh','makefile'], @language.lowlight_filenames.sort
+      expected = ['cyber-dojo.sh','makefile','Makefile'].sort
+      assert_equal expected, @language.lowlight_filenames.sort
     end
   end
 

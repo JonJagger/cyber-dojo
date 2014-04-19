@@ -50,10 +50,10 @@ $ docker pull IMAGE_NAME
 ```
 for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
-<br>
 Alternatively, if you want to pull them all
 ```bash
-$ ruby admin_scripts/docker_pull_all.rb
+$ cd /var/www/cyberdojo/admin_scripts
+$ ruby docker_pull_all.rb
 ```
 
 
@@ -68,8 +68,8 @@ adding a new language
     which was built using this [dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/C-assert/Dockerfile_build_essential)
 
   * write a dockerfile containing all the
-    required commands (eg `apt-get install`).
-    For example
+    required commands (eg `apt-get install`)'s.
+    <br>For example
     [cyberdojo/languages/C#-NUnit/Dockerfile_csharp_2.10.8.1_nunit](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile_csharp_2.10.8.1_nunit)
 
   * use the dockerfile to build your container. For example
@@ -133,7 +133,7 @@ Each `manifest.json` file contains an ruby object in JSON format
 ### check the languages' manifest.json file
 There is a ruby script to do this
 ```bash
-$ cd cyberdojo/test/installation
+$ cd /var/www/cyberdojo/test/installation
 $ ruby check_language_manifest.rb ../.. [language-dir]
 ```
 where [language-dir] is the directory of the language you are checking
@@ -145,12 +145,12 @@ adding a new exercise
   * Create a new sub-directory under `cyberdojo/exercises/`
     <br>Example:
     ```
-    cyberdojo/exercises/FizzBuzz
+    /var/www/cyberdojo/exercises/FizzBuzz
     ```
   * Create a text file called `instructions` in this directory.
     <br>Example:
     ```
-    cyberdojo/exercises/FizzBuzz/instructions
+    /var/www/cyberdojo/exercises/FizzBuzz/instructions
     ```
 
 

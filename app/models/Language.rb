@@ -82,7 +82,7 @@ class Language
     if highlight_filenames.length > 0
       return visible_filenames - highlight_filenames
     else
-      return ['cyber-dojo.sh', 'makefile']
+      return ['cyber-dojo.sh', 'makefile', 'Makefile']
     end
   end
 

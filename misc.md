@@ -7,20 +7,20 @@ language manifest.json parameters
 
 `"image_name": string`
 
-  The name of docker image to execute `cyber-dojo.sh`.
+  The name of docker image in which `cyber-dojo.sh` is run.
   <br>Optional. Not required if you're using a [raw-server](raw-server.md) instead
   of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
 `"visible_filenames": [ string* ]`
 
   Filenames that will be visible in the browser's editor at startup.
-  Each of these files must exist in the directory.
+  Each of these files must exist in the languages' directory.
   The filename `cyber-dojo.sh` must be present as a `"visible_filenames"` entry
   or as a `"support_filenames"` entry. This is because `cyber-dojo.sh` is the name
   of the shell file assumed by the ruby code (on the server) to be the start
   point for running the tests. You can write any actions in the `cyber-dojo.sh`
   file but clearly any programs it tries to run must be installed in this
-  languages docker container.
+  languages docker container (or on the raw server).
   For example, if `cyber-dojo.sh` runs `gcc` to compile C files then `gcc` has
   to be installed. If `cyber-dojo.sh` runs `javac` to compile java files then
   `javac` has to be installed.
@@ -28,9 +28,9 @@ language manifest.json parameters
 `"support_filenames": [ string* ]`
 
   The names of necessary supporting files. Each of these files must
-  exist in the directory. For example, junit .jar files or nunit .dll assemblies.
-  These are symlinked from the `cyberdojo/languages` folder to each animals
-  `cyberdojo/katas/...` subfolder.
+  exist in the languages' directory. For example, junit .jar files or nunit .dll assemblies.
+  These are symlinked from the `/var/www/cyberdojo/languages` folder to each animals
+  `/var/www/cyberdojo/katas/...` subfolder.
   Despite the name `"support_filenames"` you can symlink a folder if required.
   <br>Not required if you do not need support files.
 - - - - - - - - - - - - - - - - - - - -
@@ -72,7 +72,7 @@ language manifest.json parameters
   If there is no highlight_filenames entry, then lowlight-filenames
   will default to
   ```
-  [ 'cyber-dojo', 'makefile' ]
+  [ 'cyber-dojo', 'makefile', 'Makefile' ]
   ```
   Not required. Defaults to empty.
 - - - - - - - - - - - - - - - - - - - -
@@ -206,5 +206,3 @@ thank you
    http://www.estherderby.com/problem-solving-leadership-psl
    which strongly influenced the way I designed cyber-dojo.
    Thank you Jerry.
-
-
