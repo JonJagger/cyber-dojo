@@ -16,6 +16,8 @@ containers = %w(
   groovy-2.2.0_junit
   haskell-7.6.3
   haskell-7.6.3_hunit
+  java-1.8
+  java-1.8_junit
   perl-5.14.2
   perl-5.14.2_test_simple
   python-3.3.5
