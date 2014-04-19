@@ -1,5 +1,3 @@
-# build-essential was built from 13.10 (saucy)
-
 FROM       cyberdojo/ruby-1.9.3
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
@@ -7,6 +5,3 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/s
 RUN apt-get update
 RUN apt-get upgrade -y
 
-# docker build -t  cyberdojo/ruby-1.9.3_test_unit  .
-# docker push      cyberdojo/ruby-1.9.3_test_unit
-# docker run -i -t cyberdojo/ruby-1.9.3_test_unit /bin/bash

@@ -1,6 +1,3 @@
 FROM       cyberdojo/go
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-# docker build -t  cyberdojo/go_testing .
-# docker push      cyberdojo/go_testing
-# docker run -i -t cyberdojo/go_testing /bin/bash

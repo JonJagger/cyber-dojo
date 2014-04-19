@@ -8,6 +8,3 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y golang
 
-# docker build -t  cyberdojo/go .
-# docker push      cyberdojo/go
-# docker run -i -t cyberdojo/go /bin/bash

@@ -4,6 +4,3 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 RUN apt-get install -y python-pip
 RUN pip install -U pytest
 
-# docker build -t  cyberdojo/python-3.3.5_pytest  .
-# docker push      cyberdojo/python-3.3.5_pytest
-# docker run -i -t cyberdojo/python-3.3.5_pytest /bin/bash

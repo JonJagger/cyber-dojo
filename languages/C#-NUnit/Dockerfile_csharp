@@ -18,6 +18,3 @@ RUN cd /tmp ; dpkg -i /fuse.deb
 
 RUN apt-get install -y monodevelop
 
-# docker build -t  cyberdojo/csharp .
-# docker push      cyberdojo/csharp
-# docker run -i -t cyberdojo/csharp /bin/bash

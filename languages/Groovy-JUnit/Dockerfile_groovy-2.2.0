@@ -11,6 +11,3 @@ RUN apt-get install -y unzip
 RUN wget http://dist.groovy.codehaus.org/distributions/groovy-binary-2.2.0.zip
 RUN unzip groovy-binary-2.2.0.zip
 
-# docker build -t  cyberdojo/groovy-2.2.0 .
-# docker push      cyberdojo/groovy-2.2.0
-# docker run -i -t cyberdojo/groovy-2.2.0 /bin/bash

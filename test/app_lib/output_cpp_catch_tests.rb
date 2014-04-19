@@ -29,6 +29,8 @@ class OutputCatchTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  # - - - - - - - - - - - - - - -
+
   test "AMBER" do
     output =
       [
@@ -40,6 +42,8 @@ class OutputCatchTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  # - - - - - - - - - - - - - - -
+  
   test "GREEN" do
     output =
       [

@@ -7,6 +7,3 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y haskell-platform
 
-# docker build -t  cyberdojo/haskell  .
-# docker push      cyberdojo/haskell
-# docker run -i -t cyberdojo/haskell /bin/bash

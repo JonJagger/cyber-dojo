@@ -1,6 +1,3 @@
 FROM  cyberdojo/haskell
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-# docker build -t  cyberdojo/haskell_hunit .
-# docker push      cyberdojo/haskell_hunit
-# docker run -i -t cyberdojo/haskell_hunit /bin/bash

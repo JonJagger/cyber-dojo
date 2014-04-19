@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LANGUAGE-CHECKER
+  Make dedicated language_manifest_checker.
+  Do I still need a cyberdojo/test/cyberdojo/languages folder?
+  Now I use docker I can simply wait to install the image_name
+  Split off red/amber/green testing into separate tester class.
+  TODO: check rights of files. Should be www-data (not root)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in popup right next to the item they are tipping.
   Look at how its done in jQuery book.
@@ -11,6 +18,12 @@ JAVA-LANGUAGE-MANIFEST
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER IMAGE NAMES
   put version-number on all container names
+  C#      -->  2.10.8.1  (mono 4.0)
+  Clojure --> 1.4.0   (from jar file) (currently java-1.8)
+  Erlang  --> 5.10.2  (erl -v)
+  Haskell --> 7.6.3 (-v)
+  Perl    --> 5.14.2
+  Go      --> 1.1.2
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in app/lib/LinuxPaas.rb
@@ -51,12 +64,6 @@ CSS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE MANIFEST.JSON
   s/image_name/docker_image_name/  ??
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LANGUAGE-CHECKER
-  Make dedicated language_manifest_checker.
-  Do I still need a cyberdojo/test/cyberdojo/languages folder?
-  Now I use docker I can simply wait to install the image_name
-  Split off red/amber/green testing into separate tester class.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-HAS-MANIFEST
   At the moment the instructions come from exercises/ and

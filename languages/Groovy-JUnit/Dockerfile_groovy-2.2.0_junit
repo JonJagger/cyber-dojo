@@ -1,6 +1,3 @@
 FROM       cyberdojo/groovy-2.2.0
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-# docker build -t  cyberdojo/groovy-2.2.0_junit .
-# docker push      cyberdojo/groovy-2.2.0_junit
-# docker run -i -t cyberdojo/groovy-2.2.0_junit /bin/bash

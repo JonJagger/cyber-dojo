@@ -11,7 +11,3 @@ RUN apt-get install -y cmake
 RUN cd /usr/src/gtest && cmake .
 RUN cd /usr/src/gtest && make
 RUN cd /usr/src/gtest && mv libg* /usr/lib
-
-# docker build -t  cyberdojo/gpp-4.8.1_googletest .
-# docker push      cyberdojo/gpp-4.8.1_googletest
-# docker run -i -t cyberdojo/gpp-4.8.1_googletest /bin/bash

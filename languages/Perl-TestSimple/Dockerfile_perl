@@ -5,6 +5,3 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/s
 RUN apt-get update
 RUN apt-get upgrade -y
 
-# docker build -t  cyberdojo/perl  .
-# docker push      cyberdojo/perl
-# docker run -i -t cyberdojo/perl /bin/bash

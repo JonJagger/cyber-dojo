@@ -29,6 +29,3 @@ RUN ["update-alternatives", "--install", "/usr/bin/java", "java", "/usr/lib/jvm/
 RUN ["update-alternatives", "--set", "javac", "/usr/lib/jvm/jdk1.8.0/bin/javac"]
 RUN ["update-alternatives", "--set", "java", "/usr/lib/jvm/jdk1.8.0/bin/java"]
 
-# docker build -t  cyberdojo/java-1.8  .
-# docker push      cyberdojo/java-1.8
-# docker run -i -t cyberdojo/java-1.8 /bin/bash
