@@ -87,7 +87,7 @@ Each `manifest.json` file contains an ruby object in JSON format
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",
-  "image_name": "cyberdojo/java-1.8",
+  "image_name": "cyberdojo/java-1.8_junit",
   "tab_size": 4
 }
 ```
