@@ -7,26 +7,26 @@ is installed. If it is then...
     has an `image_name` entry that exists.
     <br>For example, if
     ```
-    languages/Java-JUnit/manifest.json
+    cyberdojo/languages/Java-JUnit/manifest.json
     ```
     contains this...
     ```json
     {
-
-      "image_name": "cyberdojo/java-1.8"
+      ...
+      "image_name": "cyberdojo/java-1.8_junit"
     }
     ```
     then Java-JUnit will only be offered as a language on the
-    initial create page if the docker image `cyberdojo/java-1.8` exists
+    initial create page if the docker image `cyberdojo/java-1.8_junit` exists
     on the server, as determined by running
     ```bash
     $ docker images
     ```
   * it will use the docker `image_name` container to execute an animals
     `cyber-dojo.sh` file each time the animal presses the `[test]` button.
-  * however, if the environment variable `CYBERDOJO_USE_HOST`
-    is set (to anything) then cyber-dojo will attempt to use the raw
-    host server even if docker is installed.
+  * however, if docker is not installed, or if it is but the environment variable
+    `CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the raw
+    host server.
 
 
 running your own docker'd cyber-dojo server
@@ -70,7 +70,7 @@ adding a new language
   * write a dockerfile containing all the
     required commands (eg `apt-get install`).
     For example
-    [cyberdojo/languages/C#-NUnit/Dockerfile_csharp_nunit](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile_csharp_nunit)
+    [cyberdojo/languages/C#-NUnit/Dockerfile_csharp_2.10.8.1_nunit](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile_csharp_2.10.8.1_nunit)
 
   * use the dockerfile to build your container. For example
     ```bash

@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+docker_pull_all.rb
+  contains duplication. Better to iterate through the languages/
+  and extract the image_name entries from the manifest.json files.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
   tes/installation red/amber/green testing need TLC
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
