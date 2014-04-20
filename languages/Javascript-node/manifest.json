@@ -5,9 +5,10 @@
     "untitledTest.js",
     "cyber-dojo.sh"
   ],
-  
+
+  "display_name": "Javascript",
+  "display_test_name": "node",
   "unit_test_framework": "node",
-  
+
   "tab_size": 2
 }
-
