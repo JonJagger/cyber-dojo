@@ -19,8 +19,7 @@ TOOL-TIPS
 DOCKER IMAGE NAMES
   put version-number on all container names
   give each language its own docker image even if its simply a tag
-   on an existing one. eg clojure
-  Clojure --> 1.4.0   (from jar file) (currently java-1.8)
+   on an existing one.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in app/lib/LinuxPaas.rb
