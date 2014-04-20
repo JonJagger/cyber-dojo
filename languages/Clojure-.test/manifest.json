@@ -13,5 +13,5 @@
   "display_name": "Clojure",
   "display_test_name": ".test",
   "unit_test_framework": "clojure_test",
-  "image_name": "cyberdojo/java-1.8"
+  "image_name": "cyberdojo/clojure-1.4.0_test"
 }
