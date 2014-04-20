@@ -1,5 +1,5 @@
 
-![logo](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png)
+![logo](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png =100x100)
 
 cyber-dojo
 ==========
