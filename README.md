@@ -1,4 +1,9 @@
 
+![logo](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png)
+
+cyber-dojo
+==========
+
 [Running a Dojo](running-a-dojo.md)
   * creating your programming dojo
     * chose your language|unit-test-framework, eg C++|assert
