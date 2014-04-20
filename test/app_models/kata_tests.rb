@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasKataTests < LinuxPaasModelTestCase
+class KataTests < ModelTestCase
 
   test "id is from ctor" do
     json_and_rb do

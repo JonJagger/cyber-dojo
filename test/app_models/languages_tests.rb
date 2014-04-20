@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasLanguagesTests < LinuxPaasModelTestCase
+class LanguagesTests < ModelTestCase
 
   test "dojo.languages.each() forwards to paas.languages_each()" do
     @paas.dir(@dojo.languages['C#-NUnit'])

@@ -4,7 +4,7 @@ require __DIR__ + '/spy_disk'
 require __DIR__ + '/stub_git'
 require __DIR__ + '/stub_runner'
 
-class LinuxPaasModelTestCase < ActionController::TestCase
+class ModelTestCase < ActionController::TestCase
 
   def setup
     setup_format('rb')

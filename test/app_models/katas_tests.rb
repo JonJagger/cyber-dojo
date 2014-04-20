@@ -4,7 +4,7 @@ require __DIR__ + 'lib/OsDisk'
 require __DIR__ + 'lib/Git'
 require __DIR__ + 'app/lib/RawRunner'
 
-class LinuxPaasKatasTests < ActionController::TestCase
+class KatasTests < ActionController::TestCase
 
   def set_paas(format)
     @disk  = OsDisk.new

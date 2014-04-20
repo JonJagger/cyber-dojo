@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasTests < LinuxPaasModelTestCase
+class LinuxPaasTests < ModelTestCase
 
   test "path(exercise)" do
     json_and_rb do

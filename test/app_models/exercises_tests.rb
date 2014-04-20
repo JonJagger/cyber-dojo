@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasExercisesTests < LinuxPaasModelTestCase
+class ExercisesTests < ModelTestCase
 
   test "dojo.exercises.each() forwards to paas.exercises_each()" do
     @paas.dir(@dojo.exercises['Unsplice'])

@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class AvatarTests < LinuxPaasModelTestCase
+class AvatarTests < ModelTestCase
 
   test "exists? is false when dir doesn't exist, true when dir does exist" do
     json_and_rb do

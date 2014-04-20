@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasLanguageTests < LinuxPaasModelTestCase
+class LanguageTests < ModelTestCase
 
   test "name is translated if old language dir has been renamed" do
     json_and_rb do

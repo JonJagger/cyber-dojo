@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasSandboxTests < LinuxPaasModelTestCase
+class SandboxTests < ModelTestCase
 
   test "avatar's sandbox -- sandbox's avatar" do
     json_and_rb do

@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/linux_paas_model_test_case'
+require File.dirname(__FILE__) + '/model_test_case'
 
-class LinxuPaasExerciseTests < LinuxPaasModelTestCase
+class ExerciseTests < ModelTestCase
 
   test "name is as set in ctor" do
     json_and_rb do
