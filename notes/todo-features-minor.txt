@@ -1,5 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIALOGS
+  reduce forker/reverter diff font-sizes to match diff-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+AJAX
+  when json ajax call is made, eg to bring up diff-dialog
+  switch to wait-cursor and revert back to normal cursor
+  when ajax returns.
+  Do the same for when << < > >> buttons are pressed
+  (also causes ajax call)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
   It would be a good idea if the setup screen/dialog
   indicated which Runner was being used, Docker or Raw.
