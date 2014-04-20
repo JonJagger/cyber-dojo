@@ -4,7 +4,7 @@
 cyber-dojo
 ==========
 
-[Running a Dojo](running-a-dojo.md)
+[Running a Dojo](md/running-a-dojo.md)
   * creating your programming dojo
     * chose your language,unit-test-framework eg C++,assert
     * chose your exercise eg Prime Factors
@@ -15,7 +15,7 @@ cyber-dojo
     * |60s| columns?
   * replaying the diffs
 
-[Docker Server](docker-server.md)
+[Docker Server](md/docker-server.md)
   * running your own docker'd cyber-dojo server
   * pulling pre-built docker language containers
   * adding a new language
@@ -35,5 +35,5 @@ cyber-dojo
   * notes
   * thank you
 
-[Raw Server](raw-server.md)
+[Raw Server](md/raw-server.md)
   * deprecated
