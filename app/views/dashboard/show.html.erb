@@ -6,13 +6,12 @@ $(document).ready(function() {
   cd.tipify($('.tipped'), $('#tip-window'));
 
   if ("<%=@avatar_name%>" !== "") {
-    var title = "<%= t('views.buttons.diff_review') %>";
     var id = "<%=@id%>";
     var avatarName = "<%=@avatar_name%>";
     var wasTag = parseInt("<%=@was_tag%>");
     var nowTag = parseInt("<%=@now_tag%>");
     var maxTag = parseInt("<%=@max_tag%>");
-    cd.dialog_diff(title, id, avatarName, wasTag, nowTag, maxTag);
+    cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag);
   }
 
 });

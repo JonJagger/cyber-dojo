@@ -1,10 +1,13 @@
 # script to scp cyberdojo katas from one server to another
+# run from server you are copying from
+# on command line provide ip-address of server you are copying to
+# /var/www/cyberdojo/tmp_scp_all folder assumed to exist on server
 
 require './script_lib.rb'
 
 IP = ARGV[0]
 if IP === nil
-  puts "ruby scp_all IP-ADDRESS"
+  puts "ruby scp_all [ip-address]
   exit
 end
 
@@ -21,4 +24,3 @@ index('katas') do |kata_dir,id|
   n += 1
   #break if n == 1
 end
-
