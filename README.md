@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" style="width:100px;"/>
+<img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="100px" height="100px"/>
 
 cyber-dojo
 ==========
