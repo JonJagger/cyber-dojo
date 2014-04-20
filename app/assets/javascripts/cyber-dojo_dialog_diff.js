@@ -384,7 +384,7 @@ var cyberDojo = (function(cd, $) {
 
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
-	  width: 1200,
+	  width: 1100,
 	  height: "auto",
 	  modal: true,
 	  buttons: {
