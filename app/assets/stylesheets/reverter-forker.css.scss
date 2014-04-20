@@ -23,6 +23,7 @@
   #revert-fork-filenames {
     height: 18em;
     overflow-y: auto;
+    font-size: 11pt;
   }
 
   #revert-fork-tag-number {
@@ -30,10 +31,10 @@
   }
 
   #revert-fork-content {
-    width: 40em;
-    height: 25em;
+    width: 45em;
+    height: 31em;
     font: {
-      size: 1.5em;
+      size: 12pt; //1.5em;
       family: monospace;
     }
   }

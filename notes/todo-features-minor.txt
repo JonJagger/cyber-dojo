@@ -1,8 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIALOGS
-  reduce forker/reverter diff font-sizes to match diff-dialog
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 AJAX
   when json ajax call is made, eg to bring up diff-dialog
   switch to wait-cursor and revert back to normal cursor
