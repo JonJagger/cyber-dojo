@@ -42,10 +42,6 @@ MODEL
 FORKER-CONTROLLER
   for .html format I'm not checking if the fork worked.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/app_models
-  drop linux_paas_ prefix from all test files that stub.
-  Make commented out tests in test/app_model/avatar_tests.rb live
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OUTPUT-PARSER
   in app/lib/
   Refactor so patterns are matched for red and green
