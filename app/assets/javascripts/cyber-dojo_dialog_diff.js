@@ -3,21 +3,21 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.setupTrafficLightOpensDiffDialogHandlers = function(nodes) {
-	nodes.click(function() {
-	  var id = $(this).data('id');
-	  var avatarName = $(this).data('avatar-name');
-	  var wasTag = $(this).data('was-tag');
-	  var nowTag = $(this).data('now-tag');
-	  var maxTag = $(this).data('max-tag');
-	  //$(this).css('cursor', 'wait');
-	  cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag);
+  cd.setupTrafficLightOpensDiffDialogHandlers = function(lights) {
+	lights.click(function() {
+	  var light = $(this);
+	  var id = light.data('id');
+	  var avatarName = light.data('avatar-name');
+	  var wasTag = light.data('was-tag');
+	  var nowTag = light.data('now-tag');
+	  var maxTag = light.data('max-tag');
+	  cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag, light);
 	});
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag) {
+  cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, light) {
 
   	var minTag = 0;
     var tagGap = nowTag - wasTag;
@@ -400,7 +400,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function(open) {
-	  //$(this).css('cursor', 'wait');
+	  var cursor = light.css('cursor');
+	  light.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
 		  id: id,
@@ -409,7 +410,7 @@ var cyberDojo = (function(cd, $) {
 		  now_tag: nowTag
 		},
 		function(data) {
-          //$(this).css('cursor', 'default');
+          light.css('cursor', cursor);
 		  resetNavigateButtonHandlers();
 
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));

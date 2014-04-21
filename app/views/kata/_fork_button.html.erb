@@ -4,13 +4,14 @@
 $(document).ready(function() {
 
   $('#fork-button').click(function() {
-    var title = $(this).data('title');
-    var cancel = $(this).data('cancel');
+    var button = $(this);
+    var title = button.data('title');
+    var cancel = button.data('cancel');
     var id = "<%= @kata.id %>";
     var avatarName = "<%= @avatar.name %>";
     var maxTag = parseInt($('.traffic-light-count').text());
     var tag = maxTag;
-    cd.dialog_fork(title, cancel, id, avatarName, tag, maxTag);
+    cd.dialog_fork(title, cancel, id, avatarName, tag, maxTag, button);
   });
 
 });

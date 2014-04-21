@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_fork = function(title, cancel, id, avatarName, tag, maxTag) {
+  cd.dialog_fork = function(title, cancel, id, avatarName, tag, maxTag, forkButton) {
     // There is a lot commonality in the fork and revert dialogs.
 	// And both could be improved by showing the red/green
 	// lines added/removed (like on the diff)
@@ -305,8 +305,9 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var refresh = function() {
-      //$('*').css('cursor', 'wait');
+	var refresh = function(open) {
+	  var cursor = forkButton.css('cursor');
+      forkButton.css('cursor', 'wait');
 	  $.getJSON('/reverter/revert',
 		{
 		  id: id,
@@ -314,21 +315,27 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(data) {
-          //$('*').css('cursor', 'default');
+          forkButton.css('cursor', cursor);
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
 		  trafficLightNumber.val(data.inc.number);
 		  forkFilenames.html(makeForkFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
           showCurrentFile();
+		  if (open !== undefined) {
+			open();
+		  }
 		}
 	  );
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	forkDialog.dialog('open');
-	refresh();
+	refresh(function() {
+	  // only open after all html-loaded otherwise
+	  // dialog may not center on the page.
+	  forkDialog.dialog('open');
+	});
 
   }; // cd.dialog_fork = function(title, close, id, avatarName, tag, maxTag) {
 

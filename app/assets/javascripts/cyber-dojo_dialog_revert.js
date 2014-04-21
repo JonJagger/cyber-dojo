@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
+  cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag, revertButton) {
 	// Refactor this so it can both revert and fork?
   	var minTag = 1;
 
@@ -248,8 +248,9 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var refresh = function() {
-	  //$('*').css('cursor', 'wait');
+	var refresh = function(open) {
+	  var cursor = revertButton.css('cursor');
+	  revertButton.css('cursor', 'wait');
 	  $.getJSON('/reverter/revert',
 		{
 		  id: id,
@@ -257,7 +258,7 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(d) {
-          //$('*').css('cursor', 'default');
+          revertButton.css('cursor', cursor);
 		  data = d;
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
@@ -265,14 +266,20 @@ var cyberDojo = (function(cd, $) {
 		  revertForkFilenames.html(makeRevertForkFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
           showCurrentFile();
+		  if (open !== undefined) {
+			open();
+		  }
 		}
 	  );
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	revertForkDialog.dialog('open');
-	refresh();
+	refresh(function() {
+	  // only open after all html-loaded otherwise
+	  // dialog may not center on the page.
+	  revertForkDialog.dialog('open');
+	});
 
   }; // cd.dialog_revert = function(title, cancel, id, avatarName, tag, maxTag) {
 
