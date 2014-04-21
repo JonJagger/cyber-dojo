@@ -3,7 +3,6 @@
 AJAX
   when json ajax call is made switch to wait-cursor and revert
   back to normal cursor when ajax returns.
-  Do for enter/re-enter buttons.
   Do for home-page buttons?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER

@@ -7,7 +7,9 @@ $(document).ready(function() {
     var id = $('#kata-id-input').val();
     var ok = "<%= t('views.buttons.ok') %>";
     var title = "<%= t('views.buttons.enter') %>";
+    $('*').css('cursor', 'wait');
     $.getJSON('/dojo/start_json' , { id: id }, function(dojo) {
+      $('*').css('cursor', 'default');
       if (dojo.full) {
         cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
       } else {

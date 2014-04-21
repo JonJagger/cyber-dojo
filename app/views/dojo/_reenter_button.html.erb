@@ -7,7 +7,9 @@ $(document).ready(function() {
     var id = $('#kata-id-input').val();
     var title = "<%= t('views.buttons.reenter') %>";
     var cancel = "<%= t('views.buttons.cancel') %>";
+    $('*').css('cursor', 'wait');
     $.getJSON('/dojo/resume_json' , { id: id }, function(dojo) {
+      $('*').css('cursor', 'default');
       cd.dialog_resumeCoding(title, cancel, dojo.resume_dialog_html).dialog('open');
     });
   });

@@ -7,7 +7,9 @@ $(document).ready(function () {
     var name = $(this).attr('id');
     var close = $(this).data('close');
     var title = $(this).text();
+    $('*').css('cursor', 'wait');
     $.get('/dojo/button_dialog/' + name, function(html) {
+      $('*').css('cursor', 'default');
       cd.dialog(html, title, close).dialog('open');
     });
   });
