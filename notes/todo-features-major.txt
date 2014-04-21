@@ -1,9 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 quick-start  code-pad
-  No exercise
-  You just press the language and you automatically
+  No exercise. You just press the language and you automatically
     get an id and an animal.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+sytax-highlighting
+  make it toggleable, like line-numbers?
+  by default syntax-highlighting is off.
+  CodeMirror?
+  This would provide a possible architecture for storing the
+  individual keystrokes (replay in animation style)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker
 o) copy files I zipped up before when moving server.

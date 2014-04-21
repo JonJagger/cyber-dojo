@@ -1,7 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ID-CHECK
-  this should only happen with id is 6 chars or more.
+ENTER
+  mention pressing traffic-light on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE BUTTONS
   add buttons for [blog] [tweet]

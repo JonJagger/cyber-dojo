@@ -1,4 +1,4 @@
-CXXFLAGS += -g -std=c++11 -Wall -Wextra -pthread
+CXXFLAGS += -g -std=c++11 -Wall -Wextra -Werror -pthread
 GTEST_LIBS = -lgtest -lgtest_main
 
 run.tests.output : makefile run.tests
