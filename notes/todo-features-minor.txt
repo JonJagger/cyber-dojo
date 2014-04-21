@@ -1,9 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-AJAX
-  when json ajax call is made switch to wait-cursor and revert
-  back to normal cursor when ajax returns.
-  Do for home-page buttons?
+HOME-PAGE BUTTON
+  move why? button to be a:link (like send-me-feedback)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
   It would be a good idea if the setup screen/dialog

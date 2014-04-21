@@ -135,6 +135,10 @@ $text-color: darken($lighter-color, 10%);
   }
 }
 
+.about.dialog, .faqs.dialog, .help.dialog, .tips.dialog, .why.dialog {
+  font-size: 12pt;
+}
+
 .kata-id-input {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     background: lighten($green, 20%);
