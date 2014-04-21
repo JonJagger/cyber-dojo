@@ -18,11 +18,13 @@ $(document).ready(function() {
     enableIf($('#enter-button'), false);
     enableIf($('#reenter-button'), false);
     enableIf($('#review-button'), false);
-    $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
-      enableIf($('#enter-button'), dojo.exists);
-      enableIf($('#reenter-button'), dojo.started > 0);
-      enableIf($('#review-button'), dojo.started > 0);
-    });
+    if (id.length >= 6) {
+      $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
+        enableIf($('#enter-button'), dojo.exists);
+        enableIf($('#reenter-button'), dojo.started > 0);
+        enableIf($('#review-button'), dojo.started > 0);
+      });
+    }
   };
 
   kataIdInput.keyup(function() {
