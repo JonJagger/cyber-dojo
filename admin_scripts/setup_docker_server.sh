@@ -17,8 +17,8 @@ sed s/railsapp/cyberdojo/ <railsapp.conf >cyberdojo.conf
 rm railsapp.conf
 cd /var/www
 git clone https://JonJagger@github.com/JonJagger/cyberdojo
+cd cyberdojo
 ./pull.sh
-service apache2 restart
 echo "deb http://get.docker.io/ubuntu docker main" > /etc/apt/sources.list.d/docker.list
 wget -qO- https://get.docker.io/gpg | apt-key add -
 apt-get update
