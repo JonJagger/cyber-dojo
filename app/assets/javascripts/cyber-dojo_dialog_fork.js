@@ -306,6 +306,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function() {
+      $('*').css('cursor', 'wait');
 	  $.getJSON('/reverter/revert',
 		{
 		  id: id,
@@ -313,6 +314,7 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(data) {
+          $('*').css('cursor', 'default');
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
 		  trafficLightNumber.val(data.inc.number);
