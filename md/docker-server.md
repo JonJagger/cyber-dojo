@@ -3,8 +3,9 @@ Docker Server
 =============
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
-  * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
-    has an `image_name` entry that exists. For example, if
+
+1. when you press the <code>create</code> button it will only offer languages whose `manifest.json` file
+has an `image_name` entry that exists. For example, if
 ```bash
 cyberdojo/languages/Java-JUnit/manifest.json
 ```
@@ -15,17 +16,19 @@ contains this...
   "image_name": "cyberdojo/java-1.8_junit"
 }
 ```
-then Java-JUnit will only be offered as a language on the
-    initial create page if the docker image `cyberdojo/java-1.8_junit` exists
-    on the server, as determined by running<br/>
-    ```bash
-    $ docker images
-    ```
-  * it will use the docker `image_name` container to execute an animals
-    `cyber-dojo.sh` file each time the animal presses the `[test]` button.
-  * however, if docker is not installed, or if it is but the environment variable
-    `CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the raw
-    host server.
+then Java-JUnit will only be offered as a language
+if the docker image `cyberdojo/java-1.8_junit` exists
+on the server, as determined by running<br/>
+```bash
+$ docker images
+```
+
+2. it will re-use the docker `image_name` container to execute an animals
+`cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
+
+3. however, if docker is not installed, or if it is but the environment variable
+`CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the raw
+host server.
 
 
 running your own docker'd cyber-dojo server
