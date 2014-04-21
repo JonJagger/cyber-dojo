@@ -249,7 +249,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function() {
-	  $('*').css('cursor', 'wait');
+	  //$('*').css('cursor', 'wait');
 	  $.getJSON('/reverter/revert',
 		{
 		  id: id,
@@ -257,7 +257,7 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(d) {
-          $('*').css('cursor', 'default');
+          //$('*').css('cursor', 'default');
 		  data = d;
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));

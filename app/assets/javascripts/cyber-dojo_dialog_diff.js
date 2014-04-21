@@ -10,6 +10,7 @@ var cyberDojo = (function(cd, $) {
 	  var wasTag = $(this).data('was-tag');
 	  var nowTag = $(this).data('now-tag');
 	  var maxTag = $(this).data('max-tag');
+	  //$(this).css('cursor', 'wait');
 	  cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag);
 	});
   };
@@ -399,7 +400,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function(open) {
-	  $('*').css('cursor', 'wait');
+	  //$(this).css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
 		  id: id,
@@ -408,7 +409,7 @@ var cyberDojo = (function(cd, $) {
 		  now_tag: nowTag
 		},
 		function(data) {
-          $('*').css('cursor', 'default');
+          //$(this).css('cursor', 'default');
 		  resetNavigateButtonHandlers();
 
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
