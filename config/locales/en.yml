@@ -54,14 +54,14 @@ en:
       reenter: "re-enter"
       review: "review"
       
-      about: "about"
       faqs: "faqs"
-      help: "help"
+      get-started: "get started"
       tips: "tips"
-      why: "why"
       
+      about: "about"
       donators: "donators"
-      feedback: "feedback"
+      give-feedback: "give feedback"
+      why: "why"
       
       test: "test"
       new_file: "new"
@@ -72,11 +72,11 @@ en:
       download: "download"
 
     feedback:
-      id_really_appreciate_it_if_you_could: "I'd really appreciate it if you could"
+      please: "please"
       email_me: "email me"
-      what_did_you_like_dislike: "What did you like? What did you dislike?"
-      what_worked_failed: "What worked? What failed?"
-      what_should_i_add_remove: "What should I add? What should I remove?"
+      what_did_you_like_dislike: "What did you like?<br/>What did you dislike?"
+      what_worked_failed: "What worked?<br/>What didn't?"
+      what_should_i_add_remove: "What should I add?<br/>What should I remove?"
       
     tips:
       think_about_improving_not_finishing: "Think about improving, not finishing"

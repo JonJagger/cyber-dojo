@@ -1,7 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HOME-PAGE BUTTON
-  move why? button to be a:link (like send-me-feedback)
+ID-CHECK
+  this should only happen with id is 6 chars or more.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE BUTTONS
+  add buttons for [blog] [tweet]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE
+  drop words to left of main buttons.
+  fill that area with images of animals and code.
+  change every 30 seconds?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
   It would be a good idea if the setup screen/dialog

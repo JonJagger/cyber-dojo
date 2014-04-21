@@ -3,7 +3,8 @@
 
 $(document).ready(function () {
 
-  $('.show-dialog-button').click(function() {
+  var buttons = $('#about,#donators,#give-feedback,#why');
+  buttons.click(function() {
     var name = $(this).attr('id');
     var close = $(this).data('close');
     var title = $(this).text();
@@ -18,8 +19,8 @@ $(document).ready(function () {
 
 //--></script>
 
-<div id="buttons-container">
-  <% buttons = ['about', 'faqs', 'help', 'tips','why'
+<div class="buttons-container">
+  <% buttons = ['about', 'donators', 'give-feedback', 'why'
                ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
   <% buttons.each do |action, text| %>
@@ -27,7 +28,8 @@ $(document).ready(function () {
             class="show-dialog-button"
             data-close="<%= t('views.buttons.close') %>"
             id="<%= action %>">
-      <%= text %><% if text == 'why' %>?<% end %>
+      <%= text %>
+      <% if text === 'why' %>?<% end %>
     </button>
     <div style="clear:both">
     </div>

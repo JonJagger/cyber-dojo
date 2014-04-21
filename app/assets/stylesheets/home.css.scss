@@ -44,8 +44,8 @@ $text-color: darken($lighter-color, 10%);
     display: block;
     margin: 0 auto 12px auto;
     border: solid 1px Gray;
-    width: 120px;
-    font-size: 1.2em;
+    width: 100px;
+    font-size: 12pt;
     color: lighten($darker-color, 6%);
   }
 
@@ -99,7 +99,7 @@ $text-color: darken($lighter-color, 10%);
   #donate-button {
     padding-top: 20px;
   }
-  #buttons-container {
+  .buttons-container {
     margin-bottom: 20px;
   }
   #accu {
@@ -122,9 +122,6 @@ $text-color: darken($lighter-color, 10%);
       margin-bottom: 10px;
     }
   }
-  #send-me-feedback {
-    @include font-size-tiny();
-  }
   hr {
     display: block;
     height: 1px;
@@ -135,9 +132,21 @@ $text-color: darken($lighter-color, 10%);
   }
 }
 
-.about.dialog, .faqs.dialog, .help.dialog, .tips.dialog, .why.dialog {
+.faqs.dialog, .get-started.dialog, .tips.dialog,
+.about.dialog, .donators.dialog, .give-feedback.dialog, .why.dialog {
   font-size: 12pt;
 }
+
+#faqs, #get-started, #tips,
+#about, #donators, #give-feedback, #why
+{
+  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  @include font-size-small();
+  padding-left: 0.3em;
+  padding-right: 0.3em;
+}
+
+
 
 .kata-id-input {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -180,14 +189,6 @@ a:link, a:visited
 {
   color: $darker-color;
   @include font-size-medium();
-}
-
-#about, #faqs,  #help, #tips, #why
-{
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  @include font-size-small();
-  padding-left: 0.3em;
-  padding-right: 0.3em;
 }
 
 [data-cursor=pointer]

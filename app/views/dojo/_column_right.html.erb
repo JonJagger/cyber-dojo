@@ -1,22 +1,4 @@
 
-<script type="text/javascript"><!--
-
-$(document).ready(function() {
-
-  $('#donators').click(function(event) {
-    var name = $(this).attr('id');
-    var title = $(this).text();
-    var close = $(this).data('close');
-    $.get('/dojo/button_dialog/' + name, function(html) {
-      cd.dialog(html, title, close).dialog('open');
-    });
-    event.preventDefault();
-  });
-
-});
-
-//--></script>
-
 <table class="align-center">
   <tr>
     <td id="raspberry-pi-logo">
@@ -38,9 +20,7 @@ $(document).ready(function() {
   <tr>
     <td id="total-raised">
       &pound;2439 raised so far<br>
-      thank you <a id="donators"
-         href=""
-         data-close="<%= t('views.buttons.close') %>">donators</a>
+      thank you
     </td>
   </tr>
 </table>
