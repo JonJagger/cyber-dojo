@@ -5,7 +5,7 @@ running a programming dojo
 creating your programming dojo
 ------------------------------
   * click the `[create]` button
-  * click your chosen language|unit-test-framework, eg `C++|assert`
+  * click your chosen language,unit-test-framework, eg `C++,assert`
   * click your chosen exercise, eg `Prime Factors`
   * click the `[ok]` button
   * you'll get a case-insensitive 6-character hex-id. The full id is ten

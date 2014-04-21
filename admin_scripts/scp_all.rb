@@ -7,7 +7,7 @@ require './script_lib.rb'
 
 IP = ARGV[0]
 if IP === nil
-  puts "ruby scp_all [ip-address]
+  puts "ruby scp_all [ip-address]"
   exit
 end
 

@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOCKER
+  It would be a good idea if the setup screen/dialog
+  indicated which Runner was being used, Docker or Raw.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ENTER
   mention pressing traffic-light on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -16,13 +20,9 @@ HOME-PAGE BUTTONS
   add buttons for [blog] [tweet]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
-  drop words to left of main buttons.
+  drop info-words to left of main buttons.
   fill that area with images of animals and code.
   change every 30 seconds?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOCKER
-  It would be a good idea if the setup screen/dialog
-  indicated which Runner was being used, Docker or Raw.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ADMIN-SCRIPTS
   docker_pull_all.rb
