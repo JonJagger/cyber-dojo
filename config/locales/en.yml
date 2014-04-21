@@ -67,8 +67,8 @@ en:
       new_file: "new"
       rename_file: "rename"
       delete_file: "delete"
-      fork: "fork"
-      revert: "revert"
+      fork: "fork&#8209;from"
+      revert: "revert&#8209;to"
       download: "download"
 
     feedback:
