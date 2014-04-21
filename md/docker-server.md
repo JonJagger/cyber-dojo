@@ -28,8 +28,8 @@ $ docker images
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
 
 3. however, if docker is not installed, or if it is but the environment variable
-`CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the raw
-host server.
+`CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the
+[raw server](md/raw-server.md).
 
 
 running your own docker'd cyber-dojo server
