@@ -2,7 +2,7 @@
 Docker Server
 =============
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
-is installed. If it is then...
+is installed.
 
 When you press the `[create]` button cyber-dojo will only offer
 languages whose `manifest.json` file
@@ -25,11 +25,11 @@ $ docker images
 ```
 <hr/>
 
-cyber-dojo will re-use the docker `image_name` container to execute an animals
+cyber-dojo will re-use the [docker](https://www.docker.io/) `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
 
 <hr/>
-however, if docker is not installed, or if it is but the environment variable
+However, if [docker](https://www.docker.io/) is not installed, or if it is but the environment variable
 `CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the
 [raw server](md/raw-server.md).
 
@@ -37,7 +37,7 @@ however, if docker is not installed, or if it is but the environment variable
 running your own docker'd cyber-dojo server
 -------------------------------------------
   * Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
-  * Install cyber-dojo and docker into it using
+  * Install cyber-dojo and [docker](https://www.docker.io/) into it using
     [setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
 
 
