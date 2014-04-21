@@ -4,8 +4,7 @@ Docker Server
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
   * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
-    has an `image_name` entry that exists.
-    <br>For example, if
+    has an `image_name` entry that exists. For example, if
     ```
     cyberdojo/languages/Java-JUnit/manifest.json
     ```
