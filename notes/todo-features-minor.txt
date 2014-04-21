@@ -3,6 +3,15 @@
 ENTER
   mention pressing traffic-light on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+C/C++ MAKEFILES
+  improve them.
+  ask for input from accu-general
+  requirements
+    - makes lib from non test src files
+    - makes test exe from test src and lib
+    - runs test exe
+    - knows if makefile is changed
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE BUTTONS
   add buttons for [blog] [tweet]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
