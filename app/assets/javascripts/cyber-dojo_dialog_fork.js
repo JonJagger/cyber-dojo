@@ -204,6 +204,7 @@ var cyberDojo = (function(cd, $) {
 		  trafficLightNumber.val(tag);
 		} else {
 		  tag = newTag;
+		  forkButton = $(event.target); // wait-cursor hack
 		  refresh();
 		}
 	  }
@@ -287,6 +288,7 @@ var cyberDojo = (function(cd, $) {
 		  .click(function() {
 			if (!onOff) {
 			  tag = newTag;
+			  forkButton = $(this); // wait-cursor hack
 			  refresh();
 			}
 		  }
