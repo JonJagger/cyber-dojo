@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT DIALOG
+  press << or < or > or >> once  - you get the wait-cursor
+  now edit the tag-number and press return - you don't get the wait-cursor
+  but edit the tag-number and press return again - and you do get it
+  Only fails to appear on first edit (after pressing << < > >>)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   test-failing...
   test/app_lib/git_diff_parser_tests.rb
