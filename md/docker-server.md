@@ -4,9 +4,7 @@ Docker Server
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
 
-<ul>
-<li>
-when you press the <code>create</code> button it will only offer languages whose <code>manifest.json</code> file
+1. when you press the <code>create</code> button it will only offer languages whose <code>manifest.json</code> file
 has an <code>image_name</code> entry that exists. For example, if
 ```bash
 cyberdojo/languages/Java-JUnit/manifest.json
@@ -24,9 +22,6 @@ on the server, as determined by running<br/>
 ```bash
 $ docker images
 ```
-</li>
-</ul>
-
 
 2. it will re-use the docker `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
