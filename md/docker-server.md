@@ -4,7 +4,7 @@ Docker Server
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
 
-1. when you press the `[create]` button cyber-dojo will only offer
+When you press the `[create]` button cyber-dojo will only offer
 languages whose `manifest.json` file
 has an `image_name` entry that exists. For example, if
 ```bash
@@ -23,11 +23,13 @@ on the server, as determined by running
 ```bash
 $ docker images
 ```
+<hr/>
 
-2. it will re-use the docker `image_name` container to execute an animals
+cyber-dojo will re-use the docker `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
 
-3. however, if docker is not installed, or if it is but the environment variable
+<hr/>
+however, if docker is not installed, or if it is but the environment variable
 `CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the
 [raw server](md/raw-server.md).
 
