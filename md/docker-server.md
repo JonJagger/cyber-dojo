@@ -4,24 +4,25 @@ Docker Server
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
 
-1. when you press the <code>create</code> button it will only offer languages whose `manifest.json` file
-has an `image_name` entry that exists. For example, if
-```bash
-cyberdojo/languages/Java-JUnit/manifest.json
-```
-contains this...
-```json
-{
-  ...
-  "image_name": "cyberdojo/java-1.8_junit"
-}
-```
-then Java-JUnit will only be offered as a language
-if the docker image `cyberdojo/java-1.8_junit` exists
-on the server, as determined by running<br/>
-```bash
-$ docker images
-```
+  * when you press the <code>create</code> button it will only offer languages whose <code>manifest.json</code> file
+    has an `image_name` entry that exists. For example, if
+    ```bash
+    cyberdojo/languages/Java-JUnit/manifest.json
+    ```
+    contains this...
+    ```json
+    {
+      ...
+      "image_name": "cyberdojo/java-1.8_junit"
+    }
+    ```
+    then Java-JUnit will only be offered as a language
+    if the docker image `cyberdojo/java-1.8_junit` exists
+    on the server, as determined by running<br/>
+    ```bash
+    $ docker images
+    ```
+
 
 2. it will re-use the docker `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
