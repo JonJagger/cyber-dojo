@@ -151,7 +151,9 @@ var cyberDojo = (function(cd, $) {
 		button.attr('disabled', off);
 		if (!off) {
 		  button.unbind()
-			.click(function() { showDiff(from, to); })
+			.click(function() {
+			  showDiff(from, to);
+			})
 			.attr('title', toolTip(from, to));
 		}
 	  };
@@ -397,6 +399,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function(open) {
+	  $('*').css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
 		  id: id,
@@ -405,6 +408,7 @@ var cyberDojo = (function(cd, $) {
 		  now_tag: nowTag
 		},
 		function(data) {
+          $('*').css('cursor', 'default');
 		  resetNavigateButtonHandlers();
 
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
