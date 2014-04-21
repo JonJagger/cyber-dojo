@@ -5,7 +5,7 @@ cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
   * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
     has an `image_name` entry that exists. For example, if
-    ```
+    ```bash
     cyberdojo/languages/Java-JUnit/manifest.json
     ```
     contains this...
@@ -49,7 +49,7 @@ $ docker pull IMAGE_NAME
 ```
 for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
-Alternatively, you can pull them all
+Alternatively, you can pull them all (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ruby docker_pull_all.rb
