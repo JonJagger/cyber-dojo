@@ -5,7 +5,7 @@ cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
 
   * when you press the <code>create</code> button it will only offer languages whose <code>manifest.json</code> file
-    has an `image_name` entry that exists. For example, if
+    has an <code>image_name</code> entry that exists. For example, if
     ```bash
     cyberdojo/languages/Java-JUnit/manifest.json
     ```
