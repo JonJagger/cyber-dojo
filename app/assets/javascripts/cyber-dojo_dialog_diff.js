@@ -17,7 +17,7 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, light) {
+  cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, diffLight) {
 
   	var minTag = 0;
     var tagGap = nowTag - wasTag;
@@ -143,6 +143,7 @@ var cyberDojo = (function(cd, $) {
 			wasTagNumber.val(wasTag);
 			nowTagNumber.val(nowTag);
 		  } else {
+			diffLight = $(event.target); // wait-cursor hack
 			showDiff(newWasTag, newNowTag);
 		  }
 		}
@@ -153,6 +154,7 @@ var cyberDojo = (function(cd, $) {
 		if (!off) {
 		  button.unbind()
 			.click(function() {
+			  diffLight = $(this); // wait-cursor hack
 			  showDiff(from, to);
 			})
 			.attr('title', toolTip(from, to));
@@ -400,8 +402,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function(open) {
-	  var cursor = light.css('cursor');
-	  light.css('cursor', 'wait');
+	  var cursor = diffLight.css('cursor');
+	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
 		  id: id,
@@ -410,7 +412,7 @@ var cyberDojo = (function(cd, $) {
 		  now_tag: nowTag
 		},
 		function(data) {
-          light.css('cursor', cursor);
+          diffLight.css('cursor', cursor);
 		  resetNavigateButtonHandlers();
 
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
