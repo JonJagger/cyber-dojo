@@ -27,6 +27,7 @@ $ docker images
 
 cyber-dojo will re-use the [docker](https://www.docker.io/) `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
+See [app/lib/DockerRunner.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/DockerRunner.rb)
 
 <hr/>
 However, if [docker](https://www.docker.io/) is not installed, or if it is but the environment variable

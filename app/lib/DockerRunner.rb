@@ -1,7 +1,6 @@
 
 # runner providing some isolation/protection/security
-# Uses Docker containers
-# https://www.docker.io/
+# Uses Docker containers https://www.docker.io/
 
 class DockerRunner
 
