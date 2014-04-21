@@ -4,18 +4,18 @@ Docker Server
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then...
   * it will only offer `cyberdojo/languages/*` whose `manifest.json` file
-    has an `image_name` entry that exists. For example, if<br/>
-    ```bash
-    cyberdojo/languages/Java-JUnit/manifest.json
-    ```
-    <br/>contains this...
-    ```json
-    {
-      ...
-      "image_name": "cyberdojo/java-1.8_junit"
-    }
-    ```
-    <br/>then Java-JUnit will only be offered as a language on the
+    has an `image_name` entry that exists. For example, if
+```bash
+cyberdojo/languages/Java-JUnit/manifest.json
+```
+contains this...
+```json
+{
+  ...
+  "image_name": "cyberdojo/java-1.8_junit"
+}
+```
+then Java-JUnit will only be offered as a language on the
     initial create page if the docker image `cyberdojo/java-1.8_junit` exists
     on the server, as determined by running<br/>
     ```bash
