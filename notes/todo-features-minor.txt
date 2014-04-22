@@ -1,9 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-BUTTON
-  right-align it
-  drop the small spinners either side of it.
+  drop the small spinner
   instead have a big spinner in the middle of the screen!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  right align right-align the age
+  right align the bulb counts
+  right-align the animal's name (under the animal's image)
+  right-align the bulb counts (in their own td)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
   if there are lots of filenames make the scrollbar

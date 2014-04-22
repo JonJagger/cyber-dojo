@@ -22,6 +22,14 @@ $(document).ready(function() {
 	<% end %>
 
 	<td>
+	  <%= render :partial => 'avatar_image' %>
+
+	  <%= render :partial => 'shared/avatar_name',
+				 :locals  => { :avatar_name => @avatar.name
+							 } %>
+	</td>
+
+	<td>
 	  <%= render :partial => 'shared/traffic_light_bulb_counts',
 				 :locals  => { :traffic_lights => @traffic_lights,
 							   :avatar_name    => translate_avatar(@avatar.name)
@@ -35,13 +43,6 @@ $(document).ready(function() {
 							 } %>
 	</td>
 
-	<td>
-	  <%= render :partial => 'avatar_image' %>
-
-	  <%= render :partial => 'shared/avatar_name',
-				 :locals  => { :avatar_name => @avatar.name
-							 } %>
-	</td>
 
   </tr>
 </table>

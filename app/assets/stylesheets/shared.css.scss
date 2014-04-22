@@ -1,10 +1,13 @@
 
 .avatar_name, #id {
   @include font-size-tiny();
+  text-align: right;
 }
 
-#shared-info
-{
+#shared-info {
+  margin-left: auto;   // right-align
+  margin-right: 12px;  // right-align
+  text-align: right;
   @include font-size-tiny();
 }
 
