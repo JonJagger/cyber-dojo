@@ -1,38 +1,20 @@
+require 'json'
 
-containers = %w(
-  clojure-1.4.0
-  clojure-1.4.0_test
-  csharp-2.10.8.1
-  csharp-2.10.8.1_nunit
-  erlang-5.10.2
-  erlang-5.10.2_eunit
-  gcc-4.8.1
-  gcc-4.8.1_assert
-  go-1.1.2
-  go-1.1.2_testing
-  gpp-4.8.1
-  gpp-4.8.1_assert
-  gpp-4.8.1_cpputest
-  gpp-4.8.1_googletest
-  groovy-2.2.0
-  groovy-2.2.0_junit
-  haskell-7.6.3
-  haskell-7.6.3_hunit
-  java-1.8
-  java-1.8_approval
-  java-1.8_cucumber
-  java-1.8_junit
-  java-1.8_mockito
-  perl-5.14.2
-  perl-5.14.2_test_simple
-  python-3.3.5
-  python-3.3.5_pytest
-  python-3.3.5_unittest
-  ruby-1.9.3
-  ruby-1.9.3_test_unit
-)
+CYBER_DOJO_ROOT_DIR = ARGV[0]
+if CYBER_DOJO_ROOT_DIR === nil
+  puts "ruby docker_pull_all.rb [root-dir]"
+  exit
+end
 
-containers.each do |container|
-  p container
-  `docker pull cyberdojo/#{container}`
+image_names = [ ]
+Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/manifest.json") do |file|
+  json = JSON.parse(IO.read(file))
+  image_name = json['image_name']
+  image_names << image_name if image_name != nil
+end
+
+image_names.each do |image_name|
+  p image_name
+  cmd = "docker pull #{image_name}"
+  `cmd`
 end
