@@ -18,8 +18,9 @@ $text-color: darken($lighter-color, 10%);
     top: -28px;
   }
   #home-page-logo {
-    text-align: center;
+    text-align: right;
     padding-bottom: 10px;
+    margin-right: 20px;
   }
   #a_place_to_practice {
     font-size: 1.3em;
@@ -128,7 +129,12 @@ $text-color: darken($lighter-color, 10%);
     height: 1px;
     border: 0;
     border-top: 1px dotted $lighter-color;
-    margin: 1em 0;
+    margin: {
+      top: 15px;
+      bottom: 15px;
+      left: 20px;
+      right: 20px;
+    }
     padding: 0;
   }
 }
@@ -139,12 +145,14 @@ $text-color: darken($lighter-color, 10%);
 }
 
 #faqs, #get-started, #tips,
-#about, #donators, #give-feedback, #why
-{
+#about, #donators, #give-feedback, #why {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   @include font-size-small();
-  padding-left: 0.3em;
-  padding-right: 0.3em;
+  padding: {
+    left: 0.3em;
+    right: 0.5em;
+  }
+  text-align: right;
 }
 
 
