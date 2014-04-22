@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+WAIT-CURSOR
+  if there is an ajax error then the cursor is not restored.
+  Eg try on localhost server with `rails s` not running.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none
   which has empty instructions file.
