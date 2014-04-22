@@ -4,9 +4,11 @@ $text-color: darken($lighter-color, 10%);
 #home-page {
 
   font-size: 1.15em;
-  margin-top: 1.5em;
-  margin-left: 3em;
-  margin-right: 3em;
+  margin: {
+    top: 1.5em;
+    left: 3em;
+    right: 3em;
+  }
 
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -25,22 +27,26 @@ $text-color: darken($lighter-color, 10%);
   #a_place_to_practice {
     font-size: 1.3em;
     color: lighten($text-color, 5%);
-    margin-top: -50px;
-    margin-bottom: 2em;
+    margin: {
+      top: -50px;
+      bottom: 2em;
+    }
   }
   td#column-middle {
-    padding-left: 2em;
-    padding-right: 2em;
+    padding: {
+      left: 2em;
+      right: 2em;
+    }
     margin-top: -20px;
   }
   td#column-left, td#column-right {
     padding: 12px;
+    padding-top: 20px;
     background-color: lighten($darker-color, 10%);
     border: dotted 1px DarkGray;
     width: 145px;
     position: relative;
     top: 20px;
-    padding-top: 20px;
     @include rounded-corner(6px);
   }
   .show-dialog-button {
@@ -84,23 +90,29 @@ $text-color: darken($lighter-color, 10%);
     margin-bottom: 40px;
   }
   #raspberry-pi-logo {
-    padding-bottom: 10px;
-    padding-right: 24px;
+    padding: {
+      bottom: 10px;
+      right: 24px;
+    }
     text-align: right;
   }
   #please_donate {
     text-align: right;
-    margin-left: 16px;
-    margin-right: 24px;
+    margin: {
+      left: 16px;
+      right: 24px;
+    }
     color: $lighter-color;
     @include font-size-tiny();
   }
   #total-raised {
     color: $lighter-color;
     @include font-size-tiny();
-    padding-top: 5px;
-    padding-bottom: 10px;
-    padding-right: 24px;
+    padding: {
+      top: 5px;
+      bottom: 10px;
+      right: 24px;
+    }
     text-align: right;
   }
   #donate-form {
@@ -108,8 +120,10 @@ $text-color: darken($lighter-color, 10%);
   }
   #donate-button {
     text-align: right;
-    padding-top: 20px;
-    padding-right: 18px;
+    padding: {
+      top: 20px;
+      right: 18px;
+    }
     margin-right: 24px;
   }
   .buttons-container {
@@ -122,17 +136,21 @@ $text-color: darken($lighter-color, 10%);
   }
   #accu-words {
     @include font-size-tiny();
-    margin-top: 10px;
+    margin: {
+      top: 10px;
+      right: 24px;
+    }
     color: $lighter-color;
-    margin-right: 24px;
     text-align: right;
   }
   #testimonial {
     @include font-size-tiny();
     text-align: right;
     color: $lighter-color;
-    margin-left: 22px;
-    margin-right: 22px;
+    margin: {
+      left: 22px;
+      right: 22px;
+    }
     #title {
       @include font-size-small();
       font-weight: bold;
