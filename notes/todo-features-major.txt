@@ -4,6 +4,15 @@ quick-start  code-pad
   No exercise. You just press the language and you automatically
     get an id and an animal.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+hash-ids
+  For the collection of files to see if there are duplicates...
+  don't base the hash on files that are not relevant
+  eg makefile, Makefile, cyber-dojo.sh
+  Hmmm. It would also be useful to store hashes for
+  individual files. It might well happen that although
+  the combination of files has never been seen before
+  one (or more) of the source files has occured before.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sytax-highlighting
   make it toggleable, like line-numbers?
   by default syntax-highlighting is off.
