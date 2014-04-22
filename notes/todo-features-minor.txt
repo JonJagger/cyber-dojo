@@ -4,10 +4,10 @@ TEST-BUTTON
   drop the small spinner
   instead have a big spinner in the middle of the screen!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ANIMAL-IMAGE NAME
+  extends slightly too far beyond vertical edge of animal image
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
-  right align right-align the age
-  right align the bulb counts
-  right-align the animal's name (under the animal's image)
   right-align the bulb counts (in their own td)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
@@ -20,7 +20,7 @@ TRAFFIC-LIGHT SCROLLBAR
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ALIGNMENT
   right-align everything on front page?
-  how do you add right-margin to contents of textentry
+  how do you add right-margin to contents of text-entry
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none
