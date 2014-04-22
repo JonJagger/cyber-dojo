@@ -59,7 +59,7 @@ body {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-$filename_and_button_border_size: 2px;
+$filename_and_button_border_size: 1px;
 
 button {
   background: darken($lighter-color, 10%);
@@ -106,6 +106,7 @@ div[class~='filename'] {
     color: $darker-color;
     cursor: default;
   }
+  text-align: right;
 }
 
 div[class~="filename"]:hover, button:hover {

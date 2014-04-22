@@ -86,20 +86,19 @@ $(document).ready(function() {
         <div class="panel">
           <%= render :partial => 'filename_list' %>
         </div>
-        <div class="panel">
-          <div class="table-row">
+        <div class="panel align-right" id="controls">
+          <div>
             <%= render :partial => 'line_numbers_checkbox' %>
           </div>
-          <div class="table-row">
+          <div>
             <%= render :partial => 'revert_button' %>
           </div>
-          <div class="table-row">
+          <div>
             <%= render :partial => 'fork_button' %>
           </div>
-          <div class="table-row">
+          <div>
             <%= render :partial => 'help_button' %>
           </div>
-          <%= render :partial => 'shared/tip_window' %>
         </div>
       </td>
       <td>

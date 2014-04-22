@@ -34,9 +34,10 @@ $text-color: darken($lighter-color, 10%);
   }
   td#column-middle {
     padding: {
-      left: 2em;
-      right: 2em;
+      left: 0em;
+      right: 2.6em;
     }
+    margin-left: 0px;
     margin-top: -20px;
   }
   td#column-left, td#column-right {
@@ -71,17 +72,20 @@ $text-color: darken($lighter-color, 10%);
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
-    width: 254px;
+    width: 242px;
     margin-bottom: 2px;
+    margin-right: 2px;
     @include gradient-lighten($green, 40%, 30%, 20%);
+    @include rounded-corner(6px);
   }
   #create-button, #enter-button, #reenter-button,  #review-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
     text-align: center;
-    width: 260px;
+    width: 250px;
     margin-left: 10px;
+    text-align: center;
   }
   #create-button {
     margin-bottom: 30px;

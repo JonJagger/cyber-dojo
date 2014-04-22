@@ -31,8 +31,15 @@
     }
   }
 
+  #controls {
+    margin-right: 5px;
+  }
+
   #revert-button, #fork-button {
     @include font-size-tiny();
+    width: 60px;
+    text-align: right;
+    padding-right: 7px;
   }
 
   #help-button {
