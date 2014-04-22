@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+UNTAR
+  untar all files in downloads/ and zips/
+  run admin_scripts/find_old_language_names.rb
+  use info it generates to patch more language names.
+  see if any katas are corrupt and cannot be re-entered.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
   It would be a good idea if the setup screen/dialog
   indicated which Runner was being used, Docker or Raw.
@@ -16,12 +22,15 @@ C/C++ MAKEFILES
     - runs test exe
     - knows if makefile is changed
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+C++ START FILES
+  use a class?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE BUTTONS
   add buttons for [blog] [tweet]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   drop info-words to left of main buttons.
-  fill that area with images of animals and code.
+  fill that area with images of animals and code that
   change every 30 seconds?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ADMIN-SCRIPTS
@@ -33,13 +42,9 @@ LANGUAGE-CHECKER
   test/installation red/amber/green testing need TLC
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
-  have them open up in popup right next to the item they are tipping.
-  Look at how its done in jQuery book.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOCKER IMAGE NAMES
-  put version-number on all container names
-  give each language its own docker image even if its simply a tag
-   on an existing one.
+  have them open up in a popup right next to the item they are tipping.
+  Look at how its done in jQuery book?
+  Find plug-in.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MODEL
   in app/lib/LinuxPaas.rb

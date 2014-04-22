@@ -4,7 +4,25 @@ misc
 
 language manifest.json parameters
 ---------------------------------
-
+Example: the `manifest.json` file for Java-JUnit looks like this:
+```json
+{
+  "visible_filenames": [
+    "Untitled.java",
+    "UntitledTest.java",
+    "cyber-dojo.sh"
+  ],
+  "support_filenames": [
+    "junit-4.11.jar"
+  ],
+  "display_name": "Java",
+  "display_test_name": "JUnit",
+  "unit_test_framework": "junit",
+  "image_name": "cyberdojo/java-1.8_junit",
+  "tab_size": 4
+}
+```
+- - - - - - - - - - - - - - - - - - - -
 `"image_name": string`
 
   The name of docker image in which `cyber-dojo.sh` is run.
@@ -19,7 +37,7 @@ language manifest.json parameters
   or as a `"support_filenames"` entry. This is because `cyber-dojo.sh` is the name
   of the shell file assumed by the ruby code (on the server) to be the start
   point for running the tests. You can write any actions in the `cyber-dojo.sh`
-  file but clearly any programs it tries to run must be installed in this
+  file but clearly any programs it tries to run must be installed in its
   languages docker container (or on the raw server).
   For example, if `cyber-dojo.sh` runs `gcc` to compile C files then `gcc` has
   to be installed. If `cyber-dojo.sh` runs `javac` to compile java files then
@@ -29,7 +47,7 @@ language manifest.json parameters
 
   The names of necessary supporting files. Each of these files must
   exist in the languages' directory. For example, junit .jar files or nunit .dll assemblies.
-  These are symlinked from the `/var/www/cyberdojo/languages` folder to each animals
+  These are sym-linked from the `/var/www/cyberdojo/languages` folder to each animals
   `/var/www/cyberdojo/katas/...` subfolder.
   Despite the name `"support_filenames"` you can symlink a folder if required.
   <br>Not required if you do not need support files.
@@ -46,7 +64,7 @@ language manifest.json parameters
 ```json
   "highlight_filenames": [ "buffer.cpp", "buffer.hpp", "instructions" ]
 ```
-  The apperance of `"highlight_filenames"` is controlled by the CSS
+  The appearance of `"highlight_filenames"` is controlled by the CSS
   in [kata.css.scss](https://github.com/JonJagger/cyberdojo/blob/master/app/assets/stylesheets/kata.css.scss)
 ```css
     div[class~='filename'][class~='highlight']
@@ -69,7 +87,7 @@ language manifest.json parameters
   ```
   [visible_filenames] - [highlight_filenames]
   ```
-  If there is no highlight_filenames entry, then lowlight-filenames
+  If there is no `"highlight_filenames"` entry, then lowlight-filenames
   will default to
   ```
   [ 'cyber-dojo', 'makefile', 'Makefile' ]
@@ -81,7 +99,8 @@ language manifest.json parameters
   The name of the language as it appears in the create page (where you select
   your language and exercise) and also in the info
   displayed at the top-left of the test and dashboard pages.
-  <br>Optional. Defaults to the name of the folder holding the `manifest.json` file.
+  <br>Optional. Defaults to the name of the language folder holding the
+  `manifest.json` file.
 - - - - - - - - - - - - - - - - - - - -
 `"display_test_name": string`
 
@@ -109,7 +128,7 @@ language manifest.json parameters
 
 katas directory structure
 -------------------------
-The rails code does NOT use a database.
+The rails code does *not* use a database.
 Instead each practice session lives in a git-like directory structure based
 on its 10 character id. For example the session with id `82B583C347` lives at
 ```
@@ -131,10 +150,10 @@ Each started animal has its own git respository, eg
 ```
   cyberdojo/katas/82/B583C347/wolf/.git
 ```
-The starting files (as loaded from the `wolf/manifests.json` file) form
-tag 0 (zero). Each [test] event causes a new git commit and tag, with a
+The starting files (as loaded from the `cyberdojo/katas/82/B583C347/wolf/manifests.json`
+file) form tag 0 (zero). Each `[test]` event causes a new git commit and tag, with a
 message and tag which is simply the increment number. For example, the fourth
-time the wolf computer presses [test] causes
+time the wolf computer presses `[test]` causes
 ```
 $ git commit -a -m '4'
 $ git tag -m '4' 4 HEAD
@@ -148,7 +167,7 @@ To look at filename's differences between tag 4 and tag 5
 ```
 $ git diff 4 5 sandbox/filename
 ```
-It's much easier and more informative to just click on a dashboard traffic light.
+It's much easier and more informative to just click on a traffic light.
 
 
 disk space
