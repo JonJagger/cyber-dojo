@@ -260,7 +260,6 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(d) {
-          revertButton.css('cursor', cursor);
 		  data = d;
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
@@ -272,7 +271,9 @@ var cyberDojo = (function(cd, $) {
 			open();
 		  }
 		}
-	  );
+	  ).always(function() {
+        revertButton.css('cursor', cursor);
+	  })
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

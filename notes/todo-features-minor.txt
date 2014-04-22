@@ -1,8 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-WAIT-CURSOR
-  if there is an ajax error then the cursor is not restored.
-  Eg try on localhost server with `rails s` not running.
+ALIGNMENT
+  text-align everything on front page?
+  small and large buttons
+  accu
+  donations
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none

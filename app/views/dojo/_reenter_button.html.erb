@@ -11,8 +11,9 @@ $(document).ready(function() {
     var cursor = button.css('cursor');
     button.css('cursor', 'wait');
     $.getJSON('/dojo/resume_json' , { id: id }, function(dojo) {
-      button.css('cursor', cursor);
       cd.dialog_resumeCoding(title, cancel, dojo.resume_dialog_html).dialog('open');
+    }).always(function() {
+      button.css('cursor', cursor);
     });
   });
 

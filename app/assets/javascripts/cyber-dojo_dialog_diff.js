@@ -412,7 +412,6 @@ var cyberDojo = (function(cd, $) {
 		  now_tag: nowTag
 		},
 		function(data) {
-          diffLight.css('cursor', cursor);
 		  resetNavigateButtonHandlers();
 
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
@@ -430,7 +429,9 @@ var cyberDojo = (function(cd, $) {
 			open();
 		  }
 		}
-	  );
+	  ).always(function() {
+        diffLight.css('cursor', cursor);
+	  });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

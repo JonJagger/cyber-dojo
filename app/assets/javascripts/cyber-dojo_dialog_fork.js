@@ -317,7 +317,6 @@ var cyberDojo = (function(cd, $) {
 		  tag: tag
 		},
 		function(data) {
-          forkButton.css('cursor', cursor);
 		  resetNavigateButtonHandlers();
 		  trafficLight.html(makeTrafficLight(data.inc));
 		  trafficLightNumber.val(data.inc.number);
@@ -328,7 +327,9 @@ var cyberDojo = (function(cd, $) {
 			open();
 		  }
 		}
-	  );
+	  ).always(function() {
+        forkButton.css('cursor', cursor);
+	  });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
