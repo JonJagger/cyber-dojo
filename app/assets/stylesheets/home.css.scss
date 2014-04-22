@@ -20,7 +20,7 @@ $text-color: darken($lighter-color, 10%);
   #home-page-logo {
     text-align: right;
     padding-bottom: 10px;
-    margin-right: 20px;
+    margin-right: 22px;
   }
   #a_place_to_practice {
     font-size: 1.3em;
@@ -34,12 +34,14 @@ $text-color: darken($lighter-color, 10%);
     margin-top: -20px;
   }
   td#column-left, td#column-right {
-    padding: 1em;
+    padding: 12px;
     background-color: lighten($darker-color, 10%);
     border: dotted 1px DarkGray;
-    width: 140px;
+    width: 145px;
     position: relative;
     top: 20px;
+    padding-top: 20px;
+    @include rounded-corner(6px);
   }
   .show-dialog-button {
     display: block;
@@ -83,39 +85,53 @@ $text-color: darken($lighter-color, 10%);
   }
   #raspberry-pi-logo {
     padding-bottom: 10px;
+    padding-right: 24px;
+    text-align: right;
   }
   #please_donate {
+    text-align: right;
+    margin-left: 16px;
+    margin-right: 24px;
     color: $lighter-color;
     @include font-size-tiny();
   }
   #total-raised {
     color: $lighter-color;
     @include font-size-tiny();
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 10px;
+    padding-right: 24px;
+    text-align: right;
   }
   #donate-form {
     height: 40px;
   }
   #donate-button {
+    text-align: right;
     padding-top: 20px;
+    padding-right: 18px;
+    margin-right: 24px;
   }
   .buttons-container {
     margin-bottom: 20px;
   }
-  #accu {
+  #accu-image {
+    padding-right: 24px;
+    margin-bottom: 0px;
+    text-align: right;
+  }
+  #accu-words {
     @include font-size-tiny();
-    margin-top: 20px;
+    margin-top: 10px;
     color: $lighter-color;
-    #image {
-      margin-bottom: 10px;
-      text-align: center;
-    }
+    margin-right: 24px;
+    text-align: right;
   }
   #testimonial {
     @include font-size-tiny();
     text-align: right;
     color: $lighter-color;
+    margin-left: 22px;
     margin-right: 22px;
     #title {
       @include font-size-small();
@@ -133,7 +149,7 @@ $text-color: darken($lighter-color, 10%);
       top: 15px;
       bottom: 15px;
       left: 20px;
-      right: 20px;
+      right: 24px;
     }
     padding: 0;
   }

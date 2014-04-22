@@ -1,15 +1,17 @@
 
 #kata-page {
 
-  margin-top: 1em;
-  margin-left: 1em;
+  margin: {
+    top: 1em;
+    left: 1em;
+  }
 
   #file-operations {
     #new, #rename, #delete {
       @include font-size-tiny();
       padding: {
-          left: 0.3em;
-          right: 0.3em;
+          left: 0.5em;
+          right: 0.5em;
       }
     }
   }
@@ -41,8 +43,10 @@
   #traffic-lights {
     width: 64em;
     overflow-x: auto;
-    margin-top: 5px;
-    margin-left: 5px;
+    margin: {
+      top: 5px;
+      left: 5px;
+    }
   }
 }
 

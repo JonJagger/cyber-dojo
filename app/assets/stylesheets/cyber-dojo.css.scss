@@ -47,8 +47,10 @@ body {
   }
   margin: none;
   padding: 0.5em;
-  margin-left: 0.25em;
-  margin-right: 0.25em;
+  margin: {
+    left: 0.25em;
+    right: 0.25em;
+  }
 
   &.edgeless {
     padding: 0em;
@@ -71,7 +73,7 @@ button {
   text-decoration: none;
   font-weight: normal;
   border: $filename_and_button_border_size solid $darker-color;
-  @include rounded-corner(4px);
+  @include rounded-corner(6px);
   display: inline-block;
   @include gradient-lighten(darken($lighter-color, 12%), 9%, 2%, 0%);
 }
