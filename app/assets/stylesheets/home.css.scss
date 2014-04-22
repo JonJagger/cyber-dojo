@@ -113,8 +113,9 @@ $text-color: darken($lighter-color, 10%);
   }
   #testimonial {
     @include font-size-tiny();
-    text-align: left;
+    text-align: right;
     color: $lighter-color;
+    margin-right: 22px;
     #title {
       @include font-size-small();
       font-weight: bold;
