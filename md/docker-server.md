@@ -58,8 +58,8 @@ for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
 Alternatively, you can pull them all (this will take a while)
 ```bash
-$ cd /var/www/cyberdojo/admin_scripts
-$ ruby docker_pull_all.rb
+$ cd /var/www/cyberdojo/
+$ ruby admin_scripts/docker_pull_all.rb .
 ```
 
 
