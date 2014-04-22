@@ -15,13 +15,15 @@ $(document).ready(function() {
 
 //--></script>
 
-<button type="button"
-        class="tipped"
-        data-title="?"
-        data-close="<%= t('views.buttons.close') %>"
-        id="help-button">
-  ?
-  <div class="tooltip">
-    shows help
-  </div>
-</button>
+<div id="help-button-container">
+  <button type="button"
+          class="tipped"
+          data-title="?"
+          data-close="<%= t('views.buttons.close') %>"
+          id="help-button">
+    ?
+    <div class="tooltip">
+      shows help
+    </div>
+  </button>
+</div>

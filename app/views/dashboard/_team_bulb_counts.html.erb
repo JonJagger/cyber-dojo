@@ -10,48 +10,46 @@ $(document).ready(function() {
 <%# See _traffic_lights.html.erb for explanation of {lights.count > 1} %>
 
 <% if @all_lights.select{|avatar_name,lights| lights.count > 1}.count > 1 %>
-  <div class="panel">
-    <table>
-      <tr>
-        <td>
-          <% counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
-          <% ['red','amber','green'].each do |bulb| %>
-            <% @all_lights.each do |avatar_name,lights| %>
-              <% if lights.count > 1 %>
-                <% counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
-              <% end %>
-            <% end %>
-            <div class="tipped <%= bulb %> bulb-count">
-              <%= counts[bulb] %>
-              <div class='tooltip'>
-                 animals have<br>
-                 <%= pluralize(counts[bulb], bulb + ' traffic-light') %><br>
-                 so far
-              </div>
-            </div>
-          <% end %>
-          <% lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+  <table id="team-bulb-counts-container">
+    <tr>
+      <td>
+        <% counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+        <% ['red','amber','green'].each do |bulb| %>
           <% @all_lights.each do |avatar_name,lights| %>
             <% if lights.count > 1 %>
-              <% lasts[lights.last['colour']] += 1 %>
+              <% counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
             <% end %>
           <% end %>
-        </td>
-        <td>
-          <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
-          <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
-          <% colour = 'amber' if lasts['amber'] >  0 %>
-          <div class="tipped traffic-light-count <%= colour %>" >
-            <%= total = counts['red'] + counts['amber'] + counts['green'] %>
+          <div class="tipped <%= bulb %> bulb-count">
+            <%= counts[bulb] %>
             <div class='tooltip'>
                animals have<br>
-               <%= pluralize(total, 'traffic-light') %><br>
-               so far and are<br>
-               currently at <%= colour %>
+               <%= pluralize(counts[bulb], bulb + ' traffic-light') %><br>
+               so far
             </div>
           </div>
-        </td>
-      </tr>
-    </table>
-  </div>
+        <% end %>
+        <% lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+        <% @all_lights.each do |avatar_name,lights| %>
+          <% if lights.count > 1 %>
+            <% lasts[lights.last['colour']] += 1 %>
+          <% end %>
+        <% end %>
+      </td>
+      <td>
+        <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
+        <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
+        <% colour = 'amber' if lasts['amber'] >  0 %>
+        <div class="tipped traffic-light-count <%= colour %>" >
+          <%= total = counts['red'] + counts['amber'] + counts['green'] %>
+          <div class='tooltip'>
+             animals have<br>
+             <%= pluralize(total, 'traffic-light') %><br>
+             so far and are<br>
+             currently at <%= colour %>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
 <% end %>
