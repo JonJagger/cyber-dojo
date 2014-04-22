@@ -5,7 +5,6 @@ $(document).ready(function() {
 
   var spinners = $('.spinner');
   var testButton = $('#test-button');
-  var tipWindow = $('#tip-window');
 
   var ajaxAfter = function() {
     var allTheWay = 100000;
@@ -13,14 +12,10 @@ $(document).ready(function() {
     spinners.hide();
     cd.loadFile('output');
     testButton.attr('disabled', false);
-    tipWindow.hide();
-    tipWindow.empty();
   };
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
     testButton.attr('disabled', true);
-    tipWindow.hide();
-    tipWindow.empty();
     spinners.show();
     cd.storeOutgoingFileHashes();
   });
@@ -48,7 +43,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<table class="align-center">
+<table id="test-button-container">
   <tr>
     <td>
       <%= render :partial => 'spinner' %>
@@ -63,9 +58,6 @@ $(document).ready(function() {
           runs the tests<br>and generates a<br>new traffic-light
         </div>
       </button>
-    </td>
-    <td>
-      <%= render :partial => 'spinner' %>
     </td>
   </tr>
 </table>

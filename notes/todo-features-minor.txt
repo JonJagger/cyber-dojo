@@ -1,10 +1,21 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-BUTTON
+  right-align it
+  drop the small spinners either side of it.
+  instead have a big spinner in the middle of the screen!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+FILENAMES
+  if there are lots of filenames make the scrollbar
+  omit scrolling the output file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TRAFFIC-LIGHT SCROLLBAR
+  on [test] page
+  try to lose it but still allow scrolling.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ALIGNMENT
-  text-align everything on front page?
-  small and large buttons
-  accu
-  donations
+  right-align everything on front page?
+  how do you add right-margin to contents of textentry
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none
