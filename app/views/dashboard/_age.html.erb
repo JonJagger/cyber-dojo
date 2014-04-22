@@ -22,41 +22,39 @@ $(document).ready(function() {
   var sep = '&thinsp;:&thinsp;';
 
   if (days() > 0) {
-    $('#days_label').html("<%= t('views.labels.days') %>" + sep);
-    $('#days').text(days());
+    $('#days-label').html("<%= t('views.labels.days') %>" + sep);
+    $('#days').text(zerod(days()));
   }
   if (days() > 0 || hours() > 0) {
-    $('#hours_label').html("<%= t('views.labels.hours') %>" + sep);
+    $('#hours-label').html("<%= t('views.labels.hours') %>" + sep);
     $('#hours').text(zerod(hours()));
   }
   if (days() > 0 || hours() > 0 || minutes() > 0) {
-    $('#minutes_label').html("<%= t('views.labels.minutes') %>" + sep);
+    $('#minutes-label').html("<%= t('views.labels.minutes') %>" + sep);
     $('#minutes').text(zerod(minutes()));
   }
-  $('#seconds_label').html("<%= t('views.labels.seconds') %>" + sep);
+  $('#seconds-label').html("<%= t('views.labels.seconds') %>" + sep);
   $('#seconds').text(zerod(seconds()));
 
 });
 
 //--></script>
 
-<div>
-  <table>
-    <tr>
-      <td id="days_label" class="align-right"></td>
-      <td id="days" class="align-left"></td>
-    </tr>
-    <tr>
-      <td id="hours_label" class="align-right"></td>
-      <td id="hours" class="align-left"></td>
-    </tr>
-    <tr>
-      <td id="minutes_label" class="align-right"></td>
-      <td id="minutes" class="align-left"></td>
-    </tr>
-    <tr>
-      <td id="seconds_label" class="align-right"></td>
-      <td id="seconds" class="align-left"></td>
-    </tr>
-  </table>
-</div>
+<table id="age-container">
+  <tr>
+    <td id="days-label" class="align-right"></td>
+    <td id="days" class="align-left"></td>
+  </tr>
+  <tr>
+    <td id="hours-label" class="align-right"></td>
+    <td id="hours" class="align-left"></td>
+  </tr>
+  <tr>
+    <td id="minutes-label" class="align-right"></td>
+    <td id="minutes" class="align-left"></td>
+  </tr>
+  <tr>
+    <td id="seconds-label" class="align-right"></td>
+    <td id="seconds" class="align-left"></td>
+  </tr>
+</table>

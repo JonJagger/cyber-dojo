@@ -3,8 +3,15 @@ $ellipsis: "\2026";
 
 #dashboard-page {
 
-  margin-top: 2em;
-  margin-left: 1em;
+  margin: {
+    top: 2em;
+    left: 1em;
+  }
+
+  #age-container {
+    margin-left: auto;   // right-align
+    margin-right: 3px;  // right-align
+  }
 
   #help-button {
     @include font-size-tiny();
