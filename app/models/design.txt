@@ -9,16 +9,20 @@ does not use a database.
 From a paas object you create a dojo object like this...
 
 <code>
+format = 'json'
 dojo = paas.create_dojo(root_path,format)
 </code>
 
 A paas can have several dojo's...
-For example the live one off
+For example, the live one off
   /var/www/cyberdojo
 and a test one off
   /var/www/cyberdojo/test/cyberdojo
-The formats are 'rb' (and old format that required 'eval's)
-and 'json' (requiring only the safer JSON.parse())
+
+The format will always be 'json'.
+The format used to be 'rb' which required eval's
+but 'rb' is now only needed in tests to check backward
+compatibility.
 
 From a dojo object you list all its languages or
 use [ ] to select a specific language.
@@ -29,7 +33,10 @@ use [ ] to select a specific kata.
 From a kata object you can list all the avatars or
 use [ ] to select a specific avatar.
 
+For example
+
 <code>
+...
 dojo.languages.each {|language| ... }
 java = dojo.language['Java-JUnit']
 ...
@@ -47,10 +54,9 @@ lion = kata.avatars['lion']
 ...
 </code>
 
-Note that none of the above checks that the object is 'valid', that the
-underlying disk paths exists. This allows you to write code like this...
+Note that, deliberately, none of the above checks that the object is 'valid',
+that the underlying disk paths exists. This allows you to write code like this...
 
 <code>
 dojo.katas['34D6E7823E'].avatars['lion'].exists?
 </code>
-
