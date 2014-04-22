@@ -1,10 +1,18 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+EXERCISE=NONE
+  add exercise called none
+  which has empty instructions file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 UNTAR
-  untar all files in downloads/ and zips/
-  run admin_scripts/find_old_language_names.rb
-  use info it generates to patch more language names.
-  see if any katas are corrupt and cannot be re-entered.
+  o) untar all files in downloads/ and zips/
+  o) Do this off to the size of the main katas/ folder
+     so that I avoid checking katas I've already checked.
+  o) admin_scripts/find_old_language_names.rb will need refactoring
+     so cyber-dojo-root-dir is a parameter.
+  o) run admin_scripts/find_old_language_names.rb
+  o) use info it generates to patch more language names.
+  o) see if any katas are corrupt and are not worth saving.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
   It would be a good idea if the setup screen/dialog

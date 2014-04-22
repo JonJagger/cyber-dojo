@@ -9,4 +9,4 @@ The exceptions (which do work) are
   (4) domain_lib.rb
   (5) find_old_language_names.rb
   (6) docker_crib.sh
-  (7) docker_pull.rb
+  (7) docker_pull_all.rb

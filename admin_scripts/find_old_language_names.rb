@@ -31,7 +31,7 @@ dojo.katas.each do |kata|
 end
 print "\n"
 print "\n"
-p missing
+p missing.sort
 print "\n"
 print "\n"
 p missing.keys
