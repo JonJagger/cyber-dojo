@@ -13,7 +13,7 @@ module TrafficLightHelper
         "<div class='tooltip'>" +
           tool_tip(avatar_name,light) +
         "</div>" +
-        traffic_light_image(colour(light), 20, 62) +
+        traffic_light_image(colour(light), 17, 54) +
      "</div>"
     ).html_safe
   end
@@ -37,8 +37,8 @@ module TrafficLightHelper
         "<img src='/images/avatars/#{avatar_name}.jpg'" +
             " alt='#{avatar_name}'" +
             " title='#{avatar_name}'" +
-            " width='52'" +
-            " height='52'/>" +
+            " width='45'" +
+            " height='45'/>" +
      "</div>"
     ).html_safe
   end

@@ -35,9 +35,6 @@ ANIMAL-IMAGE NAME
 DASHBOARD
   right-align the bulb counts (in their own td)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  if there is only one animal I get an extra panel hr line.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
   if there are lots of filenames make the scrollbar
   omit scrolling the output file.
