@@ -32,15 +32,11 @@
   #filename-list {
     height: 270px;
     overflow-y: auto;
-    #radio_output {
-      margin-bottom: 0.5em;
-      font-style: italic;
-    }
     div[class~='filename'][class~='highlight'] {
       &:before { content: ">"; }
     }
-    div[class~='filename'][class~='lowlight'] {
-      color: lighten($darker-color, 20%);
+    #radio_output, div[class~='filename'][class~='lowlight'] {
+      color: lighten($darker-color, 15%);
     }
   }
 
