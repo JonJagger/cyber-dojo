@@ -31,7 +31,7 @@ en:
       click_to_revert: "click<br/>&larr;to<br/>revert<br/>"
       sorry_full_up: "sorry, full up!"
       click_to_re_enter: "click the animal"
-      columns: "|60s| columns"
+      columns: "60s columns"
       auto_refresh: "auto refresh"
       days: "days"
       hours: "hours"
