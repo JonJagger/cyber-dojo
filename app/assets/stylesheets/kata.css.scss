@@ -18,6 +18,8 @@
   }
 
   #file-operations {
+    margin-left: auto;  // right-align
+    margin-right: 2px;  // right-align
     #new, #rename, #delete {
       @include font-size-tiny();
       padding: {
