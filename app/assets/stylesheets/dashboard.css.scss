@@ -8,7 +8,8 @@ $ellipsis: "\2026";
     left: 1em;
   }
 
-  #age-container, #team-bulb-counts-container, #help-button-container {
+  #age-container, #team-bulb-counts-container,
+  #help-button-container, #controls-container {
     margin-left: auto;  // right-align
     margin-right: 3px;  // right-align
     text-align: right;
