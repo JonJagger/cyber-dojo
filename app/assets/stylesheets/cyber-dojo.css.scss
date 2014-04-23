@@ -18,16 +18,20 @@ body {
 }
 
 .avatar_image {
-  margin-left: 0.2em;
-  margin-right: 0.2em;
-  margin-top: 0em;
-  margin-bottom: 0em;
+  margin: {
+      left: 0.2em;
+     right: 0.2em;
+       top: 0em;
+    bottom: 0em;
+  }
   cursor: pointer;
 }
 
 .vertical-padded {
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding: {
+       top: 0.5em;
+    bottom: 0.5em;
+  }
 }
 
 .panel-title {
@@ -169,8 +173,10 @@ div[class~="filename"], button[disabled]:hover {
   color: $darker-color;
   display: table;
   margin: 0 auto;
-  margin-left: 45px;
-  margin-right: 45px;
+  margin: {
+    left: 45px;
+    right: 45px;
+  }
   a:link, a:visited {
     color: $lighter-color;
   }
@@ -180,10 +186,4 @@ div[class~="filename"], button[disabled]:hover {
     position: relative;
     left: -45px;
   }
-}
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-img[class~="flag"] {
-  margin: 5px;
 }
