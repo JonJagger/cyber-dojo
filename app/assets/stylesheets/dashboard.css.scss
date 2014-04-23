@@ -15,6 +15,13 @@ $ellipsis: "\2026";
     text-align: right;
   }
 
+  #age-container {
+    #days, #hours, #minutes, #seconds {
+      position: relative;
+      top: +1px;
+    }
+  }
+
   #help-button {
     @include font-size-tiny();
     @include rounded-corner(14px);

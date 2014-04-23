@@ -44,7 +44,7 @@ body {
   border: {
     style: dotted;
     width: 1px;
-    color: lighten($darker-color, 25%);
+    color: lighten($darker-color, 15%);
     left: none;
     right: none;
     bottom: none;
@@ -54,10 +54,6 @@ body {
   margin: {
     left: 0.25em;
     right: 0.25em;
-  }
-
-  &.edgeless {
-    padding: 0em;
   }
 }
 
@@ -157,12 +153,12 @@ div[class~="filename"], button[disabled]:hover {
   border-left: {
     style: dotted;
     width: 1px;
-    color: lighten($darker-color, 25%);
+    color: lighten($darker-color, 15%);
   }
   border-top: {
     style: dotted;
     width: 1px;
-    color: lighten($darker-color, 25%);
+    color: lighten($darker-color, 15%);
   }
 }
 

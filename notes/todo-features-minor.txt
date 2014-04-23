@@ -1,9 +1,13 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+JAVA
+  add jMock
+  add EasyMock
+  add PowerMock
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   drop extra spacing below output filename
-  colour output file same as cyber-dojo.sh
+  colour output file same as cyber-dojo.sh (lolight)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   drop yin-yang logo from top-left
@@ -24,23 +28,14 @@ TAKE-OUT
   header expires thing from application-controller
   1.2.3.4 thing from
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-BUTTON
-  drop the small spinner
-  instead have a big spinner in the middle of the screen!
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ANIMAL-IMAGE NAME
-  extends slightly too far beyond vertical edge of animal image
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  right-align the bulb counts (in their own td)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
   if there are lots of filenames make the scrollbar
   omit scrolling the output file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TRAFFIC-LIGHT SCROLLBAR
   on [test] page
-  try to lose it but still allow scrolling.
+  try to lose it
+  but still allow scrolling.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none

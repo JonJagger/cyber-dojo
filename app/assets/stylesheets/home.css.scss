@@ -168,7 +168,7 @@ $text-color: darken($lighter-color, 10%);
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px dotted $lighter-color;
+    border-top: 1px dotted lighten($darker-color, 30%);
     margin: {
       top: 15px;
       bottom: 15px;

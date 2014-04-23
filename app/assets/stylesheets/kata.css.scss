@@ -79,6 +79,11 @@
       left: 0px;
     }
   }
+
+  #visible-files-container {
+    position: relative;
+    top: -1px;
+  }
 }
 
 #kata-page, #help-dialog {
