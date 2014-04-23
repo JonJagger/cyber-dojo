@@ -12,19 +12,14 @@
         <% if @started_avatar_names.include?(avatar_name) %>
           <img onclick='return cd.resume("<%= @kata.id %>","<%= avatar_name %>");'
                src="/images/avatars/<%= avatar_name %>.jpg"
+               title="<%= avatar_name %>"
                width="<%= size %>"
                height="<%= size %>"
                data-cursor="pointer"/>
-          <div class="started-avatar-name">
-            <%= t("views.avatars.#{avatar_name}") %>
-          </div>
         <% else %>
           <img src="/images/avatars/bw/<%= avatar_name %>.jpg"
                width="<%= size %>"
                height="<%= size %>"/>
-          <div class="unstarted-avatar-name">
-            <%= t("views.avatars.#{avatar_name}") %>
-          </div>
         <% end %>
         <% index += 1 %>
       </td>
