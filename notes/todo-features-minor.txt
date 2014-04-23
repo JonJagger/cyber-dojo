@@ -2,6 +2,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
+  drop extra spacing below output filename
+  colour output file same as cyber-dojo.sh
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
   drop yin-yang logo from top-left
   use big yin-yang spinner in center of page instead of
     small spinner to left of test button.
