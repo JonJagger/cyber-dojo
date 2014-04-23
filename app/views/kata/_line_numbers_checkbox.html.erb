@@ -5,7 +5,7 @@ $(document).ready(function() {
 
   //TODO: this loses the focus on the currently opened file
 
-  $('#line_numbers_checkbox').click(function() {
+  $('#line-numbers-checkbox').click(function() {
     var nodes = $('[id$=line_numbers]');
     if ($(this).is(':checked')) {
       nodes.show();
@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<div style="float:right;">
+<div id="line-numbers-checkbox-container" style="float:right;">
   <table>
     <tr>
       <td>
@@ -35,8 +35,8 @@ $(document).ready(function() {
       <td>
         <input type="checkbox" class="regular-checkbox"
                checked="true"
-               id="line_numbers_checkbox"/>
-          <label for="line_numbers_checkbox"></label>
+               id="line-numbers-checkbox"/>
+          <label for="line-numbers-checkbox"></label>
       </td>
     </tr>
   </table>

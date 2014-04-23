@@ -21,16 +21,16 @@
     margin-left: auto;  // right-align
     margin-right: 2px;  // right-align
     #new, #rename, #delete {
+      width: 60px;
+      text-align: right;
       @include font-size-tiny();
-      padding: {
-          left: 0.5em;
-          right: 0.5em;
-      }
+      padding-right: 7px;
+      margin-bottom: 2px;
     }
   }
 
   #filename-list {
-    height: 22em;
+    height: 21em;
     overflow-y: auto;
     #radio_output {
       margin-bottom: 0.5em;
@@ -46,6 +46,13 @@
 
   #controls {
     margin-right: 5px;
+  }
+
+  #line-numbers-checkbox-container {
+    margin: {
+      top: 0px;
+      bottom: 4px;
+    }
   }
 
   #revert-button, #fork-button {
@@ -66,7 +73,7 @@
     overflow-x: auto;
     margin: {
       top: 5px;
-      left: 5px;
+      left: 0px;
     }
   }
 }
