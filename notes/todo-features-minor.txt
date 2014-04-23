@@ -2,6 +2,9 @@
 HOME-PAGE
   the small buttons on lhs no longer have the hover ghosting
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+MISC
+  does anything use the avatar-name css now?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HR-LINES
   on dashboard and test page are slightly too long.
   they intrude into the vertical alignment.

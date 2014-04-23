@@ -10,14 +10,12 @@
       <td class="panel">
         <% avatar_name = @all_avatar_names[index] %>
           <img src="/images/avatars/<%= avatar_name %>.jpg"
+               title="<%= avatar_name %>"
                width="<%= size %>"
-               height="<%= size %>" />          
-          <div class="unstarted-avatar-name">
-            <%= t("views.avatars.#{avatar_name}") %>
-          </div>
+               height="<%= size %>" />
         <% index += 1 %>
       </td>
-      <% end %>     
+      <% end %>
     </tr>
     <% end %>
   </table>
