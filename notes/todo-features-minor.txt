@@ -1,8 +1,41 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  does not have animal name below animal image. add it?
+  revert/fork dialog does not have animal name either.
+  remove it?
+  from [test] page?
+  from dashboard page?
+  from re-enter dialog?
+  Yes I think so. But keep name as title tooltip.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  if name of exercise is quite long (eg recently used list)
+  then you can see that
+     |60s| columns?
+      auto refresh?
+  are not right-aligned.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  |60s| columns? says "columns" twice. Once in || and once in the word.
+  change to
+    one min columns?
+    timed columns?
+    60s columns?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  small red bulb-count is hard to see. lighten the red
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  add left-right padding to bulb-counts
+  right-align the bulb-counts.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOME-PAGE
+  the small buttons on lhs no longer have the hover ghosting
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HR-LINES
- on dashboard and test page are slightly too long.
- they intrude into the vertical alignment.
+  on dashboard and test page are slightly too long.
+  they intrude into the vertical alignment.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TAKE-OUT
   header expires thing from application-controller
