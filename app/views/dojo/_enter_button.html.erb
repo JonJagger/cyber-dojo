@@ -10,11 +10,11 @@ $(document).ready(function() {
     var button = $(this);
     var cursor = button.css('cursor');
     button.css('cursor', 'wait');
-    $.getJSON('/dojo/start_json' , { id: id }, function(dojo) {
+    $.getJSON('/dojo/enter_json' , { id: id }, function(dojo) {
       if (dojo.full) {
         cd.dialog(dojo.full_dialog_html, title, ok).dialog('open');
       } else {
-        cd.dialog_startCoding(title, id, ok, dojo.avatar_name, dojo.start_dialog_html).dialog('open');
+        cd.dialog_enter(title, id, ok, dojo.avatar_name, dojo.enter_dialog_html).dialog('open');
         cd.enableDisableStartResumeReview();
       }
     }).always(function() {
