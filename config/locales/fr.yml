@@ -32,7 +32,7 @@ fr:
       revert: "revenir"
       click_to_revert: "cliquez<br/>&larr;pour<br/>revenir<br/>"
       sorry_full_up: "désolé, le plein"
-      click_to_resume: "cliquez sur l'animal"
+      click_to_re_enter: "cliquez sur l'animal"
       columns: "|60s| colonnes"
       auto_refresh: "actualiser automatique"
       days: "journées"
