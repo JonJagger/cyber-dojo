@@ -54,7 +54,7 @@ $text-color: darken($lighter-color, 10%);
     display: block;
     margin: 0 auto 12px auto;
     border: solid 1px Gray;
-    width: 100px;
+    width: 115px;
     font-size: 12pt;
     color: lighten($darker-color, 6%);
   }
@@ -172,8 +172,8 @@ $text-color: darken($lighter-color, 10%);
     margin: {
       top: 15px;
       bottom: 15px;
-      left: 20px;
-      right: 24px;
+      left: 18px;
+      right: 18px;
     }
     padding: 0;
   }

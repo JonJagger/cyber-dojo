@@ -56,13 +56,13 @@ fr:
       reenter: "rentrer"
       review: "réviser"
       
-      about: "à propos"
-      basics: "base"
-      donators: "donators"
       faqs: "faqs"
-      feedback: "réactions"
-      source: "source"
+      get-started: "commencer"
       tips: "conseil"
+      
+      about: "à propos"
+      donators: "donators"
+      give-feedback: "réactions"
       why: "pourquoi"
       
       test: "tester"

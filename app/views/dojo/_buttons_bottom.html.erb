@@ -30,7 +30,7 @@ $(document).ready(function () {
             class="show-dialog-button"
             data-close="<%= t('views.buttons.close') %>"
             id="<%= action %>">
-      <%= text %>
+      <%= raw text %>
       <% if text === 'why' %>?<% end %>
     </button>
     <div style="clear:both">
