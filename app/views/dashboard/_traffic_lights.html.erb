@@ -56,10 +56,6 @@ $(document).ready(function() {
 		<% end %>
 		<td class="align-center valign-center">
 		  <%= no_diff_avatar_image(@kata, avatar_name, lights.last, lights.length) %>
-
-		  <%= render :partial => 'shared/avatar_name',
-					 :locals  => { :avatar_name => avatar_name
-								 } %>
 		</td>
 		<td>
 		  <%= render :partial => 'shared/traffic_light_bulb_counts',
