@@ -71,10 +71,13 @@ $text-color: darken($lighter-color, 10%);
     background: lighten($green, 20%);
     color: $darker-color;
     @include font-size-largest();
-    text-align: center;
-    width: 242px;
-    margin-bottom: 2px;
-    margin-right: 2px;
+    width: 222px;
+    margin: {
+      bottom: 2px;
+      right: 2px;
+    }
+    padding-right: 20px;
+    text-align: right;
     @include gradient-lighten($green, 40%, 30%, 20%);
     @include rounded-corner(6px);
   }
@@ -82,10 +85,9 @@ $text-color: darken($lighter-color, 10%);
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
-    text-align: center;
     width: 250px;
     margin-left: 10px;
-    text-align: center;
+    text-align: right;
   }
   #create-button {
     margin-bottom: 30px;
@@ -114,7 +116,7 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-tiny();
     padding: {
       top: 5px;
-      bottom: 10px;
+      bottom: 5px;
       right: 24px;
     }
     text-align: right;

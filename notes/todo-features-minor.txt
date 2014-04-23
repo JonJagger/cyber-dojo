@@ -1,5 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HR-LINES
+ on dashboard and test page are slightly too long.
+ they intrude into the vertical alignment.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TAKE-OUT
+  header expires thing from application-controller
+  1.2.3.4 thing from
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-BUTTON
   drop the small spinner
   instead have a big spinner in the middle of the screen!
@@ -10,6 +18,9 @@ ANIMAL-IMAGE NAME
 DASHBOARD
   right-align the bulb counts (in their own td)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  if there is only one animal I get an extra panel hr line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
   if there are lots of filenames make the scrollbar
   omit scrolling the output file.
@@ -17,10 +28,6 @@ FILENAMES
 TRAFFIC-LIGHT SCROLLBAR
   on [test] page
   try to lose it but still allow scrolling.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ALIGNMENT
-  right-align everything on front page?
-  how do you add right-margin to contents of text-entry
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none
