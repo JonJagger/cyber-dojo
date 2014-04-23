@@ -55,41 +55,43 @@ $(document).ready(function() {
 
 //--></script>
 
-<table id="controls-container">
-  <tr>
-    <td class="align-right">
-      <div class="tipped">
-        <%= raw t("views.labels.columns") %>
-        <div class="tooltip">
+<div class="panel">
+  <table id="controls-container">
+    <tr>
+      <td class="align-right">
+        <div class="tipped">
+          <%= raw t("views.labels.columns") %>
+          <div class="tooltip">
+          </div>
         </div>
-      </div>
-    </td>
-    <td>
-      &nbsp;
-    </td>
-    <td>
-      <input type="checkbox" class="regular-checkbox"
-             id="minute_columns_checkbox"/>
-        <label for="minute_columns_checkbox"></label>
-    </td>
-  </tr>
-  <tr>
-    <td class="align-right">
-      <div class="tipped">
-        <%= raw t('views.labels.auto_refresh') %>
-        <div class="tooltip">
-          toggles the 10 second<br>
-          auto-refresh on/off
+      </td>
+      <td>
+        &nbsp;
+      </td>
+      <td>
+        <input type="checkbox" class="regular-checkbox"
+               id="minute_columns_checkbox"/>
+          <label for="minute_columns_checkbox"></label>
+      </td>
+    </tr>
+    <tr>
+      <td class="align-right">
+        <div class="tipped">
+          <%= raw t('views.labels.auto_refresh') %>
+          <div class="tooltip">
+            toggles the 10 second<br>
+            auto-refresh on/off
+          </div>
         </div>
-      </div>
-    </td>
-    <td>
-      &nbsp;
-    </td>
-    <td>
-      <input type="checkbox" class="regular-checkbox"
-             id="auto_refresh_checkbox"/>
-        <label for="auto_refresh_checkbox"></label>
-    </td>
-  </tr>
-</table>
+      </td>
+      <td>
+        &nbsp;
+      </td>
+      <td>
+        <input type="checkbox" class="regular-checkbox"
+               id="auto_refresh_checkbox"/>
+          <label for="auto_refresh_checkbox"></label>
+      </td>
+    </tr>
+  </table>
+</div>

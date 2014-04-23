@@ -10,6 +10,7 @@ $(document).ready(function() {
 <%# See _traffic_lights.html.erb for explanation of {lights.count > 1} %>
 
 <% if @all_lights.select{|avatar_name,lights| lights.count > 1}.count > 1 %>
+<div class="panel">
   <table id="team-bulb-counts-container">
     <tr>
       <td>
@@ -52,4 +53,5 @@ $(document).ready(function() {
       </td>
     </tr>
   </table>
+</div>
 <% end %>
