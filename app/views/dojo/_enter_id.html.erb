@@ -13,7 +13,7 @@ $(document).ready(function() {
     }
   };
 
-  cd.enableDisableStartResumeReview = function() {
+  cd.enableDisableEnterReEnterReview = function() {
     var id = kataIdInput.val();
     enableIf($('#enter-button'), false);
     enableIf($('#reenter-button'), false);
@@ -28,10 +28,10 @@ $(document).ready(function() {
   };
 
   kataIdInput.keyup(function() {
-    cd.enableDisableStartResumeReview();
+    cd.enableDisableEnterReEnterReview();
   });
 
-  cd.enableDisableStartResumeReview();
+  cd.enableDisableEnterReEnterReview();
 });
 
 //--></script>

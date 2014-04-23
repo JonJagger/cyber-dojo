@@ -10,7 +10,7 @@
       <td class="panel">
         <% avatar_name = @all_avatar_names[index] %>
         <% if @started_avatar_names.include?(avatar_name) %>
-          <img onclick='return cd.resume("<%= @kata.id %>","<%= avatar_name %>");'
+          <img onclick='return cd.re_enter("<%= @kata.id %>","<%= avatar_name %>");'
                src="/images/avatars/<%= avatar_name %>.jpg"
                title="<%= avatar_name %>"
                width="<%= size %>"
