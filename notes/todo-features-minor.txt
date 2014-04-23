@@ -7,13 +7,6 @@ DASHBOARD
     timed columns?
     60s columns?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  small red bulb-count is hard to see. lighten the red
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  add left-right padding to bulb-counts
-  right-align the bulb-counts.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   the small buttons on lhs no longer have the hover ghosting
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
