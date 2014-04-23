@@ -30,7 +30,7 @@
   }
 
   #filename-list {
-    height: 21em;
+    height: 270px;
     overflow-y: auto;
     #radio_output {
       margin-bottom: 0.5em;
@@ -49,6 +49,9 @@
   }
 
   #line-numbers-checkbox-container {
+    margin-left: auto;  // right-align
+    margin-right: 2px;  // right-align
+    text-align: right;
     margin: {
       top: 0px;
       bottom: 4px;
