@@ -55,8 +55,10 @@
     font-size: 12pt;
 
     ln {
-      margin-left : 4px;
-      margin-right: 3px;
+      margin: {
+        left : 4px;
+        right: 3px;
+      }
       font-weight: normal;
     }
 

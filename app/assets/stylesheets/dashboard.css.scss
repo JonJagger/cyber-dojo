@@ -33,16 +33,16 @@ $ellipsis: "\2026";
       }
     }
     .row      td { padding: 0em; }
-    .row.odd  td { background: lighten($darker-color, 5% ); }
-    .row.even td { background: lighten($darker-color, 10%); }
+    .row.odd  td { background: lighten($darker-color, 3%); }
+    .row.even td { background: lighten($darker-color, 6%); }
     .omission {
       font-size: 0.7em;
-      color: White;
+      color: lighten(Black,40%);
       &:after { content: $ellipsis; }
     }
     .gap {
       font-size: 0.5em;
-      color: Gray;
+      color: lighten(Black,40%);
       text-align: center;
     }
   }

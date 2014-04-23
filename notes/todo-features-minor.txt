@@ -1,12 +1,4 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  |60s| columns? says "columns" twice. Once in || and once in the word.
-  change to
-    one min columns?
-    timed columns?
-    60s columns?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   the small buttons on lhs no longer have the hover ghosting
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
