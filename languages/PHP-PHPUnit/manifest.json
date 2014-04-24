@@ -9,6 +9,6 @@
   "display_name": "PHP",
   "display_test_name": "PHPUnit",
   "unit_test_framework": "php_unit",
-  "image_name": "cyberdojo/php-N_phpunit",
+  "image_name": "cyberdojo/php-5.5.3_phpunit",
   "tab_size": 4
 }
