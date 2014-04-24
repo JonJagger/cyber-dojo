@@ -4,11 +4,6 @@
       <table>
         <tr class="valign-top">
           <td>
-            <textarea class="line_numbers"
-                      id="<%= filename %>_line_numbers">
-            </textarea>
-          </td>
-          <td>
             <% if filename != 'output' %>
               <textarea class="file_content"
                         spellcheck="false"
@@ -20,6 +15,11 @@
             <% else %>
               <%= render :partial => 'output' %>
             <% end %>
+          </td>
+          <td>
+            <textarea class="line_numbers"
+                      id="<%= filename %>_line_numbers">
+            </textarea>
           </td>
         </tr>
       </table>

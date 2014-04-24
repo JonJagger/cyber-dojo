@@ -1,5 +1,16 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LINE-NUMBERS
+  put them on the right-hand side?!
+  o) means edit is more similar to diff/fork/revert display
+  o) means vertical scrollbar is next to line-numbers
+  o) means textarea does not jump when line-numbers added/removed
+  only really doable if I can highlight the current line
+  as the cursor moves up and down in a textarea.
+  Or rather, I don't need to highlight current line of text
+  but I do need to highlight the line-number as the cursor
+  moves over that line.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 JAVA
   add jMock
   add EasyMock

@@ -119,13 +119,8 @@ div[class~="filename"], button[disabled]:hover {
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-.filename_div { display: none; }
-
-.file_content {
-  background: $lighter-color;
-  color: $darker-color;
-  width: 48em;
-  font-weight: 500;
+.filename_div {
+  display: none;
 }
 
 .line_numbers, .file_content { height: 30em; }
@@ -136,7 +131,6 @@ div[class~="filename"], button[disabled]:hover {
   border: 0;
   margin: 0;
   padding: 0;
-  padding-left: 2px;
   display: block;
   overflow: auto;
 }
@@ -150,7 +144,7 @@ div[class~="filename"], button[disabled]:hover {
   display: block;
   padding-right: 2px;
   width: 2em;
-  border-left: {
+  border-right: {
     style: dotted;
     width: 1px;
     color: lighten($darker-color, 15%);
@@ -160,6 +154,14 @@ div[class~="filename"], button[disabled]:hover {
     width: 1px;
     color: lighten($darker-color, 15%);
   }
+}
+
+.file_content {
+  background: $lighter-color;
+  color: $darker-color;
+  width: 48em;
+  font-weight: 500;
+  padding-left: 4px;
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
