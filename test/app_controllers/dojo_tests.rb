@@ -57,9 +57,9 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test "start_json with id that does not exist" do
+  test "enter_json with id that does not exist" do
     bad_id = 'ab00ab11ab'
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :format => :json,
       :id => bad_id
     }
@@ -68,9 +68,9 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test "start_json with id that does exist" do
+  test "enter_json with id that does exist" do
     id = checked_save_id
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :format => :json,
       :id => id
     }
@@ -84,7 +84,7 @@ class DojoControllerTest  < IntegrationTest
   test "start-coding succeeds once for each avatar name, then dojo is full" do
     id = checked_save_id
     Avatars.names.each do |avatar_name|
-      get '/dojo/start_json', {
+      get '/dojo/enter_json', {
         :format => :json,
         :id => id
       }
@@ -93,7 +93,7 @@ class DojoControllerTest  < IntegrationTest
       assert_not_nil json['avatar_name']
     end
 
-    get '/dojo/start_json', {
+    get '/dojo/enter_json', {
       :format => :json,
       :id => id
     }
@@ -104,9 +104,9 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test "resume_json with id that does not exist" do
+  test "re_enter_json with id that does not exist" do
     bad_id = 'ab00ab11ab'
-    get 'dojo/resume_json', {
+    get 'dojo/re_enter_json', {
       :format => :json,
       :id => bad_id
     }
@@ -115,9 +115,9 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test "resume_json with id that exists but is empty" do
+  test "re_enter_json with id that exists but is empty" do
     id = checked_save_id
-    get 'dojo/resume_json', {
+    get 'dojo/re_enter_json', {
       :format => :json,
       :id => id
     }
@@ -127,13 +127,13 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test "resume_json with id that exists and is not empty" do
+  test "re_enter_json with id that exists and is not empty" do
     id = checked_save_id
-    get '/dojo/start_json', {
+    get '/dojo/enter_json', {
       :format => :json,
       :id => id
     }
-    get 'dojo/resume_json', {
+    get 'dojo/re_enter_json', {
       :format => :json,
       :id => id
     }
@@ -144,7 +144,7 @@ class DojoControllerTest  < IntegrationTest
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test "button dialogs" do
-    buttons = %w( about help faqs tips why )
+    buttons = %w( about donators give-feedback get-started faqs tips why )
     buttons.each do |name|
       get 'dojo/button_dialog', {
         :id => name

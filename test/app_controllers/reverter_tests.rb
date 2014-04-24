@@ -6,16 +6,16 @@ class ReverterControllerTest  < IntegrationTest
   test "revert" do
     id = checked_save_id
 
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :id => id
     }
-    avatar_name = json['avatar_name']    
-    
+    avatar_name = json['avatar_name']
+
     post '/kata/edit', {
       :id => id,
       :avatar => avatar_name
     }
-    
+
     post 'kata/run_tests', { # 1
       :id => id,
       :avatar => avatar_name,
@@ -29,7 +29,7 @@ class ReverterControllerTest  < IntegrationTest
         'cyber-dojo.sh' => -4545645678
       }
     }
-    
+
     post 'kata/run_tests', { # 2
       :id => id,
       :avatar => avatar_name,
@@ -44,7 +44,7 @@ class ReverterControllerTest  < IntegrationTest
       }
     }
 
-    get 'reverter/revert', { 
+    get 'reverter/revert', {
       :format => :json,
       :id => id,
       :avatar => avatar_name,
@@ -55,13 +55,13 @@ class ReverterControllerTest  < IntegrationTest
     assert_not_nil visible_files
     assert_not_nil visible_files['output']
     assert_not_nil visible_files['cyber-dojo.sh']
-    
+
     assert_equal "echo abc", visible_files['cyber-dojo.sh']
-    
+
     inc = json['inc']
     assert_not_nil inc
     assert_equal "amber", inc['colour']
     assert_equal 1, inc['number']
   end
-    
+
 end

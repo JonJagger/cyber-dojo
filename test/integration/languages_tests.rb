@@ -21,7 +21,7 @@ class LanguagesTests < ActionController::TestCase
      "C#-NUnit",
      "C++-Catch",
      "C++-GoogleTest",
-     "Clojure",
+     "Clojure-.test",
      "Groovy-JUnit",
      "Groovy-Spock",
      "Java-Approval",

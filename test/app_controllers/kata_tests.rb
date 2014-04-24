@@ -6,7 +6,7 @@ class KataControllerTest  < IntegrationTest
   test "edit and then run-tests" do
     id = checked_save_id
 
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :id => id
     }
     avatar_name = json['avatar_name']
@@ -49,5 +49,5 @@ class KataControllerTest  < IntegrationTest
     get "/kata/help_dialog", { :avatar_name => 'lion' }
     assert_response :success
   end
-  
+
 end

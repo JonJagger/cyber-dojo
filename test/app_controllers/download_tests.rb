@@ -20,7 +20,7 @@ class DownloadControllerTest < IntegrationTest
   test "downloaded zip of dojo with one animal unzips to same as original folder" do
     id = checked_save_id
 
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :id => id
     }
     avatar_name = json['avatar_name']
@@ -60,7 +60,7 @@ class DownloadControllerTest < IntegrationTest
     id = checked_save_id
 
     (0..9).each do
-      get 'dojo/start_json', {
+      get 'dojo/enter_json', {
         :id => id
       }
       avatar_name = json['avatar_name']

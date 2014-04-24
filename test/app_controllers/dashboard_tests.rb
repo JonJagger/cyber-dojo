@@ -15,7 +15,7 @@ class DashboardControllerTest < IntegrationTest
     id = checked_save_id
     (1..4).each do |n|
 
-      get 'dojo/start_json', {
+      get 'dojo/enter_json', {
         :id => id
       }
       avatar_name = json['avatar_name']
@@ -36,7 +36,7 @@ class DashboardControllerTest < IntegrationTest
     id = checked_save_id
     (1..3).each do |n|
 
-      get 'dojo/start_json', {
+      get 'dojo/enter_json', {
         :id => id
       }
       avatar_name = json['avatar_name']
@@ -80,7 +80,7 @@ class DashboardControllerTest < IntegrationTest
   test "show dashboard and open a diff-dialog" do
     id = checked_save_id
 
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :id => id
     }
     avatar_name = json['avatar_name']
@@ -128,7 +128,7 @@ class DashboardControllerTest < IntegrationTest
   test "heartbeat" do
     id = checked_save_id
 
-    get 'dojo/start_json', {
+    get 'dojo/enter_json', {
       :id => id
     }
     avatar_name = json['avatar_name']
