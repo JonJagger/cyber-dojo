@@ -25,6 +25,7 @@ class Language
     when 'Java'    then return 'Java-JUnit'
     when 'Java-JUnit-Mockito' then return 'Java-Mockito'
     when 'Perl'    then return 'Perl-TestSimple'
+    when 'PHP'     then return 'PHP-PHPUnit'
     when 'Python'  then return 'Python-unittest'
     when 'Ruby'    then return 'Ruby-TestUnit'
     else                return @name

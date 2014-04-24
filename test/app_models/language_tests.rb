@@ -14,6 +14,7 @@ class LanguageTests < ModelTestCase
       assert_equal 'Java-JUnit', @dojo.languages['Java'].name
       assert_equal 'Java-Mockito', @dojo.languages['Java-JUnit-Mockito'].name
       assert_equal 'Perl-TestSimple', @dojo.languages['Perl'].name
+      assert_equal 'PHP-PHPUnit', @dojo.languages['PHP'].name
       assert_equal 'Python-unittest', @dojo.languages['Python'].name
       assert_equal 'Ruby-TestUnit', @dojo.languages['Ruby'].name
     end
