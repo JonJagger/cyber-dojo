@@ -92,12 +92,12 @@ end
 # Suppose I have :hippo with lights for td's numbered 5 and 15
 # and that the time this gap (from 5 to 15, viz 9 td's) represents
 # is large enough to be collapsed.
-# Does this mean the hippo's tr gets 10 empty td's between the
+# Does this mean the hippo's tr gets 9 empty td's between the
 # td#5 and the td#15?
 # The answer is it depends on the other avatars.
 # The td's have to align vertically.
 # For example if the :lion has a td at 11 then
-# this effectively means that for the hippo its 5-15 has to be
+# this effectively means that for the :hippo its 5-15 has to be
 # considered as 5-11-15 and the gaps are really 5-11 (5 td gaps)
 # and 11-15 (3 td gaps).
 # This is where the :td_nos array comes in.

@@ -3,15 +3,29 @@
 JAVA
   add jMock
   add EasyMock
-  add PowerMock
+  add PowerMock with starting example of
+    mocking a static method in static final class
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   drop yin-yang logo from top-left
   use big yin-yang spinner in center of page instead of
     small spinner to left of test button.
+    http://gifmaker.me/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  reclicking the filename to scroll to the next diff-chunk
+  does not work for the 2nd+ clicks. Look at
+    http://manos.malihu.gr/page-scroll-to-id/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   the small buttons on lhs no longer have the hover ghosting
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOCKER
+  It would be a good idea if the setup screen/dialog
+  indicated which Runner was being used, Docker or Raw.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ENTER
+  add "pressing traffic-light..." message on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   does anything use the avatar-name css now?
@@ -46,13 +60,6 @@ UNTAR
   o) run admin_scripts/find_old_language_names.rb
   o) use info it generates to patch more language names.
   o) see if any katas are corrupt and are not worth saving.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOCKER
-  It would be a good idea if the setup screen/dialog
-  indicated which Runner was being used, Docker or Raw.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ENTER
-  mention pressing traffic-light on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 C/C++ MAKEFILES
   improve them.
