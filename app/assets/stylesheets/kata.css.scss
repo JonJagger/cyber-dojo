@@ -82,7 +82,12 @@
   }
 
   ::-webkit-scrollbar {
-    background-color: Gray;
+    background-color: $darker-color;
+    border-top: {
+      style: dotted;
+      width: 1px;
+      color: lighten($darker-color, 15%);
+    }
   }
 
 }

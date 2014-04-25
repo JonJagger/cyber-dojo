@@ -71,6 +71,8 @@
   .diff-line-numbers {
     text-align: right;
     overflow: hidden;
+    padding-left: 3px;
+    padding-right: 5px;
     background: $darker-color;
     border-right: {
       style: dotted;
@@ -78,6 +80,11 @@
       color: lighten($darker-color, 25%);
     }
     border-top: {
+      style: dotted;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
+    border-bottom: {
       style: dotted;
       width: 1px;
       color: lighten($darker-color, 25%);
@@ -134,6 +141,11 @@
 
   ::-webkit-scrollbar {
     background-color: $darker-color;
+    border-top: {
+      style: dotted;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
   }
 
 }
