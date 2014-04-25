@@ -8,7 +8,7 @@
 
   #choose_language, #choose_exercise {
     color: darken($lighter-color, 5%);
-    @include font-size-large();
+    @include font-size-larger();
     margin-bottom: 0.3em;
     text-align: right;
     padding-right: 25px;
@@ -23,7 +23,8 @@
   }
 
   #ok, #cancel {
-    @include font-size-large();
+    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+    @include font-size-largest();
   }
 
   #div_exercises, #div_languages {
