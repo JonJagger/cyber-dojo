@@ -2,16 +2,21 @@
 <div id="setup-page">
   <table>
     <tr>
-      <td colspan="2">
+      <td class="valign-top" rowspan="2">
+        <%= render :partial => 'choose_language' %>
+      </td>
+      <td class="valign-top" rowspan="2">
+        <%= render :partial => 'choose_exercise' %>
+      </td>
+      <td class="valign-top">
+        <%= render :partial => 'instructions' %>
+      </td>
+    </tr>
+    <tr>
+
+      <td>
         <table>
           <tr>
-            <td>
-              <img alt="cyber-dojo yin-yang logo"
-                   src="/images/avatars/cyber-dojo.png"
-                   height="48"
-                   width="48" />
-            </td>
-            <td>&nbsp;</td>
             <td>
               <%= render :partial => 'ok_button' %>
             </td>
@@ -19,20 +24,15 @@
             <td>
               <%= render :partial => 'cancel_button' %>
             </td>
+            <td>&nbsp;</td>
+            <td>
+              <img alt="cyber-dojo yin-yang logo"
+                   src="/images/avatars/cyber-dojo.png"
+                   height="48"
+                   width="48" />
+            </td>
           </tr>
         </table>
-      </td>
-      <td class="panel valign-top" rowspan="2">
-        <%= render :partial => 'instructions' %>
-      </td>
-    </tr>
-
-    <tr>
-      <td class="panel valign-top">
-        <%= render :partial => 'choose_language' %>
-      </td>
-      <td class="panel valign-top">
-        <%= render :partial => 'choose_exercise' %>
       </td>
     </tr>
   </table>
