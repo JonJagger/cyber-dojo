@@ -33,18 +33,18 @@ var cyberDojo = (function(cd, $) {
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
+
   cd.bindLineNumbersFromTo = function(content, numbers) {
-    var setLine = function() {
+    var setLineNC = function() {
       numbers.scrollTop(content.scrollTop());
     };
     content.bind({
-      keydown   : setLine,
-      scroll    : setLine,
-      mousewheel: setLine,
-      mousemove : setLine,
-      mousedown : setLine,
-      mouseup   : setLine
+      keydown   : setLineNC,
+      scroll    : setLineNC,
+      mousewheel: setLineNC,
+      mousemove : setLineNC,
+      mousedown : setLineNC,
+      mouseup   : setLineNC
     });
   };
 

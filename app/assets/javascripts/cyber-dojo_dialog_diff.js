@@ -201,11 +201,11 @@ var cyberDojo = (function(cd, $) {
 		  '<table>' +
 		    '<tr class="valign-top">' +
 		      '<td>' +
-		        '<div class="diff-line-numbers">' +
+		        '<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
 				'</div>' +
 		      '</td>' +
 		      '<td>' +
-		        '<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
+		        '<div class="diff-line-numbers">' +
 				'</div>' +
 		      '</td>' +
 		    '</tr>' +

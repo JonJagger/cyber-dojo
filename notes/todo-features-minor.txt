@@ -10,6 +10,10 @@ LINE-NUMBERS
   Or rather, I don't need to highlight current line of text
   but I do need to highlight the line-number as the cursor
   moves over that line.
+  Get linenumber from cursor
+    http://stackoverflow.com/questions/12553025/getting-line-number-in-text-area
+    http://stackoverflow.com/questions/11191136/set-a-selection-range-from-a-to-b-in-absolute-position/11191372#11191372
+    http://jsfiddle.net/jz7Jx/2/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 JAVA
   add jMock
