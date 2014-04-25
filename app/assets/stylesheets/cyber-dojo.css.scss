@@ -38,6 +38,7 @@ body {
   margin-top: 10px;
   @include font-size-small();
 }
+
 .panel {
   background: $darker-color;
   color: $lighter-color;
@@ -159,7 +160,7 @@ div[class~="filename"], button[disabled]:hover {
 .file_content {
   background: $lighter-color;
   color: $darker-color;
-  width: 48em;
+  width: 45em;
   font-weight: 500;
   padding-left: 4px;
   outline: none;
