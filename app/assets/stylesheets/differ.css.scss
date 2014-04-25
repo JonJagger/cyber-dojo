@@ -77,6 +77,11 @@
       width: 1px;
       color: lighten($darker-color, 25%);
     }
+    border-top: {
+      style: dotted;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
   }
 
   .diff-sheet {
@@ -128,7 +133,7 @@
   }
 
   ::-webkit-scrollbar {
-    background-color: Gray;
+    background-color: $darker-color;
   }
 
 }
