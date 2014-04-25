@@ -72,7 +72,7 @@
     text-align: right;
     overflow: hidden;
     background: $darker-color;
-    border-left: {
+    border-right: {
       style: dotted;
       width: 1px;
       color: lighten($darker-color, 25%);
@@ -95,7 +95,7 @@
       &:hover { background: lighten($diff-deleted-color, 5%); }
     }
     same {
-      &:hover { background: lighten($lighter-color, 5%); }
+      &:hover { background: lighten($lighter-color, 10%); }
     }
   }
 
@@ -125,6 +125,10 @@
       background: lighten($darker-color, 20%);
       cursor: default;
     }
+  }
+
+  ::-webkit-scrollbar {
+    background-color: Gray;
   }
 
 }

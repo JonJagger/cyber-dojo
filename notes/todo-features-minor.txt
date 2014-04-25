@@ -1,16 +1,23 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK DIALOG
+  change background of scrollbar
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-REVERT-FORK DIALOG
+  filenames do not appear in same way as on edit page.
+  eg makefile and cyber-dojo.sh are not lolighted.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+INSTRUCTIONS
+  add instructions to lolight filename default?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
   put them on the right-hand side?!
   o) means edit is more similar to diff/fork/revert display
   o) means vertical scrollbar is next to line-numbers
   o) means textarea does not jump when line-numbers added/removed
-  only really doable if I can highlight the current line
-  as the cursor moves up and down in a textarea.
-  Or rather, I don't need to highlight current line of text
-  but I do need to highlight the line-number as the cursor
-  moves over that line.
-  Get linenumber from cursor
+  o) I'd like to highlight the current line-number
+     as the cursor moves up and down in a textarea.
+     Get linenumber from cursor?
     http://stackoverflow.com/questions/12553025/getting-line-number-in-text-area
     http://stackoverflow.com/questions/11191136/set-a-selection-range-from-a-to-b-in-absolute-position/11191372#11191372
     http://jsfiddle.net/jz7Jx/2/
@@ -29,7 +36,7 @@ TEST-PAGE
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   reclicking the filename to scroll to the next diff-chunk
-  does not work for the 2nd+ clicks. Look at
+  does not work (sometimes) for the 2nd+ clicks. Look at
     http://manos.malihu.gr/page-scroll-to-id/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE

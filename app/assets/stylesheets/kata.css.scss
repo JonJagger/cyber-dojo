@@ -80,6 +80,11 @@
     position: relative;
     top: -1px;
   }
+
+  ::-webkit-scrollbar {
+    background-color: Gray;
+  }
+
 }
 
 #kata-page, #help-dialog {

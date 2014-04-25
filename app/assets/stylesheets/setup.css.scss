@@ -1,33 +1,39 @@
 
-#choose_language, #choose_exercise
-{
-  color: darken($lighter-color, 15%);
-  @include font-size-large();
-  margin-bottom: 0.3em;
-  text-align: right;
-  padding-right: 25px;
-}
+#setup-page {
 
-#instructions
-{
-  background: $lighter-color;
-  color: $darker-color;
-  border: 4px solid $lighter-color;
-  overflow-y: auto;
-  height: 25em;
-}
+  #choose_language, #choose_exercise {
+    color: darken($lighter-color, 15%);
+    @include font-size-large();
+    margin-bottom: 0.3em;
+    text-align: right;
+    padding-right: 25px;
+  }
 
-.light_margin.panel { background: $lighter-color; }
+  #instructions {
+    background: $lighter-color;
+    color: $darker-color;
+    border: 4px solid $lighter-color;
+    overflow-y: auto;
+    height: 25em;
+  }
 
-#ok, #cancel
-{
-  @include font-size-large();
-}
+  .light_margin.panel {
+    background: $lighter-color;
+  }
 
-#div_exercises, #div_languages
-{
-  height: 35em;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 10px;
+  #ok, #cancel {
+    @include font-size-large();
+  }
+
+  #div_exercises, #div_languages {
+    height: 35em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+  }
+
+  ::-webkit-scrollbar {
+    background-color: Gray;
+  }
+
 }
