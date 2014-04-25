@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   var previousLanguage = undefined;
-  var container = $('#div_languages');
+  var container = $('#div-languages');
   var downFromTop = 100;
   var halfSecond = 500;
   var selected = $('#language_' + <%= @selected_language_index %>);
@@ -27,11 +27,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="choose_language">
-  <%= t("views.labels.language") %>?
-</div>
-
-<div id="div_languages">
+<div id="div-languages">
   <% @languages.each_with_index do |atts,index| %>
     <div class="filename"
          id="language_<%= index %>"

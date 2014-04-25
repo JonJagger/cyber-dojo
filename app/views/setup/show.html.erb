@@ -2,10 +2,24 @@
 <div id="setup-page">
   <table>
     <tr>
-      <td class="valign-top" rowspan="2">
+      <td>
+        <div id="choose-language">
+          <%= t("views.labels.language") %>?
+        </div>
+      </td>
+      <td>
+        <div id="choose-exercise">
+          <%= t("views.labels.exercise") %>?
+        </div>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <tr>
+      <td class="valign-top">
         <%= render :partial => 'choose_language' %>
       </td>
-      <td class="valign-top" rowspan="2">
+      <td class="valign-top">
         <%= render :partial => 'choose_exercise' %>
       </td>
       <td class="valign-top">
@@ -13,20 +27,13 @@
       </td>
     </tr>
     <tr>
-
       <td>
-        <table>
-          <tr>
-            <td>
-              <%= render :partial => 'ok_button' %>
-            </td>
-            <td>&nbsp;</td>
-            <td>
-              <%= render :partial => 'cancel_button' %>
-            </td>
-          </tr>
-        </table>
       </td>
+      <td>
+      </td>
+      <td>
+        <%= render :partial => 'ok_button' %>
+        <%= render :partial => 'cancel_button' %>
     </tr>
   </table>
 </div>

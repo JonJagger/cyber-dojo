@@ -4,7 +4,7 @@
 $(document).ready(function() {
 
   var previousExercise = undefined;
-  var container = $('#div_exercises');
+  var container = $('#div-exercises');
   var downFromTop = 100;
   var halfSecond = 500;
   var selected = $('#exercise_' + <%= @selected_exercise_index %>);
@@ -29,11 +29,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="choose_exercise">
-  <%= t("views.labels.exercise") %>?
-</div>
-
-<div id="div_exercises">
+<div id="div-exercises">
   <% @exercises_names.each_with_index do |choice,index| %>
     <div class="filename"
          id="exercise_<%= index %>"

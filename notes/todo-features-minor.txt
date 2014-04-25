@@ -1,11 +1,24 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-REVERT-FORK DIALOG
-  change background of scrollbar
+SETUP-PAGE
+  this can show a pre-allocated ID !
+  ties it back to the home page much better.
+  perhaps ok can go with the id and cancel can be separated off
+  to the right
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE TRAFFIC-LIGHTS
+  lose border-top (but keep for line-numbers)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE TRAFFIC-LIGHTS
+  is the width of these still controlled by CSS?
+  can just be the width of editarea+line-numbers?
+  use px values to make sure they are exactly the same.
+  then bulb-count numbers will align with line-numbers.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK DIALOG
   filenames do not appear in same way as on edit page.
-  eg makefile and cyber-dojo.sh are not lolighted.
+  eg makefile and cyber-dojo.sh are not lo-lighted
+  and listed in different order.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSTRUCTIONS
   add instructions to lolight filename default?
