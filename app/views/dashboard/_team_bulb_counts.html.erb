@@ -10,17 +10,26 @@ $(document).ready(function() {
 <%# See _traffic_lights.html.erb for explanation of {lights.count > 1} %>
 
 <% if @all_lights.select{|avatar_name,lights| lights.count > 1}.count > 1 %>
+<%   lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+<%   @all_lights.each do |avatar_name,lights| %>
+<%     if lights.count > 1 %>
+<%       lasts[lights.last['colour']] += 1 %>
+<%     end %>
+<%   end %>
+<%   counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+<%   ['red','amber','green'].each do |bulb| %>
+<%     @all_lights.each do |avatar_name,lights| %>
+<%       if lights.count > 1 %>
+<%         counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
+<%       end %>
+<%     end %>
+<%   end %>
+
 <div class="panel">
   <table id="team-bulb-counts-container">
     <tr>
       <td>
-        <% counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
         <% ['red','amber','green'].each do |bulb| %>
-          <% @all_lights.each do |avatar_name,lights| %>
-            <% if lights.count > 1 %>
-              <% counts[bulb] += lights.count{ |light| light['colour'] == bulb } %>
-            <% end %>
-          <% end %>
           <div class="tipped <%= bulb %> bulb-count">
             <%= counts[bulb] %>
             <div class='tooltip'>
@@ -29,12 +38,6 @@ $(document).ready(function() {
                so far
             </div>
           </div>
-        <% end %>
-        <% lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
-        <% @all_lights.each do |avatar_name,lights| %>
-          <% if lights.count > 1 %>
-            <% lasts[lights.last['colour']] += 1 %>
-          <% end %>
         <% end %>
       </td>
       <td>
