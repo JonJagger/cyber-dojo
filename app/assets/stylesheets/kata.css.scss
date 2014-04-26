@@ -2,8 +2,8 @@
 #kata-page {
 
   margin: {
-    top: 0.5em;
-    left: 1em;
+    top: 2em;
+    left: 2em;
   }
 
   table#test-button-container {
@@ -12,7 +12,11 @@
     #test-button {
       padding: {
         left: 20px;
-        right: 20px;
+        right: 18px;
+      }
+      margin: {
+        right: 10px;
+        bottom: 12px;
       }
     }
   }
@@ -81,7 +85,7 @@
     top: -1px;
   }
 
-  ::-webkit-scrollbar {
+  .filename_div ::-webkit-scrollbar {
     background-color: $darker-color;
     border-top: {
       style: dotted;
@@ -100,5 +104,7 @@
       left: 0.2em;
       right: 0.2em;
     }
+    position: relative;
+    top: -3px;
   }
 }

@@ -65,19 +65,7 @@ $(document).ready(function() {
   <table>
     <tr class="valign-top">
       <td>
-        <div class="vertical-padded">
-          <%= render :partial => 'shared/info' %>
-        </div>
-      </td>
-      <td>
-        <div id="traffic-lights">
-          <%= render :partial => 'traffic_lights' %>
-        </div>
-      </td>
-    </tr>
-    <tr class="valign-top">
-      <td>
-        <div class="panel">
+        <div class="xpanel">
           <%= render :partial => 'test_button' %>
         </div>
         <div class="panel">
@@ -104,6 +92,18 @@ $(document).ready(function() {
       <td>
         <div>
           <%= render :partial => 'editor' %>
+        </div>
+      </td>
+    </tr>
+    <tr class="valign-top">
+      <td>
+        <div class="vertical-padded">
+          <%= render :partial => 'shared/info' %>
+        </div>
+      </td>
+      <td>
+        <div id="traffic-lights">
+          <%= render :partial => 'traffic_lights' %>
         </div>
       </td>
     </tr>
