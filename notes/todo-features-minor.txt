@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+YIN-YANG LOGO ON TEST PAGE
+  this can move up and be the spinner
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP-PAGE
   this can show a pre-allocated ID !
   ties it back to the home page much better.

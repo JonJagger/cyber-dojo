@@ -14,8 +14,11 @@
     padding-right: 25px;
   }
 
-  #div-exercises, #div-languages, #instructions {
+  #div-exercises, #div-languages {
     height: 475px;
+  }
+  #instructions {
+    height: 465px;
   }
 
   #instructions {
@@ -29,6 +32,7 @@
   #ok, #cancel {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
+    margin-top: 10px;
     margin-right: 20px;
   }
 
@@ -37,6 +41,9 @@
     overflow-x: hidden;
     padding-right: 10px;
     margin-right: 20px;
+  }
+  #div-exercises {
+    margin-right: 10px;
   }
 
   ::-webkit-scrollbar {

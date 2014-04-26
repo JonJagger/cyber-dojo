@@ -1,26 +1,26 @@
 
-    <div class="filename_div"
-         id="<%= filename %>_div">
-      <table>
-        <tr class="valign-top">
-          <td>
-            <% if filename != 'output' %>
-              <textarea class="file_content"
-                        spellcheck="false"
-                        data-filename="<%= filename %>"
-                        name="file_content[<%= filename %>]"
-                        id="file_content_for_<%= filename %>"
-                        wrap="off">
+<div class="filename_div"
+     id="<%= filename %>_div">
+  <table>
+    <tr class="valign-top">
+      <td>
+        <% if filename != 'output' %>
+          <textarea class="file_content"
+                    spellcheck="false"
+                    data-filename="<%= filename %>"
+                    name="file_content[<%= filename %>]"
+                    id="file_content_for_<%= filename %>"
+                    wrap="off">
 <%= h content %></textarea>
-            <% else %>
-              <%= render :partial => 'output' %>
-            <% end %>
-          </td>
-          <td>
-            <textarea class="line_numbers"
-                      id="<%= filename %>_line_numbers">
-            </textarea>
-          </td>
-        </tr>
-      </table>
-    </div>
+        <% else %>
+          <%= render :partial => 'output' %>
+        <% end %>
+      </td>
+      <td>
+        <textarea class="line_numbers"
+                  id="<%= filename %>_line_numbers">
+        </textarea>
+      </td>
+    </tr>
+  </table>
+</div>
