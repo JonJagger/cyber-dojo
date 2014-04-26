@@ -37,7 +37,7 @@
     height: 270px;
     overflow-y: auto;
     div[class~='filename'][class~='highlight'] {
-      &:before { content: ">"; }
+      &:after { content: "<"; }
     }
     #radio_output, div[class~='filename'][class~='lowlight'] {
       color: lighten($darker-color, 15%);

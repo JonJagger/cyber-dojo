@@ -10,9 +10,6 @@ SETUP-PAGE
   to the right
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE TRAFFIC-LIGHTS
-  lose border-top (but keep for line-numbers)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE TRAFFIC-LIGHTS
   is the width of these still controlled by CSS?
   can just be the width of editarea+line-numbers?
   use px values to make sure they are exactly the same.
