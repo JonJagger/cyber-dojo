@@ -40,11 +40,11 @@ var cyberDojo = (function(cd, $) {
   };
 
   cd.loadNextFileHotKey = function() {
-    return 'Alt+f';
+    return 'Alt+j';
   };
 
   cd.loadPreviousFileHotKey = function() {
-    return 'Alt+b';
+    return 'Alt+k';
   };
 
   cd.showOutputFileHotKey = function() {
