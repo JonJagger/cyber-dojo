@@ -21,9 +21,6 @@ DIFF-REVERT-FORK DIALOG
   eg makefile and cyber-dojo.sh are not lo-lighted
   and listed in different order.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-INSTRUCTIONS
-  add instructions to lolight filename default?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
   o) I'd like to highlight the current line-number
      as the cursor moves up and down in a textarea.
