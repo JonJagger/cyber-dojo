@@ -1,7 +1,8 @@
 
 public class Untitled {
-    
-    public static int answer() {
-        return 42;
+
+    public int answer() {
+        return 6 * Config.getInstance().getMultiplier();
     }
+
 }

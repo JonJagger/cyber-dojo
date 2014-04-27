@@ -1,6 +1,7 @@
 
 {
   "visible_filenames": [
+    "Config.java",
     "Untitled.java",
     "UntitledTest.java",
     "cyber-dojo.sh"
@@ -17,6 +18,6 @@
 
   "display_name": "Java",
   "display_test_name": "PowerMockito",
-  "unit_test_framework": "power-mockito",
+  "unit_test_framework": "junit",
   "image_name": "cyberdojo/java-1.8_powermockito"
 }
