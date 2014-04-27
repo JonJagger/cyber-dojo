@@ -17,13 +17,13 @@ $text-color: darken($lighter-color, 10%);
     margin-bottom: 0em;
     padding-bottom: 0em;
     position: relative;
-    top: -28px;
+    top: -26px;
   }
 
   #home-page-logo {
     display: inline-block;
     position: relative;
-    top: -42px;
+    top: -48px;
     right: -20px;
   }
 
@@ -98,13 +98,6 @@ $text-color: darken($lighter-color, 10%);
   #review-button {
     margin-bottom: 40px;
   }
-  #raspberry-pi-logo {
-    padding: {
-      bottom: 10px;
-      right: 24px;
-    }
-    text-align: right;
-  }
   #please_donate {
     text-align: right;
     margin: {
@@ -114,27 +107,36 @@ $text-color: darken($lighter-color, 10%);
     color: $lighter-color;
     @include font-size-tiny();
   }
-  #total-raised {
-    color: $lighter-color;
-    @include font-size-tiny();
-    padding: {
-      top: 5px;
-      bottom: 5px;
-      right: 24px;
-    }
-    text-align: right;
-  }
   #donate-form {
-    height: 40px;
+    height: 42px;
   }
   #donate-button {
     text-align: right;
     padding: {
-      top: 20px;
+      top: 15px;
       right: 18px;
     }
     margin-right: 24px;
   }
+  #total-raised {
+    color: $lighter-color;
+    @include font-size-tiny();
+    padding: {
+      top: 0px;
+      bottom: 10px;
+      right: 24px;
+    }
+    text-align: right;
+  }
+  #raspberry-pi-logo {
+    padding: {
+      bottom: 0px;
+      right: 24px;
+    }
+    text-align: right;
+  }
+
+
   .buttons-container {
     margin-bottom: 20px;
   }

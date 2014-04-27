@@ -25,10 +25,6 @@ INSTRUCTIONS
   add instructions to lolight filename default?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
-  put them on the right-hand side?!
-  o) means edit is more similar to diff/fork/revert display
-  o) means vertical scrollbar is next to line-numbers
-  o) means textarea does not jump when line-numbers added/removed
   o) I'd like to highlight the current line-number
      as the cursor moves up and down in a textarea.
      Get linenumber from cursor?
