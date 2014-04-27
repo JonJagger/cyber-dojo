@@ -47,7 +47,7 @@
   }
 
   ::-webkit-scrollbar {
-    background-color: Gray;
+    background-color: lighten($darker-color, 5%);
   }
 
 }

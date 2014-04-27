@@ -86,7 +86,7 @@
   }
 
   .filename_div ::-webkit-scrollbar {
-    background-color: $darker-color;
+    background-color: lighten($darker-color, 5%);
     border-top: {
       style: dotted;
       width: 1px;
