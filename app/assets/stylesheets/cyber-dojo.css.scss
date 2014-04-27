@@ -145,12 +145,17 @@ div[class~="filename"], button[disabled]:hover {
   display: block;
   padding-right: 12px;
   width: 2em;
-  border-right: {
+  border-left: {
     style: dotted;
     width: 1px;
     color: lighten($darker-color, 15%);
   }
   border-top: {
+    style: dotted;
+    width: 1px;
+    color: lighten($darker-color, 15%);
+  }
+  border-bottom: {
     style: dotted;
     width: 1px;
     color: lighten($darker-color, 15%);

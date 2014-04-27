@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+INITIALLY-RED-TESTS
+  do this by using fail("") calls rather than deliberately wrong values.
+  do this for all languages.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 YIN-YANG LOGO ON TEST PAGE
   this can move up and be the spinner
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
