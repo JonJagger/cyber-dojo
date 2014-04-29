@@ -94,6 +94,12 @@ Example: the `manifest.json` file for Java-JUnit looks like this:
   ```
   Not required. Defaults to empty.
 - - - - - - - - - - - - - - - - - - - -
+`"filename_extension": string`
+  The filename extension used when creating a new filename.
+  For example, if set to `".java"` the new filename will be
+  `filename.java`. Not required. Defaults to the empty string
+  (and the new filename will be `filename`).
+- - - - - - - - - - - - - - - - - - - -
 `"display_name": string`
 
   The name of the language as it appears in the create page (where you select
