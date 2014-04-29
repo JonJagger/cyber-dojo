@@ -6,6 +6,7 @@
     "cyber-dojo.sh",
     "Makefile"
   ],
+  "filename_extension" : ".erl",
   "display_name": "Erlang",
   "display_test_name": "eunit",
   "unit_test_framework": "eunit",

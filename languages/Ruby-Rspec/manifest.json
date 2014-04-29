@@ -5,7 +5,7 @@
     "untitled_spec.rb",
     "cyber-dojo.sh"
   ],
-
+  "filename_extension" : ".rb",
   "display_name": "Ruby",
   "display_test_name": "RSpec",
   "unit_test_framework": "ruby_rspec",

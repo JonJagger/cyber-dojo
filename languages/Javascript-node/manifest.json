@@ -5,7 +5,7 @@
     "untitledTest.js",
     "cyber-dojo.sh"
   ],
-
+  "filename_extension" : ".js",
   "display_name": "Javascript",
   "display_test_name": "node",
   "unit_test_framework": "node",

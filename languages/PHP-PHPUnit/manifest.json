@@ -5,7 +5,7 @@
     "UntitledTest.php",
     "cyber-dojo.sh"
   ],
-
+  "filename_extension" : ".php",
   "display_name": "PHP",
   "display_test_name": "PHPUnit",
   "unit_test_framework": "php_unit",

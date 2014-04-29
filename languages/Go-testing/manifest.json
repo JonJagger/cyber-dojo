@@ -5,7 +5,7 @@
     "untitled_test.go",
     "cyber-dojo.sh"
   ],
-
+  "filename_extension" : ".go",
   "display_name": "Go",
   "display_test_name": "testing",
   "unit_test_framework": "go_testing",

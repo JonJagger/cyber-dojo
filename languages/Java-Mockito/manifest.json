@@ -6,12 +6,11 @@
     "UntitledHelper.java",
     "cyber-dojo.sh"
   ],
-
   "support_filenames": [
     "junit-4.11.jar",
     "mockito-all-1.9.5.jar"
   ],
-
+  "filename_extension" : ".java",
   "display_name": "Java",
   "display_test_name": "Mockito",
   "unit_test_framework": "junit",

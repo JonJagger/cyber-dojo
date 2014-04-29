@@ -5,6 +5,7 @@
     "test_untitled.rb",
     "cyber-dojo.sh"
   ],
+  "filename_extension" : ".rb",
   "display_name": "Ruby",
   "display_test_name": "Test::Unit",
   "unit_test_framework": "ruby_test_unit",

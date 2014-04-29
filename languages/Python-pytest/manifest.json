@@ -5,7 +5,7 @@
     "test_untitled.py",
     "cyber-dojo.sh"
   ],
-
+  "filename_extension" : ".py",
   "display_name": "Python",
   "display_test_name": "py.test",
   "unit_test_framework": "python_pytest",

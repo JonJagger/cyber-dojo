@@ -6,7 +6,6 @@
     "UntitledTest.java",
     "cyber-dojo.sh"
   ],
-
   "support_filenames": [
     "cglib-nodep-2.2.2.jar",
     "javassist-3.18.1-GA.jar",
@@ -15,7 +14,7 @@
     "objenesis-2.1.jar",
     "powermock-mockito-1.5.4-full.jar"
   ],
-
+  "filename_extension" : ".java",
   "display_name": "Java",
   "display_test_name": "PowerMockito",
   "unit_test_framework": "junit",

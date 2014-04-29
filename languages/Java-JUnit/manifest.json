@@ -9,7 +9,7 @@
   "support_filenames": [
     "junit-4.11.jar"
   ],
-
+  "filename_extension" : ".java",
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",

@@ -51,7 +51,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.newFile = function(title) {
-    var newFilename = 'filename';
+    var newFilename = 'filename' + cd.extensionFilename();
     var div = $('<div>', {
       'class': 'panel'
     });

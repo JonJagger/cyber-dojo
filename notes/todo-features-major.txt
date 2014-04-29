@@ -4,6 +4,11 @@ quick-start  code-pad
   No exercise. You just press the language and you automatically
     get an id and an animal.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+user-identification
+  don't store the user's id. Store a hash of it.
+  Allow a session to be tagged with a users hashed-id.
+  No need to store any sensitive data.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hash-ids
   For the collection of files to see if there are duplicates...
   don't base the hash on files that are not relevant

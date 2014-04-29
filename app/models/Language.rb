@@ -60,6 +60,10 @@ class Language
     manifest['image_name'] || ""
   end
 
+  def filename_extension
+    manifest['filename_extension'] || ""
+  end
+
   def visible_files
     Hash[visible_filenames.collect{ |filename|
       [ filename, read(filename) ]

@@ -4,6 +4,7 @@
     "test_Untitled.hs",
     "cyber-dojo.sh"
   ],
+  "filename_extension" : ".hs",
   "display_name": "Haskell",
   "display_test_name": "hunit",
   "unit_test_framework": "hunit",

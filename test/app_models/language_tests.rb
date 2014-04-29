@@ -2,6 +2,26 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class LanguageTests < ModelTestCase
 
+  test "filename_extension defaults to empty string" do
+    json_and_rb do
+      @language = @dojo.languages['Ruby']
+      spy_manifest({})
+      assert_equal("", @language.filename_extension)
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "filename_extension set if not defaulted" do
+    json_and_rb do
+      @language = @dojo.languages['Ruby']
+      spy_manifest({ 'filename_extension' => '.rb' })
+      assert_equal(".rb", @language.filename_extension)
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "name is translated if old language dir has been renamed" do
     json_and_rb do
       assert_equal 'C-assert', @dojo.languages['C'].name

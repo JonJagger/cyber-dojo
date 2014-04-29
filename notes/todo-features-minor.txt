@@ -1,5 +1,25 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LANGUAGES
+  when new-file is clicked, make default not [filename]
+  but [filename.java] when using Java, etc.
+  Default can be "" 
+  C# .cs
+  C++ .cpp
+  C  .c
+  Clojure .clj
+  Coffeescript .coffee
+  Erlanf .erl
+  Go .go
+  Groovy .groovy
+  Haskell .hs
+  Java .java
+  Perl .perl
+  PHP .php
+  Python .py
+  Ruby .rb
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INITIALLY-RED-TESTS
   do this by using fail("") calls rather than deliberately wrong values.
   do this for all languages.

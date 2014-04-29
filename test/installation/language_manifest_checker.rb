@@ -25,6 +25,7 @@ class LanguageManifestChecker
     return false if unknown_keys_exist?
     return false if duplicate_visible_filenames?
     return false if duplicate_support_filenames?
+    return false if filename_extension_starts_with_dot?
     return false if !cyberdojo_sh_exists?
     return false if !cyberdojo_sh_has_execute_permission?
     return false if !all_visible_files_exist?
@@ -69,6 +70,7 @@ private
   def unknown_keys_exist?
     known = [ 'visible_filenames',
               'support_filenames',
+              'filename_extension',
               'highlight_filenames',
               'unit_test_framework',
               'tab_size',
@@ -113,7 +115,19 @@ private
         return true
       end
     end
-    print "."
+    print '.'
+    false
+  end
+
+  def filename_extension_starts_with_dot?
+    if @manifest['filename_extension'][0] != '.'
+      message =
+        alert +
+        " #{@manifest_filename}'s 'filename_extension' does not start with a ."
+        puts message
+        return true
+    end
+    print '.'
     false
   end
 

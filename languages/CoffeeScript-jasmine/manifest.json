@@ -5,7 +5,7 @@
     "untitled_spec.coffee",
     "cyber-dojo.sh"
   ],
-
+  "filename_extension" : ".coffee",
   "display_name": "CoffeeScript",
   "display_test_name": "jasmine",
   "unit_test_framework": "jasmine",

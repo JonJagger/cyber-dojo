@@ -7,7 +7,6 @@
     "RunCukesTest.java",
     "cyber-dojo.sh"
   ],
-
   "support_filenames": [
     "junit-4.11.jar",
     "cucumber-core-1.0.14.jar",
@@ -20,6 +19,7 @@
     "gherkin-jvm-deps-1.0.2.jar",
     "hamcrest-all-1.3.jar"
   ],
+  "filename_extension" : ".java",
   "display_name": "Java",
   "display_test_name": "Cucumber",
   "unit_test_framework": "junit",
