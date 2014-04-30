@@ -43,7 +43,7 @@
       &:after { content: "<"; }
     }
     #radio_output, div[class~='filename'][class~='lowlight'] {
-      color: lighten($darker-color, 15%);
+      color: lighten($darker-color, 25%);
     }
   }
 
