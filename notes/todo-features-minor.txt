@@ -1,5 +1,24 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-PAGE
+  use dialog (to freeze editing) with big yin-yang spinner in center of
+  page instead of small spinner to left of test button.
+  Also, add words "Please wait while tests are run" to the dialog
+  and do not tweak the output file. This will mean the display behind
+  the dialog will stay on the file that was open when the test button
+  is pressed.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TIPS
+  add game whereby players keep track of their predicted traffic
+  light colour, and their actual traffic-light colour.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ENTER
+  add "pressing traffic-light..." message on enter-dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HELP
+  need to add some text somewhere about to use fork to setup
+  a specific starting position.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INITIALLY-RED-TESTS
   do this by using fail("") calls rather than deliberately wrong values.
   do this for all languages.
@@ -35,12 +54,6 @@ JAVA
   add PowerMock with starting example of
     mocking a static method in static final class
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE
-  drop yin-yang logo from top-left
-  use big yin-yang spinner in center of page instead of
-    small spinner to left of test button.
-    http://gifmaker.me/
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   reclicking the filename to scroll to the next diff-chunk
   does not work (sometimes) for the 2nd+ clicks. Look at
@@ -52,9 +65,6 @@ HOME-PAGE
 DOCKER
   It would be a good idea if the setup screen/dialog
   indicated which Runner was being used, Docker or Raw.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ENTER
-  add "pressing traffic-light..." message on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   does anything use the avatar-name css now?
