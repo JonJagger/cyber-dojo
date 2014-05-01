@@ -9,6 +9,9 @@ SETUP-PAGE
   [create] can go with the id
   [cancel] can be separated off to the right
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+CATCH
+  add a URL to catch in the untitled.tests.cpp file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TIPS-COLOUR-PREDICTION
   game where you have to predict what colour you will get
   and you get max N incorrect predictions
