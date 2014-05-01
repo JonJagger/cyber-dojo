@@ -43,9 +43,13 @@ $ellipsis: "\2026";
     .row.odd  td { background: lighten($darker-color, 3%); }
     .row.even td { background: lighten($darker-color, 6%); }
     .omission {
-      font-size: 0.7em;
-      color: lighten(Black,40%);
-      &:after { content: $ellipsis; }
+      font-size: 2em;
+      background-color: darken(White, 40%);
+      &:after { content: "\2009"; } //thin space
+      margin: {
+        left: 5px;
+        right: 5px;
+      }
     }
     .gap {
       font-size: 0.5em;
