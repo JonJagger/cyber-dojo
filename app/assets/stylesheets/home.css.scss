@@ -5,51 +5,51 @@ $text-color: darken($lighter-color, 10%);
 
   font-size: 1.15em;
   margin: {
-    top: 1.5em;
-    left: 3em;
-    right: 3em;
+    top: 10px;
+    left: 50px;
   }
 
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    font-size: 7.5em;
+    font-size: 7.4em;
     color: $text-color;
-    margin-bottom: 0em;
-    padding-bottom: 0em;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
     position: relative;
-    top: -26px;
   }
 
   #home-page-logo {
     display: inline-block;
     position: relative;
-    top: -48px;
-    right: -35px;
+    top: -50px;
+    right: -38px;
   }
 
   #a_place_to_practice, #programming {
     font-size: 1.55em;
     color: lighten($text-color, 5%);
     margin: {
-      top: -48px;
-      bottom: 2em;
+      top: -15px;
+      bottom: 0px;
     }
   }
   #programming {
     font-size: 1.55em;
     color: lighten($text-color, 5%);
     margin: {
-      top: -58px;
-      bottom: 2em;
+      top: 0px;
+      bottom: 15px;
     }
   }
   td#column-middle {
     padding: {
-      left: 0em;
-      right: 2.6em;
+      left: 0px;
+      right: 30px;
     }
-    margin-left: 0px;
-    margin-top: -20px;
+    margin: {
+      left: 0px;
+      top: -20px;
+    }
   }
   td#column-left, td#column-right {
     padding: 12px;
@@ -58,7 +58,7 @@ $text-color: darken($lighter-color, 10%);
     border: dotted 1px DarkGray;
     width: 145px;
     position: relative;
-    top: 20px;
+    top: 42px;
     @include rounded-corner(6px);
   }
   .show-dialog-button {
@@ -82,7 +82,7 @@ $text-color: darken($lighter-color, 10%);
     background: lighten($green, 20%);
     color: $darker-color;
     @include font-size-largest();
-    width: 201px;
+    width: 196px;
     margin: {
       bottom: 2px;
       right: 2px;
@@ -98,7 +98,7 @@ $text-color: darken($lighter-color, 10%);
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     color: $darker-color;
     @include font-size-largest();
-    width: 225px;
+    width: 220px;
     margin-left: 10px;
     text-align: right;
   }
