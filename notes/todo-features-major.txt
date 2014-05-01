@@ -25,6 +25,12 @@ sytax-highlighting
   This would provide a possible architecture for storing the
   individual keystrokes (replay in animation style)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Finer-grained commits
+  do a secret commit when an animal switches from one file
+  to another file (and there is some change somewhere). This
+  would allow you to see if the first code entered was
+  code or test code.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker
 o) copy files I zipped up before when moving server.
    Eg check out tl_25_age_14.txt

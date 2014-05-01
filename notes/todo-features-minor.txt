@@ -1,5 +1,54 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TIPS-COLOUR-PREDICTION
+  game where you have to predict what colour you will get
+  and you get max N incorrect predictions
+     per animal
+     per dojo
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TIPS-AMBER-LIMITS
+  game where you get N amber traffic-lights max.
+     per animal
+     per dojo
+  game where you get N ambers in a row max.
+     per animal
+     per dojo
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TIPS-BETTER-DIAGNOSTIC-EXERCISE
+  game where your task is to improve the diagnostic message
+  you get when a test is red!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-FIRST-TRAFFIC-LIGHT
+  in a refactoring dojo you want all the animals to be visible
+  right from the start. They start from green. Perhaps show
+  initial traffic-light only if its green?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-DURATION
+  the duration currently shows the time from the moment the
+  dojo was created to the current moment. This could do with
+  tweaking.
+  Firstly, suppose you create a special setup (via forking)
+  hours before it is needed. The duration time should start
+  when the first animal presses [test].
+  Also the duration end time should be calculated from the
+  current time only as long as their has been a traffic-light
+  within the last N minutes. If there hasn't, the duration end
+  time should be the time of the last traffic light.
+  This could be a good requirement to refactor the domain
+  to include traffic-lights.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+META-DASHBOARD
+  have a page that allows you to enter the IDs of several dojos
+  and these then look like filenames on the lhs. Clicking on
+  one of them opens the dashboard for that id. This allows you
+  to create a summary dashboard for codeRetreat style days.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-TIME-GAP
+  if there is a session that is split over several hours, eg
+  if you resume a session one morning after starting it the
+  previous session, it might be nice to be able to view
+  one dashboard in two parts.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
   use dialog (to freeze editing) with big yin-yang spinner in center of
   page instead of small spinner to left of test button.
@@ -7,10 +56,6 @@ TEST-PAGE
   and do not tweak the output file. This will mean the display behind
   the dialog will stay on the file that was open when the test button
   is pressed.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TIPS
-  add game whereby players keep track of their predicted traffic
-  light colour, and their actual traffic-light colour.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ENTER
   add "pressing traffic-light..." message on enter-dialog
@@ -25,8 +70,8 @@ INITIALLY-RED-TESTS
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP-PAGE
   this can show a pre-allocated ID !
-  ties it back to the home page much better.
-  perhaps ok can go with the id and cancel can be separated off
+  ties it back to the home page nicely.
+  perhaps [ok] can go with the id and [cancel] can be separated off
   to the right
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE TRAFFIC-LIGHTS
@@ -38,12 +83,12 @@ TEST-PAGE TRAFFIC-LIGHTS
 DIFF-REVERT-FORK DIALOG
   filenames do not appear in same way as on edit page.
   eg makefile and cyber-dojo.sh are not lo-lighted
-  and listed in different order.
+  and are listed in different order.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
-  o) I'd like to highlight the current line-number
-     as the cursor moves up and down in a textarea.
-     Get linenumber from cursor?
+  I'd like to highlight the current line-number
+  as the cursor moves up and down in a textarea.
+  Get linenumber from cursor?
     http://stackoverflow.com/questions/12553025/getting-line-number-in-text-area
     http://stackoverflow.com/questions/11191136/set-a-selection-range-from-a-to-b-in-absolute-position/11191372#11191372
     http://jsfiddle.net/jz7Jx/2/
