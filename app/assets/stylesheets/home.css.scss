@@ -27,11 +27,19 @@ $text-color: darken($lighter-color, 10%);
     right: -35px;
   }
 
-  #a_place_to_practice {
-    font-size: 1.3em;
+  #a_place_to_practice, #programming {
+    font-size: 1.55em;
     color: lighten($text-color, 5%);
     margin: {
-      top: -50px;
+      top: -48px;
+      bottom: 2em;
+    }
+  }
+  #programming {
+    font-size: 1.55em;
+    color: lighten($text-color, 5%);
+    margin: {
+      top: -58px;
       bottom: 2em;
     }
   }
