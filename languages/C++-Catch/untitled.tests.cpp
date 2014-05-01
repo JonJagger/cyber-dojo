@@ -1,6 +1,6 @@
 #include "untitled.hpp"
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
+#include "catch.hpp"  // https://github.com/philsquared/Catch
 
 TEST_CASE( "The answer to life the universe and everything", "[hhg]" )
 {
