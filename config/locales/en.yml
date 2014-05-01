@@ -111,8 +111,8 @@ en:
       the_tests_ran_and_all_passed: "tests ran and all passed"
       filename: "filename"
       opens_the_filename: "opens filename"
-      open_the_output_file: "toggles to-from the <u>o</u>utput file"
-      open_the_next_lit_file: "cycles <u>f</u>orwards through the lit files"
-      open_the_previous_lit_file: "cycles <u>b</u>ackwards through the lit files"
+      open_the_output_file: "toggles to-from the output file"
+      open_the_next_lit_file: "cycles forwards through the lit files"
+      open_the_previous_lit_file: "cycles backwards through the lit files"
       
     dashboard:
