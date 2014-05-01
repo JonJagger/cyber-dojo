@@ -6,7 +6,7 @@ $text-color: darken($lighter-color, 10%);
   font-size: 1.15em;
   margin: {
     top: 10px;
-    left: 50px;
+    left: 20px;
   }
 
   #cyber-dojo {
@@ -60,6 +60,9 @@ $text-color: darken($lighter-color, 10%);
     position: relative;
     top: 42px;
     @include rounded-corner(6px);
+  }
+  td#column-gap {
+    width: 25px;
   }
   .show-dialog-button {
     display: block;
