@@ -47,6 +47,7 @@ en:
       
     buttons:
       ok: "ok"
+      create: "create"
       close: "close"
       cancel: "cancel"
       

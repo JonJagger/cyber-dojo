@@ -29,11 +29,11 @@
     overflow-y: auto;
   }
 
-  #ok, #cancel {
+  #create, #cancel {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin-top: 10px;
-    margin-right: 20px;
+    margin-right: 140px;
   }
 
   #div-exercises, #div-languages {

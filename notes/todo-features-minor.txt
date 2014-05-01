@@ -1,5 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SETUP-PAGE
+  change [ok] button to [create] button
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SETUP-PAGE
+  this can show a pre-allocated ID !
+  ties it back to the home page nicely.
+  [create] can go with the id
+  [cancel] can be separated off to the right
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TIPS-COLOUR-PREDICTION
   game where you have to predict what colour you will get
   and you get max N incorrect predictions
@@ -67,12 +76,6 @@ HELP
 INITIALLY-RED-TESTS
   do this by using fail("") calls rather than deliberately wrong values.
   do this for all languages.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SETUP-PAGE
-  this can show a pre-allocated ID !
-  ties it back to the home page nicely.
-  perhaps [ok] can go with the id and [cancel] can be separated off
-  to the right
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE TRAFFIC-LIGHTS
   is the width of these still controlled by CSS?

@@ -2,24 +2,24 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  
-  $('#ok').click(function() {  
+
+  $('#create').click(function() {
     var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
     var language = $('[id^=language_][class~=selected]').data('language');
     $.getJSON('/setup/save', {
       exercise: exercise,
-      language: language      
+      language: language
     }, function(dojo) {
       var url = '/dojo/index/' + dojo.id;
       window.location = url;
     });
   });
-  
+
 });
 
 //--></script>
 
 <button type="button"
-        id="ok">
-  <%= t("views.buttons.ok") %>
+        id="create">
+  <%= t("views.buttons.create") %>
 </button>
