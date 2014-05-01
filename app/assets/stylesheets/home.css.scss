@@ -41,7 +41,7 @@ $text-color: darken($lighter-color, 10%);
       bottom: 15px;
     }
   }
-  td#column-middle {
+  td#column-main {
     padding: {
       left: 0px;
       right: 30px;
@@ -51,7 +51,7 @@ $text-color: darken($lighter-color, 10%);
       top: -20px;
     }
   }
-  td#column-left, td#column-right {
+  td#column-buttons, td#column-donate {
     padding: 12px;
     padding-top: 20px;
     background-color: lighten($darker-color, 10%);
