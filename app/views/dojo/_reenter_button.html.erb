@@ -5,8 +5,8 @@ $(document).ready(function() {
 
   $('#reenter-button').click(function() {
     var id = $('#kata-id-input').val();
-    var title = "<%= t('views.buttons.reenter') %>";
-    var cancel = "<%= t('views.buttons.cancel') %>";
+    var title = "<%= raw t('views.buttons.reenter') %>";
+    var cancel = "<%= raw t('views.buttons.cancel') %>";
     var button = $(this);
     var cursor = button.css('cursor');
     button.css('cursor', 'wait');
