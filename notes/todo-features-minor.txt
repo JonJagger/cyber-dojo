@@ -1,31 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP-PAGE
-  change [ok] button to [create] button
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SETUP-PAGE
   this can show a pre-allocated ID !
   ties it back to the home page nicely.
   [create] can go with the id
   [cancel] can be separated off to the right
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TIPS-COLOUR-PREDICTION
-  game where you have to predict what colour you will get
-  and you get max N incorrect predictions
-     per animal
-     per dojo
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TIPS-AMBER-LIMITS
-  game where you get N amber traffic-lights max.
-     per animal
-     per dojo
-  game where you get N ambers in a row max.
-     per animal
-     per dojo
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TIPS-BETTER-DIAGNOSTIC-EXERCISE
-  game where your task is to improve the diagnostic message
-  you get when a test is red!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD-FIRST-TRAFFIC-LIGHT
   in a refactoring dojo you want all the animals to be visible
