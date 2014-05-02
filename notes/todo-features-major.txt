@@ -8,6 +8,9 @@ user-identification
   don't store the user's id. Store a hash of it.
   Allow a session to be tagged with a users hashed-id.
   No need to store any sensitive data.
+  With this I can create a user-dashboard showing a history
+  of previous dojos. This allows a comparison of dojo to dojo.
+  This could be powerful in showing improvement.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 hash-ids
   For the collection of files to see if there are duplicates...
@@ -30,19 +33,6 @@ Finer-grained commits
   to another file (and there is some change somewhere). This
   would allow you to see if the first code entered was
   code or test code.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-docker
-o) copy files I zipped up before when moving server.
-   Eg check out tl_25_age_14.txt
-   That zip file is also saved on cyber-dojo.com
-o) make micro server with large-hard disk and
-   copy katas.zip file from cyber-dojo.com to it.
-   copy tl_25_age_14'd katas too.
-o) Destroy server cyber-dojo.com
-o) See if reserved instance switches to cyber-dojo.org
-o) If not pay to reserve server holding new cyber-dojo.org?
-o) create containers for Go, Groovy, PHP, etc.
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 o) refactor so new katas save sha1 hashes
    and also put URL of server dojo into kata's manifest.

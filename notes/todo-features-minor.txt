@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOWNLOAD
+  reinstate download button on dashboard page.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP-PAGE
   this can show a pre-allocated ID !
   ties it back to the home page nicely.
@@ -19,7 +22,7 @@ DASHBOARD-DURATION
   hours before it is needed. The duration time should start
   when the first animal presses [test].
   Also the duration end time should be calculated from the
-  current time only as long as their has been a traffic-light
+  current time only if there has been a traffic-light
   within the last N minutes. If there hasn't, the duration end
   time should be the time of the last traffic light.
   This could be a good requirement to refactor the domain
@@ -87,7 +90,7 @@ DIFF-DIALOG
     http://manos.malihu.gr/page-scroll-to-id/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
-  the small buttons on lhs no longer have the hover ghosting
+  the small buttons on rhs no longer have the hover ghosting
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOCKER
   It would be a good idea if the setup screen/dialog
@@ -109,7 +112,7 @@ FILENAMES
   omit scrolling the output file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TRAFFIC-LIGHT SCROLLBAR
-  on [test] page
+  (on [test] page)
   try to lose it
   but still allow scrolling.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
