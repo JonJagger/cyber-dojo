@@ -1,13 +1,46 @@
 
-<% ['red','amber','green'].each do |bulb| %>
-  <%  bulb_tally = traffic_lights.count{ |light| light['colour'] == bulb } %>
-  <div class="tipped <%= bulb %> bulb-count">
-    <%= bulb_tally %>
-    <div class='tooltip'>
-       <%= avatar_name %> has<br>
-       <%= pluralize(bulb_tally, bulb.to_s + ' traffic-light') %><br>
-       so far
-    </div>
-  </div>
-<% end %>
+<script type="text/javascript"><!--
 
+$(document).ready(function() {
+  var options = {
+    segmentShowStroke : false,
+    animation: false
+  };
+  var plural = function(n,word) {
+    return "" + n + " " + word + (n == 1 ? "" : "s");
+  }
+  $(".pie").each(function() {
+    var   redCount = $(this).data('red-count');
+    var amberCount = $(this).data('amber-count');
+    var greenCount = $(this).data('green-count');
+    var title = "" +
+      plural(redCount,'red') + ', ' +
+      plural(amberCount, 'amber') + ', ' +
+      plural(greenCount, 'green');
+    var data = [
+        { value:   redCount, color: "#ff0000" },
+        { value: amberCount, color: "#ffcc33" },
+        { value: greenCount, color: "#00ff00" },
+    ];
+    var ctx = $(this)[0].getContext("2d");
+    new Chart(ctx).Pie(data,options);
+    $(this).closest('td').prop('title', title);
+  });
+});
+
+//--></script>
+
+<table>
+  <tr>
+    <td>
+      <canvas class="pie"
+              data-red-count="<%= traffic_lights.count{ |light| light['colour'] == 'red' } %>"
+              data-amber-count="<%= traffic_lights.count{ |light| light['colour'] == 'amber' } %>"
+              data-green-count="<%= traffic_lights.count{ |light| light['colour'] == 'green' } %>"
+              width="35"
+              height="35">
+        not supported
+      </canvas>
+    </td>
+  </tr>
+</table>
