@@ -55,8 +55,28 @@ lion = kata.avatars['lion']
 </code>
 
 Note that, deliberately, none of the above checks that the object is 'valid',
-that the underlying disk paths exists. This allows you to write code like this...
+that the underlying disk paths exist. This allows you to write code like this...
 
 <code>
 dojo.katas['34D6E7823E'].avatars['lion'].exists?
 </code>
+
+
+TODO: Extend the domain model into traffic-lights
+
+lion.lights.each{|light| ...}
+lion.lights << light
+lion.lights[23].colour
+lion.lights[23].output
+lion.lights[23].visible_files
+lion.lights[23].visible_files['filename']
+lion.lights[23].created
+lion.lights[23].client_ip_address
+lion.lights[23].server_ip_address
+lion.lights[13].diff(15)
+
+Also
+
+dojo.katas['34D6E7823E'].lights
+which gives you the collection with the
+animals name as a key.
