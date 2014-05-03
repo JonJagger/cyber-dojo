@@ -1,7 +1,7 @@
 
 module TrafficLightHelper
 
-  def pie_chart_canvas(traffic_lights, size=35)
+  def pie_chart(traffic_lights, size=35)
      ("<canvas" +
         " class='pie'" +
         " data-red-count='#{count(traffic_lights,'red')}'" +
