@@ -2,7 +2,7 @@
 <script type="text/javascript"><!--
 
 $(document).ready(function() {
-  //cd.tipify($('.tipped'), $('#tip-window'));
+  cd.pieChart($('.pie'));
 });
 
 //--></script>
@@ -29,18 +29,6 @@ $(document).ready(function() {
   <table id="team-bulb-counts-container">
     <tr>
       <td>
-        <% ['red','amber','green'].each do |bulb| %>
-          <div class="tipped <%= bulb %> bulb-count">
-            <%= counts[bulb] %>
-            <div class='tooltip'>
-               animals have<br>
-               <%= pluralize(counts[bulb], bulb + ' traffic-light') %><br>
-               so far
-            </div>
-          </div>
-        <% end %>
-      </td>
-      <td>
         <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
         <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
         <% colour = 'amber' if lasts['amber'] >  0 %>
@@ -53,6 +41,9 @@ $(document).ready(function() {
              currently at <%= colour %>
           </div>
         </div>
+      </td>
+      <td>
+        <%= pie_chart({},35,counts) %>
       </td>
     </tr>
   </table>
