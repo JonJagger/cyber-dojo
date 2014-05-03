@@ -2,29 +2,17 @@
 <table id="shared-info">
   <tr>
     <td>
-      <div class="tipped">
+      <div id="id" title="this dojo's unique id">
         <%= @kata.id.to_s[0..5] %>
-        <div class="tooltip">
-          this dojo's<br>unique id
-        </div>
       </div>
-      <div class="tipped">
+      <div title="this dojo's language">
         <%= @kata.language.display_name %>
-        <div class="tooltip">
-          this dojo's<br>language
-        </div>
       </div>
-      <div class="tipped">
+      <div title="this dojo's unit-test framework">
         <%= @kata.language.display_test_name %>
-        <div class="tooltip">
-          this dojo's<br>unit test framework
-        </div>
       </div>
-      <div class="tipped">
+      <div title="this dojo's exercise">
         <%= @kata.exercise.name.gsub('_',' ') %>
-        <div class="tooltip">
-          this dojo's<br>chosen exercise
-        </div>
       </div>
     </td>
   </tr>

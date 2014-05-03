@@ -9,6 +9,9 @@
   margin-right: 15px;  // right-align
   text-align: right;
   @include font-size-tiny();
+  #id {
+    @include font-size-medium();
+  }
 }
 
 .triangle.button {
