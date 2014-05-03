@@ -22,20 +22,21 @@ $(document).ready(function() {
 	<% end %>
 
 	<td>
-	  <%= render :partial => 'avatar_image' %>
-	</td>
-
-	<td>
-      <%= pie_chart(@traffic_lights,35) %>
-	</td>
-
-	<td>
 	  <%= render :partial => 'shared/traffic_light_count',
 				 :locals  => { :traffic_lights => @traffic_lights,
 							   :avatar_name    => translate_avatar(@avatar.name)
 							 } %>
 	</td>
 
+	<td>
+	  <%= render :partial => 'avatar_image' %>
+	</td>
+
+    <% if @traffic_lights.length > 1 %>
+	  <td>
+        <%= pie_chart(@traffic_lights,35) %>
+	  </td>
+    <% end %>
 
   </tr>
 </table>
