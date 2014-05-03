@@ -7,7 +7,7 @@ $(document).ready(function() {
   cd.setupTrafficLightOpensDiffDialogHandlers(lights);
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
-  //cd.tipify($('.tipped'), $('#tip-window'));
+  cd.pieChart($('.pie'));
 
 });
 
@@ -64,10 +64,7 @@ $(document).ready(function() {
 								 } %>
 		</td>
 		<td class="align-right">
-		  <%= render :partial => 'shared/traffic_light_bulb_counts',
-					 :locals  => { :traffic_lights => lights,
-								   :avatar_name    => avatar_name
-								 } %>
+          <%= pie_chart(lights,35) %>
 		</td>
 	  </tr>
 	<% end %>
