@@ -30,17 +30,4 @@ $(document).ready(function() {
 
 //--></script>
 
-<table>
-  <tr>
-    <td>
-      <canvas class="pie"
-              data-red-count="<%= traffic_lights.count{ |light| light['colour'] == 'red' } %>"
-              data-amber-count="<%= traffic_lights.count{ |light| light['colour'] == 'amber' } %>"
-              data-green-count="<%= traffic_lights.count{ |light| light['colour'] == 'green' } %>"
-              width="35"
-              height="35">
-        not supported
-      </canvas>
-    </td>
-  </tr>
-</table>
+<%= pie_chart_canvas(traffic_lights,35) %>

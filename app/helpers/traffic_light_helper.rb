@@ -1,6 +1,17 @@
 
 module TrafficLightHelper
 
+  def pie_chart_canvas(traffic_lights, size=35)
+     ("<canvas" +
+        " class='pie'" +
+        " data-red-count='#{count(traffic_lights,'red')}'" +
+        " data-amber-count='#{count(traffic_lights,'amber')}'" +
+        " data-green-count='#{count(traffic_lights,'green')}'" +
+        " width='#{size}'" +
+        " height='#{size}'>" +
+      "</canvas>").html_safe
+  end
+
   def diff_traffic_light(kata, avatar_name, light, max_lights)
     # used from test page and from dashboard page
     number = light['number'].to_i
@@ -54,6 +65,12 @@ module TrafficLightHelper
     n = light['number'].to_i
     "review #{avatar_name}'s<br>" +
     "#{n-1} &harr; #{n} diff"
+  end
+
+private
+
+  def count(traffic_lights, colour)
+     traffic_lights.count{|light| light['colour'] === colour}
   end
 
 end
