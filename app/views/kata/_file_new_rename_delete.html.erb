@@ -29,12 +29,10 @@ $(document).ready(function() {
     <td>
       <button type="button"
               id="new"
+              title="creates a new file"
               data-title="<%= t('views.buttons.new_file') %>"
               class="tipped">
         <%= t('views.buttons.new_file') %>
-        <div class="tooltip">
-          creates a<br>new file
-        </div>
       </button>
     </td>
   </tr>
@@ -42,12 +40,10 @@ $(document).ready(function() {
     <td>
       <button type="button"
               id="rename"
+              title="renames the current file"
               data-title="<%= t('views.buttons.rename_file') %>"
               class="tipped">
         <%= t('views.buttons.rename_file') %>
-        <div class="tooltip">
-          renames the<br>current file
-        </div>
       </button>
     </td>
   </tr>
@@ -55,12 +51,10 @@ $(document).ready(function() {
     <td>
       <button type="button"
               id="delete"
+              title="deletes the current file"
               data-title="<%= t('views.buttons.delete_file') %>"
               class="tipped">
         <%= t('views.buttons.delete_file') %>
-        <div class="tooltip">
-          deletes the<br>current file
-        </div>
       </button>
     </td>
   </tr>

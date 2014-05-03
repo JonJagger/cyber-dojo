@@ -47,11 +47,7 @@
     }
   }
 
-  #controls {
-    margin-right: 5px;
-  }
-
-  #line-numbers-checkbox-container {
+  .right-align-container {
     margin-left: auto;  // right-align
     margin-right: 2px;  // right-align
     text-align: right;
@@ -61,12 +57,18 @@
     }
   }
 
+  #line-numbers-container {
+    margin: {
+      top: 10px;
+      bottom: 10px;
+      right: 4px;
+    }
+  }
+
   #revert-button, #fork-button {
     @include font-size-tiny();
     width: 60px;
     text-align: right;
-    padding-right: 7px;
-    margin-bottom: 2px;
   }
 
   #help-button {

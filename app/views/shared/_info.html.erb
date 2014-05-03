@@ -2,16 +2,16 @@
 <table id="shared-info">
   <tr>
     <td>
-      <div id="id" title="this dojo's unique id">
+      <div id="id" title="this dojo's unique id is <%= @kata.id.to_s[0..5] %>">
         <%= @kata.id.to_s[0..5] %>
       </div>
-      <div title="this dojo's language">
+      <div title="this dojo's language is <%= @kata.language.display_name %>">
         <%= @kata.language.display_name %>
       </div>
-      <div title="this dojo's unit-test framework">
+      <div title="this dojo's unit-test framework is <%= @kata.language.display_test_name %>">
         <%= @kata.language.display_test_name %>
       </div>
-      <div title="this dojo's exercise">
+      <div title="this dojo's exercise is <%= @kata.exercise.name.gsub('_',' ') %>">
         <%= @kata.exercise.name.gsub('_',' ') %>
       </div>
     </td>

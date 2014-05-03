@@ -26,8 +26,6 @@ $(document).ready(function() {
   cd.storeIncomingFileHashes();
   cd.storeOutgoingFileHashes();
 
-  //cd.tipify($('.tipped'), $('#tip-window'));
-
   var filenames = cd.filenames();
   $.each(filenames, function(index,filename) {
     var file = cd.fileContentFor(filename);
@@ -69,32 +67,10 @@ $(document).ready(function() {
   <table>
     <tr class="valign-top">
       <td>
-        <%= render :partial => 'test_button' %>
-        <div class="panel">
-          <%= render :partial => 'filename_list' %>
-        </div>
-        <div class="panel">
-          <%= render :partial => 'file_new_rename_delete' %>
-        </div>
-        <div class="panel align-right" id="controls">
-          <div>
-            <%= render :partial => 'line_numbers_checkbox' %>
-          </div>
-          <div>
-            <%= render :partial => 'revert_button' %>
-          </div>
-          <div>
-            <%= render :partial => 'fork_button' %>
-          </div>
-          <div>
-            <%= render :partial => 'help_button' %>
-          </div>
-        </div>
+        <%= render :partial => 'controls' %>
       </td>
       <td>
-        <div>
-          <%= render :partial => 'editor' %>
-        </div>
+        <%= render :partial => 'editor' %>
       </td>
     </tr>
     <tr class="valign-top">

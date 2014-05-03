@@ -18,13 +18,12 @@ $(document).ready(function() {
 
 //--></script>
 
-<button type="button"
-        id="fork-button"
-        class="tipped"
-        data-title="<%= t('views.buttons.fork') %>"
-        data-cancel="<%= t('views.buttons.cancel') %>">
-  <%= raw t('views.buttons.fork') %>
-  <div class="tooltip">
-    forks a new dojo<br>from any traffic-light
-  </div>
-</button>
+<div class="right-align-container">
+  <button type="button"
+          id="fork-button"
+          title="forks a new dojo from any traffic-light"
+          data-title="<%= t('views.buttons.fork') %>"
+          data-cancel="<%= t('views.buttons.cancel') %>">
+    <%= raw t('views.buttons.fork') %>
+  </button>
+</div>

@@ -59,36 +59,32 @@ $(document).ready(function() {
   <table id="controls-container">
     <tr>
       <td class="align-right">
-        <div class="tipped">
+        <div title="toggles 60-second columns on/off">
           <%= raw t("views.labels.columns") %>
-          <div class="tooltip">
-          </div>
         </div>
       </td>
       <td>
         &nbsp;
       </td>
       <td>
-        <input type="checkbox" class="regular-checkbox"
+        <input type="checkbox"
+               class="regular-checkbox"
                id="minute_columns_checkbox"/>
           <label for="minute_columns_checkbox"></label>
       </td>
     </tr>
     <tr>
       <td class="align-right">
-        <div class="tipped">
+        <div title="toggle the 10 second auto-refresh on/off">
           <%= raw t('views.labels.auto_refresh') %>
-          <div class="tooltip">
-            toggles the 10 second<br>
-            auto-refresh on/off
-          </div>
         </div>
       </td>
       <td>
         &nbsp;
       </td>
       <td>
-        <input type="checkbox" class="regular-checkbox"
+        <input type="checkbox"
+               class="regular-checkbox"
                id="auto_refresh_checkbox"/>
           <label for="auto_refresh_checkbox"></label>
       </td>

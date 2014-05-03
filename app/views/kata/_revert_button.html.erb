@@ -15,13 +15,12 @@ $(document).ready(function() {
 
 //--></script>
 
-<button type="button"
-        id="revert-button"
-		class="tipped"
-		data-title="<%= t('views.buttons.revert') %>"
-		data-cancel="<%= t('views.buttons.cancel') %>">
-  <%= raw t('views.buttons.revert') %>
-  <div class="tooltip">
-    reverts to any<br>previous<br>traffic-light
-  </div>
-</button>
+<div class="right-align-container">
+  <button type="button"
+		  id="revert-button"
+		  title="reverts to any previous traffic-light"
+		  data-title="<%= t('views.buttons.revert') %>"
+		  data-cancel="<%= t('views.buttons.cancel') %>">
+	<%= raw t('views.buttons.revert') %>
+  </button>
+</div>
