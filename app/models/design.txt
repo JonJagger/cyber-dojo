@@ -13,7 +13,7 @@ format = 'json'
 dojo = paas.create_dojo(root_path,format)
 </code>
 
-A paas can have several dojo's...
+A paas can have several dojo's, (each with their own root folder).
 For example, the live one off
   /var/www/cyberdojo
 and a test one off
@@ -79,4 +79,4 @@ Also
 
 dojo.katas['34D6E7823E'].lights
 which gives you the collection with the
-animals name as a key.
+animals name as a key. As used by td-gapper

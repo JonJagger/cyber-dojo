@@ -14,7 +14,7 @@ Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/manifest.json") do |file|
 end
 
 image_names.each do |image_name|
-  p image_name
   cmd = "docker pull #{image_name}"
-  `cmd`
+  p cmd
+  `#{cmd}`
 end
