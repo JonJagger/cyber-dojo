@@ -16,8 +16,6 @@ languages_names = dojo.languages.collect {|language| language.name}
 missing = { }
 count = 0
 dojo.katas.each do |kata|
-  print '.'
-  count += 1
   begin
     if !languages_names.include? kata.language.name
       missing[kata.language.name] ||= [ ]
@@ -30,10 +28,13 @@ dojo.katas.each do |kata|
     puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
     puts error.message
   end
+  count += 1
+  dots = '.' * (count % 64)
+  spaces = ' ' * (64-count%64)
+  line = "\r" + dots + spaces + count.to_s
+  sleep(0.002)
+  print line
 end
-print "\n"
-print "\n"
-print "#{count} katas examined"
 print "\n"
 print "\n"
 missing.keys.sort.each do |name|
