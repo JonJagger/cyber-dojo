@@ -1,20 +1,6 @@
 
 module TrafficLightHelper
 
-  def pie_chart(traffic_lights, size, counts={})
-     counts['red'] = tally(counts,traffic_lights,'red')
-     counts['amber'] = tally(counts,traffic_lights,'amber')
-     counts['green'] = tally(counts,traffic_lights,'green')
-     ("<canvas" +
-        " class='pie'" +
-        " data-red-count='#{counts['red']}'" +
-        " data-amber-count='#{counts['amber']}'" +
-        " data-green-count='#{counts['green']}'" +
-        " width='#{size}'" +
-        " height='#{size}'>" +
-      "</canvas>").html_safe
-  end
-
   def diff_traffic_light(kata, avatar_name, light, max_lights)
     # used from test page and from dashboard page
     number = light['number'].to_i
@@ -31,12 +17,12 @@ module TrafficLightHelper
   end
 
   def colour(light)
-     # old dojos used 'outcome'
+     # very old dojos used 'outcome'
      (light['colour'] || light['outcome']).to_s
   end
 
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
-    ("<div class='tipped diff-traffic-light'" +
+    ("<div class='diff-traffic-light'" +
          " title='review #{avatar_name}s current code'" +
          " data-id='#{kata.id}'" +
          " data-avatar-name='#{avatar_name}'" +
@@ -61,16 +47,6 @@ module TrafficLightHelper
   def tool_tip(avatar_name, light)
     n = light['number'].to_i
     "review #{avatar_name}s #{n-1} &harr; #{n} diff"
-  end
-
-private
-
-  def tally(counts, traffic_lights, colour)
-     counts.include?(colour) ? counts[colour] : count(traffic_lights,colour)
-  end
-
-  def count(traffic_lights, colour)
-     traffic_lights.count{|light| light['colour'] === colour}
   end
 
 end
