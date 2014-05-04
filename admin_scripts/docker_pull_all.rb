@@ -15,6 +15,6 @@ end
 
 image_names.each do |image_name|
   cmd = "docker pull #{image_name}"
-  p cmd
+  print cmd + "\n"
   `#{cmd}`
 end
