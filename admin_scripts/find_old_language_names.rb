@@ -36,7 +36,8 @@ print "\n"
 print "#{count} katas examined"
 print "\n"
 print "\n"
-p missing.sort
+missing.keys.sort.each do |name|
+  print "#{name} - #{missing[name].length}\n"
+end
 print "\n"
 print "\n"
-p missing.keys
