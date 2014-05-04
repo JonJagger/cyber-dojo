@@ -2,7 +2,7 @@
 # First post-LinuxPaas-refactoring script to use
 # the app/models classes to navigate the domain
 
-require './domain_lib'
+require File.expand_path(File.dirname(__FILE__)) + '/domain_lib'
 
 disk = OsDisk.new
 git = Git.new
@@ -14,8 +14,10 @@ dojo = paas.create_dojo(CYBERDOJO_HOME_DIR, format)
 languages_names = dojo.languages.collect {|language| language.name}
 
 missing = { }
+count = 0
 dojo.katas.each do |kata|
   print '.'
+  count += 1
   begin
     if !languages_names.include? kata.language.name
       missing[kata.language.name] ||= [ ]
@@ -29,6 +31,9 @@ dojo.katas.each do |kata|
     puts error.message
   end
 end
+print "\n"
+print "\n"
+print "#{count} katas examined"
 print "\n"
 print "\n"
 p missing.sort
