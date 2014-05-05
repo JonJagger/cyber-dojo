@@ -72,17 +72,16 @@ class LinuxPaas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def languages_each(languages)
-    @disk[path(languages)].entries do |name|
+    @disk[path(languages)].entries.select do |name|
       yield name if languages[name].exists?
     end
   end
 
   def exercises_each(exercises)
-    pathed = path(exercises)
-    @disk[pathed].entries.select do |name|
-      if @disk.is_dir?(File.join(pathed, name))
-        yield name
-      end
+    # not sure why I need the .select here...
+    # without it test/app_model/exercises_tests.rb fails
+    @disk[path(exercises)].entries.select do |name|
+      yield name if exercises[name].exists?
     end
   end
 
