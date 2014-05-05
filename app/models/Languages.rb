@@ -9,9 +9,7 @@ class Languages
   attr_reader :dojo
 
   def each
-    paas.languages_each(self) do |name|
-      yield self[name]
-    end
+    paas.all_languages(self).each { |name| yield self[name] }
   end
 
   def [](name)
