@@ -83,7 +83,9 @@ class LinuxPaas
   def exercises_each(exercises)
     pathed = path(exercises)
     @disk[pathed].entries.select do |name|
-      yield name if @disk.is_dir?(File.join(pathed, name))
+      if @disk.is_dir?(File.join(pathed, name))
+        yield name
+      end
     end
   end
 
@@ -105,7 +107,9 @@ class LinuxPaas
   def avatars_each(kata)
     pathed = path(kata)
     @disk[pathed].entries.select do |name|
-      yield name if @disk.is_dir?(File.join(pathed, name))
+      if @disk.is_dir?(File.join(pathed, name))
+        yield name
+      end
     end
   end
 
