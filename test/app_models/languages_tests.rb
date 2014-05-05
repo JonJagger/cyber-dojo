@@ -10,7 +10,7 @@ class LanguagesTests < ModelTestCase
     end
   end
 
-  test "dojo.languages.each() forwards to paas.languages_each()" do
+  test "dojo.languages.each() forwards to paas.all_languages()" do
     stub_exists(['C#-NUnit','Ruby-TestUnit'])
     languages_names = @dojo.languages.map {|language| language.name}
     assert languages_names.include?('C#-NUnit'), 'C#-NUnit: ' + languages_names.inspect

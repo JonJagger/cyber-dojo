@@ -10,7 +10,7 @@ class ExercisesTests < ModelTestCase
     end
   end
 
-  test "dojo.exercises.each() forwards to paas.exercises_each()" do
+  test "dojo.exercises.each() forwards to paas.all_exercises()" do
     stub_exists(['Unsplice','Verbal','Salmo'])
     exercises_names = @dojo.exercises.map {|exercise| exercise.name}
     assert exercises_names.include?('Unsplice'), 'Unsplice: ' + exercises_names.inspect
