@@ -50,7 +50,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false before dir and manifest are made" do
+  test "exists? is true only if dir and manifest exist" do
     json_and_rb do
       @language = @dojo.languages['Erlang']
       assert !@language.exists?
