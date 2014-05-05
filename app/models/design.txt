@@ -46,9 +46,6 @@ diamond = dojo.exercises['Print-Diamond']
 dojo.katas.each {|kata| ... }
 kata = dojo.katas['34D6E7823E']
 ...
-dojo.katas.each {|kata| ... }
-kata = dojo.katas['34D6E7823E']
-...
 kata.avatars.each {|avatar| ... }
 lion = kata.avatars['lion']
 ...
@@ -58,6 +55,9 @@ Note that, deliberately, none of the above checks that the object is 'valid',
 that the underlying disk paths exist. This allows you to write code like this...
 
 <code>
+dojo.languages['C#-NUnit'].exists?
+dojo.exercises['Yatzy'].exists?
+dojo.katas['34D6E7823E'].exists?
 dojo.katas['34D6E7823E'].avatars['lion'].exists?
 </code>
 
