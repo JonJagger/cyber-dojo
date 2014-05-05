@@ -38,7 +38,7 @@ class Language
   end
 
   def exists?
-    paas.exists?(self, manifest_filename)
+    paas.exists?(Adapter.new(@dojo,@name), manifest_filename)
   end
 
   def runnable?
@@ -125,6 +125,18 @@ private
 
   def manifest_filename
     'manifest.json'
+  end
+
+  class Adapter < Language
+    def initialize(dojo,name)
+      @dojo,@name = dojo,name
+    end
+    def dojo
+      @dojo
+    end
+    def name
+      @name
+    end
   end
 
 end
