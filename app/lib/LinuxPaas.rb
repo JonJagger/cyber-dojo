@@ -72,11 +72,8 @@ class LinuxPaas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def languages_each(languages)
-    pathed = path(languages)
-    @disk[pathed].entries.select do |name|
-      if @disk.is_dir?(File.join(pathed, name))
-        yield name
-      end
+    @disk[path(languages)].entries do |name|
+      yield name if languages[name].exists?
     end
   end
 

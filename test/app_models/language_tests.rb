@@ -50,12 +50,16 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false before dir is made" do
+  test "exists? is false before dir and manifest are made" do
     json_and_rb do
       @language = @dojo.languages['Erlang']
       assert !@language.exists?
       @paas.dir(@language).make
+      assert !@language.exists?
+      spy_manifest({})
       assert @language.exists?
+      # force spy to read manifest
+      @language.visible_files
     end
   end
 

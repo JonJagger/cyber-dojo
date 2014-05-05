@@ -38,7 +38,7 @@ class Language
   end
 
   def exists?
-    paas.exists?(self)
+    paas.exists?(self, manifest_filename)
   end
 
   def runnable?
@@ -106,9 +106,9 @@ class Language
 
   def manifest
     begin
-      @manifest ||= JSON.parse(read('manifest.json'))
+      @manifest ||= JSON.parse(read(manifest_filename))
     rescue
-      raise "JSON.parse('manifest.json') exception from language:" + name
+      raise "JSON.parse(#{manifest_filename}) exception from language:" + name
     end
   end
 
@@ -121,6 +121,10 @@ private
 
   def paas
     dojo.paas
+  end
+
+  def manifest_filename
+    'manifest.json'
   end
 
 end
