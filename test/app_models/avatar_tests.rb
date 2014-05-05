@@ -2,13 +2,25 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class AvatarTests < ModelTestCase
 
-  test "exists? is false when dir doesn't exist, true when dir does exist" do
+  test "exists? is true when dir exists and name is Avatar.name" do
     json_and_rb do
       kata = @dojo.katas[id]
-      avatar = kata.avatars['hippo']
+      avatar = kata.avatars[Avatars.names[0]]
       assert !avatar.exists?
       @paas.dir(avatar).make
       assert avatar.exists?
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "exists? is false when dir exists and name is not Avatar.name" do
+    json_and_rb do
+      kata = @dojo.katas[id]
+      avatar = kata.avatars['Salmo']
+      assert !avatar.exists?
+      @paas.dir(avatar).make
+      assert !avatar.exists?
     end
   end
 

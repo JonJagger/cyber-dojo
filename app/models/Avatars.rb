@@ -19,9 +19,7 @@ class Avatars
   attr_reader :kata
 
   def each
-    paas.avatars_each(kata) do |name|
-      yield self[name]
-    end
+    paas.all_avatars(kata).each { |name| yield self[name] }
   end
 
   def [](name)

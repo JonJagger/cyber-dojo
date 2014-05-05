@@ -9,9 +9,6 @@ class Exercises
   attr_reader :dojo
 
   def each
-    #paas.exercises_each(self) do |name|
-    #  yield self[name]
-    #end
     paas.all_exercises(self).each { |name| yield self[name] }
   end
 

@@ -11,7 +11,7 @@ class Avatar
   def_delegators :kata, :format, :format_is_rb?, :format_is_json?
 
   def exists?
-    paas.exists?(self)
+    Avatars.names.include?(name) && paas.exists?(self)
   end
 
   def sandbox

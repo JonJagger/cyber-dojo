@@ -65,12 +65,6 @@ class LinuxPaas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def exists?(object, filename='')
-    dir(object).exists?(filename)
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
   def all_languages(languages)
     @disk[path(languages)].select{ |name| languages[name].exists? }
   end
@@ -94,13 +88,14 @@ class LinuxPaas
     end
   end
 
-  def avatars_each(kata)
-    pathed = path(kata)
-    @disk[pathed].entries.select do |name|
-      if @disk.is_dir?(File.join(pathed, name))
-        yield name
-      end
-    end
+  def all_avatars(kata)
+    @disk[path(kata)].select{ |name| kata.avatars[name].exists? }
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  def exists?(object, filename='')
+    dir(object).exists?(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
