@@ -32,7 +32,6 @@ dojo.katas.each do |kata|
   dots = '.' * (count % 64)
   spaces = ' ' * (64-count%64)
   line = "\r" + dots + spaces + count.to_s
-  sleep(0.002)
   print line
 end
 print "\n"
