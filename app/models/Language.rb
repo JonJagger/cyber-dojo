@@ -35,9 +35,6 @@ class Language
     # when 'CoffeeScript' then return 'CoffeeScript-jasmine'
     # when 'Javascript'   then return 'Javascript-node'
     # when 'PHP'          then return 'PHP-PHPUnit'
-    #
-    # Ok but no docker image yet...
-    #"C++-Catch"            --> C++-Catch
   end
 
   def exists?
