@@ -4,6 +4,17 @@ LANGUAGE-MANIFEST-CHECKS
   move into admin_scripts folder.
   delete test/installation language-checkers?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+AVATAR
+  write run_tests(...) function that wraps all of this...
+     save(delta, visible_files)
+     output = test(max_duration)
+     save_visible_files(...)
+     save_traffic_lights(...)
+  which currently happens in kata_controller
+  It can parse output to determine traffic_light colour
+  Might be able to reduce number of @variables in some controllers
+  so the views reach into the domain objects...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOWNLOAD
   reinstate download button on dashboard page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

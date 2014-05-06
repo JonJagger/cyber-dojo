@@ -19,4 +19,15 @@ class Light
     @hash['number']
   end
 
+  #- - - - - - - - - - - - - - - -
+
+  #def visible_files
+  #end
+
+  #def output
+  #end
+
+  #def diff(n)
+  #end
+
 end

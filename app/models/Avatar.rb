@@ -49,6 +49,19 @@ class Avatar
     lights
   end
 
+  def commit(tag)
+    paas.git_commit(self, "-a -m '#{tag}' --quiet")
+    paas.git_tag(self, "-m '#{tag}' #{tag} HEAD")
+  end
+
+  #- - - - - - - - - - - - - - -
+
+  def lights
+    Lights.new(self)
+  end
+
+  #- - - - - - - - - - - - - - -
+
   def visible_files(tag = nil)
     parse(visible_files_filename, tag)
   end
@@ -63,23 +76,12 @@ class Avatar
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
-  def commit(tag)
-    paas.git_commit(self, "-a -m '#{tag}' --quiet")
-    paas.git_tag(self, "-m '#{tag}' #{tag} HEAD")
-  end
-
   def traffic_lights_filename
     'increments.' + format
   end
 
   def visible_files_filename
     'manifest.' + format
-  end
-
-  #- - - - - - - - - - - - - - -
-  
-  def lights
-    Lights.new(self)
   end
 
 private
