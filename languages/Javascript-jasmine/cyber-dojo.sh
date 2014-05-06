@@ -1,1 +1,1 @@
-jasmine-node --noColor .
+jasmine-node --verbose --noColor .

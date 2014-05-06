@@ -1,4 +1,4 @@
 
-function answer() {
+answer = function() {
   return 42;
-}
+};
