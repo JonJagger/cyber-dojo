@@ -7,7 +7,7 @@
   ],
   "filename_extension" : ".js",
   "display_name": "Javascript",
-  "display_test_name": "node",
+  "display_test_name": "assert",
   "unit_test_framework": "node",
 
   "tab_size": 2

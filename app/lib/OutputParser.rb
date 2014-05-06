@@ -184,7 +184,7 @@ module OutputParser
     end
   end
 
-  def self.parse_node(output)
+  def self.parse_node(output) # node_assert
     return :green if /^All tests passed/.match(output)
     return :red   if /AssertionError/.match(output)
     return :amber
