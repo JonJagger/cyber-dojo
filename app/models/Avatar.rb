@@ -76,6 +76,12 @@ class Avatar
     'manifest.' + format
   end
 
+  #- - - - - - - - - - - - - - -
+  
+  def lights
+    Lights.new(self)
+  end
+
 private
 
   def paas
