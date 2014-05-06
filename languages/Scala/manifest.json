@@ -1,0 +1,13 @@
+
+{
+  "visible_filenames": [ "untitled.scala", "untitled_tests.scala", "cyber-dojo.sh" ],
+  "support_filenames": [ "scalatest_2.10.0-1.8.jar" ],
+  "unit_test_framework": "scala_test",
+
+  "filename_extension" : ".scala",
+  "display_name": "Scala",
+  "display_test_name": "scalatest",
+  "unit_test_framework": "scalatest",
+  "image_name": "cyberdojo/scala-X_scalatest",
+  "tab_size": 4
+}
