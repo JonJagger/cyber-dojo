@@ -1,4 +1,3 @@
-
 {
   "visible_filenames": [
     "untitled.js",
@@ -9,6 +8,6 @@
   "display_name": "Javascript",
   "display_test_name": "assert",
   "unit_test_framework": "node",
-
+  "image_name": "cyberdojo/javascript_node-0.10.15",
   "tab_size": 2
 }

@@ -6,4 +6,6 @@ RUN apt-get update
 RUN apt-get upgrade -y
 
 RUN apt-get install -y nodejs
-RUN curl http://npmjs.org/install.sh | sh
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+RUN apt-get install -y npm
+
