@@ -15,26 +15,23 @@ class Language
     # well known id's such as the refactoring dojos.
     # So patch to the language new-name.
     case @name
-    when 'C'       then return 'C-assert'
-    when 'C++'     then return 'C++-assert'
-    when 'C#'      then return 'C#-NUnit'
-    when 'Clojure' then return 'Clojure-.test'
-    when 'Erlang'  then return 'Erlang-eunit'
-    when 'Go'      then return 'Go-testing'
-    when 'Haskell' then return 'Haskell-hunit'
-    when 'Java'    then return 'Java-JUnit'
+    when 'C'                  then return 'C-assert'
+    when 'C++'                then return 'C++-assert'
+    when 'C#'                 then return 'C#-NUnit'
+    when 'Clojure'            then return 'Clojure-.test'
+    when 'Coffeescript'       then return 'Coffeescript-jasmine'
+    when 'Erlang'             then return 'Erlang-eunit'
+    when 'Go'                 then return 'Go-testing'
+    when 'Haskell'            then return 'Haskell-hunit'
+    when 'Java'               then return 'Java-JUnit'
     when 'Java-JUnit-Mockito' then return 'Java-Mockito'
     when 'Javascript'         then return 'Javascript-assert'
-    when 'Perl'    then return 'Perl-TestSimple'
-    when 'PHP'     then return 'PHP-PHPUnit'
-    when 'Python'  then return 'Python-unittest'
-    when 'Ruby'    then return 'Ruby-TestUnit'
-    else                return @name
+    when 'Perl'               then return 'Perl-TestSimple'
+    when 'PHP'                then return 'PHP-PHPUnit'
+    when 'Python'             then return 'Python-unittest'
+    when 'Ruby'               then return 'Ruby-TestUnit'
+    else                           return @name
     end
-
-    # Still to build docker image
-    # when 'CoffeeScript' then return 'CoffeeScript-jasmine'
-    # when 'PHP'          then return 'PHP-PHPUnit'
   end
 
   def exists?

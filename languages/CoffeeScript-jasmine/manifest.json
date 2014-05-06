@@ -9,6 +9,6 @@
   "display_name": "CoffeeScript",
   "display_test_name": "jasmine",
   "unit_test_framework": "jasmine",
-
+  "image_name": "cyberdojo/coffeescript-1.14.3_jasmine",
   "tab_size": 2
 }
