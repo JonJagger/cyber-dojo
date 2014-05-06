@@ -19,7 +19,7 @@ class Language
     when 'C++'                then return 'C++-assert'
     when 'C#'                 then return 'C#-NUnit'
     when 'Clojure'            then return 'Clojure-.test'
-    when 'Coffeescript'       then return 'Coffeescript-jasmine'
+    when 'CoffeeScript'       then return 'CoffeeScript-jasmine'
     when 'Erlang'             then return 'Erlang-eunit'
     when 'Go'                 then return 'Go-testing'
     when 'Haskell'            then return 'Haskell-hunit'
