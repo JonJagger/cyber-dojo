@@ -1,0 +1,21 @@
+{
+  "visible_filenames": [
+    "untitled.cpp",
+    "untitled.tests.cpp",
+    "untitled.hpp",
+    "untitled_helper.hpp",
+    "makefile",
+    "cyber-dojo.sh"
+  ],
+
+  "support_filenames": [
+    "gtest",
+    "gmock",
+    "gmock_main.a"
+  ],
+
+  "display_name": "C++",
+  "display_test_name": "GoogleMock",
+  "unit_test_framework": "google_test"
+}
+

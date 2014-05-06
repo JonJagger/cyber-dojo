@@ -1,0 +1,2 @@
+LANG=c
+make
