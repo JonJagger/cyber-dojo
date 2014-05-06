@@ -24,6 +24,7 @@ class Language
     when 'Haskell' then return 'Haskell-hunit'
     when 'Java'    then return 'Java-JUnit'
     when 'Java-JUnit-Mockito' then return 'Java-Mockito'
+    when 'Javascript'         then return 'Javascript-assert'
     when 'Perl'    then return 'Perl-TestSimple'
     when 'PHP'     then return 'PHP-PHPUnit'
     when 'Python'  then return 'Python-unittest'
@@ -33,7 +34,6 @@ class Language
 
     # Still to build docker image
     # when 'CoffeeScript' then return 'CoffeeScript-jasmine'
-    # when 'Javascript'   then return 'Javascript-node'
     # when 'PHP'          then return 'PHP-PHPUnit'
   end
 
