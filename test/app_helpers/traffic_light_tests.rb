@@ -7,7 +7,7 @@ class TrafficLightTests < ActionView::TestCase
 
   test "tool tip" do
     light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
-    assert_equal "review hippo's<br>1 &harr; 2 diff", tool_tip('hippo', light)
+    assert_equal "review hippos 1 &harr; 2 diff", tool_tip('hippo', light)
   end
 
   test "traffic_light_image" do
@@ -30,18 +30,15 @@ class TrafficLightTests < ActionView::TestCase
     max_lights = 45
     expected = "" +
       "<div" +
-      " class='tipped diff-traffic-light'" +
+      " class='diff-traffic-light'" +
+      " title='review hippos current code'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='23'" +
       " data-now-tag='23'" +
       " data-max-tag='45'>" +
-      "<div class='tooltip'>" +
-      "review hippo's<br>current code" +
-      "</div>" +
       "<img src='/images/avatars/hippo.jpg'" +
           " alt='hippo'" +
-          " title='hippo'" +
           " width='45'" +
           " height='45'/>" +
         "</div>"
@@ -66,15 +63,13 @@ class TrafficLightTests < ActionView::TestCase
     max_lights = 45
     expected = "" +
       "<div" +
-      " class='tipped diff-traffic-light'" +
+      " class='diff-traffic-light'" +
+      " title='review hippos 22 &harr; 23 diff'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='22'" +
       " data-now-tag='23'" +
       " data-max-tag='45'>" +
-      "<div class='tooltip'>" +
-      "review hippo's<br>22 &harr; 23 diff" +
-      "</div>" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +
           " width='17'" +
