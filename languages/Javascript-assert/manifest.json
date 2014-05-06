@@ -8,6 +8,6 @@
   "display_name": "JavaScript",
   "display_test_name": "assert",
   "unit_test_framework": "node",
-  "image_name": "cyberdojo/javascript-0.10.15",
+  "image_name": "cyberdojo/javascript-0.10.15_assert",
   "tab_size": 2
 }
