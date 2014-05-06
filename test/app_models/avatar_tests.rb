@@ -186,12 +186,6 @@ class AvatarTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar names all begin with a different letter" do
-    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "avatar has no traffic-lights before first test-run" do
     json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
