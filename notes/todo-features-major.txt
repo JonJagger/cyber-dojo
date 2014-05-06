@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+timed-out katas
+  the more I think about it the more I realize that having
+  dojos non-resumable after 2 hours from the first traffic-light
+  is a good idea. It also ties in with the idea of making a
+  second read-only server. It may help to solve language
+  rename awkwardness a little too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 quick-start  code-pad
   No exercise. You just press the language and you automatically
     get an id and an animal.

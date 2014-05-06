@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LANGUAGE-MANIFEST-CHECKS
+  move into admin_scripts folder.
+  delete test/installation language-checkers?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOWNLOAD
   reinstate download button on dashboard page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
