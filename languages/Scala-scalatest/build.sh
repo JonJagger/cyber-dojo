@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cp Dockerfile_scala-X Dockerfile
-docker build -t cyberdojo/scala-X  .
+cp Dockerfile_scala-2.9.2 Dockerfile
+docker build -t cyberdojo/scala-2.9.2  .
 rm Dockerfile
 
-cp Dockerfile_scala-X_scalatest Dockerfile
-docker build -t cyberdojo/scala-X_scalatest  .
+cp Dockerfile_scala-2.9.2_scalatest Dockerfile
+docker build -t cyberdojo/scala-2.9.2_scalatest  .
 rm Dockerfile
