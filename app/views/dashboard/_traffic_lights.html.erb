@@ -61,11 +61,11 @@ $(document).ready(function() {
 								   :avatar_name    => avatar_name
 								 } %>
 		</td>
-		<td class="align-center valign-center">
-		  <%= no_diff_avatar_image(@kata, avatar_name, lights.last, lights.length) %>
-		</td>
 		<td class="align-right">
           <%= pie_chart(lights,35) %>
+		</td>
+		<td class="align-center valign-center">
+		  <%= no_diff_avatar_image(@kata, avatar_name, lights.last, lights.length) %>
 		</td>
 	  </tr>
 	<% end %>
