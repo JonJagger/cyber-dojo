@@ -24,7 +24,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffInfo = function() {
 	  return '' +
-	    '<table class="align-center">' +
+	    '<table id="diff-info">' +
 		  '<tr>' +
 		    '<td>' +
 			  '<div id="was-traffic-light">' +
@@ -59,22 +59,33 @@ var cyberDojo = (function(cd, $) {
           "<td valign='top'>" +
 
 		    "<table>" +
-			  "<tr valign='top'>" +
+			  "<tr valign='top' align='right'>" +
 				"<td valign='top'>" +
 			      makeDiffInfo() +
 			    "</td>" +
 			  "</tr>" +
 
+			  "<tr>" +
+			    "<td>" +
+				  "<hr/>" +
+				"</td>" +
+			  "</tr>" +
+			  
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  cd.makeNavigateButtons(avatarName) +
 				"</td>" +
 			  "</tr>" +
 
-			  "<tr valign='top'>" +
+			  "<tr>" +
+			    "<td>" +
+				  "<hr/>" +
+				"</td>" +
+			  "</tr>" +
+
+			  "<tr valign='top' align='right'>" +
 				"<td valign='top'>" +
-				  "<div id='diff-filenames'" +
-					   "class='panel'>" +
+				  "<div id='diff-filenames'>" +
 				  "</div>" +
 				"</td>" +
 			  "</tr>" +
@@ -311,7 +322,7 @@ var cyberDojo = (function(cd, $) {
       var table= $('<table>');
       $.each(diffs, function(_, diff) {
 		var tr = $('<tr>');
-		var td = $('<td>', { 'class': 'align-left' });
+		var td = $('<td>', { 'class': 'align-right' });
 
         var filenameDiv = $('<div>', {
           'class': 'filename',
@@ -342,9 +353,9 @@ var cyberDojo = (function(cd, $) {
 		}
 
 		td.append(filenameDiv);
-		tr.append(td);
 		tr.append(deletedLineCountTd);
 		tr.append(addedLineCountTd)
+		tr.append(td);
         table.append(tr);
       });
 

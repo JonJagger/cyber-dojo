@@ -35,9 +35,28 @@
     @include font-size-tiny();
   }
 
+  #diff-info, #diff-navigate-buttons, #diff-filenames {
+    margin-left: auto;  // right-align
+    margin-right: 15px;
+  }
+
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px dotted lighten($darker-color, 30%);
+    margin: {
+      top: 5px;
+      bottom: 5px;
+      left: 18px;
+      right: 18px;
+    }
+    padding: 0;
+  }
+
   #diff-filenames {
-    height: 18em;
-    overflow-y: auto;
+    height: 130px;
+    overflow-y: none;
     font-size: 11pt;
   }
 
