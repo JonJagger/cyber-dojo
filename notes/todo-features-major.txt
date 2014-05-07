@@ -1,13 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Finer-grained commits
-  do a secret commit when an animal switches from one file
-  to another file (and there is a change somewhere).
-  This would allow you to see if the first code
-  entered was code or test code.
+  do a commit when an animal switches from one file
+  to another file. This would allow you to see if the first code
+  entered was code or test code. And also file navigation.
   The diff << < > >> controls would need to be expanded.
   One possible design...
-  o) each movement causes a new commit with a new tag number
+  o) each movement causes a new tag-commit with a new tag number
   o) each [test] does the same
   o) << < > >> controls move along tag numbers
   o) < red > moves to prev/next red
@@ -22,62 +21,51 @@ Finer-grained commits
   will be a commit+tag.
   Issue: If you switch files and there has been no edit, again
   there would be no actual diff in the source files. However,
-  I could create an events.json file (like increments.rb) that
-  simply stores the filename moved to.
+  I could create an tag-commits.json file (like increments.rb) that
+  simply stores the event causing the commit. The event would be
+    o) switch file
+    o) new file
+    o) rename file
+    o) delete file
+    o) [test]
 
-  Possible design of new < > navigator
+  Possible design of new << < > >> navigator
   Add third type of < > button.
   One whose triangle is not filled in.
-  This would move one file switch. Above this would still be
+  This would move one tag-commit event. Above this would still be
   the editable tag numbers and the lights
    This suggests puting the < > buttons underneath the tags
    (which they work on) and the the <| |> buttons underneath
    the lights (which they work on)
    Move animal image. Repeat count and pie chart from dashboard.
-   But make the count is the finer-grained count.
-   This also gives a limit on the tag number.
-       92 [lion] (pie)
+   Add tag-commit count.
+       11 (pie) [lion] 92
             light |tag| |tag| light
+        <<||   <|    <   >    |>    ||>
+   Also add tag-number to each light.
+       11 (pie) [lion] 92
+        tag-light |tag| |tag| light-tag
         <<||   <|    <   >    |>    ||>
 
   Reduce size of tag input-edits. The most common navigation
   by far is using the << < > >> buttons.
 
   This raises the idea of *not* trying to open the
-  'most changed file' when you navigate. But instead of
-  opening the file that was the one switched to. This is
+  'most changed file' when you navigate. Instead
+  open the file that was the one switched to. This is
   simpler and perhaps more in keeping with the review aspect.
   It means the file could be cyber-dojo.sh or output.
   It also suggests recording the scroll-position of the
-  file when it is restored. This allows you to see
+  file when it is re-played. This allows you to see
   exactly what the player saw when they switched to that file.
 
-  The dashboard could show two numbers, the big one (number
+  The dashboard could also show two numbers, the big one (number
   of lights) and a small one (number of tags).
+       11 (pie) [lion] 92
 
   Also suggests extending the domain model.
   avatar.lights[n]
   avatar.tags[n]
-
-  Events that also cause a new tag
-  o) new file
-  o) rename file
-  o) delete file
-
-  This might give an option of changing the lights when the
-  tag number is not a test? Or leave it at current light?
-  Or maybe have a 'marked' light. Eg marked green means
-  last light was a green but there have been tag changes
-  (but no [test]) since then.
-  Maybe mark each light with its tag number?
-       92 [lion] (pie)
-        tag-light |tag| |tag| light-tag
-        <<||   <|    <   >    |>    ||>
-  And display both counts (as on the dashboard)
-  but in a way that diff shows more. Eg append tag-count
-       11 (pie) [lion] 92
-        tag-light |tag| |tag| light-tag
-        <<||   <|    <   >    |>    ||>
 
   What about revert/fork dialogs?
   Allow forking from a light or a tag?

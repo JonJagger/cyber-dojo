@@ -30,9 +30,10 @@
   #was-traffic-light { margin-right: 0.3em; }
   #now-traffic-light { margin-left : 0.3em; }
 
-  #was-tag-number { @include editable_tag_number; }
-  #now-tag-number { @include editable_tag_number; }
-  #tag-gap-number { @include font-size-tiny(); }
+  #was-tag-number, #now-tag-number {
+    @include editable_tag_number;
+    @include font-size-tiny();
+  }
 
   #diff-filenames {
     height: 18em;

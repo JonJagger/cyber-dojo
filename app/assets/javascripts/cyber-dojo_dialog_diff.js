@@ -34,15 +34,7 @@ var cyberDojo = (function(cd, $) {
 			  '<input type="text" id="was-tag-number" value="' + wasTag + '" />' +
 			'</td>' +
 			'<td>' +
-			  '&thinsp;&larr;' +
-			'</td>' +
-			'<td>' +
-			  '<div id="tag-gap-number">' +
-			    tagGap +
-			  '</div>' +
-			'</td>' +
-			'<td>' +
-			  '&rarr;&thinsp;' +
+			  '&thinsp;&lrarr;' +
 			'</td>' +
 			'<td>' +
 			  '<input type="text" id="now-tag-number" value="' + nowTag + '" />' +
