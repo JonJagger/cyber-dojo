@@ -35,6 +35,9 @@ class LanguageManifestChecker
     return false if any_files_owner_is_root?
     return false if any_files_group_is_root?
     return false if any_file_is_unreadable?
+    # Dockerfile_exists?
+    # build_docker_container_exists?
+    # build_docker_container_starts_with_cyberdojo
     return true
   end
 
