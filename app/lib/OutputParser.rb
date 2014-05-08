@@ -90,6 +90,15 @@ module OutputParser
     end
   end
 
+  def self.parse_ruby_approvals(output)
+    return :amber if /(SyntaxError)/.match(output)
+    return :amber if /NameError/.match(output)
+    return :amber if /LoadError/.match(output)
+    return :amber if /NoMethodError/.match(output)
+    return :red   if /Approvals::ApprovalError/.match(output)
+    return :green
+  end
+
   def self.parse_nunit(output)
     nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+))?, Failures: (\d*)/
     if output =~ nunit_pattern
