@@ -34,7 +34,7 @@ var cyberDojo = (function(cd, $) {
 			  '<input type="text" id="was-tag-number" value="' + wasTag + '" />' +
 			'</td>' +
 			'<td>' +
-			  '&thinsp;&lrarr;' +
+			  '&thinsp;&#8596;&thinsp;' +
 			'</td>' +
 			'<td>' +
 			  '<input type="text" id="now-tag-number" value="' + nowTag + '" />' +
@@ -70,7 +70,7 @@ var cyberDojo = (function(cd, $) {
 				  "<hr/>" +
 				"</td>" +
 			  "</tr>" +
-			  
+
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  cd.makeNavigateButtons(avatarName) +
