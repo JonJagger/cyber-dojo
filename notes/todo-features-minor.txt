@@ -1,22 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LANGUAGE-BUILDS
-  split base language into own folder
-  eg  Java base dockerfile (just called Dockerfile) and its build.sh file
-    Java/
-    Java-JUnit/
-    Java-Mockito/
-    etc
-    Also make a build-essential folder for the base container
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LANGUAGE-readme.txt
-  explain historical reasons why .jar files do not live inside
-  their docker-container.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LANGUAGE-MANIFEST-CHECKS
-  move into admin_scripts folder.
-  delete test/installation language-checkers?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 AVATAR
   write run_tests(...) function that wraps all of this...
      save(delta, visible_files)
