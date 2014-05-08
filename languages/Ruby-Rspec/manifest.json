@@ -9,6 +9,6 @@
   "display_name": "Ruby",
   "display_test_name": "RSpec",
   "unit_test_framework": "ruby_rspec",
-
+  "image_name": "cyberdojo/ruby-1.9.3_rspec",
   "tab_size": 2
 }
