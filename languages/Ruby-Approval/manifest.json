@@ -11,6 +11,6 @@
   "display_name": "Ruby",
   "display_test_name": "Approval",
   "unit_test_framework": "ruby_rspec",
-  "image_name": "cyberdojo/ruby-1.9.3_approvals",
+  "image_name": "cyberdojo/ruby-1.9.3_approval",
   "tab_size": 2
 }
