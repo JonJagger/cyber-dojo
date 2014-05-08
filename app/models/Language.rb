@@ -35,7 +35,7 @@ class Language
   end
 
   def exists?
-    paas.exists?(self, manifest_filename)
+    paas.exists?(TrueNameAdapter.new(@dojo,@name), manifest_filename)
   end
 
   def runnable?
@@ -122,6 +122,14 @@ private
 
   def manifest_filename
     'manifest.json'
+  end
+
+  class TrueNameAdapter < Language
+    # bypass the name-patch so exists? works as required
+    def initialize(dojo,name)
+      @dojo,@name = dojo,name
+    end
+    attr_reader :dojo, :name
   end
 
 end
