@@ -23,12 +23,9 @@ module OutputParser
   end
 
   def self.parse_perl_test_simple(output)
-    green_pattern = Regexp.new('All tests successful')
-    syntax_error_pattern = Regexp.new('syntax error')
-    compilation_aborted_pattern = Regexp.new('aborted due to compilation errors')
-    return :green if green_pattern.match(output)
-    return :amber if syntax_error_pattern.match(output)
-    return :amber if compilation_aborted_pattern.match(output)
+    return :green if /All tests successful/.match(output)
+    return :amber if /syntax error/.match(output)
+    return :amber if /aborted due to compilation errors/.match(output)
     return :red
   end
 
@@ -57,15 +54,10 @@ module OutputParser
   end
 
   def self.parse_cassert(output)
-    red_pattern = Regexp.new('(.*)Assertion(.*)failed.')
-    syntax_error_pattern = Regexp.new(':(\d*): error')
-    make_error_pattern = Regexp.new('^make:')
-    makefile_error_pattern = Regexp.new('^makefile:')
-
-    return :red   if red_pattern.match(output)
-    return :amber if make_error_pattern.match(output)
-    return :amber if makefile_error_pattern.match(output)
-    return :amber if syntax_error_pattern.match(output)
+    return :red   if /(.*)Assertion(.*)failed./.match(output)
+    return :amber if /^make:/.match(output)
+    return :amber if /^makefile:/.match(output)
+    return :amber if /:(\d*): error/.match(output)
     return :green
   end
 
@@ -81,13 +73,9 @@ module OutputParser
   end
 
   def self.parse_ruby_rspec(output)
-    if /\A\.+$/ =~ output
-      :green
-    elsif /\A[\.F]+$/ =~ output
-      :red
-    else
-      :amber
-    end
+    return :green if /\A\.+$/.match(output)
+    return :red   if /\A[\.F]+$/.match(output)
+    return :amber
   end
 
   def self.parse_ruby_approvals(output)
@@ -200,15 +188,9 @@ module OutputParser
   end
 
   def self.parse_cpputest(output)
-    failed_pattern = /Errors /
-    passed_pattern = /OK /
-    if failed_pattern.match(output)
-      :red
-    elsif passed_pattern.match(output)
-      :green
-    else
-      :amber
-    end
+    return :red   if /Errors /.match(output)
+    return :green if /OK /.match(output)
+    return :amber
   end
 
   def self.parse_jasmine(output)
