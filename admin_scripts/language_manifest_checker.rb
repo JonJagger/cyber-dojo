@@ -1,4 +1,4 @@
-CYBER_DOJO_ROOT = File.absolute_path(File.dirname(__FILE__) + '/../../')
+CYBER_DOJO_ROOT = File.absolute_path(File.dirname(__FILE__) + '/../')
 require 'json'
 require 'etc'
 require CYBER_DOJO_ROOT + "/app/lib/OutputParser"
