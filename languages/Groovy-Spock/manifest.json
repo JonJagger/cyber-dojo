@@ -14,5 +14,6 @@
   "filename_extension" : ".groovy",
   "display_name": "Groovy",
   "display_test_name": "Spock",
+  "image_name": "cyberdojo/groovy-2.2.0_spock",
   "unit_test_framework": "groovy_spock"
 }

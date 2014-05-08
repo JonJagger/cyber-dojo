@@ -1,10 +1,9 @@
 
 # Update - it is much simpler and faster to do this using rsync
 # eg
-# $ rsync --progress -prltgo local-folder/ root@IP-ADDRESS:/destination-folder
+# $ rsync --progress -prtgo local-folder/ root@IP-ADDRESS:/destination-folder
 #
 # -r = recursive
-# -l = links
 # -t = timestamp
 # -g = groups
 # -o = owner
