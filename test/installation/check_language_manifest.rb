@@ -49,7 +49,8 @@ if language_dir != nil
   puts ""
 else
   languages = Dir.entries(root_dir + '/languages').select { |name|
-    name != '.' and name != '..'
+    manifest = root_dir + "/languages/#{name}/manifest.json"
+    name != '.' and name != '..' and File.file?(manifest)
   }
   languages.sort.each do |language|
     checker.check?(language)
