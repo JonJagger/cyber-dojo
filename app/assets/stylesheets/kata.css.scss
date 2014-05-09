@@ -88,7 +88,7 @@
   }
 
   ::-webkit-scrollbar {
-    background: lighten($darker-color, 3%);
+    background: lighten($darker-color, 10%);
     border: 1px dotted lighten($darker-color, 10%);
     border-left: none;
   }

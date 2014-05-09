@@ -14,11 +14,11 @@
 }
 
 ::-webkit-scrollbar:horizontal {
-    height: 11px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    border: 2px solid $lighter-color;
-    background-color: $darker-color;
+    border: 2px dotted lighten($darker-color,40%);
+    background: lighten($darker-color, 15%);
 }
