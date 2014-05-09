@@ -8,8 +8,7 @@
   margin-top: 0.5em;
 
   #revert-fork-info, #revert-fork-tag-control, #revert-fork-filenames {
-    margin-left: auto;  // right-align
-    margin-right: 15px;
+    @include right-align(15px);
   }
 
   hr {  @include hr; }

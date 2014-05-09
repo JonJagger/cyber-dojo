@@ -18,13 +18,6 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-// TODO: make a css function for right-align(margin)
-// TODO: move to shared
-#navigate-buttons {
-  margin-left: auto;  // right-align
-  margin-right: 15px;
-}
-
 #diff-dialog {
 
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -42,8 +35,7 @@
   }
 
   #diff-info, #diff-tag-control, #diff-filenames {
-    margin-left: auto;  // right-align
-    margin-right: 15px;
+    @include right-align(15px);
   }
 
   hr {  @include hr; }

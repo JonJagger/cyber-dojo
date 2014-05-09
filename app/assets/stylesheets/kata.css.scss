@@ -7,8 +7,7 @@
   }
 
   table#test-button-container {
-    margin-left: auto;  // right-align
-    margin-right: 0;    // right-align
+    @include right-align(0px);
     #test-button {
       padding: {
         left: 20px;
@@ -25,8 +24,7 @@
   }
 
   #file-operations {
-    margin-left: auto;  // right-align
-    margin-right: 2px;  // right-align
+    @include right-align(2px);
     #new, #rename, #delete {
       width: 60px;
       text-align: right;
@@ -48,8 +46,7 @@
   }
 
   .right-align-container {
-    margin-left: auto;  // right-align
-    margin-right: 2px;  // right-align
+    @include right-align(2px);
     text-align: right;
     margin: {
       top: 0px;
