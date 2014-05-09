@@ -169,11 +169,12 @@ div[class~="filename"], button[disabled]:hover {
   font-weight: 500;
   padding-left: 4px;
   outline: none;
-  border-bottom: {
+  border-bottom: 1px dotted lighten($darker-color, 10%);
+  /*{
     style: solid;
     width: 1px;
     color: $lighter-color;
-  }
+  }*/
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -

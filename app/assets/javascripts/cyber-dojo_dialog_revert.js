@@ -62,30 +62,24 @@ var cyberDojo = (function(cd, $) {
 			"</td>" +
 		  "</tr>";
 	  };
-      var table = $('<table>');
-      table.append(
-        "<tr valign='top'>" +
-          "<td valign='top'>" +
-		    "<table>" +
-			  trTd(makeRevertInfo()) +
-			  trTdHr +
-			  trTd(makeRevertTagControl()) +
-			  trTdHr +
-			  trTd(cd.makeNavigateButtons()) +
-			  trTdHr +
-			  trTd("<div id='revert-fork-filenames'></div>") +
-			"</table>" +
-          "</td>" +
-          "<td>" +
-           "<textarea id='revert-fork-content'" +
-		             "class='file_content'" +
-					 "readonly='readonly'" +
-		             "wrap='off'>" +
-		   "</textarea>" +
-          "</td>" +
-	    "</tr>");
-
-      div.append(table);
+	  div.append('' +
+		   "<textarea id='revert-fork-content'" +
+		            " class='file_content'" +
+					" readonly='readonly'" +
+		            " wrap='off'>" +
+		   "</textarea>");
+	  div.append('' +
+			"<div id='revert-fork-controls'>" +
+			  "<table>" +
+				trTd(makeRevertInfo()) +
+				trTdHr +
+				trTd(makeRevertTagControl()) +
+				trTdHr +
+				trTd(cd.makeNavigateButtons()) +
+				trTdHr +
+				trTd("<div id='revert-fork-filenames'></div>") +
+			  "</table>" +
+			"</div>");
       return div;
     };
 

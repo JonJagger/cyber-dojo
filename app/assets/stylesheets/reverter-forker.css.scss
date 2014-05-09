@@ -1,17 +1,28 @@
 
 #revert-fork-dialog {
 
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $darker-color;
-  padding: none;
-  margin: 0;
-  margin-top: 0.5em;
-
-  #revert-fork-info, #revert-fork-tag-control, #revert-fork-filenames {
-    @include right-align(15px);
+  border: {
+    left: 1px dotted lighten($darker-color, 10%);
+    right: 1px dotted lighten($darker-color, 10%);
   }
 
-  hr {  @include hr; }
+  #revert-fork-controls {
+    position: absolute;
+    top: 15px;
+    left: 764px;
+  }
+
+  .filename {
+    text-align: left;
+  }
+
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  background: $darker-color;
+  padding-left: 25px;
+  margin-left: 0px;
+  margin-top: 15px;
+
+  hr {  @include hr-left-align(0px); }
 
   #revert-fork-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -37,6 +48,7 @@
   }
 
   #revert-fork-content {
+    overflow-y: scroll;
     width: 45em;
     height: 31em;
     font: {
@@ -44,4 +56,11 @@
       family: monospace;
     }
   }
+
+  ::-webkit-scrollbar {
+    background: lighten($darker-color, 3%);
+    border: 1px dotted lighten($darker-color, 10%);
+    border-left: none;
+  }
+
 }
