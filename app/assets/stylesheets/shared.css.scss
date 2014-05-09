@@ -16,6 +16,14 @@
     margin-right: auto;
 }
 
+@mixin ghost-panel
+{
+    margin-bottom: 12px;
+    padding: 5px;
+    background: lighten($darker-color, 3%);
+    border: 1px dotted lighten($darker-color, 10%);
+}
+
 #shared-info {
   @include right-align(15px);
   text-align: right;
@@ -26,7 +34,7 @@
 }
 
 #navigate-buttons {
-  //@include right-align(15px);
+  @include ghost-panel;
 }
 
 .triangle.button {

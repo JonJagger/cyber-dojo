@@ -25,10 +25,14 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
 
+  #diff-tag-control {
+    @include ghost-panel;
+  }
+
   #diff-controls {
     position: absolute;
     top: 15px;
-    left: 798px;
+    left: 792px;
   }
 
   .filename {
@@ -52,8 +56,9 @@
   hr {  @include hr-left-align(0px); }
 
   #diff-filenames {
-    height: 130px;
-    overflow-y: none;
+    height: 300px;
+    width: 230px;
+    overflow-y: auto;
     font-size: 11pt;
     text-align: left;
   }

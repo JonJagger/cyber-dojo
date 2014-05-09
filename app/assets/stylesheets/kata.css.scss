@@ -14,7 +14,7 @@
         right: 18px;
       }
       margin: {
-        right: 10px;
+        right: 15px;
         bottom: 12px;
       }
     }
@@ -24,7 +24,8 @@
   }
 
   #file-operations {
-    @include right-align(2px);
+    @include ghost-panel;
+    @include right-align(15px);
     #new, #rename, #delete {
       width: 60px;
       text-align: right;
@@ -35,6 +36,7 @@
   }
 
   #filename-list {
+    margin-right: 15px;
     height: 270px;
     overflow-y: auto;
     div[class~='filename'][class~='highlight'] {
@@ -45,27 +47,16 @@
     }
   }
 
-  .right-align-container {
-    @include right-align(2px);
-    text-align: right;
-    margin: {
-      top: 0px;
-      bottom: 4px;
-    }
-  }
-
-  #line-numbers-container {
-    margin: {
-      top: 10px;
-      bottom: 10px;
-      right: 4px;
-    }
+  #line-numbers-container, #revert-fork-container {
+    @include ghost-panel;
+    @include right-align(15px);
   }
 
   #revert-button, #fork-button {
     @include font-size-tiny();
     width: 60px;
     text-align: right;
+    margin-bottom: 2px;
   }
 
   #help-button {

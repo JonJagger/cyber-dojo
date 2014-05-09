@@ -73,11 +73,8 @@ var cyberDojo = (function(cd, $) {
 	  div.append('<div id="diff-controls">' +
 				  '<table>' +
 					trTd(makeDiffInfo()) +
-					trTdHr +
 					trTd(makeDiffTagControl()) +
-					trTdHr +
 					trTd(cd.makeNavigateButtons()) +
-					trTdHr +
 					trTd("<div id='diff-filenames'></div>") +
 				   '</table>' +
 				  '</div>');
