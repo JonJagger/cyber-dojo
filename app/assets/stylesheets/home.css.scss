@@ -56,8 +56,12 @@ $text-color: darken($lighter-color, 10%);
     padding-left: 20px;
     width: 200px;
   }
+  td#column-buttons {
+    width: 150px;
+  }
   .show-dialog-button {
     display: inline-block;
+    text-align: right;
     margin: 0 auto 12px auto;
     border: solid 1px Gray;
     width: 125px;
@@ -79,7 +83,7 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-largest();
     width: 196px;
     margin: {
-      bottom: 2px;
+      bottom: 3px;
       right: 2px;
     }
     padding-right: 20px;
@@ -104,7 +108,8 @@ $text-color: darken($lighter-color, 10%);
     margin-bottom: 40px;
   }
 
-  .buttons-container {
+  #buttons-container {
+    @include ghost-panel(15px);
     margin-bottom: 10px;
   }
 

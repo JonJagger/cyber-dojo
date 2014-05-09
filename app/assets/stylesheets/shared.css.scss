@@ -26,12 +26,10 @@
 
 #shared-info {
   @include ghost-panel(5px);
+  margin-left: auto;
   margin-right: 15px;
   text-align: right;
-  @include font-size-tiny();
-  #id {
-    @include font-size-medium();
-  }
+  @include font-size-small();
 }
 
 #navigate-buttons {

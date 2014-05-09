@@ -67,22 +67,29 @@ $(document).ready(function() {
   <table>
     <tr class="valign-top">
       <td>
-        <%= render :partial => 'controls' %>
+        <%= render :partial => 'shared/info' %>
+        <%= render :partial => 'line_numbers_checkbox' %>
+        <%= render :partial => 'revert_fork' %>
+        <%= render :partial => 'help_button' %>
       </td>
       <td>
         <%= render :partial => 'editor' %>
       </td>
+      <td>
+        <%= render :partial => 'test_button' %>
+        <%= render :partial => 'file_new_rename_delete' %>
+        <%= render :partial => 'filename_list' %>
+      </td>
     </tr>
     <tr class="valign-top">
       <td align='right'>
-        <div class="vertical-padded">
-          <%= render :partial => 'shared/info' %>
-        </div>
       </td>
       <td>
         <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
+      </td>
+      <td>
       </td>
     </tr>
   </table>

@@ -46,15 +46,15 @@ $(document).ready(function() {
 <table id="test-button-container">
   <tr>
     <td>
-      <%= render :partial => 'spinner' %>
-    </td>
-    <td>
       <button type="submit"
               id="test-button"
               title="runs the tests and generates a new traffic-light"
               value="<%= t('views.buttons.test') %>">
         <%= t('views.buttons.test') %>
       </button>
+    </td>
+    <td>
+      <%= render :partial => 'spinner' %>
     </td>
   </tr>
 </table>

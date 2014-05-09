@@ -46,7 +46,7 @@ module TrafficLightHelper
 
   def tool_tip(avatar_name, light)
     n = light['number'].to_i
-    "review #{avatar_name}s #{n-1} &harr; #{n} diff"
+    "review #{avatar_name}&#39;s #{n-1} &harr; #{n} diff"
   end
 
 end
