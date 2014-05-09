@@ -40,23 +40,16 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
     var makeDiffTagControl = function() {
+	  var td = function(html) {
+		return '<td>' + html + '</td>';
+	  };
 	  return '' +
 	    '<table id="diff-tag-control">' +
 		  '<tr>' +
-		    '<td>' +
-			  '<div id="was-traffic-light">' +
-			  '</div>' +
-		    '</td>' +
-			'<td>' +
-			  '<input type="text" id="was-tag-number" value="' + wasTag + '" />' +
-			'</td>' +
-			'<td>' +
-			  '<input type="text" id="now-tag-number" value="' + nowTag + '" />' +
-			'</td>' +
-		    '<td>' +
-			  '<div id="now-traffic-light">' +
-			  '</div>' +
-		    '</td>' +
+		    td('<div id="was-traffic-light"></div>') +
+			td('<input type="text" id="was-tag-number" value="' + wasTag + '" />') +
+			td('<input type="text" id="now-tag-number" value="' + nowTag + '" />') +
+		    td('<div id="now-traffic-light"></div>') +
 		  '</tr>' +
 		'</table>';
     };
@@ -76,11 +69,9 @@ var cyberDojo = (function(cd, $) {
 			"</td>" +
 		  "</tr>";
 	  };
-      var table = $('<table>');
-      table.append(
-        "<tr valign='top'>" +
-          "<td valign='top'>" +
-		    '<table>' +
+      //var table = $("<table>");
+      div.append('<div id="diff-content"></div>');
+	  div.append('<div id="diff-controls"><table>' +
 			  trTd(makeDiffInfo()) +
 			  trTdHr +
 			  trTd(makeDiffTagControl()) +
@@ -88,15 +79,9 @@ var cyberDojo = (function(cd, $) {
 			  trTd(cd.makeNavigateButtons()) +
 			  trTdHr +
 			  trTd("<div id='diff-filenames'></div>") +
-			'</table>' +
-          '</td>' +
-          '<td>' +
-            "<div id='diff-content'>" +
-		    '</div>' +
-          '</td>' +
-	    '</tr>');
+			'</table></div>');
 
-      div.append(table);
+      //div.append(table);
       return div;
     };
 
@@ -201,11 +186,10 @@ var cyberDojo = (function(cd, $) {
 		  '<table>' +
 		    '<tr class="valign-top">' +
 		      '<td>' +
-		        '<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
-				'</div>' +
+		        '<div class="diff-line-numbers"></div>' +
 		      '</td>' +
 		      '<td>' +
-		        '<div class="diff-line-numbers">' +
+		        '<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
 				'</div>' +
 		      '</td>' +
 		    '</tr>' +
@@ -350,9 +334,9 @@ var cyberDojo = (function(cd, $) {
 		}
 
 		td.append(filenameDiv);
+		tr.append(td);
 		tr.append(deletedLineCountTd);
 		tr.append(addedLineCountTd)
-		tr.append(td);
         table.append(tr);
       });
 

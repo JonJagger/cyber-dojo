@@ -20,6 +20,16 @@
 
 #diff-dialog {
 
+  #diff-controls {
+    position: absolute;
+    top: 15px;
+    left: 790px;
+  }
+
+  .filename {
+    text-align: left;
+  }
+
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
   color: $lighter-color;
@@ -35,22 +45,16 @@
   }
 
   #diff-info, #diff-tag-control, #diff-filenames {
-    @include right-align(15px);
+    //@include right-align(15px);
   }
 
-  hr {  @include hr(15px); }
+  hr {  @include hr-left-align(0px); }
 
   #diff-filenames {
     height: 130px;
     overflow-y: none;
     font-size: 11pt;
-  }
-
-  #diff-content {
-    width: 45em;
-    font: {
-      family: monospace;
-    }
+    text-align: left;
   }
 
   .diff-line-numbers, .diff-sheet {
@@ -99,7 +103,8 @@
 
   .diff-sheet {
     width: 45em;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: scroll;
     color: $darker-color;
     background: $lighter-color;
     added, deleted, same { padding-left: 3px; }

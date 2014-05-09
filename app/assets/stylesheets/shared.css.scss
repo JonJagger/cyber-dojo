@@ -10,6 +10,12 @@
     margin-right: $margin-right;
 }
 
+@mixin left-align($margin-left)
+{
+    margin-left: $margin-left;
+    margin-right: auto;
+}
+
 #shared-info {
   @include right-align(15px);
   text-align: right;
@@ -20,7 +26,7 @@
 }
 
 #navigate-buttons {
-  @include right-align(15px);
+  //@include right-align(15px);
 }
 
 .triangle.button {
@@ -59,6 +65,22 @@
   }
   padding: 0;
 }
+
+@mixin hr-left-align($h-margin: 8px, $v-margin: 5px)
+{
+  @include left-align($h-margin);
+  display: block;
+  height: 1px;
+  width: 120px;
+  border: 0;
+  border-top: 1px dotted lighten($darker-color, 30%);
+  margin: {
+    top: $v-margin;
+    bottom: $v-margin;
+  }
+  padding: 0;
+}
+
 
 .traffic-light-count {
   font-size: 2.5em;
