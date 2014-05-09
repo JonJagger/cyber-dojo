@@ -16,10 +16,10 @@
     margin-right: auto;
 }
 
-@mixin ghost-panel
+@mixin ghost-panel($padding: 5px)
 {
     margin-bottom: 12px;
-    padding: 5px;
+    padding: $padding;
     background: lighten($darker-color, 3%);
     border: 1px dotted lighten($darker-color, 10%);
 }
@@ -57,21 +57,6 @@
   @include font-size-tiny();
   text-align: center;
   width: 2em;
-}
-
-@mixin hr($h-margin: 8px, $v-margin: 5px)
-{
-  @include right-align($h-margin);
-  display: block;
-  height: 1px;
-  width: 120px;
-  border: 0;
-  border-top: 1px dotted lighten($darker-color, 30%);
-  margin: {
-    top: $v-margin;
-    bottom: $v-margin;
-  }
-  padding: 0;
 }
 
 .traffic-light-count {

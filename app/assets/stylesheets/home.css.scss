@@ -5,7 +5,7 @@ $text-color: darken($lighter-color, 10%);
 
   font-size: 1.15em;
   margin: {
-    top: 10px;
+    top: 20px;
     left: 20px;
   }
 
@@ -21,7 +21,7 @@ $text-color: darken($lighter-color, 10%);
   #home-page-logo {
     display: inline-block;
     position: relative;
-    top: -50px;
+    top: -40px;
     right: -38px;
   }
 
@@ -42,33 +42,27 @@ $text-color: darken($lighter-color, 10%);
     }
   }
   td#column-main {
+    @include ghost-panel;
     padding: {
       left: 0px;
       right: 30px;
     }
     margin: {
       left: 0px;
-      top: -20px;
     }
   }
   td#column-buttons, td#column-donate {
-    padding: 12px;
-    padding-top: 20px;
-    background-color: lighten($darker-color, 10%);
-    border: dotted 1px DarkGray;
-    width: 145px;
-    position: relative;
-    top: 42px;
-    @include rounded-corner(6px);
+    padding-left: 20px;
+    width: 200px;
   }
   td#column-gap {
-    width: 30px;
+    width: 10px;
   }
   .show-dialog-button {
     display: block;
     margin: 0 auto 12px auto;
     border: solid 1px Gray;
-    width: 115px;
+    width: 165px;
     font-size: 12pt;
     color: lighten($darker-color, 6%);
   }
@@ -111,69 +105,19 @@ $text-color: darken($lighter-color, 10%);
   #review-button {
     margin-bottom: 40px;
   }
-  #please_donate {
-    text-align: right;
-    margin: {
-      left: 16px;
-      right: 24px;
-    }
-    color: $lighter-color;
-    @include font-size-tiny();
-  }
-  #donate-form {
-    height: 42px;
-  }
-  #donate-button {
-    text-align: right;
-    padding: {
-      top: 15px;
-      right: 18px;
-    }
-    margin-right: 24px;
-  }
-  #total-raised {
-    color: $lighter-color;
-    @include font-size-tiny();
-    padding: {
-      top: 0px;
-      bottom: 10px;
-      right: 24px;
-    }
-    text-align: right;
-  }
-  #raspberry-pi-logo {
-    padding: {
-      bottom: 0px;
-      right: 24px;
-    }
-    text-align: right;
-  }
-
 
   .buttons-container {
     margin-bottom: 20px;
   }
-  #accu-image {
-    padding-right: 24px;
-    margin-bottom: 0px;
-    text-align: right;
-  }
-  #accu-words {
-    @include font-size-tiny();
-    margin: {
-      top: 10px;
-      right: 24px;
-    }
-    color: $lighter-color;
-    text-align: right;
-  }
+
   #testimonial {
+    @include ghost-panel(10px);
     @include font-size-tiny();
     text-align: right;
     color: $lighter-color;
     margin: {
-      left: 22px;
-      right: 22px;
+      left: 15px;
+      right: 15px;
     }
     #title {
       @include font-size-small();
@@ -183,7 +127,66 @@ $text-color: darken($lighter-color, 10%);
     }
   }
 
-  hr {  @include hr(15px,18px); }
+  #donate-container {
+    @include ghost-panel(10px);
+
+    #please_donate {
+      text-align: right;
+      margin: {
+        left: 10px;
+        right: 10px;
+      }
+      color: $lighter-color;
+      @include font-size-tiny();
+    }
+    #donate-form {
+      height: 42px;
+    }
+    #donate-button {
+      text-align: right;
+      padding: {
+        top: 15px;
+        right: 10px;
+      }
+    }
+    #total-raised {
+      color: $lighter-color;
+      @include font-size-tiny();
+      padding: {
+        top: 0px;
+        bottom: 10px;
+        right: 10px;
+      }
+      text-align: right;
+    }
+    #raspberry-pi-logo {
+      padding: {
+        bottom: 0px;
+        right: 10px;
+      }
+      text-align: right;
+    }
+  }
+
+
+  #accu-container {
+    @include ghost-panel(10px);
+    #accu-image {
+      padding-right: 10px;
+      margin-bottom: 0px;
+      text-align: right;
+    }
+    #accu-words {
+      @include font-size-tiny();
+      margin: {
+        top: 10px;
+        right: 10px;
+      }
+      color: $lighter-color;
+      text-align: right;
+    }
+  }
+
 }
 
 .faqs.dialog, .get-started.dialog, .tips.dialog,
@@ -200,6 +203,7 @@ $text-color: darken($lighter-color, 10%);
     right: 0.5em;
   }
   text-align: right;
+  width: 50px;
 }
 
 
