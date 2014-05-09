@@ -7,6 +7,25 @@
   margin: 0;
   margin-top: 0.5em;
 
+  #revert-fork-info, #revert-fork-tag-control, #revert-fork-filenames {
+    margin-left: auto;  // right-align
+    margin-right: 15px;
+  }
+
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px dotted lighten($darker-color, 30%);
+    margin: {
+      top: 5px;
+      bottom: 5px;
+      left: 18px;
+      right: 18px;
+    }
+    padding: 0;
+  }
+
   #revert-fork-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-medium();

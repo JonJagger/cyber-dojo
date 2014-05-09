@@ -18,6 +18,13 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+// TODO: make a css function for right-align(margin)
+// TODO: move to shared
+#navigate-buttons {
+  margin-left: auto;  // right-align
+  margin-right: 15px;
+}
+
 #diff-dialog {
 
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -34,11 +41,12 @@
     @include editable_tag_number;
   }
 
-  #diff-info, #diff-tag-control, #diff-navigate-buttons, #diff-filenames {
+  #diff-info, #diff-tag-control, #diff-filenames {
     margin-left: auto;  // right-align
     margin-right: 15px;
   }
 
+  //TODO: refactor hr duplication (fork/revert/differ)
   hr {
     display: block;
     height: 1px;

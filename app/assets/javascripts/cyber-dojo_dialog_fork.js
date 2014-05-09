@@ -10,9 +10,26 @@ var cyberDojo = (function(cd, $) {
 
   	var minTag = 1;
 
-    var makeForkInfo = function() {
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var makeForkInfo = function() {
 	  return '' +
-	    '<table class="align-center">' +
+	    '<table id="revert-fork-info">' +
+		  '<tr>' +
+			'<td>' +
+			  '<img height="38"' +
+			      ' width="38"' +
+			      ' src="/images/avatars/' + avatarName + '.jpg"/>' +
+			'</td>' +
+		  '</tr>' +
+		'</table>';
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var makeForkTagControl = function() {
+	  return '' +
+	    '<table id="revert-fork-tag-control">' +
 		  '<tr>' +
 			'<td>' +
 			  '<button type="button"' +
@@ -27,11 +44,6 @@ var cyberDojo = (function(cd, $) {
 			'<td>' +
 			  '<input type="text" id="revert-fork-tag-number" value="" />' +
 			'</td>' +
-			'<td>' +
-			  '<img height="38"' +
-			      ' width="38"' +
-			      ' src="/images/avatars/' + avatarName + '.jpg"/>' +
-			'</td>' +
 		  '</tr>' +
 		'</table>';
     };
@@ -42,28 +54,38 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'revert-fork-dialog'
       });
+	  var hr = '' +
+		'<tr>' +
+		  '<td>' +
+			'<hr/>' +
+		  '</td>' +
+		'</tr>';
       var table = $('<table>');
       table.append(
         "<tr valign='top'>" +
           "<td valign='top'>" +
-
 		    "<table>" +
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 			      makeForkInfo() +
 			    "</td>" +
 			  "</tr>" +
-
+			  hr +
+			  "<tr valign='top'>" +
+				"<td valign='top'>" +
+			      makeForkTagControl() +
+			    "</td>" +
+			  "</tr>" +
+			  hr +
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  cd.makeNavigateButtons() +
 				"</td>" +
 			  "</tr>" +
-
+			  hr +
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-				  "<div id='revert-fork-filenames'" +
-					   "class='panel'>" +
+				  "<div id='revert-fork-filenames'>" +
 				  "</div>" +
 				"</td>" +
 			  "</tr>" +

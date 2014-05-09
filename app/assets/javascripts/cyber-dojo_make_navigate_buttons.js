@@ -17,7 +17,7 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	return '' +
-		'<table id="diff-navigate-buttons">' +
+		'<table id="navigate-buttons">' +
 		  '<tr>' +
 			'<td>' +
 			   makeNavigateButton('first') +

@@ -9,7 +9,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeForkTagControl = function() {
 	  return '' +
-	    '<table class="align-center">' +
+	    '<table id="revert-fork-tag-control">' +
 		  '<tr>' +
 			'<td>' +
 			  '<button type="button"' +
