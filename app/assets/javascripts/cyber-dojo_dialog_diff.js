@@ -67,53 +67,28 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'diff-dialog'
       });
-	  var hr = '' +
-		'<tr>' +
-		  '<td>' +
-			'<hr/>' +
-		  '</td>' +
-		'</tr>';
-
+	  var trTdHr = '<tr><td><hr/></td></tr>';
+	  var trTd = function(html) {
+		return '' +
+		  "<tr valign='top'>" +
+			"<td valign='top'>" +
+			  html +
+			"</td>" +
+		  "</tr>";
+	  };
       var table = $('<table>');
       table.append(
         "<tr valign='top'>" +
           "<td valign='top'>" +
-
 		    '<table>' +
-
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-				  makeDiffInfo() +
-			    '</td>' +
-			  '</tr>' +
-
-			  hr +
-
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-			      makeDiffTagControl() +
-			    '</td>' +
-			  '</tr>' +
-
-			  hr +
-
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-				  cd.makeNavigateButtons() +
-				'</td>' +
-			  '</tr>' +
-
-			  hr +
-
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-				  "<div id='diff-filenames'>" +
-				  '</div>' +
-				'</td>' +
-			  '</tr>' +
-
+			  trTd(makeDiffInfo()) +
+			  trTdHr +
+			  trTd(makeDiffTagControl()) +
+			  trTdHr +
+			  trTd(cd.makeNavigateButtons()) +
+			  trTdHr +
+			  trTd("<div id='diff-filenames'></div>") +
 			'</table>' +
-
           '</td>' +
           '<td>' +
             "<div id='diff-content'>" +
