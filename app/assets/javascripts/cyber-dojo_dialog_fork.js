@@ -54,7 +54,6 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'revert-fork-dialog'
       });
-	  var trTdHr = '<tr><td><hr/></td></tr>';
 	  var trTd = function(html) {
 		return '' +
 		  "<tr valign='top'>" +
@@ -73,11 +72,8 @@ var cyberDojo = (function(cd, $) {
 			"<div id='revert-fork-controls'>" +
 			  "<table>" +
 				trTd(makeForkInfo()) +
-				trTdHr +
 				trTd(makeForkTagControl()) +
-				trTdHr +
 				trTd(cd.makeNavigateButtons()) +
-				trTdHr +
 				trTd("<div id='revert-fork-filenames'></div>") +
 			  "</table>" +
 	        "</div>");

@@ -53,8 +53,6 @@
     @include editable_tag_number;
   }
 
-  hr {  @include hr-left-align(0px); }
-
   #diff-filenames {
     height: 300px;
     width: 230px;

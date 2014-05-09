@@ -22,8 +22,6 @@
   margin-left: 0px;
   margin-top: 15px;
 
-  hr {  @include hr-left-align(0px); }
-
   #revert-fork-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-large();
