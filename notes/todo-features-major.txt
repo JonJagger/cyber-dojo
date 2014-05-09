@@ -58,6 +58,14 @@ Finer-grained commits
   It also suggests recording the scroll-position of the
   file when it is re-played. This allows you to see
   exactly what the player saw when they switched to that file.
+  Could even save scrollbar movements.
+  Could of course save character by character edits!
+  Or do a tag-commit if there hasn't been one for 1 minute.
+  Or do a tag-commit if the diff amount gets beyond a threshold.
+
+  It gives possiblly interesting data. If the most recently
+  edited file was test code is the chance of a non-amber
+  higher than if it was non-test code?
 
   The dashboard could also show two numbers, the big one (number
   of lights) and a small one (number of tags).
@@ -68,10 +76,15 @@ Finer-grained commits
   avatar.tags[n]
 
   What about revert/fork dialogs?
-  Allow forking from a light or a tag?
+  Allow forking from a light or a tag? Light I think
+  Allow forking from a light or a tag? Light I think
   What about backward compatibility?
   Will the light/tag distinction collapse silently
   for reviewing dojos done before the tag-commits?
+
+  This also creates the possibility of doing the deltas
+  on the browser and only sending the changed elements
+  to the server.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 timed-out katas

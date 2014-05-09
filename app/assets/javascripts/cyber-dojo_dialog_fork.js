@@ -27,6 +27,11 @@ var cyberDojo = (function(cd, $) {
 			'<td>' +
 			  '<input type="text" id="revert-fork-tag-number" value="" />' +
 			'</td>' +
+			'<td>' +
+			  '<img height="38"' +
+			      ' width="38"' +
+			      ' src="/images/avatars/' + avatarName + '.jpg"/>' +
+			'</td>' +
 		  '</tr>' +
 		'</table>';
     };

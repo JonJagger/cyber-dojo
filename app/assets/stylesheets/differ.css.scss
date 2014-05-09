@@ -32,7 +32,6 @@
 
   #was-tag-number, #now-tag-number {
     @include editable_tag_number;
-    @include font-size-tiny();
   }
 
   #diff-info, #diff-navigate-buttons, #diff-filenames {
