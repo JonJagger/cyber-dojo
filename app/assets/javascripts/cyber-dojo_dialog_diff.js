@@ -69,19 +69,18 @@ var cyberDojo = (function(cd, $) {
 			"</td>" +
 		  "</tr>";
 	  };
-      //var table = $("<table>");
       div.append('<div id="diff-content"></div>');
-	  div.append('<div id="diff-controls"><table>' +
-			  trTd(makeDiffInfo()) +
-			  trTdHr +
-			  trTd(makeDiffTagControl()) +
-			  trTdHr +
-			  trTd(cd.makeNavigateButtons()) +
-			  trTdHr +
-			  trTd("<div id='diff-filenames'></div>") +
-			'</table></div>');
-
-      //div.append(table);
+	  div.append('<div id="diff-controls">' +
+				  '<table>' +
+					trTd(makeDiffInfo()) +
+					trTdHr +
+					trTd(makeDiffTagControl()) +
+					trTdHr +
+					trTd(cd.makeNavigateButtons()) +
+					trTdHr +
+					trTd("<div id='diff-filenames'></div>") +
+				   '</table>' +
+				  '</div>');
       return div;
     };
 
@@ -373,7 +372,7 @@ var cyberDojo = (function(cd, $) {
 
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
-	  width: 1200,
+	  width: 1100,
 	  height: "auto",
 	  modal: true,
 	  buttons: {

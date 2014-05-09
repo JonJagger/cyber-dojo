@@ -23,7 +23,7 @@
   #diff-controls {
     position: absolute;
     top: 15px;
-    left: 790px;
+    left: 795px;
   }
 
   .filename {
@@ -79,12 +79,12 @@
   }
 
   .diff-line-numbers {
+    width: 32px;
+    margin-left: 15px;
     text-align: right;
     overflow: hidden;
-    padding-left: 3px;
-    padding-right: 5px;
     background: $darker-color;
-    border-right: {
+    border-left: {
       style: dotted;
       width: 1px;
       color: lighten($darker-color, 25%);
@@ -152,7 +152,12 @@
 
   ::-webkit-scrollbar {
     background-color: $darker-color;
-    border-top: {
+    border: {
+      style: solid;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
+    Xborder-top: {
       style: dotted;
       width: 1px;
       color: lighten($darker-color, 25%);
