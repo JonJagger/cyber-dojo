@@ -34,7 +34,7 @@
     @include editable_tag_number;
   }
 
-  #diff-info, #diff-navigate-buttons, #diff-filenames {
+  #diff-info, #diff-tag-control, #diff-navigate-buttons, #diff-filenames {
     margin-left: auto;  // right-align
     margin-right: 15px;
   }

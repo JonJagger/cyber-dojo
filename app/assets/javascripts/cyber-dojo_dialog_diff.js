@@ -22,9 +22,26 @@ var cyberDojo = (function(cd, $) {
   	var minTag = 0;
     var tagGap = nowTag - wasTag;
 
-    var makeDiffInfo = function() {
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var makeDiffInfo = function() {
 	  return '' +
 	    '<table id="diff-info">' +
+		  '<tr>' +
+		    '<td>' +
+			  '<img height="38"' +
+				  ' width="38"' +
+				  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
+			'</td>' +
+		  '</tr>' +
+		'</table>';
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var makeDiffTagControl = function() {
+	  return '' +
+	    '<table id="diff-tag-control">' +
 		  '<tr>' +
 		    '<td>' +
 			  '<div id="was-traffic-light">' +
@@ -50,51 +67,59 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'diff-dialog'
       });
+	  var hr = '' +
+		'<tr>' +
+		  '<td>' +
+			'<hr/>' +
+		  '</td>' +
+		'</tr>';
+
       var table = $('<table>');
       table.append(
         "<tr valign='top'>" +
           "<td valign='top'>" +
 
-		    "<table>" +
-			  "<tr valign='top' align='right'>" +
-				"<td valign='top'>" +
-			      makeDiffInfo() +
-			    "</td>" +
-			  "</tr>" +
-
-			  "<tr>" +
-			    "<td>" +
-				  "<hr/>" +
-				"</td>" +
-			  "</tr>" +
+		    '<table>' +
 
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-				  cd.makeNavigateButtons(avatarName) +
-				"</td>" +
-			  "</tr>" +
+				  makeDiffInfo() +
+			    '</td>' +
+			  '</tr>' +
 
-			  "<tr>" +
-			    "<td>" +
-				  "<hr/>" +
-				"</td>" +
-			  "</tr>" +
+			  hr +
 
-			  "<tr valign='top' align='right'>" +
+			  "<tr valign='top'>" +
+				"<td valign='top'>" +
+			      makeDiffTagControl() +
+			    '</td>' +
+			  '</tr>' +
+
+			  hr +
+
+			  "<tr valign='top'>" +
+				"<td valign='top'>" +
+				  cd.makeNavigateButtons() +
+				'</td>' +
+			  '</tr>' +
+
+			  hr +
+
+			  "<tr valign='top'>" +
 				"<td valign='top'>" +
 				  "<div id='diff-filenames'>" +
-				  "</div>" +
-				"</td>" +
-			  "</tr>" +
+				  '</div>' +
+				'</td>' +
+			  '</tr>' +
 
-			"</table>" +
+			'</table>' +
 
-          "</td>" +
-          "<td>" +
+          '</td>' +
+          '<td>' +
             "<div id='diff-content'>" +
-		    "</div>" +
-          "</td>" +
-	    "</tr>");
+		    '</div>' +
+          '</td>' +
+	    '</tr>');
 
       div.append(table);
       return div;

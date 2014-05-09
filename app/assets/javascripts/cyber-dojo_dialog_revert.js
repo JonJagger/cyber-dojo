@@ -7,7 +7,7 @@ var cyberDojo = (function(cd, $) {
 	// Refactor this so it can both revert and fork?
   	var minTag = 1;
 
-    var makeInfo = function() {
+    var makeForkTagControl = function() {
 	  return '' +
 	    '<table class="align-center">' +
 		  '<tr>' +
@@ -49,13 +49,13 @@ var cyberDojo = (function(cd, $) {
 		    "<table>" +
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-			      makeInfo() +
+			      makeForkTagControl() +
 			    "</td>" +
 			  "</tr>" +
 
 			  "<tr valign='top'>" +
 				"<td valign='top'>" +
-				  cd.makeNavigateButtons(avatarName) +
+				  cd.makeNavigateButtons() +
 				"</td>" +
 			  "</tr>" +
 

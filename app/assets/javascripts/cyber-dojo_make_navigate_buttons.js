@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.makeNavigateButtons = function(avatarName) {
+  cd.makeNavigateButtons = function() {
 
 	var makeNavigateButton = function(name) {
 	  return '' +
