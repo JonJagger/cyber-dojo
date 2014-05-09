@@ -45,18 +45,17 @@
   width: 2em;
 }
 
-
-@mixin hr($v-margin: 5px, $h-margin: 8px)
+@mixin hr($h-margin: 8px, $v-margin: 5px)
 {
+  @include right-align($h-margin);
   display: block;
   height: 1px;
+  width: 120px;
   border: 0;
   border-top: 1px dotted lighten($darker-color, 30%);
   margin: {
     top: $v-margin;
     bottom: $v-margin;
-    left: $h-margin;
-    right: $h-margin;
   }
   padding: 0;
 }

@@ -38,7 +38,7 @@
     @include right-align(15px);
   }
 
-  hr {  @include hr; }
+  hr {  @include hr(15px); }
 
   #diff-filenames {
     height: 130px;
