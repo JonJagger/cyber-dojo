@@ -36,6 +36,22 @@
   width: 2em;
 }
 
+
+@mixin hr($v-margin: 5px, $h-margin: 8px)
+{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px dotted lighten($darker-color, 30%);
+    margin: {
+      top: $v-margin;
+      bottom: $v-margin;
+      left: $h-margin;
+      right: $h-margin;
+    }
+    padding: 0;
+  }
+
 .traffic-light-count {
   font-size: 2.5em;
   padding: 0.1em;

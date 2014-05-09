@@ -12,19 +12,7 @@
     margin-right: 15px;
   }
 
-  hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px dotted lighten($darker-color, 30%);
-    margin: {
-      top: 5px;
-      bottom: 5px;
-      left: 18px;
-      right: 18px;
-    }
-    padding: 0;
-  }
+  hr {  @include hr; }
 
   #revert-fork-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -53,7 +41,7 @@
     width: 45em;
     height: 31em;
     font: {
-      size: 12pt; 
+      size: 12pt;
       family: monospace;
     }
   }

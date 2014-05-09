@@ -182,19 +182,8 @@ $text-color: darken($lighter-color, 10%);
       margin-bottom: 10px;
     }
   }
-  hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px dotted lighten($darker-color, 30%);
-    margin: {
-      top: 15px;
-      bottom: 15px;
-      left: 18px;
-      right: 18px;
-    }
-    padding: 0;
-  }
+
+  hr {  @include hr(15px,18px); }
 }
 
 .faqs.dialog, .get-started.dialog, .tips.dialog,
