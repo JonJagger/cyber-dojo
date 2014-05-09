@@ -12,10 +12,15 @@ $ellipsis: "\2026";
     font-size: 1em;
   }
 
-  #age-container, #team-bulb-counts-container,
-  #help-button-container, #controls-container {
-    @include right-align(3px);
+  #age-container, #team-bulb-counts-container, #controls-container {
+    @include ghost-panel(5px);
+    margin-right: 15px;
+    margin-top: 15px;
+  }
+
+  #help-button-container {
     text-align: right;
+    margin-right: 15px;
   }
 
   #age-container {

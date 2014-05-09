@@ -25,27 +25,25 @@ $(document).ready(function() {
 <%     end %>
 <%   end %>
 
-<div class="panel">
-  <table id="team-bulb-counts-container">
-    <tr>
-      <td>
-        <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
-        <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
-        <% colour = 'amber' if lasts['amber'] >  0 %>
-        <div class="tipped traffic-light-count <%= colour %>" >
-          <%= total = counts['red'] + counts['amber'] + counts['green'] %>
-          <div class='tooltip'>
-             animals have<br>
-             <%= pluralize(total, 'traffic-light') %><br>
-             so far and are<br>
-             currently at <%= colour %>
-          </div>
+<table id="team-bulb-counts-container">
+  <tr>
+    <td>
+      <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
+      <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
+      <% colour = 'amber' if lasts['amber'] >  0 %>
+      <div class="tipped traffic-light-count <%= colour %>" >
+        <%= total = counts['red'] + counts['amber'] + counts['green'] %>
+        <div class='tooltip'>
+           animals have<br>
+           <%= pluralize(total, 'traffic-light') %><br>
+           so far and are<br>
+           currently at <%= colour %>
         </div>
-      </td>
-      <td>
-        <%= pie_chart({},35,counts) %>
-      </td>
-    </tr>
-  </table>
-</div>
+      </div>
+    </td>
+    <td>
+      <%= pie_chart({},35,counts) %>
+    </td>
+  </tr>
+</table>
 <% end %>

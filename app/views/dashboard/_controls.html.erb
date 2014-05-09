@@ -55,39 +55,37 @@ $(document).ready(function() {
 
 //--></script>
 
-<div class="panel">
-  <table id="controls-container">
-    <tr>
-      <td class="align-right">
-        <div title="toggles 60-second columns on/off">
-          <%= raw t("views.labels.columns") %>
-        </div>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <input type="checkbox"
-               class="regular-checkbox"
-               id="minute_columns_checkbox"/>
-          <label for="minute_columns_checkbox"></label>
-      </td>
-    </tr>
-    <tr>
-      <td class="align-right">
-        <div title="toggle the 10 second auto-refresh on/off">
-          <%= raw t('views.labels.auto_refresh') %>
-        </div>
-      </td>
-      <td>
-        &nbsp;
-      </td>
-      <td>
-        <input type="checkbox"
-               class="regular-checkbox"
-               id="auto_refresh_checkbox"/>
-          <label for="auto_refresh_checkbox"></label>
-      </td>
-    </tr>
-  </table>
-</div>
+<table id="controls-container">
+  <tr>
+    <td>
+      <div title="toggles 60-second columns on/off">
+        <%= raw t("views.labels.columns") %>
+      </div>
+    </td>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+      <input type="checkbox"
+             class="regular-checkbox"
+             id="minute_columns_checkbox"/>
+        <label for="minute_columns_checkbox"></label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <div title="toggle the 10 second auto-refresh on/off">
+        <%= raw t('views.labels.auto_refresh') %>
+      </div>
+    </td>
+    <td>
+      &nbsp;
+    </td>
+    <td>
+      <input type="checkbox"
+             class="regular-checkbox"
+             id="auto_refresh_checkbox"/>
+        <label for="auto_refresh_checkbox"></label>
+    </td>
+  </tr>
+</table>

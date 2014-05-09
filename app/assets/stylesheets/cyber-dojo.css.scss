@@ -34,30 +34,6 @@ body {
   }
 }
 
-.panel-title {
-  margin-top: 10px;
-  @include font-size-small();
-}
-
-.panel {
-  background: $darker-color;
-  color: $lighter-color;
-  border: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 15%);
-    left: none;
-    right: none;
-    bottom: none;
-  }
-  margin: none;
-  padding: 0.5em;
-  margin: {
-    left: 0.25em;
-    right: 0.25em;
-  }
-}
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 $filename_and_button_border_size: 1px;
