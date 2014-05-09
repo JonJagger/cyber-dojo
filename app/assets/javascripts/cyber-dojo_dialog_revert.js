@@ -53,40 +53,28 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'revert-fork-dialog'
       });
-	  var hr = '<tr><td><hr/></td></tr>';
+	  var trTdHr = '<tr><td><hr/></td></tr>';
+	  var trTd = function(html) {
+		return '' +
+		  "<tr valign='top'>" +
+			"<td valign='top'>" +
+			  html +
+			"</td>" +
+		  "</tr>";
+	  };
       var table = $('<table>');
       table.append(
         "<tr valign='top'>" +
           "<td valign='top'>" +
-
 		    "<table>" +
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-			      makeRevertInfo() +
-			    "</td>" +
-			  "</tr>" +
-			  hr +
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-			      makeRevertTagControl() +
-			    "</td>" +
-			  "</tr>" +
-			  hr +
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-				  cd.makeNavigateButtons() +
-				"</td>" +
-			  "</tr>" +
-			  hr +
-			  "<tr valign='top'>" +
-				"<td valign='top'>" +
-				  "<div id='revert-fork-filenames'>" +
-				  "</div>" +
-				"</td>" +
-			  "</tr>" +
-
+			  trTd(makeRevertInfo()) +
+			  trTdHr +
+			  trTd(makeRevertTagControl()) +
+			  trTdHr +
+			  trTd(cd.makeNavigateButtons()) +
+			  trTdHr +
+			  trTd("<div id='revert-fork-filenames'></div>") +
 			"</table>" +
-
           "</td>" +
           "<td>" +
            "<textarea id='revert-fork-content'" +
