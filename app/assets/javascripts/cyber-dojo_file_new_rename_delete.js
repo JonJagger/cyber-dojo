@@ -242,23 +242,23 @@ var cyberDojo = (function(cd, $) {
   cd.isValidFilename = function(filename) {
 	var tipWindow = $('#tip-window');
     if (filename === "") {
-	  cd.showTip('no filename', tipWindow);
+	  //cd.showTip('no filename', tipWindow);
       return false;
     }
     if (cd.filenameAlreadyExists(filename)) {
-	  cd.showTip('already exists', tipWindow);
+	  //cd.showTip('already exists', tipWindow);
       return false;
     }
     if (filename.indexOf("\\") !== -1) {
-	  cd.showTip("can't contain \\", tipWindow);
+	  //cd.showTip("can't contain \\", tipWindow);
       return false;
     }
     if (filename[0] === '/') {
-	  cd.showTip("can't start with /", tipWindow);
+	  //cd.showTip("can't start with /", tipWindow);
       return false;
     }
     if (filename.indexOf("..") !== -1) {
-	  cd.showTip("can't contain ..", tipWindow);
+	  //cd.showTip("can't contain ..", tipWindow);
       return false;
     }
     return true;
