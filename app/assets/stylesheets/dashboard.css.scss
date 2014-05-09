@@ -65,4 +65,8 @@ $ellipsis: "\2026";
       text-align: center;
     }
   }
+
+  ::-webkit-scrollbar {
+    -webkit-appearance: display !important;
+  }
 }

@@ -31,14 +31,10 @@ $(document).ready(function() {
       <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
       <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
       <% colour = 'amber' if lasts['amber'] >  0 %>
-      <div class="tipped traffic-light-count <%= colour %>" >
-        <%= total = counts['red'] + counts['amber'] + counts['green'] %>
-        <div class='tooltip'>
-           animals have<br>
-           <%= pluralize(total, 'traffic-light') %><br>
-           so far and are<br>
-           currently at <%= colour %>
-        </div>
+      <% total = counts['red'] + counts['amber'] + counts['green'] %>
+      <div class="traffic-light-count <%= colour %>"
+           title="animals have <%= pluralize(total,'traffic-light') %> so far and are currently at <%= colour %>">
+        <%= total %>
       </div>
     </td>
     <td>
