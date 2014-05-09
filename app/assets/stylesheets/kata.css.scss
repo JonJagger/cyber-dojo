@@ -9,6 +9,7 @@
   table#test-button-container {
     @include right-align(0px);
     #test-button {
+      @include font-size-largest();
       padding: {
         left: 20px;
         right: 18px;
@@ -96,7 +97,7 @@
 #kata-page, #help-dialog {
   #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-largest();
+    @include font-size-large();
     padding: {
       left: 0.2em;
       right: 0.2em;

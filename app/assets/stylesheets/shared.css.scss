@@ -25,7 +25,8 @@
 }
 
 #shared-info {
-  @include right-align(15px);
+  @include ghost-panel(5px);
+  margin-right: 15px;
   text-align: right;
   @include font-size-tiny();
   #id {
