@@ -54,12 +54,7 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'revert-fork-dialog'
       });
-	  var hr = '' +
-		'<tr>' +
-		  '<td>' +
-			'<hr/>' +
-		  '</td>' +
-		'</tr>';
+	  var hr = '<tr><td><hr/></td></tr>';
       var table = $('<table>');
       table.append(
         "<tr valign='top'>" +

@@ -28,7 +28,7 @@
 
   #revert-fork-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    @include font-size-medium();
+    @include font-size-large();
     margin-left: 0em;
     margin-right: 0em;
     margin-bottom: 0.3em;
@@ -53,7 +53,7 @@
     width: 45em;
     height: 31em;
     font: {
-      size: 12pt; //1.5em;
+      size: 12pt; 
       family: monospace;
     }
   }
