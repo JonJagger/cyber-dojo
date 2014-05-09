@@ -169,6 +169,11 @@ div[class~="filename"], button[disabled]:hover {
   font-weight: 500;
   padding-left: 4px;
   outline: none;
+  border-bottom: {
+    style: solid;
+    width: 1px;
+    color: $lighter-color;
+  }
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -23,7 +23,7 @@
   #diff-controls {
     position: absolute;
     top: 15px;
-    left: 795px;
+    left: 798px;
   }
 
   .filename {
@@ -42,10 +42,6 @@
 
   #was-tag-number, #now-tag-number {
     @include editable_tag_number;
-  }
-
-  #diff-info, #diff-tag-control, #diff-filenames {
-    //@include right-align(15px);
   }
 
   hr {  @include hr-left-align(0px); }
@@ -105,8 +101,14 @@
     width: 45em;
     overflow-x: auto;
     overflow-y: scroll;
+    outline: none;
     color: $darker-color;
     background: $lighter-color;
+    border-bottom: {
+      style: solid;
+      width: 1px;
+      color: $lighter-color;
+    }
     added, deleted, same { padding-left: 3px; }
     added {
       background: $diff-added-color;
@@ -152,11 +154,17 @@
 
   ::-webkit-scrollbar {
     background-color: $darker-color;
-    border: {
+    border-top: {
       style: solid;
       width: 1px;
       color: lighten($darker-color, 25%);
     }
+    border-right: {
+      style: solid;
+      width: 1px;
+      color: lighten($darker-color, 25%);
+    }
+    border-bottom: none;
   }
 
 }
