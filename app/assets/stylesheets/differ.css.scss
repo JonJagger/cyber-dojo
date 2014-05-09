@@ -101,11 +101,6 @@
     outline: none;
     color: $darker-color;
     background: $lighter-color;
-    border-bottom: {
-      style: solid;
-      width: 1px;
-      color: $lighter-color;
-    }
     added, deleted, same { padding-left: 3px; }
     added {
       background: $diff-added-color;

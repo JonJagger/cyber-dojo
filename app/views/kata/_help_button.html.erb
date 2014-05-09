@@ -15,12 +15,16 @@ $(document).ready(function() {
 
 //--></script>
 
-<div class="right-align-container">
-  <button type="button"
-          data-title="?"
-          data-close="<%= t('views.buttons.close') %>"
-          id="help-button"
-          title="shows help">
-    ?
-  </button>
-</div>
+<table id="help-button-container">
+  <tr>
+    <td>
+      <button type="button"
+              data-title="?"
+              data-close="<%= t('views.buttons.close') %>"
+              id="help-button"
+              title="shows help">
+        ?
+      </button>
+    </td>
+  </tr>
+</table>

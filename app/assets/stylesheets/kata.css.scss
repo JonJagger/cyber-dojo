@@ -51,6 +51,9 @@
     @include ghost-panel;
     @include right-align(15px);
   }
+  #help-button-container {
+    @include right-align(15px);
+  }
 
   #revert-button, #fork-button {
     @include font-size-tiny();
@@ -78,15 +81,16 @@
     top: -1px;
   }
 
-  .filename_div ::-webkit-scrollbar {
-    background-color: lighten($darker-color, 5%);
-    border-top: {
-      style: dotted;
-      width: 1px;
-      color: lighten($darker-color, 15%);
-    }
+  .file_content {
+    overflow-x: auto;
+    overflow-y: scroll;
   }
 
+  ::-webkit-scrollbar {
+    background: lighten($darker-color, 3%);
+    border: 1px dotted lighten($darker-color, 10%);
+    border-left: none;
+  }
 }
 
 #kata-page, #help-dialog {
