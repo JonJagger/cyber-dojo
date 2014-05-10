@@ -54,14 +54,13 @@ class LanguageTests < ModelTestCase
 
   test "exists? is true only if dir and manifest exist" do
     json_and_rb do
-      @language = @dojo.languages['Erlang']
-      assert !@language.exists?
+      # if you s/Erlang-eunit/Erlang/ it fails... Why?
+      @language = @dojo.languages['Erlang-eunit']
+      assert !@language.exists?, "1"
       @paas.dir(@language).make
-      assert !@language.exists?
-      spy_manifest({})
-      assert @language.exists?
-      # force spy to read manifest
-      @language.visible_files
+      assert !@language.exists?, "2"
+      spy_exists?(manifest_filename)
+      assert @language.exists?, "3"
     end
   end
 
@@ -376,14 +375,22 @@ class LanguageTests < ModelTestCase
     @format = 'json'
     @dojo = @paas.create_dojo(root_path, @format)
     ruby = @dojo.languages['Ruby']
-    @paas.dir(ruby).write('manifest.json', { })
+    @paas.dir(ruby).write(manifest_filename, { })
     assert !ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def spy_manifest(manifest)
-    @paas.dir(@language).spy_read('manifest.json', JSON.unparse(manifest))
+    @paas.dir(@language).spy_read(manifest_filename, JSON.unparse(manifest))
+  end
+
+  def spy_exists?(filename)
+    @paas.dir(@language).spy_exists?(filename)
+  end
+
+  def manifest_filename
+    'manifest.json'
   end
 
 end

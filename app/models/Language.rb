@@ -14,6 +14,10 @@ class Language
     # wish to fork from. Particularly for sessions with
     # well known id's such as the refactoring dojos.
     # So patch to the language new-name.
+    #
+    # Feels wrong.
+    # Better in forker_controller.rb?
+    
     case @name
     when 'C'                  then return 'C-assert'
     when 'C++'                then return 'C++-assert'
