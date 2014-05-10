@@ -74,11 +74,13 @@ class ForkerControllerTest < IntegrationTest
     paas = LinuxPaas.new(disk, git, runner)
     format = 'json'
     dojo = Dojo.new(paas, root_path, format)
+    language = dojo.languages['Ruby-installed-and-working']
+    paas.dir(language).make
+    paas.dir(language).spy_exists?('manifest.json')
+
     id = '1234512345'
     kata = dojo.katas[id]
-    language = dojo.languages['Ruby-installed-and-working']
-    paas.dir(kata).spy_read('manifest.rb', { :language => language.name }.inspect)
-    paas.dir(language).make
+    paas.dir(kata).spy_read('manifest.json', JSON.unparse({ :language => language.name }))
     get "forker/fork", {
       :format => :json,
       :id => id,
@@ -114,11 +116,13 @@ class ForkerControllerTest < IntegrationTest
     format = 'json'
     dojo = Dojo.new(paas, root_path, format)
     language_name = 'Ruby-installed-and-working'
+    language = dojo.languages[language_name]
+    paas.dir(language).make
+    paas.dir(language).spy_exists?('manifest.json')
+
     id = '1234512345'
     kata = dojo.katas[id]
     paas.dir(kata).spy_read('manifest.rb', { :language => language_name }.inspect)
-    language = dojo.languages[language_name]
-    paas.dir(language).make
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
     paas.dir(avatar).spy_read('increments.rb', [{

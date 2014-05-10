@@ -3,6 +3,15 @@ require './integration_test'
 
 class DifferControllerTest < IntegrationTest
 
+  def setup
+    super
+    Thread.current[:runner] = HostRunner.new
+  end
+
+  def teardown
+    Thread.current[:runner] = nil
+  end
+
   test "no lines different in any files between successive tags" do
     id = checked_save_id
 
@@ -83,6 +92,7 @@ class DifferControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "one line different in one file between successive tags" do
+    Thread.current[:runner] = HostRunner.new
     id = checked_save_id
 
     get 'dojo/enter_json', {

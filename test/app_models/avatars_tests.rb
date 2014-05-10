@@ -26,7 +26,7 @@ class AvatarsTests < ActionController::TestCase
   end
 
   test "avatar names all begin with a different letter" do
-    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+    assert_equal Avatars.names.collect{|name| name[0]}.uniq.length, Avatars.names.length
   end
 
   test "format" do

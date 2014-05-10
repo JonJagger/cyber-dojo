@@ -31,8 +31,7 @@ class LanguagesTests < ActionController::TestCase
      "Ruby-Rspec",
      "Ruby-installed-and-working",
      "Ruby-installed-but-not-working",
-     "Ruby-not-installed",
-     "Scala"
+     "Ruby-not-installed"
     ]
     assert_equal expected, actual
   end
