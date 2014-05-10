@@ -21,8 +21,8 @@ cyber-dojo
   * adding a new language
     * build the docker image
     * write an output parse function
-    * write the languages' manifest.json file
-    * check the languages' manifest.json file
+    * write the language's manifest.json file
+    * check the language's manifest.json file
   * adding a new exercise
   * pulling from the cyberdojo github repo
 
@@ -35,5 +35,5 @@ cyber-dojo
   * notes
   * thank you
 
-[Raw Server](md/raw-server.md)
+[Host Server](md/host-server.md)
   * deprecated

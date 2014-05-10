@@ -1,5 +1,5 @@
 
-Raw Server (deprecated)
+Host Server (deprecated)
 =======================
 
 All development is now focused on running cyber-dojo using a
@@ -8,6 +8,7 @@ All development is now focused on running cyber-dojo using a
 This is how cyber-dojo runs if
  * docker is not installed
  * the environment variable CYBERDOJO_USE_HOST is set
+
 This is useful primarily for running a personal cyber-dojo on
 a laptop. In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
@@ -15,8 +16,8 @@ a laptop. In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
 
 
-running your own raw cyber-dojo server
---------------------------------------
+running your own host cyber-dojo server
+---------------------------------------
 Install [VirtualBox](http://www.virtualbox.org/)
 Download the TurnKey Linux image from
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.ova
@@ -31,8 +32,8 @@ Detailed instructions on building your own Turnkey server from scratch are here
 http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html
 
 
-installing languages on a raw server
-------------------------------------
+installing languages on a host server
+-------------------------------------
 The base rails3 image is available here (417MB)
 http://dl.dropbox.com/u/11033193/CyberDojo/Turnkey-CyberDojo-20120515.base.ova
 (see http://jonjagger.blogspot.co.uk/2012/05/building-rails-3-turnkey-image.html

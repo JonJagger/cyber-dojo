@@ -30,9 +30,10 @@ cyber-dojo will re-use the [docker](https://www.docker.io/) `image_name` contain
 See [app/lib/DockerRunner.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/DockerRunner.rb)
 
 <hr/>
-However, if [docker](https://www.docker.io/) is not installed, or if it is but the environment variable
+However, if [docker](https://www.docker.io/) is not installed,
+and the environment variable
 `CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the
-[raw server](md/raw-server.md).
+[host server](md/host-server.md).
 
 
 running your own docker'd cyber-dojo server
@@ -103,7 +104,7 @@ adding a new language
     eg
     [output_python_pytest_tests.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/output_python_pytest_tests.rb)
 
-### write the languages' manifest.json file
+### write the language's manifest.json file
 
 Create a new sub-directory under `cyberdojo/languages/`
 <br>By convention name it $languageName-$testFrameworkName
@@ -137,7 +138,7 @@ Each `manifest.json` file contains an ruby object in JSON format
 }
 ```
 
-### check the languages' manifest.json file
+### check the language's manifest.json file
 There is a ruby script to do this
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
