@@ -3,11 +3,11 @@
 
 $(document).ready(function() {
 
+  cd.pieChart($('.pie'));
   var lights = $('.diff-traffic-light');
   cd.setupTrafficLightOpensDiffDialogHandlers(lights);
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
-  cd.pieChart($('.pie'));
 
 });
 

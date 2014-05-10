@@ -31,16 +31,10 @@
 
   #traffic-lights {
     width: 75em;
-    overflow-x: scroll;
     height: 46em;
+    overflow-x: scroll;
     overflow-y: auto;
-
-    img {
-      padding: {
-        left: 1px;
-        right: 1px;
-      }
-    }
+    img { padding: 1px; }
     .row      td { padding: 0em; }
     .row.odd  td { background: lighten($darker-color, 3%); }
     .row.even td { background: lighten($darker-color, 6%); }
@@ -48,16 +42,14 @@
       font-size: 2.9em;
       background-color: darken(white, 50%);
       &:after { content: "\2009"; } //thin space
-      margin: {
-        left: 5px;
-        right: 5px;
-      }
+      margin: 5px;
     }
     .gap {
       font-size: 0.5em;
       color: lighten(black,40%);
       text-align: center;
     }
+
   }
 
 }
