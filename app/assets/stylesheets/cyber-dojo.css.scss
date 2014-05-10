@@ -25,19 +25,12 @@ body {
 .panel {
   background: $darker-color;
   color: $lighter-color;
-  border: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 15%);
-    left: none;
-    right: none;
-    bottom: none;
-  }
-  margin: none;
+  border: 1px solid lighten($darker-color, 8%);
   padding: 0.5em;
   margin: {
-    left: 0.25em;
-    right: 0.25em;
+    left: 10px;
+    right: 10px;
+    bottom: 1px;
   }
 }
 
@@ -129,9 +122,9 @@ div[class~="filename"], button[disabled]:hover {
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
 .line_numbers, .file_content {
-  border: 0;
-  margin: 0;
-  padding: 0;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
   display: block;
   overflow: auto;
 }
@@ -143,23 +136,9 @@ div[class~="filename"], button[disabled]:hover {
   text-align: right;
   overflow: hidden;
   display: block;
-  padding-right: 3px;
+  padding-right: 2px;
   width: 2em;
-  border-left: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 15%);
-  }
-  border-top: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 15%);
-  }
-  border-bottom: {
-    style: dotted;
-    width: 1px;
-    color: lighten($darker-color, 15%);
-  }
+  border: 1px solid lighten($darker-color, 6%);
   border-right: 0px;
   outline: none;
 }
@@ -169,7 +148,11 @@ div[class~="filename"], button[disabled]:hover {
   color: $darker-color;
   width: 45em;
   font-weight: 500;
-  padding-left: 4px;
+
+  // if padding-left gets too large it pushes the background to the
+  // right and the scrollbar gets a background-coloured right-border
+  padding-left: 2px;
+
   outline: none;
 }
 

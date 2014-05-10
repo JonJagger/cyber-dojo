@@ -20,6 +20,13 @@
 
 #diff-dialog {
 
+  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
+  background: $darker-color;
+  color: $lighter-color;
+  padding: none;
+  margin-left: 0px;
+  margin-top: 15px;
+
   border: {
     left: 1px dotted lighten($darker-color, 10%);
     right: 1px dotted lighten($darker-color, 10%);
@@ -38,13 +45,6 @@
   .filename {
     text-align: left;
   }
-
-  font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  background: $darker-color;
-  color: $lighter-color;
-  padding: none;
-  margin-left: 0px;
-  margin-top: 15px;
 
   #was-traffic-light { margin-right: 0.3em; }
   #now-traffic-light { margin-left : 0.3em; }
@@ -140,12 +140,6 @@
       background: lighten($darker-color, 20%);
       cursor: default;
     }
-  }
-
-  ::-webkit-scrollbar {
-    background: lighten($darker-color, 3%);
-    border: 1px dotted lighten($darker-color, 10%);
-    border-left: none;
   }
 
 }

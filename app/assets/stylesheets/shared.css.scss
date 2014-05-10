@@ -16,7 +16,7 @@
     margin-bottom: 12px;
     padding: $padding;
     background: lighten($darker-color, 3%);
-    border: 1px dotted lighten($darker-color, 10%);
+    border: 1px solid lighten($darker-color, 6%);
 }
 
 #shared-info {

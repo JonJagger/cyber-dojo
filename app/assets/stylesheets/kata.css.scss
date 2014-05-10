@@ -10,10 +10,8 @@
         left: 20px;
         right: 18px;
       }
-      margin: {
-        left: 15px;
-        bottom: 12px;
-      }
+      margin: 15px;
+      margin-top: 0px;
     }
     #spinner {
       margin-bottom: 15px;
@@ -74,21 +72,11 @@
     }
   }
 
-  #visible-files-container {
-    position: relative;
-    top: -1px;
-  }
-
   .file_content {
     overflow-x: auto;
     overflow-y: scroll;
   }
 
-  ::-webkit-scrollbar {
-    background: lighten($darker-color, 10%);
-    border: 1px dotted lighten($darker-color, 10%);
-    border-left: none;
-  }
 }
 
 #kata-page, #help-dialog {
@@ -102,7 +90,3 @@
   }
 }
 
-#kata-page #test-button {
-  position: relative;
-  top: -4px;
-}
