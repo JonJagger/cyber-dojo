@@ -1,4 +1,9 @@
 
+# Not currently used. Working towards a model where tag commits
+# occur for events between traffic-lights (eg opening a different file).
+# avatar.lights[n]   gives you the tag for the nth traffic light
+# avatar.tags[n]     gives you the nth tag which may not be a traffic-light.
+
 class Lights
   include Enumerable
 

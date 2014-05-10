@@ -64,19 +64,41 @@ dojo.katas['34D6E7823E'].avatars['lion'].exists?
 
 TODO: Extend the domain model into traffic-lights
 
+lion.lights.length
 lion.lights.each{|light| ...}
 lion.lights << light
 lion.lights[23].colour
+lion.lights[23].time_stamp
 lion.lights[23].output
 lion.lights[23].visible_files
 lion.lights[23].visible_files['filename']
-lion.lights[23].created
 lion.lights[23].client_ip_address
 lion.lights[23].server_ip_address
-lion.lights[13].diff(15)
+lion.lights[23].diff(27)
+lion.lights[23].tag_number  (see below)
 
 Also
 
 dojo.katas['34D6E7823E'].lights
 which gives you the collection with the
 animals name as a key. As used by td-gapper
+
+Also: Extend the domain model into tags.
+Idea is to record a tag for events beyond just [test] button presses.
+Eg moving from one file to another file.
+
+lion.tags.length
+lion.tags.each{|tag| ...}
+lion.tags << tag
+lion.tags[45]
+lion.tags[45].created
+lion.tags[45].diff(46)
+lion.tags[45].colour  ??? 'white' if code has changed?
+lion.tags[45].output
+lion.tags[45].visible_files
+lion.tags[45].visible_files['filename']
+lion.tags[45].data
+lion.tags[45].data['current_file']
+lion.tags[45].data['current_file_scroll_position']
+
+

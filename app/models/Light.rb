@@ -30,4 +30,7 @@ class Light
   #def diff(n)
   #end
 
+  #def tag_number
+  #end
+
 end
