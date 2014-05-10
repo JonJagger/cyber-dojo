@@ -71,12 +71,12 @@ adding a new language
   * choose a docker-container to build on top of. For example
     `cyberdojo/build-essential`
     at the [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
-    which was built using this [dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/C-assert/Dockerfile_build_essential)
+    which was built using this [Dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/build-essential/Dockerfile)
 
-  * write a dockerfile containing all the
+  * write a Dockerfile containing all the
     required commands (eg `apt-get install`)'s.
     <br>For example
-    [cyberdojo/languages/C#-NUnit/Dockerfile_csharp_2.10.8.1_nunit](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile_csharp_2.10.8.1_nunit)
+    [cyberdojo/languages/C#-NUnit/Dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile)
 
   * use the dockerfile to build your container. For example
     ```bash
@@ -91,12 +91,12 @@ adding a new language
 ### write an output parse function
 
   * the `unit_test_framework` entry in the languages' `manifest.json`
-    file is the name of the function inside `OutputParser.rb`
+    file is the name of the function inside `app/lib/OutputParser.rb`
     used to determine if the output from running `cyber-dojo.sh` in your docker
     container on the animals current files qualifies as a red traffic-light, an amber
     traffic-light, or a green traffic-light.
     There are lots of examples in
-    [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+    [app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
 
   * There are lots of example tests in
     [cyberdojo/test/app_lib](https://github.com/JonJagger/cyberdojo/tree/master/test/app_lib)
@@ -140,14 +140,14 @@ Each `manifest.json` file contains an ruby object in JSON format
 ### check the languages' manifest.json file
 There is a ruby script to do this
 ```bash
-$ cd /var/www/cyberdojo/test/installation
-$ ruby check_language_manifest.rb ../.. [language-dir]
+$ cd /var/www/cyberdojo/admin_scripts
+$ ruby check_language_manifest.rb .. [language-dir]
 ```
 where [language-dir] is the directory of the language you are checking
 which contains the `manifest.json` file.
 <br>Example
 ```bash
-$ ruby check_language_manifest.rb ../.. Lisp-5.6
+$ ruby check_language_manifest.rb .. Lisp-5.6
 ```
 
 
