@@ -54,8 +54,8 @@
   }
 
   #diff-filenames {
-    height: 300px;
-    width: 230px;
+    height: 270px;
+    width: 250px;
     overflow-y: auto;
     font-size: 11pt;
     text-align: left;
@@ -87,8 +87,8 @@
     margin-left: 8px;
     text-align: right;
     overflow: hidden;
-    background: lighten($darker-color, 3%);
-    border: 1px dotted lighten($darker-color, 10%);
+    background: lighten($darker-color, 6%);
+    border: 1px dotted lighten($darker-color, 6%);
     border-right: none;
   }
 

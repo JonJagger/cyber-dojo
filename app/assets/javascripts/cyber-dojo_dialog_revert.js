@@ -112,7 +112,7 @@ var cyberDojo = (function(cd, $) {
 
 	var revertForkDialog = revertForkDiv.dialog({
 	  autoOpen: false,
-	  width: 1200,
+	  width: 1100,
 	  height: "auto",
 	  modal: true,
 	  buttons: [

@@ -82,7 +82,7 @@ button[disabled] {
 
 div[class~='filename'] {
   @include font-size-small();
-  background: lighten($darker-color, 3%);
+  background: lighten($darker-color, 6%);
   color: $lighter-color;
   margin: none;
   padding: {
@@ -130,17 +130,20 @@ div[class~="filename"], button[disabled]:hover {
 }
 
 .line_numbers {
-  background: lighten($darker-color, 3%);
+  background: lighten($darker-color, 6%);
   color: lighten($darker-color, 25%);
   font-weight: 100;
   text-align: right;
   overflow: hidden;
   display: block;
-  padding-right: 2px;
+  padding-right: 4px;
   width: 2em;
   border: 1px solid lighten($darker-color, 6%);
   border-right: 0px;
   outline: none;
+
+  position: relative; // lose 1px gap to file-content
+  left: 2px;
 }
 
 .file_content {

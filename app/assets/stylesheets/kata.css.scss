@@ -70,6 +70,9 @@
       top: 5px;
       left: 0px;
     }
+    &::-webkit-scrollbar:horizontal {
+        height: 6px;
+    }
   }
 
   .file_content {
