@@ -57,7 +57,7 @@ reviewing your programming dojo
 -------------------------------
 You can get to the dashboard page in two ways
   * from the home page, enter the dojo's id and click the `[review]` button.
-  * from the test page, click the animal image at the top right
+  * from the test page, click the animal image
 
 Each horizontal row corresponds to one animal and displays, from left to right,
   * its oldest-to-newest traffic lights
@@ -76,8 +76,8 @@ horizontal space. These traffic-lights auto scroll:
   * old ones are scrolled out of view to the left
   * the animal image is always visible to the right.
 
-The idea is to leave auto-refresh on *during* the dojo
-and to turn it *off* just before starting a dashboard review.
+  * Leave auto-refresh on *during* the dojo
+  * Turn it *off* just before starting a dashboard review.
 
 
 ### |60s| columns?
