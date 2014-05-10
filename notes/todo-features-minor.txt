@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  show the _time_ between two tags
+  [23] 00:54 [24]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 AVATAR
   write run_tests(...) function that wraps all of this...
      save(delta, visible_files)

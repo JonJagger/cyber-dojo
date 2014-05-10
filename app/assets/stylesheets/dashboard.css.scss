@@ -1,26 +1,25 @@
 
-$ellipsis: "\2026";
-
 #dashboard-page {
 
-  margin: {
-    top: 2em;
-    left: 1em;
+  margin: 25px;
+
+  #age-container, #controls-container {
+    @include ghost-panel(10px);
+    margin: 15px;
   }
 
-  #shared-info {
-    font-size: 1em;
-  }
-
-  #age-container, #team-bulb-counts-container, #controls-container {
+  #team-bulb-counts-container {
     @include ghost-panel(5px);
-    margin-right: 15px;
-    margin-top: 15px;
+    margin: 15px;
   }
 
   #help-button-container {
     text-align: right;
-    margin-right: 15px;
+    margin: 15px;
+    #help-button {
+      @include font-size-tiny();
+      @include rounded-corner(15px);
+    }
   }
 
   #age-container {
@@ -28,11 +27,6 @@ $ellipsis: "\2026";
       position: relative;
       top: +1px;
     }
-  }
-
-  #help-button {
-    @include font-size-tiny();
-    @include rounded-corner(14px);
   }
 
   #traffic-lights {
@@ -52,7 +46,7 @@ $ellipsis: "\2026";
     .row.even td { background: lighten($darker-color, 6%); }
     .omission {
       font-size: 2.9em;
-      background-color: darken(White, 50%);
+      background-color: darken(white, 50%);
       &:after { content: "\2009"; } //thin space
       margin: {
         left: 5px;
@@ -61,7 +55,7 @@ $ellipsis: "\2026";
     }
     .gap {
       font-size: 0.5em;
-      color: lighten(Black,40%);
+      color: lighten(black,40%);
       text-align: center;
     }
   }
