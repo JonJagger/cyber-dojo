@@ -2,9 +2,8 @@
 Docker Server
 =============
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
-is installed.
-
-When you press the `[create]` button cyber-dojo will only offer
+is installed. If it is then
+when you press the `[create]` button cyber-dojo will only offer
 languages whose `manifest.json` file
 has an `image_name` entry that exists. For example, if
 ```bash
@@ -30,9 +29,9 @@ cyber-dojo will re-use the [docker](https://www.docker.io/) `image_name` contain
 See [app/lib/DockerRunner.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/DockerRunner.rb)
 
 <hr/>
-However, if [docker](https://www.docker.io/) is not installed,
+If [docker](https://www.docker.io/) is *not* installed,
 and the environment variable
-`CYBERDOJO_USE_HOST` is set (to anything) then cyber-dojo will use the
+`CYBERDOJO_USE_HOST` is set then cyber-dojo will use the
 [host server](md/host-server.md).
 
 
@@ -67,7 +66,7 @@ $ ruby admin_scripts/docker_pull_all.rb .
 adding a new language
 ---------------------
 
-### build the docker image
+### build the docker container
 
   * choose a docker-container to build on top of. For example
     `cyberdojo/build-essential`

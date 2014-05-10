@@ -4,7 +4,7 @@
 cyber-dojo
 ==========
 
-[Running a Dojo](md/running-a-dojo.md)
+[Running a Programming Dojo](md/running-a-dojo.md)
   * creating your programming dojo
     * chose your language,unit-test-framework eg C++,assert
     * chose your exercise eg Prime Factors
@@ -19,7 +19,7 @@ cyber-dojo
   * running your own docker'd cyber-dojo server
   * pulling pre-built docker language containers
   * adding a new language
-    * build the docker image
+    * build the docker container
     * write an output parse function
     * write the language's manifest.json file
     * check the language's manifest.json file
