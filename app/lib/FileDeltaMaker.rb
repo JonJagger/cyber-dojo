@@ -1,6 +1,11 @@
 
 module FileDeltaMaker
 
+  # Noticeably absent from this is :renamed
+  # If browser file new/rename/delete events all
+  # caused a git-tag on the server I could capture
+  # file renames. Should result in better diffs.
+  
   def self.make_delta(was, now)
     result = {
       :unchanged => [ ],
