@@ -7,7 +7,7 @@ class TrafficLightTests < ActionView::TestCase
 
   test "tool tip" do
     light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
-    assert_equal "review hippos 1 &harr; 2 diff", tool_tip('hippo', light)
+    assert_equal "review hippo&#39;s 1 &harr; 2 diff", tool_tip('hippo', light)
   end
 
   test "traffic_light_image" do
@@ -31,7 +31,7 @@ class TrafficLightTests < ActionView::TestCase
     expected = "" +
       "<div" +
       " class='diff-traffic-light'" +
-      " title='review hippos current code'" +
+      " title='review hippo&#39;s current code'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='23'" +
@@ -64,7 +64,7 @@ class TrafficLightTests < ActionView::TestCase
     expected = "" +
       "<div" +
       " class='diff-traffic-light'" +
-      " title='review hippos 22 &harr; 23 diff'" +
+      " title='review hippo&#39;s 22 &harr; 23 diff'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='22'" +

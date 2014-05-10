@@ -22,12 +22,13 @@ module TrafficLightHelper
   end
 
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
+    number = light['number']
     ("<div class='diff-traffic-light'" +
-         " title='review #{avatar_name}s current code'" +
+         " title='review #{avatar_name}&#39;s current code'" +
          " data-id='#{kata.id}'" +
          " data-avatar-name='#{avatar_name}'" +
-         " data-was-tag='#{light['number']}'" +
-         " data-now-tag='#{light['number']}'" +
+         " data-was-tag='#{number}'" +
+         " data-now-tag='#{number}'" +
          " data-max-tag='#{max_lights}'>" +
         "<img src='/images/avatars/#{avatar_name}.jpg'" +
             " alt='#{avatar_name}'" +
