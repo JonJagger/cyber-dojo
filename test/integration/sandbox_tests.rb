@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Git'
-require 'RawRunner'
+require 'HostRunner'
 
 class SandboxTests < ActionController::TestCase
 
   def setup
     disk   = OsDisk.new
     git    = Git.new
-    runner = RawRunner.new
+    runner = HostRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     format = 'json'
     @dojo = paas.create_dojo(root_path, format)

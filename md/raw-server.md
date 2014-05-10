@@ -5,8 +5,9 @@ Raw Server (deprecated)
 All development is now focused on running cyber-dojo using a
 [docker'd server](docker-server.md)
 
-This is how cyber-dojo runs if docker is not installed or if
-it is but the environment variable CYBERDOJO_USE_HOST is set.
+This is how cyber-dojo runs if
+ * docker is not installed
+ * the environment variable CYBERDOJO_USE_HOST is set
 This is useful primarily for running a personal cyber-dojo on
 a laptop. In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.

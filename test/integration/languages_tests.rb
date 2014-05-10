@@ -1,20 +1,20 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Git'
-require 'RawRunner'
+require 'HostRunner'
 
 class LanguagesTests < ActionController::TestCase
 
   def setup
     disk   = OsDisk.new
     git    = Git.new
-    runner = RawRunner.new
+    runner = HostRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     format = 'json'
     @dojo = paas.create_dojo(root_path, format)
   end
 
-  test "RawRunner says it can run any language" do
+  test "HostRunner says it can run any language" do
     languages = @dojo.languages.entries
     actual = languages.map{|language| language.name}.sort
     expected = [

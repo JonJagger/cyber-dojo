@@ -6,7 +6,7 @@ class ChooseTests < ActionController::TestCase
     super
     @disk = OsDisk.new
     @git = Git.new
-    @runner = RawRunner.new
+    @runner = HostRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'json'
     @dojo = @paas.create_dojo(root_path, @format)

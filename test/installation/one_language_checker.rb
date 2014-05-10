@@ -11,7 +11,7 @@ require CYBER_DOJO_ROOT + "/app/models/Sandbox"
 require CYBER_DOJO_ROOT + "/app/lib/OutputParser"
 require CYBER_DOJO_ROOT + "/lib/OsDisk"
 require CYBER_DOJO_ROOT + "/lib/Git"
-require CYBER_DOJO_ROOT + "/lib/RawRunner"
+require CYBER_DOJO_ROOT + "/lib/HostRunner"
 require CYBER_DOJO_ROOT + "/lib/Uuid"
 
 class OneLanguageChecker
@@ -144,7 +144,7 @@ private
   def dojo
     Thread.current[:disk]   ||= Disk.new
     Thread.current[:git]    ||= Git.new
-    Thread.current[:runner] ||= RawRunner.new
+    Thread.current[:runner] ||= HostRunner.new
     Dojo.new(@root_path,'json')
   end
 

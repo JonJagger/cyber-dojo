@@ -1,8 +1,11 @@
 
-# no isolation/protection/security, nothing.
+# Runner that runs directly on the host server
+# (of Docker not installed at CYBERDOJO_USE_HOST is set)
+# $ export CYBERDOJO_USE_HOST=true
+# No isolation/protection/security, nothing.
 # See DockerRunner.rb
 
-class RawRunner
+class HostRunner
 
   def runnable?(language)
     true

@@ -81,7 +81,7 @@ class LinuxPaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "in RawRunner runnable? always returns true" do
+  test "in HostRunner runnable? always returns true" do
     json_and_rb do |format|
       language = @dojo.languages['Java-JUnit']
       assert @paas.runnable?(language)

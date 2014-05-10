@@ -2,14 +2,14 @@ __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + 'test/test_helper'
 require __DIR__ + 'lib/OsDisk'
 require __DIR__ + 'lib/Git'
-require __DIR__ + 'app/lib/RawRunner'
+require __DIR__ + 'app/lib/HostRunner'
 
 class KatasTests < ActionController::TestCase
 
   def set_paas(format)
     @disk  = OsDisk.new
     @git   = Git.new
-    @runer = RawRunner.new
+    @runer = HostRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = format
     @dojo = @paas.create_dojo(root_path, @format)

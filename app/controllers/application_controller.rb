@@ -2,7 +2,9 @@ __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
 require __DIR__ + '/app/lib/DockerRunner'
 require __DIR__ + '/app/lib/LinuxPaas'
-require __DIR__ + '/app/lib/RawRunner'
+require __DIR__ + '/app/lib/DockerRunner'
+require __DIR__ + '/app/lib/HostRunner'
+require __DIR__ + '/app/lib/NullRunner'
 require __DIR__ + '/lib/Folders'
 require __DIR__ + '/lib/Git'
 require __DIR__ + '/lib/OsDisk'
@@ -59,12 +61,14 @@ private
   end
 
   def runner
-    docker? ? DockerRunner.new : RawRunner.new
+    return DockerRunner.new if docker?
+    return HostRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
+    return NullRunner.new
   end
 
   def docker?
     `docker info > /dev/null 2>&1`
-    $?.exitstatus === 0 && ENV['CYBERDOJO_USE_HOST'] === nil
+    $?.exitstatus === 0
   end
 
 end
