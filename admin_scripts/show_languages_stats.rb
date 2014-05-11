@@ -52,7 +52,7 @@ renamed.keys.sort.each do |name|
   n = renamed[name].length
   count += n
   print number(n,5)
-  print "  #{renamed[name][0]}"
+  print "  #{renamed[name].shuffle[0]}"
   if name == dojo.languages[name].new_name
     print " --> MISSING new_name "
   else
@@ -73,7 +73,7 @@ rest.keys.sort.each do |name|
   n = rest[name].length
   count += n
   print number(n,5)
-  print "  #{rest[name][0]}"
+  print "  #{rest[name].shuffle[0]}"
   print " --> MISSING new_name " if name != dojo.languages[name].new_name
   print "\n"
 end
