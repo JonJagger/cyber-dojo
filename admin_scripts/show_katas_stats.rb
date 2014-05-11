@@ -60,12 +60,9 @@ totals.each do |smid,count|
   tally += 1
 end
 
-print "Frequencies (#{tally}/255)\n"
+print "Frequencies (#{tally}/256)\n"
 freqs.sort.each do |count,freq|
-  print number(count,5)
-  dots = '.' * freq
-  print dots + freq.to_s
-  print "\n"
+  print number(count,5) + ' ' + ('.' * freq) + freq.to_s + "\n"
 end
 print "\n"
 print "\n"
