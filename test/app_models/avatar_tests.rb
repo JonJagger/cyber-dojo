@@ -32,7 +32,7 @@ class AvatarTests < ModelTestCase
           " each visible_file into avatar/sandbox, and" +
           " links each support_filename into avatar/sandbox" do
     json_and_rb do |fmt|
-      language = @dojo.languages['C']
+      language = @dojo.languages['C-assert']
 
       visible_files = {
         'wibble.h' => '#include <stdio.h>',

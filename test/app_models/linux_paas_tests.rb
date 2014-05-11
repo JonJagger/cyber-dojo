@@ -45,9 +45,9 @@ class LinuxPaasTests < ModelTestCase
       id = '123456789A'
       kata = @dojo.katas[id]
 
-      language = @dojo.languages['C']
+      language = @dojo.languages['test-C++-Catch']
       language_manifest = {
-        :unit_test_framework => 'assert'
+        :unit_test_framework => 'catch'
       }
       @paas.dir(language).spy_read('manifest.json', JSON.unparse(language_manifest))
 
@@ -81,9 +81,18 @@ class LinuxPaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #test "in HostRunner runnable? returns false if language does not exist" do
+  #  json_and_rb do |format|
+  #    language = @dojo.languages['Java-JUnit']
+  #    assert !@paas.runnable?(language)
+  #  end
+  #end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "in HostRunner runnable? always returns true" do
     json_and_rb do |format|
-      language = @dojo.languages['Java-JUnit']
+      language = @dojo.languages['test-Java-JUnit']
       assert @paas.runnable?(language)
     end
   end

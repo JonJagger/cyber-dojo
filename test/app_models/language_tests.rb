@@ -22,23 +22,36 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "name is translated if old language dir has been renamed" do
+  test "new_name is translated if old language dir has been renamed" do
     json_and_rb do
-      assert_equal 'C-assert', @dojo.languages['C'].name
-      assert_equal 'C++-assert', @dojo.languages['C++'].name
-      assert_equal 'C#-NUnit', @dojo.languages['C#'].name
-      assert_equal 'Clojure-.test', @dojo.languages['Clojure'].name
-      assert_equal 'CoffeeScript-jasmine', @dojo.languages['CoffeeScript'].name
-      assert_equal 'Erlang-eunit', @dojo.languages['Erlang'].name
-      assert_equal 'Go-testing', @dojo.languages['Go'].name
-      assert_equal 'Haskell-hunit', @dojo.languages['Haskell'].name
-      assert_equal 'Java-JUnit', @dojo.languages['Java'].name
-      assert_equal 'Java-Mockito', @dojo.languages['Java-JUnit-Mockito'].name
-      assert_equal 'Javascript-assert', @dojo.languages['Javascript'].name
-      assert_equal 'Perl-TestSimple', @dojo.languages['Perl'].name
-      assert_equal 'PHP-PHPUnit', @dojo.languages['PHP'].name
-      assert_equal 'Python-unittest', @dojo.languages['Python'].name
-      assert_equal 'Ruby-TestUnit', @dojo.languages['Ruby'].name
+      renames = {
+        'C'            => 'C-assert',
+        'C++'          => 'C++-assert',
+        'C#'           => 'C#-NUnit',
+        'Clojure'      => 'Clojure-.test',
+        'CoffeeScript' => 'CoffeeScript-jasmine',
+        'Erlang'       => 'Erlang-eunit',
+        'Go'           => 'Go-testing',
+        'Haskell'      => 'Haskell-hunit',
+
+        'Java'               => 'Java-1.8_JUnit',
+        'Java-JUnit'         => 'Java-1.8_JUnit',
+        'Java-Approval'      => 'Java-1.8_Approval',
+        'Java-ApprovalTests' => 'Java-1.8_Approval',
+        'Java-Cucumber'      => 'Java-1.8_Cucumber',
+        'Java-Mockito'       => 'Java-1.8_Mockito',
+        'Java-JUnit-Mockito' => 'Java-1.8_Mockito',
+        'Java-PowerMockito'  => 'Java-1.8_Powermockito',
+
+        'Javascript' => 'Javascript-assert',
+        'Perl'       => 'Perl-TestSimple',
+        'PHP'        => 'PHP-PHPUnit',
+        'Python'     => 'Python-unittest',
+        'Ruby'       => 'Ruby-TestUnit'
+      }
+      renames.each do |was,now|
+        assert_equal now, @dojo.languages[was].new_name
+      end
     end
   end
 

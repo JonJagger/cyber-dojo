@@ -8,14 +8,6 @@ class Dojo
 
   attr_reader :paas, :path, :format
 
-  def format_is_rb?
-    format == 'rb'
-  end
-
-  def format_is_json?
-    format == 'json'
-  end
-
   def languages
     Languages.new(self)
   end
@@ -30,6 +22,14 @@ class Dojo
 
   def katas
     Katas.new(self)
+  end
+
+  def format_is_rb?
+    format == 'rb'
+  end
+
+  def format_is_json?
+    format == 'json'
   end
 
 private

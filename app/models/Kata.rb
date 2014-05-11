@@ -29,8 +29,15 @@ class Kata
     Id.new(@id)
   end
 
-  def language
+  def original_language
+    # allow kata to be reviewed even
+    # if it's language name has changed
+    # See app/models/language.rb new_name()
     dojo.languages[manifest['language']]
+  end
+
+  def language
+    dojo.languages[original_language.new_name]
   end
 
   def exercise

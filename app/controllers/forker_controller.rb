@@ -35,7 +35,8 @@ class ForkerController < ApplicationController
     end
 
     if !error
-      language = kata.language
+      # NB language.new_name
+      language = dojo.languages[kata.language.name]
       exercise = kata.exercise
       id = Id.new.to_s
       now = make_time(Time.now)

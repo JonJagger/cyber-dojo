@@ -5,41 +5,10 @@ class Language
     @dojo,@name = dojo,name
   end
 
-  attr_reader :dojo
-
-  def name
-    # Some language folders have been renamed.
-    # This creates a problem for practice-sessions done
-    # before the language-folder rename that you now
-    # wish to fork from. Particularly for sessions with
-    # well known id's such as the refactoring dojos.
-    # So patch to the language new-name.
-    #
-    # Feels wrong.
-    # Better in forker_controller.rb?
-    
-    case @name
-    when 'C'                  then return 'C-assert'
-    when 'C++'                then return 'C++-assert'
-    when 'C#'                 then return 'C#-NUnit'
-    when 'Clojure'            then return 'Clojure-.test'
-    when 'CoffeeScript'       then return 'CoffeeScript-jasmine'
-    when 'Erlang'             then return 'Erlang-eunit'
-    when 'Go'                 then return 'Go-testing'
-    when 'Haskell'            then return 'Haskell-hunit'
-    when 'Java'               then return 'Java-JUnit'
-    when 'Java-JUnit-Mockito' then return 'Java-Mockito'
-    when 'Javascript'         then return 'Javascript-assert'
-    when 'Perl'               then return 'Perl-TestSimple'
-    when 'PHP'                then return 'PHP-PHPUnit'
-    when 'Python'             then return 'Python-unittest'
-    when 'Ruby'               then return 'Ruby-TestUnit'
-    else                           return @name
-    end
-  end
+  attr_reader :dojo, :name
 
   def exists?
-    paas.exists?(TrueNameAdapter.new(@dojo,@name), manifest_filename)
+    paas.exists?(self, manifest_filename)
   end
 
   def runnable?
@@ -105,6 +74,42 @@ class Language
     manifest['visible_filenames'] || [ ]
   end
 
+  def new_name
+    # Some languages/ sub-folders have been renamed.
+    # This creates a problem for practice-sessions done
+    # before the rename that you now wish to review or
+    # fork from. Particularly for sessions with
+    # well known id's such as the refactoring dojos.
+    # See app/models/kata.rb language()
+
+    case @name
+    when 'C'                  then return 'C-assert'
+    when 'C++'                then return 'C++-assert'
+    when 'C#'                 then return 'C#-NUnit'
+    when 'Clojure'            then return 'Clojure-.test'
+    when 'CoffeeScript'       then return 'CoffeeScript-jasmine'
+    when 'Erlang'             then return 'Erlang-eunit'
+    when 'Go'                 then return 'Go-testing'
+    when 'Haskell'            then return 'Haskell-hunit'
+
+    when 'Java'               then return 'Java-1.8_JUnit'
+    when 'Java-JUnit'         then return 'Java-1.8_JUnit'
+    when 'Java-Approval'      then return 'Java-1.8_Approval'
+    when 'Java-ApprovalTests' then return 'Java-1.8_Approval'
+    when 'Java-Cucumber'      then return 'Java-1.8_Cucumber'
+    when 'Java-Mockito'       then return 'Java-1.8_Mockito'
+    when 'Java-JUnit-Mockito' then return 'Java-1.8_Mockito'
+    when 'Java-PowerMockito'  then return 'Java-1.8_Powermockito'
+
+    when 'Javascript'         then return 'Javascript-assert'
+    when 'Perl'               then return 'Perl-TestSimple'
+    when 'PHP'                then return 'PHP-PHPUnit'
+    when 'Python'             then return 'Python-unittest'
+    when 'Ruby'               then return 'Ruby-TestUnit'
+    else                           return @name
+    end
+  end
+
   def manifest
     begin
       @manifest ||= JSON.parse(read(manifest_filename))
@@ -126,14 +131,6 @@ private
 
   def manifest_filename
     'manifest.json'
-  end
-
-  class TrueNameAdapter < Language
-    # bypass the name-patch so exists? works as required
-    def initialize(dojo,name)
-      @dojo,@name = dojo,name
-    end
-    attr_reader :dojo, :name
   end
 
 end

@@ -13,7 +13,7 @@ class KatasTests < ActionController::TestCase
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = format
     @dojo = @paas.create_dojo(root_path, @format)
-    @language = @dojo.languages['Java-JUnit']
+    @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
   end

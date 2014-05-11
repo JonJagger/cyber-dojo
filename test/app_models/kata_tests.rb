@@ -80,16 +80,16 @@ class KataTests < ModelTestCase
 
   test "kata.id, kata.created, kata.language.name, kata.exercise.name, kata.visible_files all read from manifest" do
     json_and_rb do
-      language = @dojo.languages['C']
+      language = @dojo.languages['test-C++-catch']
       visible_files = {
-          'wibble.h' => '#include <stdio.h>',
-          'wibble.c' => '#include "wibble.h"'
+          'wibble.hpp' => '#include <iostream>',
+          'wibble.cpp' => '#include "wibble.hpp"'
       }
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({
         :visible_filenames => visible_files.keys
       }))
-      @paas.dir(language).spy_read('wibble.h', visible_files['wibble.h'])
-      @paas.dir(language).spy_read('wibble.c', visible_files['wibble.c'])
+      @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
+      @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
       exercise = @dojo.exercises['Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
@@ -101,8 +101,8 @@ class KataTests < ModelTestCase
       expected_visible_files = {
         'output' => '',
         'instructions' => 'your task...',
-        'wibble.h' => visible_files['wibble.h'],
-        'wibble.c' => visible_files['wibble.c'],
+        'wibble.hpp' => visible_files['wibble.hpp'],
+        'wibble.cpp' => visible_files['wibble.cpp'],
       }
       assert_equal expected_visible_files, kata.visible_files
     end
@@ -176,16 +176,16 @@ class KataTests < ModelTestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def make_kata
-    language = @dojo.languages['C']
+    language = @dojo.languages['test-C++-Catch']
     visible_files = {
-        'wibble.h' => '#include <stdio.h>',
-        'wibble.c' => '#include "wibble.h"'
+        'wibble.hpp' => '#include <iostream>',
+        'wibble.cpp' => '#include "wibble.hpp"'
     }
     @paas.dir(language).spy_read('manifest.json', JSON.unparse({
       :visible_filenames => visible_files.keys
     }))
-    @paas.dir(language).spy_read('wibble.h', visible_files['wibble.h'])
-    @paas.dir(language).spy_read('wibble.c', visible_files['wibble.c'])
+    @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
+    @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
     exercise = @dojo.exercises['Yahtzee']
     @paas.dir(exercise).spy_read('instructions', 'your task...')
     @dojo.make_kata(language, exercise)
