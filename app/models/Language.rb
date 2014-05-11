@@ -106,6 +106,7 @@ class Language
     when 'PHP'                then return 'PHP-PHPUnit'
     when 'Python'             then return 'Python-unittest'
     when 'Ruby'               then return 'Ruby-TestUnit'
+    when 'Scala'              then return 'Scala-scalatest'
     else                           return @name
     end
   end

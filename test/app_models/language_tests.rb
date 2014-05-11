@@ -47,7 +47,8 @@ class LanguageTests < ModelTestCase
         'Perl'       => 'Perl-TestSimple',
         'PHP'        => 'PHP-PHPUnit',
         'Python'     => 'Python-unittest',
-        'Ruby'       => 'Ruby-TestUnit'
+        'Ruby'       => 'Ruby-TestUnit',
+        'Scala'      => 'Scala-scalatest'
       }
       renames.each do |was,now|
         assert_equal now, @dojo.languages[was].new_name
