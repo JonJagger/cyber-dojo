@@ -1,7 +1,4 @@
 
-# First post-LinuxPaas-refactoring script to use
-# the app/models classes to navigate the domain
-
 require File.expand_path(File.dirname(__FILE__)) + '/domain_lib'
 
 def number(value,width)
@@ -11,7 +8,7 @@ end
 
 disk = OsDisk.new
 git = Git.new
-runner = DockerRunner.new
+runner = NullRunner.new
 paas = LinuxPaas.new(disk, git, runner)
 format = 'json'
 dojo = paas.create_dojo(CYBERDOJO_HOME_DIR, format)
