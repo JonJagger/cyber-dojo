@@ -197,7 +197,7 @@ class GitDiffViewTests < ActionController::TestCase
   #-----------------------------------------------
 
   test "only visible files are commited and are seen in diff_lines" do
-    language = @dojo.languages['Java-JUnit']
+    language = @dojo.languages['test-Java-JUnit']
     exercise = @dojo.exercises['Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
     kata = @dojo.make_kata(language, exercise)

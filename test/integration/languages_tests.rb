@@ -19,19 +19,19 @@ class LanguagesTests < ActionController::TestCase
     actual = languages.map{|language| language.name}.sort
     expected = [
      "C#-NUnit",
-     "C++-Catch",
      "C++-GoogleTest",
      "Clojure-.test",
      "Groovy-JUnit",
      "Groovy-Spock",
      "Java-Approval",
-     "Java-JUnit",
      "Objective-C",
      "Ruby-Cucumber",
      "Ruby-Rspec",
      "Ruby-installed-and-working",
      "Ruby-installed-but-not-working",
-     "Ruby-not-installed"
+     "Ruby-not-installed",
+     "test-C++-Catch",
+     "test-Java-JUnit"
     ]
     assert_equal expected, actual
   end
