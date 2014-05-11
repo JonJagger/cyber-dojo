@@ -7,6 +7,13 @@
 # -t = timestamp
 # -g = groups
 # -o = owner
+#
+# Eg if you are on the server you want to pull to then
+#
+# $ rsync -prtgo root@IP:/var/www/cyberdojo/katas /var/www/cyberdojo
+#
+# will copy the katas/ folder from IP address into
+# /var/www/cyberdojo/katas on the current server
 
 
 # A ruby script to download zips of dojos identified by

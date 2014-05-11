@@ -81,34 +81,33 @@ class Language
     # fork from. Particularly for sessions with
     # well known id's such as the refactoring dojos.
     # See app/models/kata.rb language()
+    renames = {
+      'C'            => 'C-assert',
+      'C++'          => 'C++-assert',
+      'C#'           => 'C#-NUnit',
+      'Clojure'      => 'Clojure-.test',
+      'CoffeeScript' => 'CoffeeScript-jasmine',
+      'Erlang'       => 'Erlang-eunit',
+      'Go'           => 'Go-testing',
+      'Haskell'      => 'Haskell-hunit',
 
-    case @name
-    when 'C'                  then return 'C-assert'
-    when 'C++'                then return 'C++-assert'
-    when 'C#'                 then return 'C#-NUnit'
-    when 'Clojure'            then return 'Clojure-.test'
-    when 'CoffeeScript'       then return 'CoffeeScript-jasmine'
-    when 'Erlang'             then return 'Erlang-eunit'
-    when 'Go'                 then return 'Go-testing'
-    when 'Haskell'            then return 'Haskell-hunit'
+      'Java'               => 'Java-1.8_JUnit',
+      'Java-JUnit'         => 'Java-1.8_JUnit',
+      'Java-Approval'      => 'Java-1.8_Approval',
+      'Java-ApprovalTests' => 'Java-1.8_Approval',
+      'Java-Cucumber'      => 'Java-1.8_Cucumber',
+      'Java-Mockito'       => 'Java-1.8_Mockito',
+      'Java-JUnit-Mockito' => 'Java-1.8_Mockito',
+      'Java-PowerMockito'  => 'Java-1.8_Powermockito',
 
-    when 'Java'               then return 'Java-1.8_JUnit'
-    when 'Java-JUnit'         then return 'Java-1.8_JUnit'
-    when 'Java-Approval'      then return 'Java-1.8_Approval'
-    when 'Java-ApprovalTests' then return 'Java-1.8_Approval'
-    when 'Java-Cucumber'      then return 'Java-1.8_Cucumber'
-    when 'Java-Mockito'       then return 'Java-1.8_Mockito'
-    when 'Java-JUnit-Mockito' then return 'Java-1.8_Mockito'
-    when 'Java-PowerMockito'  then return 'Java-1.8_Powermockito'
-
-    when 'Javascript'         then return 'Javascript-assert'
-    when 'Perl'               then return 'Perl-TestSimple'
-    when 'PHP'                then return 'PHP-PHPUnit'
-    when 'Python'             then return 'Python-unittest'
-    when 'Ruby'               then return 'Ruby-TestUnit'
-    when 'Scala'              then return 'Scala-scalatest'
-    else                           return @name
-    end
+      'Javascript' => 'Javascript-assert',
+      'Perl'       => 'Perl-TestSimple',
+      'PHP'        => 'PHP-PHPUnit',
+      'Python'     => 'Python-unittest',
+      'Ruby'       => 'Ruby-TestUnit',
+      'Scala'      => 'Scala-scalatest'
+    }
+    renames[@name] || @name
   end
 
   def manifest
