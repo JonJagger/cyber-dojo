@@ -19,7 +19,7 @@ dojo = paas.create_dojo(CYBERDOJO_HOME_DIR, format)
 languages_names = dojo.languages.collect {|language| language.name}
 
 print "\n"
-renamed,rest = { },{ }
+renamed,rest,totals = { },{ },{ }
 count = 0
 dojo.katas.each do |kata|
   begin
@@ -30,6 +30,8 @@ dojo.katas.each do |kata|
       rest[kata.language.name] ||= [ ]
       rest[kata.language.name] << kata.id
     end
+    totals[kata.language.name] ||= 0
+    totals[kata.language.name] += 1
   rescue SyntaxError => error
     puts "SyntaxError from kata #{kata.id}"
     puts error.message
@@ -52,7 +54,7 @@ renamed.keys.sort.each do |name|
   print " #{name}#{dots}"
   n = renamed[name].length
   count += n
-  print number(n,4)
+  print number(n,5)
   print "  #{renamed[name][0]}"
   if name == dojo.languages[name].new_name
     print " --> MISSING new_name "
@@ -62,7 +64,7 @@ renamed.keys.sort.each do |name|
   print "\n"
 end
 print ' ' * (33)
-print number(count,4)
+print number(count,5)
 print "\n"
 print "\n"
 
@@ -73,12 +75,22 @@ rest.keys.sort.each do |name|
   print " #{name}#{dots}"
   n = rest[name].length
   count += n
-  print number(n,4)
+  print number(n,5)
   print "  #{rest[name][0]}"
   print " --> MISSING new_name " if name != dojo.languages[name].new_name
   print "\n"
 end
 print ' ' * (33)
-print number(count,4)
+print number(count,5)
+print "\n"
+print "\n"
+
+print "Totals\n"
+totals.sort_by{|k,v| v}.reverse.each do |name,count|
+  dots = '.' * (32 - name.length)
+  print " #{name}#{dots}"
+  print number(count,5)
+  print "\n"
+end
 print "\n"
 print "\n"
