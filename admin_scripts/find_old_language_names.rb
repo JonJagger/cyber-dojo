@@ -19,13 +19,16 @@ dojo = paas.create_dojo(CYBERDOJO_HOME_DIR, format)
 languages_names = dojo.languages.collect {|language| language.name}
 
 print "\n"
-missing = { }
+renamed,rest = { },{ }
 count = 0
 dojo.katas.each do |kata|
   begin
     if !languages_names.include? kata.original_language.name
-      missing[kata.original_language.name] ||= [ ]
-      missing[kata.original_language.name] << kata.id
+      renamed[kata.original_language.name] ||= [ ]
+      renamed[kata.original_language.name] << kata.id
+    else
+      rest[kata.language.name] ||= [ ]
+      rest[kata.language.name] << kata.id
     end
   rescue SyntaxError => error
     puts "SyntaxError from kata #{kata.id}"
@@ -41,14 +44,41 @@ dojo.katas.each do |kata|
 end
 print "\n"
 print "\n"
-missing.keys.sort.each do |name|
+
+print "Renamed\n"
+count = 0
+renamed.keys.sort.each do |name|
   dots = '.' * (32 - name.length)
   print " #{name}#{dots}"
-  n = missing[name].length
+  n = renamed[name].length
+  count += n
   print number(n,4)
-  print "  #{missing[name][0]}"
-  print " --> MISSING new_name " if name == dojo.languages[name].new_name
+  print "  #{renamed[name][0]}"
+  if name == dojo.languages[name].new_name
+    print " --> MISSING new_name "
+  else
+    print " --> " + dojo.languages[name].new_name
+  end
   print "\n"
 end
+print ' ' * (33)
+print number(count,4)
+print "\n"
+print "\n"
+
+print "Rest\n"
+count = 0
+rest.keys.sort.each do |name|
+  dots = '.' * (32 - name.length)
+  print " #{name}#{dots}"
+  n = rest[name].length
+  count += n
+  print number(n,4)
+  print "  #{rest[name][0]}"
+  print " --> MISSING new_name " if name != dojo.languages[name].new_name
+  print "\n"
+end
+print ' ' * (33)
+print number(count,4)
 print "\n"
 print "\n"
