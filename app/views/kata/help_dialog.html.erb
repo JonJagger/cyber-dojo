@@ -1,61 +1,6 @@
 
 <div class="dialog" id="help-dialog" data-width="610">
   <table>
-    <tr>
-      <td>
-        <div class="panel">
-        <table>
-          <tr>
-            <td>
-              <table>
-                <tr>
-                  <td>
-                    <%= logo_image(50,'') %>
-                  </td>
-                  <td>
-                    <%= raw t("views.kata_help.opens_a_home_page") %>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td>
-              <table>
-                <tr>
-                  <td>
-                    <%= traffic_light_image('red',22,65) %>
-                  </td>
-                  <td>
-                    <%= traffic_light_image('amber',22,65) %>
-                  </td>
-                  <td>
-                    <%= traffic_light_image('green',22,65) %>
-                  </td>
-                  <td>
-                    &nbsp;
-                  </td>
-                  <td>
-                    <%= raw t("views.kata_help.opens_a_diff_review") %>
-                  </td>
-                </tr>
-              </table>
-            </td>
-            <td>
-              <table>
-                <tr>
-                  <td>
-                    <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
-                  </td>
-                  <td>
-                    <%= raw t("views.kata_help.opens_a_dashboard_page") %>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-        </div>
-      </td>
-    </tr>
 
     <tr>
       <td>
@@ -70,7 +15,8 @@
                 </button>
               </td>
               <td>
-                &nbsp;<%= t("views.kata_help.runs_the_tests") %>
+                &nbsp;<%= t("views.kata_help.runs_the_tests") %><br/>
+                &nbsp;creates a new traffic light
               </td>
             </tr>
           </table>
@@ -148,6 +94,50 @@
               <td><b>alt-k</b></td> <td>&nbsp;</td> <td><%= raw t('views.kata_help.open_the_previous_lit_file') %></td>
             </tr>
           </table>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="panel">
+        <table>
+          <tr>
+            <td>
+              <table>
+                <tr>
+                  <td>
+                    <%= traffic_light_image('red',20,60) %>
+                  </td>
+                  <td>
+                    <%= traffic_light_image('amber',20,60) %>
+                  </td>
+                  <td>
+                    <%= traffic_light_image('green',20,60) %>
+                  </td>
+                  <td>
+                    &nbsp;
+                  </td>
+                  <td>
+                    <%= raw t("views.kata_help.opens_a_diff_review") %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table>
+                <tr>
+                  <td>
+                    <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
+                  </td>
+                  <td>
+                    <%= raw t("views.kata_help.opens_a_dashboard_page") %>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
         </div>
       </td>
     </tr>
