@@ -64,12 +64,9 @@
   }
 
   #traffic-lights {
-    width: 61em;
+    width: 835px;  // line-numbers=35, file-content=800
     overflow-x: auto;
-    margin: {
-      top: 5px;
-      left: 0px;
-    }
+    margin: 0px;
     &::-webkit-scrollbar:horizontal {
         height: 6px;
     }
@@ -92,4 +89,3 @@
     }
   }
 }
-
