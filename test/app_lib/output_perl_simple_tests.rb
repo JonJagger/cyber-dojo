@@ -27,6 +27,8 @@ class OutputPerlTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "one passing test is green" do
     output =
       [
@@ -37,6 +39,8 @@ class OutputPerlTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "one passing test and one failing test is red" do
     output =
@@ -59,6 +63,8 @@ class OutputPerlTests < ActionController::TestCase
       ].join("\n")
     assert_equal :red, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "syntax error is amber" do
     output =
@@ -84,6 +90,8 @@ class OutputPerlTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "aborted due to compilation errors is amber" do
     output =
       [
@@ -105,6 +113,8 @@ class OutputPerlTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_perl_test_simple(output)

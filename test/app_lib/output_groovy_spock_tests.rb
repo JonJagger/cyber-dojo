@@ -10,6 +10,8 @@ class OutputGroovySpockTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the first kind is amber" do
     output =
     [
@@ -28,6 +30,8 @@ class OutputGroovySpockTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the second kind is amber" do
     output =
     [
@@ -40,6 +44,8 @@ class OutputGroovySpockTests < ActionController::TestCase
     ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "one fail is red" do
     output =
@@ -65,6 +71,8 @@ class OutputGroovySpockTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "one pass is red" do
     output =
     [
@@ -77,6 +85,8 @@ class OutputGroovySpockTests < ActionController::TestCase
     assert_equal :green, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "no assertions is red" do
     output =
     [
@@ -88,6 +98,8 @@ class OutputGroovySpockTests < ActionController::TestCase
     ].join("\n")
     assert_equal :red, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_groovy_spock(output)

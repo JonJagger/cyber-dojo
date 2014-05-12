@@ -23,6 +23,8 @@ class OutputErlangEUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "one pass is green" do
     output =
       [
@@ -31,6 +33,8 @@ class OutputErlangEUnitTests < ActionController::TestCase
     assert_equal :green, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "two passes is green" do
     output =
       [
@@ -38,6 +42,8 @@ class OutputErlangEUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "one pass one fail is red" do
     output =
@@ -57,6 +63,8 @@ class OutputErlangEUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error is amber" do
     output =
       [
@@ -66,6 +74,8 @@ class OutputErlangEUnitTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "makefile error is amber" do
     output =
       [
@@ -73,6 +83,8 @@ class OutputErlangEUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_eunit(output)

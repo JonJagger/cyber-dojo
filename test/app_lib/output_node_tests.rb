@@ -13,6 +13,8 @@ class OutputNodeTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "no fails and one pass is green" do
     output =
       [
@@ -20,6 +22,8 @@ class OutputNodeTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "syntax error of the first kind is amber" do
     output =
@@ -29,6 +33,8 @@ class OutputNodeTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the second kind is amber" do
     output =
       [
@@ -36,6 +42,8 @@ class OutputNodeTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_node(output)

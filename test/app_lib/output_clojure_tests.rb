@@ -14,6 +14,8 @@ class OutputClojureTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "one error is red" do
     output =
       [
@@ -23,6 +25,8 @@ class OutputClojureTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "no fails and one pass is green" do
     output =
       [
@@ -31,6 +35,8 @@ class OutputClojureTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "one fail on 1st test and no fails on 2nd test is red" do
     output =
@@ -43,6 +49,8 @@ class OutputClojureTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "no fails on 1st test and one fail on 2nd test is red" do
     output =
       [
@@ -53,6 +61,8 @@ class OutputClojureTests < ActionController::TestCase
       ].join("\n")
     assert_equal :red, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "no fails on 1st test and no fail on 2nd test is green" do
     output =
@@ -65,6 +75,8 @@ class OutputClojureTests < ActionController::TestCase
     assert_equal :green, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "mix of amber and red is amber" do
     output =
       [
@@ -74,6 +86,8 @@ class OutputClojureTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "mix of amber and green is amber" do
     output =
@@ -85,6 +99,8 @@ class OutputClojureTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "mistake in cyber-dojo.sh is amber" do
     output =
       [
@@ -92,6 +108,8 @@ class OutputClojureTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_clojure_test(output)

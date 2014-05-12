@@ -25,17 +25,23 @@ class OutputParserTests < ActionController::TestCase
     assert_equal expected, OutputParser::parse('ignored', output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "terminated by the server after 5 seconds is amber" do
     output = "Terminated by the cyber-dojo server after 5 seconds"
     expected = { 'colour' => 'amber' }
     assert_equal expected, OutputParser::parse('ignored', output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "terminated by the server after 1 second is amber" do
     output = "Terminated by the cyber-dojo server after 1 second"
     expected = { 'colour' => 'amber' }
     assert_equal expected, OutputParser::parse('ignored', output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when not terminated unit_test_framework name is used to select parser" do
     output =

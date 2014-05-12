@@ -20,6 +20,8 @@ class OutputHaskellTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "one pass is green" do
     output =
       [
@@ -30,6 +32,8 @@ class OutputHaskellTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "one pass one fail is red" do
     output =
@@ -47,6 +51,8 @@ class OutputHaskellTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error is amber" do
     output =
       [
@@ -54,6 +60,8 @@ class OutputHaskellTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "no tests is amber" do
     # Got this by raising an error exception
@@ -67,6 +75,8 @@ class OutputHaskellTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_hunit(output)

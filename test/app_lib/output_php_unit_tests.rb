@@ -28,6 +28,8 @@ class OutputPhpUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "one pass is green" do
     output =
       [
@@ -43,6 +45,8 @@ class OutputPhpUnitTests < ActionController::TestCase
     assert_equal :green, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error is amber" do
     output =
       [
@@ -50,6 +54,8 @@ class OutputPhpUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "one pass one fail is red" do
     output =
@@ -73,6 +79,8 @@ class OutputPhpUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :red, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "multiple calls in cyber-dojo.sh and one overall-pass and one overall-fail" do
     output =
@@ -106,6 +114,8 @@ class OutputPhpUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "red output then amber output is amber" do
     output =
       [
@@ -131,6 +141,8 @@ class OutputPhpUnitTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "green output then amber output is amber" do
     output =
       [
@@ -148,10 +160,14 @@ class OutputPhpUnitTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "phpunit not installed is amber" do
     output = "./cyber-dojo.sh: line 1: phpunit: command not found"
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_php_unit(output)

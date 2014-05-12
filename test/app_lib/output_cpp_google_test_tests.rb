@@ -33,6 +33,8 @@ class OutputCppGoogleTestTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "initial amber is amber" do
     output =
     [
@@ -44,6 +46,8 @@ class OutputCppGoogleTestTests < ActionController::TestCase
     ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test " initial green is green" do
     output =
@@ -62,6 +66,8 @@ class OutputCppGoogleTestTests < ActionController::TestCase
     ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_google_test(output)

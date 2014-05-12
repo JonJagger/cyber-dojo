@@ -10,6 +10,8 @@ class OutputGroovyJUnitTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "initial red is red" do
     output =
     [
@@ -29,6 +31,8 @@ class OutputGroovyJUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test " initial green is green" do
     output =
     [
@@ -40,6 +44,8 @@ class OutputGroovyJUnitTests < ActionController::TestCase
     ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "syntax error of the first kind is amber" do
     output =
@@ -54,6 +60,8 @@ class OutputGroovyJUnitTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "two passes and no fail is green" do
     output =
     [
@@ -65,6 +73,8 @@ class OutputGroovyJUnitTests < ActionController::TestCase
     ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "one pass one fail is red" do
     output =
@@ -84,6 +94,8 @@ class OutputGroovyJUnitTests < ActionController::TestCase
     ].join("\n")
     assert_equal :red, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_groovy_junit(output)

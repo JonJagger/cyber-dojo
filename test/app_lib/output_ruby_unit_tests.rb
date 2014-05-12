@@ -34,6 +34,8 @@ class OutputRubyUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "one failing test no passing tests is red" do
     output =
       [
@@ -55,6 +57,8 @@ class OutputRubyUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "one passing test no failing test is green" do
     output =
       [
@@ -70,6 +74,8 @@ class OutputRubyUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "one passing test one failing test is red" do
     output =
@@ -92,6 +98,8 @@ class OutputRubyUnitTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the first kind is amber" do
     output =
       [
@@ -101,6 +109,8 @@ class OutputRubyUnitTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the second kind is amber" do
     output =
       [
@@ -108,6 +118,8 @@ class OutputRubyUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "syntax error of the third kind is amber" do
     output =
@@ -130,6 +142,8 @@ class OutputRubyUnitTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_ruby_test_unit(output)

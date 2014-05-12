@@ -16,6 +16,8 @@ class OutputCAssertTests < ActionController::TestCase
     assert_equal :red, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the first kind is amber" do
     output =
       [
@@ -30,6 +32,8 @@ class OutputCAssertTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "syntax error of the second kind is amber" do
     output =
     [
@@ -39,6 +43,8 @@ class OutputCAssertTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "makefile error is amber" do
     output =
       [
@@ -46,6 +52,8 @@ class OutputCAssertTests < ActionController::TestCase
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   test "throws exception so make fails is amber" do
     output =
@@ -59,6 +67,8 @@ class OutputCAssertTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test "two passes is green" do
     output =
       [
@@ -69,6 +79,8 @@ class OutputCAssertTests < ActionController::TestCase
       ].join("\n")
     assert_equal :green, colour_of(output)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
     OutputParser::parse_cassert(output)

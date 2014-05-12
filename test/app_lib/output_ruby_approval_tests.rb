@@ -153,6 +153,8 @@ class OutputRubyApprovalTests < ActionController::TestCase
     assert_equal :amber, colour_of(output)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   def colour_of(output)
     OutputParser::parse_ruby_approvals(output)
   end
