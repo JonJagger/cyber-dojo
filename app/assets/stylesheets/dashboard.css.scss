@@ -3,14 +3,16 @@
 
   margin: 25px;
 
-  #age-container, #controls-container {
-    @include ghost-panel(10px);
-    margin: 15px;
+  #age-container, #controls-container, #team-bulb-counts-container {
+    @include ghost-panel(5px);
+    @include right-align(15px);
   }
 
-  #team-bulb-counts-container {
-    @include ghost-panel(5px);
-    margin: 15px;
+  #age-container {
+    #days, #hours, #minutes, #seconds {
+      position: relative;
+      top: +1px;
+    }
   }
 
   #help-button-container {
@@ -19,13 +21,6 @@
     #help-button {
       @include font-size-tiny();
       @include rounded-corner(15px);
-    }
-  }
-
-  #age-container {
-    #days, #hours, #minutes, #seconds {
-      position: relative;
-      top: +1px;
     }
   }
 
@@ -49,7 +44,6 @@
       color: lighten(black,40%);
       text-align: center;
     }
-
   }
 
 }
