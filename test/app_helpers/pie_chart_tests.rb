@@ -5,7 +5,7 @@ class PieChartTests < ActionView::TestCase
 
   include PieChartHelper
 
-  test "pie-chart counts lights if counts not provided" do
+  test "pie-chart from traffic-lights" do
     lights = [
       { 'colour' => 'red' },
       { 'colour' => 'red' },
@@ -26,14 +26,7 @@ class PieChartTests < ActionView::TestCase
     assert_equal expected, actual
   end
 
-  test "pie-chart uses counts if provides" do
-    lights = [
-      { 'colour' => 'red' },
-      { 'colour' => 'red' },
-      { 'colour' => 'amber' },
-      { 'colour' => 'amber' },
-      { 'colour' => 'green' }
-    ]
+  test "pie-chart from counts" do
     counts = {
       'red' => 5,
       'amber' => 0,
@@ -48,7 +41,7 @@ class PieChartTests < ActionView::TestCase
       " width='42'" +
       " height='42'>" +
       "</canvas>"
-    actual = pie_chart(lights, 42, counts)
+    actual = pie_chart_from_counts(counts, 42)
     assert_equal expected, actual
   end
 

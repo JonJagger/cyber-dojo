@@ -6,7 +6,9 @@ var cyberDojo = (function(cd, $) {
   cd.pieChart = function(nodes) {
     // Chart.js http://www.chartjs.org/docs/
     var options = {
-      segmentShowStroke : false,
+      segmentShowStroke : true,
+      segmentStrokeWidth: 1,
+      segmentStrokeColor : "#757575",
       animation: false
     };
     var plural = function(n,word) {

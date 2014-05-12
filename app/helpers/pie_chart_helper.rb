@@ -1,10 +1,15 @@
 
 module PieChartHelper
 
-  def pie_chart(traffic_lights, size, counts={})
-     counts['red'] = tally(counts,traffic_lights,'red')
-     counts['amber'] = tally(counts,traffic_lights,'amber')
-     counts['green'] = tally(counts,traffic_lights,'green')
+  def pie_chart(traffic_lights, size)
+     pie_chart_from_counts({
+        'red'   => count(traffic_lights,'red'),
+        'amber' => count(traffic_lights,'amber'),
+        'green' => count(traffic_lights,'green')
+     }, size)
+  end
+
+  def pie_chart_from_counts(counts, size)
      ("<canvas" +
         " class='pie'" +
         " data-red-count='#{counts['red']}'" +
@@ -17,7 +22,7 @@ module PieChartHelper
 
 private
 
-  def tally(counts, traffic_lights, colour)
+  def XXXtally(counts, traffic_lights, colour)
      counts.include?(colour) ? counts[colour] : count(traffic_lights,colour)
   end
 
