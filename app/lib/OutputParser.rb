@@ -188,8 +188,8 @@ module OutputParser
   end
 
   def self.parse_cpputest(output)
-    return :red   if /Errors /.match(output)
-    return :green if /OK /.match(output)
+    return :red   if /Errors \((\d+) failures, (\d+) tests/.match(output)
+    return :green if /OK \((\d+) tests, (\d+) ran/.match(output)
     return :amber
   end
 
@@ -216,20 +216,5 @@ module OutputParser
       :amber
     end
   end
-
-=begin
-  def self.parse_js_test_simple(output)
-    amber_pattern = Regexp.new('Exception in thread "main" org.mozilla')
-    red_pattern = Regexp.new('FAILED:assertEqual')
-    if amber_pattern.match(output)
-      :amber
-    elsif red_pattern.match(output)
-      :red
-    else
-      :green
-    end
-  end
-
-=end
 
 end
