@@ -15,17 +15,16 @@ class DifferControllerTest < IntegrationTest
   test "no lines different in any files between successive tags" do
     id = checked_save_id
 
-    get 'dojo/enter_json', {
+    get 'dojo/enter_json',
       :id => id
-    }
+
     avatar_name = json['avatar_name']
 
-    post '/kata/edit', {
+    post '/kata/edit',
       :id => id,
       :avatar => avatar_name
-    }
 
-    post 'kata/run_tests', { # 1
+    post 'kata/run_tests', # 1
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -37,9 +36,8 @@ class DifferControllerTest < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
 
-    post 'kata/run_tests', { # 2
+    post 'kata/run_tests', # 2
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -51,15 +49,13 @@ class DifferControllerTest < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
 
-    get 'differ/diff', {
+    get 'differ/diff',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
       :was_tag => 1,
       :now_tag => 2
-    }
 
     assert_response :success
     info = " " + id + ":" + avatar_name
@@ -95,17 +91,16 @@ class DifferControllerTest < IntegrationTest
     Thread.current[:runner] = HostRunner.new
     id = checked_save_id
 
-    get 'dojo/enter_json', {
+    get 'dojo/enter_json',
       :id => id
-    }
+
     avatar_name = json['avatar_name']
 
-    post '/kata/edit', {
+    post '/kata/edit',
       :id => id,
       :avatar => avatar_name
-    }
 
-    post 'kata/run_tests', { # 1
+    post 'kata/run_tests', # 1
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -117,9 +112,8 @@ class DifferControllerTest < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
 
-    post 'kata/run_tests', { # 2
+    post 'kata/run_tests', # 2
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -131,15 +125,13 @@ class DifferControllerTest < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
 
-    get 'differ/diff', {
+    get 'differ/diff',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
       :was_tag => 1,
       :now_tag => 2
-    }
 
     assert_response :success
     info = " " + id + ":" + avatar_name + ":"
