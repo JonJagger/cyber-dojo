@@ -24,14 +24,6 @@ class Dojo
     Katas.new(self)
   end
 
-  def format_is_rb?
-    format == 'rb'
-  end
-
-  def format_is_json?
-    format == 'json'
-  end
-
 private
 
   def make_time(now)

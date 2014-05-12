@@ -29,11 +29,12 @@ class AvatarsTests < ActionController::TestCase
     assert_equal Avatars.names.collect{|name| name[0]}.uniq.length, Avatars.names.length
   end
 
-  test "format" do
+  test "an avatar's format is kata's format which is dojo's format" do
     avatar = @kata.start_avatar
     assert_equal @format, avatar.format
-    assert !avatar.format_is_rb?
-    assert avatar.format_is_json?
+    assert avatar.format === @format
+    assert @kata.format === @format
+    assert @dojo.format === @format
   end
 
   test "kata.avatars() returns all avatars started in the kata" do

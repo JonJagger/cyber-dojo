@@ -8,7 +8,7 @@ class Avatar
 
   attr_reader :kata, :name
 
-  def_delegators :kata, :format, :format_is_rb?, :format_is_json?
+  def_delegators :kata, :format
 
   def exists?
     Avatars.names.include?(name) && paas.exists?(self)
@@ -93,8 +93,8 @@ private
   def parse(filename, tag)
     text = paas.read(self, filename) if tag == nil
     text = paas.git_show(self, "#{tag}:#{filename}") if tag != nil
-    return JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
-    return JSON.parse(text) if format_is_json?
+    return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
+    return JSON.parse(text) if format === 'json'
   end
 
 end

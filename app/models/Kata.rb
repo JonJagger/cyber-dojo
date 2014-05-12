@@ -13,14 +13,6 @@ class Kata
     return dojo.format
   end
 
-  def format_is_rb?
-    format === 'rb'
-  end
-
-  def format_is_json?
-    format === 'json'
-  end
-
   def exists?
     paas.exists?(self)
   end
@@ -67,8 +59,8 @@ class Kata
   def manifest
     raw = paas.read(self, manifest_filename)
     text = raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
-    return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format_is_rb?
-    return @manifest ||= JSON.parse(text) if format_is_json?
+    return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
+    return @manifest ||= JSON.parse(text) if format === 'json'
   end
 
 private

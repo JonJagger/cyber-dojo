@@ -23,13 +23,11 @@ class KatasTests < ActionController::TestCase
   test "dojo.make_kata in .rb format" do
     set_paas('rb')
     assert_equal 'rb', @dojo.format
-    assert @dojo.format_is_rb?
-    assert !@dojo.format_is_json?
+    assert @dojo.format === 'rb'
     #
     kata = @dojo.make_kata(@language, @exercise)
     assert_equal 'rb', kata.format
-    assert kata.format_is_rb?
-    assert !kata.format_is_json?
+    assert kata.format === 'rb'
     assert_equal @language.name, kata.language.name
     assert_equal @exercise.name, kata.exercise.name
     #
@@ -46,13 +44,11 @@ class KatasTests < ActionController::TestCase
   test "dojo.make_kata in .json format" do
     set_paas('json')
     assert_equal 'json', @dojo.format
-    assert !@dojo.format_is_rb?
-    assert @dojo.format_is_json?
+    assert @dojo.format === 'json'
     #
     kata = @dojo.make_kata(@language, @exercise)
     assert_equal 'json', kata.format
-    assert !kata.format_is_rb?
-    assert kata.format_is_json?
+    assert kata.format === 'json'
     assert_equal @language.name, kata.language.name
     assert_equal @exercise.name, kata.exercise.name
     #

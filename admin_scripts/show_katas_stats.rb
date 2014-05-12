@@ -1,7 +1,10 @@
 
-# script to show frequency of katas by first 2 digits of their id.
-# for example, suppose the output is
+# Script to show frequency of katas by first 2 digits of their id.
+# If there is a bias in the generation of random kata ids this
+# may help show it. For example, suppose the output is
+#
 # Frequencies (221/255)
+#
 #    1................................................................64
 #    2..........................................................................74
 #    3...........................................43
@@ -10,18 +13,18 @@
 #    6..2
 #    7...3
 #
-# then this means
+# What are we counting?
+# The number of katas underneath the 2-digit katas/sub-folder
+# eg katas/34 katas/E4 katas/02 katas/F8 etc
 #
-# 64 2-digit codes have 1 kata
-# 74 2-digit codes have 2 katas
-# 43 2-digit codes have 3 katas
-# 23 2-digit codes have 4 katas
-# 12 2-digit codes have 5 katas
-#  2 2-digit codes have 6 katas
-#  3 2-digit codes have 7 katas
+# 64 sub-folders have 1 kata
+# 74 sub-folders have 2 katas
+# 43 sub-folders have 3 katas
+# 23 sub-folders have 4 katas
+# 12 sub-folders have 5 katas
+#  2 sub-folders have 6 katas
+#  3 sub-folders have 7 katas
 #
-# where 2-digit code are, eg, 34 E4 02 F8
-# the first two digits of katas ids.
 
 require File.expand_path(File.dirname(__FILE__)) + '/domain_lib'
 
@@ -61,6 +64,7 @@ totals.each do |smid,count|
 end
 
 print "Frequencies (#{tally}/256)\n"
+print "\n"
 freqs.sort.each do |count,freq|
   print number(count,5) + ' ' + ('.' * freq) + freq.to_s + "\n"
 end

@@ -157,8 +157,7 @@ class KataTests < ModelTestCase
       @paas.dir(kata).make
       @paas.dir(kata).spy_exists?('manifest.rb')
       assert_equal 'rb', kata.format
-      assert kata.format_is_rb?
-      assert !kata.format_is_json?
+      assert kata.format === 'rb'
       assert_equal 'manifest.rb', kata.manifest_filename
     end
   end
