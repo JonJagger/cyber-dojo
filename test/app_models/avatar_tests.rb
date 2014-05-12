@@ -48,7 +48,7 @@ class AvatarTests < ModelTestCase
         :visible_filenames => visible_files.keys,
         :support_filenames => [ support_filename ]
       }))
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
 
       kata = @dojo.make_kata(language, exercise)

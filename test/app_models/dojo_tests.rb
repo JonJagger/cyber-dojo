@@ -26,7 +26,7 @@ class DojoTests < ModelTestCase
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({
         :unit_test_framework => 'JUnit'
       }))
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       kata = @dojo.make_kata(language, exercise)
       assert_equal 'manifest.'+fmt, kata.manifest_filename

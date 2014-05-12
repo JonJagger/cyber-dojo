@@ -19,14 +19,14 @@ class ExerciseTests < ModelTestCase
 
   test "name is as set in ctor" do
     json_and_rb do
-      exercise = @dojo.exercises['Yahtzee']
-      assert_equal 'Yahtzee', exercise.name
+      exercise = @dojo.exercises['test_Yahtzee']
+      assert_equal 'test_Yahtzee', exercise.name
     end
   end
 
   test "instructions are loaded" do
     json_and_rb do
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       filename = 'instructions'
       content = 'fishing for Salmon on the Verdal'
       @paas.dir(exercise).spy_read(filename, content)

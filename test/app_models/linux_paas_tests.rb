@@ -4,7 +4,7 @@ class LinuxPaasTests < ModelTestCase
 
   test "path(exercise)" do
     json_and_rb do
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       assert @paas.path(exercise).match(exercise.name)
       assert path_ends_in_slash?(exercise)
       assert !path_has_adjacent_separators?(exercise)

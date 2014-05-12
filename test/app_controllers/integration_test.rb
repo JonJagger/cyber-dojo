@@ -14,8 +14,8 @@ class IntegrationTest  < ActionController::IntegrationTest
   def checked_save_id
     post 'setup/save',
       :language => 'Ruby-installed-and-working',
-      :exercise => 'Yahtzee'
-    
+      :exercise => 'test_Yahtzee'
+
     json['id']
   end
 

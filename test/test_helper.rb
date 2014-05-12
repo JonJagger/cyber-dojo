@@ -45,7 +45,7 @@ class ActiveSupport::TestCase
     system("rm -rf #{root_path}/katas/*")
   end
 
-  def make_kata(dojo, language_name, exercise_name = 'Yahtzee')
+  def make_kata(dojo, language_name, exercise_name = 'test_Yahtzee')
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
     dojo.make_kata(language, exercise)

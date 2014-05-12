@@ -171,11 +171,6 @@ RESUME/FORK? FROM RENAMED LANGUAGE
   to
   Java-Approval
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINE-NUMBERS
-  Dynamically change width from <99 to 100+
-  Make the left padding on the line-numbers (on test page)
-  a bit thinner. Only if its >99 lines long use extra padding.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 NEW-LANGUAGES
   https://github.com/gdunn/cyberdojo
   Add UnitTest++ C/C++

@@ -54,7 +54,7 @@ class ChooseTests < ActionController::TestCase
     test_languages_names.each do |language|
       languages = test_languages_names - [language]
       assert !languages.include?(language)
-      kata = make_kata(@dojo, language, 'Yahtzee')
+      kata = make_kata(@dojo, language, 'test_Yahtzee')
       assert kata.exists?
       assert_is_randomly_chosen_language(languages, params_id=kata.id.to_s, kata)
     end
@@ -65,7 +65,7 @@ class ChooseTests < ActionController::TestCase
        "and language is known " +
        "then choose that language" do
     test_languages_names.each_with_index do |language,n|
-      kata = make_kata(@dojo, language, 'Yahtzee')
+      kata = make_kata(@dojo, language, 'test_Yahtzee')
       id = kata.id.to_s
       assert kata.exists?
       (1..100).each do

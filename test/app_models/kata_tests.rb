@@ -37,7 +37,7 @@ class KataTests < ModelTestCase
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({
         :unit_test_framework => 'JUnit'
       }))
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       now = Time.now
       past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
@@ -57,7 +57,7 @@ class KataTests < ModelTestCase
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({
         :unit_test_framework => 'waffle'
       }))
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       kata = @dojo.make_kata(language, exercise, id, now)
@@ -99,7 +99,7 @@ class KataTests < ModelTestCase
       }))
       @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
       @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
-      exercise = @dojo.exercises['Yahtzee']
+      exercise = @dojo.exercises['test_Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       kata = @dojo.make_kata(language, exercise, id, now)
@@ -194,7 +194,7 @@ class KataTests < ModelTestCase
     }))
     @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
     @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
-    exercise = @dojo.exercises['Yahtzee']
+    exercise = @dojo.exercises['test_Yahtzee']
     @paas.dir(exercise).spy_read('instructions', 'your task...')
     @dojo.make_kata(language, exercise)
   end

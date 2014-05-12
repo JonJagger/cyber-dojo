@@ -28,7 +28,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   test "building diff view from git repo with modified file" do
     language = @dojo.languages['Ruby-installed-and-working']
-    exercise = @dojo.exercises['Yahtzee']
+    exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
     kata = @dojo.make_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
@@ -148,7 +148,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   test "building git diff view from repo with deleted file" do
     language = @dojo.languages['Ruby-installed-and-working']
-    exercise = @dojo.exercises['Yahtzee']
+    exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
     kata = @dojo.make_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
@@ -198,7 +198,7 @@ class GitDiffViewTests < ActionController::TestCase
 
   test "only visible files are commited and are seen in diff_lines" do
     language = @dojo.languages['test-Java-JUnit']
-    exercise = @dojo.exercises['Yahtzee']
+    exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`
     kata = @dojo.make_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
