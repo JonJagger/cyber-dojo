@@ -78,12 +78,12 @@ class OutputCppUTestTests < ActionController::TestCase
   test "syntax error is amber" do
     output =
       [
-      "TEST_Untitled_Create_Test::testBody()':",
-      "UntitledTest.cpp:25:24: error: 'ssss' was not declared in this scope",
-      "     FAIL(\"Start here\");ssss",
-      "                        ^",
-      "compilation terminated due to -Wfatal-errors.",
-      "make: *** [objs/UntitledTest.o] Error 1       "
+      %q{TEST_Untitled_Create_Test::testBody()':},
+      %q{UntitledTest.cpp:25:24: error: 'ssss' was not declared in this scope},
+      %q{     FAIL("Start here");ssss},
+      %q{                        ^},
+      %q{compilation terminated due to -Wfatal-errors.},
+      %q{make: *** [objs/UntitledTest.o] Error 1       }
       ].join("\n")
     assert_equal :amber, colour_of(output)
   end
