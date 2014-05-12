@@ -22,10 +22,6 @@ module PieChartHelper
 
 private
 
-  def XXXtally(counts, traffic_lights, colour)
-     counts.include?(colour) ? counts[colour] : count(traffic_lights,colour)
-  end
-
   def count(traffic_lights, colour)
      traffic_lights.count{|light| light['colour'] === colour}
   end
