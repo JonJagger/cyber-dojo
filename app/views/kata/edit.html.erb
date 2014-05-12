@@ -3,6 +3,52 @@
 
 $(document).ready(function() {
 
+  var spinner = $('#spinner');
+  var testButton = $('#test-button');
+
+  var ajaxAfter = function() {
+    var allTheWay = 100000;
+    spinner.hide();
+    $('#overlay').remove();
+    cd.loadFile('output');
+    testButton.attr('disabled', false);
+    $('#traffic-lights').scrollLeft(allTheWay);
+  };
+
+  $('form').bind('ajax:before', function(evt, data, status, xhr) {
+    testButton.attr('disabled', true);
+    $('body').prepend('<div id="overlay"></div>');
+    spinner.show();
+    cd.storeOutgoingFileHashes();
+  });
+
+  $('form').bind('ajax:error', function(evt, data, status, xhr) {
+    var errorMessage = "" +
+      "Files not sent files to the cyber-dojo server." + "\n" +
+      "Have you lost your network connection?";
+    cd.fileContentFor('output').val(errorMessage);
+    ajaxAfter();
+  });
+
+  $('form').bind('ajax:success', function(evt, data, status, xhr) {
+    cd.rebuildFilenameList();
+    // when the ajax replaces output the shortcuts
+    // are lost so need rebinding
+    var output = cd.fileContentFor('output');
+    cd.bindHotKeys(output);
+    cd.bindAllLineNumbers();
+    cd.storeIncomingFileHashes();
+    ajaxAfter();
+  });
+
+});
+
+//--></script>
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
   cd.tabExpansion = function() {
     return "<%= @tab %>";
   };
@@ -40,8 +86,7 @@ $(document).ready(function() {
   if (<%= @traffic_lights.length === 0 %>) {
     var message = "\n    Please wait while the tests are run...";
     cd.fileContentFor('output').val(message);
-    cd.loadFile('output');
-    $('#test-button').attr('disabled', true);
+    cd.loadFile('instructions');
     cd.testForm().submit();
   } else {
     var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
@@ -82,15 +127,13 @@ $(document).ready(function() {
       </td>
     </tr>
     <tr class="valign-top">
-      <td>
-      </td>
+      <td></td>
       <td>
         <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
       </td>
-      <td>
-      </td>
+      <td></td>
     </tr>
   </table>
 </div>
