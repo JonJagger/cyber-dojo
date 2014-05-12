@@ -2,20 +2,40 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class IdTests < ActionController::TestCase
 
-  test "valid? is false if empty-string-id" do
-    assert_equal false, Id.new("").valid?
+  test "valid? is false if empty-id-string" do
+    assert !Id.new("").valid?
+  end
+
+  def valid_id_string
+    'ABDEF01289'
+  end
+
+  test "valid? is false if id-string less than 10 chars" do
+    valid_id_string.each_char do |char|
+      niner = valid_id_string.tr(char,'')
+      assert !Id.new(niner).valid?
+    end
   end
 
   test "valid? is true for valid 10char id" do
-    assert_equal true, Id.new('ABCDE12345').valid?
+    assert Id.new(valid_id_string).valid?
   end
 
-  test "generates an id if one is not supplied" do
+  test "valid? is false if id-string contains non-hex char" do
+    valid_id_string.each_char do |char|
+      bad_chars = "XabcdeG".each_char do |bad_char|
+        bad_id = valid_id_string.sub(char, bad_char)
+        assert !Id.new(bad_id).valid?
+      end
+    end
+  end
+
+  test "generates a valid id if one is not supplied" do
     id = Id.new
-    assert_not_equal 'ABCDE12345', id.to_s
+    assert id.valid?
   end
 
-  test "uses id if supplied - useful for testing" do
+  test "uses id if supplied (useful for testing)" do
     given = 'ABCDE12345'
     id = Id.new(given)
     assert_equal given, id.to_s
