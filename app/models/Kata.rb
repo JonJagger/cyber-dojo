@@ -14,7 +14,7 @@ class Kata
   end
 
   def exists?
-    paas.exists?(self)
+    id.valid? && paas.exists?(self)
   end
 
   def id

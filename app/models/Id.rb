@@ -6,6 +6,10 @@ class Id
     @id = id
   end
 
+  def valid?
+    @id.length === 10 && @id.each_char.all?{|ch| hex?(ch)}
+  end
+
   def ==(rhs)
     self.to_s == rhs.to_s
   end
@@ -21,6 +25,12 @@ class Id
   def outer
     # outer_dir will be unique inside inner_dir
     @id[2..-1] || ""
+  end
+
+private
+
+  def hex?(ch)
+    "0123456789ABCDEF".include?(ch)
   end
 
 end

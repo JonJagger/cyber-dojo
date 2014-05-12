@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class IdTests < ActionController::TestCase
 
+  test "valid? is false if empty-string-id" do
+    assert_equal false, Id.new("").valid?
+  end
+
+  test "valid? is true for valid 10char id" do
+    assert_equal true, Id.new('ABCDE12345').valid?
+  end
+
   test "generates an id if one is not supplied" do
     id = Id.new
     assert_not_equal 'ABCDE12345', id.to_s
