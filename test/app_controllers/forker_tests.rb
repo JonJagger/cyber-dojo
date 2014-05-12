@@ -8,25 +8,26 @@ class ForkerControllerTest < IntegrationTest
 
   def teardown
     # ensure Thread.current settings from these tests don't linger
-    thread = Thread.current
     thread[:disk] = nil
     thread[:git] = nil
     thread[:runner] = nil
   end
 
+  def thread
+    Thread.current
+  end
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if id is bad then fork fails and reason is given as id" do
-    thread = Thread.current
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = StubGit.new
 
-    get "forker/fork", {
+    get "forker/fork",
       :format => :json,
       :id => 'helloworld',
       :avatar => 'hippo',
       :tag => 1
-    }
+
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'id', json['reason'], json.inspect
@@ -38,23 +39,22 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if language folder no longer exists the fork fails and reason is given as language" do
-    thread = Thread.current
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = StubGit.new
     thread[:runner] = runner = StubRunner.new
     paas = LinuxPaas.new(disk, git, runner)
-    format = 'json'
-    dojo = Dojo.new(paas, root_path, format)
+    dojo = Dojo.new(paas, root_path, 'json')
     language = dojo.languages['xxxx']
     id = '1234512345'
     kata = dojo.katas[id]
     paas.dir(kata).spy_read('manifest.rb', { :language => language.name }.inspect)
-    get "forker/fork", {
+
+    get "forker/fork",
       :format => :json,
       :id => id,
       :avatar => 'hippo',
       :tag => 1
-    }
+
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'language', json['reason'], json.inspect
@@ -67,13 +67,11 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "if avatar not started the fork fails and reason is given as avatar" do
-    thread = Thread.current
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = StubGit.new
     thread[:runner] = runner = StubRunner.new
     paas = LinuxPaas.new(disk, git, runner)
-    format = 'json'
-    dojo = Dojo.new(paas, root_path, format)
+    dojo = Dojo.new(paas, root_path, 'json')
     language = dojo.languages['Ruby-installed-and-working']
     paas.dir(language).make
     paas.dir(language).spy_exists?('manifest.json')
@@ -81,12 +79,13 @@ class ForkerControllerTest < IntegrationTest
     id = '1234512345'
     kata = dojo.katas[id]
     paas.dir(kata).spy_read('manifest.json', JSON.unparse({ :language => language.name }))
-    get "forker/fork", {
+
+    get "forker/fork",
       :format => :json,
       :id => id,
       :avatar => 'hippo',
       :tag => 1
-    }
+
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'avatar', json['reason'], json.inspect
@@ -108,13 +107,11 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def bad_tag_test(bad_tag)
-    thread = Thread.current
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = StubGit.new
     thread[:runner] = runner = StubRunner.new
     paas = LinuxPaas.new(disk, git, runner)
-    format = 'json'
-    dojo = Dojo.new(paas, root_path, format)
+    dojo = Dojo.new(paas, root_path, 'json')
     language_name = 'Ruby-installed-and-working'
     language = dojo.languages[language_name]
     paas.dir(language).make
@@ -130,12 +127,13 @@ class ForkerControllerTest < IntegrationTest
         "time" => [2014, 2, 15, 8, 54, 6],
         "number" => 1
       }].inspect)
-    get "forker/fork", {
+
+    get "forker/fork",
       :format => :json,
       :id => id,
-      :avatar => 'hippo',
+      :avatar => avatar_name,
       :tag => bad_tag
-    }
+
     assert_not_nil json, "assert_not_nil json"
     assert_equal false, json['forked'], json.inspect
     assert_equal 'tag', json['reason'], json.inspect
@@ -147,13 +145,11 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "when id,language,avatar,tag all ok fork works new dojo's id is returned" do
-    thread = Thread.current
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = StubGit.new
     thread[:runner] = runner = StubRunner.new
     paas = LinuxPaas.new(disk, git, runner)
-    format = 'json'
-    dojo = Dojo.new(paas, root_path, format)
+    dojo = Dojo.new(paas, root_path, 'json')
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
     kata = dojo.katas[id]
@@ -177,12 +173,12 @@ class ForkerControllerTest < IntegrationTest
         "number" => 2
       },
       ].inspect)
-    get "forker/fork", {
+
+    get "forker/fork",
       :format => :json,
       :id => id,
       :avatar => avatar_name,
       :tag => 2
-    }
 
     assert_not_nil json, "assert_not_nil json"
     assert_equal true, json['forked'], json.inspect
