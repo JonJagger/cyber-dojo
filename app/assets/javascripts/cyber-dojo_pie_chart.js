@@ -9,6 +9,7 @@ var cyberDojo = (function(cd, $) {
       segmentShowStroke : true,
       segmentStrokeWidth: 1,
       segmentStrokeColor : "#757575",
+      //animationEasing : "easeOutExpo",
       animation: false
     };
     var plural = function(n,word) {

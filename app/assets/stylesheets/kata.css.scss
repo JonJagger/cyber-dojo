@@ -3,6 +3,12 @@
 
   margin: 25px;
 
+  #spinner {
+    position: absolute;
+    top: 250px;
+    left: 550px;
+  }
+
   table#test-button-container {
     #test-button {
       @include font-size-largest();
@@ -12,9 +18,6 @@
       }
       margin: 15px;
       margin-top: 0px;
-    }
-    #spinner {
-      margin-bottom: 15px;
     }
   }
 
