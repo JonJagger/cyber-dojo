@@ -25,6 +25,10 @@ class FoldersTests < ActionController::TestCase
     assert_equal nil, Folders::id_complete(@dojo.path, nil)
   end
 
+  test "id_complete when id is empty-string is empty string" do
+    assert_equal "", Folders::id_complete(@dojo.path, "")
+  end
+
   test "id_complete when id is less than 4 chars in length is unchanged id" do
     id = "123"
     assert_equal id, Folders::id_complete(@dojo.path, id)

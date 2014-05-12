@@ -11,6 +11,15 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test "exists? is false for empty-string id" do
+    json_and_rb do
+      kata = @dojo.katas[id='']
+      assert !kata.exists?
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "exists? is false before dir is made" do
     json_and_rb do
       kata = @dojo.katas[id]
@@ -36,7 +45,7 @@ class KataTests < ModelTestCase
       assert_not_equal id, kata.id
       created = Time.mktime(*kata.created)
       diff = created - past
-      assert 0 <= diff && diff < 1, "created=#{created}, past=#{past}, diff=#{past}"
+      assert 0 <= diff && diff <= 1, "created=#{created}, past=#{past}, diff=#{past}"
     end
   end
 

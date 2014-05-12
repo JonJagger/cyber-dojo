@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DISABLED-KATA
+  once a kata is a certain age (1 day?) disable its
+  test and revert buttons. How? There is no heartbeat.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
   would be nice to be able to set ENV variables for
   the root-paths for each of these 3 independently
