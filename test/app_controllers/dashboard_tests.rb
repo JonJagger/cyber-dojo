@@ -14,19 +14,13 @@ class DashboardControllerTest < IntegrationTest
   test "show avatars but no traffic-lights" do
     id = checked_save_id
     (1..4).each do |n|
-
-      get 'dojo/enter_json', {
-        :id => id
-      }
+      get 'dojo/enter_json', :id => id
       avatar_name = json['avatar_name']
-
-      get '/kata/edit', {
-        :id => id,
-        :avatar => avatar_name
-      }
+      get '/kata/edit', :id => id, :avatar => avatar_name
       assert_response :success
     end
-    get "dashboard/show", { :id => id }
+
+    get "dashboard/show", :id => id
     assert_response :success
   end
 
@@ -36,19 +30,14 @@ class DashboardControllerTest < IntegrationTest
     id = checked_save_id
     (1..3).each do |n|
 
-      get 'dojo/enter_json', {
-        :id => id
-      }
+      get 'dojo/enter_json', :id => id
       avatar_name = json['avatar_name']
 
-      get '/kata/edit', {
-        :id => id,
-        :avatar => avatar_name
-      }
+      get '/kata/edit', :id => id, :avatar => avatar_name
       assert_response :success
 
       (1..2).each do |m|
-        post 'kata/run_tests', {
+        post 'kata/run_tests',
           :id => id,
           :avatar => avatar_name,
           :file_content => {
@@ -60,17 +49,13 @@ class DashboardControllerTest < IntegrationTest
           :file_hashes_outgoing => {
             'cyber-dojo.sh' => -4545645678
           }
-        }
       end
     end
-    get "dashboard/show", {
-      :id => id
-    }
+
+    get "dashboard/show", :id => id
     assert_response :success
-    get "dashboard/show", {
-      :id => id,
-      :minute_columns => false
-    }
+
+    get "dashboard/show",  :id => id, :minute_columns => false
     assert_response :success
 
   end
@@ -80,19 +65,14 @@ class DashboardControllerTest < IntegrationTest
   test "show dashboard and open a diff-dialog" do
     id = checked_save_id
 
-    get 'dojo/enter_json', {
-      :id => id
-    }
+    get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 
-    get '/kata/edit', {
-      :id => id,
-      :avatar => avatar_name
-    }
+    get '/kata/edit', :id => id, :avatar => avatar_name
     assert_response :success
 
     (1..3).each do |m|
-      post 'kata/run_tests', {
+      post 'kata/run_tests',
         :id => id,
         :avatar => avatar_name,
         :file_content => {
@@ -104,14 +84,12 @@ class DashboardControllerTest < IntegrationTest
         :file_hashes_outgoing => {
           'cyber-dojo.sh' => -4545645678
         }
-      }
     end
-    get "dashboard/show", {
+    get "dashboard/show",
       :id => id,
       :avatar => avatar_name,
       :was_tag => 1,
       :now_tag => 2
-    }
     assert_response :success
   end
 
@@ -128,17 +106,13 @@ class DashboardControllerTest < IntegrationTest
   test "heartbeat" do
     id = checked_save_id
 
-    get 'dojo/enter_json', {
-      :id => id
-    }
+    get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 
-    get '/kata/edit', {
-      :id => id,
-      :avatar => avatar_name
-    }
+    get '/kata/edit', :id => id, :avatar => avatar_name
     assert_response :success
-    post 'kata/run_tests', {
+
+    post 'kata/run_tests',
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -150,10 +124,8 @@ class DashboardControllerTest < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
-    get 'dashboard/heartbeat', {
-      :id => id
-    }
+
+    get 'dashboard/heartbeat', :id => id
   end
 
 end

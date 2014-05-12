@@ -5,18 +5,11 @@ class ReverterControllerTest  < IntegrationTest
 
   test "revert" do
     id = checked_save_id
-
-    get 'dojo/enter_json', {
-      :id => id
-    }
+    get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
+    post '/kata/edit', :id => id, :avatar => avatar_name
 
-    post '/kata/edit', {
-      :id => id,
-      :avatar => avatar_name
-    }
-
-    post 'kata/run_tests', { # 1
+    post 'kata/run_tests', # 1
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -28,9 +21,8 @@ class ReverterControllerTest  < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
 
-    post 'kata/run_tests', { # 2
+    post 'kata/run_tests', # 2
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -42,14 +34,12 @@ class ReverterControllerTest  < IntegrationTest
       :file_hashes_outgoing => {
         'cyber-dojo.sh' => -4545645678
       }
-    }
 
-    get 'reverter/revert', {
+    get 'reverter/revert',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
       :tag => 1
-    }
 
     visible_files = json['visibleFiles']
     assert_not_nil visible_files
