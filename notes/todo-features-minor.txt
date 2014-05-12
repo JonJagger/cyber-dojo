@@ -1,7 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+KATAS-FOLDER
+  would be nice to be able to set ENV variables for
+  the root-paths for each of these 3 independently
+    o) languages/
+    o) exercises/
+    o) katas/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
-  when they are off the alignment of the
+  when they are tuned off, the alignment of the
   traffic-lights and the rhs test+filenames is wrong.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG

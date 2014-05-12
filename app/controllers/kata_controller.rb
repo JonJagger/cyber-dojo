@@ -1,8 +1,8 @@
 
 require 'Approval'
-require 'OutputParser'
 require 'FileDeltaMaker'
 require 'MakefileFilter'
+require 'OutputParser'
 
 class KataController < ApplicationController
 
