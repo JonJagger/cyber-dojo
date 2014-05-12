@@ -61,6 +61,82 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
+  # Trying to track down a fault which results in
+  # .../katas/hippo/.git
+  # being created rather than .../katas/34/76ED5521/hippo/.git
+  # dojo_controller.rb enter_json() does this...
+  #     kata = dojo.katas[id]
+  #     exists = kata.exists?
+  #     avatar = (exists ? kata.start_avatar : nil)
+  #
+  # and kata.start_avatar() does this...
+  #    paas.start_avatar(self, names)
+  #
+  # and paas.start_avatar() does this...
+  #    make_dir(avatar)
+  #    git_init(avatar, '--quiet')
+  #
+  # and paas.make_dir() does this...
+  #    dir(object).make
+  #
+  # and dir(object) does this..
+  #    disk[path(obj)]
+  #
+  # and path(obj) does this...
+  #   when Kata
+  #      path(obj.dojo.katas) + obj.id.inner + '/' + obj.id.outer + '/'
+  #    when Avatar
+  #      path(obj.kata) + obj.name + '/'
+  #
+  # now, if obj.id is the empty string this will result in
+  #    disk['.../katas///hippo'].make
+  #
+  # and OsDir.make() does this...
+  #    FileUtils.mkdir_p(path)
+  #
+  # and FileUtils.mkdir_p('.../katas///hippo')
+  # works and does indeed create .../katas/hippo
+  # The slashes collapse.
+  #
+  # So next up is
+  #    git_init(avatar, '--quiet')
+  #
+  # and git_init() does this...
+  #     @git.init(path(object), args)
+  #
+  # and git.init() does this...
+  #    run(dir, 'init', args)
+  #
+  # and git.run() does this...
+  #    `cd #{dir}; git #{command} #{args}`
+  #
+  # which will be
+  #    'cd .../katas///hippo; git init --quiet'
+  #
+  # and once again, the /// slashes collapse
+  # and this does indeed create a git repo in
+  # ./katas/hippo
+  #
+  # So it appears that in...
+  #
+  #     kata = dojo.katas[id]
+  #     exists = kata.exists?
+  #     avatar = (exists ? kata.start_avatar : nil)
+  #
+  # we are getting to the last line and calling
+  # kata.start_avatar with an id==""
+  # This implies exists? is true
+  # This implies kata.exists? is also true
+  # But I cannot see how kata.exists? is true when id="" in
+  #     kata = dojo.katas[id]
+  #
+  # The hunt continues...
+
+
+
+
+  # - - - - - - - - - - - - - - - - - - - - - -
+
   test "enter_json with empty string id => !exists" do
     bad_id = ''
 
