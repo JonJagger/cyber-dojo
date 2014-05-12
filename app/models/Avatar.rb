@@ -32,7 +32,7 @@ class Avatar
   end
 
   def test(max_duration)
-    output = paas.runner_run(sandbox, './cyber-dojo.sh', max_duration)
+    output = paas.run(sandbox, './cyber-dojo.sh', max_duration)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

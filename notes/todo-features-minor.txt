@@ -10,6 +10,8 @@ KATAS-FOLDER
 LINE-NUMBERS
   when they are tuned off, the alignment of the
   traffic-lights and the rhs test+filenames is wrong.
+  To fix this I need to use jQuery to switch the css
+  colour of the line-numbers to the background!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   show the _time_ between two tags

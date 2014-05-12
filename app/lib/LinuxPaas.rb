@@ -48,7 +48,7 @@ class LinuxPaas
       git_add(avatar, avatar.traffic_lights_filename)
 
       kata.visible_files.each do |filename,content|
-        write(avatar.sandbox, filename,content)
+        write(avatar.sandbox, filename, content)
         git_add(avatar.sandbox, filename)
       end
 
@@ -156,7 +156,7 @@ class LinuxPaas
     @runner.runnable?(language)
   end
 
-  def runner_run(sandbox, command, max_duration)
+  def run(sandbox, command, max_duration)
     @runner.run(self, sandbox, command, max_duration)
   end
 

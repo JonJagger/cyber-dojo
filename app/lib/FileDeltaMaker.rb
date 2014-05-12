@@ -5,7 +5,13 @@ module FileDeltaMaker
   # If browser file new/rename/delete events all
   # caused a git-tag on the server I could capture
   # file renames. Should result in better diffs.
-  
+  # This would mean a git_mv() method.
+  # It would also open up the architecture to
+  # finer grained commits. Eg a next logical
+  # step would be to tag-commit when switching files.
+  # When this is coded be careful that a :renamed
+  # is not *also* seen as a :deleted
+
   def self.make_delta(was, now)
     result = {
       :unchanged => [ ],
