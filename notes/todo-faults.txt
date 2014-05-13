@@ -10,6 +10,10 @@ LINE-NUMBERS
   be quite right. Viz you can get all files with
   line-numbers except one. Cannot reproduce it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-TEAM-BULB-COUNT
+  initially that has a certain size.
+  on the first refresh it grows slightly!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT DIALOG
   press << or < or > or >> once  - you get the wait-cursor
   now edit the tag-number and press return - you don't get the wait-cursor
