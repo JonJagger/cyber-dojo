@@ -2,10 +2,19 @@
 class LinuxPaas
 
   def initialize(disk, git, runner)
-    @disk,@git,@runner = disk,git,runner
+    @disk,@git,@runner,@format = disk,git,runner,'json'
   end
 
-  def create_dojo(root, format)
+  def format
+    @format
+  end
+
+  def format=(arg)
+    raise "bad_argument" if arg != 'rb' && arg != 'json'
+    @format = arg
+  end
+
+  def create_dojo(root)
     Dojo.new(self, root, format)
   end
 

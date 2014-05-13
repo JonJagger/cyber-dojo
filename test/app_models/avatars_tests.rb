@@ -12,7 +12,7 @@ class AvatarsTests < ActionController::TestCase
     @runner = HostRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @format = 'json'
-    @dojo = @paas.create_dojo(root_path, @format)
+    @dojo = @paas.create_dojo(root_path)
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@paas.path(@dojo.katas)}`

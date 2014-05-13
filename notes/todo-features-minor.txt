@@ -1,4 +1,6 @@
 
+test/app_models/languages_tests.rb
+  has spy_read that should be spy_exists
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
   animals bulb count should open that that non-diff view.

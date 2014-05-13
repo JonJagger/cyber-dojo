@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
-    paas.create_dojo(root_path, format)
+    paas.create_dojo(root_path)
   end
 
   def bind(pathed_filename)

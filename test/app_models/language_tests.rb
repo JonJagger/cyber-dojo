@@ -373,8 +373,7 @@ class LanguageTests < ModelTestCase
     @git    = StubGit.new
     @runner = CustomRunner.new(['yes'])
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = 'json'
-    @dojo = @paas.create_dojo(root_path, @format)
+    @dojo = @paas.create_dojo(root_path)
     assert @dojo.languages['yes'].runnable?
     assert !@dojo.languages['no'].runnable?
   end
@@ -386,8 +385,7 @@ class LanguageTests < ModelTestCase
     @git    = StubGit.new
     @runner = DockerRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = 'json'
-    @dojo = @paas.create_dojo(root_path, @format)
+    @dojo = @paas.create_dojo(root_path)
     ruby = @dojo.languages['Ruby']
     @paas.dir(ruby).write(manifest_filename, { })
     assert !ruby.runnable?

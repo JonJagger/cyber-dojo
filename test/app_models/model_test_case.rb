@@ -7,16 +7,16 @@ require __DIR__ + '/stub_runner'
 class ModelTestCase < ActionController::TestCase
 
   def setup
-    setup_format('rb')
+    create_paas_dojo_format('json')
   end
 
-  def setup_format(format)
+  def create_paas_dojo_format(format)
     @disk   = SpyDisk.new
     @git    = StubGit.new
     @runner = StubRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = format
-    @dojo = @paas.create_dojo(root_path, @format)
+    @paas.format = format
+    @dojo = @paas.create_dojo(root_path)
     @max_duration = 15
   end
 
@@ -25,10 +25,10 @@ class ModelTestCase < ActionController::TestCase
   end
 
   def json_and_rb
-    yield 'rb'
-    teardown
-    setup_format('json')
     yield 'json'
+    teardown
+    create_paas_dojo_format('rb')
+    yield 'rb'
   end
 
   def filenames_written_to_in(log)

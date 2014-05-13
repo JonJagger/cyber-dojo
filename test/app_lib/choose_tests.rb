@@ -8,8 +8,7 @@ class ChooseTests < ActionController::TestCase
     @git = Git.new
     @runner = NullRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = 'json'
-    @dojo = @paas.create_dojo(root_path, @format)
+    @dojo = @paas.create_dojo(root_path)
   end
 
   def assert_is_randomly_chosen_language(languages, params_id, kata)

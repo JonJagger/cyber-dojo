@@ -10,7 +10,7 @@ class KataTests < ActionController::TestCase
     git    = Git.new
     runner = NullRunner.new
     paas = LinuxPaas.new(disk, git, runner)
-    @dojo = paas.create_dojo(root_path, 'json')
+    @dojo = paas.create_dojo(root_path)
   end
 
   test "exists? is false for empty-string id" do
@@ -52,5 +52,3 @@ end
 # So kata.start_avatar was called
 # which made the 'hippo' sub folder
 # and the git_init() made the git repo.
-
-

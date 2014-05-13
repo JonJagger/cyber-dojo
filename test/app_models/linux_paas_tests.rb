@@ -2,6 +2,40 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class LinuxPaasTests < ModelTestCase
 
+  test "default format is json" do
+    paas = LinuxPaas.new(nil,nil,nil)
+    assert_equal 'json', paas.format
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "format can be set to rb" do
+    paas = LinuxPaas.new(nil,nil,nil)
+    paas.format = 'rb'
+    assert_equal 'rb', paas.format
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "format can be set to json" do
+    paas = LinuxPaas.new(nil,nil,nil)
+    paas.format = 'json'
+    assert_equal 'json', paas.format
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "setting format to anything else raises exception" do
+    paas = LinuxPaas.new(nil,nil,nil)
+    begin
+      paas.format = 'jsrbon'
+      assert false, "exception should have been raised"
+    rescue
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "path(exercise)" do
     json_and_rb do
       exercise = @dojo.exercises['test_Yahtzee']

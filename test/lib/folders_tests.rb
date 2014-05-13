@@ -10,8 +10,7 @@ class FoldersTests < ActionController::TestCase
     @git    = Git.new
     @runner = HostRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @format = 'json'
-    @dojo = @paas.create_dojo(root_path, @format)
+    @dojo = @paas.create_dojo(root_path)
     `rm -rf #{@paas.path(@dojo.katas)}`
   end
 
