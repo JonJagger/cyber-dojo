@@ -3,32 +3,22 @@
 
 $(document).ready(function() {
 
-  var id = (function() {
-    return "<%= @kata.id %>";
-  })();
+  var id = '<%= @kata.id %>';
+  var minuteColumns = $('#minute-columns-checkbox');
+  var autoRefresh   = $('#auto-refresh-checkbox');
 
-  var minuteColumns = (function() {
-    return $('#minute-columns-checkbox');
-  })();
-  var autoRefresh = (function() {
-    return $('#auto-refresh-checkbox');
-  })();
-
-  var minuteColumnsIsChecked = function() {
-    return minuteColumns.is(':checked');
-  };
-  var autoRefreshIsChecked = function() {
-    return autoRefresh.is(':checked');
+  var isChecked = function(checkbox) {
+    return checkbox.is(':checked');
   };
 
   var dashboardHeartbeat = function() {
-    if (autoRefreshIsChecked()) {
+    if (isChecked(autoRefresh)) {
       $.ajax({
         url: '/dashboard/heartbeat',
         data: {
           id: id,
-          minute_columns: minuteColumnsIsChecked(),
-          auto_refresh: autoRefreshIsChecked()
+          minute_columns: isChecked(minuteColumns),
+          auto_refresh: isChecked(autoRefresh)
         },
         dataType: 'script'
       });
@@ -36,9 +26,9 @@ $(document).ready(function() {
   };
 
   var refreshDashboard = function() {
-    var url = '/dashboard/show/' + id + '?' +
-              'minute_columns=' + minuteColumnsIsChecked() + '&' +
-              'auto_refresh=' + autoRefreshIsChecked();
+    var url = '/dashboard/show/' + id +
+              '?' + 'minute_columns=' + isChecked(minuteColumns) +
+              '&' + 'auto_refresh=' + isChecked(autoRefresh);
     window.location = url;
   };
 
@@ -47,13 +37,13 @@ $(document).ready(function() {
   setInterval(dashboardHeartbeat, 10*seconds);
 
   minuteColumns
-    .attr('checked', "<%= @minute_columns %>" === "true")
+    .attr('checked', '<%= @minute_columns %>' === 'true')
     .click(function() {
       refreshDashboard();
     });
 
   autoRefresh
-    .attr('checked', "<%= @auto_refresh %>" === "true")
+    .attr('checked', '<%= @auto_refresh %>' === 'true')
     .click(function() {
       refreshDashboard();
     });
