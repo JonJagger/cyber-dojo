@@ -69,10 +69,7 @@ var cyberDojo = (function(cd, $) {
 	  click: function() {
 		var newFilename = $.trim(input.val())
 		cd.newFileContent(newFilename, '');
-		// hack to ensure if line-numbers are off
-		// then they are not initially displayed
-		$('#line_numbers_button').click();
-		$('#line_numbers_button').click();
+	    cd.refreshLineNumbersColor();
 		$(this).remove();
 	  }
 	};

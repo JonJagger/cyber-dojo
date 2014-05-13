@@ -5,13 +5,18 @@ $(document).ready(function() {
 
   //TODO: this loses the focus on the currently opened file
 
-  $('#line-numbers-checkbox').click(function() {
-    var nodes = $('[id$=line_numbers]');
-    if ($(this).is(':checked')) {
-      nodes.show();
-    } else {
-      nodes.hide();
-    }
+  var lineNumbersCheckbox = $('#line-numbers-checkbox');
+
+  cd.refreshLineNumbersColor = function() {
+    var color = lineNumbersCheckbox.is(':checked')
+      ? '#A6A6A6'
+      : '#757575';
+    var nodes = $('.line_numbers');
+    nodes.css('color', color);
+  };
+
+  lineNumbersCheckbox.click(function() {
+    cd.refreshLineNumbersColor();
   });
 
 });

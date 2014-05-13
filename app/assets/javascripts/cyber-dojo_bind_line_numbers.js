@@ -35,16 +35,16 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.bindLineNumbersFromTo = function(content, numbers) {
-    var setLineNC = function() {
+    var synchScroll = function() {
       numbers.scrollTop(content.scrollTop());
     };
     content.bind({
-      keydown   : setLineNC,
-      scroll    : setLineNC,
-      mousewheel: setLineNC,
-      mousemove : setLineNC,
-      mousedown : setLineNC,
-      mouseup   : setLineNC
+      keydown   : synchScroll,
+      scroll    : synchScroll,
+      mousewheel: synchScroll,
+      mousemove : synchScroll,
+      mousedown : synchScroll,
+      mouseup   : synchScroll
     });
   };
 
