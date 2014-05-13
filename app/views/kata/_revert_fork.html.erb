@@ -26,27 +26,20 @@ $(document).ready(function() {
 
 //--></script>
 
-<table id="revert-fork-container">
-  <tr>
-    <td>
-      <button type="button"
-              id="revert-button"
-              title="reverts to any previous traffic-light"
-              data-title="<%= t('views.buttons.revert') %>"
-              data-cancel="<%= t('views.buttons.cancel') %>">
-        <%= raw t('views.buttons.revert') %>
-      </button>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <button type="button"
-              id="fork-button"
-              title="forks a new dojo from any traffic-light"
-              data-title="<%= t('views.buttons.fork') %>"
-              data-cancel="<%= t('views.buttons.cancel') %>">
-        <%= raw t('views.buttons.fork') %>
-      </button>
-    </td>
-  </tr>
-</table>
+<div id="revert-fork-container">
+  <button type="button"
+		  id="revert-button"
+		  title="reverts to any previous traffic-light"
+		  data-title="<%= t('views.buttons.revert') %>"
+		  data-cancel="<%= t('views.buttons.cancel') %>">
+	<%= raw t('views.buttons.revert') %>
+  </button>
+  <div style="clear:both;"></div>
+  <button type="button"
+		  id="fork-button"
+		  title="forks a new dojo from any traffic-light"
+		  data-title="<%= t('views.buttons.fork') %>"
+		  data-cancel="<%= t('views.buttons.cancel') %>">
+	<%= raw t('views.buttons.fork') %>
+  </button>
+</div>

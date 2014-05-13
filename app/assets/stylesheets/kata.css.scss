@@ -38,12 +38,13 @@
   }
 
   #file-operations {
+    display: table;
     @include ghost-panel(8px);
     @include left-align(15px);
     #new, #rename, #delete {
       width: 75px;
       text-align: left;
-      font-size: 0.9em;
+      font-size: 0.85em;
       margin-bottom: 2px;
     }
   }
@@ -51,7 +52,7 @@
   #revert-button, #fork-button {
     width: 75px;
     text-align: right;
-    font-size: 0.9em;
+    font-size: 0.85em;
     margin-bottom: 2px;
   }
 
@@ -69,6 +70,7 @@
   }
 
   #line-numbers-container, #revert-fork-container {
+    display: table;
     @include ghost-panel(8px);
     @include right-align(15px);
   }
