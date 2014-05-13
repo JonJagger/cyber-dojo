@@ -74,11 +74,13 @@
     @include right-align(15px);
   }
   #help-button-container {
+    display: table;
     @include right-align(15px);
   }
 
   #line-numbers-container #label {
     text-align: right;
+    margin-right: 2px;
   }
 
   #help-button {
