@@ -19,8 +19,10 @@
     text-align: right;
     margin: 15px;
     #help-button {
-      @include font-size-tiny();
+      font-size: 1em;
       @include rounded-corner(15px);
+      position: relative;
+      top: -5px;
     }
   }
 
