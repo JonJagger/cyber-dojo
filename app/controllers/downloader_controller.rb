@@ -1,9 +1,6 @@
 
 class DownloaderController < ApplicationController
 
-  # could be used to xfer dojos to readonly 2nd server?
-  # reinstate if anyone asks for this?
-  
   def download
     # an dojo-id such as 01FE818E68 corresponds to the folder katas/01/FE818E86
     did = Id.new(id)

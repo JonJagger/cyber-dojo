@@ -40,18 +40,14 @@ private
 
   def bool(attribute)
     tf = params[attribute]
-    return tf if tf == "true"
-    return tf if tf == "false"
+    return tf if tf == 'true' || tf == 'false'
     return "true"
   end
 
   def seconds_per_column
     flag = params['minute_columns']
-    if !flag || flag == "true"
-      return 60
-    else
-      return 60*60*24*365*1000
-    end
+    return 60 if !flag || flag == "true"
+    return 60*60*24*365*1000
   end
 
 end
