@@ -20,6 +20,7 @@
 }
 
 #shared-info {
+  display: table;
   @include ghost-panel(10px);
   @include right-align(15px);
   text-align: right;
@@ -67,7 +68,6 @@
 }
 
 //----------------------------------------------
-// Suspect from here are mostly unused...
 
 .avatar_name, #id {
   @include font-size-tiny();

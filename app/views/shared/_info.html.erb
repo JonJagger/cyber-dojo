@@ -1,19 +1,20 @@
 
-<table id="shared-info">
-  <tr>
-    <td>
-      <div title="this dojo's unique id is <%= @kata.id.to_s[0..5] %>">
-        <%= @kata.id.to_s[0..5] %>
-      </div>
-      <div title="this dojo's language is <%= @kata.language.display_name %>">
-        <%= @kata.language.display_name %>
-      </div>
-      <div title="this dojo's unit-test framework is <%= @kata.language.display_test_name %>">
-        <%= @kata.language.display_test_name %>
-      </div>
-      <div title="this dojo's exercise is <%= @kata.exercise.name.gsub('_',' ') %>">
-        <%= @kata.exercise.name.gsub('_',' ') %>
-      </div>
-    </td>
-  </tr>
-</table>
+<div id="shared-info">
+
+  <div title="this dojo's unique id is <%= @kata.id.to_s[0..5] %>">
+    <%= @kata.id.to_s[0..5] %>
+  </div>
+  <div style="clear:both;"></div>
+  <div title="this dojo's language is <%= @kata.language.display_name %>">
+    <%= @kata.language.display_name %>
+  </div>
+  <div style="clear:both;"></div>
+  <div title="this dojo's unit-test framework is <%= @kata.language.display_test_name %>">
+    <%= @kata.language.display_test_name %>
+  </div>
+  <div style="clear:both;"></div>
+  <div title="this dojo's exercise is <%= @kata.exercise.name.gsub('_',' ') %>">
+    <%= @kata.exercise.name.gsub('_',' ') %>
+  </div>
+
+</div>
