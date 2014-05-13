@@ -1,6 +1,11 @@
 
 module TrafficLightHelper
 
+  # The data-id, data-avatar-name, data-was-tag, data-now-tag
+  # values are used to create click handlers that open a diff-dialog
+  # See setupTrafficLightOpensDiffDialogHandlers()
+  # in app/helpers/traffic_light_helper.rb
+
   def diff_traffic_light(kata, avatar_name, light, max_lights)
     # used from test page and from dashboard page
     number = light['number'].to_i
