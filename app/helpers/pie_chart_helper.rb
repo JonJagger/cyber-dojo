@@ -1,20 +1,21 @@
 
 module PieChartHelper
 
-  def pie_chart(traffic_lights, size)
+  def pie_chart(traffic_lights, size, key)
      pie_chart_from_counts({
         'red'   => count(traffic_lights,'red'),
         'amber' => count(traffic_lights,'amber'),
         'green' => count(traffic_lights,'green')
-     }, size)
+     }, size, key)
   end
 
-  def pie_chart_from_counts(counts, size)
+  def pie_chart_from_counts(counts, size, key)
      ("<canvas" +
         " class='pie'" +
         " data-red-count='#{counts['red']}'" +
         " data-amber-count='#{counts['amber']}'" +
         " data-green-count='#{counts['green']}'" +
+        " data-key='#{key}'" +
         " width='#{size}'" +
         " height='#{size}'>" +
       "</canvas>").html_safe

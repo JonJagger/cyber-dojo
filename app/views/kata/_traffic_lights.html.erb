@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  cd.pieChart($('.pie'));
+  cd.pieChart($('#traffic-lights .pie'));
   cd.setupTrafficLightOpensDiffDialogHandlers($('.diff-traffic-light'));
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     <% if @traffic_lights.length > 1 %>
 	  <td>
-        <%= pie_chart(@traffic_lights,35) %>
+        <%= pie_chart(@traffic_lights,40,@avatar.name) %>
 	  </td>
     <% end %>
 
