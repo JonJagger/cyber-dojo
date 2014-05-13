@@ -41,12 +41,18 @@
     @include ghost-panel(8px);
     @include left-align(15px);
     #new, #rename, #delete {
-      width: 60px;
+      width: 75px;
       text-align: left;
-      @include font-size-tiny();
-      padding-right: 7px;
+      font-size: 0.9em;
       margin-bottom: 2px;
     }
+  }
+
+  #revert-button, #fork-button {
+    width: 75px;
+    text-align: right;
+    font-size: 0.9em;
+    margin-bottom: 2px;
   }
 
   #filename-list {
@@ -72,13 +78,6 @@
 
   #line-numbers-container #label {
     text-align: right;
-  }
-
-  #revert-button, #fork-button {
-    @include font-size-tiny();
-    width: 60px;
-    text-align: right;
-    margin-bottom: 2px;
   }
 
   #help-button {
