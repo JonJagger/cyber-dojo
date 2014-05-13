@@ -12,10 +12,10 @@ KATAS-FOLDER
     o) katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS
-  when they are tuned off, the alignment of the
-  traffic-lights and the rhs test+filenames is wrong.
-  To fix this I need to use jQuery to switch the css
-  colour of the line-numbers to the background!
+  There is some combination of line-numbers on/off
+  and creating a new file that still seems to not
+  be quite right. Viz you can get all files with
+  line-numbers except one. Cannot reproduce it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   show the _time_ between two tags

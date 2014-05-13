@@ -7,17 +7,27 @@ $(document).ready(function() {
 
   var lineNumbersCheckbox = $('#line-numbers-checkbox');
 
+  var lineNumbers = function() {
+    return $('.line_numbers');
+  };
+
+  var showLineNumbersColor = lineNumbers().css('color');
+  var hideLineNumbersColor = lineNumbers().css('background-color');
+
   cd.refreshLineNumbersColor = function() {
+    // also called from cd.newFile()
     var color = lineNumbersCheckbox.is(':checked')
-      ? '#A6A6A6'
-      : '#757575';
-    var nodes = $('.line_numbers');
-    nodes.css('color', color);
+      ? showLineNumbersColor
+      : hideLineNumbersColor;
+    // Don't do .hide() as this causes
+    // dom elements to shift positions.
+    lineNumbers().css('color', color);
   };
 
   lineNumbersCheckbox.click(function() {
     cd.refreshLineNumbersColor();
   });
+
 
 });
 
