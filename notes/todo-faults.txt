@@ -1,5 +1,15 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LINE-NUMBERS CHECKBOX
+  when you click this you lose the focus on the
+  currently opened file
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+LINE-NUMBERS
+  There is some combination of line-numbers on/off
+  and creating a new file that still seems to not
+  be quite right. Viz you can get all files with
+  line-numbers except one. Cannot reproduce it.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT DIALOG
   press << or < or > or >> once  - you get the wait-cursor
   now edit the tag-number and press return - you don't get the wait-cursor

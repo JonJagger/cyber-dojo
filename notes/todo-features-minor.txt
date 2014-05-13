@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD
+  animals bulb count should open that that non-diff view.
+  animal itself should open to 0-1 initial diff.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DISABLED-KATA
   once a kata is a certain age (1 day?) disable its
   test and revert buttons. How? There is no heartbeat.
@@ -10,12 +14,6 @@ KATAS-FOLDER
     o) languages/
     o) exercises/
     o) katas/
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINE-NUMBERS
-  There is some combination of line-numbers on/off
-  and creating a new file that still seems to not
-  be quite right. Viz you can get all files with
-  line-numbers except one. Cannot reproduce it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   show the _time_ between two tags
@@ -72,14 +70,6 @@ DASHBOARD-TIME-GAP
   previous session, it might be nice to be able to view
   one dashboard in two parts.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE
-  use dialog (to freeze editing) with big yin-yang spinner in center of
-  page instead of small spinner to left of test button.
-  Also, add words "Please wait while tests are run" to the dialog
-  and do not tweak the output file. This will mean the display behind
-  the dialog will stay on the file that was open when the test button
-  is pressed.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ENTER
   add "pressing traffic-light..." message on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,12 +80,6 @@ HELP
 INITIALLY-RED-TESTS
   do this by using fail("") calls rather than deliberately wrong values.
   do this for all languages.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TEST-PAGE TRAFFIC-LIGHTS
-  is the width of these still controlled by CSS?
-  can just be the width of editarea+line-numbers?
-  use px values to make sure they are exactly the same.
-  then bulb-count numbers will align with line-numbers.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK DIALOG
   filenames do not appear in same way as on edit page.
