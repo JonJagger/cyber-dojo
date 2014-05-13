@@ -3,38 +3,30 @@
 $(document).ready(function() {
 
   var age = parseInt("<%= (Time.now - @kata.created).to_i %>");
+  var seconds = age % 60;
+  var minutes = Math.floor((age / 60) % 60);
+  var hours   = Math.floor((age / (60*60)) % 24);
+  var days    = Math.floor(age / (60*60*24));
 
-  var seconds = function() {
-    return age % 60;
-  };
-  var minutes = function() {
-    return Math.floor((age / 60) % 60);
-  };
-  var hours = function() {
-    return Math.floor((age / (60*60)) % 24);
-  };
-  var days = function() {
-    return Math.floor(age / (60*60*24));
-  };
   var zerod = function(n) {
     return ('00' + n).slice(-2);
   };
   var sep = '&thinsp;:&thinsp;';
 
-  if (days() > 0) {
+  if (days > 0) {
     $('#days-label').html("<%= t('views.labels.days') %>" + sep);
-    $('#days').text(zerod(days()));
+    $('#days').text(zerod(days));
   }
-  if (days() > 0 || hours() > 0) {
+  if (days > 0 || hours > 0) {
     $('#hours-label').html("<%= t('views.labels.hours') %>" + sep);
-    $('#hours').text(zerod(hours()));
+    $('#hours').text(zerod(hours));
   }
-  if (days() > 0 || hours() > 0 || minutes() > 0) {
+  if (days > 0 || hours > 0 || minutes > 0) {
     $('#minutes-label').html("<%= t('views.labels.minutes') %>" + sep);
-    $('#minutes').text(zerod(minutes()));
+    $('#minutes').text(zerod(minutes));
   }
   $('#seconds-label').html("<%= t('views.labels.seconds') %>" + sep);
-  $('#seconds').text(zerod(seconds()));
+  $('#seconds').text(zerod(seconds));
 
 });
 
