@@ -4,9 +4,6 @@
 $(document).ready(function() {
 
   var previousLanguage = undefined;
-  var container = $('#div-languages');
-  var downFromTop = 100;
-  var halfSecond = 500;
   var selected = $('#language_' + <%= @selected_language_index %>);
 
   $('[id^=language_]').each(function(index) {
@@ -17,9 +14,13 @@ $(document).ready(function() {
     });
   });
 
+  var downFromTop = 100;
+  var halfSecond = 500;
+  var container = $('#languages-container');
+
   selected.click();
-  // ensure visible
   container.animate({
+    // ensure visible
     scrollTop: selected.offset().top - container.offset().top - downFromTop
   }, halfSecond);
 
@@ -27,7 +28,7 @@ $(document).ready(function() {
 
 //--></script>
 
-<div id="div-languages">
+<div id="languages-container">
   <% @languages.each_with_index do |atts,index| %>
     <div class="filename"
          id="language_<%= index %>"

@@ -3,6 +3,20 @@
 
   margin: 35px;
 
+  #exercises-container, #languages-container, #instructions {
+    height: 475px;
+  }
+  #exercises-container, #languages-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+    margin-right: 20px;
+  }
+  #exercises-container {
+    margin-left: 30px;
+    margin-right: 10px;
+  }
+
   #choose-language, #choose-exercise {
     color: darken($lighter-color, 5%);
     @include font-size-larger();
@@ -12,10 +26,6 @@
   }
   #choose-exercise {
     margin-left: 30px;
-  }
-
-  #div-exercises, #div-languages, #instructions {
-    height: 475px;
   }
 
   #instructions {
@@ -33,17 +43,6 @@
     @include font-size-largest();
     margin-top: 10px;
     margin-right: 140px;
-  }
-
-  #div-exercises, #div-languages {
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 10px;
-    margin-right: 20px;
-  }
-  #div-exercises {
-    margin-left: 30px;
-    margin-right: 10px;
   }
 
 }
