@@ -5,24 +5,32 @@ $(document).ready(function() {
 
   var kataIdInput = $('#kata-id-input');
 
+  var enterButton   = $('#enter-button');
+  var reviewButton  = $('#review-button');
+  var reEnterButton = $('#reenter-button');
+
+  var disable = function(button) {
+      button.attr('disabled', true);
+  };
+
   var enableIf = function(button, condition) {
     if (condition) {
       button.removeAttr('disabled');
     } else {
-      button.attr('disabled', true);
+      disable(button);
     }
   };
 
   cd.enableDisableEnterReEnterReview = function() {
     var id = kataIdInput.val();
-    enableIf($('#enter-button'), false);
-    enableIf($('#reenter-button'), false);
-    enableIf($('#review-button'), false);
+    disable(enterButton);
+    disable(reEnterButton);
+    disable(reviewButton);
     if (id.length >= 6) {
       $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
-        enableIf($('#enter-button'), dojo.exists);
-        enableIf($('#reenter-button'), dojo.started > 0);
-        enableIf($('#review-button'), dojo.started > 0);
+        enableIf(enterButton, dojo.exists);
+        enableIf(reEnterButton, dojo.started > 0);
+        enableIf(reviewButton, dojo.started > 0);
       });
     }
   };
