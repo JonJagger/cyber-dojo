@@ -16,15 +16,10 @@ module TrafficLightHelper
     ).html_safe
   end
 
-  def colour(light)
-     # very old dojos used 'outcome'
-     (light['colour'] || light['outcome']).to_s
-  end
-
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
     number = light['number']
     ("<div class='diff-traffic-light'" +
-         " title='review #{avatar_name}&#39;s current code'" +
+         " title='review #{avatar_name}#{apostrophe}s current code'" +
          " data-id='#{kata.id}'" +
          " data-avatar-name='#{avatar_name}'" +
          " data-was-tag='#{number}'" +
@@ -42,12 +37,26 @@ module TrafficLightHelper
     ("<img src='/images/traffic_light_#{colour}.png'" +
       " alt='#{colour} traffic-light'" +
       " width='#{width}'" +
-      " height='#{height}'/>").html_safe
+      " height='#{height}'/>"
+    ).html_safe
   end
 
   def tool_tip(avatar_name, light)
     n = light['number'].to_i
-    "review #{avatar_name}&#39;s #{n-1} &harr; #{n} diff"
+    "review #{avatar_name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
+  end
+
+  def colour(light)
+     # very old dojos used 'outcome'
+     (light['colour'] || light['outcome']).to_s
+  end
+
+  def apostrophe
+    '&#39;'
+  end
+
+  def arrow
+    '&harr;'
   end
 
 end
