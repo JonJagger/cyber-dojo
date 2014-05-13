@@ -3,22 +3,14 @@
 
 $(document).ready(function() {
 
-  var spinner = $('#spinner');
-  var testButton = $('#test-button');
-
-  var ajaxAfter = function() {
-    var allTheWay = 100000;
-    spinner.hide();
-    $('#overlay').remove();
-    cd.loadFile('output');
-    testButton.attr('disabled', false);
-    $('#traffic-lights').scrollLeft(allTheWay);
-  };
+  var testButton  = $('#test-button');
+  var testSpinner = $('#test-spinner');
+  var testOverlay = $('<div id="test-overlay"></div>');
 
   $('form').bind('ajax:before', function(evt, data, status, xhr) {
     testButton.attr('disabled', true);
-    $('body').prepend('<div id="overlay"></div>');
-    spinner.show();
+    testOverlay.insertAfter($('body'));
+    testSpinner.show();
     cd.storeOutgoingFileHashes();
   });
 
@@ -27,7 +19,6 @@ $(document).ready(function() {
       "Files not sent files to the cyber-dojo server." + "\n" +
       "Have you lost your network connection?";
     cd.fileContentFor('output').val(errorMessage);
-    ajaxAfter();
   });
 
   $('form').bind('ajax:success', function(evt, data, status, xhr) {
@@ -38,7 +29,15 @@ $(document).ready(function() {
     cd.bindHotKeys(output);
     cd.bindAllLineNumbers();
     cd.storeIncomingFileHashes();
-    ajaxAfter();
+  });
+
+  $('form').bind('ajax:complete', function(evt, data, status, xhr) {
+    var allTheWay = 100000;
+    testSpinner.hide();
+    testOverlay.remove();
+    testButton.attr('disabled', false);
+    cd.loadFile('output');
+    $('#traffic-lights').scrollLeft(allTheWay);
   });
 
 });
@@ -101,9 +100,9 @@ $(document).ready(function() {
               },
                 :remote => true ) do %>
 
-  <%= render :partial => 'current_filename' %>
-  <%= render :partial => 'file_hashes_incoming' %>
-  <%= render :partial => 'file_hashes_outgoing' %>
+<%= render :partial => 'current_filename' %>
+<%= render :partial => 'file_hashes_incoming' %>
+<%= render :partial => 'file_hashes_outgoing' %>
 
 <div id="kata-page">
   <table>
@@ -115,11 +114,11 @@ $(document).ready(function() {
         <%= render :partial => 'help_button' %>
       </td>
       <td>
-        <%= render :partial => 'spinner' %>
         <%= render :partial => 'editor' %>
       </td>
       <td>
         <%= render :partial => 'test_button' %>
+        <%= render :partial => 'test_spinner' %>
         <%= render :partial => 'file_new_rename_delete' %>
         <%= render :partial => 'filename_list' %>
       </td>
