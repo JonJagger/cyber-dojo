@@ -1,0 +1,46 @@
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+
+  var testButton  = $('#test-button');
+  var testSpinner = $('#test-spinner');
+  var testOverlay = $('<div id="test-overlay"></div>');
+  var form = $('form');
+
+  form.bind('ajax:before', function(evt, data, status, xhr) {
+    testButton.attr('disabled', true);
+    testOverlay.insertAfter($('body'));
+    testSpinner.show();
+    cd.storeOutgoingFileHashes();
+  });
+
+  form.bind('ajax:error', function(evt, data, status, xhr) {
+    var errorMessage = "" +
+      "Files not sent files to the cyber-dojo server." + "\n" +
+      "Have you lost your network connection?";
+    cd.fileContentFor('output').val(errorMessage);
+  });
+
+  form.bind('ajax:success', function(evt, data, status, xhr) {
+    cd.rebuildFilenameList();
+    // when the ajax replaces output the shortcuts
+    // are lost so need rebinding
+    var output = cd.fileContentFor('output');
+    cd.bindHotKeys(output);
+    cd.bindAllLineNumbers();
+    cd.storeIncomingFileHashes();
+  });
+
+  form.bind('ajax:complete', function(evt, data, status, xhr) {
+    var allTheWay = 100000;
+    testSpinner.hide();
+    testOverlay.remove();
+    testButton.attr('disabled', false);
+    cd.loadFile('output');
+    $('#traffic-lights').scrollLeft(allTheWay);
+  });
+
+});
+
+//--></script>
