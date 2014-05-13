@@ -81,8 +81,11 @@
   }
 
   #help-button {
-    @include font-size-tiny();
+    font-size: 1em;
     @include rounded-corner(14px);
+    margin: 0px;
+    position: relative;
+    top: -5px;
   }
 
   #traffic-lights {
