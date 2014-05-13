@@ -7,7 +7,7 @@ module AvatarImageHelper
       :title => title,
       :width => size,
       :height => size,
-      :class => 'avatar_image'
+      :class => 'avatar-image'
   end
 
 end
