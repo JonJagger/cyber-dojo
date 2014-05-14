@@ -9,9 +9,8 @@ class LinuxPaas
     @format
   end
 
-  def format=(arg)
-    raise "bad_argument" if arg != 'rb' && arg != 'json'
-    @format = arg
+  def format_rb
+    @format = 'rb'
   end
 
   def create_dojo(root)

@@ -15,7 +15,7 @@ class ModelTestCase < ActionController::TestCase
     @git    = StubGit.new
     @runner = StubRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @paas.format = format
+    @paas.format_rb if format === 'rb'
     @dojo = @paas.create_dojo(root_path)
     @max_duration = 15
   end

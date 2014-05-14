@@ -11,27 +11,8 @@ class LinuxPaasTests < ModelTestCase
 
   test "format can be set to rb" do
     paas = LinuxPaas.new(nil,nil,nil)
-    paas.format = 'rb'
+    paas.format_rb
     assert_equal 'rb', paas.format
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "format can be set to json" do
-    paas = LinuxPaas.new(nil,nil,nil)
-    paas.format = 'json'
-    assert_equal 'json', paas.format
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "setting format to anything else raises exception" do
-    paas = LinuxPaas.new(nil,nil,nil)
-    begin
-      paas.format = 'jsrbon'
-      assert false, "exception should have been raised"
-    rescue
-    end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -12,9 +12,7 @@ class AvatarImageTests < ActionView::TestCase
     assert html.match("width=\"#{size}\""), 'width: ' + html
     assert html.match("src=\"/images/avatars/#{name}.jpg"), 'src: ' + html
     assert html.match('title="wibble"'), 'title: ' + html
-    assert html.match('class="avatar_image"'), 'class: ' + html
+    assert html.match('class="avatar-image"'), 'class: ' + html
   end
 
 end
-
-

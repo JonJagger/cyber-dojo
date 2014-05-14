@@ -11,7 +11,7 @@ class KatasTests < ActionController::TestCase
     @git   = Git.new
     @runer = HostRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
-    @paas.format = format
+    @paas.format_rb if format === 'rb'
     @dojo = @paas.create_dojo(root_path)
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']
