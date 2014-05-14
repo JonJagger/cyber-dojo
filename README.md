@@ -17,6 +17,7 @@ cyber-dojo
 
 [Docker Server](md/docker-server.md)
   * running your own docker'd cyber-dojo server
+  * overview of how docker language containers work
   * pulling pre-built docker language containers
   * adding a new language
     * build the docker container

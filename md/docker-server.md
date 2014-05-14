@@ -1,6 +1,31 @@
 
 Docker Server
 =============
+
+running your own docker'd cyber-dojo server
+-------------------------------------------
+* Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
+* As root...
+* Install cyber-dojo
+```bash
+$ cd /var/www
+$ git clone https://JonJagger@github.com/JonJagger/cyberdojo
+```
+* Install all the necessary gems and [docker](https://www.docker.io/)
+```bash
+$ cd /var/www/cyberdojo/admin_scripts
+$ ruby setup_docker_server.rb ..
+```
+* Install all the languages' docker containers
+```bash
+$ cd /var/www/cyberdojo/admin_scripts
+$ ruby docker_pull_all.rb ..
+```
+
+
+overview of how docker language containers work
+-----------------------------------------------
+
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then
 when you press the `[create]` button cyber-dojo will only offer
@@ -35,11 +60,6 @@ and the environment variable
 [host server](md/host-server.md).
 
 
-running your own docker'd cyber-dojo server
--------------------------------------------
-  * Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
-  * Install cyber-dojo and [docker](https://www.docker.io/) into it using
-    [setup_docker_server.sh](https://raw.githubusercontent.com/JonJagger/cyberdojo/master/admin_scripts/setup_docker_server.sh)
 
 
 pulling pre-built docker language containers
