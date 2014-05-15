@@ -8,8 +8,15 @@ $(document).ready(function() {
   var testOverlay = $('<div id="test-overlay"></div>');
   var form = $('form');
 
-  form.bind('ajax:before', function(evt, data, status, xhr) {
+  testButton.enable = function() {
+    testButton.attr('disabled', false);
+  };
+  testButton.disable = function() {
     testButton.attr('disabled', true);
+  };
+
+  form.bind('ajax:before', function(evt, data, status, xhr) {
+    testButton.disable();
     testOverlay.insertAfter($('body'));
     testSpinner.show();
     cd.storeOutgoingFileHashes();
@@ -36,7 +43,7 @@ $(document).ready(function() {
     var allTheWay = 100000;
     testSpinner.hide();
     testOverlay.remove();
-    testButton.attr('disabled', false);
+    testButton.enable();
     cd.loadFile('output');
     $('#traffic-lights').scrollLeft(allTheWay);
   });
