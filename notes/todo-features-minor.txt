@@ -1,6 +1,4 @@
 
-test/app_models/languages_tests.rb
-  has spy_read that should be spy_exists
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
   animals bulb count should open that that non-diff view.
@@ -117,22 +115,9 @@ DOCKER
 MISC
   does anything use the avatar-name css now?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HR-LINES
-  on dashboard and test page are slightly too long.
-  they intrude into the vertical alignment.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TAKE-OUT
-  header expires thing from application-controller
-  1.2.3.4 thing from
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
   if there are lots of filenames make the scrollbar
   omit scrolling the output file.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TRAFFIC-LIGHT SCROLLBAR
-  (on [test] page)
-  try to lose it
-  but still allow scrolling.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE=NONE
   add exercise called none
@@ -169,7 +154,8 @@ HOME-PAGE
   change every 30 seconds?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LANGUAGE-CHECKER
-  test/installation red/amber/green testing need TLC
+  test/installation red/amber/green testing is looking
+  like its defunct. Excess detail. No need to keep it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TOOL-TIPS
   have them open up in a popup right next to the item they are tipping.
@@ -223,9 +209,4 @@ EXERCISE-HAS-MANIFEST
   And then I have to know to select it only with a specific language.
   How about allowing a language folder to have its own exercise folders.
   And give Exercise a manifest like Language?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CUSTOM-DOMAIN-NAMES
-  James spins up custom names for clients
-  eg  cisco.cyber-dojo.org - from amazon route 53
-  Nice idea.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

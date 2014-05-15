@@ -32,14 +32,17 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
 
-  #diff-tag-control {
-    @include ghost-panel;
-  }
-
   #diff-controls {
     position: absolute;
     top: 15px;
     left: 792px;
+
+    #diff-arrow {
+      margin-bottom: 20px;
+    }
+    .tag-control {
+      @include ghost-panel;
+    }
   }
 
   .filename {

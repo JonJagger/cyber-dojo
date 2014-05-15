@@ -39,17 +39,37 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    var makeDiffTagControl = function() {
-	  var td = function(html) {
-		return '<td>' + html + '</td>';
-	  };
+	var td = function(html) {
+	  return '<td>' + html + '</td>';
+	};
+
+	var makeWasTagControl = function(tag) {
 	  return '' +
-	    '<table id="diff-tag-control">' +
+	    '<table class="tag-control">' +
 		  '<tr>' +
-		    td('<div id="was-traffic-light"></div>') +
-			td('<input type="text" id="was-tag-number" value="' + wasTag + '" />') +
-			td('<input type="text" id="now-tag-number" value="' + nowTag + '" />') +
-		    td('<div id="now-traffic-light"></div>') +
+ 		    td('<div id="was-traffic-light"></div>') +
+			td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
+		  '</tr>' +
+		'</table>';
+	}
+
+	var makeNowTagControl = function(tag) {
+	  return '' +
+	    '<table class="tag-control">' +
+		  '<tr>' +
+			td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
+ 		    td('<div id="now-traffic-light"></div>') +
+		  '</tr>' +
+		'</table>';
+	};
+
+    var makeDiffTagControl = function() {
+	  return '' +
+	    '<table>' +
+		  '<tr>' +
+		    td(makeWasTagControl(wasTag)) +
+			td('<div id="diff-arrow">&harr;</div>') +
+		    td(makeNowTagControl(nowTag)) +
 		  '</tr>' +
 		'</table>';
     };
