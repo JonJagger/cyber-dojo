@@ -1,12 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DASHBOARD
-  animals bulb count should open that that non-diff view.
+  animals bulb count should open that tag in non-diff view.
   animal itself should open to 0-1 initial diff.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DISABLED-KATA
-  once a kata is a certain age (1 day?) disable its
-  test and revert buttons. How? There is no heartbeat.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  show the _time_ between two tags
+  [23] 00:54 [24]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
   would be nice to be able to set ENV variables for
@@ -15,9 +17,60 @@ KATAS-FOLDER
     o) exercises/
     o) katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DOWNLOAD
+  reinstate download button on dashboard page.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DASHBOARD-TIME-GAP
+  if there is a session that is split over several hours, eg
+  if you resume a session one morning after starting it the
+  previous session, it might be nice to be able to view
+  one dashboard in two parts.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
-  show the _time_ between two tags
-  [23] 00:54 [24]
+  o) click on the animal to open a re-enter like 'dialog'
+     which you can click on to move to diff 0-1 of next animal.
+  o) have [next animal] button
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  have [revert] button on now-tag control
+  have [fork] button on now-tag control
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  with the above features it is questionable whether to leave
+  the diff-dialog as a dialog. If it was a regular page it would
+  offer more consistency and also the goggle diagnostics would
+  be able to give me better review stats.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+KATA-EXPIRED
+  have a timeout (1 day)
+  when katas has expired
+    o) no [revert]
+    o) no [test]
+  How? There is no heartbeat.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+READ-ONLY SERVER
+  o) need kata-expired
+  o) needs GitRunner that is read-only
+       no init,add,rm   [diff,show]
+  o) needs OsDisk that is read-only
+       no write,  [read,exists?]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 AVATAR
   write run_tests(...) function that wraps all of this...
@@ -29,9 +82,6 @@ AVATAR
   It can parse output to determine traffic_light colour
   Might be able to reduce number of @variables in some controllers
   so the views reach into the domain objects...
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DOWNLOAD
-  reinstate download button on dashboard page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP-PAGE
   this can show a pre-allocated ID !
@@ -63,12 +113,6 @@ META-DASHBOARD
   and these then look like filenames on the lhs. Clicking on
   one of them opens the dashboard for that id. This allows you
   to create a summary dashboard for codeRetreat style days.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD-TIME-GAP
-  if there is a session that is split over several hours, eg
-  if you resume a session one morning after starting it the
-  previous session, it might be nice to be able to view
-  one dashboard in two parts.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ENTER
   add "pressing traffic-light..." message on enter-dialog
@@ -111,9 +155,6 @@ HOME-PAGE
 DOCKER
   It would be a good idea if the setup screen/dialog
   indicated which Runner was being used, Docker or Raw.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MISC
-  does anything use the avatar-name css now?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FILENAMES
   if there are lots of filenames make the scrollbar
@@ -197,9 +238,6 @@ CSS
   use cursor: not-allowed
   for disabled buttons.
   Do on jQuery dialog buttons too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LANGUAGE MANIFEST.JSON
-  s/image_name/docker_image_name/  ??
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 EXERCISE-HAS-MANIFEST
   At the moment the instructions come from exercises/ and

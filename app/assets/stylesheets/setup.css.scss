@@ -2,7 +2,7 @@
 #setup-page {
 
   margin-top: 45px;
-  margin-left: 115px;
+  margin-left: 65px;
 
   #languages-container, #exercises-container {
     height: 475px;
@@ -28,8 +28,9 @@
 
   #instructions {
     height: 465px;
+    width: 600px;
     margin-left: 0px;
-    font-size: 1.4em;
+    font-size: 12pt;
     background: $lighter-color;
     color: $darker-color;
     overflow-y: scroll;
