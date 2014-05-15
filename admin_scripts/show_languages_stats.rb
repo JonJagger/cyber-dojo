@@ -10,8 +10,7 @@ disk = OsDisk.new
 git = Git.new
 runner = NullRunner.new
 paas = LinuxPaas.new(disk, git, runner)
-format = 'json'
-dojo = paas.create_dojo(CYBERDOJO_HOME_DIR, format)
+dojo = paas.create_dojo(CYBERDOJO_HOME_DIR)
 
 languages_names = dojo.languages.collect {|language| language.name}
 
