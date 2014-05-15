@@ -43,7 +43,7 @@
 
   #filename-list {
     margin-left: 15px;
-    height: 390px;
+    height: 360px;
     overflow-x: none;
     overflow-y: auto;
     div[class~='filename'][class~='highlight'] {
@@ -79,7 +79,8 @@
   #traffic-lights {
     width: 835px;  // line-numbers=35, file-content=800
     overflow-x: auto;
-    margin: 0px;
+    margin-left: 3px;
+    margin-top: 2px;
     &::-webkit-scrollbar:horizontal {
         height: 6px;
     }

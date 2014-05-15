@@ -16,7 +16,7 @@
 @mixin code-font
 {
   font: {
-    size: 13pt;
-    family: monospace;
+    size: 12pt;
+    family: Consolas, "Liberation Mono", Courier, monospace;
   }
 }
