@@ -53,6 +53,10 @@ var cyberDojo = (function(cd, $) {
 		'</table>';
 	}
 
+	var makeTagGap = function() {
+	  return '<div id="diff-arrow">&harr;</div>';
+	};
+
 	var makeNowTagControl = function(tag) {
 	  return '' +
 	    '<table class="tag-control">' +
@@ -68,7 +72,7 @@ var cyberDojo = (function(cd, $) {
 	    '<table>' +
 		  '<tr>' +
 		    td(makeWasTagControl(wasTag)) +
-			td('<div id="diff-arrow">&harr;</div>') +
+			td(makeTagGap()) +
 		    td(makeNowTagControl(nowTag)) +
 		  '</tr>' +
 		'</table>';

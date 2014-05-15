@@ -154,6 +154,7 @@ div[class~="filename"], button[disabled]:hover {
   // if padding-left gets too large it pushes the background to the
   // right and the vertical scrollbar gets a background-coloured right-border
   padding-left: 2px;
+  padding-top: 2px;
 
   outline: none;
 }
