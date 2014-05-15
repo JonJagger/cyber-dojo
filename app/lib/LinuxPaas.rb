@@ -10,6 +10,8 @@ class LinuxPaas
   end
 
   def format_rb
+    # only required when a test wants to create a paas
+    # using old-style rb manifest files which are eval'd
     @format = 'rb'
   end
 
