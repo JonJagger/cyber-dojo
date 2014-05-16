@@ -1,5 +1,7 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  OutputParser could be another object hung of Thread.current
+  A FakeDisk/FakeDir would be nice for nicer unit tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   now LinuxPaas.create_dojo() has only one argument I could do this...
      paas.dojos[root_path].katas[id]

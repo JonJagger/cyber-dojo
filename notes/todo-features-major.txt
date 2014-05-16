@@ -29,6 +29,74 @@ Finer-grained commits
     o) delete file
     o) [test]
 
+  These calls need to be syncronous I think.
+
+  $$$ The current file could have changed when you press
+  $$$ new/rename/delete (or switch file or test)
+  $$$ I want to send this as a single ajax call though.
+  $$$ But on the server this could be saved as two commits
+  $$$ if it helps.
+
+      o) new file
+         $.ajax({
+           url: new_file,
+           dataType: 'json',
+           async: false,
+           data: { filename:filename, id:id, avatar:name }, // tag? I think no
+           before: function() {
+             //set cursor to wait
+             //add transparent overlay?
+           },
+           success: function() {
+             //update incoming hashes
+             //create the file in the browser
+             //open it
+           },
+           error: function() {
+             //write message on output
+           },
+           complete: function() {
+             //remove transparent overlay
+             //set cursor back
+           });
+
+      o) deleted file
+           very similar but for deleted file
+            do I need to record which file is the one shown
+            after the delete? Can't choose instructions as
+            some katas may not have an instructions file.
+            Only guaranteed files are cyber-dojo.sh
+            and output. Both boring.
+            Simplest is to pick the next one in the filenames
+            list.
+
+      o) renamed file = old-name new-name
+           very similar, was-filename, now-filename
+           will result in $git mv
+           on the server.
+
+  The one that is trickier is the file-movement.
+      o) file-movement:
+         This one needs to do a hash-diff of the file
+         we are leaving. I could intercept each key
+         press in the current textarea and have this
+         information ready.
+         If there is no change in any file, but the
+         player is just moving from one file to another
+         then I should still record that.
+         So I'd need to sent
+         i) file moved from-to
+         ii) content of file we just left if it changed
+
+  How to store the finer-grained increments on the server?
+  Adapt existing?
+  Add reason property which defaults to :test
+  New non-test commits can have their own reason, with specific data related to the reason.
+  New non-test commits can all have white traffic-light
+  Existing << < > >> navigation moves through non-white traffic-lights.
+
+
+
   Possible design of new << < > >> navigator
   Add third type of < > button.
   One whose triangle is not filled in.
