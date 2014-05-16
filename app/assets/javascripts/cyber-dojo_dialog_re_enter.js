@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.re_enter = function(id, avatarName) {
+  cd.reEnter = function(id, avatarName) {
     var url = '/kata/edit/' + id + '?' +
               'avatar=' + avatarName;
     window.open(url);
@@ -11,6 +11,8 @@ var cyberDojo = (function(cd, $) {
     return false;
   };
 
+  //- - - - - - - - - - - - - - - - - - - - -
+  
   cd.dialog_reEnter = function(title, cancel ,dialogHtml) {
     var i18nButtons = { };
     i18nButtons[cancel] = function() {

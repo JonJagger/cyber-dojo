@@ -1,8 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD
-  animals bulb count should open that tag in non-diff view.
-  animal itself should open to 0-1 initial diff.
+ENTER
+  add "pressing traffic-light..." message on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -113,9 +112,6 @@ META-DASHBOARD
   and these then look like filenames on the lhs. Clicking on
   one of them opens the dashboard for that id. This allows you
   to create a summary dashboard for codeRetreat style days.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ENTER
-  add "pressing traffic-light..." message on enter-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HELP
   need to add some text somewhere about to use fork to setup
