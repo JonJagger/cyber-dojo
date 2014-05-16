@@ -4,6 +4,10 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   languages/ and exercises/ need Stubs - these are read from only
   katas/ needs FakeDisk/Dir - these are read-write
+  A mock-Disk could be comprised of three separate delegated to Disks
+       - one for languages/
+       - one for exercises/
+       - one for katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   now LinuxPaas.create_dojo() has only one argument I could do this...
      paas.dojos[root_path].katas[id]

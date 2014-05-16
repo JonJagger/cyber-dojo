@@ -5,6 +5,7 @@ module Choose
   # there is an id present make the initial selection of the
   # language and the exercise on the create page the same as the
   # kata with that id - if they still exist.
+  # This helps to re-inforce the idea of repetition.
 
   def self.language(languages, params_id, kata)
     self.chooser(languages, params_id, kata) {|kata| kata.language.name}
