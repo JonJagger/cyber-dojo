@@ -1,8 +1,4 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ENTER
-  add "pressing traffic-light..." message on enter-dialog
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
