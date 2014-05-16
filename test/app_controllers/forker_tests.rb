@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/../app_models/spy_disk'
-require File.dirname(__FILE__) + '/../app_models/stub_git'
-require File.dirname(__FILE__) + '/../app_models/stub_runner'
+require File.dirname(__FILE__) + '/../app_models/spy_git'
+require File.dirname(__FILE__) + '/../app_models/spy_runner'
 require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
@@ -22,7 +22,7 @@ class ForkerControllerTest < IntegrationTest
        "then fork fails " +
        "and the reason is id" do
     thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = StubGit.new
+    thread[:git] = git = SpyGit.new
 
     get "forker/fork",
       :format => :json,
@@ -47,8 +47,8 @@ class ForkerControllerTest < IntegrationTest
         "the fork fails " +
         "and the reason is language" do
     thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = StubGit.new
-    thread[:runner] = runner = StubRunner.new
+    thread[:git] = git = SpyGit.new
+    thread[:runner] = runner = SpyRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language = dojo.languages['xxxx']
@@ -77,8 +77,8 @@ class ForkerControllerTest < IntegrationTest
        "the fork fails " +
        "and the reason is avatar" do
     thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = StubGit.new
-    thread[:runner] = runner = StubRunner.new
+    thread[:git] = git = SpyGit.new
+    thread[:runner] = runner = SpyRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language = dojo.languages['Ruby-installed-and-working']
@@ -119,8 +119,8 @@ class ForkerControllerTest < IntegrationTest
 
   def bad_tag_test(bad_tag)
     thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = StubGit.new
-    thread[:runner] = runner = StubRunner.new
+    thread[:git] = git = SpyGit.new
+    thread[:runner] = runner = SpyRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language_name = 'Ruby-installed-and-working'
@@ -160,8 +160,8 @@ class ForkerControllerTest < IntegrationTest
        "the fork works " +
        "and new dojo's id is returned" do
     thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = StubGit.new
-    thread[:runner] = runner = StubRunner.new
+    thread[:git] = git = SpyGit.new
+    thread[:runner] = runner = SpyRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     id = '1234512345'
@@ -175,7 +175,7 @@ class ForkerControllerTest < IntegrationTest
       {
         'unit_test_framework' => 'fake'
       }))
-    
+
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
     paas.dir(avatar).spy_read('increments.rb', [
@@ -203,7 +203,7 @@ class ForkerControllerTest < IntegrationTest
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
     assert dojo.katas[json['id']].exists?
-    # need to be able to properly stub in StubGit so I can return manifest
+    # need to be able to properly stub in SpyGit so I can return manifest
     # and assert new dojo has same settings as one forked from
     assert_equal({paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, git.log)
     disk.teardown
@@ -215,8 +215,8 @@ class ForkerControllerTest < IntegrationTest
        "the fork works " +
        "and new dojo's id is returned" do
     thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = StubGit.new
-    thread[:runner] = runner = StubRunner.new
+    thread[:git] = git = SpyGit.new
+    thread[:runner] = runner = SpyRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language_name = 'Ruby-installed-and-working'
@@ -255,7 +255,7 @@ class ForkerControllerTest < IntegrationTest
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
     assert dojo.katas[json['id']].exists?
-    # need to be able to properly stub in StubGit so I can return manifest
+    # need to be able to properly stub in SpyGit so I can return manifest
     # and assert new dojo has same settings as one forked from
     assert_equal({paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, git.log)
     disk.teardown

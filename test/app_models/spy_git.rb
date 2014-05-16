@@ -1,5 +1,5 @@
 
-class StubGit
+class SpyGit
 
   def initialize
     @log = { }

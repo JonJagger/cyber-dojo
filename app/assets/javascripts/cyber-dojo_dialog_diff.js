@@ -27,6 +27,7 @@ var cyberDojo = (function(cd, $) {
 	  var maxTag = count.data('bulb-count');
 	  var colour  = count.data('current-colour');
 	  // animals don't appear on dashboard until they have 2+ traffic-lights
+	  // so pluralization of traffic-lights is ok
 	  var toolTip = avatarName + ' has ' + wasTag + ' traffic-lights' +
 	    ' and is currently at ' + colour + '.' +
 		' Click to review ' + avatarName + "'s current code.";

@@ -1,7 +1,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   OutputParser could be another object hung of Thread.current
-  A FakeDisk/FakeDir would be nice for nicer unit tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   now LinuxPaas.create_dojo() has only one argument I could do this...
      paas.dojos[root_path].katas[id]
@@ -13,9 +12,8 @@
   kata.lion.tag[4]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   renames
-    OsDisk --> Disk
-    OsDir  --> Dir
     StubDir --> MockDir
+    A FakeDisk/FakeDir would be nice for nicer unit tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   test/app_models/languages_tests.rb
     has spy_read that should be spy_exists

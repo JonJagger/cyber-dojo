@@ -370,7 +370,7 @@ class LanguageTests < ModelTestCase
 
   test "custom runner that filters the language.runnable?" do
     @disk   = SpyDisk.new
-    @git    = StubGit.new
+    @git    = SpyGit.new
     @runner = CustomRunner.new(['yes'])
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
@@ -382,7 +382,7 @@ class LanguageTests < ModelTestCase
 
   test "DockerRunner.runnable?(language) is false if language does not have image_name set in manifest" do
     @disk   = SpyDisk.new
-    @git    = StubGit.new
+    @git    = SpyGit.new
     @runner = DockerRunner.new
     @paas = LinuxPaas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
