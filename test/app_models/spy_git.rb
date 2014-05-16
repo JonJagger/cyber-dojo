@@ -10,36 +10,36 @@ class SpyGit
   end
 
   def init(dir, options)
-    store(dir, 'init', options)
+    spy(dir, 'init', options)
   end
 
   def add(dir, what)
-    store(dir, 'add', what)
+    spy(dir, 'add', what)
   end
 
   def rm(dir, what)
-    store(dir, 'rm', what)
+    spy(dir, 'rm', what)
   end
 
   def commit(dir, options)
-    store(dir, 'commit', options)
+    spy(dir, 'commit', options)
   end
 
   def tag(dir, options)
-    store(dir, 'commit', options)
+    spy(dir, 'commit', options)
   end
 
   def show(dir, options)
-    store(dir, "show", options)
+    spy(dir, "show", options)
   end
 
   def diff(dir, options)
-    store(dir, "diff", options)
+    spy(dir, "diff", options)
   end
 
 private
 
-  def store(dir, command, options)
+  def spy(dir, command, options)
     @log[dir] ||= [ ]
     @log[dir] << [command, options]
     "{:hack=>'yes'}"

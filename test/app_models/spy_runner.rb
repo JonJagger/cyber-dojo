@@ -5,6 +5,10 @@ class SpyRunner
     @log = [ ]
   end
 
+  def log
+    @log
+  end
+
   def runnable?(language)
     true
   end
@@ -13,10 +17,6 @@ class SpyRunner
     path = paas.path(sandbox)
     @log << ("cd '#{path}';" + command)
     'stubbed-output'
-  end
-
-  def log
-    @log
   end
 
 end
