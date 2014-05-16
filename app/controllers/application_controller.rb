@@ -43,25 +43,25 @@ class ApplicationController < ActionController::Base
 
 private
 
-  def format
-    'json'
-  end
-
   def runner
     return DockerRunner.new if docker?
-    return HostRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
+    return HostRunner.new   if ENV['CYBERDOJO_USE_HOST'] !== nil
     return NullRunner.new
   end
 
   def docker?
-    `docker info > /dev/null 2>&1`
+    command = stderr2stdout('docker info > /dev/null')
+    `#{command}`
     $?.exitstatus === 0
   end
 
 private
 
-  #before_filter :set_locale
+  def stderr2stdout(cmd)
+    cmd + ' 2>&1'
+  end
 
+  #before_filter :set_locale
   def set_locale
     # i18n work is not currently live
     if params[:locale].present?
