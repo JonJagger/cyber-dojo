@@ -17,6 +17,28 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  cd.setupTrafficLightCountOpensCurrentDiff = function(bulbs) {
+    $.each(bulbs, function(_,bulb) {
+	  var count = $(bulb);
+	  var id = count.data('id');
+	  var avatarName = count.data('avatar-name');
+	  var wasTag = count.data('bulb-count');
+	  var nowTag = count.data('bulb-count');
+	  var maxTag = count.data('bulb-count');
+	  var colour  = count.data('current-colour');
+	  // animals don't appear on dashboard until they have 2+ traffic-lights
+	  var toolTip = avatarName + ' has ' + wasTag + ' traffic-lights' +
+	    ' and is currently at ' + colour + '.' +
+		' Click to review ' + avatarName + "'s current code.";
+	  count.attr('title', toolTip);
+	  count.click(function() {
+	    cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag, count);
+	  });
+	});
+  };
+
+  //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
   cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, diffLight) {
 
   	var minTag = 0;

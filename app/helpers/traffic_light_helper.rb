@@ -21,6 +21,23 @@ module TrafficLightHelper
     ).html_safe
   end
 
+  def diff_avatar_image(kata, avatar_name, light, max_lights)
+    number = light['number']
+    ("<div class='diff-traffic-light'" +
+         " title='Click to review #{avatar_name}#{apostrophe}s code'" +
+         " data-id='#{kata.id}'" +
+         " data-avatar-name='#{avatar_name}'" +
+         " data-was-tag='0'" +
+         " data-now-tag='1'" +
+         " data-max-tag='#{max_lights}'>" +
+        "<img src='/images/avatars/#{avatar_name}.jpg'" +
+            " alt='#{avatar_name}'" +
+            " width='45'" +
+            " height='45'/>" +
+     "</div>"
+    ).html_safe
+  end
+
   def no_diff_avatar_image(kata, avatar_name, light, max_lights)
     number = light['number']
     ("<div class='diff-traffic-light'" +
@@ -48,7 +65,7 @@ module TrafficLightHelper
 
   def tool_tip(avatar_name, light)
     n = light['number'].to_i
-    "review #{avatar_name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
+    "Click to review #{avatar_name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
   end
 
   def colour(light)
