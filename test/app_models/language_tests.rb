@@ -2,27 +2,27 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class LanguageTests < ModelTestCase
 
-  test "filename_extension defaults to empty string" do
+  test 'filename_extension defaults to empty string when not set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({})
-      assert_equal("", @language.filename_extension)
+      assert_equal('', @language.filename_extension)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "filename_extension set if not defaulted" do
+  test 'filename_extension reads back as set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({ 'filename_extension' => '.rb' })
-      assert_equal(".rb", @language.filename_extension)
+      assert_equal('.rb', @language.filename_extension)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "new_name is translated if old language dir has been renamed" do
+  test 'new_name is translated when old language dir has been renamed' do
     json_and_rb do
       renames = {
         'C'            => 'C-assert',
@@ -58,7 +58,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "name is not translated if language dir has not been renamed" do
+  test 'name is not translated when language dir has not been renamed' do
     json_and_rb do
       assert_equal 'Java-JUnit', @dojo.languages['Java-JUnit'].name
     end
@@ -66,41 +66,48 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is true only if dir and manifest exist" do
+  test 'exists? is true only if dir and manifest exist' do
     json_and_rb do
       # if you s/Erlang-eunit/Erlang/ it fails... Why?
       @language = @dojo.languages['Erlang-eunit']
-      assert !@language.exists?, "1"
+      assert !@language.exists?, '1'
       @paas.dir(@language).make
-      assert !@language.exists?, "2"
+      assert !@language.exists?, '2'
       spy_exists?(manifest_filename)
-      assert @language.exists?, "3"
+      assert @language.exists?, '3'
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when :visible_filenames is not in manifest then visible_files is empty hash" do
+  test 'when :visible_filenames is not in manifest ' +
+       'then visible_files is empty hash ' +
+       'and visible_filenames is empty array' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({})
       assert_equal({}, @language.visible_files)
+      assert_equal([], @language.visible_filenames)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when :visible_filenames is empty array in manifest then visible_files is empty hash" do
+  test 'when :visible_filenames is empty array in manifest ' +
+       'then visible_files is empty hash' +
+       'and visible_filenames is empty array' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({ 'visible_filenames' => [ ] })
       assert_equal({}, @language.visible_files)
+      assert_equal([], @language.visible_filenames)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when :visible_filenames is non-empty array in manifest then visible_files are loaded but not output and not instructions" do
+  test 'when :visible_filenames is non-empty array in manifest ' +
+       'then visible_files are loaded but not output and not instructions' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
@@ -114,7 +121,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "support_filenames defaults to [ ]" do
+  test 'support_filenames defaults to [ ] when not set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
@@ -124,7 +131,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "support_filenames set if not defaulted" do
+  test 'support_filenames reads back as set' do
     json_and_rb do
       @language = @dojo.languages['Java']
       support_filenames = [ 'x.jar', 'y.jar' ]
@@ -135,7 +142,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "highlight_filenames defaults to [ ]" do
+  test 'highlight_filenames defaults to [ ] when not set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
@@ -145,7 +152,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "highlight_filenames set if not defaulted" do
+  test 'highlight_filenames reads back as set' do
     json_and_rb do
       @language = @dojo.languages['C']
       visible_filenames = [ 'x.hpp', 'x.cpp' ]
@@ -160,7 +167,8 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "lowlight_filenames defaults to ['cyberdojo.sh','makefile','Makefile'] if there is no entry for highlight_filenames" do
+  test "lowlight_filenames defaults to ['cyberdojo.sh','makefile','Makefile']" +
+       "when there is no entry for highlight_filenames" do
     json_and_rb do
       @language = @dojo.languages['C']
       visible_filenames = [ 'wibble.hpp', 'wibble.cpp' ]
@@ -174,7 +182,8 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "lowlight_filenames is visible_filenames - highlight_filenames if there is an entry for highlight_filenames" do
+  test 'lowlight_filenames is visible_filenames - highlight_filenames ' +
+       'when there is an entry for highlight_filenames' do
     json_and_rb do
       @language = @dojo.languages['C']
       visible_filenames = [ 'wibble.hpp', 'wibble.cpp', 'fubar.hpp', 'fubar.cpp' ]
@@ -189,7 +198,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "display_name if set" do
+  test 'display_name reads back as set' do
     json_and_rb do
       name = 'Ruby-RSpec'
       @language = @dojo.languages[name]
@@ -202,7 +211,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "display_name defaults to name" do
+  test "display_name defaults to name when not set" do
     json_and_rb do
       name = 'Ruby-Approval'
       @language = @dojo.languages[name]
@@ -214,7 +223,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "display_test_name if set" do
+  test 'display_test_name reads back as set' do
     json_and_rb do
       name = 'Java-Mockito'
       @language = @dojo.languages[name]
@@ -227,7 +236,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "display_test_name defaults to unit_test_framework" do
+  test 'display_test_name defaults to unit_test_framework when not set' do
     json_and_rb do
       name = 'Java-Mockito'
       @language = @dojo.languages[name]
@@ -239,7 +248,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "image_name if set" do
+  test 'image_name is read back as set' do
     json_and_rb do
       name = 'Ruby-Test::Unit'
       @language = @dojo.languages[name]
@@ -251,7 +260,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "image_name is empty string if not set" do
+  test 'image_name is empty string when not set' do
     json_and_rb do
       name = 'Ruby-Test::Unit'
       @language = @dojo.languages[name]
@@ -263,7 +272,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "unit_test_framework is set" do
+  test 'unit_test_framework is read back as set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       unit_test_framework = 'Satchmo'
@@ -274,10 +283,10 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "tab_size is set if not defaulted" do
+  test 'tab_size is read back as set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
-      tab_size = 42
+      tab_size = 9
       spy_manifest({ 'tab_size' => tab_size })
       assert_equal tab_size, @language.tab_size
     end
@@ -285,7 +294,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "tab_size defaults to 4" do
+  test 'tab_size defaults to 4 when not set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({})
@@ -295,7 +304,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "tab is 7 spaces if tab_size is 7" do
+  test 'tab is 7 spaces when tab_size is 7' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       tab_size = 7
@@ -306,7 +315,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "tab defaults to 4 spaces" do
+  test 'tab defaults to 4 spaces when not set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({})
@@ -316,11 +325,11 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  # test "if manifest.json does not exist..." do
+  # test "when manifest.json does not exist..." do
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if manifest.rb and manifest.json exist, json is used" do
+  test 'when manifest.rb and manifest.json exist, json is used' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       @paas.dir(@language).write('manifest.json', {'tab_size' => 4})
@@ -332,7 +341,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "language can be asked if it is runnable" do
+  test 'language can be asked if it is runnable' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
       assert @language.runnable?
@@ -341,11 +350,11 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "JSON.parse error raises exception naming the language" do
+  test 'JSON.parse error raises exception naming the language' do
     json_and_rb do
       name = 'Ruby'
       @language = @dojo.languages[name]
-      any_bad_json = "42"
+      any_bad_json = '42'
       @paas.dir(@language).spy_read('manifest.json', any_bad_json)
       named = false
       begin
@@ -368,7 +377,7 @@ class LanguageTests < ModelTestCase
     end
   end
 
-  test "custom runner that filters the language.runnable?" do
+  test 'custom runner that filters the language.runnable?' do
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = CustomRunner.new(['yes'])
@@ -380,7 +389,8 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "DockerRunner.runnable?(language) is false if language does not have image_name set in manifest" do
+  test 'DockerRunner.runnable?(language) is false ' +
+       'when language does not have image_name set in manifest' do
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = DockerRunner.new

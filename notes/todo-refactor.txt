@@ -11,10 +11,6 @@
     handy shortcut for this could be
   kata.lion.tag[4]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  renames
-    StubDir --> MockDir
-    A FakeDisk/FakeDir would be nice for nicer unit tests.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   test/app_models/languages_tests.rb
     has spy_read that should be spy_exists
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
