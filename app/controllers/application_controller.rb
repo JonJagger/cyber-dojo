@@ -45,7 +45,7 @@ private
 
   def runner
     return DockerRunner.new if docker?
-    return HostRunner.new   if ENV['CYBERDOJO_USE_HOST'] !== nil
+    return HostRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
     return NullRunner.new
   end
 
