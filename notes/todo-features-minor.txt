@@ -25,6 +25,13 @@ DASHBOARD-TIME-GAP
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ADD FORTRAIN
+http://sourceforge.net/apps/mediawiki/fortranxunit/index.php?title=FruitExample
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   o) click on the animal to open a re-enter like 'dialog'
      which you can click on to move to diff 0-1 of next animal.

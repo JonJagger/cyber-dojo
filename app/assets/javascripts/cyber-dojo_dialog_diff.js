@@ -41,16 +41,40 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, diffLight) {
+	// diffLight isn't necessarily a traffic-light.
+	// it is whatever dom element's click handler causes
+	// dialog_diff() to be called. It has its cursor
+	// tweaked while the getJSON call is made.
 
   	var minTag = 0;
     var tagGap = nowTag - wasTag;
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	var allHtml = function(node) {
+	  http://stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
+	  return $(node).clone().wrap('<p/>').parent().html();
+	};
 
 	var makeDiffInfo = function() {
+	  var tlcSelector = '[data-avatar-name=' + avatarName + ']';
+	  var tlc = $('[class^=traffic-light-count]' + tlcSelector);
 	  return '' +
 	    '<table id="diff-info">' +
 		  '<tr>' +
+		    '<td>' +
+			  allHtml(tlc) +
+			'</td>' +
+		    '<td>' +
+			  // I'd like to add red/amber/green pie-chart
+			  // here, again to match the dashboard
+			  // Could I get this via a jQuery retrieval?
+			  // I have avatarName
+			  // On [test] and [dashboard] pages the dom element is
+			  // <div class='pie'
+			  //      data-key='wolf'
+			  //      data-red-count='3'
+			  //      data-amber-count='5'
+			  //      data-green-count='6'
+			'</td>' +
 		    '<td>' +
 			  '<img height="38"' +
 				  ' width="38"' +
