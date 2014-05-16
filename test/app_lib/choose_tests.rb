@@ -11,6 +11,8 @@ class ChooseTests < ActionController::TestCase
     @dojo = @paas.create_dojo(root_path)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   def assert_is_randomly_chosen_language(languages, params_id, kata)
     counts = {}
     (1..100).each do
@@ -23,6 +25,8 @@ class ChooseTests < ActionController::TestCase
     assert_equal languages.length, counts.length
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   def test_languages_names
     [ 'C#-NUnit',
       'C++-GoogleTest',
@@ -31,12 +35,16 @@ class ChooseTests < ActionController::TestCase
     ].sort
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   test "when no params[:id] " +
        "then choose random known language" do
     kata = @dojo.katas['01234556789']
     assert !kata.exists?
     assert_is_randomly_chosen_language(test_languages_names, params_id=nil, kata)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when params[:id] " +
        "and !katas[id].exists " +
@@ -45,6 +53,8 @@ class ChooseTests < ActionController::TestCase
     assert !kata.exists?
     assert_is_randomly_chosen_language(test_languages_names, params_id='012345', kata)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when params[:id] " +
        "and katas[id].exists? " +
@@ -58,6 +68,8 @@ class ChooseTests < ActionController::TestCase
       assert_is_randomly_chosen_language(languages, params_id=kata.id.to_s, kata)
     end
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when params[:id] " +
        "and katas[id].exists? " +
@@ -87,6 +99,8 @@ class ChooseTests < ActionController::TestCase
     assert_equal exercises.length, counts.length
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   def test_exercises_names
     ['test_Yahtzee',
      'test_Roman_Numerals',
@@ -96,12 +110,16 @@ class ChooseTests < ActionController::TestCase
     ].sort
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - -
+
   test "when no params[:id] " +
        "then choose random known exercise" do
     kata = @dojo.katas['01234556789']
     assert !kata.exists?
     assert_is_randomly_chosen_exercise(test_exercises_names, params_id=nil, kata)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when params[:id] " +
        "but !katas[id].exist? " +
@@ -110,6 +128,8 @@ class ChooseTests < ActionController::TestCase
     assert !kata.exists?
     assert_is_randomly_chosen_exercise(test_exercises_names, params_id='012345', kata)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when params[:id] " +
        "and katas[id].exists? " +
@@ -123,6 +143,8 @@ class ChooseTests < ActionController::TestCase
       assert_is_randomly_chosen_exercise(exercises, params_id=kata.id.to_s, kata)
     end
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   test "when params[:id] " +
        "and katas[id].exists? " +

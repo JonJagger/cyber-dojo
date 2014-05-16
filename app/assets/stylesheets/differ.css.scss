@@ -32,6 +32,10 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
 
+  #diff-info {
+    @include ghost-panel(5px);
+  }
+
   #diff-controls {
     position: absolute;
     top: 15px;
@@ -42,6 +46,9 @@
     }
     .tag-control {
       @include ghost-panel;
+    }
+    .traffic-light-count {
+      @include font-size-large;
     }
   }
 
@@ -54,6 +61,7 @@
 
   #was-tag-number, #now-tag-number {
     @include editable_tag_number;
+    font-size: 1.1em;
   }
 
   #diff-filenames {

@@ -57,6 +57,8 @@ var cyberDojo = (function(cd, $) {
 	var makeDiffInfo = function() {
 	  var tlcSelector = '[data-avatar-name=' + avatarName + ']';
 	  var tlc = $('[class^=traffic-light-count]' + tlcSelector);
+	  var pieSelector = '[data-key=' + avatarName + ']';
+	  var pie = $('[class^=pie]' + pieSelector);
 	  return '' +
 	    '<table id="diff-info">' +
 		  '<tr>' +
@@ -64,16 +66,7 @@ var cyberDojo = (function(cd, $) {
 			  allHtml(tlc) +
 			'</td>' +
 		    '<td>' +
-			  // I'd like to add red/amber/green pie-chart
-			  // here, again to match the dashboard
-			  // Could I get this via a jQuery retrieval?
-			  // I have avatarName
-			  // On [test] and [dashboard] pages the dom element is
-			  // <div class='pie'
-			  //      data-key='wolf'
-			  //      data-red-count='3'
-			  //      data-amber-count='5'
-			  //      data-green-count='6'
+			  allHtml(pie) +
 			'</td>' +
 		    '<td>' +
 			  '<img height="38"' +
@@ -478,6 +471,7 @@ var cyberDojo = (function(cd, $) {
           showCurrentFile(data.currentFilenameId);
 		  if (open !== undefined) {
 			open();
+		    cd.pieChart($('.pie', diffDiv));
 		  }
 		}
 	  ).always(function() {
