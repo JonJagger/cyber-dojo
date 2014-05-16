@@ -1,14 +1,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Git'
-require 'NullRunner'
+require 'DummyRunner'
 
 class KataTests < ActionController::TestCase
 
   def setup
     disk   = OsDisk.new
     git    = Git.new
-    runner = NullRunner.new
+    runner = DummyRunner.new
     paas = LinuxPaas.new(disk, git, runner)
     @dojo = paas.create_dojo(root_path)
   end

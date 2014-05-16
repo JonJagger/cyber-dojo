@@ -1,14 +1,14 @@
 
 # Runner that does nothing.
 
-class NullRunner
+class DummyRunner
 
   def runnable?(language)
-    true
+    false
   end
 
   def run(paas, sandbox, command, max_seconds)
-    "No runner found on this server"
+    ""
   end
 
 end
