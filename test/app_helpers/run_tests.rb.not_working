@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+my_dir = File.expand_path(File.join(File.dirname(__FILE__), '.'))
+$LOAD_PATH << my_dir
+require 'test/unit'
+puts my_dir
+exit Test::Unit::AutoRunner.run(true, my_dir)
+

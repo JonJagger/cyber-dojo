@@ -1,7 +1,9 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'pie_chart_helper'
 
-class PieChartTests < ActionView::TestCase
+class PieChartTests < CyberDojoTestBase
 
   include PieChartHelper
 

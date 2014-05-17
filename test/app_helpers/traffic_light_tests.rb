@@ -1,18 +1,20 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'traffic_light_helper'
 
-class TrafficLightTests < ActionView::TestCase
+class TrafficLightTests < CyberDojoTestBase
 
   include TrafficLightHelper
 
-  test "tool tip" do
+  test 'tool tip' do
     light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
     assert_equal "Click to review hippo&#39;s 1 &harr; 2 diff", tool_tip('hippo', light)
   end
 
   #- - - - - - - - - - - - - - - -
 
-  test "traffic_light_image" do
+  test 'traffic_light_image' do
     expected = "<img src='/images/traffic_light_red.png'" +
                " alt='red traffic-light'" +
                " width='12'" +
@@ -26,7 +28,7 @@ class TrafficLightTests < ActionView::TestCase
 
   #- - - - - - - - - - - - - - - -
 
-  test "diff_avatar_image" do
+  test 'diff_avatar_image' do
     kata = Object.new
     def kata.id; 'ABCD1234'; end
     avatar_name = 'hippo'
@@ -52,7 +54,7 @@ class TrafficLightTests < ActionView::TestCase
 
   #- - - - - - - - - - - - - - - -
 
-  test "diff_traffic_light" do
+  test 'diff_traffic_light' do
     # light[:colour] used to be light[:outcome]
     diff_traffic_light_func({'colour' => 'red'})
     diff_traffic_light_func({'outcome' => 'red'})

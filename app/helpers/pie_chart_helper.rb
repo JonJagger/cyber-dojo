@@ -10,7 +10,7 @@ module PieChartHelper
   end
 
   def pie_chart_from_counts(counts, size, key)
-     ("<canvas" +
+     "<canvas" +
         " class='pie'" +
         " data-red-count='#{counts['red']}'" +
         " data-amber-count='#{counts['amber']}'" +
@@ -18,7 +18,7 @@ module PieChartHelper
         " data-key='#{key}'" +
         " width='#{size}'" +
         " height='#{size}'>" +
-      "</canvas>").html_safe
+      "</canvas>"
   end
 
 private

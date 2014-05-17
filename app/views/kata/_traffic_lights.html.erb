@@ -17,7 +17,7 @@ $(document).ready(function() {
 
 	<% @traffic_lights.each do |light| %>
 	  <td>
-		<%= diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>
+		<%= raw diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>
 	  </td>
 	<% end %>
 
@@ -30,7 +30,7 @@ $(document).ready(function() {
 
     <% if @traffic_lights.length > 1 %>
 	  <td>
-        <%= pie_chart(@traffic_lights,40,@avatar.name) %>
+        <%= raw pie_chart(@traffic_lights,40,@avatar.name) %>
 	  </td>
     <% end %>
 

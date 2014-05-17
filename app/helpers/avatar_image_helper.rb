@@ -1,13 +1,13 @@
 
 module AvatarImageHelper
 
-  def avatar_image(name, size, title = name.downcase)
+  def avatar_image(name, size, title = name)
     name = name.downcase
-    image_tag "/images/avatars/#{name}.jpg",
-      :title => title,
-      :width => size,
-      :height => size,
-      :class => 'avatar-image'
+    "<img src='/images/avatars/#{name.downcase}.jpg'" +
+      " title='#{title.downcase}'" +
+      " width='#{size}'" +
+      " height='#{size}'" +
+      " class='avatar-image'/>"
   end
 
 end
