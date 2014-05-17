@@ -23,8 +23,8 @@ class FakeDir
   # - - - - - - - - - - - - - - -
 
   def exists?(filename = '')
-    return false if @repo === nil  # no mk_dir -> dir().make yet
-    return true if filename === '' # the repo exists for the dir
+    return false if @repo === nil   # no mk_dir -> dir().make yet
+    return true  if filename === '' # the repo exists for the dir
     return @repo[filename] != nil
   end
 
@@ -46,8 +46,8 @@ class FakeDir
   # - - - - - - - - - - - - - - -
 
   def read(filename)
-    assert @repo != nil, "read('#{filename}') no stub file"
-    assert @repo[filename] != nil, "read('#{filename}') no stub file"
+    assert @repo != nil, "read('#{filename}') no file"
+    assert @repo[filename] != nil, "read('#{filename}') no file"
     content  = @repo[filename]
     content
   end
@@ -56,6 +56,14 @@ class FakeDir
 
   def lock(&block)
     block.call
+  end
+
+private
+
+  def assert(truth, message)
+    if !truth
+      raise "FakeDir['#{@dir}'].#{message}"
+    end
   end
 
 end
