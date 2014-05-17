@@ -110,11 +110,13 @@ adding a new language
 
 ### write an output parse function
 
-  * the `unit_test_framework` entry in the languages' `manifest.json`
+  * <deep-breath>
+    the `unit_test_framework` entry in the languages' `manifest.json`
     file is the name of the function inside `app/lib/OutputParser.rb`
     used to determine if the output from running `cyber-dojo.sh` in your docker
     container on the animals current files qualifies as a red traffic-light, an amber
     traffic-light, or a green traffic-light.
+    </deep-breath>
     There are lots of examples in
     [app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
 
@@ -123,19 +125,22 @@ adding a new language
     eg
     [output_python_pytest_tests.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/output_python_pytest_tests.rb)
 
+  * Of course, if the unit-test framework you're using already exists
+    in OutputParser.rb you can simply use it.
+
 ### write the language's manifest.json file
 
 Create a new sub-directory under `cyberdojo/languages/`
 <br>By convention name it $languageName-$testFrameworkName
 <br>For example:
   ```
-  cyberdojo/languages/Lisp-5.6
+  cyberdojo/languages/Lisp-lut
   ```
 Create a `manifest.json` file in this directory.
 See [manifest.json details](misc.md)
 <br>For example:
   ```
-  cyberdojo/languages/Lisp-5.6/manifest.json
+  cyberdojo/languages/Lisp-lut/manifest.json
   ```
 Each `manifest.json` file contains an ruby object in JSON format
 <br>Example: the one for Java-JUnit looks like this:
@@ -167,7 +172,7 @@ where [language-dir] is the directory of the language you are checking
 which contains the `manifest.json` file.
 <br>Example
 ```bash
-$ ruby check_language_manifest.rb .. Lisp-5.6
+$ ruby check_language_manifest.rb .. Lisp-lut
 ```
 
 
