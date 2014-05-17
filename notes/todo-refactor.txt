@@ -1,7 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   max-duration should be a ctor parameter for DockerRunner
-  and not for test()
+  and not for test()?
+  Or is it feasible that the duration could become a parameter
+  in a language manifest for example?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   test/app_models/avatar_tests.rb
   has some tests that need reviving.

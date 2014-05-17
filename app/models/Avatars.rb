@@ -16,20 +16,18 @@ class Avatars
     @kata = kata
   end
 
-  attr_reader :kata
-
   def each
-    paas.all_avatars(kata).each { |name| yield self[name] }
+    paas.all_avatars(@kata).each { |name| yield self[name] }
   end
 
   def [](name)
-    Avatar.new(kata,name)
+    Avatar.new(@kata,name)
   end
 
 private
 
   def paas
-    kata.dojo.paas
+    @kata.dojo.paas
   end
 
 end

@@ -211,7 +211,7 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "display_name defaults to name when not set" do
+  test 'display_name defaults to name when not set' do
     json_and_rb do
       name = 'Ruby-Approval'
       @language = @dojo.languages[name]
@@ -264,9 +264,8 @@ class LanguageTests < ModelTestCase
     json_and_rb do
       name = 'Ruby-Test::Unit'
       @language = @dojo.languages[name]
-      expected = ""
       spy_manifest({ })
-      assert_equal expected, @language.image_name
+      assert_equal '', @language.image_name
     end
   end
 
