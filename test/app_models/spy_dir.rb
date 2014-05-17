@@ -5,11 +5,13 @@ class SpyDir
   def initialize(disk, dir)
     @disk,@dir = disk,dir
     @log = [ ]
-    @stub_log = [ ]
+    @spy_log = [ ]
   end
 
+  attr_reader :log
+
   def teardown
-    @stub_log.each do |entry|
+    @spy_log.each do |entry|
       assert log.include?(entry), "log.include?(#{entry})"
     end
   end
@@ -31,24 +33,20 @@ class SpyDir
   # - - - - - - - - - - - - - - -
 
   def spy_exists?(filename)
-    @stub_log << ['exists',filename]
+    @spy_log << ['exists',filename]
   end
 
   def exists?(filename = '')
-    if @repo === nil
-      return false # no mk_dir -> dir().make yet
-    end
-    if filename === ''
-      return true # the repo exists for the dir
-    end
+    return false if @repo === nil    # no dir().make yet
+    return true  if filename === ''  # the repo exists for the dir
     @log << ['exists',filename]
-    @repo[filename] != nil || @stub_log.include?(['exists',filename])
+    @repo[filename] != nil || @spy_log.include?(['exists',filename])
   end
 
   # - - - - - - - - - - - - - - -
 
   def spy_write(filename, content)
-    @stub_log << ['write',filename,content]
+    @spy_log << ['write',filename,content]
   end
 
   def write(filename, content)
@@ -70,7 +68,7 @@ class SpyDir
   def spy_read(filename, content)
     make
     @repo[filename] = content
-    @stub_log << ['read',filename,content]
+    @spy_log << ['read',filename,content]
   end
 
   def read(filename)
@@ -87,16 +85,10 @@ class SpyDir
     block.call
   end
 
-  def log
-    @log
-  end
-
 private
 
   def assert(truth, message)
-    if !truth
-      raise "SpyDir['#{@dir}'].#{message}"
-    end
+    raise "SpyDir['#{@dir}'].#{message}" if !truth
   end
 
 end

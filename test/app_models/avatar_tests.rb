@@ -2,7 +2,9 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class AvatarTests < ModelTestCase
 
-  test "exists? is true when dir exists and name is in Avatars.name" do
+  test 'exists? is true' +
+       ' when dir exists' +
+       ' and name is in Avatars.name' do
     json_and_rb do
       kata = @dojo.katas[id]
       avatar = kata.avatars[Avatars.names[0]]
@@ -14,7 +16,9 @@ class AvatarTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false when dir exists and name is not in Avatars.name" do
+  test 'exists? is false' +
+       ' when dir exists' +
+       ' and name is not in Avatars.name' do
     json_and_rb do
       kata = @dojo.katas[id]
       avatar = kata.avatars['Salmo']
@@ -26,11 +30,11 @@ class AvatarTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar creation saves" +
-          " visible_files in avatar/manifest.rb|json, and" +
-          " empty avatar/increments.rb/json, and" +
-          " each visible_file into avatar/sandbox, and" +
-          " links each support_filename into avatar/sandbox" do
+  test 'avatar creation saves' +
+          ' visible_files in avatar/manifest.rb|json,' +
+          ' and empty avatar/increments.rb/json,' +
+          ' and each visible_file into avatar/sandbox,' +
+          ' and links each support_filename into avatar/sandbox' do
     json_and_rb do |fmt|
       language = @dojo.languages['C-assert']
 
@@ -91,6 +95,10 @@ class AvatarTests < ModelTestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # test avatar is not active? when it does not exist
+  # test avatar is not active? when it has less than 2 traffic-lights
+  # test avatar is active? when it has 2 or more traffic-lights
 
 =begin
 

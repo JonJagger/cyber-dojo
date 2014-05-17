@@ -7,6 +7,8 @@ class SpyDisk
     @dir_spies = { }
   end
 
+  attr_reader :symlink_log
+
   def teardown
     @dir_spies.each { |dir,spy| spy.teardown }
   end
@@ -39,10 +41,6 @@ class SpyDisk
 
   def symlink(old_name, new_name)
     @symlink_log << ['symlink', old_name, new_name]
-  end
-
-  def symlink_log
-    @symlink_log
   end
 
 end

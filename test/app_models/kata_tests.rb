@@ -183,6 +183,16 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  # test kata has been entered? if it has at least one avatar
+  # test kata is not active? when it does not exist
+  # test kata is not active? when all its avatars have less than 2 traffic-lights
+  # test kata is active? when at least one avatar has 2 or more traffic-lights
+
+  # test kata age is zero when not active
+  # test kata age is from earliest 2nd traffic-light to now when active
+  # test kata expired? is false when age is less than one day
+  # test kata expired? is true when age is greater than or equal to one day
+
   def make_kata
     language = @dojo.languages['test-C++-Catch']
     visible_files = {

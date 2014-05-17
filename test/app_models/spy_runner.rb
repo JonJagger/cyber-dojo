@@ -5,9 +5,7 @@ class SpyRunner
     @log = [ ]
   end
 
-  def log
-    @log
-  end
+  attr_reader :log
 
   def runnable?(language)
     true

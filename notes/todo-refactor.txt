@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  max-duration should be a ctor parameter for DockerRunner
+  and not for test()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   OutputParser could be another object hung of Thread.current
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   languages/ and exercises/ need Stubs - these are read from only

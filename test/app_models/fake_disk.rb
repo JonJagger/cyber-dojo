@@ -7,6 +7,8 @@ class FakeDisk
     @dir_fakes = { }
   end
 
+  attr_reader :symlink_log
+
   def dir_separator
     '/'
   end
@@ -35,10 +37,6 @@ class FakeDisk
 
   def symlink(old_name, new_name)
     @symlink_log << ['symlink', old_name, new_name]
-  end
-
-  def symlink_log
-    @symlink_log
   end
 
 end

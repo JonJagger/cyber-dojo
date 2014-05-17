@@ -6,9 +6,7 @@ class OsDir
   def initialize(disk,path)
     @disk,@path = disk,path
     dir_separator = @disk.dir_separator
-    if @path[-1] != dir_separator
-      @path += dir_separator
-    end
+    @path += dir_separator if @path[-1] != dir_separator
   end
 
   def path
@@ -22,35 +20,31 @@ class OsDir
   end
 
   def exists?(filename = nil)
-    if filename == nil
-      return File.directory?(path)
-    else
-      return File.exists?(path + filename)
-    end
+    return File.directory?(path) if filename == nil
+    return File.exists?(path + filename)
   end
 
   def make
-    # the p option creates intermediate dirs as required
+    # mkdir_p does [mkdir -p] which
+    # creates intermediate dirs as required
     FileUtils.mkdir_p(path)
   end
 
   def write(filename, object)
     pathed_filename = path + filename
     FileUtils.mkdir_p(File.dirname(pathed_filename))
+    # The filename could be pathed, eg abc/def.hpp
+    # if I allow pathed filenames to be entered from
+    # the browser (or via language manifests?).
+    # Not currently working though...
     if object.is_a? String
-      File.open(pathed_filename, 'w') do |fd|
-        fd.write(object)
-      end
-      execute_permission = 0755
-      File.chmod(execute_permission, pathed_filename) if pathed_filename =~ /\.sh/
+      File.open(pathed_filename, 'w') { |fd| fd.write(object) }
+      execute = 0755
+      File.chmod(execute, pathed_filename) if pathed_filename.end_with?('.sh')
     else
       File.open(pathed_filename, 'w') { |file|
-        if filename.end_with?('.rb')
-          file.write(object.inspect)
-        end
-        if filename.end_with?('.json')
-          file.write(JSON.unparse(object))
-        end
+        file.write(object.inspect)       if filename.end_with?('.rb')
+        file.write(JSON.unparse(object)) if filename.end_with?('.json')
       }
     end
   end
