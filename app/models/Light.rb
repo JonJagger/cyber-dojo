@@ -8,7 +8,8 @@ class Light
   attr_reader :avatar
 
   def colour
-    @hash['colour']
+    # old katas used 'outcome'
+    @hash['colour'] || @hash['outcome']
   end
 
   def time_stamp

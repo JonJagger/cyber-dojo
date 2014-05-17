@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 # run from cyberdojo dir
 
 ids = [ ]

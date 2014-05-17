@@ -11,5 +11,3 @@ echo '  -o = preserve owner'
 echo '  -t = preserve timestamp'
 echo '  -r = recursive'
 echo
-
-

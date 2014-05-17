@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'json'
 
 CYBER_DOJO_ROOT_DIR = ARGV[0]

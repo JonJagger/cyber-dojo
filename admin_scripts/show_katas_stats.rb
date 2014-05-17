@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 
 # Script to show frequency of katas by first 2 digits of their id.
 # If there is a bias in the generation of random kata ids this
@@ -35,7 +36,7 @@ end
 
 disk = OsDisk.new
 git = Git.new
-runner = NullRunner.new
+runner = DummyRunner.new
 paas = LinuxPaas.new(disk, git, runner)
 dojo = paas.create_dojo(CYBERDOJO_HOME_DIR)
 

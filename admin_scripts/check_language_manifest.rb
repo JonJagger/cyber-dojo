@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require File.dirname(__FILE__) + '/language_manifest_checker'
 
 def show_use(message = "")
