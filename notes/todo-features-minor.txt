@@ -12,6 +12,12 @@ KATAS-FOLDER
     o) exercises/
     o) katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+OUTPUT-PARSER
+  it would be nice if I could stub this so that
+  I could fully control scenarios involving traffic
+  light colours. It would be easier than stubbing the
+  output returned from test().
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DOWNLOAD
   reinstate download button on dashboard page.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -55,15 +55,15 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeDiffInfo = function() {
-	  var tlcSelector = '[data-avatar-name=' + avatarName + ']';
-	  var tlc = $('[class^=traffic-light-count]' + tlcSelector);
+	  var countSelector = '[data-avatar-name=' + avatarName + ']';
+	  var count = $('[class^=traffic-light-count]' + countSelector);
 	  var pieSelector = '[data-key=' + avatarName + ']';
 	  var pie = $('[class^=pie]' + pieSelector);
 	  return '' +
 	    '<table id="diff-info">' +
 		  '<tr>' +
 		    '<td>' +
-			  allHtml(tlc) +
+			  allHtml(count) +
 			'</td>' +
 		    '<td>' +
 			  allHtml(pie) +
