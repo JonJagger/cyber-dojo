@@ -3,6 +3,9 @@
   max-duration should be a ctor parameter for DockerRunner
   and not for test()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  test/app_models/avatar_tests.rb
+  has some tests that need reviving.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   OutputParser could be another object hung of Thread.current
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   languages/ and exercises/ need Stubs - these are read from only

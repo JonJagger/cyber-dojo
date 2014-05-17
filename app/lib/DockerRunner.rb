@@ -71,9 +71,9 @@ end
 #
 # --rm
 #   automatically remove the container created by running inner_command
-#   on the base container (language.image_name) - we are only interested
-#   in the output produced. All files are saved and gitted into the
-#   /katas folder on the main server and not into the container.
+#   on the base container (language.image_name). We are only interested
+#   in the output produced. All files are saved and gitted off the
+#   /katas sub-folder on the main server and not into the container.
 #
 # -v #{paas.path(sandbox)}:/sandbox:#{read_write}
 #   volume mount the animal's sandbox to /sandbox inside the container
@@ -89,8 +89,8 @@ end
 #   by all animals in all katas that choose that language.
 #
 # -w /sandbox
-#   working directory when the command is run is /sandbox (as volume
-#   mounted in the first -v option)
+#   working directory when the command is run is /sandbox
+#   (as volume mounted in the first -v option)
 #
 # #{language.image_name} /bin/bash -c \"#{inner_command}\"
 #   the container to run the command inside is the one specified in

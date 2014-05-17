@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class KataTests < ModelTestCase
 
-  test "id is from ctor" do
+  test 'id read back as set' do
     json_and_rb do
       kata = @dojo.katas[id]
       assert_equal Id.new(id), kata.id
@@ -11,7 +11,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false for empty-string id" do
+  test 'exists? is false for empty-string id' do
     json_and_rb do
       kata = @dojo.katas[id='']
       assert !kata.exists?
@@ -20,7 +20,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false before dir is made" do
+  test 'exists? is false before dir is made' do
     json_and_rb do
       kata = @dojo.katas[id]
       assert !kata.exists?
@@ -31,7 +31,8 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "make_kata with default-id and default-now creates unique-id and uses-time-now" do
+  test 'make_kata with default-id and default-now' +
+       ' creates unique-id and uses-time-now' do
     json_and_rb do
       language = @dojo.languages['Java-JUnit']
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({
@@ -51,7 +52,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "make_kata saves manifest in kata dir" do
+  test 'make_kata saves manifest in kata dir' do
     json_and_rb do |format|
       language = @dojo.languages['Java-JUnit']
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({
@@ -87,7 +88,9 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "kata.id, kata.created, kata.language.name, kata.exercise.name, kata.visible_files all read from manifest" do
+  test 'kata.id, kata.created, kata.language.name,' +
+       ' kata.exercise.name, kata.visible_files' +
+       ' all read from manifest' do
     json_and_rb do
       language = @dojo.languages['test-C++-catch']
       visible_files = {
@@ -119,30 +122,36 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "you can create an avatar in a kata" do
+  test 'start_avatar with specific avatar' do
     json_and_rb do
       kata = make_kata
       avatar = kata.start_avatar(['hippo'])
       assert_equal 'hippo', avatar.name
+      assert_equal ['hippo'], kata.avatars.map {|avatar| avatar.name}
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "multiple avatars in a kata are all seen" do
+  test 'start_avatar with avatar-names preference' do
     json_and_rb do
       kata = make_kata
-      names = [ 'panda', 'lion' ]
+      names = [ 'panda', 'lion', 'cheetah' ]
       panda = kata.start_avatar(names)
+      assert_equal 'panda', panda.name
       lion = kata.start_avatar(names)
+      assert_equal 'lion', lion.name
+      cheetah = kata.start_avatar(names)
+      assert_equal 'cheetah', cheetah.name
+      assert_equal nil, kata.start_avatar(names)
       avatars_names = kata.avatars.map {|avatar| avatar.name}
-      assert_equal ['lion','panda'], avatars_names.sort
+      assert_equal names.sort, avatars_names.sort
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "start_avatar succeeds once for each avatar name then fails" do
+  test 'start_avatar succeeds once for each avatar name then fails' do
     json_and_rb do
       kata = make_kata
       created = [ ]
@@ -159,7 +168,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "old kata with rb manifest file will report its format is rb" do
+  test 'old kata with rb manifest file reports its format as rb' do
     json_and_rb do
       id = '12345ABCDE'
       kata = Kata.new(@dojo, id)
@@ -173,7 +182,8 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "kata without manifest yet will report its manifest_filename in dojo's format" do
+  test 'kata without manifest yet' +
+       " reports its manifest_filename in dojo's format" do
     json_and_rb do |format|
       id = '12345ABCDE'
       kata = Kata.new(@dojo, id)
@@ -190,6 +200,7 @@ class KataTests < ModelTestCase
 
   # test kata age is zero when not active
   # test kata age is from earliest 2nd traffic-light to now when active
+  # test kata age is from earliest 2nd traffic-light to max of one day
   # test kata expired? is false when age is less than one day
   # test kata expired? is true when age is greater than or equal to one day
 

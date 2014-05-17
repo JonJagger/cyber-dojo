@@ -9,9 +9,7 @@ class OsDir
     @path += dir_separator if @path[-1] != dir_separator
   end
 
-  def path
-    @path
-  end
+  attr_reader :path
 
   def each
     Dir.entries(path).select do |name|
