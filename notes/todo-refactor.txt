@@ -1,5 +1,17 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  languages: this should know its own path, and that path
+  is retrieved from it in linux_paas.rb not like this
+        when Languages
+        root(obj.dojo) + 'languages/'
+  but like this
+        when Languages
+        obj.path
+  This opens up possibility of Languages being selectable
+  from different folders.
+  Same for exercises.
+  Same for katas.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   max-duration should be a ctor parameter for DockerRunner
   and not for test()?
   Or is it feasible that the duration could become a parameter
