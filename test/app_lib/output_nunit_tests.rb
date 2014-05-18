@@ -1,9 +1,9 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputNUnitTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputNUnitTests < CyberDojoTestBase
 
   test "nunit RED" do
     # There are two NUnit output formats depending on what
@@ -17,12 +17,14 @@ class OutputNUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
+=begin
   test "nunit GREEN" do
     output_1 = 'Tests run: 1, Failures: 0'
     assert_equal :green, colour_of(output_1)
     output_2 = 'Tests run: 3, Errors: 0, Failures: 0'
     assert_equal :green, colour_of(output_2)
   end
+=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 

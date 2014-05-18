@@ -1,18 +1,18 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputGroovyJUnitTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputGroovyJUnitTests < CyberDojoTestBase
 
-  test "groovyc not installed is amber" do
+  test 'groovyc not installed is amber' do
     output = [ "groovyc: command not found" ].join("\n")
     assert_equal :amber, colour_of(output)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "initial red is red" do
+  test 'initial red is red' do
     output =
     [
       "JUnit version 4.11",
@@ -33,7 +33,7 @@ class OutputGroovyJUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test " initial green is green" do
+  test 'initial green is green' do
     output =
     [
       "JUnit version 4.11",
@@ -47,7 +47,7 @@ class OutputGroovyJUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "syntax error of the first kind is amber" do
+  test 'syntax error of the first kind is amber' do
     output =
     [
       "org.codehaus.groovy.control.MultipleCompilationErrorsException: startup failed:",
@@ -62,7 +62,7 @@ class OutputGroovyJUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "two passes and no fail is green" do
+  test 'two passes and no fail is green' do
     output =
     [
       "JUnit version 4.11",
@@ -76,7 +76,7 @@ class OutputGroovyJUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "one pass one fail is red" do
+  test 'one pass one fail is red' do
     output =
     [
       "JUnit version 4.11",

@@ -1,9 +1,9 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputRubyApprovalTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputRubyApprovalTests < CyberDojoTestBase
 
   test "NameError is amber" do
     output = [

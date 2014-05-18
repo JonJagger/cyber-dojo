@@ -1,9 +1,9 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputScalaTestTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputScalaTestTests < CyberDojoTestBase
 
   test "red" do
     output =
@@ -45,5 +45,5 @@ class OutputScalaTestTests < ActionController::TestCase
   def colour_of(output)
     OutputParser::parse_scala_test(output)
   end
-  
+
 end

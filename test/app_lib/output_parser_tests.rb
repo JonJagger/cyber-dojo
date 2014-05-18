@@ -1,5 +1,7 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
 # If a player creates a cyberdojo.sh file which runs two
 # test files then it's possible the first one will pass and
@@ -15,9 +17,7 @@ require File.dirname(__FILE__) + '/../test_helper'
 # any amber + any green => amber
 # any green + any red => red
 
-class OutputParserTests < ActionController::TestCase
-
-  include OutputParser
+class OutputParserTests < CyberDojoTestBase
 
   test "terminated by the server after 10 seconds is amber" do
     output = "Terminated by the cyber-dojo server after 10 seconds"

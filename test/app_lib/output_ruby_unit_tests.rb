@@ -1,9 +1,9 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputRubyUnitTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputRubyUnitTests < CyberDojoTestBase
 
   test "was a red ruby case" do
     output =
