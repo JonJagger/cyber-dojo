@@ -1,8 +1,11 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class DockerParseTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'DockerRunner'
 
-  test "parse 'docker images' output in prep for languages_each()" do
+class DockerParseTests < CyberDojoTestBase
+
+  test "parse `docker images` output in prep for languages_each()" do
     output = [
       "REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE",
       "cyberdojo/language_ruby-1.9.3         latest              48f93a0a2bb4        3 hours ago         328.3 MB",
@@ -24,7 +27,7 @@ class DockerParseTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "parse 'docker images' when none installed" do
+  test "parse `docker images` when none installed" do
     output =
       "REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE"
     assert_equal [ ], DockerRunner.new.image_names(output)

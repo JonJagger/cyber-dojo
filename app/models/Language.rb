@@ -1,3 +1,4 @@
+require 'json'
 
 class Language
 

@@ -1,6 +1,21 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class ChooseTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'Choose'
+require 'OsDisk'
+require 'Git'
+require 'DummyRunner'
+require 'LinuxPaas'
+require 'Dojo'
+require 'Katas'
+require 'Kata'
+require 'Id'
+require 'Languages'
+require 'Language'
+require 'Exercises'
+require 'Exercise'
+
+class ChooseTests < CyberDojoTestBase
 
   def setup
     super
@@ -37,8 +52,8 @@ class ChooseTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when no params[:id] " +
-       "then choose random known language" do
+  test 'when no params[:id] ' +
+       'then choose random known language' do
     kata = @dojo.katas['01234556789']
     assert !kata.exists?
     assert_is_randomly_chosen_language(test_languages_names, params_id=nil, kata)
@@ -46,9 +61,9 @@ class ChooseTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when params[:id] " +
-       "and !katas[id].exists " +
-       "then choose random known language" do
+  test 'when params[:id] ' +
+       'and !katas[id].exists ' +
+       'then choose random known language' do
     kata = @dojo.katas['0123456789']
     assert !kata.exists?
     assert_is_randomly_chosen_language(test_languages_names, params_id='012345', kata)
@@ -56,10 +71,10 @@ class ChooseTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when params[:id] " +
-       "and katas[id].exists? " +
-       "but language is unknown " +
-       "then choose random known language" do
+  test 'when params[:id] ' +
+       'and katas[id].exists? ' +
+       'but language is unknown ' +
+       'then choose random known language' do
     test_languages_names.each do |language|
       languages = test_languages_names - [language]
       assert !languages.include?(language)

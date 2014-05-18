@@ -1,7 +1,9 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'GitDiffParser'
 
-class GitDiffParserTests < ActionController::TestCase
+class GitDiffParserTests < CyberDojoTestBase
 
   include GitDiff
 

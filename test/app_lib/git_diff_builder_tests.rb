@@ -1,8 +1,10 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class GitDiffBuilderTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'GitDiffBuilder'
+require 'GitDiffParser'
 
-  include GitDiff
+class GitDiffBuilderTests < CyberDojoTestBase
 
   test "build chunk with space in its filename" do
 
@@ -48,13 +50,13 @@ HERE
           ] # chunks
     }
 
-    assert_equal expected_diff, GitDiffParser.new(lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
 
 source_lines = <<HERE
 Please rename me!
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -116,13 +118,13 @@ HERE
           ] # chunks
     } # expected
 
-    assert_equal expected_diff, GitDiffParser.new(lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
 
 source_lines = <<HERE
 a
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -208,7 +210,7 @@ HERE
           ] # chunks
     } # expected
 
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -226,7 +228,7 @@ source_lines = <<HERE
 13
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -323,7 +325,7 @@ HERE
             }
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1a
@@ -337,7 +339,7 @@ source_lines = <<HERE
 9a
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -417,7 +419,7 @@ HERE
             } # chunk
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -430,7 +432,7 @@ source_lines = <<HERE
 8
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -503,7 +505,7 @@ HERE
             } # chunk
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -518,7 +520,7 @@ source_lines = <<HERE
 7
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -589,7 +591,7 @@ HERE
             } # chunk
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -602,7 +604,7 @@ source_lines = <<HERE
 10
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -675,7 +677,7 @@ HERE
             } # chunk
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -690,7 +692,7 @@ source_lines = <<HERE
 12
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -765,7 +767,7 @@ HERE
             } # chunk
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -784,7 +786,7 @@ source_lines = <<HERE
 13
 HERE
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
@@ -860,7 +862,7 @@ HERE
             } # chunk
           ] # chunks
     } # expected
-    assert_equal expected_diff, GitDiffParser.new(diff_lines).parse_one
+    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
 source_lines = <<HERE
 1
@@ -885,7 +887,7 @@ HERE
     split_lines = source_lines.split("\n")
     assert_equal expected_split_lines, split_lines
 
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, split_lines)
 
     expected_source_diff =

@@ -1,6 +1,25 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class GitDiffViewTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'GitDiff'
+require 'OsDisk'
+require 'Git'
+require 'HostRunner'
+require 'LinuxPaas'
+require 'Dojo'
+require 'Languages'
+require 'Language'
+require 'Exercises'
+require 'Exercise'
+require 'Katas'
+require 'Kata'
+require 'Id'
+require 'Avatars'
+require 'Avatar'
+require 'Sandbox'
+require 'OutputParser'
+
+class GitDiffViewTests < CyberDojoTestBase
 
   include GitDiff
 

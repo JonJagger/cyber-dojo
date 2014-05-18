@@ -1,6 +1,9 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class GitDiffMostChangedTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'GitDiff'
+
+class GitDiffMostChangedTests < CyberDojoTestBase
 
   include GitDiff
 

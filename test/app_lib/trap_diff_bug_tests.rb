@@ -1,10 +1,15 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class TrapDiffBugTests < ActionController::TestCase
-  
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'GitDiff'
+require 'GitDiffParser'
+require 'GitDiffBuilder'
+
+class TrapDiffBugTests < CyberDojoTestBase
+
   include GitDiff
-  
-  test "another specific real dojo that once failed a diff" do    
+
+  test 'another specific real dojo that once failed a diff' do
     bad_diff_lines =
     [
       "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
@@ -12,12 +17,12 @@ class TrapDiffBugTests < ActionController::TestCase
       "copy from sandbox/recently_used_list.cpp",
       "copy to sandbox/was_recently_used_list.test.cpp",
     ].join("\n")
-    
-    diff = GitDiffParser.new(bad_diff_lines).parse_all
 
-    expected_diff = 
+    diff = GitDiff::GitDiffParser.new(bad_diff_lines).parse_all
+
+    expected_diff =
     {
-        :prefix_lines =>  
+        :prefix_lines =>
           [
             "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
             "similarity index 100%",
@@ -34,15 +39,15 @@ class TrapDiffBugTests < ActionController::TestCase
       "b/sandbox/was_recently_used_list.test.cpp" => expected_diff
     }
     assert_equal expected, diff
-    
-  end
-  
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  
-  test "specific real dojo that fails diff show narrowing" do
 
-    visible_files = { } 
-    visible_files['gapper.rb'] =    
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'specific real dojo that fails diff show narrowing' do
+
+    visible_files = { }
+    visible_files['gapper.rb'] =
           [
             "",
             "def as_time(t)",
@@ -132,13 +137,13 @@ class TrapDiffBugTests < ActionController::TestCase
       "   end",
       " "
     ].join("\n")
-    
-    diffs = GitDiffParser.new(diff_lines).parse_all
-    sandbox_name = 'b/sandbox/gapper.rb' 
+
+    diffs = GitDiff::GitDiffParser.new(diff_lines).parse_all
+    sandbox_name = 'b/sandbox/gapper.rb'
     diff = diffs[sandbox_name]
-    expected_diff = 
+    expected_diff =
     {
-        :prefix_lines =>  
+        :prefix_lines =>
           [
             "diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb",
             "index 6cf082b..08e1893 100644",
@@ -157,7 +162,7 @@ class TrapDiffBugTests < ActionController::TestCase
               :sections =>
               [
                 {
-                  :deleted_lines => 
+                  :deleted_lines =>
                     [
                       "class Array",
                       "    def each_pair",
@@ -173,21 +178,21 @@ class TrapDiffBugTests < ActionController::TestCase
               ] # sections
             } # chunk
           ] # chunks
-    }    
+    }
     assert_equal expected_diff, diff
 
     md = %r|^(.)/sandbox/(.*)|.match(sandbox_name)
     name = md[2]
-    assert 'gapper.rb', name   
-    
+    assert 'gapper.rb', name
+
     source_lines = visible_files[name]
-    
+
     split_up = source_lines.split("\n")
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     view = builder.build(diff, split_up)
     nils = view.select { |one| one[:line] == nil }
     assert_not_equal [ ], nils
-    
+
     # OK. And after all that the problem is the split.
     assert_equal [ ], "\n\n".split("\n")
 
@@ -195,11 +200,11 @@ class TrapDiffBugTests < ActionController::TestCase
     # I want "\n\n" --> [ "", "" ]
     # So...
     assert_equal [ "", "" ], "\n\n".split(/(\n)/).select { |line| line != "\n" }
-    
+
     # And to double check...
-    
+
     split_up = source_lines.split(/(\n)/).select { |line| line != "\n"}
-    builder = GitDiffBuilder.new()
+    builder = GitDiff::GitDiffBuilder.new()
     view = builder.build(diff, split_up)
     nils = view.select { |one| one[:line] == "\n" }
     assert_equal [ ], nils
@@ -208,19 +213,19 @@ class TrapDiffBugTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "empty file is deleted" do
+  test 'empty file is deleted' do
     diff_lines =
     [
       "diff --git a/sandbox/xx.rb b/sandbox/xx.rb",
       "deleted file mode 100644",
-      "index e69de29..0000000"      
+      "index e69de29..0000000"
     ].join("\n")
-    
+
     visible_files = {
       'xx.rb' => ''
     }
-    
-    actual_diffs = GitDiffParser.new(diff_lines).parse_all
+
+    actual_diffs = GitDiff::GitDiffParser.new(diff_lines).parse_all
     expected_diffs =
     {
       "a/sandbox/xx.rb" =>
@@ -234,13 +239,13 @@ class TrapDiffBugTests < ActionController::TestCase
         :was_filename => "a/sandbox/xx.rb",
         :now_filename=>"/dev/null",
         :chunks => [ ]
-      }      
+      }
     }
     assert_equal expected_diffs, actual_diffs
-    
+
     expected_view = { 'xx.rb' => [ ] }
-    actual_view = unit_testable_git_diff_view(diff_lines, visible_files)    
-    assert_equal expected_view, actual_view    
+    actual_view = unit_testable_git_diff_view(diff_lines, visible_files)
+    assert_equal expected_view, actual_view
   end
 
 end
