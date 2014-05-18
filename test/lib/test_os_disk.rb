@@ -63,6 +63,8 @@ class OsDiskTests < ActionController::TestCase
     assert_nil result
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
     block_run = false
     begin
@@ -73,6 +75,8 @@ class OsDiskTests < ActionController::TestCase
       assert_equal 'Hello', result
     end
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "outer_lock_is_blocking_so_inner_lock_blocks" do
     outer_run = false
@@ -95,6 +99,8 @@ class OsDiskTests < ActionController::TestCase
     assert outer_run
     assert !inner_run
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
     parent_dir = @dir + 'parent' + @disk.dir_separator

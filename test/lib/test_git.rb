@@ -12,18 +12,22 @@ class GitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "git init raises exception if dir does not exist" do
+  test 'git init raises exception if dir does not exist' do
     bad_dir = 'notThere'
     error = assert_raises(RuntimeError) { @git.init(bad_dir,'') }
     assert error.message.start_with?("Cannot `cd #{bad_dir}")
   end
 
-  test "git init" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git init' do
     expected = "Initialized empty Git repository in #{@dir}.git/\n"
     assert_equal expected, @git.init(@dir, '')
   end
 
-  test "git add" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git add' do
     @git.init(@dir, '')
     File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
@@ -33,7 +37,9 @@ class GitTests < ActionController::TestCase
     assert status.include?('new file:   hello.txt')
   end
 
-  test "git commit" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git commit' do
     @git.init(@dir, '')
     File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
@@ -43,7 +49,9 @@ class GitTests < ActionController::TestCase
     assert output.include?('create mode 100644 hello.txt')
   end
 
-  test "git rm" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git rm' do
     @git.init(@dir, '')
     File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
@@ -54,7 +62,9 @@ class GitTests < ActionController::TestCase
     assert output.include?("rm 'hello.txt'")
   end
 
-  test "git tag and show" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git tag and show' do
     @git.init(@dir, '')
     File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("content")
@@ -66,7 +76,9 @@ class GitTests < ActionController::TestCase
     assert_equal "content", show
   end
 
-  test "git diff" do
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'git diff' do
     @git.init(@dir, '')
     File.open(@dir + 'hello.txt', 'w') do |fd|
       fd.write("aaaaa")

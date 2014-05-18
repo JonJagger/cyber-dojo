@@ -4,7 +4,7 @@
 echo '' > log.tmp
 echo '' > run_all.tmp
 
-for TEST in *.rb ; do
+for TEST in test_*.rb ; do
     cat $TEST >> run_all.tmp
 done
 ruby run_all.tmp 2>&1 | tee -a log.tmp
