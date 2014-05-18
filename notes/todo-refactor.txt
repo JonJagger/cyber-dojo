@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  s/LinuxPaas/Paas/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   put fake/mock/stub/spy classes into same folder as the real things.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   languages: this should know its own path, and that path
@@ -55,6 +57,16 @@
   })
   What is self in context here? Don't think it will be paas.
 
+  This would also mean paas does not need to be passed
+  to DockerRunner.run()
+
+  I think this also means the Dojo class will collapse.
+  Paas will have its methods
+     def languages...
+     def exercises...
+     def katas...
+  This ties in with Paas.make_kata_manifest() being passed
+  dojo as a parameter which it never uses.
 
   I think this would mean model objects do not need to store their
   parent (eg kata -> dojo)
