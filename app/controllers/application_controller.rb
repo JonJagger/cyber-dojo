@@ -1,6 +1,6 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
-require __DIR__ + '/app/lib/LinuxPaas'
+require __DIR__ + '/app/lib/Paas'
 require __DIR__ + '/app/lib/DockerRunner'
 require __DIR__ + '/app/lib/DummyRunner'
 require __DIR__ + '/app/lib/HostRunner'
@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     @disk   ||= thread[:disk]   || OsDisk.new
     @git    ||= thread[:git]    || Git.new
     @runner ||= thread[:runner] || runner
-    @paas   ||= LinuxPaas.new(@disk, @git, @runner)
+    @paas   ||= Paas.new(@disk, @git, @runner)
   end
 
   def dojo

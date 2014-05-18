@@ -1,16 +1,16 @@
 require File.dirname(__FILE__) + '/model_test_case'
 
-class LinuxPaasTests < ModelTestCase
+class PaasTests < ModelTestCase
 
   test "default format is json" do
-    paas = LinuxPaas.new(nil,nil,nil)
+    paas = Paas.new(nil,nil,nil)
     assert_equal 'json', paas.format
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "format can be set to rb" do
-    paas = LinuxPaas.new(nil,nil,nil)
+    paas = Paas.new(nil,nil,nil)
     paas.format_rb
     assert_equal 'rb', paas.format
   end

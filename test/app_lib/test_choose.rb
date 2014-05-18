@@ -5,7 +5,7 @@ require 'Choose'
 require 'OsDisk'
 require 'Git'
 require 'DummyRunner'
-require 'LinuxPaas'
+require 'Paas'
 require 'Dojo'
 require 'Katas'
 require 'Kata'
@@ -22,7 +22,7 @@ class ChooseTests < CyberDojoTestBase
     @disk = OsDisk.new
     @git = Git.new
     @runner = DummyRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
   end
 

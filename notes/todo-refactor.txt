@@ -1,6 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   s/LinuxPaas/Paas/
+  s/LinuxPaas/CyberDojo
+    (especially when Dojo has been dropped)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   put fake/mock/stub/spy classes into same folder as the real things.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

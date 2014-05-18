@@ -380,7 +380,7 @@ class LanguageTests < ModelTestCase
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = CustomRunner.new(['yes'])
-    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
     assert @dojo.languages['yes'].runnable?
     assert !@dojo.languages['no'].runnable?
@@ -393,7 +393,7 @@ class LanguageTests < ModelTestCase
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = DockerRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
     ruby = @dojo.languages['Ruby']
     @paas.dir(ruby).write(manifest_filename, { })

@@ -14,7 +14,7 @@ class ModelTestCase < ActionController::TestCase
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = SpyRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @paas = Paas.new(@disk, @git, @runner)
     @paas.format_rb if format === 'rb'
     @dojo = @paas.create_dojo(root_path)
     @max_duration = 15

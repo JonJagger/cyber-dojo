@@ -49,7 +49,7 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = SpyGit.new
     thread[:runner] = runner = SpyRunner.new
-    paas = LinuxPaas.new(disk, git, runner)
+    paas = Paas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language = dojo.languages['xxxx']
     id = '1234512345'
@@ -79,7 +79,7 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = SpyGit.new
     thread[:runner] = runner = SpyRunner.new
-    paas = LinuxPaas.new(disk, git, runner)
+    paas = Paas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language = dojo.languages['Ruby-installed-and-working']
     paas.dir(language).make
@@ -121,7 +121,7 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = SpyGit.new
     thread[:runner] = runner = SpyRunner.new
-    paas = LinuxPaas.new(disk, git, runner)
+    paas = Paas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language_name = 'Ruby-installed-and-working'
     language = dojo.languages[language_name]
@@ -162,7 +162,7 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = SpyGit.new
     thread[:runner] = runner = SpyRunner.new
-    paas = LinuxPaas.new(disk, git, runner)
+    paas = Paas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     id = '1234512345'
     kata = dojo.katas[id]
@@ -217,7 +217,7 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = SpyGit.new
     thread[:runner] = runner = SpyRunner.new
-    paas = LinuxPaas.new(disk, git, runner)
+    paas = Paas.new(disk, git, runner)
     dojo = Dojo.new(paas, root_path, 'json')
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'

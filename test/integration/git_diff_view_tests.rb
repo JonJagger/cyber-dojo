@@ -5,7 +5,7 @@ require 'GitDiff'
 require 'OsDisk'
 require 'Git'
 require 'HostRunner'
-require 'LinuxPaas'
+require 'Paas'
 require 'Dojo'
 require 'Languages'
 require 'Language'
@@ -28,7 +28,7 @@ class GitDiffViewTests < CyberDojoTestBase
     @disk = OsDisk.new
     @git = Git.new
     @runner = HostRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
   end
 

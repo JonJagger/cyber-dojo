@@ -9,7 +9,7 @@ class KataTests < ActionController::TestCase
     disk   = OsDisk.new
     git    = Git.new
     runner = DummyRunner.new
-    paas = LinuxPaas.new(disk, git, runner)
+    paas = Paas.new(disk, git, runner)
     @dojo = paas.create_dojo(root_path)
   end
 

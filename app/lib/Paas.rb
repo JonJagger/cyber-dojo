@@ -1,5 +1,7 @@
 
-class LinuxPaas
+# CyberDojo - Platform As A Service
+
+class Paas
 
   def initialize(disk, git, runner)
     @disk,@git,@runner,@format = disk,git,runner,'json'

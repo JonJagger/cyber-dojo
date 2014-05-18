@@ -10,7 +10,7 @@ class KatasTests < ActionController::TestCase
     @disk  = OsDisk.new
     @git   = Git.new
     @runer = HostRunner.new
-    @paas = LinuxPaas.new(@disk, @git, @runner)
+    @paas = Paas.new(@disk, @git, @runner)
     @paas.format_rb if format === 'rb'
     @dojo = @paas.create_dojo(root_path)
     @language = @dojo.languages['test-Java-JUnit']
