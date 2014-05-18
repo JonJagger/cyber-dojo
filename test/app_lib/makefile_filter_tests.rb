@@ -1,6 +1,9 @@
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class MakefileFilterTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'MakefileFilter'
+
+class MakefileFilterTests < CyberDojoTestBase
 
   test "not makefile leaves leading whitespace untouched" do
     check('notMakefile', "            abc", "            abc")

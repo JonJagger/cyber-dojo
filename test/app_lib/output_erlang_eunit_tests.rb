@@ -1,11 +1,11 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputErlangEUnitTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputErlangEUnitTests < CyberDojoTestBase
 
-  test "one fail is red" do
+  test 'one fail is red' do
     output =
       [
         "untitled_tests: answer_test (module 'untitled_tests')...*failed*",
@@ -25,7 +25,7 @@ class OutputErlangEUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "one pass is green" do
+  test 'one pass is green' do
     output =
       [
         "  Test passed."
@@ -35,7 +35,7 @@ class OutputErlangEUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "two passes is green" do
+  test 'two passes is green' do
     output =
       [
         "  All 2 tests passed."
@@ -45,7 +45,7 @@ class OutputErlangEUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "one pass one fail is red" do
+  test 'one pass one fail is red' do
     output =
       [
         "untitled_tests: answer2_test...*failed*",
@@ -65,7 +65,7 @@ class OutputErlangEUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "syntax error is amber" do
+  test 'syntax error is amber' do
     output =
       [
         "./untitled_tests.erl:5: function ddd/1 undefined",
@@ -76,7 +76,7 @@ class OutputErlangEUnitTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "makefile error is amber" do
+  test 'makefile error is amber' do
     output =
       [
       "Makefile:8: *** missing separator.  Stop."

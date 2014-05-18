@@ -1,11 +1,11 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputCAssertTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputCAssertTests < CyberDojoTestBase
 
-  test "failure is red" do
+  test 'failure is red' do
     output =
       [
         "gcc -Wall -Werror -O -std=c99 *.c -o run.tests",
@@ -18,7 +18,7 @@ class OutputCAssertTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "syntax error of the first kind is amber" do
+  test 'syntax error of the first kind is amber' do
     output =
       [
         "gcc -Wall -Werror -O -std=c99 *.c -o run.tests",
@@ -34,7 +34,7 @@ class OutputCAssertTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "syntax error of the second kind is amber" do
+  test 'syntax error of the second kind is amber' do
     output =
     [
       "gcc -Wall -Werror -O -std=c99 *.c -o run.tests",
@@ -45,7 +45,7 @@ class OutputCAssertTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "makefile error is amber" do
+  test 'makefile error is amber' do
     output =
       [
         "makefile:3: *** missing separator.  Stop."
@@ -55,7 +55,7 @@ class OutputCAssertTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "throws exception so make fails is amber" do
+  test 'throws exception so make fails is amber' do
     output =
       [
         "g++ -Wall -Werror -O *.cpp -o run.tests",
@@ -69,7 +69,7 @@ class OutputCAssertTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "two passes is green" do
+  test 'two passes is green' do
     output =
       [
         "g++ -Wall -Werror -O *.cpp -o run.tests",

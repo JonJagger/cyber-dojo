@@ -1,11 +1,11 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputCppGoogleTestTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputCppGoogleTestTests < CyberDojoTestBase
 
-  test "initial red is red" do
+  test 'initial red is red' do
     output =
     [
       "Running main() from gmock_main.cc",
@@ -35,7 +35,7 @@ class OutputCppGoogleTestTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "initial amber is amber" do
+  test 'initial amber is amber' do
     output =
     [
       "untitled.cpp: In function 'int hhg()':",
@@ -49,7 +49,7 @@ class OutputCppGoogleTestTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test " initial green is green" do
+  test 'initial green is green' do
     output =
     [
       "Running main() from gmock_main.cc",

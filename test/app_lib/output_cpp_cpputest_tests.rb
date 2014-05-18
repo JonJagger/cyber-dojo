@@ -1,11 +1,11 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputCppUTestTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputCppUTestTests < CyberDojoTestBase
 
-  test "one failing test is red" do
+  test 'one failing test is red' do
     output =
       [
        "Errors (1 failures, 1 tests, 1 ran, 5 checks, 0 ignored, 0 filtered out, 1 ms)"
@@ -15,7 +15,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "one passing test is green" do
+  test 'one passing test is green' do
     output =
       [
       "OK (1 tests, 1 ran, 5 checks, 0 ignored, 0 filtered out, 0 ms)"
@@ -25,7 +25,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "two failing tests is red" do
+  test 'two failing tests is red' do
     output =
       [
       "Errors (2 failures, 2 tests, 2 ran, 10 checks, 0 ignored, 0 filtered out, 2 ms)"
@@ -35,7 +35,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "three failing tests is red" do
+  test 'three failing tests is red' do
     output =
       [
       "Errors (3 failures, 3 tests, 3 ran, 15 checks, 0 ignored, 0 filtered out, 4 ms)"
@@ -45,7 +45,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "two passing tests is green" do
+  test 'two passing tests is green' do
     output =
       [
       "OK (2 tests, 2 ran, 10 checks, 0 ignored, 0 filtered out, 1 ms)"
@@ -55,7 +55,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "three passing tests is green" do
+  test 'three passing tests is green' do
     output =
       [
       "OK (3 tests, 3 ran, 15 checks, 0 ignored, 0 filtered out, 1 ms)"
@@ -65,7 +65,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "one failing test and one passing test is red" do
+  test 'one failing test and one passing test is red' do
     output =
       [
       "Errors (1 failures, 2 tests, 2 ran, 10 checks, 0 ignored, 0 filtered out, 2 ms)"
@@ -75,7 +75,7 @@ class OutputCppUTestTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "syntax error is amber" do
+  test 'syntax error is amber' do
     output =
       [
       %q{TEST_Untitled_Create_Test::testBody()':},

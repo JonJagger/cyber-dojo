@@ -1,11 +1,11 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputClojureTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputClojureTests < CyberDojoTestBase
 
-  test "one fail is red" do
+  test 'one fail is red' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -16,7 +16,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "one error is red" do
+  test 'one error is red' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -27,7 +27,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "no fails and one pass is green" do
+  test 'no fails and one pass is green' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -38,7 +38,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "one fail on 1st test and no fails on 2nd test is red" do
+  test 'one fail on 1st test and no fails on 2nd test is red' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -51,7 +51,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "no fails on 1st test and one fail on 2nd test is red" do
+  test 'no fails on 1st test and one fail on 2nd test is red' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -64,7 +64,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "no fails on 1st test and no fail on 2nd test is green" do
+  test 'no fails on 1st test and no fail on 2nd test is green' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -77,7 +77,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "mix of amber and red is amber" do
+  test 'mix of amber and red is amber' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -89,7 +89,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "mix of amber and green is amber" do
+  test 'mix of amber and green is amber' do
     output =
       [
         "Ran 1 tests containing 1 assertions.",
@@ -101,7 +101,7 @@ class OutputClojureTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test "mistake in cyber-dojo.sh is amber" do
+  test 'mistake in cyber-dojo.sh is amber' do
     output =
       [
         "./cyber-dojo.sh: 1: xjava: not found"

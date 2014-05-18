@@ -1,11 +1,11 @@
-# encoding: iso-8859-1
-require File.dirname(__FILE__) + '/../test_helper'
+#!/usr/bin/env ruby
 
-class OutputCatchTests < ActionController::TestCase
+require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require 'OutputParser'
 
-  include OutputParser
+class OutputCatchTests < CyberDojoTestBase
 
-  test "one failing test is red" do
+  test 'one failing test is red' do
     output =
       [
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
@@ -31,7 +31,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "one passing test is green" do
+  test 'one passing test is green' do
     output =
       [
         "All tests passed (1 assertion in 1 test case)"
@@ -41,7 +41,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "two failing tests is red" do
+  test 'two failing tests is red' do
     output =
       [
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
@@ -78,7 +78,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "three failing tests is red" do
+  test 'three failing tests is red' do
     output =
       [
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
@@ -126,7 +126,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "two passing tests is green" do
+  test 'two passing tests is green' do
     output =
       [
         "All tests passed (2 assertions in 2 test cases)"
@@ -136,7 +136,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "three passing tests is green" do
+  test 'three passing tests is green' do
     output =
       [
         "All tests passed (3 assertions in 3 test cases)"
@@ -146,7 +146,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "one failing test and one passing test is red" do
+  test 'one failing test and one passing test is red' do
     output =
       [
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
@@ -172,7 +172,7 @@ class OutputCatchTests < ActionController::TestCase
 
   # - - - - - - - - - - - - - - -
 
-  test "syntax error is amber" do
+  test 'syntax error is amber' do
     output =
       [
         "untitled.cpp: In function 'int hhg()':",
