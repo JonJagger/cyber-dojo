@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  put fake/mock/stub/spy classes into same folder as the real things.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   languages: this should know its own path, and that path
   is retrieved from it in linux_paas.rb not like this
         when Languages
@@ -9,6 +11,56 @@
         obj.path
   Indeed, perhaps each object should know its own path
   so the whole case disappears, and path(obj) becomes obj.path
+  And then there will be no need to go back to the paas to
+  read/write files (for example).
+    raw = paas.read(self, manifest_filename)
+  can become
+    raw = paas.read(path, manifest_filename)
+  So paas is constructed with
+     3 object pre-constructed: git, disk, runner
+     3 object paths: languages/, exercises/, katas/
+  and the paas ctor does
+     Languages.new(self, languages_root)
+  or
+  abstract the path and the paas ctor is passed in factory
+  class Paas
+    def initialize(config)
+      @languages = config[:languages].create(self)
+    end
+  end
+  class LanguagesFactory
+    def initialize(path)
+      @path = path
+    end
+    def create(paas)
+      Languages.new(paas, @path)
+    end
+  end
+  paas = Paas.new({
+    :languages => LanguagesFactory.new(languages_root),
+    :exercises => ExercisesFactory.new(exercises_root),
+    :katas     => KatasFactory.new(katas_root),
+    :disk   => Disk.new
+    :git    => Git.new,
+    :runner => DockerRunner.new
+  })
+  or would plain 'blocks' be simpler?
+  paas = Paas.new({
+    :languages => ->{ Languages.new(self,'.../languages/') }
+    :exercises => ->{ Exercises.new(self,'.../exercises/') }
+    :katas     => ->{     Katas.new(self,'.../katas/') }
+    :disk   => Disk.new
+    :git    => Git.new,
+    :runner => DockerRunner.new
+  })
+  What is self in context here? Don't think it will be paas.
+
+
+  I think this would mean model objects do not need to store their
+  parent (eg kata -> dojo)
+
+  Check language interaction with Choose.language()
+  Check exercise interaction with Choose.exercise()
 
   This opens up possibility of Languages being selectable
   from different folders.
@@ -39,7 +91,7 @@
      where paas.dojos[root_path] gives you a dojo object
      which may or may not exist (just like katas[id])
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  kata.animals['lion'].tag[4]
+  kata.avatars['lion'].tag[4]
     handy shortcut for this could be
   kata.lion.tag[4]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
