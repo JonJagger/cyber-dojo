@@ -23,7 +23,7 @@ class DockerRunner
         " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 
     output = `#{outer_command}`
-    $?.exitstatus != fatal_error(kill) ? output : terminated_after(max_seconds)
+    $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
   end
 
   def image_names(output)
@@ -44,8 +44,11 @@ private
     9
   end
 
-  def terminated_after(max_seconds)
-    "Terminated by the cyber-dojo server after #{max_seconds} seconds."
+  def didnt_complete(max_seconds)
+    "Unable to complete the tests in #{max_seconds} seconds\n" +
+    "Is there an accidental infinite loop? (unlikely)\n" +
+    "Is the server very busy? (more likely)\n" +
+    "Please try again."
   end
 
   def read_write
