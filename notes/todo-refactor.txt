@@ -1,10 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  add blurb to start of instructions explaining that
-  the initial source files bare no relation to the exercise.
+  if the server times-out (15 seconds) is there any
+  residual output? If there is it would be good to
+  include it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  s/Paas/CyberDojo
-    (especially when Dojo has been dropped)
+  add blurb to start of initial source files explaining that
+  the initial source files bare no relation to the exercise.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   put fake/mock/stub/spy classes into same folder as the real things.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,6 +61,11 @@
     :runner => DockerRunner.new
   })
   What is self in context here? Don't think it will be paas.
+
+  Katas should not only know its own path, it should also
+  have the make_kata() method currently in Paas.
+
+  Kata should have start_avatar() method currently in Paas.
 
   This would also mean paas does not need to be passed
   to DockerRunner.run()
