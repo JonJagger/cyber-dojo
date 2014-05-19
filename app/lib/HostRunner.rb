@@ -56,7 +56,7 @@ private
   end
 
   def didnt_complete(max_seconds)
-    "Unable to complete the tests in #{max_seconds} seconds\n" +
+    "Unable to complete the tests in #{max_seconds} seconds.\n" +
     "Is there an accidental infinite loop? (unlikely)\n" +
     "Is the server very busy? (more likely)\n" +
     "Please try again."

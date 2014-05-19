@@ -1,7 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  s/LinuxPaas/Paas/
-  s/LinuxPaas/CyberDojo
+  add blurb to start of instructions explaining that
+  the initial source files bare no relation to the exercise.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  s/Paas/CyberDojo
     (especially when Dojo has been dropped)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   put fake/mock/stub/spy classes into same folder as the real things.
