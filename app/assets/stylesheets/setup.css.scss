@@ -1,8 +1,8 @@
 
 #setup-page {
 
-  margin-top: 45px;
-  margin-left: 65px;
+  margin-top: 25px;
+  margin-left: 35px;
 
   #languages-container, #exercises-container {
     height: 475px;
@@ -23,7 +23,7 @@
   }
 
   #exercises-container, #choose-exercise {
-    padding-left: 65px;
+    padding-left: 35px;
   }
 
   #instructions {
@@ -43,7 +43,7 @@
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
     margin-top: 30px;
-    margin-right: 140px;
+    margin-right: 100px;
   }
 
 }
