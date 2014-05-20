@@ -9,6 +9,27 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   put fake/mock/stub/spy classes into same folder as the real things.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  admin_scripts/check_language_manifest.rb
+  should be passed the languages/ dir not the root_dir
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  languages/exercises/
+  These should know their own path and be passed a Disk
+  object on construction. They are currently passed a Paas
+  object - which is over coupled. They don't need git/runner.
+
+  katas/
+  This should know its own path and be passed
+    Disk,Git,Runner objects on construction
+    Move create_manifest() and start_avatar() into
+    Katas and Avatars classes.
+  Aim for dropping the Paas class, just need these three...
+     Languages, Exercises, Katas
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Move docker? and stderr2stdout from ApplicationController
+  into DockerRunner
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Folders.id_complete can move to Katas.id_complete
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   languages: this should know its own path, and that path
   is retrieved from it in linux_paas.rb not like this
         when Languages

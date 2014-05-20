@@ -4,7 +4,7 @@ require 'json'
 
 CYBER_DOJO_ROOT_DIR = ARGV[0]
 if CYBER_DOJO_ROOT_DIR === nil
-  puts "ruby docker_pull_all.rb [root-dir]"
+  puts "docker_pull_all.rb [root-dir]"
   exit
 end
 

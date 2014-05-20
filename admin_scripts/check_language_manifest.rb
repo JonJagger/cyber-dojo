@@ -4,10 +4,10 @@ require File.dirname(__FILE__) + '/language_manifest_checker'
 
 def show_use(message = "")
   puts
-  puts "USE: ruby check_language_manifest.rb [cyber-dojo-root-dir]"
+  puts "USE: check_language_manifest.rb [cyber-dojo-root-dir]"
   puts "   checks [cyber-dojo-root-dir]/languages/*/manifest.json"
   puts ""
-  puts "USE: ruby check_language_manifest.rb [cyber-dojo-root-dir] [language-dir]"
+  puts "USE: check_language_manifest.rb [cyber-dojo-root-dir] [language-dir]"
   puts "   checks [cyber-dojo-root-dir]/languages/[language-dir]/manifest.json"
   puts ""
   puts "   ERROR: #{message}" if message != ""
