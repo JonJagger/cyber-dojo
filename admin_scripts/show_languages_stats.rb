@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(File.dirname(__FILE__)) + '/domain_lib'
+require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
 
 def number(value,width)
   spaces = ' ' * (width - value.to_s.length)
@@ -10,7 +10,7 @@ end
 disk = OsDisk.new
 git = Git.new
 runner = DummyRunner.new
-paas = LinuxPaas.new(disk, git, runner)
+paas = Paas.new(disk, git, runner)
 dojo = paas.create_dojo(CYBERDOJO_HOME_DIR)
 
 languages_names = dojo.languages.collect {|language| language.name}

@@ -7,7 +7,7 @@ app_lib
    227 tests, 3553 assertions, 1 failures, 0 errors, 0 skips
    Finished tests in 2.622439s, 86.5606 tests/s, 1354.8456 assertions/s.
    Coverage = 66.67%
-   (Missing *Runner and LinuxPaas coverage)
+   (Missing *Runner and Paas coverage)
 
 app_models
    122 tests, 726 assertions, 0 failures, 0 errors, 0 skips

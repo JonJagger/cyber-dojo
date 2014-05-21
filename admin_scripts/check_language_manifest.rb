@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/language_manifest_checker'
+require File.dirname(__FILE__) + '/lib_language_manifest_checker'
 
 def show_use(message = "")
   puts
