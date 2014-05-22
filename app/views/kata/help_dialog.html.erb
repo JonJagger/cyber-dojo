@@ -29,13 +29,13 @@
           <table>
             <tr>
               <td>
-                <%= traffic_light_image('red',20,60) %>
+                <%= raw traffic_light_image('red',20,60) %>
               </td>
               <td>
-                <%= traffic_light_image('amber',20,60) %>
+                <%= raw traffic_light_image('amber',20,60) %>
               </td>
               <td>
-                <%= traffic_light_image('green',20,60) %>
+                <%= raw traffic_light_image('green',20,60) %>
               </td>
               <td>
                 <table>
@@ -117,13 +117,13 @@
               <table>
                 <tr>
                   <td>
-                    <%= traffic_light_image('red',20,60) %>
+                    <%= raw traffic_light_image('red',20,60) %>
                   </td>
                   <td>
-                    <%= traffic_light_image('amber',20,60) %>
+                    <%= raw traffic_light_image('amber',20,60) %>
                   </td>
                   <td>
-                    <%= traffic_light_image('green',20,60) %>
+                    <%= raw traffic_light_image('green',20,60) %>
                   </td>
                   <td>
                     &nbsp;
@@ -138,7 +138,7 @@
               <table>
                 <tr>
                   <td>
-                    <%= avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
+                    <%= raw avatar_image(@avatar_name, 57, translate_avatar(@avatar_name)) %>
                   </td>
                   <td>
                     <%= raw t("views.kata_help.opens_a_dashboard_page") %>
