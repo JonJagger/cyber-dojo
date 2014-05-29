@@ -1,4 +1,9 @@
 
+Once a kata has a max duration, I can move done katas
+to a read-only server. Then I copy the support files
+instead of linking them. This means I won't need the
+link command on disk objects. I also won't need the
+second -v volume mount in the DockerRunner.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
