@@ -1,24 +1,22 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
+$(document).ready(function() { //function() {
 
   var fileButtons =  $('#file-operations');
+  var expired = <%= @kata.expired? %>;
 
-  fileButtons.find('#new').click(function() {
-    var title = $(this).data('title');
-    cd.newFile(title);
-  });
+  fileButtons.find('#new')
+    .click(function() { cd.newFile($(this).data('title')); })
+    .prop('disabled', expired);
 
-  fileButtons.find('#rename').click(function() {
-    var title = $(this).data('title');
-    cd.renameFile(title);
-  });
+  fileButtons.find('#rename')
+    .click(function() { cd.renameFile($(this).data('title')); })
+    .prop('disabled', expired);
 
-  fileButtons.find('#delete').click(function() {
-    var title = $(this).data('title');
-    cd.deleteFile(title);
-  });
+  fileButtons.find('#delete')
+    .click(function() { cd.deleteFile($(this).data('title')); })
+    .prop('disabled', expired);
 
 });
 
@@ -28,6 +26,7 @@ $(document).ready(function() {
   <button type="button"
           id="new"
           data-title="<%= t('views.buttons.new_file') %>"
+          data-expired="<%= @kata.expired? %>"
           title="creates a new file">
     <%= t('views.buttons.new_file') %>
   </button>
@@ -35,6 +34,7 @@ $(document).ready(function() {
   <button type="button"
           id="rename"
           data-title="<%= t('views.buttons.rename_file') %>"
+          data-expired="<%= @kata.expired? %>"
           title="renames the current file">
     <%= t('views.buttons.rename_file') %>
   </button>
@@ -42,6 +42,7 @@ $(document).ready(function() {
   <button type="button"
           id="delete"
           data-title="<%= t('views.buttons.delete_file') %>"
+          data-expired="<%= @kata.expired? %>"
           title="deletes the current file">
     <%= t('views.buttons.delete_file') %>
   </button>

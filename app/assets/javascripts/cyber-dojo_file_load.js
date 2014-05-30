@@ -61,20 +61,21 @@ var cyberDojo = (function(cd, $) {
     var renameFile = fileOps.find('#rename');
     var deleteFile = fileOps.find('#delete');
 
-    var turnOff = function(node) {
-      node.attr('disabled', true);
+    var disable = function(node) {
+      node.prop('disabled', true);
     };
-    var turnOn = function(node) {
-      node.removeAttr('disabled');
+
+    var enable = function(node) {
+      node.prop('disabled', node.data('expired'));
     };
 
     if (cd.cantBeRenamedOrDeleted(filename)) {
-      turnOff(renameFile);
-      turnOff(deleteFile);
+      disable(renameFile);
+      disable(deleteFile);
     }
     else {
-      turnOn(renameFile);
-      turnOn(deleteFile);
+      enable(renameFile);
+      enable(deleteFile);
     }
   };
 

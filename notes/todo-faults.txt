@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF
+  the auto-scroll to the diff-chunk does not work on
+  the initial diff-dialog. It only works when you
+  navigate using << < > >>
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS CHECKBOX
   when you click this you lose the focus on the
   currently opened file
