@@ -52,6 +52,13 @@ class Kata
     Time.mktime(*manifest['created'])
   end
 
+  def age(now)
+    return 0 if active_avatars.count === 0
+    # time of 1st manually pressed traffic-light
+    earliest = active_avatars.map{|avatar| avatar.lights[1].time_stamp}.sort[0]
+    return (now - Time.mktime(*earliest)).to_i
+  end
+
   def visible_files
     manifest['visible_files']
   end

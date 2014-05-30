@@ -22,7 +22,7 @@ class Avatar
     # o) When an avatar enters a cyber-dojo the tests are automatically
     #    run. This means an avatar gets one traffic-light for free.
     # o) When forking a new kata it is common to enter as one animal
-    #    to sanity check it is ok.
+    #    to sanity check it is ok (but not press [test])
     lights.count > 1
   end
 

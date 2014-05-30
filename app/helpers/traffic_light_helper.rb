@@ -48,11 +48,6 @@ module TrafficLightHelper
     "Click to review #{avatar_name}#{apostrophe}s #{n-1} #{arrow} #{n} diff"
   end
 
-  def XXcolour(light)
-     # very old dojos used 'outcome'
-     (light['colour'] || light['outcome']).to_s
-  end
-
   def apostrophe
     '&#39;'
   end

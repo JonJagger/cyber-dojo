@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-  var age = parseInt("<%= (Time.now - @kata.created).to_i %>");
+  var age = <%= @kata.age(Time.now) %>;
   var seconds = age % 60;
   var minutes = Math.floor((age / 60) % 60);
   var hours   = Math.floor((age / (60*60)) % 24);
@@ -25,8 +25,10 @@ $(document).ready(function() {
     $('#minutes-label').html("<%= t('views.labels.minutes') %>" + sep);
     $('#minutes').text(zerod(minutes));
   }
-  $('#seconds-label').html("<%= t('views.labels.seconds') %>" + sep);
-  $('#seconds').text(zerod(seconds));
+  if (days > 0 || hours > 0 || minutes > 0 || seconds > 0) {
+    $('#seconds-label').html("<%= t('views.labels.seconds') %>" + sep);
+    $('#seconds').text(zerod(seconds));
+  }
 
 });
 
