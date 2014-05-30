@@ -3,24 +3,27 @@
 
 $(document).ready(function() {
 
-  $('#revert-button').click(function() {
-    var button = $(this);
-    var title = button.data('title');
-	var cancel = button.data('cancel');
-    var maxTag = parseInt($('.traffic-light-count').text());
-    cd.dialog_revert(title, cancel, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag, button);
-  });
+  $('#revert-button')
+    .click(function() {
+	  var button = $(this);
+	  var title = button.data('title');
+	  var cancel = button.data('cancel');
+	  var maxTag = parseInt($('.traffic-light-count').text());
+	  cd.dialog_revert(title, cancel, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag, button);
+	})
+	.prop('disabled', <%= @kata.expired? %>);
 
-  $('#fork-button').click(function() {
-    var button = $(this);
-    var title = button.data('title');
-    var cancel = button.data('cancel');
-    var id = "<%= @kata.id %>";
-    var avatarName = "<%= @avatar.name %>";
-    var maxTag = parseInt($('.traffic-light-count').text());
-    var tag = maxTag;
-    cd.dialog_fork(title, cancel, id, avatarName, tag, maxTag, button);
-  });
+  $('#fork-button')
+    .click(function() {
+	  var button = $(this);
+	  var title = button.data('title');
+	  var cancel = button.data('cancel');
+	  var id = "<%= @kata.id %>";
+	  var avatarName = "<%= @avatar.name %>";
+	  var maxTag = parseInt($('.traffic-light-count').text());
+	  var tag = maxTag;
+	  cd.dialog_fork(title, cancel, id, avatarName, tag, maxTag, button);
+	});
 
 });
 
