@@ -1,4 +1,14 @@
 
+<script type="text/javascript"><!--
+
+$(function() {
+
+  $('.file_content').prop('disabled', <%= @kata.expired? %>);
+  
+});
+
+//--></script>
+
 <div id="visible-files-container">
 
   <% @visible_files.each do |filename,content| %>
