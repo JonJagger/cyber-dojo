@@ -24,7 +24,7 @@ module PieChartHelper
 private
 
   def count(traffic_lights, colour)
-     traffic_lights.count{|light| light['colour'] === colour}
+     traffic_lights.count{|light| light.colour === colour}
   end
 
 end

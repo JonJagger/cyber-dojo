@@ -21,7 +21,7 @@ module TrafficLightHelper
   end
 
   def diff_avatar_image(kata, avatar_name, light, max_lights)
-    number = light['number']
+    number = light.number
     "<div class='diff-traffic-light'" +
         " title='Click to review #{avatar_name}#{apostrophe}s code'" +
         " data-id='#{kata.id}'" +

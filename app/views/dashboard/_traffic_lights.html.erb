@@ -36,12 +36,15 @@ $(document).ready(function() {
   <% gapped = gapper.fully_gapped(@all_lights, make_time(Time.now)) %>
   <% index = 0 %>
 
-  <% @all_lights.keys.sort.each do |avatar_name| %>
-	<% lights = @all_lights[avatar_name] %>
-	<% if lights.length > 1 %>
+  <%# @all_lights.keys.sort.each do |avatar_name| %>
+	<%# lights = @all_lights[avatar_name] %>
+	<%# if lights.length > 1 %>
+
+  <% @kata.active_avatars.each do |avatar| %>
+    <% lights = avatar.lights %>
 	  <% index += 1 %>
 	  <tr class="<%= parity(index) %> row">
-		<% td_map = gapped[avatar_name] %>
+		<% td_map = gapped[avatar.name] %>
 		<% td_map.keys.sort.each do |td_no| %>
 		  <% td = td_map[td_no] %>
 		  <td align="right">
@@ -56,7 +59,7 @@ $(document).ready(function() {
 				<tr>
 				  <% td.each do |light| %>
 					<td>
-					  <%= raw diff_traffic_light(@kata, avatar_name, light, lights.length) %>
+					  <%= raw diff_traffic_light(@kata, avatar.name, light, lights.length) %>
 					</td>
 				  <% end %>
 				</tr>
@@ -67,17 +70,17 @@ $(document).ready(function() {
 		<% end %>
 		<td class="align-right">
 		  <%= render :partial => 'shared/traffic_light_count',
-					 :locals  => { :traffic_lights => lights,
-								   :avatar_name    => avatar_name
+					 :locals  => { :lights => lights,
+								   :avatar_name    => avatar.name
 								 } %>
 		</td>
 		<td class="align-right">
-          <%= raw pie_chart(lights,40,avatar_name) %>
+          <%= raw pie_chart(lights,40,avatar.name) %>
 		</td>
 		<td class="align-center valign-center">
-		  <%= raw diff_avatar_image(@kata, avatar_name, lights.last, lights.length) %>
+		  <%= raw diff_avatar_image(@kata, avatar.name, lights.latest, lights.length) %>
 		</td>
 	  </tr>
-	<% end %>
+	<%# end %>
   <% end %>
 </table>
