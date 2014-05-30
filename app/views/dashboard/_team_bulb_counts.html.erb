@@ -7,11 +7,11 @@ $(document).ready(function() {
 
 //--></script>
 
-<% activeAvatars = @kata.avatars.select{|avatar| avatar.active? } %>
-<% if activeAvatars.count > 1 %>
-<%   lasts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+<% active_avatars = @kata.active_avatars %>
+<% if active_avatars.count > 1 %>
+<%   lasts  = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
 <%   counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
-<%   activeAvatars.each do |avatar| %>
+<%   active_avatars.each do |avatar| %>
 <%     lasts[avatar.lights.latest.colour] += 1 %>
 <%     counts['red']   += avatar.lights.count{ |light| light.colour == 'red' } %>
 <%     counts['amber'] += avatar.lights.count{ |light| light.colour == 'amber' } %>

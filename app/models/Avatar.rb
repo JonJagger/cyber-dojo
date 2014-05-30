@@ -16,8 +16,8 @@ class Avatar
   end
 
   def active?
-    # o) Players commonly start two avatars on the same computer and use one
-    #    solely to read the instructions. I don't want such animals
+    # o) Players commonly start two avatars on the same computer and use
+    #    one solely to read the instructions. I don't want these avatars
     #    appearing on the dashboard.
     # o) When an avatar enters a cyber-dojo the tests are automatically
     #    run. This means an avatar gets one traffic-light for free.

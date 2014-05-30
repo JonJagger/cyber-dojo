@@ -35,6 +35,7 @@ $(document).ready(function() {
   <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) %>
   <% gapped = gapper.fully_gapped(@all_lights, make_time(Time.now)) %>
   <% index = 0 %>
+
   <% @all_lights.keys.sort.each do |avatar_name| %>
 	<% lights = @all_lights[avatar_name] %>
 	<% if lights.length > 1 %>

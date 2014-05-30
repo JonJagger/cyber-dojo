@@ -44,6 +44,10 @@ class Kata
     Avatars.new(self)
   end
 
+  def active_avatars
+    avatars.select{|avatar| avatar.active?}
+  end
+
   def created
     Time.mktime(*manifest['created'])
   end
