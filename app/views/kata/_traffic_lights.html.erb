@@ -15,9 +15,9 @@ $(document).ready(function() {
 <table>
   <tr class="row">
 
-	<% @traffic_lights.each do |light| %>
+	<% @avatar.lights.each do |light| %>
 	  <td>
-		<%= raw diff_traffic_light(@kata, @avatar.name, light, @traffic_lights.length) %>
+		<%= raw diff_traffic_light(@kata, @avatar.name, light, @avatar.lights.length) %>
 	  </td>
 	<% end %>
 

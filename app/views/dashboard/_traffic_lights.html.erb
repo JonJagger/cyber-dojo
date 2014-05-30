@@ -20,15 +20,6 @@ $(document).ready(function() {
 
 //--></script>
 
-<%# An animal has properly started when it has more than one traffic-light.      %>
-<%# Why?                                                                         %>
-<%# Partly because the first traffic-light is created automatically on start up. %>
-<%# Also people commonly start two animals on the same computer and use one      %>
-<%# animal solely to read the instructions.                                      %>
-<%# Another common pattern is to fork a new kata and then enter as one animal to %>
-<%# sanity check it is ok. Hence below you will find:                            %>
-<%# if lights.length > 1 %>
-
 <table>
   <% seconds_per_td = @seconds_per_column %>
   <% maximum_seconds_uncollapsed = seconds_per_td * 60 %>
@@ -36,51 +27,50 @@ $(document).ready(function() {
   <% gapped = gapper.fully_gapped(@all_lights, make_time(Time.now)) %>
   <% index = 0 %>
 
-  <%# @all_lights.keys.sort.each do |avatar_name| %>
-	<%# lights = @all_lights[avatar_name] %>
-	<%# if lights.length > 1 %>
-
   <% @kata.active_avatars.each do |avatar| %>
     <% lights = avatar.lights %>
-	  <% index += 1 %>
-	  <tr class="<%= parity(index) %> row">
-		<% td_map = gapped[avatar.name] %>
-		<% td_map.keys.sort.each do |td_no| %>
-		  <% td = td_map[td_no] %>
-		  <td align="right">
-		  <% if td.class == Hash %>
-			<span class="omission"></span>
-		  <% end %>
-		  <% if td.class == Array %>
-			<% if td.length == 0 %>
-			  <div class="gap">.</div>
-			<% else %>
-			  <table>
-				<tr>
-				  <% td.each do |light| %>
-					<td>
-					  <%= raw diff_traffic_light(@kata, avatar.name, light, lights.length) %>
-					</td>
-				  <% end %>
-				</tr>
-			  </table>
-			<% end %>
-		  <% end %>
-		  </td>
+	<% index += 1 %>
+	<tr class="<%= parity(index) %> row">
+	  <% td_map = gapped[avatar.name] %>
+	  <% td_map.keys.sort.each do |td_no| %>
+		<% td = td_map[td_no] %>
+		<td align="right">
+		<% if td.class == Hash %>
+		  <span class="omission"></span>
 		<% end %>
-		<td class="align-right">
-		  <%= render :partial => 'shared/traffic_light_count',
-					 :locals  => { :lights => lights,
-								   :avatar_name    => avatar.name
-								 } %>
+		<% if td.class == Array %>
+		  <% if td.length == 0 %>
+			<div class="gap">.</div>
+		  <% else %>
+			<table>
+			  <tr>
+				<% td.each do |light| %>
+				  <td>
+					<%= raw diff_traffic_light(@kata, avatar.name, Light.new(avatar,light), lights.length) %>
+				  </td>
+				<% end %>
+			  </tr>
+			</table>
+		  <% end %>
+		<% end %>
 		</td>
-		<td class="align-right">
-          <%= raw pie_chart(lights,40,avatar.name) %>
-		</td>
-		<td class="align-center valign-center">
-		  <%= raw diff_avatar_image(@kata, avatar.name, lights.latest, lights.length) %>
-		</td>
-	  </tr>
-	<%# end %>
+	  <% end %>
+
+	  <td class="align-right">
+		<%= render :partial => 'shared/traffic_light_count',
+				   :locals  => { :lights => lights,
+								 :avatar_name => avatar.name
+							   } %>
+	  </td>
+
+	  <td class="align-right">
+		<%= raw pie_chart(lights, 40, avatar.name) %>
+	  </td>
+
+	  <td class="align-center valign-center">
+		<%= raw diff_avatar_image(@kata, avatar.name, lights.latest, lights.length) %>
+	  </td>
+
+	</tr>
   <% end %>
 </table>
