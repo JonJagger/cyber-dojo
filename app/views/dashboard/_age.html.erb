@@ -2,32 +2,32 @@
 
 $(document).ready(function() {
 
-  var age = <%= @kata.age(Time.now) %>;
+  var age = <%= @kata.age %>;
   var seconds = age % 60;
   var minutes = Math.floor((age / 60) % 60);
   var hours   = Math.floor((age / (60*60)) % 24);
   var days    = Math.floor(age / (60*60*24));
 
-  var zerod = function(n) {
+  var zeroed = function(n) {
     return ('00' + n).slice(-2);
   };
   var sep = '&thinsp;:&thinsp;';
 
   if (days > 0) {
     $('#days-label').html("<%= t('views.labels.days') %>" + sep);
-    $('#days').text(zerod(days));
+    $('#days').text(zeroed(days));
   }
   if (days > 0 || hours > 0) {
     $('#hours-label').html("<%= t('views.labels.hours') %>" + sep);
-    $('#hours').text(zerod(hours));
+    $('#hours').text(zeroed(hours));
   }
   if (days > 0 || hours > 0 || minutes > 0) {
     $('#minutes-label').html("<%= t('views.labels.minutes') %>" + sep);
-    $('#minutes').text(zerod(minutes));
+    $('#minutes').text(zeroed(minutes));
   }
   if (days > 0 || hours > 0 || minutes > 0 || seconds > 0) {
     $('#seconds-label').html("<%= t('views.labels.seconds') %>" + sep);
-    $('#seconds').text(zerod(seconds));
+    $('#seconds').text(zeroed(seconds));
   }
 
 });

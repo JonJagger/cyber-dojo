@@ -17,6 +17,14 @@ class Kata
     id.valid? && paas.exists?(self)
   end
 
+  def active?
+    active_avatars.count > 0
+  end
+
+  def expired?
+    age > 60*60*24  # 1 day
+  end
+
   def id
     Id.new(@id)
   end
@@ -52,8 +60,8 @@ class Kata
     Time.mktime(*manifest['created'])
   end
 
-  def age(now)
-    return 0 if active_avatars.count === 0
+  def age(now = Time.now)
+    return 0 if !active?
     # time of 1st manually pressed traffic-light
     earliest = active_avatars.map{|avatar| avatar.lights[1].time_stamp}.sort[0]
     return (now - Time.mktime(*earliest)).to_i
