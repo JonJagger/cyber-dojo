@@ -15,6 +15,17 @@ class Avatar
     Avatars.names.include?(name) && paas.exists?(self)
   end
 
+  def active?
+    # o) Players commonly start two avatars on the same computer and use one
+    #    solely to read the instructions. I don't want such animals
+    #    appearing on the dashboard.
+    # o) When an avatar enters a cyber-dojo the tests are automatically
+    #    run. This means an avatar gets one traffic-light for free.
+    # o) When forking a new kata it is common to enter as one animal
+    #    to sanity check it is ok.
+    lights.count > 1
+  end
+
   def sandbox
     Sandbox.new(self)
   end

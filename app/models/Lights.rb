@@ -1,10 +1,4 @@
 
-# Not currently used. Working towards a model where tag commits
-# occur for events between traffic-lights
-# (eg new/rename/delete a file).
-# avatar.lights[n]   gives you the tag for the nth traffic light
-# avatar.tags[n]     gives you the nth tag which may not be a traffic-light.
-
 class Lights
   include Enumerable
 
@@ -26,15 +20,15 @@ class Lights
     each.entries.length
   end
 
+  def latest
+    self[length-1]
+  end
+  
   #def <<(light)
   #  ...
   #  could this parse output to determine colour?
   #  ...
   #  @lights = nil
-  #end
-
-  #def latest
-  #  self[length-1]
   #end
 
 private
@@ -56,3 +50,9 @@ private
   end
 
 end
+
+# Working towards a model where tag commits
+# occur for events between traffic-lights
+# (eg new/rename/delete a file).
+# avatar.lights[n]   gives you the tag for the nth traffic light
+# avatar.tags[n]     gives you the nth tag which may not be a traffic-light.
