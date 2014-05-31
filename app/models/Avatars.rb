@@ -17,11 +17,15 @@ class Avatars
   end
 
   def each
-    paas.all_avatars(@kata).each { |name| yield self[name] }
+    paas.all_avatars(@kata).each { |name| yield self[name] if block_given? }
   end
 
   def [](name)
     Avatar.new(@kata,name)
+  end
+
+  def length
+    each.entries.length
   end
 
 private

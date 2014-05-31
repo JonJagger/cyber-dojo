@@ -23,12 +23,10 @@ class Lights
   def latest
     self[length-1]
   end
-  
+
   #def <<(light)
   #  ...
-  #  could this parse output to determine colour?
-  #  ...
-  #  @lights = nil
+  #  @lights = nil  (reset cache)
   #end
 
 private
@@ -38,7 +36,13 @@ private
   end
 
   def lights
-    @lights ||= JSON.parse(paas.read(avatar, traffic_lights_filename))
+    return @lights ||= JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
+    return @lights ||= JSON.parse(text) if format === 'json'
+  end
+
+  def text
+    raw = paas.read(avatar, traffic_lights_filename)
+    raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
   def traffic_lights_filename
@@ -51,7 +55,7 @@ private
 
 end
 
-# Working towards a model where tag commits
+# Note: Working towards a model where tag commits
 # occur for events between traffic-lights
 # (eg new/rename/delete a file).
 # avatar.lights[n]   gives you the tag for the nth traffic light
