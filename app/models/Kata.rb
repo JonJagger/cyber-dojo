@@ -7,12 +7,6 @@ class Kata
 
   attr_reader :dojo
 
-  def format
-    return 'json' if paas.exists?(self, manifest_prefix + 'json')
-    return 'rb'   if paas.exists?(self, manifest_prefix + 'rb')
-    return dojo.format
-  end
-
   def exists?
     id.valid? && paas.exists?(self)
   end
@@ -62,9 +56,7 @@ class Kata
 
   def age(now = Time.now)
     return 0 if !active?
-    # time of 1st manually pressed traffic-light
-    earliest = active_avatars.map{|avatar| avatar.lights[1].time_stamp}.sort[0]
-    return (now - Time.mktime(*earliest)).to_i
+    return (now - Time.mktime(*earliest_light)).to_i
   end
 
   def visible_files
@@ -80,6 +72,12 @@ class Kata
     return @manifest ||= JSON.parse(text) if format === 'json'
   end
 
+  def format
+    return 'json' if paas.exists?(self, manifest_prefix + 'json')
+    return 'rb'   if paas.exists?(self, manifest_prefix + 'rb')
+    return dojo.format
+  end
+
 private
 
   def paas
@@ -93,6 +91,12 @@ private
   def text
     raw = paas.read(self, manifest_filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+  end
+
+  def earliest_light
+    # time of first manually pressed traffic-light
+    # (initial traffic-light is automatically created)
+    active_avatars.map{|avatar| avatar.lights[1].time_stamp}.sort[0]
   end
 
 end
