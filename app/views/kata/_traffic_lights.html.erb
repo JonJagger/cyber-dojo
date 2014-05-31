@@ -1,7 +1,7 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
+$(function() {
 
   cd.pieChart($('#traffic-lights .pie'));
   cd.setupTrafficLightOpensDiffDialogHandlers($('.diff-traffic-light'));
@@ -28,10 +28,10 @@ $(document).ready(function() {
 							 } %>
 	</td>
 
-    <% if @avatar.lights.length > 1 %>
-	  <td>
-        <%= raw pie_chart(@avatar.lights, 40, @avatar.name) %>
-	  </td>
+    <% if @avatar.active? %>
+	<td>
+	  <%= raw pie_chart(@avatar.lights, 40, @avatar.name) %>
+	</td>
     <% end %>
 
 	<td>

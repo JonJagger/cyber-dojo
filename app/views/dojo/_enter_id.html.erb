@@ -1,7 +1,7 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
+$(function() {
 
   var kataIdInput = $('#kata-id-input');
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
   var reEnterButton = $('#reenter-button');
 
   var disable = function(button) {
-      button.attr('disabled', true);
+      button.prop('disabled', true);
   };
 
   var enableIf = function(button, condition) {

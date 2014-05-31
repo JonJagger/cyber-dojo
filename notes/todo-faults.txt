@@ -5,6 +5,12 @@ DIFF
   the initial diff-dialog. It only works when you
   navigate using << < > >>
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+WAIT-CURSOR
+  if you are on the last > button and you click it
+  then the cursor is restored to a "live" cursor
+  indicating the button is still enabled, rather than
+  a normal cursor indicating the button is disabled.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 LINE-NUMBERS CHECKBOX
   when you click this you lose the focus on the
   currently opened file

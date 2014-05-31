@@ -1,7 +1,7 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
+$(function() {
 
   var id = '<%= @kata.id %>';
   var minuteColumns = $('#minute-columns-checkbox');
@@ -38,15 +38,11 @@ $(document).ready(function() {
 
   minuteColumns
     .attr('checked', '<%= @minute_columns %>' === 'true')
-    .click(function() {
-      refreshDashboard();
-    });
+    .click(function() { refreshDashboard(); });
 
   autoRefresh
     .attr('checked', '<%= @auto_refresh %>' === 'true')
-    .click(function() {
-      refreshDashboard();
-    });
+    .click(function() { refreshDashboard(); });
 
 });
 

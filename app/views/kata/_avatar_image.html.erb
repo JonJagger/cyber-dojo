@@ -1,12 +1,14 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
+$(function() {
+
   $('#avatar-image-opens-dashboard').click(function() {
     var id = $(this).data('id');
     var url = '/dashboard/show/' + id;
     window.open(url);
   });
+  
 });
 
 //--></script>

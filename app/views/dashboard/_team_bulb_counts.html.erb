@@ -1,8 +1,10 @@
 
 <script type="text/javascript"><!--
 
-$(document).ready(function() {
+$(function() {
+
   cd.pieChart($('#dashboard-page #team-bulb-counts-container .pie'));
+
 });
 
 //--></script>
@@ -31,7 +33,7 @@ $(document).ready(function() {
       </div>
     </td>
     <td>
-      <%= raw pie_chart_from_counts(counts,40,'zoo') %>
+      <%= raw pie_chart_from_counts(counts, 40, 'zoo') %>
     </td>
   </tr>
 </table>
