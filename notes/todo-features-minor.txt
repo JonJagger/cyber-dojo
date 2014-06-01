@@ -4,7 +4,9 @@ to a read-only server. Then I copy the support files
 instead of linking them. This means I won't need the
 link command on disk objects. I also won't need the
 second -v volume mount in the DockerRunner.
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SCRIPT
+  that counts number of diff'd lines in kata
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   show the _time_ between two tags
