@@ -40,7 +40,7 @@ class TdGapperTests < CyberDojoTestBase
     # 6 : 2;32;00 - 2:32:20
     # 7 : 2;32:20 - 2:32:40
 
-    all_incs =
+    all_lights =
     {
       'hippo' => [ t1={ 'time' => [year,month,day,hour,30,21] }, # 1
                    t2={ 'time' => [year,month,day,hour,31,33] }, # 4
@@ -54,17 +54,17 @@ class TdGapperTests < CyberDojoTestBase
     }
     expected =
     {
-      'avatars' =>
+      :avatars =>
       {
         'hippo' => { 1 => [ t1 ], 4 => [ t2    ] },
         'lion'  => { 1 => [ t3 ], 4 => [ t4,t5 ] },
         'panda' => {                             5 => [ t6 ] }
       },
-      'td_nos' => [0,1,4,5,7]
+      :td_nos => [0,1,4,5,7]
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
-    assert_equal expected, gapper.stats(all_incs, now)
+    assert_equal expected, gapper.stats(all_lights, now)
   end
 
   test "vertical bleed" do
@@ -73,7 +73,7 @@ class TdGapperTests < CyberDojoTestBase
     now = [year,month,day,hour,32,23] #td 7
     max_seconds_uncollapsed = 30 * 60
     seconds_per_td = 20
-    all_incs =
+    all_lights =
     {
       'hippo' => [ t1={ 'time' => [year,month,day,hour,30,21] }, # 1
                    t2={ 'time' => [year,month,day,hour,31,33] }, # 4
@@ -92,9 +92,9 @@ class TdGapperTests < CyberDojoTestBase
       'panda' => { 0 => [ ], 1 => [    ], 4 => [       ], 5 => [ t6 ], 7 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
-    s = gapper.stats(all_incs, now)
+    s = gapper.stats(all_lights, now)
     gapper.vertical_bleed(s)
-    assert_equal expected, s['avatars']
+    assert_equal expected, s[:avatars]
   end
 
   test "collapsed table" do
@@ -107,9 +107,9 @@ class TdGapperTests < CyberDojoTestBase
     td_nos = [0,1,4,5]
     expected =
     {
-      0 => [ 'dont_collapse', 0 ],
-      1 => [ 'dont_collapse', 2 ],
-      4 => [ 'dont_collapse', 0 ]
+      0 => [ :dont_collapse, 0 ],
+      1 => [ :dont_collapse, 2 ],
+      4 => [ :dont_collapse, 0 ]
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
@@ -119,9 +119,9 @@ class TdGapperTests < CyberDojoTestBase
     td_nos = [0,1,3,95]
     expected =
     {
-      0 => [ 'dont_collapse', 0 ],
-      1 => [ 'dont_collapse', 1 ],
-      3 => [ 'collapse', 91 ]
+      0 => [ :dont_collapse, 0 ],
+      1 => [ :dont_collapse, 1 ],
+      3 => [ :collapse, 91 ]
     }
     actual = gapper.collapsed_table(td_nos)
     assert_equal expected, actual
@@ -133,9 +133,9 @@ class TdGapperTests < CyberDojoTestBase
     now = [year,month,day+1,hour,32,23] #td 4327
     max_seconds_uncollapsed = 30 * 60
     seconds_per_td = 20
-    all_incs = { }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
-    actual = gapper.fully_gapped(all_incs, now)
+    all_lights = { }
+    actual = gapper.fully_gapped(all_lights, now)
     expected = { }
     assert_equal expected, actual
   end
@@ -146,7 +146,7 @@ class TdGapperTests < CyberDojoTestBase
     now = [year,month,day+1,hour,32,23] #td 4327
     max_seconds_uncollapsed = 30 * 60
     seconds_per_td = 20
-    all_incs =
+    all_lights =
     {
       'hippo' => [ t1={ 'time' => [year,month,day,hour,30,21] }, # 1
                    t2={ 'time' => [year,month,day,hour,31,33] }, # 4
@@ -160,12 +160,12 @@ class TdGapperTests < CyberDojoTestBase
     }
     expected =
     {
-      'hippo' => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { 'collapsed' => 4321 }, 4327 => [ ] },
-      'lion'  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { 'collapsed' => 4321 }, 4327 => [ ] },
-      'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { 'collapsed' => 4321 }, 4327 => [ ] }
+      'hippo' => { 0 => [ ], 1 => [ t1 ], 2 => [ ], 3 => [ ], 4 => [ t2    ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
+      'lion'  => { 0 => [ ], 1 => [ t3 ], 2 => [ ], 3 => [ ], 4 => [ t4,t5 ], 5 => [    ], 6 => { :collapsed => 4321 }, 4327 => [ ] },
+      'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
-    actual = gapper.fully_gapped(all_incs, now)
+    actual = gapper.fully_gapped(all_lights, now)
     assert_equal expected, actual
   end
 

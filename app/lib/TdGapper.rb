@@ -9,44 +9,44 @@ class TdGapper
     @max_seconds_uncollapsed = max_seconds_uncollapsed
   end
 
-  def fully_gapped(all_incs, now)
-    s = stats(all_incs, now)
+  def fully_gapped(all_lights, now)
+    s = stats(all_lights, now)
     vertical_bleed(s)
-    collapsed_table(s['td_nos']).each do |td,gi|
+    collapsed_table(s[:td_nos]).each do |td,gi|
       count = gi[1]
-      s['avatars'].each do |name,td_map|
-        if gi[0] == 'dont_collapse'
+      s[:avatars].each do |name,td_map|
+        if gi[0] === :dont_collapse
           count.times {|n| td_map[td+n+1] = [ ] }
         end
-        if gi[0] == 'collapse'
-          td_map[td+1] = { 'collapsed' => count }
+        if gi[0] === :collapse
+          td_map[td+1] = { :collapsed => count }
         end
       end
     end
-    s['avatars']
+    s[:avatars]
   end
 
-  def stats(all_incs, now)
+  def stats(all_lights, now)
     obj = {
-      'avatars' => { },
-      'td_nos'  => [ 0, number({'time' => now}) ]
+      :avatars => { },
+      :td_nos  => [ 0, number({'time' => now}) ]
     }
-    all_incs.each do |avatar_name, incs|
-      an = obj['avatars'][avatar_name] = { }
-      incs.each do |inc|
-        tdn = number(inc)
+    all_lights.each do |avatar_name, lights|
+      an = obj[:avatars][avatar_name] = { }
+      lights.each do |light|
+        tdn = number(light)
         an[tdn] ||= [ ]
-        an[tdn] << inc
-        obj['td_nos'] << tdn
+        an[tdn] << light
+        obj[:td_nos] << tdn
       end
     end
-    obj['td_nos'].sort!.uniq!
+    obj[:td_nos].sort!.uniq!
     obj
   end
 
   def vertical_bleed(s)
-    s['td_nos'].each do |n|
-      s['avatars'].each do |name,td_map|
+    s[:td_nos].each do |n|
+      s[:avatars].each do |name,td_map|
         td_map[n] ||= [ ]
       end
     end
@@ -57,7 +57,7 @@ class TdGapper
     obj = { }
     td_nos.each_cons(2) do |p|
       diff = p[1] - p[0]
-      key = diff < max_uncollapsed_tds ? 'dont_collapse' : 'collapse'
+      key = diff < max_uncollapsed_tds ? :dont_collapse : :collapse
       obj[p[0]] = [ key, diff-1 ]
     end
     obj
