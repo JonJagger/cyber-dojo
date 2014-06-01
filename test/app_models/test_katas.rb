@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + 'test/test_helper'
 require __DIR__ + 'lib/OsDisk'

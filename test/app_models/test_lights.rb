@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + 'test/test_helper'
 require __DIR__ + 'lib/OsDisk'
@@ -87,7 +89,7 @@ class LightsTests < ActionController::TestCase
     at = now
     avatar.save_traffic_light(light, at)
     assert_equal 1, avatar.lights.length, "length"
-    assert_equal 'red', avatar.lights[0].colour, "colour"
+    assert_equal :red, avatar.lights[0].colour, "colour"
     assert_equal at, avatar.lights[0].time_stamp, "time_stamp"
     assert_equal 1, avatar.lights[0].number, "number"
   end

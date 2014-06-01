@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require File.dirname(__FILE__) + '/../test_helper'
 require File.dirname(__FILE__) + '/spy_dir'
 require File.dirname(__FILE__) + '/spy_disk'

@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Git'
@@ -30,7 +32,6 @@ class TimeOutTests < ActionController::TestCase
       :new => [ ]
     }
     output = run_test(delta, avatar, visible_files, timeout = 5)
-    assert_match(/Terminated by the cyber-dojo server after \d+ seconds?/, output)
     assert_equal 'amber', avatar.traffic_lights.last['colour']
     ps_count_after = ps_count
     # This often fails with

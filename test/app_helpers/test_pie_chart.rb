@@ -2,6 +2,7 @@
 
 require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'pie_chart_helper'
+require 'Light'
 
 class PieChartTests < CyberDojoTestBase
 
