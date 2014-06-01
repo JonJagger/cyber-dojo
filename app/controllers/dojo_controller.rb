@@ -18,9 +18,11 @@ class DojoController < ApplicationController
     kata = dojo.katas[id]
     exists = params[:id].length >= 6 && kata.exists?
     started = exists ? kata.avatars.entries.length : 0
+    expired = exists ? kata.expired? : false
     render :json => {
       :exists => exists,
-      :started => started
+      :started => started,
+      :expired => expired
     }
   end
 
