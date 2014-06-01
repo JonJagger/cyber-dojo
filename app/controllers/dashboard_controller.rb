@@ -46,7 +46,7 @@ private
 
   def seconds_per_column
     flag = params['minute_columns']
-    return 60 if !flag || flag == "true"
+    return 60 if !flag || flag == 'true'
     return 60*60*24*365*1000
   end
 

@@ -17,14 +17,12 @@ class OutputNUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin
   test "nunit GREEN" do
     output_1 = 'Tests run: 1, Failures: 0'
     assert_equal :green, colour_of(output_1)
     output_2 = 'Tests run: 3, Errors: 0, Failures: 0'
     assert_equal :green, colour_of(output_2)
   end
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 

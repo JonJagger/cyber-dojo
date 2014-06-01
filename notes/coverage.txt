@@ -1,7 +1,7 @@
 app_helpers
    12 tests, 30 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 0.071378s, 168.1190 tests/s, 420.2976 assertions/s.
-   Coverage = 93.75%
+   Finished tests in 0.080174s, 149.6745 tests/s, 374.1861 assertions/s.
+   Coverage = 100%
 
 app_lib
    227 tests, 3553 assertions, 1 failures, 0 errors, 0 skips

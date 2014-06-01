@@ -90,7 +90,7 @@ module OutputParser
   def self.parse_nunit(output)
     nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+))?, Failures: (\d*)/
     if output =~ nunit_pattern
-      if $4 == "0" and ($3.blank? or $3 == "0")
+      if $4 == "0" and ($3.nil? or $3 == "0")
         :green
       else
         :red
