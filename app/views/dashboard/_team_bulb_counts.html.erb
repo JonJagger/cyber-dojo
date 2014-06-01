@@ -11,21 +11,21 @@ $(function() {
 
 <% active_avatars = @kata.avatars.active %>
 <% if active_avatars.count > 1 %>
-<%   lasts  = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
+<%   lasts  = { :red => 0, :amber => 0, :green => 0 } %>
 <%   counts = { :red => 0, :amber => 0, :green => 0 } %>
 <%   active_avatars.each do |avatar| %>
 <%     lasts[avatar.lights.latest.colour] += 1 %>
-<%     counts[:red]   += avatar.lights.count{ |light| light.colour == 'red' } %>
-<%     counts[:amber] += avatar.lights.count{ |light| light.colour == 'amber' } %>
-<%     counts[:green] += avatar.lights.count{ |light| light.colour == 'green' } %>
+<%     counts[:red]   += avatar.lights.count{ |light| light.colour == :red } %>
+<%     counts[:amber] += avatar.lights.count{ |light| light.colour == :amber } %>
+<%     counts[:green] += avatar.lights.count{ |light| light.colour == :green } %>
 <%   end %>
 
 <table id="team-bulb-counts-container">
   <tr>
     <td>
-      <% colour = 'green' if lasts['amber'] == 0 and lasts['red'] == 0 %>
-      <% colour = 'red'   if lasts['amber'] == 0 and lasts['red']  > 0 %>
-      <% colour = 'amber' if lasts['amber'] >  0 %>
+      <% colour = 'green' if lasts[:amber] == 0 and lasts[:red] == 0 %>
+      <% colour = 'red'   if lasts[:amber] == 0 and lasts[:red]  > 0 %>
+      <% colour = 'amber' if lasts[:amber] >  0 %>
       <% total = counts[:red] + counts[:amber] + counts[:green] %>
       <div class="traffic-light-count <%= colour %>"
            title="animals have <%= pluralize(total,'traffic-light') %> so far and are currently at <%= colour %>">

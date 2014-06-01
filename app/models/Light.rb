@@ -9,7 +9,7 @@ class Light
 
   def colour
     # old katas used 'outcome'
-    @hash['colour'] || @hash['outcome']
+    (@hash['colour'] || @hash['outcome']).to_sym
   end
 
   def time_stamp

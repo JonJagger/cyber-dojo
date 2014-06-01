@@ -3,9 +3,9 @@ module PieChartHelper
 
   def pie_chart(traffic_lights, size, key)
      pie_chart_from_counts({
-        :red   => count(traffic_lights,'red'),
-        :amber => count(traffic_lights,'amber'),
-        :green => count(traffic_lights,'green')
+        :red   => count(traffic_lights, :red),
+        :amber => count(traffic_lights, :amber),
+        :green => count(traffic_lights, :green)
      }, size, key)
   end
 
