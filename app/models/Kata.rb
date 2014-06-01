@@ -12,7 +12,7 @@ class Kata
   end
 
   def active?
-    active_avatars.count > 0
+    avatars.active.count > 0
   end
 
   def expired?
@@ -44,10 +44,6 @@ class Kata
 
   def avatars
     Avatars.new(self)
-  end
-
-  def active_avatars
-    avatars.select{|avatar| avatar.active?}
   end
 
   def created
@@ -96,7 +92,7 @@ private
   def earliest_light
     # time of first manually pressed traffic-light
     # (initial traffic-light is automatically created)
-    active_avatars.map{|avatar| avatar.lights[1].time_stamp}.sort[0]
+    avatars.active.map{|avatar| avatar.lights[1].time_stamp}.sort[0]
   end
 
 end

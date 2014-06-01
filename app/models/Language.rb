@@ -81,7 +81,8 @@ class Language
     # before the rename that you now wish to review or
     # fork from. Particularly for sessions with
     # well known id's such as the refactoring dojos.
-    # See app/models/kata.rb ::language()
+    # See app/models/Kata.rb ::language()
+    # See app/models/Kata.rb ::original_language()
     renames = {
       'C'            => 'C-assert',
       'C++'          => 'C++-assert',

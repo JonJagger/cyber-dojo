@@ -27,7 +27,7 @@ $(function() {
   <% gapped = gapper.fully_gapped(@all_lights, make_time(Time.now)) %>
   <% index = 0 %>
 
-  <% @kata.active_avatars.each do |avatar| %>
+  <% @kata.avatars.active.each do |avatar| %>
     <% lights = avatar.lights %>
 	<% index += 1 %>
 	<tr class="<%= parity(index) %> row">

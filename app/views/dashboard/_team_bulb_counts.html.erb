@@ -9,7 +9,7 @@ $(function() {
 
 //--></script>
 
-<% active_avatars = @kata.active_avatars %>
+<% active_avatars = @kata.avatars.active %>
 <% if active_avatars.count > 1 %>
 <%   lasts  = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>
 <%   counts = { 'red' => 0, 'amber' => 0, 'green' => 0 } %>

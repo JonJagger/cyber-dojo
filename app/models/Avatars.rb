@@ -28,6 +28,10 @@ class Avatars
     each.entries.length
   end
 
+  def active
+    self.select{|avatar| avatar.active?}
+  end
+
 private
 
   def paas
