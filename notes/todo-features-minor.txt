@@ -1,4 +1,9 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST
+  needs to check if kata has expired and if so
+  not do the test
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Once a kata has a max duration, I can move done katas
 to a read-only server. Then I copy the support files
 instead of linking them. This means I won't need the

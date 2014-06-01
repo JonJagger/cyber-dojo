@@ -7,13 +7,17 @@ class PieChartTests < CyberDojoTestBase
 
   include PieChartHelper
 
+  def   red_light; Light.new(nil,{'colour'=> :red  }); end
+  def amber_light; Light.new(nil,{'colour'=> :amber}); end
+  def green_light; Light.new(nil,{'colour'=> :green}); end
+
   test "pie-chart from traffic-lights" do
     lights = [
-      { 'colour' => 'red' },
-      { 'colour' => 'red' },
-      { 'colour' => 'amber' },
-      { 'colour' => 'amber' },
-      { 'colour' => 'green' }
+      red_light,
+      red_light,
+      amber_light,
+      amber_light,
+      green_light
     ]
     expected = "" +
       "<canvas" +
@@ -31,9 +35,9 @@ class PieChartTests < CyberDojoTestBase
 
   test "pie-chart from counts" do
     counts = {
-      'red' => 5,
-      'amber' => 0,
-      'green' => 6
+      :red => 5,
+      :amber => 0,
+      :green => 6
     }
     expected = "" +
       "<canvas" +
@@ -45,7 +49,7 @@ class PieChartTests < CyberDojoTestBase
       " width='42'" +
       " height='42'>" +
       "</canvas>"
-    actual = pie_chart_from_counts(counts, 42,'lion')
+    actual = pie_chart_from_counts(counts, 42, 'lion')
     assert_equal expected, actual
   end
 

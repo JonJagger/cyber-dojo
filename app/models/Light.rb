@@ -17,7 +17,7 @@ class Light
   end
 
   def number
-    @hash['number']
+    @hash['number'].to_i
   end
 
   #- - - - - - - - - - - - - - - -

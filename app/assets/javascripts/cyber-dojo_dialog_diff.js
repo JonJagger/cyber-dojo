@@ -29,7 +29,7 @@ var cyberDojo = (function(cd, $) {
 	  // animals don't appear on dashboard until they have 2+ traffic-lights
 	  // so pluralization of traffic-lights is ok
 	  var toolTip = avatarName + ' has ' + wasTag + ' traffic-lights' +
-	    ' and is currently at ' + colour + '.' +
+	    ' and is at ' + colour + '.' +
 		' Click to review ' + avatarName + "'s current code.";
 	  count.attr('title', toolTip);
 	  count.click(function() {

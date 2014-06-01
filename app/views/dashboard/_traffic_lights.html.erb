@@ -46,7 +46,7 @@ $(function() {
 			  <tr>
 				<% td.each do |light| %>
 				  <td>
-					<%= raw diff_traffic_light(@kata, avatar.name, Light.new(avatar,light), lights.length) %>
+					<%= raw diff_traffic_light(Light.new(avatar,light)) %>
 				  </td>
 				<% end %>
 			  </tr>
@@ -68,7 +68,7 @@ $(function() {
 	  </td>
 
 	  <td class="align-center valign-center">
-		<%= raw diff_avatar_image(@kata, avatar.name, lights.latest, lights.length) %>
+		<%= raw diff_avatar_image(avatar) %>
 	  </td>
 
 	</tr>

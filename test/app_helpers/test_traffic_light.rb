@@ -2,14 +2,23 @@
 
 require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'traffic_light_helper'
+require 'Lights'
+require 'Light'
+require 'Avatar'
 
 class TrafficLightTests < CyberDojoTestBase
 
   include TrafficLightHelper
 
   test 'tool tip' do
-    light = { 'number' => 2, 'time' => [2012,5,1,23,20,45], 'colour' => 'red' }
-    assert_equal "Click to review hippo&#39;s 1 &harr; 2 diff", tool_tip('hippo', light)
+    kata = nil
+    avatar = Avatar.new(kata,'hippo')
+    light = Light.new(avatar, {
+      'number' => 2,
+      'time' => [2012,5,1,23,20,45],
+      'colour' => 'red'
+    })
+    assert_equal "Click to review hippo&#39;s 1 &harr; 2 diff", tool_tip(light)
   end
 
   #- - - - - - - - - - - - - - - -
@@ -20,8 +29,8 @@ class TrafficLightTests < CyberDojoTestBase
                " width='12'" +
                " height='38'/>"
     color = 'red'
-    width='12'
-    height='38'
+    width = '12'
+    height = '38'
     actual = traffic_light_image(color,width,height)
     assert_equal expected, actual
   end
@@ -31,13 +40,12 @@ class TrafficLightTests < CyberDojoTestBase
   test 'diff_avatar_image' do
     kata = Object.new
     def kata.id; 'ABCD1234'; end
-    avatar_name = 'hippo'
-    light = { 'number' => 23 }
-    max_lights = 27
+    avatar = Avatar.new(kata,'hippo')
+    def avatar.lights; [1]*27; end
     expected = "" +
       "<div" +
       " class='diff-traffic-light'" +
-      " title='Click to review hippo&#39;s code'" +
+      " title='Click to diff-review hippo&#39;s code'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='0'" +
@@ -48,7 +56,7 @@ class TrafficLightTests < CyberDojoTestBase
           " width='45'" +
           " height='45'/>" +
         "</div>"
-    actual = diff_avatar_image(kata,avatar_name,light,max_lights)
+    actual = diff_avatar_image(avatar)
     assert_equal expected, actual
   end
 
@@ -65,25 +73,27 @@ class TrafficLightTests < CyberDojoTestBase
   def diff_traffic_light_func(light)
     kata = Object.new
     def kata.id; 'ABCD1234'; end
-    avatar_name = 'hippo'
-    light['number'] = 23
-    light['time'] = [2012,5,1,23,20,45]
-    max_lights = 45
+    avatar = Avatar.new(kata,'hippo')
+    def avatar.lights; [1]*7; end
+    light = Light.new(avatar, {
+      'number' => 3,
+      'colour' => 'red'
+    })
     expected = "" +
       "<div" +
       " class='diff-traffic-light'" +
-      " title='Click to review hippo&#39;s 22 &harr; 23 diff'" +
+      " title='Click to review hippo&#39;s 2 &harr; 3 diff'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
-      " data-was-tag='22'" +
-      " data-now-tag='23'" +
-      " data-max-tag='45'>" +
+      " data-was-tag='2'" +
+      " data-now-tag='3'" +
+      " data-max-tag='7'>" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +
           " width='17'" +
           " height='54'/>" +
       "</div>"
-    actual = diff_traffic_light(kata,avatar_name,light,max_lights)
+    actual = diff_traffic_light(light)
     assert_equal expected, actual
   end
 
