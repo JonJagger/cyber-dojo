@@ -31,8 +31,8 @@ integration
 app_controllers
    36 tests, 212 assertions, 0 failures, 0 errors, 0 skips
    Finished tests in 44.442588s, 0.8325 tests/s, 4.7927 assertions/s.
-   Coverage = 95.91%
-     93.88%  app/helpers
-     70.21%  app/lib
-     91.73%  app/models
-     84.09%  lib
+   Coverage = 95.94%
+     93.75%  app/helpers
+     70.24%  app/lib
+     96.35%  app/models
+     86.59%  lib

@@ -21,17 +21,9 @@ $(function() {
 //--></script>
 
 <table>
-  <% seconds_per_td = @seconds_per_column %>
-  <% maximum_seconds_uncollapsed = seconds_per_td * 60 %>
-  <% gapper = TdGapper.new(@kata.created, seconds_per_td, maximum_seconds_uncollapsed) %>
-  <% gapped = gapper.fully_gapped(@all_lights, make_time(Time.now)) %>
-  <% index = 0 %>
-
-  <% @kata.avatars.active.each do |avatar| %>
-    <% lights = avatar.lights %>
-	<% index += 1 %>
+  <% @kata.avatars.active.each_with_index do |avatar,index| %>
 	<tr class="<%= parity(index) %> row">
-	  <% td_map = gapped[avatar.name] %>
+	  <% td_map = @gapped[avatar.name] %>
 	  <% td_map.keys.sort.each do |td_no| %>
 		<% td = td_map[td_no] %>
 		<td align="right">
@@ -55,6 +47,8 @@ $(function() {
 		<% end %>
 		</td>
 	  <% end %>
+
+      <% lights = avatar.lights %>
 
 	  <td class="align-right">
 		<%= render :partial => 'shared/traffic_light_count',

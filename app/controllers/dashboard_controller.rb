@@ -14,12 +14,10 @@ class DashboardController < ApplicationController
       @now_tag = params['now_tag']
       @max_tag = @kata.avatars[@avatar_name].traffic_lights.length
     end
-   @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
   end
 
   def heartbeat
     gather
-    @all_lights = Hash[@kata.avatars.collect{|avatar| [avatar.name, avatar.traffic_lights]}]
     respond_to do |format|
       format.js if request.xhr?
     end
@@ -35,7 +33,12 @@ private
     @kata = dojo.katas[id]
     @minute_columns = bool('minute_columns')
     @auto_refresh = bool('auto_refresh')
-    @seconds_per_column = seconds_per_column
+    maximum_seconds_uncollapsed = seconds_per_column * 60
+    gapper = TdGapper.new(@kata.created, seconds_per_column, maximum_seconds_uncollapsed)
+    all_lights = Hash[
+      @kata.avatars.collect{|avatar|[avatar.name, avatar.traffic_lights]}
+    ]
+    @gapped = gapper.fully_gapped(all_lights, make_time(Time.now))
   end
 
   def bool(attribute)
