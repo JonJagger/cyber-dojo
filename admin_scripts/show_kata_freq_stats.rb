@@ -14,23 +14,27 @@ show_ids = (ARGV[0] || "false")
 dojo = create_dojo
 
 print "\n"
-stats,languages,exercises = { },{ },{ }
+days,weekdays,languages,exercises = { },{ },{ },{ }
 dot_count = 0
 dojo.katas.each do |kata|
   begin
     id = kata.id.to_s
     created = kata.created
     ymd = [created.year, created.month, created.day, created.strftime('%a')]
-    stats[ymd] ||= 0
-    stats[ymd] += 1
+    days[ymd] ||= 0
+    days[ymd] += 1
+    weekdays[ymd[3]] ||= 0
+    weekdays[ymd[3]] += 1
     language = kata.language.name
     languages[language] ||= [ ]
     languages[language] << id
     exercise = kata.exercise.name
-    exercises[exercise] ||=  [ ]
+    exercises[exercise] ||= [ ]
     exercises[exercise] << id
   rescue Exception => e
     puts "---->Exception raised for #{id}: #{e.message}"
+    puts kata.exercise.name
+    puts ymd[3]
   end
   dot_count += 1
   print "\r " + dots(dot_count)
@@ -39,15 +43,22 @@ print "\n"
 print "\n"
 
 puts ""
-puts "dojos per day"
-puts "-------------"
-stats.sort.each do |ymdw,n|
+puts "per day"
+puts "-------"
+days.sort.each do |ymdw,n|
   puts ymdw.inspect + "\t" + n.to_s
 end
 
 puts ""
-puts "dojos per language"
-puts "------------------"
+puts "per week day"
+puts "------------"
+['Sat','Sun','Mon','Tue','Wed','Thu','Fri'].each do |day|
+  puts day.to_s + "\t" + weekdays[day].to_s
+end
+
+puts ""
+puts "language freq"
+puts "-------------"
 languages.sort_by{|k,v| v.length}.reverse.each do |language,n|
   if show_ids == "true"
     puts language + "\t" + n.to_s
@@ -57,8 +68,8 @@ languages.sort_by{|k,v| v.length}.reverse.each do |language,n|
 end
 
 puts ""
-puts "dojos per exercise"
-puts "------------------"
+puts "exercise freq"
+puts "-------------"
 exercises.sort_by{|k,v| v.length}.reverse.each do |exercise,n|
   if show_ids == "true"
     puts exercise + "\t" + n.to_s
