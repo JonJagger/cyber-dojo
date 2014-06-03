@@ -6,18 +6,23 @@ require 'Light'
 
 class TdGapperTests < CyberDojoTestBase
 
-  def make_light(y,m,d,hour,min,sec)
-    avatar = nil
-    Light.new(avatar, { 'time' => [y,m,d,hour,min,sec] })
+  def year; 2011; end
+  def month;   5; end
+  def day;    18; end
+  def hour;    2; end
+
+  def start; Time.mktime(*[year,month,day,hour,30,0]); end
+
+  def max_seconds_uncollapsed; 30 * 60; end
+  def seconds_per_td; 20; end
+
+  def make_light(min,sec)
+    Light.new(avatar=nil, { 'time' => [year,month,day,hour,min,sec] })
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "number" do
-    year = 2011; month = 5; day = 18; hour = 2;
-    start = Time.mktime(*[year,month,day,hour,30,0])
-    max_seconds_uncollapsed = 30 * 60
-    seconds_per_td = 20
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
     # 2 : 2:30:40 - 2:31:00
@@ -26,21 +31,15 @@ class TdGapperTests < CyberDojoTestBase
     # 5 : 2:31:40 - 2:32:00
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
 
-    assert_equal 0, gapper.number(make_light(year,month,day,hour,30,19))
-    assert_equal 1, gapper.number(make_light(year,month,day,hour,30,22))
-    assert_equal 2, gapper.number(make_light(year,month,day,hour,30,58))
-    assert_equal 3, gapper.number(make_light(year,month,day,hour,31,11))
+    assert_equal 0, gapper.number(make_light(30,19))
+    assert_equal 1, gapper.number(make_light(30,22))
+    assert_equal 2, gapper.number(make_light(30,58))
+    assert_equal 3, gapper.number(make_light(31,11))
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "stats" do
-    year = 2011; month = 5; day = 18; hour = 2;
-    start = Time.mktime(*[year,month,day,hour,30,0])
-    now = [year,month,day,hour,32,23] #td 7
-    max_seconds_uncollapsed = 30 * 60
-    seconds_per_td = 20
-
     # 0 : 2:30:00 - 2:30:20
     # 1 : 2:30:20 - 2:30:40
     # 2 : 2:30:40 - 2:31:00
@@ -52,14 +51,14 @@ class TdGapperTests < CyberDojoTestBase
 
     all_lights =
     {
-      'hippo' => [ t1=make_light(year,month,day,hour,30,21), # 1
-                   t2=make_light(year,month,day,hour,31,33), # 4
+      'hippo' => [ t1=make_light(30,21), # 1
+                   t2=make_light(31,33), # 4
                  ],
-      'lion' =>  [ t3=make_light(year,month,day,hour,30,25), # 1
-                   t4=make_light(year,month,day,hour,31,37), # 4
-                   t5=make_light(year,month,day,hour,31,39), # 4
+      'lion' =>  [ t3=make_light(30,25), # 1
+                   t4=make_light(31,37), # 4
+                   t5=make_light(31,39), # 4
                  ],
-      'panda' => [ t6=make_light(year,month,day,hour,31,42), # 5
+      'panda' => [ t6=make_light(31,42), # 5
                  ]
     }
     expected =
@@ -73,28 +72,23 @@ class TdGapperTests < CyberDojoTestBase
       :td_nos => [0,1,4,5,7]
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
-
+    now = [year,month,day,hour,32,23] #td 7
     assert_equal expected, gapper.stats(all_lights, now)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "vertical bleed" do
-    year = 2011; month = 5; day = 18; hour = 2;
-    start = Time.mktime(*[year,month,day,hour,30,0])
-    now = [year,month,day,hour,32,23] #td 7
-    max_seconds_uncollapsed = 30 * 60
-    seconds_per_td = 20
     all_lights =
     {
-      'hippo' => [ t1=make_light(year,month,day,hour,30,21), # 1
-                   t2=make_light(year,month,day,hour,31,33), # 4
+      'hippo' => [ t1=make_light(30,21), # 1
+                   t2=make_light(31,33), # 4
                  ],
-      'lion' =>  [ t3=make_light(year,month,day,hour,30,25), # 1
-                   t4=make_light(year,month,day,hour,31,37), # 4
-                   t5=make_light(year,month,day,hour,31,39), # 4
+      'lion' =>  [ t3=make_light(30,25), # 1
+                   t4=make_light(31,37), # 4
+                   t5=make_light(31,39), # 4
                  ],
-      'panda' => [ t6=make_light(year,month,day,hour,31,42), # 5
+      'panda' => [ t6=make_light(31,42), # 5
                  ]
     }
     expected =
@@ -104,6 +98,7 @@ class TdGapperTests < CyberDojoTestBase
       'panda' => { 0 => [ ], 1 => [    ], 4 => [       ], 5 => [ t6 ], 7 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
+    now = [year,month,day,hour,32,23] #td 7
     s = gapper.stats(all_lights, now)
     gapper.vertical_bleed(s)
     assert_equal expected, s[:avatars]
@@ -113,11 +108,6 @@ class TdGapperTests < CyberDojoTestBase
 
   test "collapsed table" do
     # 30 mins = 30 x 3 x 20 secs = 90 tds
-    year = 2011; month = 5; day = 18; hour = 2;
-    start = Time.mktime(*[year,month,day,hour,30,0])
-    max_seconds_uncollapsed = 30 * 60
-    seconds_per_td = 20
-
     td_nos = [0,1,4,5]
     expected =
     {
@@ -126,7 +116,6 @@ class TdGapperTests < CyberDojoTestBase
       4 => [ :dont_collapse, 0 ]
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
-
     actual = gapper.collapsed_table(td_nos)
     assert_equal expected, actual
 
@@ -144,13 +133,9 @@ class TdGapperTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "fully gapped no traffic_lights yet" do
-    year = 2011; month = 5; day = 18; hour = 2;
-    start = Time.mktime(*[year,month,day,hour,30,0])
-    now = [year,month,day+1,hour,32,23] #td 4327
-    max_seconds_uncollapsed = 30 * 60
-    seconds_per_td = 20
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
     all_lights = { }
+    now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
     expected = { }
     assert_equal expected, actual
@@ -159,21 +144,16 @@ class TdGapperTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "fully gapped" do
-    year = 2011; month = 5; day = 18; hour = 2;
-    start = Time.mktime(*[year,month,day,hour,30,0])
-    now = [year,month,day+1,hour,32,23] #td 4327
-    max_seconds_uncollapsed = 30 * 60
-    seconds_per_td = 20
     all_lights =
     {
-      'hippo' => [ t1=make_light(year,month,day,hour,30,21), # 1
-                   t2=make_light(year,month,day,hour,31,33), # 4
+      'hippo' => [ t1=make_light(30,21), # 1
+                   t2=make_light(31,33), # 4
                  ],
-      'lion' =>  [ t3=make_light(year,month,day,hour,30,25), # 1
-                   t4=make_light(year,month,day,hour,31,37), # 4
-                   t5=make_light(year,month,day,hour,31,39), # 4
+      'lion' =>  [ t3=make_light(30,25), # 1
+                   t4=make_light(31,37), # 4
+                   t5=make_light(31,39), # 4
                  ],
-      'panda' => [ t6=make_light(year,month,day,hour,31,42), # 5
+      'panda' => [ t6=make_light(31,42), # 5
                  ]
     }
     expected =
@@ -183,6 +163,7 @@ class TdGapperTests < CyberDojoTestBase
       'panda' => { 0 => [ ], 1 => [    ], 2 => [ ], 3 => [ ], 4 => [       ], 5 => [ t6 ], 6 => { :collapsed => 4321 }, 4327 => [ ] }
     }
     gapper = TdGapper.new(start, seconds_per_td, max_seconds_uncollapsed)
+    now = [year,month,day+1,hour,32,23] #td 4327
     actual = gapper.fully_gapped(all_lights, now)
     assert_equal expected, actual
   end

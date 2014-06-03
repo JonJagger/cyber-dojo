@@ -79,9 +79,11 @@ class LightsTests < ActionController::TestCase
     assert_equal 0, avatar.lights.length
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "avatar.lights length==1" +
       " [0].colour = red" +
-      " [0].time_stamp = now" +
+      " [0].time = now" +
       " [0].number = 1" +
       " after save_traffic_light() called" do
     avatar = @kata.start_avatar
@@ -90,7 +92,7 @@ class LightsTests < ActionController::TestCase
     avatar.save_traffic_light(light, at)
     assert_equal 1, avatar.lights.length, "length"
     assert_equal :red, avatar.lights[0].colour, "colour"
-    assert_equal at, avatar.lights[0].time_stamp, "time_stamp"
+    assert_equal Time.mktime(*at), avatar.lights[0].time, "time"
     assert_equal 1, avatar.lights[0].number, "number"
   end
 
