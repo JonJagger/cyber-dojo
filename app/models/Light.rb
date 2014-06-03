@@ -12,7 +12,11 @@ class Light
     (@hash['colour'] || @hash['outcome']).to_sym
   end
 
-  def time_stamp
+  def time
+    Time.mktime(*@hash['time'])
+  end
+
+  def time_stamp # DROP
     @hash['time']
   end
 

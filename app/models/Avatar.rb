@@ -72,14 +72,14 @@ class Avatar
     Lights.new(self)
   end
 
+  def traffic_lights(tag = nil)
+    parse(traffic_lights_filename, tag)
+  end
+
   #- - - - - - - - - - - - - - -
 
   def visible_files(tag = nil)
     parse(visible_files_filename, tag)
-  end
-
-  def traffic_lights(tag = nil)
-    parse(traffic_lights_filename, tag)
   end
 
   def diff_lines(was_tag, now_tag)

@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  avatar.traffic_lights(tag = nil)
+    This is used with tag != nil only for revert_controller
+    Refactor.
+    inc: ==> light:
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if the server times-out (15 seconds) is there any
   residual output? If there is it would be good to
   include it.
