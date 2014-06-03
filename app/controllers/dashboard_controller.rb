@@ -36,7 +36,7 @@ private
     maximum_seconds_uncollapsed = seconds_per_column * 60
     gapper = TdGapper.new(@kata.created, seconds_per_column, maximum_seconds_uncollapsed)
     all_lights = Hash[
-      @kata.avatars.collect{|avatar|[avatar.name, avatar.traffic_lights]}
+      @kata.avatars.collect{|avatar| [avatar.name, avatar.lights]}
     ]
     @gapped = gapper.fully_gapped(all_lights, make_time(Time.now))
   end

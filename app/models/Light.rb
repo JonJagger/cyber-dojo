@@ -16,10 +16,6 @@ class Light
     Time.mktime(*@hash['time'])
   end
 
-  def time_stamp # DROP
-    @hash['time']
-  end
-
   def number
     @hash['number'].to_i
   end

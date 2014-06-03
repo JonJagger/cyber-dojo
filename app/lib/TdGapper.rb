@@ -29,7 +29,7 @@ class TdGapper
   def stats(all_lights, now)
     obj = {
       :avatars => { },
-      :td_nos  => [ 0, number({'time' => now}) ]
+      :td_nos  => [ 0, n(now) ]
     }
     all_lights.each do |avatar_name, lights|
       an = obj[:avatars][avatar_name] = { }
@@ -64,8 +64,13 @@ class TdGapper
   end
 
   def number(light)
-    ((Time.mktime(*light['time']) - @start) / @seconds_per_td).to_i
+    ((light.time - @start) / @seconds_per_td).to_i
   end
+
+  def n(now)
+    ((Time.mktime(*now) - @start) / @seconds_per_td).to_i
+  end
+
 
 end
 

@@ -38,7 +38,7 @@ $(function() {
 			  <tr>
 				<% td.each do |light| %>
 				  <td>
-					<%= raw diff_traffic_light(Light.new(avatar,light)) %>
+					<%= raw diff_traffic_light(light) %>
 				  </td>
 				<% end %>
 			  </tr>
@@ -48,17 +48,15 @@ $(function() {
 		</td>
 	  <% end %>
 
-      <% lights = avatar.lights %>
-
 	  <td class="align-right">
 		<%= render :partial => 'shared/traffic_light_count',
-				   :locals  => { :lights => lights,
+				   :locals  => { :lights => avatar.lights,
 								 :avatar_name => avatar.name
 							   } %>
 	  </td>
 
 	  <td class="align-right">
-		<%= raw pie_chart(lights, 40, avatar.name) %>
+		<%= raw pie_chart(avatar.lights, 40, avatar.name) %>
 	  </td>
 
 	  <td class="align-center valign-center">
