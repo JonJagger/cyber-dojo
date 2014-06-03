@@ -42,9 +42,6 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "if language folder no longer exists " +
         "the fork fails " +
         "and the reason is language" do
@@ -110,15 +107,18 @@ class ForkerControllerTest < IntegrationTest
   test "if tag is bad " +
        "the fork fails " +
        "and the reason is tag" do
-    bad_tag_test('xx')
-    bad_tag_test('-14')
-    bad_tag_test('-1')
-    bad_tag_test('0')
-    bad_tag_test('2')
+    bad_tag_test('xx')    # !is_tag
+    bad_tag_test('-14')   # tag <= 0
+    bad_tag_test('-1')    # tag <= 0
+    bad_tag_test('0')     # tag <= 0
+    bad_tag_test('2')     # tag > avatar.lights.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  # This fails after the lights-model refactor in forker_controller
+  # and right now I cannot see why ...
+  
   def bad_tag_test(bad_tag)
     thread[:disk] = disk = SpyDisk.new
     thread[:git] = git = SpyGit.new
@@ -135,7 +135,9 @@ class ForkerControllerTest < IntegrationTest
     paas.dir(kata).spy_read('manifest.rb', { :language => language_name }.inspect)
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    paas.dir(avatar).spy_read('increments.rb', [{
+
+    paas.dir(avatar).spy_read('increments.rb', [
+      {
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],
         "number" => 1
@@ -148,9 +150,9 @@ class ForkerControllerTest < IntegrationTest
       :tag => bad_tag
 
     assert_not_nil json, "assert_not_nil json"
-    assert_equal false, json['forked'], json.inspect
-    assert_equal 'tag', json['reason'], json.inspect
-    assert_nil json['id'], "json['id']==nil"
+    assert_equal false, json['forked'], json.inspect + ':' + bad_tag
+    assert_equal 'tag', json['reason'], json.inspect + ':' + bad_tag
+    assert_nil json['id'], "json['id']==nil : " + bad_tag
     assert_equal({ }, git.log)
     disk.teardown
   end

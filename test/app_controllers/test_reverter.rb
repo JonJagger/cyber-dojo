@@ -50,10 +50,10 @@ class ReverterControllerTest  < IntegrationTest
 
     assert_equal "echo abc", visible_files['cyber-dojo.sh']
 
-    inc = json['inc']
-    assert_not_nil inc
-    assert_equal "amber", inc['colour']
-    assert_equal 1, inc['number']
+    light = json['light']
+    assert_not_nil light
+    assert_equal "amber", light['colour']
+    assert_equal 1, light['number']
   end
 
 end
