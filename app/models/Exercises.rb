@@ -1,4 +1,9 @@
 
+# Designed to allow...
+#
+# o) dojo.exercises['name'] to access a specific exercise
+# o) dojo.exercises.each to iterate through a dojo's exercises
+
 class Exercises
   include Enumerable
 

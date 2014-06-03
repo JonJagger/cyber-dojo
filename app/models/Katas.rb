@@ -1,4 +1,9 @@
 
+# Designed to allow...
+#
+# o) dojo.katas[id] to access a specific kata
+# o) dojo.katas.each to iterate through a dojo's katas
+
 class Katas
   include Enumerable
 

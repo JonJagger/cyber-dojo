@@ -1,20 +1,24 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST
-  needs to check if kata has expired and if so
-  not do the test
+  needs to check if kata has expired and if so not do the test
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+AGE
+  if age >= 1 day then only display the number of days?
+  Or the age (ala git, eg about 3 months)
+  if age < 1 day then display hours, seconds, minutes
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Once a kata has a max duration, I can move done katas
 to a read-only server. Then I copy the support files
-instead of linking them. This means I won't need the
-link command on disk objects. I also won't need the
+instead of linking them (at creation). This means I won't
+need the link command on disk objects. I also won't need the
 second -v volume mount in the DockerRunner.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SCRIPT
   that counts number of diff'd lines in kata
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
-  show the _time_ between two tags
+  show the *time* between two tags
   [23] 00:54 [24]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
@@ -43,7 +47,7 @@ DASHBOARD-TIME-GAP
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ADD FORTRAIN
+ADD FORTRAN
 http://sourceforge.net/apps/mediawiki/fortranxunit/index.php?title=FruitExample
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -113,20 +117,6 @@ DASHBOARD-FIRST-TRAFFIC-LIGHT
   in a refactoring dojo you want all the animals to be visible
   right from the start. They start from green. Perhaps show
   initial traffic-light only if its green?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DASHBOARD-DURATION
-  the duration currently shows the time from the moment the
-  dojo was created to the current moment. This could do with
-  tweaking.
-  Firstly, suppose you create a special setup (via forking)
-  hours before it is needed. The duration time should start
-  when the first animal presses [test].
-  Also the duration end time should be calculated from the
-  current time only if there has been a traffic-light
-  within the last N minutes. If there hasn't, the duration end
-  time should be the time of the last traffic light.
-  This could be a good requirement to refactor the domain
-  to include traffic-lights.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 META-DASHBOARD
   have a page that allows you to enter the IDs of several dojos

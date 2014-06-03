@@ -1,4 +1,10 @@
 
+# Designed to allow...
+#
+# o) kata.avatars['lion'] to access a specific avatar in a kata
+# o) kata.avatars.each   to iterate through a kata's started avatars
+# o) kata.avatars.active.each to iterate through a kata's active avatars
+
 class Avatars
   include Enumerable
 
@@ -21,7 +27,7 @@ class Avatars
   end
 
   def [](name)
-    Avatar.new(@kata,name)
+    Avatar.new(@kata, name)
   end
 
   def length

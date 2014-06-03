@@ -1,4 +1,9 @@
 
+# Designed to allow...
+#
+# o) avatar.lights[6] to access a specific light
+# o) avatar.lights.each to iterate through an avatar's lights
+
 class Lights
   include Enumerable
 

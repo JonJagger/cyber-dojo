@@ -1,4 +1,9 @@
 
+# Designed to allow...
+#
+# o) dojo.languages['name'] to access a specific language
+# o) dojo.languages.each to iterate through a dojo's language
+
 class Languages
   include Enumerable
 

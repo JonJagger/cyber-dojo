@@ -19,10 +19,10 @@ For example, the live one off
 and a test one off
   /var/www/cyberdojo/test/cyberdojo
 
-The format will always be 'json'.
+When creating a dojo the format will always be 'json'.
 The format used to be 'rb' which required eval's
 but 'rb' is now only needed in tests to check backward
-compatibility.
+compatibility (and to read an existing old format dojo).
 
 From a dojo object you list all its languages or
 use [ ] to select a specific language.
