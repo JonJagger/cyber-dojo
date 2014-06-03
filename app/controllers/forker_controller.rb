@@ -25,7 +25,7 @@ class ForkerController < ApplicationController
     end
 
     if !error # && !light.exists?
-      lights = avatar.traffic_lights
+      lights = avatar.lights
       is_tag = params['tag'].match(/^\d+$/)
       tag = params['tag'].to_i;
       if !is_tag || tag <= 0 || tag > lights.length
