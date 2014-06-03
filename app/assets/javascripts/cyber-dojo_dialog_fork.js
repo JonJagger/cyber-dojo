@@ -319,8 +319,8 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(data) {
 		  resetNavigateButtonHandlers();
-		  trafficLight.html(makeTrafficLight(data.inc));
-		  trafficLightNumber.val(data.inc.number);
+		  trafficLight.html(makeTrafficLight(data.light));
+		  trafficLightNumber.val(data.light.number);
 		  forkFilenames.html(makeForkFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
           showCurrentFile();

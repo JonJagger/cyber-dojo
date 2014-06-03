@@ -6,8 +6,8 @@ class ReverterController < ApplicationController
 	avatar = dojo.katas[id].avatars[params[:avatar]]
 	render :json => {
       :visibleFiles => avatar.visible_files(tag),
-	  :inc => avatar.traffic_lights(tag).last
-	  #:inc => avatar.lights[tag.to_i]
+	  :light => avatar.traffic_lights(tag).last
+	  #:light => avatar.lights[tag.to_i]
 	}
   end
 

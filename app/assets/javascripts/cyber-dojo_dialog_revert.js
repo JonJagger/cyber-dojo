@@ -263,8 +263,8 @@ var cyberDojo = (function(cd, $) {
 		function(d) {
 		  data = d;
 		  resetNavigateButtonHandlers();
-		  trafficLight.html(makeTrafficLight(data.inc));
-		  trafficLightNumber.val(data.inc.number);
+		  trafficLight.html(makeTrafficLight(data.light));
+		  trafficLightNumber.val(data.light.number);
 		  revertForkFilenames.html(makeRevertForkFilenames(data.visibleFiles));
 		  showContentOnFilenameClick(data.visibleFiles);
           showCurrentFile();
