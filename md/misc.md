@@ -186,11 +186,12 @@ the inodes is `cyberdojo/katas/`
 
 turning off spell-checking in your browser
 ------------------------------------------
-and avoid annoying red underlines the code editor...
+and avoid annoying red underlines in the code editor...
 <br>In Chrome
   * Right click in the editor
   * Under Spell-checker Options>
   * Deselect 'Check Spelling in this Field'
+  
 In Opera/Firefox
   * Right click in the editor
   * Deselect 'Check spelling'
