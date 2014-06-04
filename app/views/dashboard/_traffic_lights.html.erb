@@ -21,7 +21,7 @@ $(function() {
 //--></script>
 
 <table>
-  <% @kata.avatars.active.each_with_index do |avatar,index| %>
+  <% @kata.avatars.active.sort_by(&:name).each_with_index do |avatar,index| %>
 	<tr class="<%= parity(index) %> row">
 	  <% td_map = @gapped[avatar.name] %>
 	  <% td_map.keys.sort.each do |td_no| %>
