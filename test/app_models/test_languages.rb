@@ -7,8 +7,7 @@ class LanguagesTests < ModelTestCase
   def stub_exists(languages_names)
     languages_names.each do |name|
       language = @dojo.languages[name]
-      @paas.dir(language).spy_read('manifest.json', JSON.unparse({}))
-      language.tab # stop spy saying 'not read'
+      @paas.dir(language).spy_exists?('manifest.json')
     end
   end
 
@@ -19,10 +18,9 @@ class LanguagesTests < ModelTestCase
   end
 
   test "dojo.languages.each() forwards to paas.all_languages()" do
-    stub_exists(['C#-NUnit','Ruby-TestUnit'])
-    languages_names = @dojo.languages.map {|language| language.name}
-    assert languages_names.include?('C#-NUnit'), 'C#-NUnit: ' + languages_names.inspect
-    assert languages_names.include?('Ruby-TestUnit'), 'Ruby-TestUnit: ' + languages_names.inspect
+    expected = ['C#-NUnit','Ruby-TestUnit']
+    stub_exists(expected)
+    assert_equal @dojo.languages.map {|language| language.name}.sort, expected
   end
 
   test "dojo.languages[name] returns language with given name" do

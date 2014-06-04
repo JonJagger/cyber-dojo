@@ -1,7 +1,14 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  a fork-controller test is failing.
+  the one checking for bad tags.
+  it seems the increments.json manifest is not being read?!
+  yet it still knows it size.
+  write Lights-Light model test and explore.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller
+    (which is itself used in fork-dialog as well as revert-dialog)
     Refactor.
     inc: ==> light:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -81,12 +88,24 @@
   paas = Paas.new({
     :languages => ->{ Languages.new(self,'.../languages/') }
     :exercises => ->{ Exercises.new(self,'.../exercises/') }
-    :katas     => ->{     Katas.new(self,'.../katas/') }
+    :katas     => ->{     Katas.new(self,'.../katas/')     }
     :disk   => Disk.new
     :git    => Git.new,
     :runner => DockerRunner.new
   })
   What is self in context here? Don't think it will be paas.
+  Can I just use paas directly!? Will it be lazily evald? I think so.
+  paas = Paas.new({
+    :languages => ->{ Languages.new(paas,'.../languages/') }
+    :exercises => ->{ Exercises.new(paas,'.../exercises/') }
+    :katas     => ->{     Katas.new(paas,'.../katas/')     }
+    :disk   => Disk.new
+    :git    => Git.new,
+    :runner => DockerRunner.new
+  })
+  Better still, pass dir=disk['.../languages/'] as the Languages ctor arg
+  Or could I pass a block to the Paas ctor?
+
 
   Katas should not only know its own path, it should also
   have the make_kata() method currently in Paas.

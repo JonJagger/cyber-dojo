@@ -33,6 +33,7 @@ class SpyDir
   # - - - - - - - - - - - - - - -
 
   def spy_exists?(filename)
+    make
     @spy_log << ['exists',filename]
   end
 

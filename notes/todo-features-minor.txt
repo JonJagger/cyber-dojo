@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+HOW DO I FORK FROM AN EXPIRED DOJO?
+  cant enter/re-enter
+  dashboard only gives diff dialog
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST
   needs to check if kata has expired and if so not do the test
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
