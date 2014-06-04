@@ -120,6 +120,10 @@ class Language
     end
   end
 
+  def manifest_filename
+    'manifest.json'
+  end
+
 private
 
   def read(filename)
@@ -129,10 +133,6 @@ private
 
   def paas
     dojo.paas
-  end
-
-  def manifest_filename
-    'manifest.json'
   end
 
 end
