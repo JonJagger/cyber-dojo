@@ -25,9 +25,9 @@ Example: the `manifest.json` file for Java-JUnit looks like this:
 - - - - - - - - - - - - - - - - - - - -
 `"image_name": string`
 
-  The name of docker image in which `cyber-dojo.sh` is run.
-  <br>Optional. Not required if you're using a [raw-server](raw-server.md) instead
-  of a docker-server.
+  The name of the docker image in which `cyber-dojo.sh` is run.
+  <br>Optional. Not required if you're using a local [raw-server](raw-server.md)
+  instead of a docker-server.
 - - - - - - - - - - - - - - - - - - - -
 `"visible_filenames": [ string* ]`
 
@@ -156,10 +156,10 @@ Each started animal has its own git respository, eg
 ```
   cyberdojo/katas/82/B583C347/wolf/.git
 ```
-The starting files (as loaded from the `cyberdojo/katas/82/B583C347/wolf/manifests.json`
+The starting files (as loaded from the `cyberdojo/katas/82/B583C347/wolf/manifest.json`
 file) form tag 0 (zero). Each `[test]` event causes a new git commit and tag, with a
-message and tag which is simply the increment number. For example, the fourth
-time the wolf computer presses `[test]` causes
+message and tag which is simply its number. For example, the fourth time the wolf
+computer presses `[test]` causes
 ```
 $ git commit -a -m '4'
 $ git tag -m '4' 4 HEAD
@@ -191,7 +191,7 @@ and avoid annoying red underlines in the code editor...
   * Right click in the editor
   * Under Spell-checker Options>
   * Deselect 'Check Spelling in this Field'
-  
+
 In Opera/Firefox
   * Right click in the editor
   * Deselect 'Check spelling'
