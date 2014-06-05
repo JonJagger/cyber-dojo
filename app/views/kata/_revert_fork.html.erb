@@ -10,9 +10,8 @@ $(function() {
 	  var cancel = button.data('cancel');
 	  var maxTag = parseInt($('.traffic-light-count').text());
 	  cd.dialog_revert(title, cancel, "<%= @kata.id %>", "<%= @avatar.name %>", maxTag, maxTag, button);
-	})
-	.prop('disabled', <%= @kata.expired? %>);
-
+	});
+	
   $('#fork-button')
     .click(function() {
 	  var button = $(this);

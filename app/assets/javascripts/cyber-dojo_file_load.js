@@ -66,7 +66,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     var enable = function(node) {
-      node.prop('disabled', node.data('expired'));
+      node.prop('disabled', false);
     };
 
     if (cd.cantBeRenamedOrDeleted(filename)) {

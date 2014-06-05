@@ -28,8 +28,8 @@ $(function() {
     disable(reviewButton);
     if (id.length >= 6) {
       $.getJSON('/dojo/valid_id', { id: id }, function(dojo) {
-        enableIf(enterButton, dojo.exists && !dojo.expired);
-        enableIf(reEnterButton, dojo.started > 0 && !dojo.expired);
+        enableIf(enterButton, dojo.exists);
+        enableIf(reEnterButton, dojo.started);
         enableIf(reviewButton, dojo.started > 0);
       });
     }
