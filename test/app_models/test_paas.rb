@@ -4,14 +4,14 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class PaasTests < ModelTestCase
 
-  test "default format is json" do
+  test 'default format is json' do
     paas = Paas.new(nil,nil,nil)
     assert_equal 'json', paas.format
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "format can be set to rb" do
+  test 'format can be set to rb' do
     paas = Paas.new(nil,nil,nil)
     paas.format_rb
     assert_equal 'rb', paas.format
@@ -19,7 +19,7 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(exercise)" do
+  test 'path(exercise)' do
     json_and_rb do
       exercise = @dojo.exercises['test_Yahtzee']
       assert @paas.path(exercise).match(exercise.name)
@@ -31,7 +31,7 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(language)" do
+  test 'path(language)' do
     json_and_rb do
       language = @dojo.languages['Ruby']
       assert @paas.path(language).match(language.name)
@@ -43,9 +43,8 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(kata)" do
+  test 'path(kata)' do
     json_and_rb do
-      id = '123456789A'
       kata = @dojo.katas[id]
       assert @paas.path(kata).include?(kata.id.inner)
       assert @paas.path(kata).include?(kata.id.outer)
@@ -57,16 +56,15 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path(avatar) and path(sandbox)" do
+  test 'path(avatar) and path(sandbox)' do
     json_and_rb do |format|
-      id = '123456789A'
       kata = @dojo.katas[id]
 
       language = @dojo.languages['test-C++-Catch']
       language_manifest = {
         :unit_test_framework => 'catch'
       }
-      @paas.dir(language).spy_read('manifest.json', JSON.unparse(language_manifest))
+      @paas.dir(language).spy_read2('manifest.json', language_manifest)
 
       kata_manifest = {
         :id => id,
@@ -76,10 +74,10 @@ class PaasTests < ModelTestCase
         :language => language.name
       }
       if (format == 'rb')
-        @paas.dir(kata).spy_read('manifest.rb', kata_manifest.inspect)
+        @paas.dir(kata).spy_read2('manifest.rb', kata_manifest)
       end
       if (format == 'json')
-        @paas.dir(kata).spy_read('manifest.json', JSON.unparse(kata_manifest))
+        @paas.dir(kata).spy_read2('manifest.json', kata_manifest)
       end
 
       avatar = kata.start_avatar(Avatars.names)
@@ -107,7 +105,7 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "in HostRunner runnable? always returns true" do
+  test 'in HostRunner runnable? always returns true' do
     json_and_rb do |format|
       language = @dojo.languages['test-Java-JUnit']
       assert @paas.runnable?(language)
@@ -115,6 +113,10 @@ class PaasTests < ModelTestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def id
+    '123456789A'
+  end
 
   def path_ends_in_slash?(object)
     @paas.path(object).end_with?(@disk.dir_separator)

@@ -53,11 +53,11 @@ class AvatarTests < ModelTestCase
       end
 
       support_filename = 'lib.a'
-      @paas.dir(language).spy_read('manifest.json', JSON.unparse({
+      @paas.dir(language).spy_read2('manifest.json', {
         :unit_test_framework => 'assert',
         :visible_filenames => visible_files.keys,
         :support_filenames => [ support_filename ]
-      }))
+      })
       exercise = @dojo.exercises['test_Yahtzee']
       @paas.dir(exercise).spy_read('instructions', 'your task...')
 
