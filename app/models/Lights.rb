@@ -22,7 +22,7 @@ class Lights
   end
 
   def length
-    each.entries.length
+    lights.length
   end
 
   def latest

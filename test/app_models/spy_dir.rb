@@ -8,11 +8,12 @@ class SpyDir
     @spy_log = [ ]
   end
 
-  attr_reader :log
+  attr_reader :log, :spy_log
 
   def teardown
     @spy_log.each do |entry|
-      assert log.include?(entry), "log.include?(#{entry})"
+      assert log.include?(entry),
+        "SpyDir(#{@dir}).teardown() log.include?(#{entry})\nlog==#{log.inspect}"
     end
   end
 
