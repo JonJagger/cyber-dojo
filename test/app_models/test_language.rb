@@ -334,7 +334,7 @@ class LanguageTests < ModelTestCase
       @language = @dojo.languages['Ruby']
       @paas.dir(@language).write('manifest.json', {'tab_size' => 4})
       @paas.dir(@language).write('manifest.rb', {:tab_size => 8})
-      @paas.dir(@language).spy_read('manifest.json', JSON.unparse({'tab_size' => 4}))
+      @paas.dir(@language).spy_read('manifest.json', {'tab_size' => 4})
       assert_equal ' '*4, @language.tab
     end
   end
@@ -355,7 +355,7 @@ class LanguageTests < ModelTestCase
       name = 'Ruby'
       @language = @dojo.languages[name]
       any_bad_json = '42'
-      @paas.dir(@language).spy_read('manifest.json', any_bad_json)
+      @paas.dir(@language).spy_read_raw('manifest.json', any_bad_json)
       named = false
       begin
         @language.tab_size
@@ -404,7 +404,7 @@ class LanguageTests < ModelTestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def spy_manifest(manifest)
-    @paas.dir(@language).spy_read(manifest_filename, JSON.unparse(manifest))
+    @paas.dir(@language).spy_read(manifest_filename, manifest)
   end
 
   def spy_exists?(filename)

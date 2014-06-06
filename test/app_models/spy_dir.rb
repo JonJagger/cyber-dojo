@@ -66,15 +66,13 @@ class SpyDir
 
   # - - - - - - - - - - - - - - -
 
-  def spy_read2(filename,content)
+  def spy_read(filename, content)
     content = JSON.unparse(content) if filename === 'manifest.json'
     content = content.inspect if filename === 'manifest.rb'
-    make
-    @repo[filename] = content
-    @spy_log << ['read',filename,content]
+    spy_read_raw(filename, content)
   end
 
-  def spy_read(filename, content)
+  def spy_read_raw(filename, content)
     make
     @repo[filename] = content
     @spy_log << ['read',filename,content]

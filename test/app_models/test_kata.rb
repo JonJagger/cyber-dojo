@@ -49,7 +49,7 @@ class KataTests < ModelTestCase
        ' creates unique-id and uses-time-now' do
     json_and_rb do
       language = @dojo.languages['Java-JUnit']
-      @paas.dir(language).spy_read2('manifest.json', {
+      @paas.dir(language).spy_read('manifest.json', {
         :unit_test_framework => 'JUnit'
       })
       exercise = @dojo.exercises['test_Yahtzee']
@@ -69,7 +69,7 @@ class KataTests < ModelTestCase
   test 'make_kata saves manifest in kata dir' do
     json_and_rb do |format|
       language = @dojo.languages['Java-JUnit']
-      @paas.dir(language).spy_read2('manifest.json', {
+      @paas.dir(language).spy_read('manifest.json', {
         :unit_test_framework => 'waffle'
       })
       exercise = @dojo.exercises['test_Yahtzee']
@@ -111,7 +111,7 @@ class KataTests < ModelTestCase
           'wibble.hpp' => '#include <iostream>',
           'wibble.cpp' => '#include "wibble.hpp"'
       }
-      @paas.dir(language).spy_read2('manifest.json', {
+      @paas.dir(language).spy_read('manifest.json', {
         :visible_filenames => visible_files.keys
       })
       @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
@@ -213,7 +213,7 @@ class KataTests < ModelTestCase
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
     }
-    @paas.dir(language).spy_read2('manifest.json', {
+    @paas.dir(language).spy_read('manifest.json', {
       :visible_filenames => visible_files.keys
     })
     @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])

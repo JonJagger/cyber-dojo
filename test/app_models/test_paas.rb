@@ -64,7 +64,7 @@ class PaasTests < ModelTestCase
       language_manifest = {
         :unit_test_framework => 'catch'
       }
-      @paas.dir(language).spy_read2('manifest.json', language_manifest)
+      @paas.dir(language).spy_read('manifest.json', language_manifest)
 
       kata_manifest = {
         :id => id,
@@ -74,10 +74,10 @@ class PaasTests < ModelTestCase
         :language => language.name
       }
       if (format == 'rb')
-        @paas.dir(kata).spy_read2('manifest.rb', kata_manifest)
+        @paas.dir(kata).spy_read('manifest.rb', kata_manifest)
       end
       if (format == 'json')
-        @paas.dir(kata).spy_read2('manifest.json', kata_manifest)
+        @paas.dir(kata).spy_read('manifest.json', kata_manifest)
       end
 
       avatar = kata.start_avatar(Avatars.names)

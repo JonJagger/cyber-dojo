@@ -53,7 +53,7 @@ class AvatarTests < ModelTestCase
       end
 
       support_filename = 'lib.a'
-      @paas.dir(language).spy_read2('manifest.json', {
+      @paas.dir(language).spy_read('manifest.json', {
         :unit_test_framework => 'assert',
         :visible_filenames => visible_files.keys,
         :support_filenames => [ support_filename ]
