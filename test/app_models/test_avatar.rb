@@ -242,7 +242,7 @@ class AvatarTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar's tag 0 repo contains an empty output file only if kata-manifest does" do
+  test "avatar's tag 0 repo contains an empty output file only when kata-manifest does" do
     json_and_rb |format|
       @dojo = Dojo.new('spied/',format)
       @kata = @dojo[@id]

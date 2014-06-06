@@ -68,10 +68,9 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'exists? is true only if dir and manifest exist' do
+  test 'exists? is true only when dir and manifest exist' do
     json_and_rb do
-      # if you s/Erlang-eunit/Erlang/ it fails... Why?
-      @language = @dojo.languages['Erlang-eunit']
+      @language = @dojo.languages['Erlang']
       assert !@language.exists?, '1'
       @paas.dir(@language).make
       assert !@language.exists?, '2'
