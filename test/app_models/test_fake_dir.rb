@@ -12,9 +12,13 @@ class FakeDirTests < ActionController::TestCase
     @dir = FakeDir.new(@disk,@path)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "path is as set in ctor" do
     assert_equal @path, @dir.path
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "exists? is false before make is called, true after" do
     assert !@dir.exists?
@@ -22,17 +26,23 @@ class FakeDirTests < ActionController::TestCase
     assert @dir.exists?
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "exists?(filename) is true after write(filename)" do
     filename = 'wibble.hpp'
     @dir.write(filename, '#include <iostream>')
     assert @dir.exists?(filename)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "read(filename) raises if no file exists" do
     filename = 'wibble.rb'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
     assert_equal "FakeDir['#{@path}'].read('#{filename}') no file", error.message
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
 
   test "read(filename) returns previous write(filename,content)" do
     filename = 'readme.txt'
@@ -41,6 +51,8 @@ class FakeDirTests < ActionController::TestCase
     assert content, @dir.read(filename)
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test "read(filename) raises if different filename stubbed" do
     @dir.write('wibble.h', '#include <stdio.h>')
     filename = 'wibble.cpp'
@@ -48,7 +60,9 @@ class FakeDirTests < ActionController::TestCase
     assert_equal "FakeDir['#{@path}'].read('#{filename}') no file", error.message
   end
 
-  test "each" do
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "each filters nested-sub-folders to immediate sub-folder only" do
     @disk[@path + 'a']
     @disk[@path + 'b']
     @disk[@path + 'b/c']

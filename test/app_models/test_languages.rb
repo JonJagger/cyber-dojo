@@ -9,16 +9,22 @@ class LanguagesTests < ModelTestCase
     assert_equal expected, languages.map {|language| language.name}
   end
 
+  #- - - - - - - - - - - - - - - - - - - - -
+
   test 'dojo.languages.each() not empty' do
     stub_exists(expected = ['C#-NUnit','Ruby-TestUnit'])
     assert_equal expected, languages.map {|language| language.name}.sort
   end
+
+  #- - - - - - - - - - - - - - - - - - - - -
 
   test 'dojo.languages[name] returns language with given name' do
     ['Ruby-Cucumber','C#-NUnit'].each do |name|
       assert_equal name, languages[name].name
     end
   end
+
+  #- - - - - - - - - - - - - - - - - - - - -
 
   def languages
     @dojo.languages

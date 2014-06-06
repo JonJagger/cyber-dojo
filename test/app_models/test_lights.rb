@@ -21,11 +21,6 @@ class LightsTests < ActionController::TestCase
     @max_duration = 15
   end
 
-  def now
-    tn = Time.now
-    [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar.save(:changed).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
@@ -166,5 +161,10 @@ class LightsTests < ActionController::TestCase
     assert diff.include?('+++ b/sandbox/Wibble.java'), diff
   end
 =end
+
+  def now
+    tn = Time.now
+    [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
+  end
 
 end

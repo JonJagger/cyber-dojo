@@ -10,19 +10,19 @@ class DojoTests < ModelTestCase
     end
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "languages['xxx'] gives you language which knows its name is 'xxx'" do
     json_and_rb do
-      assert_equal 'xxx', @dojo.languages['xxx'].name
+      assert_equal 'Ruby', @dojo.languages['Ruby'].name
+      assert_equal 'C', @dojo.languages['C'].name
+      assert_equal 'Erlang', @dojo.languages['Erlang'].name
     end
   end
 
-  test "exercises['yyy'] gives you exercise which knows its name is 'yyy'" do
-    json_and_rb do
-      assert_equal 'yyy', @dojo.exercises['yyy'].name
-    end
-  end
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "c'tor format controls kata's manifest format" do
+  test "c'tor format determines kata's manifest format" do
     json_and_rb do |fmt|
       language = @dojo.languages['Java-JUnit']
       @paas.dir(language).spy_read('manifest.json', JSON.unparse({

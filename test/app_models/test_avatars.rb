@@ -22,14 +22,13 @@ class AvatarsTests < ActionController::TestCase
     @max_duration = 15
   end
 
-  def now
-    tn = Time.now
-    [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
-  end
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar names all begin with a different letter" do
     assert_equal Avatars.names.collect{|name| name[0]}.uniq.length, Avatars.names.length
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "an avatar's format is kata's format which is dojo's format" do
     avatar = @kata.start_avatar
@@ -39,6 +38,8 @@ class AvatarsTests < ActionController::TestCase
     assert @dojo.format === @format
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "kata.avatars() returns all avatars started in the kata" do
     avatar1 = @kata.start_avatar
     avatar2 = @kata.start_avatar
@@ -46,6 +47,8 @@ class AvatarsTests < ActionController::TestCase
     names = @kata.avatars.map{|avatar| avatar.name}
     assert_equal expected_names.sort, names.sort
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "dojo.katas[id].avatars() returns all avatars started in kata with given id" do
     avatar1 = @kata.start_avatar
@@ -55,6 +58,8 @@ class AvatarsTests < ActionController::TestCase
     assert_equal expected_names.sort, names.sort
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
   test "dojo.katas[id].avatars[name] finds avatar with given name" do
     avatar = @kata.start_avatar
     name = avatar.name
@@ -63,6 +68,8 @@ class AvatarsTests < ActionController::TestCase
     avatar = @dojo.katas[@kata.id.to_s].avatars[name]
     assert_equal name, avatar.name
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar.test() initial output" do
     avatar = @kata.start_avatar
@@ -177,6 +184,13 @@ class AvatarsTests < ActionController::TestCase
     diff = avatar.diff_lines(was_tag=0, now_tag=1)
     assert diff.include?('--- /dev/null'), diff
     assert diff.include?('+++ b/sandbox/Wibble.java'), diff
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def now
+    tn = Time.now
+    [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
   end
 
 end

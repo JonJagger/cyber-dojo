@@ -4,6 +4,18 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class KataTests < ModelTestCase
 
+  # test kata is not active? when it does not exist
+  # test kata is not active? when all its avatars have less than 2 traffic-lights
+  # test kata is active? when at least one avatar has 2 or more traffic-lights
+
+  # test kata's age is zero when not active
+  # test kata's age is from earliest 2nd traffic-light to now when active
+  # test kata's age is from earliest 2nd traffic-light to max of one day
+  # test kata's expired? is false when age is less than one day
+  # test kata's expired? is true when age is greater than or equal to one day
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'id read back as set' do
     json_and_rb do
       kata = @dojo.katas[id]
@@ -124,7 +136,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with specific avatar' do
+  test 'start_avatar with specific avatar (useful for testing)' do
     json_and_rb do
       kata = make_kata
       avatar = kata.start_avatar(['hippo'])
@@ -184,8 +196,8 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'kata without manifest yet' +
-       " reports its manifest_filename in dojo's format" do
+  test 'kata without manifest yet (viz not started) ' +
+       " reports its manifest_filename as having parent dojo's format" do
     json_and_rb do |format|
       id = '12345ABCDE'
       kata = Kata.new(@dojo, id)
@@ -194,17 +206,6 @@ class KataTests < ModelTestCase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  # test kata has been entered? if it has at least one avatar
-  # test kata is not active? when it does not exist
-  # test kata is not active? when all its avatars have less than 2 traffic-lights
-  # test kata is active? when at least one avatar has 2 or more traffic-lights
-
-  # test kata age is zero when not active
-  # test kata age is from earliest 2nd traffic-light to now when active
-  # test kata age is from earliest 2nd traffic-light to max of one day
-  # test kata expired? is false when age is less than one day
-  # test kata expired? is true when age is greater than or equal to one day
 
   def make_kata
     language = @dojo.languages['test-C++-Catch']
