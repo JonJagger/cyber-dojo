@@ -126,7 +126,7 @@ class SpyDirTests < ActionController::TestCase
     @dir.spy_read(filename, content)
     error = assert_raises(RuntimeError) { @dir.teardown }
     expected = ['read',filename,content]
-    assert_equal "SpyDir['#{@path}'].log.include?(#{expected})", error.message
+    assert_equal "SpyDir['#{@path}'].teardown() log.include?(#{expected})", error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -151,7 +151,7 @@ class SpyDirTests < ActionController::TestCase
     @dir.write(filename, content+'X')
     error = assert_raise(RuntimeError) { @dir.teardown }
     expected = ['write',filename,content]
-    assert_equal "SpyDir['#{@path}'].log.include?(#{expected})", error.message
+    assert_equal "SpyDir['#{@path}'].teardown() log.include?(#{expected})", error.message
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

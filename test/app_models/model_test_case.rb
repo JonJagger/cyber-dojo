@@ -37,4 +37,20 @@ class ModelTestCase < ActionController::TestCase
     log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
   end
 
+  def make_kata
+    language = @dojo.languages['test-C++-Catch']
+    visible_files = {
+        'wibble.hpp' => '#include <iostream>',
+        'wibble.cpp' => '#include "wibble.hpp"'
+    }
+    @paas.dir(language).spy_read('manifest.json', {
+      :visible_filenames => visible_files.keys
+    })
+    @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
+    @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
+    exercise = @dojo.exercises['test_Yahtzee']
+    @paas.dir(exercise).spy_read('instructions', 'your task...')
+    @dojo.make_kata(language, exercise)
+  end
+
 end

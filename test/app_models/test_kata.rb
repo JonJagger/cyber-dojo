@@ -4,15 +4,94 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class KataTests < ModelTestCase
 
-  # test kata is not active? when it does not exist
-  # test kata is not active? when all its avatars have less than 2 traffic-lights
-  # test kata is active? when at least one avatar has 2 or more traffic-lights
+  test 'when kata does exist it is not active and its age is zero' do
+    json_and_rb do
+      kata = @dojo.katas[id]
+      assert !kata.exists?
+      assert !kata.active?
+      assert_equal 0, kata.age
+    end
+  end
 
-  # test kata's age is zero when not active
-  # test kata's age is from earliest 2nd traffic-light to now when active
-  # test kata's age is from earliest 2nd traffic-light to max of one day
-  # test kata's expired? is false when age is less than one day
-  # test kata's expired? is true when age is greater than or equal to one day
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'when kata exists but has no avatars it is not active and its age is zero' do
+    json_and_rb do
+      kata = make_kata
+      assert kata.exists?
+      assert !kata.active?
+      assert_equal 0, kata.age
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'when kata exists but all its avatars have less than 2 traffic-lights ' +
+       'then it is not active and its age is zero' do
+    json_and_rb do |format|
+      kata = make_kata
+      hippo = kata.start_avatar(['hippo'])
+      lion = kata.start_avatar(['lion'])
+      lights_filename = lion.traffic_lights_filename
+
+      light =
+      [
+        {
+          'colour' => 'red',
+          'time' => [2014, 2, 15, 8, 54, 6],
+          'number' => 1
+        }
+      ]
+      if format === 'rb'
+        @paas.dir(hippo).spy_read(lights_filename, light.inspect)
+      end
+      if format === 'json'
+        @paas.dir(hippo).spy_read(lights_filename, JSON.unparse(light))
+      end
+
+      assert !kata.active?
+      assert_equal 0, kata.age
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'when kata exists and at least one avatar has 2 or more traffic-lights ' +
+       'then kata is active and age is from earliest 2nd traffic-light to now' do
+    json_and_rb do |format|
+      kata = make_kata
+      hippo = kata.start_avatar(['hippo'])
+      lion = kata.start_avatar(['lion'])
+      lights_filename = lion.traffic_lights_filename
+      auto =
+        {
+          'colour' => 'red',
+          'time' => [2014, 2, 15, 8, 54, 6],
+          'number' => 1
+        }
+
+      manual =
+        {
+          'colour' => 'green',
+          'time' => [2014, 2, 15, 8, 54, 34],
+          'number' => 2
+        }
+
+      if format === 'rb'
+        @paas.dir(hippo).spy_read(lights_filename, [auto].inspect)
+        @paas.dir(lion).spy_read(lights_filename, [auto,manual].inspect)
+      end
+      if format === 'json'
+        @paas.dir(hippo).spy_read(lights_filename, JSON.unparse([auto]))
+        @paas.dir(lion).spy_read(lights_filename, JSON.unparse([auto,manual]))
+      end
+
+      assert kata.active?
+      now = manual["time"]
+      now[5] += 17
+      assert_equal 17, kata.age(now)
+    end
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -136,7 +215,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with specific avatar (useful for testing)' do
+  test 'start_avatar with specific avatar-name (useful for testing)' do
     json_and_rb do
       kata = make_kata
       avatar = kata.start_avatar(['hippo'])
@@ -147,7 +226,7 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with avatar-names preference' do
+  test 'start_avatar with specific avatar-names arg is use (useful for testing)' do
     json_and_rb do
       kata = make_kata
       names = [ 'panda', 'lion', 'cheetah' ]
@@ -203,24 +282,6 @@ class KataTests < ModelTestCase
       kata = Kata.new(@dojo, id)
       assert_equal format, kata.format
     end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  def make_kata
-    language = @dojo.languages['test-C++-Catch']
-    visible_files = {
-        'wibble.hpp' => '#include <iostream>',
-        'wibble.cpp' => '#include "wibble.hpp"'
-    }
-    @paas.dir(language).spy_read('manifest.json', {
-      :visible_filenames => visible_files.keys
-    })
-    @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
-    @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
-    exercise = @dojo.exercises['test_Yahtzee']
-    @paas.dir(exercise).spy_read('instructions', 'your task...')
-    @dojo.make_kata(language, exercise)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

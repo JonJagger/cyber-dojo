@@ -15,10 +15,6 @@ class Kata
     avatars.active.count > 0
   end
 
-  def expired?
-    age > 60*60*24  # 1 day
-  end
-
   def id
     Id.new(@id)
   end
@@ -50,9 +46,9 @@ class Kata
     Time.mktime(*manifest['created'])
   end
 
-  def age(now = Time.now)
+  def age(now = Time.now.to_a[0..5].reverse)
     return 0 if !active?
-    return (now - earliest_light).to_i
+    return (Time.mktime(*now) - earliest_light).to_i
   end
 
   def visible_files
@@ -92,7 +88,7 @@ private
   def earliest_light
     # time of first manually pressed traffic-light
     # (initial traffic-light is automatically created)
-    avatars.active.map{|avatar| avatar.lights[1].time}.sort[0]
+    Time.mktime(*avatars.active.map{|avatar| avatar.lights[1].time}.sort[0])
   end
 
 end

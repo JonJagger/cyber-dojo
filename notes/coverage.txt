@@ -10,9 +10,9 @@ app_lib
    (Missing *Runner and Paas coverage)
 
 app_models
-   126 tests, 745 assertions, 0 failures, 0 errors, 0 skips
-   Finished tests in 21.065568s, 5.7914 tests/s, 34.4638 assertions/s.
-   Coverage = 97.01%
+   133 tests, 774 assertions, 0 failures, 0 errors, 0 skips
+   Finished tests in 27.356941s, 4.8617 tests/s, 28.2926 assertions/s.
+   Coverage = 99.33%
 
 lib
    33 tests, 61 assertions, 0 failures, 0 errors, 0 skips

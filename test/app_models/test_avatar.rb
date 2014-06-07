@@ -4,19 +4,71 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class AvatarTests < ModelTestCase
 
-  # test avatar is not active? when it does not exist
-  # test avatar is not active? when it has less than 2 traffic-lights
-  # test avatar is active? when it has 2 or more traffic-lights
+  test 'avatar is not active? when it does not exist' do
+    kata = @dojo.katas[id]
+    lion = kata.avatars['lion']
+    assert !lion.exists?
+    assert !lion.active?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'avatar is not active? when it has zero traffic-lights' do
+    kata = @dojo.katas[id]
+    lion = kata.avatars['lion']
+    lights_filename = lion.traffic_lights_filename
+    @paas.dir(lion).spy_read(lights_filename, JSON.unparse([]))
+    assert !lion.active?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'avatar is not active? when it has one traffic-light' do
+    kata = @dojo.katas[id]
+    lion = kata.avatars['lion']
+    lights_filename = lion.traffic_lights_filename
+    @paas.dir(lion).spy_read(lights_filename, JSON.unparse([
+      {
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
+      }
+    ]))
+    assert !lion.active?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'avatar is active? when it has 2 or more traffic-lights' do
+    kata = @dojo.katas[id]
+    lion = kata.avatars['lion']
+    lights_filename = lion.traffic_lights_filename
+    @paas.dir(lion).spy_read(lights_filename, JSON.unparse([
+      {
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
+      },
+      {
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 54, 34],
+        'number' => 2
+      }
+      ]))
+    assert lion.active?
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'exists? is true' +
        ' when dir exists' +
        ' and name is in Avatars.name' do
     json_and_rb do
       kata = @dojo.katas[id]
-      avatar = kata.avatars[Avatars.names[0]]
-      assert !avatar.exists?
-      @paas.dir(avatar).make
-      assert avatar.exists?
+      lion = kata.avatars['lion']
+      assert !lion.exists?
+      @paas.dir(lion).make
+      assert lion.exists?
     end
   end
 
@@ -24,13 +76,14 @@ class AvatarTests < ModelTestCase
 
   test 'exists? is false' +
        ' when dir exists' +
-       ' and name is not in Avatars.name' do
+       ' and name is NOT in Avatars.name' do
     json_and_rb do
       kata = @dojo.katas[id]
-      avatar = kata.avatars['Salmo']
-      assert !avatar.exists?
-      @paas.dir(avatar).make
-      assert !avatar.exists?
+      assert !Avatars.names.include?('salmon')
+      salmon = kata.avatars['salmon']
+      assert !salmon.exists?
+      @paas.dir(salmon).make
+      assert !salmon.exists?
     end
   end
 
@@ -41,7 +94,7 @@ class AvatarTests < ModelTestCase
           ' and empty avatar/increments.rb/json,' +
           ' and each visible_file into avatar/sandbox,' +
           ' and links each support_filename into avatar/sandbox' do
-    json_and_rb do |fmt|
+    json_and_rb do |format|
       language = @dojo.languages['C-assert']
 
       visible_files = {
@@ -78,13 +131,13 @@ class AvatarTests < ModelTestCase
       expected_manifest['output'] = ''
       expected_manifest['instructions'] = 'your task...'
 
-      if (fmt == 'rb')
+      if (format == 'rb')
         assert @paas.dir(avatar).log.include?(['write','manifest.rb', expected_manifest.inspect]),
             @paas.dir(avatar).log.inspect
         assert @paas.dir(avatar).log.include?(['write','increments.rb', [ ].inspect]),
             @paas.dir(avatar).log.inspect
       end
-      if (fmt == 'json')
+      if (format == 'json')
         assert @paas.dir(avatar).log.include?(['write','manifest.json', JSON.unparse(expected_manifest)]),
             @paas.dir(avatar).log.inspect
         assert @paas.dir(avatar).log.include?(['write','increments.json', JSON.unparse([ ])]),

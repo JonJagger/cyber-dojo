@@ -13,7 +13,7 @@ class SpyDir
   def teardown
     @spy_log.each do |entry|
       assert log.include?(entry),
-        "SpyDir(#{@dir}).teardown() log.include?(#{entry})\nlog==#{log.inspect}"
+        "teardown() log.include?(#{entry})"
     end
   end
 
