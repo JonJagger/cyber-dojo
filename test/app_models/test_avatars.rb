@@ -41,9 +41,12 @@ class AvatarsTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "kata.avatars() returns all avatars started in the kata" do
-    avatar1 = @kata.start_avatar
-    avatar2 = @kata.start_avatar
-    expected_names = [avatar1.name, avatar2.name]
+    assert_equal 0, @kata.avatars.length
+    lion = @kata.start_avatar(['lion'])
+    assert_equal 1, @kata.avatars.length
+    cheetah = @kata.start_avatar(['cheetah'])
+    assert_equal 2, @kata.avatars.length
+    expected_names = ['lion', 'cheetah']
     names = @kata.avatars.map{|avatar| avatar.name}
     assert_equal expected_names.sort, names.sort
   end

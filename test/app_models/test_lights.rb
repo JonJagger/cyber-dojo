@@ -69,9 +69,9 @@ class LightsTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "avatar.lights initially empty" do
-    avatar = @kata.start_avatar
-    assert_equal [], avatar.lights.entries
-    assert_equal 0, avatar.lights.length
+    lights = @kata.start_avatar.lights
+    assert_equal [], lights.entries
+    assert_equal 0, lights.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -85,10 +85,14 @@ class LightsTests < ActionController::TestCase
     light = { 'colour' => 'red' }
     at = now
     avatar.save_traffic_light(light, at)
-    assert_equal 1, avatar.lights.length, "length"
-    assert_equal :red, avatar.lights[0].colour, "colour"
-    assert_equal Time.mktime(*at), avatar.lights[0].time, "time"
-    assert_equal 1, avatar.lights[0].number, "number"
+    lights = avatar.lights
+    assert_equal 1, lights.length, "length"
+    assert_equal :red, lights[0].colour, "colour"
+    assert_equal Time.mktime(*at), lights[0].time, "time"
+    assert_equal 1, lights[0].number, "number"
+    assert_equal :red, lights.latest.colour
+    assert_equal Time.mktime(*at), lights.latest.time
+    assert_equal 1, lights.latest.number
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
