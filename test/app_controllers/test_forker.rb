@@ -12,6 +12,14 @@ class ForkerControllerTest < IntegrationTest
     Thread.current
   end
 
+  def setup_dojo
+    thread[:disk] = @disk = SpyDisk.new
+    thread[:git] = @git = SpyGit.new
+    thread[:runner] = @runner = SpyRunner.new
+    @paas = Paas.new(@disk, @git, @runner)
+    @dojo = Dojo.new(@paas, root_path, 'json')
+  end
+
   def teardown
     thread[:disk] = nil
     thread[:git] = nil
@@ -45,15 +53,11 @@ class ForkerControllerTest < IntegrationTest
   test "if language folder no longer exists " +
         "the fork fails " +
         "and the reason is language" do
-    thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = SpyGit.new
-    thread[:runner] = runner = SpyRunner.new
-    paas = Paas.new(disk, git, runner)
-    dojo = Dojo.new(paas, root_path, 'json')
-    language = dojo.languages['xxxx']
+    setup_dojo
+    language = @dojo.languages['does-not-exist']
     id = '1234512345'
-    kata = dojo.katas[id]
-    paas.dir(kata).spy_read('manifest.rb', { :language => language.name })
+    kata = @dojo.katas[id]
+    @paas.dir(kata).spy_read('manifest.rb', { :language => language.name })
 
     get "forker/fork",
       :format => :json,
@@ -66,8 +70,8 @@ class ForkerControllerTest < IntegrationTest
     assert_equal 'language', json['reason'], json.inspect
     assert_equal language.name, json['language'], json.inspect
     assert_nil json['id'], "json['id']==nil"
-    assert_equal({ }, git.log)
-    disk.teardown
+    assert_equal({ }, @git.log)
+    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,18 +79,14 @@ class ForkerControllerTest < IntegrationTest
   test "if avatar not started " +
        "the fork fails " +
        "and the reason is avatar" do
-    thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = SpyGit.new
-    thread[:runner] = runner = SpyRunner.new
-    paas = Paas.new(disk, git, runner)
-    dojo = Dojo.new(paas, root_path, 'json')
-    language = dojo.languages['Ruby-installed-and-working']
-    paas.dir(language).make
-    paas.dir(language).spy_exists?('manifest.json')
+    setup_dojo
+    language = @dojo.languages['Ruby-installed-and-working']
+    @paas.dir(language).make
+    @paas.dir(language).spy_exists?('manifest.json')
 
     id = '1234512345'
-    kata = dojo.katas[id]
-    paas.dir(kata).spy_read('manifest.json', { :language => language.name })
+    kata = @dojo.katas[id]
+    @paas.dir(kata).spy_read('manifest.json', { :language => language.name })
 
     get "forker/fork",
       :format => :json,
@@ -98,8 +98,8 @@ class ForkerControllerTest < IntegrationTest
     assert_equal false, json['forked'], json.inspect
     assert_equal 'avatar', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
-    assert_equal({ }, git.log)
-    disk.teardown
+    assert_equal({ }, @git.log)
+    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -116,31 +116,24 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  # This fails after the lights-model refactor in forker_controller
-  # and right now I cannot see why ...
-
   def bad_tag_test(bad_tag, more_than_number_of_lights = false)
-    thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = SpyGit.new
-    thread[:runner] = runner = SpyRunner.new
-    paas = Paas.new(disk, git, runner)
-    dojo = Dojo.new(paas, root_path, 'json')
+    setup_dojo
     language_name = 'Ruby-installed-and-working'
-    language = dojo.languages[language_name]
-    paas.dir(language).make
-    paas.dir(language).spy_exists?('manifest.json')
+    language = @dojo.languages[language_name]
+    @paas.dir(language).make
+    @paas.dir(language).spy_exists?('manifest.json')
 
     id = '1234512345'
-    kata = dojo.katas[id]
-    paas.dir(kata).make
-    paas.dir(kata).spy_read('manifest.json', { :language => language_name })
+    kata = @dojo.katas[id]
+    @paas.dir(kata).make
+    @paas.dir(kata).spy_read('manifest.json', { :language => language_name })
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    paas.dir(avatar).make
+    @paas.dir(avatar).make
 
     if more_than_number_of_lights
-      paas.dir(avatar).spy_read('increments.json',
+      @paas.dir(avatar).spy_read('increments.json',
         JSON.unparse([
           [
           "colour" => "red",
@@ -160,10 +153,9 @@ class ForkerControllerTest < IntegrationTest
     assert_equal false, json['forked'], json.inspect + ':' + bad_tag
     assert_equal 'tag', json['reason'], json.inspect + ':' + bad_tag
     assert_nil json['id'], "json['id']==nil : " + bad_tag
-    assert_equal({ }, git.log)
+    assert_equal({ }, @git.log)
 
-    disk.teardown
-    teardown
+    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -172,25 +164,25 @@ class ForkerControllerTest < IntegrationTest
        "and id,avatar,tag all ok " +
        "the fork works " +
        "and new dojo's id is returned" do
-    thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = SpyGit.new
-    thread[:runner] = runner = SpyRunner.new
-    paas = Paas.new(disk, git, runner)
-    dojo = Dojo.new(paas, root_path, 'json')
+    setup_dojo
     id = '1234512345'
-    kata = dojo.katas[id]
+    kata = @dojo.katas[id]
 
     old_language_name = 'C#'
     new_language_name = 'C#-NUnit'
-    paas.dir(kata).spy_read('manifest.rb', { :language => old_language_name })
-    language = dojo.languages[new_language_name]
-    paas.dir(language).spy_read('manifest.json', {
-        'unit_test_framework' => 'fake'
-      })
+
+    #TODO: change this to use json format?
+    @paas.dir(kata).spy_read('manifest.rb', {
+      :language => old_language_name
+    })
+    language = @dojo.languages[new_language_name]
+    @paas.dir(language).spy_read('manifest.json', {
+      'unit_test_framework' => 'fake'
+    })
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    paas.dir(avatar).spy_read('increments.rb', [
+    @paas.dir(avatar).spy_read('increments.rb', [
       {
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],
@@ -214,11 +206,12 @@ class ForkerControllerTest < IntegrationTest
     assert_not_nil json['id'], json.inspect
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
-    assert dojo.katas[json['id']].exists?
-    # need to be able to properly stub in SpyGit so I can return manifest
-    # and assert new dojo has same settings as one forked from
-    assert_equal({paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, git.log)
-    disk.teardown
+    assert @dojo.katas[json['id']].exists?
+
+    # TODO: assert new dojo has same settings as one forked from
+
+    assert_equal({@paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, @git.log)
+    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -226,22 +219,18 @@ class ForkerControllerTest < IntegrationTest
   test "when id,language,avatar,tag all ok " +
        "the fork works " +
        "and new dojo's id is returned" do
-    thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = SpyGit.new
-    thread[:runner] = runner = SpyRunner.new
-    paas = Paas.new(disk, git, runner)
-    dojo = Dojo.new(paas, root_path, 'json')
+    setup_dojo
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
-    kata = dojo.katas[id]
-    paas.dir(kata).spy_read('manifest.rb', { :language => language_name })
-    language = dojo.languages[language_name]
-    paas.dir(language).spy_read('manifest.json', {
+    kata = @dojo.katas[id]
+    @paas.dir(kata).spy_read('manifest.rb', { :language => language_name })
+    language = @dojo.languages[language_name]
+    @paas.dir(language).spy_read('manifest.json', {
         'unit_test_framework' => 'fake'
       })
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    paas.dir(avatar).spy_read('increments.rb', [
+    @paas.dir(avatar).spy_read('increments.rb', [
       {
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],
@@ -265,11 +254,12 @@ class ForkerControllerTest < IntegrationTest
     assert_not_nil json['id'], json.inspect
     assert_equal 10, json['id'].length
     assert_not_equal id, json['id']
-    assert dojo.katas[json['id']].exists?
-    # need to be able to properly stub in SpyGit so I can return manifest
-    # and assert new dojo has same settings as one forked from
-    assert_equal({paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, git.log)
-    disk.teardown
+    assert @dojo.katas[json['id']].exists?
+
+    # TODO: assert new dojo has same settings as one forked from
+
+    assert_equal({@paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, @git.log)
+    @disk.teardown
   end
 
 end

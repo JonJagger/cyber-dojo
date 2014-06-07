@@ -10,7 +10,7 @@ class SpyDisk
   attr_reader :symlink_log
 
   def teardown
-    @dir_spies.each { |dir,spy| spy.teardown }
+    @dir_spies.each { |_dir,spy| spy.teardown }
   end
 
   def dir_separator
@@ -18,7 +18,7 @@ class SpyDisk
   end
 
   def is_dir?(name)
-    @dir_spies[name + '/']
+    @dir_spies[name + '/'] != nil
   end
 
   def dirs_each(from)
