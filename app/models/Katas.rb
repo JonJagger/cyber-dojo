@@ -1,9 +1,4 @@
 
-# Designed to allow...
-#
-# o) dojo.katas[id] to access a specific kata
-# o) dojo.katas.each to iterate through a dojo's katas
-
 class Katas
   include Enumerable
 
@@ -14,12 +9,14 @@ class Katas
   attr_reader :dojo
 
   def each
+    # dojo.katas.each
     paas.katas_each(self) do |id|
       yield self[id]
     end
   end
 
   def [](id)
+    # dojo.katas[id]
     Kata.new(dojo,id)
   end
 

@@ -1,9 +1,4 @@
 
-# Designed to allow...
-#
-# o) avatar.lights[6] to access a specific light
-# o) avatar.lights.each to iterate through an avatar's lights
-
 class Lights
   include Enumerable
 
@@ -14,10 +9,12 @@ class Lights
   attr_reader :avatar
 
   def each
+    # avatar.lights.each
     lights.each_with_index { |light,n| yield self[n,light] if block_given? }
   end
 
   def [](n, light = nil)
+    # avatar.lights[6]
     Light.new(avatar, light || lights[n])
   end
 
@@ -59,9 +56,3 @@ private
   end
 
 end
-
-# Note: Working towards a model where tag commits
-# occur for events between traffic-lights
-# (eg new/rename/delete a file).
-# avatar.lights[n]   gives you the tag for the nth traffic light
-# avatar.tags[n]     gives you the nth tag which may not be a traffic-light.

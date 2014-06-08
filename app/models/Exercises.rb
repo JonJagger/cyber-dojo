@@ -1,9 +1,4 @@
 
-# Designed to allow...
-#
-# o) dojo.exercises['name'] to access a specific exercise
-# o) dojo.exercises.each to iterate through a dojo's exercises
-
 class Exercises
   include Enumerable
 
@@ -14,10 +9,12 @@ class Exercises
   attr_reader :dojo
 
   def each
+    # dojo.exercises.each
     paas.all_exercises(self).each { |name| yield self[name] }
   end
 
   def [](name)
+    # dojo.exercises['name']
     Exercise.new(dojo, name)
   end
 
