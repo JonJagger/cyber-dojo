@@ -14,12 +14,12 @@ $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 * Install all the necessary gems and [docker](https://www.docker.io/)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
-$ ruby setup_docker_server.rb ..
+$ ./setup_docker_server.rb
 ```
 * Install all the languages' docker containers
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
-$ ruby docker_pull_all.rb ..
+$ ./docker_pull_all.rb
 ```
 
 
@@ -78,8 +78,8 @@ for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
 Alternatively, you can pull them all (this will take a while)
 ```bash
-$ cd /var/www/cyberdojo/
-$ ruby admin_scripts/docker_pull_all.rb .
+$ cd /var/www/cyberdojo/admin_scripts
+$ ./docker_pull_all.rb 
 ```
 
 

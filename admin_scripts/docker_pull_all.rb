@@ -2,11 +2,7 @@
 
 require 'json'
 
-CYBER_DOJO_ROOT_DIR = ARGV[0]
-if CYBER_DOJO_ROOT_DIR === nil
-  puts "docker_pull_all.rb [root-dir]"
-  exit
-end
+CYBER_DOJO_ROOT_DIR = ARGV[0] || '/var/www/cyberdojo'
 
 image_names = [ ]
 Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/manifest.json") do |file|
