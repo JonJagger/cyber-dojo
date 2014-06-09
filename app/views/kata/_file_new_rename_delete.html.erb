@@ -4,7 +4,6 @@
 $(function() {
 
   var fileButtons =  $('#file-operations');
-  var expired = <%= @kata.expired? %>;
 
   fileButtons.find('#new')
     .click(function() { cd.newFile($(this).data('title')); });
