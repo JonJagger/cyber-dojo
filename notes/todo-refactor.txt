@@ -1,5 +1,28 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  paas.start_avatar
+     copy visible_filenames
+        # this could also be replaced by
+        # kata.language.visible_filenames.each do |filename|
+        #   from = path(kata.language) + filename
+        #     to = path(avatar.sandbox) + filename
+        #   `cp #{from} #{to}`
+        #   git_add(avatar.sandbox, filename)
+        # end
+        # But this would be impossible to mock.
+        # It's too imperative.
+        # I need to tell the language to copy it visible_files
+        # to a given folder (which it is passed) which it
+        # does not know is the folder for an avatar's sandbox.
+        # This will also remove the dependency on content here.
+    copy support_filenames
+        # doing a `cp #{from} #{to}` here would mean that
+        # once the kata was created it was no longer dependent
+        # on the language still being available...
+        # Howewever, it would increase the size of .tar.gz files
+        # that would get xfer'd to a readonly server.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   a fork-controller test is failing.
   the one checking for bad tags.
   it seems the increments.json manifest is not being read?!

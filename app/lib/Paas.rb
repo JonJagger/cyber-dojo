@@ -66,7 +66,7 @@ class Paas
 
       kata.language.support_filenames.each do |filename|
         from = path(kata.language) + filename
-        to = path(avatar.sandbox) + filename
+          to = path(avatar.sandbox) + filename
         symlink(from, to)
       end
 
