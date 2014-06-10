@@ -2,14 +2,14 @@
 SILENCE = @
 
 #---- Outputs ----#
-COMPONENT_NAME = Untitled
+COMPONENT_NAME = Hiker
 
 #--- Inputs ----#
 PROJECT_HOME_DIR = .
 
-SRC_FILES = Untitled.cpp
+SRC_FILES = Hiker.cpp
 
-TEST_SRC_FILES = AllTests.cpp UntitledTest.cpp
+TEST_SRC_FILES = AllTests.cpp HikerTest.cpp
 
 INCLUDE_DIRS =\
 	.\
