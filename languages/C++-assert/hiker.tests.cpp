@@ -9,6 +9,6 @@ static void life_the_universe_and_everthing()
 
 int main()
 {
-    life_the_universe_everthing();
+    life_the_universe_and_everthing();
     std::cout << "All tests passed";
 }
