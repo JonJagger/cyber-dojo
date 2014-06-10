@@ -1,7 +1,6 @@
-#include "untitled.h"
+#include "unnamed.h"
 
 int hhg(void)
 {
     return 42;
 }
-

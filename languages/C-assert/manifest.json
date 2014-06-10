@@ -1,10 +1,10 @@
 
 {
   "visible_filenames": [
-     "untitled.c",
-     "untitled.h",
+     "unnamed.c",
+     "unnamed.h",
      "makefile",
-     "untitled.tests.c",
+     "unnamed.tests.c",
      "cyber-dojo.sh"
   ],
   "filename_extension" : ".c",
