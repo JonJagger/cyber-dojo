@@ -57,7 +57,7 @@ class ForkerControllerTest < IntegrationTest
     language = @dojo.languages['does-not-exist']
     id = '1234512345'
     kata = @dojo.katas[id]
-    @paas.dir(kata).spy_read('manifest.rb', { :language => language.name })
+    @paas.dir(kata).spy_read('manifest.json', { :language => language.name })
 
     get "forker/fork",
       :format => :json,
@@ -172,6 +172,7 @@ class ForkerControllerTest < IntegrationTest
     new_language_name = 'C#-NUnit'
 
     #TODO: change this to use json format?
+
     @paas.dir(kata).spy_read('manifest.rb', {
       :language => old_language_name
     })
