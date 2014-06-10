@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+42 should be in the test.
+6*9 should be in the code.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 untitled.* filenames are better as unnamed.* filenames
 or noname.* filenames
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
