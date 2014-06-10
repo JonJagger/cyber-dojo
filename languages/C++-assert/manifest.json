@@ -1,9 +1,9 @@
 
 {
   "visible_filenames": [
-    "unnamed.cpp",
-    "unnamed.tests.cpp",
-    "unnamed.hpp",
+    "hiker.tests.cpp",
+    "hiker.cpp",
+    "hiker.hpp",
     "makefile",
     "cyber-dojo.sh"
   ],
