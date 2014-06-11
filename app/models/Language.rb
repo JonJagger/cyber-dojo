@@ -9,7 +9,7 @@ class Language
   attr_reader :dojo, :name
 
   def exists?
-    paas.exists?(self, manifest_filename)
+    dir.exists?(manifest_filename)
   end
 
   def runnable?
@@ -127,8 +127,12 @@ class Language
 private
 
   def read(filename)
-    raw = paas.read(self, filename)
+    raw = dir.read(filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+  end
+
+  def dir
+    dojo.paas.dir(self)
   end
 
   def paas

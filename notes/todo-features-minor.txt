@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Avatar should be passed block that can determine the colour
+of test output so that it can create its own traffic light.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 42 should be in the test.
 6*9 should be in the code.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

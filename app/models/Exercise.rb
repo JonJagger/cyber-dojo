@@ -8,17 +8,17 @@ class Exercise
   attr_reader :dojo, :name
 
   def exists?
-    paas.exists?(self, instructions_filename)
+    dir.exists?(instructions_filename)
   end
 
   def instructions
-    paas.read(self, instructions_filename)
+    dir.read(instructions_filename)
   end
 
 private
 
-  def paas
-    dojo.paas
+  def dir
+    dojo.paas.dir(self)
   end
 
   def instructions_filename

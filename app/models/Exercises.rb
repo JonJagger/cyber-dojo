@@ -10,7 +10,7 @@ class Exercises
 
   def each
     # dojo.exercises.each
-    paas.dir(self).each { |name| yield self[name] if self[name].exists? }
+    dir.each { |name| yield self[name] if self[name].exists? }
   end
 
   def [](name)
@@ -20,8 +20,8 @@ class Exercises
 
 private
 
-  def paas
-    dojo.paas
+  def dir
+    dojo.paas.dir(self)
   end
 
 end
