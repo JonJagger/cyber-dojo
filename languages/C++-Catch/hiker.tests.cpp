@@ -4,5 +4,6 @@
 
 TEST_CASE( "Life the universe and everything", "[hhgttg]" )
 {
+    // a simple example to start you off
     REQUIRE( answer() == 42 );
 }

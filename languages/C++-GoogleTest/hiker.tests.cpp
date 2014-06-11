@@ -5,5 +5,6 @@ using namespace ::testing;
 
 TEST(HikerTest, Life_the_universe_and_everything)
 {
+    // a simple example to start you off
     ASSERT_EQ(42, answer());
 }

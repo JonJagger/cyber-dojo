@@ -4,6 +4,7 @@
 
 static void life_the_universe_and_everthing()
 {
+    // a simple example to start you off
     assert(answer() == 42);
 }
 

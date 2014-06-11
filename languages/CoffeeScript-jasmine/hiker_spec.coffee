@@ -3,5 +3,5 @@ imports = require './hiker'
 describe 'jasmine-node', ->
 
   it 'life the universe and everything', ->
-    hiker = new imports.Hiker()
-    expect(hiker.answer()).toEqual 42
+    douglas = new imports.Hiker()
+    expect(douglas.answer()).toEqual 42
