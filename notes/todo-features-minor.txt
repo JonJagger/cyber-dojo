@@ -7,7 +7,7 @@ of test output so that it can create its own traffic light.
 6*9 should be in the code.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 untitled.* filenames are better as unnamed.* filenames
-or noname.* filenames
+or noname.* filenames or hiker.*
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOW DO I FORK FROM AN EXPIRED DOJO?
   cant enter/re-enter

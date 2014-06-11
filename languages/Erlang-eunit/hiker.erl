@@ -1,6 +1,5 @@
--module(untitled).
+-module(hiker).
 -export([answer/0]).
 
 answer() ->
-  42.
-
+  6 * 9.

@@ -1,8 +1,8 @@
 
 {
   "visible_filenames": [
-    "untitled.erl",
-    "untitled_tests.erl",
+    "hiker_tests.erl",
+    "hiker.erl",
     "cyber-dojo.sh",
     "Makefile"
   ],
