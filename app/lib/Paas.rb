@@ -78,11 +78,7 @@ class Paas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def all_languages(languages)
-    @disk[path(languages)].select{ |name| languages[name].exists? }
-  end
-
-  def all_exercises(exercises)
-    @disk[path(exercises)].select{ |name| exercises[name].exists? }
+    dir(languages).select{ |name| languages[name].exists? }
   end
 
   def katas_each(katas)
@@ -101,7 +97,7 @@ class Paas
   end
 
   def all_avatars(kata)
-    @disk[path(kata)].select{ |name| kata.avatars[name].exists? }
+    dir(kata).select{ |name| kata.avatars[name].exists? }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
