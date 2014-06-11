@@ -10,7 +10,7 @@ class Languages
 
   def each
     # dojo.languages.each
-    paas.all_languages(self).each { |name| yield self[name] }
+    paas.dir(self).each { |name| yield self[name] if self[name].exists? }
   end
 
   def [](name)

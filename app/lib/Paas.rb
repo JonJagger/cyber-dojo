@@ -77,10 +77,6 @@ class Paas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def all_languages(languages)
-    dir(languages).select{ |name| languages[name].exists? }
-  end
-
   def katas_each(katas)
     pathed = path(katas)
     @disk[pathed].each do |outer_dir|
