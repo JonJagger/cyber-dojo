@@ -1,9 +1,9 @@
 
 {
   "visible_filenames": [
-    "untitled.rb",
-    "untitled.feature",
-    "untitled_stepdefs.rb",
+    "hiker.feature",
+    "hiker_stepdefs.rb",
+    "hiker.rb",
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".rb",

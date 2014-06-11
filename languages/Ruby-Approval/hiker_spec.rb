@@ -1,13 +1,13 @@
 require './spec_helper'
 
-require './untitled'
+require './hiker'
 
-describe "untitled" do
+describe "hiker" do
   subject do
     answer
   end
-  
-  context "sums" do
+
+  context "life the universe and everything" do
     it "has answer" do
       verify do
         subject

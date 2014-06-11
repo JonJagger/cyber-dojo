@@ -1,4 +1,4 @@
 
 def answer
-  42
+  6 * 9
 end
