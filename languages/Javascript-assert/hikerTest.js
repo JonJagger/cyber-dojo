@@ -1,7 +1,7 @@
-require('./untitled.js');
+require('./hiker.js');
 
 assert = require('assert');
 
-assert.equal( answer(), 6*9 );
+assert.equal( answer(), 42 );
 
 console.log('All tests passed');

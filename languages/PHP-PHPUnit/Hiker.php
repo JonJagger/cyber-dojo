@@ -2,8 +2,7 @@
 
 function answer()
 {
-    return 42;
+    return 6 * 9;
 }
 
 ?>
-
