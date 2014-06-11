@@ -1,10 +1,4 @@
 
-# Designed to allow...
-#
-# o) kata.avatars['lion'] to access a specific avatar in a kata
-# o) kata.avatars.each   to iterate through a kata's started avatars
-# o) kata.avatars.active.each to iterate through a kata's active avatars
-
 class Avatars
   include Enumerable
 
@@ -23,19 +17,22 @@ class Avatars
   end
 
   def each
+    # kata.avatars.each
     paas.all_avatars(@kata).each { |name| yield self[name] if block_given? }
   end
 
+  def active
+    # kata.avatars.active
+    self.select{|avatar| avatar.active?}
+  end
+
   def [](name)
+    # kata.avatars['lion']
     Avatar.new(@kata, name)
   end
 
   def length
     each.entries.length
-  end
-
-  def active
-    self.select{|avatar| avatar.active?}
   end
 
 private
