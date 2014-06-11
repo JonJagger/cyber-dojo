@@ -2,15 +2,15 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class UntitledTest {
+public class HikerTest {
 
     @Test
-    public void hitch_hiker() {
-        UntitledHelper mock = mock(UntitledHelper.class);
-        Untitled target = new Untitled(mock);
+    public void life_the_universe_and_everything() {
+        HikerHelper mock = mock(HikerHelper.class);
+        Hiker douglas = new Hiker(mock);
         int expected = 42;
         when(mock.answer()).thenReturn(6 * 9);
-        int actual = target.answer();
+        int actual = douglas.answer();
         assertEquals(expected, actual);
     }
 }

@@ -1,10 +1,10 @@
 
 {
   "visible_filenames": [
-    "Untitled.java",
-    "UntitledTest.java",
+    "Hiker.java",
+    "HikerTest.java",
     "cyber-dojo.sh",
-    "UntitledTest.hitch_hiker.approved.txt"
+    "HikerTest.life_the_universe_and_everything.approved.txt"
   ],
   "support_filenames": [
     "junit-4.11.jar",

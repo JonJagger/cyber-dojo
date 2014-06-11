@@ -6,11 +6,11 @@ import org.approvaltests.reporters.UseReporter;
 import org.approvaltests.reporters.JunitReporter;
 
 @UseReporter(JunitReporter.class)
-public class UntitledTest {
-    
+public class HikerTest {
+
     @Test
-    public void hitch_hiker() throws Exception {
-        int actual = Untitled.answer();
+    public void life_the_universe_everything() throws Exception {
+        int actual = Hiker.answer();
         Approvals.verify("" + actual);
     }
 }

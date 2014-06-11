@@ -1,9 +1,9 @@
 
 {
   "visible_filenames": [
-    "Untitled.java",
-    "UntitledTest.java",
-    "UntitledHelper.java",
+    "HikerTest.java",
+    "Hiker.java",
+    "HikerHelper.java",
     "cyber-dojo.sh"
   ],
   "support_filenames": [

@@ -1,7 +1,7 @@
 
-public class Untitled {
+public class Hiker {
 
-    public Untitled(UntitledHelper helper) {
+    public Hiker(HikerHelper helper) {
         this.helper = helper;
     }
 
@@ -9,5 +9,5 @@ public class Untitled {
         return helper.answer();
     }
 
-    private UntitledHelper helper;
+    private HikerHelper helper;
 }
