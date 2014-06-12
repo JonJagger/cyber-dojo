@@ -7,7 +7,7 @@ class DummyRunner
     false
   end
 
-  def run(paas, sandbox, command, max_seconds)
+  def run(sandbox, command, max_seconds)
     ""
   end
 

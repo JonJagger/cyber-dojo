@@ -10,15 +10,15 @@ class DockerRunner
     @installed.include?(language.image_name)
   end
 
-  def run(paas, sandbox, command, max_seconds)
+  def run(sandbox, command, max_seconds)
     inner_command = "timeout --signal=#{kill} #{max_seconds}s #{stderr2stdout(command)}"
     language = sandbox.avatar.kata.language
     outer_command =
       "docker run" +
         " -u root" +
         " --rm" +
-        " -v #{paas.path(sandbox)}:/sandbox:#{read_write}" +
-        " -v #{paas.path(language)}:#{paas.path(language)}:#{read_only}" +
+        " -v #{sandbox.path}:/sandbox:#{read_write}" +
+        " -v #{language.path}:#{language.path}:#{read_only}" +
         " -w /sandbox" +
         " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 
@@ -64,8 +64,8 @@ end
 # docker run
 #    " -u root" +
 #    " --rm" +
-#    " -v #{paas.path(sandbox)}:/sandbox:#{read_write}" +
-#    " -v #{paas.path(language)}:#{paas.path(language)}:#{read_only}" +
+#    " -v #{sandbox.path}:/sandbox:#{read_write}" +
+#    " -v #{language.path}:#{language.path}:#{read_only}" +
 #    " -w /sandbox" +
 #    " #{language.image_name} /bin/bash -c \"#{inner_command}\""
 #
@@ -78,11 +78,11 @@ end
 #   in the output produced. All files are saved and gitted off the
 #   /katas sub-folder on the main server and not into the container.
 #
-# -v #{paas.path(sandbox)}:/sandbox:#{read_write}
+# -v #{sandbox.path}:/sandbox:#{read_write}
 #   volume mount the animal's sandbox to /sandbox inside the container
 #   as a read-write folder. This provides isolation.
 #
-# -v #{paas.path(language)}:#{paas.path(language)}:#{read_only}
+# -v #{language.path}:#{language.path}:#{read_only}
 #   volume mount the language's folder to the same folder path+name
 #   inside the container. Intermediate folders are created as necessary
 #   (like mkdir -p). This provides access to supporting files which

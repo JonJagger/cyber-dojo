@@ -157,7 +157,7 @@ class Paas
   end
 
   def run(sandbox, command, max_duration)
-    @runner.run(self, sandbox, command, max_duration)
+    @runner.run(sandbox, command, max_duration)
   end
 
 end

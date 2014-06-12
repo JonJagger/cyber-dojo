@@ -1,7 +1,8 @@
 
 # Runner that runs directly on the host server
-# (of Docker not installed at CYBERDOJO_USE_HOST is set)
+# (if Docker not installed and CYBERDOJO_USE_HOST is set)
 # $ export CYBERDOJO_USE_HOST=true
+#
 # No isolation/protection/security, nothing.
 # See DockerRunner.rb
 
@@ -11,12 +12,8 @@ class HostRunner
     true
   end
 
-  def run(paas, sandbox, command, max_seconds)
-    path = sandbox.path
-    pipe_run("cd '#{path}';" + stderr2stdout(command), max_seconds)
-  end
-
-  def pipe_run(command, max_seconds)
+  def run(sandbox, command, max_seconds)
+    command = "cd '#{sandbox.path}';" + stderr2stdout(command)
     pipe = IO::popen(command)
     output = ""
     sandbox_thread = Thread.new { output += pipe.read }

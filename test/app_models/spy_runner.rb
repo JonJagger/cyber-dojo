@@ -11,7 +11,7 @@ class SpyRunner
     true
   end
 
-  def run(paas, sandbox, command, max_duration)
+  def run(sandbox, command, max_duration)
     @log << ("cd '#{sandbox.path}';" + command)
     'stubbed-output'
   end
