@@ -7,6 +7,10 @@ class Exercise
 
   attr_reader :dojo, :name
 
+  def path
+    dojo.exercises.path + name + '/'
+  end
+
   def exists?
     dir.exists?(instructions_filename)
   end

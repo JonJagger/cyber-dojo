@@ -8,6 +8,10 @@ class Exercises
 
   attr_reader :dojo
 
+  def path
+    dojo.path + 'exercises/'
+  end
+
   def each
     # dojo.exercises.each
     dir.each { |name| yield self[name] if self[name].exists? }

@@ -7,6 +7,10 @@ class Kata
 
   attr_reader :dojo
 
+  def path
+    dojo.katas.path + id.inner + '/' + id.outer + '/'
+  end
+
   def exists?
     id.valid? && paas.exists?(self)
   end

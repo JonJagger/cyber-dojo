@@ -8,6 +8,10 @@ class Language
 
   attr_reader :dojo, :name
 
+  def path
+    dojo.languages.path + name + '/'
+  end
+
   def exists?
     dir.exists?(manifest_filename)
   end

@@ -165,21 +165,21 @@ class Paas
   def path(obj)
     case obj
       when Languages
-        root(obj.dojo) + 'languages/'
+        obj.path
       when Language
-        path(obj.dojo.languages) + obj.name + '/'
+        obj.path
       when Exercises
-        root(obj.dojo) + 'exercises/'
+        obj.path
       when Exercise
-        path(obj.dojo.exercises) + obj.name + '/'
+        obj.path
       when Katas
-        root(obj.dojo) + 'katas/'
+        obj.path
       when Kata
-        path(obj.dojo.katas) + obj.id.inner + '/' + obj.id.outer + '/'
+        obj.path
       when Avatar
-        path(obj.kata) + obj.name + '/'
+        obj.path
       when Sandbox
-        path(obj.avatar) + 'sandbox/'
+        obj.path
     end
   end
 

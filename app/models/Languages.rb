@@ -8,6 +8,10 @@ class Languages
 
   attr_reader :dojo
 
+  def path
+    dojo.path + 'languages/'
+  end
+
   def each
     # dojo.languages.each
     dir.each { |name| yield self[name] if self[name].exists? }

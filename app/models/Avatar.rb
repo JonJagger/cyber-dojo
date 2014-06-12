@@ -11,6 +11,10 @@ class Avatar
 
   def_delegators :kata, :format
 
+  def path
+    kata.path + name + '/'
+  end
+
   def exists?
     Avatars.names.include?(name) && paas.exists?(self)
   end

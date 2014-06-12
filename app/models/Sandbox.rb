@@ -7,6 +7,10 @@ class Sandbox
 
   attr_reader :avatar
 
+  def path
+    avatar.path + 'sandbox/'
+  end
+
   def write(filename, content)
     paas.write(self, filename, content)
   end

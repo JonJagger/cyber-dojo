@@ -8,6 +8,10 @@ class Katas
 
   attr_reader :dojo
 
+  def path
+    dojo.path + 'katas/'
+  end
+
   def each
     # dojo.katas.each
     paas.katas_each(self) do |id|
