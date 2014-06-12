@@ -9,7 +9,7 @@ public class HikerTest {
         HikerHelper mock = mock(HikerHelper.class);
         Hiker douglas = new Hiker(mock);
         int expected = 42;
-        when(mock.answer()).thenReturn(6 * 9);
+        when(mock.multiplier()).thenReturn(9);
         int actual = douglas.answer();
         assertEquals(expected, actual);
     }

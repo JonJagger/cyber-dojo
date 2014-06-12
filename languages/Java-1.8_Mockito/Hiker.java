@@ -6,7 +6,7 @@ public class Hiker {
     }
 
     public int answer() {
-        return helper.answer();
+        return 6 * helper.multiplier();
     }
 
     private HikerHelper helper;
