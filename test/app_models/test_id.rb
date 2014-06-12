@@ -58,7 +58,7 @@ class IdTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "id contains only 0-9 and A-E chars" do
-    (0..20).each do |n|
+    (0..5).each do |n|
       id = Id.new.to_s
       id.chars.each do |char|
         assert "0123456789ABCDEF".include?(char),

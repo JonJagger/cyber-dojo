@@ -17,8 +17,8 @@ class KatasTests < ModelTestCase
     setup
     kata1 = make_kata
     kata2 = make_kata
-    #THIS FAILS.... ????
-    #assert_equal [kata1.id.to_s,kata2.id.to_s].sort, @dojo.katas.map{|kata| kata.id.to_s}.sort
+    ids = @dojo.katas.map{|kata| kata.id.to_s.gsub('/','') }
+    assert_equal [kata1.id.to_s,kata2.id.to_s].sort, ids.sort
   end
 
 end

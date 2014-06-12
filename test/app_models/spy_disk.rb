@@ -18,7 +18,7 @@ class SpyDisk
   end
 
   def is_dir?(name)
-    @dir_spies[name + '/'] != nil
+    @dir_spies.any? { |dir,_spy| dir.start_with?(name) }
   end
 
   def dirs_each(from)
