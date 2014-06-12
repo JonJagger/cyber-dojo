@@ -22,7 +22,7 @@ class PaasTests < ModelTestCase
   test 'path(exercise)' do
     json_and_rb do
       exercise = @dojo.exercises['test_Yahtzee']
-      assert @paas.path(exercise).match(exercise.name)
+      assert exercise.path.match(exercise.name)
       assert path_ends_in_slash?(exercise)
       assert !path_has_adjacent_separators?(exercise)
       assert path_includes_dojo_path?(exercise)
@@ -34,7 +34,7 @@ class PaasTests < ModelTestCase
   test 'path(language)' do
     json_and_rb do
       language = @dojo.languages['Ruby']
-      assert @paas.path(language).match(language.name)
+      assert language.path.match(language.name)
       assert path_ends_in_slash?(language)
       assert !path_has_adjacent_separators?(language)
       assert path_includes_dojo_path?(language)
@@ -46,8 +46,8 @@ class PaasTests < ModelTestCase
   test 'path(kata)' do
     json_and_rb do
       kata = @dojo.katas[id]
-      assert @paas.path(kata).include?(kata.id.inner)
-      assert @paas.path(kata).include?(kata.id.outer)
+      assert kata.path.include?(kata.id.inner)
+      assert kata.path.include?(kata.id.outer)
       assert path_ends_in_slash?(kata)
       assert !path_has_adjacent_separators?(kata)
       assert path_includes_dojo_path?(kata)
@@ -90,7 +90,7 @@ class PaasTests < ModelTestCase
       assert path_ends_in_slash?(sandbox)
       assert !path_has_adjacent_separators?(sandbox)
       assert path_includes_dojo_path?(avatar)
-      assert @paas.path(sandbox).include?('sandbox')
+      assert sandbox.path.include?('sandbox')
     end
   end
 
@@ -119,16 +119,16 @@ class PaasTests < ModelTestCase
   end
 
   def path_ends_in_slash?(object)
-    @paas.path(object).end_with?(@disk.dir_separator)
+    object.path.end_with?(@disk.dir_separator)
   end
 
   def path_has_adjacent_separators?(object)
     doubled_separator = @disk.dir_separator * 2
-    @paas.path(object).scan(doubled_separator).length > 0
+    object.path.scan(doubled_separator).length > 0
   end
 
   def path_includes_dojo_path?(object)
-    @paas.path(object).include?(@dojo.path)
+    object.path.include?(@dojo.path)
   end
 
 end

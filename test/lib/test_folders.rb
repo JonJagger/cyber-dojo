@@ -13,13 +13,13 @@ class FoldersTests < ActionController::TestCase
     @runner = HostRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
-    `rm -rf #{@paas.path(@dojo.katas)}`
+    `rm -rf #{@dojo.katas.path}`
   end
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
   test 'test languages folder does not contain . or ..' do
-    folders = Folders::in(@dojo.path + 'languages')
+    folders = Folders::in(@dojo.path. + 'languages')
     assert_equal 0, folders.count('.')
     assert_equal 0, folders.count('..')
   end

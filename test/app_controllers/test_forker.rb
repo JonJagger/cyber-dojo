@@ -211,7 +211,7 @@ class ForkerControllerTest < IntegrationTest
 
     # TODO: assert new dojo has same settings as one forked from
 
-    assert_equal({@paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, @git.log)
+    assert_equal({avatar.path => [ ["show", "2:manifest.rb"]]}, @git.log)
     @disk.teardown
   end
 
@@ -259,7 +259,7 @@ class ForkerControllerTest < IntegrationTest
 
     # TODO: assert new dojo has same settings as one forked from
 
-    assert_equal({@paas.path(avatar) => [ ["show", "2:manifest.rb"]]}, @git.log)
+    assert_equal({avatar.path => [ ["show", "2:manifest.rb"]]}, @git.log)
     @disk.teardown
   end
 

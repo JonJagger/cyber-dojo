@@ -12,8 +12,7 @@ class SpyRunner
   end
 
   def run(paas, sandbox, command, max_duration)
-    path = paas.path(sandbox)
-    @log << ("cd '#{path}';" + command)
+    @log << ("cd '#{sandbox.path}';" + command)
     'stubbed-output'
   end
 

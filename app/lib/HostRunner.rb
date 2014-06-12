@@ -12,7 +12,7 @@ class HostRunner
   end
 
   def run(paas, sandbox, command, max_seconds)
-    path = paas.path(sandbox)
+    path = sandbox.path
     pipe_run("cd '#{path}';" + stderr2stdout(command), max_seconds)
   end
 

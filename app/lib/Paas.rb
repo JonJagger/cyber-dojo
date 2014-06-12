@@ -65,8 +65,8 @@ class Paas
       end
 
       kata.language.support_filenames.each do |filename|
-        from = path(kata.language) + filename
-          to = path(avatar.sandbox) + filename
+        from = kata.language.path + filename
+          to = avatar.sandbox.path + filename
         symlink(from, to)
       end
 
@@ -78,7 +78,7 @@ class Paas
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def katas_each(katas)
-    pathed = path(katas)
+    pathed = katas.path
     @disk[pathed].each do |outer_dir|
       outer_path = File.join(pathed, outer_dir)
       if @disk.is_dir?(outer_path)
@@ -116,38 +116,38 @@ class Paas
     @disk.symlink(from, to)
   end
 
-  def dir(obj)
-    @disk[path(obj)]
+  def dir(object)
+    @disk[object.path]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def git_init(object, args)
-    @git.init(path(object), args)
+    @git.init(object.path, args)
   end
 
   def git_add(object, filename)
-    @git.add(path(object), filename)
+    @git.add(object.path, filename)
   end
 
   def git_rm(object, filename)
-    @git.rm(path(object), filename)
+    @git.rm(object.path, filename)
   end
 
   def git_commit(object, args)
-    @git.commit(path(object), args)
+    @git.commit(object.path, args)
   end
 
   def git_tag(object, args)
-    @git.tag(path(object), args)
+    @git.tag(object.path, args)
   end
 
   def git_diff(object, args)
-    @git.diff(path(object), args)
+    @git.diff(object.path, args)
   end
 
   def git_show(object, args)
-    @git.show(path(object), args)
+    @git.show(object.path, args)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
@@ -162,29 +162,12 @@ class Paas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def path(obj)
-    case obj
-      when Languages
-        obj.path
-      when Language
-        obj.path
-      when Exercises
-        obj.path
-      when Exercise
-        obj.path
-      when Katas
-        obj.path
-      when Kata
-        obj.path
-      when Avatar
-        obj.path
-      when Sandbox
-        obj.path
-    end
-  end
+  #def path(obj)
+  #  obj.path
+  #end
 
-  def root(dojo)
-    dojo.path
-  end
+  #def root(dojo)
+  #  dojo.path
+  #end
 
 end

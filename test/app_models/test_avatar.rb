@@ -146,8 +146,8 @@ class AvatarTests < ModelTestCase
 
       expected_symlink = [
         'symlink',
-        @paas.path(language) + support_filename,
-        @paas.path(sandbox) + support_filename
+        language.path + support_filename,
+        sandbox.path + support_filename
       ]
       assert @disk.symlink_log.include?(expected_symlink), @disk.symlink_log.inspect
     end
@@ -252,7 +252,7 @@ class AvatarTests < ModelTestCase
       avatar.save(delta, visible_files)
       saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
       assert_equal delta[:new].sort, saved_filenames.sort
-      git_log = @git.log[@paas.path(sandbox)]
+      git_log = @git.log[sandbox.path]
       assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
     end
   end
@@ -278,7 +278,7 @@ class AvatarTests < ModelTestCase
       saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
       assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 
-      git_log = @git.log[@paas.path(sandbox)]
+      git_log = @git.log[sandbox.path]
       assert git_log.include?([ 'rm', 'wibble.cs' ]), git_log.inspect
     end
   end
