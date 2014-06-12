@@ -6,7 +6,7 @@
 # No isolation/protection/security, nothing.
 # See DockerRunner.rb
 
-class HostRunner
+class HostRunner < TestRunner
 
   def runnable?(language)
     true
@@ -50,17 +50,6 @@ private
     pid_map.each{ |pid,ppid| descendants[ppid] << descendants[pid] }
     # Flatten away the generations
     descendants[base].flatten - [base]
-  end
-
-  def didnt_complete(max_seconds)
-    "Unable to complete the tests in #{max_seconds} seconds.\n" +
-    "Is there an accidental infinite loop? (unlikely)\n" +
-    "Is the server very busy? (more likely)\n" +
-    "Please try again."
-  end
-
-  def stderr2stdout(cmd)
-    cmd + ' 2>&1'
   end
 
 end

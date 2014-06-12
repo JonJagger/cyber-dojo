@@ -2,7 +2,7 @@
 # runner providing some isolation/protection/security
 # Uses Docker containers https://www.docker.io/
 
-class DockerRunner
+class DockerRunner < TestRunner
 
   def runnable?(language)
     command = stderr2stdout('docker images')
@@ -32,23 +32,12 @@ class DockerRunner
 
 private
 
-  def stderr2stdout(cmd)
-    cmd + ' 2>&1'
-  end
-
   def fatal_error(signal)
     128 + signal
   end
 
   def kill
     9
-  end
-
-  def didnt_complete(max_seconds)
-    "Unable to complete the tests in #{max_seconds} seconds.\n" +
-    "Is there an accidental infinite loop? (unlikely)\n" +
-    "Is the server very busy? (more likely)\n" +
-    "Please try again."
   end
 
   def read_write
