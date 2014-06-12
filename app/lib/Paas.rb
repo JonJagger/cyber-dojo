@@ -160,14 +160,4 @@ class Paas
     @runner.run(self, sandbox, command, max_duration)
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  #def path(obj)
-  #  obj.path
-  #end
-
-  #def root(dojo)
-  #  dojo.path
-  #end
-
 end
