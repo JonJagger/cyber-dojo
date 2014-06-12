@@ -8,8 +8,13 @@ ip_address = ARGV[0]
 ids = ARGV[1..-1]
 
 ids.each do |id|
-  xfer_cmd = "wget -q -O /var/www/cyberdojo/katas/#{id}.tar.gz http://#{ip_address}/downloader/download/#{id}"
-  untar_cmd = "cd /var/www/cyberdojo/katas; tar -xvf #{id}.tar.gz"
+  puts id
+  tar_filename = "#{id}.tar.gz"
+  folder = "/var/www/cyberdojo/katas"
+  xfer_cmd = "wget -q -O #{folder}/#{tar_filename} http://#{ip_address}/downloader/download/#{id}"
+  untar_cmd = "cd #{folder}; tar -xvf #{id}.tar.gz"
+  rm_cmd = "rm #{folder}/#{tar_filename}"
   `#{xfer_cmd}`
   `#{untar_cmd}`
+  `#{rm_cmd}`
 end
