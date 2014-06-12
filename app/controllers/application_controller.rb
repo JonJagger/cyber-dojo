@@ -1,9 +1,9 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
 require __DIR__ + '/app/lib/Paas'
-require __DIR__ + '/app/lib/DockerRunner'
-require __DIR__ + '/app/lib/DummyRunner'
-require __DIR__ + '/app/lib/HostRunner'
+require __DIR__ + '/app/lib/DockerTestRunner'
+require __DIR__ + '/app/lib/DummyTestRunner'
+require __DIR__ + '/app/lib/HostTestRunner'
 require __DIR__ + '/lib/Folders'
 require __DIR__ + '/lib/Git'
 require __DIR__ + '/lib/OsDisk'
@@ -44,9 +44,9 @@ class ApplicationController < ActionController::Base
 private
 
   def runner
-    return DockerRunner.new if docker?
-    return HostRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
-    return DummyRunner.new
+    return DockerTestRunner.new if docker?
+    return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
+    return DummyTestRunner.new
   end
 
   def docker?

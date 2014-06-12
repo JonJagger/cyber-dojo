@@ -3,19 +3,19 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Git'
-require 'HostRunner'
+require 'HostTestRunner'
 
 class LanguagesTests < ActionController::TestCase
 
   def setup
     disk   = OsDisk.new
     git    = Git.new
-    runner = HostRunner.new
+    runner = HostTestRunner.new
     paas = Paas.new(disk, git, runner)
     @dojo = paas.create_dojo(root_path)
   end
 
-  test "HostRunner says it can run any language" do
+  test "HostTestRunner says it can run any language" do
     languages = @dojo.languages.entries
     actual = languages.map{|language| language.name}.sort
     expected = [

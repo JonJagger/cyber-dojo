@@ -96,7 +96,7 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #test "in HostRunner runnable? returns false when language does not exist" do
+  #test "in HostTestRunner runnable? returns false when language does not exist" do
   #  json_and_rb do |format|
   #    language = @dojo.languages['Java-JUnit']
   #    assert !@paas.runnable?(language)
@@ -105,7 +105,7 @@ class PaasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'in HostRunner runnable? always returns true' do
+  test 'in HostTestRunner runnable? always returns true' do
     json_and_rb do |format|
       language = @dojo.languages['test-Java-JUnit']
       assert @paas.runnable?(language)

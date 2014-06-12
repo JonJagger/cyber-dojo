@@ -3,14 +3,14 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'OsDisk'
 require 'Folders'
-require 'HostRunner'
+require 'HostTestRunner'
 
 class FoldersTests < ActionController::TestCase
 
   def setup
     @disk   = OsDisk.new
     @git    = Git.new
-    @runner = HostRunner.new
+    @runner = HostTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
     `rm -rf #{@dojo.katas.path}`

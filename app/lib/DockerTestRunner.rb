@@ -1,8 +1,12 @@
 
-# runner providing some isolation/protection/security
+# test runner providing some isolation/protection/security
 # Uses Docker containers https://www.docker.io/
 
-class DockerRunner < TestRunner
+__DIR__ = File.dirname(__FILE__)
+
+require __DIR__ + '/TestRunner'
+
+class DockerTestRunner < TestRunner
 
   def runnable?(language)
     command = stderr2stdout('docker images')

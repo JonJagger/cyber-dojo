@@ -389,11 +389,11 @@ class LanguageTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'DockerRunner.runnable?(language) is false ' +
+  test 'DockerTestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
     @disk   = SpyDisk.new
     @git    = SpyGit.new
-    @runner = DockerRunner.new
+    @runner = DockerTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
     ruby = @dojo.languages['Ruby']

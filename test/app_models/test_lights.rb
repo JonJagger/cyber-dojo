@@ -4,14 +4,14 @@ __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + 'test/test_helper'
 require __DIR__ + 'lib/OsDisk'
 require __DIR__ + 'lib/Git'
-require __DIR__ + 'app/lib/HostRunner'
+require __DIR__ + 'app/lib/HostTestRunner'
 
 class LightsTests < ActionController::TestCase
 
   def setup
     @disk   = OsDisk.new
     @git    = Git.new
-    @runner = HostRunner.new
+    @runner = HostTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
     @language = @dojo.languages['test-Java-JUnit']

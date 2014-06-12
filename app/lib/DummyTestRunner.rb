@@ -1,7 +1,11 @@
 
 # Runner that does nothing.
 
-class DummyRunner
+__DIR__ = File.dirname(__FILE__)
+
+require __DIR__ + '/TestRunner'
+
+class DummyTestRunner
 
   def runnable?(language)
     false

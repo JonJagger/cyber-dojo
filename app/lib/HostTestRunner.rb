@@ -1,12 +1,16 @@
 
-# Runner that runs directly on the host server
+# test runner that runs directly on the host server
 # (if Docker not installed and CYBERDOJO_USE_HOST is set)
 # $ export CYBERDOJO_USE_HOST=true
 #
 # No isolation/protection/security, nothing.
-# See DockerRunner.rb
+# See DockerTestRunner.rb
 
-class HostRunner < TestRunner
+__DIR__ = File.dirname(__FILE__)
+
+require __DIR__ + '/TestRunner'
+
+class HostTestRunner < TestRunner
 
   def runnable?(language)
     true

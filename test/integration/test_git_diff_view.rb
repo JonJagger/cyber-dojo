@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'GitDiff'
 require 'OsDisk'
 require 'Git'
-require 'HostRunner'
+require 'HostTestRunner'
 require 'Paas'
 require 'Dojo'
 require 'Languages'
@@ -27,7 +27,7 @@ class GitDiffViewTests < CyberDojoTestBase
     super
     @disk = OsDisk.new
     @git = Git.new
-    @runner = HostRunner.new
+    @runner = HostTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
   end

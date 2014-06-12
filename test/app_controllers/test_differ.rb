@@ -7,7 +7,7 @@ class DifferControllerTest < IntegrationTest
 
   def setup
     super
-    Thread.current[:runner] = HostRunner.new
+    Thread.current[:runner] = HostTestRunner.new
   end
 
   def teardown
@@ -83,7 +83,7 @@ class DifferControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "one line different in one file between successive tags" do
-    Thread.current[:runner] = HostRunner.new
+    Thread.current[:runner] = HostTestRunner.new
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
