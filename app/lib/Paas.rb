@@ -92,10 +92,6 @@ class Paas
     end
   end
 
-  def all_avatars(kata)
-    dir(kata).select{ |name| kata.avatars[name].exists? }
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
   def exists?(object, filename='')

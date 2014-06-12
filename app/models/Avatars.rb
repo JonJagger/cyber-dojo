@@ -18,7 +18,10 @@ class Avatars
 
   def each
     # kata.avatars.each
-    paas.all_avatars(@kata).each { |name| yield self[name] if block_given? }
+    paas.dir(@kata).each do |name|
+      avatar = self[name]
+      yield avatar if avatar.exists? && block_given?
+    end
   end
 
   def active

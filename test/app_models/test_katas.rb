@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class KatasTests < ModelTestCase
 
-  test "dojo.katas[id] returns previously created kata with given id" do
+  test 'dojo.katas[id] returns previously created kata with given id' do
     kata = make_kata
     k = @dojo.katas[kata.id.to_s]
     assert_not_nil k
@@ -13,7 +13,7 @@ class KatasTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - -
 
-  test "dojo.katas.each() returns all currently created katas by forwarding to paas.katas_each()" do
+  test 'dojo.katas.each() returns all currently created katas' do
     setup
     kata1 = make_kata
     kata2 = make_kata
