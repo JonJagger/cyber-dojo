@@ -1,5 +1,5 @@
 
-class Disk
+class Disk # Template Method (make_dir)
 
   def initialize
     @dirs = { }

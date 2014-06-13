@@ -61,9 +61,7 @@ class FakeDir
 private
 
   def assert(truth, message)
-    if !truth
-      raise "FakeDir['#{@dir}'].#{message}"
-    end
+    raise "FakeDir['#{@dir}'].#{message}" if !truth
   end
 
 end

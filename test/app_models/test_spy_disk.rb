@@ -7,13 +7,13 @@ require File.dirname(__FILE__) + '/spy_disk'
 class SpyDiskTests < ActionController::TestCase
 
   test 'each() filters nested sub-folders to the immediate sub-folder only' do
-    disk = SpyDisk.new
     path = 'spied/'
+    disk = SpyDisk.new
     disk[path + 'a']
     disk[path + 'b']
     disk[path + 'b/c']
-    assert_equal ['a','b'], disk['spied'].each.entries.sort
-    assert_equal ['a','b'], disk['spied/'].each.entries.sort
+    assert_equal ['a','b'], disk['spied'].entries.sort
+    assert_equal ['a','b'], disk['spied/'].entries.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - -
@@ -32,7 +32,7 @@ class SpyDiskTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - -
 
   test 'outer is_dir? is true and outer/ is_dir? is true ' +
-       'when outer/inner/ dir exists ' do
+       'when outer/inner/ dir exists (note extra slash)' do
     outer_path = 'outer'
     inner_path = outer_path + '/' + 'inner'
     disk = SpyDisk.new

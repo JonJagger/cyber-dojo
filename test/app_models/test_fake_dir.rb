@@ -14,13 +14,13 @@ class FakeDirTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "path is as set in ctor" do
+  test 'path is as set in ctor' do
     assert_equal @path, @dir.path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists? is false before make is called, true after" do
+  test 'exists? is false before make is called, true after' do
     assert !@dir.exists?
     @dir.make
     assert @dir.exists?
@@ -28,7 +28,7 @@ class FakeDirTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists?(filename) is true after write(filename)" do
+  test 'exists?(filename) is true after write(filename)' do
     filename = 'wibble.hpp'
     @dir.write(filename, '#include <iostream>')
     assert @dir.exists?(filename)
@@ -36,7 +36,7 @@ class FakeDirTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "read(filename) raises if no file exists" do
+  test 'read(filename) raises if no file exists' do
     filename = 'wibble.rb'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
     assert_equal "FakeDir['#{@path}'].read('#{filename}') no file", error.message
@@ -44,16 +44,16 @@ class FakeDirTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "read(filename) returns previous write(filename,content)" do
-    filename = 'readme.txt'
-    content = 'NB:important'
+  test 'read(filename) returns previous write(filename,content)' do
+    filename = 'fable.txt'
+    content = 'once upon a time'
     @dir.write(filename, content)
     assert content, @dir.read(filename)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "read(filename) raises if different filename stubbed" do
+  test 'read(filename) raises if different filename stubbed' do
     @dir.write('wibble.h', '#include <stdio.h>')
     filename = 'wibble.cpp'
     error = assert_raises(RuntimeError) { @dir.read(filename) }
@@ -62,7 +62,7 @@ class FakeDirTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "each filters nested-sub-folders to immediate sub-folder only" do
+  test 'each filters nested-sub-folders to immediate sub-folder only' do
     @disk[@path + 'a']
     @disk[@path + 'b']
     @disk[@path + 'b/c']

@@ -55,8 +55,8 @@ class SpyDirTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'read(filename) returns previous write(filename,content)' do
-    filename = 'readme.txt'
-    content = 'NB:important'
+    filename = 'fable.txt'
+    content = 'once upon a time'
     @dir.write(filename, content)
     assert content, @dir.read(filename)
     content = 'er no its not'
@@ -84,8 +84,8 @@ class SpyDirTests < ActionController::TestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'read(filename) returns content setup in corresponding spy_read()' do
-    filename = 'film.txt'
-    content = 'once upon a time in the west'
+    filename = 'the_princess_bride.txt'
+    content = 'I am not left handed'
     @dir.spy_read(filename, content)
     assert_equal content, @dir.read(filename)
   end
@@ -111,8 +111,8 @@ class SpyDirTests < ActionController::TestCase
 
   test 'when all spy_read(filename) calls have corresponding ' +
        'read(filename) calls, then teardown does not raise' do
-    filename = 'film.txt'
-    @dir.spy_read(filename, 'the princess bride')
+    filename = 'the_princess_bride.txt'
+    @dir.spy_read(filename, 'cough cough cough')
     @dir.read(filename)
     @dir.teardown
   end
@@ -121,8 +121,8 @@ class SpyDirTests < ActionController::TestCase
 
   test 'when any spy_read(filename) call has no corresponding ' +
        'read(filename) call then teardown raises' do
-    filename = 'great_film.txt'
-    content = 'the princess bride'
+    filename = 'princess_bride.txt'
+    content = 'inconceivable'
     @dir.spy_read(filename, content)
     error = assert_raises(RuntimeError) { @dir.teardown }
     expected = ['read',filename,content]
@@ -133,8 +133,8 @@ class SpyDirTests < ActionController::TestCase
 
   test 'when all spy_write(filename,content) calls have corresponding ' +
        'write(filename,content) calls, then teardown does not raise' do
-    filename = 'favourite_film.txt'
-    content = 'the princess bride'
+    filename = 'the_princess_bride.txt'
+    content = "nonsense, you're just saying that because no-one ever has"
     @dir.spy_write(filename, content)
     @dir.write(filename, content)
     @dir.teardown
@@ -144,8 +144,8 @@ class SpyDirTests < ActionController::TestCase
 
   test 'when any spy_write(filename,content) calls has no corresponding ' +
        'write(filename,content) call then teardown raises RuntimeError' do
-    filename = 'film.txt'
-    content = 'the princess bride'
+    filename = 'the_princess_bride.txt'
+    content = 'are you miracle max?'
     @dir.spy_write(filename, content)
     @dir.write(filename+'X', content)
     @dir.write(filename, content+'X')

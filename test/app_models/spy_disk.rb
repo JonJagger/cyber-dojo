@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/spy_dir'
 class SpyDisk < Disk
 
   def teardown
-    dirs.each { |_dir,spy| spy.teardown }
+    dirs.each_value { |spy| spy.teardown }
   end
 
   def make_dir(disk,path)
