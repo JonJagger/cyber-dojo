@@ -1,5 +1,7 @@
+require 'Externals'
 
 class Kata
+  include Externals
 
   def initialize(dojo, id)
     @dojo,@id = dojo,id
@@ -12,7 +14,7 @@ class Kata
   end
 
   def exists?
-    id.valid? && paas.exists?(self)
+    id.valid? && dir(path).exists?
   end
 
   def active?
@@ -39,7 +41,7 @@ class Kata
   end
 
   def start_avatar(names = Avatars.names.shuffle)
-    paas.start_avatar(self, names)
+    dojo.paas.start_avatar(self, names)
   end
 
   def avatars
@@ -69,23 +71,19 @@ class Kata
   end
 
   def format
-    return 'json' if paas.exists?(self, manifest_prefix + 'json')
-    return 'rb'   if paas.exists?(self, manifest_prefix + 'rb')
+    return 'json' if dir(path).exists?(manifest_prefix + 'json')
+    return 'rb'   if dir(path).exists?(manifest_prefix + 'rb')
     return dojo.format
   end
 
 private
-
-  def paas
-    dojo.paas
-  end
 
   def manifest_prefix
     'manifest.'
   end
 
   def text
-    raw = paas.read(self, manifest_filename)
+    raw = dir(path).read(manifest_filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
