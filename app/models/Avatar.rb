@@ -40,10 +40,10 @@ class Avatar
     end
     delta[:new].each do |filename|
       paas.write(sandbox, filename, visible_files[filename])
-      paas.git_add(sandbox, filename)
+      git.add(sandbox.path, filename)
     end
     delta[:deleted].each do |filename|
-      paas.git_rm(sandbox, filename)
+      git.rm(sandbox.path, filename)
     end
   end
 
@@ -66,8 +66,8 @@ class Avatar
   end
 
   def commit(tag)
-    paas.git_commit(self, "-a -m '#{tag}' --quiet")
-    paas.git_tag(self, "-m '#{tag}' #{tag} HEAD")
+    git.commit(path, "-a -m '#{tag}' --quiet")
+    git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
   #- - - - - - - - - - - - - - -
@@ -88,7 +88,7 @@ class Avatar
 
   def diff_lines(was_tag, now_tag)
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-    output = paas.git_diff(self, command)
+    output = git.diff(path, command)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
@@ -108,9 +108,13 @@ private
 
   def parse(filename, tag)
     text = paas.read(self, filename) if tag == nil
-    text = paas.git_show(self, "#{tag}:#{filename}") if tag != nil
+    text = git.show(path, "#{tag}:#{filename}") if tag != nil
     return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
     return JSON.parse(text) if format === 'json'
+  end
+
+  def git
+    Thread.current[:git]
   end
 
 end

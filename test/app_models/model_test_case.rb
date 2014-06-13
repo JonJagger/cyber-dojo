@@ -11,6 +11,9 @@ class ModelTestCase < ActionController::TestCase
   end
 
   def create_paas_dojo_format(format)
+    thread = Thread.current
+    thread[:git] = nil
+    
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = SpyRunner.new

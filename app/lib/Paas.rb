@@ -5,6 +5,10 @@ class Paas
 
   def initialize(disk, git, runner)
     @disk,@git,@runner,@format = disk,git,runner,'json'
+    thread = Thread.current
+    thread[:disk]   ||= disk
+    thread[:git]    ||= git
+    thread[:runner] ||= runner
   end
 
   def format
