@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TEST-BUTTON
+  there should be a 15-second timeout on the browser too.
+  Sometimes the re/green yin-yang spinner just hangs there.
+  Perhaps make the browser timeout slightly longer?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
   if the number of lines added/removed is reasonably large
   then when you click the added-delete-line-number button
