@@ -1,5 +1,7 @@
+require 'Externals'
 
 class Exercise
+  include Externals
 
   def initialize(dojo,name)
     @dojo,@name = dojo,name
@@ -12,17 +14,11 @@ class Exercise
   end
 
   def exists?
-    dir.exists?(instructions_filename)
+    dir(path).exists?(instructions_filename)
   end
 
   def instructions
-    dir.read(instructions_filename)
-  end
-
-private
-
-  def dir
-    dojo.paas.dir(self)
+    dir(path).read(instructions_filename)
   end
 
   def instructions_filename
