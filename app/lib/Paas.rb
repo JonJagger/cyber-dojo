@@ -1,5 +1,5 @@
 
-# CyberDojo - Platform As A Service
+# Platform As A Service
 
 class Paas
 

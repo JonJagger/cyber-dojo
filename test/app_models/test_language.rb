@@ -378,6 +378,9 @@ class LanguageTests < ModelTestCase
   end
 
   test 'custom runner that filters the language.runnable?' do
+    Thread.current[:disk] = nil
+    Thread.current[:git] = nil
+    Thread.current[:runner] = nil
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = CustomRunner.new(['yes'])
@@ -391,6 +394,9 @@ class LanguageTests < ModelTestCase
 
   test 'DockerTestRunner.runnable?(language) is false ' +
        'when language does not have image_name set in manifest' do
+    Thread.current[:disk] = nil
+    Thread.current[:git] = nil
+    Thread.current[:runner] = nil
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = DockerTestRunner.new

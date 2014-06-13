@@ -1,6 +1,8 @@
 require 'json'
+require 'Externals'
 
 class Language
+  include Externals
 
   def initialize(dojo, name)
     @dojo,@name = dojo,name
@@ -13,15 +15,15 @@ class Language
   end
 
   def exists?
-    dir.exists?(manifest_filename)
+    dir(path).exists?(manifest_filename)
   end
 
   def runnable?
-    paas.runnable?(self)
+    runner.runnable?(self)
   end
 
   def display_name
-    manifest['display_name'] || @name
+    manifest['display_name'] || name
   end
 
   def display_test_name
@@ -113,7 +115,7 @@ class Language
       'Ruby'       => 'Ruby-TestUnit',
       'Scala'      => 'Scala-scalatest'
     }
-    renames[@name] || @name
+    renames[name] || name
   end
 
   def manifest
@@ -131,16 +133,8 @@ class Language
 private
 
   def read(filename)
-    raw = dir.read(filename)
+    raw = dir(path).read(filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
-  end
-
-  def dir
-    dojo.paas.dir(self)
-  end
-
-  def paas
-    dojo.paas
   end
 
 end
