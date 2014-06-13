@@ -1,6 +1,8 @@
+require 'Externals'
 
 class Exercises
   include Enumerable
+  include Externals
 
   def initialize(dojo)
     @dojo = dojo
@@ -14,18 +16,15 @@ class Exercises
 
   def each
     # dojo.exercises.each
-    dir.each { |name| yield self[name] if self[name].exists? }
+    dir(path).each do |name|
+      exercise = self[name]
+      yield exercise if exercise.exists?
+    end
   end
 
   def [](name)
     # dojo.exercises['name']
-    Exercise.new(dojo, name)
-  end
-
-private
-
-  def dir
-    dojo.paas.dir(self)
+    Exercise.new(self, name)
   end
 
 end

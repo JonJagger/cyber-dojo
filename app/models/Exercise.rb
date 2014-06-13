@@ -3,14 +3,14 @@ require 'Externals'
 class Exercise
   include Externals
 
-  def initialize(dojo,name)
-    @dojo,@name = dojo,name
+  def initialize(exercises,name)
+    @exercises,@name = exercises,name
   end
 
-  attr_reader :dojo, :name
+  attr_reader :exercises, :name
 
   def path
-    dojo.exercises.path + name + '/'
+    exercises.path + name + '/'
   end
 
   def exists?
