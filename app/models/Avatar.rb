@@ -1,7 +1,9 @@
 require 'forwardable'
+require 'Externals'
 
 class Avatar
   extend Forwardable
+  include Externals
 
   def initialize(kata, name)
     @kata,@name = kata,name
@@ -107,22 +109,6 @@ private
     text = git.show(path, "#{tag}:#{filename}") if tag != nil
     return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
     return JSON.parse(text) if format === 'json'
-  end
-
-  def runner
-    Thread.current[:runner]
-  end
-
-  def git
-    Thread.current[:git]
-  end
-
-  def disk
-    Thread.current[:disk]
-  end
-
-  def dir(path)
-    disk[path]
   end
 
 end
