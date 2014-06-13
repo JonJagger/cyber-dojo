@@ -466,8 +466,7 @@ var cyberDojo = (function(cd, $) {
           buildDiffFilenameHandlers(data.idsAndSectionCounts);
           showCurrentFile(data.currentFilenameId);
 		  if (open !== undefined) {
-			open();
-		    cd.pieChart($('.pie', diffDiv));
+			open(data);
 		  }
 		}
 	  ).always(function() {
@@ -477,10 +476,12 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	refresh(function() {
+	refresh(function(data) {
 	  // only open after all html-loaded otherwise
 	  // dialog may not center on the page.
 	  diffDialog.dialog('open');
+      cd.pieChart($('.pie', diffDiv));
+      showCurrentFile(data.currentFilenameId);
 	});
 
 

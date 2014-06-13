@@ -1,9 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF
-  the auto-scroll to the diff-chunk does not work on
-  the initial diff-dialog. It only works when you
-  navigate using << < > >>
+IS_DIR
+  on SpyDir. This is checked by using starts_with?
+  But a/bc  should not be seen as a dir if a/bcd is what exists.
+  Probably the same for FakeDir
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 WAIT-CURSOR
   if you are on the last > button and you click it
