@@ -72,7 +72,7 @@ class LanguageTests < ModelTestCase
     json_and_rb do
       @language = @dojo.languages['Erlang']
       assert !@language.exists?, '1'
-      @paas.dir(@language).make
+      @language.dir.make
       assert !@language.exists?, '2'
       spy_exists?(manifest_filename)
       assert @language.exists?, '3'
@@ -112,7 +112,7 @@ class LanguageTests < ModelTestCase
     json_and_rb do
       @language = @dojo.languages['Ruby']
       spy_manifest({ 'visible_filenames' => [ 'test_untitled.rb' ] })
-      @paas.dir(@language).spy_read('test_untitled.rb', 'content')
+      @language.dir.spy_read('test_untitled.rb', 'content')
       visible_files = @language.visible_files
       assert_equal( { 'test_untitled.rb' => 'content' }, visible_files)
       assert_nil visible_files['output']
@@ -332,9 +332,9 @@ class LanguageTests < ModelTestCase
   test 'when manifest.rb and manifest.json exist, json is used' do
     json_and_rb do
       @language = @dojo.languages['Ruby']
-      @paas.dir(@language).write('manifest.json', {'tab_size' => 4})
-      @paas.dir(@language).write('manifest.rb', {:tab_size => 8})
-      @paas.dir(@language).spy_read('manifest.json', {'tab_size' => 4})
+      @language.dir.write('manifest.json', {'tab_size' => 4})
+      @language.dir.write('manifest.rb', {:tab_size => 8})
+      @language.dir.spy_read('manifest.json', {'tab_size' => 4})
       assert_equal ' '*4, @language.tab
     end
   end
@@ -355,7 +355,7 @@ class LanguageTests < ModelTestCase
       name = 'Ruby'
       @language = @dojo.languages[name]
       any_bad_json = '42'
-      @paas.dir(@language).spy_read_raw('manifest.json', any_bad_json)
+      @language.dir.spy_read_raw('manifest.json', any_bad_json)
       named = false
       begin
         @language.tab_size
@@ -403,18 +403,18 @@ class LanguageTests < ModelTestCase
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
     ruby = @dojo.languages['Ruby']
-    @paas.dir(ruby).write(manifest_filename, { })
+    ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def spy_manifest(manifest)
-    @paas.dir(@language).spy_read(manifest_filename, manifest)
+    @language.dir.spy_read(manifest_filename, manifest)
   end
 
   def spy_exists?(filename)
-    @paas.dir(@language).spy_exists?(filename)
+    @language.dir.spy_exists?(filename)
   end
 
   def manifest_filename

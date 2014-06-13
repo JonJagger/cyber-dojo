@@ -1,6 +1,8 @@
+require 'Externals'
 
 class Lights
   include Enumerable
+  include Externals
 
   def initialize(avatar)
     @avatar = avatar
@@ -33,9 +35,9 @@ class Lights
 
 private
 
-  def paas
-    avatar.kata.dojo.paas
-  end
+  #def paas
+  #  avatar.kata.dojo.paas
+  #end
 
   def lights
     return @lights ||= JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
@@ -43,7 +45,7 @@ private
   end
 
   def text
-    raw = paas.read(avatar, traffic_lights_filename)
+    raw = avatar.dir.read(traffic_lights_filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

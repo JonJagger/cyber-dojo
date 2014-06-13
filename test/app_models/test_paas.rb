@@ -64,7 +64,7 @@ class PaasTests < ModelTestCase
       language_manifest = {
         :unit_test_framework => 'catch'
       }
-      @paas.dir(language).spy_read('manifest.json', language_manifest)
+      language.dir.spy_read('manifest.json', language_manifest)
 
       kata_manifest = {
         :id => id,
@@ -74,10 +74,10 @@ class PaasTests < ModelTestCase
         :language => language.name
       }
       if (format == 'rb')
-        @paas.dir(kata).spy_read('manifest.rb', kata_manifest)
+        kata.dir.spy_read('manifest.rb', kata_manifest)
       end
       if (format == 'json')
-        @paas.dir(kata).spy_read('manifest.json', kata_manifest)
+        kata.dir.spy_read('manifest.json', kata_manifest)
       end
 
       avatar = kata.start_avatar(Avatars.names)
@@ -91,24 +91,6 @@ class PaasTests < ModelTestCase
       assert !path_has_adjacent_separators?(sandbox)
       assert path_includes_dojo_path?(avatar)
       assert sandbox.path.include?('sandbox')
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  #test "in HostTestRunner runnable? returns false when language does not exist" do
-  #  json_and_rb do |format|
-  #    language = @dojo.languages['Java-JUnit']
-  #    assert !@paas.runnable?(language)
-  #  end
-  #end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'in HostTestRunner runnable? always returns true' do
-    json_and_rb do |format|
-      language = @dojo.languages['test-Java-JUnit']
-      assert @paas.runnable?(language)
     end
   end
 

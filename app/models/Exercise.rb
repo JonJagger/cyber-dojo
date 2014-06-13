@@ -13,12 +13,16 @@ class Exercise
     exercises.path + name + '/'
   end
 
+  def dir
+    disk[path]
+  end
+
   def exists?
-    dir(path).exists?(instructions_filename)
+    dir.exists?(instructions_filename)
   end
 
   def instructions
-    dir(path).read(instructions_filename)
+    dir.read(instructions_filename)
   end
 
   def instructions_filename

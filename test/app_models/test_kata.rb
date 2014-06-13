@@ -43,10 +43,10 @@ class KataTests < ModelTestCase
         }
       ]
       if format === 'rb'
-        @paas.dir(hippo).spy_read(lights_filename, light.inspect)
+        hippo.dir.spy_read(lights_filename, light.inspect)
       end
       if format === 'json'
-        @paas.dir(hippo).spy_read(lights_filename, JSON.unparse(light))
+        hippo.dir.spy_read(lights_filename, JSON.unparse(light))
       end
 
       assert !kata.active?
@@ -78,12 +78,12 @@ class KataTests < ModelTestCase
         }
 
       if format === 'rb'
-        @paas.dir(hippo).spy_read(lights_filename, [auto].inspect)
-        @paas.dir(lion).spy_read(lights_filename, [auto,manual].inspect)
+        hippo.dir.spy_read(lights_filename, [auto].inspect)
+        lion.dir.spy_read(lights_filename, [auto,manual].inspect)
       end
       if format === 'json'
-        @paas.dir(hippo).spy_read(lights_filename, JSON.unparse([auto]))
-        @paas.dir(lion).spy_read(lights_filename, JSON.unparse([auto,manual]))
+        hippo.dir.spy_read(lights_filename, JSON.unparse([auto]))
+        lion.dir.spy_read(lights_filename, JSON.unparse([auto,manual]))
       end
 
       assert kata.active?
@@ -117,7 +117,7 @@ class KataTests < ModelTestCase
     json_and_rb do
       kata = @dojo.katas[id]
       assert !kata.exists?
-      @paas.dir(kata).make
+      @disk[kata.path].make
       assert kata.exists?
     end
   end
@@ -128,11 +128,11 @@ class KataTests < ModelTestCase
        ' creates unique-id and uses-time-now' do
     json_and_rb do
       language = @dojo.languages['Java-JUnit']
-      @paas.dir(language).spy_read('manifest.json', {
+      language.dir.spy_read('manifest.json', {
         :unit_test_framework => 'JUnit'
       })
       exercise = @dojo.exercises['test_Yahtzee']
-      @paas.dir(exercise).spy_read('instructions', 'your task...')
+      exercise.dir.spy_read('instructions', 'your task...')
       now = Time.now
       past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
       kata = @dojo.make_kata(language, exercise)
@@ -148,11 +148,11 @@ class KataTests < ModelTestCase
   test 'make_kata saves manifest in kata dir' do
     json_and_rb do |format|
       language = @dojo.languages['Java-JUnit']
-      @paas.dir(language).spy_read('manifest.json', {
+      language.dir.spy_read('manifest.json', {
         :unit_test_framework => 'waffle'
       })
       exercise = @dojo.exercises['test_Yahtzee']
-      @paas.dir(exercise).spy_read('instructions', 'your task...')
+      exercise.dir.spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       kata = @dojo.make_kata(language, exercise, id, now)
 
@@ -169,12 +169,12 @@ class KataTests < ModelTestCase
         }
       }
       if format == 'rb'
-        assert @paas.dir(kata).log.include?([ 'write', 'manifest.rb', expected_manifest.inspect ]),
-          @paas.dir(kata).log.inspect
+        assert kata.dir.log.include?([ 'write', 'manifest.rb', expected_manifest.inspect ]),
+          kata.dir.log.inspect
       end
       if format == 'json'
-        assert @paas.dir(kata).log.include?([ 'write', 'manifest.json', JSON.unparse(expected_manifest) ]),
-          @paas.dir(kata).log.inspect
+        assert kata.dir.log.include?([ 'write', 'manifest.json', JSON.unparse(expected_manifest) ]),
+          kata.dir.log.inspect
       end
     end
   end
@@ -190,13 +190,13 @@ class KataTests < ModelTestCase
           'wibble.hpp' => '#include <iostream>',
           'wibble.cpp' => '#include "wibble.hpp"'
       }
-      @paas.dir(language).spy_read('manifest.json', {
+      language.dir.spy_read('manifest.json', {
         :visible_filenames => visible_files.keys
       })
-      @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
-      @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
+      language.dir.spy_read('wibble.hpp', visible_files['wibble.hpp'])
+      language.dir.spy_read('wibble.cpp', visible_files['wibble.cpp'])
       exercise = @dojo.exercises['test_Yahtzee']
-      @paas.dir(exercise).spy_read('instructions', 'your task...')
+      exercise.dir.spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
       kata = @dojo.make_kata(language, exercise, id, now)
       assert_equal id, kata.id.to_s
@@ -265,8 +265,8 @@ class KataTests < ModelTestCase
     json_and_rb do
       id = '12345ABCDE'
       kata = Kata.new(@dojo, id)
-      @paas.dir(kata).make
-      @paas.dir(kata).spy_exists?('manifest.rb')
+      kata.dir.make
+      kata.dir.spy_exists?('manifest.rb')
       assert_equal 'rb', kata.format
       assert kata.format === 'rb'
       assert_equal 'manifest.rb', kata.manifest_filename

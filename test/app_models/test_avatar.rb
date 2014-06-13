@@ -17,7 +17,7 @@ class AvatarTests < ModelTestCase
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
     lights_filename = lion.traffic_lights_filename
-    @paas.dir(lion).spy_read(lights_filename, JSON.unparse([]))
+    lion.dir.spy_read(lights_filename, JSON.unparse([]))
     assert !lion.active?
   end
 
@@ -27,7 +27,7 @@ class AvatarTests < ModelTestCase
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
     lights_filename = lion.traffic_lights_filename
-    @paas.dir(lion).spy_read(lights_filename, JSON.unparse([
+    lion.dir.spy_read(lights_filename, JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -43,7 +43,7 @@ class AvatarTests < ModelTestCase
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
     lights_filename = lion.traffic_lights_filename
-    @paas.dir(lion).spy_read(lights_filename, JSON.unparse([
+    lion.dir.spy_read(lights_filename, JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -67,7 +67,7 @@ class AvatarTests < ModelTestCase
       kata = @dojo.katas[id]
       lion = kata.avatars['lion']
       assert !lion.exists?
-      @paas.dir(lion).make
+      lion.dir.make
       assert lion.exists?
     end
   end
@@ -82,7 +82,7 @@ class AvatarTests < ModelTestCase
       assert !Avatars.names.include?('salmon')
       salmon = kata.avatars['salmon']
       assert !salmon.exists?
-      @paas.dir(salmon).make
+      salmon.dir.make
       assert !salmon.exists?
     end
   end
@@ -102,25 +102,25 @@ class AvatarTests < ModelTestCase
         'wibble.c' => '#include "wibble.h"'
       }
       visible_files.each do |filename,content|
-        @paas.dir(language).spy_read(filename, content)
+        language.dir.spy_read(filename, content)
       end
 
       support_filename = 'lib.a'
-      @paas.dir(language).spy_read('manifest.json', {
+      language.dir.spy_read('manifest.json', {
         :unit_test_framework => 'assert',
         :visible_filenames => visible_files.keys,
         :support_filenames => [ support_filename ]
       })
       exercise = @dojo.exercises['test_Yahtzee']
-      @paas.dir(exercise).spy_read('instructions', 'your task...')
+      exercise.dir.spy_read('instructions', 'your task...')
 
       kata = @dojo.make_kata(language, exercise)
       avatar = kata.start_avatar
       sandbox = avatar.sandbox
 
       visible_files.each do |filename,content|
-        assert @paas.dir(sandbox).log.include?(['write',filename,content]),
-          @paas.dir(sandbox).log.inspect
+        assert sandbox.dir.log.include?(['write',filename,content]),
+          sandbox.dir.log.inspect
       end
 
       avatar = kata.start_avatar
@@ -132,16 +132,16 @@ class AvatarTests < ModelTestCase
       expected_manifest['instructions'] = 'your task...'
 
       if (format == 'rb')
-        assert @paas.dir(avatar).log.include?(['write','manifest.rb', expected_manifest.inspect]),
-            @paas.dir(avatar).log.inspect
-        assert @paas.dir(avatar).log.include?(['write','increments.rb', [ ].inspect]),
-            @paas.dir(avatar).log.inspect
+        assert avatar.dir.log.include?(['write','manifest.rb', expected_manifest.inspect]),
+            avatar.dir.log.inspect
+        assert avatar.dir.log.include?(['write','increments.rb', [ ].inspect]),
+            avatar.dir.log.inspect
       end
       if (format == 'json')
-        assert @paas.dir(avatar).log.include?(['write','manifest.json', JSON.unparse(expected_manifest)]),
-            @paas.dir(avatar).log.inspect
-        assert @paas.dir(avatar).log.include?(['write','increments.json', JSON.unparse([ ])]),
-            @paas.dir(avatar).log.inspect
+        assert avatar.dir.log.include?(['write','manifest.json', JSON.unparse(expected_manifest)]),
+            avatar.dir.log.inspect
+        assert avatar.dir.log.include?(['write','increments.json', JSON.unparse([ ])]),
+            avatar.dir.log.inspect
       end
 
       expected_symlink = [
@@ -177,7 +177,7 @@ class AvatarTests < ModelTestCase
       output = avatar.test(@max_duration)
       assert_equal 'stubbed-output', output
       assert !visible_files.keys.include?('output')
-      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      saved_filenames = filenames_written_to_in(sandbox.dir.log)
       assert !saved_filenames.include?('output')
     end
   end
@@ -201,7 +201,7 @@ class AvatarTests < ModelTestCase
       }
       avatar.save(delta, visible_files)
       output = avatar.test(@max_duration)
-      log = @paas.dir(sandbox).log
+      log = sandbox.dir.log
       saved_filenames = filenames_written_to_in(log)
       assert_equal delta[:changed].sort, saved_filenames.sort
       assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
@@ -227,7 +227,7 @@ class AvatarTests < ModelTestCase
         :new => [ ]
       }
       avatar.save(delta, visible_files)
-      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      saved_filenames = filenames_written_to_in(sandbox.dir.log)
       assert_equal delta[:changed].sort, saved_filenames
     end
   end
@@ -250,7 +250,7 @@ class AvatarTests < ModelTestCase
         :new => [ 'wibble.cs' ]
       }
       avatar.save(delta, visible_files)
-      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      saved_filenames = filenames_written_to_in(sandbox.dir.log)
       assert_equal delta[:new].sort, saved_filenames.sort
       git_log = @git.log[sandbox.path]
       assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
@@ -275,7 +275,7 @@ class AvatarTests < ModelTestCase
         :new => [ ]
       }
       avatar.save(delta, visible_files)
-      saved_filenames = filenames_written_to_in(@paas.dir(sandbox).log)
+      saved_filenames = filenames_written_to_in(sandbox.dir.log)
       assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 
       git_log = @git.log[sandbox.path]

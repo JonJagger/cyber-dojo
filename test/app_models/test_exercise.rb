@@ -8,9 +8,9 @@ class ExerciseTests < ModelTestCase
     json_and_rb do
       exercise = @dojo.exercises['test_Yahtzee']
       assert !exercise.exists?
-      @paas.dir(exercise).make
+      exercise.dir.make
       assert !exercise.exists?
-      @paas.dir(exercise).spy_exists?('instructions')
+      exercise.dir.spy_exists?('instructions')
       assert exercise.exists?
     end
   end
@@ -31,9 +31,9 @@ class ExerciseTests < ModelTestCase
       exercise = @dojo.exercises['test_Yahtzee']
       filename = 'instructions'
       content = 'The game of Yahtzee...'
-      @paas.dir(exercise).spy_read(filename, content)
+      exercise.dir.spy_read(filename, content)
       assert_equal content, exercise.instructions
-      assert @paas.dir(exercise).log.include?(['read',filename,content])
+      assert exercise.dir.log.include?(['read',filename,content])
     end
   end
 

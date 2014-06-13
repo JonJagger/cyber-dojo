@@ -14,8 +14,12 @@ class Language
     languages.path + name + '/'
   end
 
+  def dir
+    disk[path]
+  end
+
   def exists?
-    dir(path).exists?(manifest_filename)
+    dir.exists?(manifest_filename)
   end
 
   def runnable?
@@ -133,7 +137,7 @@ class Language
 private
 
   def read(filename)
-    raw = dir(path).read(filename)
+    raw = dir.read(filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

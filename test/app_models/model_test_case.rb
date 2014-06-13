@@ -47,13 +47,13 @@ class ModelTestCase < ActionController::TestCase
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
     }
-    @paas.dir(language).spy_read('manifest.json', {
+    language.dir.spy_read('manifest.json', {
       :visible_filenames => visible_files.keys
     })
-    @paas.dir(language).spy_read('wibble.hpp', visible_files['wibble.hpp'])
-    @paas.dir(language).spy_read('wibble.cpp', visible_files['wibble.cpp'])
+    language.dir.spy_read('wibble.hpp', visible_files['wibble.hpp'])
+    language.dir.spy_read('wibble.cpp', visible_files['wibble.cpp'])
     exercise = @dojo.exercises['test_Yahtzee']
-    @paas.dir(exercise).spy_read('instructions', 'your task...')
+    exercise.dir.spy_read('instructions', 'your task...')
     @dojo.make_kata(language, exercise)
   end
 

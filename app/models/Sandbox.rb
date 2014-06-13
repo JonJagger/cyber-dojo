@@ -13,8 +13,12 @@ class Sandbox
     avatar.path + 'sandbox/'
   end
 
+  def dir
+    disk[path]
+  end
+
   def write(filename, content)
-    dir(path).write(filename, content)
+    dir.write(filename, content)
   end
 
 end

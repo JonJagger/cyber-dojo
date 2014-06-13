@@ -13,8 +13,12 @@ class Kata
     dojo.katas.path + id.inner + '/' + id.outer + '/'
   end
 
+  def dir
+    disk[path]
+  end
+
   def exists?
-    id.valid? && dir(path).exists?
+    id.valid? && dir.exists?
   end
 
   def active?
@@ -71,8 +75,8 @@ class Kata
   end
 
   def format
-    return 'json' if dir(path).exists?(manifest_prefix + 'json')
-    return 'rb'   if dir(path).exists?(manifest_prefix + 'rb')
+    return 'json' if dir.exists?(manifest_prefix + 'json')
+    return 'rb'   if dir.exists?(manifest_prefix + 'rb')
     return dojo.format
   end
 
@@ -83,7 +87,7 @@ private
   end
 
   def text
-    raw = dir(path).read(manifest_filename)
+    raw = dir.read(manifest_filename)
     raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 

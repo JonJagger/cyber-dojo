@@ -20,9 +20,9 @@ class SandboxTests < ModelTestCase
       kata = @dojo.katas['45ED23A2F1']
       avatar = kata.avatars['hippo']
       sandbox = avatar.sandbox
-      assert !@paas.dir(sandbox).exists?
+      assert !sandbox.dir.exists?
       sandbox.write('filename', 'content')
-      assert @paas.dir(sandbox).exists?
+      assert sandbox.dir.exists?
     end
   end
 

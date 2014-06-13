@@ -17,8 +17,12 @@ class Avatar
     kata.path + name + '/'
   end
 
+  def dir
+    disk[path]
+  end
+
   def exists?
-    Avatars.names.include?(name) && dir(path).exists?
+    Avatars.names.include?(name) && dir.exists?
   end
 
   def active?
@@ -38,10 +42,10 @@ class Avatar
 
   def save(delta, visible_files)
     delta[:changed].each do |filename|
-      dir(sandbox.path).write(filename, visible_files[filename])
+      sandbox.dir.write(filename, visible_files[filename])
     end
     delta[:new].each do |filename|
-      dir(sandbox.path).write(filename, visible_files[filename])
+      sandbox.dir.write(filename, visible_files[filename])
       git.add(sandbox.path, filename)
     end
     delta[:deleted].each do |filename|
@@ -55,7 +59,7 @@ class Avatar
   end
 
   def save_visible_files(visible_files)
-    dir(path).write(visible_files_filename, visible_files)
+    dir.write(visible_files_filename, visible_files)
   end
 
   def save_traffic_light(traffic_light, now)
@@ -63,7 +67,7 @@ class Avatar
     lights << traffic_light
     traffic_light['number'] = lights.length
     traffic_light['time'] = now
-    dir(path).write(traffic_lights_filename, lights)
+    dir.write(traffic_lights_filename, lights)
     lights
   end
 
@@ -105,7 +109,7 @@ class Avatar
 private
 
   def parse(filename, tag)
-    text = dir(path).read(filename) if tag == nil
+    text = dir.read(filename) if tag == nil
     text = git.show(path, "#{tag}:#{filename}") if tag != nil
     return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
     return JSON.parse(text) if format === 'json'

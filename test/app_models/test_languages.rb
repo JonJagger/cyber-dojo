@@ -33,7 +33,7 @@ class LanguagesTests < ModelTestCase
   def stub_exists(languages_names)
     languages_names.each do |name|
       language = languages[name]
-      @paas.dir(language).spy_exists?(language.manifest_filename)
+      language.dir.spy_exists?(language.manifest_filename)
     end
   end
 

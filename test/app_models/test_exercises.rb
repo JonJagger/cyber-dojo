@@ -27,7 +27,7 @@ class ExercisesTests < ModelTestCase
     name = 'Yahtzee'
     exercise = @dojo.exercises[name]
     content = 'your task...'
-    @paas.dir(exercise).spy_read('instructions', content)
+    exercise.dir.spy_read('instructions', content)
     assert_equal content, exercise.instructions
   end
 
@@ -36,7 +36,7 @@ class ExercisesTests < ModelTestCase
   def stub_exists(exercises_names)
     exercises_names.each do |name|
       exercise = @dojo.exercises[name]
-      @paas.dir(exercise).spy_exists?('instructions')
+      exercise.dir.spy_exists?('instructions')
     end
   end
 

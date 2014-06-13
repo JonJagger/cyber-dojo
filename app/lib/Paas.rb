@@ -42,7 +42,7 @@ class Paas
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
     kata = Kata.new(dojo, id)
-    write(kata, kata.manifest_filename, manifest)
+    kata.dir.write(kata.manifest_filename, manifest)
     kata
   end
 
@@ -54,24 +54,24 @@ class Paas
       avatar_name = unstarted_avatar_names[0]
       avatar = Avatar.new(kata, avatar_name)
 
-      make_dir(avatar)
+      avatar.dir.make
       @git.init(avatar.path, '--quiet')
 
-      write(avatar, avatar.visible_files_filename, kata.visible_files)
+      avatar.dir.write(avatar.visible_files_filename, kata.visible_files)
       @git.add(avatar.path, avatar.visible_files_filename)
 
-      write(avatar, avatar.traffic_lights_filename, [ ])
+      avatar.dir.write(avatar.traffic_lights_filename, [ ])
       @git.add(avatar.path, avatar.traffic_lights_filename)
 
       kata.visible_files.each do |filename,content|
-        write(avatar.sandbox, filename, content)
+        avatar.sandbox.dir.write(filename, content)
         @git.add(avatar.sandbox.path, filename)
       end
 
       kata.language.support_filenames.each do |filename|
         from = kata.language.path + filename
           to = avatar.sandbox.path + filename
-        symlink(from, to)
+        @disk.symlink(from, to)
       end
 
       avatar.commit(tag=0)
@@ -81,36 +81,36 @@ class Paas
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def exists?(object, filename='')
-    dir(object).exists?(filename)
-  end
+  #def exists?(object, filename='')
+  #  dir(object).exists?(filename)
+  #end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def make_dir(object)
-    dir(object).make
-  end
+  #def make_dir(object)
+  #  dir(object).make
+  #end
 
-  def read(object, filename)
-    dir(object).read(filename)
-  end
+  #def read(object, filename)
+  #  dir(object).read(filename)
+  #end
 
-  def write(object, filename, content)
-    dir(object).write(filename, content)
-  end
+  #def write(object, filename, content)
+  #  dir(object).write(filename, content)
+  #end
 
-  def symlink(from, to)
-    @disk.symlink(from, to)
-  end
+  #def symlink(from, to)
+  #  @disk.symlink(from, to)
+  #end
 
-  def dir(object)
-    @disk[object.path]
-  end
+  #def dir(object)
+  #  @disk[object.path]
+  #end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  def runnable?(language)
-    @runner.runnable?(language)
-  end
+  #def runnable?(language)
+  #  @runner.runnable?(language)
+  #end
 
 end
