@@ -11,7 +11,7 @@ class FakeDir
   end
 
   def each
-    @disk.dirs_each(self) do |subdir|
+    @disk.subdirs_each(self) do |subdir|
       yield subdir
     end
   end
