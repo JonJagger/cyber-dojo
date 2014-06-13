@@ -57,7 +57,7 @@ class ForkerControllerTest < IntegrationTest
     language = @dojo.languages['does-not-exist']
     id = '1234512345'
     kata = @dojo.katas[id]
-    @paas.dir(kata).spy_read('manifest.json', { :language => language.name })
+    kata.dir.spy_read('manifest.json', { :language => language.name })
 
     get "forker/fork",
       :format => :json,
@@ -81,12 +81,12 @@ class ForkerControllerTest < IntegrationTest
        "and the reason is avatar" do
     setup_dojo
     language = @dojo.languages['Ruby-installed-and-working']
-    @paas.dir(language).make
-    @paas.dir(language).spy_exists?('manifest.json')
+    language.dir.make
+    language.dir.spy_exists?('manifest.json')
 
     id = '1234512345'
     kata = @dojo.katas[id]
-    @paas.dir(kata).spy_read('manifest.json', { :language => language.name })
+    kata.dir.spy_read('manifest.json', { :language => language.name })
 
     get "forker/fork",
       :format => :json,
@@ -120,20 +120,20 @@ class ForkerControllerTest < IntegrationTest
     setup_dojo
     language_name = 'Ruby-installed-and-working'
     language = @dojo.languages[language_name]
-    @paas.dir(language).make
-    @paas.dir(language).spy_exists?('manifest.json')
+    language.dir.make
+    language.dir.spy_exists?('manifest.json')
 
     id = '1234512345'
     kata = @dojo.katas[id]
-    @paas.dir(kata).make
-    @paas.dir(kata).spy_read('manifest.json', { :language => language_name })
+    kata.dir.make
+    kata.dir.spy_read('manifest.json', { :language => language_name })
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    @paas.dir(avatar).make
+    avatar.dir.make
 
     if more_than_number_of_lights
-      @paas.dir(avatar).spy_read('increments.json',
+      avatar.dir.spy_read('increments.json',
         JSON.unparse([
           [
           "colour" => "red",
@@ -173,17 +173,17 @@ class ForkerControllerTest < IntegrationTest
 
     #TODO: change this to use json format?
 
-    @paas.dir(kata).spy_read('manifest.rb', {
+    kata.dir.spy_read('manifest.rb', {
       :language => old_language_name
     })
     language = @dojo.languages[new_language_name]
-    @paas.dir(language).spy_read('manifest.json', {
+    language.dir.spy_read('manifest.json', {
       'unit_test_framework' => 'fake'
     })
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    @paas.dir(avatar).spy_read('increments.rb', [
+    avatar.dir.spy_read('increments.rb', [
       {
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],
@@ -224,14 +224,14 @@ class ForkerControllerTest < IntegrationTest
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
     kata = @dojo.katas[id]
-    @paas.dir(kata).spy_read('manifest.rb', { :language => language_name })
+    kata.dir.spy_read('manifest.rb', { :language => language_name })
     language = @dojo.languages[language_name]
-    @paas.dir(language).spy_read('manifest.json', {
+    language.dir.spy_read('manifest.json', {
         'unit_test_framework' => 'fake'
       })
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    @paas.dir(avatar).spy_read('increments.rb', [
+    avatar.dir.spy_read('increments.rb', [
       {
         "colour" => "red",
         "time" => [2014, 2, 15, 8, 54, 6],

@@ -79,38 +79,4 @@ class Paas
     avatar
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  #def exists?(object, filename='')
-  #  dir(object).exists?(filename)
-  #end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  #def make_dir(object)
-  #  dir(object).make
-  #end
-
-  #def read(object, filename)
-  #  dir(object).read(filename)
-  #end
-
-  #def write(object, filename, content)
-  #  dir(object).write(filename, content)
-  #end
-
-  #def symlink(from, to)
-  #  @disk.symlink(from, to)
-  #end
-
-  #def dir(object)
-  #  @disk[object.path]
-  #end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  #def runnable?(language)
-  #  @runner.runnable?(language)
-  #end
-
 end

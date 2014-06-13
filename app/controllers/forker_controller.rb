@@ -41,7 +41,7 @@ class ForkerController < ApplicationController
       manifest = @paas.make_kata_manifest(dojo, language, exercise, id, now)
       manifest[:visible_files] = avatar.visible_files(params['tag'])
       kata = Kata.new(dojo, id)
-      paas.write(kata, kata.manifest_filename, manifest)
+      kata.dir.write(kata.manifest_filename, manifest)
       result[:forked] = true
       result[:id] = id
     end
