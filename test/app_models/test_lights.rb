@@ -11,6 +11,7 @@ class LightsTests < ActionController::TestCase
   def setup
     thread = Thread.current
     thread[:git] = nil
+    thread[:disk] = nil
     @disk   = OsDisk.new
     @git    = Git.new
     @runner = HostTestRunner.new

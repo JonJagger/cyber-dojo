@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + '/../cyberdojo_test_base'
-require 'DockerRunner'
+require 'DockerTestRunner'
 
 class DockerParseTests < CyberDojoTestBase
 
@@ -22,7 +22,7 @@ class DockerParseTests < CyberDojoTestBase
       'cyberdojo/language_gcc-4.8.1_assert',
       'cyberdojo/language_gpp-4.8.1_assert',
       'ubuntu'
-    ].sort, DockerRunner.new.image_names(output)
+    ].sort, DockerTestRunner.new.image_names(output)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -30,7 +30,7 @@ class DockerParseTests < CyberDojoTestBase
   test "parse `docker images` when none installed" do
     output =
       "REPOSITORY                            TAG                 IMAGE ID            CREATED             VIRTUAL SIZE"
-    assert_equal [ ], DockerRunner.new.image_names(output)
+    assert_equal [ ], DockerTestRunner.new.image_names(output)
   end
 
 end

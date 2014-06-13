@@ -36,10 +36,10 @@ class Avatar
 
   def save(delta, visible_files)
     delta[:changed].each do |filename|
-      paas.write(sandbox, filename, visible_files[filename])
+      dir(sandbox.path).write(filename, visible_files[filename])
     end
     delta[:new].each do |filename|
-      paas.write(sandbox, filename, visible_files[filename])
+      dir(sandbox.path).write(filename, visible_files[filename])
       git.add(sandbox.path, filename)
     end
     delta[:deleted].each do |filename|
@@ -53,7 +53,8 @@ class Avatar
   end
 
   def save_visible_files(visible_files)
-    paas.write(self, visible_files_filename, visible_files)
+    #paas.write(self, visible_files_filename, visible_files)
+    dir(path).write(visible_files_filename, visible_files)
   end
 
   def save_traffic_light(traffic_light, now)
@@ -61,7 +62,7 @@ class Avatar
     lights << traffic_light
     traffic_light['number'] = lights.length
     traffic_light['time'] = now
-    paas.write(self, traffic_lights_filename, lights)
+    dir(path).write(traffic_lights_filename, lights)
     lights
   end
 
@@ -107,7 +108,7 @@ private
   end
 
   def parse(filename, tag)
-    text = paas.read(self, filename) if tag == nil
+    text = dir(path).read(filename) if tag == nil
     text = git.show(path, "#{tag}:#{filename}") if tag != nil
     return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
     return JSON.parse(text) if format === 'json'
@@ -115,6 +116,14 @@ private
 
   def git
     Thread.current[:git]
+  end
+
+  def disk
+    Thread.current[:disk]
+  end
+
+  def dir(path)
+    disk[path]
   end
 
 end

@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/../cyberdojo_test_base'
 require 'Choose'
 require 'OsDisk'
 require 'Git'
-require 'DummyRunner'
+require 'DummyTestRunner'
 require 'Paas'
 require 'Dojo'
 require 'Katas'
@@ -21,7 +21,7 @@ class ChooseTests < CyberDojoTestBase
     super
     @disk = OsDisk.new
     @git = Git.new
-    @runner = DummyRunner.new
+    @runner = DummyTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = @paas.create_dojo(root_path)
   end
