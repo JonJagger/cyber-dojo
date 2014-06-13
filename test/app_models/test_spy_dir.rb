@@ -154,13 +154,4 @@ class SpyDirTests < ActionController::TestCase
     assert_equal "SpyDir['#{@path}'].teardown() log.include?(#{expected})", error.message
   end
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'each() filters nested sub-folders to the immediate sub-folder only' do
-    @disk[@path + 'a']
-    @disk[@path + 'b']
-    @disk[@path + 'b/c']
-    assert_equal ['a','b'], @disk[@path].entries.sort
-  end
-
 end
