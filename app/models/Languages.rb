@@ -24,7 +24,7 @@ class Languages
 
   def [](name)
     # dojo.languages['name']
-    Language.new(dojo, name)
+    Language.new(self, name)
   end
 
 end

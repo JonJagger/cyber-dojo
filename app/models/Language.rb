@@ -4,14 +4,14 @@ require 'Externals'
 class Language
   include Externals
 
-  def initialize(dojo, name)
-    @dojo,@name = dojo,name
+  def initialize(languages, name)
+    @languages,@name = languages,name
   end
 
-  attr_reader :dojo, :name
+  attr_reader :languages, :name
 
   def path
-    dojo.languages.path + name + '/'
+    languages.path + name + '/'
   end
 
   def exists?
