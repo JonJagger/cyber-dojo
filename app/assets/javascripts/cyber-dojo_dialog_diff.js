@@ -371,32 +371,28 @@ var cyberDojo = (function(cd, $) {
           'text': diff.filename
         });
 
-		var deletedLineCountTd = undefined;
-		if (diff.deleted_line_count > 0) {
+		var deletedLineCountTd =
 		  deletedLineCountTd = $('<td>', {
 			'class': 'align-right diff-deleted-line-count button',
 			'data-filename': diff.filename
 		  });
+		if (diff.deleted_line_count > 0) {
 		  deletedLineCountTd.append(diff.deleted_line_count);
-		} else {
-		  deletedLineCountTd = $('<td>');
 		}
 
-		var addedLineCountTd = undefined;
-		if (diff.added_line_count > 0) {
+		var addedLineCountTd =
 		  addedLineCountTd = $('<td>', {
 			'class': 'align-right diff-added-line-count button',
 			'data-filename': diff.filename
 		  });
+		if (diff.added_line_count > 0) {
 		  addedLineCountTd.append(diff.added_line_count);
-		} else {
-		  addedLineCountTd = $('<td>');
 		}
 
 		td.append(filenameDiv);
-		tr.append(td);
 		tr.append(deletedLineCountTd);
 		tr.append(addedLineCountTd)
+		tr.append(td);
         table.append(tr);
       });
 

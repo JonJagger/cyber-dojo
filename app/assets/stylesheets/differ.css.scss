@@ -129,8 +129,10 @@
   .diff-deleted-line-count, .diff-added-line-count {
     color: $darker-color;
     @include diff-line-count;
+    @include font-size-tiny();
     border: 2px solid $darker-color;
     @include rounded-corner(4px);
+    width: 20px;
   }
 
   .diff-deleted-line-count {
@@ -139,7 +141,7 @@
     border-left: 3px solid $darker-color;
 
     &[disabled] {
-      background: lighten($darker-color, 20%);
+      background: lighten($darker-color, 10%);
       cursor: default;
     }
   }
@@ -149,7 +151,7 @@
     cursor: pointer;
 
     &[disabled] {
-      background: lighten($darker-color, 20%);
+      background: lighten($darker-color, 10%);
       cursor: default;
     }
   }

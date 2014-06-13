@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+DIFF-DIALOG
+  if the number of lines added/removed is reasonably large
+  then when you click the added-delete-line-number button
+  to toggle visibility there is no auto-scroll to bring
+  added lines back into view.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar should be passed block that can determine the colour
 of test output so that it can create its own traffic light.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
