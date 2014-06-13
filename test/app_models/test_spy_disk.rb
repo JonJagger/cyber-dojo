@@ -13,6 +13,7 @@ class SpyDiskTests < ActionController::TestCase
     disk[path + 'b']
     disk[path + 'b/c']
     assert_equal ['a','b'], disk['spied'].each.entries.sort
+    assert_equal ['a','b'], disk['spied/'].each.entries.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - -

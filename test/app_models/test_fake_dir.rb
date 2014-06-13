@@ -66,7 +66,8 @@ class FakeDirTests < ActionController::TestCase
     @disk[@path + 'a']
     @disk[@path + 'b']
     @disk[@path + 'b/c']
-    assert_equal ['a','b'], @disk[@path].entries.sort
+    assert_equal ['a','b'], @disk['fake'].entries.sort
+    assert_equal ['a','b'], @disk['fake/'].entries.sort
   end
 
 end
