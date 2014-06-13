@@ -16,7 +16,7 @@ class Avatar
   end
 
   def exists?
-    Avatars.names.include?(name) && paas.exists?(self)
+    Avatars.names.include?(name) && dir(path).exists?
   end
 
   def active?
@@ -53,7 +53,6 @@ class Avatar
   end
 
   def save_visible_files(visible_files)
-    #paas.write(self, visible_files_filename, visible_files)
     dir(path).write(visible_files_filename, visible_files)
   end
 
