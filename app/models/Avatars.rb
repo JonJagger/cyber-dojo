@@ -1,6 +1,7 @@
 
 class Avatars
   include Enumerable
+  include Externals
 
   def self.names
       # no two animals start with the same letter
@@ -18,7 +19,7 @@ class Avatars
 
   def each
     # kata.avatars.each
-    paas.dir(@kata).each do |name|
+    dir(@kata.path).each do |name|
       avatar = self[name]
       yield avatar if avatar.exists? && block_given?
     end
@@ -36,12 +37,6 @@ class Avatars
 
   def length
     each.entries.length
-  end
-
-private
-
-  def paas
-    @kata.dojo.paas
   end
 
 end

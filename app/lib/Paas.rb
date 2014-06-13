@@ -146,9 +146,9 @@ class Paas
     @git.tag(object.path, args)
   end
 
-  def git_diff(object, args)
-    @git.diff(object.path, args)
-  end
+  #def git_diff(object, args)
+  #  @git.diff(object.path, args)
+  #end
 
   def git_show(object, args)
     @git.show(object.path, args)
