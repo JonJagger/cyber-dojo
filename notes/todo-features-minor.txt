@@ -11,8 +11,10 @@ DIFF-DIALOG
   to toggle visibility there is no auto-scroll to bring
   added lines back into view.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar should be passed block that can determine the colour
-of test output so that it can create its own traffic light.
+OUTPUT
+  if the server times-out (15 seconds) is there any
+  residual output? If there is it would be good to
+  include it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 AGE
   if age >= 1 day then only display the number of days?
@@ -31,13 +33,6 @@ SCRIPT
 DIFF-DIALOG
   show the *time* between two tags
   [23] 00:54 [24]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-KATAS-FOLDER
-  would be nice to be able to set ENV variables for
-  the root-paths for each of these 3 independently
-    o) languages/
-    o) exercises/
-    o) katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 OUTPUT-PARSER
   it would be nice if I could stub this so that

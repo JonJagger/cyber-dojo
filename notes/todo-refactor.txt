@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+KATAS-FOLDER
+  would be nice to be able to set ENV variables for
+  the root-paths for each of these 3 independently
+    o) languages/
+    o) exercises/
+    o) katas/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker md file
 o) adding a new language
    mention creating a sub-folder off languages/ at the start
@@ -28,21 +35,14 @@ o) adding a new language
         # that would get xfer'd to a readonly server.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  a fork-controller test is failing.
-  the one checking for bad tags.
-  it seems the increments.json manifest is not being read?!
-  yet it still knows it size.
-  write Lights-Light model test and explore.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller
     (which is itself used in fork-dialog as well as revert-dialog)
     Refactor.
     inc: ==> light:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  if the server times-out (15 seconds) is there any
-  residual output? If there is it would be good to
-  include it.
+  Avatar should be passed block that can determine the colour
+  of test output so that it can create its own traffic light.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   add blurb to start of initial source files explaining that
   the initial source files bare no relation to the exercise.
@@ -65,102 +65,7 @@ o) adding a new language
   Aim for dropping the Paas class, just need these three...
      Languages, Exercises, Katas
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Move docker? and stderr2stdout from ApplicationController
-  into DockerRunner
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.id_complete
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  languages: this should know its own path, and that path
-  is retrieved from it in linux_paas.rb not like this
-        when Languages
-        root(obj.dojo) + 'languages/'
-  but like this
-        when Languages
-        obj.path
-  Indeed, perhaps each object should know its own path
-  so the whole case disappears, and path(obj) becomes obj.path
-  And then there will be no need to go back to the paas to
-  read/write files (for example).
-    raw = paas.read(self, manifest_filename)
-  can become
-    raw = paas.read(path, manifest_filename)
-  So paas is constructed with
-     3 object pre-constructed: git, disk, runner
-     3 object paths: languages/, exercises/, katas/
-  and the paas ctor does
-     Languages.new(self, languages_root)
-  or
-  abstract the path and the paas ctor is passed in factory
-  class Paas
-    def initialize(config)
-      @languages = config[:languages].create(self)
-    end
-  end
-  class LanguagesFactory
-    def initialize(path)
-      @path = path
-    end
-    def create(paas)
-      Languages.new(paas, @path)
-    end
-  end
-  paas = Paas.new({
-    :languages => LanguagesFactory.new(languages_root),
-    :exercises => ExercisesFactory.new(exercises_root),
-    :katas     => KatasFactory.new(katas_root),
-    :disk   => Disk.new
-    :git    => Git.new,
-    :runner => DockerRunner.new
-  })
-  or would plain 'blocks' be simpler?
-  paas = Paas.new({
-    :languages => ->{ Languages.new(self,'.../languages/') }
-    :exercises => ->{ Exercises.new(self,'.../exercises/') }
-    :katas     => ->{     Katas.new(self,'.../katas/')     }
-    :disk   => Disk.new
-    :git    => Git.new,
-    :runner => DockerRunner.new
-  })
-  What is self in context here? Don't think it will be paas.
-  Can I just use paas directly!? Will it be lazily evald? I think so.
-  paas = Paas.new({
-    :languages => ->{ Languages.new(paas,'.../languages/') }
-    :exercises => ->{ Exercises.new(paas,'.../exercises/') }
-    :katas     => ->{     Katas.new(paas,'.../katas/')     }
-    :disk   => Disk.new
-    :git    => Git.new,
-    :runner => DockerRunner.new
-  })
-  Better still, pass dir=disk['.../languages/'] as the Languages ctor arg
-  Or could I pass a block to the Paas ctor?
-
-
-  Katas should not only know its own path, it should also
-  have the make_kata() method currently in Paas.
-
-  Kata should have start_avatar() method currently in Paas.
-
-  This would also mean paas does not need to be passed
-  to DockerRunner.run()
-
-  I think this also means the Dojo class will collapse.
-  Paas will have its methods
-     def languages...
-     def exercises...
-     def katas...
-  This ties in with Paas.make_kata_manifest() being passed
-  dojo as a parameter which it never uses.
-
-  I think this would mean model objects do not need to store their
-  parent (eg kata -> dojo)
-
-  Check language interaction with Choose.language()
-  Check exercise interaction with Choose.exercise()
-
-  This opens up possibility of Languages being selectable
-  from different folders.
-  Same for exercises.
-  Same for katas.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   max-duration could be a ctor parameter for DockerRunner
   and not for test()?
@@ -169,17 +74,10 @@ o) adding a new language
   What about tests? Is it simpler to substitute a different
   max-duration as a parameter? I think so.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  test/app_models/avatar_tests.rb
+  test/app_models/test_avatar_test.rb
   has some tests that need reviving.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  OutputParser could be another object hung of Thread.current
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  languages/ and exercises/ need Stubs - these are read from only
-  katas/ needs FakeDisk/Dir - these are read-write
-  A mock-Disk could be comprised of three separate delegated to Disks
-       - one for languages/
-       - one for exercises/
-       - one for katas/
+  OutputParser could be another object hung off Thread.current
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   now LinuxPaas.create_dojo() has only one argument I could do this...
      paas.dojos[root_path].katas[id]
@@ -189,9 +87,6 @@ o) adding a new language
   kata.avatars['lion'].tag[4]
     handy shortcut for this could be
   kata.lion.tag[4]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  test/app_models/languages_tests.rb
-    has spy_read that should be spy_exists
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   There should be a dependency on the language manifest file
   only for startup. Once started a kata should have a *copy* of
