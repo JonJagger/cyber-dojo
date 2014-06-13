@@ -160,8 +160,4 @@ class Paas
     @runner.runnable?(language)
   end
 
-  def run(sandbox, command, max_duration)
-    @runner.run(sandbox, command, max_duration)
-  end
-
 end

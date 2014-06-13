@@ -14,7 +14,7 @@ class ModelTestCase < ActionController::TestCase
     thread = Thread.current
     thread[:git] = nil
     thread[:disk] = nil
-    
+    thread[:runner] = nil
     @disk   = SpyDisk.new
     @git    = SpyGit.new
     @runner = SpyRunner.new

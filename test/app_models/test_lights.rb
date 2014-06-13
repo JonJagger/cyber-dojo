@@ -12,6 +12,7 @@ class LightsTests < ActionController::TestCase
     thread = Thread.current
     thread[:git] = nil
     thread[:disk] = nil
+    thread[:runner] = nil
     @disk   = OsDisk.new
     @git    = Git.new
     @runner = HostTestRunner.new

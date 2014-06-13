@@ -48,7 +48,7 @@ class Avatar
   end
 
   def test(max_duration)
-    output = paas.run(sandbox, './cyber-dojo.sh', max_duration)
+    output = runner.run(sandbox, './cyber-dojo.sh', max_duration)
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
@@ -102,15 +102,15 @@ class Avatar
 
 private
 
-  def paas
-    kata.dojo.paas
-  end
-
   def parse(filename, tag)
     text = dir(path).read(filename) if tag == nil
     text = git.show(path, "#{tag}:#{filename}") if tag != nil
     return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
     return JSON.parse(text) if format === 'json'
+  end
+
+  def runner
+    Thread.current[:runner]
   end
 
   def git
