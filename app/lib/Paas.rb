@@ -55,17 +55,17 @@ class Paas
       avatar = Avatar.new(kata, avatar_name)
 
       make_dir(avatar)
-      git_init(avatar, '--quiet')
+      @git.init(avatar.path, '--quiet')
 
       write(avatar, avatar.visible_files_filename, kata.visible_files)
-      git_add(avatar, avatar.visible_files_filename)
+      @git.add(avatar.path, avatar.visible_files_filename)
 
       write(avatar, avatar.traffic_lights_filename, [ ])
-      git_add(avatar, avatar.traffic_lights_filename)
+      @git.add(avatar.path, avatar.traffic_lights_filename)
 
       kata.visible_files.each do |filename,content|
         write(avatar.sandbox, filename, content)
-        git_add(avatar.sandbox, filename)
+        @git.add(avatar.sandbox.path, filename)
       end
 
       kata.language.support_filenames.each do |filename|
@@ -78,23 +78,6 @@ class Paas
     end
     avatar
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  #def katas_each(katas)
-  #  pathed = katas.path
-  #  @disk[pathed].each do |outer_dir|
-  #    outer_path = File.join(pathed, outer_dir)
-  #    if @disk.is_dir?(outer_path)
-  #      @disk[outer_path].each do |inner_dir|
-  #        inner_path = File.join(outer_path, inner_dir)
-  #        if @disk.is_dir?(inner_path)
-  #          yield outer_dir + inner_dir
-  #        end
-  #      end
-  #    end
-  #  end
-  #end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -122,36 +105,6 @@ class Paas
 
   def dir(object)
     @disk[object.path]
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - -
-
-  def git_init(object, args)
-    @git.init(object.path, args)
-  end
-
-  def git_add(object, filename)
-    @git.add(object.path, filename)
-  end
-
-  def git_rm(object, filename)
-    @git.rm(object.path, filename)
-  end
-
-  def git_commit(object, args)
-    @git.commit(object.path, args)
-  end
-
-  def git_tag(object, args)
-    @git.tag(object.path, args)
-  end
-
-  #def git_diff(object, args)
-  #  @git.diff(object.path, args)
-  #end
-
-  def git_show(object, args)
-    @git.show(object.path, args)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

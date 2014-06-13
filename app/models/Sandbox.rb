@@ -1,5 +1,7 @@
+require 'Externals'
 
 class Sandbox
+  include Externals
 
   def initialize(avatar)
     @avatar = avatar
@@ -12,13 +14,7 @@ class Sandbox
   end
 
   def write(filename, content)
-    paas.write(self, filename, content)
-  end
-
-private
-
-  def paas
-    avatar.kata.dojo.paas
+    dir(path).write(filename, content)
   end
 
 end
