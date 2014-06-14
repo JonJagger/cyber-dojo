@@ -1,5 +1,7 @@
 
-class TestRunner
+# mixin module
+
+module TestRunner
 
   def stderr2stdout(cmd)
     cmd + ' 2>&1'

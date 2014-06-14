@@ -1,7 +1,8 @@
 require 'Disk'
 require 'SpyDir'
 
-class SpyDisk < Disk
+class SpyDisk
+  include Disk
 
   def teardown
     dirs.each_value { |spy| spy.teardown }

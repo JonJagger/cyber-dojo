@@ -6,11 +6,10 @@
 # No isolation/protection/security, nothing.
 # See DockerTestRunner.rb
 
-__DIR__ = File.dirname(__FILE__)
+require 'TestRunner'
 
-require __DIR__ + '/TestRunner'
-
-class HostTestRunner < TestRunner
+class HostTestRunner
+  include TestRunner
 
   def runnable?(language)
     true
