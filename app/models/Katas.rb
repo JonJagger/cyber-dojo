@@ -26,7 +26,7 @@ class Katas
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
-    kata = Kata.new(dojo, id)
+    kata = Kata.new(self, id)
     kata.dir.write(kata.manifest_filename, manifest)
     kata
   end
@@ -52,7 +52,7 @@ class Katas
 
   def [](id)
     # dojo.katas[id]
-    Kata.new(dojo,id)
+    Kata.new(self,id)
   end
 
 private

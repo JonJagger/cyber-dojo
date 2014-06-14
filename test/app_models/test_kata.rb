@@ -279,7 +279,7 @@ class KataTests < ModelTestCase
        " reports its manifest_filename as having parent dojo's format" do
     json_and_rb do |format|
       id = '12345ABCDE'
-      kata = Kata.new(@dojo, id)
+      kata = Kata.new(@dojo.katas, id)
       assert_equal format, kata.format
     end
   end

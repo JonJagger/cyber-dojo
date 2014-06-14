@@ -3,11 +3,11 @@ require 'Externals'
 class Kata
   include Externals
 
-  def initialize(dojo, id)
-    @dojo,@id = dojo,id
+  def initialize(katas, id)
+    @katas,@id = katas,id
   end
 
-  attr_reader :dojo
+  attr_reader :katas
 
   def start_avatar(avatar_names = Avatar.names.shuffle)
     avatar = nil
@@ -44,7 +44,7 @@ class Kata
   end
 
   def path
-    dojo.katas.path + id.inner + '/' + id.outer + '/'
+    katas.path + id.inner + '/' + id.outer + '/'
   end
 
   def exists?
@@ -121,6 +121,10 @@ private
     # time of first manually pressed traffic-light
     # (initial traffic-light is automatically created)
     Time.mktime(*avatars.active.map{|avatar| avatar.lights[1].time}.sort[0])
+  end
+
+  def dojo
+    katas.dojo
   end
 
 end

@@ -17,7 +17,7 @@ class Avatars
 
   def active
     # kata.avatars.active
-    self.select{|avatar| avatar.active?}
+    self.select{ |avatar| avatar.active? }
   end
 
   def [](name)
