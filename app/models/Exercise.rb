@@ -13,10 +13,6 @@ class Exercise
     exercises.path + name + '/'
   end
 
-  def dir
-    disk[path]
-  end
-
   def exists?
     dir.exists?(instructions_filename)
   end

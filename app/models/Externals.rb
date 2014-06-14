@@ -1,4 +1,6 @@
 
+# mixin module
+
 module Externals
 
   def runner
@@ -8,12 +10,12 @@ module Externals
   def git
     thread[:git]
   end
-  
+
   def disk
     thread[:disk]
   end
 
-  def dir(path)
+  def dir
     disk[path]
   end
 

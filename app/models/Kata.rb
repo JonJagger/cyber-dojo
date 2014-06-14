@@ -13,10 +13,6 @@ class Kata
     dojo.katas.path + id.inner + '/' + id.outer + '/'
   end
 
-  def dir
-    disk[path]
-  end
-
   def exists?
     id.valid? && dir.exists?
   end

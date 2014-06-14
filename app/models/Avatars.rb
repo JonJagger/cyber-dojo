@@ -19,7 +19,7 @@ class Avatars
 
   def each
     # kata.avatars.each
-    dir(@kata.path).each do |name|
+    disk[@kata.path].each do |name|
       avatar = self[name]
       yield avatar if avatar.exists? && block_given?
     end

@@ -16,7 +16,7 @@ class Languages
 
   def each
     # dojo.languages.each
-    dir(path).each do |name|
+    dir.each do |name|
       language = self[name]
       yield language if language.exists?
     end

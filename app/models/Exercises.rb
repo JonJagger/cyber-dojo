@@ -16,7 +16,7 @@ class Exercises
 
   def each
     # dojo.exercises.each
-    dir(path).each do |name|
+    dir.each do |name|
       exercise = self[name]
       yield exercise if exercise.exists?
     end

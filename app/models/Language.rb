@@ -14,10 +14,6 @@ class Language
     languages.path + name + '/'
   end
 
-  def dir
-    disk[path]
-  end
-
   def exists?
     dir.exists?(manifest_filename)
   end
