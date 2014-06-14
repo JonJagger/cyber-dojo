@@ -25,9 +25,7 @@ class DojoTests < ModelTestCase
   test "c'tor format determines kata's manifest format" do
     json_and_rb do |fmt|
       language = @dojo.languages['Java-JUnit']
-      language.dir.spy_read('manifest.json', {
-        :unit_test_framework => 'JUnit'
-      })
+      language.dir.spy_read('manifest.json', { :unit_test_framework => 'JUnit' })
       exercise = @dojo.exercises['test_Yahtzee']
       exercise.dir.spy_read('instructions', 'your task...')
       kata = @dojo.make_kata(language, exercise)

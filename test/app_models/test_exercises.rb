@@ -4,17 +4,16 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class ExercisesTests < ModelTestCase
 
-  test "dojo.exercises.each() forwards to paas.all_exercises()" do
-    stub_exists(['Unsplice','Verbal','Salmo'])
+  test 'dojo.exercises.each() gives all exercises which exist' do
+    names = ['Unsplice','Verbal','Salmo']
+    stub_exists(names)
     exercises_names = @dojo.exercises.map {|exercise| exercise.name}
-    assert exercises_names.include?('Unsplice'), 'Unsplice: ' + exercises_names.inspect
-    assert exercises_names.include?('Verbal'), 'Verbal: ' + exercises_names.inspect
-    assert exercises_names.include?('Salmo'), 'Salmo: ' + exercises_names.inspect
+    assert_equal names.sort, exercises_names.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dojo.exercises[name] returns exercise with given name" do
+  test 'dojo.exercises[name] returns exercise with given name' do
     name = 'Print_Diamond'
     exercise = @dojo.exercises[name]
     assert_equal Exercise, exercise.class
@@ -23,7 +22,7 @@ class ExercisesTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dojo.exercise.instructions" do
+  test 'dojo.exercise.instructions' do
     name = 'Yahtzee'
     exercise = @dojo.exercises[name]
     content = 'your task...'
