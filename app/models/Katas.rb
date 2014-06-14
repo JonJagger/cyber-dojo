@@ -1,5 +1,8 @@
 require 'Externals'
 
+# dojo.katas[id]
+# dojo.katas.each {|kata| ...}
+
 class Katas
   include Enumerable
   include Externals
@@ -26,7 +29,7 @@ class Katas
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
-    kata = Kata.new(self, id)
+    kata = self[id]
     kata.dir.write(kata.manifest_filename, manifest)
     kata
   end
@@ -36,7 +39,6 @@ class Katas
   end
 
   def each
-    # dojo.katas.each
     disk[path].each do |outer_dir|
       outer_path = File.join(path, outer_dir)
       if disk.is_dir?(outer_path)
@@ -51,7 +53,6 @@ class Katas
   end
 
   def [](id)
-    # dojo.katas[id]
     Kata.new(self,id)
   end
 

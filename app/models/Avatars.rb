@@ -1,4 +1,8 @@
 
+# kata.avatars.active
+# kata.avatars['lion']
+# kata.avatars.each {|avatar| ...}
+
 class Avatars
   include Enumerable
   include Externals
@@ -8,7 +12,6 @@ class Avatars
   end
 
   def each
-    # kata.avatars.each
     disk[@kata.path].each do |name|
       avatar = self[name]
       yield avatar if avatar.exists? && block_given?
@@ -16,12 +19,10 @@ class Avatars
   end
 
   def active
-    # kata.avatars.active
     self.select{ |avatar| avatar.active? }
   end
 
   def [](name)
-    # kata.avatars['lion']
     Avatar.new(@kata, name)
   end
 

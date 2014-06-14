@@ -1,5 +1,8 @@
 require 'Externals'
 
+# dojo.languages['name']
+# dojo.languages.each {|language| ...}
+
 class Languages
   include Enumerable
   include Externals
@@ -15,7 +18,6 @@ class Languages
   end
 
   def each
-    # dojo.languages.each
     dir.each do |name|
       language = self[name]
       yield language if language.exists?
@@ -23,7 +25,6 @@ class Languages
   end
 
   def [](name)
-    # dojo.languages['name']
     Language.new(self, name)
   end
 
