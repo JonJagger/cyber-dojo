@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/Disk'
-require File.dirname(__FILE__) + '/FakeDir'
+require 'Disk'
+require 'FakeDir'
 
 class FakeDisk < Disk
 
