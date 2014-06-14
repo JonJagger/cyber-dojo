@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + '/../test_helper'
-require File.dirname(__FILE__) + '/../app_models/spy_disk'
-require File.dirname(__FILE__) + '/../app_models/spy_git'
-require File.dirname(__FILE__) + '/../app_models/spy_runner'
+require 'SpyDisk'
+require 'SpyGit'
+require 'StubTestRunner'
 require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
@@ -15,7 +15,7 @@ class ForkerControllerTest < IntegrationTest
   def setup_dojo
     thread[:disk] = @disk = SpyDisk.new
     thread[:git] = @git = SpyGit.new
-    thread[:runner] = @runner = SpyRunner.new
+    thread[:runner] = @runner = StubTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @dojo = Dojo.new(@paas, root_path, 'json')
   end

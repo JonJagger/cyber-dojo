@@ -1,5 +1,5 @@
-require File.dirname(__FILE__) + '/disk'
-require File.dirname(__FILE__) + '/spy_dir'
+require File.dirname(__FILE__) + '/Disk'
+require File.dirname(__FILE__) + '/SpyDir'
 
 class SpyDisk < Disk
 

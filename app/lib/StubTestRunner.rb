@@ -1,5 +1,5 @@
 
-class SpyRunner
+class StubTestRunner
 
   def initialize
     @log = [ ]

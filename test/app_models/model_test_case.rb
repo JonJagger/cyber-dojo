@@ -1,8 +1,8 @@
 __DIR__ = File.dirname(__FILE__)
 require __DIR__ + '/../test_helper'
-require __DIR__ + '/spy_disk'
-require __DIR__ + '/spy_git'
-require __DIR__ + '/spy_runner'
+require 'SpyDisk'
+require 'SpyGit'
+require 'StubTestRunner'
 
 class ModelTestCase < ActionController::TestCase
 
@@ -17,7 +17,7 @@ class ModelTestCase < ActionController::TestCase
     thread[:runner] = nil
     @disk   = SpyDisk.new
     @git    = SpyGit.new
-    @runner = SpyRunner.new
+    @runner = StubTestRunner.new
     @paas = Paas.new(@disk, @git, @runner)
     @paas.format_rb if format === 'rb'
     @dojo = @paas.create_dojo(root_path)
