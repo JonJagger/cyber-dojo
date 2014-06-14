@@ -8,10 +8,10 @@ class Language
     @languages,@name = languages,name
   end
 
-  attr_reader :languages, :name
+  attr_reader :name
 
   def path
-    languages.path + name + '/'
+    @languages.path + name + '/'
   end
 
   def exists?

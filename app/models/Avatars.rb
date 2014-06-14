@@ -5,14 +5,13 @@
 
 class Avatars
   include Enumerable
-  include Externals
 
   def initialize(kata)
     @kata = kata
   end
 
   def each
-    disk[@kata.path].each do |name|
+    Avatar.names.each do |name|
       avatar = self[name]
       yield avatar if avatar.exists? && block_given?
     end
@@ -23,7 +22,7 @@ class Avatars
   end
 
   def [](name)
-    Avatar.new(@kata, name)
+    Avatar.new(@kata,name)
   end
 
 end

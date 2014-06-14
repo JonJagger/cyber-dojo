@@ -74,7 +74,7 @@ class AvatarTests < ModelTestCase
 
   test 'exists? is true' +
        ' when dir exists' +
-       ' and name is in Avatars.name' do
+       ' and name is in Avatar.names' do
     json_and_rb do
       kata = @dojo.katas[id]
       lion = kata.avatars['lion']
@@ -88,7 +88,7 @@ class AvatarTests < ModelTestCase
 
   test 'exists? is false' +
        ' when dir exists' +
-       ' and name is NOT in Avatars.name' do
+       ' and name is NOT in Avatar.names' do
     json_and_rb do
       kata = @dojo.katas[id]
       assert !Avatar.names.include?('salmon')

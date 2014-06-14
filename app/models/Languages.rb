@@ -11,21 +11,19 @@ class Languages
     @dojo = dojo
   end
 
-  attr_reader :dojo
-
   def path
-    dojo.path + 'languages/'
+    @dojo.path + 'languages/'
   end
 
   def each
     dir.each do |name|
       language = self[name]
-      yield language if language.exists?
+      yield language if language.exists? && block_given?
     end
   end
 
   def [](name)
-    Language.new(self, name)
+    Language.new(self,name)
   end
 
 end

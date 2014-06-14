@@ -7,10 +7,10 @@ class Exercise
     @exercises,@name = exercises,name
   end
 
-  attr_reader :exercises, :name
+  attr_reader :name
 
   def path
-    exercises.path + name + '/'
+    @exercises.path + name + '/'
   end
 
   def exists?
