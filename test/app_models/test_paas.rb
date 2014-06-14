@@ -80,7 +80,7 @@ class PaasTests < ModelTestCase
         kata.dir.spy_read('manifest.json', kata_manifest)
       end
 
-      avatar = kata.start_avatar(Avatars.names)
+      avatar = kata.start_avatar(Avatar.names)
       assert_equal 'alligator', avatar.name
       assert path_ends_in_slash?(avatar)
       assert !path_has_adjacent_separators?(avatar)

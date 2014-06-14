@@ -4,6 +4,18 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class AvatarTests < ModelTestCase
 
+  test 'there are 16 avatar names' do
+    assert_equal 16, Avatar.names.length
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'avatar names all begin with a different letter' do
+    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'avatar is not active? when it does not exist' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
@@ -79,7 +91,7 @@ class AvatarTests < ModelTestCase
        ' and name is NOT in Avatars.name' do
     json_and_rb do
       kata = @dojo.katas[id]
-      assert !Avatars.names.include?('salmon')
+      assert !Avatar.names.include?('salmon')
       salmon = kata.avatars['salmon']
       assert !salmon.exists?
       salmon.dir.make

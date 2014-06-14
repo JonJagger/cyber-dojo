@@ -5,6 +5,16 @@ class Avatar
   extend Forwardable
   include Externals
 
+  def self.names
+      # no two names start with the same letter
+      %w(
+          alligator buffalo cheetah deer
+          elephant frog gorilla hippo
+          koala lion moose panda
+          raccoon snake wolf zebra
+        )
+  end
+
   def initialize(kata, name)
     @kata,@name = kata,name
   end
@@ -17,12 +27,8 @@ class Avatar
     kata.path + name + '/'
   end
 
-  def dir
-    disk[path]
-  end
-
   def exists?
-    Avatars.names.include?(name) && dir.exists?
+    Avatar.names.include?(name) && dir.exists?
   end
 
   def active?

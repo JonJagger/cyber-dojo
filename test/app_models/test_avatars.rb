@@ -4,12 +4,6 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class AvatarsTests < ModelTestCase
 
-  test "avatar names all begin with a different letter" do
-    assert_equal Avatars.names.collect{|name| name[0]}.uniq.length, Avatars.names.length
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "an avatar's format is kata's format which is dojo's format" do
     kata = make_kata
     avatar = kata.start_avatar
@@ -19,7 +13,7 @@ class AvatarsTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "kata.avatars() returns all avatars started in the kata" do
+  test 'kata.avatars() returns all avatars started in the kata' do
     kata = make_kata
     assert_equal 0, kata.avatars.length
     lion = kata.start_avatar(['lion'])
@@ -33,7 +27,7 @@ class AvatarsTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dojo.katas[id].avatars() returns all avatars started in kata with given id" do
+  test 'dojo.katas[id].avatars() returns all avatars started in kata with given id' do
     kata = make_kata
     lion = kata.start_avatar(['lion'])
     hippo = kata.start_avatar(['hippo'])
@@ -44,7 +38,7 @@ class AvatarsTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "dojo.katas[id].avatars[name] finds avatar with given name" do
+  test 'dojo.katas[id].avatars[name] finds avatar with given name' do
     kata = make_kata
     panda = kata.start_avatar(['panda'])
     assert_equal ['panda'], kata.avatars.map{|avatar| avatar.name}

@@ -248,12 +248,12 @@ class KataTests < ModelTestCase
     json_and_rb do
       kata = make_kata
       created = [ ]
-      Avatars.names.length.times do |n|
+      Avatar.names.length.times do |n|
         avatar = kata.start_avatar
         assert_not_nil avatar
         created << avatar
       end
-      assert_equal Avatars.names.sort, created.collect{|avatar| avatar.name}.sort
+      assert_equal Avatar.names.sort, created.collect{|avatar| avatar.name}.sort
       avatar = kata.start_avatar
       assert_nil avatar
     end
