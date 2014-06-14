@@ -32,7 +32,7 @@ class DojoTests < ModelTestCase
       exercise.dir.spy_read('instructions', 'your task...')
       kata = @dojo.make_kata(language, exercise)
       assert_equal 'manifest.'+fmt, kata.manifest_filename
-      assert filenames_written_to_in(kata.dir.log).include?('manifest.'+fmt)
+      assert filenames_written_to(kata.dir.log).include?('manifest.'+fmt)
     end
   end
 

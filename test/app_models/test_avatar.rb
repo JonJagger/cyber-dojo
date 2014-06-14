@@ -177,7 +177,7 @@ class AvatarTests < ModelTestCase
       output = avatar.test(@max_duration)
       assert_equal 'stubbed-output', output
       assert !visible_files.keys.include?('output')
-      saved_filenames = filenames_written_to_in(sandbox.dir.log)
+      saved_filenames = filenames_written_to(sandbox.dir.log)
       assert !saved_filenames.include?('output')
     end
   end
@@ -202,7 +202,7 @@ class AvatarTests < ModelTestCase
       avatar.save(delta, visible_files)
       output = avatar.test(@max_duration)
       log = sandbox.dir.log
-      saved_filenames = filenames_written_to_in(log)
+      saved_filenames = filenames_written_to(log)
       assert_equal delta[:changed].sort, saved_filenames.sort
       assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
       assert log.include?(['write','untitled.test.cs', 'content for test file' ]), log.inspect
@@ -227,7 +227,7 @@ class AvatarTests < ModelTestCase
         :new => [ ]
       }
       avatar.save(delta, visible_files)
-      saved_filenames = filenames_written_to_in(sandbox.dir.log)
+      saved_filenames = filenames_written_to(sandbox.dir.log)
       assert_equal delta[:changed].sort, saved_filenames
     end
   end
@@ -250,7 +250,7 @@ class AvatarTests < ModelTestCase
         :new => [ 'wibble.cs' ]
       }
       avatar.save(delta, visible_files)
-      saved_filenames = filenames_written_to_in(sandbox.dir.log)
+      saved_filenames = filenames_written_to(sandbox.dir.log)
       assert_equal delta[:new].sort, saved_filenames.sort
       git_log = @git.log[sandbox.path]
       assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
@@ -275,7 +275,7 @@ class AvatarTests < ModelTestCase
         :new => [ ]
       }
       avatar.save(delta, visible_files)
-      saved_filenames = filenames_written_to_in(sandbox.dir.log)
+      saved_filenames = filenames_written_to(sandbox.dir.log)
       assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 
       git_log = @git.log[sandbox.path]

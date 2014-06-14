@@ -35,25 +35,24 @@ class ModelTestCase < ActionController::TestCase
     yield 'rb'
   end
 
-  def filenames_written_to_in(log)
+  def filenames_written_to(log)
     # each log entry is of the form
     #  [ 'read'/'write',  filename, content ]
     log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
   end
 
   def make_kata
-    language = @dojo.languages['test-C++-Catch']
     visible_files = {
         'wibble.hpp' => '#include <iostream>',
         'wibble.cpp' => '#include "wibble.hpp"'
     }
-    language.dir.spy_read('manifest.json', {
-      :visible_filenames => visible_files.keys
-    })
-    language.dir.spy_read('wibble.hpp', visible_files['wibble.hpp'])
-    language.dir.spy_read('wibble.cpp', visible_files['wibble.cpp'])
+    language = @dojo.languages['test-C++-Catch']
+    language.dir.spy_read('manifest.json', { :visible_filenames => visible_files.keys })
+    visible_files.each {|filename,content| language.dir.spy_read(filename, content) }
+
     exercise = @dojo.exercises['test_Yahtzee']
     exercise.dir.spy_read('instructions', 'your task...')
+
     @dojo.make_kata(language, exercise)
   end
 

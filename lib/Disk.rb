@@ -1,6 +1,6 @@
 
 # Template Method pattern
-# make_dir() is provided by sub-classes FakeDisk and SpyDisk
+# make_dir() is provided by sub-classes FakeDisk and SpyDisk (*not* OsDisk)
 
 class Disk
 
