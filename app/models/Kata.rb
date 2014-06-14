@@ -9,6 +9,10 @@ class Kata
 
   attr_reader :dojo
 
+  def start_avatar(names = Avatars.names.shuffle)
+    dojo.paas.start_avatar(self, names)
+  end
+
   def path
     dojo.katas.path + id.inner + '/' + id.outer + '/'
   end
@@ -38,10 +42,6 @@ class Kata
 
   def exercise
     dojo.exercises[manifest['exercise']]
-  end
-
-  def start_avatar(names = Avatars.names.shuffle)
-    dojo.paas.start_avatar(self, names)
   end
 
   def avatars

@@ -114,7 +114,7 @@ class AvatarTests < ModelTestCase
       exercise = @dojo.exercises['test_Yahtzee']
       exercise.dir.spy_read('instructions', 'your task...')
 
-      kata = @dojo.make_kata(language, exercise)
+      kata = @dojo.katas.create_kata(language, exercise)
       avatar = kata.start_avatar
       sandbox = avatar.sandbox
 

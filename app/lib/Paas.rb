@@ -25,27 +25,6 @@ class Paas
     Dojo.new(self, root, format)
   end
 
-  def make_kata_manifest(dojo, language, exercise, id, now)
-    {
-      :created => now,
-      :id => id,
-      :language => language.name,
-      :exercise => exercise.name,
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
-    }
-  end
-
-  def make_kata(dojo, language, exercise, id, now)
-    manifest = make_kata_manifest(dojo, language, exercise, id, now)
-    manifest[:visible_files] = language.visible_files
-    manifest[:visible_files]['output'] = ''
-    manifest[:visible_files]['instructions'] = exercise.instructions
-    kata = Kata.new(dojo, id)
-    kata.dir.write(kata.manifest_filename, manifest)
-    kata
-  end
-
   def start_avatar(kata, avatar_names)
     avatar = nil
     started_avatar_names = kata.avatars.collect { |avatar| avatar.name }

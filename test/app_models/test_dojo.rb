@@ -28,7 +28,7 @@ class DojoTests < ModelTestCase
       language.dir.spy_read('manifest.json', { :unit_test_framework => 'JUnit' })
       exercise = @dojo.exercises['test_Yahtzee']
       exercise.dir.spy_read('instructions', 'your task...')
-      kata = @dojo.make_kata(language, exercise)
+      kata = @dojo.katas.create_kata(language, exercise)
       assert_equal 'manifest.'+fmt, kata.manifest_filename
       assert filenames_written_to(kata.dir.log).include?('manifest.'+fmt)
     end

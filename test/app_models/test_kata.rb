@@ -135,7 +135,7 @@ class KataTests < ModelTestCase
       exercise.dir.spy_read('instructions', 'your task...')
       now = Time.now
       past = Time.mktime(now.year, now.month, now.day, now.hour, now.min, now.sec)
-      kata = @dojo.make_kata(language, exercise)
+      kata = @dojo.katas.create_kata(language, exercise)
       assert_not_equal id, kata.id
       created = Time.mktime(*kata.created)
       diff = created - past
@@ -154,7 +154,7 @@ class KataTests < ModelTestCase
       exercise = @dojo.exercises['test_Yahtzee']
       exercise.dir.spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
-      kata = @dojo.make_kata(language, exercise, id, now)
+      kata = @dojo.katas.create_kata(language, exercise, id, now)
 
       expected_manifest = {
         :created => now,
@@ -198,7 +198,7 @@ class KataTests < ModelTestCase
       exercise = @dojo.exercises['test_Yahtzee']
       exercise.dir.spy_read('instructions', 'your task...')
       now = [2014,7,17,21,15,45]
-      kata = @dojo.make_kata(language, exercise, id, now)
+      kata = @dojo.katas.create_kata(language, exercise, id, now)
       assert_equal id, kata.id.to_s
       assert_equal Time.mktime(*now), kata.created
       assert_equal language.name, kata.language.name

@@ -53,7 +53,7 @@ class CyberDojoTestBase < Test::Unit::TestCase
   def make_kata(dojo, language_name, exercise_name = 'test_Yahtzee')
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
-    dojo.make_kata(language, exercise)
+    dojo.katas.create_kata(language, exercise)
   end
 
   def make_manifest(dojo, language_name, exercise_name)

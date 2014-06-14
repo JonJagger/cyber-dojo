@@ -53,7 +53,7 @@ class ModelTestCase < ActionController::TestCase
     exercise = @dojo.exercises['test_Yahtzee']
     exercise.dir.spy_read('instructions', 'your task...')
 
-    @dojo.make_kata(language, exercise)
+    @dojo.katas.create_kata(language, exercise)
   end
 
 end

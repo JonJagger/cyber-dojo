@@ -16,18 +16,8 @@ class Dojo
     Exercises.new(self)
   end
 
-  def make_kata(language, exercise, id = Id.new.to_s, now = make_time(Time.now))
-    paas.make_kata(self, language, exercise, id, now)
-  end
-
   def katas
     Katas.new(self)
-  end
-
-private
-
-  def make_time(now)
-    [now.year, now.month, now.day, now.hour, now.min, now.sec]
   end
 
 end

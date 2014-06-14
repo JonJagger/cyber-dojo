@@ -21,7 +21,7 @@ class LightsTests < ActionController::TestCase
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`
-    @kata = @dojo.make_kata(@language, @exercise)
+    @kata = @dojo.katas.create_kata(@language, @exercise)
     @max_duration = 15
   end
 

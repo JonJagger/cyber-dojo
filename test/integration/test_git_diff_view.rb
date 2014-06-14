@@ -48,7 +48,7 @@ class GitDiffViewTests < CyberDojoTestBase
     language = @dojo.languages['Ruby-installed-and-working']
     exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`
-    kata = @dojo.make_kata(language, exercise)
+    kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
     visible_files =
       {
@@ -168,7 +168,7 @@ class GitDiffViewTests < CyberDojoTestBase
     language = @dojo.languages['Ruby-installed-and-working']
     exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`
-    kata = @dojo.make_kata(language, exercise)
+    kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
     visible_files =
       {
@@ -218,7 +218,7 @@ class GitDiffViewTests < CyberDojoTestBase
     language = @dojo.languages['test-Java-JUnit']
     exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`
-    kata = @dojo.make_kata(language, exercise)
+    kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
     visible_files = avatar.visible_files
 

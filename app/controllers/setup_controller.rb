@@ -23,7 +23,7 @@ class SetupController < ApplicationController
   def save
     language = dojo.languages[params['language']]
     exercise = dojo.exercises[params['exercise']]
-    kata = dojo.make_kata(language, exercise)
+    kata = dojo.katas.create_kata(language, exercise)
     render :json => {
       :id => kata.id.to_s
     }
