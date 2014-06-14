@@ -1,7 +1,7 @@
 
 class Id
 
-  def initialize(id = `uuidgen`.strip.delete('-')[0..9].upcase)
+  def initialize(id = `uuidgen`.strip.delete('-')[0...10].upcase)
     # a raw uuidgen has 32 chars hex.
     @id = id
   end

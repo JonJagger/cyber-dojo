@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Folders.id_complete can move to Katas.complete(id)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
   would be nice to be able to set ENV variables for
   the root-paths for each of these 3 independently
@@ -47,8 +49,6 @@ o) adding a new language
   add blurb to start of initial source files explaining that
   the initial source files bare no relation to the exercise.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  put fake/mock/stub/spy classes into same folder as the real things.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   admin_scripts/check_language_manifest.rb
   should be passed the languages/ dir not the root_dir
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -64,8 +64,6 @@ o) adding a new language
     Katas and Avatars classes.
   Aim for dropping the Paas class, just need these three...
      Languages, Exercises, Katas
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Folders.id_complete can move to Katas.id_complete
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   max-duration could be a ctor parameter for DockerRunner
   and not for test()?
