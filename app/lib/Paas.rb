@@ -22,7 +22,7 @@ class Paas
   end
 
   def create_dojo(root)
-    Dojo.new(self, root, format)
+    Dojo.new(root, format)
   end
 
 end
