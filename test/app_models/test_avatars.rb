@@ -15,14 +15,9 @@ class AvatarsTests < ModelTestCase
 
   test 'kata.avatars() returns all avatars started in the kata' do
     kata = make_kata
-    assert_equal 0, kata.avatars.length
-    lion = kata.start_avatar(['lion'])
-    assert_equal 1, kata.avatars.length
     cheetah = kata.start_avatar(['cheetah'])
-    assert_equal 2, kata.avatars.length
-    expected_names = ['lion', 'cheetah']
-    names = kata.avatars.map{|avatar| avatar.name}
-    assert_equal expected_names.sort, names.sort
+    lion = kata.start_avatar(['lion'])
+    assert_equal ['cheetah','lion'], kata.avatars.map{|avatar| avatar.name}.sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -

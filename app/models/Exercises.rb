@@ -1,5 +1,8 @@
 require 'Externals'
 
+# dojo.exercises['name']
+# dojo.exercises.each{|exercise| ...}
+
 class Exercises
   include Enumerable
   include Externals
@@ -15,7 +18,6 @@ class Exercises
   end
 
   def each
-    # dojo.exercises.each
     dir.each do |name|
       exercise = self[name]
       yield exercise if exercise.exists?
@@ -23,7 +25,6 @@ class Exercises
   end
 
   def [](name)
-    # dojo.exercises['name']
     Exercise.new(self, name)
   end
 

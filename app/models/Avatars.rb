@@ -26,8 +26,4 @@ class Avatars
     Avatar.new(@kata, name)
   end
 
-  def length
-    each.entries.length
-  end
-
 end
