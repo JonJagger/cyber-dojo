@@ -1,5 +1,8 @@
 
-class Disk # Template Method (make_dir)
+# Template Method pattern
+# make_dir() is provided by sub-classes FakeDisk and SpyDisk
+
+class Disk
 
   def initialize
     @dirs = { }
@@ -17,15 +20,15 @@ class Disk # Template Method (make_dir)
   end
 
   def subdirs_each(root_dir)                                    # spied/
-    dirs = [ ]
+    subs = [ ]
     @dirs.each_key{ |dir|                                       # spied/a/b/
       if dir != root_dir.path && dir.start_with?(root_dir.path)
         sub = dir[root_dir.path.length..-1]                     #       a/b
         last = sub.index(dir_separator) - 1
-        dirs << sub[0..last]                                    #   <<  a
+        subs << sub[0..last]                                    #   <<  a
       end
     }
-    dirs.sort.uniq.each do |dir|
+    subs.sort.uniq.each do |dir|
       yield dir if block_given?
     end
   end

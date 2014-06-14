@@ -23,17 +23,16 @@ integration
    Finished tests in 48.720147s, 0.1642 tests/s, 0.9442 assertions/s.
    8 tests, 46 assertions, 0 failures, 0 errors, 0 skips
      Coverages for the *other* modules....
-     49.12%  app/helpers
-     25.60%  app/lib
-     88.11%  app/models
-     89.11%  lib
+     58.33%  app/helpers
+     64.98%  app/lib
+     85.63%  app/models
+     79.27%  lib
 
 app_controllers
    Finished tests in 44.442588s, 0.8325 tests/s, 4.7927 assertions/s.
    36 tests, 212 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 95.94%
-     Coverages for the *other* modules....
+     95.93%  app/controllers
      93.75%  app/helpers
-     70.24%  app/lib
-     96.35%  app/models
-     86.59%  lib
+     69.69%  app/lib
+     95.60%  app/models
+     82.56%  lib
