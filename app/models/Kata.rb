@@ -9,8 +9,38 @@ class Kata
 
   attr_reader :dojo
 
-  def start_avatar(names = Avatars.names.shuffle)
-    dojo.paas.start_avatar(self, names)
+  def start_avatar(avatar_names = Avatars.names.shuffle)
+    avatar = nil
+    started_avatar_names = avatars.collect { |avatar| avatar.name }
+    unstarted_avatar_names = avatar_names - started_avatar_names
+    if unstarted_avatar_names != [ ]
+      avatar_name = unstarted_avatar_names[0]
+      avatar = Avatar.new(self, avatar_name)
+
+      avatar.dir.make
+      git.init(avatar.path, '--quiet')
+
+      avatar.dir.write(avatar.visible_files_filename, visible_files)
+      git.add(avatar.path, avatar.visible_files_filename)
+
+      avatar.dir.write(avatar.traffic_lights_filename, [ ])
+      git.add(avatar.path, avatar.traffic_lights_filename)
+
+      visible_files.each do |filename,content|
+        avatar.sandbox.dir.write(filename, content)
+        git.add(avatar.sandbox.path, filename)
+      end
+
+      language.support_filenames.each do |filename|
+        from = language.path + filename
+          to = avatar.sandbox.path + filename
+        disk.symlink(from, to)
+      end
+
+      avatar.commit(tag=0)
+    end
+    avatar
+
   end
 
   def path

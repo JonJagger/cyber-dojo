@@ -1,9 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-IS_DIR
-  on SpyDir. This is checked by using starts_with?
-  But a/bc  should not be seen as a dir if a/bcd is what exists.
-  Probably the same for FakeDir
+START-AVATAR
+  needs to lock. Use lock in dir?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 WAIT-CURSOR
   if you are on the last > button and you click it
