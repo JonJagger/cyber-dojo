@@ -7,13 +7,11 @@ class Exercises
   include Enumerable
   include Externals
 
-  def initialize(dojo)
-    @dojo = dojo
+  def initialize(path)
+    @path = path
   end
 
-  def path
-    @dojo.path + 'exercises/'
-  end
+  attr_reader :path
 
   def each
     dir.each do |name|

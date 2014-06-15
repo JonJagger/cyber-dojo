@@ -6,14 +6,15 @@ class Dojo
     raise RuntimeError.new("path must end in /") if !path.end_with?('/')
   end
 
+  #TODO: aim to drop :path
   attr_reader :path, :format
 
   def languages
-    Languages.new(self)
+    Languages.new(@path + 'languages/')
   end
 
   def exercises
-    Exercises.new(self)
+    Exercises.new(@path + 'exercises/')
   end
 
   def katas
