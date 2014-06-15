@@ -7,11 +7,11 @@ class Katas
   include Enumerable
   include Externals
 
-  def initialize(dojo)
-    @dojo = dojo
+  def initialize(dojo,path)
+    @dojo,@path = dojo,path
   end
 
-  attr_reader :dojo
+  attr_reader :dojo, :path
 
   def create_kata_manifest(language, exercise, id, now)
     {
@@ -32,10 +32,6 @@ class Katas
     kata = self[id]
     kata.dir.write(kata.manifest_filename, manifest)
     kata
-  end
-
-  def path
-    dojo.path + 'katas/'
   end
 
   def each

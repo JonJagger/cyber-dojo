@@ -14,7 +14,7 @@ module Folders
       # Doing completion with fewer characters would likely result
       # in a lot of disk activity and no unique outcome
       if id.length >= 4 && id.length < 10
-        dirs = Dir[root_dir + '/katas/' + id[0..1] + '/' + id[2..-1] + '*']
+        dirs = Dir[root_dir + id[0..1] + '/' + id[2..-1] + '*']
         if dirs.length == 1
           dir = dirs[0]
           id = dir[dir.length-12..-1].tr('//', '')

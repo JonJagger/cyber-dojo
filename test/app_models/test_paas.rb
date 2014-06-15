@@ -25,7 +25,6 @@ class PaasTests < ModelTestCase
       assert exercise.path.match(exercise.name)
       assert path_ends_in_slash?(exercise)
       assert !path_has_adjacent_separators?(exercise)
-      assert path_includes_dojo_path?(exercise)
     end
   end
 
@@ -37,7 +36,6 @@ class PaasTests < ModelTestCase
       assert language.path.match(language.name)
       assert path_ends_in_slash?(language)
       assert !path_has_adjacent_separators?(language)
-      assert path_includes_dojo_path?(language)
     end
   end
 
@@ -50,7 +48,6 @@ class PaasTests < ModelTestCase
       assert kata.path.include?(kata.id.outer)
       assert path_ends_in_slash?(kata)
       assert !path_has_adjacent_separators?(kata)
-      assert path_includes_dojo_path?(kata)
     end
   end
 
@@ -84,12 +81,10 @@ class PaasTests < ModelTestCase
       assert_equal 'alligator', avatar.name
       assert path_ends_in_slash?(avatar)
       assert !path_has_adjacent_separators?(avatar)
-      assert path_includes_dojo_path?(avatar)
 
       sandbox = avatar.sandbox
       assert path_ends_in_slash?(sandbox)
       assert !path_has_adjacent_separators?(sandbox)
-      assert path_includes_dojo_path?(avatar)
       assert sandbox.path.include?('sandbox')
     end
   end
@@ -107,10 +102,6 @@ class PaasTests < ModelTestCase
   def path_has_adjacent_separators?(object)
     doubled_separator = @disk.dir_separator * 2
     object.path.scan(doubled_separator).length > 0
-  end
-
-  def path_includes_dojo_path?(object)
-    object.path.include?(@dojo.path)
   end
 
 end

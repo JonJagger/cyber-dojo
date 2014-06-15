@@ -4,14 +4,6 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class DojoTests < ModelTestCase
 
-  test "path is as set in ctor" do
-    json_and_rb do
-      assert_equal root_path, @dojo.path
-    end
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "languages['xxx'] gives you language which knows its name is 'xxx'" do
     json_and_rb do
       assert_equal 'Ruby', @dojo.languages['Ruby'].name

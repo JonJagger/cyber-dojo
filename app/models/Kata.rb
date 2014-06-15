@@ -40,7 +40,6 @@ class Kata
       avatar.commit(tag=0)
     end
     avatar
-
   end
 
   def path

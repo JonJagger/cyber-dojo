@@ -264,7 +264,7 @@ class KataTests < ModelTestCase
   test 'old kata with rb manifest file reports its format as rb' do
     json_and_rb do
       id = '12345ABCDE'
-      kata = Kata.new(@dojo, id)
+      kata = Kata.new(@dojo.katas, id)
       kata.dir.make
       kata.dir.spy_exists?('manifest.rb')
       assert_equal 'rb', kata.format

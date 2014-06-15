@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   include MakeTimeHelper # for derived controllers
 
   def id
-    Folders::id_complete(root_path, params[:id]) || ""
+    Folders::id_complete(root_path + 'katas/', params[:id]) || ""
   end
 
   def paas
