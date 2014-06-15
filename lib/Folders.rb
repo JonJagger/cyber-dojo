@@ -1,11 +1,6 @@
 
 module Folders
 
-  def self.in(path)
-    # Used only in app/lib/Approval.rb
-    Dir.entries(path).select { |name| name != '.' and name != '..' }
-  end
-
   def self.id_complete(root_dir, id)
     if id != nil
       id = id[0..9].upcase
