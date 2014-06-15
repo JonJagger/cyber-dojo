@@ -19,7 +19,7 @@ class Id
   end
 
   def inner
-    @id[0..1]
+    @id[0...2]
   end
 
   def outer
