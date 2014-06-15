@@ -1,6 +1,7 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
 require __DIR__ + '/app/lib/Paas'
+require __DIR__ + '/app/lib/Docker'
 require __DIR__ + '/app/lib/DockerTestRunner'
 require __DIR__ + '/app/lib/DummyTestRunner'
 require __DIR__ + '/app/lib/HostTestRunner'
@@ -44,22 +45,12 @@ class ApplicationController < ActionController::Base
 private
 
   def runner
-    return DockerTestRunner.new if docker?
+    return DockerTestRunner.new if Docker.installed?
     return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
     return DummyTestRunner.new
   end
 
-  def docker?
-    command = stderr2stdout('docker info > /dev/null')
-    `#{command}`
-    $?.exitstatus === 0
-  end
-
 private
-
-  def stderr2stdout(cmd)
-    cmd + ' 2>&1'
-  end
 
   #before_filter :set_locale
   def set_locale
