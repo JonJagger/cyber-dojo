@@ -33,7 +33,7 @@ class LanguagesTests < ModelTestCase
   def stub_exists(languages_names)
     languages_names.each do |name|
       language = languages[name]
-      language.dir.spy_exists?(language.manifest_filename)
+      language.dir.spy_exists?(Language.manifest_filename)
     end
   end
 

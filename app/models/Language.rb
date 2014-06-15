@@ -15,7 +15,7 @@ class Language
   end
 
   def exists?
-    dir.exists?(manifest_filename)
+     dir.exists?(Language.manifest_filename)
   end
 
   def runnable?
@@ -120,13 +120,13 @@ class Language
 
   def manifest
     begin
-      @manifest ||= JSON.parse(read(manifest_filename))
+      @manifest ||= JSON.parse(read(Language.manifest_filename))
     rescue
-      raise "JSON.parse(#{manifest_filename}) exception from language:" + name
+      raise "JSON.parse(#{Language.manifest_filename}) exception from language:" + name
     end
   end
 
-  def manifest_filename
+  def self.manifest_filename
     'manifest.json'
   end
 
