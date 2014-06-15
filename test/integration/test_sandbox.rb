@@ -8,11 +8,11 @@ require 'HostTestRunner'
 class SandboxTests < ActionController::TestCase
 
   def setup
-    disk   = OsDisk.new
-    git    = Git.new
-    runner = HostTestRunner.new
-    paas = Paas.new(disk, git, runner)
-    @dojo = paas.create_dojo(root_path)
+    thread = Thread.current
+    thread[:disk]   = OsDisk.new
+    thread[:git]    = Git.new
+    thread[:runner] = HostTestRunner.new
+    @dojo = Dojo.new(root_path)
   end
 
   test "defect-driven: filename containing space is not accidentally retained" do

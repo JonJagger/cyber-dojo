@@ -5,7 +5,6 @@ require 'GitDiff'
 require 'OsDisk'
 require 'Git'
 require 'HostTestRunner'
-require 'Paas'
 require 'Dojo'
 require 'Languages'
 require 'Language'
@@ -25,11 +24,11 @@ class GitDiffViewTests < CyberDojoTestBase
 
   def setup
     super
-    @disk = OsDisk.new
-    @git = Git.new
-    @runner = HostTestRunner.new
-    @paas = Paas.new(@disk, @git, @runner)
-    @dojo = @paas.create_dojo(root_path)
+    thread = Thread.current
+    thread[:disk]   = OsDisk.new
+    thread[:git]    = Git.new
+    thread[:runner] = HostTestRunner.new
+    @dojo = Dojo.new(root_path)
   end
 
   class MockIdFactory

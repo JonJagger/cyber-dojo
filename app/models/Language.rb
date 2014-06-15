@@ -121,8 +121,8 @@ class Language
   def manifest
     begin
       @manifest ||= JSON.parse(read(Language.manifest_filename))
-    rescue
-      raise "JSON.parse(#{Language.manifest_filename}) exception from language:" + name
+    rescue Exception => e
+      raise "JSON.parse(#{Language.manifest_filename}) exception from language:" + path
     end
   end
 

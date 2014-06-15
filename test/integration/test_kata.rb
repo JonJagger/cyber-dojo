@@ -8,11 +8,11 @@ require 'DummyTestRunner'
 class KataTests < ActionController::TestCase
 
   def setup
-    disk   = OsDisk.new
-    git    = Git.new
-    runner = DummyTestRunner.new
-    paas = Paas.new(disk, git, runner)
-    @dojo = paas.create_dojo(root_path)
+    thread = Thread.current
+    thread[:disk]   = OsDisk.new
+    thread[:git]    = Git.new
+    thread[:runner] = DummyTestRunner.new
+    @dojo = Dojo.new(root_path)
   end
 
   test "exists? is false for empty-string id" do

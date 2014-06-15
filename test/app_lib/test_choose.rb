@@ -5,7 +5,6 @@ require 'Choose'
 require 'OsDisk'
 require 'Git'
 require 'DummyTestRunner'
-require 'Paas'
 require 'Dojo'
 require 'Katas'
 require 'Kata'
@@ -19,11 +18,11 @@ class ChooseTests < CyberDojoTestBase
 
   def setup
     super
-    @disk = OsDisk.new
-    @git = Git.new
-    @runner = DummyTestRunner.new
-    @paas = Paas.new(@disk, @git, @runner)
-    @dojo = @paas.create_dojo(root_path)
+    thread = Thread.current
+    thread[:disk]   = OsDisk.new
+    thread[:git]    = Git.new
+    thread[:runner] = DummyTestRunner.new
+    @dojo = Dojo.new(root_path)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -

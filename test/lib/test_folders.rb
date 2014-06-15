@@ -8,11 +8,11 @@ require 'HostTestRunner'
 class FoldersTests < ActionController::TestCase
 
   def setup
-    @disk   = OsDisk.new
-    @git    = Git.new
-    @runner = HostTestRunner.new
-    @paas = Paas.new(@disk, @git, @runner)
-    @dojo = @paas.create_dojo(root_path)
+    thread = Thread.current
+    thread[:disk]   = OsDisk.new
+    thread[:git]    = Git.new
+    thread[:runner] = HostTestRunner.new
+    @dojo = Dojo.new(root_path)
     @path = @dojo.katas.path
     `rm -rf #{@path}`
   end

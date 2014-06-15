@@ -1,13 +1,6 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
-require __DIR__ + '/app/lib/Paas'
-require __DIR__ + '/app/lib/Docker'
-require __DIR__ + '/app/lib/DockerTestRunner'
-require __DIR__ + '/app/lib/DummyTestRunner'
-require __DIR__ + '/app/lib/HostTestRunner'
 require __DIR__ + '/lib/Folders'
-require __DIR__ + '/lib/Git'
-require __DIR__ + '/lib/OsDisk'
 
 class ApplicationController < ActionController::Base
 
@@ -19,17 +12,8 @@ class ApplicationController < ActionController::Base
     Folders::id_complete(root_path + 'katas/', params[:id]) || ""
   end
 
-  def paas
-    # allow app/controller tests to tunnel through rails stack
-    thread = Thread.current
-    @disk   ||= thread[:disk]   || OsDisk.new
-    @git    ||= thread[:git]    || Git.new
-    @runner ||= thread[:runner] || runner
-    @paas   ||= Paas.new(@disk, @git, @runner)
-  end
-
   def dojo
-    paas.create_dojo(root_path)
+    Dojo.new(root_path, 'json')
   end
 
   def bind(pathed_filename)
@@ -40,14 +24,6 @@ class ApplicationController < ActionController::Base
   def root_path
     # See test/app_controllers/integration_test.rb
     Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
-  end
-
-private
-
-  def runner
-    return DockerTestRunner.new if Docker.installed?
-    return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
-    return DummyTestRunner.new
   end
 
 private

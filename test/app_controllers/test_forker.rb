@@ -16,8 +16,7 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = @disk = SpyDisk.new
     thread[:git] = @git = SpyGit.new
     thread[:runner] = @runner = StubTestRunner.new
-    @paas = Paas.new(@disk, @git, @runner)
-    @dojo = @paas.create_dojo(root_path)
+    @dojo = Dojo.new(root_path)
   end
 
   def teardown

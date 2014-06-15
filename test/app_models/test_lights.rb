@@ -10,14 +10,10 @@ class LightsTests < ActionController::TestCase
 
   def setup
     thread = Thread.current
-    thread[:git] = nil
-    thread[:disk] = nil
-    thread[:runner] = nil
-    @disk   = OsDisk.new
-    @git    = Git.new
-    @runner = HostTestRunner.new
-    @paas = Paas.new(@disk, @git, @runner)
-    @dojo = @paas.create_dojo(root_path)
+    thread[:disk]   = OsDisk.new
+    thread[:git]    = Git.new
+    thread[:runner] = HostTestRunner.new
+    @dojo = Dojo.new(root_path)
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`

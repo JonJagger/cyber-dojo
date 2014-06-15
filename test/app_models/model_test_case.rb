@@ -7,20 +7,15 @@ require 'StubTestRunner'
 class ModelTestCase < ActionController::TestCase
 
   def setup
-    create_paas_dojo_format('json')
+    create_dojo_format('json')
   end
 
-  def create_paas_dojo_format(format)
+  def create_dojo_format(format)
     thread = Thread.current
-    thread[:git] = nil
-    thread[:disk] = nil
-    thread[:runner] = nil
-    @disk   = SpyDisk.new
-    @git    = SpyGit.new
-    @runner = StubTestRunner.new
-    @paas = Paas.new(@disk, @git, @runner)
-    @paas.format_rb if format === 'rb'
-    @dojo = @paas.create_dojo(root_path)
+    @disk   = thread[:disk]   = SpyDisk.new
+    @git    = thread[:git]    = SpyGit.new
+    @runner = thread[:runner] = StubTestRunner.new
+    @dojo = Dojo.new(root_path, format)
     @max_duration = 15
   end
 
@@ -31,7 +26,7 @@ class ModelTestCase < ActionController::TestCase
   def json_and_rb
     yield 'json'
     teardown
-    create_paas_dojo_format('rb')
+    create_dojo_format('rb')
     yield 'rb'
   end
 
