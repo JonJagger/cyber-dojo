@@ -1,5 +1,18 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename Dojo.rb to CyberDojo.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Duplication of this is lots of places, tests too
+  thread = Thread.current
+  thread[:disk] = ...
+  thread[:git] = ...
+  thread[:runner] = ...
+  Make set(1,2,3) method in Externals?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dojo.ctor has
+   raise RuntimeError.new("path must end in /") if !path.end_with?('/')
+   do slashed(path) method as per FakeDisk
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
@@ -52,19 +65,6 @@ o) adding a new language
   admin_scripts/check_language_manifest.rb
   should be passed the languages/ dir not the root_dir
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  languages/exercises/
-  These should know their own path and be passed a Disk
-  object on construction. They are currently passed a Paas
-  object - which is over coupled. They don't need git/runner.
-
-  katas/
-  This should know its own path and be passed
-    Disk,Git,Runner objects on construction
-    Move create_manifest() and start_avatar() into
-    Katas and Avatars classes.
-  Aim for dropping the Paas class, just need these three...
-     Languages, Exercises, Katas
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   max-duration could be a ctor parameter for DockerRunner
   and not for test()?
   Or is it feasible that the duration could become a parameter
@@ -76,11 +76,6 @@ o) adding a new language
   has some tests that need reviving.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   OutputParser could be another object hung off Thread.current
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  now LinuxPaas.create_dojo() has only one argument I could do this...
-     paas.dojos[root_path].katas[id]
-     where paas.dojos[root_path] gives you a dojo object
-     which may or may not exist (just like katas[id])
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   kata.avatars['lion'].tag[4]
     handy shortcut for this could be
