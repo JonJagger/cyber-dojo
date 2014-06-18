@@ -4,11 +4,22 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class DojoTests < ModelTestCase
 
-  test "languages['xxx'] gives you language which knows its name is 'xxx'" do
-    json_and_rb do
-      assert_equal 'Ruby', @dojo.languages['Ruby'].name
-      assert_equal 'C', @dojo.languages['C'].name
-      assert_equal 'Erlang', @dojo.languages['Erlang'].name
+  test 'default format is json' do
+    assert_equal 'json', Dojo.new(path='fake/').format
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'format is as set in ctor' do
+    assert_equal 'json', Dojo.new(path='fake/', 'json').format
+    assert_equal 'rb',   Dojo.new(path='fake/', 'rb').format
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'dojo created with format not json or rb raises' do
+    assert_raise RuntimeError do
+      Dojo.new('fake/', 'wibble')
     end
   end
 

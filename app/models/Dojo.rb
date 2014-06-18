@@ -11,6 +11,7 @@ class Dojo
 
   def initialize(path, format = 'json')
     @path,@format = path,format
+    raise RuntimeError.new('format must be json|rb') if !['json','rb'].include?(format)
     raise RuntimeError.new("path must end in /") if !path.end_with?('/')
     thread = Thread.current
     thread[:disk]   ||= OsDisk.new

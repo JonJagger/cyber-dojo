@@ -4,6 +4,17 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class ExerciseTests < ModelTestCase
 
+  test 'path(exercise)' do
+    json_and_rb do
+      exercise = @dojo.exercises['test_Yahtzee']
+      assert exercise.path.match(exercise.name)
+      assert path_ends_in_slash?(exercise)
+      assert !path_has_adjacent_separators?(exercise)
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
   test 'exists? is true only if dir and instructions exist' do
     json_and_rb do
       exercise = @dojo.exercises['test_Yahtzee']

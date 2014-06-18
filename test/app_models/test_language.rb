@@ -4,6 +4,17 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class LanguageTests < ModelTestCase
 
+  test 'path(language)' do
+    json_and_rb do
+      language = @dojo.languages['Ruby']
+      assert language.path.match(language.name)
+      assert path_ends_in_slash?(language)
+      assert !path_has_adjacent_separators?(language)
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'filename_extension defaults to empty string when not set' do
     json_and_rb do
       @language = @dojo.languages['Ruby']

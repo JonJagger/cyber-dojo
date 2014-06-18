@@ -101,6 +101,22 @@ class AvatarTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'path(avatar)' do
+    json_and_rb do |format|
+      kata = make_kata
+      avatar = kata.start_avatar(Avatar.names)
+      assert path_ends_in_slash?(avatar)
+      assert !path_has_adjacent_separators?(avatar)
+
+      #sandbox = avatar.sandbox
+      #assert path_ends_in_slash?(sandbox)
+      #assert !path_has_adjacent_separators?(sandbox)
+      #assert sandbox.path.include?('sandbox')
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'avatar creation saves' +
           ' visible_files in avatar/manifest.rb|json,' +
           ' and empty avatar/increments.rb/json,' +

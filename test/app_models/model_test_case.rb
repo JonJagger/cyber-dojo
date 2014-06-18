@@ -51,4 +51,13 @@ class ModelTestCase < ActionController::TestCase
     @dojo.katas.create_kata(language, exercise)
   end
 
+  def path_ends_in_slash?(object)
+    object.path.end_with?(@disk.dir_separator)
+  end
+
+  def path_has_adjacent_separators?(object)
+    doubled_separator = @disk.dir_separator * 2
+    object.path.scan(doubled_separator).length > 0
+  end
+
 end

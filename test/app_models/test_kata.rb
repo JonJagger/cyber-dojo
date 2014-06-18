@@ -4,6 +4,18 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class KataTests < ModelTestCase
 
+  test 'path(kata)' do
+    json_and_rb do
+      kata = @dojo.katas[id]
+      assert kata.path.include?(kata.id.inner)
+      assert kata.path.include?(kata.id.outer)
+      assert path_ends_in_slash?(kata)
+      assert !path_has_adjacent_separators?(kata)
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'when kata does exist it is not active and its age is zero' do
     json_and_rb do
       kata = @dojo.katas[id]
