@@ -28,11 +28,10 @@ require 'Id'
 require 'json'
 
 def create_dojo
-  disk = OsDisk.new
-  git = Git.new
-  runner = DummyRunner.new
-  paas = Paas.new(disk, git, runner)
-  paas.create_dojo(CYBERDOJO_HOME_DIR)
+  thread[:disk] = OsDisk.new
+  thread[:git] = Git.new
+  thread[:runner] = DummyTestRunner.new
+  Dojo.new(CYBERDOJO_HOME_DIR)
 end
 
 def number(value,width)
