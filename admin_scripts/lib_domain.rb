@@ -28,6 +28,7 @@ require 'Id'
 require 'json'
 
 def create_dojo
+  thread = Thread.current
   thread[:disk] = OsDisk.new
   thread[:git] = Git.new
   thread[:runner] = DummyTestRunner.new
