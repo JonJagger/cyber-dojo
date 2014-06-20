@@ -1,8 +1,11 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
 require __DIR__ + '/lib/Folders'
+require __DIR__ + '/lib/Git'
+require 'Externals'
 
 class ApplicationController < ActionController::Base
+  include Externals
 
   protect_from_forgery
 
@@ -13,6 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
+    set_git(Git.new)
     Dojo.new(root_path, 'json')
   end
 

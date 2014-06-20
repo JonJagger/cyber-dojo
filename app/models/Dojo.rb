@@ -10,10 +10,13 @@ require __DIR__ + '/lib/OsDisk'
 class Dojo
 
   def initialize(path, format = 'json')
+    thread = Thread.current
     @path,@format = path,format
     raise RuntimeError.new('format must be json|rb') if !['json','rb'].include?(format)
     raise RuntimeError.new("path must end in /") if !path.end_with?('/')
-    thread = Thread.current
+
+    raise RuntimeError.new('External:git not set') if thread[:git].nil?
+
     thread[:disk]   ||= OsDisk.new
     thread[:git]    ||= Git.new
     thread[:runner] ||= runner
