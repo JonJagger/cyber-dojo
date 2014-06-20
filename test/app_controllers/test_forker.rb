@@ -8,10 +8,6 @@ require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
 
-  def thread
-    Thread.current
-  end
-
   def setup_dojo
     thread[:disk] = @disk = SpyDisk.new
     thread[:git] = @git = SpyGit.new
@@ -23,6 +19,10 @@ class ForkerControllerTest < IntegrationTest
     thread[:disk] = nil
     thread[:git] = nil
     thread[:runner] = nil
+  end
+
+  def thread
+    Thread.current
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
