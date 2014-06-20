@@ -28,10 +28,7 @@ class KataController < ApplicationController
     was = params[:file_hashes_incoming]
     now = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(was, now)
-    # there are a lot of steps below that could be collapsed into one
-    # command. I don't do that because later on I am going to need to
-    # convert old format katas to new format katas which means I will
-    # need to miss out the step that does the actual test()
+    # there are a lot of steps below that sould be collapsed somewhat.
     @avatar.save(delta, visible_files)
     max_duration = 15
     @output = @avatar.test(max_duration)

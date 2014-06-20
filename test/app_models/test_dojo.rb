@@ -4,6 +4,17 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class DojoTests < ModelTestCase
 
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # ctor raises if thread[:git] not set
+  # ctor raises if thread[:disk] not set
+  # ctor raises if thread[:runner] not set
+  # ctor raises if exercises_dir_env_var_not_set
+  # ctor raises if languages_dir_env_var_not_set
+  # ctor raises if katas_dir_env_var_not_set
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'default format is json' do
     assert_equal 'json', Dojo.new(path='fake/').format
   end
