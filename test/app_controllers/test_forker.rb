@@ -7,31 +7,27 @@ require 'StubTestRunner'
 require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
+  include Externals
 
   def setup_dojo
-    thread[:disk] = @disk = SpyDisk.new
-    thread[:git] = @git = SpyGit.new
-    thread[:runner] = @runner = StubTestRunner.new
+    set_disk(@disk = SpyDisk.new)
+    set_git(@git = SpyGit.new)
+    set_runner(@runner = StubTestRunner.new)
     @dojo = Dojo.new(root_path)
   end
 
   def teardown
-    thread[:disk] = nil
-    thread[:git] = nil
-    thread[:runner] = nil
-  end
-
-  def thread
-    Thread.current
+    reset
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  #TODO: s/if/when/
+
   test "if id is bad " +
        "then fork fails " +
        "and the reason is id" do
-    thread[:disk] = disk = SpyDisk.new
-    thread[:git] = git = SpyGit.new
+    setup_dojo
 
     get "forker/fork",
       :format => :json,
@@ -74,6 +70,12 @@ class ForkerControllerTest < IntegrationTest
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # this passes when run on its own
+  # $ ./test_forker.rb
+  # but it fails when run in the full suite
+  # $ ./run_all.sh
+  # ????????
 
   test "if avatar not started " +
        "the fork fails " +

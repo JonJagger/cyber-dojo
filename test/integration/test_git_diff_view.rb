@@ -21,13 +21,13 @@ require 'OutputParser'
 class GitDiffViewTests < CyberDojoTestBase
 
   include GitDiff
+  include Externals
 
   def setup
     super
-    thread = Thread.current
-    thread[:disk]   = OsDisk.new
-    thread[:git]    = Git.new
-    thread[:runner] = HostTestRunner.new
+    set_disk(OsDisk.new)
+    set_git(Git.new)
+    set_runner(HostTestRunner.new)
     @dojo = Dojo.new(root_path)
   end
 

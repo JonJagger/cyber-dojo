@@ -7,12 +7,12 @@ require __DIR__ + 'lib/Git'
 require __DIR__ + 'app/lib/HostTestRunner'
 
 class LightsTests < ActionController::TestCase
+  include Externals
 
   def setup
-    thread = Thread.current
-    thread[:disk]   = OsDisk.new
-    thread[:git]    = Git.new
-    thread[:runner] = HostTestRunner.new
+    set_disk(OsDisk.new)
+    set_git(Git.new)
+    set_runner(HostTestRunner.new)
     @dojo = Dojo.new(root_path)
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']

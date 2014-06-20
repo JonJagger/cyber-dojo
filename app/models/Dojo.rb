@@ -1,4 +1,3 @@
-__DIR__ = File.dirname(__FILE__) + '/../../'
 
 class Dojo
 

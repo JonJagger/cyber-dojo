@@ -6,12 +6,12 @@ require 'Git'
 require 'DummyTestRunner'
 
 class KataTests < ActionController::TestCase
+  include Externals
 
   def setup
-    thread = Thread.current
-    thread[:disk]   = OsDisk.new
-    thread[:git]    = Git.new
-    thread[:runner] = DummyTestRunner.new
+    set_disk(OsDisk.new)
+    set_git(Git.new)
+    set_runner(DummyTestRunner.new)
     @dojo = Dojo.new(root_path)
   end
 
@@ -21,4 +21,3 @@ class KataTests < ActionController::TestCase
   end
 
 end
-
