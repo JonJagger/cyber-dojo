@@ -4,8 +4,6 @@ require File.dirname(__FILE__) + '/model_test_case'
 
 class DojoTests < ModelTestCase
 
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "ctor raises if thread[:git] not set" do
     Thread.current[:git] = nil
     assert_raise RuntimeError do
@@ -13,8 +11,24 @@ class DojoTests < ModelTestCase
     end
   end
 
-  # ctor raises if thread[:git] not set
-  # ctor raises if thread[:runner] not set
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "ctor raises if thread[:disk] not set" do
+    Thread.current[:disk] = nil
+    assert_raise RuntimeError do
+      Dojo.new('fake/')
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test "ctor raises if thread[:runner] not set" do
+    Thread.current[:runner] = nil
+    assert_raise RuntimeError do
+      Dojo.new('fake/')
+    end
+  end
+
   # ctor raises if exercises_dir_env_var_not_set
   # ctor raises if languages_dir_env_var_not_set
   # ctor raises if katas_dir_env_var_not_set

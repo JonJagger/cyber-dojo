@@ -16,7 +16,7 @@ module Externals
   end
 
   def set_runner(arg)
-    thread[:runner] = arg
+    thread[:runner] ||= arg
   end
 
   def set_git(arg)
@@ -24,7 +24,7 @@ module Externals
   end
 
   def set_disk(arg)
-    thread[:disk] = arg
+    thread[:disk] ||= arg
   end
 
   def dir

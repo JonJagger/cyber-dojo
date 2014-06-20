@@ -1,7 +1,13 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
 require __DIR__ + '/config/environment.rb'
+require __DIR__ + '/app/lib/Docker'
+require __DIR__ + '/app/lib/DockerTestRunner'
+require __DIR__ + '/app/lib/DummyTestRunner'
+require __DIR__ + '/app/lib/HostTestRunner'
 require __DIR__ + '/lib/Folders'
 require __DIR__ + '/lib/Git'
+require __DIR__ + '/lib/OsDisk'
+
 require 'Externals'
 
 class ApplicationController < ActionController::Base
@@ -16,7 +22,9 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
+    set_disk(OsDisk.new)
     set_git(Git.new)
+    set_runner(runner)
     Dojo.new(root_path, 'json')
   end
 
@@ -31,6 +39,13 @@ class ApplicationController < ActionController::Base
   end
 
 private
+
+  def runner
+    return DockerTestRunner.new if Docker.installed?
+    # export CYBERDOJO_USE_HOST=true
+    return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
+    return DummyTestRunner.new
+  end
 
   #before_filter :set_locale
   def set_locale
