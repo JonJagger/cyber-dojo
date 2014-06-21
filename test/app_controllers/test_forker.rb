@@ -22,20 +22,18 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #TODO: s/if/when/
-
-  test "if id is bad " +
-       "then fork fails " +
-       "and the reason is id" do
+  test 'when id is bad ' +
+       'then fork fails ' +
+       'and the reason is id' do
     setup_dojo
 
-    get "forker/fork",
+    get 'forker/fork',
       :format => :json,
       :id => 'bad',
       :avatar => 'hippo',
       :tag => 1
 
-    assert_not_nil json, "assert_not_nil json"
+    assert_not_nil json, 'assert_not_nil json'
     assert_equal false, json['forked'], json.inspect
     assert_equal 'id', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
@@ -45,22 +43,22 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if language folder no longer exists " +
-        "the fork fails " +
-        "and the reason is language" do
+  test 'when language folder no longer exists ' +
+       'the fork fails ' +
+       'and the reason is language' do
     setup_dojo
     language = @dojo.languages['does-not-exist']
     id = '1234512345'
     kata = @dojo.katas[id]
     kata.dir.spy_read('manifest.json', { :language => language.name })
 
-    get "forker/fork",
+    get 'forker/fork',
       :format => :json,
       :id => id,
       :avatar => 'hippo',
       :tag => 1
 
-    assert_not_nil json, "assert_not_nil json"
+    assert_not_nil json, 'assert_not_nil json'
     assert_equal false, json['forked'], json.inspect
     assert_equal 'language', json['reason'], json.inspect
     assert_equal language.name, json['language'], json.inspect
@@ -77,9 +75,9 @@ class ForkerControllerTest < IntegrationTest
   # $ ./run_all.sh
   # ????????
 
-  test "if avatar not started " +
-       "the fork fails " +
-       "and the reason is avatar" do
+  test 'when avatar not started ' +
+       'the fork fails ' +
+       'and the reason is avatar' do
     setup_dojo
     language = @dojo.languages['Ruby-installed-and-working']
     language.dir.make
@@ -89,13 +87,13 @@ class ForkerControllerTest < IntegrationTest
     kata = @dojo.katas[id]
     kata.dir.spy_read('manifest.json', { :language => language.name })
 
-    get "forker/fork",
+    get 'forker/fork',
       :format => :json,
       :id => id,
       :avatar => 'hippo',
       :tag => 1
 
-    assert_not_nil json, "assert_not_nil json"
+    assert_not_nil json, 'assert_not_nil json'
     assert_equal false, json['forked'], json.inspect
     assert_equal 'avatar', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
@@ -105,9 +103,9 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if tag is bad " +
-       "the fork fails " +
-       "and the reason is bad tag" do
+  test 'when tag is bad ' +
+       'the fork fails ' +
+       'and the reason is bad tag' do
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
     bad_tag_test('-1')      # tag <= 0
@@ -161,9 +159,9 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when language has been renamed but new-name-language exists " +
-       "and id,avatar,tag all ok " +
-       "the fork works " +
+  test 'when language has been renamed but new-name-language exists ' +
+       'and id,avatar,tag all ok ' +
+       'the fork works ' +
        "and new dojo's id is returned" do
     setup_dojo
     id = '1234512345'
@@ -186,24 +184,24 @@ class ForkerControllerTest < IntegrationTest
     avatar = kata.avatars[avatar_name]
     avatar.dir.spy_read('increments.rb', [
       {
-        "colour" => "red",
-        "time" => [2014, 2, 15, 8, 54, 6],
-        "number" => 1
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
       },
       {
-        "colour" => "green",
-        "time" => [2014, 2, 15, 8, 54, 34],
-        "number" => 2
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 54, 34],
+        'number' => 2
       },
       ].inspect)
 
-    get "forker/fork",
+    get 'forker/fork',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
       :tag => 2
 
-    assert_not_nil json, "assert_not_nil json"
+    assert_not_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
     assert_not_nil json['id'], json.inspect
     assert_equal 10, json['id'].length
@@ -212,14 +210,14 @@ class ForkerControllerTest < IntegrationTest
 
     # TODO: assert new dojo has same settings as one forked from
 
-    assert_equal({avatar.path => [ ["show", "2:manifest.rb"]]}, @git.log)
+    assert_equal({avatar.path => [ ['show', '2:manifest.rb']]}, @git.log)
     @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id,language,avatar,tag all ok " +
-       "the fork works " +
+  test 'when id,language,avatar,tag all ok ' +
+       'the fork works ' +
        "and new dojo's id is returned" do
     setup_dojo
     language_name = 'Ruby-installed-and-working'
@@ -234,24 +232,24 @@ class ForkerControllerTest < IntegrationTest
     avatar = kata.avatars[avatar_name]
     avatar.dir.spy_read('increments.rb', [
       {
-        "colour" => "red",
-        "time" => [2014, 2, 15, 8, 54, 6],
-        "number" => 1
+        'colour' => 'red',
+        'time' => [2014, 2, 15, 8, 54, 6],
+        'number' => 1
       },
       {
-        "colour" => "green",
-        "time" => [2014, 2, 15, 8, 54, 34],
-        "number" => 2
+        'colour' => 'green',
+        'time' => [2014, 2, 15, 8, 54, 34],
+        'number' => 2
       },
       ].inspect)
 
-    get "forker/fork",
+    get 'forker/fork',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
       :tag => 2
 
-    assert_not_nil json, "assert_not_nil json"
+    assert_not_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
     assert_not_nil json['id'], json.inspect
     assert_equal 10, json['id'].length
@@ -260,7 +258,7 @@ class ForkerControllerTest < IntegrationTest
 
     # TODO: assert new dojo has same settings as one forked from
 
-    assert_equal({avatar.path => [ ["show", "2:manifest.rb"]]}, @git.log)
+    assert_equal({avatar.path => [ ['show', '2:manifest.rb']]}, @git.log)
     @disk.teardown
   end
 
