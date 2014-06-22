@@ -12,7 +12,7 @@ class SandboxTests < ActionController::TestCase
     set_disk(OsDisk.new)
     set_git(Git.new)
     set_runner(HostTestRunner.new)
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
   end
 
   test "defect-driven: filename containing space is not accidentally retained" do

@@ -12,7 +12,7 @@ class KataTests < ActionController::TestCase
     set_disk(OsDisk.new)
     set_git(Git.new)
     set_runner(DummyTestRunner.new)
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
   end
 
   test "exists? is false for empty-string id" do

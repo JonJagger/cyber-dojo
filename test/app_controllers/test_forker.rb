@@ -13,7 +13,7 @@ class ForkerControllerTest < IntegrationTest
     set_disk(@disk = SpyDisk.new)
     set_git(@git = SpyGit.new)
     set_runner(@runner = StubTestRunner.new)
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
   end
 
   def teardown

@@ -12,7 +12,7 @@ class FoldersTests < ActionController::TestCase
     thread[:disk]   = OsDisk.new
     thread[:git]    = Git.new
     thread[:runner] = HostTestRunner.new
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
     @path = @dojo.katas.path
     `rm -rf #{@path}`
   end

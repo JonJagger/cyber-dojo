@@ -392,7 +392,7 @@ class LanguageTests < ModelTestCase
     Thread.current[:disk]   = SpyDisk.new
     Thread.current[:git]    = SpyGit.new
     Thread.current[:runner] = CustomRunner.new(['yes'])
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
     assert @dojo.languages['yes'].runnable?
     assert !@dojo.languages['no'].runnable?
   end
@@ -404,7 +404,7 @@ class LanguageTests < ModelTestCase
     Thread.current[:disk]   = SpyDisk.new
     Thread.current[:git]    = SpyGit.new
     Thread.current[:runner] = DockerTestRunner.new
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
     ruby = @dojo.languages['Ruby']
     ruby.dir.write(manifest_filename, { })
     assert !ruby.runnable?

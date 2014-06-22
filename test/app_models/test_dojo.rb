@@ -7,7 +7,7 @@ class DojoTests < ModelTestCase
   test "ctor raises if thread[:git] not set" do
     Thread.current[:git] = nil
     assert_raise RuntimeError do
-      Dojo.new('fake/')
+      Dojo.new('fake/','json')
     end
   end
 
@@ -16,7 +16,7 @@ class DojoTests < ModelTestCase
   test "ctor raises if thread[:disk] not set" do
     Thread.current[:disk] = nil
     assert_raise RuntimeError do
-      Dojo.new('fake/')
+      Dojo.new('fake/','json')
     end
   end
 
@@ -25,19 +25,13 @@ class DojoTests < ModelTestCase
   test "ctor raises if thread[:runner] not set" do
     Thread.current[:runner] = nil
     assert_raise RuntimeError do
-      Dojo.new('fake/')
+      Dojo.new('fake/','json')
     end
   end
 
   # ctor raises if exercises_dir_env_var_not_set
   # ctor raises if languages_dir_env_var_not_set
   # ctor raises if katas_dir_env_var_not_set
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'default format is json' do
-    assert_equal 'json', Dojo.new(path='fake/').format
-  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

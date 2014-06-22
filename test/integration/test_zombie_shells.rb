@@ -7,12 +7,12 @@ require 'HostTestRunner'
 
 class ZombieShellTests < ActionController::TestCase
   include Externals
-  
+
   def setup
     set_disk(OsDisk.new)
     set_git(Git.new)
     set_runner(HostTestRunner.new)
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path, 'json')
   end
 
   def defunct_count

@@ -12,7 +12,7 @@ class TimeOutTests < ActionController::TestCase
     set_disk(OsDisk.new)
     set_git(Git.new)
     set_runner(HostTestRunner.new)
-    @dojo = Dojo.new(root_path)
+    @dojo = Dojo.new(root_path,'json')
   end
 
   test "that code with infinite loop times out to amber and doesnt leak processes" do
