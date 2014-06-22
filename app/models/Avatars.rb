@@ -22,7 +22,7 @@ class Avatars
   end
 
   def [](name)
-    Avatar.new(@kata,name)
+    Avatar.new({ :kata => @kata, :name => name})
   end
 
 end

@@ -15,7 +15,7 @@ class Kata
     unstarted_avatar_names = avatar_names - started_avatar_names
     if unstarted_avatar_names != [ ]
       avatar_name = unstarted_avatar_names[0]
-      avatar = Avatar.new(self, avatar_name)
+      avatar = Avatar.new({:kata => self, :name => avatar_name})
 
       avatar.dir.make
       git.init(avatar.path, '--quiet')

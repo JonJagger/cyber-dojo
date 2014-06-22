@@ -15,8 +15,9 @@ class Avatar
         )
   end
 
-  def initialize(kata, name)
-    @kata,@name = kata,name
+  def initialize(args) #kata, name)
+    @kata = args[:kata]
+    @name = args[:name]
   end
 
   attr_reader :kata, :name
