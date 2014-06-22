@@ -1,11 +1,10 @@
 require 'json'
-require 'Externals'
 
 class Language
-  include Externals
 
-  def initialize(languages, name)
+  def initialize(languages,name,disk,runner)
     @languages,@name = languages,name
+    @disk,@runner = disk,runner
   end
 
   attr_reader :name
@@ -14,12 +13,16 @@ class Language
     @languages.path + name + '/'
   end
 
+  def dir
+    @disk[path]
+  end
+
   def exists?
      dir.exists?(Language.manifest_filename)
   end
 
   def runnable?
-    runner.runnable?(self)
+    @runner.runnable?(self)
   end
 
   def display_name

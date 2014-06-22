@@ -5,10 +5,9 @@ require 'Externals'
 
 class Exercises
   include Enumerable
-  include Externals
 
-  def initialize(path)
-    @path = path
+  def initialize(path,disk)
+    @path,@disk = path,disk
   end
 
   attr_reader :path
@@ -21,7 +20,13 @@ class Exercises
   end
 
   def [](name)
-    Exercise.new(self,name)
+    Exercise.new(self,name,@disk)
+  end
+
+private
+
+  def dir
+    @disk[path]
   end
 
 end

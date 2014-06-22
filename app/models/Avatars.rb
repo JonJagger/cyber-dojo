@@ -6,8 +6,9 @@
 class Avatars
   include Enumerable
 
-  def initialize(kata)
+  def initialize(kata,externals)
     @kata = kata
+    @externals = externals
   end
 
   def each
@@ -22,7 +23,7 @@ class Avatars
   end
 
   def [](name)
-    Avatar.new({ :kata => @kata, :name => name})
+    Avatar.new(@kata,name,@externals)
   end
 
 end

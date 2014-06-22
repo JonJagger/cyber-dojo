@@ -1,9 +1,7 @@
 require 'forwardable'
-require 'Externals'
 
 class Avatar
   extend Forwardable
-  include Externals
 
   def self.names
       # no two names start with the same letter
@@ -15,9 +13,9 @@ class Avatar
         )
   end
 
-  def initialize(args) #kata, name)
-    @kata = args[:kata]
-    @name = args[:name]
+  def initialize(kata,name,externals)
+    @kata,@name = kata,name
+    @externals = externals
   end
 
   attr_reader :kata, :name
@@ -26,6 +24,10 @@ class Avatar
 
   def path
     kata.path + name + '/'
+  end
+
+  def dir
+    @externals[:disk][path]
   end
 
   def exists?
@@ -114,6 +116,14 @@ class Avatar
   end
 
 private
+
+  def git
+    @externals[:git]
+  end
+
+  def runner
+    @externals[:runner]
+  end
 
   def parse(filename, tag)
     text = dir.read(filename) if tag == nil

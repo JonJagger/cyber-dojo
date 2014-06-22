@@ -11,7 +11,7 @@ class TrafficLightTests < CyberDojoTestBase
   include TrafficLightHelper
 
   def new_avatar(kata,name)
-    Avatar.new({:kata => kata, :name => name})
+    Avatar.new(kata,name,externals=nil)
   end
 
   test 'tool tip' do

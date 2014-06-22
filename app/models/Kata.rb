@@ -1,10 +1,9 @@
-require 'Externals'
 
 class Kata
-  include Externals
 
-  def initialize(katas, id)
+  def initialize(katas,id,externals)
     @katas,@id = katas,id
+    @externals = externals
   end
 
   attr_reader :katas
@@ -15,7 +14,7 @@ class Kata
     unstarted_avatar_names = avatar_names - started_avatar_names
     if unstarted_avatar_names != [ ]
       avatar_name = unstarted_avatar_names[0]
-      avatar = Avatar.new({:kata => self, :name => avatar_name})
+      avatar = Avatar.new(self,avatar_name,@externals)
 
       avatar.dir.make
       git.init(avatar.path, '--quiet')
@@ -43,7 +42,11 @@ class Kata
   end
 
   def path
-    katas.path + id.inner + '/' + id.outer + '/'
+    @katas.path + id.inner + '/' + id.outer + '/'
+  end
+
+  def dir
+    disk[path]
   end
 
   def exists?
@@ -74,7 +77,7 @@ class Kata
   end
 
   def avatars
-    Avatars.new(self)
+    Avatars.new(self, @externals)
   end
 
   def created
@@ -107,6 +110,14 @@ class Kata
 
 private
 
+  def disk
+    @externals[:disk]
+  end
+
+  def git
+    @externals[:git]
+  end
+
   def manifest_prefix
     'manifest.'
   end
@@ -123,7 +134,7 @@ private
   end
 
   def dojo
-    katas.dojo
+    @katas.dojo
   end
 
 end

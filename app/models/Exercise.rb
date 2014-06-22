@@ -1,16 +1,19 @@
-require 'Externals'
 
 class Exercise
-  include Externals
 
-  def initialize(exercises,name)
+  def initialize(exercises,name,disk)
     @exercises,@name = exercises,name
+    @disk = disk
   end
 
   attr_reader :name
 
   def path
     @exercises.path + name + '/'
+  end
+
+  def dir
+    @disk[path]
   end
 
   def exists?

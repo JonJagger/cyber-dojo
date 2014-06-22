@@ -1,14 +1,13 @@
-require 'Externals'
 
 # dojo.katas[id]
 # dojo.katas.each {|kata| ...}
 
 class Katas
   include Enumerable
-  include Externals
 
-  def initialize(dojo,path)
+  def initialize(dojo,path,externals)
     @dojo,@path = dojo,path
+    @externals = externals
   end
 
   attr_reader :dojo, :path
@@ -49,10 +48,14 @@ class Katas
   end
 
   def [](id)
-    Kata.new(self,id)
+    Kata.new(self,id,@externals)
   end
 
 private
+
+  def disk
+    @externals[:disk]
+  end
 
   def make_time(now)
     [now.year, now.month, now.day, now.hour, now.min, now.sec]
