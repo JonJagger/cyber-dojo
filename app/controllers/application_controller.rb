@@ -8,10 +8,7 @@ require __DIR__ + '/lib/Folders'
 require __DIR__ + '/lib/Git'
 require __DIR__ + '/lib/OsDisk'
 
-require 'Externals'
-
 class ApplicationController < ActionController::Base
-  include Externals
 
   protect_from_forgery
 
@@ -22,10 +19,13 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
-    set_disk(OsDisk.new)
-    set_git(Git.new)
-    set_runner(runner)
-    Dojo.new(root_path, 'json')
+    thread = Thread.current
+    externals = {
+      :disk   => @disk   = thread[:disk  ] || OsDisk.new,
+      :git    => @git    = thread[:git   ] || Git.new,
+      :runner => @runner = thread[:runner] || runner
+    }
+    Dojo.new(root_path,'json',externals)
   end
 
   def bind(pathed_filename)

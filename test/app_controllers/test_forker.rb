@@ -7,17 +7,24 @@ require 'StubTestRunner'
 require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
-  include Externals
+
+  def thread
+    Thread.current
+  end
 
   def setup_dojo
-    set_disk(@disk = SpyDisk.new)
-    set_git(@git = SpyGit.new)
-    set_runner(@runner = StubTestRunner.new)
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
+      :git    => @git    = thread[:git   ] = SpyGit.new,
+      :runner => @runner = thread[:runner] = StubTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
   end
 
   def teardown
-    reset
+    thread[:disk] = nil
+    thread[:git] = nil
+    thread[:runner] = nil
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -37,8 +44,8 @@ class ForkerControllerTest < IntegrationTest
     assert_equal false, json['forked'], json.inspect
     assert_equal 'id', json['reason'], json.inspect
     assert_nil json['id'], "json['id']==nil"
-    assert_equal({ }, git.log)
-    disk.teardown
+    assert_equal({ }, @git.log)
+    @disk.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

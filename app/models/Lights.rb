@@ -1,8 +1,6 @@
-require 'Externals'
 
 class Lights
   include Enumerable
-  include Externals
 
   def initialize(avatar)
     @avatar = avatar

@@ -6,13 +6,14 @@ require 'Git'
 require 'HostTestRunner'
 
 class SandboxTests < ActionController::TestCase
-  include Externals
 
   def setup
-    set_disk(OsDisk.new)
-    set_git(Git.new)
-    set_runner(HostTestRunner.new)
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk => OsDisk.new,
+      :git => Git.new,
+      :runner => HostTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
   end
 
   test "defect-driven: filename containing space is not accidentally retained" do

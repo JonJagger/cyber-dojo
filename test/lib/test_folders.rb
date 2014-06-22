@@ -8,11 +8,12 @@ require 'HostTestRunner'
 class FoldersTests < ActionController::TestCase
 
   def setup
-    thread = Thread.current
-    thread[:disk]   = OsDisk.new
-    thread[:git]    = Git.new
-    thread[:runner] = HostTestRunner.new
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk => OsDisk.new,
+      :git => Git.new,
+      :runner => HostTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
     @path = @dojo.katas.path
     `rm -rf #{@path}`
   end

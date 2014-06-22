@@ -1,4 +1,3 @@
-require 'Externals'
 
 # dojo.exercises['name']
 # dojo.exercises.each{|exercise| ...}

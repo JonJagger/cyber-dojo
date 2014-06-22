@@ -15,14 +15,15 @@ require 'Exercises'
 require 'Exercise'
 
 class ChooseTests < CyberDojoTestBase
-  include Externals
 
   def setup
     super
-    set_disk(OsDisk.new)
-    set_git(Git.new)
-    set_runner(DummyTestRunner.new)
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk => OsDisk.new,
+      :git => Git.new,
+      :runner => DummyTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -

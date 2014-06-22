@@ -1,10 +1,9 @@
-require 'Externals'
 
 class Sandbox
-  include Externals
 
-  def initialize(avatar)
+  def initialize(avatar,disk)
     @avatar = avatar
+    @disk = disk
   end
 
   attr_reader :avatar
@@ -14,7 +13,7 @@ class Sandbox
   end
 
   def dir
-    disk[path]
+    @disk[path]
   end
 
   def write(filename, content)

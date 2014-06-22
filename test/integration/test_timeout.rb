@@ -6,13 +6,14 @@ require 'Git'
 require 'HostTestRunner'
 
 class TimeOutTests < ActionController::TestCase
-  include Externals
 
   def setup
-    set_disk(OsDisk.new)
-    set_git(Git.new)
-    set_runner(HostTestRunner.new)
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk => OsDisk.new,
+      :git => Git.new,
+      :runner => HostTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
   end
 
   test "that code with infinite loop times out to amber and doesnt leak processes" do

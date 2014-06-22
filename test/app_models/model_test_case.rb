@@ -5,23 +5,23 @@ require 'SpyGit'
 require 'StubTestRunner'
 
 class ModelTestCase < ActionController::TestCase
-  include Externals
 
   def setup
     create_dojo_format('json')
   end
 
   def create_dojo_format(format)
-    set_disk(@disk = SpyDisk.new)
-    set_git(@git = SpyGit.new)
-    set_runner(@runner = StubTestRunner.new)
-    @dojo = Dojo.new(root_path, format)
+    externals = {
+      :disk => @disk = SpyDisk.new,
+      :git => @git = SpyGit.new,
+      :runner => StubTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,format,externals)
     @max_duration = 15
   end
 
   def teardown
     @disk.teardown
-    reset
   end
 
   def json_and_rb

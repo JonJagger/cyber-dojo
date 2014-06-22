@@ -27,7 +27,7 @@ class Avatar
   end
 
   def dir
-    @externals[:disk][path]
+    disk[path]
   end
 
   def exists?
@@ -46,7 +46,7 @@ class Avatar
   end
 
   def sandbox
-    Sandbox.new(self)
+    Sandbox.new(self,disk)
   end
 
   def save(delta, visible_files)
@@ -116,6 +116,10 @@ class Avatar
   end
 
 private
+
+  def disk
+    @externals[:disk]
+  end
 
   def git
     @externals[:git]

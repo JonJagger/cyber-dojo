@@ -5,27 +5,36 @@ require File.dirname(__FILE__) + '/model_test_case'
 class DojoTests < ModelTestCase
 
   test "ctor raises if thread[:git] not set" do
-    Thread.current[:git] = nil
+    externals = {
+      :disk => dummy,
+      :runner => dummy
+    }
     assert_raise RuntimeError do
-      Dojo.new('fake/','json')
+      Dojo.new('fake/','json',externals)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "ctor raises if thread[:disk] not set" do
-    Thread.current[:disk] = nil
+    externals = {
+      :git => dummy,
+      :runner => dummy
+    }
     assert_raise RuntimeError do
-      Dojo.new('fake/','json')
+      Dojo.new('fake/','json',externals)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "ctor raises if thread[:runner] not set" do
-    Thread.current[:runner] = nil
+    externals = {
+      :disk => dummy,
+      :git => dummy
+    }
     assert_raise RuntimeError do
-      Dojo.new('fake/','json')
+      Dojo.new('fake/','json', externals)
     end
   end
 
@@ -36,15 +45,25 @@ class DojoTests < ModelTestCase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'format is as set in ctor' do
-    assert_equal 'json', Dojo.new(path='fake/', 'json').format
-    assert_equal 'rb',   Dojo.new(path='fake/', 'rb').format
+    externals = {
+      :disk => dummy,
+      :git => dummy,
+      :runner => dummy
+    }
+    assert_equal 'json', Dojo.new(path='fake/','json',externals).format
+    assert_equal 'rb',   Dojo.new(path='fake/','rb',externals).format
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'dojo created with format not json or rb raises' do
+    externals = {
+      :disk => dummy,
+      :git => dummy,
+      :runner => dummy
+    }
     assert_raise RuntimeError do
-      Dojo.new('fake/', 'wibble')
+      Dojo.new('fake/','wibble',externals)
     end
   end
 
@@ -60,6 +79,10 @@ class DojoTests < ModelTestCase
       assert_equal 'manifest.'+fmt, kata.manifest_filename
       assert filenames_written_to(kata.dir.log).include?('manifest.'+fmt)
     end
+  end
+
+  def dummy
+    Object.new
   end
 
 end

@@ -6,13 +6,14 @@ require 'Git'
 require 'DummyTestRunner'
 
 class KataTests < ActionController::TestCase
-  include Externals
 
   def setup
-    set_disk(OsDisk.new)
-    set_git(Git.new)
-    set_runner(DummyTestRunner.new)
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk => OsDisk.new,
+      :git => Git.new,
+      :runner => DummyTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
   end
 
   test "exists? is false for empty-string id" do

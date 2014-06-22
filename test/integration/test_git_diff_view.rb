@@ -21,14 +21,15 @@ require 'OutputParser'
 class GitDiffViewTests < CyberDojoTestBase
 
   include GitDiff
-  include Externals
 
   def setup
     super
-    set_disk(OsDisk.new)
-    set_git(Git.new)
-    set_runner(HostTestRunner.new)
-    @dojo = Dojo.new(root_path,'json')
+    externals = {
+      :disk => OsDisk.new,
+      :git => Git.new,
+      :runner => HostTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,'json',externals)
   end
 
   class MockIdFactory
