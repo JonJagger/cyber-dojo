@@ -28,11 +28,12 @@ require 'Id'
 require 'json'
 
 def create_dojo
-  thread = Thread.current
-  thread[:disk] = OsDisk.new
-  thread[:git] = Git.new
-  thread[:runner] = DummyTestRunner.new
-  Dojo.new(CYBERDOJO_HOME_DIR)
+  externals = {
+    :disk => OsDisk.new,
+    :git => Git.new,
+    :runner => DummyTestRunner.new
+  }
+  Dojo.new(CYBERDOJO_HOME_DIR,'json',externals)
 end
 
 def number(value,width)

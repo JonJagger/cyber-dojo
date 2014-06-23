@@ -1,11 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename Dojo.rb to CyberDojo.rb ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dojo.ctor has
-   raise RuntimeError.new("path must end in /") if !path.end_with?('/')
-   do slashed(path) method as per FakeDisk
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages,Exercises,Languages container classes
 all check disk[path].exists? in their ctor and
 raise if it doesn't
@@ -13,6 +7,12 @@ raise if it doesn't
 Models all check existence in their ctors.
 exists? methods move to container classes
 Eg kata.exists? ==> katas.exists?(id)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename Dojo.rb to CyberDojo.rb ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dojo.ctor has
+   raise RuntimeError.new("path must end in /") if !path.end_with?('/')
+   do slashed(path) method as per FakeDisk
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
