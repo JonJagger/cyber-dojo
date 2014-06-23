@@ -24,11 +24,15 @@ print "\n"
 stats = { }
 dot_count = 0
 dojo.katas.each do |kata|
-  count = kata.avatars.inject(0){|sum,avatar| sum + avatar.lights.length }
-  stats[count] ||= [ ]
-  stats[count] << kata.avatars.entries.length
-  dot_count += 1
-  print "\r " + dots(dot_count)
+  begin
+    count = kata.avatars.inject(0){|sum,avatar| sum + avatar.lights.length }
+    stats[count] ||= [ ]
+    stats[count] << kata.avatars.entries.length
+    dot_count += 1
+    print "\r " + dots(dot_count)
+  rescue Exception => e
+    puts e.message
+  end
 end
 print "\n"
 print "\n"
