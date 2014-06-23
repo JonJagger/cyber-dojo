@@ -70,4 +70,51 @@ class FakeDirTests < ActionController::TestCase
     assert_equal ['a','b'], @disk['fake/'].entries.sort
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'write() raises if filename ends in .rb and content is string' do
+    assert_raise RuntimeError do
+      @dir.write('filename.rb', 'theory')
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'write(filename.rb,content) succeeds and can be read back as ruby object' do
+    @dir.write('filename.rb', { :answer => 42 })
+    assert_equal '{:answer=>42}', @dir.read('filename.rb')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'write() raises if filename ends in .json and content is string' do
+    assert_raise RuntimeError do
+      @dir.write('filename.json', 'theory')
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'write(filename.json,content) succeeds and can be read back as json object' do
+    @dir.write('filename.json', { :answer => 42 })
+    assert_equal '{"answer":42}', @dir.read('filename.json')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'write(filename.txt,content) succeeds and can be read back' do
+    @dir.write('filename.txt','hello, world')
+    assert_equal 'hello, world', @dir.read('filename.txt')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'lock(block) is executed' do
+    called = false
+    @dir.lock do
+      called = true
+    end
+    assert called
+  end
+
 end

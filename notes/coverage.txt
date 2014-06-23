@@ -6,8 +6,8 @@ app_helpers
 app_lib
    Finished tests in 2.074535s, 109.9041 tests/s, 1713.6370 assertions/s.
    228 tests, 3555 assertions, 1 failures, 0 errors, 0 skips
-   Coverage = 86.48%
-   (Missing *Runner and Paas coverage)
+   Coverage = 92.68%
+   (Missing *Runner coverage)
 
 app_models
    Finished tests in 6.426620s, 16.1827 tests/s, 80.9135 assertions/s.
@@ -15,9 +15,9 @@ app_models
    Coverage = 100%
 
 lib
-   Finished tests in 7.991714s, 7.2575 tests/s, 13.0135 assertions/s.
-   58 tests, 104 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 91.43%
+   Finished tests in 0.540152s, 24.0673 tests/s, 31.4726 assertions/s.
+   13 tests, 17 assertions, 0 failures, 0 errors, 0 skips
+   Coverage = 93.81%
 
 integration
    Finished tests in 47.454755s, 0.5057 tests/s, 2.8027 assertions/s.
