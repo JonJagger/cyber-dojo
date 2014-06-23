@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+__DIR__ = File.dirname(__FILE__)
+require __DIR__ + '/../cyberdojo_test_base'
+require __DIR__ + '/externals'
 require 'GitDiff'
-require 'OsDisk'
-require 'Git'
-require 'HostTestRunner'
 require 'Dojo'
 require 'Languages'
 require 'Language'
@@ -20,15 +19,11 @@ require 'OutputParser'
 
 class GitDiffViewTests < CyberDojoTestBase
 
+  include Externals
   include GitDiff
 
   def setup
     super
-    externals = {
-      :disk => OsDisk.new,
-      :git => Git.new,
-      :runner => HostTestRunner.new
-    }
     @dojo = Dojo.new(root_path,'json',externals)
   end
 

@@ -1,18 +1,14 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
-require 'OsDisk'
-require 'Git'
-require 'HostTestRunner'
+__DIR__ = File.dirname(__FILE__)
+require __DIR__ + '/../test_helper'
+require __DIR__ + '/externals'
 
 class AvatarTests < ActionController::TestCase
 
+  include Externals
+
   def setup
-    externals = {
-      :disk => OsDisk.new,
-      :git => Git.new,
-      :runner => HostTestRunner.new
-    }
     @dojo = Dojo.new(root_path,'json',externals)
   end
 

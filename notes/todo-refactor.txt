@@ -1,10 +1,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-rename Dojo.rb to CyberDojo.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Use hash based arg to all ctors. Then pass disk,git,runner
-in the hash. application_controller then uses thread trick
-to see if anything is already set.
+rename Dojo.rb to CyberDojo.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.ctor has
    raise RuntimeError.new("path must end in /") if !path.end_with?('/')
