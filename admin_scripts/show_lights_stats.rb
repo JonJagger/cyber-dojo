@@ -43,7 +43,6 @@ puts
 puts "means there were 2 katas with 34 traffic lights"
 puts "and those 2 katas had 5 and 6 avatars respectively."
 puts
-puts
 
 stats.sort.each do |count,tallies|
   printf("%3d %3d ",count, tallies.length)
@@ -54,7 +53,7 @@ end
 if exceptions != [ ]
   puts
   puts
-  print "Exceptions"
+  puts "Exceptions"
   exceptions.each do |message|
     puts message
   end
