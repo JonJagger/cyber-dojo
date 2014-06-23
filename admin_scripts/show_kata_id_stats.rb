@@ -31,7 +31,7 @@ require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
 
 dojo = create_dojo
 
-print "\n"
+puts
 totals = { }
 dot_count = 0
 dojo.katas.each do |kata|
@@ -41,8 +41,8 @@ dojo.katas.each do |kata|
   dot_count += 1
   print "\r " + dots(dot_count)
 end
-print "\n"
-print "\n"
+puts
+puts
 
 freqs = { }
 tally = 0
@@ -57,5 +57,5 @@ print "\n"
 freqs.sort.each do |count,freq|
   print number(count,5) + ' ' + ('.' * freq) + freq.to_s + "\n"
 end
-print "\n"
-print "\n"
+puts
+puts

@@ -6,7 +6,7 @@ dojo = create_dojo
 
 languages_names = dojo.languages.collect {|language| language.name}
 
-print "\n"
+puts
 renamed,rest,totals = { },{ },{ }
 dot_count = 0
 dojo.katas.each do |kata|
@@ -30,8 +30,8 @@ dojo.katas.each do |kata|
   dot_count += 1
   print "\r " + dots(dot_count)
 end
-print "\n"
-print "\n"
+puts
+puts
 
 print "Renamed\n"
 count = 0
@@ -47,12 +47,12 @@ renamed.keys.sort.each do |name|
   else
     print " --> " + dojo.languages[name].new_name
   end
-  print "\n"
+  puts
 end
 print ' ' * (33)
 print number(count,5)
-print "\n"
-print "\n"
+puts
+puts
 
 print "Rest\n"
 count = 0
@@ -64,19 +64,19 @@ rest.keys.sort.each do |name|
   print number(n,5)
   print "  #{rest[name].shuffle[0]}"
   print " --> MISSING new_name " if name != dojo.languages[name].new_name
-  print "\n"
+  puts
 end
 print ' ' * (33)
 print number(count,5)
-print "\n"
-print "\n"
+puts
+puts
 
 print "Totals\n"
 totals.sort_by{|k,v| v}.reverse.each do |name,count|
   dots = '.' * (32 - name.length)
   print " #{name}#{dots}"
   print number(count,5)
-  print "\n"
+  puts
 end
-print "\n"
-print "\n"
+puts
+puts

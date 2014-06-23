@@ -20,7 +20,7 @@ require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
 
 dojo = create_dojo
 
-print "\n"
+puts
 stats = { }
 dot_count = 0
 exceptions = [ ]

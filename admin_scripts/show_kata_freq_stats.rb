@@ -13,7 +13,7 @@ show_ids = (ARGV[0] || "false")
 
 dojo = create_dojo
 
-print "\n"
+puts
 days,weekdays,languages,exercises = { },{ },{ },{ }
 dot_count = 0
 dojo.katas.each do |kata|
@@ -39,24 +39,24 @@ dojo.katas.each do |kata|
   dot_count += 1
   print "\r " + dots(dot_count)
 end
-print "\n"
-print "\n"
+puts
+puts
 
-puts ""
+puts
 puts "per day"
 puts "-------"
 days.sort.each do |ymdw,n|
   puts ymdw.inspect + "\t" + n.to_s
 end
 
-puts ""
+puts
 puts "per week day"
 puts "------------"
 ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'].each do |day|
   puts day.to_s + "\t" + weekdays[day].to_s
 end
 
-puts ""
+puts
 puts "language freq"
 puts "-------------"
 languages.sort_by{|k,v| v.length}.reverse.each do |language,n|
@@ -67,7 +67,7 @@ languages.sort_by{|k,v| v.length}.reverse.each do |language,n|
   end
 end
 
-puts ""
+puts
 puts "exercise freq"
 puts "-------------"
 exercises.sort_by{|k,v| v.length}.reverse.each do |exercise,n|
@@ -78,4 +78,4 @@ exercises.sort_by{|k,v| v.length}.reverse.each do |exercise,n|
   end
 end
 
-puts ""
+puts
