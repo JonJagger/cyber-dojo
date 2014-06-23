@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + '/model_test_case'
+require 'DummyGit'
 
 class KataTests < ModelTestCase
 
@@ -273,12 +274,15 @@ class KataTests < ModelTestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-=begin   #Kata.new needs third argument, this is integration test?
-
   test 'old kata with rb manifest file reports its format as rb' do
     json_and_rb do
       id = '12345ABCDE'
-      kata = Kata.new(@dojo.katas,id)
+      externals = {
+        :disk => SpyDisk.new,
+        :git => DummyGit.new,
+        :runner => DummyTestRunner.new
+      }
+      kata = Kata.new(@dojo.katas,id,externals)
       kata.dir.make
       kata.dir.spy_exists?('manifest.rb')
       assert_equal 'rb', kata.format
@@ -286,8 +290,6 @@ class KataTests < ModelTestCase
       assert_equal 'manifest.rb', kata.manifest_filename
     end
   end
-  
-=end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
