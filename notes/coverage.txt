@@ -1,23 +1,23 @@
 app_helpers
-   Finished tests in 0.079692s, 150.5797 tests/s, 376.4493 assertions/s.
    12 tests, 30 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 95.83%
+   Coverage report generated for RSpec, Unit Tests to /Users/jonjagger/Desktop/Repos/cyberdojo/coverage. 1581 / 2179 LOC (72.56%) covered.
+   Coverage = 93.75%
 
 app_lib
-   Finished tests in 2.074535s, 109.9041 tests/s, 1713.6370 assertions/s.
+   Finished tests in 2.044483s, 111.5196 tests/s, 1738.8259 assertions/s.
    228 tests, 3555 assertions, 1 failures, 0 errors, 0 skips
-   Coverage = 92.68%
-   (Missing *Runner coverage)
+   Coverage report generated for RSpec, Unit Tests to /Users/jonjagger/Desktop/Repos/cyberdojo/coverage. 1957 / 2131 LOC (91.83%) covered.
+   Coverage = 95.7%
 
 app_models
-   Finished tests in 6.426620s, 16.1827 tests/s, 80.9135 assertions/s.
-   104 tests, 520 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 100%
+   105 tests, 526 assertions, 0 failures, 0 errors, 0 skips
+   Coverage report generated for RSpec, Unit Tests to /Users/jonjagger/Desktop/Repos/cyberdojo/coverage. 1581 / 2179 LOC (72.56%) covered.
+   Coverage = 100.0%
 
 lib
-   Finished tests in 0.540152s, 24.0673 tests/s, 31.4726 assertions/s.
-   13 tests, 17 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 93.81%
+   Finished tests in 8.004218s, 7.9958 tests/s, 13.7428 assertions/s.
+   64 tests, 110 assertions, 0 failures, 0 errors, 0 skips
+   Coverage = 88.34%
 
 integration
    Finished tests in 47.454755s, 0.5057 tests/s, 2.8027 assertions/s.
@@ -29,10 +29,11 @@ integration
      79.27%  lib
 
 app_controllers
-   Finished tests in 44.442588s, 0.8325 tests/s, 4.7927 assertions/s.
+   Finished tests in 39.561611s, 0.9100 tests/s, 5.3587 assertions/s.
    36 tests, 212 assertions, 0 failures, 0 errors, 0 skips
-     95.93%  app/controllers
-     93.75%  app/helpers
-     69.69%  app/lib
-     95.60%  app/models
-     82.56%  lib
+   Coverage = 95.75%
+
+     95.83%  app/helpers
+     67.11%  app/lib
+     94.82%  app/models
+     80.07%  lib
