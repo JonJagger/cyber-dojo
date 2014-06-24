@@ -1,18 +1,17 @@
 app_helpers
+   Finished tests in 0.086069s, 139.4230 tests/s, 348.5576 assertions/s.
    12 tests, 30 assertions, 0 failures, 0 errors, 0 skips
-   Coverage report generated for RSpec, Unit Tests to /Users/jonjagger/Desktop/Repos/cyberdojo/coverage. 1581 / 2179 LOC (72.56%) covered.
    Coverage = 93.75%
 
 app_lib
    Finished tests in 2.044483s, 111.5196 tests/s, 1738.8259 assertions/s.
    228 tests, 3555 assertions, 1 failures, 0 errors, 0 skips
-   Coverage report generated for RSpec, Unit Tests to /Users/jonjagger/Desktop/Repos/cyberdojo/coverage. 1957 / 2131 LOC (91.83%) covered.
    Coverage = 95.7%
 
 app_models
-   105 tests, 526 assertions, 0 failures, 0 errors, 0 skips
-   Coverage report generated for RSpec, Unit Tests to /Users/jonjagger/Desktop/Repos/cyberdojo/coverage. 1581 / 2179 LOC (72.56%) covered.
-   Coverage = 100.0%
+   Finished tests in 0.566351s, 181.8660 tests/s, 896.9703 assertions/s.
+   103 tests, 508 assertions, 0 failures, 0 errors, 0 skips
+   Coverage = 94.82%
 
 lib
    Finished tests in 8.004218s, 7.9958 tests/s, 13.7428 assertions/s.
