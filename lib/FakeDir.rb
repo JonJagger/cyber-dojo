@@ -48,7 +48,7 @@ class FakeDir
   def read(filename)
     assert @repo != nil, "read('#{filename}') no file"
     assert @repo[filename] != nil, "read('#{filename}') no file"
-    content  = @repo[filename]
+    content = @repo[filename]
     content
   end
 

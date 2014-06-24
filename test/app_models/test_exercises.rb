@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+__DIR__ = File.dirname(__FILE__)
+require  __DIR__ + '/model_test_case'
 
 class ExercisesTests < ModelTestCase
 

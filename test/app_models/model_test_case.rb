@@ -45,10 +45,8 @@ class ModelTestCase < ActionController::TestCase
     language = @dojo.languages['test-C++-Catch']
     language.dir.spy_read('manifest.json', { :visible_filenames => visible_files.keys })
     visible_files.each {|filename,content| language.dir.spy_read(filename, content) }
-
     exercise = @dojo.exercises['test_Yahtzee']
     exercise.dir.spy_read('instructions', 'your task...')
-
     @dojo.katas.create_kata(language, exercise)
   end
 

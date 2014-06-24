@@ -1,12 +1,13 @@
 __DIR__ = File.dirname(__FILE__) + '/../../'
-require __DIR__ + '/config/environment.rb'
-require __DIR__ + '/app/lib/Docker'
-require __DIR__ + '/app/lib/DockerTestRunner'
-require __DIR__ + '/app/lib/DummyTestRunner'
-require __DIR__ + '/app/lib/HostTestRunner'
-require __DIR__ + '/lib/Folders'
-require __DIR__ + '/lib/Git'
-require __DIR__ + '/lib/OsDisk'
+
+require __DIR__ + 'config/environment.rb'
+require __DIR__ + 'lib/Docker'
+require __DIR__ + 'lib/DockerTestRunner'
+require __DIR__ + 'lib/DummyTestRunner'
+require __DIR__ + 'lib/HostTestRunner'
+require __DIR__ + 'lib/Folders'
+require __DIR__ + 'lib/Git'
+require __DIR__ + 'lib/OsDisk'
 
 class ApplicationController < ActionController::Base
 

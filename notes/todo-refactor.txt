@@ -10,9 +10,11 @@ Eg kata.exists? ==> katas.exists?(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename Dojo.rb to CyberDojo.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dojo.ctor has
-   raise RuntimeError.new("path must end in /") if !path.end_with?('/')
-   do slashed(path) method as per FakeDisk
+  application_controller does this...
+    def root_path
+      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
+    end
+  make it so root_path is always set via ENV far from shell.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -94,12 +96,6 @@ o) adding a new language
   move app/lib/Choose.language into app/models/Languages?
   move app/lib/Choose.exercise into app/models/Exercises?
   move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  application_controller does this...
-    def root_path
-      Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
-    end
-  make it so root_path is always set via ENV far from shell.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   prune_large.rb and prune_small.rb rework to used Dojo.each function
   Dojo.create_kata(manifest)
