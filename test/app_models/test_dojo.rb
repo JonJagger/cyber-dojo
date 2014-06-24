@@ -38,10 +38,6 @@ class DojoTests < ModelTestCase
     end
   end
 
-  # ctor raises if exercises_dir_env_var_not_set
-  # ctor raises if languages_dir_env_var_not_set
-  # ctor raises if katas_dir_env_var_not_set
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'format is as set in ctor' do
