@@ -1,6 +1,4 @@
 
-# Post-Paas-refactoring domain lib
-
 me = File.expand_path(File.dirname(__FILE__))
 CYBERDOJO_HOME_DIR = File.expand_path('..', me) + '/'
 
