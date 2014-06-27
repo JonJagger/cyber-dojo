@@ -14,18 +14,18 @@ class Dojo
   attr_reader :format
 
   def languages
-    root_path = @path + 'languages/'
-    Languages.new(root_path, @externals[:disk], @externals[:runner])
+    languages_path = @path + 'languages/'
+    Languages.new(languages_path, @externals[:disk], @externals[:runner])
   end
 
   def exercises
-    root_path = @path + 'exercises/'
-    Exercises.new(root_path, @externals[:disk])
+    exercises_path = @path + 'exercises/'
+    Exercises.new(exercises_path, @externals[:disk])
   end
 
   def katas
-    root_path = @path + 'katas/'
-    Katas.new(self, root_path, @externals)
+    katas_path = @path + 'katas/'
+    Katas.new(self, katas_path, @externals)
   end
 
 end

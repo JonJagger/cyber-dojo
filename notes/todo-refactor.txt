@@ -1,5 +1,44 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Kata.start_avatar
+  needs to do dir.lock do...end
+  to ensure you don't get two avatars with the same name.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  avatar.traffic_lights(tag = nil)
+    This is used with tag != nil only for revert_controller
+    (which is itself used in fork-dialog as well as revert-dialog)
+    Refactor.
+    inc: ==> light:
+  this needs to be
+      avatar.tags[t].lights
+      avatar.tags[t].lights[4]
+      avatar.tags[t].lights[4].colour
+      avatar.tags[t].visible_files
+
+  YES. and lights for a tag that is not a *test* event
+  eg its a file rename, can simply return the lights for
+  the most recent tag that was a *test* event.
+  OK. The details. How to do this?
+  Currently
+  increments.json stores
+  [  { colour:'red',
+       number:'1',
+       time:[2014,6,7,23,11,14]
+     }
+  ]
+  where each entry corresponds to a *test* event.
+  $ git shortlog
+  lists all the commit tags. So
+  irb: `git shortlog`.lines.entries[-2].strip.to_i
+  gets you last current git tag (-2 because -1 is a newline)
+
+  So if there is no event: key then take it to be a test event.
+  Otherwise the event is named eg :rename
+   colour: for a :rename could be 'previous-red'
+  This gives an easy way to create the list of traffic-lights
+  by simply filtering all the entries.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages,Exercises,Languages container classes
 all check disk[path].exists? in their ctor and
 raise if it doesn't
@@ -16,14 +55,14 @@ rename Dojo.rb to CyberDojo.rb ?
     end
   make it so root_path is always set via ENV far from shell.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Folders.id_complete can move to Katas.complete(id)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
   would be nice to be able to set ENV variables for
   the root-paths for each of these 3 independently
     o) languages/
     o) exercises/
     o) katas/
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker md file
 o) adding a new language
@@ -52,12 +91,6 @@ o) adding a new language
         # Howewever, it would increase the size of .tar.gz files
         # that would get xfer'd to a readonly server.
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  avatar.traffic_lights(tag = nil)
-    This is used with tag != nil only for revert_controller
-    (which is itself used in fork-dialog as well as revert-dialog)
-    Refactor.
-    inc: ==> light:
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Avatar should be passed block that can determine the colour
   of test output so that it can create its own traffic light.
