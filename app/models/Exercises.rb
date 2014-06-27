@@ -19,7 +19,7 @@ class Exercises
   end
 
   def [](name)
-    Exercise.new(self,name,@disk)
+    Exercise.new(path,name,@disk)
   end
 
 private

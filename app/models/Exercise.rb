@@ -1,15 +1,15 @@
 
 class Exercise
 
-  def initialize(exercises,name,disk)
-    @exercises,@name = exercises,name
+  def initialize(path,name,disk)
+    @path,@name = path,name
     @disk = disk
   end
 
   attr_reader :name
 
   def path
-    @exercises.path + name + '/'
+    @path + name + '/'
   end
 
   def dir
