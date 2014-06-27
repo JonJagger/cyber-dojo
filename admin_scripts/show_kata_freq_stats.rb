@@ -7,7 +7,7 @@
 # to see the ids of all counted dojos (in their catagories)
 # append true to the command line
 
-require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
+require File.dirname(__FILE__) + '/lib_domain'
 
 show_ids = (ARGV[0] || "false")
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
-
 # A ruby script to display the count of katas by size
 # For example...
 #    ...
@@ -17,6 +15,8 @@ require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
 # 34 2 [5, 6]
 # 156 1 [8]
 # 194 1 [3]
+
+require File.dirname(__FILE__) + '/lib_domain'
 
 dojo = create_dojo
 

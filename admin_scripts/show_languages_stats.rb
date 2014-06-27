@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require File.expand_path(File.dirname(__FILE__)) + '/lib_domain'
+require File.dirname(__FILE__) + '/lib_domain'
+
 
 dojo = create_dojo
 
