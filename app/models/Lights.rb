@@ -33,13 +33,9 @@ class Lights
 
 private
 
-  #def paas
-  #  avatar.kata.dojo.paas
-  #end
-
   def lights
     return @lights ||= JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
-    return @lights ||= JSON.parse(text) if format === 'json'
+    return @lights ||= JSON.parse(text)                     if format === 'json'
   end
 
   def text
