@@ -2,15 +2,15 @@ require 'json'
 
 class Language
 
-  def initialize(languages,name,disk,runner)
-    @languages,@name = languages,name
+  def initialize(path,name,disk,runner)
+    @path,@name = path,name
     @disk,@runner = disk,runner
   end
 
   attr_reader :name
 
   def path
-    @languages.path + name + '/'
+    @path + name + '/'
   end
 
   def dir

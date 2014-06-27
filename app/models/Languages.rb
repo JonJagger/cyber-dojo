@@ -20,7 +20,7 @@ class Languages
   end
 
   def [](name)
-    Language.new(self,name,@disk,@runner)
+    Language.new(path,name,@disk,@runner)
   end
 
 private
