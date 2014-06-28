@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class AvatarTests < ModelTestCase
+class AvatarTests < ModelTestBase
 
   test 'there are 16 avatar names' do
     assert_equal 16, Avatar.names.length

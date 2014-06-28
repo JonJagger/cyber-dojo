@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class DojoTests < ModelTestCase
+class DojoTests < ModelTestBase
 
   test "ctor raises if thread[:git] not set" do
     externals = {

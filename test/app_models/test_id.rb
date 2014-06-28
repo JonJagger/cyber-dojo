@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class IdTests < ModelTestCase
+class IdTests < ModelTestBase
 
   test "valid? is false when empty-id-string" do
     assert !Id.new("").valid?

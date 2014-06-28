@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class AvatarsTests < ModelTestCase
+class AvatarsTests < ModelTestBase
 
   test "an avatar's format is kata's format which is dojo's format" do
     kata = make_kata

@@ -69,7 +69,7 @@ require 'test/unit'
 
 #=================================================================
 
-class ModelTestCase < Test::Unit::TestCase
+class ModelTestBase < Test::Unit::TestCase
 
   def setup
     create_dojo_format('json')

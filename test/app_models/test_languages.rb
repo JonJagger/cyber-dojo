@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class LanguagesTests < ModelTestCase
+class LanguagesTests < ModelTestBase
 
   test 'dojo.languages.each() empty' do
     stub_exists(expected = [ ])

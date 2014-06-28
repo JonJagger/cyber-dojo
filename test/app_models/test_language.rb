@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class LanguageTests < ModelTestCase
+class LanguageTests < ModelTestBase
 
   test 'path(language)' do
     json_and_rb do

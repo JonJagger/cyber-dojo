@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class KatasTests < ModelTestCase
+class KatasTests < ModelTestBase
 
   test 'dojo.katas[id] returns previously created kata with given id' do
     kata = make_kata

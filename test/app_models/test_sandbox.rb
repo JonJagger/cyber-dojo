@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class SandboxTests < ModelTestCase
+class SandboxTests < ModelTestBase
 
   test 'path(avatar)' do
     json_and_rb do |format|

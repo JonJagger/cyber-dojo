@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_case'
+require File.dirname(__FILE__) + '/model_test_base'
 
-class ExercisesTests < ModelTestCase
+class ExercisesTests < ModelTestBase
 
   test 'dojo.exercises.each() gives all exercises which exist' do
     names = ['Unsplice','Verbal','Salmo']
