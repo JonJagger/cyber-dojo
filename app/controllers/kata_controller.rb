@@ -22,13 +22,13 @@ class KataController < ApplicationController
     @kata   = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
     visible_files = received_files
-    previous_files = visible_files.keys # should be previous_filenames
+    previous_filenames = visible_files.keys
     visible_files.delete('output')
 
     was = params[:file_hashes_incoming]
     now = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(was, now)
-    # there are a lot of steps below that sould be collapsed somewhat.
+    # there are a lot of steps below that should be collapsed somewhat.
     @avatar.save(delta, visible_files)
     max_duration = 15
     @output = @avatar.test(max_duration)
@@ -44,8 +44,8 @@ class KataController < ApplicationController
     @traffic_lights = @avatar.save_traffic_light(traffic_light, make_time(Time.now))
     @avatar.commit(@traffic_lights.length)
 
-    @new_files = visible_files.select {|filename, content| ! previous_files.include?(filename)}
-    @files_to_remove = previous_files.select {|filename| ! visible_files.keys.include?(filename)}
+    @new_files = visible_files.select {|filename, content| ! previous_filenames.include?(filename)}
+    @files_to_remove = previous_filenames.select {|filename| ! visible_files.keys.include?(filename)}
 
     respond_to do |format|
       format.js if request.xhr?
