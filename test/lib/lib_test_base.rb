@@ -42,6 +42,7 @@ $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/helpers'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/lib'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/models'
 
+require 'FakeDisk'
 require 'SpyDisk'
 require 'SpyDir'
 

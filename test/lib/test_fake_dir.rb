@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
-require 'FakeDir'
-require 'FakeDisk'
+require File.dirname(__FILE__) + '/lib_test_base'
 
-class FakeDirTests < ActionController::TestCase
+class FakeDirTests < LibTestBase
 
   def setup
     @disk = FakeDisk.new
