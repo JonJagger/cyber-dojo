@@ -1,3 +1,4 @@
+
 CyberDojo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -34,7 +35,7 @@ CyberDojo::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = false
-  
+
   config.log_level = :warn
-  
+
 end
