@@ -1,4 +1,5 @@
 ENV["RAILS_ENV"] = "test"
+
 require 'simplecov'
 
 module SimpleCov::Configuration
