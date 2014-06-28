@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
-require 'SpyDir'
-require 'SpyDisk'
+require File.dirname(__FILE__) + '/lib_test_base'
 
-class SpyDirTests < ActionController::TestCase
+class SpyDirTests < LibTestBase
 
   def setup
     @disk = SpyDisk.new

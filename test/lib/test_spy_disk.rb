@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
-require 'SpyDir'
-require 'SpyDisk'
+require File.dirname(__FILE__) + '/lib_test_base'
 
-class SpyDiskTests < ActionController::TestCase
+class SpyDiskTests < LibTestBase
 
   test 'each() filters nested sub-folders to the immediate sub-folder only' do
     path = 'spied/'

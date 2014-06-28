@@ -1,9 +1,8 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
-require 'HostTestRunner'
+require File.dirname(__FILE__) + '/lib_test_base'
 
-class HostTestRunnerTests < ActionController::TestCase
+class HostTestRunnerTests < LibTestBase
 
   class StubSandbox
     def path
