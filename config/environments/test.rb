@@ -34,9 +34,12 @@ CyberDojo::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-  
+
   config.exceptions_app = lambda do |env|
     ExceptionController.action(:render_error).call(env)
-  end  
+  end
+
+  # turn off warning about this defaulting to true in future
+  I18n.enforce_available_locales = false
 
 end
