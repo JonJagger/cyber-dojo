@@ -19,7 +19,6 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    #binding.pry
     @kata   = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
     visible_files = received_files

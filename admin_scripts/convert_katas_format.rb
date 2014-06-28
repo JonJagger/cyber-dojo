@@ -72,11 +72,6 @@ def replay(dojo,sid)
       prev_visible_files = curr_visible_files
 
       tavatar.commit(tag)
-
-      # This appears to work. However
-      # The output file content is present
-      # However I cannot resume into the converted kata
-      # and I should be able to.
     end
 
   end
