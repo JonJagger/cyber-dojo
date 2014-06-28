@@ -5,11 +5,6 @@
 
 require File.dirname(__FILE__) + '/lib_domain'
 
-def convert(tdir, sdir, prefix)
-  manifest = eval(sdir.read(prefix + '.rb'))
-  tdir.write(prefix + '.json', JSON.unparse(manifest))
-end
-
 def make_time(now)
   [now.year, now.month, now.day, now.hour, now.min, now.sec]
 end
@@ -38,19 +33,15 @@ end
 
 def replay(dojo,sid)
   s = dojo.katas[sid]
-
   tid = sid.reverse
   t = dojo.katas.create_kata(s.language, s.exercise, tid, make_time(s.created))
-
-  convert(t.dir, s.dir, 'manifest')
-
+  manifest = eval(s.dir.read('manifest.rb'))
+  t.dir.write('manifest.json', JSON.unparse(manifest))
   s.avatars.each do |avatar|
     tavatar = t.start_avatar([avatar.name])
-
     prev_visible_files = avatar.visible_files(0)
-
     max_tag = `cd #{avatar.path};git shortlog`.lines.entries[-2].strip.to_i
-    puts "#{avatar.name}:#{max_tag}"
+    #puts "#{avatar.name}:#{max_tag}"
     (1..max_tag).each do |tag|
       lights = avatar.traffic_lights(tag)
       last = lights.last
@@ -59,18 +50,17 @@ def replay(dojo,sid)
 
       curr_visible_files = avatar.visible_files(tag)
       #puts "#{tag}:filenames #{curr_visible_files.keys.sort}"
-
       delta = calc_delta(prev_visible_files.clone, curr_visible_files.clone)
       #puts "#{tag}:unchanged #{delta[:unchanged].sort}"
       #puts "#{tag}:  changed #{delta[:changed].sort}"
       #puts "#{tag}:  deleted #{delta[:deleted].sort}"
       #puts "#{tag}:      new #{delta[:new].sort}"
-
       tavatar.save(delta, curr_visible_files)
-      tavatar.save_visible_files(curr_visible_files)
-      prev_visible_files = curr_visible_files
 
+      tavatar.save_manifest(curr_visible_files)
       tavatar.commit(tag)
+
+      prev_visible_files = curr_visible_files
     end
 
   end
