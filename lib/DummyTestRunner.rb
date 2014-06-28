@@ -1,10 +1,6 @@
 
 # Runner that does nothing.
 
-__DIR__ = File.dirname(__FILE__)
-
-require __DIR__ + '/TestRunner'
-
 class DummyTestRunner
 
   def runnable?(language)
@@ -12,7 +8,9 @@ class DummyTestRunner
   end
 
   def run(sandbox, command, max_seconds)
-    ""
+    "dummy-test-runner\n" +
+    "to use HostTestRunner\n" +
+    "$ export CYBERDOJO_USE_HOST=true"
   end
 
 end
