@@ -57,7 +57,7 @@ class LightsTests < ActionController::TestCase
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
-    avatar.save_visible_files(visible_files)
+    avatar.save_manifest(visible_files)
     traffic_light = { 'colour' => 'green' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
 
@@ -117,7 +117,7 @@ class LightsTests < ActionController::TestCase
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
-    avatar.save_visible_files(visible_files)
+    avatar.save_manifest(visible_files)
     traffic_light = { 'colour' => 'amber' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
     assert_equal traffic_lights, avatar.traffic_lights
@@ -149,7 +149,7 @@ class LightsTests < ActionController::TestCase
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
-    avatar.save_visible_files(visible_files)
+    avatar.save_manifest(visible_files)
     traffic_light = { 'colour' => 'red' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
     assert_equal traffic_lights, avatar.traffic_lights

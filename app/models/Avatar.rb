@@ -67,7 +67,7 @@ class Avatar
     output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
-  def save_visible_files(visible_files)
+  def save_manifest(visible_files)
     dir.write(visible_files_filename, visible_files)
   end
 

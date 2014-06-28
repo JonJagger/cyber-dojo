@@ -591,7 +591,7 @@ class AvatarTests < ModelTestCase
       avatar.sandbox.write(delta, avatar.visible_files)
       output = avatar.sandbox.test(timeout=15)
       visible_files['output'] = output
-      avatar.save_visible_files(visible_files)
+      avatar.save_manifest(visible_files)
 
       traffic_light = OutputParser::parse(@kata.language.unit_test_framework, output)
       traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
@@ -697,7 +697,7 @@ class AvatarTests < ModelTestCase
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
-    avatar.save_visible_files(visible_files)
+    avatar.save_manifest(visible_files)
     traffic_light = { 'colour' => 'green' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
 
@@ -735,7 +735,7 @@ class AvatarTests < ModelTestCase
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
-    avatar.save_visible_files(visible_files)
+    avatar.save_manifest(visible_files)
     traffic_light = { 'colour' => 'amber' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
     assert_equal traffic_lights, avatar.traffic_lights
@@ -767,7 +767,7 @@ class AvatarTests < ModelTestCase
 
     avatar.sandbox.write('output',output)
     visible_files['output'] = output
-    avatar.save_visible_files(visible_files)
+    avatar.save_manifest(visible_files)
     traffic_light = { 'colour' => 'red' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
     assert_equal traffic_lights, avatar.traffic_lights

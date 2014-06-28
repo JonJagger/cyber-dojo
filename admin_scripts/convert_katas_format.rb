@@ -61,7 +61,6 @@ def replay(dojo,sid)
       #puts "#{tag}:filenames #{curr_visible_files.keys.sort}"
 
       delta = calc_delta(prev_visible_files.clone, curr_visible_files.clone)
-
       #puts "#{tag}:unchanged #{delta[:unchanged].sort}"
       #puts "#{tag}:  changed #{delta[:changed].sort}"
       #puts "#{tag}:  deleted #{delta[:deleted].sort}"

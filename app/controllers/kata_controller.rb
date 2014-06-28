@@ -39,7 +39,7 @@ class KataController < ApplicationController
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.path, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.path, visible_files)
 
-    @avatar.save_visible_files(visible_files)
+    @avatar.save_manifest(visible_files)
     traffic_light = OutputParser::parse(@kata.language.unit_test_framework, @output)
     @traffic_lights = @avatar.save_traffic_light(traffic_light, make_time(Time.now))
     @avatar.commit(@traffic_lights.length)
