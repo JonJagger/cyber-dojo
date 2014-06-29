@@ -63,13 +63,16 @@ def replay_rb_as_json(dojo,sid)
     tavatar = t.start_avatar([avatar.name])
     prev_visible_files = avatar.visible_files(0)
     max_tag = `cd #{avatar.path};git shortlog`.lines.entries[-2].strip.to_i
-    puts "#{sid}:#{avatar.name}:#{max_tag}"
+    puts "\n#{sid}:#{avatar.name}:#{max_tag}"
     (1..max_tag).each do |tag|
+      puts "\t#{tag}:avatar.traffic_lights(tag)"
       lights = avatar.traffic_lights(tag)
       last = lights.last
       now = last['time']
+      puts "\t#{tag}:tavatar.save_traffic_light(last,now)"
       tavatar.save_traffic_light(last,now)
 
+      puts "\t#{tag}:avatar.visible_files(tag)"
       curr_visible_files = avatar.visible_files(tag)
       #puts "#{tag}:filenames #{curr_visible_files.keys.sort}"
       delta = calc_delta(prev_visible_files.clone, curr_visible_files.clone)
@@ -77,9 +80,14 @@ def replay_rb_as_json(dojo,sid)
       #puts "#{tag}:  changed #{delta[:changed].sort}"
       #puts "#{tag}:  deleted #{delta[:deleted].sort}"
       #puts "#{tag}:      new #{delta[:new].sort}"
+
+      puts "\t#{tag}:tavatar.save(delta,curr_visible_files)"
       tavatar.save(delta, curr_visible_files)
 
+      puts "\t#{tag}:tavatar.save_manifest(curr_visible_files)"
       tavatar.save_manifest(curr_visible_files)
+
+      puts "\t#{tag}:tavatar.commit(tag)"
       tavatar.commit(tag)
 
       prev_visible_files = curr_visible_files
