@@ -2,20 +2,28 @@
 
 # Script to convert katas in old .rb format into new
 # katas (with new id) in new .json format.
+# After running this
+# o) katas dir will contain only .json katas
+# o) katas_rb will contain copies of converted .rb katas
+# o) katas_rb_bad will contain katas that could not be converted
+# The script works by replaying every [test] event from
+# the .rb kata into a new .json kata. It takes a long time
+# to run.
 #
 # Originally cyber-dojo saved state on the hard disk
 # in .rb files which were read back in and eval'd.
 # Later I switched to using .json files (to avoid eval)
 # but kept support for katas in the old .rb format
-# mostly so they could be reviewed.
-# I wrote this script to convert all the old katas in .rb
+# so they could be reviewed or resumed.
+# This script converts all the old katas in .rb
 # format to .json format. After converting the support for
-# .rb format can be dropped from the model.
+# .rb format will be dropped from the model.
 # If you want to run this script you will need support for
 # the old .rb format. For that you will need to checkout
 # an old commit (before .rb format support was removed)
-# run this script, and then go back to HEAD^1
 # The commit id you need is XXXXXXXXXXXXXXXXXXXXXXXXXXX
+# Then run this script
+# Then go back to HEAD^1
 
 def my_dir
   File.dirname(__FILE__)
@@ -155,7 +163,7 @@ dojo.katas.each do |kata|
            ArgumentError,
            NoMethodError => error
       tidy_up(kata,error)
-      exit
+      #exit
     end
   end
   dot_count += 1
