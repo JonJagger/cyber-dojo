@@ -72,8 +72,12 @@ class Kata
     dojo.languages[original_language.new_name]
   end
 
-  def exercise
+  def original_exercise
     dojo.exercises[manifest['exercise']]
+  end
+
+  def exercise
+    dojo.exercises[original_exercise.new_name]
   end
 
   def avatars

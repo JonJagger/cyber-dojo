@@ -2,12 +2,27 @@
 
 # Script (IN PROGRESS) to convert katas in old .rb format into new
 # katas (with new id) in new .json format
+# TODO: add original name to exercises just like I did for languages
 
-require File.dirname(__FILE__) + '/lib_domain'
+def my_dir
+  File.dirname(__FILE__)
+end
+
+require my_dir + '/lib_domain'
+
+#- - - - - - - - - - - - - - - - - - - - - - - -
+
+def root_dir
+  File.expand_path('..', my_dir)
+end
+
+#- - - - - - - - - - - - - - - - - - - - - - - -
 
 def make_time(now)
   [now.year, now.month, now.day, now.hour, now.min, now.sec]
 end
+
+#- - - - - - - - - - - - - - - - - - - - - - - -
 
 def calc_delta(was,now)
   result = {
@@ -31,9 +46,13 @@ def calc_delta(was,now)
   result
 end
 
-def replay(dojo,sid)
+#- - - - - - - - - - - - - - - - - - - - - - - -
+
+def replay_rb_as_json(dojo,sid)
   s = dojo.katas[sid]
-  tid = sid.reverse
+  outer = sid[0..1]
+  inner = sid[2..-1]
+  tid = outer + '1'*8
   t = dojo.katas.create_kata(s.language, s.exercise, tid, make_time(s.created))
   manifest = eval(s.dir.read('manifest.rb'))
   t.dir.write('manifest.json', JSON.unparse(manifest))
@@ -62,25 +81,31 @@ def replay(dojo,sid)
 
       prev_visible_files = curr_visible_files
     end
-
   end
-end
 
-dojo = create_dojo
-replay(dojo,'0A998360EA')
+  # mv katas/0A/998360EA to katas_rb/0A/998360EA
+  mkdir_cmd = "mkdir -p #{root_dir}/katas_rb/#{outer}"
+  `#{mkdir_cmd}`
+  mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb/#{outer}/#{inner}"
+  `#{mv_cmd}`
+
+  # rename dir 0A/11111111 to 0A/998360EA
+  rename_cmd = "mv #{root_dir}/katas/#{outer}/#{'1'*8} #{root_dir}/katas/#{outer}/#{inner}"
+  `#{rename_cmd}`
+
+end
 
 #- - - - - - - - - - - - - - - - - - - - - - - - -
 
 puts
 dot_count = 0
+dojo = create_dojo
 dojo.katas.each do |kata|
-  # if kata.format === 'rb'
-  #   do conversion, eg
-  #     if  source id = 0A998360EA
-  #     use target id = 0A11111111
-  #     delete the old kata
-  #     rename dir 0A/11111111 to 0A/998360EA
-  # end
+  if kata.format === 'rb'
+    replay_rb_as_json(dojo,kata.id.to_s)
+    #puts kata.id.to_s
+    #break
+  end
   dot_count += 1
   print "\r " + dots(dot_count)
 end

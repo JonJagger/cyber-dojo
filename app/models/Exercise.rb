@@ -8,6 +8,18 @@ class Exercise
 
   attr_reader :name
 
+  def new_name
+    # Some exercises/ sub-folders have been renamed.
+    # This creates a problem for the script
+    # admin_scripts/convert_katas_format.rb
+    # See app/models/Kata.rb ::exercise()
+    # See app/models/Kata.rb ::original_exercise()
+    renames = {
+      'Yahtzee' => 'Yazty'
+    }
+    renames[name] || name
+  end
+
   def path
     @path + name + '/'
   end
