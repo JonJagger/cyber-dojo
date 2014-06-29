@@ -34,7 +34,8 @@ class Exercise
   end
 
   def instructions
-    dir.read(instructions_filename)
+    raw = dir.read(instructions_filename)
+    raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
   end
 
   def instructions_filename

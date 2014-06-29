@@ -106,7 +106,7 @@ dojo.katas.each do |kata|
       #puts kata.id.to_s
       #break
     rescue SyntaxError => error
-      puts "SyntaxError from kata #{kata.id}"
+      puts "\nSyntaxError from kata #{kata.id}"
       puts error.message
       outer = kata.id.to_s[0..1]
       inner = kata.id.to_s[2..-1]
@@ -116,8 +116,10 @@ dojo.katas.each do |kata|
       `#{mv_cmd}`
       exit
     rescue Encoding::InvalidByteSequenceError => error
-      puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
+      puts "\nEncoding::InvalidByteSequenceError from kata #{kata.id}"
       puts error.message
+      outer = kata.id.to_s[0..1]
+      inner = kata.id.to_s[2..-1]
       mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
       `#{mkdir_cmd}`
       mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
