@@ -40,8 +40,7 @@ private
 
   def text
     raw = avatar.dir.read(traffic_lights_filename)
-    raw.force_encoding('UTF-8')
-    raw.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
+    clean(raw)
   end
 
   def traffic_lights_filename
@@ -50,6 +49,11 @@ private
 
   def format
     avatar.format
+  end
+
+  def clean(s)
+    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+    s = s.encode('UTF-8', 'UTF-16')
   end
 
 end

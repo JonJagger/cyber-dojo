@@ -64,8 +64,7 @@ class Avatar
 
   def test(max_duration)
     output = runner.run(sandbox, './cyber-dojo.sh', max_duration)
-    output = output.force_encoding('UTF-8')
-    output.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
+    clean(output)
   end
 
   def save_manifest(visible_files)
@@ -105,8 +104,7 @@ class Avatar
   def diff_lines(was_tag, now_tag)
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
     output = git.diff(path, command)
-    output = output.force_encoding('UTF-8')
-    output.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
+    clean(output)
   end
 
   def traffic_lights_filename
@@ -132,14 +130,27 @@ private
   end
 
   def parse(filename, tag)
-    raw = dir.read(filename)                   if tag == nil
-    raw = git.show(path, "#{tag}:#{filename}") if tag != nil
+    text = dir.read(filename)                   if tag == nil
+    text = git.show(path, "#{tag}:#{filename}") if tag != nil
 
-    raw = raw.force_encoding('UTF-8')
-    text = raw.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
-
-    return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
+    return JSON.parse(JSON.unparse(cleaned(filename,eval(text)))) if format === 'rb'
     return JSON.parse(text)                     if format === 'json'
+  end
+
+  def cleaned(filename,obj)
+    if filename === 'manifest.rb'
+      filenames = obj.keys
+      filenames.each do |filename|
+        s = obj[filename]
+        obj[filename] = clean(s)
+      end
+    end
+    obj
+  end
+
+  def clean(s)
+    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+    s = s.encode('UTF-8', 'UTF-16')
   end
 
 end

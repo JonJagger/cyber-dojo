@@ -63,11 +63,18 @@ private
     seen = { }
     (params[:file_content] || {}).each do |filename,content|
       # Cater for windows line endings from windows browser
+      content = clean(content)
       content = content.gsub(/\r\n/, "\n")
       # Cater for jquery-tabby.js plugin
       seen[filename] = MakefileFilter.filter(filename,content)
     end
     seen
+  end
+
+  def clean(s)
+    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+    s = s.encode('UTF-8', 'UTF-16')
+    s
   end
 
 end
