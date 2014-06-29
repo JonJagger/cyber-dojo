@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-# Script (IN PROGRESS) to convert katas in old .rb format into new
+# Script to convert katas in old .rb format into new
 # katas (with new id) in new .json format
-# TODO: add original name to exercises just like I did for languages
 
 def my_dir
   File.dirname(__FILE__)
