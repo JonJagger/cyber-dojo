@@ -108,8 +108,8 @@ dojo.katas.each do |kata|
     rescue SyntaxError => error
       puts "SyntaxError from kata #{kata.id}"
       puts error.message
-      outer = kata.id.outer
-      inner = kata.id.inner
+      outer = kata.id.to_s[0..1]
+      inner = kata.id.to_s[2..-1]
       mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
       `#{mkdir_cmd}`
       mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
