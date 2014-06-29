@@ -47,7 +47,7 @@ end
 
 #- - - - - - - - - - - - - - - - - - - - - - - -
 
-def replay_rb_as_json(dojo,sid)
+def replay_rb_as_json(dojo,sid,dot_count)
   s = dojo.katas[sid]
   outer = sid[0..1]
   inner = sid[2..-1]
@@ -64,8 +64,10 @@ def replay_rb_as_json(dojo,sid)
     tavatar = t.start_avatar([avatar.name])
     prev_visible_files = avatar.visible_files(0)
     max_tag = `cd #{avatar.path};git shortlog`.lines.entries[-2].strip.to_i
-    #puts "\n#{sid}:#{avatar.name}:#{max_tag}"
-    (1..max_tag).each do |tag|
+
+    puts "\n#{sid}:#{avatar.name}:#{max_tag}    (#{dot_count})"
+
+     (1..max_tag).each do |tag|
       #puts "\t#{tag}:avatar.traffic_lights(tag)"
       lights = avatar.traffic_lights(tag)
       last = lights.last
@@ -112,7 +114,7 @@ dojo = create_dojo
 dojo.katas.each do |kata|
   if kata.format === 'rb'
     begin
-      replay_rb_as_json(dojo,kata.id.to_s)
+      replay_rb_as_json(dojo,kata.id.to_s,dot_count)
       #puts kata.id.to_s
       #break
     rescue SyntaxError => error
@@ -158,7 +160,6 @@ dojo.katas.each do |kata|
     end
   end
   dot_count += 1
-  print "\r " + dots(dot_count) + "  " + kata.id.to_s
 end
 puts
 puts
