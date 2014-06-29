@@ -5,6 +5,12 @@ o) use it to convert all rb katas on cyber-dojo.org
 o) remove all format code
 o) remove json_rb switcher in model_test_base
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Avatar.rb has this
+  raw = git.show(path, "#{tag}:#{filename}") if tag != nil
+  When tags[t] is done this could be reworked
+  avatar.tags[tag].read(filename)
+  And the raw.encoding could be done inside the read() too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
