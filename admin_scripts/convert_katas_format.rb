@@ -101,28 +101,29 @@ dot_count = 0
 dojo = create_dojo
 dojo.katas.each do |kata|
   if kata.format === 'rb'
-  begin
-    replay_rb_as_json(dojo,kata.id.to_s)
-    #puts kata.id.to_s
-    #break
-  rescue SyntaxError => error
-    puts "SyntaxError from kata #{kata.id}"
-    puts error.message
-    outer = kata.id.outer
-    inner = kata.id.inner
-    mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
-    `#{mkdir_cmd}`
-    mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
-    `#{mv_cmd}`
-    exit
-  rescue Encoding::InvalidByteSequenceError => error
-    puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
-    puts error.message
-    mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
-    `#{mkdir_cmd}`
-    mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
-    `#{mv_cmd}`
-    exit
+    begin
+      replay_rb_as_json(dojo,kata.id.to_s)
+      #puts kata.id.to_s
+      #break
+    rescue SyntaxError => error
+      puts "SyntaxError from kata #{kata.id}"
+      puts error.message
+      outer = kata.id.outer
+      inner = kata.id.inner
+      mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
+      `#{mkdir_cmd}`
+      mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
+      `#{mv_cmd}`
+      exit
+    rescue Encoding::InvalidByteSequenceError => error
+      puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
+      puts error.message
+      mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
+      `#{mkdir_cmd}`
+      mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
+      `#{mv_cmd}`
+      exit
+    end
   end
   dot_count += 1
   print "\r " + dots(dot_count) + "  " + kata.id.to_s
