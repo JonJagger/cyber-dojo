@@ -106,7 +106,7 @@ dojo.katas.each do |kata|
     #break
   end
   dot_count += 1
-  print "\r " + dots(dot_count)
+  print "\r " + dots(dot_count) + "  " + kata.id.to_s
 end
 puts
 puts
