@@ -130,9 +130,9 @@ private
   end
 
   def parse(filename, tag)
-    text = dir.read(filename)                   if tag == nil
-    text = git.show(path, "#{tag}:#{filename}") if tag != nil
-
+    raw = dir.read(filename)                   if tag == nil
+    raw = git.show(path, "#{tag}:#{filename}") if tag != nil
+    text = clean(raw)
     return JSON.parse(JSON.unparse(cleaned(filename,eval(text)))) if format === 'rb'
     return JSON.parse(text)                     if format === 'json'
   end
