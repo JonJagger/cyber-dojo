@@ -52,7 +52,8 @@ def replay_rb_as_json(dojo,sid)
   outer = sid[0..1]
   inner = sid[2..-1]
   raw = s.dir.read('manifest.rb')
-  text = raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+  raw = raw.force_encoding('UTF-8')
+  text = raw.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
   manifest = eval(text)
 
   tid = outer + '1'*8

@@ -137,7 +137,8 @@ private
 
   def read(filename)
     raw = dir.read(filename)
-    raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    raw.force_encoding('UTF-8')
+    raw.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
   end
 
 end

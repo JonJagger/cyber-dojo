@@ -64,7 +64,8 @@ class Avatar
 
   def test(max_duration)
     output = runner.run(sandbox, './cyber-dojo.sh', max_duration)
-    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    output = output.force_encoding('UTF-8')
+    output.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
   end
 
   def save_manifest(visible_files)
@@ -104,7 +105,8 @@ class Avatar
   def diff_lines(was_tag, now_tag)
     command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
     output = git.diff(path, command)
-    output.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    output = output.force_encoding('UTF-8')
+    output.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
   end
 
   def traffic_lights_filename
@@ -133,7 +135,8 @@ private
     raw = dir.read(filename)                   if tag == nil
     raw = git.show(path, "#{tag}:#{filename}") if tag != nil
 
-    text = raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+    raw = raw.force_encoding('UTF-8')
+    text = raw.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
 
     return JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
     return JSON.parse(text)                     if format === 'json'

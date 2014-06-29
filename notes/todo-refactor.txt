@@ -11,6 +11,8 @@ Avatar.rb has this
   avatar.tags[tag].read(filename)
   And the raw.encoding could be done inside the read() too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
