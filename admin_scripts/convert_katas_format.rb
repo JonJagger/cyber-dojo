@@ -135,6 +135,16 @@ dojo.katas.each do |kata|
       mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
       `#{mv_cmd}`
       exit
+    rescue NoMethodError => error
+      puts "\nNoMethodError from kata #{kata.id}"
+      puts error.message
+      outer = kata.id.to_s[0..1]
+      inner = kata.id.to_s[2..-1]
+      mkdir_cmd = "mkdir -p #{root_dir}/katas_rb_bad/#{outer}"
+      `#{mkdir_cmd}`
+      mv_cmd = "mv #{root_dir}/katas/#{outer}/#{inner} #{root_dir}/katas_rb_bad/#{outer}/#{inner}"
+      `#{mv_cmd}`
+      exit
     end
   end
   dot_count += 1
