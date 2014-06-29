@@ -15,7 +15,8 @@ class Exercise
     # See app/models/Kata.rb ::exercise()
     # See app/models/Kata.rb ::original_exercise()
     renames = {
-      'Yahtzee' => 'Yazty'
+      'Yahtzee' => 'Yazty',
+      'Yahtzee_Cutdown' => 'Yatzy_Cutdown'
     }
     renames[name] || name
   end
