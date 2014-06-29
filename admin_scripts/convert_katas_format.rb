@@ -51,15 +51,19 @@ def replay_rb_as_json(dojo,sid)
   s = dojo.katas[sid]
   outer = sid[0..1]
   inner = sid[2..-1]
+  raw = s.dir.read('manifest.rb')
+  text = raw.encode('utf-8', 'binary', :invalid => :replace, :undef => :replace)
+  manifest = eval(text)
+
   tid = outer + '1'*8
   t = dojo.katas.create_kata(s.language, s.exercise, tid, make_time(s.created))
-  manifest = eval(s.dir.read('manifest.rb'))
   t.dir.write('manifest.json', JSON.unparse(manifest))
+
   s.avatars.each do |avatar|
     tavatar = t.start_avatar([avatar.name])
     prev_visible_files = avatar.visible_files(0)
     max_tag = `cd #{avatar.path};git shortlog`.lines.entries[-2].strip.to_i
-    #puts "#{avatar.name}:#{max_tag}"
+    puts "#{sid}:#{avatar.name}:#{max_tag}"
     (1..max_tag).each do |tag|
       lights = avatar.traffic_lights(tag)
       last = lights.last
