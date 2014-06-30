@@ -9,7 +9,7 @@ class KataTests < ActionController::TestCase
   include Externals
 
   def setup
-    @dojo = Dojo.new(root_path,'json',externals(DummyTestRunner.new))
+    @dojo = Dojo.new(root_path,externals(DummyTestRunner.new))
   end
 
   test "exists? is false for empty-string id" do

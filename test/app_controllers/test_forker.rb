@@ -18,13 +18,15 @@ class ForkerControllerTest < IntegrationTest
       :git    => @git    = thread[:git   ] = SpyGit.new,
       :runner => @runner = thread[:runner] = StubTestRunner.new
     }
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
 
   def teardown
     thread[:disk] = nil
     thread[:git] = nil
     thread[:runner] = nil
+    #TODO: @disk.teardown
+    #TODO: @git.teardown
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,12 +77,6 @@ class ForkerControllerTest < IntegrationTest
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  # this passes when run on its own
-  # $ ./test_forker.rb
-  # but it fails when run in the full suite
-  # $ ./run_all.sh
-  # ????????
 
   test 'when avatar not started ' +
        'the fork fails ' +
@@ -142,9 +138,9 @@ class ForkerControllerTest < IntegrationTest
       avatar.dir.spy_read('increments.json',
         JSON.unparse([
           [
-          "colour" => "red",
-          "time" => [2014, 2, 15, 8, 54, 6],
-          "number" => 1
+            'colour' => 'red',
+            'time' => [2014, 2, 15, 8, 54, 6],
+            'number' => 1
           ]
         ]))
     end
@@ -177,9 +173,7 @@ class ForkerControllerTest < IntegrationTest
     old_language_name = 'C#'
     new_language_name = 'C#-NUnit'
 
-    #TODO: change this to use json format?
-
-    kata.dir.spy_read('manifest.rb', {
+    kata.dir.spy_read('manifest.json', {
       :language => old_language_name
     })
     language = @dojo.languages[new_language_name]
@@ -189,7 +183,7 @@ class ForkerControllerTest < IntegrationTest
 
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    avatar.dir.spy_read('increments.rb', [
+    avatar.dir.spy_read('increments.json', JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -200,13 +194,21 @@ class ForkerControllerTest < IntegrationTest
         'time' => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       },
-      ].inspect)
+      ]))
+
+    manifest = JSON.unparse({
+      'Hiker.cs' => 'public class Hiker { }',
+      'HikerTest.cs' => 'using NUnit.Framework;'
+    })
+    tag = 2
+    filename = 'manifest.json'
+    @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
 
     get 'forker/fork',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
-      :tag => 2
+      :tag => tag
 
     assert_not_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
@@ -217,7 +219,7 @@ class ForkerControllerTest < IntegrationTest
 
     # TODO: assert new dojo has same settings as one forked from
 
-    assert_equal({avatar.path => [ ['show', '2:manifest.rb']]}, @git.log)
+    assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
     @disk.teardown
   end
 
@@ -230,14 +232,14 @@ class ForkerControllerTest < IntegrationTest
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
     kata = @dojo.katas[id]
-    kata.dir.spy_read('manifest.rb', { :language => language_name })
+    kata.dir.spy_read('manifest.json', { :language => language_name })
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {
         'unit_test_framework' => 'fake'
       })
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
-    avatar.dir.spy_read('increments.rb', [
+    avatar.dir.spy_read('increments.json', JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -248,13 +250,21 @@ class ForkerControllerTest < IntegrationTest
         'time' => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       },
-      ].inspect)
+      ]))
+
+    manifest = JSON.unparse({
+      'Hiker.cs' => 'public class Hiker { }',
+      'HikerTest.cs' => 'using NUnit.Framework;'
+    })
+    tag = 2
+    filename = 'manifest.json'
+    @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
 
     get 'forker/fork',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
-      :tag => 2
+      :tag => tag
 
     assert_not_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
@@ -265,7 +275,7 @@ class ForkerControllerTest < IntegrationTest
 
     # TODO: assert new dojo has same settings as one forked from
 
-    assert_equal({avatar.path => [ ['show', '2:manifest.rb']]}, @git.log)
+    assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
     @disk.teardown
   end
 

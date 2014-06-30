@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
       :git    => @git    = thread[:git   ] || Git.new,
       :runner => @runner = thread[:runner] || runner
     }
-    Dojo.new(root_path,'json',externals)
+    Dojo.new(root_path,externals)
   end
 
   def bind(pathed_filename)

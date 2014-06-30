@@ -20,8 +20,6 @@ class Avatar
 
   attr_reader :kata, :name
 
-  def_delegators :kata, :format
-
   def path
     kata.path + name + '/'
   end
@@ -108,11 +106,11 @@ class Avatar
   end
 
   def traffic_lights_filename
-    'increments.' + format
+    'increments.json'
   end
 
   def visible_files_filename
-    'manifest.' + format
+    'manifest.json'
   end
 
 private
@@ -133,19 +131,7 @@ private
     raw = dir.read(filename)                   if tag == nil
     raw = git.show(path, "#{tag}:#{filename}") if tag != nil
     text = clean(raw)
-    return JSON.parse(JSON.unparse(cleaned(filename,eval(text)))) if format === 'rb'
-    return JSON.parse(text)                     if format === 'json'
-  end
-
-  def cleaned(filename,obj)
-    if filename === 'manifest.rb'
-      filenames = obj.keys
-      filenames.each do |filename|
-        s = obj[filename]
-        obj[filename] = clean(s)
-      end
-    end
-    obj
+    JSON.parse(clean(raw))
   end
 
   def clean(s)

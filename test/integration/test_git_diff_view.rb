@@ -24,7 +24,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
   def setup
     super
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
 
   class MockIdFactory

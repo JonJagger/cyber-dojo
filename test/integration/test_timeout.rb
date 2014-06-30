@@ -9,7 +9,7 @@ class TimeOutTests < ActionController::TestCase
   include Externals
 
   def setup
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
 
   test "that code with infinite loop times out to amber and doesnt leak processes" do

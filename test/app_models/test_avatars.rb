@@ -4,15 +4,6 @@ require File.dirname(__FILE__) + '/model_test_base'
 
 class AvatarsTests < ModelTestBase
 
-  test "an avatar's format is kata's format which is dojo's format" do
-    kata = make_kata
-    avatar = kata.start_avatar
-    assert_equal 'json', avatar.format
-    assert_equal 'json', @dojo.format
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'kata.avatars() returns all avatars started in the kata' do
     kata = make_kata
     cheetah = kata.start_avatar(['cheetah'])

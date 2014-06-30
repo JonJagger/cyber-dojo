@@ -9,7 +9,7 @@ class ZombieShellTests < ActionController::TestCase
   include Externals
 
   def setup
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
 
   def defunct_count

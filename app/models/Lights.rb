@@ -34,8 +34,7 @@ class Lights
 private
 
   def lights
-    return @lights ||= JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
-    return @lights ||= JSON.parse(text)                     if format === 'json'
+    return @lights ||= JSON.parse(text)
   end
 
   def text
@@ -44,11 +43,7 @@ private
   end
 
   def traffic_lights_filename
-    'increments.' + format
-  end
-
-  def format
-    avatar.format
+    'increments.json'
   end
 
   def clean(s)

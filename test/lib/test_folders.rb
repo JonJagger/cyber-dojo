@@ -13,7 +13,7 @@ class FoldersTests < ActionController::TestCase
       :git => Git.new,
       :runner => HostTestRunner.new
     }
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
     @path = @dojo.katas.path
     `rm -rf #{@path}`
   end

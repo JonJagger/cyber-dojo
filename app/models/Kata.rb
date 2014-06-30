@@ -97,19 +97,12 @@ class Kata
     manifest['visible_files']
   end
 
-  def manifest_filename
-    manifest_prefix + format
-  end
-
   def manifest
-    return @manifest ||= JSON.parse(JSON.unparse(eval(text))) if format === 'rb'
-    return @manifest ||= JSON.parse(text) if format === 'json'
+    return @manifest ||= JSON.parse(text)
   end
 
-  def format
-    return 'json' if dir.exists?(manifest_prefix + 'json')
-    return 'rb'   if dir.exists?(manifest_prefix + 'rb')
-    return dojo.format
+  def manifest_filename
+    'manifest.json'
   end
 
 private
@@ -122,14 +115,9 @@ private
     @externals[:git]
   end
 
-  def manifest_prefix
-    'manifest.'
-  end
-
   def text
     raw = dir.read(manifest_filename)
-    raw.force_encoding('UTF-8')
-    raw.encode('UTF-8', 'binary', :invalid => :replace, :undef => :replace, :replace => '')
+    clean(raw)
   end
 
   def earliest_light
@@ -140,6 +128,14 @@ private
 
   def dojo
     @katas.dojo
+  end
+
+  def clean(s)
+    # force an encoding change - if encoding is already utf-8
+    # then encoding to utf-8 is a no-op and invalid byte
+    # sequences are not detected.
+    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
+    s = s.encode('UTF-8', 'UTF-16')
   end
 
 end

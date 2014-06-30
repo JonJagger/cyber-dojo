@@ -10,7 +10,7 @@ class DojoTests < ModelTestBase
       :runner => dummy
     }
     assert_raise RuntimeError do
-      Dojo.new('fake/','json',externals)
+      Dojo.new('fake/',externals)
     end
   end
 
@@ -22,7 +22,7 @@ class DojoTests < ModelTestBase
       :runner => dummy
     }
     assert_raise RuntimeError do
-      Dojo.new('fake/','json',externals)
+      Dojo.new('fake/',externals)
     end
   end
 
@@ -34,48 +34,23 @@ class DojoTests < ModelTestBase
       :git => dummy
     }
     assert_raise RuntimeError do
-      Dojo.new('fake/','json', externals)
+      Dojo.new('fake/',externals)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'format is as set in ctor' do
+  test "ctor raises if path does not end in /" do
     externals = {
       :disk => dummy,
-      :git => dummy,
-      :runner => dummy
-    }
-    assert_equal 'json', Dojo.new(path='fake/','json',externals).format
-    assert_equal 'rb',   Dojo.new(path='fake/','rb',externals).format
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'dojo created with format not json or rb raises' do
-    externals = {
-      :disk => dummy,
-      :git => dummy,
-      :runner => dummy
+      :git => dummy
     }
     assert_raise RuntimeError do
-      Dojo.new('fake/','wibble',externals)
+      Dojo.new('fake',externals)
     end
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "c'tor format determines kata's manifest format" do
-    json_and_rb do |fmt|
-      language = @dojo.languages['Java-JUnit']
-      language.dir.spy_read('manifest.json', { :unit_test_framework => 'JUnit' })
-      exercise = @dojo.exercises['test_Yahtzee']
-      exercise.dir.spy_read('instructions', 'your task...')
-      kata = @dojo.katas.create_kata(language, exercise)
-      assert_equal 'manifest.'+fmt, kata.manifest_filename
-      assert filenames_written_to(kata.dir.log).include?('manifest.'+fmt)
-    end
-  end
 
   def dummy
     Object.new

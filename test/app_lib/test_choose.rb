@@ -23,7 +23,7 @@ class ChooseTests < CyberDojoTestBase
       :git => Git.new,
       :runner => DummyTestRunner.new
     }
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -

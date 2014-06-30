@@ -7,28 +7,17 @@ require 'test/unit'
 class ModelTestBase < Test::Unit::TestCase
 
   def setup
-    create_dojo_format('json')
-  end
-
-  def create_dojo_format(format)
     externals = {
       :disk => @disk = SpyDisk.new,
       :git => @git = SpyGit.new,
       :runner => StubTestRunner.new
     }
-    @dojo = Dojo.new(root_path,format,externals)
+    @dojo = Dojo.new(root_path,externals)
     @max_duration = 15
   end
 
   def teardown
     @disk.teardown
-  end
-
-  def json_and_rb
-    yield 'json'
-    teardown
-    create_dojo_format('rb')
-    yield 'rb'
   end
 
   def filenames_written_to(log)

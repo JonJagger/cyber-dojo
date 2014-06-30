@@ -14,7 +14,7 @@ class LightsTests < ActionController::TestCase
       :git => Git.new,
       :runner => HostTestRunner.new
     }
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`

@@ -9,8 +9,10 @@ class AvatarTests < ActionController::TestCase
   include Externals
 
   def setup
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "deleted file is deleted from that repo tag" do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')

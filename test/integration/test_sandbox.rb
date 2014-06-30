@@ -9,7 +9,7 @@ class SandboxTests < ActionController::TestCase
   include Externals
 
   def setup
-    @dojo = Dojo.new(root_path,'json',externals)
+    @dojo = Dojo.new(root_path,externals)
   end
 
   test "defect-driven: filename containing space is not accidentally retained" do

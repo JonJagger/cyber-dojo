@@ -1,9 +1,18 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-o) finish convert .rb to .json script
-o) use it to convert all rb katas on cyber-dojo.org
-o) remove all format code
-o) remove json_rb switcher in model_test_base
+Is there a require_relative - if so use it and get rid
+of __DIR__ stuff at top of files
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Move clean(string) code into Dir.read
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+spydir.read does this
+    content = JSON.unparse(content) if filename === 'manifest.json'
+This is wrong. This needs to happen in the caller
+Suppose I wanted to fake an actual file of that name.
+OsDir.write does this
+        file.write(object.inspect)       if filename.end_with?('.rb')
+        file.write(JSON.unparse(object)) if filename.end_with?('.json')
+Again, this needs to happen in the caller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar.rb has this
   raw = git.show(path, "#{tag}:#{filename}") if tag != nil
