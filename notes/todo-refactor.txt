@@ -1,8 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Is there a require_relative - if so use it and get rid
-of __DIR__ stuff at top of files
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar.parse(filename,tag)
     raw = dir.read(filename)                   if tag == nil
     raw = git.show(path, "#{tag}:#{filename}") if tag != nil
@@ -287,17 +284,10 @@ isolate make new-file and rename-file dialogs and put into dedicated
 -----
 java-cucumber fails test/installation_tests.rb
 -----
-add tip to dashboard that setting secs_per_column to 999999
-  collapses the columns into 1 if you want to see a non-spaced
-  timeline of traffic lights.
------
 The Click-to-revert tip could appear when the current-traffic-light-count
   disappears (and disappear when it reappears). This would also mean
   you don't get the 'Click to revert' tip when there is only one
   traffic-light (which is kind of pointless).
------
-increments should be renamed to traffic_lights. And traffic_lights
-  should become a model.
 -----
 Now that the traffic-lights offer reverting, it makes sense to allow
   you to revert from any traffic-light. Yet only enough to fit on the
@@ -367,13 +357,10 @@ module TrafficLight
   end
 end
 -----
-the various uses of eval in the ruby code could do with being replaced with
-a json parse.
------
 The intention with the installation tests is that they are used to determine
 what languages are installed and to only offer those languages (at the create
 page). But at the moment all the languages are being offered.
 -----
-Getting Objective-C compiling on Ubuntu
+Get Objective-C compiling on Ubuntu ?
 http://www.gnustep.org/
 -----
