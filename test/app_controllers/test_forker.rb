@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
+require_relative 'integration_test'
 require 'SpyDisk'
 require 'SpyGit'
 require 'StubTestRunner'
-require './integration_test'
 
 class ForkerControllerTest < IntegrationTest
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
+require_relative '../test_helper'
 require 'flag_image_helper'
 
 class FlagImageTests < ActionView::TestCase

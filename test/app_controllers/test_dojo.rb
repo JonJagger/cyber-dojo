@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../test_helper'
-require './integration_test'
+require_relative '../test_helper'
+require_relative 'integration_test'
 
 class DojoControllerTest  < IntegrationTest
 

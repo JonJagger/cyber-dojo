@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../test_helper'
-require __DIR__ + '/externals'
+require_relative '../test_helper'
+require_relative 'externals'
 
 class TimeOutTests < ActionController::TestCase
 

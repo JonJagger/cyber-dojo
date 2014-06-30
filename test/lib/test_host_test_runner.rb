@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/lib_test_base'
+require_relative 'lib_test_base'
 
 class HostTestRunnerTests < LibTestBase
 

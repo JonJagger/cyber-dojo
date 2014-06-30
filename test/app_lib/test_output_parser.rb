@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require_relative '../cyberdojo_test_base'
 require 'OutputParser'
 
 # If a player creates a cyberdojo.sh file which runs two

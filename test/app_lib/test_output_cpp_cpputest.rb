@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/../cyberdojo_test_base'
+require_relative '../cyberdojo_test_base'
 require 'OutputParser'
 
 class OutputCppUTestTests < CyberDojoTestBase

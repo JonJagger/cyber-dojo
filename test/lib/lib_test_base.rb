@@ -1,7 +1,6 @@
 
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../test_coverage'
-require __DIR__ + '/../all'
+require_relative '../test_coverage'
+require_relative '../all'
 
 require 'test/unit'
 

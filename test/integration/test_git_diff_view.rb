@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/../cyberdojo_test_base'
-require __DIR__ + '/externals'
+require_relative '../cyberdojo_test_base'
+require_relative 'externals'
 require 'GitDiff'
 require 'Dojo'
 require 'Languages'

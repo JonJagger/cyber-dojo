@@ -1,19 +1,13 @@
 #!/usr/bin/env ruby
 
-__DIR__ = File.dirname(__FILE__) + '/../../'
-require __DIR__ + 'test/test_helper'
-require __DIR__ + 'lib/OsDisk'
-require __DIR__ + 'lib/Git'
-require __DIR__ + 'lib/HostTestRunner'
+require_relative '../test_helper'
+require_relative 'externals'
 
 class LightsTests < ActionController::TestCase
 
+  include Externals
+
   def setup
-    externals = {
-      :disk => OsDisk.new,
-      :git => Git.new,
-      :runner => HostTestRunner.new
-    }
     @dojo = Dojo.new(root_path,externals)
     @language = @dojo.languages['test-Java-JUnit']
     @exercise = @dojo.exercises['test_Yahtzee']
