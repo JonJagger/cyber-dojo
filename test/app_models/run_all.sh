@@ -6,3 +6,4 @@ rm ../../coverage/.resultset.json
 testrb . 2>&1 | tee log.tmp
 cp -R ../../coverage/* .
 ruby ../perc.rb index.html app/models | tee -a log.tmp
+rm log.tmp

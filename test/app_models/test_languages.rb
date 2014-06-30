@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/model_test_base'
+require_relative 'model_test_base'
 
 class LanguagesTests < ModelTestBase
 
