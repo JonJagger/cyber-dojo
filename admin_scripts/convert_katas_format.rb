@@ -79,17 +79,6 @@ end
 
 #- - - - - - - - - - - - - - - - - - - - - - - -
 
-#def cleaned(obj)
-#  filenames = obj.keys
-#  filenames.each do |filename|
-#    s = obj[filename]
-#    obj[filename] = clean(s)
-#  end
-#  obj
-#end
-
-#- - - - - - - - - - - - - - - - - - - - - - - -
-
 def replay_rb_as_json(dojo,sid,dot_count)
   s = dojo.katas[sid]
   outer = sid[0..1]
@@ -163,7 +152,6 @@ dojo.katas.each do |kata|
            ArgumentError,
            NoMethodError => error
       tidy_up(kata,error)
-      #exit
     end
   end
   dot_count += 1
