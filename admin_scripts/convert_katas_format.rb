@@ -21,7 +21,7 @@
 # If you want to run this script you will need support for
 # the old .rb format. For that you will need to checkout
 # an old commit (before .rb format support was removed)
-# The commit id you need is XXXXXXXXXXXXXXXXXXXXXXXXXXX
+# The commit id you need is f1e67d2f75a92c32a67d9fa1758173cf4f0f1c97
 # Then run this script
 # Then go back to HEAD^1
 
