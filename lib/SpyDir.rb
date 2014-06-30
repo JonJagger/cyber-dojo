@@ -52,10 +52,6 @@ class SpyDir
   end
 
   def write(filename, content)
-    #if filename.end_with?('.rb')
-    #  assert content.class != String, "write('#{filename}',content.class != String)"
-    #  content = content.inspect
-    #end
     if filename.end_with?(".json")
       assert content.class != String, "write('#{filename}',content.class != String)"
       content = JSON.unparse(content)
@@ -69,7 +65,6 @@ class SpyDir
 
   def spy_read(filename, content)
     content = JSON.unparse(content) if filename === 'manifest.json'
-    #content = content.inspect if filename === 'manifest.rb'
     spy_read_raw(filename, content)
   end
 

@@ -41,7 +41,6 @@ class OsDir
       File.chmod(execute, pathed_filename) if pathed_filename.end_with?('.sh')
     else
       File.open(pathed_filename, 'w') { |file|
-        file.write(object.inspect)       if filename.end_with?('.rb')
         file.write(JSON.unparse(object)) if filename.end_with?('.json')
       }
     end

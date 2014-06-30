@@ -135,13 +135,6 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save_file (rb) for non-string is saved as inspected object and folder is automatically created" do
-    object = { :a => 1, :b => 2 }
-    check_save_file('manifest.rb', object, "{:a=>1, :b=>2}")
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test "save_file (json) for non-string is saved as JSON object and folder is automatically created" do
     object = { :a => 1, :b => 2 }
     check_save_file('manifest.json', object, '{"a":1,"b":2}')

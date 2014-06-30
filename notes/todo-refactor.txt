@@ -3,21 +3,27 @@
 Is there a require_relative - if so use it and get rid
 of __DIR__ stuff at top of files
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Avatar.parse(filename,tag)
+    raw = dir.read(filename)                   if tag == nil
+    raw = git.show(path, "#{tag}:#{filename}") if tag != nil
+Would it be better to always use a tag?
+This removes the dependency on the current files
+and treats the git repo as the master. Seems right.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move clean(string) code into Dir.read
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 spydir.read does this
-    content = JSON.unparse(content) if filename === 'manifest.json'
+  content = JSON.unparse(content) if filename === 'manifest.json'
 This is wrong. This needs to happen in the caller
 Suppose I wanted to fake an actual file of that name.
 OsDir.write does this
-        file.write(object.inspect)       if filename.end_with?('.rb')
-        file.write(JSON.unparse(object)) if filename.end_with?('.json')
+  file.write(JSON.unparse(object)) if filename.end_with?('.json')
 Again, this needs to happen in the caller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar.rb has this
-  raw = git.show(path, "#{tag}:#{filename}") if tag != nil
-  When tags[t] is done this could be reworked
-  avatar.tags[tag].read(filename)
+  raw = git.show(path, "#{n}:#{filename}") if tag != nil
+  When tags[n] is done this could be reworked
+  avatar.tags[n].read(filename)
   And the raw.encoding could be done inside the read() too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences
