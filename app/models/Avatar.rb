@@ -1,5 +1,4 @@
 require 'forwardable'
-require 'json'
 require 'Cleaner'
 
 class Avatar
@@ -71,12 +70,12 @@ class Avatar
   end
 
   def save_traffic_light(traffic_light, now)
-    lights = traffic_lights
-    lights << traffic_light
-    traffic_light['number'] = lights.length
+    rags = lights.each.entries
+    rags << traffic_light
+    traffic_light['number'] = rags.length
     traffic_light['time'] = now
-    dir.write(traffic_lights_filename, lights)
-    lights
+    dir.write(traffic_lights_filename, rags)
+    rags
   end
 
   def commit(tag)
@@ -90,15 +89,11 @@ class Avatar
     @tags ||= Tags.new(self,git)
   end
 
-  #- - - - - - - - - - - - - - -
-
   def lights
     Lights.new(self)
   end
 
-  def traffic_lights(tag = nil)
-    parse(traffic_lights_filename, tag)
-  end
+  #- - - - - - - - - - - - - - -
 
   def traffic_lights_filename
     'increments.json'
@@ -120,12 +115,6 @@ private
 
   def runner
     @externals[:runner]
-  end
-
-  def parse(filename, tag)
-    raw = dir.read(filename)                   if tag == nil
-    raw = git.show(path, "#{tag}:#{filename}") if tag != nil
-    JSON.parse(clean(raw))
   end
 
   include Cleaner

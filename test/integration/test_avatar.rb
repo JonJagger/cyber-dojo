@@ -63,7 +63,7 @@ class AvatarTests < ActionController::TestCase
       :new => [ ]
      }
     run_test(delta, avatar, visible_files) # tag 2
-    traffic_lights = avatar.traffic_lights
+    traffic_lights = avatar.lights.each.entries
     assert_equal 2, traffic_lights.length
     actual = avatar.tags[1].diff(2)
     assert actual.match(/^diff --git/)

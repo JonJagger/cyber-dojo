@@ -13,7 +13,7 @@ class KataController < ApplicationController
     @visible_files = @avatar.tags.latest.visible_files
     @new_files = { }
     @files_to_remove = [ ]
-    @traffic_lights = @avatar.traffic_lights
+    @traffic_lights = @avatar.lights.each.entries
     @output = @visible_files['output']
     @title = id[0..5] + ' ' + @avatar.name + ' code'
   end

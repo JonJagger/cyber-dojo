@@ -13,6 +13,8 @@ require 'Kata'
 require 'Id'
 require 'Avatars'
 require 'Avatar'
+require 'Lights'
+require 'Light'
 require 'Tags'
 require 'Tag'
 require 'Sandbox'
@@ -60,8 +62,9 @@ class GitDiffViewTests < CyberDojoTestBase
       :new => [ ]
     }
     run_test(delta, avatar, visible_files) # tag 1
-    assert_equal 'red', avatar.traffic_lights.last['colour'],
-                        avatar.tags[1].output
+
+    assert_equal :red, avatar.lights.latest.colour,
+                       avatar.tags[1].output
 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
     delta = {
@@ -72,7 +75,8 @@ class GitDiffViewTests < CyberDojoTestBase
     }
 
     run_test(delta, avatar, visible_files) # tag 2
-    assert_equal 'green', avatar.traffic_lights.last['colour']
+
+    assert_equal :green, avatar.lights.latest.colour
 
     was_tag = 1
     now_tag = 2
@@ -183,8 +187,8 @@ class GitDiffViewTests < CyberDojoTestBase
 
     run_test(delta, avatar, visible_files) # tag 1
 
-    assert_equal 'red', avatar.traffic_lights.last['colour'],
-                        avatar.tags[1].output
+    assert_equal :red, avatar.lights.latest.colour,
+                       avatar.tags[1].output
 
     visible_files.delete('untitled.rb') # will cause amber
     delta = {
@@ -195,7 +199,8 @@ class GitDiffViewTests < CyberDojoTestBase
     }
 
     run_test(delta, avatar, visible_files) # tag 2
-    assert_equal 'amber', avatar.traffic_lights.last['colour']
+
+    assert_equal :amber, avatar.lights.latest.colour
 
     from_tag = 1
     to_tag = 2

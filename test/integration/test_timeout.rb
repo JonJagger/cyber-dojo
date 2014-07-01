@@ -28,7 +28,7 @@ class TimeOutTests < ActionController::TestCase
       :new => [ ]
     }
     output = run_test(delta, avatar, visible_files, timeout = 5)
-    assert_equal 'amber', avatar.traffic_lights.last['colour']
+    assert_equal :amber, avatar.lights.latest.colour
     ps_count_after = ps_count
     # This often fails with
     # <1> expected but was

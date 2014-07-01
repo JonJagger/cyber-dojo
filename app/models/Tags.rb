@@ -76,4 +76,3 @@ end
 # Thus the inclusive upper bound for n in avatar.tags[n]
 # is always the current length of increments.json
 # (even if that is zero) which is also the latest tag number.
-

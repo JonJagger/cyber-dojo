@@ -29,8 +29,7 @@ class LightsTests < ActionController::TestCase
   test "avatar.save(:changed).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
     avatar = @kata.start_avatar
     visible_files = avatar.tags[0].visible_files
-    assert_equal [ ], avatar.traffic_lights
-    assert_equal [ ], avatar.traffic_lights(tag=0)
+    assert_equal [ ], avatar.lights.each.entries
 
     filename = 'UntitledTest.java'
     test_code = visible_files[filename];
@@ -54,13 +53,12 @@ class LightsTests < ActionController::TestCase
     traffic_light = { 'colour' => 'green' }
     traffic_lights = avatar.save_traffic_light(traffic_light, now)
 
-    assert_equal traffic_lights, avatar.traffic_lights
+    assert_equal traffic_lights, avatar.lights.each.entries
     assert_not_nil traffic_lights
     assert_equal 1, traffic_lights.length
 
     avatar.commit(traffic_lights.length)
-    assert_equal traffic_lights, avatar.traffic_lights
-    assert_equal traffic_lights, avatar.traffic_lights(tag=1)
+    assert_equal traffic_lights, avatar.lights.each.entries
 
     diff = avatar.tags[0].diff(1)
     assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff

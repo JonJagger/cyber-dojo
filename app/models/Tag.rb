@@ -21,6 +21,11 @@ class Tag
     clean(@git.diff(@avatar.path, command))
   end
 
+  def light
+    @incs ||= JSON.parse(clean(@git.show(@avatar.path, "#{@n}:increments.json")))
+    @incs.last
+  end
+
 private
 
   include Cleaner

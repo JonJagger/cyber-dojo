@@ -28,7 +28,7 @@ private
   def setup_parameters
     @kata = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
-    @traffic_lights = @avatar.traffic_lights
+    @traffic_lights = @avatar.lights.each.entries
     @min_tag = 0
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i

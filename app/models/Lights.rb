@@ -34,7 +34,7 @@ class Lights
 private
 
   def lights
-    return @lights ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
+    @lights ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
   end
 
   include Cleaner
