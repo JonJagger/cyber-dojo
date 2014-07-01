@@ -34,6 +34,21 @@ private
     # which is the same as the latest tag. So
     # @length ||= `cd @avatar.path;git shortlog -s`.to_i
     # which needs to go inside a new git method
+    #
+    # However....
+    # traffic-light info (colour,time,number) from increments.json
+    # is *not* currently included in a tag for two reasons
+    # 1. tag[0] does not have a traffic-light
+    # 2. I plan to use tags for more than traffic-lights
+    #    eg new/rename/delete a file
+    #    eg opening different file
+    # viz
+    #    avatar.lights[n]   gives you the tag for the nth traffic light
+    #    avatar.tags[n]     gives you the nth tag which may not be a traffic-light.
+    #
+    # However, perhaps this needs revisiting.
+    # Surely tags for, eg, file renames, will need time and number?
+
   end
 
   include Cleaner
@@ -61,3 +76,4 @@ end
 # Thus the inclusive upper bound for n in avatar.tags[n]
 # is always the current length of increments.json
 # (even if that is zero) which is also the latest tag number.
+

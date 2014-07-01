@@ -6,8 +6,7 @@ class Languages
   include Enumerable
 
   def initialize(path,disk,runner)
-    @path = path
-    @disk,@runner = disk,runner
+    @path,@disk,@runner = path,disk,runner
   end
 
   attr_reader :path

@@ -2,8 +2,7 @@
 class Sandbox
 
   def initialize(avatar,disk)
-    @avatar = avatar
-    @disk = disk
+    @avatar,@disk = avatar,disk
   end
 
   attr_reader :avatar

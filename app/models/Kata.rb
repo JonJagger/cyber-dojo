@@ -4,8 +4,7 @@ require 'Cleaner'
 class Kata
 
   def initialize(katas,id,externals)
-    @katas,@id = katas,id
-    @externals = externals
+    @katas,@id,@externals = katas,id,externals
   end
 
   attr_reader :katas

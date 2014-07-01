@@ -2,8 +2,7 @@
 class Dojo
 
   def initialize(path,externals)
-    @path = path
-    @externals = externals
+    @path,@externals = path,externals
     raise RuntimeError.new("path must end in /") if !path.end_with?('/')
     raise RuntimeError.new('disk not set') if externals[:disk].nil?
     raise RuntimeError.new('git not set') if externals[:git].nil?

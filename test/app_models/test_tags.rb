@@ -31,6 +31,7 @@ class TagsTest < ModelTestBase
     assert_equal [f1,f2], visible_files.keys.sort
     assert_equal f1_content, visible_files[f1]
     assert_equal f2_content, visible_files[f2]
+    assert_equal '', tags[0].output
   end
 
   #- - - - - - - - - - - - - - - - - - -
@@ -67,16 +68,18 @@ class TagsTest < ModelTestBase
     # simulate green [test]
     manifest = JSON.unparse({
       f1='Hiker.cs' => f1_content='public class Hiker { }',
-      f2='HikerTest.cs' => f2_content='using NUnit.Framework;'
+      f2='HikerTest.cs' => f2_content='using NUnit.Framework;',
+      f3='output' => f3_content='Tests run: 1, Failures: 0'
     })
     n = 2
     filename = 'manifest.json'
     @git.spy(avatar.dir.path,'show',"#{n}:#{filename}",manifest)
 
     visible_files = tags[n].visible_files
-    assert_equal [f1,f2], visible_files.keys.sort
+    assert_equal [f1,f2,f3], visible_files.keys.sort
     assert_equal f1_content, visible_files[f1]
     assert_equal f2_content, visible_files[f2]
+    assert_equal f3_content, tags[n].output
 
   end
 

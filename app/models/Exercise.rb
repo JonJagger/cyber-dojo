@@ -3,8 +3,7 @@ require 'Cleaner'
 class Exercise
 
   def initialize(path,name,disk)
-    @path,@name = path,name
-    @disk = disk
+    @path,@name,@disk = path,name,disk
   end
 
   attr_reader :name

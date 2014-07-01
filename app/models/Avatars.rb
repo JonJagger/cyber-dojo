@@ -7,8 +7,7 @@ class Avatars
   include Enumerable
 
   def initialize(kata,externals)
-    @kata = kata
-    @externals = externals
+    @kata,@externals = kata,externals
   end
 
   def each

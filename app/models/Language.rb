@@ -4,8 +4,7 @@ require 'Cleaner'
 class Language
 
   def initialize(path,name,disk,runner)
-    @path,@name = path,name
-    @disk,@runner = disk,runner
+    @path,@name,@disk,@runner = path,name,disk,runner
   end
 
   attr_reader :name

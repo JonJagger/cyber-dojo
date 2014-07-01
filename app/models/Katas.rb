@@ -6,8 +6,7 @@ class Katas
   include Enumerable
 
   def initialize(dojo,path,externals)
-    @dojo,@path = dojo,path
-    @externals = externals
+    @dojo,@path,@externals = dojo,path,externals
   end
 
   attr_reader :dojo, :path

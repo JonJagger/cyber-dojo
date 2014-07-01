@@ -16,8 +16,7 @@ class Avatar
   end
 
   def initialize(kata,name,externals)
-    @kata,@name = kata,name
-    @externals = externals
+    @kata,@name,@externals = kata,name,externals
   end
 
   attr_reader :kata, :name
