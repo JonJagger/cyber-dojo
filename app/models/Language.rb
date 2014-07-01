@@ -18,7 +18,7 @@ class Language
   end
 
   def exists?
-     dir.exists?(Language.manifest_filename)
+     dir.exists?(manifest_filename)
   end
 
   def runnable?
@@ -121,23 +121,22 @@ class Language
     renames[name] || name
   end
 
+private
+
   def manifest
     begin
-      @manifest ||= JSON.parse(read(Language.manifest_filename))
+      @manifest ||= JSON.parse(read(manifest_filename))
     rescue Exception => e
-      raise "JSON.parse(#{Language.manifest_filename}) exception from language:" + path
+      raise "JSON.parse(#{manifest_filename}) exception from language:" + path
     end
   end
 
-  def self.manifest_filename
+  def manifest_filename
     'manifest.json'
   end
 
-private
-
   def read(filename)
-    raw = dir.read(filename)
-    clean(raw)
+    clean(dir.read(filename))
   end
 
   include Cleaner
