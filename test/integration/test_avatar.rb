@@ -65,9 +65,7 @@ class AvatarTests < ActionController::TestCase
     run_test(delta, avatar, visible_files) # tag 2
     traffic_lights = avatar.traffic_lights
     assert_equal 2, traffic_lights.length
-    was_tag = nil
-    now_tag = nil
-    actual = avatar.diff_lines(was_tag = 1, now_tag = 2)
+    actual = avatar.tags[1].diff(2)
     assert actual.match(/^diff --git/)
   end
 
@@ -86,8 +84,10 @@ class AvatarTests < ActionController::TestCase
       :deleted => [ ],
       :new => [ added_filename ]
     }
+
     run_test(delta, avatar, visible_files) # 1
-    actual = avatar.diff_lines(was_tag=0, now_tag=1)
+
+    actual = avatar.tags[0].diff(1)
     expected =
       [
         "diff --git a/sandbox/#{added_filename} b/sandbox/#{added_filename}",
@@ -128,7 +128,7 @@ class AvatarTests < ActionController::TestCase
     }
     run_test(delta, avatar, visible_files)  # tag 2
     #- - - - -
-    actual = avatar.diff_lines(was_tag=1, now_tag=2)
+    actual = avatar.tags[1].diff(2)
     expected =
       [
         "diff --git a/sandbox/#{deleted_filename} b/sandbox/#{deleted_filename}",

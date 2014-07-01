@@ -16,10 +16,10 @@ class Tag
     visible_files['output'] || ''
   end
 
-  #def diff(m)
-  #  command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-  #  clean(@git.diff(@avatar.path, command))
-  #end
+  def diff(m)
+    command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
+    clean(@git.diff(@avatar.path, command))
+  end
 
 private
 

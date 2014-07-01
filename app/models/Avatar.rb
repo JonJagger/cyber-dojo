@@ -100,14 +100,6 @@ class Avatar
     parse(traffic_lights_filename, tag)
   end
 
-  #- - - - - - - - - - - - - - -
-
-  def diff_lines(was_tag, now_tag)
-    command = "--ignore-space-at-eol --find-copies-harder #{was_tag} #{now_tag} sandbox"
-    output = git.diff(path, command)
-    clean(output)
-  end
-
   def traffic_lights_filename
     'increments.json'
   end

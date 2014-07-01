@@ -62,7 +62,7 @@ class LightsTests < ActionController::TestCase
     assert_equal traffic_lights, avatar.traffic_lights
     assert_equal traffic_lights, avatar.traffic_lights(tag=1)
 
-    diff = avatar.diff_lines(was_tag=0, now_tag=1)
+    diff = avatar.tags[0].diff(1)
     assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
     assert diff.include?('-        int expected = 6 * 9;'), diff
     assert diff.include?('+        int expected = 6 * 7;'), diff

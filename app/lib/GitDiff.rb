@@ -10,7 +10,7 @@ module GitDiff
 
   def git_diff_view(avatar, was_tag, now_tag, visible_files = nil)
       visible_files ||= avatar.tags[now_tag].visible_files
-      diff_lines = avatar.diff_lines(was_tag, now_tag)
+      diff_lines = avatar.tags[was_tag].diff(now_tag)
       unit_testable_git_diff_view(diff_lines, visible_files)
   end
 
