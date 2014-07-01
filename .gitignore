@@ -3,6 +3,7 @@ log/*
 db/*.sqlite3
 tmp/**/*
 coverage
+katas_rb
 
 .DS_Store
 .sass-cache/
