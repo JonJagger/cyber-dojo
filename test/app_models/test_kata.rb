@@ -37,7 +37,6 @@ class KataTests < ModelTestBase
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
-    lights_filename = lion.traffic_lights_filename
 
     light =
     [
@@ -47,7 +46,7 @@ class KataTests < ModelTestBase
         'number' => 1
       }
     ]
-    hippo.dir.spy_read(lights_filename, JSON.unparse(light))
+    hippo.dir.spy_read('increments.json', JSON.unparse(light))
 
     assert !kata.active?
     assert_equal 0, kata.age
@@ -60,7 +59,6 @@ class KataTests < ModelTestBase
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
-    lights_filename = lion.traffic_lights_filename
     auto =
       {
         'colour' => 'red',
@@ -75,8 +73,8 @@ class KataTests < ModelTestBase
         'number' => 2
       }
 
-    hippo.dir.spy_read(lights_filename, JSON.unparse([auto]))
-    lion.dir.spy_read(lights_filename, JSON.unparse([auto,manual]))
+    hippo.dir.spy_read('increments.json', JSON.unparse([auto]))
+    lion.dir.spy_read('increments.json', JSON.unparse([auto,manual]))
 
     assert kata.active?
     now = manual["time"]

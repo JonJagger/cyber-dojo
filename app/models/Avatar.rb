@@ -93,7 +93,7 @@ class Avatar
     Lights.new(self)
   end
 
-  #- - - - - - - - - - - - - - -
+private
 
   def traffic_lights_filename
     'increments.json'
@@ -102,8 +102,6 @@ class Avatar
   def visible_files_filename
     'manifest.json'
   end
-
-private
 
   def disk
     @externals[:disk]

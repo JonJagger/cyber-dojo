@@ -20,11 +20,11 @@ class Kata
       avatar.dir.make
       git.init(avatar.path, '--quiet')
 
-      avatar.dir.write(avatar.visible_files_filename, visible_files)
-      git.add(avatar.path, avatar.visible_files_filename)
+      avatar.dir.write('manifest.json', visible_files)
+      git.add(avatar.path, 'manifest.json')
 
-      avatar.dir.write(avatar.traffic_lights_filename, [ ])
-      git.add(avatar.path, avatar.traffic_lights_filename)
+      avatar.dir.write('increments.json', [ ])
+      git.add(avatar.path, 'increments.json')
 
       visible_files.each do |filename,content|
         avatar.sandbox.dir.write(filename, content)

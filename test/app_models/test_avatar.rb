@@ -28,8 +28,7 @@ class AvatarTests < ModelTestBase
   test 'avatar is not active? when it has zero traffic-lights' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
-    lights_filename = lion.traffic_lights_filename
-    lion.dir.spy_read(lights_filename, JSON.unparse([]))
+    lion.dir.spy_read('increments.json', JSON.unparse([]))
     assert !lion.active?
   end
 
@@ -38,8 +37,7 @@ class AvatarTests < ModelTestBase
   test 'avatar is not active? when it has one traffic-light' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
-    lights_filename = lion.traffic_lights_filename
-    lion.dir.spy_read(lights_filename, JSON.unparse([
+    lion.dir.spy_read('increments.json', JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
@@ -54,8 +52,7 @@ class AvatarTests < ModelTestBase
   test 'avatar is active? when it has 2 or more traffic-lights' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
-    lights_filename = lion.traffic_lights_filename
-    lion.dir.spy_read(lights_filename, JSON.unparse([
+    lion.dir.spy_read('increments.json', JSON.unparse([
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
