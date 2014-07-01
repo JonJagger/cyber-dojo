@@ -34,14 +34,14 @@ class KataController < ApplicationController
     @output = @avatar.test(max_duration)
     @avatar.sandbox.write('output', @output) # so output appears in diff-view
     visible_files['output'] = @output
+    traffic_light = OutputParser::parse(@kata.language.unit_test_framework, @output)
+    @traffic_lights = @avatar.save_traffic_light(traffic_light, make_time(Time.now))
 
     #should really only do this if kata is using approval-style test-framework
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.path, visible_files)
     Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.path, visible_files)
 
     @avatar.save_manifest(visible_files)
-    traffic_light = OutputParser::parse(@kata.language.unit_test_framework, @output)
-    @traffic_lights = @avatar.save_traffic_light(traffic_light, make_time(Time.now))
     @avatar.commit(@traffic_lights.length)
 
     @new_files = visible_files.select {|filename, content| ! previous_filenames.include?(filename)}
@@ -62,8 +62,8 @@ private
   def received_files
     seen = { }
     (params[:file_content] || {}).each do |filename,content|
-      # Cater for windows line endings from windows browser
       content = clean(content)
+      # Cater for windows line endings from windows browser
       content = content.gsub(/\r\n/, "\n")
       # Cater for jquery-tabby.js plugin
       seen[filename] = MakefileFilter.filter(filename,content)
@@ -74,7 +74,6 @@ private
   def clean(s)
     s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
     s = s.encode('UTF-8', 'UTF-16')
-    s
   end
 
 end

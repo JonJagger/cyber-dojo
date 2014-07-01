@@ -6,6 +6,7 @@ Avatar.parse(filename,tag)
 Would it be better to always use a tag?
 This removes the dependency on the current files
 and treats the git repo as the master. Seems right.
+irb> tag = `cd dir;git shortlog -s`.to_i
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move clean(string) code into Dir.read
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -31,7 +32,7 @@ Kata.start_avatar
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 parse output to determine traffic-light colour
 This can be a simple library call inside an avatar method.
-It has no external dependencies.
+parse(output) has no external dependencies.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller
@@ -43,6 +44,8 @@ It has no external dependencies.
       avatar.tags[t].lights[4]
       avatar.tags[t].lights[4].colour
       avatar.tags[t].visible_files
+      avatar.tags[t].visible_files[filename]
+      avatar.tags[t].output
 
   YES. and lights for a tag that is not a *test* event
   eg its a file rename, can simply return the lights for
@@ -58,8 +61,10 @@ It has no external dependencies.
   where each entry corresponds to a *test* event.
   $ git shortlog
   lists all the commit tags. So
-  irb: `git shortlog`.lines.entries[-2].strip.to_i
-  gets you last current git tag (-2 because -1 is a newline)
+  irb: `cd dir;git shortlog -s`.to_i
+  gets you last current git tag
+  And then
+     avatar.tags[-1]
 
   So if there is no event: key then take it to be a test event.
   Otherwise the event is named eg :rename
@@ -121,11 +126,8 @@ o) adding a new language
         # that would get xfer'd to a readonly server.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Avatar should be passed block that can determine the colour
-  of test output so that it can create its own traffic light.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   add blurb to start of initial source files explaining that
-  the initial source files bare no relation to the exercise.
+  the initial source files bare no relation to the exercise?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   admin_scripts/check_language_manifest.rb
   should be passed the languages/ dir not the root_dir
@@ -139,8 +141,6 @@ o) adding a new language
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   test/app_models/test_avatar_test.rb
   has some tests that need reviving.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  OutputParser could be another object hung off Thread.current
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   kata.avatars['lion'].tag[4]
     handy shortcut for this could be
@@ -230,12 +230,6 @@ It would be simpler if output and instructions were not mixed
 into kata.language and avatar.setup did an explicit
 save(kata.exercise.instructions)
 -----
-kata.dir should probably return a dir with a / catenated to the end.
-  This would simplify lines 10,26,74 (and probably more in exercises and languages)
------
-avatar.dir should probably return a dir with a / catenated to the end.
-  This would simplify line 80
------
 Edit help dialog needs to show fork icon. Or the word fork now that the
   overly subtle fork-icon has been dropped.
 -----
@@ -314,11 +308,6 @@ the dashboard traps carriage-returns on the secs_per_columns and
   posting (like the diff page does for the was_tag and now_tag
   text fields)
 -----
-I'd like the rightmost column of avatar images on the dashboard
-  to not scroll off screen. But at the same time I'd also like
-  the time-moving traffic-lights to update (to the avatar image's
-  left) every 10 seconds.
------
 allow initial manifest.rb setup of initial exercise/language to
   contain subfolders. Do I need this? Could it already be done
   with links?
@@ -328,12 +317,8 @@ once a dojo has been created it should be independent of the
   For example, you should be able to rename a languages sub-folder
   and a dojo created from it before the rename should be ok.
 -----
-sort filenames so filenames with no . in them are grouped together
-  and filenames with one or more . in them are grouped together?
-sort filenames so files with the same extension are grouped together?
------
-diff-filename-click cycles to the next diff but it loses the current red/green
-  toggling states
+diff-filename-click cycles to the next diff but it loses the
+  current red/green toggling states
 -----
 in diff page when you go back to a file with diff it should not cycle to next
   diff change it should only cycle to next diff change if you click the filename
