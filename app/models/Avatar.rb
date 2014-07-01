@@ -66,7 +66,7 @@ class Avatar
   end
 
   def save_manifest(visible_files)
-    dir.write(visible_files_filename, visible_files)
+    dir.write('manifest.json', visible_files)
   end
 
   def save_traffic_light(traffic_light, now)
@@ -74,7 +74,7 @@ class Avatar
     rags << traffic_light
     traffic_light['number'] = rags.length
     traffic_light['time'] = now
-    dir.write(traffic_lights_filename, rags)
+    dir.write('increments.json', rags)
     rags
   end
 
@@ -91,19 +91,11 @@ class Avatar
 
   def lights
     Lights.new(self)
-    #@lights ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
-    #@lights.map{|hash| Light.new(self,hash)}
+    #@incs ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
+    #@lights ||= @incs.map{|inc| Light.new(self,inc)}
   end
 
 private
-
-  def traffic_lights_filename
-    'increments.json'
-  end
-
-  def visible_files_filename
-    'manifest.json'
-  end
 
   def disk
     @externals[:disk]
