@@ -38,11 +38,11 @@ class Exercise
     clean(raw)
   end
 
+private
+
   def instructions_filename
     'instructions'
   end
-
-private
 
   include Cleaner
 
