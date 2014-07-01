@@ -39,6 +39,7 @@ class ActiveSupport::TestCase
     avatar.save(delta, visible_files)
     output = avatar.test(timeout)
     avatar.sandbox.write('output', output)
+    visible_files['output'] = output
     avatar.save_manifest(visible_files)
     traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
     traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))

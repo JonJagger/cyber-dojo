@@ -39,7 +39,8 @@ class ForkerController < ApplicationController
       id = Id.new.to_s
       now = make_time(Time.now)
       manifest = dojo.katas.create_kata_manifest(language, exercise, id, now)
-      manifest[:visible_files] = avatar.visible_files(params['tag'])
+      tag = params['tag']
+      manifest[:visible_files] = avatar.tags[tag].visible_files
       kata = dojo.katas[id]
       kata.dir.write(kata.manifest_filename, manifest)
       result[:forked] = true

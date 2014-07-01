@@ -10,7 +10,7 @@ class KataController < ApplicationController
     @kata = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
     @tab = @kata.language.tab
-    @visible_files = @avatar.visible_files
+    @visible_files = @avatar.tags.latest.visible_files
     @new_files = { }
     @files_to_remove = [ ]
     @traffic_lights = @avatar.traffic_lights

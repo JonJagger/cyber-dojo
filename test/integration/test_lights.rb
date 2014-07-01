@@ -28,8 +28,7 @@ class LightsTests < ActionController::TestCase
 
   test "avatar.save(:changed).test().save_traffic_light().commit().traffic_lights().diff_lines()" do
     avatar = @kata.start_avatar
-    visible_files = avatar.visible_files
-    assert_equal visible_files, avatar.visible_files(tag=0)
+    visible_files = avatar.tags[0].visible_files
     assert_equal [ ], avatar.traffic_lights
     assert_equal [ ], avatar.traffic_lights(tag=0)
 

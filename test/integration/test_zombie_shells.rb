@@ -23,7 +23,7 @@ class ZombieShellTests < ActionController::TestCase
     avatar_count = 4
     avatar_count.times do |n|
       avatar = kata.start_avatar
-      visible_files_set[avatar.name] = avatar.visible_files
+      visible_files_set[avatar.name] = avatar.tags[0].visible_files
       avatars << avatar
     end
 

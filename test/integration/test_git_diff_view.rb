@@ -13,6 +13,8 @@ require 'Kata'
 require 'Id'
 require 'Avatars'
 require 'Avatar'
+require 'Tags'
+require 'Tag'
 require 'Sandbox'
 require 'OutputParser'
 
@@ -58,7 +60,8 @@ class GitDiffViewTests < CyberDojoTestBase
       :new => [ ]
     }
     run_test(delta, avatar, visible_files) # tag 1
-    assert_equal 'red', avatar.traffic_lights.last['colour'], avatar.visible_files["output"]
+    assert_equal 'red', avatar.traffic_lights.last['colour'],
+                        avatar.tags[1].output
 
     visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
     delta = {
@@ -179,7 +182,9 @@ class GitDiffViewTests < CyberDojoTestBase
     }
 
     run_test(delta, avatar, visible_files) # tag 1
-    assert_equal 'red', avatar.traffic_lights.last['colour'], avatar.visible_files["output"]
+
+    assert_equal 'red', avatar.traffic_lights.last['colour'],
+                        avatar.tags[1].output
 
     visible_files.delete('untitled.rb') # will cause amber
     delta = {
@@ -213,8 +218,8 @@ class GitDiffViewTests < CyberDojoTestBase
     exercise = @dojo.exercises['test_Yahtzee']
     `rm -rf #{@dojo.katas.path}`
     kata = @dojo.katas.create_kata(language, exercise)
-    avatar = kata.start_avatar # tag 0
-    visible_files = avatar.visible_files
+    avatar = kata.start_avatar
+    visible_files = avatar.tags[0].visible_files
 
     cyber_dojo_sh = visible_files['cyber-dojo.sh']
     cyber_dojo_sh += "\n"
