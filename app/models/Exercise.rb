@@ -1,3 +1,4 @@
+require 'Cleaner'
 
 class Exercise
 
@@ -42,9 +43,8 @@ class Exercise
     'instructions'
   end
 
-  def clean(s)
-    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-    s = s.encode('UTF-8', 'UTF-16')
-  end
+private
+
+  include Cleaner
 
 end

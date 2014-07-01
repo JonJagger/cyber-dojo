@@ -1,3 +1,5 @@
+require 'json'
+require 'Cleaner'
 
 class Lights
   include Enumerable
@@ -34,21 +36,9 @@ class Lights
 private
 
   def lights
-    return @lights ||= JSON.parse(text)
+    return @lights ||= JSON.parse(clean(avatar.dir.read('increments.json')))
   end
 
-  def text
-    raw = avatar.dir.read(traffic_lights_filename)
-    clean(raw)
-  end
-
-  def traffic_lights_filename
-    'increments.json'
-  end
-
-  def clean(s)
-    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-    s = s.encode('UTF-8', 'UTF-16')
-  end
+  include Cleaner
 
 end

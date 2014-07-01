@@ -1,3 +1,5 @@
+require 'json'
+require 'Cleaner'
 
 class Kata
 
@@ -98,7 +100,7 @@ class Kata
   end
 
   def manifest
-    return @manifest ||= JSON.parse(text)
+    return @manifest ||= JSON.parse(clean(dir.read(manifest_filename)))
   end
 
   def manifest_filename
@@ -115,11 +117,6 @@ private
     @externals[:git]
   end
 
-  def text
-    raw = dir.read(manifest_filename)
-    clean(raw)
-  end
-
   def earliest_light
     # time of first manually pressed traffic-light
     # (initial traffic-light is automatically created)
@@ -130,12 +127,6 @@ private
     @katas.dojo
   end
 
-  def clean(s)
-    # force an encoding change - if encoding is already utf-8
-    # then encoding to utf-8 is a no-op and invalid byte
-    # sequences are not detected.
-    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-    s = s.encode('UTF-8', 'UTF-16')
-  end
+  include Cleaner
 
 end

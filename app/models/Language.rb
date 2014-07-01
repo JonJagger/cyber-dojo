@@ -1,4 +1,5 @@
 require 'json'
+require 'Cleaner'
 
 class Language
 
@@ -140,9 +141,6 @@ private
     clean(raw)
   end
 
-  def clean(s)
-    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-    s = s.encode('UTF-8', 'UTF-16')
-  end
+  include Cleaner
 
 end

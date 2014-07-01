@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+app/lib/Choose.rb => Chooser
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar.parse(filename,tag)
     raw = dir.read(filename)                   if tag == nil
     raw = git.show(path, "#{tag}:#{filename}") if tag != nil
