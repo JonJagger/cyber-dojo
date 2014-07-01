@@ -8,8 +8,6 @@ class Lights
     @avatar = avatar
   end
 
-  attr_reader :avatar
-
   def each
     # avatar.lights.each
     lights.each_with_index { |light,n| yield self[n,light] if block_given? }
@@ -17,7 +15,7 @@ class Lights
 
   def [](n, light = nil)
     # avatar.lights[6]
-    Light.new(avatar, light || lights[n])
+    Light.new(@avatar, light || lights[n])
   end
 
   def length
@@ -36,7 +34,7 @@ class Lights
 private
 
   def lights
-    return @lights ||= JSON.parse(clean(avatar.dir.read('increments.json')))
+    return @lights ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
   end
 
   include Cleaner
