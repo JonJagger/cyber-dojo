@@ -26,11 +26,6 @@ class Lights
     self[length-1]
   end
 
-  #def <<(light)
-  #  ...
-  #  @lights = nil  (reset cache)
-  #end
-
 private
 
   def lights

@@ -91,6 +91,8 @@ class Avatar
 
   def lights
     Lights.new(self)
+    #@lights ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
+    #@lights.map{|hash| Light.new(self,hash)}
   end
 
 private

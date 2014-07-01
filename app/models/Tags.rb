@@ -47,7 +47,7 @@ private
     #    avatar.tags[n]     gives you the nth tag which may not be a traffic-light.
     #
     # However, perhaps this needs revisiting.
-    # Surely tags for, eg, file renames, will need time and number?
+    # Surely tags for, eg, file rename, will need time and number?
 
   end
 

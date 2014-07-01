@@ -20,18 +20,4 @@ class Light
     @hash['number'].to_i
   end
 
-  #- - - - - - - - - - - - - - - -
-
-  #def visible_files
-  #end
-
-  #def output
-  #end
-
-  #def diff(n)
-  #end
-
-  #def tag_number
-  #end
-
 end

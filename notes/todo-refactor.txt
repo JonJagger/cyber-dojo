@@ -1,19 +1,16 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I think there are some clean(s) calls that do not use
+the Cleaner module
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 avatar.lights.each.entries
   is painful
   create and return array of Light objects
-  Then use last instead of latest
+  Then use last instead of latest.
+  This should work ok when increments contains non test events
+  since I can simply filter increments.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.parse(filename,tag)
-    raw = dir.read(filename)                   if tag == nil
-    raw = git.show(path, "#{tag}:#{filename}") if tag != nil
-Would it be better to always use a tag?
-This removes the dependency on the current files
-and treats the git repo as the master. Seems right.
-irb> tag = `cd dir;git shortlog -s`.to_i
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Move clean(string) code into Dir.read
+Move clean(string) code into Dir.read ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 spydir.read does this
   content = JSON.unparse(content) if filename === 'manifest.json'
