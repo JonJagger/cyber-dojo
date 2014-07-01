@@ -136,8 +136,7 @@ private
   def parse(filename, tag)
     raw = dir.read(filename)                   if tag == nil
     raw = git.show(path, "#{tag}:#{filename}") if tag != nil
-    text = clean(raw)
-    JSON.parse(text)
+    JSON.parse(clean(raw))
   end
 
   def clean(s)
