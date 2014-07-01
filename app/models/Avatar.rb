@@ -85,6 +85,12 @@ class Avatar
 
   #- - - - - - - - - - - - - - -
 
+  def tags
+    @tags ||= Tags.new(self,git)
+  end
+
+  #- - - - - - - - - - - - - - -
+
   def lights
     Lights.new(self)
   end
@@ -131,7 +137,7 @@ private
     raw = dir.read(filename)                   if tag == nil
     raw = git.show(path, "#{tag}:#{filename}") if tag != nil
     text = clean(raw)
-    JSON.parse(clean(raw))
+    JSON.parse(text)
   end
 
   def clean(s)

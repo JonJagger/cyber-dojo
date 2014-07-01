@@ -137,11 +137,11 @@ class ForkerControllerTest < IntegrationTest
     if more_than_number_of_lights
       avatar.dir.spy_read('increments.json',
         JSON.unparse([
-          [
+          {
             'colour' => 'red',
             'time' => [2014, 2, 15, 8, 54, 6],
             'number' => 1
-          ]
+          }
         ]))
     end
 
