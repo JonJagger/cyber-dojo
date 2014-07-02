@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'OutputParser'
 
 class OutputPhpUnitTests < CyberDojoTestBase
 
-  test "one fail is red" do
+  test 'one fail is red' do
     output =
       [
         "PHPUnit 3.4.5 by Sebastian Bergmann.",
@@ -30,7 +29,7 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "one pass is green" do
+  test 'one pass is green' do
     output =
       [
         "PHPUnit 3.4.5 by Sebastian Bergmann.",
@@ -47,7 +46,7 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "syntax error is amber" do
+  test 'syntax error is amber' do
     output =
       [
         "PHP Parse error:  syntax error, unexpected T_STRING in /var/www/cyberdojo/sandboxes/52/431F0275/zebra/UntitledTest.php on line 10"
@@ -57,7 +56,7 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "one pass one fail is red" do
+  test 'one pass one fail is red' do
     output =
       [
         "PHPUnit 3.4.5 by Sebastian Bergmann.",
@@ -82,7 +81,8 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "multiple calls in cyber-dojo.sh and one overall-pass and one overall-fail" do
+  test 'multiple calls in cyber-dojo.sh and ' +
+       'one overall-pass and one overall-fail' do
     output =
       [
         "PHPUnit 3.4.5 by Sebastian Bergmann.",
@@ -116,7 +116,7 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "red output then amber output is amber" do
+  test 'red output then amber output is amber' do
     output =
       [
         "PHPUnit 3.4.5 by Sebastian Bergmann.",
@@ -143,7 +143,7 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "green output then amber output is amber" do
+  test 'green output then amber output is amber' do
     output =
       [
         "PHPUnit 3.4.5 by Sebastian Bergmann.",
@@ -162,7 +162,7 @@ class OutputPhpUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "phpunit not installed is amber" do
+  test 'phpunit not installed is amber' do
     output = "./cyber-dojo.sh: line 1: phpunit: command not found"
     assert_equal :amber, colour_of(output)
   end

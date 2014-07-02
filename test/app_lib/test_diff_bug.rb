@@ -1,9 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'GitDiff'
-require 'GitDiffParser'
-require 'GitDiffBuilder'
 
 class TrapDiffBugTests < CyberDojoTestBase
 

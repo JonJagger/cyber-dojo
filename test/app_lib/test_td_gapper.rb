@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'TdGapper'
-require 'Light'
 
 class TdGapperTests < CyberDojoTestBase
 

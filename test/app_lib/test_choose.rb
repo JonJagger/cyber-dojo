@@ -1,18 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'Choose'
-require 'OsDisk'
-require 'Git'
-require 'DummyTestRunner'
-require 'Dojo'
-require 'Katas'
-require 'Kata'
-require 'Id'
-require 'Languages'
-require 'Language'
-require 'Exercises'
-require 'Exercise'
 
 class ChooseTests < CyberDojoTestBase
 

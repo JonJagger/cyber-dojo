@@ -52,7 +52,7 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def self.test(name, &block)
-      define_method("test_#{name}".to_sym, &block)
+    define_method("test_#{name}".to_sym, &block)
   end
 
 end
