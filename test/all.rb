@@ -19,6 +19,10 @@ require 'DummyTestRunner'
 require 'HostTestRunner'
 require 'StubTestRunner'
 
+require 'make_time_helper'
+
+require 'OutputParser'
+
 require 'Dojo'
 require 'Languages'
 require 'Language'

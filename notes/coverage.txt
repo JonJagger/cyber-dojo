@@ -11,7 +11,7 @@ app_lib
 app_models
    Finished tests in 0.776376s, 133.9557 tests/s, 502.3339 assertions/s.
    104 tests, 390 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 96.79%
+   Coverage = 98.95%
 
 lib
    Finished tests in 8.021521s, 7.8539 tests/s, 13.3391 assertions/s.

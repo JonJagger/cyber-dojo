@@ -36,15 +36,11 @@ class ActiveSupport::TestCase
   end
 
   def run_test(delta, avatar, visible_files, timeout = 15)
-    avatar.save(delta, visible_files)
-    output = avatar.test(timeout)
-    avatar.sandbox.write('output', output)
-    visible_files['output'] = output
+    now = make_time(Time.now)
+    lights = avatar.test(delta, visible_files, timeout, now)
     avatar.save_manifest(visible_files)
-    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.commit(traffic_lights.length)
-    output
+    avatar.commit(lights.length)
+    visible_files['output']
   end
 
   def root_path

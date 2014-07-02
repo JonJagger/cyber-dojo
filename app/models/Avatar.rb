@@ -47,6 +47,39 @@ class Avatar
     Sandbox.new(self,disk)
   end
 
+  #- - - - - - - - - - - - - - -
+
+  def tags
+    @tags ||= Tags.new(self,git)
+  end
+
+  def lights
+    Lights.new(self)
+  end
+
+  #- - - - - - - - - - - - - - -
+
+  def test(delta, visible_files, max_duration, now)
+    save(delta, visible_files)
+    output = clean(runner.run(sandbox, './cyber-dojo.sh', max_duration))
+    sandbox.write('output', output) # so output appears in diff-view
+    visible_files['output'] = output
+    traffic_light = OutputParser::parse(kata.language.unit_test_framework, output)
+    traffic_lights = save_traffic_light(traffic_light, now)
+    traffic_lights
+  end
+
+  def save_manifest(visible_files)
+    dir.write('manifest.json', visible_files)
+  end
+
+  def commit(tag)
+    git.commit(path, "-a -m '#{tag}' --quiet")
+    git.tag(path, "-m '#{tag}' #{tag} HEAD")
+  end
+
+private
+
   def save(delta, visible_files)
     delta[:changed].each do |filename|
       sandbox.dir.write(filename, visible_files[filename])
@@ -60,14 +93,10 @@ class Avatar
     end
   end
 
-  def test(max_duration)
-    output = runner.run(sandbox, './cyber-dojo.sh', max_duration)
-    clean(output)
-  end
-
-  def save_manifest(visible_files)
-    dir.write('manifest.json', visible_files)
-  end
+  #def test(max_duration)
+  #  output = runner.run(sandbox, './cyber-dojo.sh', max_duration)
+  #  clean(output)
+  #end
 
   def save_traffic_light(traffic_light, now)
     rags = lights.each.entries
@@ -76,21 +105,6 @@ class Avatar
     traffic_light['time'] = now
     dir.write('increments.json', rags)
     rags
-  end
-
-  def commit(tag)
-    git.commit(path, "-a -m '#{tag}' --quiet")
-    git.tag(path, "-m '#{tag}' #{tag} HEAD")
-  end
-
-  #- - - - - - - - - - - - - - -
-
-  def tags
-    @tags ||= Tags.new(self,git)
-  end
-
-  def lights
-    Lights.new(self)
   end
 
 private

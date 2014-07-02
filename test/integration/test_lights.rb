@@ -26,7 +26,7 @@ class LightsTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar.save(:changed).test().save_traffic_light().commit().traffic_lights().diff()" do
+  test "avatar.save(:changed).test().lights().diff()" do
     avatar = @kata.start_avatar
     visible_files = avatar.tags[0].visible_files
     assert_equal [ ], avatar.lights.each.entries
@@ -42,52 +42,26 @@ class LightsTests < ActionController::TestCase
       :new => [ ],
       :unchanged => visible_files.keys - [ filename ]
     }
+
     visible_files.delete('output')
-    avatar.save(delta, visible_files)
-    output = avatar.test(@max_duration)
-    assert output.include?('OK (1 test)')
 
-    avatar.sandbox.write('output',output)
-    visible_files['output'] = output
+    max_duration = 15
+    now = make_time(Time.now)
+    lights = avatar.test(delta, visible_files, max_duration, now)
     avatar.save_manifest(visible_files)
-    traffic_light = { 'colour' => 'green' }
-    traffic_lights = avatar.save_traffic_light(traffic_light, now)
-
-    assert_equal traffic_lights, avatar.lights.each.entries
-    assert_not_nil traffic_lights
-    assert_equal 1, traffic_lights.length
-
-    avatar.commit(traffic_lights.length)
-    assert_equal traffic_lights, avatar.lights.each.entries
+    avatar.commit(lights.length)
+    output = visible_files['output']
+    assert output.include?('OK (1 test)')
+    assert_equal 1, lights.length
+    assert_equal 'green', lights[-1]['colour']
+    assert_equal now, lights[-1]['time']
+    assert_equal 1, lights[-1]['number']
 
     diff = avatar.tags[0].diff(1)
     assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
     assert diff.include?('-        int expected = 6 * 9;'), diff
     assert diff.include?('+        int expected = 6 * 7;'), diff
   end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test "avatar.lights length==1" +
-      " [0].colour = red" +
-      " [0].time = now" +
-      " [0].number = 1" +
-      " after save_traffic_light() called" do
-    avatar = @kata.start_avatar
-    light = { 'colour' => 'red' }
-    at = now
-    avatar.save_traffic_light(light, at)
-    lights = avatar.lights
-    assert_equal 1, lights.length, "length"
-    assert_equal :red, lights[0].colour, "colour"
-    assert_equal Time.mktime(*at), lights[0].time, "time"
-    assert_equal 1, lights[0].number, "number"
-    assert_equal :red, lights.latest.colour
-    assert_equal Time.mktime(*at), lights.latest.time
-    assert_equal 1, lights.latest.number
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - -
 
 =begin
   test "xxxx" do

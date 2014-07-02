@@ -4,6 +4,8 @@ require_relative 'model_test_base'
 
 class AvatarTests < ModelTestBase
 
+  include MakeTimeHelper
+
   test 'there are 16 avatar names' do
     assert_equal 16, Avatar.names.length
   end
@@ -159,8 +161,8 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'after test() output-file is not saved in sandbox ' +
-       'and output-file is not inserted into the visible_files argument' do
+  test 'after test() output-file is saved in sandbox ' +
+       'and output-file is inserted into the visible_files argument' do
     kata = @dojo.katas['45ED23A2F1']
     avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
@@ -176,18 +178,34 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    avatar.save(delta, visible_files)
-    output = avatar.test(@max_duration)
+
+    max_duration = 15
+    now = make_time(Time.now)
+    language = @dojo.languages['C-assert']
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name,
+      :unit_test_framework => 'cassert'
+    }
+    language.dir.spy_read('manifest.json', manifest)
+    kata.dir.spy_read('manifest.json', manifest)
+    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+
+    avatar.test(delta, visible_files, max_duration, now)
+    output = visible_files['output'] #avatar.test(@max_duration)
+
     assert_equal 'stubbed-output', output
-    assert !visible_files.keys.include?('output')
+    assert visible_files.keys.include?('output')
     saved_filenames = filenames_written_to(sandbox.dir.log)
-    assert !saved_filenames.include?('output')
+    assert saved_filenames.include?('output')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:changed] files are saved' do
-    avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
+    kata = @dojo.katas['45ED23A2F1']
+    avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
     visible_files = {
       'untitled.cs' => 'content for code file',
@@ -200,11 +218,25 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    avatar.save(delta, visible_files)
-    output = avatar.test(@max_duration)
+
+    max_duration = 15
+    now = make_time(Time.now)
+    language = @dojo.languages['C-assert']
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name,
+      :unit_test_framework => 'cassert'
+    }
+    language.dir.spy_read('manifest.json', manifest)
+    kata.dir.spy_read('manifest.json', manifest)
+    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+
+    avatar.test(delta, visible_files, max_duration, now)
+
     log = sandbox.dir.log
     saved_filenames = filenames_written_to(log)
-    assert_equal delta[:changed].sort, saved_filenames.sort
+
     assert log.include?(['write','untitled.cs', 'content for code file' ]), log.inspect
     assert log.include?(['write','untitled.test.cs', 'content for test file' ]), log.inspect
   end
@@ -212,7 +244,8 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:unchanged] files are not saved' do
-    avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
+    kata = @dojo.katas['45ED23A2F1']
+    avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
     visible_files = {
       'untitled.cs' => 'content for code file',
@@ -225,15 +258,34 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    avatar.save(delta, visible_files)
+
+    max_duration = 15
+    now = make_time(Time.now)
+    language = @dojo.languages['C-assert']
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name,
+      :unit_test_framework => 'cassert'
+    }
+    language.dir.spy_read('manifest.json', manifest)
+    kata.dir.spy_read('manifest.json', manifest)
+    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+
+    avatar.test(delta, visible_files, max_duration, now)
+
     saved_filenames = filenames_written_to(sandbox.dir.log)
-    assert_equal delta[:changed].sort, saved_filenames
+    delta[:changed].each do |filename|
+      assert saved_filenames.include?(filename)
+    end
+
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'save():delta[:new] files are saved and git added' do
-    avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
+    kata = @dojo.katas['45ED23A2F1']
+    avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
     visible_files = {
       'wibble.cs' => 'content for code file',
@@ -246,9 +298,27 @@ class AvatarTests < ModelTestBase
       :deleted => [ ],
       :new => [ 'wibble.cs' ]
     }
-    avatar.save(delta, visible_files)
+
+    max_duration = 15
+    now = make_time(Time.now)
+    language = @dojo.languages['C-assert']
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name,
+      :unit_test_framework => 'cassert'
+    }
+    language.dir.spy_read('manifest.json', manifest)
+    kata.dir.spy_read('manifest.json', manifest)
+    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+
+    avatar.test(delta, visible_files, max_duration, now)
+
     saved_filenames = filenames_written_to(sandbox.dir.log)
-    assert_equal delta[:new].sort, saved_filenames.sort
+    delta[:new].each do |filename|
+      assert saved_filenames.include?(filename)
+    end
+
     git_log = @git.log[sandbox.path]
     assert git_log.include?([ 'add', 'wibble.cs' ]), git_log.inspect
   end
@@ -256,7 +326,8 @@ class AvatarTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "save():delta[:deleted] files are git rm'd" do
-    avatar = @dojo.katas['45ED23A2F1'].avatars['hippo']
+    kata = @dojo.katas['45ED23A2F1']
+    avatar = kata.avatars['hippo']
     sandbox = avatar.sandbox
     visible_files = {
       'untitled.cs' => 'content for code file',
@@ -269,7 +340,22 @@ class AvatarTests < ModelTestBase
       :deleted => [ 'wibble.cs' ],
       :new => [ ]
     }
-    avatar.save(delta, visible_files)
+
+    max_duration = 15
+    now = make_time(Time.now)
+    language = @dojo.languages['C-assert']
+    manifest = {
+      :id => @id,
+      :visible_files => visible_files,
+      :language => language.name,
+      :unit_test_framework => 'cassert'
+    }
+    language.dir.spy_read('manifest.json', manifest)
+    kata.dir.spy_read('manifest.json', manifest)
+    avatar.dir.spy_read('increments.json', JSON.unparse([]))
+
+    avatar.test(delta, visible_files, max_duration, now)
+
     saved_filenames = filenames_written_to(sandbox.dir.log)
     assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
 

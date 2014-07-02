@@ -29,13 +29,20 @@ class KataController < ApplicationController
     now = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(was, now)
     # there are a lot of steps below that should be collapsed somewhat.
-    @avatar.save(delta, visible_files)
+
     max_duration = 15
-    @output = @avatar.test(max_duration)
-    @avatar.sandbox.write('output', @output) # so output appears in diff-view
-    visible_files['output'] = @output
-    traffic_light = OutputParser::parse(@kata.language.unit_test_framework, @output)
-    @traffic_lights = @avatar.save_traffic_light(traffic_light, make_time(Time.now))
+    now = make_time(Time.now)
+    @traffic_lights = @avatar.test(delta, visible_files, max_duration, now)
+    @output = visible_files['output']
+
+    #@avatar.save(delta, visible_files)
+    #max_duration = 15
+    #@output = @avatar.test(max_duration)
+    #@avatar.sandbox.write('output', @output) # so output appears in diff-view
+    #visible_files['output'] = @output
+    #traffic_light = OutputParser::parse(@kata.language.unit_test_framework, @output)
+    #@traffic_lights = @avatar.save_traffic_light(traffic_light, make_time(Time.now))
+
 
     #should really only do this if kata is using approval-style test-framework
     Approval::add_text_files_created_in_run_tests(@avatar.sandbox.path, visible_files)

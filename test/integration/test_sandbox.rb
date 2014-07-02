@@ -29,14 +29,16 @@ class SandboxTests < ActionController::TestCase
       :new       => [ ]
     }
 
-    avatar.save(delta, visible_files)
     max_duration = 15
-    output = avatar.test(max_duration)
-    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.commit(traffic_lights.length)
+    now = make_time(Time.now)
+    lights = avatar.test(delta, visible_files, max_duration, now)
+    avatar.save_manifest(visible_files)
+    avatar.commit(lights.length)
 
-    assert_equal 'green', traffic_light['colour']
+    assert_equal 1, lights.length
+    assert_equal 'green', lights[-1]['colour']
+
+    #- - - - - - - -
 
     SPACE = ' '
     visible_files = {
@@ -51,15 +53,18 @@ class SandboxTests < ActionController::TestCase
       :new       => [ 'Untitled' + SPACE + '.java' ]
     }
 
-    avatar.save(delta, visible_files)
-    output = avatar.test(max_duration)
-    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.commit(traffic_lights.length)
+    max_duration = 15
+    now = make_time(Time.now)
+    lights = avatar.test(delta, visible_files, max_duration, now)
+    avatar.save_manifest(visible_files)
+    avatar.commit(lights.length)
 
-    assert_equal 'amber', traffic_light['colour']
+    assert_equal 2, lights.length
+    assert_equal 'amber', lights[-1]['colour']
 
+    #- - - - - - - -
     # put it back the way it was
+    
     visible_files = {
       'Untitled.java'     => content_for_untitled_java,
       'UntitledTest.java' => content_for_untitled_test_java,
@@ -72,15 +77,15 @@ class SandboxTests < ActionController::TestCase
       :new       => [ 'Untitled.java' ]
     }
 
-    avatar.save(delta, visible_files)
-    output = avatar.test(max_duration)
-    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.commit(traffic_lights.length)
+    max_duration = 15
+    now = make_time(Time.now)
+    lights = avatar.test(delta, visible_files, max_duration, now)
+    avatar.save_manifest(visible_files)
+    avatar.commit(lights.length)
 
-    # if the file whose name contained a space has been retained
-    # this will be :amber instead of :green
-    assert_equal 'green', traffic_light['colour'], kata.id.to_s + ":" + avatar.name
+    assert_equal 3, lights.length
+    assert_equal 'green', lights[-1]['colour']
+
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
