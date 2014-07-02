@@ -42,7 +42,7 @@ class ForkerController < ApplicationController
       tag = params['tag'].to_i
       manifest[:visible_files] = avatar.tags[tag].visible_files
       kata = dojo.katas[id]
-      kata.dir.write(kata.manifest_filename, manifest)
+      kata.dir.write('manifest.json', manifest)
       result[:forked] = true
       result[:id] = id
     end

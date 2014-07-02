@@ -99,11 +99,7 @@ class Kata
   end
 
   def manifest
-    return @manifest ||= JSON.parse(clean(dir.read(manifest_filename)))
-  end
-
-  def manifest_filename
-    'manifest.json'
+    @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
   end
 
 private

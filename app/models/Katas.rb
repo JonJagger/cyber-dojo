@@ -28,7 +28,7 @@ class Katas
     manifest[:visible_files]['output'] = ''
     manifest[:visible_files]['instructions'] = exercise.instructions
     kata = self[id]
-    kata.dir.write(kata.manifest_filename, manifest)
+    kata.dir.write('manifest.json', manifest)
     kata
   end
 
