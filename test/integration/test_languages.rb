@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
+require_relative '../cyberdojo_test_base'
 require_relative 'externals'
 
-class LanguagesTests < ActionController::TestCase
+class LanguagesTests < CyberDojoTestBase
 
   include Externals
 

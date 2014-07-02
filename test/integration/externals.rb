@@ -1,7 +1,7 @@
 
-require 'HostTestRunner'
-require 'Git'
-require 'OsDisk'
+#require 'HostTestRunner'
+#require 'Git'
+#require 'OsDisk'
 
 module Externals
 

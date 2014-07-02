@@ -21,6 +21,7 @@ $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/helpers'
 require 'make_time_helper'
 
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/lib'
+require 'Approval'
 require 'Choose'
 require 'FileDeltaMaker'
 require 'GitDiff'

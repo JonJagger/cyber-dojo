@@ -1,11 +1,4 @@
 
-$CYBERDOJO_HOME_DIR = File.expand_path('..', File.dirname(__FILE__)) + '/'
-
-$LOAD_PATH << $CYBERDOJO_HOME_DIR + 'lib'
-$LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/helpers'
-$LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/lib'
-$LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/models'
-
 require_relative 'test_coverage'
 require_relative 'all'
 require 'test/unit'
@@ -46,7 +39,8 @@ class CyberDojoTestBase < Test::Unit::TestCase
   end
 
   def root_path
-    ($CYBERDOJO_HOME_DIR + 'test/cyberdojo/').to_s
+    cyberdojo_home_dir = File.expand_path('..', File.dirname(__FILE__))
+    (cyberdojo_home_dir + '/test/cyberdojo/').to_s
   end
 
   def self.test(name, &block)

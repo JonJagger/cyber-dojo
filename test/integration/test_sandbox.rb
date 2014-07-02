@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
+require_relative '../cyberdojo_test_base'
 require_relative 'externals'
 
-class SandboxTests < ActionController::TestCase
+class SandboxTests < CyberDojoTestBase
 
   include Externals
 
@@ -11,7 +11,8 @@ class SandboxTests < ActionController::TestCase
     @dojo = Dojo.new(root_path,externals)
   end
 
-  test "defect-driven: filename containing space is not accidentally retained" do
+  test 'defect-driven: filename containing space ' +
+       'is not accidentally retained' do
     # retained means stays in the sandbox
     kata = make_kata(@dojo, 'test-Java-JUnit')
     avatar = kata.start_avatar
@@ -64,7 +65,7 @@ class SandboxTests < ActionController::TestCase
 
     #- - - - - - - -
     # put it back the way it was
-    
+
     visible_files = {
       'Untitled.java'     => content_for_untitled_java,
       'UntitledTest.java' => content_for_untitled_test_java,

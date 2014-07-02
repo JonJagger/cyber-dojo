@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
+require_relative '../cyberdojo_test_base'
 require_relative 'externals'
 
-class LightsTests < ActionController::TestCase
+class LightsTests < CyberDojoTestBase
 
   include Externals
 
@@ -18,7 +18,7 @@ class LightsTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar.lights initially empty" do
+  test 'avatar.lights initially empty' do
     lights = @kata.start_avatar.lights
     assert_equal [], lights.entries
     assert_equal 0, lights.length
@@ -26,7 +26,7 @@ class LightsTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "avatar.save(:changed).test().lights().diff()" do
+  test 'avatar.save(:changed).test().lights().diff()' do
     avatar = @kata.start_avatar
     visible_files = avatar.tags[0].visible_files
     assert_equal [ ], avatar.lights.each.entries
@@ -127,9 +127,9 @@ class LightsTests < ActionController::TestCase
   end
 =end
 
-  def now
-    tn = Time.now
-    [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
-  end
+  #def now
+  #  tn = Time.now
+  #  [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
+  #end
 
 end

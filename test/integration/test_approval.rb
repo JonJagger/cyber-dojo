@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
+require_relative '../cyberdojo_test_base'
+require 'tmpdir'
+require 'pathname'
 
-class ApprovalTests < ActionController::TestCase
+class ApprovalTests < CyberDojoTestBase
 
   def setup
     @temp_dir = Dir.mktmpdir

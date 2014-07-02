@@ -2,23 +2,6 @@
 
 require_relative '../cyberdojo_test_base'
 require_relative 'externals'
-require 'GitDiff'
-require 'Dojo'
-require 'Languages'
-require 'Language'
-require 'Exercises'
-require 'Exercise'
-require 'Katas'
-require 'Kata'
-require 'Id'
-require 'Avatars'
-require 'Avatar'
-require 'Lights'
-require 'Light'
-require 'Tags'
-require 'Tag'
-require 'Sandbox'
-require 'OutputParser'
 
 class GitDiffViewTests < CyberDojoTestBase
 

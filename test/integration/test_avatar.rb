@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
+require_relative '../cyberdojo_test_base'
 require_relative 'externals'
 
-class AvatarTests < ActionController::TestCase
+class AvatarTests < CyberDojoTestBase
 
   include Externals
 
@@ -13,7 +13,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "deleted file is deleted from that repo tag" do
+  test 'deleted file is deleted from that repo tag' do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
@@ -44,7 +44,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "diff_lines is not empty when change in files" do
+  test 'diff is not empty when change in files' do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
@@ -71,7 +71,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "diff_lines shows added file" do
+  test 'diff shows added file' do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
@@ -103,7 +103,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "diff_lines shows deleted file" do
+  test 'diff shows deleted file' do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
@@ -144,7 +144,7 @@ class AvatarTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "output is correct on refresh" do
+  test 'output is correct on refresh' do
     kata = make_kata(@dojo, 'Ruby-installed-and-working')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
