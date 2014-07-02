@@ -3,8 +3,8 @@ require 'Cleaner'
 
 class Tag
 
-  def initialize(avatar,n,git)
-    @avatar,@n,@git = avatar,n,git
+  def initialize(avatar,n,git,light)
+    @avatar,@n,@git,@light = avatar,n,git,light
   end
 
   def visible_files
@@ -22,8 +22,8 @@ class Tag
   end
 
   def light
-    @incs ||= JSON.parse(clean(@git.show(@avatar.path, "#{@n}:increments.json")))
-    @incs.last
+    # tag 0 has no light
+    @light
   end
 
 private

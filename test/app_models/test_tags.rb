@@ -32,6 +32,7 @@ class TagsTest < ModelTestBase
     assert_equal f1_content, visible_files[f1]
     assert_equal f2_content, visible_files[f2]
     assert_equal '', tags[0].output
+    assert_equal nil, tags[0].light
   end
 
   #- - - - - - - - - - - - - - - - - - -
@@ -62,8 +63,17 @@ class TagsTest < ModelTestBase
     tags = avatar.tags
     assert_equal 3, tags.length
     n = 0
-    tags.each { n += 1 }
+    tags.each { |tag|
+      assert_equal 'Tag', tag.class.name
+      n += 1
+    }
     assert_equal 3, n
+
+    assert_nil tags[0].light
+    assert_not_nil tags[1].light
+    assert_not_nil tags[2].light
+    assert_not_nil tags[3].light
+
 
     # simulate green [test]
     manifest = JSON.unparse({
