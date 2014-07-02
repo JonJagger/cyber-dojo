@@ -5,14 +5,12 @@ module OutputParser
   #  'amber' - this means the tests could not be run (eg syntax error)
   #  'green' - this means the tests ran and all passed
 
-  def self.parse(unit_test_framework, output)
-    inc = { }
-    if Regexp.new("Terminated by the cyber-dojo server after").match(output)
-      inc['colour'] = 'amber'
+  def self.colour(unit_test_framework, output)
+    if Regexp.new('Terminated by the cyber-dojo server after').match(output)
+      'amber'
     else
-      inc['colour'] = self.send("parse_#{unit_test_framework}", output).to_s
+      self.send("parse_#{unit_test_framework}", output).to_s
     end
-    inc
   end
 
   def self.parse_php_unit(output)
@@ -64,8 +62,8 @@ module OutputParser
   def self.parse_ruby_test_unit(output)
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
-      return :amber if match[4] != "0"
-      return :red   if match[3] != "0"
+      return :amber if match[4] != '0'
+      return :red   if match[3] != '0'
       return :green
     else
       return :amber

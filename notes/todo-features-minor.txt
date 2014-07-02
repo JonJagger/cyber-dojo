@@ -2,7 +2,7 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-BUTTON
   there should be a 15-second timeout on the browser too.
-  Sometimes the re/green yin-yang spinner just hangs there.
+  Sometimes the red/green yin-yang spinner just hangs there.
   Perhaps make the browser timeout slightly longer?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
@@ -18,7 +18,7 @@ OUTPUT
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 AGE
   if age >= 1 day then only display the number of days?
-  Or the age (ala git, eg about 3 months)
+  Or the age ala git (eg "about 3 months")
   if age < 1 day then display hours, seconds, minutes
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Once a kata has a max duration, I can move done katas
