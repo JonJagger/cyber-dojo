@@ -1,8 +1,4 @@
 
-#require 'HostTestRunner'
-#require 'Git'
-#require 'OsDisk'
-
 module Externals
 
   def externals(runner = HostTestRunner.new,
