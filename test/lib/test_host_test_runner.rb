@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib_test_base'
+require_relative '../cyberdojo_test_base'
 
-class HostTestRunnerTests < LibTestBase
+class HostTestRunnerTests < CyberDojoTestBase
 
   class StubSandbox
     def path
@@ -10,14 +10,14 @@ class HostTestRunnerTests < LibTestBase
     end
   end
 
-  test "command executes within timeout and returns command output" do
+  test 'command executes within timeout and returns command output' do
     sandbox = StubSandbox.new
     command = 'echo "Hello"'
     max_duration = 2 # seconds
     assert_equal "Hello\n", HostTestRunner.new.run(sandbox, command, max_duration)
   end
 
-  test "when command times-out output includes unable-to-complete message" do
+  test 'when command times-out output includes unable-to-complete message' do
     sandbox = StubSandbox.new
     command = 'sleep 10000'
     max_duration = 1 # second

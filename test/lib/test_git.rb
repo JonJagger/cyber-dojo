@@ -1,14 +1,13 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
-require 'Git'
+require_relative '../cyberdojo_test_base'
 
-class GitTests < ActionController::TestCase
+class GitTests < CyberDojoTestBase
 
   def setup
     @dir = root_path + 'tmp/'
-    system("rm -rf #{@dir}")
-    system("mkdir #{@dir}")
+    `rm -rf #{@dir}`
+    `mkdir #{@dir}`
     @git = Git.new
   end
 

@@ -7,10 +7,12 @@ $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/helpers'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/lib'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/models'
 
+require 'OsDisk'
 require 'FakeDisk'
 require 'SpyDisk'
 require 'SpyDir'
 
+require 'Git'
 require 'SpyGit'
 require 'DummyGit'
 
@@ -19,6 +21,7 @@ require 'DummyTestRunner'
 require 'HostTestRunner'
 require 'StubTestRunner'
 
+require 'Folders'
 require 'make_time_helper'
 
 require 'OutputParser'

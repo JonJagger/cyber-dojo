@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'lib_test_base'
+require_relative '../cyberdojo_test_base'
 
-class SpyDiskTests < LibTestBase
+class SpyDiskTests < CyberDojoTestBase
 
   test 'each() filters nested sub-folders to the immediate sub-folder only' do
     path = 'spied/'

@@ -1,11 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
-require 'OsDisk'
-require 'Folders'
-require 'HostTestRunner'
+require_relative '../cyberdojo_test_base'
 
-class FoldersTests < ActionController::TestCase
+class FoldersTests < CyberDojoTestBase
 
   def setup
     externals = {

@@ -1,13 +1,11 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
-require 'OsDisk'
+require_relative '../cyberdojo_test_base'
 
-class OsDiskTests < ActionController::TestCase
+class OsDiskTests < CyberDojoTestBase
 
   def setup
-    super
-    Thread.current[:disk] = @disk = OsDisk.new
+    @disk = OsDisk.new
     @dir = root_path + 'tmp/'
     `rm -rf #{@dir}`
     `mkdir -p #{@dir}`
@@ -15,13 +13,13 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "[dir] always has path ending in /" do
+  test '[dir] always has path ending in /' do
     assert_equal "ABC/", @disk['ABC'].path
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists?(dir) false when dir does not exist, true when it does" do
+  test 'exists?(dir) false when dir does not exist, true when it does' do
     `rm -rf #{@dir}`
     assert !@disk[@dir].exists?
     @disk[@dir].make
@@ -30,7 +28,7 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "exists?(filename) false when file exists, true when it does" do
+  test 'exists?(filename) false when file exists, true when it does' do
     `rm -rf #{@dir}`
     filename = 'hello.txt'
     assert !@disk[@dir].exists?(filename)
@@ -40,7 +38,7 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "reads back what was written" do
+  test 'reads back what was written' do
     expected = "content"
     @disk[@dir].write('filename', expected)
     actual = @disk[@dir].read('filename')
@@ -49,7 +47,9 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "on_lock_if_path_does_not_exist_exception_is_thrown_block_is_not_executed_and_result_is_nil" do
+  test 'on lock if path does not exist exception is thrown, ' +
+       'block is not_executed, ' +
+       'and result is nil' do
     block_run = false
     exception_throw = false
     begin
@@ -67,7 +67,8 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "if_lock_is_obtained_block_is_executed_and_result_is_result_of_block" do
+  test 'if lock is obtained block is executed ' +
+       'and result is result of block' do
     block_run = false
     begin
       result = @disk[@dir].lock {
@@ -80,7 +81,7 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "outer_lock_is_blocking_so_inner_lock_blocks" do
+  test 'outer lock is blocking so inner lock blocks' do
     outer_run = false
     inner_run = false
     @disk[@dir].lock do
@@ -104,7 +105,8 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "holding_lock_on_parent_dir_does_not_prevent_acquisition_of_lock_on_child_dir" do
+  test 'holding lock on parent dir does not prevent ' +
+       'acquisition of lock on child dir' do
     parent_dir = @dir + 'parent' + @disk.dir_separator
     child_dir = parent_dir + 'child' + @disk.dir_separator
     `mkdir #{parent_dir}`
@@ -123,8 +125,8 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "symlink" do
-    expected = "content"
+  test 'symlink' do
+    expected = 'content'
     @disk[@dir].write('filename', expected)
     oldname = @dir + 'filename'
     newname = @dir + 'linked'
@@ -135,21 +137,23 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save_file (json) for non-string is saved as JSON object and folder is automatically created" do
+  test 'save_file (json) for non-string is saved as JSON object ' +
+       'and folder is automatically created' do
     object = { :a => 1, :b => 2 }
     check_save_file('manifest.json', object, '{"a":1,"b":2}')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save_file for string - folder is automatically created" do
-    object = "hello world"
+  test 'save_file for string - folder is automatically created' do
+    object = 'hello world'
     check_save_file('manifest.rb', object, "hello world")
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "saving a file with a folder creates the subfolder and the file in it" do
+  test 'saving a file with a folder creates the subfolder ' +
+       'and the file in it' do
     pathed_filename = 'f1/f2/wibble.txt'
     content = 'Hello world'
     @disk[@dir].write(pathed_filename, content)
@@ -162,19 +166,19 @@ class OsDiskTests < ActionController::TestCase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save file for non executable file" do
+  test 'save file for non executable file' do
     check_save_file('file.a', 'content', 'content')
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save file for executable file" do
+  test 'save file for executable file' do
     check_save_file('file.sh', 'ls', 'ls', executable=true)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "save filename longer than but ends in makefile is not auto-tabbed" do
+  test 'save filename longer than but ends in makefile is not auto-tabbed' do
     content = '    abc'
     expected_content = content
     check_save_file('smakefile', content, expected_content)
@@ -189,7 +193,7 @@ class OsDiskTests < ActionController::TestCase
           "File.exists?(#{pathed_filename})"
     assert_equal expected_content, IO.read(pathed_filename)
     assert_equal executable, File.executable?(pathed_filename),
-                            "File.executable?(pathed_filename)"
+                            'File.executable?(pathed_filename)'
   end
 
 end

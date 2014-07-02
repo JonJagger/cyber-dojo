@@ -1,9 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/test_coverage'
-
-require File.expand_path('../../config/environment', __FILE__)
+require_relative 'test_coverage'
+require_relative '../config/environment'
 require 'rails/test_help'
 require 'make_time_helper'
 

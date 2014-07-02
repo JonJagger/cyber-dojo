@@ -1,16 +1,13 @@
 
-__DIR__ = File.dirname(__FILE__)
-require __DIR__ + '/test_coverage'
-
-me = File.expand_path(File.dirname(__FILE__))
-$CYBERDOJO_HOME_DIR = File.expand_path('..', me) + '/'
+$CYBERDOJO_HOME_DIR = File.expand_path('..', File.dirname(__FILE__)) + '/'
 
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'lib'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/helpers'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/lib'
 $LOAD_PATH << $CYBERDOJO_HOME_DIR + 'app/models'
 
-require 'make_time_helper'
+require_relative 'test_coverage'
+require_relative 'all'
 require 'test/unit'
 
 class CyberDojoTestBase < Test::Unit::TestCase
@@ -18,7 +15,7 @@ class CyberDojoTestBase < Test::Unit::TestCase
   include MakeTimeHelper
 
   def setup
-    system("rm -rf #{root_path}/katas/*")
+    `rm -rf #{root_path}/katas/*`
   end
 
   def make_kata(dojo, language_name, exercise_name = 'test_Yahtzee')
@@ -53,7 +50,7 @@ class CyberDojoTestBase < Test::Unit::TestCase
   end
 
   def self.test(name, &block)
-      define_method("test_#{name}".to_sym, &block)
+    define_method("test_#{name}".to_sym, &block)
   end
 
 end
