@@ -42,7 +42,6 @@ class LightsTests < ModelTestBase
     avatar.dir.spy_read('increments.json', JSON.unparse(incs))
     lights = avatar.lights
     assert_equal 3, lights.length
-    assert_equal 3, lights.count
 
     assert_equal_light(Light.new(avatar,red  ), lights[0])
     assert_equal_light(Light.new(avatar,amber), lights[1])
