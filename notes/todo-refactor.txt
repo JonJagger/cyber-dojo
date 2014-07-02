@@ -5,10 +5,13 @@ the Cleaner module
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 avatar.lights.each.entries
   is painful
-  create and return array of Light objects
+  create and return array of Light objects?
   Then use last instead of latest.
   This should work ok when increments contains non test events
   since I can simply filter increments.
+  Proving difficult.
+  Getting an infinite loop when DifferController/diff
+  tries to render back to diff-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move clean(string) code into Dir.read ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

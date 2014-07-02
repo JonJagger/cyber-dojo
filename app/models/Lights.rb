@@ -10,12 +10,12 @@ class Lights
 
   def each
     # avatar.lights.each
-    lights.each_with_index { |light,n| yield self[n,light] if block_given? }
+    lights.each { |light| yield Light.new(@avatar,light) if block_given? }
   end
 
-  def [](n, light = nil)
+  def [](n)
     # avatar.lights[6]
-    Light.new(@avatar, light || lights[n])
+    Light.new(@avatar, lights[n])
   end
 
   def length

@@ -10,6 +10,7 @@ class TagsTest < ModelTestBase
     tags = avatar.tags
     assert_equal [], tags.entries
     assert_equal 0, tags.length
+    assert_equal 0, tags.count
     n = 0
     tags.each { n += 1 }
     assert_equal 0, n
@@ -61,6 +62,7 @@ class TagsTest < ModelTestBase
 
     tags = avatar.tags
     assert_equal 3, tags.length
+    assert_equal 3, tags.count
     n = 0
     tags.each { n += 1 }
     assert_equal 3, n

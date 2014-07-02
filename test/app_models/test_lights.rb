@@ -7,8 +7,13 @@ class LightsTests < ModelTestBase
   test 'lights initially empty' do
     kata = make_kata
     lights = kata.start_avatar.lights
-    assert_equal [], lights.entries
+    assert_equal [ ], lights.entries
+    assert_equal [ ], lights.each.entries
     assert_equal 0, lights.length
+    assert_equal 0, lights.count
+    n = 0
+    lights.each { n += 1 }
+    assert_equal 0, n
   end
 
   #- - - - - - - - - - - - - - - - - - -
@@ -37,11 +42,33 @@ class LightsTests < ModelTestBase
     avatar.dir.spy_read('increments.json', JSON.unparse(incs))
     lights = avatar.lights
     assert_equal 3, lights.length
+    assert_equal 3, lights.count
 
     assert_equal_light(Light.new(avatar,red  ), lights[0])
     assert_equal_light(Light.new(avatar,amber), lights[1])
     assert_equal_light(Light.new(avatar,green), lights[2])
     assert_equal_light(Light.new(avatar,green), lights.latest)
+
+    n = 0
+    lights.each { |light|
+      n += 1
+      assert_equal avatar, light.avatar
+    }
+    assert_equal 3, n
+
+    assert_equal 3, lights.entries.length
+    assert_equal 3, lights.each.entries.length
+
+    # THIS IS ODD...
+    eh = lights.entries
+    assert_equal 'Array', eh.class.name
+    assert_equal 'Light', eh[0].class.name
+
+    eh = lights.each.entries
+    assert_equal 'Array', eh.class.name
+    assert_equal 'Hash',  eh[0].class.name
+
+    #assert_equal lights.entries, lights.each.entries
   end
 
   #- - - - - - - - - - - - - - - - - - -
@@ -51,4 +78,5 @@ class LightsTests < ModelTestBase
     assert_equal expected.time, actual.time, '.time'
     assert_equal expected.number, actual.number, '.number'
   end
+
 end

@@ -4,51 +4,57 @@ require_relative 'model_test_base'
 
 class LightTests < ModelTestBase
 
-  test 'lights initially empty' do
-    kata = make_kata
-    lights = kata.start_avatar.lights
-    assert_equal [], lights.entries
-    assert_equal 0, lights.length
+  def dummy_avatar
+    Object.new
   end
 
-  #- - - - - - - - - - - - - - - - - - -
-
-  test 'lights not empty' do
-    kata = make_kata
-    avatar = kata.start_avatar
-    incs =
-    [
-      red={
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      },
-      amber={
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 54, 34],
-        'number' => 2
-      },
-      green={
-        'colour' => 'green',
-        'time' => [2014, 2, 15, 8, 55, 7],
-        'number' => 3
-      }
-    ]
-    avatar.dir.spy_read('increments.json', JSON.unparse(incs))
-    lights = avatar.lights
-    assert_equal 3, lights.length
-
-    assert_equal_light(Light.new(avatar,red  ), lights[0])
-    assert_equal_light(Light.new(avatar,amber), lights[1])
-    assert_equal_light(Light.new(avatar,green), lights[2])
-    assert_equal_light(Light.new(avatar,green), lights.latest)
+  def make_light(rgb,time,n, key='colour')
+    Light.new(dummy_avatar, {
+      key => rgb,
+      'time' => time,
+      'number' => n
+    })
   end
 
-  #- - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - -
 
-  def assert_equal_light(expected, actual)
-    assert_equal expected.colour, actual.colour, '.colour'
-    assert_equal expected.time, actual.time, '.time'
-    assert_equal expected.number, actual.number, '.number'
+  test 'colour is converted to symbol' do
+    light = make_light('red',[2014,2,15,8,54,6],1)
+    assert_equal :red, light.colour
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'colour was once stored as outcome' do
+    light = make_light('red',[2014,2,15,8,54,6],1,'outcome')
+    assert_equal :red, light.colour
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'time is read as set' do
+    year = 2014
+    month = 2
+    day = 15
+    hh = 8
+    mm = 54
+    ss = 6
+    light = make_light('red',[year,month,day,hh,mm,ss],1)
+    time = light.time
+    assert_equal year, time.year
+    assert_equal month, time.month
+    assert_equal day, time.day
+    assert_equal hh, time.hour
+    assert_equal mm, time.min
+    assert_equal ss, time.sec
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'number is read as set' do
+    number = 7
+    light = make_light('red',[2014,2,15,8,54,6],number)
+    assert_equal number, light.number
+  end
+
 end
