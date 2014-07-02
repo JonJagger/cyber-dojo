@@ -46,15 +46,6 @@ class CyberDojoTestBase < Test::Unit::TestCase
     avatar.save_manifest(visible_files)
     avatar.commit(lights.length)
     visible_files['output']
-
-    #avatar.save(delta, visible_files)
-    #output = avatar.test(timeout)
-    #avatar.sandbox.write('output', output)
-    #avatar.save_manifest(visible_files)
-    #traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    #traffic_lights = avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    #avatar.commit(traffic_lights.length)
-    #output
   end
 
   def root_path

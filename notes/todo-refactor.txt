@@ -23,21 +23,11 @@ OsDir.write does this
   file.write(JSON.unparse(object)) if filename.end_with?('.json')
 Again, this needs to happen in the caller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.rb has this
-  raw = git.show(path, "#{n}:#{filename}") if tag != nil
-  When tags[n] is done this could be reworked
-  avatar.tags[n].read(filename)
-  And the raw.encoding could be done inside the read() too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-parse output to determine traffic-light colour
-This can be a simple library call inside an avatar method.
-parse(output) has no external dependencies.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller
@@ -80,7 +70,7 @@ parse(output) has no external dependencies.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages,Exercises,Languages container classes
 all check disk[path].exists? in their ctor and
-raise if it doesn't
+raise if it doesn't?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Models all check existence in their ctors.
 exists? methods move to container classes
@@ -108,7 +98,7 @@ o) adding a new language
    mention creating a sub-folder off languages/ at the start
    so its clear Dockerfile lives off this folder.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  paas.start_avatar
+  kata.start_avatar
      copy visible_filenames
         # this could also be replaced by
         # kata.language.visible_filenames.each do |filename|

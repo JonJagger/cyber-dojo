@@ -93,11 +93,6 @@ private
     end
   end
 
-  #def test(max_duration)
-  #  output = runner.run(sandbox, './cyber-dojo.sh', max_duration)
-  #  clean(output)
-  #end
-
   def save_traffic_light(traffic_light, now)
     rags = lights.each.entries
     rags << traffic_light
