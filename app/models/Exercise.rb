@@ -1,4 +1,4 @@
-require 'Cleaner'
+require_relative '../lib/Cleaner'
 
 class Exercise
 

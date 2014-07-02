@@ -1,5 +1,5 @@
-require 'Disk'
-require 'SpyDir'
+require_relative 'Disk'
+require_relative 'SpyDir'
 
 class SpyDisk
   include Disk

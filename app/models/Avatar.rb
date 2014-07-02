@@ -1,5 +1,5 @@
 require 'forwardable'
-require 'Cleaner'
+require_relative '../lib/Cleaner'
 
 class Avatar
   extend Forwardable

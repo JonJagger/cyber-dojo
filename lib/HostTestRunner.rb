@@ -6,7 +6,7 @@
 # No isolation/protection/security, nothing.
 # See DockerTestRunner.rb
 
-require 'TestRunner'
+require_relative 'TestRunner'
 
 class HostTestRunner
   include TestRunner

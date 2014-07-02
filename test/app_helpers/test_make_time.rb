@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'make_time_helper'
 
 class MakeTimeTests < CyberDojoTestBase
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'avatar_image_helper'
 
 class AvatarImageTests < CyberDojoTestBase
 

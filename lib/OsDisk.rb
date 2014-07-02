@@ -1,5 +1,4 @@
-
-require 'OsDir'
+require_relative 'OsDir'
 
 class OsDisk
 

@@ -11,7 +11,7 @@ class ActiveSupport::TestCase
   include MakeTimeHelper
 
   def setup
-    system("rm -rf #{root_path}/katas/*")
+    `rm -rf #{root_path}/katas/*`
   end
 
   def make_kata(dojo, language_name, exercise_name = 'test_Yahtzee')

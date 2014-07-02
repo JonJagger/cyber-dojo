@@ -2,7 +2,7 @@
 # test runner providing some isolation/protection/security
 # Uses Docker containers https://www.docker.io/
 
-require 'TestRunner'
+require_relative 'TestRunner'
 
 class DockerTestRunner
   include TestRunner

@@ -48,7 +48,8 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def root_path
-    ($CYBERDOJO_HOME_DIR + 'test/cyberdojo/').to_s
+    cyberdojo_home_dir = File.expand_path('../..', File.dirname(__FILE__))
+    cyberdojo_home_dir + '/test/cyberdojo/'
   end
 
   def self.test(name, &block)

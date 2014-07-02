@@ -1,5 +1,5 @@
 require 'json'
-require 'Cleaner'
+require_relative '../lib/Cleaner'
 
 class Kata
 

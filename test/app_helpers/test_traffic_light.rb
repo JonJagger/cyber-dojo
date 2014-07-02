@@ -1,10 +1,6 @@
 #!/usr/bin/env ruby
 
 require_relative '../cyberdojo_test_base'
-require 'traffic_light_helper'
-require 'Lights'
-require 'Light'
-require 'Avatar'
 
 class TrafficLightTests < CyberDojoTestBase
 
