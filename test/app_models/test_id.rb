@@ -10,7 +10,7 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "valid? is false when id-string less than 10 chars" do
+  test 'valid? is false when id-string less than 10 chars' do
     valid_id_string.each_char do |char|
       niner = valid_id_string.tr(char,'')
       assert !Id.new(niner).valid?
@@ -19,13 +19,13 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "valid? is true for valid 10char id" do
+  test 'valid? is true for valid 10char id' do
     assert Id.new(valid_id_string).valid?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "valid? is false when id-string contains non-hex char" do
+  test 'valid? is false when id-string contains non-hex char' do
     valid_id_string.each_char do |char|
       bad_chars = "XabcdeG".each_char do |bad_char|
         bad_id = valid_id_string.sub(char, bad_char)
@@ -36,14 +36,14 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "generates a valid id when one is not supplied" do
+  test 'generates a valid id when one is not supplied' do
     id = Id.new
     assert id.valid?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "uses id when supplied (useful for testing)" do
+  test 'uses id when supplied (useful for testing)' do
     given = 'ABCDE12345'
     id = Id.new(given)
     assert_equal given, id.to_s
@@ -51,13 +51,13 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "id is 10 chars long" do
+  test 'id is 10 chars long' do
     assert_equal 10, Id.new.to_s.length
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "id contains only 0-9 and A-E chars" do
+  test 'id contains only 0-9 and A-E chars' do
     (0..5).each do |n|
       id = Id.new.to_s
       id.chars.each do |char|
@@ -69,7 +69,7 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "id.inner is first 2 chars" do
+  test 'id.inner is first 2 chars' do
     id = Id.new('1C2345ABDE')
     assert_equal 2, id.inner.length
     assert_equal '1C', id.inner
@@ -77,7 +77,7 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "id.outer is last 8 chars" do
+  test 'id.outer is last 8 chars' do
     id = Id.new('1C2345ABDE')
     assert_equal 8, id.outer.length
     assert_equal '2345ABDE', id.outer
@@ -85,7 +85,8 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is empty string inner and outer return empty string not nil" do
+  test 'when id is empty string inner ' +
+       'and outer return empty string not nil' do
     id = Id.new('')
     assert_equal '', id.inner
     assert_equal '', id.outer
@@ -93,7 +94,8 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is one char inner is that char and outer is empty string" do
+  test 'when id is one char inner is that char ' +
+       'and outer is empty string' do
     id = Id.new('E')
     assert_equal 'E', id.inner
     assert_equal '', id.outer
@@ -101,7 +103,8 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is two chars inner is those chars and outer is empty string" do
+  test 'when id is two chars inner is those chars ' +
+       'and outer is empty string' do
     id = Id.new('EA')
     assert_equal 'EA', id.inner
     assert_equal '', id.outer
@@ -109,7 +112,8 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "when id is three chars inner is first two chars and outer is third char" do
+  test 'when id is three chars inner is first two chars ' +
+       'and outer is third char' do
     id = Id.new('EAC')
     assert_equal 'EA', id.inner
     assert_equal 'C', id.outer
@@ -117,7 +121,7 @@ class IdTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "operator== and operator!=" do
+  test 'operator== and operator!=' do
     assert Id.new('ABCDEABCDE') == Id.new('ABCDEABCDE')
     assert Id.new('ABCDEABCDE') != Id.new('1234512345')
   end
