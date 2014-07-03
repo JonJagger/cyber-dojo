@@ -19,16 +19,15 @@ class KataController < ApplicationController
   end
 
   def run_tests
-    @kata   = dojo.katas[id]
-    @avatar = @kata.avatars[params[:avatar]]
-    visible_files = received_files
-    previous_filenames = visible_files.keys
-    visible_files.delete('output')
-
     was = params[:file_hashes_incoming]
     now = params[:file_hashes_outgoing]
     delta = FileDeltaMaker.make_delta(was, now)
-    # there are a lot of steps below that should be collapsed somewhat.
+
+    visible_files = received_files
+    pre_test_filenames = visible_files.keys
+
+    @kata   = dojo.katas[id]
+    @avatar = @kata.avatars[params[:avatar]]
 
     max_duration = 15
     now = make_time(Time.now)
@@ -42,8 +41,8 @@ class KataController < ApplicationController
     @avatar.save_manifest(visible_files)
     @avatar.commit(@traffic_lights.length)
 
-    @new_files = visible_files.select {|filename, content| ! previous_filenames.include?(filename)}
-    @files_to_remove = previous_filenames.select {|filename| ! visible_files.keys.include?(filename)}
+    @new_files = visible_files.select {|filename,_| ! pre_test_filenames.include?(filename)}
+    @files_to_remove = pre_test_filenames.select {|filename| ! visible_files.keys.include?(filename)}
 
     respond_to do |format|
       format.js if request.xhr?

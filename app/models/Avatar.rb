@@ -75,10 +75,9 @@ class Avatar
     sandbox.write('output', output) # so output appears in diff-view
     visible_files['output'] = output
 
-    colour = OutputParser::colour(kata.language.unit_test_framework, output)
     rags = lights.each.entries
     rag = {
-      'colour' => colour,
+      'colour' => kata.language.colour(output),
       'time' => now,
       'number' => rags.length + 1
     }

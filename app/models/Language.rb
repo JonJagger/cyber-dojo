@@ -72,6 +72,10 @@ class Language
     manifest['unit_test_framework']
   end
 
+  def colour(output)
+    OutputParser::colour(unit_test_framework, output)
+  end
+
   def tab
     " " * tab_size
   end

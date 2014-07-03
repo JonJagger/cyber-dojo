@@ -1,7 +1,33 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+output is inserted into visible_files in
+katas.create_kata() This means it is always present in
+the manifest. Then kata.start_avatar git.adds each
+visible_file. So it is present in the git repo
+from the start as well.
+However it only appears in a diff if
+o) it changes
+o) it is saved as an individual file
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Should initial output file be present in tag[0]?
+Should [test]s auto-run on avatar entry?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+<% @files_to_remove.each do |filename| %>
+  to_remove = document.getElementById("<%= filename %>_div");
+  if (to_remove) {
+    to_remove.parentNode.removeChild(to_remove);
+  }
+<% end %>
+This can be simplified with jQuery.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Language object can have a post-test method which is
+passed the visible-files and only the approval style
+languages do anything. Can initially be a new setting
+inside the language manifest naming a filename wildcard
+which defaults to nothing.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think there are some clean(s) calls that do not use
-the Cleaner module
+the Cleaner module. In controllers.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 avatar.lights.each.entries
   is painful
