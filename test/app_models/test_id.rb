@@ -127,6 +127,64 @@ class IdTests < ModelTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def format_3_3_lots(id)
+    # idea: massage the uuidgen into an id with
+    # format of 3(A-F)letters + 3(0-9)digits
+    # to make it more user friendly.
+    # analysis: gives 6^3 * 10^3 == 216,000 possibilities
+    # outcome: this is too small so I've not used the idea
+    chars = id.chars
+    letters = chars.select{ |ch| is_letter?(ch) }.join
+    digits  = chars.select{ |ch|  is_digit?(ch) }.join
+    x,letters = letters.slice!(0...3), letters
+    y,digits  =  digits.slice!(0...3), digits
+    z = (letters+digits).chars.to_a.shuffle.join
+    x + y + z
+  end
+
+  def assert_perm(lhs,rhs)
+    assert_equal lhs.chars.sort.join,rhs.chars.sort.join
+  end
+
+  test 'format33lots with 3+ chars and <3 digits' do
+    id = 'CABCDEABCDEABCDFFDDEDDEECFCFCA60'
+    nid = format_3_3_lots(id)
+    assert_equal 'CAB60',nid[0...5]
+    assert_perm 'CDEABCDEABCDFFDDEDDEECFCFCA', nid[5..-1]
+  end
+
+  test 'format33lots with <3 chars and 3+ digits' do
+    id = 'C5322A80980848728405599701034102'
+    nid = format_3_3_lots(id)
+    assert_equal 'CA532',nid[0...5]
+    assert_perm '280980848728405599701034102', nid[5..-1]
+  end
+
+  test 'format33lots with 3+ chars and 3+ digits' do
+    id = 'C5322A8C98C8487284F55997F1D341A2'
+    nid = format_3_3_lots(id)
+    assert_equal 'CAC532',nid[0...6]
+    assert_perm 'CFFDA' + '289884872845599713412', nid[6..-1]
+  end
+
+  test 'format33lots already in 3,3 prefix' do
+    id = 'CAC5322898C8487284F55997F1D341A2'
+    nid = format_3_3_lots(id)
+    assert_equal 'CAC532',nid[0...6]
+    assert_perm 'CFFDA' + '289884872845599713412', nid[6..-1]
+  end
+
+  def is_letter?(ch)
+    'ABCDEF'.include?(ch)
+  end
+
+  def is_digit?(ch)
+    '0123456789'.include?(ch)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def valid_id_string
     'ABDEF01289'

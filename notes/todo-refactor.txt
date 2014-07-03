@@ -1,5 +1,44 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Id.new should have its default moved into katas.create_kata()?
+create unique_id() module which wraps uuidgen
+Include it inside katas privately.
+Hold id as plain string inside kata?
+Does this affect id.complete? No.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+should katas.each check inner and outer are comprised only
+of hex chars and are correct length?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+in controllers I do params['id']
+If id is not present in params this will be nil
+If params['id']==nil is used as part of a string path
+the + concatenation will fail.
+Eg forker_controller
+    kata = dojo.katas[params['id']]
+    if !error && !kata.exists?
+This will create an Id.new(nil)
+which means both
+  Id.new(nil).inner
+  Id.new(nil).outer
+will cause an exception.
+Similarly
+   a = avatars[params['avatar']]
+   a.path
+will cause an exception since in
+    kata.path + name + '/'
+name will be nil.
+Note the need to check name isn't "" since that dir would
+exist - it would be the kata's dir.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+make_time(Time.now) can be simplified to time_now()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+forker-controller could go straight to the tag existence check
+and bypass the kata and avatar check. Would simplify things.
+Needs a tags.exists?(tag) function
+Or tags[tag].exists? to match current style.
+This will need Tag to get the max tag for the avatar.
+Add git.max_tag() function?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 language tests should be run as part of test-suite.
 Use admin_scripts/lib_language_manifest_checker.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

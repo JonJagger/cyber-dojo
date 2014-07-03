@@ -7,7 +7,8 @@ class ForkerController < ApplicationController
 
     kata = dojo.katas[params['id']]
     avatar = kata.avatars[params['avatar']]
-
+    #tag  = avatar.tags[params['tag']]
+    
     if !error && !kata.exists?
       result[:reason] = 'id'
       error = true

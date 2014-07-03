@@ -23,6 +23,9 @@ class Katas
   end
 
   def create_kata(language, exercise, id = Id.new.to_s, now = make_time(Time.now))
+    # a kata's id has 10 hex chars. This gives 16^10 possibilities
+    # which is 1,099,511,627,776 which is big enough to not
+    # need to check that a kata with the id already exists.
     manifest = create_kata_manifest(language, exercise, id, now)
     manifest[:visible_files] = language.visible_files
     manifest[:visible_files]['output'] = ''

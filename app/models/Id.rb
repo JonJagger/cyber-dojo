@@ -7,7 +7,7 @@ class Id
   end
 
   def valid?
-    @id.length === 10 && @id.each_char.all?{|ch| hex?(ch)}
+    @id.length === 10 && @id.chars.all?{|ch| hex?(ch)}
   end
 
   def ==(rhs)
