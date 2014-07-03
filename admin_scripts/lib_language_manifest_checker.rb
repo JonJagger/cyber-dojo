@@ -1,7 +1,6 @@
-CYBER_DOJO_ROOT = File.absolute_path(File.dirname(__FILE__) + '/../')
+require_relative '../../app/lib/OutputParser'
 require 'json'
 require 'etc'
-require CYBER_DOJO_ROOT + "/app/lib/OutputParser"
 
 class LanguageManifestChecker
 

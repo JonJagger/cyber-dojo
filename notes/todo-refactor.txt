@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+language tests should be run as part of test-suite.
+Use admin_scripts/lib_language_manifest_checker.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 output is inserted into visible_files in
 katas.create_kata() This means it is always present in
 the manifest. Then kata.start_avatar git.adds each
@@ -16,7 +19,8 @@ kata_controller.run_test contains these lines
     @avatar.commit(@traffic_lights.length)
 these can be moved into avatar.test()
 and the approval style .txt file addition/removal works.
-However lots of test break.
+However lots of test break. Approval is hard-wired to
+hard-disk. Move it to use OsDisk from externals.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 <% @files_to_remove.each do |filename| %>
   to_remove = document.getElementById("<%= filename %>_div");

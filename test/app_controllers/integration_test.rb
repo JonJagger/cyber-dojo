@@ -3,7 +3,10 @@ require_relative '../test_helper'
 class IntegrationTest  < ActionController::IntegrationTest
 
   def setup
-    super  # calls test_helper's ActiveSupport::TestCase::setup
+    # calls test_helper's ActiveSupport::TestCase::setup
+    # (from test_helper)
+    super
+    # used in application_controller.root_path()
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
   end
 
