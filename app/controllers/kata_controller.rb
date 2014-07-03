@@ -35,8 +35,8 @@ class KataController < ApplicationController
     @output = visible_files['output']
 
     #should really only do this if kata is using approval-style test-framework
-    Approval::add_text_files_created_in_run_tests(@avatar.sandbox.path, visible_files)
-    Approval::delete_text_files_deleted_in_run_tests(@avatar.sandbox.path, visible_files)
+    Approval::add_created_txt_files(@avatar.sandbox.path, visible_files)
+    Approval::remove_deleted_txt_files(@avatar.sandbox.path, visible_files)
 
     @avatar.save_manifest(visible_files)
     @avatar.commit(@traffic_lights.length)
