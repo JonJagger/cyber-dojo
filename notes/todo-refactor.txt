@@ -17,9 +17,8 @@ languages do anything. Can initially be a new setting
 inside the language manifest naming a filename wildcard
 which defaults to nothing.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
+indented HERE documents
+eg test/integration/test_git_diff_view.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker_controller does this
   if !is_tag || tag <= 0 || tag > avatar.lights.length

@@ -15,19 +15,6 @@ class CyberDojoTestBase < Test::Unit::TestCase
     dojo.katas.create_kata(language, exercise)
   end
 
-  #def make_manifest(dojo, language_name, exercise_name)
-  #  language = dojo.languages[language_name]
-  #  {
-  #    :created => now = make_time(Time.now),
-  #    :id => Id.new.to_s,
-  #    :language => language.name,
-  #    :exercise => exercise_name,
-  #    :visible_files => language.visible_files,
-  #    :unit_test_framework => language.unit_test_framework,
-  #    :tab_size => language.tab_size
-  #  }
-  #end
-
   def run_test(delta, avatar, visible_files, time_limit = 15)
     lights = avatar.test(delta, visible_files, time_limit, time_now)
     avatar.save_manifest(visible_files)
