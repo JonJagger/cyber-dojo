@@ -85,14 +85,21 @@ class DownloadControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def verify_zip_unzips_to_same_as_original(root, id, zipfile_name)
-    uuid = Id.new(id)
     unzip_folder = root + "/zips/unzips"
     `mkdir -p #{unzip_folder}`
     `cd #{unzip_folder};cat #{zipfile_name} | tar xf -`
-    src_folder = root + "/katas/#{uuid.inner}/#{uuid.outer}"
-    dst_folder = "#{unzip_folder}/#{uuid.inner}/#{uuid.outer}"
+    src_folder = root + "/katas/#{outer(id)}/#{inner(id)}"
+    dst_folder = "#{unzip_folder}/#{outer(id)}/#{inner(id)}"
     result = `diff -r -q #{src_folder} #{dst_folder}`
-    assert_equal "", result, uuid.to_s
+    assert_equal "", result, id
+  end
+
+  def outer(id)
+    id[0..1]
+  end
+
+  def inner(id)
+    id[2..-1]
   end
 
 end

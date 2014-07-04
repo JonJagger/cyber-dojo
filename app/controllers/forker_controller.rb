@@ -1,3 +1,4 @@
+require_relative '../../lib/UniqueId'
 
 class ForkerController < ApplicationController
 
@@ -45,7 +46,7 @@ class ForkerController < ApplicationController
     if !error
       language = dojo.languages[kata.language.name]
       exercise = kata.exercise
-      id = Id.new.to_s
+      id = unique_id
       now = make_time(Time.now)
       manifest = dojo.katas.create_kata_manifest(language, exercise, id, now)
       tag = params['tag'].to_i
@@ -64,5 +65,9 @@ class ForkerController < ApplicationController
     end
 
   end
+
+private
+
+  include UniqueId
 
 end

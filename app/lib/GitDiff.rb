@@ -45,16 +45,12 @@ module GitDiff
 
   #-----------------------------------------------------------
 
-  class IdFactory
-    def create_id
-      Id.new.to_s
-    end
-  end
-
-  def git_diff_prepare(diffed_files, id_factory = IdFactory.new)
+  def git_diff_prepare(diffed_files)
+    n = 0
     diffs = [ ]
     diffed_files.sort.each do |filename,diff|
-      id = 'id_' + id_factory.create_id
+      id = 'id_' + n.to_s
+      n += 1
       diffs << {
         :id => id,
         :filename => filename,

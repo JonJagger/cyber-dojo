@@ -1,6 +1,3 @@
-
-# dojo.katas[id]
-# dojo.katas.each {|kata| ...}
 require_relative '../../lib/UniqueId'
 
 class Katas
@@ -38,6 +35,7 @@ class Katas
   end
 
   def each
+    # dojo.katas.each {|kata| ...}
     disk[path].each do |outer_dir|
       outer_path = File.join(path, outer_dir)
       if disk.is_dir?(outer_path)
@@ -52,6 +50,7 @@ class Katas
   end
 
   def [](id)
+    # dojo.katas[id]
     Kata.new(self,id,@externals)
   end
 
@@ -78,9 +77,5 @@ private
   def is_hex?(char)
     '0123456789ABCDEF'.include?(char)
   end
-
-  #def make_time(now)
-  #  [now.year, now.month, now.day, now.hour, now.min, now.sec]
-  #end
 
 end

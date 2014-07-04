@@ -22,12 +22,12 @@ class KataTests < ModelTestBase
 
   test 'id read back as set' do
     kata = @dojo.katas[id]
-    assert_equal Id.new(id), kata.id
+    assert_equal id, kata.id
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'path(kata)' do
+  test 'path is split ala git' do
     kata = @dojo.katas[id]
     assert kata.path.include?(kata.id[0..1])
     assert kata.path.include?(kata.id[2..-1])

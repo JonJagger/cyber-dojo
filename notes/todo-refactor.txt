@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+katas.exists?(id) could do katas[id] inside a block
+and return false from a rescue
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+forker_controller does
+   now = make_time(Time.now)
+create time_now helper and include it wherever needed.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 kata.rb
   make manifest private
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

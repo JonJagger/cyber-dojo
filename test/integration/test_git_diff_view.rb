@@ -13,16 +13,6 @@ class GitDiffViewTests < CyberDojoTestBase
     @dojo = Dojo.new(root_path,externals)
   end
 
-  class MockIdFactory
-    def initialize(mock_ids)
-      @n = -1
-      @mock_ids = mock_ids
-    end
-    def create_id
-      @mock_ids[@n += 1]
-    end
-  end
-
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test "building diff view from git repo with modified file" do
@@ -82,10 +72,10 @@ class GitDiffViewTests < CyberDojoTestBase
 
     assert_equal expected, view
 
-    diffs = git_diff_prepare(view, MockIdFactory.new(["1","2","3"]))
+    diffs = git_diff_prepare(view)
     expected_diffs = [
       {
-        :id => "id_1",
+        :id => "id_0",
         :filename => "cyber-dojo.sh",
         :section_count => 0,
         :deleted_line_count => 0,
@@ -94,7 +84,7 @@ class GitDiffViewTests < CyberDojoTestBase
         :line_numbers => "<same><ln>1</ln></same>"
       },
       {
-        :id => "id_2",
+        :id => "id_1",
         :filename => "test_untitled.rb",
         :section_count => 0,
         :deleted_line_count => 0,
@@ -123,13 +113,13 @@ class GitDiffViewTests < CyberDojoTestBase
         "<same><ln>10</ln></same>"
       },
       {
-        :id => "id_3",
+        :id => "id_2",
         :filename => "untitled.rb",
         :section_count => 1,
         :deleted_line_count => 1,
         :added_line_count => 1,
         :content =>
-        "<same>def answer</same>" + "<span id='id_3_section_0'></span>" +
+        "<same>def answer</same>" + "<span id='id_2_section_0'></span>" +
         "<deleted>  42</deleted>" +
         "<added>  54</added>" +
         "<same>end</same>",
@@ -235,16 +225,15 @@ class GitDiffViewTests < CyberDojoTestBase
 
   #-----------------------------------------------
 
-  test "id_factory" do
-    factory = IdFactory.new
-    (1..5).each { |n|
-      uuid = factory.create_id
-      assert_equal 10, uuid.length
-      uuid.chars { |ch|
-        assert_not_nil "0123456789ABCDEF".index(ch)
-      }
-    }
-  end
+  #test "id_factory" do
+  #  factory = IdFactory.new
+  #  ids = { }
+  #  (1..100).each {
+  #    id = factory.id
+  #    assert !ids.include?(id)
+  #    ids[id] = id
+  #  }
+  #end
 
   #-----------------------------------------------
 

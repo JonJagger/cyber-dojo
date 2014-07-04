@@ -44,8 +44,7 @@ class Kata
   end
 
   def path
-    #@katas.path + id.inner + '/' + id.outer + '/'
-    @katas.path + inner(id) + '/' + outer(id) + '/'
+    @katas.path + outer(id) + '/' + inner(id) + '/'
   end
 
   def dir
@@ -53,17 +52,12 @@ class Kata
   end
 
   def exists?
-    #id.valid? && dir.exists?
     dir.exists?
   end
 
   def active?
     avatars.active.count > 0
   end
-
-  #def id
-  #  Id.new(@id)
-  #end
 
   def original_language
     # allow kata to be reviewed/forked even
@@ -125,11 +119,11 @@ private
     @katas.dojo
   end
 
-  def inner(id)
+  def outer(id)
     id[0..1]  # 'E5'
   end
 
-  def outer(id)
+  def inner(id)
     id[2..-1] # '6A3327FE'
   end
 
