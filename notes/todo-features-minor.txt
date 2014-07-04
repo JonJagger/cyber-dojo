@@ -1,5 +1,5 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 TEST-BUTTON
   there should be a 15-second timeout on the browser too.
   Sometimes the red/green yin-yang spinner just hangs there.
@@ -51,11 +51,6 @@ DASHBOARD-TIME-GAP
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-ADD FORTRAN
-http://sourceforge.net/apps/mediawiki/fortranxunit/index.php?title=FruitExample
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 

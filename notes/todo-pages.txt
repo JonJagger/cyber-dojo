@@ -10,13 +10,18 @@ HOME-PAGE
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   add a [publish] button. Perhaps layout as
-  [ start] [ review]
-  [resume] [publish]
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 HOME-PAGE
   Perhaps disable resume/review buttons until dojo is 30 seconds old?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SETUP-PAGE
+  Hitting escape key on setup page should be a cancel
+  ...
+  Use a dialog?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -24,10 +29,6 @@ TEST-PAGE
   filenames: add * marker if files have changed since last [test] ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-PAGE
-  ...
-  If [test] pressed and nothing has changed since last traffic-light
-  pop up a dialog? Saying nothing different since last time.
-  ...
   Should clicking avatar image on [test] page open dashboard? or home?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -48,13 +49,4 @@ DASHBOARD-PAGE
   Or perhaps try subtle alternate "vertical-stripe" shading on rows.
   ...
   Nicer help dialog content (same format as on test page)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SETUP-PAGE
-  Hitting escape key on setup page should be a cancel
-  ...
-  Use a dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
