@@ -8,7 +8,7 @@ class AvatarTests < ModelTestBase
 
   test 'attempting to create an Avatar with an invalid name raises' do
     kata = @dojo.katas[id]
-    assert !Avatar.names.include?('salmon')
+    assert !Avatars.names.include?('salmon')
     assert_raises(RuntimeError) { kata.avatars['salmon'] }
   end
 
@@ -81,7 +81,7 @@ class AvatarTests < ModelTestBase
 
   test 'path(avatar)' do
     kata = make_kata
-    avatar = kata.start_avatar(Avatar.names)
+    avatar = kata.start_avatar(Avatars.names)
     assert path_ends_in_slash?(avatar)
     assert !path_has_adjacent_separators?(avatar)
   end

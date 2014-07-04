@@ -1,19 +1,21 @@
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-katas.exists?(id) could do katas[id] inside a block
-and return false from a rescue
+dojo_controller has
+  kata.avatars.entries.length
+add count method to Avatars
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+make_time(Time.now) can be simplified to time_now()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker_controller does
    now = make_time(Time.now)
 create time_now helper and include it wherever needed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.names should be in AvatarS.name
+katas.exists?(id) could do katas[id] inside a block
+and return false from a rescue
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar.valid?(id) should in AvatarS
 create Avatars.exists?(name) like Katas.exists?(id)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dojo_controller has
-  kata.avatars.entries.length
-add count method to Avatars
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think forker_controller will fail if the exercise
 has been renamed. This does not need to be so.
@@ -47,8 +49,6 @@ will cause an exception since in
 name will be nil.
 Note the need to check name isn't "" since that dir would
 exist - it would be the kata's dir.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-make_time(Time.now) can be simplified to time_now()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker-controller could go straight to the tag existence check
 and bypass the kata and avatar check. Would simplify things.

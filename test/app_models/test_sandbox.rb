@@ -6,7 +6,7 @@ class SandboxTests < ModelTestBase
 
   test 'path(avatar)' do
     kata = make_kata
-    avatar = kata.start_avatar(Avatar.names)
+    avatar = kata.start_avatar(Avatars.names)
     sandbox = avatar.sandbox
     assert path_ends_in_slash?(sandbox)
     assert !path_has_adjacent_separators?(sandbox)

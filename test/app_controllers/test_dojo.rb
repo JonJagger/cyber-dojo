@@ -83,7 +83,7 @@ class DojoControllerTest  < IntegrationTest
 
   test 'enter succeeds once for each avatar name, then dojo is full' do
     id = checked_save_id
-    Avatar.names.each do |avatar_name|
+    Avatars.names.each do |avatar_name|
       get '/dojo/enter_json', :format => :json, :id => id
       assert json['exists']
       assert !json['full']

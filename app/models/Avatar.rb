@@ -4,18 +4,8 @@ require_relative '../lib/Cleaner'
 class Avatar
   extend Forwardable
 
-  def self.names
-      # no two names start with the same letter
-      %w(
-          alligator buffalo cheetah deer
-          elephant frog gorilla hippo
-          koala lion moose panda
-          raccoon snake wolf zebra
-        )
-  end
-
   def initialize(kata,name,externals)
-    raise 'Invalid Avatar(name)' if !valid?(name)
+    raise 'Invalid Avatar(name)' if !Avatars.valid?(name)
     @kata,@name,@externals = kata,name,externals
   end
 
@@ -30,7 +20,6 @@ class Avatar
   end
 
   def exists?
-    #Avatar.names.include?(name) && dir.exists?
     dir.exists?
   end
 
@@ -109,10 +98,6 @@ private
 
   def runner
     @externals[:runner]
-  end
-
-  def valid?(name)
-    Avatar.names.include?(name)
   end
 
   include Cleaner

@@ -46,7 +46,7 @@ class DojoController < ApplicationController
   end
 
   def full_dialog_html()
-    @all_avatar_names = Avatar.names
+    @all_avatar_names = Avatars.names
     bind('/app/views/dojo/full_dialog.html.erb')
   end
 
@@ -66,7 +66,7 @@ class DojoController < ApplicationController
   def re_enter_dialog_html(kata, started_avatar_names)
     @kata = kata
     @started_avatar_names = started_avatar_names
-    @all_avatar_names = Avatar.names
+    @all_avatar_names = Avatars.names
     bind('/app/views/dojo/re_enter_dialog.html.erb')
   end
 

@@ -10,7 +10,7 @@ class Kata
 
   attr_reader :katas, :id
 
-  def start_avatar(avatar_names = Avatar.names.shuffle)
+  def start_avatar(avatar_names = Avatars.names.shuffle)
     avatar = nil
     started_avatar_names = avatars.collect { |avatar| avatar.name }
     unstarted_avatar_names = avatar_names - started_avatar_names
