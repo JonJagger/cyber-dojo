@@ -1,4 +1,5 @@
 root = '../..'
+require_relative root + '/app/lib/Approval'
 require_relative root + '/app/lib/Cleaner'
 require_relative root + '/app/lib/OutputParser'
 require 'json'
@@ -36,11 +37,11 @@ class Language
   end
 
   def image_name
-    manifest['image_name'] || ""
+    manifest['image_name'] || ''
   end
 
   def filename_extension
-    manifest['filename_extension'] || ""
+    manifest['filename_extension'] || ''
   end
 
   def visible_files
@@ -92,8 +93,8 @@ class Language
     # before the rename that you now wish to review or
     # fork from. Particularly for sessions with
     # well known id's such as the refactoring dojos.
-    # See app/models/Kata.rb ::language()
-    # See app/models/Kata.rb ::original_language()
+    # See app/models/Kata.rb language()
+    # See app/models/Kata.rb original_language()
     renames = {
       'C'            => 'C-assert',
       'C++'          => 'C++-assert',
@@ -123,12 +124,17 @@ class Language
     renames[name] || name
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def colour(output)
-    OutputParser::colour(unit_test_framework, output)
+    OutputParser.colour(unit_test_framework, output)
   end
 
-  def after_test(sandbox,visible_files)
-    
+  def after_test(sandbox, visible_files)
+    if name.include?('Approval')
+      Approval.add_created_txt_files(sandbox.path, visible_files)
+      Approval.remove_deleted_txt_files(sandbox.path, visible_files)
+    end
   end
 
 private

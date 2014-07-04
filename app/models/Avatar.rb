@@ -1,5 +1,4 @@
 root = '../..'
-require_relative root + '/app/lib/Approval'
 require_relative root + '/app/lib/Cleaner'
 
 class Avatar
@@ -65,10 +64,7 @@ class Avatar
     output = clean(runner.run(sandbox, './cyber-dojo.sh', time_limit))
     sandbox.write('output', output) # so output appears in diff-view
     visible_files['output'] = output
-    if kata.language.name.include?('Approval')
-      Approval.add_created_txt_files(sandbox.path, visible_files)
-      Approval.remove_deleted_txt_files(sandbox.path, visible_files)
-    end
+    kata.language.after_test(sandbox, visible_files)
     save_manifest(visible_files)
 
     rags = lights.each.entries
