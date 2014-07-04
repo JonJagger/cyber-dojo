@@ -9,32 +9,28 @@ does not use a database.
 From a paas object you create a dojo object like this...
 
 <code>
-format = 'json'
-dojo = paas.create_dojo(root_path,format)
+externals = {
+  :disk => OsDisk.new,
+  :git => Git.new,
+  :runner => DockerTestRunner.new
+}
+Dojo.new(root_path,externals)
 </code>
 
-A paas can have several dojo's, (each with their own root folder).
-For example, the live one off
+The live root_path is
   /var/www/cyberdojo
-and a test one off
+and a test is is
   /var/www/cyberdojo/test/cyberdojo
 
-When creating a dojo the format will always be 'json'.
-The format used to be 'rb' which required eval's
-but 'rb' is now only needed in tests to check backward
-compatibility (and to read an existing old format dojo).
-
-From a dojo object you list all its languages or
-use [ ] to select a specific language.
-From a dojo object you can list all its exercises or
-use [ ] to select a specific exercise.
-From a dojo object you can list all the katas (practice sessions) or
-use [ ] to select a specific kata.
-From a kata object you can list all the avatars or
-use [ ] to select a specific avatar.
+You can
+o) list all its languages or use [ ] to select a specific language.
+o) list all its exercises or use [ ] to select a specific exercise.
+o) list all the katas (practice sessions) or use [ ] to select a specific kata.
+o) list all the avatars or use [ ] to select a specific avatar.
+o) list all the tags or use [ ] to select a specific tag
+o) list all the lights or use [ ] to select a specific light
 
 For example
-
 <code>
 ...
 dojo.languages.each {|language| ... }
@@ -49,55 +45,15 @@ kata = dojo.katas['34D6E7823E']
 kata.avatars.each {|avatar| ... }
 lion = kata.avatars['lion']
 ...
+lion.tags.each {|tag| ...}
+tag = lion.tags[3]
+...
+lion.lights.each{|light| ...}
+light = lion.lights[5]
 </code>
 
-Note that, deliberately, none of the above checks that the object is 'valid',
-that the underlying disk paths exist. This allows you to write code like this...
 
 <code>
-dojo.languages['C#-NUnit'].exists?
-dojo.exercises['Yatzy'].exists?
-dojo.katas['34D6E7823E'].exists?
-dojo.katas['34D6E7823E'].avatars['lion'].exists?
+src = dojo.katas['34D6E7823E'].avatars['lion'].tags[6].visible_files['wibble.h']
+src = dojo.katas['34D6E7823E'].avatars['lion'].light[3].colour
 </code>
-
-
-TODO: Extend the domain model into traffic-lights
-
-lion.lights.length
-lion.lights.each{|light| ...}
-lion.lights << light
-lion.lights[23].colour
-lion.lights[23].time_stamp
-lion.lights[23].output
-lion.lights[23].visible_files
-lion.lights[23].visible_files['filename']
-lion.lights[23].client_ip_address
-lion.lights[23].server_ip_address
-lion.lights[23].diff(27)
-lion.lights[23].tag_number  (see below)
-
-Also
-
-dojo.katas['34D6E7823E'].lights
-which gives you the collection with the
-animals name as a key. As used by td-gapper
-
-Also: Extend the domain model into tags.
-Idea is to record a tag for events beyond just [test] button presses.
-Eg new/rename/delete file events (should help give better diffs)
-and maybe after that moving from one file to another file.
-
-lion.tags.length
-lion.tags.each{|tag| ...}
-lion.tags << tag
-lion.tags[45]
-lion.tags[45].created
-lion.tags[45].diff(46)
-lion.tags[45].colour  ??? 'white' if code has changed?
-lion.tags[45].output
-lion.tags[45].visible_files
-lion.tags[45].visible_files['filename']
-lion.tags[45].data
-lion.tags[45].data['current_file']
-lion.tags[45].data['current_file_scroll_position']
