@@ -1,9 +1,7 @@
 root = '../..'
 require_relative root + '/app/lib/Cleaner'
-require 'forwardable'
 
 class Avatar
-  extend Forwardable
 
   def initialize(kata,name,externals)
     raise 'Invalid Avatar(name)' if !Avatars.valid?(name)

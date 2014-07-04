@@ -2,10 +2,6 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Tags.length -> Tags.count
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.rb
-  does it need
-    extend Forwardable
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setup_controller
   make chooser a module. refactor to
   choose_exercise
