@@ -23,8 +23,8 @@ class CyberDojoTestBase < Test::Unit::TestCase
   end
 
   def root_path
-    cyberdojo_home_dir = File.expand_path('..', File.dirname(__FILE__))
-    cyberdojo_home_dir + '/test/cyberdojo/'
+    root_dir = File.expand_path('..', File.dirname(__FILE__))
+    root_dir + '/test/cyberdojo/'
   end
 
   def self.test(name, &block)

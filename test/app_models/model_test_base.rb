@@ -5,6 +5,11 @@ require 'test/unit'
 
 class ModelTestBase < Test::Unit::TestCase
 
+  def root_path
+    root_dir = File.expand_path('../..', File.dirname(__FILE__))
+    root_dir + '/test/cyberdojo/'
+  end
+
   def setup
     externals = {
       :disk => @disk = SpyDisk.new,
@@ -45,11 +50,6 @@ class ModelTestBase < Test::Unit::TestCase
   def path_has_adjacent_separators?(object)
     doubled_separator = @disk.dir_separator * 2
     object.path.scan(doubled_separator).length > 0
-  end
-
-  def root_path
-    cyberdojo_home_dir = File.expand_path('../..', File.dirname(__FILE__))
-    cyberdojo_home_dir + '/test/cyberdojo/'
   end
 
   def self.test(name, &block)
