@@ -5,7 +5,7 @@ $("#traffic-lights")
 $("#output")
   .html("<%= js_partial('output') %>");
 
-<% @files_to_remove.each do |filename| %>
+<% @filenames_to_delete.each do |filename| %>
   to_remove = document.getElementById("<%= filename %>_div");
   if (to_remove) {
     to_remove.parentNode.removeChild(to_remove);

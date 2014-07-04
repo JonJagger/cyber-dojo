@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def id
-    Folders::id_complete(root_path + 'katas/', params[:id]) || ""
+    Folders::id_complete(root_path + 'katas/', params[:id]) || ''
   end
 
   def dojo

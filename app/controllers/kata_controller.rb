@@ -13,29 +13,32 @@ class KataController < ApplicationController
     @tab = @kata.language.tab
     @visible_files = @avatar.tags.latest.visible_files
     @new_files = { }
-    @files_to_remove = [ ]
+    @filenames_to_delete = [ ]
     @traffic_lights = @avatar.lights.each.entries
     @output = @visible_files['output']
-    @title = id[0..5] + ' ' + @avatar.name + ' code'
+    @title = id[0..5] + ' ' + @avatar.name + "'s code"
   end
 
   def run_tests
-    was = params[:file_hashes_incoming]
-    now = params[:file_hashes_outgoing]
-    delta = FileDeltaMaker.make_delta(was, now)
-
-    visible_files = received_files
-    pre_test_filenames = visible_files.keys
-
     @kata   = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
 
+    was = params[:file_hashes_incoming]
+    now = params[:file_hashes_outgoing]
+    delta = FileDeltaMaker.make_delta(was, now)
+    visible_files = received_files
     time_limit = 15
-    @traffic_lights = @avatar.test(delta, visible_files, time_limit, time_now)
-    @output = visible_files['output']
 
-    @new_files = visible_files.select {|filename,_| ! pre_test_filenames.include?(filename)}
-    @files_to_remove = pre_test_filenames.select {|filename| ! visible_files.keys.include?(filename)}
+    pre_test_filenames = visible_files.keys
+    @traffic_lights = @avatar.test(delta, visible_files, time_limit, time_now)
+    @new_files = visible_files.select { |filename|
+      !pre_test_filenames.include?(filename)
+    }
+    @filenames_to_delete = pre_test_filenames.select { |filename|
+      !visible_files.keys.include?(filename)
+    }
+
+    @output = visible_files['output']
 
     respond_to do |format|
       format.js { render :layout => false }
