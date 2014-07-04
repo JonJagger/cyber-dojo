@@ -1,6 +1,6 @@
 root = '../..'
 
-require_relative root + '/app/lib/Choose'
+require_relative root + '/app/lib/Chooser'
 
 class SetupController < ApplicationController
 
@@ -15,9 +15,9 @@ class SetupController < ApplicationController
       @instructions[name] = dojo.exercises[name].instructions
     end
     @selected_language_index =
-      Choose::language(@languages_names, params[:id], dojo.katas)
+      choose_language(@languages_names, params[:id], dojo.katas)
     @selected_exercise_index =
-      Choose::exercise(@exercises_names, params[:id], dojo.katas)
+      choose_exercise(@exercises_names, params[:id], dojo.katas)
     @id = id
     @title = 'Create'
   end
@@ -30,5 +30,9 @@ class SetupController < ApplicationController
       :id => kata.id.to_s
     }
   end
+
+private
+
+  include Chooser
 
 end

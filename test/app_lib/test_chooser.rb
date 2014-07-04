@@ -4,6 +4,8 @@ require_relative '../cyberdojo_test_base'
 
 class ChooseTests < CyberDojoTestBase
 
+  include Chooser
+  
   def setup
     super
     externals = {
@@ -59,7 +61,7 @@ class ChooseTests < CyberDojoTestBase
       kata = make_kata(@dojo, language, 'test_Yahtzee')
       assert kata.exists?
       (1..100).each do
-        assert_equal n, Choose::language(test_languages_names, kata.id, @katas)
+        assert_equal n, choose_language(test_languages_names, kata.id, @katas)
       end
     end
   end
@@ -108,7 +110,7 @@ class ChooseTests < CyberDojoTestBase
       kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise)
       assert kata.exists?
       (1..42).each do
-        assert_equal n, Choose::exercise(test_exercises_names, kata.id, @katas)
+        assert_equal n, choose_exercise(test_exercises_names, kata.id, @katas)
       end
     end
   end
@@ -118,7 +120,7 @@ class ChooseTests < CyberDojoTestBase
   def assert_is_randomly_chosen_language(languages, id, katas)
     counts = {}
     (1..100).each do
-      n = Choose::language(languages, id, katas)
+      n = choose_language(languages, id, katas)
       assert n.is_a? Numeric
       assert n >= 0 && n < languages.length
       counts[n] ||= 0
@@ -132,7 +134,7 @@ class ChooseTests < CyberDojoTestBase
   def assert_is_randomly_chosen_exercise(exercises, id, katas)
     counts = {}
     (1..100).each do
-      n = Choose::exercise(exercises, id, katas)
+      n = choose_exercise(exercises, id, katas)
       assert n.is_a? Numeric
       assert n >= 0 && n < exercises.length
       counts[n] ||= 0

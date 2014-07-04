@@ -12,7 +12,7 @@ require_relative app_helpers('pie_chart_helper')
 require_relative app_helpers('traffic_light_helper')
 
 require_relative app_lib('Approval')
-require_relative app_lib('Choose')
+require_relative app_lib('Chooser')
 require_relative app_lib('Cleaner')
 require_relative app_lib('FileDeltaMaker')
 require_relative app_lib('GitDiff')
