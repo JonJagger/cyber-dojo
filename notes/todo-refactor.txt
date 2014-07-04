@@ -11,14 +11,6 @@ and the approval style .txt file addition/removal works.
 However lots of test break. Approval is hard-wired to
 hard-disk. Move it to use OsDisk from externals.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-<% @files_to_remove.each do |filename| %>
-  to_remove = document.getElementById("<%= filename %>_div");
-  if (to_remove) {
-    to_remove.parentNode.removeChild(to_remove);
-  }
-<% end %>
-This can be simplified with jQuery.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Language object can have a post-test method which is
 passed the visible-files and only the approval style
 languages do anything. Can initially be a new setting

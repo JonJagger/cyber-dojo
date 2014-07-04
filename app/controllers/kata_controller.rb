@@ -47,7 +47,7 @@ class KataController < ApplicationController
     @files_to_remove = pre_test_filenames.select {|filename| ! visible_files.keys.include?(filename)}
 
     respond_to do |format|
-      format.js if request.xhr?
+      format.js { render :layout => false }
     end
   end
 
