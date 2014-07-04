@@ -5,6 +5,11 @@ require 'test/unit'
 
 class CyberDojoTestBase < Test::Unit::TestCase
 
+  def root_path
+    root_dir = File.expand_path('..', File.dirname(__FILE__))
+    root_dir + '/test/cyberdojo/'
+  end
+
   def setup
     `rm -rf #{root_path}/katas/*`
   end
@@ -17,14 +22,7 @@ class CyberDojoTestBase < Test::Unit::TestCase
 
   def run_test(delta, avatar, visible_files, time_limit = 15)
     lights = avatar.test(delta, visible_files, time_limit, time_now)
-    avatar.save_manifest(visible_files)
-    avatar.commit(lights.length)
     visible_files['output']
-  end
-
-  def root_path
-    root_dir = File.expand_path('..', File.dirname(__FILE__))
-    root_dir + '/test/cyberdojo/'
   end
 
   def self.test(name, &block)

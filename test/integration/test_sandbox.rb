@@ -33,8 +33,6 @@ class SandboxTests < CyberDojoTestBase
 
     max_duration = 15
     lights = avatar.test(delta, visible_files, max_duration, time_now)
-    avatar.save_manifest(visible_files)
-    avatar.commit(lights.length)
 
     assert_equal 1, lights.length
     assert_equal 'green', lights[-1]['colour']
@@ -56,8 +54,6 @@ class SandboxTests < CyberDojoTestBase
 
     max_duration = 15
     lights = avatar.test(delta, visible_files, max_duration, time_now)
-    avatar.save_manifest(visible_files)
-    avatar.commit(lights.length)
 
     assert_equal 2, lights.length
     assert_equal 'amber', lights[-1]['colour']
@@ -79,8 +75,6 @@ class SandboxTests < CyberDojoTestBase
 
     max_duration = 15
     lights = avatar.test(delta, visible_files, max_duration, time_now)
-    avatar.save_manifest(visible_files)
-    avatar.commit(lights.length)
 
     assert_equal 3, lights.length
     assert_equal 'green', lights[-1]['colour']

@@ -1,6 +1,5 @@
 root = '../..'
 
-require_relative root + '/app/lib/Approval'
 require_relative root + '/app/lib/Cleaner'
 require_relative root + '/app/lib/FileDeltaMaker'
 require_relative root + '/app/lib/MakefileFilter'
@@ -31,17 +30,9 @@ class KataController < ApplicationController
     @kata   = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
 
-    max_duration = 15
-    now = time_now
-    @traffic_lights = @avatar.test(delta, visible_files, max_duration, now)
+    time_limit = 15
+    @traffic_lights = @avatar.test(delta, visible_files, time_limit, time_now)
     @output = visible_files['output']
-
-    #should really only do this if kata is using approval-style test-framework
-    Approval::add_created_txt_files(@avatar.sandbox.path, visible_files)
-    Approval::remove_deleted_txt_files(@avatar.sandbox.path, visible_files)
-
-    @avatar.save_manifest(visible_files)
-    @avatar.commit(@traffic_lights.length)
 
     @new_files = visible_files.select {|filename,_| ! pre_test_filenames.include?(filename)}
     @files_to_remove = pre_test_filenames.select {|filename| ! visible_files.keys.include?(filename)}

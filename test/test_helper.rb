@@ -27,8 +27,6 @@ class ActiveSupport::TestCase
 
   def run_test(delta, avatar, visible_files, time_limit = 15)
     lights = avatar.test(delta, visible_files, time_limit, time_now)
-    avatar.save_manifest(visible_files)
-    avatar.commit(lights.length)
     visible_files['output']
   end
 

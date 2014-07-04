@@ -49,8 +49,6 @@ class LightsTests < CyberDojoTestBase
     max_duration = 15
     now = time_now
     lights = avatar.test(delta, visible_files, max_duration, now)
-    avatar.save_manifest(visible_files)
-    avatar.commit(lights.length)
     output = visible_files['output']
     assert output.include?('OK (1 test)')
     assert_equal 1, lights.length

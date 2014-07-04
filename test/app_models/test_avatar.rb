@@ -173,9 +173,9 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    max_duration = 15
-    avatar.test(delta, visible_files, max_duration, time_now)
-    output = visible_files['output'] #avatar.test(@max_duration)
+    time_limit = 15
+    avatar.test(delta, visible_files, time_limit, time_now)
+    output = visible_files['output']
 
     assert_equal 'stubbed-output', output
     assert visible_files.keys.include?('output')
