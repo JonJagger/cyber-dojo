@@ -1,57 +1,56 @@
 
-$HOME_DIR = File.expand_path('..', File.dirname(__FILE__))
+def rooted(path,filename); '../' + path + '/' + filename;  end
+def app_helpers(filename); rooted('app/helpers',filename); end
+def app_lib(filename);     rooted('app/lib',    filename); end
+def app_models(filename);  rooted('app/models', filename); end
+def lib(filename);         rooted('lib',        filename); end
 
-$APP_HELPERS_DIR = $HOME_DIR + '/app/helpers'
-$APP_LIB_DIR     = $HOME_DIR + '/app/lib'
-$APP_MODELS_DIR  = $HOME_DIR + '/app/models'
-$LIB_DIR         = $HOME_DIR + '/lib'
+require_relative app_helpers('avatar_image_helper')
+require_relative app_helpers('logo_image_helper')
+require_relative app_helpers('parity_helper')
+require_relative app_helpers('pie_chart_helper')
+require_relative app_helpers('traffic_light_helper')
 
-require $APP_HELPERS_DIR + '/avatar_image_helper'
-require $APP_HELPERS_DIR + '/logo_image_helper'
-require $APP_HELPERS_DIR + '/parity_helper'
-require $APP_HELPERS_DIR + '/pie_chart_helper'
-require $APP_HELPERS_DIR + '/traffic_light_helper'
+require_relative app_lib('Approval')
+require_relative app_lib('Choose')
+require_relative app_lib('Cleaner')
+require_relative app_lib('FileDeltaMaker')
+require_relative app_lib('GitDiff')
+require_relative app_lib('GitDiffBuilder')
+require_relative app_lib('GitDiffParser')
+require_relative app_lib('LineSplitter')
+require_relative app_lib('MakefileFilter')
+require_relative app_lib('OutputParser')
+require_relative app_lib('TdGapper')
 
-require $APP_LIB_DIR + '/Approval'
-require $APP_LIB_DIR + '/Choose'
-require $APP_LIB_DIR + '/Cleaner'
-require $APP_LIB_DIR + '/FileDeltaMaker'
-require $APP_LIB_DIR + '/GitDiff'
-require $APP_LIB_DIR + '/GitDiffBuilder'
-require $APP_LIB_DIR + '/GitDiffParser'
-require $APP_LIB_DIR + '/LineSplitter'
-require $APP_LIB_DIR + '/MakefileFilter'
-require $APP_LIB_DIR + '/OutputParser'
-require $APP_LIB_DIR + '/TdGapper'
+require_relative app_models('Dojo')
+require_relative app_models('Languages')
+require_relative app_models('Language')
+require_relative app_models('Exercises')
+require_relative app_models('Exercise')
+require_relative app_models('Katas')
+require_relative app_models('Kata')
+require_relative app_models('Avatars')
+require_relative app_models('Avatar')
+require_relative app_models('Sandbox')
+require_relative app_models('Lights')
+require_relative app_models('Light')
+require_relative app_models('Tags')
+require_relative app_models('Tag')
 
-require $APP_MODELS_DIR + '/Dojo'
-require $APP_MODELS_DIR + '/Languages'
-require $APP_MODELS_DIR + '/Language'
-require $APP_MODELS_DIR + '/Exercises'
-require $APP_MODELS_DIR + '/Exercise'
-require $APP_MODELS_DIR + '/Katas'
-require $APP_MODELS_DIR + '/Kata'
-require $APP_MODELS_DIR + '/Avatars'
-require $APP_MODELS_DIR + '/Avatar'
-require $APP_MODELS_DIR + '/Sandbox'
-require $APP_MODELS_DIR + '/Lights'
-require $APP_MODELS_DIR + '/Light'
-require $APP_MODELS_DIR + '/Tags'
-require $APP_MODELS_DIR + '/Tag'
-
-require $LIB_DIR + '/TestRunner'
-require $LIB_DIR + '/DockerTestRunner'
-require $LIB_DIR + '/DummyGit'
-require $LIB_DIR + '/DummyTestRunner'
-require $LIB_DIR + '/FakeDisk'
-require $LIB_DIR + '/Folders'
-require $LIB_DIR + '/Git'
-require $LIB_DIR + '/HostTestRunner'
-require $LIB_DIR + '/OsDisk'
-require $LIB_DIR + '/OsDir'
-require $LIB_DIR + '/SpyDir'
-require $LIB_DIR + '/SpyDisk'
-require $LIB_DIR + '/SpyGit'
-require $LIB_DIR + '/StubTestRunner'
-require $LIB_DIR + '/TimeNow'
-require $LIB_DIR + '/UniqueId'
+require_relative lib('TestRunner')
+require_relative lib('DockerTestRunner')
+require_relative lib('DummyGit')
+require_relative lib('DummyTestRunner')
+require_relative lib('FakeDisk')
+require_relative lib('Folders')
+require_relative lib('Git')
+require_relative lib('HostTestRunner')
+require_relative lib('OsDisk')
+require_relative lib('OsDir')
+require_relative lib('SpyDir')
+require_relative lib('SpyDisk')
+require_relative lib('SpyGit')
+require_relative lib('StubTestRunner')
+require_relative lib('TimeNow')
+require_relative lib('UniqueId')
