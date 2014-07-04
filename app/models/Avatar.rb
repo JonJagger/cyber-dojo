@@ -49,7 +49,7 @@ class Avatar
 
   #- - - - - - - - - - - - - - -
 
-  def test(delta, visible_files, max_duration, now)
+  def test(delta, visible_files, time_limit, now)
     delta[:changed].each do |filename|
       sandbox.dir.write(filename, visible_files[filename])
     end
@@ -61,7 +61,7 @@ class Avatar
       git.rm(sandbox.path, filename)
     end
 
-    output = clean(runner.run(sandbox, './cyber-dojo.sh', max_duration))
+    output = clean(runner.run(sandbox, './cyber-dojo.sh', time_limit))
     sandbox.write('output', output) # so output appears in diff-view
     visible_files['output'] = output
 
