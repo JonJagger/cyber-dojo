@@ -1,6 +1,7 @@
 root = '../..'
 
 require_relative root + '/app/lib/Approval'
+require_relative root + '/app/lib/Cleaner'
 require_relative root + '/app/lib/FileDeltaMaker'
 require_relative root + '/app/lib/MakefileFilter'
 require_relative root + '/lib/TimeNow'
@@ -57,6 +58,7 @@ class KataController < ApplicationController
 
 private
 
+  include Cleaner
   include TimeNow
 
   def received_files
@@ -69,11 +71,6 @@ private
       seen[filename] = MakefileFilter.filter(filename,content)
     end
     seen
-  end
-
-  def clean(s)
-    s = s.encode('UTF-16', 'UTF-8', :invalid => :replace, :replace => '')
-    s = s.encode('UTF-8', 'UTF-16')
   end
 
 end

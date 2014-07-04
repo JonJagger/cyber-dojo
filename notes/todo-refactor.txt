@@ -1,9 +1,33 @@
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setup_controller
-  make chooser a module. refactor to
-  choose_exercise
-  choose_language
+kata_controller.run_test contains these lines
+    Approval::add_created_txt_files(@avatar.sandbox.path, visible_files)
+    Approval::remove_deleted_txt_files(@avatar.sandbox.path, visible_files)
+    @avatar.save_manifest(visible_files)
+    @avatar.commit(@traffic_lights.length)
+these can be moved into avatar.test()
+and the approval style .txt file addition/removal works.
+However lots of test break. Approval is hard-wired to
+hard-disk. Move it to use OsDisk from externals.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+<% @files_to_remove.each do |filename| %>
+  to_remove = document.getElementById("<%= filename %>_div");
+  if (to_remove) {
+    to_remove.parentNode.removeChild(to_remove);
+  }
+<% end %>
+This can be simplified with jQuery.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Language object can have a post-test method which is
+passed the visible-files and only the approval style
+languages do anything. Can initially be a new setting
+inside the language manifest naming a filename wildcard
+which defaults to nothing.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker_controller does this
   if !is_tag || tag <= 0 || tag > avatar.lights.length
@@ -62,34 +86,6 @@ from the start as well.
 However it only appears in a diff if
 o) it changes
 o) it is saved as an individual file
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-kata_controller.run_test contains these lines
-    Approval::add_created_txt_files(@avatar.sandbox.path, visible_files)
-    Approval::remove_deleted_txt_files(@avatar.sandbox.path, visible_files)
-    @avatar.save_manifest(visible_files)
-    @avatar.commit(@traffic_lights.length)
-these can be moved into avatar.test()
-and the approval style .txt file addition/removal works.
-However lots of test break. Approval is hard-wired to
-hard-disk. Move it to use OsDisk from externals.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-<% @files_to_remove.each do |filename| %>
-  to_remove = document.getElementById("<%= filename %>_div");
-  if (to_remove) {
-    to_remove.parentNode.removeChild(to_remove);
-  }
-<% end %>
-This can be simplified with jQuery.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Language object can have a post-test method which is
-passed the visible-files and only the approval style
-languages do anything. Can initially be a new setting
-inside the language manifest naming a filename wildcard
-which defaults to nothing.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I think there are some clean(s) calls that do not use
-the Cleaner module. In controllers.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 avatar.lights.each.entries
   is painful
   create and return array of Light objects?
