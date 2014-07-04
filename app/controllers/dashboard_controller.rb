@@ -1,3 +1,6 @@
+root = '../..'
+
+require_relative root + '/lib/TimeNow'
 
 class DashboardController < ApplicationController
 
@@ -29,6 +32,8 @@ class DashboardController < ApplicationController
 
 private
 
+  include TimeNow
+
   def gather
     @kata = dojo.katas[id]
     @minute_columns = bool('minute_columns')
@@ -38,7 +43,7 @@ private
     all_lights = Hash[
       @kata.avatars.collect{|avatar| [avatar.name, avatar.lights]}
     ]
-    @gapped = gapper.fully_gapped(all_lights, make_time(Time.now))
+    @gapped = gapper.fully_gapped(all_lights, time_now)
   end
 
   def bool(attribute)

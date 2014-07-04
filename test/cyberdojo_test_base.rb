@@ -5,8 +5,6 @@ require 'test/unit'
 
 class CyberDojoTestBase < Test::Unit::TestCase
 
-  include MakeTimeHelper
-
   def setup
     `rm -rf #{root_path}/katas/*`
   end
@@ -31,8 +29,7 @@ class CyberDojoTestBase < Test::Unit::TestCase
   end
 
   def run_test(delta, avatar, visible_files, timeout = 15)
-    now = make_time(Time.now)
-    lights = avatar.test(delta, visible_files, timeout, now)
+    lights = avatar.test(delta, visible_files, timeout, time_now)
     avatar.save_manifest(visible_files)
     avatar.commit(lights.length)
     visible_files['output']
@@ -46,5 +43,9 @@ class CyberDojoTestBase < Test::Unit::TestCase
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
   end
+
+private
+
+  include TimeNow
 
 end

@@ -1,7 +1,9 @@
-require_relative '../../lib/UniqueId'
+root = '../..'
+require_relative root + '/lib/UniqueId'
+require_relative root + '/lib/TimeNow'
 
 class Katas
-  
+
   include Enumerable
 
   def initialize(dojo,path,externals)
@@ -66,18 +68,15 @@ class Katas
 
 private
 
+  include UniqueId
+  include TimeNow
+
   def disk
     @externals[:disk]
-  end
-
-  def time_now(now = Time.now)
-    [now.year, now.month, now.day, now.hour, now.min, now.sec]
   end
 
   def is_hex?(char)
     '0123456789ABCDEF'.include?(char)
   end
-
-  include UniqueId
 
 end

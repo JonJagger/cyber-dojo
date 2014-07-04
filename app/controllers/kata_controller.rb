@@ -1,8 +1,9 @@
+root = '../..'
 
-require 'Approval'
-require 'FileDeltaMaker'
-require 'MakefileFilter'
-require 'OutputParser'
+require_relative root + '/app/lib/Approval'
+require_relative root + '/app/lib/FileDeltaMaker'
+require_relative root + '/app/lib/MakefileFilter'
+require_relative root + '/lib/TimeNow'
 
 class KataController < ApplicationController
 
@@ -30,7 +31,7 @@ class KataController < ApplicationController
     @avatar = @kata.avatars[params[:avatar]]
 
     max_duration = 15
-    now = make_time(Time.now)
+    now = time_now
     @traffic_lights = @avatar.test(delta, visible_files, max_duration, now)
     @output = visible_files['output']
 
@@ -55,6 +56,8 @@ class KataController < ApplicationController
   end
 
 private
+
+  include TimeNow
 
   def received_files
     seen = { }

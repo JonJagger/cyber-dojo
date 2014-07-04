@@ -1,5 +1,6 @@
+root = '../..'
+require_relative root + '/app/lib/Cleaner'
 require 'json'
-require_relative '../lib/Cleaner'
 
 class Language
 

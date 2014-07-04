@@ -1,19 +1,17 @@
-__DIR__ = File.dirname(__FILE__) + '/../../'
+root = '../..'
 
-require __DIR__ + 'config/environment.rb'
-require __DIR__ + 'lib/Docker'
-require __DIR__ + 'lib/DockerTestRunner'
-require __DIR__ + 'lib/DummyTestRunner'
-require __DIR__ + 'lib/HostTestRunner'
-require __DIR__ + 'lib/Folders'
-require __DIR__ + 'lib/Git'
-require __DIR__ + 'lib/OsDisk'
+require_relative root + '/config/environment.rb'
+require_relative root + '/lib/Docker'
+require_relative root + '/lib/DockerTestRunner'
+require_relative root + '/lib/DummyTestRunner'
+require_relative root + '/lib/Folders'
+require_relative root + '/lib/Git'
+require_relative root + '/lib/HostTestRunner'
+require_relative root + '/lib/OsDisk'
 
 class ApplicationController < ActionController::Base
 
   protect_from_forgery
-
-  include MakeTimeHelper # for derived controllers
 
   def id
     Folders::id_complete(root_path + 'katas/', params[:id]) || ""
@@ -44,12 +42,12 @@ private
   def runner
     return DockerTestRunner.new if Docker.installed?
     return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
-    puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-    puts "X                                X"
-    puts "X ?using DummyTestRunner         X"
-    puts "X export CYBERDOJO_USE_HOST=true X"
-    puts "X                                X"
-    puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+    puts '----------------------------------'
+    puts '|                                |'
+    puts '| ?using DummyTestRunner         |'
+    puts '| export CYBERDOJO_USE_HOST=true |'
+    puts '|                                |'
+    puts '----------------------------------'
     return DummyTestRunner.new
   end
 

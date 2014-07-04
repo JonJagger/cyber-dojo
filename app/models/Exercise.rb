@@ -1,4 +1,5 @@
-require_relative '../lib/Cleaner'
+root = '../..'
+require_relative root + '/app/lib/Cleaner'
 
 class Exercise
 

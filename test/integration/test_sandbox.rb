@@ -6,6 +6,7 @@ require_relative 'externals'
 class SandboxTests < CyberDojoTestBase
 
   include Externals
+  include TimeNow
 
   def setup
     @dojo = Dojo.new(root_path,externals)
@@ -31,8 +32,7 @@ class SandboxTests < CyberDojoTestBase
     }
 
     max_duration = 15
-    now = make_time(Time.now)
-    lights = avatar.test(delta, visible_files, max_duration, now)
+    lights = avatar.test(delta, visible_files, max_duration, time_now)
     avatar.save_manifest(visible_files)
     avatar.commit(lights.length)
 
@@ -55,8 +55,7 @@ class SandboxTests < CyberDojoTestBase
     }
 
     max_duration = 15
-    now = make_time(Time.now)
-    lights = avatar.test(delta, visible_files, max_duration, now)
+    lights = avatar.test(delta, visible_files, max_duration, time_now)
     avatar.save_manifest(visible_files)
     avatar.commit(lights.length)
 
@@ -79,8 +78,7 @@ class SandboxTests < CyberDojoTestBase
     }
 
     max_duration = 15
-    now = make_time(Time.now)
-    lights = avatar.test(delta, visible_files, max_duration, now)
+    lights = avatar.test(delta, visible_files, max_duration, time_now)
     avatar.save_manifest(visible_files)
     avatar.commit(lights.length)
 

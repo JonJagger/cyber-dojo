@@ -1,7 +1,9 @@
+root = '../..'
+require_relative root + '/app/lib/Cleaner'
 require 'json'
-require_relative '../lib/Cleaner'
 
 class Tags
+  
   include Enumerable
 
   def initialize(avatar,git)
@@ -28,6 +30,8 @@ class Tags
 
 private
 
+  include Cleaner
+
   def tags
     @tags ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
   end
@@ -35,8 +39,6 @@ private
   def light(n)
     n != 0 ? tags[n-1] : nil # See comment below
   end
-
-  include Cleaner
 
 end
 

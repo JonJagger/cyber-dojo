@@ -1,5 +1,6 @@
+root = '../..'
 
-require 'Choose'
+require_relative root + '/app/lib/Choose'
 
 class SetupController < ApplicationController
 

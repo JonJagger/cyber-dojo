@@ -6,6 +6,7 @@ require_relative 'externals'
 class LightsTests < CyberDojoTestBase
 
   include Externals
+  include TimeNow
 
   def setup
     @dojo = Dojo.new(root_path,externals)
@@ -46,7 +47,7 @@ class LightsTests < CyberDojoTestBase
     visible_files.delete('output')
 
     max_duration = 15
-    now = make_time(Time.now)
+    now = time_now
     lights = avatar.test(delta, visible_files, max_duration, now)
     avatar.save_manifest(visible_files)
     avatar.commit(lights.length)

@@ -1,8 +1,6 @@
 
-# dojo.languages['name']
-# dojo.languages.each {|language| ...}
-
 class Languages
+  
   include Enumerable
 
   def initialize(path,disk,runner)
@@ -12,6 +10,7 @@ class Languages
   attr_reader :path
 
   def each
+    # dojo.languages.each {|language| ...}
     dir.each do |name|
       language = self[name]
       yield language if language.exists? && block_given?
@@ -19,6 +18,7 @@ class Languages
   end
 
   def [](name)
+    # dojo.languages['name']
     Language.new(path,name,@disk,@runner)
   end
 

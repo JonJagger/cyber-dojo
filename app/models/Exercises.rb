@@ -1,8 +1,6 @@
 
-# dojo.exercises['name']
-# dojo.exercises.each{|exercise| ...}
-
 class Exercises
+
   include Enumerable
 
   def initialize(path,disk)
@@ -12,6 +10,7 @@ class Exercises
   attr_reader :path
 
   def each
+    # dojo.exercises.each{|exercise| ...}
     dir.each do |name|
       exercise = self[name]
       yield exercise if exercise.exists? && block_given?
@@ -19,6 +18,7 @@ class Exercises
   end
 
   def [](name)
+    # dojo.exercises['name']
     Exercise.new(path,name,@disk)
   end
 

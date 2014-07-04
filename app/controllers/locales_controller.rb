@@ -1,3 +1,4 @@
+
 class LocalesController < ApplicationController
 
   def change

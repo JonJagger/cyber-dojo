@@ -4,7 +4,7 @@ require_relative 'model_test_base'
 
 class AvatarTests < ModelTestBase
 
-  include MakeTimeHelper
+  include TimeNow
 
   test 'attempting to create an Avatar with an invalid name raises' do
     kata = @dojo.katas[id]
@@ -162,8 +162,6 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
 
-    max_duration = 15
-    now = make_time(Time.now)
     language = @dojo.languages['C-assert']
     manifest = {
       :id => @id,
@@ -175,7 +173,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    avatar.test(delta, visible_files, max_duration, now)
+    max_duration = 15
+    avatar.test(delta, visible_files, max_duration, time_now)
     output = visible_files['output'] #avatar.test(@max_duration)
 
     assert_equal 'stubbed-output', output
@@ -202,8 +201,6 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
 
-    max_duration = 15
-    now = make_time(Time.now)
     language = @dojo.languages['C-assert']
     manifest = {
       :id => @id,
@@ -215,7 +212,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    avatar.test(delta, visible_files, max_duration, now)
+    max_duration = 15
+    avatar.test(delta, visible_files, max_duration, time_now)
 
     log = sandbox.dir.log
     saved_filenames = filenames_written_to(log)
@@ -242,8 +240,6 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
 
-    max_duration = 15
-    now = make_time(Time.now)
     language = @dojo.languages['C-assert']
     manifest = {
       :id => @id,
@@ -255,7 +251,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    avatar.test(delta, visible_files, max_duration, now)
+    max_duration = 15
+    avatar.test(delta, visible_files, max_duration, time_now)
 
     saved_filenames = filenames_written_to(sandbox.dir.log)
     delta[:changed].each do |filename|
@@ -282,8 +279,6 @@ class AvatarTests < ModelTestBase
       :new => [ 'wibble.cs' ]
     }
 
-    max_duration = 15
-    now = make_time(Time.now)
     language = @dojo.languages['C-assert']
     manifest = {
       :id => @id,
@@ -295,7 +290,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    avatar.test(delta, visible_files, max_duration, now)
+    max_duration = 15
+    avatar.test(delta, visible_files, max_duration, time_now)
 
     saved_filenames = filenames_written_to(sandbox.dir.log)
     delta[:new].each do |filename|
@@ -324,8 +320,6 @@ class AvatarTests < ModelTestBase
       :new => [ ]
     }
 
-    max_duration = 15
-    now = make_time(Time.now)
     language = @dojo.languages['C-assert']
     manifest = {
       :id => @id,
@@ -337,7 +331,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    avatar.test(delta, visible_files, max_duration, now)
+    max_duration = 15
+    avatar.test(delta, visible_files, max_duration, time_now)
 
     saved_filenames = filenames_written_to(sandbox.dir.log)
     assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect

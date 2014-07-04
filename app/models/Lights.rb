@@ -1,5 +1,6 @@
+root = '../..'
+require_relative root + '/app/lib/Cleaner'
 require 'json'
-require_relative '../lib/Cleaner'
 
 class Lights
   include Enumerable
@@ -28,10 +29,10 @@ class Lights
 
 private
 
+  include Cleaner
+
   def lights
     @lights ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
   end
-
-  include Cleaner
 
 end

@@ -1,11 +1,15 @@
 
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-make_time(Time.now) can be simplified to time_now()
+Tags.length -> Tags.count
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-forker_controller does
-   now = make_time(Time.now)
-create time_now helper and include it wherever needed.
+Avatar.rb
+  does it need
+    extend Forwardable
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setup_controller
+  make chooser a module. refactor to
+  choose_exercise
+  choose_language
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 katas.exists?(id) could do katas[id] inside a block
 and return false from a rescue

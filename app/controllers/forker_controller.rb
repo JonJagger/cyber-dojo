@@ -1,4 +1,7 @@
-require_relative '../../lib/UniqueId'
+root = '../..'
+
+require_relative root + '/lib/UniqueId'
+require_relative root + '/lib/TimeNow'
 
 class ForkerController < ApplicationController
 
@@ -47,8 +50,7 @@ class ForkerController < ApplicationController
       language = dojo.languages[kata.language.name]
       exercise = kata.exercise
       id = unique_id
-      now = make_time(Time.now)
-      manifest = dojo.katas.create_kata_manifest(language, exercise, id, now)
+      manifest = dojo.katas.create_kata_manifest(language, exercise, id, time_now)
       tag = params['tag'].to_i
       manifest[:visible_files] = avatar.tags[tag].visible_files
       kata = dojo.katas[id]
@@ -69,5 +71,6 @@ class ForkerController < ApplicationController
 private
 
   include UniqueId
+  include TimeNow
 
 end

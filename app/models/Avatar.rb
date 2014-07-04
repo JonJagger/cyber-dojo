@@ -1,5 +1,6 @@
+root = '../..'
+require_relative root + '/app/lib/Cleaner'
 require 'forwardable'
-require_relative '../lib/Cleaner'
 
 class Avatar
   extend Forwardable
@@ -88,6 +89,8 @@ class Avatar
 
 private
 
+  include Cleaner
+
   def disk
     @externals[:disk]
   end
@@ -99,7 +102,5 @@ private
   def runner
     @externals[:runner]
   end
-
-  include Cleaner
 
 end

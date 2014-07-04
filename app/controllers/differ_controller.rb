@@ -1,8 +1,8 @@
-require 'GitDiff'
+root = '../..'
+
+require_relative root + '/app/lib/GitDiff'
 
 class DifferController < ApplicationController
-
-  include GitDiff
 
   def diff
     setup_parameters
@@ -24,6 +24,8 @@ class DifferController < ApplicationController
   end
 
 private
+
+  include GitDiff
 
   def setup_parameters
     @kata = dojo.katas[id]
