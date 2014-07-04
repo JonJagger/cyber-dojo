@@ -1,5 +1,28 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+working towards a tag being created for moving from one
+file to another when there is a change in the one
+moved from - This can be done first, before any work
+on [test] handling. It will simply reduce the amount
+of difference the [test] has to deal with.
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+kata_controller.run_tests() does this
+    pre_test_filenames = visible_files.keys
+    @traffic_lights = @avatar.test(delta, visible_files, time_limit, time_now)
+    @new_files = ...
+    @filenames_to_delete = ...
+This means that @new_files and @filenames_to_delete are created
+after the commit (which happens inside test()) and so
+are not git.add'ed to the repo and are not added to
+the manifest and thus do not fare well in the diff-dialog.
+Rework this so @new_files and @filenames_to_delete are
+git.add'ed and are placed in the manifest.
+
+
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-BUTTON
   there should be a 15-second timeout on the browser too.
   Sometimes the red/green yin-yang spinner just hangs there.
@@ -96,17 +119,6 @@ READ-ONLY SERVER
 
 
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-AVATAR
-  write run_tests(...) function that wraps all of this...
-     save(delta, visible_files)
-     output = test(max_duration)
-     save_visible_files(...)
-     save_traffic_lights(...)
-  which currently happens in kata_controller
-  It can parse output to determine traffic_light colour
-  Might be able to reduce number of @variables in some controllers
-  so the views reach into the domain objects...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SETUP-PAGE
   this can show a pre-allocated ID !
