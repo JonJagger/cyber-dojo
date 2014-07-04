@@ -1,5 +1,6 @@
 root = '../..'
 require_relative root + '/app/lib/Cleaner'
+require_relative root + '/app/lib/OutputParser'
 require 'json'
 
 class Language
@@ -128,6 +129,8 @@ class Language
 
 private
 
+  include Cleaner
+
   def manifest
     begin
       @manifest ||= JSON.parse(read(manifest_filename))
@@ -143,7 +146,5 @@ private
   def read(filename)
     clean(dir.read(filename))
   end
-
-  include Cleaner
 
 end
