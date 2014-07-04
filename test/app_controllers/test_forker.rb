@@ -31,7 +31,7 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id is bad ' +
+  test 'when id is invalid ' +
        'then fork fails ' +
        'and the reason is id' do
     setup_dojo

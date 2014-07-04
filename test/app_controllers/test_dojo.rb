@@ -20,11 +20,11 @@ class DojoControllerTest  < IntegrationTest
 
   # - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'valid_id exists=false when id.length < 6 and kata exists' do
+  test 'valid_id exists=true when id.length < 6 and kata exists' do
     id = checked_save_id[0..4]
     assert id.length < 6
     get 'dojo/valid_id', :format => :json, :id => id
-    assert !json['exists']
+    assert json['exists']
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

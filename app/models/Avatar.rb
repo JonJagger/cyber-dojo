@@ -15,6 +15,7 @@ class Avatar
   end
 
   def initialize(kata,name,externals)
+    raise 'Invalid Avatar(name)' if !valid?(name)
     @kata,@name,@externals = kata,name,externals
   end
 
@@ -29,7 +30,8 @@ class Avatar
   end
 
   def exists?
-    Avatar.names.include?(name) && dir.exists?
+    #Avatar.names.include?(name) && dir.exists?
+    dir.exists?
   end
 
   def active?
@@ -107,6 +109,10 @@ private
 
   def runner
     @externals[:runner]
+  end
+
+  def valid?(name)
+    Avatar.names.include?(name)
   end
 
   include Cleaner

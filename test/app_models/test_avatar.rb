@@ -6,14 +6,10 @@ class AvatarTests < ModelTestBase
 
   include MakeTimeHelper
 
-  test 'there are 16 avatar names' do
-    assert_equal 16, Avatar.names.length
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'avatar names all begin with a different letter' do
-    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  test 'attempting to create an Avatar with an invalid name raises' do
+    kata = @dojo.katas[id]
+    assert !Avatar.names.include?('salmon')
+    assert_raises(RuntimeError) { kata.avatars['salmon'] }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,19 +75,6 @@ class AvatarTests < ModelTestBase
     assert !lion.exists?
     lion.dir.make
     assert lion.exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'exists? is false' +
-       ' when dir exists' +
-       ' and name is NOT in Avatar.names' do
-    kata = @dojo.katas[id]
-    assert !Avatar.names.include?('salmon')
-    salmon = kata.avatars['salmon']
-    assert !salmon.exists?
-    salmon.dir.make
-    assert !salmon.exists?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -4,6 +4,18 @@ require_relative 'model_test_base'
 
 class AvatarsTests < ModelTestBase
 
+  test 'there are 16 avatar names' do
+    assert_equal 16, Avatar.names.length
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'avatar names all begin with a different letter' do
+    assert_equal Avatar.names.collect{|name| name[0]}.uniq.length, Avatar.names.length
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'kata.avatars() returns all avatars started in the kata' do
     kata = make_kata
     cheetah = kata.start_avatar(['cheetah'])

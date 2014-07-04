@@ -11,8 +11,8 @@ class KataTests < CyberDojoTestBase
     @dojo = Dojo.new(root_path,externals(DummyTestRunner.new))
   end
 
-  test 'exists? is false for empty-string id' do
-    kata = @dojo.katas[id='']
+  test 'exists? is false' do
+    kata = @dojo.katas['123456789A']
     assert !kata.exists?
   end
 

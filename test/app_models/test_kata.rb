@@ -4,17 +4,41 @@ require_relative 'model_test_base'
 
 class KataTests < ModelTestBase
 
+  test 'attempting to create a Kata with an invalid id raises' do
+    bad_ids = [
+      nil,          # not string
+      Object.new,   # not string
+      '',           # too short
+      '123456789',  # too short
+      '123456789f', # not 0-9A-F
+      '123456789S'  # not 0-9A-F
+    ]
+    bad_ids.each do |bad_id|
+      assert_raises(RuntimeError) { @dojo.katas[bad_id] }
+    end
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'id read back as set' do
+    kata = @dojo.katas[id]
+    assert_equal Id.new(id), kata.id
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'path(kata)' do
     kata = @dojo.katas[id]
-    assert kata.path.include?(kata.id.inner)
-    assert kata.path.include?(kata.id.outer)
+    assert kata.path.include?(kata.id[0..1])
+    assert kata.path.include?(kata.id[2..-1])
     assert path_ends_in_slash?(kata)
     assert !path_has_adjacent_separators?(kata)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata does exist it is not active and its age is zero' do
+  test 'when kata does exist it is not active ' +
+       'and its age is zero' do
     kata = @dojo.katas[id]
     assert !kata.exists?
     assert !kata.active?
@@ -23,7 +47,9 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata exists but has no avatars it is not active and its age is zero' do
+  test 'when kata exists but has no avatars ' +
+       'then it is not active ' +
+       'and its age is zero' do
     kata = make_kata
     assert kata.exists?
     assert !kata.active?
@@ -33,7 +59,8 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when kata exists but all its avatars have less than 2 traffic-lights ' +
-       'then it is not active and its age is zero' do
+       'then it is not active ' +
+       'and its age is zero' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
@@ -55,7 +82,8 @@ class KataTests < ModelTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when kata exists and at least one avatar has 2 or more traffic-lights ' +
-       'then kata is active and age is from earliest 2nd traffic-light to now' do
+       'then kata is active ' +
+       'and age is from earliest 2nd traffic-light to now' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
@@ -84,20 +112,6 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'id read back as set' do
-    kata = @dojo.katas[id]
-    assert_equal Id.new(id), kata.id
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'exists? is false for empty-string id' do
-    kata = @dojo.katas[id='']
-    assert !kata.exists?
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   test 'exists? is false before dir is made' do
     kata = @dojo.katas[id]
     assert !kata.exists?
@@ -107,8 +121,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'make_kata with default-id and default-now' +
-       ' creates unique-id and uses-time-now' do
+  test 'make_kata with default-id and default-now ' +
+       'creates unique-id and uses-time-now' do
     language = @dojo.languages['Java-JUnit']
     language.dir.spy_read('manifest.json', {
       :unit_test_framework => 'JUnit'
@@ -154,9 +168,9 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'kata.id, kata.created, kata.language.name,' +
-       ' kata.exercise.name, kata.visible_files' +
-       ' all read from manifest' do
+  test 'kata.id, kata.created, kata.language.name, ' +
+       'kata.exercise.name, kata.visible_files ' +
+       'all read from manifest' do
     language = @dojo.languages['test-C++-catch']
     visible_files = {
         'wibble.hpp' => '#include <iostream>',
@@ -186,7 +200,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with specific avatar-name (useful for testing)' do
+  test 'start_avatar with specific avatar-name ' +
+       '(useful for testing)' do
     kata = make_kata
     avatar = kata.start_avatar(['hippo'])
     assert_equal 'hippo', avatar.name
@@ -195,7 +210,8 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'start_avatar with specific avatar-names arg is use (useful for testing)' do
+  test 'start_avatar with specific avatar-names arg is used ' +
+       '(useful for testing)' do
     kata = make_kata
     names = [ 'panda', 'lion', 'cheetah' ]
     panda = kata.start_avatar(names)

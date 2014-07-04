@@ -8,11 +8,11 @@ class Tag
   end
 
   def visible_files
-    @vis ||= JSON.parse(clean(@git.show(@avatar.path, "#{@n}:manifest.json")))
+    @manifest ||= JSON.parse(clean(@git.show(@avatar.path, "#{@n}:manifest.json")))
   end
 
   def output
-    # tag 0 does not have an output file
+    # tag 0's manifest does not have an output file
     visible_files['output'] || ''
   end
 

@@ -1,9 +1,11 @@
 
 # dojo.katas[id]
 # dojo.katas.each {|kata| ...}
+require_relative '../../lib/UniqueId'
 
 class Katas
   include Enumerable
+  include UniqueId
 
   def initialize(dojo,path,externals)
     @dojo,@path,@externals = dojo,path,externals
@@ -22,7 +24,7 @@ class Katas
     }
   end
 
-  def create_kata(language, exercise, id = Id.new.to_s, now = make_time(Time.now))
+  def create_kata(language, exercise, id = unique_id, now = time_now)
     # a kata's id has 10 hex chars. This gives 16^10 possibilities
     # which is 1,099,511,627,776 which is big enough to not
     # need to check that a kata with the id already exists.
@@ -53,14 +55,32 @@ class Katas
     Kata.new(self,id,@externals)
   end
 
+  def valid?(id)
+    id.class.name === 'String' &&
+    id.length === 10 &&
+    id.chars.all?{|char| is_hex?(char)}
+  end
+
+  def exists?(id)
+    valid?(id) && self[id].exists?
+  end
+
 private
 
   def disk
     @externals[:disk]
   end
 
-  def make_time(now)
+  def time_now(now = Time.now)
     [now.year, now.month, now.day, now.hour, now.min, now.sec]
   end
+
+  def is_hex?(char)
+    '0123456789ABCDEF'.include?(char)
+  end
+
+  #def make_time(now)
+  #  [now.year, now.month, now.day, now.hour, now.min, now.sec]
+  #end
 
 end

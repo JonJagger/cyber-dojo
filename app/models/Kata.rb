@@ -4,10 +4,11 @@ require_relative '../lib/Cleaner'
 class Kata
 
   def initialize(katas,id,externals)
+    raise "Invalid Kata(id)" if !katas.valid?(id)
     @katas,@id,@externals = katas,id,externals
   end
 
-  attr_reader :katas
+  attr_reader :katas, :id
 
   def start_avatar(avatar_names = Avatar.names.shuffle)
     avatar = nil
@@ -43,7 +44,8 @@ class Kata
   end
 
   def path
-    @katas.path + id.inner + '/' + id.outer + '/'
+    #@katas.path + id.inner + '/' + id.outer + '/'
+    @katas.path + inner(id) + '/' + outer(id) + '/'
   end
 
   def dir
@@ -51,16 +53,17 @@ class Kata
   end
 
   def exists?
-    id.valid? && dir.exists?
+    #id.valid? && dir.exists?
+    dir.exists?
   end
 
   def active?
     avatars.active.count > 0
   end
 
-  def id
-    Id.new(@id)
-  end
+  #def id
+  #  Id.new(@id)
+  #end
 
   def original_language
     # allow kata to be reviewed/forked even
@@ -120,6 +123,14 @@ private
 
   def dojo
     @katas.dojo
+  end
+
+  def inner(id)
+    id[0..1]  # 'E5'
+  end
+
+  def outer(id)
+    id[2..-1] # '6A3327FE'
   end
 
   include Cleaner

@@ -5,26 +5,34 @@ class ForkerController < ApplicationController
     result = { :forked => false }
     error = false
 
-    kata = dojo.katas[params['id']]
-    avatar = kata.avatars[params['avatar']]
-    #tag  = avatar.tags[params['tag']]
-    
-    if !error && !kata.exists?
-      result[:reason] = 'id'
-      error = true
+    id = params['id']
+    if !error
+      if !dojo.katas.exists?(id)
+        error = true
+        result[:reason] = 'id'
+      else
+        kata = dojo.katas[id]
+      end
     end
 
-    if !error && !dojo.languages[kata.language.name].exists?
-      result[:reason] = 'language'
-      result[:language] = kata.language.name
-      error = true
+    if !error
+      if !dojo.languages[kata.language.name].exists?
+        error = true
+        result[:reason] = 'language'
+        result[:language] = kata.language.name
+      end
     end
 
-    if !error && !avatar.exists?
-      result[:reason] = 'avatar'
-      error = true
+    avatar_name = params['avatar']
+    if !error
+      avatar = kata.avatars[avatar_name]
+      if !error && !avatar.exists?
+        result[:reason] = 'avatar'
+        error = true
+      end
     end
 
+    #tag = avatar.tags[params['tag']]
     if !error # && !light.exists?
       is_tag = params['tag'].match(/^\d+$/)
       tag = params['tag'].to_i;

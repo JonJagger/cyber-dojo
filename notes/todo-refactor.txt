@@ -1,5 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+kata.rb
+  make manifest private
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Avatar.names should be in AvatarS.name
+Avatar.valid?(id) should in AvatarS
+create Avatars.exists?(name) like Katas.exists?(id)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dojo_controller has
+  kata.avatars.entries.length
+add count method to Avatars
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I think forker_controller will fail if the exercise
+has been renamed. This does not need to be so.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Id.new should have its default moved into katas.create_kata()?
 create unique_id() module which wraps uuidgen
 Include it inside katas privately.

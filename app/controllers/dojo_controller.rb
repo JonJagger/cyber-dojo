@@ -15,8 +15,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
 
   def valid_id
-    kata = dojo.katas[id]
-    exists = params[:id].length >= 6 && kata.exists?
+    exists = katas.exists?(id)
     started = exists ? kata.avatars.entries.length : 0
     render :json => {
       :exists => exists,
@@ -27,8 +26,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
 
   def enter_json
-    kata = dojo.katas[id]
-    exists = kata.exists?
+    exists = katas.exists?(id)
     avatar = (exists ? kata.start_avatar : nil)
     full = exists && avatar.nil?
     enter_html = exists && avatar ? enter_dialog_html(avatar.name) : ''
@@ -55,8 +53,7 @@ class DojoController < ApplicationController
   #------------------------------------------------
 
   def re_enter_json
-    kata = dojo.katas[id]
-    exists = kata.exists?
+    exists = katas.exists?(id)
     started_avatar_names = exists ? kata.avatars.collect{|avatar| avatar.name} : [ ]
     empty = (started_avatar_names == [ ])
     render :json => {
@@ -71,6 +68,16 @@ class DojoController < ApplicationController
     @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatar.names
     bind('/app/views/dojo/re_enter_dialog.html.erb')
+  end
+
+private
+
+  def katas
+    dojo.katas
+  end
+
+  def kata
+    katas[id]
   end
 
 end
