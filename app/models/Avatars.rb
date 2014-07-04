@@ -7,7 +7,6 @@ class Avatars
   include Enumerable
 
   def self.names
-      # no two names start with the same letter
       %w(
           alligator buffalo cheetah deer
           elephant frog gorilla hippo
@@ -17,7 +16,7 @@ class Avatars
   end
 
   def self.valid?(name)
-    Avatars.names.include?(name)
+    names.include?(name)
   end
 
   def initialize(kata,externals)
@@ -37,6 +36,10 @@ class Avatars
 
   def [](name)
     Avatar.new(@kata,name,@externals)
+  end
+
+  def count
+    entries.length
   end
 
 end

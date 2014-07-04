@@ -20,6 +20,6 @@ do
     tail -5 $module/log.tmp | head -1
     tail -3 $module/log.tmp | head -1
     tail -1 $module/log.tmp
-    rm $module/log.tmp
+    rm -rf $module/log.tmp
 done
 echo

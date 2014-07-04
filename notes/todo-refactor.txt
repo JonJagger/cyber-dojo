@@ -1,10 +1,6 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dojo_controller has
-  kata.avatars.entries.length
-add count method to Avatars
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make_time(Time.now) can be simplified to time_now()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker_controller does
@@ -19,12 +15,6 @@ create Avatars.exists?(name) like Katas.exists?(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I think forker_controller will fail if the exercise
 has been renamed. This does not need to be so.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Id.new should have its default moved into katas.create_kata()?
-create unique_id() module which wraps uuidgen
-Include it inside katas privately.
-Hold id as plain string inside kata?
-Does this affect id.complete? No.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 should katas.each check inner and outer are comprised only
 of hex chars and are correct length?
@@ -52,6 +42,8 @@ exist - it would be the kata's dir.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker-controller could go straight to the tag existence check
 and bypass the kata and avatar check. Would simplify things.
+Perhaps do that in a block and in the rescue clause try
+to determine a finer-grained error message.
 Needs a tags.exists?(tag) function
 Or tags[tag].exists? to match current style.
 This will need Tag to get the max tag for the avatar.

@@ -1,8 +1,8 @@
 require_relative '../../lib/UniqueId'
 
 class Katas
+  
   include Enumerable
-  include UniqueId
 
   def initialize(dojo,path,externals)
     @dojo,@path,@externals = dojo,path,externals
@@ -77,5 +77,7 @@ private
   def is_hex?(char)
     '0123456789ABCDEF'.include?(char)
   end
+
+  include UniqueId
 
 end

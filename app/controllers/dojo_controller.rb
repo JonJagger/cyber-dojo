@@ -16,7 +16,7 @@ class DojoController < ApplicationController
 
   def valid_id
     exists = katas.exists?(id)
-    started = exists ? kata.avatars.entries.length : 0
+    started = exists ? kata.avatars.count : 0
     render :json => {
       :exists => exists,
       :started => started
