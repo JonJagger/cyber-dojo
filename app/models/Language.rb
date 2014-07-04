@@ -74,10 +74,6 @@ class Language
     manifest['unit_test_framework']
   end
 
-  def colour(output)
-    OutputParser::colour(unit_test_framework, output)
-  end
-
   def tab
     " " * tab_size
   end
@@ -125,6 +121,14 @@ class Language
       'Scala'      => 'Scala-scalatest'
     }
     renames[name] || name
+  end
+
+  def colour(output)
+    OutputParser::colour(unit_test_framework, output)
+  end
+
+  def after_test(sandbox,visible_files)
+    
   end
 
 private

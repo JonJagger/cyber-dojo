@@ -212,8 +212,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    max_duration = 15
-    avatar.test(delta, visible_files, max_duration, time_now)
+    time_limit = 15
+    avatar.test(delta, visible_files, time_limit, time_now)
 
     log = sandbox.dir.log
     saved_filenames = filenames_written_to(log)
@@ -251,8 +251,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    max_duration = 15
-    avatar.test(delta, visible_files, max_duration, time_now)
+    time_limit = 15
+    avatar.test(delta, visible_files, time_limit, time_now)
 
     saved_filenames = filenames_written_to(sandbox.dir.log)
     delta[:changed].each do |filename|
@@ -290,8 +290,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    max_duration = 15
-    avatar.test(delta, visible_files, max_duration, time_now)
+    time_limit = 15
+    avatar.test(delta, visible_files, time_limit, time_now)
 
     saved_filenames = filenames_written_to(sandbox.dir.log)
     delta[:new].each do |filename|
@@ -331,8 +331,8 @@ class AvatarTests < ModelTestBase
     kata.dir.spy_read('manifest.json', manifest)
     avatar.dir.spy_read('increments.json', JSON.unparse([]))
 
-    max_duration = 15
-    avatar.test(delta, visible_files, max_duration, time_now)
+    time_limit = 15
+    avatar.test(delta, visible_files, time_limit, time_now)
 
     saved_filenames = filenames_written_to(sandbox.dir.log)
     assert !saved_filenames.include?('wibble.cs'), saved_filenames.inspect
