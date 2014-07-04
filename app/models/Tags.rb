@@ -3,7 +3,7 @@ require_relative root + '/app/lib/Cleaner'
 require 'json'
 
 class Tags
-  
+
   include Enumerable
 
   def initialize(avatar,git)
@@ -12,7 +12,7 @@ class Tags
 
   def each
     # avatar.tags.each
-    (0...length).each {|n| yield self[n] if block_given? }
+    (0...count).each {|n| yield self[n] if block_given? }
   end
 
   def [](n)
@@ -20,12 +20,12 @@ class Tags
     Tag.new(@avatar,n,@git,light(n))
   end
 
-  def length
-    tags.length
+  def count
+    tags.count
   end
 
   def latest
-    self[length] # See comment below
+    self[count] # See comment below
   end
 
 private
@@ -45,7 +45,7 @@ end
 # After an avatar starts (but before the first test is
 # auto-run) a git.commit(tag=0) occurs for the avatar
 # and increments.json is created as [ ]
-# So when there is 1 tag there is 0 lights
+# So when there is 1 tag there are 0 lights
 #
 #
 # After the first [test] is run the increments.json

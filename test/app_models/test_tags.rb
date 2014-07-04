@@ -9,7 +9,7 @@ class TagsTest < ModelTestBase
     avatar = kata.start_avatar
     tags = avatar.tags
     assert_equal [], tags.entries
-    assert_equal 0, tags.length
+    assert_equal 0, tags.count
     n = 0
     tags.each { n += 1 }
     assert_equal 0, n
@@ -61,7 +61,7 @@ class TagsTest < ModelTestBase
     avatar.dir.spy_read('increments.json', JSON.unparse(incs))
 
     tags = avatar.tags
-    assert_equal 3, tags.length
+    assert_equal 3, tags.count
     n = 0
     tags.each { |tag|
       assert_equal 'Tag', tag.class.name

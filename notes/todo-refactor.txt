@@ -1,11 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Tags.length -> Tags.count
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 setup_controller
   make chooser a module. refactor to
   choose_exercise
   choose_language
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+forker_controller does this
+  if !is_tag || tag <= 0 || tag > avatar.lights.length
+o) tag > avatar.tags.count
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 katas.exists?(id) could do katas[id] inside a block
 and return false from a rescue
