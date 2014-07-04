@@ -7,9 +7,6 @@ forker_controller does
    now = make_time(Time.now)
 create time_now helper and include it wherever needed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-kata.rb
-  make manifest private
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Avatar.names should be in AvatarS.name
 Avatar.valid?(id) should in AvatarS
 create Avatars.exists?(name) like Katas.exists?(id)

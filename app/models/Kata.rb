@@ -95,11 +95,11 @@ class Kata
     manifest['visible_files']
   end
 
+private
+
   def manifest
     @manifest ||= JSON.parse(clean(dir.read('manifest.json')))
   end
-
-private
 
   def disk
     @externals[:disk]
