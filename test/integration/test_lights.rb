@@ -126,9 +126,4 @@ class LightsTests < CyberDojoTestBase
   end
 =end
 
-  #def now
-  #  tn = Time.now
-  #  [tn.year, tn.month, tn.day, tn.hour, tn.min, tn.sec]
-  #end
-
 end

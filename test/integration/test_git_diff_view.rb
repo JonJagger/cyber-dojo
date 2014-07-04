@@ -225,18 +225,6 @@ class GitDiffViewTests < CyberDojoTestBase
 
   #-----------------------------------------------
 
-  #test "id_factory" do
-  #  factory = IdFactory.new
-  #  ids = { }
-  #  (1..100).each {
-  #    id = factory.id
-  #    assert !ids.include?(id)
-  #    ids[id] = id
-  #  }
-  #end
-
-  #-----------------------------------------------
-
   test "sameify with joined newlines" do
     expected =
     [
