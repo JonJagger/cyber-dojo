@@ -40,7 +40,7 @@ class ForkerController < ApplicationController
     if !error # && !light.exists?
       is_tag = params['tag'].match(/^\d+$/)
       tag = params['tag'].to_i;
-      if !is_tag || tag <= 0 || tag > avatar.lights.length
+      if !is_tag || tag <= 0 || tag > avatar.lights.count
         result[:reason] = 'tag'
         error = true
       end

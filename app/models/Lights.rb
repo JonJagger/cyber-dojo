@@ -19,12 +19,12 @@ class Lights
     Light.new(@avatar, lights[n])
   end
 
-  def length
-    lights.length
+  def count
+    lights.count
   end
 
   def latest
-    self[length-1]
+    self[count-1]
   end
 
 private

@@ -21,7 +21,7 @@ class LightsTests < CyberDojoTestBase
   test 'avatar.lights initially empty' do
     lights = @kata.start_avatar.lights
     assert_equal [], lights.entries
-    assert_equal 0, lights.length
+    assert_equal 0, lights.count
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - -
@@ -50,7 +50,7 @@ class LightsTests < CyberDojoTestBase
     lights = avatar.test(delta, visible_files, time_limit, now)
     output = visible_files['output']
     assert output.include?('OK (1 test)')
-    assert_equal 1, lights.length
+    assert_equal 1, lights.count
     assert_equal 'green', lights[-1]['colour']
     assert_equal now, lights[-1]['time']
     assert_equal 1, lights[-1]['number']

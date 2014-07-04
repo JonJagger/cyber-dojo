@@ -1,5 +1,8 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Kata.start_avatar
+  needs to do dir.lock do...end
+  to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Approval is hard-wired to hard-disk.
 Move it to use OsDisk from externals.
@@ -11,7 +14,7 @@ indented HERE documents
 eg test/integration/test_git_diff_view.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker_controller does this
-  if !is_tag || tag <= 0 || tag > avatar.lights.length
+  if !is_tag || tag <= 0 || tag > avatar.lights.count
 o) tag > avatar.tags.count
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 katas.exists?(id) could do katas[id] inside a block
@@ -23,7 +26,7 @@ create Avatars.exists?(name) like Katas.exists?(id)
 I think forker_controller will fail if the exercise
 has been renamed. This does not need to be so.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-should katas.each check inner and outer are comprised only
+should katas.each() check inner and outer are comprised only
 of hex chars and are correct length?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 in controllers I do params['id']
@@ -88,10 +91,6 @@ OsDir.write does this
 Again, this needs to happen in the caller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Kata.start_avatar
-  needs to do dir.lock do...end
-  to ensure you don't get two avatars with the same name.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller

@@ -16,7 +16,7 @@ module TrafficLightHelper
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='#{number-1}'" +
         " data-now-tag='#{number}'" +
-        " data-max-tag='#{avatar.lights.length}'>" +
+        " data-max-tag='#{avatar.lights.count}'>" +
         traffic_light_image(light.colour, 17, 54) +
      "</div>"
   end
@@ -28,7 +28,7 @@ module TrafficLightHelper
         " data-avatar-name='#{avatar.name}'" +
         " data-was-tag='0'" +
         " data-now-tag='1'" +
-        " data-max-tag='#{avatar.lights.length}'>" +
+        " data-max-tag='#{avatar.lights.count}'>" +
         "<img src='/images/avatars/#{avatar.name}.jpg'" +
             " alt='#{avatar.name}'" +
             " width='45'" +

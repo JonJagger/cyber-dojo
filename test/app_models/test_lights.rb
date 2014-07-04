@@ -9,7 +9,6 @@ class LightsTests < ModelTestBase
     lights = kata.start_avatar.lights
     assert_equal [ ], lights.entries
     assert_equal [ ], lights.each.entries
-    assert_equal 0, lights.length
     assert_equal 0, lights.count
     n = 0
     lights.each { n += 1 }
@@ -41,7 +40,7 @@ class LightsTests < ModelTestBase
     ]
     avatar.dir.spy_read('increments.json', JSON.unparse(incs))
     lights = avatar.lights
-    assert_equal 3, lights.length
+    assert_equal 3, lights.count
 
     assert_equal_light(Light.new(avatar,red  ), lights[0])
     assert_equal_light(Light.new(avatar,amber), lights[1])
