@@ -8,10 +8,10 @@
   text-align: right;
   margin: none;
   padding: {
-       top: 0em;
-     right: 0.2em;
+    top   : 0em;
+    right : 0.2em;
     bottom: 0em;
-      left: 0.2em;
+    left  : 0.2em;
   }
   @include font-size-tiny();
   width: 20px;
@@ -23,13 +23,15 @@
 
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
-  color: $lighter-color;
+  color     : $lighter-color;
   padding: none;
-  margin-left: 0px;
-  margin-top: 15px;
+  margin: {
+    left: 0px;
+    top : 15px;
+  }
 
   border: {
-    left: 1px dotted lighten($darker-color, 10%);
+    left : 1px dotted lighten($darker-color, 10%);
     right: 1px dotted lighten($darker-color, 10%);
   }
 
@@ -39,12 +41,15 @@
 
   #diff-controls {
     position: absolute;
-    top: 15px;
+    top : 15px;
     left: 772px;
 
     #diff-arrow {
-      @include center-align;
-      margin-bottom: 20px;
+      margin: {
+        bottom: 20px;
+        left  : 8px;
+        right : 8px;
+      }
     }
     .tag-control {
       @include ghost-panel;
@@ -68,7 +73,7 @@
 
   #diff-filenames {
     height: 270px;
-    width: 300px;
+    width : 300px;
     overflow-y: auto;
     font-size: 11pt;
     text-align: left;
@@ -111,7 +116,7 @@
     overflow-x: auto;
     overflow-y: scroll;
     outline: none;
-    color: $darker-color;
+    color     : $darker-color;
     background: $lighter-color;
     added, deleted, same { padding-left: 3px; }
     added {
@@ -141,14 +146,14 @@
     cursor: pointer;
 
     &.none {
-      background: lighten($darker-color, 10%);
+      background: lighten($darker-color,10%);
     }
     &[disabled] {
-      background: lighten($darker-color, 10%);
+      background: lighten($darker-color,10%);
       cursor: default;
     }
     &[disabled].some {
-      background: lighten($darker-color, 25%);
+      background: lighten($darker-color,25%);
       color: $diff-deleted-color;
     }
   }
@@ -159,14 +164,14 @@
     border-left: 2px solid $darker-color;
 
     &.none {
-      background: lighten($darker-color, 10%);
+      background: lighten($darker-color,10%);
     }
     &[disabled] {
-      background: lighten($darker-color, 10%);
+      background: lighten($darker-color,10%);
       cursor: default;
     }
     &[disabled].some {
-      background: lighten($darker-color, 25%);
+      background: lighten($darker-color,25%);
       color: $diff-added-color;
     }
   }

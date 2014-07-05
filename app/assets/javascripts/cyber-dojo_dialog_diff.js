@@ -96,8 +96,8 @@ var cyberDojo = (function(cd, $) {
 
 	var makeTagGap = function() {
 	  return '' +
-		'<div>' +
-		  '<div id="diff-arrow">&harr;</div>' +
+		'<div id="diff-arrow">' +
+		  '&harr;' +
 		'</div>';
 	};
 
@@ -376,24 +376,23 @@ var cyberDojo = (function(cd, $) {
           'text': diff.filename
         });
 
-		var dn = (diff.deleted_line_count === 0 ||
-				 diff.filename === 'output') ? 'none' : 'some';
-		var deletedLineCountTd =
-		  deletedLineCountTd = $('<td>', {
-			'class': 'diff-deleted-line-count ' + dn + ' button',
-			'data-filename': diff.filename
-		  });
+		var dlc = (diff.deleted_line_count === 0 ||
+				  diff.filename === 'output') ? 'none' : 'some';
+		var deletedLineCountTd = $('<td>', {
+		  'class': 'diff-deleted-line-count ' + dlc + ' button',
+		  'data-filename': diff.filename
+		});
+
+		var alc = (diff.added_line_count === 0 ||
+				  diff.filename === 'output') ? 'none' : 'some';
+		var addedLineCountTd = $('<td>', {
+		  'class': 'diff-added-line-count ' + alc + ' button',
+		  'data-filename': diff.filename
+		});
+
 		if (diff.deleted_line_count > 0) {
 		  deletedLineCountTd.append(diff.deleted_line_count);
 		}
-
-		var an = (diff.added_line_count === 0 ||
-				 diff.filename === 'output') ? 'none' : 'some';
-		var addedLineCountTd =
-		  addedLineCountTd = $('<td>', {
-			'class': 'diff-added-line-count ' + an + ' button',
-			'data-filename': diff.filename
-		  });
 		if (diff.added_line_count > 0) {
 		  addedLineCountTd.append(diff.added_line_count);
 		}

@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+diff-dialog
+  selection of most-changed-filename prefers to stay
+  on the same file if there are no changes. Is this
+  a good idea if the file is empty?
+  Also, what if the selected filename is output?
+  Should you prefer moving away from that?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Kata.start_avatar
   needs to do dir.lock do...end
   to ensure you don't get two avatars with the same name.
