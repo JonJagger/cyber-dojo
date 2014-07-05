@@ -6,16 +6,17 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   test 'build chunk with space in its filename' do
 
-    lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/file with_space b/sandbox/file with_space
-      new file mode 100644
-      index 0000000..21984c7
-      --- /dev/null
-      +++ b/sandbox/file with_space
-      @@ -0,0 +1 @@
-      +Please rename me!
-      \\ No newline at end of file
-    HERE
+    lines =
+    [
+      'diff --git a/sandbox/file with_space b/sandbox/file with_space',
+      'new file mode 100644',
+      'index 0000000..21984c7',
+      '--- /dev/null',
+      '+++ b/sandbox/file with_space',
+      '@@ -0,0 +1 @@',
+      '+Please rename me!',
+      '\\ No newline at end of file'
+    ].join("\n")
 
     expected_diff =
     {
@@ -50,9 +51,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      Please rename me!
-    HERE
+    source_lines =
+    [
+      'Please rename me!'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
@@ -71,15 +73,16 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   test 'build chunk with defaulted now line info' do
 
-    lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3
-      index e69de29..2e65efe 100644
-      --- a/sandbox/untitled_5G3
-      +++ b/sandbox/untitled_5G3
-      @@ -0,0 +1 @@
-      +a
-      \\ No newline at end of file
-    HERE
+    lines =
+    [
+      'diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3',
+      'index e69de29..2e65efe 100644',
+      '--- a/sandbox/untitled_5G3',
+      '+++ b/sandbox/untitled_5G3',
+      '@@ -0,0 +1 @@',
+      '+a',
+      '\\ No newline at end of file'
+    ].join("\n")
 
     #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
     #Is a blog entry by Guido van Rossum.
@@ -118,9 +121,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      a
-    HERE
+    source_lines =
+    [
+      'a'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
@@ -128,7 +132,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
     expected_source_diff =
     [
       { :type => :section, :index => 0 },
-      { :type => :added,   :line => "a", :number => 1 },
+      { :type => :added,   :line => 'a', :number => 1 },
     ]
 
     assert_equal expected_source_diff, source_diff
@@ -140,28 +144,29 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'build two chunks with leading and trailing same lines ' +
        'and no newline at eof' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index b1a30d9..7fa9727 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -1,5 +1,5 @@
-       1
-      -2
-      +2a
-       3
-       4
-       5
-      @@ -8,6 +8,6 @@
-       8
-       9
-       10
-      -11
-      +11a
-       12
-       13
-      \\ No newline at end of file
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index b1a30d9..7fa9727 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -1,5 +1,5 @@',
+      ' 1',
+      '-2',
+      '+2a',
+      ' 3',
+      ' 4',
+      ' 5',
+      '@@ -8,6 +8,6 @@',
+      ' 8',
+      ' 9',
+      ' 10',
+      '-11',
+      '+11a',
+      ' 12',
+      ' 13',
+      '\\ No newline at end of file'
+    ].join("\n")
 
     expected_diff =
     {
@@ -211,21 +216,22 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1
-      2a
-      3
-      4
-      5
-      6
-      7
-      8
-      9
-      10
-      11a
-      12
-      13
-    HERE
+    source_lines =
+    [
+      '1',
+      '2a',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11a',
+      '12',
+      '13'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
@@ -261,24 +267,25 @@ class GitDiffBuilderTests < CyberDojoTestBase
        'and are 7 lines apart' do
     # diffs need to be 7 lines apart not to be merged into contiguous sections in one chunk
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 0719398..2943489 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -1,4 +1,4 @@
-      -1
-      +1a
-       2
-       3
-       4
-      @@ -6,4 +6,4 @@
-       6
-       7
-       8
-      -9
-      +9a
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 0719398..2943489 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -1,4 +1,4 @@',
+      '-1',
+      '+1a',
+      ' 2',
+      ' 3',
+      ' 4',
+      '@@ -6,4 +6,4 @@',
+      ' 6',
+      ' 7',
+      ' 8',
+      '-9',
+      '+9a'
+    ].join("\n")
 
     expected_diff =
     {
@@ -327,17 +334,18 @@ class GitDiffBuilderTests < CyberDojoTestBase
     } # expected
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1a
-      2
-      3
-      4
-      5
-      6
-      7
-      8
-      9a
-    HERE
+    source_lines =
+    [
+      '1a',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9a'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
@@ -368,30 +376,31 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'build one chunk with two sections ' +
        'each with one line added and one line deleted' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 535d2b0..a173ef1 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -1,8 +1,8 @@
-       1
-       2
-      -3
-      +3a
-       4
-      -5
-      +5a
-       6
-       7
-       8
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 535d2b0..a173ef1 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -1,8 +1,8 @@',
+      ' 1',
+      ' 2',
+      '-3',
+      '+3a',
+      ' 4',
+      '-5',
+      '+5a',
+      ' 6',
+      ' 7',
+      ' 8'
+    ].join("\n")
 
     expected_diff =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 535d2b0..a173ef1 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index 535d2b0..a173ef1 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -403,18 +412,18 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 1, :size => 8 },
                 :now => { :start_line => 1, :size => 8 },
               },
-              :before_lines => [ "1", "2" ],
+              :before_lines => [ '1', '2' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ "3" ],
-                  :added_lines   => [ "3a" ],
-                  :after_lines => [ "4" ]
+                  :deleted_lines => [ '3' ],
+                  :added_lines   => [ '3a' ],
+                  :after_lines => [ '4' ]
                 }, # section
                 {
-                  :deleted_lines => [ "5" ],
-                  :added_lines   => [ "5a" ],
-                  :after_lines => [ "6", "7", "8" ]
+                  :deleted_lines => [ '5' ],
+                  :added_lines   => [ '5a' ],
+                  :after_lines => [ '6', '7', '8' ]
                 }, # section
               ] # sections
             } # chunk
@@ -422,34 +431,35 @@ class GitDiffBuilderTests < CyberDojoTestBase
     } # expected
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1
-      2
-      3a
-      4
-      5a
-      6
-      7
-      8
-    HERE
+    source_lines =
+    [
+      '1',
+      '2',
+      '3a',
+      '4',
+      '5a',
+      '6',
+      '7',
+      '8'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
+      { :line => '1', :type => :same, :number => 1 },
+      { :line => '2', :type => :same, :number => 2 },
       { :type => :section, :index => 0 },
-      { :line => "3", :type => :deleted, :number => 3 },
-      { :line => "3a", :type => :added, :number => 3 },
-      { :line => "4", :type => :same, :number => 4 },
+      { :line => '3', :type => :deleted, :number => 3 },
+      { :line => '3a', :type => :added, :number => 3 },
+      { :line => '4', :type => :same, :number => 4 },
       { :type => :section, :index => 1 },
-      { :line => "5", :type => :deleted, :number => 5 },
-      { :line => "5a", :type => :added, :number => 5 },
-      { :line => "6", :type => :same, :number => 6 },
-      { :line => "7", :type => :same, :number => 7 },
-      { :line => "8", :type => :same, :number => 8 },
+      { :line => '5', :type => :deleted, :number => 5 },
+      { :line => '5a', :type => :added, :number => 5 },
+      { :line => '6', :type => :same, :number => 6 },
+      { :line => '7', :type => :same, :number => 7 },
+      { :line => '8', :type => :same, :number => 8 },
     ]
 
     assert_equal expected_source_diff, source_diff
@@ -460,22 +470,23 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   test 'build one chunk with one section with only lines added' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 06e567b..59e88aa 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -1,6 +1,9 @@
-       1
-       2
-       3
-      +3a1
-      +3a2
-      +3a3
-       4
-       5
-       6
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 06e567b..59e88aa 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -1,6 +1,9 @@',
+      ' 1',
+      ' 2',
+      ' 3',
+      '+3a1',
+      '+3a2',
+      '+3a3',
+      ' 4',
+      ' 5',
+      ' 6'
+    ].join("\n")
 
     expected_diff =
     {
@@ -494,13 +505,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 1, :size => 6 },
                 :now => { :start_line => 1, :size => 9 },
               },
-              :before_lines => [ "1", "2", "3" ],
+              :before_lines => [ '1', '2', '3' ],
               :sections =>
               [
                 {
                   :deleted_lines => [ ],
-                  :added_lines   => [ "3a1", "3a2", "3a3" ],
-                  :after_lines => [ "4", "5", "6" ]
+                  :added_lines   => [ '3a1', '3a2', '3a3' ],
+                  :after_lines => [ '4', '5', '6' ]
                 } # section
               ] # sections
             } # chunk
@@ -508,35 +519,36 @@ class GitDiffBuilderTests < CyberDojoTestBase
     } # expected
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1
-      2
-      3
-      3a1
-      3a2
-      3a3
-      4
-      5
-      6
-      7
-    HERE
+    source_lines =
+    [
+      '1',
+      '2',
+      '3',
+      '3a1',
+      '3a2',
+      '3a3',
+      '4',
+      '5',
+      '6',
+      '7'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
 
     expected_source_diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },
+      { :line => '1', :type => :same, :number => 1 },
+      { :line => '2', :type => :same, :number => 2 },
+      { :line => '3', :type => :same, :number => 3 },
       { :type => :section, :index => 0 },
-      { :line => "3a1", :type => :added, :number => 4 },
-      { :line => "3a2", :type => :added, :number => 5 },
-      { :line => "3a3", :type => :added, :number => 6 },
-      { :line => "4", :type => :same, :number => 7 },
-      { :line => "5", :type => :same, :number => 8 },
-      { :line => "6", :type => :same, :number => 9 },
-      { :line => "7", :type => :same, :number => 10 },
+      { :line => '3a1', :type => :added, :number => 4 },
+      { :line => '3a2', :type => :added, :number => 5 },
+      { :line => '3a3', :type => :added, :number => 6 },
+      { :line => '4', :type => :same, :number => 7 },
+      { :line => '5', :type => :same, :number => 8 },
+      { :line => '6', :type => :same, :number => 9 },
+      { :line => '7', :type => :same, :number => 10 },
     ]
 
     assert_equal expected_source_diff, source_diff
