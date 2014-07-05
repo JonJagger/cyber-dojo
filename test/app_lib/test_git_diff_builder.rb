@@ -705,14 +705,14 @@ class GitDiffBuilderTests < CyberDojoTestBase
       { :line => "4", :type => :same, :number => 4 },
       { :line => "5", :type => :same, :number => 5 },
       { :type => :section, :index => 0 },
-      { :line => "6", :type => :deleted, :number => 6 },
-      { :line => "7", :type => :deleted, :number => 7 },
-      { :line => "8", :type => :deleted, :number => 8 },
-      { :line => "7a", :type => :added, :number => 6 },
-      { :line => "9", :type => :same, :number => 7 },
-      { :line => "10", :type => :same, :number => 8 },
-      { :line => "11", :type => :same, :number => 9 },
-      { :line => "12", :type => :same, :number => 10 },
+      { :line => "6", :type => :deleted, :number =>  6 },
+      { :line => "7", :type => :deleted, :number =>  7 },
+      { :line => "8", :type => :deleted, :number =>  8 },
+      { :line => "7a",:type => :added,   :number =>  6 },
+      { :line => "9", :type => :same,    :number =>  7 },
+      { :line => "10",:type => :same,    :number =>  8 },
+      { :line => "11",:type => :same,    :number =>  9 },
+      { :line => "12",:type => :same,    :number => 10 },
     ]
 
     assert_equal expected_source_diff, source_diff
@@ -758,13 +758,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 3, :size => 7 },
                 :now => { :start_line => 3, :size => 8 },
               },
-              :before_lines => [ "3", "4", "5" ],
+              :before_lines => [ '3', '4', '5' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ "6" ],
-                  :added_lines   => [ "6a", "6b" ],
-                  :after_lines => [ "7", "8", "9" ]
+                  :deleted_lines => [ '6' ],
+                  :added_lines   => [ '6a', '6b' ],
+                  :after_lines => [ '7', '8', '9' ]
                 } # section
               ] # sections
             } # chunk
@@ -794,22 +794,22 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },
-      { :line => "4", :type => :same, :number => 4 },
-      { :line => "5", :type => :same, :number => 5 },
+      { :line => '1', :type => :same, :number => 1 },
+      { :line => '2', :type => :same, :number => 2 },
+      { :line => '3', :type => :same, :number => 3 },
+      { :line => '4', :type => :same, :number => 4 },
+      { :line => '5', :type => :same, :number => 5 },
       { :type => :section, :index => 0 },
-      { :line => "6", :type => :deleted, :number => 6 },
-      { :line => "6a", :type => :added, :number => 6 },
-      { :line => "6b", :type => :added, :number => 7 },
-      { :line => "7", :type => :same, :number => 8 },
-      { :line => "8", :type => :same, :number => 9 },
-      { :line => "9", :type => :same, :number => 10 },
-      { :line => "10", :type => :same, :number => 11 },
-      { :line => "11", :type => :same, :number => 12 },
-      { :line => "12", :type => :same, :number => 13 },
-      { :line => "13", :type => :same, :number => 14 },
+      { :line => '6', :type => :deleted, :number =>  6 },
+      { :line => '6a',:type => :added,   :number =>  6 },
+      { :line => '6b',:type => :added,   :number =>  7 },
+      { :line => '7', :type => :same,    :number =>  8 },
+      { :line => '8', :type => :same,    :number =>  9 },
+      { :line => '9', :type => :same,    :number => 10 },
+      { :line => '10',:type => :same,    :number => 11 },
+      { :line => '11',:type => :same,    :number => 12 },
+      { :line => '12',:type => :same,    :number => 13 },
+      { :line => '13',:type => :same,    :number => 14 },
 
     ]
     assert_equal expected_source_diff, source_diff
@@ -854,13 +854,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 5, :size => 7 },
                 :now => { :start_line => 5, :size => 7 },
               },
-              :before_lines => [ "5", "6", "7" ],
+              :before_lines => [ '5', '6', '7' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ "8" ],
-                  :added_lines   => [ "8a" ],
-                  :after_lines => [ "9", "10", "11" ]
+                  :deleted_lines => [ '8' ],
+                  :added_lines   => [ '8a' ],
+                  :after_lines => [ '9', '10', '11' ]
                 } # section
               ] # sections
             } # chunk
@@ -886,7 +886,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_split_lines =
     [
-      "1", "2", "3", "4", "5", "6", "7", "8a", "9", "10", "11", "12", "13"
+      '1', '2', '3', '4', '5', '6', '7', '8a', '9', '10', '11', '12', '13'
     ]
     split_lines = source_lines.split("\n")
     assert_equal expected_split_lines, split_lines
@@ -896,21 +896,21 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },
-      { :line => "4", :type => :same, :number => 4 },
-      { :line => "5", :type => :same, :number => 5 },
-      { :line => "6", :type => :same, :number => 6 },
-      { :line => "7", :type => :same, :number => 7 },
+      { :line => '1', :type => :same, :number => 1 },
+      { :line => '2', :type => :same, :number => 2 },
+      { :line => '3', :type => :same, :number => 3 },
+      { :line => '4', :type => :same, :number => 4 },
+      { :line => '5', :type => :same, :number => 5 },
+      { :line => '6', :type => :same, :number => 6 },
+      { :line => '7', :type => :same, :number => 7 },
       { :type => :section, :index => 0 },
-      { :line => "8", :type => :deleted, :number => 8 },
-      { :line => "8a", :type => :added, :number => 8 },
-      { :line => "9", :type => :same, :number => 9 },
-      { :line => "10", :type => :same, :number => 10 },
-      { :line => "11", :type => :same, :number => 11 },
-      { :line => "12", :type => :same, :number => 12 },
-      { :line => "13", :type => :same, :number => 13 },
+      { :line => '8', :type => :deleted, :number =>  8 },
+      { :line => '8a',:type => :added,   :number =>  8 },
+      { :line => '9', :type => :same,    :number =>  9 },
+      { :line => '10',:type => :same,    :number => 10 },
+      { :line => '11',:type => :same,    :number => 11 },
+      { :line => '12',:type => :same,    :number => 12 },
+      { :line => '13',:type => :same,    :number => 13 },
 
     ]
     assert_equal expected_source_diff, source_diff
@@ -922,22 +922,22 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'count added and deleted lines' do
     diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },
-      { :line => "4", :type => :same, :number => 4 },
-      { :line => "5", :type => :same, :number => 5 },
-      { :line => "6", :type => :same, :number => 6 },
-      { :line => "7a",:type => :added,:number => 7 },
-      { :line => "8", :type => :deleted, :number => 8 },
-      { :line => "8a", :type => :added, :number => 8 },
-      { :line => "9", :type => :same, :number => 9 },
-      { :line => "10", :type => :same, :number => 10 },
-      { :line => "11", :type => :same, :number => 11 },
-      { :line => "12", :type => :same, :number => 12 },
-      { :line => "13", :type => :same, :number => 13 },
+      { :line => '1', :type => :same,    :number =>  1 },
+      { :line => '2', :type => :same,    :number =>  2 },
+      { :line => '3', :type => :same,    :number =>  3 },
+      { :line => '4', :type => :same,    :number =>  4 },
+      { :line => '5', :type => :same,    :number =>  5 },
+      { :line => '6', :type => :same,    :number =>  6 },
+      { :line => '7a',:type => :added,   :number =>  7 },
+      { :line => '8', :type => :deleted, :number =>  8 },
+      { :line => '8a',:type => :added,   :number =>  8 },
+      { :line => '9', :type => :same,    :number =>  9 },
+      { :line => '10',:type => :same,    :number => 10 },
+      { :line => '11',:type => :same,    :number => 11 },
+      { :line => '12',:type => :same,    :number => 12 },
+      { :line => '13',:type => :same,    :number => 13 },
     ]
-    assert_equal 2, diff.count { |e| e[:type] == :added }
+    assert_equal 2, diff.count { |e| e[:type] == :added   }
     assert_equal 1, diff.count { |e| e[:type] == :deleted }
   end
 
