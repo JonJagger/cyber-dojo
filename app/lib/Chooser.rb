@@ -16,7 +16,7 @@ module Chooser
   end
 
   def chooser(choices, id, katas)
-    choice = [*0..choices.length-1].shuffle[0]
+    choice = [*0...choices.length].shuffle[0]
     if katas.valid?(id) && katas[id].exists?
       index = choices.index(yield(katas[id]))
       choice = index if index != nil
