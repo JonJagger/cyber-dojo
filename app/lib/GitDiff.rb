@@ -87,13 +87,13 @@ module GitDiff
     files = files.select { |diff| change_count(diff) > 0 }
     most_changed_diff = files.max { |lhs,rhs| change_count(lhs) <=> change_count(rhs) }
 
-    if current_filename_diff != nil
-      if change_count(current_filename_diff) > 0 || most_changed_diff == nil
+    if !current_filename_diff.nil?
+      if change_count(current_filename_diff) > 0 || most_changed_diff.nil?
         chosen_diff = current_filename_diff
       else
         chosen_diff = most_changed_diff
       end
-    elsif most_changed_diff != nil
+    elsif !most_changed_diff.nil?
       chosen_diff = most_changed_diff
     else
       diffs = diffs.select { |diff| diff[:filename] != 'output' && diff[:filename] != 'instructions' }
@@ -112,16 +112,16 @@ module GitDiff
   #-----------------------------------------------------------
 
   def git_diff_html(id, diff)
-    lines = diff.map {|n| diff_htmlify(id, n) }.join("")
+    lines = diff.map {|n| diff_htmlify(id, n) }.join('')
   end
 
   def diff_htmlify(id, n)
-    result = ""
+    result = ''
     if n[:type] == :section
       result = "<span id='#{id}_section_#{n[:index]}'></span>"
     else
       line = CGI.escapeHTML(n[:line])
-      line = "&thinsp;" if line == ""
+      line = '&thinsp;' if line == ''
       result =
         "<#{n[:type]}>" +
           line +
@@ -145,7 +145,7 @@ module GitDiff
   # is the change of content anyway.
 
   def git_diff_html_line_numbers(diff)
-    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n) }.join("")
+    line_numbers = diff.map {|n| diff_htmlify_line_numbers(n) }.join('')
   end
 
   def diff_htmlify_line_numbers(n)
