@@ -547,21 +547,22 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   test 'build one chunk with one section with only lines deleted' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 0b669b6..a972632 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -2,8 +2,6 @@
-       2
-       3
-       4
-      -5
-      -6
-       7
-       8
-       9
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 0b669b6..a972632 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -2,8 +2,6 @@',
+      ' 2',
+      ' 3',
+      ' 4',
+      '-5',
+      '-6',
+      ' 7',
+      ' 8',
+      ' 9'
+    ].join("\n")
 
     expected_diff =
     {
@@ -594,16 +595,17 @@ class GitDiffBuilderTests < CyberDojoTestBase
     } # expected
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1
-      2
-      3
-      4
-      7
-      8
-      9
-      10
-    HERE
+    source_lines =
+    [
+      '1',
+      '2',
+      '3',
+      '4',
+      '7',
+      '8',
+      '9',
+      '10'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
@@ -632,23 +634,24 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'build one chunk with one section ' +
        'with more lines deleted than added' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 08fe19c..1f8695e 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -3,9 +3,7 @@
-       3
-       4
-       5
-      -6
-      -7
-      -8
-      +7a
-       9
-       10
-       11
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 08fe19c..1f8695e 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -3,9 +3,7 @@',
+      ' 3',
+      ' 4',
+      ' 5',
+      '-6',
+      '-7',
+      '-8',
+      '+7a',
+      ' 9',
+      ' 10',
+      ' 11'
+    ].join("\n")
 
     expected_diff =
     {
@@ -681,18 +684,19 @@ class GitDiffBuilderTests < CyberDojoTestBase
     } # expected
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1
-      2
-      3
-      4
-      5
-      7a
-      9
-      10
-      11
-      12
-    HERE
+    source_lines =
+    [
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '7a',
+      '9',
+      '10',
+      '11',
+      '12'
+    ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
     source_diff = builder.build(expected_diff, source_lines.split("\n"))
@@ -724,22 +728,23 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'build one chunk with one section ' +
        'with more lines added than deleted' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 8e435da..a787223 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -3,7 +3,8 @@
-       ccc
-       ddd
-       eee
-      -fff
-      +XXX
-      +YYY
-       ggg
-       hhh
-       iii
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 8e435da..a787223 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -3,7 +3,8 @@',
+      ' ccc',
+      ' ddd',
+      ' eee',
+      '-fff',
+      '+XXX',
+      '+YYY',
+      ' ggg',
+      ' hhh',
+      ' iii'
+    ].join("\n")
 
     expected_diff =
     {
@@ -925,20 +930,20 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'count added and deleted lines' do
     diff =
     [
-      { :line => '1', :type => :same,    :number =>  1 },
-      { :line => '2', :type => :same,    :number =>  2 },
-      { :line => '3', :type => :same,    :number =>  3 },
-      { :line => '4', :type => :same,    :number =>  4 },
-      { :line => '5', :type => :same,    :number =>  5 },
-      { :line => '6', :type => :same,    :number =>  6 },
-      { :line => '7a',:type => :added,   :number =>  7 },
-      { :line => '8', :type => :deleted, :number =>  8 },
-      { :line => '8a',:type => :added,   :number =>  8 },
-      { :line => '9', :type => :same,    :number =>  9 },
-      { :line => '10',:type => :same,    :number => 10 },
-      { :line => '11',:type => :same,    :number => 11 },
-      { :line => '12',:type => :same,    :number => 12 },
-      { :line => '13',:type => :same,    :number => 13 },
+      same_line('a', 1),
+      same_line('b', 2),
+      same_line('c', 3),
+      same_line('d', 4),
+      same_line('e', 5),
+      same_line('f', 6),
+      added_line('XX',7),
+      deleted_line('QQ',8),
+      added_line('XX',8),
+      same_line('g', 9),
+      same_line('h', 10),
+      same_line('i', 11),
+      same_line('j', 12),
+      same_line('k', 13)
     ]
     assert_equal 2, diff.count { |e| e[:type] == :added   }
     assert_equal 1, diff.count { |e| e[:type] == :deleted }
