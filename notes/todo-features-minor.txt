@@ -1,10 +1,22 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-working towards a tag being created for moving from one
-file to another when there is a change in the one
-moved from - This can be done first, before any work
-on [test] handling. It will simply reduce the amount
-of difference the [test] has to deal with.
+working towards a tag being created for inter-test events...
+When an event happens in the browser I create a snapshot of
+the current state. Eg if there are 3 files fileA,fileB,fileC,
+then if you edit fileB, then edit fileC , then edit fileB again
+you get three snapshots in the state array
+  :originally state in browser matches state on server
+    :state = [fileA-contentA,fileB-contentB,fileC-contentC]
+  :event = edit fileB and open fileC
+    :state = [fileB-contentB']
+  :event = edit fileC and open fileA
+    :state = [fileB-contentB',
+              fileC-contentC']
+  :event = edit fileB and press [test]
+    :state = [fileB-contentB',
+              fileC-contentC',
+              fileC-contentB'']
+    send that to server.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 kata_controller.run_tests() does this
@@ -14,18 +26,36 @@ kata_controller.run_tests() does this
     @filenames_to_delete = ...
 This means that @new_files and @filenames_to_delete are created
 after the commit (which happens inside test()) and so
-are not git.add'ed to the repo and are not added to
+are *not* git.add'ed to the repo and are *not* added to
 the manifest and thus do not fare well in the diff-dialog.
 Rework this so @new_files and @filenames_to_delete are
 git.add'ed and are placed in the manifest.
 
-
-
+post-test step could help with James' request to
+have a graph plotting the number of tests failing/passing.
+This also opens up the possibility of post-test steps
+further kinds of metrics. I'm thinking in particular
+of coverage.
+Another possible metric is graph plotting correlation
+between traffic-light-colour and line-diff-count.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-BUTTON
-  there should be a 15-second timeout on the browser too.
+  Should there be a 15-second timeout on the browser too.
   Sometimes the red/green yin-yang spinner just hangs there.
+  This could tie up nicely with replacing the auto form submission
+  with custom state sent via custom ajax code.
+  This raises a design issue. Suppose the browser times out
+  and then a fraction of a second later the server completes.
+  We now have a mismatch in server state and client state.
+  One option is to retain the state array in the client
+  and continue adding to it, and when a [test] happens again
+  the state array contains two batches of edits which are sent.
+  The server would then have to process the state array against
+  the retrieved state and figure out that the first part had
+  already been saved. Of course, a submission containing 2 [test]s
+  worth of edits will have the server timeout of 15 seconds *per*
+  test.
   Perhaps make the browser timeout slightly longer?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
