@@ -138,9 +138,16 @@
     background: $diff-deleted-color;
     cursor: pointer;
 
+    &.none {
+      background: lighten($darker-color, 10%);
+    }
     &[disabled] {
       background: lighten($darker-color, 10%);
       cursor: default;
+    }
+    &[disabled].some {
+      background: lighten($darker-color, 25%);
+      color: $diff-deleted-color;
     }
   }
 
@@ -149,9 +156,16 @@
     cursor: pointer;
     border-left: 2px solid $darker-color;
 
+    &.none {
+      background: lighten($darker-color, 10%);
+    }
     &[disabled] {
       background: lighten($darker-color, 10%);
       cursor: default;
+    }
+    &[disabled].some {
+      background: lighten($darker-color, 25%);
+      color: $diff-added-color;
     }
   }
 

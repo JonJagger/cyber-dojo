@@ -320,11 +320,11 @@ var cyberDojo = (function(cd, $) {
 		  var tr = filenameNode.closest('tr');
 		  disableAllLineCountButtons();
 		  tr.find('.diff-deleted-line-count')
-			  .attr('disabled', false)
-			  .attr('title', 'Toggle deleted lines on/off');
+		    .attr('disabled', false)
+		    .attr('title', 'Toggle deleted lines on/off');
 		  tr.find('.diff-added-line-count')
-			  .attr('disabled', false)
-			  .attr('title', 'Toggle added lines on/off');
+		    .attr('disabled', false)
+		    .attr('title', 'Toggle added lines on/off');
 
 		  cd.radioEntrySwitch(previousFilenameNode, filenameNode);
 		  if (previousFilenameNode !== undefined) {
@@ -371,18 +371,22 @@ var cyberDojo = (function(cd, $) {
           'text': diff.filename
         });
 
+		var n = (diff.deleted_line_count === 0 ||
+				 diff.filename === 'output') ? 'none' : 'some';
 		var deletedLineCountTd =
 		  deletedLineCountTd = $('<td>', {
-			'class': 'align-right diff-deleted-line-count button',
+			'class': 'align-right diff-deleted-line-count ' + n + ' button',
 			'data-filename': diff.filename
 		  });
 		if (diff.deleted_line_count > 0) {
 		  deletedLineCountTd.append(diff.deleted_line_count);
 		}
 
+		var n = (diff.added_line_count === 0 ||
+				 diff.filename === 'output') ? 'none' : 'some';
 		var addedLineCountTd =
 		  addedLineCountTd = $('<td>', {
-			'class': 'align-right diff-added-line-count button',
+			'class': 'align-right diff-added-line-count ' + n + ' button',
 			'data-filename': diff.filename
 		  });
 		if (diff.added_line_count > 0) {
