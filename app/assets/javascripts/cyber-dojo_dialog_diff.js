@@ -435,6 +435,18 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	var closeDiffDialog = function() {
+	  // It's important to call remove() and not
+	  // close() to ensure the dialog is totally
+	  // removed from the dom and to do this in
+	  // *both* the close button and hitting escape.
+	  // If you don't do this then things don't
+	  // work properly. Eg the initial selection
+	  // of the chosen filename does not work when
+	  // reopening the dialog.
+	  diffDialog.remove();
+	};
+
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
 	  width: 1150,
@@ -442,9 +454,14 @@ var cyberDojo = (function(cd, $) {
 	  modal: true,
 	  buttons: {
 		close: function() {
-		  $(this).dialog('close');
+		  closeDiffDialog();
 		}
 	  }
+	}).on('keydown', function(event) {
+	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
+		closeDiffDialog();
+	  }
+	  event.stopPropagation();
 	});
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -461,19 +478,19 @@ var cyberDojo = (function(cd, $) {
 		  current_filename: currentFilename // 51:var currentFilename
 		},
 		function(data) {
-		  resetNavigateButtonHandlers();
+		  diffFilenames.html(makeDiffFilenames(data.diffs));
+		  resetFilenameAddedDeletedLineCountHandlers();
+		  diffContent.html(makeDiffContent(data.diffs));
+          buildDiffFilenameHandlers(data.idsAndSectionCounts);
+          showFile(data.currentFilenameId);
 
+		  resetNavigateButtonHandlers();
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
 		  wasTagNumber.val(wasTag);
 		  tagGapNumber.html(tagGap);
 		  nowTagNumber.val(nowTag);
 		  nowTrafficLight.html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
-		  diffFilenames.html(makeDiffFilenames(data.diffs));
-		  resetFilenameAddedDeletedLineCountHandlers();
-		  diffContent.html(makeDiffContent(data.diffs));
-          buildDiffFilenameHandlers(data.idsAndSectionCounts);
-          showFile(data.currentFilenameId);
 		  if (open !== undefined) {
 			open(data);
 		  }
