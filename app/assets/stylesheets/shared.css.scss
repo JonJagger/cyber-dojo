@@ -11,6 +11,16 @@
     margin-right: auto;
 }
 
+@mixin center-align
+{
+  text-align: center;
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+
 @mixin ghost-panel($padding: 5px)
 {
     margin-bottom: 20px;
@@ -81,11 +91,7 @@
 .align-left { text-align: left; }
 
 .align-center {
-  text-align: center;
-  margin: {
-    left: auto;
-    right: auto;
-  }
+  @include center-align;
 }
 .align-right   { text-align: right;  }
 .valign-top    { vertical-align: top;    }

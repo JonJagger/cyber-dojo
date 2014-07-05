@@ -43,6 +43,7 @@
     left: 772px;
 
     #diff-arrow {
+      @include center-align;
       margin-bottom: 20px;
     }
     .tag-control {
@@ -132,6 +133,7 @@
     @include diff-line-count;
     border: 2px solid $darker-color;
     @include rounded-corner(4px);
+    @include right-align(0px);
   }
 
   .diff-deleted-line-count {

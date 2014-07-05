@@ -95,7 +95,10 @@ var cyberDojo = (function(cd, $) {
 	}
 
 	var makeTagGap = function() {
-	  return '<div id="diff-arrow">&harr;</div>';
+	  return '' +
+		'<div>' +
+		  '<div id="diff-arrow">&harr;</div>' +
+		'</div>';
 	};
 
 	var makeNowTagControl = function(tag) {
@@ -377,7 +380,7 @@ var cyberDojo = (function(cd, $) {
 				 diff.filename === 'output') ? 'none' : 'some';
 		var deletedLineCountTd =
 		  deletedLineCountTd = $('<td>', {
-			'class': 'align-right diff-deleted-line-count ' + dn + ' button',
+			'class': 'diff-deleted-line-count ' + dn + ' button',
 			'data-filename': diff.filename
 		  });
 		if (diff.deleted_line_count > 0) {
@@ -388,7 +391,7 @@ var cyberDojo = (function(cd, $) {
 				 diff.filename === 'output') ? 'none' : 'some';
 		var addedLineCountTd =
 		  addedLineCountTd = $('<td>', {
-			'class': 'align-right diff-added-line-count ' + an + ' button',
+			'class': 'diff-added-line-count ' + an + ' button',
 			'data-filename': diff.filename
 		  });
 		if (diff.added_line_count > 0) {
