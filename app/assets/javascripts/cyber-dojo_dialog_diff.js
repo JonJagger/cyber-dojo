@@ -51,7 +51,7 @@ var cyberDojo = (function(cd, $) {
 	var currentFilename = '';
 
 	var allHtml = function(node) {
-	  http://stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
+	  //http:stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
 	  return $(node).clone().wrap('<p/>').parent().html();
 	};
 
