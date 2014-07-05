@@ -821,21 +821,22 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'build one chunk with one section ' +
        'with one line deleted and one line added' do
 
-    diff_lines = <<-HERE.gsub(/^ {6}/,'')
-      diff --git a/sandbox/lines b/sandbox/lines
-      index 5ed4618..aad3f67 100644
-      --- a/sandbox/lines
-      +++ b/sandbox/lines
-      @@ -5,7 +5,7 @@
-       5
-       6
-       7
-      -8
-      +8a
-       9
-       10
-       11
-    HERE
+    diff_lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 5ed4618..aad3f67 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -5,7 +5,7 @@',
+      ' aaa',
+      ' bbb',
+      ' ccc',
+      '-QQQ',
+      '+RRR',
+      ' ddd',
+      ' eee',
+      ' fff'
+    ].join("\n")
 
     expected_diff =
     {
@@ -854,13 +855,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 5, :size => 7 },
                 :now => { :start_line => 5, :size => 7 },
               },
-              :before_lines => [ '5', '6', '7' ],
+              :before_lines => [ 'aaa', 'bbb', 'ccc' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ '8' ],
-                  :added_lines   => [ '8a' ],
-                  :after_lines => [ '9', '10', '11' ]
+                  :deleted_lines => [ 'QQQ' ],
+                  :added_lines   => [ 'RRR' ],
+                  :after_lines => [ 'ddd', 'eee', 'fff' ]
                 } # section
               ] # sections
             } # chunk
@@ -868,25 +869,28 @@ class GitDiffBuilderTests < CyberDojoTestBase
     } # expected
     assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
 
-    source_lines = <<-HERE.gsub(/^ {6}/,'')
-      1
-      2
-      3
-      4
-      5
-      6
-      7
-      8a
-      9
-      10
-      11
-      12
-      13
-    HERE
+    source_lines =
+    [
+      'zz',
+      'yy',
+      'xx',
+      'ww',
+      'aaa',
+      'bbb',
+      'ccc',
+      'RRR',
+      'ddd',
+      'eee',
+      'fff',
+      'ggg',
+      'hhh'
+    ].join("\n")
 
     expected_split_lines =
     [
-      '1', '2', '3', '4', '5', '6', '7', '8a', '9', '10', '11', '12', '13'
+      'zz', 'yy', 'xx', 'ww', 'aaa', 'bbb', 'ccc',
+      'RRR',
+      'ddd', 'eee', 'fff', 'ggg', 'hhh'
     ]
     split_lines = source_lines.split("\n")
     assert_equal expected_split_lines, split_lines
@@ -896,22 +900,21 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :line => '1', :type => :same, :number => 1 },
-      { :line => '2', :type => :same, :number => 2 },
-      { :line => '3', :type => :same, :number => 3 },
-      { :line => '4', :type => :same, :number => 4 },
-      { :line => '5', :type => :same, :number => 5 },
-      { :line => '6', :type => :same, :number => 6 },
-      { :line => '7', :type => :same, :number => 7 },
-      { :type => :section, :index => 0 },
-      { :line => '8', :type => :deleted, :number =>  8 },
-      { :line => '8a',:type => :added,   :number =>  8 },
-      { :line => '9', :type => :same,    :number =>  9 },
-      { :line => '10',:type => :same,    :number => 10 },
-      { :line => '11',:type => :same,    :number => 11 },
-      { :line => '12',:type => :same,    :number => 12 },
-      { :line => '13',:type => :same,    :number => 13 },
-
+      same_line('zz', 1),
+      same_line('yy', 2),
+      same_line('xx', 3),
+      same_line('ww', 4),
+      same_line('aaa', 5),
+      same_line('bbb', 6),
+      same_line('ccc', 7),
+      section(0),
+      deleted_line('QQQ', 8),
+      added_line('RRR', 8),
+      same_line('ddd',   9),
+      same_line('eee', 10),
+      same_line('fff', 11),
+      same_line('ggg', 12),
+      same_line('hhh', 13)
     ]
     assert_equal expected_source_diff, source_diff
 
