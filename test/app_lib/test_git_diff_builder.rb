@@ -61,8 +61,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :type => :section, :index => 0},
-      { :type => :added,   :line => 'Please rename me!', :number => 1 },
+      section(0),
+      added_line('Please rename me!', 1),
     ]
 
     assert_equal expected_source_diff, source_diff
@@ -80,7 +80,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '--- a/sandbox/untitled_5G3',
       '+++ b/sandbox/untitled_5G3',
       '@@ -0,0 +1 @@',
-      '+a',
+      '+aaa',
       '\\ No newline at end of file'
     ].join("\n")
 
@@ -111,7 +111,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
               [
                 {
                   :deleted_lines => [ ],
-                  :added_lines   => [ 'a' ],
+                  :added_lines   => [ 'aaa' ],
                   :after_lines => [ ]
                 }, # section
               ] # sections
@@ -123,7 +123,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     source_lines =
     [
-      'a'
+      'aaa'
     ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
@@ -132,7 +132,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
     expected_source_diff =
     [
       { :type => :section, :index => 0 },
-      { :type => :added,   :line => 'a', :number => 1 },
+      { :type => :added,   :line => 'aaa', :number => 1 },
     ]
 
     assert_equal expected_source_diff, source_diff
@@ -715,20 +715,20 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },
-      { :line => "4", :type => :same, :number => 4 },
-      { :line => "5", :type => :same, :number => 5 },
+      { :line => '1', :type => :same, :number => 1 },
+      { :line => '2', :type => :same, :number => 2 },
+      { :line => '3', :type => :same, :number => 3 },
+      { :line => '4', :type => :same, :number => 4 },
+      { :line => '5', :type => :same, :number => 5 },
       { :type => :section, :index => 0 },
-      { :line => "6", :type => :deleted, :number =>  6 },
-      { :line => "7", :type => :deleted, :number =>  7 },
-      { :line => "8", :type => :deleted, :number =>  8 },
-      { :line => "7a",:type => :added,   :number =>  6 },
-      { :line => "9", :type => :same,    :number =>  7 },
-      { :line => "10",:type => :same,    :number =>  8 },
-      { :line => "11",:type => :same,    :number =>  9 },
-      { :line => "12",:type => :same,    :number => 10 },
+      { :line => '6', :type => :deleted, :number =>  6 },
+      { :line => '7', :type => :deleted, :number =>  7 },
+      { :line => '8', :type => :deleted, :number =>  8 },
+      { :line => '7a',:type => :added,   :number =>  6 },
+      { :line => '9', :type => :same,    :number =>  7 },
+      { :line => '10',:type => :same,    :number =>  8 },
+      { :line => '11',:type => :same,    :number =>  9 },
+      { :line => '12',:type => :same,    :number => 10 },
     ]
 
     assert_equal expected_source_diff, source_diff
