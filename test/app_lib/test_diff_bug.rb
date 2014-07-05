@@ -9,10 +9,10 @@ class TrapDiffBugTests < CyberDojoTestBase
   test 'another specific real dojo that once failed a diff' do
     bad_diff_lines =
     [
-      "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
-      "similarity index 100%",
-      "copy from sandbox/recently_used_list.cpp",
-      "copy to sandbox/was_recently_used_list.test.cpp",
+      'diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp',
+      'similarity index 100%',
+      'copy from sandbox/recently_used_list.cpp',
+      'copy to sandbox/was_recently_used_list.test.cpp',
     ].join("\n")
 
     diff = GitDiff::GitDiffParser.new(bad_diff_lines).parse_all
@@ -21,10 +21,10 @@ class TrapDiffBugTests < CyberDojoTestBase
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp",
-            "similarity index 100%",
-            "copy from sandbox/recently_used_list.cpp",
-            "copy to sandbox/was_recently_used_list.test.cpp",
+            'diff --git a/sandbox/recently_used_list.cpp b/sandbox/was_recently_used_list.test.cpp',
+            'similarity index 100%',
+            'copy from sandbox/recently_used_list.cpp',
+            'copy to sandbox/was_recently_used_list.test.cpp',
           ],
         :was_filename => 'a/sandbox/recently_used_list.cpp',
         :now_filename => 'b/sandbox/was_recently_used_list.test.cpp',
@@ -33,7 +33,7 @@ class TrapDiffBugTests < CyberDojoTestBase
           ] # chunks
     }
     expected = {
-      "b/sandbox/was_recently_used_list.test.cpp" => expected_diff
+      'b/sandbox/was_recently_used_list.test.cpp' => expected_diff
     }
     assert_equal expected, diff
 
@@ -42,25 +42,24 @@ class TrapDiffBugTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'specific real dojo that fails diff show narrowing' do
-
     visible_files = { }
     visible_files['gapper.rb'] =
           [
-            "",
-            "def as_time(t)",
-            "  [t.year, t.month, t.day, t.hour, t.min, t.sec]",
-            "end",
-            "",
-            "def gapper(lights, from, to, secs_per_gap)",
-            "  gaps = [as_time(from)]  ",
-            "  while (from + secs_per_gap < to)",
-            "    from += secs_per_gap;",
-            "    gaps << as_time(from)",
-            "  end",
-            "  gaps",
-            "end",
-            "",
-            ""
+            '',
+            'def as_time(t)',
+            '  [t.year, t.month, t.day, t.hour, t.min, t.sec]',
+            'end',
+            '',
+            'def gapper(lights, from, to, secs_per_gap)',
+            '  gaps = [as_time(from)]  ',
+            '  while (from + secs_per_gap < to)',
+            '    from += secs_per_gap;',
+            '    gaps << as_time(from)',
+            '  end',
+            '  gaps',
+            'end',
+            '',
+            ''
           ].join("\n")
 
     diff_lines =
@@ -142,8 +141,8 @@ class TrapDiffBugTests < CyberDojoTestBase
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb",
-            "index 6cf082b..08e1893 100644",
+            'diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb',
+            'index 6cf082b..08e1893 100644',
           ],
         :was_filename => 'a/sandbox/gapper.rb',
         :now_filename => 'b/sandbox/gapper.rb',
@@ -155,7 +154,7 @@ class TrapDiffBugTests < CyberDojoTestBase
                 :was => { :start_line => 12, :size => 10 },
                 :now => { :start_line => 12, :size => 3 },
               },
-              :before_lines => [ "  gaps", "end", "" ],
+              :before_lines => [ '  gaps', 'end', '' ],
               :sections =>
               [
                 {
@@ -213,9 +212,9 @@ class TrapDiffBugTests < CyberDojoTestBase
   test 'empty file is deleted' do
     diff_lines =
     [
-      "diff --git a/sandbox/xx.rb b/sandbox/xx.rb",
-      "deleted file mode 100644",
-      "index e69de29..0000000"
+      'diff --git a/sandbox/xx.rb b/sandbox/xx.rb',
+      'deleted file mode 100644',
+      'index e69de29..0000000'
     ].join("\n")
 
     visible_files = {
@@ -225,16 +224,16 @@ class TrapDiffBugTests < CyberDojoTestBase
     actual_diffs = GitDiff::GitDiffParser.new(diff_lines).parse_all
     expected_diffs =
     {
-      "a/sandbox/xx.rb" =>
+      'a/sandbox/xx.rb' =>
       {
         :prefix_lines =>
         [
-          "diff --git a/sandbox/xx.rb b/sandbox/xx.rb",
-          "deleted file mode 100644",
-          "index e69de29..0000000"
+          'diff --git a/sandbox/xx.rb b/sandbox/xx.rb',
+          'deleted file mode 100644',
+          'index e69de29..0000000'
         ],
-        :was_filename => "a/sandbox/xx.rb",
-        :now_filename=>"/dev/null",
+        :was_filename => 'a/sandbox/xx.rb',
+        :now_filename => '/dev/null',
         :chunks => [ ]
       }
     }

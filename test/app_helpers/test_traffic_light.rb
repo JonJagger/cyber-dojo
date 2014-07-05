@@ -10,6 +10,8 @@ class TrafficLightTests < CyberDojoTestBase
     Avatar.new(kata,name,externals=nil)
   end
 
+  #- - - - - - - - - - - - - - - -
+
   test 'tool tip' do
     kata = nil
     avatar = new_avatar(kata,'hippo')
