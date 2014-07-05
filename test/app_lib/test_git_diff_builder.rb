@@ -84,10 +84,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    #http://www.artima.com/weblogs/viewpost.jsp?thread=164293
-    #Is a blog entry by Guido van Rossum.
-    #He says that in L,S the ,S can be omitted if the chunk size
-    #S is 1. So -3 is the same as -3,1
+    # http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+    # Is a blog entry by Guido van Rossum.
+    # He says that in L,S the ,S can be omitted if the chunk size
+    # S is 1. So -3 is the same as -3,1
 
     expected_diff =
     {
@@ -131,8 +131,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :type => :section, :index => 0 },
-      { :type => :added,   :line => 'aaa', :number => 1 },
+      section(0),
+      added_line('aaa', 1),
     ]
 
     assert_equal expected_source_diff, source_diff
@@ -238,23 +238,23 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :line => '1', :type => :same, :number => 1 },
-      { :type => :section, :index => 0 },
-      { :line => '2', :type => :deleted, :number => 2 },
-      { :line => '2a', :type => :added, :number => 2 },
-      { :line => '3', :type => :same, :number => 3 },
-      { :line => '4', :type => :same, :number => 4 },
-      { :line => '5', :type => :same, :number => 5 },
-      { :line => '6', :type => :same, :number => 6 },
-      { :line => '7', :type => :same, :number => 7 },
-      { :line => '8', :type => :same, :number => 8 },
-      { :line => '9', :type => :same, :number => 9 },
-      { :line => '10', :type => :same, :number => 10 },
-      { :type => :section, :index => 1 },
-      { :line => '11', :type => :deleted, :number => 11 },
-      { :line => '11a', :type => :added, :number => 11 },
-      { :line => '12', :type => :same, :number => 12 },
-      { :line => '13', :type => :same, :number => 13 },
+      same_line('1', 1),
+      section(0),
+      deleted_line('2', 2),
+      added_line('2a', 2),
+      same_line('3', 3),
+      same_line('4', 4),
+      same_line('5', 5),
+      same_line('6', 6),
+      same_line('7', 7),
+      same_line('8', 8),
+      same_line('9', 9),
+      same_line('10', 10),
+      section(1),
+      deleted_line('11', 11),
+      added_line('11a', 11),
+      same_line('12', 12),
+      same_line('13', 13)
     ]
 
     assert_equal expected_source_diff, source_diff
