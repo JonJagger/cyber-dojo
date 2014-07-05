@@ -554,22 +554,22 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -2,8 +2,6 @@',
-      ' 2',
-      ' 3',
-      ' 4',
-      '-5',
-      '-6',
-      ' 7',
-      ' 8',
-      ' 9'
+      ' bbb',
+      ' ccc',
+      ' ddd',
+      '-EEE',
+      '-FFF',
+      ' ggg',
+      ' hhh',
+      ' iii'
     ].join("\n")
 
     expected_diff =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 0b669b6..a972632 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index 0b669b6..a972632 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -581,13 +581,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 2, :size => 8 },
                 :now => { :start_line => 2, :size => 6 },
               },
-              :before_lines => [ "2", "3", "4" ],
+              :before_lines => [ 'bbb', 'ccc', 'ddd' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ "5", "6" ],
+                  :deleted_lines => [ 'EEE', 'FFF' ],
                   :added_lines   => [ ],
-                  :after_lines => [ "7", "8", "9" ]
+                  :after_lines => [ 'ggg', 'hhh', 'iii' ]
                 } # section
               ] # sections
             } # chunk
@@ -597,14 +597,14 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     source_lines =
     [
-      '1',
-      '2',
-      '3',
-      '4',
-      '7',
-      '8',
-      '9',
-      '10'
+      'aaa',
+      'bbb',
+      'ccc',
+      'ddd',
+      'ggg',
+      'hhh',
+      'iii',
+      'jjj'
     ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
@@ -612,17 +612,17 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      { :line => "1", :type => :same, :number => 1 },
-      { :line => "2", :type => :same, :number => 2 },
-      { :line => "3", :type => :same, :number => 3 },
-      { :line => "4", :type => :same, :number => 4 },
-      { :type => :section, :index => 0 },
-      { :line => "5", :type => :deleted, :number => 5 },
-      { :line => "6", :type => :deleted, :number => 6 },
-      { :line => "7", :type => :same, :number => 5 },
-      { :line => "8", :type => :same, :number => 6 },
-      { :line => "9", :type => :same, :number => 7 },
-      { :line => "10", :type => :same, :number => 8 },
+      same_line('aaa', 1),
+      same_line('bbb', 2),
+      same_line('ccc', 3),
+      same_line('ddd', 4),
+      section(0),
+      deleted_line('EEE', 5),
+      deleted_line('FFF', 6),
+      same_line('ggg', 5),
+      same_line('hhh', 6),
+      same_line('iii', 7),
+      same_line('jjj', 8)
     ]
 
     assert_equal expected_source_diff, source_diff
