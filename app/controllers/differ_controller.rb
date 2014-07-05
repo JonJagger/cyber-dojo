@@ -12,7 +12,7 @@ class DifferController < ApplicationController
     diffed_files = git_diff_view(@avatar, @was_tag, @now_tag, visible_files)
     @diffs = git_diff_prepare(diffed_files)
     @ids_and_section_counts = prune(@diffs)
-    @current_filename_id = most_changed_lines_file_id(@diffs, params[:current_filename])
+    @current_filename_id = most_changed_lines_file_id(@diffs, @current_filename)
 
 	render :json => {
 	  :wasTrafficLight => @was_traffic_light,
@@ -35,6 +35,7 @@ private
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i
     @max_tag = @traffic_lights.length
+    @current_filename = params[:current_filename]
   end
 
   def prune(array)

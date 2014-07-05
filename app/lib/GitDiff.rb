@@ -77,9 +77,14 @@ module GitDiff
   #-----------------------------------------------------------
 
   def most_changed_lines_file_id(diffs, current_filename)
-    # prefers to stay on the same file if it still exists
+    # Prefers to stay on the same file if it still exists
     # in the now_tag (it could have been deleted or renamed)
     # and has at least one red or green change.
+    # Otherwise prefers file with most changes.
+    # If nothing has changed prefers the largest file
+    # that isn't output or instructions (this is likely to
+    # be a test file).
+
     chosen_diff = nil
     current_filename_diff = diffs.find { |diff| diff[:filename] == current_filename }
 

@@ -46,8 +46,9 @@ var cyberDojo = (function(cd, $) {
 	// dialog_diff() to be called. It has its cursor
 	// tweaked while the getJSON call is made.
 
-  	var minTag = 0;
-    var tagGap = nowTag - wasTag;
+	var minTag = 0;
+	var tagGap = nowTag - wasTag;
+	var currentFilename = '';
 
 	var allHtml = function(node) {
 	  http://stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
@@ -332,6 +333,7 @@ var cyberDojo = (function(cd, $) {
 		  }
 		  diffFileDiv(getFilename(filenameNode)).show();
 		  previousFilenameNode = filenameNode;
+		  currentFilename = filename;
 
 		  if (sectionCount > 0 && (reselected || !cd.inArray(filename, alreadyOpened))) {
 			var section = $('#' + id + '_section_' + sectionIndex);
@@ -371,22 +373,22 @@ var cyberDojo = (function(cd, $) {
           'text': diff.filename
         });
 
-		var n = (diff.deleted_line_count === 0 ||
+		var dn = (diff.deleted_line_count === 0 ||
 				 diff.filename === 'output') ? 'none' : 'some';
 		var deletedLineCountTd =
 		  deletedLineCountTd = $('<td>', {
-			'class': 'align-right diff-deleted-line-count ' + n + ' button',
+			'class': 'align-right diff-deleted-line-count ' + dn + ' button',
 			'data-filename': diff.filename
 		  });
 		if (diff.deleted_line_count > 0) {
 		  deletedLineCountTd.append(diff.deleted_line_count);
 		}
 
-		var n = (diff.added_line_count === 0 ||
+		var an = (diff.added_line_count === 0 ||
 				 diff.filename === 'output') ? 'none' : 'some';
 		var addedLineCountTd =
 		  addedLineCountTd = $('<td>', {
-			'class': 'align-right diff-added-line-count ' + n + ' button',
+			'class': 'align-right diff-added-line-count ' + an + ' button',
 			'data-filename': diff.filename
 		  });
 		if (diff.added_line_count > 0) {
@@ -425,7 +427,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var showCurrentFile = function(filenameId) {
+	var showFile = function(filenameId) {
 	  $('#radio_' + filenameId).click();
 	};
 
@@ -450,10 +452,11 @@ var cyberDojo = (function(cd, $) {
 	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
-		  id: id,
-		  avatar: avatarName,
-		  was_tag: wasTag,
-		  now_tag: nowTag
+		  id: id,                // 43:dialog_diff(id...)
+		  avatar: avatarName,    // 43:dialog_diff(... avatarName...)
+		  was_tag: wasTag,       // 43:dialog_diff(... wasTag ...)
+		  now_tag: nowTag,       // 43:dialog_diff(... nowTag ...)
+		  current_filename: currentFilename // 51:var currentFilename
 		},
 		function(data) {
 		  resetNavigateButtonHandlers();
@@ -468,7 +471,7 @@ var cyberDojo = (function(cd, $) {
 		  resetFilenameAddedDeletedLineCountHandlers();
 		  diffContent.html(makeDiffContent(data.diffs));
           buildDiffFilenameHandlers(data.idsAndSectionCounts);
-          showCurrentFile(data.currentFilenameId);
+          showFile(data.currentFilenameId);
 		  if (open !== undefined) {
 			open(data);
 		  }
@@ -485,7 +488,7 @@ var cyberDojo = (function(cd, $) {
 	  // dialog may not center on the page.
 	  diffDialog.dialog('open');
       cd.pieChart($('.pie', diffDiv));
-      showCurrentFile(data.currentFilenameId);
+      showFile(data.currentFilenameId);
 	});
 
 
