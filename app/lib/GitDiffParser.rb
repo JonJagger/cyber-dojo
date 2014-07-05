@@ -13,13 +13,7 @@ module GitDiff
       @n = 0
     end
 
-    def lines
-      @lines
-    end
-
-    def n
-      @n
-    end
+    attr_reader :lines, :n
 
     def parse_all
       all = { }
