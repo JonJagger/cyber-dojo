@@ -20,11 +20,6 @@ class CyberDojoTestBase < Test::Unit::TestCase
     dojo.katas.create_kata(language, exercise)
   end
 
-  def run_test(delta, avatar, visible_files, time_limit = 15)
-    lights = avatar.test(delta, visible_files, time_limit, time_now)
-    visible_files['output']
-  end
-
   def self.test(name, &block)
     define_method("test_#{name}".to_sym, &block)
   end

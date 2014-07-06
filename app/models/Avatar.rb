@@ -1,5 +1,6 @@
 root = '../..'
 require_relative root + '/app/lib/Cleaner'
+require_relative root + '/lib/TimeNow'
 
 class Avatar
 
@@ -49,7 +50,7 @@ class Avatar
 
   #- - - - - - - - - - - - - - -
 
-  def test(delta, visible_files, time_limit, now)
+  def test(delta, visible_files, time_limit = 15, now = time_now)
     delta[:changed].each do |filename|
       sandbox.dir.write(filename, visible_files[filename])
     end
@@ -92,6 +93,7 @@ class Avatar
 private
 
   include Cleaner
+  include TimeNow
 
   def disk
     @externals[:disk]

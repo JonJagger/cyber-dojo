@@ -34,7 +34,7 @@ class GitDiffViewTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    run_test(delta, avatar, visible_files) # tag 1
+    avatar.test(delta, visible_files) # tag 1
 
     assert_equal :red, avatar.lights.latest.colour,
                        avatar.tags[1].output
@@ -47,7 +47,7 @@ class GitDiffViewTests < CyberDojoTestBase
       :new => [ ]
     }
 
-    run_test(delta, avatar, visible_files) # tag 2
+    avatar.test(delta, visible_files) # tag 2
 
     assert_equal :green, avatar.lights.latest.colour
 
@@ -160,7 +160,7 @@ class GitDiffViewTests < CyberDojoTestBase
       :new => [ ]
     }
 
-    run_test(delta, avatar, visible_files) # tag 1
+    avatar.test(delta, visible_files) # tag 1
 
     assert_equal :red, avatar.lights.latest.colour,
                        avatar.tags[1].output
@@ -173,7 +173,7 @@ class GitDiffViewTests < CyberDojoTestBase
       :new => [ ]
     }
 
-    run_test(delta, avatar, visible_files) # tag 2
+    avatar.test(delta, visible_files) # tag 2
 
     assert_equal :amber, avatar.lights.latest.colour
 
@@ -213,7 +213,7 @@ class GitDiffViewTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    run_test(delta, avatar, visible_files) # tag 1
+    avatar.test(delta, visible_files) # tag 1
 
     was_tag = 0
     now_tag = 1
@@ -282,7 +282,7 @@ class GitDiffViewTests < CyberDojoTestBase
       ''
     ].join("\n")
   end
-  
+
   #-----------------------------------------------
 
   def cyberdojo_sh

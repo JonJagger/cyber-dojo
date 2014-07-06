@@ -25,7 +25,7 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    run_test(delta, avatar, visible_files)  # tag 1
+    avatar.test(delta, visible_files)  # tag 1
     visible_files.delete(deleted_filename)
     delta = {
       :changed => [ ],
@@ -33,7 +33,7 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ deleted_filename ],
       :new => [ ]
     }
-    run_test(delta, avatar, visible_files)  # tag 2
+    avatar.test(delta, visible_files)  # tag 2
     before = avatar.tags[1].visible_files
     assert before.keys.include?("#{deleted_filename}"),
           "before.keys.include?(#{deleted_filename})"
@@ -54,7 +54,7 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
      }
-    run_test(delta, avatar, visible_files) # tag 1
+    avatar.test(delta, visible_files) # tag 1
     visible_files['cyber-dojo.sh'] += 'xxxx'
     delta = {
       :changed => [ 'cyber-dojo.sh' ],
@@ -62,7 +62,7 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
      }
-    run_test(delta, avatar, visible_files) # tag 2
+    avatar.test(delta, visible_files) # tag 2
     traffic_lights = avatar.lights.each.entries
     assert_equal 2, traffic_lights.length
     actual = avatar.tags[1].diff(2)
@@ -85,7 +85,7 @@ class AvatarTests < CyberDojoTestBase
       :new => [ added_filename ]
     }
 
-    run_test(delta, avatar, visible_files) # 1
+    avatar.test(delta, visible_files) # 1
 
     actual = avatar.tags[0].diff(1)
     expected =
@@ -117,7 +117,7 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    run_test(delta, avatar, visible_files)  # tag 1
+    avatar.test(delta, visible_files)  # tag 1
     #- - - - -
     visible_files.delete(deleted_filename)
     delta = {
@@ -126,7 +126,7 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ deleted_filename ],
       :new => [ ]
     }
-    run_test(delta, avatar, visible_files)  # tag 2
+    avatar.test(delta, visible_files)  # tag 2
     #- - - - -
     actual = avatar.tags[1].diff(2)
     expected =
@@ -155,7 +155,8 @@ class AvatarTests < CyberDojoTestBase
       :deleted => [ ],
       :new => [ ]
     }
-    output = run_test(delta, avatar, visible_files)
+    avatar.test(delta, visible_files)
+    output = visible_files['output']
 
     # now refresh
     avatar = kata.avatars[avatar.name]
