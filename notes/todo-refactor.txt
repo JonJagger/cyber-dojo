@@ -1,8 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/app_lib/test_git_diff_parser.rb
-has lines which are numbers which is silly; they need to be textized.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
   same_line()

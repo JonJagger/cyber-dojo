@@ -612,11 +612,11 @@ class GitDiffParserTests < CyberDojoTestBase
     lines =
     [
       '@@ -1,4 +1,4 @@',
-      '-1',
-      '+1a',
-      ' 2',
-      ' 3',
-      ' 4'
+      '-AAA',
+      '+BBB',
+      ' CCC',
+      ' DDD',
+      ' EEE'
     ].join("\n")
 
     expected =
@@ -630,9 +630,9 @@ class GitDiffParserTests < CyberDojoTestBase
         :sections     =>
         [
           {
-            :deleted_lines => [ '1' ],
-            :added_lines   => [ '1a' ],
-            :after_lines   => [ '2', '3', '4' ]
+            :deleted_lines => [ 'AAA' ],
+            :added_lines   => [ 'BBB' ],
+            :after_lines   => [ 'CCC', 'DDD', 'EEE' ]
           }, # section
         ] # sections
       } # chunk
@@ -648,16 +648,16 @@ class GitDiffParserTests < CyberDojoTestBase
     lines =
     [
       '@@ -1,8 +1,8 @@',
-      ' 1',
-      ' 2',
-      '-3',
-      '+3a',
-      ' 4',
-      '-5',
-      '+5a',
-      ' 6',
-      ' 7',
-      ' 8'
+      ' AAA',
+      ' BBB',
+      '-CCC',
+      '+DDD',
+      ' EEE',
+      '-FFF',
+      '+GGG',
+      ' HHH',
+      ' JJJ',
+      ' KKK'
     ].join("\n")
 
     expected =
@@ -668,18 +668,18 @@ class GitDiffParserTests < CyberDojoTestBase
             :was => { :start_line => 1, :size => 8 },
             :now => { :start_line => 1, :size => 8 },
           },
-          :before_lines => [ '1', '2' ],
+          :before_lines => [ 'AAA', 'BBB' ],
           :sections     =>
           [
             {
-              :deleted_lines => [ '3' ],
-              :added_lines   => [ '3a' ],
-              :after_lines   => [ '4' ]
+              :deleted_lines => [ 'CCC' ],
+              :added_lines   => [ 'DDD' ],
+              :after_lines   => [ 'EEE' ]
             }, # section
             {
-              :deleted_lines => [ '5' ],
-              :added_lines   => [ '5a' ],
-              :after_lines   => [ '6', '7', '8' ]
+              :deleted_lines => [ 'FFF' ],
+              :added_lines   => [ 'GGG' ],
+              :after_lines   => [ 'HHH', 'JJJ', 'KKK' ]
             }, # section
           ] # sections
         } # chunk
@@ -1017,17 +1017,17 @@ class GitDiffParserTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -5,9 +5,9 @@',
-      ' 5',
-      ' 6',
-      ' 7',
-      '-8',
-      '+8a',
-      ' 9',
-      '-10',
-      '+10a',
-      ' 11',
-      ' 12',
-      ' 13'
+      ' AAA',
+      ' BBB',
+      ' CCC',
+      '-DDD',
+      '+EEE',
+      ' FFF',
+      '-GGG',
+      '+HHH',
+      ' JJJ',
+      ' KKK',
+      ' LLL'
     ].join("\n")
 
     expected =
@@ -1047,18 +1047,18 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 5, :size => 9 },
                 :now => { :start_line => 5, :size => 9 },
               },
-              :before_lines => [ '5', '6', '7' ],
+              :before_lines => [ 'AAA', 'BBB', 'CCC' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '8' ],
-                  :added_lines   => [ '8a' ],
-                  :after_lines   => [ '9' ]
+                  :deleted_lines => [ 'DDD' ],
+                  :added_lines   => [ 'EEE' ],
+                  :after_lines   => [ 'FFF' ]
                 },
                 {
-                  :deleted_lines => [ '10' ],
-                  :added_lines   => [ '10a' ],
-                  :after_lines   => [ '11', '12', '13' ]
+                  :deleted_lines => [ 'GGG' ],
+                  :added_lines   => [ 'HHH' ],
+                  :after_lines   => [ 'JJJ', 'KKK', 'LLL' ]
                 } # section
               ] # sections
             } # chunk
@@ -1079,18 +1079,18 @@ class GitDiffParserTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -5,10 +5,10 @@',
-      ' 5',
-      ' 6',
-      ' 7',
-      '-8',
-      '+8a',
-      ' 9',
-      ' 10',
-      '-11',
-      '+11a',
-      ' 12',
-      ' 13',
-      ' 14'
+      ' AAA',
+      ' BBB',
+      ' CCC',
+      '-DDD',
+      '+EEE',
+      ' FFF',
+      ' GGG',
+      '-HHH',
+      '+JJJ',
+      ' KKK',
+      ' LLL',
+      ' MMM'
     ].join("\n")
 
     expected =
@@ -1110,18 +1110,18 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 5, :size => 10 },
                 :now => { :start_line => 5, :size => 10 },
               },
-              :before_lines => [ '5', '6', '7' ],
+              :before_lines => [ 'AAA', 'BBB', 'CCC' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '8' ],
-                  :added_lines   => [ '8a' ],
-                  :after_lines   => [ '9', '10' ]
+                  :deleted_lines => [ 'DDD' ],
+                  :added_lines   => [ 'EEE' ],
+                  :after_lines   => [ 'FFF', 'GGG' ]
                 },
                 {
-                  :deleted_lines => [ '11' ],
-                  :added_lines   => [ '11a' ],
-                  :after_lines   => [ '12', '13', '14' ]
+                  :deleted_lines => [ 'HHH' ],
+                  :added_lines   => [ 'JJJ' ],
+                  :after_lines   => [ 'KKK', 'LLL', 'MMM' ]
                 } # section
               ] # sections
             } # chunk
@@ -1144,21 +1144,21 @@ class GitDiffParserTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -5,14 +5,14 @@',
-      ' 5',
-      ' 6',
-      ' 7',
-      '-8',
-      '+8a',
-      ' 9',
-      ' 10',
-      ' 11',
-      ' 12',
-      ' 13',
-      ' 14',
-      '-15',
-      '+15a',
-      ' 16',
-      ' 17'
+      ' AAA',
+      ' BBB',
+      ' CCC',
+      '-DDD',
+      '+EEE',
+      ' FFF',
+      ' GGG',
+      ' HHH',
+      ' JJJ',
+      ' KKK',
+      ' LLL',
+      '-MMM',
+      '+NNN',
+      ' OOO',
+      ' PPP'
     ].join("\n")
 
     expected =
@@ -1178,18 +1178,18 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 5, :size => 14 },
                 :now => { :start_line => 5, :size => 14 },
               },
-              :before_lines => [ '5', '6', '7' ],
+              :before_lines => [ 'AAA', 'BBB', 'CCC' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '8' ],
-                  :added_lines   => [ '8a' ],
-                  :after_lines   => [ '9', '10', '11', '12', '13', '14' ]
+                  :deleted_lines => [ 'DDD' ],
+                  :added_lines   => [ 'EEE' ],
+                  :after_lines   => [ 'FFF', 'GGG', 'HHH', 'JJJ', 'KKK', 'LLL' ]
                 },
                 {
-                  :deleted_lines => [ '15' ],
-                  :added_lines   => [ '15a' ],
-                  :after_lines   => [ '16', '17' ]
+                  :deleted_lines => [ 'MMM' ],
+                  :added_lines   => [ 'NNN' ],
+                  :after_lines   => [ 'OOO', 'PPP' ]
                 } # section
               ] # sections
             } # chunk
@@ -1210,23 +1210,23 @@ class GitDiffParserTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -5,7 +5,7 @@',
-      ' 5',
-      ' 6',
-      ' 7',
-      '-8',
-      '+8a',
-      ' 9',
-      ' 10',
-      ' 11',
+      ' AAA',
+      ' BBB',
+      ' CCC',
+      '-DDD',
+      '+EEE',
+      ' FFF',
+      ' GGG',
+      ' HHH',
       '@@ -13,7 +13,7 @@',
-      ' 13',
-      ' 14',
-      ' 15',
-      '-16',
-      '+16a',
-      ' 17',
-      ' 18',
-      ' 19'
+      ' QQQ',
+      ' RRR',
+      ' SSS',
+      '-TTT',
+      '+UUU',
+      ' VVV',
+      ' WWW',
+      ' XXX'
     ].join("\n")
 
     expected =
@@ -1246,13 +1246,13 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 5, :size => 7 },
                 :now => { :start_line => 5, :size => 7 },
               },
-              :before_lines => [ '5', '6', '7' ],
+              :before_lines => [ 'AAA', 'BBB', 'CCC' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '8' ],
-                  :added_lines   => [ '8a' ],
-                  :after_lines   => [ '9', '10', '11' ]
+                  :deleted_lines => [ 'DDD' ],
+                  :added_lines   => [ 'EEE' ],
+                  :after_lines   => [ 'FFF', 'GGG', 'HHH' ]
                 }
               ]
             },
@@ -1262,13 +1262,13 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 13, :size => 7 },
                 :now => { :start_line => 13, :size => 7 },
               },
-              :before_lines => [ '13', '14', '15' ],
+              :before_lines => [ 'QQQ', 'RRR', 'SSS' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '16' ],
-                  :added_lines   => [ '16a' ],
-                  :after_lines   => [ '17', '18', '19' ]
+                  :deleted_lines => [ 'TTT' ],
+                  :added_lines   => [ 'UUU' ],
+                  :after_lines   => [ 'VVV', 'WWW', 'XXX' ]
                 } # section
               ] # sections
             } # chunk
