@@ -4,10 +4,6 @@ require_relative '../cyberdojo_test_base'
 
 class GitDiffBuilderTests < CyberDojoTestBase
 
-  def builder
-    GitDiff::GitDiffBuilder.new()
-  end
-
   test 'chunk with a space in its filename' do
 
     diff_lines =
@@ -27,16 +23,16 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'Please rename me!'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       section(0),
       added_line('Please rename me!', 1),
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -60,16 +56,16 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'aaa'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       section(0),
       added_line('aaa', 1),
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -119,10 +115,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'ttt'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       same_line('aaa', 1),
       section(0),
@@ -143,7 +136,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('ttt', 13)
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -185,10 +181,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'ttt'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       section(0),
       deleted_line('aaa', 1),
@@ -205,7 +198,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       added_line('ttt', 9)
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -245,10 +241,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -264,7 +257,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('jjj', 8)
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -304,11 +300,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -323,7 +315,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('jjj', 10)
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -360,10 +355,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -378,7 +370,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('jjj', 8)
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -420,10 +415,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'nnn'
     ].join("\n")
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    source_diff = builder.build(diff, source_lines.split("\n"))
-
-    expected_source_diff =
+    expected =
     [
       same_line('bbb', 1),
       same_line('ccc', 2),
@@ -441,7 +433,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('nnn', 10)
     ]
 
-    assert_equal expected_source_diff, source_diff
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    actual = builder.build(diff, source_lines.split("\n"))
+
+    assert_equal expected, actual
 
   end
 
@@ -578,6 +573,10 @@ class GitDiffBuilderTests < CyberDojoTestBase
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def builder
+    GitDiff::GitDiffBuilder.new()
+  end
 
   def same_line(line,number)
     { :line => line, :type => :same, :number => number }
