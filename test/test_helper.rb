@@ -4,7 +4,6 @@ root = '..'
 
 require_relative root + '/test/test_coverage'
 require_relative root + '/config/environment'
-require_relative root + '/lib/TimeNow'
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
@@ -24,14 +23,5 @@ class ActiveSupport::TestCase
     exercise = dojo.exercises[exercise_name]
     dojo.katas.create_kata(language, exercise)
   end
-
-  def run_test(delta, avatar, visible_files, time_limit = 15)
-    lights = avatar.test(delta, visible_files, time_limit, time_now)
-    visible_files['output']
-  end
-
-private
-
-  include TimeNow
 
 end

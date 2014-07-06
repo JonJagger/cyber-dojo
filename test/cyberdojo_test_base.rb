@@ -24,8 +24,4 @@ class CyberDojoTestBase < Test::Unit::TestCase
     define_method("test_#{name}".to_sym, &block)
   end
 
-private
-
-  include TimeNow
-
 end
