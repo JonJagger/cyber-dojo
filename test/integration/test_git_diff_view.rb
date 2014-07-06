@@ -53,7 +53,9 @@ class GitDiffViewTests < CyberDojoTestBase
 
     was_tag = 1
     now_tag = 2
-    view = git_diff_view(avatar, was_tag, now_tag)
+    visible_files = avatar.tags[now_tag].visible_files
+    diff_lines = avatar.tags[was_tag].diff(now_tag)
+    view = git_diff_view(diff_lines, visible_files)
     view.delete('output')
 
     expected =
@@ -175,9 +177,11 @@ class GitDiffViewTests < CyberDojoTestBase
 
     assert_equal :amber, avatar.lights.latest.colour
 
-    from_tag = 1
-    to_tag = 2
-    view = git_diff_view(avatar, from_tag, to_tag)
+    was_tag = 1
+    now_tag = 2
+    visible_files = avatar.tags[now_tag].visible_files
+    diff_lines = avatar.tags[was_tag].diff(now_tag)
+    view = git_diff_view(diff_lines, visible_files)
     view.delete('output')
 
     expected =
@@ -211,9 +215,12 @@ class GitDiffViewTests < CyberDojoTestBase
     }
     run_test(delta, avatar, visible_files) # tag 1
 
-    from_tag = 0
-    to_tag = 1
-    view = git_diff_view(avatar, from_tag, to_tag)
+    was_tag = 0
+    now_tag = 1
+    visible_files = avatar.tags[now_tag].visible_files
+    diff_lines = avatar.tags[was_tag].diff(now_tag)
+    view = git_diff_view(diff_lines, visible_files)
+    view.delete('output')
 
     view.keys.each do |filename|
       assert visible_files.keys.include?(filename),

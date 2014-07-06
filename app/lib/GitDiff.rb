@@ -4,17 +4,11 @@ require_relative 'LineSplitter'
 
 module GitDiff
 
-  # Top level functions used by diff_controller.rb to create data structure
-  # (to build view from) containing diffs for all files, for a given avatar,
-  # for a given tag.
+  # Top level functions used by diff_controller.rb to create
+  # data structure (to build view from) containing diffs
+  # for all files, for a given avatar, for a given tag.
 
-  def git_diff_view(avatar, was_tag, now_tag, visible_files = nil)
-      visible_files ||= avatar.tags[now_tag].visible_files
-      diff_lines = avatar.tags[was_tag].diff(now_tag)
-      unit_testable_git_diff_view(diff_lines, visible_files)
-  end
-
-  def unit_testable_git_diff_view(diff_lines, visible_files)
+  def git_diff_view(diff_lines, visible_files)
       view = { }
       diffs = GitDiffParser.new(diff_lines).parse_all
       diffs.each do |sandbox_name,diff|

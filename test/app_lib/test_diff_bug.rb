@@ -2,7 +2,7 @@
 
 require_relative '../cyberdojo_test_base'
 
-class TrapDiffBugTests < CyberDojoTestBase
+class DiffBugTests < CyberDojoTestBase
 
   include GitDiff
 
@@ -240,7 +240,7 @@ class TrapDiffBugTests < CyberDojoTestBase
     assert_equal expected_diffs, actual_diffs
 
     expected_view = { 'xx.rb' => [ ] }
-    actual_view = unit_testable_git_diff_view(diff_lines, visible_files)
+    actual_view = git_diff_view(diff_lines, visible_files)
     assert_equal expected_view, actual_view
   end
 
