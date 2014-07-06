@@ -701,24 +701,25 @@ HERE
 
   #-----------------------------------------------------
 
-  test "standard diff" do
+  test 'standard diff' do
 
-lines = <<HERE
-diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb
-index 26bc41b..8a5b0b7 100644
---- a/sandbox/gapper.rb
-+++ b/sandbox/gapper.rb
-@@ -4,7 +5,8 @@ def time_gaps(from, to, seconds_per_gap)
-   (0..n+1).collect {|i| from + i * seconds_per_gap }
- end
-
--def full_gapper(all_incs, gaps)
-+def full_gapper(all_incs, created, seconds_per_gap)
-+  gaps = time_gaps(created, latest(all_incs), seconds_per_gap)
-   full = {}
-   all_incs.each do |avatar_name, incs|
-     full[avatar_name.to_sym] = gapper(incs, gaps)
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/gapper.rb b/sandbox/gapper.rb',
+      'index 26bc41b..8a5b0b7 100644',
+      '--- a/sandbox/gapper.rb',
+      '+++ b/sandbox/gapper.rb',
+      '@@ -4,7 +5,8 @@ def time_gaps(from, to, seconds_per_gap)',
+      '   (0..n+1).collect {|i| from + i * seconds_per_gap }',
+      ' end',
+      ' ',
+      '-def full_gapper(all_incs, gaps)',
+      '+def full_gapper(all_incs, created, seconds_per_gap)',
+      '+  gaps = time_gaps(created, latest(all_incs), seconds_per_gap)',
+      '   full = {}',
+      '   all_incs.each do |avatar_name, incs|',
+      '     full[avatar_name.to_sym] = gapper(incs, gaps)'
+    ].join("\n")
 
     expected =
     {
