@@ -362,27 +362,27 @@ class GitDiffParserTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -1,7 +1,7 @@',
-      ' 1',
-      ' 2',
-      ' 3',
-      '-4',
-      '+4a',
-      ' 5',
-      ' 6',
-      ' 7',
+      ' aaa',
+      ' bbb',
+      ' ccc',
+      '-ddd',
+      '+eee',
+      ' fff',
+      ' ggg',
+      ' hhh',
       'diff --git a/sandbox/other b/sandbox/other',
       'index cf0389a..b28bf03 100644',
       '--- a/sandbox/other',
       '+++ b/sandbox/other',
       '@@ -1,6 +1,6 @@',
-      ' 1',
-      ' 2',
-      '-3',
-      '-4',
-      '+3a',
-      '+4a',
-      ' 5',
-      ' 6',
+      ' AAA',
+      ' BBB',
+      '-CCC',
+      '-DDD',
+      '+EEE',
+      '+FFF',
+      ' GGG',
+      ' HHH',
       "\\ No newline at end of file"
     ].join("\n")
 
@@ -403,13 +403,13 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 1, :size => 7 },
                 :now => { :start_line => 1, :size => 7 },
               },
-              :before_lines => [ '1', '2', '3'],
+              :before_lines => [ 'aaa', 'bbb', 'ccc'],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '4' ],
-                  :added_lines   => [ '4a' ],
-                  :after_lines   => [ '5', '6', '7' ]
+                  :deleted_lines => [ 'ddd' ],
+                  :added_lines   => [ 'eee' ],
+                  :after_lines   => [ 'fff', 'ggg', 'hhh' ]
                 }, # section
               ] # sections
             } # chunk
@@ -433,13 +433,13 @@ class GitDiffParserTests < CyberDojoTestBase
                 :was => { :start_line => 1, :size => 6 },
                 :now => { :start_line => 1, :size => 6 },
               },
-              :before_lines => [ '1', '2' ],
+              :before_lines => [ 'AAA', 'BBB' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ '3', '4' ],
-                  :added_lines   => [ '3a', '4a' ],
-                  :after_lines   => [ '5', '6' ]
+                  :deleted_lines => [ 'CCC', 'DDD' ],
+                  :added_lines   => [ 'EEE', 'FFF' ],
+                  :after_lines   => [ 'GGG', 'HHH' ]
                 }, # section
               ] # sections
             } # chunk
