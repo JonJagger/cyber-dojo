@@ -39,27 +39,6 @@ module GitDiff
 
   #-----------------------------------------------------------
 
-  def git_diff_prepare(diffed_files)
-    n = 0
-    diffs = [ ]
-    diffed_files.sort.each do |filename,diff|
-      id = 'id_' + n.to_s
-      n += 1
-      diffs << {
-        :id => id,
-        :filename => filename,
-        :section_count      => diff.count { |line| line[:type] == :section },
-        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
-        :added_line_count   => diff.count { |line| line[:type] == :added   },
-        :content  => git_diff_html(id, diff),
-        :line_numbers => git_diff_html_line_numbers(diff)
-      }
-    end
-    diffs
-  end
-
-  #-----------------------------------------------------------
-
   def deleted_file?(ch)
     # GitDiffParser uses names beginning with
     # a/... to indicate a deleted file
@@ -69,6 +48,30 @@ module GitDiff
   end
 
   #-----------------------------------------------------------
+
+  def sameify(source)
+    ify(LineSplitter.line_split(source), :same)
+  end
+
+  #-----------------------------------------------------------
+
+  def deleteify(lines)
+    ify(lines, :deleted)
+  end
+
+  #-----------------------------------------------------------
+
+  def ify(lines, type)
+    lines.collect.each_with_index do |line, number|
+      {
+        :line => line,
+        :type => type,
+        :number => number + 1
+      }
+    end
+  end
+
+  #############################################################
 
   def most_changed_lines_file_id(diffs, current_filename)
     # Prefers to stay on the same file if it still exists
@@ -108,11 +111,34 @@ module GitDiff
     diff[:deleted_line_count] + diff[:added_line_count]
   end
 
+  #############################################################
+
+  def git_diff_prepare(diffed_files)
+    n = 0
+    diffs = [ ]
+    diffed_files.sort.each do |filename,diff|
+      id = 'id_' + n.to_s
+      n += 1
+      diffs << {
+        :id => id,
+        :filename => filename,
+        :section_count      => diff.count { |line| line[:type] == :section },
+        :deleted_line_count => diff.count { |line| line[:type] == :deleted },
+        :added_line_count   => diff.count { |line| line[:type] == :added   },
+        :content  => git_diff_html(id, diff),
+        :line_numbers => git_diff_html_line_numbers(diff)
+      }
+    end
+    diffs
+  end
+
   #-----------------------------------------------------------
 
   def git_diff_html(id, diff)
     lines = diff.map {|n| diff_htmlify(id, n) }.join('')
   end
+
+  #-----------------------------------------------------------
 
   def diff_htmlify(id, n)
     result = ''
@@ -156,30 +182,6 @@ module GitDiff
         "</#{n[:type]}>"
     end
     result
-  end
-
-  #-----------------------------------------------------------
-
-  def sameify(source)
-    ify(LineSplitter.line_split(source), :same)
-  end
-
-  #-----------------------------------------------------------
-
-  def deleteify(lines)
-    ify(lines, :deleted)
-  end
-
-  #-----------------------------------------------------------
-
-  def ify(lines, type)
-    lines.collect.each_with_index do |line, number|
-      {
-        :line => line,
-        :type => type,
-        :number => number + 1
-      }
-    end
   end
 
 end
