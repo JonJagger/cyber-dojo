@@ -478,7 +478,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -1,6 +1,9 @@',
-      ' 1',
+      ' aaa',
       ' 2',
       ' 3',
       '+3a1',
@@ -506,7 +506,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 1, :size => 6 },
                 :now => { :start_line => 1, :size => 9 },
               },
-              :before_lines => [ '1', '2', '3' ],
+              :before_lines => [ 'aaa', '2', '3' ],
               :sections =>
               [
                 {
@@ -522,7 +522,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     source_lines =
     [
-      '1',
+      'aaa',
       '2',
       '3',
       '3a1',
@@ -539,7 +539,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      same_line('1', 1),
+      same_line('aaa', 1),
       same_line('2', 2),
       same_line('3', 3),
       section(0),
