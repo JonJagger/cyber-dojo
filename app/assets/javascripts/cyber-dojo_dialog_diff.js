@@ -42,9 +42,11 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, diffLight) {
 	// diffLight isn't necessarily a traffic-light.
-	// it is whatever dom element's click handler causes
-	// dialog_diff() to be called. It has its cursor
-	// tweaked while the getJSON call is made.
+	// It is whatever dom element's click handler causes
+	// dialog_diff() to be called.
+	// Eg it could be an animals light-count which opens
+	// a "no-diff" by setting wasTag == nowTag.
+	// It has its cursor tweaked while the getJSON call is made.
 
 	var minTag = 0;
 	var tagGap = nowTag - wasTag;
@@ -274,20 +276,19 @@ var cyberDojo = (function(cd, $) {
 
 	var buildDiffFilenameHandlers = function(diffs) {
 	  // Builds the diff filename click handlers for a given kata-id,
-	  // given animal-name, and given traffic-light was-tag/now-tag numbers.
+	  // given animal-name, and given traffic-light was-tag/now-tag.
 	  // Clicking on the filename brings it into view by hiding the
 	  // previously selected file and showing the selected one.
 	  //
-	  // The first time the filename for a file with one or more
-	  // diff-sections is clicked its diff-section is scrolled into view.
-	  //
-	  // Subsequent times if you click on the filename you will _not_ get
-	  // an autoscroll. This is so that the scrollPos of a diff that has
-	  // been manually scrolled is retained.
-	  //
-	  // However, if filename X is open and you reclick on filename X
-	  // then you _will_ get an autoscroll to the _next_ diff-section in that
-	  // diff (which will cycle round).
+	  // The first time a filename X with one or more diff-sections is
+	  // clicked it is opened and its first diff-section is scrolled
+	  // into view. If you open a different file and then reclick
+	  // filename X you will _not_ get an autoscroll to the next diff.
+	  // This is so the scrollPos of a file is retained.
+	  // Eg it could be been manually scrolled.
+	  // However, if filename X is already open and you reclick
+	  // on filename X then you _will_ get an autoscroll to the
+	  // _next_ diff-section in that diff (which will cycle round).
 
 	  var previousFilenameNode;
 	  var alreadyOpened = [ ];
