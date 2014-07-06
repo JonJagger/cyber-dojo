@@ -4,7 +4,7 @@ require_relative '../cyberdojo_test_base'
 
 class GitDiffBuilderTests < CyberDojoTestBase
 
-  test 'chunk with space in its filename' do
+  test 'chunk with a space in its filename' do
 
     lines =
     [

@@ -79,8 +79,8 @@ module GitDiff
   def most_changed_lines_file_id(diffs, current_filename)
     # Prefers to stay on the same file if it still exists
     # in the now_tag (it could have been deleted or renamed)
-    # and has at least one red or green change.
-    # Otherwise prefers file with most changes.
+    # and has at least one change.
+    # Otherwise prefers the file with the most changes.
     # If nothing has changed prefers the largest file
     # that isn't output or instructions (this is likely to
     # be a test file).
@@ -154,7 +154,7 @@ module GitDiff
   end
 
   def diff_htmlify_line_numbers(n)
-    result = ""
+    result = ''
     if n[:type] != :section
       result =
         "<#{n[:type]}>" +

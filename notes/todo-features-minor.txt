@@ -40,6 +40,14 @@ Another possible metric is graph plotting correlation
 between traffic-light-colour and line-diff-count.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+diff-dialog
+  selection of most-changed-filename prefers to stay
+  on the same file if there are no changes. Is this
+  a good idea if the file is empty?
+  Also, what if the selected filename is output?
+  Should you prefer moving away from that?
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TEST-BUTTON
   Should there be a 15-second timeout on the browser too.
   Sometimes the red/green yin-yang spinner just hangs there.
