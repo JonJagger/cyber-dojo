@@ -11,16 +11,10 @@ test/integration/git_diff_test_view
     helpers added to base?
 Also needed in test/app_lib/test_git_diff_html
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/app_lib/test_git_diff_builder
+  test/app_lib/test_git_diff_builder
   GitDiff::GitDiffParser.new(lines).parse_one
     should be
   GitDiff::Parser.new(lines).parse_one
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/integration/git_diff_test_view
- content =
-   '<same>&thinsp;</same>'
-is not ideal as it means the contents of
-the <xml> are not identical to the contents of the file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Should tags[n].diff(m) return a fully data structure.
 Viz should GitDiffParser stuff go inside tags[n].diff(m)

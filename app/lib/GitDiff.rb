@@ -146,6 +146,8 @@ module GitDiff
       result = "<span id='#{id}_section_#{n[:index]}'></span>"
     else
       line = CGI.escapeHTML(n[:line])
+      # thin-space prevents empty lines from collapsing
+      # in the diff-dialog view.
       line = '&thinsp;' if line == ''
       result =
         "<#{n[:type]}>" +
