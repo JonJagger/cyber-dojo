@@ -1,61 +1,4 @@
 
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-run_all.sh summary can be improved
-  o) use ruby instead of sh
-  o) pull figures and present
-      pass/fail count totals for all tests
-      timings for all tests
-
-   ======lib======
-   Finished tests in 5.068048s, 13.2201 tests/s, 77.9393 assertions/s.
-   67 tests, 395 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 84.49%
-   ======integration======
-   Finished tests in 14.430787s, 1.5938 tests/s, 4.0192 assertions/s.
-   23 tests, 58 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 100.0%
-   ======app_controllers======
-   Finished tests in 49.000525s, 0.7347 tests/s, 4.3265 assertions/s.
-   36 tests, 212 assertions, 0 failures, 0 errors, 0 skips
-   Coverage = 94.06%
-
-BECOMES
-                   took(s)  tests/s  asserts/s  coverage(%)
-   -----------------------------------------------------------
-   lib              5.06    13.22    77.93       84.49
-   integration     14.43     1.59     4.01      100.00
-   app/controllers 49.00     0.73     4.32       94.06
-   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-   TOTAL           67.34     7.34    64.34
-   -----------------------------------------------------------
-
-
-                    #tests  #assertions  #failures #errors #skips
-   -----------------------------------------------------------
-   lib              67      395          0         0       0
-   integration      23       58          0         0       0
-   app/controllers  36      212          0         0       0
-   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-   TOTAL           126      665          0         0       0
-   -----------------------------------------------------------
-
-OR MAYBE
-
-                 #t  #ass    #f/e/s  took(s)     t/s    ass/s  cov(%)
----------------------------------------------------------------------
-app/helpers      12    30   0  0  0     0.07  160.97   402.41  100.00
-app/lib         226  3555   0  0  0     2.04  111.51  1738.82   93.44
-app/model        89   238   0  0  0     0.38  271.24  1027.61   98.92
-lib              67   395   0  0  0     5.06   13.22    77.93   84.49
-integration      23    58   0  0  0    14.43    1.59     4.01  100.00
-app/controllers  36   212   0  0  0    49.00    0.73     4.32   94.06
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TOTAL           453  4488   0  0  0    71.34   97.34   364.34
----------------------------------------------------------------------
-
-
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
@@ -102,11 +45,8 @@ Kata.start_avatar
 Approval is hard-wired to hard-disk.
 Move it to use OsDisk from externals.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Add parameter to language globbing the file pattern
-to add/remove in post-test event.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-indented HERE documents
-eg test/integration/test_git_diff_view.rb
+Add manifest parameter to app/model/Language.rb globbing
+the file pattern to add/remove in post-test event?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 forker_controller does this
   if !is_tag || tag <= 0 || tag > avatar.lights.count

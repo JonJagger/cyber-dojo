@@ -13,13 +13,4 @@ done
 echo
 echo
 
-# summary
-for module in ${modules[@]}
-do
-    echo "======$module======"
-    tail -5 $module/log.tmp | head -1
-    tail -3 $module/log.tmp | head -1
-    tail -1 $module/log.tmp
-    rm -rf $module/log.tmp
-done
-echo
+./print_summary.rb
