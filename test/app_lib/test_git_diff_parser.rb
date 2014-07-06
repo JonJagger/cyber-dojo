@@ -6,14 +6,14 @@ class GitDiffParserTests < CyberDojoTestBase
 
   include GitDiff
 
-  test "lines are split" do
-    lines = [ "a", "b" ]
+  test 'lines are split' do
+    lines = [ 'a', 'b' ]
     assert_equal lines, GitDiffParser.new(lines.join("\n")).lines
   end
 
   #-----------------------------------------------------
 
-  test "parse diff for filename ending in tab removes the tab" do
+  test 'parse diff for filename ending in tab removes the tab' do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd',
       GitDiffParser.new(was_line + "\t").parse_was_filename
@@ -21,7 +21,7 @@ class GitDiffParserTests < CyberDojoTestBase
 
   #-----------------------------------------------------
 
-  test "parse diff for filename with space in its name" do
+  test 'parse diff for filename with space in its name' do
     was_line =  '--- a/sandbox/ab cd'
     assert_equal 'a/sandbox/ab cd',
       GitDiffParser.new(was_line).parse_was_filename
@@ -29,7 +29,7 @@ class GitDiffParserTests < CyberDojoTestBase
 
   #-----------------------------------------------------
 
-  test "parse diff for deleted file" do
+  test 'parse diff for deleted file' do
     was_line =  '--- a/sandbox/xxx'
     assert_equal 'a/sandbox/xxx',
       GitDiffParser.new(was_line).parse_was_filename
@@ -41,7 +41,7 @@ class GitDiffParserTests < CyberDojoTestBase
 
   #-----------------------------------------------------
 
-  test "parse diff for new file" do
+  test 'parse diff for new file' do
     was_line =  '--- /dev/null'
     assert_equal '/dev/null',
       GitDiffParser.new(was_line).parse_was_filename
@@ -53,26 +53,10 @@ class GitDiffParserTests < CyberDojoTestBase
 
   #-----------------------------------------------------
 
-  test "here processing" do
-    # backslash characters still have to be escaped in a here string
-line = <<HERE
-"\\\\was"
-HERE
-    assert_equal '"',  line[0].chr
-    assert_equal "\\", line[1].chr
-    assert_equal "\\", line[2].chr
-    assert_equal "w",  line[3].chr
-    assert_equal "a",  line[4].chr
-    assert_equal "s",  line[5].chr
-    assert_equal '"',  line[6].chr
-  end
-
-  #-----------------------------------------------------
-
-  test "parse diff quoted filename with backslash" do
-    filename = "\"\\\\was\""
-    expected = "\\was"
-    actual = GitDiffParser.new("").unescaped(filename)
+  test 'parse diff containing quoted filename with backslash' do
+    filename = '"\\\\was"'
+    expected = '\\was'
+    actual = GitDiffParser.new('').unescaped(filename)
     assert_equal expected, actual
   end
 
@@ -91,39 +75,39 @@ index 21984c7..0000000
 \\ No newline at end of file
 HERE
 
-expected =
-{
-  "a/sandbox/\\was_newfile_FIU" =>   # <------ single backslash
-  {
-    :prefix_lines =>
-    [
-        "diff --git \"a/sandbox/\\\\was_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
-        "deleted file mode 100644",
-        "index 21984c7..0000000",
-    ],
-    :was_filename => "a/sandbox/\\was_newfile_FIU", # <------ single backslash
-    :now_filename => '/dev/null',
-    :chunks       =>
-    [
+    expected =
+    {
+      "a/sandbox/\\was_newfile_FIU" => # <-- single backslash
       {
-        :range =>
-        {
-          :now => { :size => 0, :start_line => 0 },
-          :was => { :size => 1, :start_line => 1 }
-        },
-        :sections =>
+        :prefix_lines =>
+        [
+            "diff --git \"a/sandbox/\\\\was_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
+            'deleted file mode 100644',
+            'index 21984c7..0000000',
+        ],
+        :was_filename => "a/sandbox/\\was_newfile_FIU", # <-- single backslash
+        :now_filename => '/dev/null',
+        :chunks       =>
         [
           {
-            :deleted_lines => [ "Please rename me!"],
-            :added_lines   => [ ],
-            :after_lines   => [ ]
+            :range =>
+            {
+              :now => { :size => 0, :start_line => 0 },
+              :was => { :size => 1, :start_line => 1 }
+            },
+            :sections =>
+            [
+              {
+                :deleted_lines => [ 'Please rename me!' ],
+                :added_lines   => [ ],
+                :after_lines   => [ ]
+              }
+            ],
+            :before_lines => [ ]
           }
-        ],
-        :before_lines => [ ]
+        ]
       }
-    ]
-  }
-}
+    }
 
     parser = GitDiffParser.new(lines)
     actual = parser.parse_all
@@ -133,29 +117,30 @@ expected =
 
   #-----------------------------------------------------
 
-  test "parse diff deleted file" do
+  test 'parse diff deleted file' do
 
-lines = <<HERE
-diff --git a/sandbox/original b/sandbox/original
-deleted file mode 100644
-index e69de29..0000000
-HERE
-
-expected =
-{
-  'a/sandbox/original' =>
-  {
-    :prefix_lines =>
+    lines =
     [
-        "diff --git a/sandbox/original b/sandbox/original",
-        "deleted file mode 100644",
-        "index e69de29..0000000",
-    ],
-    :was_filename => 'a/sandbox/original',
-    :now_filename => '/dev/null',
-    :chunks       => [ ]
-  }
-}
+      'diff --git a/sandbox/original b/sandbox/original',
+      'deleted file mode 100644',
+      'index e69de29..0000000'
+    ].join("\n")
+
+    expected =
+    {
+      'a/sandbox/original' =>
+      {
+        :prefix_lines =>
+        [
+            'diff --git a/sandbox/original b/sandbox/original',
+            'deleted file mode 100644',
+            'index e69de29..0000000',
+        ],
+        :was_filename => 'a/sandbox/original',
+        :now_filename => '/dev/null',
+        :chunks       => [ ]
+      }
+    }
 
     parser = GitDiffParser.new(lines)
     actual = parser.parse_all
