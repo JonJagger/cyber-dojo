@@ -6,21 +6,21 @@ class GitDiffHtmlTests <  CyberDojoTestBase
 
   include GitDiff
 
-  test "mixture with more than 9 lines" do
+  test 'mixture with more than 9 lines' do
     diffed =
     [
-      { :line => "once",              :type => :same,    :number => 1 },
-      { :line => "upon a",            :type => :same,    :number => 2 },
-      { :line => "time",              :type => :same,    :number => 3 },
-      { :line => "IN",                :type => :deleted, :number => 4 },
-      { :line => "in",                :type => :added,   :number => 4 },
-      { :line => "the west",          :type => :same,    :number => 5 },
-      { :line => "Charles Bronson",   :type => :same,    :number => 6 },
-      { :line => "Jason Robarts",     :type => :same,    :number => 7 },
-      { :line => "Henry Fonda",       :type => :same,    :number => 8 },
-      { :line => "Claudia Cardinale", :type => :same,    :number => 9 },
-      { :line => "Sergio Leone",      :type => :added,   :number => 10 },
-      { :line => "Ennio Morricone",   :type => :same,    :number => 11 },
+      { :line => 'once',              :type => :same,    :number => 1 },
+      { :line => 'upon a',            :type => :same,    :number => 2 },
+      { :line => 'time',              :type => :same,    :number => 3 },
+      { :line => 'IN',                :type => :deleted, :number => 4 },
+      { :line => 'in',                :type => :added,   :number => 4 },
+      { :line => 'the west',          :type => :same,    :number => 5 },
+      { :line => 'Charles Bronson',   :type => :same,    :number => 6 },
+      { :line => 'Jason Robarts',     :type => :same,    :number => 7 },
+      { :line => 'Henry Fonda',       :type => :same,    :number => 8 },
+      { :line => 'Claudia Cardinale', :type => :same,    :number => 9 },
+      { :line => 'Sergio Leone',      :type => :added,   :number => 10 },
+      { :line => 'Ennio Morricone',   :type => :same,    :number => 11 },
     ]
     expected =
     [
@@ -60,7 +60,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "some lines same some lines added some lines deleted" do
+  test 'some lines same some lines added some lines deleted' do
     diffed =
     [
       { :line => "once",     :type => :same,    :number => 1 },
@@ -96,7 +96,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "some lines same some lines added" do
+  test 'some lines same some lines added' do
     diffed =
     [
       { :line => "once",     :type => :same, :number => 1 },
@@ -129,7 +129,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "all lines same" do
+  test 'all lines same' do
     diffed =
     [
       { :line => "once",        :type => :same, :number => 1 },
@@ -140,19 +140,19 @@ class GitDiffHtmlTests <  CyberDojoTestBase
 
     expected =
     [
-        "<same>once</same>",
-        "<same>upon a</same>",
-        "<same>time</same>",
-        "<same>in the west</same>"
+        '<same>once</same>',
+        '<same>upon a</same>',
+        '<same>time</same>',
+        '<same>in the west</same>'
     ].join
     assert_equal expected, git_diff_html_file('ennio', diffed)
 
     expected =
     [
-        "<same><ln>1</ln></same>",
-        "<same><ln>2</ln></same>",
-        "<same><ln>3</ln></same>",
-        "<same><ln>4</ln></same>"
+        '<same><ln>1</ln></same>',
+        '<same><ln>2</ln></same>',
+        '<same><ln>3</ln></same>',
+        '<same><ln>4</ln></same>'
     ].join
     assert_equal expected, git_diff_html_line_numbers(diffed)
 
