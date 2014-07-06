@@ -755,34 +755,30 @@ HERE
 
   #-----------------------------------------------------
 
-  test "find copies harder finds a rename" do
-lines = <<HERE
-diff --git a/sandbox/oldname b/sandbox/newname
-similarity index 99%
-rename from sandbox/oldname
-rename to sandbox/newname
-index afcb4df..c0f407c 100644
-HERE
+  test 'find copies harder finds a rename' do
 
-    expected =
-      [
-        "diff --git a/sandbox/oldname b/sandbox/newname",
-        "similarity index 99%",
-        "rename from sandbox/oldname",
-        "rename to sandbox/newname",
-        "index afcb4df..c0f407c 100644"
-      ]
-    assert_equal expected,
-      GitDiffParser.new(lines).parse_prefix_lines
+    lines =
+    [
+      'diff --git a/sandbox/oldname b/sandbox/newname',
+      'similarity index 99%',
+      'rename from sandbox/oldname',
+      'rename to sandbox/newname',
+      'index afcb4df..c0f407c 100644'
+    ]
+
+    assert_equal lines,
+      GitDiffParser.new(lines.join("\n")).parse_prefix_lines
   end
 
   #-----------------------------------------------------
 
-  test "no deleted line" do
-lines = <<HERE
-+p Timw.now
-+p Time.now
-HERE
+  test 'not an deleted line' do
+
+    lines =
+    [
+      '+p Timw.now',
+      '+p Time.now'
+    ].join("\n")
 
     expected = [ ]
     assert_equal expected,
@@ -791,11 +787,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "no added line" do
-lines = <<HERE
- p Timw.now
- p Time.now
-HERE
+  test 'not an added line' do
+
+    lines =
+    [
+      ' p Timw.now',
+      ' p Time.now'
+    ].join("\n")
 
     expected = [ ]
     assert_equal expected,
@@ -804,11 +802,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "single deleted line" do
-lines = <<HERE
--p Timw.now
-+p Time.now
-HERE
+  test 'single deleted line' do
+
+    lines =
+    [
+      '-p Timw.now',
+      '+p Time.now'
+    ].join("\n")
 
     expected =
       [
@@ -820,11 +820,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "single added line" do
-lines = <<HERE
-+p Time.now
- common line
-HERE
+  test 'single added line' do
+
+    lines =
+    [
+    '+p Time.now',
+    ' common line'
+    ].join("\n")
 
     expected =
       [
@@ -836,11 +838,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "single deleted line with following newline at eof" do
-lines = <<HERE
--p Timw.now
-\\ No newline at end of file'
-HERE
+  test 'single deleted line with trailing newline-at-eof' do
+
+    lines =
+    [
+      '-p Timw.now',
+      "\\ No newline at end of file'"
+    ].join("\n")
 
     expected =
       [
@@ -852,11 +856,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "single added line with following newline at eof" do
-lines = <<HERE
-+p Timw.now
-\\ No newline at end of file'
-HERE
+  test 'single added line with trailing newline-at-eof' do
+
+    lines =
+    [
+      '+p Timw.now',
+      "\\ No newline at end of file'"
+    ].join("\n")
 
     expected =
       [
@@ -868,11 +874,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "two deleted lines" do
-lines = <<HERE
--p Timw.now
--p Time.now
-HERE
+  test 'two deleted lines' do
+
+    lines =
+    [
+      '-p Timw.now',
+      '-p Time.now'
+    ].join("\n")
 
     expected =
       [
@@ -885,11 +893,13 @@ HERE
 
   #-----------------------------------------------------
 
-  test "two added lines" do
-lines = <<HERE
-+p Timw.now
-+p Time.now
-HERE
+  test 'two added lines' do
+
+    lines =
+    [
+      '+p Timw.now',
+      '+p Time.now'
+    ].join("\n")
 
     expected =
       [
@@ -902,12 +912,14 @@ HERE
 
   #-----------------------------------------------------
 
-  test "two deleted lines with following newline at eof" do
-lines = <<HERE
--p Timw.now
--p Time.now
-\\ No newline at end of file
-HERE
+  test 'two deleted lines with trailing newline-at-eof' do
+
+    lines =
+    [
+      '-p Timw.now',
+      '-p Time.now',
+      "\\ No newline at end of file"
+    ].join("\n")
 
     expected =
       [
@@ -920,12 +932,14 @@ HERE
 
   #-----------------------------------------------------
 
-  test "two added lines with following newline at eof" do
-lines = <<HERE
-+p Timw.now
-+p Time.now
-\\ No newline at end of file
-HERE
+  test 'two added lines with trailing newline-at-eof' do
+
+    lines =
+    [
+      '+p Timw.now',
+      '+p Time.now',
+      "\\ No newline at end of file"
+    ].join("\n")
 
     expected =
       [
