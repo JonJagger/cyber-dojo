@@ -4,7 +4,7 @@ require_relative '../cyberdojo_test_base'
 
 class GitDiffBuilderTests < CyberDojoTestBase
 
-  test 'build chunk with space in its filename' do
+  test 'chunk with space in its filename' do
 
     lines =
     [
@@ -71,7 +71,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build chunk with defaulted now line info' do
+  test 'chunk with defaulted now line info' do
 
     lines =
     [
@@ -141,7 +141,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build two chunks with leading and trailing same lines ' +
+  test 'two chunks with leading and trailing same lines ' +
        'and no newline at eof' do
 
     diff_lines =
@@ -263,7 +263,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build two chunks first and last lines change ' +
+  test 'two chunks first and last lines change ' +
        'and are 7 lines apart' do
     # diffs need to be 7 lines apart not to be merged
     # into contiguous sections in one chunk
@@ -374,7 +374,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build one chunk with two sections ' +
+  test 'one chunk with two sections ' +
        'each with one line added and one line deleted' do
 
     diff_lines =
@@ -469,7 +469,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build one chunk with one section with only lines added' do
+  test 'one chunk with one section with only lines added' do
 
     diff_lines =
     [
@@ -558,7 +558,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build one chunk with one section with only lines deleted' do
+  test 'one chunk with one section with only lines deleted' do
 
     diff_lines =
     [
@@ -644,7 +644,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build one chunk with one section ' +
+  test 'one chunk with one section ' +
        'with more lines deleted than added' do
 
     diff_lines =
@@ -738,7 +738,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build one chunk with one section ' +
+  test 'one chunk with one section ' +
        'with more lines added than deleted' do
 
     diff_lines =
@@ -836,7 +836,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'build one chunk with one section ' +
+  test 'one chunk with one section ' +
        'with one line deleted and one line added' do
 
     diff_lines =
@@ -936,30 +936,6 @@ class GitDiffBuilderTests < CyberDojoTestBase
     ]
     assert_equal expected_source_diff, source_diff
 
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'count added and deleted lines' do
-    diff =
-    [
-      same_line('a', 1),
-      same_line('b', 2),
-      same_line('c', 3),
-      same_line('d', 4),
-      same_line('e', 5),
-      same_line('f', 6),
-      added_line('XX',7),
-      deleted_line('QQ',8),
-      added_line('XX',8),
-      same_line('g', 9),
-      same_line('h', 10),
-      same_line('i', 11),
-      same_line('j', 12),
-      same_line('k', 13)
-    ]
-    assert_equal 2, diff.count { |e| e[:type] == :added   }
-    assert_equal 1, diff.count { |e| e[:type] == :deleted }
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
