@@ -35,7 +35,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
            '<same>Charles Bronson</same>',
            '<same>Jason Robarts</same>',
            '<same>&thinsp;</same>',
-    ].join
+    ]
 
     @expected_line_numbers =
     [
@@ -48,7 +48,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
            "<same><ln>6</ln></same>",
            "<same><ln>7</ln></same>",
            "<same><ln>8</ln></same>",
-    ].join
+    ]
 
     assert_equal_diff_html
 
@@ -71,7 +71,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
            '<same>&thinsp;</same>',
           '<added>&thinsp;</added>',
         '<deleted>&thinsp;</deleted>',
-    ].join
+    ]
 
 
     @expected_line_numbers =
@@ -79,7 +79,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
            "<same><ln>4</ln></same>",
           "<added><ln>5</ln></added>",
         "<deleted><ln>6</ln></deleted>",
-    ].join
+    ]
 
     assert_equal_diff_html
 
@@ -124,7 +124,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
           "<span id='ennio_section_3'></span>",
           '<added>ddd</added>',
         '<deleted>eee</deleted>',
-    ].join
+    ]
 
     @expected_line_numbers =
     [
@@ -140,7 +140,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
            "<same><ln>13</ln></same>",
           "<added><ln>14</ln></added>",
         "<deleted><ln>15</ln></deleted>",
-    ].join
+    ]
 
     assert_equal_diff_html('ennio')
 
@@ -150,10 +150,10 @@ class GitDiffHtmlTests <  CyberDojoTestBase
 
   def assert_equal_diff_html(id = 'unused')
 
-    assert_equal @expected_lines,
+    assert_equal @expected_lines.join,
       git_diff_html_file(id, @diff_lines)
 
-    assert_equal @expected_line_numbers,
+    assert_equal @expected_line_numbers.join,
       git_diff_html_line_numbers(@diff_lines)
   end
 
