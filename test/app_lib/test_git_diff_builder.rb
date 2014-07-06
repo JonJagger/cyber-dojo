@@ -654,16 +654,16 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -3,9 +3,7 @@',
-      ' 3',
-      ' 4',
-      ' 5',
-      '-6',
-      '-7',
-      '-8',
-      '+7a',
-      ' 9',
-      ' 10',
-      ' 11'
+      ' ddd',
+      ' eee',
+      ' fff',
+      '-ggg',
+      '-hhh',
+      '-iii',
+      '+jjj',
+      ' kkk',
+      ' lll',
+      ' mmm'
     ].join("\n")
 
     expected_diff =
@@ -683,13 +683,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 3, :size => 9 },
                 :now => { :start_line => 3, :size => 7 },
               },
-              :before_lines => [ '3', '4', '5' ],
+              :before_lines => [ 'ddd', 'eee', 'fff' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ '6', '7', '8' ],
-                  :added_lines   => [ '7a' ],
-                  :after_lines => [ '9', '10', '11' ]
+                  :deleted_lines => [ 'ggg', 'hhh', 'iii' ],
+                  :added_lines   => [ 'jjj' ],
+                  :after_lines => [ 'kkk', 'lll', 'mmm' ]
                 } # section
               ] # sections
             } # chunk
@@ -699,16 +699,16 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     source_lines =
     [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '7a',
-      '9',
-      '10',
-      '11',
-      '12'
+      'bbb',
+      'ccc',
+      'ddd',
+      'eee',
+      'fff',
+      'jjj',
+      'kkk',
+      'lll',
+      'mmm',
+      'nnn'
     ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
@@ -716,20 +716,20 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      same_line('1', 1),
-      same_line('2', 2),
-      same_line('3', 3),
-      same_line('4', 4),
-      same_line('5', 5),
+      same_line('bbb', 1),
+      same_line('ccc', 2),
+      same_line('ddd', 3),
+      same_line('eee', 4),
+      same_line('fff', 5),
       section(0),
-      deleted_line('6', 6),
-      deleted_line('7', 7),
-      deleted_line('8', 8),
-      added_line('7a', 6),
-      same_line('9', 7),
-      same_line('10', 8),
-      same_line('11', 9),
-      same_line('12', 10)
+      deleted_line('ggg', 6),
+      deleted_line('hhh', 7),
+      deleted_line('iii', 8),
+      added_line('jjj', 6),
+      same_line('kkk', 7),
+      same_line('lll', 8),
+      same_line('mmm', 9),
+      same_line('nnn', 10)
     ]
 
     assert_equal expected_source_diff, source_diff
