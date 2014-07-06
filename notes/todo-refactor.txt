@@ -12,12 +12,6 @@ test/integration/git_diff_test_view
 Also needed in test/app_lib/test_git_diff_html
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_lib/test_git_diff_builder
-  contains a lot of calls like this
-    assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
-  no need to have expected_diff
-  it duplicates git_diff_parser tests elsewhere.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/app_lib/test_git_diff_builder
   GitDiff::GitDiffParser.new(lines).parse_one
     should be
   GitDiff::Parser.new(lines).parse_one

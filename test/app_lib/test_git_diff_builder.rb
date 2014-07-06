@@ -16,12 +16,12 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '@@ -0,0 +1 @@',
       '+Please rename me!',
       '\\ No newline at end of file'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
       'Please rename me!'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -45,12 +45,12 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '@@ -0,0 +1 @@',
       '+aaa',
       '\\ No newline at end of file'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
       'aaa'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -88,7 +88,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' sss',
       ' ttt',
       '\\ No newline at end of file'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -105,7 +105,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'rrr',
       'sss',
       'ttt'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -154,7 +154,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' rrr',
       '-sss',
       '+ttt'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -167,7 +167,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'qqq',
       'rrr',
       'ttt'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -211,7 +211,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' hhh',
       ' iii',
       ' jjj'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -223,7 +223,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'hhh',
       'iii',
       'jjj'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -264,7 +264,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' ggg',
       ' hhh',
       ' iii'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -278,7 +278,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'hhh',
       'iii',
       'jjj'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -317,7 +317,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' ggg',
       ' hhh',
       ' iii'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -329,7 +329,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'hhh',
       'iii',
       'jjj'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -371,7 +371,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' kkk',
       ' lll',
       ' mmm'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -385,7 +385,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'lll',
       'mmm',
       'nnn'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -429,7 +429,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' ggg',
       ' hhh',
       ' iii'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -447,7 +447,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'kkk',
       'lll',
       'mmm'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -492,7 +492,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' ddd',
       ' eee',
       ' fff'
-    ].join("\n")
+    ]
 
     @source_lines =
     [
@@ -509,7 +509,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'fff',
       'ggg',
       'hhh'
-    ].join("\n")
+    ]
 
     @expected =
     [
@@ -536,9 +536,9 @@ class GitDiffBuilderTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def assert_equal_builder
-    diff = GitDiff::GitDiffParser.new(@diff_lines).parse_one
+    diff = GitDiff::GitDiffParser.new(@diff_lines.join("\n")).parse_one
     builder = GitDiff::GitDiffBuilder.new()
-    actual = builder.build(diff, @source_lines.split("\n"))
+    actual = builder.build(diff, @source_lines)
     assert_equal @expected, actual
   end
 
