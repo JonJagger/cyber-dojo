@@ -15,10 +15,10 @@ class GitDiffViewTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "building diff view from git repo with modified file" do
+  test 'building diff view from git repo with modified file' do
+
     language = @dojo.languages['Ruby-installed-and-working']
     exercise = @dojo.exercises['test_Yahtzee']
-    `rm -rf #{@dojo.katas.path}`
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
     visible_files =
@@ -56,94 +56,94 @@ class GitDiffViewTests < CyberDojoTestBase
     visible_files = avatar.tags[now_tag].visible_files
     diff_lines = avatar.tags[was_tag].diff(now_tag)
     diffs = git_diff(diff_lines, visible_files)
-    diffs.delete('output')
 
     expected =
     {
       'untitled.rb' =>
       [
-        { :line => "def answer", :type => :same,    :number => 1 },
+        { :line => 'def answer', :type => :same,    :number => 1 },
         { :type => :section, :index => 0 },
-        { :line => "  42",       :type => :deleted, :number => 2 },
-        { :line => "  54",       :type => :added,   :number => 2 },
-        { :line => "end",        :type => :same,    :number => 3 },
+        { :line => '  42',       :type => :deleted, :number => 2 },
+        { :line => '  54',       :type => :added,   :number => 2 },
+        { :line => 'end',        :type => :same,    :number => 3 },
       ],
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh' => sameify(cyberdojo_sh)
     }
 
+    diffs.delete('output')
     assert_equal expected, diffs
 
     view = git_diff_view(diffs)
     expected_view = [
       {
-        :id => "id_0",
-        :filename => "cyber-dojo.sh",
+        :id => 'id_0',
+        :filename => 'cyber-dojo.sh',
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
-        :content => "<same>ruby test_untitled.rb</same>",
-        :line_numbers => "<same><ln>1</ln></same>"
+        :content => '<same>ruby test_untitled.rb</same>',
+        :line_numbers => '<same><ln>1</ln></same>'
       },
       {
-        :id => "id_1",
-        :filename => "test_untitled.rb",
+        :id => 'id_1',
+        :filename => 'test_untitled.rb',
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
         :content =>
         "<same>require './untitled'</same>" +
         "<same>require 'test/unit'</same>" +
-        "<same>&thinsp;</same>" +
-        "<same>class TestUntitled &lt; Test::Unit::TestCase</same>" +
-        "<same>&thinsp;</same>" +
-        "<same>  def test_simple</same>" +
-        "<same>    assert_equal 9 * 6, answer</same>" +
-        "<same>  end</same>" +
-        "<same>&thinsp;</same>" +
-        "<same>end</same>",
+        '<same>&thinsp;</same>' +
+        '<same>class TestUntitled &lt; Test::Unit::TestCase</same>' +
+        '<same>&thinsp;</same>' +
+        '<same>  def test_simple</same>' +
+        '<same>    assert_equal 9 * 6, answer</same>' +
+        '<same>  end</same>' +
+        '<same>&thinsp;</same>' +
+        '<same>end</same>',
         :line_numbers =>
-        "<same><ln>1</ln></same>" +
-        "<same><ln>2</ln></same>" +
-        "<same><ln>3</ln></same>" +
-        "<same><ln>4</ln></same>" +
-        "<same><ln>5</ln></same>" +
-        "<same><ln>6</ln></same>" +
-        "<same><ln>7</ln></same>" +
-        "<same><ln>8</ln></same>" +
-        "<same><ln>9</ln></same>" +
-        "<same><ln>10</ln></same>"
+        '<same><ln>1</ln></same>' +
+        '<same><ln>2</ln></same>' +
+        '<same><ln>3</ln></same>' +
+        '<same><ln>4</ln></same>' +
+        '<same><ln>5</ln></same>' +
+        '<same><ln>6</ln></same>' +
+        '<same><ln>7</ln></same>' +
+        '<same><ln>8</ln></same>' +
+        '<same><ln>9</ln></same>' +
+        '<same><ln>10</ln></same>'
       },
       {
-        :id => "id_2",
-        :filename => "untitled.rb",
+        :id => 'id_2',
+        :filename => 'untitled.rb',
         :section_count => 1,
         :deleted_line_count => 1,
         :added_line_count => 1,
         :content =>
         "<same>def answer</same>" + "<span id='id_2_section_0'></span>" +
-        "<deleted>  42</deleted>" +
-        "<added>  54</added>" +
-        "<same>end</same>",
+        '<deleted>  42</deleted>' +
+        '<added>  54</added>' +
+        '<same>end</same>',
         :line_numbers =>
-        "<same><ln>1</ln></same>" +
-        "<deleted><ln>2</ln></deleted>" +
-        "<added><ln>2</ln></added>" +
-        "<same><ln>3</ln></same>"
+        '<same><ln>1</ln></same>' +
+        '<deleted><ln>2</ln></deleted>' +
+        '<added><ln>2</ln></added>' +
+        '<same><ln>3</ln></same>'
       }
     ]
 
-    assert_equal expected_view[0], view[0], "0"
-    assert_equal expected_view[1], view[1], "1"
-    assert_equal expected_view[2], view[2], "2"
+    assert_equal expected_view[0], view[0], '0'
+    assert_equal expected_view[1], view[1], '1'
+    assert_equal expected_view[2], view[2], '2'
   end
 
   #-----------------------------------------------
 
-  test "building git diff view from repo with deleted file" do
+  test 'building git diff view from repo with deleted file' do
+
     language = @dojo.languages['Ruby-installed-and-working']
     exercise = @dojo.exercises['test_Yahtzee']
-    `rm -rf #{@dojo.katas.path}`
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
     visible_files =
@@ -195,10 +195,10 @@ class GitDiffViewTests < CyberDojoTestBase
 
   #-----------------------------------------------
 
-  test "only visible files are commited and are seen in diff_lines" do
+  test 'only visible files are commited and are seen in diff_lines' do
+
     language = @dojo.languages['test-Java-JUnit']
     exercise = @dojo.exercises['test_Yahtzee']
-    `rm -rf #{@dojo.katas.path}`
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
@@ -232,41 +232,41 @@ class GitDiffViewTests < CyberDojoTestBase
 
   #-----------------------------------------------
 
-  test "sameify with joined newlines" do
+  test 'sameify with joined newlines' do
     expected =
     [
-      { :line => "once",        :type => :same, :number => 1 },
-      { :line => "upon a",      :type => :same, :number => 2 },
-      { :line => "time",        :type => :same, :number => 3 },
-      { :line => "in the west", :type => :same, :number => 4 },
-      { :line => "",            :type => :same, :number => 5 },
-      { :line => "",            :type => :same, :number => 6 },
+      { :line => 'once',        :type => :same, :number => 1 },
+      { :line => 'upon a',      :type => :same, :number => 2 },
+      { :line => 'time',        :type => :same, :number => 3 },
+      { :line => 'in the west', :type => :same, :number => 4 },
+      { :line => '',            :type => :same, :number => 5 },
+      { :line => '',            :type => :same, :number => 6 },
     ]
     assert_equal expected, sameify(great_great_film + "\n\n")
   end
 
   #-----------------------------------------------
 
-  test "sameify" do
+  test 'sameify' do
     expected =
     [
-      { :line => "once",        :type => :same, :number => 1 },
-      { :line => "upon a",      :type => :same, :number => 2 },
-      { :line => "time",        :type => :same, :number => 3 },
-      { :line => "in the west", :type => :same, :number => 4 },
+      { :line => 'once',        :type => :same, :number => 1 },
+      { :line => 'upon a',      :type => :same, :number => 2 },
+      { :line => 'time',        :type => :same, :number => 3 },
+      { :line => 'in the west', :type => :same, :number => 4 },
     ]
     assert_equal expected, sameify(great_great_film)
   end
 
   #-----------------------------------------------
 
-  test "deleteify" do
+  test 'deleteify' do
     expected =
     [
-      { :line => "once",        :type => :deleted, :number => 1 },
-      { :line => "upon a",      :type => :deleted, :number => 2 },
-      { :line => "time",        :type => :deleted, :number => 3 },
-      { :line => "in the west", :type => :deleted, :number => 4 },
+      { :line => 'once',        :type => :deleted, :number => 1 },
+      { :line => 'upon a',      :type => :deleted, :number => 2 },
+      { :line => 'time',        :type => :deleted, :number => 3 },
+      { :line => 'in the west', :type => :deleted, :number => 4 },
     ]
     assert_equal expected, deleteify(LineSplitter.line_split(great_great_film))
   end
@@ -274,47 +274,48 @@ class GitDiffViewTests < CyberDojoTestBase
   #-----------------------------------------------
 
   def great_great_film
-<<HERE
-once
-upon a
-time
-in the west
-HERE
+    [
+      'once',
+      'upon a',
+      'time',
+      'in the west',
+      ''
+    ].join("\n")
   end
-
+  
   #-----------------------------------------------
 
   def cyberdojo_sh
-<<HERE
-ruby test_untitled.rb
-HERE
+    [
+      'ruby test_untitled.rb'
+    ].join("\n")
   end
 
   #-----------------------------------------------
 
   def test_untitled_rb
-<<HERE
-require './untitled'
-require 'test/unit'
-
-class TestUntitled < Test::Unit::TestCase
-
-  def test_simple
-    assert_equal 9 * 6, answer
-  end
-
-end
-HERE
+    [
+      "require './untitled'",
+      "require 'test/unit'",
+      '',
+      'class TestUntitled < Test::Unit::TestCase',
+      '',
+      '  def test_simple',
+      '    assert_equal 9 * 6, answer',
+      '  end',
+      '',
+      'end'
+    ].join("\n")
   end
 
   #-----------------------------------------------
 
   def untitled_rb
-<<HERE
-def answer
-  42
-end
-HERE
+    [
+      'def answer',
+      '  42',
+      'end'
+    ].join("\n")
   end
 
 end
