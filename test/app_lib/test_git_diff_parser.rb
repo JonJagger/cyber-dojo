@@ -952,28 +952,29 @@ HERE
 
   #-----------------------------------------------------
 
-  test "diff two chunks" do
+  test 'diff two chunks' do
 
-lines = <<HERE
-diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb
-index 4d3ca1b..61e88f0 100644
---- a/sandbox/test_gapper.rb
-+++ b/sandbox/test_gapper.rb
-@@ -9,4 +9,3 @@ class TestGapper < Test::Unit::TestCase
--p Timw.now
-+p Time.now
-\\ No newline at end of file
-@@ -19,4 +19,3 @@ class TestGapper < Test::Unit::TestCase
--q Timw.now
-+q Time.now
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb',
+      'index 4d3ca1b..61e88f0 100644',
+      '--- a/sandbox/test_gapper.rb',
+      '+++ b/sandbox/test_gapper.rb',
+      '@@ -9,4 +9,3 @@ class TestGapper < Test::Unit::TestCase',
+      '-p Timw.now',
+      '+p Time.now',
+      "\\ No newline at end of file",
+      '@@ -19,4 +19,3 @@ class TestGapper < Test::Unit::TestCase',
+      '-q Timw.now',
+      '+q Time.now'
+    ].join("\n")
 
     expected =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb",
-            "index 4d3ca1b..61e88f0 100644"
+            'diff --git a/sandbox/test_gapper.rb b/sandbox/test_gapper.rb',
+            'index 4d3ca1b..61e88f0 100644'
           ],
         :was_filename => 'a/sandbox/test_gapper.rb',
         :now_filename => 'b/sandbox/test_gapper.rb',
@@ -988,8 +989,8 @@ HERE
               :before_lines => [ ],
               :sections     =>
               [
-                { :deleted_lines => [ "p Timw.now" ],
-                  :added_lines   => [ "p Time.now" ],
+                { :deleted_lines => [ 'p Timw.now' ],
+                  :added_lines   => [ 'p Time.now' ],
                   :after_lines   => [ ]
                 }
               ]
@@ -1004,8 +1005,8 @@ HERE
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "q Timw.now" ],
-                  :added_lines   => [ "q Time.now" ],
+                  :deleted_lines => [ 'q Timw.now' ],
+                  :added_lines   => [ 'q Time.now' ],
                   :after_lines   => [ ]
                 }
               ]
@@ -1018,33 +1019,34 @@ HERE
 
   #-----------------------------------------------------
 
-  test "when diffs are one line apart" do
+  test 'when diffs are one line apart' do
 
-lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index 5ed4618..c47ec44 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
-@@ -5,9 +5,9 @@
- 5
- 6
- 7
--8
-+8a
- 9
--10
-+10a
- 11
- 12
- 13
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 5ed4618..c47ec44 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -5,9 +5,9 @@',
+      ' 5',
+      ' 6',
+      ' 7',
+      '-8',
+      '+8a',
+      ' 9',
+      '-10',
+      '+10a',
+      ' 11',
+      ' 12',
+      ' 13'
+    ].join("\n")
 
     expected =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 5ed4618..c47ec44 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index 5ed4618..c47ec44 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -1056,18 +1058,18 @@ HERE
                 :was => { :start_line => 5, :size => 9 },
                 :now => { :start_line => 5, :size => 9 },
               },
-              :before_lines => [ "5", "6", "7" ],
+              :before_lines => [ '5', '6', '7' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "8" ],
-                  :added_lines   => [ "8a" ],
-                  :after_lines   => [ "9" ]
+                  :deleted_lines => [ '8' ],
+                  :added_lines   => [ '8a' ],
+                  :after_lines   => [ '9' ]
                 },
                 {
-                  :deleted_lines => [ "10" ],
-                  :added_lines   => [ "10a" ],
-                  :after_lines   => [ "11", "12", "13" ]
+                  :deleted_lines => [ '10' ],
+                  :added_lines   => [ '10a' ],
+                  :after_lines   => [ '11', '12', '13' ]
                 } # section
               ] # sections
             } # chunk
@@ -1079,34 +1081,35 @@ HERE
 
   #-----------------------------------------------------
 
-  test "when diffs are 2 lines apart" do
+  test 'when diffs are 2 lines apart' do
 
-lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index 5ed4618..aad3f67 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
-@@ -5,10 +5,10 @@
- 5
- 6
- 7
--8
-+8a
- 9
- 10
--11
-+11a
- 12
- 13
- 14
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 5ed4618..aad3f67 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -5,10 +5,10 @@',
+      ' 5',
+      ' 6',
+      ' 7',
+      '-8',
+      '+8a',
+      ' 9',
+      ' 10',
+      '-11',
+      '+11a',
+      ' 12',
+      ' 13',
+      ' 14'
+    ].join("\n")
 
     expected =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 5ed4618..aad3f67 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index 5ed4618..aad3f67 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -1118,18 +1121,18 @@ HERE
                 :was => { :start_line => 5, :size => 10 },
                 :now => { :start_line => 5, :size => 10 },
               },
-              :before_lines => [ "5", "6", "7" ],
+              :before_lines => [ '5', '6', '7' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "8" ],
-                  :added_lines   => [ "8a" ],
-                  :after_lines   => [ "9", "10" ]
+                  :deleted_lines => [ '8' ],
+                  :added_lines   => [ '8a' ],
+                  :after_lines   => [ '9', '10' ]
                 },
                 {
-                  :deleted_lines => [ "11" ],
-                  :added_lines   => [ "11a" ],
-                  :after_lines   => [ "12", "13", "14" ]
+                  :deleted_lines => [ '11' ],
+                  :added_lines   => [ '11a' ],
+                  :after_lines   => [ '12', '13', '14' ]
                 } # section
               ] # sections
             } # chunk
@@ -1141,31 +1144,32 @@ HERE
 
   #-----------------------------------------------------
 
-  test "when diffs are 6 lines apart" do
-    # when there is 1..6 unchanged lines between 2 lines they are merged into one chunk
+  test 'when there is 1..6 unchanged lines between 2 lines' +
+       'they are merged into one chunk' do
 
-lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index 5ed4618..33d0e05 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
-@@ -5,14 +5,14 @@
- 5
- 6
- 7
--8
-+8a
- 9
- 10
- 11
- 12
- 13
- 14
--15
-+15a
- 16
- 17
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 5ed4618..33d0e05 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -5,14 +5,14 @@',
+      ' 5',
+      ' 6',
+      ' 7',
+      '-8',
+      '+8a',
+      ' 9',
+      ' 10',
+      ' 11',
+      ' 12',
+      ' 13',
+      ' 14',
+      '-15',
+      '+15a',
+      ' 16',
+      ' 17'
+    ].join("\n")
 
     expected =
     {
