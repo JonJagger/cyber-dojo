@@ -6,7 +6,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   test 'chunk with a space in its filename' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/file with_space b/sandbox/file with_space',
       'new file mode 100644',
@@ -18,29 +18,25 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'Please rename me!'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       section(0),
       added_line('Please rename me!', 1),
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'chunk with defaulted now line info' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3',
       'index e69de29..2e65efe 100644',
@@ -51,22 +47,18 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'aaa'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       section(0),
       added_line('aaa', 1),
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -74,7 +66,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'two chunks with leading and trailing same lines ' +
        'and no newline at eof' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index b1a30d9..7fa9727 100644',
@@ -98,7 +90,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'aaa',
       'ccc',
@@ -115,7 +107,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'ttt'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('aaa', 1),
       section(0),
@@ -136,11 +128,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('ttt', 13)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -148,7 +136,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'diffs 7 lines apart are not merged ' +
        'into contiguous sections in one chunk' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 0719398..2943489 100644',
@@ -168,7 +156,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '+ttt'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'bbb',
       'ccc',
@@ -181,7 +169,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'ttt'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       section(0),
       deleted_line('aaa', 1),
@@ -198,11 +186,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       added_line('ttt', 9)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -210,7 +194,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'one chunk with two sections ' +
        'each with one line added and one line deleted' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 535d2b0..a173ef1 100644',
@@ -229,7 +213,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' jjj'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'aaa',
       'bbb',
@@ -241,7 +225,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -257,18 +241,14 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('jjj', 8)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'one chunk with one section with only lines added' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 06e567b..59e88aa 100644',
@@ -286,7 +266,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' iii'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'aaa',
       'bbb',
@@ -300,7 +280,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -315,18 +295,14 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('jjj', 10)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   test 'one chunk with one section with only lines deleted' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 0b669b6..a972632 100644',
@@ -343,7 +319,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' iii'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'aaa',
       'bbb',
@@ -355,7 +331,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -370,11 +346,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('jjj', 8)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -382,7 +354,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'one chunk with one section ' +
        'with more lines deleted than added' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 08fe19c..1f8695e 100644',
@@ -401,7 +373,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' mmm'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'bbb',
       'ccc',
@@ -415,7 +387,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'nnn'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('bbb', 1),
       same_line('ccc', 2),
@@ -433,11 +405,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('nnn', 10)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -445,7 +413,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'one chunk with one section ' +
        'with more lines added than deleted' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 8e435da..a787223 100644',
@@ -463,7 +431,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' iii'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'aaa',
       'bbb',
@@ -481,7 +449,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'mmm'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('aaa', 1),
       same_line('bbb', 2),
@@ -501,11 +469,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('mmm',14),
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -513,7 +477,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
   test 'one chunk with one section ' +
        'with one line deleted and one line added' do
 
-    diff_lines =
+    @diff_lines =
     [
       'diff --git a/sandbox/lines b/sandbox/lines',
       'index 5ed4618..aad3f67 100644',
@@ -530,7 +494,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' fff'
     ].join("\n")
 
-    source_lines =
+    @source_lines =
     [
       'zz',
       'yy',
@@ -547,7 +511,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'hhh'
     ].join("\n")
 
-    expected =
+    @expected =
     [
       same_line('zz', 1),
       same_line('yy', 2),
@@ -566,16 +530,16 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('hhh', 13)
     ]
 
-    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
-    actual = builder.build(diff, source_lines.split("\n"))
-    assert_equal expected, actual
-
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def builder
-    GitDiff::GitDiffBuilder.new()
+  def assert_equal_builder
+    diff = GitDiff::GitDiffParser.new(@diff_lines).parse_one
+    builder = GitDiff::GitDiffBuilder.new()
+    actual = builder.build(diff, @source_lines.split("\n"))
+    assert_equal @expected, actual
   end
 
   def same_line(line,number)
