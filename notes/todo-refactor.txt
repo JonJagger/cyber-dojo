@@ -85,15 +85,6 @@ test/integration/git_diff_test_view
 is not ideal as it means the contents of
 the <xml> are not identical to the contents of the file.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-run_test() in test_helper and cyberdojo_test_base
-is not worth having any more.
-Just use avatar.test() and add defaults for the
-time_limit and for time_now
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-make_kata in test_helper and cyberdojo_test_base
-suggests that katas.create_kata()'s api
-should accept the *names* of the language and exercise.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Should tags[n].diff(m) return a fully data structure.
 Viz should GitDiffParser stuff go inside tags[n].diff(m)
 I think yes.
