@@ -62,30 +62,31 @@ class GitDiffParserTests < CyberDojoTestBase
 
   #-----------------------------------------------------
 
-  test "parse diff containing filename with backslash" do
+  test 'parse diff containing filename with backslash' do
 
-lines = <<HERE
-diff --git "a/sandbox/\\\\was_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
-deleted file mode 100644
-index 21984c7..0000000
---- "a/sandbox/\\\\was_newfile_FIU"
-+++ /dev/null
-@@ -1 +0,0 @@
--Please rename me!
-\\ No newline at end of file
-HERE
+    lines =
+    [
+      'diff --git "a/sandbox/\\\\was_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"',
+      'deleted file mode 100644',
+      'index 21984c7..0000000',
+      '--- "a/sandbox/\\\\was_newfile_FIU"',
+      '+++ /dev/null',
+      '@@ -1 +0,0 @@',
+      '-Please rename me!',
+      '\\ No newline at end of file'
+    ].join("\n")
 
     expected =
     {
-      "a/sandbox/\\was_newfile_FIU" => # <-- single backslash
+      'a/sandbox/\\was_newfile_FIU' => # <-- single backslash
       {
         :prefix_lines =>
         [
-            "diff --git \"a/sandbox/\\\\was_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
+            'diff --git "a/sandbox/\\\\was_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"',
             'deleted file mode 100644',
             'index 21984c7..0000000',
         ],
-        :was_filename => "a/sandbox/\\was_newfile_FIU", # <-- single backslash
+        :was_filename => 'a/sandbox/\\was_newfile_FIU', # <-- single backslash
         :now_filename => '/dev/null',
         :chunks       =>
         [
@@ -218,12 +219,13 @@ HERE
 
   test 'parse diff for renamed but unchanged file and newname is quoted' do
 
-lines = <<HERE
-diff --git "a/sandbox/was_\\\\wa s_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
-similarity index 100%
-rename from "sandbox/was_\\\\wa s_newfile_FIU"
-rename to "sandbox/\\\\was_newfile_FIU"
-HERE
+    lines =
+    [
+      'diff --git "a/sandbox/was_\\\\wa s_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"',
+      'similarity index 100%',
+      'rename from "sandbox/was_\\\\wa s_newfile_FIU"',
+      'rename to "sandbox/\\\\was_newfile_FIU"'
+    ].join("\n")
 
     expected =
     {
@@ -231,10 +233,10 @@ HERE
       {
         :prefix_lines =>
         [
-            "diff --git \"a/sandbox/was_\\\\wa s_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
-            "similarity index 100%",
-            "rename from \"sandbox/was_\\\\wa s_newfile_FIU\"",
-            "rename to \"sandbox/\\\\was_newfile_FIU\"",
+            'diff --git "a/sandbox/was_\\\\wa s_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"',
+            'similarity index 100%',
+            'rename from "sandbox/was_\\\\wa s_newfile_FIU"',
+            'rename to "sandbox/\\\\was_newfile_FIU"',
         ],
         :was_filename => 'a/sandbox/was_\\wa s_newfile_FIU', # <-- single backslash
         :now_filename => 'b/sandbox/\\was_newfile_FIU', # <-- single backslash
@@ -1299,13 +1301,13 @@ HERE
       ' {',
       '     CHECK_TRUE(CircularBuffer_IsEmpty(buffer));',
       ' }',
-      "\\ No newline at end of file",
+      '\\ No newline at end of file',
       '+',
       '+TEST(CircularBuffer, NotFullAfterCreation)',
       '+{',
       '+    CHECK_FALSE(CircularBuffer_IsFull(buffer));',
       '+}',
-      "\\ No newline at end of file"
+      '\\ No newline at end of file'
     ].join("\n")
 
     expected =
