@@ -151,20 +151,20 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '--- a/sandbox/lines',
       '+++ b/sandbox/lines',
       '@@ -1,5 +1,5 @@',
-      ' 1',
-      '-2',
-      '+2a',
-      ' 3',
-      ' 4',
-      ' 5',
+      ' aaa',
+      '-bbb',
+      '+ccc',
+      ' ddd',
+      ' eee',
+      ' fff',
       '@@ -8,6 +8,6 @@',
-      ' 8',
-      ' 9',
-      ' 10',
-      '-11',
-      '+11a',
-      ' 12',
-      ' 13',
+      ' nnn',
+      ' ooo',
+      ' ppp',
+      '-qqq',
+      '+rrr',
+      ' sss',
+      ' ttt',
       '\\ No newline at end of file'
     ].join("\n")
 
@@ -185,13 +185,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 1, :size => 5 },
                 :now => { :start_line => 1, :size => 5 },
               },
-              :before_lines => [ '1' ],
+              :before_lines => [ 'aaa' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ '2' ],
-                  :added_lines   => [ '2a' ],
-                  :after_lines => [ '3', '4', '5' ]
+                  :deleted_lines => [ 'bbb' ],
+                  :added_lines   => [ 'ccc' ],
+                  :after_lines => [ 'ddd', 'eee', 'fff' ]
                 }, # section
               ] # sections
             }, # chunk
@@ -201,13 +201,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
                 :was => { :start_line => 8, :size => 6 },
                 :now => { :start_line => 8, :size => 6 },
               },
-              :before_lines => [ '8', '9', '10' ],
+              :before_lines => [ 'nnn', 'ooo', 'ppp' ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ '11' ],
-                  :added_lines   => [ '11a' ],
-                  :after_lines => [ '12', '13' ]
+                  :deleted_lines => [ 'qqq' ],
+                  :added_lines   => [ 'rrr' ],
+                  :after_lines => [ 'sss', 'ttt' ]
                 }, # section
               ] # sections
             }
@@ -218,19 +218,19 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     source_lines =
     [
-      '1',
-      '2a',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11a',
-      '12',
-      '13'
+      'aaa',
+      'ccc',
+      'ddd',
+      'eee',
+      'fff',
+      'ggg',
+      'hhh',
+      'nnn',
+      'ooo',
+      'ppp',
+      'rrr',
+      'sss',
+      'ttt'
     ].join("\n")
 
     builder = GitDiff::GitDiffBuilder.new()
@@ -238,23 +238,23 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
     expected_source_diff =
     [
-      same_line('1', 1),
+      same_line('aaa', 1),
       section(0),
-      deleted_line('2', 2),
-      added_line('2a', 2),
-      same_line('3', 3),
-      same_line('4', 4),
-      same_line('5', 5),
-      same_line('6', 6),
-      same_line('7', 7),
-      same_line('8', 8),
-      same_line('9', 9),
-      same_line('10', 10),
+      deleted_line('bbb', 2),
+      added_line('ccc', 2),
+      same_line('ddd',  3),
+      same_line('eee',  4),
+      same_line('fff',  5),
+      same_line('ggg',  6),
+      same_line('hhh',  7),
+      same_line('nnn',  8),
+      same_line('ooo',  9),
+      same_line('ppp', 10),
       section(1),
-      deleted_line('11', 11),
-      added_line('11a', 11),
-      same_line('12', 12),
-      same_line('13', 13)
+      deleted_line('qqq', 11),
+      added_line('rrr', 11),
+      same_line('sss', 12),
+      same_line('ttt', 13)
     ]
 
     assert_equal expected_source_diff, source_diff
