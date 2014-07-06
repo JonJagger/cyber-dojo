@@ -150,67 +150,60 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse another diff-form of a deleted file" do
+  test 'parse another diff-form of a deleted file' do
 
-lines = <<HERE
-diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb
-deleted file mode 100644
-index 5c4b3ab..0000000
---- a/sandbox/untitled.rb
-+++ /dev/null
-@@ -1,3 +0,0 @@
--def answer
--  42
--end
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb',
+      'deleted file mode 100644',
+      'index 5c4b3ab..0000000',
+      '--- a/sandbox/untitled.rb',
+      '+++ /dev/null',
+      '@@ -1,3 +0,0 @@',
+      '-def answer',
+      '-  42',
+      '-end'
+    ].join("\n")
 
-expected =
-{
-  'a/sandbox/untitled.rb' =>
-  {
-    :prefix_lines =>
-    [
-        "diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb",
-        "deleted file mode 100644",
-        "index 5c4b3ab..0000000",
-    ],
-    :was_filename => 'a/sandbox/untitled.rb',
-    :now_filename => '/dev/null',
-    :chunks =>
-    [
+    expected =
+    {
+      'a/sandbox/untitled.rb' =>
       {
-        :range =>
-        {
-          :was =>
-          {
-            :start_line => 1,
-            :size       => 3
-          },
-          :now =>
-          {
-            :start_line => 0,
-            :size       => 0
-          }
-        },
-        :before_lines => [ ],
-        :sections     =>
+        :prefix_lines =>
+        [
+            'diff --git a/sandbox/untitled.rb b/sandbox/untitled.rb',
+            'deleted file mode 100644',
+            'index 5c4b3ab..0000000',
+        ],
+        :was_filename => 'a/sandbox/untitled.rb',
+        :now_filename => '/dev/null',
+        :chunks =>
         [
           {
-          :deleted_lines => ["def answer", "  42", "end"],
-          :added_lines   => [ ],
-          :after_lines   => [ ]
+            :range =>
+            {
+              :was => { :start_line => 1, :size       => 3 },
+              :now => { :start_line => 0, :size       => 0 }
+            },
+            :before_lines => [ ],
+            :sections     =>
+            [
+              {
+              :deleted_lines => [ 'def answer', '  42', 'end'],
+              :added_lines   => [ ],
+              :after_lines   => [ ]
+              }
+            ]
           }
         ]
       }
-    ]
-  }
-}
+    }
 
     parser = GitDiffParser.new(lines)
     actual = parser.parse_all
     assert_equal expected, actual
 
-    assert_equal ["def answer","  42", "end"],
+    assert_equal [ 'def answer','  42', 'end'],
       actual['a/sandbox/untitled.rb'][:chunks][0][:sections][0][:deleted_lines]
 
     md = %r|^(.)/sandbox/(.*)|.match('a/sandbox/untitled.rb')
@@ -223,7 +216,8 @@ expected =
 
   #-----------------------------------------------------
 
-  test "parse diff for renamed but unchanged file and newname is quoted" do
+  test 'parse diff for renamed but unchanged file and newname is quoted' do
+
 lines = <<HERE
 diff --git "a/sandbox/was_\\\\wa s_newfile_FIU" "b/sandbox/\\\\was_newfile_FIU"
 similarity index 100%
@@ -231,22 +225,23 @@ rename from "sandbox/was_\\\\wa s_newfile_FIU"
 rename to "sandbox/\\\\was_newfile_FIU"
 HERE
 
-expected =
-{
-  'b/sandbox/\\was_newfile_FIU' => # <------ single backslash
-  {
-    :prefix_lines =>
-    [
-        "diff --git \"a/sandbox/was_\\\\wa s_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
-        "similarity index 100%",
-        "rename from \"sandbox/was_\\\\wa s_newfile_FIU\"",
-        "rename to \"sandbox/\\\\was_newfile_FIU\"",
-    ],
-    :was_filename => 'a/sandbox/was_\\wa s_newfile_FIU', # <------ single backslash
-    :now_filename => 'b/sandbox/\\was_newfile_FIU', # <------ single backslash
-    :chunks       => [ ]
-  }
-}
+    expected =
+    {
+      'b/sandbox/\\was_newfile_FIU' => # <-- single backslash
+      {
+        :prefix_lines =>
+        [
+            "diff --git \"a/sandbox/was_\\\\wa s_newfile_FIU\" \"b/sandbox/\\\\was_newfile_FIU\"",
+            "similarity index 100%",
+            "rename from \"sandbox/was_\\\\wa s_newfile_FIU\"",
+            "rename to \"sandbox/\\\\was_newfile_FIU\"",
+        ],
+        :was_filename => 'a/sandbox/was_\\wa s_newfile_FIU', # <-- single backslash
+        :now_filename => 'b/sandbox/\\was_newfile_FIU', # <-- single backslash
+        :chunks       => [ ]
+      }
+    }
+
     parser = GitDiffParser.new(lines)
     actual = parser.parse_all
     assert_equal expected, actual
@@ -255,31 +250,32 @@ expected =
 
   #-----------------------------------------------------
 
-  test "parse diff for renamed but unchanged file" do
+  test 'parse diff for renamed but unchanged file' do
 
-lines = <<HERE
-diff --git a/sandbox/oldname b/sandbox/newname
-similarity index 100%
-rename from sandbox/oldname
-rename to sandbox/newname
-HERE
-
-expected =
-{
-  'b/sandbox/newname' =>
-  {
-    :prefix_lines =>
+    lines =
     [
-        "diff --git a/sandbox/oldname b/sandbox/newname",
-        "similarity index 100%",
-        "rename from sandbox/oldname",
-        "rename to sandbox/newname",
-    ],
-    :was_filename => 'a/sandbox/oldname',
-    :now_filename => 'b/sandbox/newname',
-    :chunks       => [ ]
-  }
-}
+      'diff --git a/sandbox/oldname b/sandbox/newname',
+      'similarity index 100%',
+      'rename from sandbox/oldname',
+      'rename to sandbox/newname'
+    ].join("\n")
+
+    expected =
+    {
+      'b/sandbox/newname' =>
+      {
+        :prefix_lines =>
+        [
+            'diff --git a/sandbox/oldname b/sandbox/newname',
+            'similarity index 100%',
+            'rename from sandbox/oldname',
+            'rename to sandbox/newname',
+        ],
+        :was_filename => 'a/sandbox/oldname',
+        :now_filename => 'b/sandbox/newname',
+        :chunks       => [ ]
+      }
+    }
 
     parser = GitDiffParser.new(lines)
     actual = parser.parse_all
