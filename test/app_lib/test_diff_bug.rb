@@ -240,7 +240,7 @@ class DiffBugTests < CyberDojoTestBase
     assert_equal expected_diffs, actual_diffs
 
     expected_view = { 'xx.rb' => [ ] }
-    actual_view = git_diff_view(diff_lines, visible_files)
+    actual_view = git_diff(diff_lines, visible_files)
     assert_equal expected_view, actual_view
   end
 

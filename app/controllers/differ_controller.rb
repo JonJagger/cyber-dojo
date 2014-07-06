@@ -11,8 +11,8 @@ class DifferController < ApplicationController
 
     visible_files = @avatar.tags[@now_tag].visible_files
     diff_lines = @avatar.tags[@was_tag].diff(@now_tag)
-    diffed_files = git_diff_view(diff_lines, visible_files)
-    @diffs = git_diff_prepare(diffed_files)
+    diffed_files = git_diff(diff_lines, visible_files)
+    @diffs = git_diff_view(diffed_files)
     @ids_and_section_counts = prune(@diffs)
     @current_filename_id = most_changed_lines_file_id(@diffs, @current_filename)
 

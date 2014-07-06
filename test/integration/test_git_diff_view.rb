@@ -55,8 +55,8 @@ class GitDiffViewTests < CyberDojoTestBase
     now_tag = 2
     visible_files = avatar.tags[now_tag].visible_files
     diff_lines = avatar.tags[was_tag].diff(now_tag)
-    view = git_diff_view(diff_lines, visible_files)
-    view.delete('output')
+    diffs = git_diff(diff_lines, visible_files)
+    diffs.delete('output')
 
     expected =
     {
@@ -72,10 +72,10 @@ class GitDiffViewTests < CyberDojoTestBase
       'cyber-dojo.sh' => sameify(cyberdojo_sh)
     }
 
-    assert_equal expected, view
+    assert_equal expected, diffs
 
-    diffs = git_diff_prepare(view)
-    expected_diffs = [
+    view = git_diff_view(diffs)
+    expected_view = [
       {
         :id => "id_0",
         :filename => "cyber-dojo.sh",
@@ -133,9 +133,9 @@ class GitDiffViewTests < CyberDojoTestBase
       }
     ]
 
-    assert_equal expected_diffs[0], diffs[0], "0"
-    assert_equal expected_diffs[1], diffs[1], "1"
-    assert_equal expected_diffs[2], diffs[2], "2"
+    assert_equal expected_view[0], view[0], "0"
+    assert_equal expected_view[1], view[1], "1"
+    assert_equal expected_view[2], view[2], "2"
   end
 
   #-----------------------------------------------
@@ -181,7 +181,7 @@ class GitDiffViewTests < CyberDojoTestBase
     now_tag = 2
     visible_files = avatar.tags[now_tag].visible_files
     diff_lines = avatar.tags[was_tag].diff(now_tag)
-    view = git_diff_view(diff_lines, visible_files)
+    view = git_diff(diff_lines, visible_files)
     view.delete('output')
 
     expected =
@@ -219,7 +219,7 @@ class GitDiffViewTests < CyberDojoTestBase
     now_tag = 1
     visible_files = avatar.tags[now_tag].visible_files
     diff_lines = avatar.tags[was_tag].diff(now_tag)
-    view = git_diff_view(diff_lines, visible_files)
+    view = git_diff(diff_lines, visible_files)
     view.delete('output')
 
     view.keys.each do |filename|

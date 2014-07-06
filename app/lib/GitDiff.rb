@@ -8,7 +8,7 @@ module GitDiff
   # data structure (to build view from) containing diffs
   # for all files, for a given avatar, for a given tag.
 
-  def git_diff_view(diff_lines, visible_files)
+  def git_diff(diff_lines, visible_files)
       view = { }
       diffs = GitDiffParser.new(diff_lines).parse_all
       diffs.each do |sandbox_name,diff|
@@ -113,7 +113,7 @@ module GitDiff
 
   #############################################################
 
-  def git_diff_prepare(diffed_files)
+  def git_diff_view(diffed_files)
     n = 0
     diffs = [ ]
     diffed_files.sort.each do |filename,diff|
