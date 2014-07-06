@@ -39,7 +39,7 @@ class GitDiffViewTests < CyberDojoTestBase
     assert_equal :red, avatar.lights.latest.colour,
                        avatar.tags[1].output
 
-    visible_files['untitled.rb'] = untitled_rb.sub('42', '54')
+    visible_files['untitled.rb'].sub!('42','54')
     delta = {
       :changed => [ 'untitled.rb' ],
       :unchanged => visible_files.keys - [ 'untitled.rb' ],
@@ -228,59 +228,6 @@ class GitDiffViewTests < CyberDojoTestBase
     end
 
     assert_equal view.length, visible_files.length
-  end
-
-  #-----------------------------------------------
-
-  test 'sameify with joined newlines' do
-    expected =
-    [
-      { :line => 'once',        :type => :same, :number => 1 },
-      { :line => 'upon a',      :type => :same, :number => 2 },
-      { :line => 'time',        :type => :same, :number => 3 },
-      { :line => 'in the west', :type => :same, :number => 4 },
-      { :line => '',            :type => :same, :number => 5 },
-      { :line => '',            :type => :same, :number => 6 },
-    ]
-    assert_equal expected, sameify(great_great_film + "\n\n")
-  end
-
-  #-----------------------------------------------
-
-  test 'sameify' do
-    expected =
-    [
-      { :line => 'once',        :type => :same, :number => 1 },
-      { :line => 'upon a',      :type => :same, :number => 2 },
-      { :line => 'time',        :type => :same, :number => 3 },
-      { :line => 'in the west', :type => :same, :number => 4 },
-    ]
-    assert_equal expected, sameify(great_great_film)
-  end
-
-  #-----------------------------------------------
-
-  test 'deleteify' do
-    expected =
-    [
-      { :line => 'once',        :type => :deleted, :number => 1 },
-      { :line => 'upon a',      :type => :deleted, :number => 2 },
-      { :line => 'time',        :type => :deleted, :number => 3 },
-      { :line => 'in the west', :type => :deleted, :number => 4 },
-    ]
-    assert_equal expected, deleteify(LineSplitter.line_split(great_great_film))
-  end
-
-  #-----------------------------------------------
-
-  def great_great_film
-    [
-      'once',
-      'upon a',
-      'time',
-      'in the west',
-      ''
-    ].join("\n")
   end
 
   #-----------------------------------------------
