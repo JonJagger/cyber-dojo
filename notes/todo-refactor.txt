@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_lib/test_git_diff_parser.rb
+has lines which are numbers which is silly; they need to be textized.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
   same_line()
@@ -7,9 +10,6 @@ test/integration/git_diff_test_view
   added_line()
     helpers added to base?
 Also needed in test/app_lib/test_git_diff_html
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-One of the git-test files still has lines which are numbers
-which is just stupid and they need to be textized.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_lib/test_git_diff_builder
   contains a lot of calls like this

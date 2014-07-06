@@ -289,4 +289,10 @@ end
 #
 #  Following this, optionally, is a single line starting with a \ character
 #  as above.
+#
+# http://www.artima.com/weblogs/viewpost.jsp?thread=164293
+# Is a blog entry by Guido van Rossum.
+# He says that in L,S the ,S can be omitted if the chunk size
+# S is 1. So -3 is the same as -3,1
+#
 #--------------------------------------------------------------

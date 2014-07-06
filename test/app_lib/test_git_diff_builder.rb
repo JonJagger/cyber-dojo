@@ -4,9 +4,13 @@ require_relative '../cyberdojo_test_base'
 
 class GitDiffBuilderTests < CyberDojoTestBase
 
+  def builder
+    GitDiff::GitDiffBuilder.new()
+  end
+
   test 'chunk with a space in its filename' do
 
-    lines =
+    diff_lines =
     [
       'diff --git a/sandbox/file with_space b/sandbox/file with_space',
       'new file mode 100644',
@@ -18,46 +22,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    expected_diff =
-    {
-        :prefix_lines =>
-          [
-            'diff --git a/sandbox/file with_space b/sandbox/file with_space',
-            'new file mode 100644',
-            'index 0000000..21984c7',
-          ],
-        :was_filename => '/dev/null',
-        :now_filename => 'b/sandbox/file with_space',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 0, :size => 0 },
-                :now => { :start_line => 1, :size => 1 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ ],
-                  :added_lines   => [ 'Please rename me!' ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    }
-
-    assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
-
     source_lines =
     [
       'Please rename me!'
     ].join("\n")
 
-    builder = GitDiff::GitDiffBuilder.new()
-    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    source_diff = builder.build(diff, source_lines.split("\n"))
 
     expected_source_diff =
     [
@@ -73,7 +44,7 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   test 'chunk with defaulted now line info' do
 
-    lines =
+    diff_lines =
     [
       'diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3',
       'index e69de29..2e65efe 100644',
@@ -84,50 +55,13 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    # http://www.artima.com/weblogs/viewpost.jsp?thread=164293
-    # Is a blog entry by Guido van Rossum.
-    # He says that in L,S the ,S can be omitted if the chunk size
-    # S is 1. So -3 is the same as -3,1
-
-    expected_diff =
-    {
-        :prefix_lines =>
-          [
-            'diff --git a/sandbox/untitled_5G3 b/sandbox/untitled_5G3',
-            'index e69de29..2e65efe 100644'
-          ],
-        :was_filename => 'a/sandbox/untitled_5G3',
-        :now_filename => 'b/sandbox/untitled_5G3',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 0, :size => 0 },
-                :now => { :start_line => 1, :size => 1 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ ],
-                  :added_lines   => [ 'aaa' ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    } # expected
-
-    assert_equal expected_diff, GitDiff::GitDiffParser.new(lines).parse_one
-
     source_lines =
     [
       'aaa'
     ].join("\n")
 
-    builder = GitDiff::GitDiffBuilder.new()
-    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    source_diff = builder.build(diff, source_lines.split("\n"))
 
     expected_source_diff =
     [
@@ -168,54 +102,6 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '\\ No newline at end of file'
     ].join("\n")
 
-    expected_diff =
-    {
-        :prefix_lines =>
-          [
-            'diff --git a/sandbox/lines b/sandbox/lines',
-            'index b1a30d9..7fa9727 100644'
-          ],
-        :was_filename => 'a/sandbox/lines',
-        :now_filename => 'b/sandbox/lines',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 1, :size => 5 },
-                :now => { :start_line => 1, :size => 5 },
-              },
-              :before_lines => [ 'aaa' ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ 'bbb' ],
-                  :added_lines   => [ 'ccc' ],
-                  :after_lines => [ 'ddd', 'eee', 'fff' ]
-                }, # section
-              ] # sections
-            }, # chunk
-            {
-              :range =>
-              {
-                :was => { :start_line => 8, :size => 6 },
-                :now => { :start_line => 8, :size => 6 },
-              },
-              :before_lines => [ 'nnn', 'ooo', 'ppp' ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ 'qqq' ],
-                  :added_lines   => [ 'rrr' ],
-                  :after_lines => [ 'sss', 'ttt' ]
-                }, # section
-              ] # sections
-            }
-          ] # chunks
-    } # expected
-
-    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
-
     source_lines =
     [
       'aaa',
@@ -233,8 +119,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'ttt'
     ].join("\n")
 
-    builder = GitDiff::GitDiffBuilder.new()
-    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    source_diff = builder.build(diff, source_lines.split("\n"))
 
     expected_source_diff =
     [
@@ -263,10 +149,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'two chunks first and last lines change ' +
-       'and are 7 lines apart' do
-    # diffs need to be 7 lines apart not to be merged
-    # into contiguous sections in one chunk
+  test 'diffs 7 lines apart are not merged ' +
+       'into contiguous sections in one chunk' do
 
     diff_lines =
     [
@@ -288,53 +172,6 @@ class GitDiffBuilderTests < CyberDojoTestBase
       '+ttt'
     ].join("\n")
 
-    expected_diff =
-    {
-        :prefix_lines =>
-          [
-            'diff --git a/sandbox/lines b/sandbox/lines',
-            'index 0719398..2943489 100644'
-          ],
-        :was_filename => 'a/sandbox/lines',
-        :now_filename => 'b/sandbox/lines',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 1, :size => 4 },
-                :now => { :start_line => 1, :size => 4 },
-              },
-              :before_lines => [ ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ 'aaa' ],
-                  :added_lines   => [ 'bbb' ],
-                  :after_lines => [ 'ccc', 'ddd', 'eee' ]
-                }, # section
-              ] # sections
-            }, # chunk
-            {
-              :range =>
-              {
-                :was => { :start_line => 6, :size => 4 },
-                :now => { :start_line => 6, :size => 4 },
-              },
-              :before_lines => [ 'ppp', 'qqq', 'rrr' ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ 'sss' ],
-                  :added_lines   => [ 'ttt' ],
-                  :after_lines => [ ]
-                }, # section
-              ] # sections
-            }
-          ] # chunks
-    } # expected
-    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
-
     source_lines =
     [
       'bbb',
@@ -348,8 +185,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'ttt'
     ].join("\n")
 
-    builder = GitDiff::GitDiffBuilder.new()
-    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    source_diff = builder.build(diff, source_lines.split("\n"))
 
     expected_source_diff =
     [
@@ -396,42 +233,6 @@ class GitDiffBuilderTests < CyberDojoTestBase
       ' jjj'
     ].join("\n")
 
-    expected_diff =
-    {
-        :prefix_lines =>
-          [
-            'diff --git a/sandbox/lines b/sandbox/lines',
-            'index 535d2b0..a173ef1 100644'
-          ],
-        :was_filename => 'a/sandbox/lines',
-        :now_filename => 'b/sandbox/lines',
-        :chunks =>
-          [
-            {
-              :range =>
-              {
-                :was => { :start_line => 1, :size => 8 },
-                :now => { :start_line => 1, :size => 8 },
-              },
-              :before_lines => [ 'aaa', 'bbb' ],
-              :sections =>
-              [
-                {
-                  :deleted_lines => [ 'ccc' ],
-                  :added_lines   => [ 'ddd' ],
-                  :after_lines => [ 'eee' ]
-                }, # section
-                {
-                  :deleted_lines => [ 'fff' ],
-                  :added_lines   => [ 'ggg' ],
-                  :after_lines => [ 'hhh', 'iii', 'jjj' ]
-                }, # section
-              ] # sections
-            } # chunk
-          ] # chunks
-    } # expected
-    assert_equal expected_diff, GitDiff::GitDiffParser.new(diff_lines).parse_one
-
     source_lines =
     [
       'aaa',
@@ -444,8 +245,9 @@ class GitDiffBuilderTests < CyberDojoTestBase
       'jjj'
     ].join("\n")
 
-    builder = GitDiff::GitDiffBuilder.new()
-    source_diff = builder.build(expected_diff, source_lines.split("\n"))
+    diff = GitDiff::GitDiffParser.new(diff_lines).parse_one
+    #builder = GitDiff::GitDiffBuilder.new()
+    source_diff = builder.build(diff, source_lines.split("\n"))
 
     expected_source_diff =
     [

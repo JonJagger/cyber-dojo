@@ -1133,7 +1133,8 @@ class GitDiffParserTests < CyberDojoTestBase
 
   #-----------------------------------------------------
 
-  test 'when there is 1..6 unchanged lines between 2 lines' +
+  test 'when there is less than 7 unchanged lines' +
+       'between 2 changed lines ' +
        'they are merged into one chunk' do
 
     lines =
