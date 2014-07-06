@@ -1188,18 +1188,18 @@ HERE
                 :was => { :start_line => 5, :size => 14 },
                 :now => { :start_line => 5, :size => 14 },
               },
-              :before_lines => [ "5", "6", "7" ],
+              :before_lines => [ '5', '6', '7' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "8" ],
-                  :added_lines   => [ "8a" ],
-                  :after_lines   => [ "9", "10", "11", "12", "13", "14" ]
+                  :deleted_lines => [ '8' ],
+                  :added_lines   => [ '8a' ],
+                  :after_lines   => [ '9', '10', '11', '12', '13', '14' ]
                 },
                 {
-                  :deleted_lines => [ "15" ],
-                  :added_lines   => [ "15a" ],
-                  :after_lines   => [ "16", "17" ]
+                  :deleted_lines => [ '15' ],
+                  :added_lines   => [ '15a' ],
+                  :after_lines   => [ '16', '17' ]
                 } # section
               ] # sections
             } # chunk
@@ -1210,41 +1210,41 @@ HERE
 
   #-----------------------------------------------------
 
-  test "when diffs are seven lines apart" do
-    # viz 7 unchanged lines between two changes lines
-    # this creates two chunks.
+  test '7 unchanged lines between two changed lines' +
+       'creates two chunks' do
 
-lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index 5ed4618..e78c888 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
-@@ -5,7 +5,7 @@
- 5
- 6
- 7
--8
-+8a
- 9
- 10
- 11
-@@ -13,7 +13,7 @@
- 13
- 14
- 15
--16
-+16a
- 17
- 18
- 19
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 5ed4618..e78c888 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -5,7 +5,7 @@',
+      ' 5',
+      ' 6',
+      ' 7',
+      '-8',
+      '+8a',
+      ' 9',
+      ' 10',
+      ' 11',
+      '@@ -13,7 +13,7 @@',
+      ' 13',
+      ' 14',
+      ' 15',
+      '-16',
+      '+16a',
+      ' 17',
+      ' 18',
+      ' 19'
+    ].join("\n")
 
     expected =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 5ed4618..e78c888 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index 5ed4618..e78c888 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -1256,13 +1256,13 @@ HERE
                 :was => { :start_line => 5, :size => 7 },
                 :now => { :start_line => 5, :size => 7 },
               },
-              :before_lines => [ "5", "6", "7" ],
+              :before_lines => [ '5', '6', '7' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "8" ],
-                  :added_lines   => [ "8a" ],
-                  :after_lines   => [ "9", "10", "11" ]
+                  :deleted_lines => [ '8' ],
+                  :added_lines   => [ '8a' ],
+                  :after_lines   => [ '9', '10', '11' ]
                 }
               ]
             },
@@ -1272,13 +1272,13 @@ HERE
                 :was => { :start_line => 13, :size => 7 },
                 :now => { :start_line => 13, :size => 7 },
               },
-              :before_lines => [ "13", "14", "15" ],
+              :before_lines => [ '13', '14', '15' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "16" ],
-                  :added_lines   => [ "16a" ],
-                  :after_lines   => [ "17", "18", "19" ]
+                  :deleted_lines => [ '16' ],
+                  :added_lines   => [ '16a' ],
+                  :after_lines   => [ '17', '18', '19' ]
                 } # section
               ] # sections
             } # chunk
@@ -1290,7 +1290,9 @@ HERE
 
   #-----------------------------------------------------
 
-  test "no_newline_at_end_of_file line at end of common section is gobbled" do
+  test 'no-newline-at-end-of-file line at end of ' +
+       'common section is gobbled' do
+
     # James Grenning has built his own cyber-dojo server
     # which he uses for training. He noticed that a file
     # called CircularBufferTests.cpp
@@ -1300,30 +1302,31 @@ HERE
     #   git diff 8 9 sandbox/CircularBufferTests.cpp
     # produced the following output
 
-lines = <<HERE
-diff --git a/sandbox/CircularBufferTest.cpp b/sandbox/CircularBufferTest.cpp
-index 0ddb952..a397f48 100644
---- a/sandbox/CircularBufferTest.cpp
-+++ b/sandbox/CircularBufferTest.cpp
-@@ -35,3 +35,8 @@ TEST(CircularBuffer, EmptyAfterCreation)
- {
-     CHECK_TRUE(CircularBuffer_IsEmpty(buffer));
- }
-\\ No newline at end of file
-+
-+TEST(CircularBuffer, NotFullAfterCreation)
-+{
-+    CHECK_FALSE(CircularBuffer_IsFull(buffer));
-+}
-\\ No newline at end of file
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/CircularBufferTest.cpp b/sandbox/CircularBufferTest.cpp',
+      'index 0ddb952..a397f48 100644',
+      '--- a/sandbox/CircularBufferTest.cpp',
+      '+++ b/sandbox/CircularBufferTest.cpp',
+      '@@ -35,3 +35,8 @@ TEST(CircularBuffer, EmptyAfterCreation)',
+      ' {',
+      '     CHECK_TRUE(CircularBuffer_IsEmpty(buffer));',
+      ' }',
+      "\\ No newline at end of file",
+      '+',
+      '+TEST(CircularBuffer, NotFullAfterCreation)',
+      '+{',
+      '+    CHECK_FALSE(CircularBuffer_IsFull(buffer));',
+      '+}',
+      "\\ No newline at end of file"
+    ].join("\n")
 
     expected =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/CircularBufferTest.cpp b/sandbox/CircularBufferTest.cpp",
-            "index 0ddb952..a397f48 100644"
+            'diff --git a/sandbox/CircularBufferTest.cpp b/sandbox/CircularBufferTest.cpp',
+            'index 0ddb952..a397f48 100644'
           ],
         :was_filename => 'a/sandbox/CircularBufferTest.cpp',
         :now_filename => 'b/sandbox/CircularBufferTest.cpp',
@@ -1337,9 +1340,9 @@ HERE
               },
               :before_lines =>
               [
-                "{",
-                "    CHECK_TRUE(CircularBuffer_IsEmpty(buffer));",
-                "}"
+                '{',
+                '    CHECK_TRUE(CircularBuffer_IsEmpty(buffer));',
+                '}'
               ],
               :sections =>
               [
@@ -1347,11 +1350,11 @@ HERE
                   :deleted_lines => [ ],
                   :added_lines   =>
                   [
-                    "",
-                    "TEST(CircularBuffer, NotFullAfterCreation)",
-                    "{",
-                    "    CHECK_FALSE(CircularBuffer_IsFull(buffer));",
-                    "}"
+                    '',
+                    'TEST(CircularBuffer, NotFullAfterCreation)',
+                    '{',
+                    '    CHECK_FALSE(CircularBuffer_IsFull(buffer));',
+                    '}'
                   ],
                   :after_lines => [ ]
                 }
