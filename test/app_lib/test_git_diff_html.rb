@@ -37,7 +37,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
           "<added>Sergio Leone</added>",
            "<same>Ennio Morricone</same>",
     ].join
-    assert_equal expected, git_diff_html('ennio', diffed)
+    assert_equal expected, git_diff_html_file('ennio', diffed)
 
     expected =
     [
@@ -79,7 +79,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
           "<added>in</added>",
            "<same>the west</same>",
     ].join
-    assert_equal expected, git_diff_html('ennio', diffed)
+    assert_equal expected, git_diff_html_file('ennio', diffed)
 
     expected =
     [
@@ -113,7 +113,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
         "<added>in</added>",
          "<same>the west</same>",
         ].join
-    assert_equal expected, git_diff_html('ennio', diffed)
+    assert_equal expected, git_diff_html_file('ennio', diffed)
 
     expected =
     [
@@ -145,7 +145,7 @@ class GitDiffHtmlTests <  CyberDojoTestBase
         "<same>time</same>",
         "<same>in the west</same>"
     ].join
-    assert_equal expected, git_diff_html('ennio', diffed)
+    assert_equal expected, git_diff_html_file('ennio', diffed)
 
     expected =
     [

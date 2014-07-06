@@ -106,7 +106,7 @@ class GitDiffMostChangedTests < CyberDojoTestBase
   end
 
   def assert_picked
-    id = most_changed_lines_file_id(@diffs, @current_filename)
+    id = most_changed_file_id(@diffs, @current_filename)
     assert_equal @picked[:id], id
   end
 

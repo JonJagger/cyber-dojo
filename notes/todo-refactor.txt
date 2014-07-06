@@ -4,8 +4,6 @@ Should tags[n].diff(m) return a fully data structure.
 Viz should GitDiffParser stuff go inside tags[n].diff(m)
 I think yes.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The GitDiffHtml stuff needs to go into its own helper.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 The GitDiffParser checks for
 \ No newline at end of file
 lines but I think just as lines beginning with - are deleted

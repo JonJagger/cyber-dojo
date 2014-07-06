@@ -73,7 +73,7 @@ module GitDiff
 
   #############################################################
 
-  def most_changed_lines_file_id(diffs, current_filename)
+  def most_changed_file_id(diffs, current_filename)
     # Prefers to stay on the same file if it still exists
     # in the now_tag (it could have been deleted or renamed)
     # and has at least one change.
@@ -125,7 +125,7 @@ module GitDiff
         :section_count      => diff.count { |line| line[:type] == :section },
         :deleted_line_count => diff.count { |line| line[:type] == :deleted },
         :added_line_count   => diff.count { |line| line[:type] == :added   },
-        :content  => git_diff_html(id, diff),
+        :content  => git_diff_html_file(id, diff),
         :line_numbers => git_diff_html_line_numbers(diff)
       }
     end
@@ -134,7 +134,7 @@ module GitDiff
 
   #-----------------------------------------------------------
 
-  def git_diff_html(id, diff)
+  def git_diff_html_file(id, diff)
     lines = diff.map {|n| diff_htmlify(id, n) }.join('')
   end
 
