@@ -287,31 +287,32 @@ HERE
 
   test "parse diff for renamed and changed file" do
 
-lines = <<HERE
-diff --git a/sandbox/instructions b/sandbox/instructions_new
-similarity index 87%
-rename from sandbox/instructions
-rename to sandbox/instructions_new
-index e747436..83ec100 100644
---- a/sandbox/instructions
-+++ b/sandbox/instructions_new
-@@ -6,4 +6,4 @@ For example, the potential anagrams of "biro" are
- biro bior brio broi boir bori
- ibro ibor irbo irob iobr iorb
- rbio rboi ribo riob roib robi
--obir obri oibr oirb orbi orib
-+obir obri oibr oirb orbi oribx
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/instructions b/sandbox/instructions_new',
+      'similarity index 87%',
+      'rename from sandbox/instructions',
+      'rename to sandbox/instructions_new',
+      'index e747436..83ec100 100644',
+      '--- a/sandbox/instructions',
+      '+++ b/sandbox/instructions_new',
+      '@@ -6,4 +6,4 @@ For example, the potential anagrams of "biro" are',
+      ' biro bior brio broi boir bori',
+      ' ibro ibor irbo irob iobr iorb',
+      ' rbio rboi ribo riob roib robi',
+      '-obir obri oibr oirb orbi orib',
+      '+obir obri oibr oirb orbi oribx'
+    ].join("\n")
 
-expected_diff =
+    expected_diff =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/instructions b/sandbox/instructions_new",
-            "similarity index 87%",
-            "rename from sandbox/instructions",
-            "rename to sandbox/instructions_new",
-            "index e747436..83ec100 100644"
+            'diff --git a/sandbox/instructions b/sandbox/instructions_new',
+            'similarity index 87%',
+            'rename from sandbox/instructions',
+            'rename to sandbox/instructions_new',
+            'index e747436..83ec100 100644'
           ],
           :was_filename => 'a/sandbox/instructions',
           :now_filename => 'b/sandbox/instructions_new',
@@ -325,15 +326,15 @@ expected_diff =
               },
               :before_lines =>
                 [
-                  "biro bior brio broi boir bori",
-                  "ibro ibor irbo irob iobr iorb",
-                  "rbio rboi ribo riob roib robi"
+                  'biro bior brio broi boir bori',
+                  'ibro ibor irbo irob iobr iorb',
+                  'rbio rboi ribo riob roib robi'
                 ],
               :sections =>
               [
                 {
-                  :deleted_lines => [ "obir obri oibr oirb orbi orib" ],
-                  :added_lines   => [ "obir obri oibr oirb orbi oribx" ],
+                  :deleted_lines => [ 'obir obri oibr oirb orbi orib' ],
+                  :added_lines   => [ 'obir obri oibr oirb orbi oribx' ],
                   :after_lines   => [ ]
                 }, # section
               ] # sections
@@ -350,44 +351,45 @@ expected_diff =
 
   #-----------------------------------------------------
 
-  test "parse diffs for two files" do
+  test 'parse diffs for two files' do
 
-lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index 896ddd8..2c8d1b8 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
-@@ -1,7 +1,7 @@
- 1
- 2
- 3
--4
-+4a
- 5
- 6
- 7
-diff --git a/sandbox/other b/sandbox/other
-index cf0389a..b28bf03 100644
---- a/sandbox/other
-+++ b/sandbox/other
-@@ -1,6 +1,6 @@
- 1
- 2
--3
--4
-+3a
-+4a
- 5
- 6
-\\ No newline at end of file
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index 896ddd8..2c8d1b8 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -1,7 +1,7 @@',
+      ' 1',
+      ' 2',
+      ' 3',
+      '-4',
+      '+4a',
+      ' 5',
+      ' 6',
+      ' 7',
+      'diff --git a/sandbox/other b/sandbox/other',
+      'index cf0389a..b28bf03 100644',
+      '--- a/sandbox/other',
+      '+++ b/sandbox/other',
+      '@@ -1,6 +1,6 @@',
+      ' 1',
+      ' 2',
+      '-3',
+      '-4',
+      '+3a',
+      '+4a',
+      ' 5',
+      ' 6',
+      "\\ No newline at end of file"
+    ].join("\n")
 
     expected_diff_1 =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index 896ddd8..2c8d1b8 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index 896ddd8..2c8d1b8 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -399,13 +401,13 @@ HERE
                 :was => { :start_line => 1, :size => 7 },
                 :now => { :start_line => 1, :size => 7 },
               },
-              :before_lines => [ "1", "2", "3"],
+              :before_lines => [ '1', '2', '3'],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "4" ],
-                  :added_lines   => [ "4a" ],
-                  :after_lines   => [ "5", "6", "7" ]
+                  :deleted_lines => [ '4' ],
+                  :added_lines   => [ '4a' ],
+                  :after_lines   => [ '5', '6', '7' ]
                 }, # section
               ] # sections
             } # chunk
@@ -416,8 +418,8 @@ HERE
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/other b/sandbox/other",
-            "index cf0389a..b28bf03 100644"
+            'diff --git a/sandbox/other b/sandbox/other',
+            'index cf0389a..b28bf03 100644'
           ],
         :was_filename => 'a/sandbox/other',
         :now_filename => 'b/sandbox/other',
@@ -429,13 +431,13 @@ HERE
                 :was => { :start_line => 1, :size => 6 },
                 :now => { :start_line => 1, :size => 6 },
               },
-              :before_lines => [ "1", "2"],
+              :before_lines => [ '1', '2' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "3", "4" ],
-                  :added_lines   => [ "3a", "4a" ],
-                  :after_lines   => [ "5", "6" ]
+                  :deleted_lines => [ '3', '4' ],
+                  :added_lines   => [ '3a', '4a' ],
+                  :after_lines   => [ '5', '6' ]
                 }, # section
               ] # sections
             } # chunk
@@ -455,8 +457,8 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse range was and now size defaulted" do
-    lines = "@@ -3 +5 @@ suffix"
+  test 'parse range was-size and now-size defaulted' do
+    lines = '@@ -3 +5 @@ suffix'
     expected =
     {
       :was => { :start_line => 3, :size => 1 },
@@ -467,8 +469,8 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse range was size defaulted" do
-    lines = "@@ -3 +5,9 @@ suffix"
+  test 'parse range was-size defaulted' do
+    lines = '@@ -3 +5,9 @@ suffix'
     expected =
     {
       :was => { :start_line => 3, :size => 1 },
@@ -479,8 +481,8 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse range now size defaulted" do
-    lines = "@@ -3,4 +5 @@ suffix"
+  test 'parse range now-size defaulted' do
+    lines = '@@ -3,4 +5 @@ suffix'
     expected =
     {
       :was => { :start_line => 3, :size => 4 },
@@ -491,8 +493,8 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse range nothing defaulted" do
-    lines = "@@ -3,4 +5,6 @@ suffix"
+  test 'parse range nothing defaulted' do
+    lines = '@@ -3,4 +5,6 @@ suffix'
     expected =
     {
       :was => { :start_line => 3, :size => 4 },
@@ -503,7 +505,7 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse no newline at eof false" do
+  test 'parse no-newline-at-eof without leading backslash' do
     lines = ' No newline at eof'
     parser = GitDiffParser.new(lines)
 
@@ -514,7 +516,7 @@ HERE
 
   #-----------------------------------------------------
 
-  test "parse no newline at eof true" do
+  test 'parse no-newline-at-eof with leading backslash' do
     lines = '\\ No newline at end of file'
     parser = GitDiffParser.new(lines)
 
@@ -525,37 +527,38 @@ HERE
 
   #-----------------------------------------------------
 
-  test "two chunks with no newline at end of file" do
+  test 'two chunks with no newline at end of file' do
 
-lines = <<HERE
-diff --git a/sandbox/lines b/sandbox/lines
-index b1a30d9..7fa9727 100644
---- a/sandbox/lines
-+++ b/sandbox/lines
-@@ -1,5 +1,5 @@
- 1
--2
-+2a
- 3
- 4
- 5
-@@ -8,6 +8,6 @@
- 8
- 9
- 10
--11
-+11a
- 12
- 13
-\\ No newline at end of file
-HERE
+    lines =
+    [
+      'diff --git a/sandbox/lines b/sandbox/lines',
+      'index b1a30d9..7fa9727 100644',
+      '--- a/sandbox/lines',
+      '+++ b/sandbox/lines',
+      '@@ -1,5 +1,5 @@',
+      ' 1',
+      '-2',
+      '+2a',
+      ' 3',
+      ' 4',
+      ' 5',
+      '@@ -8,6 +8,6 @@',
+      ' 8',
+      ' 9',
+      ' 10',
+      '-11',
+      '+11a',
+      ' 12',
+      ' 13',
+      "\\ No newline at end of file"
+    ].join("\n")
 
     expected =
     {
         :prefix_lines =>
           [
-            "diff --git a/sandbox/lines b/sandbox/lines",
-            "index b1a30d9..7fa9727 100644"
+            'diff --git a/sandbox/lines b/sandbox/lines',
+            'index b1a30d9..7fa9727 100644'
           ],
         :was_filename => 'a/sandbox/lines',
         :now_filename => 'b/sandbox/lines',
@@ -567,13 +570,13 @@ HERE
                 :was => { :start_line => 1, :size => 5 },
                 :now => { :start_line => 1, :size => 5 },
               },
-              :before_lines => [ "1" ],
+              :before_lines => [ '1' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "2" ],
-                  :added_lines   => [ "2a" ],
-                  :after_lines   => [ "3", "4", "5" ]
+                  :deleted_lines => [ '2' ],
+                  :added_lines   => [ '2a' ],
+                  :after_lines   => [ '3', '4', '5' ]
                 }, # section
               ] # sections
             }, # chunk
@@ -583,13 +586,13 @@ HERE
                 :was => { :start_line => 8, :size => 6 },
                 :now => { :start_line => 8, :size => 6 },
               },
-              :before_lines => [ "8", "9", "10" ],
+              :before_lines => [ '8', '9', '10' ],
               :sections     =>
               [
                 {
-                  :deleted_lines => [ "11" ],
-                  :added_lines   => [ "11a" ],
-                  :after_lines   => [ "12", "13" ]
+                  :deleted_lines => [ '11' ],
+                  :added_lines   => [ '11a' ],
+                  :after_lines   => [ '12', '13' ]
                 }, # section
               ] # sections
             }
@@ -602,15 +605,17 @@ HERE
 
   #-----------------------------------------------------
 
-  test "diff one chunk one section" do
-lines = <<HERE
-@@ -1,4 +1,4 @@
--1
-+1a
- 2
- 3
- 4
-HERE
+  test 'diff one chunk one section' do
+
+    lines =
+    [
+      '@@ -1,4 +1,4 @@',
+      '-1',
+      '+1a',
+      ' 2',
+      ' 3',
+      ' 4'
+    ].join("\n")
 
     expected =
       {
@@ -623,9 +628,9 @@ HERE
         :sections     =>
         [
           {
-            :deleted_lines => [ "1" ],
-            :added_lines   => [ "1a" ],
-            :after_lines   => [ "2", "3", "4" ]
+            :deleted_lines => [ '1' ],
+            :added_lines   => [ '1a' ],
+            :after_lines   => [ '2', '3', '4' ]
           }, # section
         ] # sections
       } # chunk
@@ -636,20 +641,22 @@ HERE
 
   #-----------------------------------------------------
 
-  test "diff one chunk two sections" do
-lines = <<HERE
-@@ -1,8 +1,8 @@
- 1
- 2
--3
-+3a
- 4
--5
-+5a
- 6
- 7
- 8
-HERE
+  test 'diff one chunk two sections' do
+
+    lines =
+    [
+      '@@ -1,8 +1,8 @@',
+      ' 1',
+      ' 2',
+      '-3',
+      '+3a',
+      ' 4',
+      '-5',
+      '+5a',
+      ' 6',
+      ' 7',
+      ' 8'
+    ].join("\n")
 
     expected =
       [
@@ -659,24 +666,23 @@ HERE
             :was => { :start_line => 1, :size => 8 },
             :now => { :start_line => 1, :size => 8 },
           },
-          :before_lines => [ "1", "2" ],
+          :before_lines => [ '1', '2' ],
           :sections     =>
           [
             {
-              :deleted_lines => [ "3" ],
-              :added_lines   => [ "3a" ],
-              :after_lines   => [ "4" ]
+              :deleted_lines => [ '3' ],
+              :added_lines   => [ '3a' ],
+              :after_lines   => [ '4' ]
             }, # section
             {
-              :deleted_lines => [ "5" ],
-              :added_lines   => [ "5a" ],
-              :after_lines   => [ "6", "7", "8" ]
+              :deleted_lines => [ '5' ],
+              :added_lines   => [ '5a' ],
+              :after_lines   => [ '6', '7', '8' ]
             }, # section
           ] # sections
         } # chunk
       ] # chunks
-    assert_equal expected,
-      GitDiffParser.new(lines).parse_chunk_all
+    assert_equal expected, GitDiffParser.new(lines).parse_chunk_all
 
   end
 
