@@ -1,7 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
-  Have three tabs: one for diff, one for fork, one for revert
+  Have three tabs: one for diff, one for fork, one for revert ?
   On test page only show [diff][revert] tabs
   On dashboard only show [diff][fork]   tabs
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -16,7 +16,7 @@ DIFF-REVERT-FORK-DIALOG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   remove obvious and complete duplication. Pass in callback function
-  that does the fork/revert. Not quite that easy an inspection...
+  that does the fork/revert. Not quite that easy on inspection...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   make it look similar to diff-dialog

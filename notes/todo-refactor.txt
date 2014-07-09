@@ -1,5 +1,23 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+make diff-dialog a plain page (non-dialog)?
+This will enable small dialogs for fork failures.
+Issue with this is that it means I cannot (easily)
+collapse the revert/fork into the diff-page. So I will
+need to keep the revert button on the edit-page.
+And only fork will go onto the diff-review page.
+A benefit of making diff-review a page is that it will
+have more space to display a trail of traffic-lights and
+possibly mark on the trail which lights correspond
+to the was-tag and now-tag.
+What about traffic-lights on the edit/test page?
+Do they open a diff-dialog? Perhaps not. Why not have
+just the lights on the dashboard page open a new diff page.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Is there a way that a dashboard can record which
+lights/animals have had some/all of their lights
+diff-reviewed?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Upgrade test server to docker 1.0
 http://askubuntu.com/questions/472412/how-do-i-upgrade-docker
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
@@ -8,6 +26,7 @@ $ sudo apt-get update
 $ sudo apt-get install lxc-docker
 Question
   Do I need to rebuild containers?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I need a basic test for each of the languages under docker.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 traffic-light r/g/b pie code needs a helper and some tests.
@@ -15,6 +34,10 @@ See app/views/dashboard/_team_bulb_counts.html.erb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Avatar.text(delta,visible_files,time_limit,time_now)
+is a bit better as
+Avatar.text(delta,visible_files,time_now,time_limit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages can collapse like Lights did.
 Exercises can collapse like Lights did.

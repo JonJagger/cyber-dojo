@@ -26,10 +26,6 @@ DIFF-REVERT DIALOG
   Only fails to appear on first edit (after pressing << < > >>)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
-  test-failing...
-  test/app_lib/git_diff_parser_tests.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAULT
   katas/34/87780530/hippo/sandbox
   this has a cyber-dojo.sh file with the line
      echo 'Hello' > jj.txt
@@ -40,7 +36,6 @@ FAULT
   sent back to the browser but it is not git added to the sandbox.
   And similarly approval .txt files that are deleted are also
   not git rm'd.
-  Ponder this...
   How about this...
   o) avatar.save()   does disk file commands but *not* git commands
   o) avatar.test()
@@ -59,10 +54,6 @@ FAULT
   If you create a new nested-filenamed (containing 1+ backslash)
   it is saved correctly in the sandbox but not retained in the
   git repo - do a refresh in the browser and you lose the file.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-FAULT
-  You should be able to enter nested filenames in a
-  languages manifest.json
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   When Approval txt file is auto opened after pressing [test]

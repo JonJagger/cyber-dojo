@@ -275,36 +275,48 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var buildDiffFilenameHandlers = function(diffs) {
-	  // Builds the diff filename click handlers for a given kata-id,
-	  // given animal-name, and given traffic-light was-tag/now-tag.
+	  // Builds the diff filename click handlers for a given
+	  // [ kata-id, animal-name, was-tag, now-tag] tuple.
+	  //
 	  // Clicking on the filename brings it into view by hiding the
 	  // previously selected file and showing the selected one.
 	  //
 	  // The first time a filename X with one or more diff-sections is
-	  // clicked it is opened and its first diff-section is scrolled
-	  // into view. If you open a different file and then reclick
-	  // filename X you will _not_ get an autoscroll to the next diff.
-	  // This is so the scrollPos of a file is retained.
-	  // Eg it could be been manually scrolled.
+	  // clicked it is opened and its first diff-section is auto
+	  // scrolled into view. If you open a different file and then reclick
+	  // filename X you will *not* get an autoscroll to the next diff.
+	  // This is so the scrollPos of a file is retained as you move
+	  // from one file to another, manually scrolling.
+	  //
 	  // However, if filename X is already open and you reclick
-	  // on filename X then you _will_ get an autoscroll to the
-	  // _next_ diff-section in that diff (which will cycle round).
+	  // on filename X then you *will* get an autoscroll to the
+	  // *next* diff-section in that diff (which will cycle round).
 
 	  var previousFilenameNode;
 	  var alreadyOpened = [ ];
+
 	  var getFilename = function(node) {
 		return $.trim(node.text());
 	  };
 
+	  var id = function(name) {
+	    return $('[id="' + name + '"]', diffDiv);
+	  };
+
 	  var diffFileContentFor = function(filename) {
-		return cd.id('diff_file_content_for_' + filename);
+		return id('diff_file_content_for_' + filename);
 	  };
 
 	  var diffFileDiv = function(filename) {
-		return cd.id(filename + '_diff_div');
+		return id(filename + '_diff_div');
 	  };
 
-	  var loadFrom = function(filename, filenameNode, id, sectionCount) {
+	  var loadFrom = function(diff) {
+
+		var id = diff.id;
+		var filenameNode = $('#radio_' + id, diffDiv);
+		var filename = getFilename(filenameNode);
+		var sectionCount = diff.section_count;
 
 		var diffSheet = diffFileContentFor(filename);
 		var sectionIndex = 0;
@@ -314,6 +326,7 @@ var cyberDojo = (function(cd, $) {
 		}
 
 		return function() {
+
 		  var reselected =
 			previousFilenameNode !== undefined && getFilename(previousFilenameNode) === filename;
 
@@ -332,6 +345,7 @@ var cyberDojo = (function(cd, $) {
 		    .attr('title', 'Toggle added lines on/off');
 
 		  cd.radioEntrySwitch(previousFilenameNode, filenameNode);
+
 		  if (previousFilenameNode !== undefined) {
 			diffFileDiv(getFilename(previousFilenameNode)).hide();
 		  }
@@ -354,9 +368,8 @@ var cyberDojo = (function(cd, $) {
 	  };
 
 	  $.each(diffs, function(_n, diff) {
-		var filenameNode = $('#radio_' + diff.id);
-		var filename = getFilename(filenameNode);
-		filenameNode.click(loadFrom(filename, filenameNode, diff.id, diff.section_count));
+		var filename = $('#radio_' + diff.id, diffDiv);
+		filename.click(loadFrom(diff));
 	  });
 	};
 
@@ -431,7 +444,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var showFile = function(filenameId) {
-	  $('#radio_' + filenameId).click();
+	  $('#radio_' + filenameId, diffDiv).click();
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -457,6 +470,10 @@ var cyberDojo = (function(cd, $) {
 		close: function() {
 		  closeDiffDialog();
 		}
+	  },
+	  open: function() {
+		cd.pieChart($('.pie', diffDiv));
+		refresh();
 	  }
 	}).on('keydown', function(event) {
 	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
@@ -467,7 +484,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var refresh = function(open) {
+	var refresh = function() {
 	  var cursor = diffLight.css('cursor');
 	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
@@ -479,12 +496,6 @@ var cyberDojo = (function(cd, $) {
 		  current_filename: currentFilename // 51:var currentFilename
 		},
 		function(data) {
-		  diffFilenames.html(makeDiffFilenames(data.diffs));
-		  resetFilenameAddedDeletedLineCountHandlers();
-		  diffContent.html(makeDiffContent(data.diffs));
-          buildDiffFilenameHandlers(data.idsAndSectionCounts);
-          showFile(data.currentFilenameId);
-
 		  resetNavigateButtonHandlers();
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
 		  wasTagNumber.val(wasTag);
@@ -492,9 +503,11 @@ var cyberDojo = (function(cd, $) {
 		  nowTagNumber.val(nowTag);
 		  nowTrafficLight.html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
-		  if (open !== undefined) {
-			open(data);
-		  }
+		  diffFilenames.html(makeDiffFilenames(data.diffs));
+		  resetFilenameAddedDeletedLineCountHandlers();
+		  diffContent.html(makeDiffContent(data.diffs));
+          buildDiffFilenameHandlers(data.idsAndSectionCounts);
+          showFile(data.currentFilenameId);
 		}
 	  ).always(function() {
         diffLight.css('cursor', cursor);
@@ -503,13 +516,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	refresh(function(data) {
-	  // only open after all html-loaded otherwise
-	  // dialog may not center on the page.
-	  diffDialog.dialog('open');
-      cd.pieChart($('.pie', diffDiv));
-      showFile(data.currentFilenameId);
-	});
+    diffDialog.dialog('open');
 
 
   }; // cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag) {
