@@ -4,21 +4,7 @@ require_relative 'model_test_base'
 
 class LightTests < ModelTestBase
 
-  def dummy_avatar
-    Object.new
-  end
-
-  def make_light(rgb,time,n, key='colour')
-    Light.new(dummy_avatar, {
-      key => rgb,
-      'time' => time,
-      'number' => n
-    })
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'colour is converted to symbol' do
+  test 'colour is converted to a symbol' do
     light = make_light('red',[2014,2,15,8,54,6],1)
     assert_equal :red, light.colour
   end
@@ -55,6 +41,20 @@ class LightTests < ModelTestBase
     number = 7
     light = make_light('red',[2014,2,15,8,54,6],number)
     assert_equal number, light.number
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  def dummy_avatar
+    Object.new
+  end
+
+  def make_light(rgb,time,n, key='colour')
+    Light.new(dummy_avatar, {
+      key => rgb,
+      'time' => time,
+      'number' => n
+    })
   end
 
 end

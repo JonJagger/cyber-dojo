@@ -33,7 +33,7 @@ class ForkerControllerTest < IntegrationTest
 
   test 'when id is invalid ' +
        'then fork fails ' +
-       'and the reason is id' do
+       'and the reason given is id' do
     setup_dojo
 
     get 'forker/fork',
@@ -54,7 +54,7 @@ class ForkerControllerTest < IntegrationTest
 
   test 'when language folder no longer exists ' +
        'the fork fails ' +
-       'and the reason is language' do
+       'and the reason given is language' do
     setup_dojo
     language = @dojo.languages['does-not-exist']
     id = '1234512345'
@@ -80,7 +80,7 @@ class ForkerControllerTest < IntegrationTest
 
   test 'when avatar not started ' +
        'the fork fails ' +
-       'and the reason is avatar' do
+       'and the reason given is avatar' do
     setup_dojo
     language = @dojo.languages['Ruby-installed-and-working']
     language.dir.make
@@ -108,7 +108,7 @@ class ForkerControllerTest < IntegrationTest
 
   test 'when tag is bad ' +
        'the fork fails ' +
-       'and the reason is bad tag' do
+       'and the reason given is bad-tag' do
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
     bad_tag_test('-1')      # tag <= 0
@@ -163,9 +163,9 @@ class ForkerControllerTest < IntegrationTest
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'when language has been renamed but new-name-language exists ' +
-       'and id,avatar,tag all ok ' +
+       'and id,avatar,tag are all ok ' +
        'the fork works ' +
-       "and new dojo's id is returned" do
+       "and the new dojo's id is returned" do
     setup_dojo
     id = '1234512345'
     kata = @dojo.katas[id]
@@ -225,9 +225,9 @@ class ForkerControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when id,language,avatar,tag all ok ' +
+  test 'when id,language,avatar,tag are all ok ' +
        'the fork works ' +
-       "and new dojo's id is returned" do
+       "and the new dojo's id is returned" do
     setup_dojo
     language_name = 'Ruby-installed-and-working'
     id = '1234512345'
@@ -235,7 +235,7 @@ class ForkerControllerTest < IntegrationTest
     kata.dir.spy_read('manifest.json', { :language => language_name })
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {
-        'unit_test_framework' => 'fake'
+        'unit_test_framework' => 'ruby_test_unit'
       })
     avatar_name = 'hippo'
     avatar = kata.avatars[avatar_name]
@@ -252,10 +252,11 @@ class ForkerControllerTest < IntegrationTest
       },
       ]))
 
-    manifest = JSON.unparse({
+    visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
       'HikerTest.cs' => 'using NUnit.Framework;'
-    })
+    }
+    manifest = JSON.unparse(visible_files)
     tag = 2
     filename = 'manifest.json'
     @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
@@ -268,12 +269,16 @@ class ForkerControllerTest < IntegrationTest
 
     assert_not_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
-    assert_not_nil json['id'], json.inspect
-    assert_equal 10, json['id'].length
-    assert_not_equal id, json['id']
-    assert @dojo.katas[json['id']].exists?
+    forked_kata_id = json['id']
+    assert_not_nil forked_kata_id, json.inspect
+    assert_equal 10, forked_kata_id.length
+    assert_not_equal id, forked_kata_id
+    forked_kata = @dojo.katas[forked_kata_id]
+    assert forked_kata.exists?
 
-    # TODO: assert new dojo has same settings as one forked from
+    assert_equal kata.language.name, forked_kata.language.name
+    assert_equal kata.exercise.name, forked_kata.exercise.name
+    assert_equal visible_files, forked_kata.visible_files
 
     assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
     @disk.teardown
