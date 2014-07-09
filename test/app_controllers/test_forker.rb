@@ -196,10 +196,11 @@ class ForkerControllerTest < IntegrationTest
       },
       ]))
 
-    manifest = JSON.unparse({
+    visible_files = {
       'Hiker.cs' => 'public class Hiker { }',
       'HikerTest.cs' => 'using NUnit.Framework;'
-    })
+    }
+    manifest = JSON.unparse(visible_files)
     tag = 2
     filename = 'manifest.json'
     @git.spy(avatar.dir.path,'show',"#{tag}:#{filename}",manifest)
@@ -212,12 +213,18 @@ class ForkerControllerTest < IntegrationTest
 
     assert_not_nil json, 'assert_not_nil json'
     assert_equal true, json['forked'], json.inspect
-    assert_not_nil json['id'], json.inspect
-    assert_equal 10, json['id'].length
-    assert_not_equal id, json['id']
-    assert @dojo.katas[json['id']].exists?
 
-    # TODO: assert new dojo has same settings as one forked from
+    forked_kata_id = json['id']
+    assert_not_nil forked_kata_id, json.inspect
+    assert_equal 10, forked_kata_id.length
+    assert_not_equal id, forked_kata_id
+
+    forked_kata = @dojo.katas[forked_kata_id]
+    assert forked_kata.exists?
+
+    assert_equal kata.language.name, forked_kata.language.name
+    assert_equal kata.exercise.name, forked_kata.exercise.name
+    assert_equal visible_files, forked_kata.visible_files
 
     assert_equal({avatar.path => [ ['show', '2:manifest.json']]}, @git.log)
     @disk.teardown
