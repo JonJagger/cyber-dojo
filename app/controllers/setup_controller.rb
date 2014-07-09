@@ -14,10 +14,8 @@ class SetupController < ApplicationController
     @exercises_names.each do |name|
       @instructions[name] = dojo.exercises[name].instructions
     end
-    @selected_language_index =
-      choose_language(@languages_names, params[:id], dojo.katas)
-    @selected_exercise_index =
-      choose_exercise(@exercises_names, params[:id], dojo.katas)
+    @selected_language_index = choose_language(@languages_names, id, dojo.katas)
+    @selected_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)
     @id = id
     @title = 'Create'
   end

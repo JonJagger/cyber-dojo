@@ -2,6 +2,9 @@
 
 require_relative '../test_helper'
 require_relative 'integration_test'
+require 'SpyDisk'
+require 'SpyGit'
+require 'StubTestRunner'
 
 class SetupControllerTest  < IntegrationTest
 
@@ -13,14 +16,57 @@ class SetupControllerTest  < IntegrationTest
   #- - - - - - - - - - - - - - - - - - -
 
 =begin
-  test 'setup/shows language of exercise of kata whose id is passed' do
-    # setup_dojo
-    # create kata
-    # gets its id
+  test 'setup chooses language and exercise of kata ' +
+       'whose 6-char id is passed in URL ' +
+       '(to encourage repetition)' do
+    setup_dojo
 
-    # get 'setup/show', :id => id
+    # setup_languages
+    languages_names = [
+      'Ruby',
+      'C++',
+      'C#',
+      'Java'
+    ]
+    languages_names.each do |language_name|
+      language = @dojo.languages[language_name]
+      language.dir.spy_read('manifest.json', {
+          'tab_size' => 4
+      })
+    end
 
-    # assert json parameters
+    # setup_exercises
+    exercises_names = [
+      'Print-Diamond',
+      'Yatzy',
+      'Roman-Numerals',
+      'Recently-Used-List'
+    ]
+    exercises_names.each do |exercise_name|
+      exercise = @dojo.exercises[exercise_name]
+      exercise.dir.spy_read('instructions', 'your task...')
+    end
+
+    #
+    language_index = 2
+    language_name = languages_names[language_index]
+    exercise_index = 1
+    exercise_name = exercises_names[exercise_index]
+    id = '1234512345'
+    previous_kata = @dojo.katas[id]
+    previous_kata.dir.spy_read('manifest.json', {
+      :language => language_name,
+      :exercise => exercise_name
+    })
+
+    get 'setup/show', :id => id[0...6]
+
+    post 'setup/save', ????
+
+    id = json['id']
+    new_kata = @dojo.katas[id]
+    assert_equal new_kata.language_name, language_name
+    assert_equal new_kata.exercise_name, exercise_name
 
   end
 =end

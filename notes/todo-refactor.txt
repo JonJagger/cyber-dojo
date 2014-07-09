@@ -10,6 +10,9 @@ Question
   Do I need to rebuild containers?
 I need a basic test for each of the languages under docker.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+traffic-light r/g/b pie code needs a helper and some tests.
+See app/views/dashboard/_team_bulb_counts.html.erb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

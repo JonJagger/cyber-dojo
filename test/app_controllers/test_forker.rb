@@ -236,9 +236,9 @@ class ForkerControllerTest < IntegrationTest
        'the fork works ' +
        "and the new dojo's id is returned" do
     setup_dojo
-    language_name = 'Ruby-installed-and-working'
     id = '1234512345'
     kata = @dojo.katas[id]
+    language_name = 'Ruby-installed-and-working'
     kata.dir.spy_read('manifest.json', { :language => language_name })
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {

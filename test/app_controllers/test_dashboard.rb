@@ -87,11 +87,13 @@ class DashboardControllerTest < IntegrationTest
           'cyber-dojo.sh' => -4545645678
         }
     end
+    
     get "dashboard/show",
       :id => id,
       :avatar => avatar_name,
       :was_tag => 1,
       :now_tag => 2
+
     assert_response :success
   end
 
