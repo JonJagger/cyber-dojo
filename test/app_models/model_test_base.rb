@@ -11,12 +11,12 @@ class ModelTestBase < Test::Unit::TestCase
   end
 
   def setup
-    externals = {
+    external_doubles = {
       :disk => @disk = SpyDisk.new,
       :git => @git = SpyGit.new,
       :runner => StubTestRunner.new
     }
-    @dojo = Dojo.new(root_path,externals)
+    @dojo = Dojo.new(root_path,external_doubles)
     @max_duration = 15
   end
 
