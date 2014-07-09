@@ -45,8 +45,7 @@ class Avatar
   end
 
   def lights
-    incs = JSON.parse(clean(dir.read('increments.json')))
-    incs.map { |inc| Light.new(self,inc) }
+    json_lights.map { |inc| Light.new(self,inc) }
   end
 
   #- - - - - - - - - - - - - - -
@@ -69,10 +68,10 @@ class Avatar
     kata.language.after_test(sandbox, visible_files)
     save_manifest(visible_files)
 
-    rags = JSON.parse(clean(dir.read('increments.json')))
+    rags = json_lights
     rag = {
       'colour' => kata.language.colour(output),
-      'time' => now,
+      'time'   => now,
       'number' => rags.length + 1
     }
     rags << rag
@@ -106,6 +105,10 @@ private
 
   def runner
     @externals[:runner]
+  end
+
+  def json_lights
+    @json_lights ||= JSON.parse(clean(dir.read('increments.json')))
   end
 
 end
