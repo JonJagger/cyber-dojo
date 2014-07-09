@@ -20,4 +20,12 @@ class Light
     @hash['number'].to_i
   end
 
+  def to_json
+    {
+      'colour' => colour,
+      'time'   => time,
+      'number' => number
+    }
+  end
+
 end

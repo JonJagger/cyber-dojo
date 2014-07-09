@@ -36,7 +36,7 @@ class GitDiffViewTests < CyberDojoTestBase
     }
     avatar.test(delta, visible_files) # tag 1
 
-    assert_equal :red, avatar.lights.latest.colour,
+    assert_equal :red, avatar.lights[-1].colour,
                        avatar.tags[1].output
 
     visible_files['untitled.rb'].sub!('42','54')
@@ -49,7 +49,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
     avatar.test(delta, visible_files) # tag 2
 
-    assert_equal :green, avatar.lights.latest.colour
+    assert_equal :green, avatar.lights[-1].colour
 
     was_tag = 1
     now_tag = 2
@@ -162,7 +162,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
     avatar.test(delta, visible_files) # tag 1
 
-    assert_equal :red, avatar.lights.latest.colour,
+    assert_equal :red, avatar.lights[-1].colour,
                        avatar.tags[1].output
 
     visible_files.delete('untitled.rb') # will cause amber
@@ -175,7 +175,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
     avatar.test(delta, visible_files) # tag 2
 
-    assert_equal :amber, avatar.lights.latest.colour
+    assert_equal :amber, avatar.lights[-1].colour
 
     was_tag = 1
     now_tag = 2

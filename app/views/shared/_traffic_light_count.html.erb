@@ -1,6 +1,6 @@
 
 <% if lights.count != 0 %>
-    <% colour = lights.latest.colour %>
+    <% colour = lights[-1].colour %>
     <div class="traffic-light-count <%= colour %>"
          data-id="<%= @kata.id %>"
          data-avatar-name="<%= avatar_name %>"

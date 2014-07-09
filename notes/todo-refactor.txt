@@ -10,30 +10,9 @@ Question
   Do I need to rebuild containers?
 I need a basic test for each of the languages under docker.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.lights ... why not do this...
-  def lights
-    Lights.new(self).entries
-  end
-That would remove the .each.entries problems I'm having.
-This means in fact that the whole of the Lights class
-will collapse. All I need is
-  def lights
-    all = JSON.parse(clean(@avatar.dir.read('increments.json')))
-    all.map { |light| Light.new(self,light) }
-  end
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Languages can collapse too.
-Exercises can collapse too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Lights can be based on Tags, but start at 1 not 0.
-Avatar will have
-  def tags
-    incs = JSON.parse(clean(@avatar.dir.read('increments.json')))
-    incs.map { |inc| Tag.new(self,inc) }
-  end
-  def lights
-    tags[1..-1]
-  end
+Languages can collapse like Lights did.
+Exercises can collapse like Lights did.
+Tags      can collapse like Lights did.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom

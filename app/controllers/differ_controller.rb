@@ -17,8 +17,8 @@ class DifferController < ApplicationController
     @current_filename_id = most_changed_file_id(@diffs, @current_filename)
 
 	render :json => {
-	  :wasTrafficLight => @was_traffic_light,
-	  :nowTrafficLight => @now_traffic_light,
+	  :wasTrafficLight => @was_traffic_light.to_json,
+	  :nowTrafficLight => @now_traffic_light.to_json,
 	  :diffs => @diffs,
 	  :idsAndSectionCounts => @ids_and_section_counts,
 	  :currentFilenameId => @current_filename_id
@@ -32,7 +32,7 @@ private
   def setup_parameters
     @kata = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
-    @traffic_lights = @avatar.lights.each.entries
+    @traffic_lights = @avatar.lights
     @min_tag = 0
     @was_tag = params[:was_tag].to_i
     @now_tag = params[:now_tag].to_i

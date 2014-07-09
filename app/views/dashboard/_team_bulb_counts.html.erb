@@ -14,7 +14,7 @@ $(function() {
 <%   lasts  = { :red => 0, :amber => 0, :green => 0 } %>
 <%   counts = { :red => 0, :amber => 0, :green => 0 } %>
 <%   active_avatars.each do |avatar| %>
-<%     lasts[avatar.lights.latest.colour] += 1 %>
+<%     lasts[avatar.lights[-1].colour] += 1 %>
 <%     counts[:red]   += avatar.lights.count{ |light| light.colour == :red } %>
 <%     counts[:amber] += avatar.lights.count{ |light| light.colour == :amber } %>
 <%     counts[:green] += avatar.lights.count{ |light| light.colour == :green } %>

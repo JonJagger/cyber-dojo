@@ -14,10 +14,11 @@ class DifferControllerTest < IntegrationTest
     Thread.current[:runner] = nil
   end
 
-  test "no lines different in any files between successive tags" do
+  test 'no lines different in any files between successive tags' do
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
+
     post '/kata/edit', :id => id, :avatar => avatar_name
     post 'kata/run_tests', # 1
       :id => id,
@@ -82,7 +83,7 @@ class DifferControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "one line different in one file between successive tags" do
+  test 'one line different in one file between successive tags' do
     Thread.current[:runner] = HostTestRunner.new
     id = checked_save_id
     get 'dojo/enter_json', :id => id

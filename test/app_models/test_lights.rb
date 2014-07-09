@@ -45,7 +45,6 @@ class LightsTests < ModelTestBase
     assert_equal_light(Light.new(avatar,red  ), lights[0])
     assert_equal_light(Light.new(avatar,amber), lights[1])
     assert_equal_light(Light.new(avatar,green), lights[2])
-    assert_equal_light(Light.new(avatar,green), lights.latest)
 
     n = 0
     lights.each { |light|
@@ -57,16 +56,10 @@ class LightsTests < ModelTestBase
     assert_equal 3, lights.entries.length
     assert_equal 3, lights.each.entries.length
 
-    # THIS IS ODD...
     eh = lights.entries
     assert_equal 'Array', eh.class.name
     assert_equal 'Light', eh[0].class.name
 
-    eh = lights.each.entries
-    assert_equal 'Array', eh.class.name
-    assert_equal 'Hash',  eh[0].class.name
-
-    #assert_equal lights.entries, lights.each.entries
   end
 
   #- - - - - - - - - - - - - - - - - - -
