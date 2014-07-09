@@ -45,6 +45,20 @@ class LightTests < ModelTestBase
 
   # - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'to_json' do
+    colour = 'red'
+    time = [2014,2,15,8,54,6]
+    number = 7
+    light = make_light(colour,time,number)
+    assert_equal({
+      'colour' => :red,
+      'time' => Time.mktime(*time),
+      'number' => number
+    }, light.to_json)
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
   def dummy_avatar
     Object.new
   end

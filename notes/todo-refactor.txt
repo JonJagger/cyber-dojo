@@ -10,6 +10,9 @@ Question
   Do I need to rebuild containers?
 I need a basic test for each of the languages under docker.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+tests/run_all.sh should save the coverage stats table
+into coverage.txt so it is automatically part of git repo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages can collapse like Lights did.
 Exercises can collapse like Lights did.
 Tags      can collapse like Lights did.
