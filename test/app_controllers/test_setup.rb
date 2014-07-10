@@ -15,43 +15,43 @@ class SetupControllerTest  < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - -
 
-=begin
   test 'setup chooses language and exercise of kata ' +
-       'whose 6-char id is passed in URL ' +
+       'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
     setup_dojo
 
     # setup_languages
     languages_names = [
-      'Ruby',
-      'C++',
-      'C#',
-      'Java'
-    ]
+      'fake-C++',
+      'fake-C#',
+      'fake-Java',
+      'fake-Ruby',
+    ].sort
+
     languages_names.each do |language_name|
       language = @dojo.languages[language_name]
+      assert_equal language.name, language.new_name, 'renamed!'
       language.dir.spy_read('manifest.json', {
-          'tab_size' => 4
+          'unit_test_framework' => 'fake'
       })
     end
 
     # setup_exercises
     exercises_names = [
-      'Print-Diamond',
-      'Yatzy',
-      'Roman-Numerals',
-      'Recently-Used-List'
-    ]
+      'fake-Print-Diamond',
+      'fake-Recently-Used-List',
+      'fake-Roman-Numerals',
+      'fake-Yatzy',
+    ].sort
+
     exercises_names.each do |exercise_name|
       exercise = @dojo.exercises[exercise_name]
+      assert_equal exercise.name, exercise.new_name, 'renamed!'
       exercise.dir.spy_read('instructions', 'your task...')
     end
 
-    #
-    language_index = 2
-    language_name = languages_names[language_index]
-    exercise_index = 1
-    exercise_name = exercises_names[exercise_index]
+    language_name = languages_names[2]
+    exercise_name = exercises_names[1]
     id = '1234512345'
     previous_kata = @dojo.katas[id]
     previous_kata.dir.spy_read('manifest.json', {
@@ -59,17 +59,22 @@ class SetupControllerTest  < IntegrationTest
       :exercise => exercise_name
     })
 
-    get 'setup/show', :id => id[0...6]
+    get 'setup/show', :id => id[0...10]
 
-    post 'setup/save', ????
+    md = /var selected = \$\('#exercise_' \+ (\d+)/.match(html)
+    selected_exercise = exercises_names[md[1].to_i]
+    assert_equal exercise_name, selected_exercise, 'exercise'
 
-    id = json['id']
-    new_kata = @dojo.katas[id]
-    assert_equal new_kata.language_name, language_name
-    assert_equal new_kata.exercise_name, exercise_name
+    md = /var selected = \$\('#language_' \+ (\d+)/.match(html)
+    selected_language = languages_names[md[1].to_i]
+    assert_equal language_name, selected_language, 'language'
 
   end
-=end
+
+  #- - - - - - - - - - - - - - - - - - -
+
+  # another test to verify language/exercise defaul
+  # to that of kata's id when id is only 6 chars long.
 
   #- - - - - - - - - - - - - - - - - - -
 

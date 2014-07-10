@@ -14,6 +14,10 @@ class IntegrationTest  < ActionController::IntegrationTest
     ActiveSupport::JSON.decode @response.body
   end
 
+  def html
+    @response.body
+  end
+
   def checked_save_id
     post 'setup/save',
       :language => 'Ruby-installed-and-working',
