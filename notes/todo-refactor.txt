@@ -22,16 +22,22 @@ Is there a way that a dashboard can record which
 lights/animals have had some/all of their lights
 diff-reviewed?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Upgrade test server to docker 1.0
+Upgrade test server to latest docker 1.1.1
 http://askubuntu.com/questions/472412/how-do-i-upgrade-docker
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-$ sudo sh -c "echo deb https://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
+$ sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
 $ sudo apt-get update
 $ sudo apt-get install lxc-docker
+Done.
 Question
   Do I need to rebuild containers?
+  It appears now. Good.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I need a basic test for each of the languages under docker.
+I think the simplest way to do this is to capture some of
+the output from the test-framework and check that when a
+[test] actually happens for an animal using a docker'd server
+then the captured output is reproduced.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 traffic-light r/g/b pie code needs a helper and some tests.
 See app/views/dashboard/_team_bulb_counts.html.erb
