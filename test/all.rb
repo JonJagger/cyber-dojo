@@ -4,6 +4,7 @@ def app_helpers(filename); rooted('app/helpers',filename); end
 def app_lib(filename);     rooted('app/lib',    filename); end
 def app_models(filename);  rooted('app/models', filename); end
 def lib(filename);         rooted('lib',        filename); end
+def test_lib(filename);    rooted('test/lib',   filename); end
 
 require_relative app_helpers('avatar_image_helper')
 require_relative app_helpers('logo_image_helper')
@@ -37,19 +38,21 @@ require_relative app_models('Light')
 require_relative app_models('Tags')
 require_relative app_models('Tag')
 
-require_relative lib('TestRunner')
 require_relative lib('DockerTestRunner')
-require_relative lib('DummyGit')
 require_relative lib('DummyTestRunner')
-require_relative lib('FakeDisk')
-require_relative lib('Folders')
-require_relative lib('Git')
 require_relative lib('HostTestRunner')
+require_relative lib('TestRunner')
+require_relative lib('Git')
 require_relative lib('OsDisk')
 require_relative lib('OsDir')
-require_relative lib('SpyDir')
-require_relative lib('SpyDisk')
-require_relative lib('SpyGit')
-require_relative lib('StubTestRunner')
+require_relative lib('Folders')
 require_relative lib('TimeNow')
 require_relative lib('UniqueId')
+
+require_relative test_lib('Disk')
+require_relative test_lib('DummyGit')
+require_relative test_lib('FakeDisk')
+require_relative test_lib('SpyDir')
+require_relative test_lib('SpyDisk')
+require_relative test_lib('SpyGit')
+require_relative test_lib('StubTestRunner')

@@ -4,9 +4,6 @@ diff-dialog
   if you press a |< >| button and the button becomes
   disabled the cursor should be reset to not-a-hand.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Move lib classes that are test related under test/
-They are skewing the lib/ coverage stats
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make diff-dialog a plain page (non-dialog)?
 This will enable small dialogs for fork failures.
 Issue with this is that it means I cannot (easily)

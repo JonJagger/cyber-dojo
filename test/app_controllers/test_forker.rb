@@ -2,9 +2,9 @@
 
 require_relative '../test_helper'
 require_relative 'integration_test'
-require 'SpyDisk'
-require 'SpyGit'
-require 'StubTestRunner'
+require '../lib/SpyDisk'
+require '../lib/SpyGit'
+require '../lib/StubTestRunner'
 
 class ForkerControllerTest < IntegrationTest
 
