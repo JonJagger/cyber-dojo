@@ -10,6 +10,7 @@ class TagsTest < ModelTestBase
     tags = avatar.tags
     assert_equal [], tags.entries
     assert_equal 0, tags.count
+
     n = 0
     tags.each { n += 1 }
     assert_equal 0, n
@@ -74,7 +75,6 @@ class TagsTest < ModelTestBase
     assert_not_nil tags[2].light
     assert_not_nil tags[3].light
 
-
     # simulate green [test]
     manifest = JSON.unparse({
       f1='Hiker.cs' => f1_content='public class Hiker { }',
@@ -89,7 +89,6 @@ class TagsTest < ModelTestBase
     assert_equal [f1,f2,f3], visible_files.keys.sort
     assert_equal f1_content, visible_files[f1]
     assert_equal f2_content, visible_files[f2]
-    assert_equal f3_content, tags[n].output
 
   end
 

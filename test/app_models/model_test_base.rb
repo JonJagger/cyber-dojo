@@ -12,8 +12,8 @@ class ModelTestBase < Test::Unit::TestCase
 
   def setup
     external_doubles = {
-      :disk => @disk = SpyDisk.new,
-      :git => @git = SpyGit.new,
+      :disk   => @disk = SpyDisk.new,
+      :git    => @git  = SpyGit.new,
       :runner => StubTestRunner.new
     }
     @dojo = Dojo.new(root_path,external_doubles)

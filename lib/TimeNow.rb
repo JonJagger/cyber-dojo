@@ -1,3 +1,4 @@
+# mixin
 
 module TimeNow
 
@@ -6,4 +7,3 @@ module TimeNow
   end
 
 end
-

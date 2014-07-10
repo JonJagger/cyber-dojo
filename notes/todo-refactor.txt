@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+put coverage of X into X dir.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   if you press a |< >| button and the button becomes
   disabled the cursor should be reset to not-a-hand.
@@ -31,7 +33,7 @@ $ sudo apt-get install lxc-docker
 Done.
 Question
   Do I need to rebuild containers?
-  It appears now. Good.
+  It appears not. Good.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 I need a basic test for each of the languages under docker.
 I think the simplest way to do this is to capture some of
