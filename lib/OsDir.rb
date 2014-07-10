@@ -12,8 +12,8 @@ class OsDir
   attr_reader :path
 
   def each
-    Dir.entries(path).select do |name|
-      yield name
+    Dir.entries(path).each do |name|
+      yield name if block_given?
     end
   end
 

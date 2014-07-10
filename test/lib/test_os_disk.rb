@@ -186,6 +186,38 @@ class OsDiskTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  test 'is_dir?(.) is false' do
+    assert !@disk.is_dir?('.')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'is_dir?(..) is false' do
+    assert !@disk.is_dir?('..')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'is_dir?(not-a-dir) is false' do
+    assert !@disk.is_dir?('blah-blah')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'is_dir?(a-dir) is true' do
+    assert @disk.is_dir?(@dir)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'OsDir.each' do
+    cwd = `pwd`.strip + '/../'
+    dirs = @disk[cwd].each.entries
+    %w( app_helpers app_lib ).each{|dir_name| assert dirs.include?(dir_name)}
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   def check_save_file(filename, content, expected_content, executable = false)
     @disk[@dir].write(filename, content)
     pathed_filename = @dir + filename

@@ -11,6 +11,14 @@ class HostTestRunnerTests < CyberDojoTestBase
     end
   end
 
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'runnable? is true' do
+    assert HostTestRunner.new.runnable?('kermit-the-frog')
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'command executes within timeout and returns command output' do
     sandbox = StubSandbox.new
     command = 'echo "Hello"'
