@@ -485,7 +485,6 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var refresh = function() {
-	  var cursor = diffLight.css('cursor');
 	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
@@ -510,7 +509,7 @@ var cyberDojo = (function(cd, $) {
           showFile(data.currentFilenameId);
 		}
 	  ).always(function() {
-        diffLight.css('cursor', cursor);
+        diffLight.css('cursor', 'pointer');
 	  });
 	};
 

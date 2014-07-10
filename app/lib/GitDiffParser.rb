@@ -275,7 +275,9 @@ end
 # LINE:\ No newline at end of file
 #
 #  Following this, optionally, is a single line starting with a \ character
-#  as above.
+#  as above. I wondered if the format of this was that the initial \
+#  means the line is a comment line and that there could be (are) other
+#  comments, but googling does not indicate this.
 #
 # LINE:+def full_gapper(all_incs, created, seconds_per_gap)
 # LINE:+  gaps = time_gaps(created, latest(all_incs), seconds_per_gap)
@@ -296,3 +298,5 @@ end
 # S is 1. So -3 is the same as -3,1
 #
 #--------------------------------------------------------------
+# http://en.wikipedia.org/wiki/Diff
+# http://www.chemie.fu-berlin.de/chemnet/use/info/diff/diff_3.html

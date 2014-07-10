@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+diff-dialog
+  if you press a |< >| button and the button becomes
+  disabled the cursor should be reset to not-a-hand.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Move lib classes that are test related under test/
+They are skewing the lib/ coverage stats
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make diff-dialog a plain page (non-dialog)?
 This will enable small dialogs for fork failures.
 Issue with this is that it means I cannot (easily)
@@ -35,9 +42,9 @@ See app/views/dashboard/_team_bulb_counts.html.erb
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.text(delta,visible_files,time_limit,time_now)
+Avatar.test(delta,visible_files,time_limit,time_now)
 is a bit better as
-Avatar.text(delta,visible_files,time_now,time_limit)
+Avatar.test(delta,visible_files,time_now,time_limit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages can collapse like Lights did.
 Exercises can collapse like Lights did.
@@ -59,12 +66,6 @@ Also needed in test/app_lib/test_git_diff_html
 Should tags[n].diff(m) return a fully data structure.
 Viz should GitDiffParser stuff go inside tags[n].diff(m)
 I think yes.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-The GitDiffParser checks for
-\ No newline at end of file
-lines but I think just as lines beginning with - are deleted
-lines, so lines beginning with \ are comment lines and
-there could be other comments.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Kata.start_avatar
   needs to do dir.lock do...end
