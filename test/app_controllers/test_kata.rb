@@ -5,7 +5,12 @@ require_relative 'controller_test_base'
 class KataControllerTest  < ControllerTestBase
 
   test "edit and then run-tests" do
-    id = checked_save_id
+    #setup_dojo
+    #setup_language('fake-C#')
+    #setup_exercise('fake-Yatzy')
+    id = checked_save_id #('fake-C#','fake-Yatzy')
+    # THIS NEEDS work on SpyGit.show()
+
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 

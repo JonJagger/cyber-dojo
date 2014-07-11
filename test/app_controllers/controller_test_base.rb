@@ -26,12 +26,41 @@ class ControllerTestBase < ActionController::IntegrationTest
     @dojo = Dojo.new(root_path,externals)
   end
 
+  def setup_language(language_name)
+    language = @dojo.languages[language_name]
+    language.dir.spy_read('manifest.json', {
+        'unit_test_framework' => 'fake'
+    })
+  end
+
+  def setup_exercise(exercise_name)
+    exercise = @dojo.exercises[exercise_name]
+    exercise.dir.spy_read('instructions', 'your task...')
+  end
+
+  def setup_kata(id, language_name, exercise_name)
+    kata = @dojo.katas[id]
+    kata.dir.spy_read('manifest.json', {
+      :language => language_name,
+      :exercise => exercise_name
+    })
+  end
+
+  def checked_save_id(language_name = 'Ruby-installed-and-working',
+                      exercise_name = 'test_Yahtzee')
+    # currently does not set Thread.current[:disk] etc
+    post 'setup/save',
+      :language => language_name,
+      :exercise => exercise_name
+
+    json['id']
+  end
+
   def teardown
+    @disk.teardown if !@disk.nil?
     thread[:disk] = nil
     thread[:git] = nil
     thread[:runner] = nil
-    #TODO: @disk.teardown
-    #TODO: @git.teardown
   end
 
   def json
@@ -40,15 +69,6 @@ class ControllerTestBase < ActionController::IntegrationTest
 
   def html
     @response.body
-  end
-
-  def checked_save_id
-    # currently does not set Thread.current[:disk] etc
-    post 'setup/save',
-      :language => 'Ruby-installed-and-working',
-      :exercise => 'test_Yahtzee'
-
-    json['id']
   end
 
 end

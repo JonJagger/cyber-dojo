@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SpyGit is really StubGit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_lib/test+git_diff_builder.rb
   each test ends with this line
     assert_equal_builder
