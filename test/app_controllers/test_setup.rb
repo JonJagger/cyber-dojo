@@ -1,26 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'integration_test'
-require '../lib/SpyDisk'
-require '../lib/SpyGit'
-require '../lib/StubTestRunner'
+require_relative 'controller_test_base'
 
-class SetupControllerTest < IntegrationTest
-
-  def thread
-    Thread.current
-  end
-
-  def setup_dojo
-    externals = {
-      :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
-      :git    => @git    = thread[:git   ] = SpyGit.new,
-      :runner => @runner = thread[:runner] = StubTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
-  end
-
-  #- - - - - - - - - - - - - - - - - - -
+class SetupControllerTest < ControllerTestBase
 
   test 'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +

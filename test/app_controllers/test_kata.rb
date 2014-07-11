@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'integration_test'
+require_relative 'controller_test_base'
 
-class KataControllerTest  < IntegrationTest
+class KataControllerTest  < ControllerTestBase
 
   test "edit and then run-tests" do
     id = checked_save_id

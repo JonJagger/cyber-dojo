@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'integration_test'
+require_relative 'controller_test_base'
 
-class LocalesControllerTest  < IntegrationTest
+class LocalesControllerTest  < ControllerTestBase
 
   test 'change locale' do
 

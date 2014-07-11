@@ -1,34 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'integration_test'
-require '../lib/SpyDisk'
-require '../lib/SpyGit'
-require '../lib/StubTestRunner'
+require_relative 'controller_test_base'
 
-class ForkerControllerTest < IntegrationTest
-
-  def thread
-    Thread.current
-  end
-
-  def setup_dojo
-    externals = {
-      :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
-      :git    => @git    = thread[:git   ] = SpyGit.new,
-      :runner => @runner = thread[:runner] = StubTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
-  end
-
-  def teardown
-    thread[:disk] = nil
-    thread[:git] = nil
-    thread[:runner] = nil
-    #TODO: @disk.teardown
-    #TODO: @git.teardown
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+class ForkerControllerTest < ControllerTestBase
 
   test 'when id is invalid ' +
        'then fork fails ' +

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'integration_test'
+require_relative 'controller_test_base'
 
-class DojoControllerTest  < IntegrationTest
+class DojoControllerTest  < ControllerTestBase
 
   test 'index' do
     get 'dojo/index'

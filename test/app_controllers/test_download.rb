@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-require_relative 'integration_test'
+require_relative 'controller_test_base'
 
-class DownloadControllerTest < IntegrationTest
+class DownloadControllerTest < ControllerTestBase
 
   test "downloaded zip of empty dojo with no animals yet unzips to same as original folder" do
     id = checked_save_id
