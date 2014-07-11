@@ -16,14 +16,15 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show avatars but no traffic-lights' do
-    #setup_dojo
-    #setup_language('fake-C#')
-    #setup_exercise('fake-Yatzy')
-    #id = checked_save_id('fake-C#','fake-Yatzy')
-    id = checked_save_id
+    setup_dojo
+    setup_language('fake-C#','nunit')
+    setup_exercise('fake-Yatzy')
+    id = checked_save_id('fake-C#','fake-Yatzy')
     (1..4).each do |n|
       get 'dojo/enter_json', :id => id
       avatar_name = json['avatar_name']
+
+      setup_initial_edit(id,avatar_name)
       get '/kata/edit', :id => id, :avatar => avatar_name
       assert_response :success
     end

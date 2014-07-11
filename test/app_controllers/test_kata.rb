@@ -13,13 +13,7 @@ class KataControllerTest  < ControllerTestBase
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 
-    manifest = {
-      'cyber-dojo.sh' => 'mono...',
-      'Hiker.cs' => 'class Hiker { ... }'
-    }
-    path = @dojo.katas[id].avatars[avatar_name].path
-    @git.spy(path,'show','0:manifest.json',JSON.unparse(manifest))
-
+    setup_initial_edit(id,avatar_name)
     post '/kata/edit', :id => id, :avatar => avatar_name
 
     post 'kata/run_tests', # 1
