@@ -4,7 +4,8 @@ require_relative 'controller_test_base'
 
 class DownloadControllerTest < ControllerTestBase
 
-  test "downloaded zip of empty dojo with no animals yet unzips to same as original folder" do
+  test 'downloaded zip of empty dojo with no animals yet ' +
+       'unzips to same as original folder' do
     id = checked_save_id
     post 'downloader/download', :id => id
     assert_response :success
@@ -16,7 +17,8 @@ class DownloadControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "downloaded zip of dojo with one animal unzips to same as original folder" do
+  test 'downloaded zip of dojo with one animal ' +
+       'unzips to same as original folder' do
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
@@ -46,7 +48,8 @@ class DownloadControllerTest < ControllerTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "downloaded zip of dojo with nine animal unzips to same as original folder" do
+  test 'downloaded zip of dojo with five animals unzips ' +
+       'to same as original folder' do
     id = checked_save_id
 
     (0..9).each do

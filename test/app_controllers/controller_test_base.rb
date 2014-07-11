@@ -26,7 +26,7 @@ class ControllerTestBase < ActionController::IntegrationTest
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - -
-    
+
   def setup_dojo
     externals = {
       :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
@@ -58,7 +58,7 @@ class ControllerTestBase < ActionController::IntegrationTest
 
   def checked_save_id(language_name = 'Ruby-installed-and-working',
                       exercise_name = 'test_Yahtzee')
-    # currently does not set Thread.current[:disk] etc
+    # does not set Thread.current[:disk] etc
     post 'setup/save',
       :language => language_name,
       :exercise => exercise_name

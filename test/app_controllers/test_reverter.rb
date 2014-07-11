@@ -4,7 +4,7 @@ require_relative 'controller_test_base'
 
 class ReverterControllerTest  < ControllerTestBase
 
-  test "revert" do
+  test 'revert' do
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
@@ -47,7 +47,7 @@ class ReverterControllerTest  < ControllerTestBase
     assert_not_nil visible_files['output']
     assert_not_nil visible_files['cyber-dojo.sh']
 
-    assert_equal "echo abc", visible_files['cyber-dojo.sh']
+    assert_equal 'echo abc', visible_files['cyber-dojo.sh']
 
     light = json['light']
     assert_not_nil light
