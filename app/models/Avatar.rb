@@ -62,10 +62,20 @@ class Avatar
       git.rm(sandbox.path, filename)
     end
 
+    pre_test_filenames = visible_files.keys
+
     output = clean(runner.run(sandbox, './cyber-dojo.sh', time_limit))
     sandbox.write('output', output) # so output appears in diff-view
     visible_files['output'] = output
     kata.language.after_test(sandbox, visible_files)
+
+    new_files = visible_files.select { |filename|
+      !pre_test_filenames.include?(filename)
+    }
+    filenames_to_delete = pre_test_filenames.select { |filename|
+      !visible_files.keys.include?(filename)
+    }
+
     save_manifest(visible_files)
 
     rags = json_lights
@@ -78,7 +88,7 @@ class Avatar
     dir.write('increments.json', rags)
     commit(rags.length)
 
-    rags
+    [rags,new_files,filenames_to_delete]
   end
 
   def save_manifest(visible_files)

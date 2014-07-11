@@ -29,14 +29,8 @@ class KataController < ApplicationController
     visible_files = received_files
     time_limit = 15
 
-    pre_test_filenames = visible_files.keys
-    @traffic_lights = @avatar.test(delta, visible_files, time_limit, time_now)
-    @new_files = visible_files.select { |filename|
-      !pre_test_filenames.include?(filename)
-    }
-    @filenames_to_delete = pre_test_filenames.select { |filename|
-      !visible_files.keys.include?(filename)
-    }
+    @traffic_lights,@new_files,@filenames_to_delete =
+      @avatar.test(delta, visible_files, time_limit, time_now)
 
     @output = visible_files['output']
 

@@ -32,7 +32,7 @@ class SandboxTests < CyberDojoTestBase
     }
 
     time_limit = 15
-    lights = avatar.test(delta, visible_files, time_limit, time_now)
+    lights,_,_ = avatar.test(delta, visible_files, time_limit, time_now)
 
     assert_equal 1, lights.length
     assert_equal 'green', lights[-1]['colour']
@@ -53,7 +53,7 @@ class SandboxTests < CyberDojoTestBase
     }
 
     time_limit = 15
-    lights = avatar.test(delta, visible_files, time_limit, time_now)
+    lights,_,_ = avatar.test(delta, visible_files, time_limit, time_now)
 
     assert_equal 2, lights.length
     assert_equal 'amber', lights[-1]['colour']
@@ -74,7 +74,7 @@ class SandboxTests < CyberDojoTestBase
     }
 
     time_limit = 15
-    lights = avatar.test(delta, visible_files, time_limit, time_now)
+    lights,_,_ = avatar.test(delta, visible_files, time_limit, time_now)
 
     assert_equal 3, lights.length
     assert_equal 'green', lights[-1]['colour']

@@ -289,11 +289,6 @@ o) adding a new language
   add in example of each primitive useable in the unit-test-framework
   chosen. As an example see the starting test code for James' cpputest.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  is make_manifest in test_helper.rb used anywhere anymore?
-  move app/lib/Choose.language into app/models/Languages?
-  move app/lib/Choose.exercise into app/models/Exercises?
-  move app/lib/Folders.id_complete into app/models/Katas.complete(id) ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   prune_large.rb and prune_small.rb rework to used Dojo.each function
   Dojo.create_kata(manifest)
     add 2nd parameter specifying format, no default, on call use "rb"

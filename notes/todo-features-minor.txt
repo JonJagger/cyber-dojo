@@ -19,27 +19,6 @@ you get three snapshots in the state array
     send that to server.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-kata_controller.run_tests() does this
-    pre_test_filenames = visible_files.keys
-    @traffic_lights = @avatar.test(delta, visible_files, time_limit, time_now)
-    @new_files = ...
-    @filenames_to_delete = ...
-This means that @new_files and @filenames_to_delete are created
-after the commit (which happens inside test()) and so
-are *not* git.add'ed to the repo and are *not* added to
-the manifest and thus do not fare well in the diff-dialog.
-Rework this so @new_files and @filenames_to_delete are
-git.add'ed and are placed in the manifest.
-
-post-test step could help with James' request to
-have a graph plotting the number of tests failing/passing.
-This also opens up the possibility of post-test steps
-further kinds of metrics. I'm thinking in particular
-of coverage.
-Another possible metric is graph plotting correlation
-between traffic-light-colour and line-diff-count.
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   selection of most-changed-filename prefers to stay
   on the same file if there are no changes. Is this

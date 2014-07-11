@@ -47,7 +47,7 @@ class LightsTests < CyberDojoTestBase
 
     time_limit = 15
     now = time_now
-    lights = avatar.test(delta, visible_files, time_limit, now)
+    lights,_,_ = avatar.test(delta, visible_files, time_limit, now)
     output = visible_files['output']
     assert output.include?('OK (1 test)')
     assert_equal 1, lights.count
