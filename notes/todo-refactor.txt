@@ -1,6 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-put coverage of X into X dir.
+test/app_lib/test+git_diff_builder.rb
+  each test ends with this line
+    assert_equal_builder
+  this could be done in a teardown!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   if you press a |< >| button and the button becomes
@@ -193,14 +196,14 @@ http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences
   And then
      avatar.tags[-1]
 
-  So if there is no event: key then take it to be a test event.
+  So if there is no [event:==key] then take it to be a test event.
   Otherwise the event is named eg :rename
    colour: for a :rename could be 'previous-red'
   This gives an easy way to create the list of traffic-lights
   by simply filtering all the entries.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Languages,Exercises,Languages container classes
+Languages,Exercises,etc container classes
 all check disk[path].exists? in their ctor and
 raise if it doesn't?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -214,7 +217,7 @@ rename Dojo.rb to CyberDojo.rb ?
     def root_path
       Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
     end
-  make it so root_path is always set via ENV far from shell.
+  make it so root_path is always set via ENV far from shell?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 KATAS-FOLDER
   would be nice to be able to set ENV variables for
@@ -222,6 +225,9 @@ KATAS-FOLDER
     o) languages/
     o) exercises/
     o) katas/
+  Except that languages/ and exercises/ are readonly
+  and so I can just always use the real ones. So only
+  need seam for katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

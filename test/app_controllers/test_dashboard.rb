@@ -1,19 +1,18 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
 require_relative 'integration_test'
 
 class DashboardControllerTest < IntegrationTest
 
-  test "show no avatars" do
+  test 'show no avatars' do
     id = checked_save_id
-    get "/dashboard/show", { :id => id }
+    get '/dashboard/show', :id => id
     assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "show avatars but no traffic-lights" do
+  test 'show avatars but no traffic-lights' do
     id = checked_save_id
     (1..4).each do |n|
       get 'dojo/enter_json', :id => id
@@ -22,13 +21,13 @@ class DashboardControllerTest < IntegrationTest
       assert_response :success
     end
 
-    get "dashboard/show", :id => id
+    get 'dashboard/show', :id => id
     assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "show avatars with some traffic lights" do
+  test 'show avatars with some traffic lights' do
     id = checked_save_id
     (1..3).each do |n|
 
@@ -54,17 +53,17 @@ class DashboardControllerTest < IntegrationTest
       end
     end
 
-    get "dashboard/show", :id => id
+    get 'dashboard/show', :id => id
     assert_response :success
 
-    get "dashboard/show",  :id => id, :minute_columns => false
+    get 'dashboard/show',  :id => id, :minute_columns => false
     assert_response :success
 
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "show dashboard and open a diff-dialog" do
+  test 'show dashboard and open a diff-dialog' do
     id = checked_save_id
 
     get 'dojo/enter_json', :id => id
@@ -78,7 +77,7 @@ class DashboardControllerTest < IntegrationTest
         :id => id,
         :avatar => avatar_name,
         :file_content => {
-          'cyber-dojo.sh' => ""
+          'cyber-dojo.sh' => ''
         },
         :file_hashes_incoming => {
           'cyber-dojo.sh' => 234234
@@ -87,8 +86,8 @@ class DashboardControllerTest < IntegrationTest
           'cyber-dojo.sh' => -4545645678
         }
     end
-    
-    get "dashboard/show",
+
+    get 'dashboard/show',
       :id => id,
       :avatar => avatar_name,
       :was_tag => 1,
@@ -99,15 +98,15 @@ class DashboardControllerTest < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "help_dialog" do
+  test 'help_dialog' do
     id = checked_save_id
-    get "/dashboard/help_dialog"
+    get '/dashboard/help_dialog'
     assert_response :success
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "heartbeat" do
+  test 'heartbeat' do
     id = checked_save_id
 
     get 'dojo/enter_json', :id => id
@@ -120,7 +119,7 @@ class DashboardControllerTest < IntegrationTest
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        'cyber-dojo.sh' => ""
+        'cyber-dojo.sh' => ''
       },
       :file_hashes_incoming => {
         'cyber-dojo.sh' => 234234

@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
 require_relative 'integration_test'
 require '../lib/SpyDisk'
 require '../lib/SpyGit'

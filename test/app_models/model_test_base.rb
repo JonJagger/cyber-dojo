@@ -24,12 +24,6 @@ class ModelTestBase < Test::Unit::TestCase
     @disk.teardown
   end
 
-  def filenames_written_to(log)
-    # each log entry is of the form
-    #  [ 'read'/'write',  filename, content ]
-    log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
-  end
-
   def make_kata
     visible_files = {
         'wibble.hpp' => '#include <iostream>',
@@ -50,6 +44,12 @@ class ModelTestBase < Test::Unit::TestCase
   def path_has_adjacent_separators?(object)
     doubled_separator = @disk.dir_separator * 2
     object.path.scan(doubled_separator).length > 0
+  end
+
+  def filenames_written_to(log)
+    # each log entry is of the form
+    #  [ 'read'/'write',  filename, content ]
+    log.select { |entry| entry[0] == 'write' }.collect{ |entry| entry[1] }
   end
 
   def self.test(name, &block)

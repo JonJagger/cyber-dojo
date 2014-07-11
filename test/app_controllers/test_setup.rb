@@ -1,21 +1,28 @@
 #!/usr/bin/env ruby
 
-require_relative '../test_helper'
 require_relative 'integration_test'
 require '../lib/SpyDisk'
 require '../lib/SpyGit'
 require '../lib/StubTestRunner'
 
-class SetupControllerTest  < IntegrationTest
+class SetupControllerTest < IntegrationTest
 
-  test 'show' do
-    get 'setup/show'
-    assert_response :success
+  def thread
+    Thread.current
+  end
+
+  def setup_dojo
+    externals = {
+      :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
+      :git    => @git    = thread[:git   ] = SpyGit.new,
+      :runner => @runner = thread[:runner] = StubTestRunner.new
+    }
+    @dojo = Dojo.new(root_path,externals)
   end
 
   #- - - - - - - - - - - - - - - - - - -
 
-  test 'setup chooses language and exercise of kata ' +
+  test 'setup/show chooses language and exercise of kata ' +
        'whose 10-char id is passed in URL ' +
        '(to encourage repetition)' do
     setup_dojo
@@ -60,6 +67,7 @@ class SetupControllerTest  < IntegrationTest
     })
 
     get 'setup/show', :id => id[0...10]
+    assert_response :success
 
     md = /var selected = \$\('#exercise_' \+ (\d+)/.match(html)
     selected_exercise = exercises_names[md[1].to_i]
@@ -73,28 +81,16 @@ class SetupControllerTest  < IntegrationTest
 
   #- - - - - - - - - - - - - - - - - - -
 
-  # another test to verify language/exercise defaul
+  # another test to verify language/exercise default
   # to that of kata's id when id is only 6 chars long.
+  # This will need disk abstraction in lib/Folders.
+  # Or would this be better as a separate test dedicated
+  # to just the id completion...
 
   #- - - - - - - - - - - - - - - - - - -
 
   test 'save' do
     checked_save_id
-  end
-
-  #- - - - - - - - - - - - - - - - - - -
-
-  def thread
-    Thread.current
-  end
-
-  def setup_dojo
-    externals = {
-      :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
-      :git    => @git    = thread[:git   ] = SpyGit.new,
-      :runner => @runner = thread[:runner] = StubTestRunner.new
-    }
-    @dojo = Dojo.new(root_path,externals)
   end
 
 end
