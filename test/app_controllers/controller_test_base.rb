@@ -5,18 +5,28 @@ require '../lib/StubTestRunner'
 
 class ControllerTestBase < ActionController::IntegrationTest
 
+  def thread
+    Thread.current
+  end
+
   def setup
     # calls test_helper's ActiveSupport::TestCase::setup
     # (from test_helper) which does `rm -rf #{root_path}/katas/*`
     super
     # used in application_controller.root_path()
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
+    thread[:runner] = StubTestRunner.new
   end
 
-  def thread
-    Thread.current
+  def teardown
+    @disk.teardown if !@disk.nil?
+    thread[:disk] = nil
+    thread[:git] = nil
+    thread[:runner] = nil
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - -
+    
   def setup_dojo
     externals = {
       :disk   => @disk   = thread[:disk  ] = SpyDisk.new,
@@ -66,13 +76,6 @@ class ControllerTestBase < ActionController::IntegrationTest
   end
 
   #- - - - - - - - - - - - - - - - - -
-
-  def teardown
-    @disk.teardown if !@disk.nil?
-    thread[:disk] = nil
-    thread[:git] = nil
-    thread[:runner] = nil
-  end
 
   def json
     ActiveSupport::JSON.decode @response.body
