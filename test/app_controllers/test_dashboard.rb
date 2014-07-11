@@ -5,7 +5,10 @@ require_relative 'controller_test_base'
 class DashboardControllerTest < ControllerTestBase
 
   test 'show no avatars' do
-    id = checked_save_id
+    setup_dojo
+    setup_language('fake-C#','nunit')
+    setup_exercise('fake-Yatzy')
+    id = checked_save_id('fake-C#','fake-Yatzy')
     get '/dashboard/show', :id => id
     assert_response :success
   end
@@ -13,6 +16,10 @@ class DashboardControllerTest < ControllerTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'show avatars but no traffic-lights' do
+    #setup_dojo
+    #setup_language('fake-C#')
+    #setup_exercise('fake-Yatzy')
+    #id = checked_save_id('fake-C#','fake-Yatzy')
     id = checked_save_id
     (1..4).each do |n|
       get 'dojo/enter_json', :id => id

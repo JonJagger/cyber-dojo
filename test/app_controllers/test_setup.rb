@@ -20,10 +20,7 @@ class SetupControllerTest < ControllerTestBase
     languages_names.each do |language_name|
       language = @dojo.languages[language_name]
       assert_equal language.name, language.new_name, 'renamed!'
-      setup_language(language_name)
-      #language.dir.spy_read('manifest.json', {
-      #    'unit_test_framework' => 'fake'
-      #})
+      setup_language(language_name, 'fake-test-framework-name')
     end
 
     # setup_exercises
@@ -38,7 +35,6 @@ class SetupControllerTest < ControllerTestBase
       exercise = @dojo.exercises[exercise_name]
       assert_equal exercise.name, exercise.new_name, 'renamed!'
       setup_exercise(exercise_name)
-      #exercise.dir.spy_read('instructions', 'your task...')
     end
 
     language_name = languages_names[2]
@@ -46,12 +42,6 @@ class SetupControllerTest < ControllerTestBase
     id = '1234512345'
 
     setup_kata(id, language_name, exercise_name)
-
-    #previous_kata = @dojo.katas[id]
-    #previous_kata.dir.spy_read('manifest.json', {
-    #  :language => language_name,
-    #  :exercise => exercise_name
-    #})
 
     get 'setup/show', :id => id[0...10]
     assert_response :success

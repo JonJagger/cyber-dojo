@@ -4,15 +4,21 @@ require_relative 'controller_test_base'
 
 class KataControllerTest  < ControllerTestBase
 
-  test "edit and then run-tests" do
-    #setup_dojo
-    #setup_language('fake-C#')
-    #setup_exercise('fake-Yatzy')
-    id = checked_save_id #('fake-C#','fake-Yatzy')
-    # THIS NEEDS work on SpyGit.show()
+  test 'edit and then run-tests' do
+    setup_dojo
+    setup_language('fake-C#', 'nunit')
+    setup_exercise('fake-Yatzy')
+    id = checked_save_id('fake-C#','fake-Yatzy')
 
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
+
+    manifest = {
+      'cyber-dojo.sh' => 'mono...',
+      'Hiker.cs' => 'class Hiker { ... }'
+    }
+    path = @dojo.katas[id].avatars[avatar_name].path
+    @git.spy(path,'show','0:manifest.json',JSON.unparse(manifest))
 
     post '/kata/edit', :id => id, :avatar => avatar_name
 
@@ -43,8 +49,10 @@ class KataControllerTest  < ControllerTestBase
       }
   end
 
-  test "help dialog" do
-    get "/kata/help_dialog", :avatar_name => 'lion'
+  # - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'help dialog' do
+    get '/kata/help_dialog', :avatar_name => 'lion'
     assert_response :success
   end
 

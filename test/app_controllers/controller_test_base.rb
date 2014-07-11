@@ -26,10 +26,10 @@ class ControllerTestBase < ActionController::IntegrationTest
     @dojo = Dojo.new(root_path,externals)
   end
 
-  def setup_language(language_name)
+  def setup_language(language_name, unit_test_framework)
     language = @dojo.languages[language_name]
     language.dir.spy_read('manifest.json', {
-        'unit_test_framework' => 'fake'
+        'unit_test_framework' => unit_test_framework
     })
   end
 
