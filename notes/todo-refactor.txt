@@ -2,6 +2,14 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+show-xxx admin-scripts should collect exceptions
+and save them to a file, printing only a message
+saying how many exceptions were encountered
+and which file to look at to review them.
+Maybe also message saying likely to be from
+katas in old .rb format and to look at
+convert_katas_format.rb to do conversion.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   if you press a |< >| button and the button becomes
   disabled the cursor should be reset to not-a-hand.
