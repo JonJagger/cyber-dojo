@@ -22,6 +22,8 @@ require 'Avatars'
 require 'Avatar'
 require 'Sandbox'
 require 'Light'
+require 'Tags'
+require 'Tag'
 require 'json'
 
 def create_dojo
