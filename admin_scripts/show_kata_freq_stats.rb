@@ -16,6 +16,7 @@ dojo = create_dojo
 puts
 days,weekdays,languages,exercises = { },{ },{ },{ }
 dot_count = 0
+exceptions = [ ]
 dojo.katas.each do |kata|
   begin
     id = kata.id.to_s
@@ -31,8 +32,8 @@ dojo.katas.each do |kata|
     exercise = kata.exercise.name
     exercises[exercise] ||= [ ]
     exercises[exercise] << id
-  rescue Exception => e
-    puts "---->Exception raised for #{id}: #{e.message}"
+  rescue Exception => error
+    exceptions << error.message
   end
   dot_count += 1
   print "\r " + dots(dot_count)
@@ -46,15 +47,15 @@ puts "-------"
 days.sort.each do |ymdw,n|
   puts ymdw.inspect + "\t" + n.to_s
 end
-
 puts
+
 puts "per week day"
 puts "------------"
 ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'].each do |day|
   puts day.to_s + "\t" + weekdays[day].to_s
 end
-
 puts
+
 puts "language freq"
 puts "-------------"
 languages.sort_by{|k,v| v.length}.reverse.each do |language,n|
@@ -64,8 +65,8 @@ languages.sort_by{|k,v| v.length}.reverse.each do |language,n|
     puts n.length.to_s + "\t" + language
   end
 end
-
 puts
+
 puts "exercise freq"
 puts "-------------"
 exercises.sort_by{|k,v| v.length}.reverse.each do |exercise,n|
@@ -75,5 +76,6 @@ exercises.sort_by{|k,v| v.length}.reverse.each do |exercise,n|
     puts n.length.to_s + "\t" + exercise
   end
 end
-
 puts
+
+mention(exceptions)

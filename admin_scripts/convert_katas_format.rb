@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # Script to convert katas in old .rb format into new
-# katas (with new id) in new .json format.
+# katas (with same id) in new .json format.
 # After running this
 # o) katas dir will contain only .json katas
 # o) katas_rb will contain copies of converted .rb katas
@@ -17,7 +17,7 @@
 # so they could be reviewed or resumed.
 # This script converts all the old katas in .rb
 # format to .json format. After converting the support for
-# .rb format will be dropped from the model.
+# .rb format was dropped from the model.
 # If you want to run this script you will need support for
 # the old .rb format. For that you will need to checkout
 # an old commit (before .rb format support was removed)

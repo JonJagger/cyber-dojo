@@ -34,3 +34,5 @@ test/integration/index.html
 test/cyberdojo/zips
 test/cyberdojo/tmp
 test/cyberdojo/katas
+
+admin_scripts/exceptions.log

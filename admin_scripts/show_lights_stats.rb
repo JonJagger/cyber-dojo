@@ -31,8 +31,8 @@ dojo.katas.each do |kata|
     stats[count] << kata.avatars.entries.length
     dot_count += 1
     print "\r " + dots(dot_count)
-  rescue Exception => e
-    exceptions << e.message
+  rescue Exception => error
+    exceptions << error.message
   end
 end
 
@@ -50,11 +50,4 @@ stats.sort.each do |count,tallies|
   printf("\n")
 end
 
-if exceptions != [ ]
-  puts
-  puts
-  puts "Exceptions"
-  exceptions.each do |message|
-    puts message
-  end
-end
+mention(exceptions)

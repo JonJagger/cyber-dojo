@@ -2,14 +2,14 @@
 
 require 'json'
 
-CYBER_DOJO_ROOT_DIR = ARGV[0]
-if CYBER_DOJO_ROOT_DIR === nil
+root_dir = ARGV[0]
+if root_dir.nil?
   puts "docker_show_deps.rb [root-dir]"
   exit
 end
 
 dependencies = [ ]
-Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/Dockerfile") do |file|
+Dir.glob("#{root_dir}/languages/*/Dockerfile") do |file|
   sh = File.expand_path(File.dirname(file)) + '/build-docker-container.sh'
   to = IO.read(sh).split[4]
   from = IO.read(file).split[1]
@@ -20,6 +20,8 @@ Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/Dockerfile") do |file|
   dependencies << [from,to]
 end
 
+# with some effort this could be displayed
+# in a nicer nested format
 dependencies.sort.each do |dep|
   print dep[0] + "-->" + dep[1] + "\n"
 end

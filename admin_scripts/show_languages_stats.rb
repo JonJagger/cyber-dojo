@@ -10,6 +10,7 @@ languages_names = dojo.languages.collect {|language| language.name}
 puts
 renamed,rest,totals = { },{ },{ }
 dot_count = 0
+exceptions = [ ]
 dojo.katas.each do |kata|
   begin
     if !languages_names.include? kata.original_language.name
@@ -21,15 +22,8 @@ dojo.katas.each do |kata|
     end
     totals[kata.language.name] ||= 0
     totals[kata.language.name] += 1
-  rescue SyntaxError => error
-    puts "SyntaxError from kata #{kata.id}"
-    puts error.message
-  rescue Encoding::InvalidByteSequenceError => error
-    puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
-    puts error.message
   rescue Exception => error
-    puts "Exception from kata #{kata.id}"
-    puts error.message
+    exceptions << error.message
   end
   dot_count += 1
   print "\r " + dots(dot_count)
@@ -84,3 +78,5 @@ totals.sort_by{|k,v| v}.reverse.each do |name,count|
 end
 puts
 puts
+
+mention(exceptions)
