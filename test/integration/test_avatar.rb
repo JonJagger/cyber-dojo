@@ -65,8 +65,14 @@ class AvatarTests < CyberDojoTestBase
     avatar.test(delta, visible_files) # tag 2
     traffic_lights = avatar.lights.each.entries
     assert_equal 2, traffic_lights.length
-    actual = avatar.tags[1].diff(2)
-    assert actual.match(/^diff --git/)
+    diff = avatar.tags[1].diff(2)
+    added_line =
+    {
+      :type   => :added,
+      :line   => 'xxxx',
+      :number => 3
+    }
+    assert diff['cyber-dojo.sh'].include?(added_line), diff.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -87,18 +93,17 @@ class AvatarTests < CyberDojoTestBase
 
     avatar.test(delta, visible_files) # 1
 
-    actual = avatar.tags[0].diff(1)
-    expected =
-      [
-        "diff --git a/sandbox/#{added_filename} b/sandbox/#{added_filename}",
-        "new file mode 100644",
-        "index 0000000..1bdc268",
-        "--- /dev/null",
-        "+++ b/sandbox/#{added_filename}",
-        "@@ -0,0 +1 @@",
-        "+#{content}"
-      ].join("\n")
-    assert actual.include?(expected)
+    diff = avatar.tags[0].diff(1)
+    added =
+    [
+       { :type=>:section, :index=>0
+       },
+       { :type   => :added,
+         :line   => content,
+         :number => 1
+       }
+    ]
+    assert_equal added, diff[added_filename]
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -128,18 +133,16 @@ class AvatarTests < CyberDojoTestBase
     }
     avatar.test(delta, visible_files)  # tag 2
     #- - - - -
-    actual = avatar.tags[1].diff(2)
-    expected =
-      [
-        "diff --git a/sandbox/#{deleted_filename} b/sandbox/#{deleted_filename}",
-        "deleted file mode 100644",
-        "index f68a37c..0000000",
-        "--- a/sandbox/#{deleted_filename}",
-        "+++ /dev/null",
-        "@@ -1 +0,0 @@",
-        "-#{content}"
-      ].join("\n")
-    assert actual.include?(expected), actual
+    diff = avatar.tags[1].diff(2)
+    deleted =
+    [
+      {
+        :line   => content,
+        :type   => :deleted,
+        :number => 1
+      }
+    ]
+    assert_equal deleted, diff[deleted_filename], diff.inspect
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

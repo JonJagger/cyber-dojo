@@ -56,9 +56,21 @@ class LightsTests < CyberDojoTestBase
     assert_equal 1, lights[-1]['number']
 
     diff = avatar.tags[0].diff(1)
-    assert diff.include?("diff --git a/sandbox/#{filename} b/sandbox/#{filename}"), diff
-    assert diff.include?('-        int expected = 6 * 9;'), diff
-    assert diff.include?('+        int expected = 6 * 7;'), diff
+
+    deleted_line =
+    {
+      :type   => :deleted,
+      :line   => '        int expected = 6 * 9;',
+      :number => 8
+    }
+    added_line =
+    {
+      :type   => :added,
+      :line   => '        int expected = 6 * 7;',
+      :number => 8
+    }
+    assert diff[filename].include?(deleted_line), diff.inspect
+
   end
 
 =begin

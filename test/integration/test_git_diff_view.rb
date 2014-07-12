@@ -51,11 +51,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
     assert_equal :green, avatar.lights[-1].colour
 
-    was_tag = 1
-    now_tag = 2
-    visible_files = avatar.tags[now_tag].visible_files
-    diff_lines = avatar.tags[was_tag].diff(now_tag)
-    diffs = git_diff(diff_lines, visible_files)
+    diffs = avatar.tags[was_tag=1].diff(now_tag=2)
 
     expected =
     {
@@ -177,12 +173,8 @@ class GitDiffViewTests < CyberDojoTestBase
 
     assert_equal :amber, avatar.lights[-1].colour
 
-    was_tag = 1
-    now_tag = 2
-    visible_files = avatar.tags[now_tag].visible_files
-    diff_lines = avatar.tags[was_tag].diff(now_tag)
-    view = git_diff(diff_lines, visible_files)
-    view.delete('output')
+    diff = avatar.tags[was_tag=1].diff(now_tag=2)
+    diff.delete('output')
 
     expected =
     {
@@ -190,7 +182,7 @@ class GitDiffViewTests < CyberDojoTestBase
       'test_untitled.rb' => sameify(test_untitled_rb),
       'cyber-dojo.sh'    => sameify(cyberdojo_sh)
     }
-    assert_equal expected, view
+    assert_equal expected, diff
   end
 
   #-----------------------------------------------
@@ -205,7 +197,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
     cyber_dojo_sh = visible_files['cyber-dojo.sh']
     cyber_dojo_sh += "\n"
-    cyber_dojo_sh += "echo xxx > jj.x"
+    cyber_dojo_sh += 'echo xxx > jj.x'
     visible_files['cyber-dojo.sh'] = cyber_dojo_sh
     delta = {
       :changed => [ ],
@@ -215,19 +207,13 @@ class GitDiffViewTests < CyberDojoTestBase
     }
     avatar.test(delta, visible_files) # tag 1
 
-    was_tag = 0
-    now_tag = 1
-    visible_files = avatar.tags[now_tag].visible_files
-    diff_lines = avatar.tags[was_tag].diff(now_tag)
-    view = git_diff(diff_lines, visible_files)
-    view.delete('output')
-
-    view.keys.each do |filename|
+    diff = avatar.tags[was_tag=0].diff(now_tag=1)
+    diff.keys.each do |filename|
       assert visible_files.keys.include?(filename),
             "visible_files.keys.include?(#{filename})"
     end
 
-    assert_equal view.length, visible_files.length
+    assert_equal visible_files.length, diff.length
   end
 
   #-----------------------------------------------

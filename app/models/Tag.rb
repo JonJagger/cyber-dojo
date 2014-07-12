@@ -1,5 +1,6 @@
 root = '../..'
 require_relative root + '/app/lib/Cleaner'
+require_relative root + '/app/lib/GitDiff'
 require 'json'
 
 class Tag
@@ -19,7 +20,9 @@ class Tag
 
   def diff(m)
     command = "--ignore-space-at-eol --find-copies-harder #{@n} #{m} sandbox"
-    clean(@git.diff(@avatar.path, command))
+    diff_lines = clean(@git.diff(@avatar.path, command))
+    visible_files = @avatar.tags[m].visible_files
+    git_diff(diff_lines, visible_files)
   end
 
   def light
@@ -30,5 +33,6 @@ class Tag
 private
 
   include Cleaner
+  include GitDiff
 
 end

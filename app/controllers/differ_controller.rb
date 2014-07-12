@@ -8,11 +8,7 @@ class DifferController < ApplicationController
     setup_parameters
     @was_traffic_light = @traffic_lights[@was_tag - 1]
     @now_traffic_light = @traffic_lights[@now_tag - 1]
-
-    visible_files = @avatar.tags[@now_tag].visible_files
-    diff_lines = @avatar.tags[@was_tag].diff(@now_tag)
-    diffed_files = git_diff(diff_lines, visible_files)
-    @diffs = git_diff_view(diffed_files)
+    @diffs = git_diff_view(@avatar.tags[@was_tag].diff(@now_tag))
     @ids_and_section_counts = prune(@diffs)
     @current_filename_id = most_changed_file_id(@diffs, @current_filename)
 
