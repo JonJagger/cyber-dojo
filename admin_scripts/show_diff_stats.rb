@@ -1,18 +1,20 @@
 #!/usr/bin/env ruby
 
-# A ruby script to display counts of katas by size
+# A ruby script to display stats on light-light diffs.
 
 require File.dirname(__FILE__) + '/lib_domain'
 
 $stats = { }
 
-def collect_light_stats(kata)
+def collect_diff_stats(kata)
+  #TODO
   count = kata.avatars.inject(0){|sum,avatar| sum + avatar.lights.length }
   $stats[count] ||= [ ]
   $stats[count] << kata.avatars.entries.length
 end
 
-def show_light_stats
+def show_diff_stats
+  #TODO
   $stats.sort.each do |count,tallies|
     printf("%3d %3d ",count, tallies.length)
     print tallies.sort.inspect if tallies.length <= 20
@@ -33,20 +35,25 @@ def explain_output
   puts
 end
 
+
 puts
 dot_count = 0
 exceptions = [ ]
+`rm -rf exceptions.log`
+
+
 dojo = create_dojo
 dojo.katas.each do |kata|
   begin
-    collect_light_stats(kata)
+    collect_diff_stats(kata)
     dot_count += 1
-    print "\rworking" + dots(dot_count)
+    print "\r " + dots(dot_count)
   rescue Exception => error
     exceptions << error.message
   end
 end
 
+
 explain_output
-show_light_stats
+show_diff_stats
 mention(exceptions)

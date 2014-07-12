@@ -2,7 +2,6 @@
 
 require File.dirname(__FILE__) + '/lib_domain'
 
-
 dojo = create_dojo
 
 languages_names = dojo.languages.collect {|language| language.name}
@@ -26,12 +25,14 @@ dojo.katas.each do |kata|
     exceptions << error.message
   end
   dot_count += 1
-  print "\r " + dots(dot_count)
+  print "\rworking" + dots(dot_count)
 end
 puts
 puts
 
-print "Renamed\n"
+
+puts '- - - - - - - - - - -'
+puts 'Renamed'
 count = 0
 renamed.keys.sort.each do |name|
   dots = '.' * (32 - name.length)
@@ -52,7 +53,8 @@ print number(count,5)
 puts
 puts
 
-print "Rest\n"
+puts '- - - - - - - - - - -'
+puts 'Rest'
 count = 0
 rest.keys.sort.each do |name|
   dots = '.' * (32 - name.length)
@@ -69,7 +71,8 @@ print number(count,5)
 puts
 puts
 
-print "Totals\n"
+puts '- - - - - - - - - - -'
+puts 'Totals'
 totals.sort_by{|k,v| v}.reverse.each do |name,count|
   dots = '.' * (32 - name.length)
   print " #{name}#{dots}"
