@@ -27,6 +27,9 @@ dojo.katas.each do |kata|
   rescue Encoding::InvalidByteSequenceError => error
     puts "Encoding::InvalidByteSequenceError from kata #{kata.id}"
     puts error.message
+  rescue Exception => error
+    puts "Exception from kata #{kata.id}"
+    puts error.message
   end
   dot_count += 1
   print "\r " + dots(dot_count)

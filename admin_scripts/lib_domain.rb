@@ -10,8 +10,8 @@ require 'OsDisk'
 require 'OsDir'
 require 'Git'
 require 'DockerTestRunner'
-require 'Dojo'
 require 'DummyTestRunner'
+require 'Dojo'
 require 'Languages'
 require 'Language'
 require 'Exercises'
@@ -21,18 +21,16 @@ require 'Kata'
 require 'Avatars'
 require 'Avatar'
 require 'Sandbox'
-require 'Lights'
 require 'Light'
-require 'Id'
 require 'json'
 
 def create_dojo
   externals = {
-    :disk => OsDisk.new,
-    :git => Git.new,
+    :disk   => OsDisk.new,
+    :git    => Git.new,
     :runner => DummyTestRunner.new
   }
-  Dojo.new(CYBERDOJO_HOME_DIR,'json',externals)
+  Dojo.new(CYBERDOJO_HOME_DIR,externals)
 end
 
 def number(value,width)

@@ -33,8 +33,6 @@ dojo.katas.each do |kata|
     exercises[exercise] << id
   rescue Exception => e
     puts "---->Exception raised for #{id}: #{e.message}"
-    puts kata.exercise.name
-    puts ymd[3]
   end
   dot_count += 1
   print "\r " + dots(dot_count)
