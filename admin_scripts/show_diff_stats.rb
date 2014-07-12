@@ -6,9 +6,17 @@ require File.dirname(__FILE__) + '/lib_domain'
 
 $stats =
 {
-  :green => [ ],
-  :amber => [ ],
-  :red   => [ ]
+  [:green,:green] => [ ],
+  [:green,:amber] => [ ],
+  [:green,:red  ] => [ ],
+
+  [:amber,:green] => [ ],
+  [:amber,:amber] => [ ],
+  [:amber,:red  ] => [ ],
+
+  [:red,:green] => [ ],
+  [:red,:amber] => [ ],
+  [:red,:red  ] => [ ],
 }
 
 def deleted_file(lines)
@@ -33,7 +41,8 @@ def collect_diff_stats(kata)
           end
         end
 
-        $stats[now.colour] << line_count if line_count != 0
+        key = [was.colour,now.colour]
+        $stats[key] << line_count if line_count != 0
 
         #puts "#{kata.id}:#{avatar.name}: " +
         #     "(#{was.number}<->#{now.number}) " +
@@ -44,23 +53,36 @@ def collect_diff_stats(kata)
   end
 end
 
-def show_mean(symbol)
-  values = $stats[symbol]
+def mean_count(from,to)
+  key = [from,to]
+  values = $stats[key]
   count = values.length
   total = values.inject(:+)
   mean = total.to_f / count
-  printf("%4.2f  %s \t %6d\n", mean, symbol.to_s, count)
-  count
+  [mean, count]
 end
 
-def show_diff_stats
+def show_diff_stats(n)
+  from_to_stats = [ ]
+  froms = [:red,:amber,:green]
+  tos = [:red,:amber,:green]
+  froms.each do |from|
+    tos.each do |to|
+      mean,count = mean_count(from,to)
+      from_to_stats << [mean,[from,to],count]
+    end
+  end
+
   puts
-  light_count = 0
-  light_count += show_mean(:red)
-  light_count += show_mean(:amber)
-  light_count += show_mean(:green)
-  puts '(' + light_count.to_s + ' lights)'
+  from_to_stats.sort.each do |mean,key,count|
+    printf("%7.2f %6s->%6s \t %6d\n", mean, key[0], key[1], count)
+  end
+
   puts
+  light_count = from_to_stats.collect{|a| a[2]}.inject(:+)
+  lights_per_kata = light_count.to_f / n
+  puts "#{light_count} lights"
+  printf("%7.2f lights/kata\n", lights_per_kata)
 end
 
 
@@ -70,6 +92,7 @@ $exceptions = [ ]
 `rm -rf exceptions.log`
 
 
+stop_at = 500
 dojo = create_dojo
 dojo.katas.each do |kata|
   begin
@@ -79,9 +102,9 @@ dojo.katas.each do |kata|
   rescue Exception => error
     $exceptions << error.message
   end
-  break if $dot_count >= 1000
+  break if $dot_count >= stop_at
 end
 puts
 
-show_diff_stats
+show_diff_stats(stop_at)
 mention($exceptions)
