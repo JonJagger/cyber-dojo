@@ -8,6 +8,10 @@
     @include right-align(15px);
   }
 
+  #team-bulb-counts-container .traffic-light-count {
+    font-size: 1.5em;
+  }
+
   #age-container {
     #days, #hours, #minutes, #seconds {
       position: relative;

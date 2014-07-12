@@ -2,14 +2,6 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-show-xxx admin-scripts should collect exceptions
-and save them to a file, printing only a message
-saying how many exceptions were encountered
-and which file to look at to review them.
-Maybe also message saying likely to be from
-katas in old .rb format and to look at
-convert_katas_format.rb to do conversion.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   if you press a |< >| button and the button becomes
   disabled the cursor should be reset to not-a-hand.
@@ -48,9 +40,6 @@ I think the simplest way to do this is to capture some of
 the output from the test-framework and check that when a
 [test] actually happens for an animal using a docker'd server
 then the captured output is reproduced.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-traffic-light r/g/b pie code needs a helper and some tests.
-See app/views/dashboard/_team_bulb_counts.html.erb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
