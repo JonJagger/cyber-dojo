@@ -4,15 +4,6 @@ require_relative '../cyberdojo_test_base'
 
 class GitDiffBuilderTests < CyberDojoTestBase
 
-  def teardown
-    diff = GitDiff::GitDiffParser.new(@diff_lines.join("\n")).parse_one
-    builder = GitDiff::GitDiffBuilder.new()
-    actual = builder.build(diff, @source_lines)
-    assert_equal @expected, actual
-  end
-
-  #- - - - - - - - - - - - - - - - - - - - - - -
-
   test 'chunk with a space in its filename' do
 
     @diff_lines =
@@ -37,6 +28,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       section(0),
       added_line('Please rename me!', 1),
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -64,6 +57,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       section(0),
       added_line('aaa', 1),
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -132,6 +127,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('sss', 12),
       same_line('ttt', 13)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -188,6 +185,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       deleted_line('sss', 9),
       added_line('ttt', 9)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -241,6 +240,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('iii', 7),
       same_line('jjj', 8)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -293,6 +294,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('iii', 9),
       same_line('jjj', 10)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -342,6 +345,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('iii', 7),
       same_line('jjj', 8)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -399,6 +404,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('mmm', 9),
       same_line('nnn', 10)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -461,6 +468,8 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('lll', 13),
       same_line('mmm',14),
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
@@ -520,9 +529,20 @@ class GitDiffBuilderTests < CyberDojoTestBase
       same_line('ggg', 12),
       same_line('hhh', 13)
     ]
+
+    assert_equal_builder
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  def assert_equal_builder
+    diff = GitDiff::GitDiffParser.new(@diff_lines.join("\n")).parse_one
+    builder = GitDiff::GitDiffBuilder.new()
+    actual = builder.build(diff, @source_lines)
+    assert_equal @expected, actual
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - -
 
   def same_line(line,number)
     { :line => line, :type => :same, :number => number }
