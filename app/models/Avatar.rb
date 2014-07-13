@@ -72,6 +72,10 @@ class Avatar
     new_files = visible_files.select { |filename|
       !pre_test_filenames.include?(filename)
     }
+    new_files.keys.each { |filename|
+      git.add(sandbox.path, filename)
+    }
+
     filenames_to_delete = pre_test_filenames.select { |filename|
       !visible_files.keys.include?(filename)
     }
