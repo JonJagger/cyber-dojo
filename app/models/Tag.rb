@@ -25,6 +25,7 @@ class Tag
     git_diff(diff_lines, visible_files)
   end
 
+  # only used by fork/revert controller
   def light
     # tag 0 has no light
     @light

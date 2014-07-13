@@ -5,36 +5,26 @@ require_relative root + '/app/lib/GitDiff'
 class DifferController < ApplicationController
 
   def diff
-    setup_parameters
-    @was_traffic_light = @traffic_lights[@was_tag - 1]
-    @now_traffic_light = @traffic_lights[@now_tag - 1]
-    @diffs = git_diff_view(@avatar.tags[@was_tag].diff(@now_tag))
-    @ids_and_section_counts = prune(@diffs)
-    @current_filename_id = most_changed_file_id(@diffs, @current_filename)
+    was_tag = params[:was_tag].to_i
+    now_tag = params[:now_tag].to_i
+    current_filename = params[:current_filename]
+
+    avatar = dojo.katas[id].avatars[params[:avatar]]
+    diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
+    lights = avatar.lights
 
 	render :json => {
-	  :wasTrafficLight => @was_traffic_light.to_json,
-	  :nowTrafficLight => @now_traffic_light.to_json,
-	  :diffs => @diffs,
-	  :idsAndSectionCounts => @ids_and_section_counts,
-	  :currentFilenameId => @current_filename_id
+	  :wasTrafficLight => lights[was_tag - 1].to_json,
+	  :nowTrafficLight => lights[now_tag - 1].to_json,
+	  :diffs => diffs,
+	  :idsAndSectionCounts => prune(diffs),
+	  :currentFilenameId => most_changed_file_id(diffs, current_filename)
 	}
   end
 
 private
 
   include GitDiff
-
-  def setup_parameters
-    @kata = dojo.katas[id]
-    @avatar = @kata.avatars[params[:avatar]]
-    @traffic_lights = @avatar.lights
-    @min_tag = 0
-    @was_tag = params[:was_tag].to_i
-    @now_tag = params[:now_tag].to_i
-    @max_tag = @traffic_lights.length
-    @current_filename = params[:current_filename]
-  end
 
   def prune(array)
     # diff-view has been refactored so each diff-view has its own
