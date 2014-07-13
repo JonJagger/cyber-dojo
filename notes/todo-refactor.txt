@@ -40,6 +40,8 @@ I think the simplest way to do this is to capture some of
 the output from the test-framework and check that when a
 [test] actually happens for an animal using a docker'd server
 then the captured output is reproduced.
+Or, simpler still, just run a test for each language and
+check the outcome is red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
@@ -124,24 +126,6 @@ Add git.max_tag() function?
 language tests should be run as part of test-suite.
 Use admin_scripts/lib_language_manifest_checker.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-output is inserted into visible_files in
-katas.create_kata() This means it is always present in
-the manifest. Then kata.start_avatar git.adds each
-visible_file. So it is present in the git repo
-from the start as well.
-However it only appears in a diff if
-o) it changes
-o) it is saved as an individual file
-avatar.lights.each.entries
-  is painful
-  create and return array of Light objects?
-  Then use last instead of latest.
-  This should work ok when increments contains non test events
-  since I can simply filter increments.
-  Proving difficult.
-  Getting an infinite loop when DifferController/diff
-  tries to render back to diff-dialog
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move clean(string) code into Dir.read ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 spydir.read does this
@@ -151,8 +135,6 @@ Suppose I wanted to fake an actual file of that name.
 OsDir.write does this
   file.write(JSON.unparse(object)) if filename.end_with?('.json')
 Again, this needs to happen in the caller.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller
@@ -268,6 +250,7 @@ o) adding a new language
   kata.avatars['lion'].tag[4]
     handy shortcut for this could be
   kata.lion.tag[4]
+    only really useful in testing?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   There should be a dependency on the language manifest file
   only for startup. Once started a kata should have a *copy* of

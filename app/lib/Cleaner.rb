@@ -10,3 +10,5 @@ module Cleaner
   end
 
 end
+
+# http://robots.thoughtbot.com/fight-back-utf-8-invalid-byte-sequences

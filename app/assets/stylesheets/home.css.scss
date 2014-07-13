@@ -25,8 +25,8 @@ $text-color: darken($lighter-color, 10%);
     right: -35px;
   }
 
-  #a_place_to_practice, #programming {
-    font-size: 1.55em;
+  #a-place-to-practice, #programming {
+    font-size: 1.35em;
     color: lighten($text-color, 5%);
     margin: {
       top: -15px;
@@ -34,10 +34,10 @@ $text-color: darken($lighter-color, 10%);
     }
   }
   #programming {
-    font-size: 1.55em;
+    font-size: 1.35em;
     color: lighten($text-color, 5%);
     margin: {
-      top: 0px;
+      top: -5px;
       bottom: 15px;
     }
   }
