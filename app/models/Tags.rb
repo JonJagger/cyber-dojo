@@ -17,7 +17,7 @@ class Tags
 
   def [](n)
     # avatar.tags[6]
-    Tag.new(@avatar,n,@git,light(n))
+    Tag.new(@avatar,n,@git)
   end
 
   def count
@@ -34,10 +34,6 @@ private
 
   def tags
     @tags ||= JSON.parse(clean(@avatar.dir.read('increments.json')))
-  end
-
-  def light(n)
-    n != 0 ? tags[n-1] : nil # See comment below
   end
 
 end

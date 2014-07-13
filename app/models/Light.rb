@@ -28,4 +28,8 @@ class Light
     }
   end
 
+  #def tag
+  #  avatar.tags[number]
+  #end
+
 end

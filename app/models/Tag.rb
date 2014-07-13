@@ -5,8 +5,8 @@ require 'json'
 
 class Tag
 
-  def initialize(avatar,n,git,light)
-    @avatar,@n,@git,@light = avatar,n,git,light
+  def initialize(avatar,n,git)
+    @avatar,@n,@git = avatar,n,git
   end
 
   def visible_files
@@ -14,7 +14,8 @@ class Tag
   end
 
   def output
-    # tag 0's manifest does not have an output file
+    # tag 0's manifest (start_avatar commit)
+    # does not have an output file
     visible_files['output'] || ''
   end
 
@@ -23,12 +24,6 @@ class Tag
     diff_lines = clean(@git.diff(@avatar.path, command))
     visible_files = @avatar.tags[m].visible_files
     git_diff(diff_lines, visible_files)
-  end
-
-  # only used by fork/revert controller
-  def light
-    # tag 0 has no light
-    @light
   end
 
 private

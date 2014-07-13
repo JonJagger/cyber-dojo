@@ -6,7 +6,7 @@ class ReverterController < ApplicationController
 	avatar = dojo.katas[id].avatars[params[:avatar]]
 	render :json => {
       :visibleFiles => avatar.tags[tag].visible_files,
-	  :light => avatar.tags[tag].light
+	  :light => avatar.lights[tag-1].to_json
 	}
   end
 

@@ -6,6 +6,13 @@ install D?
 install Swift?
 install Fortran?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Tags can collapse like Lights did?
+  Lights is primary. Each light has a tag number which can
+  be used to retrieve info from tags[tag]
+
+  What used Tags.latest ?
+  What uses Tags.count ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
@@ -51,10 +58,6 @@ check the outcome is red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Languages can collapse like Lights did.
-Exercises can collapse like Lights did.
-Tags      can collapse like Lights did.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
