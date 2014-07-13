@@ -17,9 +17,7 @@ $(function() {
 <%   active_avatars.each do |avatar| %>
 <%     lights = avatar.lights %>
 <%     lasts[lights[-1].colour] += 1 %>
-<%     counts[:red]   += lights.count{ |light| light.colour === :red } %>
-<%     counts[:amber] += lights.count{ |light| light.colour === :amber } %>
-<%     counts[:green] += lights.count{ |light| light.colour === :green } %>
+<%     lights.each { |light| counts[light.colour] += 1 } %>
 <%   end %>
 
   <table id="team-bulb-counts-container">
