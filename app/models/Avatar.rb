@@ -41,11 +41,13 @@ class Avatar
   #- - - - - - - - - - - - - - -
 
   def tags
-    @tags ||= Tags.new(self,git)
+    # one tag for initial start_avatar
+    # one tag for each light
+    (0..increments.length).map{ |n| Tag.new(self,n,git) }
   end
 
   def lights
-    json_lights.map { |inc| Light.new(self,inc) }
+    increments.map { |inc| Light.new(self,inc) }
   end
 
   #- - - - - - - - - - - - - - -
@@ -82,7 +84,7 @@ class Avatar
 
     save_manifest(visible_files)
 
-    rags = json_lights
+    rags = increments
     rag = {
       'colour' => kata.language.colour(output),
       'time'   => now,
@@ -121,8 +123,8 @@ private
     @externals[:runner]
   end
 
-  def json_lights
-    @json_lights ||= JSON.parse(clean(dir.read('increments.json')))
+  def increments
+    @increments ||= JSON.parse(clean(dir.read('increments.json')))
   end
 
 end

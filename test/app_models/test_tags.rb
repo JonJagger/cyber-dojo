@@ -4,16 +4,16 @@ require_relative 'model_test_base'
 
 class TagsTest < ModelTestBase
 
-  test 'tags before first [test] run' do
+  test 'there is 1 tag after avatar is started ' +
+       'and before first [test] is auto-run' do
     kata = make_kata
     avatar = kata.start_avatar
     tags = avatar.tags
-    assert_equal [], tags.entries
-    assert_equal 0, tags.count
+    assert_equal 1, tags.count
 
     n = 0
     tags.each { n += 1 }
-    assert_equal 0, n
+    assert_equal 1, n
 
     # starting an avatar causes commit tag=0 with
     # initial visible files. However the SpyGit does
@@ -37,7 +37,7 @@ class TagsTest < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - -
 
-  test 'tags after [test] run(s)' do
+  test 'each [test]-event creates a new tag' do
     kata = make_kata
     avatar = kata.start_avatar
     incs =
@@ -61,13 +61,8 @@ class TagsTest < ModelTestBase
     avatar.dir.spy_read('increments.json', JSON.unparse(incs))
 
     tags = avatar.tags
-    assert_equal 3, tags.count
-    n = 0
-    tags.each { |tag|
-      assert_equal 'Tag', tag.class.name
-      n += 1
-    }
-    assert_equal 3, n
+    assert_equal 4, tags.count
+    assert tags.all?{|tag| tag.class.name === 'Tag'}
 
     # simulate green [test]
     manifest = JSON.unparse({

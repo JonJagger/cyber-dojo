@@ -11,10 +11,11 @@ class KataController < ApplicationController
     @kata = dojo.katas[id]
     @avatar = @kata.avatars[params[:avatar]]
     @tab = @kata.language.tab
-    @visible_files = @avatar.tags.latest.visible_files
+    @visible_files = @avatar.tags[-1].visible_files
+
     @new_files = { }
     @filenames_to_delete = [ ]
-    @traffic_lights = @avatar.lights.each.entries
+    @traffic_lights = @avatar.lights
     @output = @visible_files['output']
     @title = id[0..5] + ' ' + @avatar.name + "'s code"
   end

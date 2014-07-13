@@ -6,14 +6,11 @@ install D?
 install Swift?
 install Fortran?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Tags can collapse like Lights did?
-  Lights is primary. Each light has a tag number which can
-  be used to retrieve info from tags[tag]
-
-  What used Tags.latest ?
-  What uses Tags.count ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Eventually Avatar.tags will contain one entry for each
+avatar event (eg file rename) and Avatar.lights will need
+to filter Avatar.tags
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   if you press a |< >| button and the button becomes
