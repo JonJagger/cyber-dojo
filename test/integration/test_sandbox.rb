@@ -13,8 +13,8 @@ class SandboxTests < CyberDojoTestBase
   end
 
   test 'defect-driven: filename containing space ' +
-       'is not accidentally retained' do
-    # retained means stays in the sandbox
+       'is not accidentally retained in the sandbox' do
+
     kata = make_kata(@dojo, 'test-Java-JUnit')
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
@@ -31,8 +31,7 @@ class SandboxTests < CyberDojoTestBase
       :new       => [ ]
     }
 
-    time_limit = 15
-    lights,_,_ = avatar.test(delta, visible_files, time_limit, time_now)
+    lights,_,_ = avatar.test(delta, visible_files)
 
     assert_equal 1, lights.length
     assert_equal 'green', lights[-1]['colour']
@@ -52,8 +51,7 @@ class SandboxTests < CyberDojoTestBase
       :new       => [ 'Untitled' + SPACE + '.java' ]
     }
 
-    time_limit = 15
-    lights,_,_ = avatar.test(delta, visible_files, time_limit, time_now)
+    lights,_,_ = avatar.test(delta, visible_files)
 
     assert_equal 2, lights.length
     assert_equal 'amber', lights[-1]['colour']
@@ -73,8 +71,7 @@ class SandboxTests < CyberDojoTestBase
       :new       => [ 'Untitled.java' ]
     }
 
-    time_limit = 15
-    lights,_,_ = avatar.test(delta, visible_files, time_limit, time_now)
+    lights,_,_ = avatar.test(delta, visible_files)
 
     assert_equal 3, lights.length
     assert_equal 'green', lights[-1]['colour']

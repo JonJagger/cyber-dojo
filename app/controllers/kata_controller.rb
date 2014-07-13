@@ -30,7 +30,7 @@ class KataController < ApplicationController
     time_limit = 15
 
     @traffic_lights,@new_files,@filenames_to_delete =
-      @avatar.test(delta, visible_files, time_limit, time_now)
+      @avatar.test(delta, visible_files, time_now, time_limit)
 
     @output = visible_files['output']
 

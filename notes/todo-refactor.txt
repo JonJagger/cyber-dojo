@@ -1,5 +1,11 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+install F#
+install Rust?
+install D?
+install Swift?
+install Fortran?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
@@ -45,10 +51,6 @@ check the outcome is red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Avatar.test(delta,visible_files,time_limit,time_now)
-is a bit better as
-Avatar.test(delta,visible_files,time_now,time_limit)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Languages can collapse like Lights did.
 Exercises can collapse like Lights did.

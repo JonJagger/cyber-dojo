@@ -50,7 +50,7 @@ class Avatar
 
   #- - - - - - - - - - - - - - -
 
-  def test(delta, visible_files, time_limit = 15, now = time_now)
+  def test(delta, visible_files, now = time_now, time_limit = 15)
     delta[:changed].each do |filename|
       sandbox.dir.write(filename, visible_files[filename])
     end
