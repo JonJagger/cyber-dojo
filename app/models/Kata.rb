@@ -63,7 +63,7 @@ class Kata
   def original_language
     # allow kata to be reviewed/forked even
     # if it's language name has changed
-    # See app/models/language.rb ::new_name()
+    # See app/models/Language.rb ::new_name()
     dojo.languages[manifest['language']]
   end
 
