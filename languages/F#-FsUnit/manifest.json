@@ -9,5 +9,5 @@
   "display_name": "F#",
   "display_test_name": "Fsnit",
   "unit_test_framework": "fsunit",
-  "image_name": "cyberdojo/fsharp-3.0.26-1_nunit"
+  "image_name": "cyberdojo/fsharp-3.0.26-1_fsunit"
 }
