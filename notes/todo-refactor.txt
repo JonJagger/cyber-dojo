@@ -1,12 +1,54 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 install F#
+http://fsharp.org/use/linux/
+
 install Rust?
 install D?
 install Swift?
 install Fortran?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Generalize
+   Approval.add_created_txt_files(sandbox.path, visible_files)
+   Approval.remove_deleted_txt_files(sandbox.path, visible_files)
+from Language.rb so that language manifest can name patterns it
+uses to regexp-filter newly created files and regexp-filter
+deleted files. These default to nothing - to do nothing.
+This could be combined with steps in cyber-dojo.sh to do some
+quite powerful things, eg creation of coverage stats which are
+then loaded. It creates the possibility of some of these being html
+which is loaded and displayed in a textarea replacement.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+I need a basic test for each of the languages under docker.
+I think the simplest way to do this is to capture some of
+the output from the test-framework and check that when a
+[test] actually happens for an animal using a docker'd server
+then the captured output is reproduced.
+Or, simpler still, just run a test for each language and
+check the outcome is red.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Lose Exercises.rb
+  will mean I need to create a
+     spy_exercise(name)
+  method. This can have a list of known names of exercises
+  that actually exist.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Lose Languages.rb - same as above.
+  When Exercises.rb and Languages.rb have gone then only
+  katas will have special path handling (for testing) which
+  means root_path tweak in application_controller can be
+  moved to Dojo.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would be nice to be able to set ENV variables for
+  the root-paths for each of these 3 independently
+    o) languages/
+    o) exercises/
+    o) katas/
+  Except that languages/ and exercises/ are readonly
+  and so I can just always use the real ones. So only
+  need seam for katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Eventually Avatar.tags will contain one entry for each
 avatar event (eg file rename) and Avatar.lights will need
@@ -44,14 +86,6 @@ Done.
 Question
   Do I need to rebuild containers?
   It appears not. Good.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I need a basic test for each of the languages under docker.
-I think the simplest way to do this is to capture some of
-the output from the test-framework and check that when a
-[test] actually happens for an animal using a docker'd server
-then the captured output is reproduced.
-Or, simpler still, just run a test for each language and
-check the outcome is red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
@@ -177,10 +211,6 @@ Again, this needs to happen in the caller.
   by simply filtering all the entries.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Languages,Exercises,etc container classes
-all check disk[path].exists? in their ctor and
-raise if it doesn't?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Models all check existence in their ctors.
 exists? methods move to container classes
 Eg kata.exists? ==> katas.exists?(id)
@@ -192,16 +222,6 @@ rename Dojo.rb to CyberDojo.rb ?
       Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
     end
   make it so root_path is always set via ENV far from shell?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-KATAS-FOLDER
-  would be nice to be able to set ENV variables for
-  the root-paths for each of these 3 independently
-    o) languages/
-    o) exercises/
-    o) katas/
-  Except that languages/ and exercises/ are readonly
-  and so I can just always use the real ones. So only
-  need seam for katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
