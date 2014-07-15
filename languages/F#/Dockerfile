@@ -6,6 +6,6 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/s
 RUN apt-get update
 RUN apt-get upgrade -y
 
-RUN apt-get install mono-complete
-RUN apt-get install fsharp
+RUN apt-get install -y mono-complete
+RUN apt-get install -y fsharp
 
