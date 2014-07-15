@@ -1,10 +1,11 @@
-FROM       cyberdojo/build-essential
+FROM       ubuntu:14.04
 MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
-# build-essential was built from 13.10 (saucy)
-RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
+# 14.04 (trusty)
+RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
+
 
 RUN apt-get install -y mono-complete
 RUN apt-get install -y fsharp
