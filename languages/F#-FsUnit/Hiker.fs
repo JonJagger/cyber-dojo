@@ -1,8 +1,4 @@
+module Hiker.``A simpe example to get you started``
 
-public class Hiker
-{
-    public static int Answer
-    {
-        get { return 6 * 9; }
-    }
-}
+let answer = 6 * 9;;
+
