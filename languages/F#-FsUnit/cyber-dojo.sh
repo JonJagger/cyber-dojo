@@ -1,4 +1,4 @@
-fcs -out:RunTests.dll *.fs
+fsharpc -o run-tests.exe *.fs
 if [ $? -eq 0 ]; then
-  fsunit-console -nologo RunTests.dll
+  run-tests.exe
 fi
