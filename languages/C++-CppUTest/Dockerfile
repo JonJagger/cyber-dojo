@@ -6,6 +6,8 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/s
 RUN apt-get update
 RUN apt-get upgrade -y
 
+RUN apt-get install -y aclocal-1.14
+
 RUN mkdir /cpputest
 RUN cd /
 RUN git clone https://github.com/cpputest/cpputest.git # comment to avoid cache
