@@ -6,7 +6,7 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/s
 RUN apt-get update
 RUN apt-get upgrade -y
 
-RUN apt-get install -y aclocal-1.14
+RUN apt-get install -y aclocal
 
 RUN mkdir /cpputest
 RUN cd /
