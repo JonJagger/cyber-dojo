@@ -1,4 +1,4 @@
-module Hiker.``A simpe example to get you started``
+module Hiker
 
-let answer = 6 * 9;;
-
+let answer =
+  6 * 9

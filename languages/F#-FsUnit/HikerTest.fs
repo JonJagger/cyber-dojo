@@ -1,13 +1,8 @@
+module HikerTest.``example``
 
-using NUnit.Framework;
+open NUnit.Framework
+open FsUnit
 
-[TestFixture]
-public class HikerTest
-{
-    [Test]
-    public void life_the_universe_and_everything()
-    {
-        // a simple example to start you off
-        Assert.AreEqual(42, Hiker.Answer);
-    }
-}
+[<Test>]
+let ``life, the universe, and everything.`` () =
+    Hiker.answer |> should equal 42
