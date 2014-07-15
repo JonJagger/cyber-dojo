@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/fsharp-x.y.z  .
+docker build -t cyberdojo/fsharp-3.0.26-1  .

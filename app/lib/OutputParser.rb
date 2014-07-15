@@ -13,6 +13,10 @@ module OutputParser
     end
   end
 
+  def self.parse_fsunit(output)
+    return :amber
+  end
+
   def self.parse_php_unit(output)
     return :amber if /PHP Parse error:/.match(output)
     return :red   if /FAILURES!/.match(output)
