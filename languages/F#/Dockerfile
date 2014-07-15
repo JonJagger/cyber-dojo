@@ -9,3 +9,7 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -y mono-complete
 RUN apt-get install -y fsharp
+
+RUN mozroots --import --sync
+RUN curl -L http://nuget.org/nuget.exe -o nuget.exe
+RUN mono nuget.exe install MathNet.Numerics -OutputDirectory packages
