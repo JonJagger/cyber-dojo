@@ -8,6 +8,7 @@ RUN apt-get upgrade -y
 
 
 RUN apt-get install -y mono-complete
+RUN apt-get install -y mono-tools-devel
 RUN apt-get install -y fsharp
 
 RUN mozroots --import --sync
