@@ -3,4 +3,4 @@ MAINTAINER Jon Jagger <jon@jaggersoft.com>
 
 RUN mono nuget.exe install NUnit  -o Packages -ExcludeVersion
 RUN mono nuget.exe install FsUnit -o Packages -ExcludeVersion
-RUN apt-get install -y nunit-console
+RUN mono nuget.exe install NUnit.Runners -o Packages -ExcludeVersion
