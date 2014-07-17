@@ -13,6 +13,10 @@ module OutputParser
     end
   end
 
+  def self.parse_d_unittest(output)
+    return :amber
+  end
+
   def self.parse_funit(output)
     return :amber
   end
