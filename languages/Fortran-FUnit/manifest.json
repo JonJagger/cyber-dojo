@@ -1,8 +1,8 @@
 
 {
   "visible_filenames": [
-    "hiker.f90",
-    "hiker.fun",
+    "hiker_class.f90",
+    "hiker_class.fun",
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".f90",
