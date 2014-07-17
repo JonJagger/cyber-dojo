@@ -3,6 +3,7 @@
   "visible_filenames": [
     "HikerTest.fs",
     "Hiker.fs",
+    "AreEqual.fs",
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".fs",

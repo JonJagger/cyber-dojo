@@ -1,5 +1,5 @@
 
-cp /Packages/NUnit/lib/nunit.framework.dll /sandbox
+cp /Packages/NUnit.Runners/tools/nunit.framework.dll /sandbox
 
 fsharpc --nologo \
         --target:library \
