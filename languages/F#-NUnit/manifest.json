@@ -7,7 +7,7 @@
   ],
   "filename_extension" : ".fs",
   "display_name": "F#",
-  "display_test_name": "FsUnit",
-  "unit_test_framework": "fsunit",
-  "image_name": "cyberdojo/fsharp-3.0.26-1_fsunit"
+  "display_test_name": "NUnit",
+  "unit_test_framework": "nunit",
+  "image_name": "cyberdojo/fsharp-3.0.26-1_nunit"
 }
