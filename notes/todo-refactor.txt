@@ -1,9 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-install F#
-http://fsharp.org/use/linux/
-http://numerics.mathdotnet.com/docs/
-
 install Rust?
 install D?
 install Swift?
