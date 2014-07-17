@@ -2,18 +2,14 @@
 
 require_relative '../cyberdojo_test_base'
 
-class OutputGoTests < CyberDojoTestBase
-
-  test 'build failed is amber' do
-    assert_equal :amber, colour_of("[build failed]")
-  end
+class OutputDUnitTestTests < CyberDojoTestBase
 
   test 'ran but failed is red' do
-    assert_equal :red, colour_of("FAIL")
+    assert_equal :red, colour_of("core.exception.AssertError")
   end
 
   test 'ran and passed is green' do
-    assert_equal :green, colour_of("PASS")
+    assert_equal :green, colour_of("All tests passed")
   end
 
   test 'anything else is amber' do
@@ -21,7 +17,7 @@ class OutputGoTests < CyberDojoTestBase
   end
 
   def colour_of(output)
-    OutputParser::parse_go_testing(output)
+    OutputParser::parse_d_unittest(output)
   end
 
 end

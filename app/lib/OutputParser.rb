@@ -14,6 +14,8 @@ module OutputParser
   end
 
   def self.parse_d_unittest(output)
+    return :red   if /core\.exception\.AssertError/.match(output)
+    return :green if /All tests passed/.match(output)
     return :amber
   end
 
