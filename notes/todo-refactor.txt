@@ -1,7 +1,6 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 install Rust?
-install D?
 install Swift?
 install Fortran?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
