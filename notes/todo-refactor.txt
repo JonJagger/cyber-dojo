@@ -2,7 +2,6 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 install Rust?
 install Swift?
-install Fortran?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)

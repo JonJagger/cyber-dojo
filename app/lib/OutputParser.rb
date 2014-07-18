@@ -20,6 +20,8 @@ module OutputParser
   end
 
   def self.parse_funit(output)
+    return :red   if /==========\[ SUMMARY \]==========[^:]*:\s*failed/.match(output)
+    return :green if /==========\[ SUMMARY \]==========[^:]*:\s*passed/.match(output)
     return :amber
   end
 
