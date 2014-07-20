@@ -6,10 +6,10 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/
 RUN apt-get update
 RUN apt-get upgrade -y
 
-RUN apt-get install git
-RUN apt-get install automake
-RUN apt-get install gnome-sharp2
-RUN apt-get install mono-xsp4
+RUN apt-get install -y git
+RUN apt-get install -y automake
+RUN apt-get install -y gnome-sharp2
+RUN apt-get install -y mono-xsp4
 
 RUN git clone https://github.com/mono/monodevelop.git
 
