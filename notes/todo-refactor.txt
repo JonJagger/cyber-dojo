@@ -2,6 +2,7 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 install Rust?
 install Swift?
+install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)
