@@ -4,6 +4,11 @@ install Rust?
 install Swift?
 install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Would be nice to be able to set ENV variables for
+  the root-paths of /katas only and have no dummy test
+  folders for languages/ and exercises/
+  languages/ and exercises/ are readonly
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)
    Approval.remove_deleted_txt_files(sandbox.path, visible_files)
@@ -36,15 +41,6 @@ Lose Languages.rb - same as above.
   katas will have special path handling (for testing) which
   means root_path tweak in application_controller can be
   moved to Dojo.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Would be nice to be able to set ENV variables for
-  the root-paths for each of these 3 independently
-    o) languages/
-    o) exercises/
-    o) katas/
-  Except that languages/ and exercises/ are readonly
-  and so I can just always use the real ones. So only
-  need seam for katas/
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Eventually Avatar.tags will contain one entry for each
 avatar event (eg file rename) and Avatar.lights will need

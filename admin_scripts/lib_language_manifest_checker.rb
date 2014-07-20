@@ -1,4 +1,4 @@
-require_relative '../../app/lib/OutputParser'
+require_relative '../app/lib/OutputParser'
 require 'json'
 require 'etc'
 
@@ -30,7 +30,7 @@ class LanguageManifestChecker
     return false if !all_visible_files_exist?
     return false if !all_support_files_exist?
     return false if !highlight_filenames_are_subset_of_visible_filenames?
-    return false if !parse_method_for_unit_test_framework_output_exists?
+    return false if !colour_method_for_unit_test_framework_output_exists?
     return false if any_files_owner_is_root?
     return false if any_files_group_is_root?
     return false if any_file_is_unreadable?
@@ -199,10 +199,10 @@ private
     true
   end
 
-  def parse_method_for_unit_test_framework_output_exists?
+  def colour_method_for_unit_test_framework_output_exists?
     has_parse_method = true
     begin
-      OutputParser::parse(unit_test_framework, "xx")
+      OutputParser::colour(unit_test_framework, "xx")
     rescue
       has_parse_method = false
     end
