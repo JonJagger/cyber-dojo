@@ -6,8 +6,7 @@ require 'test/unit'
 class ModelTestBase < Test::Unit::TestCase
 
   def root_path
-    root_dir = File.expand_path('../..', File.dirname(__FILE__))
-    root_dir + '/test/cyberdojo/'
+    root_dir = File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
   def setup
