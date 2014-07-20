@@ -18,6 +18,7 @@ RUN cd monodevelop ; apt-get install -y monodoc-base
 RUN cd monodevelop ; apt-get install -y monodevelop mono-vbnc
 RUN cd monodevelop ; apt-get install -y gettext
 RUN cd monodevelop ; ./configure --profile=stable
+RUN cd monodevelop ; apt-get install -y make
 RUN cd monodevelop ; make
 RUN cd monodevelop ; make run
 
