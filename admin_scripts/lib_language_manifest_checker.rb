@@ -28,9 +28,9 @@ class LanguageManifestChecker
     return false if any_files_owner_is_root?
     return false if any_files_group_is_root?
     return false if any_file_is_unreadable?
-    # Dockerfile_exists?
-    # build_docker_container_exists?
-    # build_docker_container_starts_with_cyberdojo
+    return false if !Dockerfile_exists?
+    return false if !build_docker_container_exists?
+    return false if !build_docker_container_starts_with_cyberdojo?
     return true
   end
 
@@ -256,6 +256,44 @@ private
     end
     print "."
     return false
+  end
+
+  def Dockerfile_exists?
+    if !File.exists?(language_dir + '/' + 'Dockerfile')
+      message =
+        alert +
+        "  #{language_dir}/ dir does not contain a file called Dockerfile"
+      puts message
+      return false
+    end
+    print "."
+    true
+  end
+
+  def build_docker_container_exists?
+    if !File.exists?(language_dir + '/' + 'build-docker-container.sh')
+      message =
+        alert +
+        "  #{language_dir}/ dir does not contain a file called build-docker-container.sh"
+      puts message
+      return false
+    end
+    print "."
+    true
+  end
+
+  def build_docker_container_starts_with_cyberdojo?
+    filename = language_dir + '/' + 'build-docker-container.sh'
+    content = IO.read(filename)
+    if !/docker build -t cyberdojo/.match(content)
+      message =
+        alert +
+        " #{filename} does not contain 'docker build -t cyberdojo/"
+      puts message
+      return false
+    end
+    print "."
+    return true
   end
 
 private
