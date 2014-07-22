@@ -23,7 +23,7 @@ class DojoControllerTest  < ControllerTestBase
     id = checked_save_id[0..4]
     assert id.length < 6
     get 'dojo/valid_id', :format => :json, :id => id
-    assert json['exists']
+    assert json['exists'], "json['exists']"
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -32,7 +32,7 @@ class DojoControllerTest  < ControllerTestBase
     id = checked_save_id[0..5]
     assert id.length == 6
     get 'dojo/valid_id', :format => :json, :id => id
-    assert json['exists']
+    assert json['exists'], "json['exists']"
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -
@@ -41,7 +41,7 @@ class DojoControllerTest  < ControllerTestBase
     id = checked_save_id[0..6]
     assert id.length > 6
     get 'dojo/valid_id', :format => :json, :id => id
-    assert json['exists']
+    assert json['exists'], "json['exists']"
   end
 
   # - - - - - - - - - - - - - - - - - - - - - -

@@ -9,9 +9,10 @@ class LightsTests < CyberDojoTestBase
   include TimeNow
 
   def setup
+    super
     @dojo = Dojo.new(root_path,externals)
-    @language = @dojo.languages['test-Java-JUnit']
-    @exercise = @dojo.exercises['test_Yahtzee']
+    @language = @dojo.languages['Java-1.8_JUnit']
+    @exercise = @dojo.exercises['Yatzy']
     `rm -rf #{@dojo.katas.path}`
     @kata = @dojo.katas.create_kata(@language, @exercise)
   end
@@ -31,7 +32,7 @@ class LightsTests < CyberDojoTestBase
     visible_files = avatar.tags[0].visible_files
     assert_equal [ ], avatar.lights.each.entries
 
-    filename = 'UntitledTest.java'
+    filename = 'Hiker.java'
     test_code = visible_files[filename];
     assert test_code.include?('6 * 9')
     test_code.sub!('6 * 9', '6 * 7')
@@ -58,14 +59,14 @@ class LightsTests < CyberDojoTestBase
     deleted_line =
     {
       :type   => :deleted,
-      :line   => '        int expected = 6 * 9;',
-      :number => 8
+      :line   => '        return 6 * 9;',
+      :number => 5
     }
     added_line =
     {
       :type   => :added,
-      :line   => '        int expected = 6 * 7;',
-      :number => 8
+      :line   => '        return 6 * 7;',
+      :number => 5
     }
     assert diff[filename].include?(deleted_line), diff.inspect
 

@@ -8,6 +8,7 @@ class KataTests < CyberDojoTestBase
   include Externals
 
   def setup
+    super
     @dojo = Dojo.new(root_path,externals(DummyTestRunner.new))
   end
 

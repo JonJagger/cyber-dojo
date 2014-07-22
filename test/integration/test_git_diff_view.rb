@@ -17,20 +17,15 @@ class GitDiffViewTests < CyberDojoTestBase
 
   test 'building diff view from git repo with modified file' do
 
-    language = @dojo.languages['Ruby-installed-and-working']
-    exercise = @dojo.exercises['test_Yahtzee']
+    language = @dojo.languages['Ruby-TestUnit']
+    exercise = @dojo.exercises['Yatzy']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
-    visible_files =
-      {
-        'cyber-dojo.sh'    => cyberdojo_sh,
-        'untitled.rb'      => untitled_rb,
-        'test_untitled.rb' => test_untitled_rb,
-        'output'           => ''
-      }
+    visible_files = avatar.tags[0].visible_files
+
     delta = {
-      :changed => visible_files.keys,
-      :unchanged => [ ],
+      :changed => [ ],
+      :unchanged => visible_files.keys,
       :deleted => [ ],
       :new => [ ]
     }
@@ -39,10 +34,10 @@ class GitDiffViewTests < CyberDojoTestBase
     assert_equal :red, avatar.lights[-1].colour,
                        avatar.tags[1].output
 
-    visible_files['untitled.rb'].sub!('42','54')
+    visible_files['hiker.rb'].sub!('6 * 9','6 * 7')
     delta = {
-      :changed => [ 'untitled.rb' ],
-      :unchanged => visible_files.keys - [ 'untitled.rb' ],
+      :changed => [ 'hiker.rb' ],
+      :unchanged => visible_files.keys - [ 'hiker.rb' ],
       :deleted => [ ],
       :new => [ ]
     }
@@ -55,22 +50,25 @@ class GitDiffViewTests < CyberDojoTestBase
 
     expected =
     {
-      'untitled.rb' =>
+      'hiker.rb' =>
       [
-        { :line => 'def answer', :type => :same,    :number => 1 },
+        { :line => '',           :type => :same,    :number => 1 },
+        { :line => 'def answer', :type => :same,    :number => 2 },
         { :type => :section, :index => 0 },
-        { :line => '  42',       :type => :deleted, :number => 2 },
-        { :line => '  54',       :type => :added,   :number => 2 },
-        { :line => 'end',        :type => :same,    :number => 3 },
+        { :line => '  6 * 9',       :type => :deleted, :number => 3 },
+        { :line => '  6 * 7',       :type => :added,   :number => 3 },
+        { :line => 'end',        :type => :same,    :number => 4 },
       ],
-      'test_untitled.rb' => sameify(test_untitled_rb),
-      'cyber-dojo.sh' => sameify(cyberdojo_sh)
+      'test_hiker.rb' => sameify(visible_files['test_hiker.rb']),
+      'cyber-dojo.sh' => sameify(visible_files['cyber-dojo.sh'])
     }
 
-    diffs.delete('output')
-    assert_equal expected, diffs
+    assert_equal expected['hiker.rb'], diffs['hiker.rb']
+    assert_equal expected['test_hiker.rb'], diffs['test_hiker.rb']
+    assert_equal expected['cyber-dojo.sh'], diffs['cyber-dojo.sh']
 
     view = git_diff_view(diffs)
+
     expected_view = [
       {
         :id => 'id_0',
@@ -78,80 +76,49 @@ class GitDiffViewTests < CyberDojoTestBase
         :section_count => 0,
         :deleted_line_count => 0,
         :added_line_count => 0,
-        :content => '<same>ruby test_untitled.rb</same>',
-        :line_numbers => '<same><ln>1</ln></same>'
+        :content => '<same>ruby *test*.rb</same><same>&thinsp;</same>',
+        :line_numbers => '<same><ln>1</ln></same><same><ln>2</ln></same>'
       },
       {
         :id => 'id_1',
-        :filename => 'test_untitled.rb',
-        :section_count => 0,
-        :deleted_line_count => 0,
-        :added_line_count => 0,
-        :content =>
-        "<same>require './untitled'</same>" +
-        "<same>require 'test/unit'</same>" +
-        '<same>&thinsp;</same>' +
-        '<same>class TestUntitled &lt; Test::Unit::TestCase</same>' +
-        '<same>&thinsp;</same>' +
-        '<same>  def test_simple</same>' +
-        '<same>    assert_equal 9 * 6, answer</same>' +
-        '<same>  end</same>' +
-        '<same>&thinsp;</same>' +
-        '<same>end</same>',
-        :line_numbers =>
-        '<same><ln>1</ln></same>' +
-        '<same><ln>2</ln></same>' +
-        '<same><ln>3</ln></same>' +
-        '<same><ln>4</ln></same>' +
-        '<same><ln>5</ln></same>' +
-        '<same><ln>6</ln></same>' +
-        '<same><ln>7</ln></same>' +
-        '<same><ln>8</ln></same>' +
-        '<same><ln>9</ln></same>' +
-        '<same><ln>10</ln></same>'
-      },
-      {
-        :id => 'id_2',
-        :filename => 'untitled.rb',
+        :filename => 'hiker.rb',
         :section_count => 1,
         :deleted_line_count => 1,
         :added_line_count => 1,
         :content =>
-        "<same>def answer</same>" + "<span id='id_2_section_0'></span>" +
-        '<deleted>  42</deleted>' +
-        '<added>  54</added>' +
-        '<same>end</same>',
+          "<same>&thinsp;</same>" +
+          "<same>def answer</same>" +
+          "<span id='id_1_section_0'></span>" +
+          "<deleted>  6 * 9</deleted>" +
+          "<added>  6 * 7</added>" +
+          "<same>end</same>",
+
         :line_numbers =>
-        '<same><ln>1</ln></same>' +
-        '<deleted><ln>2</ln></deleted>' +
-        '<added><ln>2</ln></added>' +
-        '<same><ln>3</ln></same>'
+          "<same><ln>1</ln></same>" +
+          "<same><ln>2</ln></same>" +
+          "<deleted><ln>3</ln></deleted>" +
+          "<added><ln>3</ln></added>" +
+          "<same><ln>4</ln></same>"
       }
     ]
 
     assert_equal expected_view[0], view[0], '0'
     assert_equal expected_view[1], view[1], '1'
-    assert_equal expected_view[2], view[2], '2'
   end
 
   #-----------------------------------------------
 
   test 'building git diff view from repo with deleted file' do
 
-    language = @dojo.languages['Ruby-installed-and-working']
-    exercise = @dojo.exercises['test_Yahtzee']
+    language = @dojo.languages['Ruby-TestUnit']
+    exercise = @dojo.exercises['Yatzy']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar # tag 0
-    visible_files =
-      {
-        'cyber-dojo.sh'    => cyberdojo_sh,
-        'untitled.rb'      => untitled_rb,
-        'test_untitled.rb' => test_untitled_rb,
-        'output'           => ''
-      }
+
+    visible_files = avatar.tags[0].visible_files
     delta = {
-      :changed => visible_files.keys,
-      :unchanged => [ ],
+      :changed => [ ],
+      :unchanged => visible_files.keys,
       :deleted => [ ],
       :new => [ ]
     }
@@ -161,11 +128,15 @@ class GitDiffViewTests < CyberDojoTestBase
     assert_equal :red, avatar.lights[-1].colour,
                        avatar.tags[1].output
 
-    visible_files.delete('untitled.rb') # will cause amber
+    deleted_filename = 'hiker.rb'
+    assert visible_files.keys.include?(deleted_filename)
+    deleted_file_content = visible_files[deleted_filename]
+    visible_files.delete(deleted_filename)
+
     delta = {
       :changed => [ ],
-      :unchanged => visible_files.keys - [ 'untitled.rb' ],
-      :deleted => [ 'untitled.rb' ],
+      :unchanged => visible_files.keys - [ deleted_filename ],
+      :deleted => [ deleted_filename ],
       :new => [ ]
     }
 
@@ -176,36 +147,31 @@ class GitDiffViewTests < CyberDojoTestBase
     diff = avatar.tags[was_tag=1].diff(now_tag=2)
     diff.delete('output')
 
-    expected =
-    {
-      'untitled.rb'      => deleteify(LineSplitter.line_split(untitled_rb)),
-      'test_untitled.rb' => sameify(test_untitled_rb),
-      'cyber-dojo.sh'    => sameify(cyberdojo_sh)
-    }
-    assert_equal expected, diff
+    expected = deleteify(LineSplitter.line_split(deleted_file_content))
+
+    assert_equal expected, diff[deleted_filename]
   end
 
   #-----------------------------------------------
 
   test 'only visible files are commited and are seen in diff_lines' do
 
-    language = @dojo.languages['test-Java-JUnit']
-    exercise = @dojo.exercises['test_Yahtzee']
+    language = @dojo.languages['Java-1.8_JUnit']
+    exercise = @dojo.exercises['Yatzy']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
 
-    cyber_dojo_sh = visible_files['cyber-dojo.sh']
-    cyber_dojo_sh += "\n"
-    cyber_dojo_sh += 'echo xxx > jj.x'
-    visible_files['cyber-dojo.sh'] = cyber_dojo_sh
+    visible_files['cyber-dojo.sh'] += "\necho xxx > jj.extra"
     delta = {
-      :changed => [ ],
-      :unchanged => visible_files.keys,
+      :changed => [ 'cyber-dojo.sh' ],
+      :unchanged => visible_files.keys - [ 'cyber-dojo.sh' ],
       :deleted => [ ],
       :new => [ ]
     }
     avatar.test(delta, visible_files) # tag 1
+
+    assert avatar.sandbox.dir.exists?('jj.extra')
 
     diff = avatar.tags[was_tag=0].diff(now_tag=1)
     diff.keys.each do |filename|
@@ -214,41 +180,6 @@ class GitDiffViewTests < CyberDojoTestBase
     end
 
     assert_equal visible_files.length, diff.length
-  end
-
-  #-----------------------------------------------
-
-  def cyberdojo_sh
-    [
-      'ruby test_untitled.rb'
-    ].join("\n")
-  end
-
-  #-----------------------------------------------
-
-  def test_untitled_rb
-    [
-      "require './untitled'",
-      "require 'test/unit'",
-      '',
-      'class TestUntitled < Test::Unit::TestCase',
-      '',
-      '  def test_simple',
-      '    assert_equal 9 * 6, answer',
-      '  end',
-      '',
-      'end'
-    ].join("\n")
-  end
-
-  #-----------------------------------------------
-
-  def untitled_rb
-    [
-      'def answer',
-      '  42',
-      'end'
-    ].join("\n")
   end
 
 end

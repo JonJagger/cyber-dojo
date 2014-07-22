@@ -8,28 +8,49 @@ class LanguagesTests < CyberDojoTestBase
   include Externals
 
   def setup
+    super
     @dojo = Dojo.new(root_path,externals)
   end
 
   test "HostTestRunner says it can run any language" do
     languages = @dojo.languages.entries
     actual = languages.map{|language| language.name}.sort
-    expected = [
-     "C#-NUnit",
-     "C++-GoogleTest",
-     "Clojure-.test",
-     "Groovy-JUnit",
-     "Groovy-Spock",
-     "Java-Approval",
-     "Objective-C",
-     "Ruby-Cucumber",
-     "Ruby-Rspec",
-     "Ruby-installed-and-working",
-     "Ruby-installed-but-not-working",
-     "Ruby-not-installed",
-     "test-C++-Catch",
-     "test-Java-JUnit"
+    expected =
+    [
+      "C#-NUnit",
+      "C++-Catch",
+      "C++-CppUTest",
+      "C++-GoogleTest",
+      "C++-assert",
+      "C-assert",
+      "Clojure-.test",
+      "CoffeeScript-jasmine",
+      "D-unittest",
+      "Erlang-eunit",
+      "F#-NUnit",
+      "Fortran-FUnit",
+      "Go-testing",
+      "Groovy-JUnit",
+      "Groovy-Spock",
+      "Haskell-hunit",
+      "Java-1.8_Approval",
+      "Java-1.8_Cucumber",
+      "Java-1.8_JUnit",
+      "Java-1.8_Mockito",
+      "Java-1.8_Powermockito",
+      "Javascript-assert",
+      "Javascript-jasmine",
+      "PHP-PHPUnit",
+      "Perl-TestSimple",
+      "Python-pytest",
+      "Python-unittest",
+      "Ruby-Approval",
+      "Ruby-Cucumber",
+      "Ruby-Rspec",
+      "Ruby-TestUnit",
+      "Scala-scalatest"
     ]
+
     assert_equal expected, actual
   end
 

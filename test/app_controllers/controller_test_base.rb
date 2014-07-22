@@ -5,17 +5,18 @@ require '../lib/StubTestRunner'
 
 class ControllerTestBase < ActionController::IntegrationTest
 
+  def root_path
+    # TODO: refactor this based on path of this file
+    '/Users/jonjagger/Desktop/Repos/cyberdojo/'
+  end
+
   def thread
     Thread.current
   end
 
   def setup
-    # calls test_helper's ActiveSupport::TestCase::setup
-    # (from test_helper) which does `rm -rf #{root_path}/katas/*`
-    super
-    # used in application_controller.root_path()
+    `rm -rf #{root_path}/test/cyberdojo/katas/*`
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
-    thread[:runner] = StubTestRunner.new
   end
 
   def teardown
@@ -56,9 +57,8 @@ class ControllerTestBase < ActionController::IntegrationTest
     })
   end
 
-  def checked_save_id(language_name = 'Ruby-installed-and-working',
-                      exercise_name = 'test_Yahtzee')
-    # does not set Thread.current[:disk] etc
+  def checked_save_id(language_name = 'Ruby-TestUnit',
+                      exercise_name = 'Yatzy')
     post 'setup/save',
       :language => language_name,
       :exercise => exercise_name

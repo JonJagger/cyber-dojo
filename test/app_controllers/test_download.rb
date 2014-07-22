@@ -4,6 +4,7 @@ require_relative 'controller_test_base'
 
 class DownloadControllerTest < ControllerTestBase
 
+=begin
   test 'downloaded zip of empty dojo with no animals yet ' +
        'unzips to same as original folder' do
     id = checked_save_id
@@ -81,6 +82,8 @@ class DownloadControllerTest < ControllerTestBase
     assert File.exists?(zipfile_name), "File.exists?(#{zipfile_name})"
     verify_zip_unzips_to_same_as_original(root,id,zipfile_name)
   end
+=end
+
 
   #test "downloaded zip of dojo before git-gc option was added unzips to same as original folder"
 

@@ -1,6 +1,0 @@
-
-{
-  "visible_filenames": [ "untitled.cpp", "untitled.tests.cpp", "untitled.hpp", "makefile", "cyber-dojo.sh" ],
-  "support_filenames": [ "gtest", "gtest_main.a" ],
-  "unit_test_framework": "google_test"
-}

@@ -5,7 +5,7 @@ require_relative '../cyberdojo_test_base'
 class ChooseTests < CyberDojoTestBase
 
   include Chooser
-  
+
   def setup
     super
     externals = {
@@ -45,7 +45,7 @@ class ChooseTests < CyberDojoTestBase
     test_languages_names.each do |language|
       languages = test_languages_names - [language]
       assert !languages.include?(language)
-      kata = make_kata(@dojo, language, 'test_Yahtzee')
+      kata = make_kata(@dojo, language, 'Fizz_Buzz')
       assert kata.exists?
       assert_is_randomly_chosen_language(languages, id=kata.id, @katas)
     end
@@ -58,7 +58,7 @@ class ChooseTests < CyberDojoTestBase
        'and language is known ' +
        'then choose that language' do
     test_languages_names.each_with_index do |language,n|
-      kata = make_kata(@dojo, language, 'test_Yahtzee')
+      kata = make_kata(@dojo, language, 'Fizz_Buzz')
       assert kata.exists?
       (1..100).each do
         assert_equal n, choose_language(test_languages_names, kata.id, @katas)
@@ -94,7 +94,7 @@ class ChooseTests < CyberDojoTestBase
     test_exercises_names.each do |exercise|
       exercises = test_exercises_names - [exercise]
       assert !exercises.include?(exercise)
-      kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise)
+      kata = make_kata(@dojo, 'Ruby-TestUnit', exercise)
       assert kata.exists?
       assert_is_randomly_chosen_exercise(exercises, id=kata.id, @katas)
     end
@@ -107,7 +107,7 @@ class ChooseTests < CyberDojoTestBase
        'and exercise is known ' +
        'then choose that exercise' do
     test_exercises_names.each_with_index do |exercise,n|
-      kata = make_kata(@dojo, 'Ruby-installed-and-working', exercise)
+      kata = make_kata(@dojo, 'Ruby-TestUnit', exercise)
       assert kata.exists?
       (1..42).each do
         assert_equal n, choose_exercise(test_exercises_names, kata.id, @katas)
@@ -148,19 +148,19 @@ class ChooseTests < CyberDojoTestBase
   def test_languages_names
     [ 'C#-NUnit',
       'C++-GoogleTest',
-      'Ruby-installed-and-working',
-      'test-Java-JUnit'
+      'Ruby-TestUnit',
+      'Java-1.8_JUnit'
     ].sort
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - -
 
   def test_exercises_names
-    ['test_Yahtzee',
-     'test_Roman_Numerals',
-     'test_Leap_Years',
-     'test_Fizz_Buzz',
-     'test_Zeckendorf'
+    ['Yatzy',
+     'Roman_Numerals',
+     'Leap_Years',
+     'Fizz_Buzz',
+     'Zeckendorf_Number'
     ].sort
   end
 

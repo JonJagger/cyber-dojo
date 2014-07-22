@@ -6,15 +6,16 @@ require 'test/unit'
 class CyberDojoTestBase < Test::Unit::TestCase
 
   def root_path
-    root_dir = File.expand_path('..', File.dirname(__FILE__))
-    root_dir + '/test/cyberdojo/'
+    root_dir = File.expand_path('..', File.dirname(__FILE__)) + '/'
+    #root_dir + '/test/cyberdojo/'
   end
 
   def setup
-    `rm -rf #{root_path}/katas/*`
+    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
+    `rm -rf #{root_path}test/cyberdojo/katas/*`
   end
 
-  def make_kata(dojo, language_name, exercise_name = 'test_Yahtzee')
+  def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
     dojo.katas.create_kata(language, exercise)

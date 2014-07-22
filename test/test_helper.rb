@@ -10,15 +10,7 @@ class ActiveSupport::TestCase
 
   fixtures :all
 
-  def root_path
-    (Rails.root + 'test/cyberdojo/').to_s
-  end
-
-  def setup
-    `rm -rf #{root_path}/katas/*`
-  end
-
-  def make_kata(dojo, language_name, exercise_name = 'test_Yahtzee')
+  def make_kata(dojo, language_name, exercise_name = 'Fizz_Buzz')
     language = dojo.languages[language_name]
     exercise = dojo.exercises[exercise_name]
     dojo.katas.create_kata(language, exercise)

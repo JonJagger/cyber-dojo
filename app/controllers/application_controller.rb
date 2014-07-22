@@ -14,7 +14,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   def id
-    Folders::id_complete(root_path + 'katas/', params[:id]) || ''
+    path = root_path
+    if ENV['CYBERDOJO_TEST_ROOT_DIR']
+      path += 'test/cyberdojo/'
+    end
+    Folders::id_complete(path + 'katas/', params[:id]) || ''
   end
 
   def dojo
@@ -33,8 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def root_path
-    # See test/app_controllers/integration_test.rb
-    Rails.root.to_s + (ENV['CYBERDOJO_TEST_ROOT_DIR'] ? '/test/cyberdojo/' : '/')
+    Rails.root.to_s + '/'
   end
 
 private
@@ -42,12 +45,6 @@ private
   def runner
     return DockerTestRunner.new if Docker.installed?
     return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
-    puts '----------------------------------'
-    puts '|                                |'
-    puts '| ?using DummyTestRunner         |'
-    puts '| export CYBERDOJO_USE_HOST=true |'
-    puts '|                                |'
-    puts '----------------------------------'
     return DummyTestRunner.new
   end
 

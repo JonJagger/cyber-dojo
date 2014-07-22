@@ -8,13 +8,14 @@ class AvatarTests < CyberDojoTestBase
   include Externals
 
   def setup
+    super
     @dojo = Dojo.new(root_path,externals)
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'deleted file is deleted from that repo tag' do
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
     deleted_filename = 'instructions'
@@ -45,7 +46,7 @@ class AvatarTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'diff is not empty when change in files' do
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
     delta = {
@@ -78,7 +79,7 @@ class AvatarTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'diff shows added file' do
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
     added_filename = 'unforgiven.txt'
@@ -109,7 +110,7 @@ class AvatarTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'diff shows deleted file' do
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
     deleted_filename = 'instructions'
@@ -148,7 +149,7 @@ class AvatarTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'output is correct on refresh' do
-    kata = make_kata(@dojo, 'Ruby-installed-and-working')
+    kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
     visible_files = avatar.tags[0].visible_files
 

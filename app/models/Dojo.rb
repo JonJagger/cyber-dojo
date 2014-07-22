@@ -20,7 +20,11 @@ class Dojo
   end
 
   def katas
-    katas_path = @path + 'katas/'
+    katas_path = @path
+    if ENV['CYBERDOJO_TEST_ROOT_DIR']
+      katas_path += 'test/cyberdojo/'
+    end
+    katas_path += 'katas/'
     Katas.new(self, katas_path, @externals)
   end
 
