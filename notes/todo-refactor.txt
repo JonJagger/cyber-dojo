@@ -1,16 +1,30 @@
-
-
-test/app_controllers/test_download.rb
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 install Rust?
 install Swift?
 install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Would be nice to be able to set ENV variables for
-  the root-paths of /katas only and have no dummy test
-  folders for languages/ and exercises/
-  languages/ and exercises/ are readonly
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_controllers/test_download.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+tests/run_all.sh should save the coverage stats table
+into coverage.txt so it is automatically part of git repo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts/check_language_manifest.rb
+  should become part of the main test suite.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts should also have basic sanity tests, eg that
+  they run without require errors.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Various places have code like this...
+   if ENV['CYBERDOJO_TEST_ROOT_DIR']
+      path += 'test/cyberdojo/'
+    end
+Refactor... first of all rename to specify its only katas/ root
+that is being tweaked.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+tests/test_helper.rb is almost empty now.
+refactor its last method and drop it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)
@@ -32,18 +46,6 @@ Or, simpler still, just run a test for each language and
 check the outcome is red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Lose Exercises.rb
-  will mean I need to create a
-     spy_exercise(name)
-  method. This can have a list of known names of exercises
-  that actually exist.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Lose Languages.rb - same as above.
-  When Exercises.rb and Languages.rb have gone then only
-  katas will have special path handling (for testing) which
-  means root_path tweak in application_controller can be
-  moved to Dojo.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Eventually Avatar.tags will contain one entry for each
 avatar event (eg file rename) and Avatar.lights will need
@@ -81,9 +83,6 @@ Done.
 Question
   Do I need to rebuild containers?
   It appears not. Good.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-tests/run_all.sh should save the coverage stats table
-into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
