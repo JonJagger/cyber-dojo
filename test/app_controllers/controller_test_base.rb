@@ -6,8 +6,7 @@ require '../lib/StubTestRunner'
 class ControllerTestBase < ActionController::IntegrationTest
 
   def root_path
-    # TODO: refactor this based on path of this file
-    '/Users/jonjagger/Desktop/Repos/cyberdojo/'
+    File.expand_path('../..', File.dirname(__FILE__)) + '/'
   end
 
   def thread
