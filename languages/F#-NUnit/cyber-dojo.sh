@@ -1,6 +1,4 @@
 
-cp /Packages/NUnit.Runners/tools/nunit.framework.dll /sandbox
-
 fsharpc --nologo \
         --target:library \
         -r:/sandbox/nunit.framework.dll \

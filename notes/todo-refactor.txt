@@ -17,6 +17,12 @@ into coverage.txt so it is automatically part of git repo.
 admin_scripts/check_language_manifest.rb
   should become part of the main test suite.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Each language should have a (docker running) test that confirms it
+  o) starts at red
+  o) if the _named_file_ is s/6*9/6*7/ its green
+     where the named_file is part of the test data
+  o) adding gibberish gives amber
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 admin_scripts should also have basic sanity tests, eg that
   they run without require errors.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
