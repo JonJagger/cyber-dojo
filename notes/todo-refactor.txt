@@ -7,6 +7,10 @@ install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_controllers/test_download.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_controllers/controller_test_base.rb
+  has root_path refactoring todo.
+  See test/app_models/model_test_base.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

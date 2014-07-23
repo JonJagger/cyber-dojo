@@ -1,5 +1,5 @@
 #include "hiker.hpp"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 using namespace ::testing;
 
