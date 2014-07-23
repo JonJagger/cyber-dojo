@@ -47,13 +47,11 @@ on the server, as determined by running
 ```bash
 $ docker images
 ```
-<hr/>
 
 cyber-dojo will re-start the [docker](https://www.docker.io/) `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
 See [lib/DockerTestRunner.rb](https://github.com/JonJagger/cyberdojo/blob/master/lib/DockerTestRunner.rb)
 
-<hr/>
 If [docker](https://www.docker.io/) is *not* installed,
 and the environment variable
 `CYBERDOJO_USE_HOST` is set then cyber-dojo will use the
@@ -86,7 +84,7 @@ $ ./docker_pull_all.rb
 adding a new language
 ---------------------
 
-### build the docker container for the language
+### build a docker container for the language
 
 For example, suppose you were building Lisp-2.3
 
@@ -106,8 +104,8 @@ For example, suppose you were building Lisp-2.3
     $ touch cyberdojo/languages/Lisp-2.3/Dockerfile
     ```
     The first line of this file must name the
-    Docker image you chose to build from in the first step.
-    Add commands for all the commands needed to install your language
+    Docker image you chose to build `FROM` in the first step.
+    Add commands needed to install your language
     prefixed with `RUN`
     ```
     FROM       cyberdojo/build-essential
@@ -133,10 +131,10 @@ For example, suppose you were building Lisp-2.3
     docker build -t cyberdojo/Lisp-2.3 .
     ```
 
-### build the docker container for the (language + unit test)
+### build a docker container for the (language + unit test)
 
 Repeat the same process, building FROM the docker container
-you created in the previous step.
+you created in the previous step.<br/>
 For example, suppose your Lisp unit-test framework is called LUnit
 
   * create a folder underneath `cyberdojo/languages/`
@@ -212,13 +210,13 @@ See [Misc](md/misc.md) for all the details.
 
 ### write an output parse function
 
-  * <deep-breath>
+  * Deep-breath...<br/>
     the `unit_test_framework` entry in `manifest.json`
     file names the function inside `app/lib/OutputParser.rb`
     used to determine if the output from running `cyber-dojo.sh` in your Docker
     container on the animals current files qualifies as a
-    red traffic-light, an amber traffic-light, or a green traffic-light.
-    </deep-breath>
+    red traffic-light, an amber traffic-light, or a green traffic-light.<br/>
+    And exhale...<br/>
     There are lots of examples in
     [app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
 
@@ -235,14 +233,11 @@ See [Misc](md/misc.md) for all the details.
 There is a ruby script to do this
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
-$ ruby check_language_manifest.rb .. [language-dir]
-```
-where [language-dir] is the directory of the language you are checking
-which contains the `manifest.json` file.
-<br>Example
-```bash
 $ ruby check_language_manifest.rb .. Lisp-2.3_LUnit
 ```
+where the last parameter is the directory of the
+language + unit test you are checking (which
+contains the `manifest.json` file).
 
 
 adding a new exercise

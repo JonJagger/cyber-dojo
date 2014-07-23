@@ -24,8 +24,8 @@ entering your programming dojo
   * edit the code files...
   * press the `[test]` button
   * a new traffic-light appears
-  * traffic-lights progress along the top, left-to-right, oldest-to-newest
-  * clicking on any traffic-light opens a dialog showing the diffs for
+  * traffic-lights progress along the bottom, left-to-right, oldest-to-newest
+  * click on any traffic-light to open a dialog showing the diffs for
    that traffic-light plus << < > >> buttons to navigate forwards and backwards
 
 You can also re-enter at any animals' most recent traffic-light by pressing
@@ -42,13 +42,16 @@ Each traffic-light is coloured as follows:
   * amber - syntax error somewhere, tests not run
   * green - tests ran and all passed
 
-The colours on the traffic-light are positional, red at the top,
-amber in the middle, green at the bottom. This means you can still read the
+The colours on the traffic-light are positional,
+red at the top,
+amber in the middle,
+green at the bottom.
+This means you can still read the
 display if you are colour blind.
 You will also get an amber traffic-light if the tests do not complete within
 15 seconds (eg you've accidentally coded an infinite loop or the server is
 overloaded with too many concurrent programming dojos)
-Clicking on any traffic-light opens a dialog showing the diffs for
+Remember, clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to
 navigate forwards and backwards.
 
@@ -60,13 +63,14 @@ You can get to the dashboard page in two ways
   * from the test page, click the animal image
 
 Each horizontal row corresponds to one animal and displays, from left to right,
-  * its oldest-to-newest traffic lights
-  * its total number of red,amber,green traffic-lights so far (in red,amber,green).
-  * its total number of traffic-lights (in the current colour).
-  * its animal
+  * oldest-to-newest traffic lights
+  * total number of traffic-lights (in the current colour).
+  * a pie-chart indicating the total number of red,amber,green traffic-lights
+    so far.
+  * the animal
   * as always clicking on any traffic-light opens a dialog showing the diffs for
     that traffic-light for that animal together with << < > >> buttons to
-    navigate forwards and backwards.
+    navigate forwards and backwards. Did I mention that already?
 
 ### auto refresh?
 
@@ -80,11 +84,11 @@ horizontal space. These traffic-lights auto scroll:
   * Turn it *off* just before starting a dashboard review.
 
 
-### |60s| columns?
+### 60 second columns?
 
 When this is checked each vertical column corresponds to 60 seconds
 and contains all the traffic-lights created by all the animals in those 60
-seconds. If no animals press the `[test]` button during those 60 seconds the
+seconds. If no animals press their `[test]` button during those 60 seconds the
 column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
 When not checked the traffic-lights of different animals are not
