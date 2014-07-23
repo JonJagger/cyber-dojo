@@ -16,7 +16,7 @@ $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./setup_docker_server.rb
 ```
-* Install all the languages' docker containers
+* Install all the language's docker containers
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./docker_pull_all.rb
@@ -49,9 +49,9 @@ $ docker images
 ```
 <hr/>
 
-cyber-dojo will re-use the [docker](https://www.docker.io/) `image_name` container to execute an animals
+cyber-dojo will re-start the [docker](https://www.docker.io/) `image_name` container to execute an animals
 `cyber-dojo.sh` file *each* time the animal presses the `[test]` button.
-See [app/lib/DockerRunner.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/DockerRunner.rb)
+See [lib/DockerTestRunner.rb](https://github.com/JonJagger/cyberdojo/blob/master/lib/DockerTestRunner.rb)
 
 <hr/>
 If [docker](https://www.docker.io/) is *not* installed,
@@ -79,69 +79,113 @@ each `cyberdojo/languages/*/manifest.json` file that you wish to use.
 Alternatively, you can pull them all (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
-$ ./docker_pull_all.rb 
+$ ./docker_pull_all.rb
 ```
 
 
 adding a new language
 ---------------------
 
-### build the docker container
+### build the docker container for the language
 
-  * choose a docker-container to build on top of. For example
+For example, suppose you were building Lisp-2.3
+
+  * choose a docker-container to build FROM
+    <br/>For example
     `cyberdojo/build-essential`
     at the [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
     which was built using this [Dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/build-essential/Dockerfile)
 
-  * write a Dockerfile containing all the
-    required commands (eg `apt-get install`)'s.
-    <br>For example
-    [cyberdojo/languages/C#-NUnit/Dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23-NUnit/Dockerfile)
-
-  * use the dockerfile to build your container. For example
+  * create a folder underneath `cyberdojo/languages/`
     ```bash
-    $ docker build -t cyberdojo/my_container .
+    $ md cyberdojo/languages/Lisp-2.3
     ```
-    which creates a new container called `cyberdojo/my_container`
-    using `Dockerfile` in the current folder `.`
-    where `cyberdojo/my_container` is the `image_name` in your
-    languages' `manifest.json` file.
 
+  * in your language's folder, create a `Dockerfile`
+    ```bash
+    $ touch cyberdojo/languages/Lisp-2.3/Dockerfile
+    ```
+    The first line of this file must name the
+    Docker image you chose to build from in the first step.
+    Add commands for all the commands needed to install your language
+    prefixed with `RUN`
+    ```
+    FROM       cyberdojo/build-essential
+    RUN apt-get install -y lispy-2.3
+    RUN apt-get install -y ...
+    ```
+    See for example...
+    [cyberdojo/languages/C#/Dockerfile](https://github.com/JonJagger/cyberdojo/blob/master/languages/C%23/Dockerfile)
 
-### write an output parse function
+  * use the `Dockerfile` to try and build your container. For example
+    ```bash
+    $ docker build -t cyberdojo/Lisp-2.3 .
+    ```
+    which, if it completes, creates a new docker container
+    called `cyberdojo/Lisp-2.3` using `Dockerfile` in
+    the current folder `.`
 
-  * <deep-breath>
-    the `unit_test_framework` entry in the languages' `manifest.json`
-    file is the name of the function inside `app/lib/OutputParser.rb`
-    used to determine if the output from running `cyber-dojo.sh` in your docker
-    container on the animals current files qualifies as a red traffic-light, an amber
-    traffic-light, or a green traffic-light.
-    </deep-breath>
-    There are lots of examples in
-    [app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+  * write a script called `build-docker-container.sh` to automate
+    building your language's docker container
+    ```bash
+    $ echo cyberdojo/languages/Lisp-2.3/build-docker-container.sh
+    #!/bin/bash
+    docker build -t cyberdojo/Lisp-2.3 .
+    ```
 
-  * There are lots of example tests in
-    [cyberdojo/test/app_lib](https://github.com/JonJagger/cyberdojo/tree/master/test/app_lib)
-    eg
-    [output_python_pytest_tests.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/output_python_pytest_tests.rb)
+### build the docker container for the (language + unit test)
 
-  * Of course, if the unit-test framework you're using already exists
-    in OutputParser.rb you can simply use it.
+Repeat the same process, building FROM the docker container
+you created in the previous step.
+For example, suppose your Lisp unit-test framework is called LUnit
 
-### write the language's manifest.json file
+  * create a folder underneath `cyberdojo/languages/`
+    ```bash
+    $ md cyberdojo/languages/Lisp-2.3_LUnit
+    ```
+    Note that this is under `cyberdojo/languages/` and not under
+    `cyberdojo/languages/Lisp-2.3/`
 
-Create a new sub-directory under `cyberdojo/languages/`
-<br>By convention name it $languageName-$testFrameworkName
-<br>For example:
-  ```
-  cyberdojo/languages/Lisp-lut
-  ```
-Create a `manifest.json` file in this directory.
-See [manifest.json details](misc.md)
-<br>For example:
-  ```
-  cyberdojo/languages/Lisp-lut/manifest.json
-  ```
+  * in your language's folder, create a `Dockerfile`
+    ```bash
+    $ touch cyberdojo/languages/Lisp-2.3_LUnit/Dockerfile
+    ```
+    The first line of this file must name the
+    docker image you built for your language above.
+    Add lines for all the commands needed to install your
+    unit-test framework prefixed with `RUN`
+    ```
+    FROM       cyberdojo/Lisp-2.3
+    RUN apt-get install -y lispy-lunit
+    RUN apt-get install -y ...
+    ```
+    If you do not need any commands you should still create
+    a `Dockerfile` with the single FROM line.
+
+  * use the `Dockerfile` to try and build your container. For example
+    ```bash
+    $ docker build -t cyberdojo/Lisp-2.3_LUnit .
+    ```
+    which, if it completes, creates a new docker container called
+    `cyberdojo/Lisp-2.3_LUnit`
+    using `Dockerfile`
+    in the current folder `.`
+
+  * write a script called `build-docker-container.sh` to automate
+    building your (language + unit test) docker container
+    ```bash
+    $ echo cyberdojo/languages/Lisp-2.3_LUnit/build-docker-container.sh
+    #!/bin/bash
+    docker build -t cyberdojo/Lisp-2.3_LUnit .
+    ```
+
+### write the `manifest.json` file
+
+For example
+```bash
+$ touch cyberdojo/languages/Lisp-2.3_LUnit/manifest.json
+```
+
 Each `manifest.json` file contains an ruby object in JSON format
 <br>Example: the one for Java-JUnit looks like this:
 ```json
@@ -162,6 +206,31 @@ Each `manifest.json` file contains an ruby object in JSON format
 }
 ```
 
+See [Misc](md/misc.md) for all the details.
+
+
+
+### write an output parse function
+
+  * <deep-breath>
+    the `unit_test_framework` entry in `manifest.json`
+    file names the function inside `app/lib/OutputParser.rb`
+    used to determine if the output from running `cyber-dojo.sh` in your Docker
+    container on the animals current files qualifies as a
+    red traffic-light, an amber traffic-light, or a green traffic-light.
+    </deep-breath>
+    There are lots of examples in
+    [app/lib/OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+
+  * There are lots of example tests in
+    [cyberdojo/test/app_lib](https://github.com/JonJagger/cyberdojo/tree/master/test/app_lib)
+    eg
+    [test_output_python_pytest.rb](https://github.com/JonJagger/cyberdojo/blob/master/test/app_lib/test_output_python_pytest.rb)
+
+  * Of course, if the unit-test framework you're using already exists
+    in OutputParser.rb you can simply name it and you're done.
+
+
 ### check the language's manifest.json file
 There is a ruby script to do this
 ```bash
@@ -172,7 +241,7 @@ where [language-dir] is the directory of the language you are checking
 which contains the `manifest.json` file.
 <br>Example
 ```bash
-$ ruby check_language_manifest.rb .. Lisp-lut
+$ ruby check_language_manifest.rb .. Lisp-2.3_LUnit
 ```
 
 
