@@ -3,7 +3,8 @@ install Swift?
 install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+when tips dialog open it needs to scroll to top.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_controllers/test_download.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
