@@ -20,7 +20,7 @@ cyber-dojo
   * running your own docker'd cyber-dojo server
   * overview of how docker language containers work
   * pulling pre-built docker language containers
-  * adding a new language + unit test
+  * adding a new (language + unit test) docker container
   * adding a new exercise
   * pulling from the cyberdojo github repo
 

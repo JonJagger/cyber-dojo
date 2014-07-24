@@ -74,6 +74,7 @@ $ docker pull IMAGE_NAME
 ```
 for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
+
 Alternatively, you can pull them all (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
@@ -204,7 +205,14 @@ Each `manifest.json` file contains an ruby object in JSON format
 }
 ```
 
-See [Misc](md/misc.md) for all the details.
+Finally you need to create the initial starting files (and
+possibly some support files). In honour of Douglas Adams
+in  cyber-dojo these always take the form of a function
+called answer() which return 6 * 9 and a test for this
+function which expects 42. Thus the initial files give
+you a red traffic-light.
+
+See [Misc](md/misc.md) for `manifest.json` details.
 
 
 
