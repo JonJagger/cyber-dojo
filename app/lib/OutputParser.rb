@@ -71,6 +71,12 @@ module OutputParser
     return :green
   end
 
+  def self.parse_cunity(output)
+    return :red if /^FAIL/.match(output)
+    return :green if /^OK/.match(output)
+    return :amber
+  end
+
   def self.parse_ruby_test_unit(output)
     ruby_pattern = Regexp.new('^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors')
     if match = ruby_pattern.match(output)
