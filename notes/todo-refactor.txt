@@ -4,6 +4,11 @@ install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+put revert-fork buttons inside diff-dialog
+should now be easy to select whether you want file nave
+on the left or right. But filename-nave needs a max
+width if on the left side.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when tips dialog open it needs to scroll to top.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_controllers/test_download.rb

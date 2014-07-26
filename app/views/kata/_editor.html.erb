@@ -1,10 +1,44 @@
 
-<div id="visible-files-container">
+<table>
 
-  <% @visible_files.each do |filename,content| %>
-    <%= render :partial => 'visible_file',
-               :locals  => { :filename => filename,
-                             :content  => content} %>
-  <% end %>
+  <tr class="valign-top">
+    <td colspan="2">
+      <div id="traffic-lights">
+        <%= render :partial => 'traffic_lights' %>
+      </div>
+    </td>
+  </tr>
 
-</div>
+  <tr class="valign-top">
+    <td colspan="2">
+      <div id="visible-files-container">
+
+        <% @visible_files.each do |filename,content| %>
+          <%= render :partial => 'visible_file',
+                     :locals  => { :filename => filename,
+                                   :content  => content} %>
+        <% end %>
+
+      </div>
+    </td>
+  </tr>
+
+  <tr class="valign-top">
+    <td>
+      <%= render :partial => 'line_numbers_checkbox' %>
+    </td>
+
+    <td id="info-container" >
+      <span title="this dojo's unique id is <%= @kata.id.to_s[0..5] %>">
+      <%= @kata.id.to_s[0..5] %></span>,
+      <span title="this dojo's exercise is <%= @kata.exercise.name.gsub('_',' ') %>">
+        <%= @kata.exercise.name.gsub('_',' ') %></span>,
+      <span title="this dojo's unit-test framework is <%= @kata.language.display_test_name %>">
+        <%= @kata.language.display_test_name %></span>,
+      <span title="this dojo's language is <%= @kata.language.display_name %>">
+        <%= @kata.language.display_name %></span>
+    </td>
+  </tr>
+
+</table>
+

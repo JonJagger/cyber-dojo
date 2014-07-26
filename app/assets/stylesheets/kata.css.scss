@@ -28,24 +28,23 @@
     @include ghost-panel(8px);
     @include left-align(15px);
     #new, #rename, #delete {
-      width: 75px;
       text-align: left;
-      font-size: 0.85em;
+      font-size: 1em;
       margin-bottom: 2px;
     }
   }
 
   #revert-button, #fork-button {
     width: 75px;
-    text-align: right;
+    text-align: left;
     font-size: 0.85em;
     margin-bottom: 2px;
   }
 
   #filename-list {
     margin-left: 15px;
-    height: 360px;
-    overflow-x: none;
+    height: 485px;
+    overflow-x: auto;
     overflow-y: auto;
     div[class~='filename'][class~='highlight'] {
       &:before { content: ">"; }
@@ -55,14 +54,27 @@
     }
   }
 
-  #line-numbers-container, #revert-fork-container {
-    display: table;
+  #info-container {
+    display: block;
+    @include ghost-panel(5px);
+    @include right-align(5px);
+  }
+
+  #line-numbers-container {
+    display: block;
+    @include ghost-panel(5px);
+    @include right-align(5px);
+    margin-left: 4px;
+  }
+
+  #revert-fork-container {
+    display: inline-block;
     @include ghost-panel(8px);
-    @include right-align(15px);
+    @include left-align(15px);
   }
   #help-button-container {
-    display: table;
-    @include right-align(15px);
+    display: inline-block;
+    @include left-align(15px);
   }
 
   #line-numbers-container #label {
@@ -72,16 +84,18 @@
   #help-button {
     font-size: 1em;
     @include rounded-corner(14px);
-    margin: 0px;
-    position: relative;
-    top: -5px;
+    margin: {
+      top: 10px;
+      bottom: 10px;
+    }
+    Xposition: relative;
+    Xtop: -5px;
   }
 
   #traffic-lights {
     width: 735px;  // line-numbers=35, file-content=700
     overflow-x: auto;
-    margin-left: 3px;
-    margin-top: 2px;
+    margin-bottom: 5px;
     &::-webkit-scrollbar:horizontal {
         height: 6px;
     }

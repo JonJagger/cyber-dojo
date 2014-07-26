@@ -31,10 +31,10 @@
 
 #shared-info {
   display: table;
-  @include ghost-panel(10px);
+  @include ghost-panel(5px);
   @include right-align(15px);
-  text-align: right;
-  font-size: 1em;
+  text-align: left;
+  font-size: 0.8em;
 }
 
 #navigate-buttons {

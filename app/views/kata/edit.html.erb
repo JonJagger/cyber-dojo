@@ -63,32 +63,35 @@ $(function() {
 <%= render :partial => 'file_hashes_outgoing' %>
 
 <div id="kata-page">
+
+  <%= render :partial => 'test_spinner' %>
+
   <table>
+
     <tr class="valign-top">
-      <td>
-        <%= render :partial => 'shared/info' %>
-        <%= render :partial => 'revert_fork' %>
-        <%= render :partial => 'line_numbers_checkbox' %>
-        <%= render :partial => 'help_button' %>
-      </td>
       <td>
         <%= render :partial => 'editor' %>
       </td>
+
       <td>
-        <%= render :partial => 'test_button' %>
-        <%= render :partial => 'test_spinner' %>
-        <%= render :partial => 'file_new_rename_delete' %>
+        <table>
+          <tr>
+            <td><%= render :partial => 'test_button' %></td>
+            <td><%= render :partial => 'revert_fork' %></td>
+          </tr>
+        </table>
+
+        <table>
+          <tr>
+            <td><%= render :partial => 'file_new_rename_delete' %></td>
+          </tr>
+        </table>
+
         <%= render :partial => 'filename_list' %>
+        <%= render :partial => 'help_button' %>
       </td>
-    </tr>
-    <tr class="valign-top">
-      <td></td>
       <td>
-        <div id="traffic-lights">
-          <%= render :partial => 'traffic_lights' %>
-        </div>
       </td>
-      <td></td>
     </tr>
   </table>
 </div>
