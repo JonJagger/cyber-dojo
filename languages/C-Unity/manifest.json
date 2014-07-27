@@ -1,0 +1,16 @@
+
+{
+  "visible_filenames": [
+     "hiker.tests.c",
+     "hiker.c",
+     "hiker.h",
+     "makefile",
+     "cyber-dojo.sh",
+     "unity.license.txt"
+  ],
+  "filename_extension" : ".c",
+  "display_name": "C",
+  "display_test_name": "Unity",
+  "unit_test_framework": "cunity",
+  "image_name": "adgico/gcc-4.8.1_unity"
+}
