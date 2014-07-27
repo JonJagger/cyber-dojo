@@ -12,5 +12,5 @@
   "display_name": "C",
   "display_test_name": "Unity",
   "unit_test_framework": "cunity",
-  "image_name": "adgico/gcc-4.8.1_unity"
+  "image_name": "cyberdojo/gcc-4.8.1_unity"
 }
