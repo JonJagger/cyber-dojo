@@ -59,7 +59,7 @@ var cyberDojo = (function(cd, $) {
 	var currentFilename = '';
 
 	var allHtml = function(node) {
-	  //http:stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
+	  // http:stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
 	  return $(node).clone().wrap('<p/>').parent().html();
 	};
 
@@ -116,6 +116,13 @@ var cyberDojo = (function(cd, $) {
 			  '</button>';
 	};
 
+	var makeForkButton = function() {
+	  return '<button type="button"' +
+			           'id="fork-button">' +
+				  'fork' +
+			  '</button>';
+	};
+
 	var makeNowTagControl = function(tag) {
 	  var html = '' +
 	    '<table class="tag-control">' +
@@ -123,9 +130,13 @@ var cyberDojo = (function(cd, $) {
 			td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
  		    td('<div id="now-traffic-light"></div>');
 
+	  var buttons = '';
 	  if (showRevert) {
-		html += td(makeRevertButton());
+		buttons += makeRevertButton();
+		buttons += '<br/>'
 	  }
+	  buttons += makeForkButton();
+	  html += td(buttons);
 	  html += '</tr>';
 	  html += '</table>';
 	  return html;
@@ -173,7 +184,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	$('#revert-fork-button', diffDiv).click(function() {
+	$('#revert-button', diffDiv).click(function() {
 	  deleteAllCurrentFiles();
 	  copyRevertFilesToCurrentFiles();
 	  cd.testForm().submit();
@@ -196,6 +207,90 @@ var cyberDojo = (function(cd, $) {
 		  cd.newFileContent(filename, visibleFiles[filename]);
 		}
 	  }
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	$('#fork-button', diffDiv).click(function() {
+	  $.getJSON('/forker/fork', {
+		id: id,
+		avatar: avatarName,
+		tag: nowTag
+	  }, function(data) {
+		if (data.forked) {
+		  // important not to do window.open(url) directly from here
+		  // as it will open in a new window and not a new tab ***
+		  forkSucceededDialog(data);
+		} else {
+		  forkFailedDialog(data);
+		}
+	  });
+	});
+
+	var forkSucceededDialog = function(fork) {
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1.5em;'>" +
+	        "your forked dojo's id is" +
+			"<div class='align-center'>" +
+              "<span class='kata-id-input'>" +
+			  "&nbsp;" +
+			  fork.id.substring(0,6) +
+			  "&nbsp;" +
+			  "</span>" +
+			"</div>" +
+		  "</div>" +
+		"</div>";
+	  var succeeded = $('<div>').html(html).dialog({
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			// *** whereas here it will open in a new tab
+			var url = '/dojo/index/' + fork.id;
+			window.open(url);
+			$(this).remove();
+		  }
+		}
+	  });
+	  succeeded.dialog('open');
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var forkFailedDialog = function(data) {
+	  var diagnostic = " an unknown failure occurred";
+	  if (data.reason === 'id') {
+		diagnostic = "the practice session no longer exists";
+	  } else if (data.reason === 'language') {
+		diagnostic = "the language " + data['language'] + " no longer exists";
+	  } else if (data.reason === 'avatar') {
+		diagnostic = "there is no " + avatarName +
+		             " in the practice session";
+	  } else  if (data.reason === 'tag') {
+		diagnostic = avatarName +
+		            " doesn't have traffic-light[" + tag + "]" +
+		            " in the practice session";
+	  }
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1em;'>" +
+	        "On the originating server " + diagnostic + "."
+		  "</div>" +
+		"</div>";
+	  var failed = $('<div>').html(html).dialog({
+		title: cd.dialogTitle('could not fork'),
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			$(this).remove();
+		  }
+		}
+	  });
+	  failed.dialog('open');
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -

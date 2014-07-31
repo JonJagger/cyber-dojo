@@ -52,7 +52,7 @@
       }
     }
     .tag-control {
-      @include ghost-panel;
+      @include ghost-panel(5px);
     }
     .traffic-light-count {
       @include font-size-large;
@@ -63,8 +63,12 @@
     text-align: left;
   }
 
-  #was-traffic-light { margin-right: 0.3em; }
-  #now-traffic-light { margin-left : 0.3em; }
+  #was-traffic-light, #now-traffic-light {
+    margin: {
+      left : 0.5em;
+      right: 0.5em;
+    }
+  }
 
   #was-tag-number, #now-tag-number {
     @include editable_tag_number;
@@ -176,8 +180,10 @@
     }
   }
 
-  #revert-button {
+  #revert-button, #fork-button {
     @include font-size-tiny;
+    width: 70px;
+    text-align: left;
   }
 
 }
