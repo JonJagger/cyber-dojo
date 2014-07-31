@@ -4,10 +4,9 @@ install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-put revert-fork buttons inside diff-dialog
-should now be easy to select whether you want file nave
-on the left or right. But filename-nave needs a max
-width if on the left side.
+Option to select whether you want filename-nave
+on the left or right.
+Filename-nave needs a max width if on the left side.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when tips dialog open it needs to scroll to top.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -84,17 +83,6 @@ just the lights on the dashboard page open a new diff page.
 Is there a way that a dashboard can record which
 lights/animals have had some/all of their lights
 diff-reviewed?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Upgrade test server to latest docker 1.1.1
-http://askubuntu.com/questions/472412/how-do-i-upgrade-docker
-$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-$ sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
-$ sudo apt-get update
-$ sudo apt-get install lxc-docker
-Done.
-Question
-  Do I need to rebuild containers?
-  It appears not. Good.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
@@ -231,11 +219,6 @@ rename Dojo.rb to CyberDojo.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Folders.id_complete can move to Katas.complete(id)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-docker md file
-o) adding a new language
-   mention creating a sub-folder off languages/ at the start
-   so its clear Dockerfile lives off this folder.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   kata.start_avatar
      copy visible_filenames
         # this could also be replaced by
@@ -293,16 +276,12 @@ o) adding a new language
     add 2nd parameter specifying format, no default, on call use "rb"
   ...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Revert and fork javascript is virtually identical.
-  ...
   Can i18n yml files be split?
   ...
   Exception_controller_test.rb needs some assertions!
   ...
-  Rename css files,
-    eg forker->forker_dialog
-    eg reverter->reverter_dialog
-    eg diff->diff_dialog
+  Rename css file,
+    diff->diff_dialog
     don't forget to update application.css.scss
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   It would be simpler if output and instructions were not mixed

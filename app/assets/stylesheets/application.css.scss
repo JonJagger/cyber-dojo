@@ -23,7 +23,6 @@
  *= depend_on setup.css.scss
  *= depend_on kata.css.scss
  *= depend_on dashboard.css.scss
- *= depend_on reverter-forker.css.scss
  *= depend_on differ.css.scss
  *= depend_on jquery-ui-1.8.16.custom.css.scss
  *= require locales
@@ -42,6 +41,5 @@
 @import "setup.css.scss";
 @import "kata.css.scss";
 @import "dashboard.css.scss";
-@import "reverter-forker.css.scss";
 @import "differ.css.scss";
 @import "jquery-ui-1.8.16.custom.css.scss";
