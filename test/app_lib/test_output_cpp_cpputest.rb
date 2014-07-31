@@ -89,6 +89,20 @@ class OutputCppUTestTests < CyberDojoTestBase
 
   # - - - - - - - - - - - - - - -
 
+  test 'explore regex of red/green for dashboard summary' do
+    red = "Errors (1 failures, 1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 1 ms)"
+    red_string = "Errors \\((\\d)+ failures, (\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
+    red_pattern = Regexp.new(red_string)
+    assert red_pattern.match(red)
+
+    green = 'OK (1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)'
+    green_string = "OK \\((\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
+    green_pattern = Regexp.new(green_string)
+    assert green_pattern.match(green)
+  end
+
+  # - - - - - - - - - - - - - - -
+
   def colour_of(output)
     OutputParser::parse_cpputest(output)
   end

@@ -18,6 +18,7 @@ class LanguageManifestChecker
     return false if unknown_keys_exist?
     return false if duplicate_visible_filenames?
     return false if duplicate_support_filenames?
+    return false if !summary_regexs_valid?
     return false if filename_extension_starts_with_dot?
     return false if !cyberdojo_sh_exists?
     return false if !cyberdojo_sh_has_execute_permission?
@@ -66,6 +67,7 @@ private
   def unknown_keys_exist?
     known = [ 'visible_filenames',
               'support_filenames',
+              'summary_regexs',
               'filename_extension',
               'highlight_filenames',
               'unit_test_framework',
@@ -113,6 +115,21 @@ private
     end
     print '.'
     false
+  end
+
+  def summary_regexs_valid?
+    summary_regexs.each do |s|
+      begin
+        Regexp.new(s)
+      rescue
+        message =
+          alert + " #{manifest_filename} contains invalid summary_regexs entry #{s}"
+        puts message
+        return false
+      end
+    end
+    print '.'
+    return true
   end
 
   def filename_extension_starts_with_dot?
@@ -213,6 +230,7 @@ private
   end
 
   def any_files_owner_is_root?
+    # for HostTestRunner
     (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
       uid = File.stat(language_dir + '/' + filename).uid
       owner = Etc.getpwuid(uid).name
@@ -229,6 +247,7 @@ private
   end
 
   def any_files_group_is_root?
+    # for HostTestRunner
     (visible_filenames + support_filenames + ['manifest.json']).each do |filename|
       gid = File.stat(language_dir + '/' + filename).gid
       owner = Etc.getgrgid(gid).name
@@ -320,6 +339,10 @@ private
 
   def support_filenames
     manifest['support_filenames'] || [ ]
+  end
+
+  def summary_regexs
+    manifest['summary_regexs'] || [ ]
   end
 
   def highlight_filenames

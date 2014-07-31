@@ -124,6 +124,10 @@ class Language
     renames[name] || name
   end
 
+  def summary_regexs
+    manifest['summary_regexs'] || [ ]
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - -
 
   def colour(output)

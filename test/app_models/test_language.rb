@@ -284,7 +284,27 @@ class LanguageTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  # test "when manifest.json does not exist..." do
+  test 'summary_regexs reads back as set' do
+    @language = @dojo.languages['Ruby']
+    regexs = [
+      "Errors \\((\\d)+ failures\\)",
+      "OK \\((\\d)+ tests\\)"
+    ]
+    spy_manifest({
+      'summary_regexs' => regexs
+    })
+    assert_equal regexs, @language.summary_regexs
+    Regexp.new(regexs[0])
+    Regexp.new(regexs[1])
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'summary_regexs defaults to empty array' do
+    @language = @dojo.languages['Ruby']
+    spy_manifest({})
+    assert_equal [], @language.summary_regexs
+  end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

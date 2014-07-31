@@ -9,6 +9,10 @@
   ],
   "filename_extension" : ".cpp",
   "unit_test_framework":  "cpputest",
+  "summary_regexs" : [
+    "Errors \\((\\d)+ failures, (\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)",
+    "OK \\((\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
+  ],
 
   "display_name": "C++",
   "display_test_name": "CppUTest",
