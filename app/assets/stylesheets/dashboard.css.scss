@@ -30,6 +30,15 @@
     }
   }
 
+  #summary-button-container {
+    @include right-align(15px);
+    text-align: right;
+
+    #summary-button {
+      @include font-size-tiny();
+    }
+  }
+
   #traffic-lights {
     width: 800px;
     height: 650px;
@@ -56,3 +65,10 @@
   }
 
 }
+
+#summary-dialog {
+  .summary {
+    padding-left: 5px;
+  }
+}
+

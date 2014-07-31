@@ -1,0 +1,75 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+
+  cd.dialog_summary = function(id) {
+
+	  $.getJSON('/dashboard/summary', { id: id }, function(data) {
+
+        var summaryDiv = $('<div id="summary-dialog">');
+
+        var html = '<table>';
+        $.each(data.animals, function(name,animal) {
+          html += '' +
+            "<tr class='animal'>" +
+              "<td class='name'>" +
+                "<img src='/images/avatars/" + name + ".jpg'" +
+                  " width='45'" +
+                  " height='45'" +
+                  " class='avatar-image'/>" +
+              "</td>" +
+              "<td class='colour'>" +
+                "<img src='/images/traffic_light_" + animal.colour + ".png'" +
+                    " alt='" + animal.colour + " traffic-light'" +
+                    " width='15'" +
+                    " height='45'/>" +
+              "</td>" +
+              "<td class='summary'>" +
+                animal.summary +
+              "</td>" +
+            "</tr>";
+        });
+        html += '</table>';
+
+        var summaryDialog = summaryDiv
+          .html(html)
+          .dialog({
+            html: html,
+            autoOpen: false,
+            title: cd.dialogTitle('summary'),
+            width: 700,
+            height: 500,
+            modal: true,
+            buttons: {
+              close: function() {
+                summaryDialog.remove();
+              }
+            },
+          });
+
+        summaryDialog.dialog('open');
+      });
+  };
+
+  $('#summary-button').click(function() {
+    //var title = $(this).data('title');
+    //var close = $(this).data('close');
+    cd.dialog_summary('<%= @kata.id %>');
+  });
+
+});
+
+//--></script>
+
+<% if @kata.language.summary_regexs != [ ] %>
+<div id="summary-button-container">
+  <button type="button"
+          title="show summary"
+          data-title="summary"
+          data-close="<%= t('views.buttons.close') %>"
+          id="summary-button">
+    summary
+  </button>
+</div>
+<% end %>
