@@ -89,16 +89,14 @@ class OutputCppUTestTests < CyberDojoTestBase
 
   # - - - - - - - - - - - - - - -
 
-  test 'explore regex of red/green for dashboard summary' do
-    red = "Errors (1 failures, 1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 1 ms)"
-    red_string = "Errors \\((\\d)+ failures, (\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
-    red_pattern = Regexp.new(red_string)
-    assert red_pattern.match(red)
+  test 'regex of red/green for dashboard summary' do
+    red_regex = "Errors \\((\\d)+ failures, (\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
+    red_string = "Errors (1 failures, 1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 1 ms)"
+    assert Regexp.new(red_regex).match(red_string)
 
-    green = 'OK (1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)'
-    green_string = "OK \\((\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
-    green_pattern = Regexp.new(green_string)
-    assert green_pattern.match(green)
+    green_regex = "OK \\((\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
+    green_string = 'OK (1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)'
+    assert Regexp.new(green_regex).match(green_string)
   end
 
   # - - - - - - - - - - - - - - -

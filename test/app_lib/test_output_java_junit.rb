@@ -4,7 +4,7 @@ require_relative '../cyberdojo_test_base'
 
 class OutputJavaJUnitTests < CyberDojoTestBase
 
-  test "failing test is red" do
+  test 'failing test is red' do
     output =
       [
         "JUnit version 4.11-SNAPSHOT-20120416-1530",
@@ -23,7 +23,7 @@ class OutputJavaJUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "syntax error is amber" do
+  test 'syntax error is amber' do
     output =
       [
         "UntitledTest.java:8: ';' expected",
@@ -36,7 +36,7 @@ class OutputJavaJUnitTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
-  test "passing test is green" do
+  test 'passing test is green' do
     output =
       [
         "JUnit version 4.11-SNAPSHOT-20120416-1530",
@@ -46,6 +46,25 @@ class OutputJavaJUnitTests < CyberDojoTestBase
         "OK (1 test)"
       ].join("\n")
     assert_equal :green, colour_of(output)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
+  test 'regex of red/green for dashboard summary' do
+    red_regex = "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+"
+
+    red_string = "Tests run: 2,  Failures: 1"
+    assert Regexp.new(red_regex).match(red_string)
+    red_string = "Tests run: 1,  Failures: 1"
+    assert Regexp.new(red_regex).match(red_string)
+
+    green_regex = "OK \\((\\d)+ test(s)?\\)"
+
+    green_string = 'OK (2 tests)'
+    assert Regexp.new(green_regex).match(green_string)
+    green_string = 'OK (1 test)'
+    assert Regexp.new(green_regex).match(green_string)
+
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - -

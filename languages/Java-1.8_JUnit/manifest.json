@@ -9,6 +9,10 @@
   "support_filenames": [
     "junit-4.11.jar"
   ],
+  "summary_regexs" : [
+    "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
+    "OK \\((\\d)+ test(s)?\\)"
+  ],
   "filename_extension" : ".java",
   "display_name": "Java",
   "display_test_name": "JUnit",

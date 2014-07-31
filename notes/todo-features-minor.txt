@@ -1,10 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dashboard summary
-  CppUTest
-  Errors (1 failures, 1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 1 ms)
-  OK     (            1 tests, 1 ran, 1 checks, 0 ignored, 0 filtered out, 0 ms)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 working towards a tag being created for inter-test events...
 When an event happens in the browser I create a snapshot of
 the current state. Eg if there are 3 files fileA,fileB,fileC,
