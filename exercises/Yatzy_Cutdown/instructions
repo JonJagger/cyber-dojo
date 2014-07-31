@@ -8,7 +8,7 @@ roll is not compatible with the category, the player scores
 zero for the roll.
 
 For example, if a player rolls 5,6,5,6,2 and scores the
-dice in the two-pairs category they would score 24 (5+6+5+6+2).
+dice in the two-pairs category they would score 22 (5+5+6+6).
 
 Your task is to score a GIVEN roll in a GIVEN category.
 You do NOT have to program the random dice rolling.
