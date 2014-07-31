@@ -176,6 +176,10 @@
     }
   }
 
+  #revert-button {
+    @include font-size-tiny;
+  }
+
 }
 
 .diff-traffic-light {

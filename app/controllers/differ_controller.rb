@@ -16,6 +16,7 @@ class DifferController < ApplicationController
 	render :json => {
 	  :wasTrafficLight => lights[was_tag - 1].to_json,
 	  :nowTrafficLight => lights[now_tag - 1].to_json,
+      :visibleFiles => avatar.tags[now_tag].visible_files,
 	  :diffs => diffs,
 	  :idsAndSectionCounts => prune(diffs),
 	  :currentFilenameId => most_changed_file_id(diffs, current_filename)

@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.setupTrafficLightOpensDiffDialogHandlers = function(lights) {
+  cd.setupTrafficLightOpensDiffDialogHandlers = function(lights,showRevert) {
 	lights.click(function() {
 	  var light = $(this);
 	  var id = light.data('id');
@@ -11,13 +11,15 @@ var cyberDojo = (function(cd, $) {
 	  var wasTag = light.data('was-tag');
 	  var nowTag = light.data('now-tag');
 	  var maxTag = light.data('max-tag');
-	  cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag, light);
+	  cd.dialog_diff(id, avatarName,
+					 wasTag, nowTag, maxTag,
+					 light, showRevert);
 	});
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.setupTrafficLightCountOpensCurrentDiff = function(bulbs) {
+  cd.setupTrafficLightCountOpensCurrentDiff = function(bulbs,showRevert) {
     $.each(bulbs, function(_,bulb) {
 	  var count = $(bulb);
 	  var id = count.data('id');
@@ -33,14 +35,18 @@ var cyberDojo = (function(cd, $) {
 		' Click to review ' + avatarName + "'s current code.";
 	  count.attr('title', toolTip);
 	  count.click(function() {
-	    cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag, count);
+	    cd.dialog_diff(id, avatarName,
+					   wasTag, nowTag, maxTag,
+					   count, showRevert);
 	  });
 	});
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag, diffLight) {
+  cd.dialog_diff = function(id, avatarName,
+							wasTag, nowTag, maxTag,
+							diffLight, showRevert) {
 	// diffLight isn't necessarily a traffic-light.
 	// It is whatever dom element's click handler causes
 	// dialog_diff() to be called.
@@ -103,14 +109,26 @@ var cyberDojo = (function(cd, $) {
 		'</div>';
 	};
 
+	var makeRevertButton = function() {
+	  return '<button type="button"' +
+			           'id="revert-button">' +
+				  'revert' +
+			  '</button>';
+	};
+
 	var makeNowTagControl = function(tag) {
-	  return '' +
+	  var html = '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
 			td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
- 		    td('<div id="now-traffic-light"></div>') +
-		  '</tr>' +
-		'</table>';
+ 		    td('<div id="now-traffic-light"></div>');
+
+	  if (showRevert) {
+		html += td(makeRevertButton());
+	  }
+	  html += '</tr>';
+	  html += '</table>';
+	  return html;
 	};
 
     var makeDiffTagControl = function() {
@@ -152,6 +170,33 @@ var cyberDojo = (function(cd, $) {
     };
 
     var diffDiv = makeDiffDiv();
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	$('#revert-fork-button', diffDiv).click(function() {
+	  deleteAllCurrentFiles();
+	  copyRevertFilesToCurrentFiles();
+	  cd.testForm().submit();
+	  closeDiffDialog();
+	});
+
+	var deleteAllCurrentFiles = function() {
+	  var newFilename;
+	  $.each(cd.filenames(), function(_, filename) {
+		if (filename !== 'output') {
+		  cd.doDelete(filename);
+		}
+	  });
+	};
+
+	var copyRevertFilesToCurrentFiles = function() {
+	  var filename;
+	  for (filename in visibleFiles) {
+		if (filename !== 'output') {
+		  cd.newFileContent(filename, visibleFiles[filename]);
+		}
+	  }
+	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -484,6 +529,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	var visibleFiles = undefined;
+
 	var refresh = function() {
 	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
@@ -495,6 +542,7 @@ var cyberDojo = (function(cd, $) {
 		  current_filename: currentFilename // 51:var currentFilename
 		},
 		function(data) {
+		  visibleFiles = data.visibleFiles;
 		  resetNavigateButtonHandlers();
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
 		  wasTagNumber.val(wasTag);

@@ -4,7 +4,8 @@
 $(function() {
 
   cd.pieChart($('#traffic-lights .pie'));
-  cd.setupTrafficLightOpensDiffDialogHandlers($('.diff-traffic-light'));
+  var showRevert = true;
+  cd.setupTrafficLightOpensDiffDialogHandlers($('.diff-traffic-light'),showRevert);
   var allTheWay = 100000;
   $('#traffic-lights').scrollLeft(allTheWay);
 
