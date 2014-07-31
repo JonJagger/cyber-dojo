@@ -58,40 +58,25 @@ $(function() {
               },
                 :remote => true ) do %>
 
-<%= render :partial => 'current_filename' %>
-<%= render :partial => 'file_hashes_incoming' %>
-<%= render :partial => 'file_hashes_outgoing' %>
+  <%= render :partial => 'current_filename' %>
+  <%= render :partial => 'file_hashes_incoming' %>
+  <%= render :partial => 'file_hashes_outgoing' %>
 
-<div id="kata-page">
+  <div id="kata-page">
+    <%= render :partial => 'test_spinner' %>
+    <table>
+      <tr class="valign-top">
+        <td>
+          <%= render :partial => 'editor' %>
+        </td>
+        <td>
+          <%= render :partial => 'test_button' %>
+          <%= render :partial => 'file_new_rename_delete' %>
+          <%= render :partial => 'filename_list' %>
+          <%= render :partial => 'help_button' %>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-  <%= render :partial => 'test_spinner' %>
-
-  <table>
-
-    <tr class="valign-top">
-      <td>
-        <%= render :partial => 'editor' %>
-      </td>
-
-      <td>
-        <table>
-          <tr>
-            <td><%= render :partial => 'test_button' %></td>
-          </tr>
-        </table>
-
-        <table>
-          <tr>
-            <td><%= render :partial => 'file_new_rename_delete' %></td>
-          </tr>
-        </table>
-
-        <%= render :partial => 'filename_list' %>
-        <%= render :partial => 'help_button' %>
-      </td>
-      <td>
-      </td>
-    </tr>
-  </table>
-</div>
 <% end %>
