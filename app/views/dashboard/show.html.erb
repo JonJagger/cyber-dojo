@@ -9,7 +9,8 @@ $(function() {
     var wasTag = parseInt("<%=@was_tag%>");
     var nowTag = parseInt("<%=@now_tag%>");
     var maxTag = parseInt("<%=@max_tag%>");
-    cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag);
+    var showRevert = false;
+    cd.dialog_diff(id, avatarName, wasTag, nowTag, maxTag, showRevert);
   }
 
 });

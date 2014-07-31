@@ -101,12 +101,7 @@ DIFF-DIALOG
   o) have [next animal] button
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-DIALOG
-  have [revert] button on now-tag control
-  have [fork] button on now-tag control
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-DIALOG
-  with the above features it is questionable whether to leave
-  the diff-dialog as a dialog. If it was a regular page it would
+  have the diff-dialog as a dialog? If it was a regular page it would
   offer more consistency and also the goggle diagnostics would
   be able to give me better review stats.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -159,8 +154,8 @@ HELP
   a specific starting position.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INITIALLY-RED-TESTS
-  do this by using fail("") calls rather than deliberately wrong values.
-  do this for all languages.
+  do this by using fail("") calls rather than deliberately wrong values?
+  do this for all languages?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK DIALOG
   filenames do not appear in same way as on edit page.
@@ -213,7 +208,7 @@ UNTAR
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 C/C++ MAKEFILES
   improve them.
-  ask for input from accu-general
+  use summer-school as pattern
   requirements
     - makes lib from non test src files
     - makes test exe from test src and lib
