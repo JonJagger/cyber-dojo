@@ -37,6 +37,7 @@ cyberdojo/languages/Java-1.8_JUnit/manifest.json
 contains this...
 ```json
 {
+  ...
   "display_name": "Java",
   "display_test_name": "JUnit",
   "image_name": "cyberdojo/java-1.8_junit"
