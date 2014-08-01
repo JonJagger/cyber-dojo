@@ -32,12 +32,13 @@ when you press the `[create]` button cyber-dojo will only offer
 languages whose `manifest.json` file
 has an `image_name` entry that exists. For example, if
 ```bash
-cyberdojo/languages/Java-JUnit/manifest.json
+cyberdojo/languages/Java-1.8_JUnit/manifest.json
 ```
 contains this...
 ```json
 {
-
+  "display_name": "Java",
+  "display_test_name": "JUnit",
   "image_name": "cyberdojo/java-1.8_junit"
 }
 ```
@@ -186,7 +187,7 @@ $ touch cyberdojo/languages/Lisp-2.3_LUnit/manifest.json
 ```
 
 Each `manifest.json` file contains an ruby object in JSON format
-<br>Example: the one for Java-JUnit looks like this:
+<br>Example: the one for Java-1.8_JUnit looks like this:
 ```json
 {
   "visible_filenames": [
