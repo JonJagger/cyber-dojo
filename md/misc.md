@@ -8,8 +8,8 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
 ```json
 {
   "visible_filenames": [
-    "Untitled.java",
-    "UntitledTest.java",
+    "Hiker.java",
+    "HikerTest.java",
     "cyber-dojo.sh"
   ],
   "support_filenames": [

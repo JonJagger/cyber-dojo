@@ -192,8 +192,8 @@ Each `manifest.json` file contains an ruby object in JSON format
 ```json
 {
   "visible_filenames": [
-    "Untitled.java",
-    "UntitledTest.java",
+    "Hiker.java",
+    "HikerTest.java",
     "cyber-dojo.sh"
   ],
   "support_filenames": [
