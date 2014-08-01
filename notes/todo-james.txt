@@ -55,9 +55,3 @@ SEARCH-REPLACE (15)
   Also, is output included in the filename list? No. Its readonly
   Also, is cyber-dojo.sh included in the filename list?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-EXTRA-INFO (20)
-  on the animal display (eg on dashboard) show the number of passing
-  tests (if at green). This is very useful for situations in
-  exercises where you pre-create all the tests and the task
-  is to work through them.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

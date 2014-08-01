@@ -106,7 +106,7 @@ en:
     kata_help:
       opens_a_home_page: "opens a<br/>home<br/>page"
       opens_a_dashboard_page: "opens a<br/>dashboard<br/>page"
-      opens_a_diff_review: "opens a<br/>diff<br/>dialog"
+      opens_a_diff_review: "opens a<br/>diff-revert-fork<br/>dialog"
       runs_the_tests: "runs the tests"
       the_tests_ran_but_one_or_more_failed: "some tests failed"
       the_tests_could_not_be_run: "tests did not run"
