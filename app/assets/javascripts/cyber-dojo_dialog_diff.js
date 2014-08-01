@@ -78,8 +78,8 @@ var cyberDojo = (function(cd, $) {
 			  allHtml(pie) +
 			'</td>' +
 		    '<td>' +
-			  '<img height="38"' +
-				  ' width="38"' +
+			  '<img height="30"' +
+				  ' width="30"' +
 				  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
 			'</td>' +
 		  '</tr>' +
@@ -159,7 +159,6 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'diff-dialog'
       });
-	  var trTdHr = '<tr><td><hr/></td></tr>';
 	  var trTd = function(html) {
 		return '' +
 		  "<tr valign='top'>" +
@@ -171,12 +170,24 @@ var cyberDojo = (function(cd, $) {
       div.append('<div id="diff-content"></div>');
 	  div.append('<div id="diff-controls">' +
 				  '<table>' +
-					trTd(makeDiffInfo()) +
+					//trTd(makeDiffInfo()) +
 					trTd(makeDiffTagControl()) +
-					trTd(cd.makeNavigateButtons()) +
+				  '</table>' +
+				  '<table>' +
+				    '<tr>' +
+					'<td>' +
+					  cd.makeNavigateButtons() +
+					'</td>' +
+					'<td>&nbsp;&nbsp;&nbsp;</td>' +
+					'<td>' +
+					  makeDiffInfo() +
+	                '</td>' +
+					'</tr>' +
+				  '</table>' +
+				  '<table>' +
 					trTd("<div id='diff-filenames'></div>") +
-				   '</table>' +
-				  '</div>');
+				  '</table>' +
+				 '</div>');
       return div;
     };
 

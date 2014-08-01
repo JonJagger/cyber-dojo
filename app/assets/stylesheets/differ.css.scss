@@ -35,8 +35,12 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
 
+  #navigate-buttons {
+    @include ghost-panel(6px);
+  }
+
   #diff-info {
-    @include ghost-panel(5px);
+    @include ghost-panel(0px);
   }
 
   #diff-controls {
@@ -76,15 +80,15 @@
   }
 
   #diff-filenames {
-    height: 270px;
-    width : 300px;
+    height: 355px;
     overflow-y: auto;
+    overflow-x: auto;
     font-size: 11pt;
     text-align: left;
   }
 
   .diff-line-numbers, .diff-sheet {
-    height: 31em;
+    height: 32em;
     margin: 0;
     padding: 0;
     @include code-font;
@@ -181,7 +185,7 @@
   }
 
   #revert-button, #fork-button {
-    @include font-size-tiny;
+    font-size: 0.6em;
     width: 70px;
     text-align: left;
   }
