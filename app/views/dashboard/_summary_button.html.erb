@@ -10,23 +10,26 @@ $(function() {
         var summaryDiv = $('<div id="summary-dialog">');
 
         var html = '<table>';
+        var index = 0;
         $.each(data.animals, function(name,animal) {
+          var parity = (index % 2 === 0) ? 'even' : 'odd';
+          index += 1;
           html += '' +
-            "<tr class='animal'>" +
-              "<td class='name'>" +
-                "<img src='/images/avatars/" + name + ".jpg'" +
-                  " width='45'" +
-                  " height='45'" +
-                  " class='avatar-image'/>" +
-              "</td>" +
-              "<td class='colour'>" +
+            "<tr class='" + parity + " animal'>" +
+              "<td>" +
                 "<img src='/images/traffic_light_" + animal.colour + ".png'" +
                     " alt='" + animal.colour + " traffic-light'" +
                     " width='15'" +
                     " height='45'/>" +
               "</td>" +
-              "<td class='summary'>" +
-                animal.summary +
+              "<td>" +
+                "<img src='/images/avatars/" + name + ".jpg'" +
+                  " width='40'" +
+                  " height='40'" +
+                  " class='avatar-image'/>" +
+              "</td>" +
+              "<td class='" + animal.summary.colour + " summary'>" +
+                animal.summary.text +
               "</td>" +
             "</tr>";
         });

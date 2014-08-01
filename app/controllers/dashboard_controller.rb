@@ -77,7 +77,11 @@ private
     regexs = avatar.kata.language.summary_regexs
     light = avatar.lights.reverse.find{|light| [:red,:green].include?(light.colour)}
     output = light.tag.output
-    regexs.map{|regex| Regexp.new(regex).match(output)}.join
+    matches = regexs.map{|regex| Regexp.new(regex).match(output)}
+    return {
+      :text => matches.join,
+      :colour => (matches[0] != nil ? 'red' : 'green')
+    }
   end
 
 end

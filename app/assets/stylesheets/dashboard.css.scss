@@ -67,8 +67,13 @@
 }
 
 #summary-dialog {
+  .odd.animal  { background: lighten($darker-color, 3%); }
+  .even.animal { background: lighten($darker-color, 6%); }
   .summary {
-    padding-left: 5px;
+    padding: {
+      left: 10px;
+      right: 10px;
+    }
   }
 }
 

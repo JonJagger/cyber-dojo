@@ -4,7 +4,7 @@ misc
 
 language manifest.json parameters
 ---------------------------------
-Example: the `manifest.json` file for Java-JUnit looks like this:
+Example: the `manifest.json` file for Java_1.8-JUnit looks like this:
 ```json
 {
   "visible_filenames": [
@@ -14,6 +14,10 @@ Example: the `manifest.json` file for Java-JUnit looks like this:
   ],
   "support_filenames": [
     "junit-4.11.jar"
+  ],
+  "summary_regexs" : [
+    "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
+    "OK \\((\\d)+ test(s)?\\)"
   ],
   "display_name": "Java",
   "display_test_name": "JUnit",
@@ -93,6 +97,18 @@ Example: the `manifest.json` file for Java-JUnit looks like this:
   [ 'cyber-dojo', 'makefile', 'Makefile' ]
   ```
   Not required. Defaults to empty.
+- - - - - - - - - - - - - - - - - - - -
+`"summary_regexs": [ string, string ]`
+
+  Two regexs, the first one to match a red traffic light's
+  test output, and the second one to match a green traffic light's
+  test output.
+  Used on the dashboard show the test output line (which often
+  contains the number of passing and failing tests) of each animal's
+  most recent red/green traffic light. Useful when your practice
+  session starts from a large number of pre-written tests and
+  you wish to monitor the progress of each animal.
+  Not required.
 - - - - - - - - - - - - - - - - - - - -
 `"filename_extension": string`
   The filename extension used when creating a new filename.
