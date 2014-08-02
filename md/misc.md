@@ -99,7 +99,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
   ```
   Not required. Defaults to an empty array.
 - - - - - - - - - - - - - - - - - - - -
-`"summary_regexs": [ string, string ]`
+`"progress_regexs": [ string, string ]`
 
   Two regexs, the first one to match a red traffic light's
   test output, and the second one to match a green traffic light's
