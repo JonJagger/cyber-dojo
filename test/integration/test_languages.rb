@@ -22,6 +22,7 @@ class LanguagesTests < CyberDojoTestBase
       "C++-CppUTest",
       "C++-GoogleTest",
       "C++-assert",
+      "C-Unity",
       "C-assert",
       "Clojure-.test",
       "CoffeeScript-jasmine",
