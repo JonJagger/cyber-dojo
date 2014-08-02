@@ -199,6 +199,10 @@ Each `manifest.json` file contains an ruby object in JSON format
   "support_filenames": [
     "junit-4.11.jar"
   ],
+  "progress_regexs" : [
+    "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
+    "OK \\((\\d)+ test(s)?\\)"
+  ],
   "display_name": "Java",
   "display_test_name": "JUnit",
   "unit_test_framework": "junit",

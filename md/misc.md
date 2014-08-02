@@ -15,7 +15,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
   "support_filenames": [
     "junit-4.11.jar"
   ],
-  "summary_regexs" : [
+  "progress_regexs" : [
     "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
     "OK \\((\\d)+ test(s)?\\)"
   ],

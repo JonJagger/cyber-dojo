@@ -3,6 +3,21 @@ install Swift?
 install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cyberdojo/exercises/ folder could be beefed up to match
+the cyberdojo/languages folder and has a manifest.json
+file and can have visible_filenames.
+It's entirely possible someone in education might want to
+setup several specific start-point exercises for the same
+language.
+The problem with this though is that it would mean various
+exercises being offered which were only appropriate for
+a specific language...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Is there a way that a dashboard can record which
+lights/animals have had some/all of their lights
+diff-reviewed? That would be very handy.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Option to select whether you want filename-nave
 on the left or right.
@@ -33,9 +48,6 @@ Various places have code like this...
     end
 Refactor... first of all rename to specify its only katas/ root
 that is being tweaked.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-tests/test_helper.rb is almost empty now.
-refactor its last method and drop it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Generalize
    Approval.add_created_txt_files(sandbox.path, visible_files)
@@ -79,10 +91,6 @@ to the was-tag and now-tag.
 What about traffic-lights on the edit/test page?
 Do they open a diff-dialog? Perhaps not. Why not have
 just the lights on the dashboard page open a new diff page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Is there a way that a dashboard can record which
-lights/animals have had some/all of their lights
-diff-reviewed?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/integration/git_diff_test_view
   has duplication at bottom
