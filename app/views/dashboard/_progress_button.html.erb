@@ -3,11 +3,11 @@
 
 $(function() {
 
-  cd.dialog_summary = function(id) {
+  cd.dialog_progress = function(id) {
 
-	  $.getJSON('/dashboard/summary', { id: id }, function(data) {
+	  $.getJSON('/dashboard/progress', { id: id }, function(data) {
 
-        var summaryDiv = $('<div id="summary-dialog">');
+        var progressDiv = $('<div id="progress-dialog">');
 
         var html = '<table>';
         var index = 0;
@@ -28,37 +28,37 @@ $(function() {
                   " height='40'" +
                   " class='avatar-image'/>" +
               "</td>" +
-              "<td class='" + animal.summary.colour + " summary'>" +
-                animal.summary.text +
+              "<td class='" + animal.progress.colour + " progress'>" +
+                animal.progress.text +
               "</td>" +
             "</tr>";
         });
         html += '</table>';
 
-        var summaryDialog = summaryDiv
+        var progressDialog = progressDiv
           .html(html)
           .dialog({
             html: html,
             autoOpen: false,
-            title: cd.dialogTitle('summary'),
+            title: cd.dialogTitle('progress'),
             width: 700,
             height: 500,
             modal: true,
             buttons: {
               close: function() {
-                summaryDialog.remove();
+                progressDialog.remove();
               }
             },
           });
 
-        summaryDialog.dialog('open');
+        progressDialog.dialog('open');
       });
   };
 
-  $('#summary-button').click(function() {
+  $('#progress-button').click(function() {
     //var title = $(this).data('title');
     //var close = $(this).data('close');
-    cd.dialog_summary('<%= @kata.id %>');
+    cd.dialog_progress('<%= @kata.id %>');
   });
 
 });
@@ -66,13 +66,13 @@ $(function() {
 //--></script>
 
 <% if @kata.language.summary_regexs != [ ] %>
-<div id="summary-button-container">
+<div id="progress-button-container">
   <button type="button"
-          title="show summary"
-          data-title="summary"
+          title="show proress"
+          data-title="progress"
           data-close="<%= t('views.buttons.close') %>"
-          id="summary-button">
-    summary
+          id="progress-button">
+    progress
   </button>
 </div>
 <% end %>

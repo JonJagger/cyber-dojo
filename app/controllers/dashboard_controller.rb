@@ -30,12 +30,12 @@ class DashboardController < ApplicationController
     render :layout => false
   end
 
-  def summary
+  def progress
     animals = { }
     dojo.katas[id].avatars.active.each do |avatar|
       animals[avatar.name] = {
         :colour => avatar.lights[-1].colour,
-        :summary => most_recent_summary(avatar)
+        :progress => most_recent_progress(avatar)
       }
     end
 
@@ -73,7 +73,7 @@ private
     return 60*60*24*365*1000
   end
 
-  def most_recent_summary(avatar)
+  def most_recent_progress(avatar)
     regexs = avatar.kata.language.summary_regexs
     light = avatar.lights.reverse.find{|light| [:red,:green].include?(light.colour)}
     output = light.tag.output
