@@ -4,11 +4,11 @@ ENV['RAILS_ENV'] = 'test'
 root = '../..'
 
 require_relative root + '/test/test_coverage'
-require_relative root + '/config/environment'
-require 'rails/test_help'
 require_relative root + '/test/lib/SpyDisk'
 require_relative root + '/test/lib/SpyGit'
 require_relative root + '/test/lib/StubTestRunner'
+require_relative root + '/config/environment'
+require 'rails/test_help'
 
 class ControllerTestBase < ActionController::IntegrationTest
 
