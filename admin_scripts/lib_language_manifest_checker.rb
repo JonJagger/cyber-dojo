@@ -118,12 +118,26 @@ private
   end
 
   def summary_regexs_valid?
+    if summary_regexs.class.name != "Array"
+        message =
+          alert + " #{manifest_filename}'s summary_regexs entry is not an array"
+        puts message
+        return false
+    end
+
+    if summary_regexs.length != 0 && summary_regexs.length != 2
+        message =
+          alert + " #{manifest_filename}'s summary_regexs entry does not contain 2 entries"
+        puts message
+        return false
+    end
+
     summary_regexs.each do |s|
       begin
         Regexp.new(s)
       rescue
         message =
-          alert + " #{manifest_filename} contains invalid summary_regexs entry #{s}"
+          alert + " #{manifest_filename} cannot create a Regexp from #{s}"
         puts message
         return false
       end
