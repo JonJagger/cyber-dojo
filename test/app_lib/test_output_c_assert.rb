@@ -74,7 +74,7 @@ class OutputCAssertTests < CyberDojoTestBase
         "g++ -Wall -Werror -O *.cpp -o run.tests",
         "./run.tests",
         "..",
-        "2 tests passed"
+        "All tests passed"
       ].join("\n")
     assert_equal :green, colour_of(output)
   end

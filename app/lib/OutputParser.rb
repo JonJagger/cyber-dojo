@@ -25,18 +25,16 @@ module OutputParser
     return :amber
   end
 
-  def self.parse_php_unit(output)
-    return :amber if /PHP Parse error:/.match(output)
-    return :red   if /FAILURES!/.match(output)
-    return :green if /OK \(/.match(output)
+  def self.parse_node(output)
+    return :red   if /AssertionError/.match(output)
+    return :green if /^All tests passed/.match(output)
     return :amber
   end
 
-  def self.parse_perl_test_simple(output)
-    return :green if /All tests successful/.match(output)
-    return :amber if /syntax error/.match(output)
-    return :amber if /aborted due to compilation errors/.match(output)
-    return :red
+  def self.parse_cpputest(output)
+    return :red   if /Errors \((\d+) failures, (\d+) tests/.match(output)
+    return :green if /OK \((\d+) tests, (\d+) ran/.match(output)
+    return :amber
   end
 
   def self.parse_eunit(output)
@@ -63,18 +61,62 @@ module OutputParser
     return :amber
   end
 
-  def self.parse_cassert(output)
-    return :red   if /(.*)Assertion(.*)failed./.match(output)
-    return :amber if /^make:/.match(output)
-    return :amber if /^makefile:/.match(output)
-    return :amber if /:(\d*): error/.match(output)
-    return :green
-  end
-
   def self.parse_cunity(output)
     return :red if /^FAIL/.match(output)
     return :green if /^OK/.match(output)
     return :amber
+  end
+
+  def self.parse_junit(output)
+    return :red   if /^Tests run: (\d*),  Failures: (\d*)/.match(output)
+    return :green if /^OK \((\d*) test/.match(output)
+    return :amber
+  end
+
+  def self.parse_go_testing(output)
+    return :red   if /FAIL/.match(output)
+    return :green if /PASS/.match(output)
+    return :amber
+  end
+
+  def self.parse_cassert(output)
+    return :red   if /(.*)Assertion(.*)failed./.match(output)
+    return :green if /All tests passed/.match(output)
+    return :amber
+  end
+
+  def self.parse_google_test(output)
+    return :red   if /\[  FAILED  \]/.match(output)
+    return :green if /\[  PASSED  \]/.match(output)
+    return :amber
+  end
+
+  def self.parse_ruby_rspec(output)
+    return :red   if /\A(\.)*F/.match(output)
+    return :green if /\A(\.)+$/.match(output)
+    return :amber
+  end
+
+  def self.parse_nunit(output)
+    return :red   if /^Errors and Failures\:/.match(output)
+    return :green if /^Tests run: (\d*), Errors: 0, Failures: 0/.match(output)
+    return :amber
+  end
+
+  #-------------------------------------------------
+
+  def self.parse_php_unit(output)
+    return :amber if /PHP Parse error:/.match(output)
+    return :red   if /FAILURES!/.match(output)
+    return :green if /OK \(/.match(output)
+    return :amber
+  end
+
+  def self.parse_perl_test_simple(output)
+    return :green if /All tests successful/.match(output)
+    return :amber if /syntax error/.match(output)
+    return :amber if /aborted due to compilation errors/.match(output)
+    return :red
   end
 
   def self.parse_ruby_test_unit(output)
@@ -88,12 +130,6 @@ module OutputParser
     end
   end
 
-  def self.parse_ruby_rspec(output)
-    return :green if /\A\.+$/.match(output)
-    return :red   if /\A[\.F]+$/.match(output)
-    return :amber
-  end
-
   def self.parse_ruby_approvals(output)
     return :amber if /(SyntaxError)/.match(output)
     return :amber if /NameError/.match(output)
@@ -101,25 +137,6 @@ module OutputParser
     return :amber if /NoMethodError/.match(output)
     return :red   if /Approvals::ApprovalError/.match(output)
     return :green
-  end
-
-  def self.parse_nunit(output)
-    nunit_pattern = /^Tests run: (\d*)(, Errors: (\d+))?, Failures: (\d*)/
-    if output =~ nunit_pattern
-      if $4 == "0" and ($3.nil? or $3 == "0")
-        :green
-      else
-        :red
-      end
-    else
-      :amber
-    end
-  end
-
-  def self.parse_junit(output)
-    return :green if /^OK \((\d*) test/.match(output)
-    return :red   if /^Tests run: (\d*),  Failures: (\d*)/.match(output)
-    return :amber
   end
 
   def self.parse_groovy_junit(output)
@@ -176,13 +193,6 @@ module OutputParser
     end
   end
 
-  def self.parse_go_testing(output)
-    return :amber if /\[build failed\]/.match(output)
-    return :red   if /FAIL/.match(output)
-    return :green if /PASS/.match(output)
-    return :amber
-  end
-
   def self.parse_clojure_test(output)
     syntax_error_pattern = /Exception in thread/
     ran_pattern = /Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./
@@ -197,18 +207,6 @@ module OutputParser
     end
   end
 
-  def self.parse_node(output) # node_assert
-    return :green if /^All tests passed/.match(output)
-    return :red   if /AssertionError/.match(output)
-    return :amber
-  end
-
-  def self.parse_cpputest(output)
-    return :red   if /Errors \((\d+) failures, (\d+) tests/.match(output)
-    return :green if /OK \((\d+) tests, (\d+) ran/.match(output)
-    return :amber
-  end
-
   def self.parse_jasmine(output)
     jasmine_pattern = /(\d+) tests?, (\d+) assertions?, (\d+) failures?/
     if jasmine_pattern.match(output)
@@ -216,12 +214,6 @@ module OutputParser
     else
       :amber
     end
-  end
-
-  def self.parse_google_test(output)
-    return :red   if /\[  FAILED  \]/.match(output)
-    return :green if /\[  PASSED  \]/.match(output)
-    return :amber
   end
 
   def self.parse_scala_test(output)
