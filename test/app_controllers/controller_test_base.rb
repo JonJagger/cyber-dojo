@@ -1,7 +1,14 @@
-require_relative '../test_helper'
-require '../lib/SpyDisk'
-require '../lib/SpyGit'
-require '../lib/StubTestRunner'
+
+ENV['RAILS_ENV'] = 'test'
+
+root = '../..'
+
+require_relative root + '/test/test_coverage'
+require_relative root + '/config/environment'
+require 'rails/test_help'
+require_relative root + '/test/lib/SpyDisk'
+require_relative root + '/test/lib/SpyGit'
+require_relative root + '/test/lib/StubTestRunner'
 
 class ControllerTestBase < ActionController::IntegrationTest
 
