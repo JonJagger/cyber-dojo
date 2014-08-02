@@ -9,7 +9,7 @@
   "support_filenames": [
     "junit-4.11.jar"
   ],
-  "summary_regexs" : [
+  "progress_regexs" : [
     "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
     "OK \\((\\d)+ test(s)?\\)"
   ],

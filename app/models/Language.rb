@@ -124,8 +124,8 @@ class Language
     renames[name] || name
   end
 
-  def summary_regexs
-    manifest['summary_regexs'] || [ ]
+  def progress_regexs
+    manifest['progress_regexs'] || [ ]
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - -

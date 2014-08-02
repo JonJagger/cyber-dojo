@@ -58,7 +58,7 @@ private
       @kata.avatars.collect{|avatar| [avatar.name, avatar.lights]}
     ]
     @gapped = gapper.fully_gapped(all_lights, time_now)
-    @summary = @kata.language.summary_regexs != [ ]
+    @progress = @kata.language.progress_regexs != [ ]
   end
 
   def bool(attribute)
@@ -74,7 +74,7 @@ private
   end
 
   def most_recent_progress(avatar)
-    regexs = avatar.kata.language.summary_regexs
+    regexs = avatar.kata.language.progress_regexs
     light = avatar.lights.reverse.find{|light| [:red,:green].include?(light.colour)}
     output = light.tag.output
     matches = regexs.map{|regex| Regexp.new(regex).match(output)}
