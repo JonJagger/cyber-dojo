@@ -97,7 +97,7 @@ class OutputGroovyJUnitTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
-    OutputParser::parse_groovy_junit(output)
+    OutputParser::parse_junit(output)
   end
 
 end

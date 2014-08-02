@@ -68,7 +68,7 @@ module OutputParser
   end
 
   def self.parse_junit(output)
-    return :red   if /^Tests run: (\d*),  Failures: (\d*)/.match(output)
+    return :red   if /^Tests run: (\d*),(\s)+Failures: (\d*)/.match(output)
     return :green if /^OK \((\d*) test/.match(output)
     return :amber
   end
@@ -137,24 +137,6 @@ module OutputParser
     return :amber if /NoMethodError/.match(output)
     return :red   if /Approvals::ApprovalError/.match(output)
     return :green
-  end
-
-  def self.parse_groovy_junit(output)
-    green_pattern = Regexp.new('^OK \((\d*) test')
-    if match = green_pattern.match(output)
-      :green
-    else
-      amber_pattern0 = Regexp.new('groovyc: command not found')
-      amber_pattern1 = Regexp.new('groovy\.lang')
-      amber_pattern2 = Regexp.new('MultipleCompilationErrorsException')
-      if amber_pattern0.match(output) ||
-         amber_pattern1.match(output) ||
-         amber_pattern2.match(output)
-        :amber
-      else
-        :red
-      end
-    end
   end
 
   def self.parse_groovy_spock(output)
