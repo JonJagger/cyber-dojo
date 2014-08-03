@@ -16,7 +16,8 @@
 #
 # What are we counting?
 # The number of katas underneath the 2-digit katas/sub-folder
-# eg katas/34 katas/E4 katas/02 katas/F8 etc
+# eg katas/34
+#    katas/F8 etc
 #
 # 64 sub-folders have 1 kata
 # 74 sub-folders have 2 katas
