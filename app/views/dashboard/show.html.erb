@@ -22,10 +22,13 @@ $(function() {
     <tr>
       <td class="valign-top">
         <div>
-          <%= render :partial => 'shared/info' %>
+          <%= render :partial => 'controls' %>
+        </div>
+        <div id="progress">
+          <%= render :partial => 'progress_button' %>
         </div>
         <div>
-          <%= render :partial => 'controls' %>
+          <%= render :partial => 'help_button' %>
         </div>
         <div id="age">
           <%= render :partial => 'age' %>
@@ -33,16 +36,13 @@ $(function() {
         <div id="team-bulb-counts">
           <%= render :partial => 'team_bulb_counts' %>
         </div>
-        <div id="summary">
-          <%= render :partial => 'progress_button' %>
-        </div>
-        <div>
-          <%= render :partial => 'help_button' %>
-        </div>
       </td>
-      <td class="valign-top" rowspan="2">
+      <td class="valign-top">
         <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
+        </div>
+        <div>
+          <%= render :partial => 'shared/info' %>
         </div>
       </td>
     </tr>

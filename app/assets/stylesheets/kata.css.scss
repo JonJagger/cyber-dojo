@@ -47,17 +47,11 @@
     }
   }
 
-  #info-container {
-    display: block;
-    @include ghost-panel(5px);
-    @include right-align(5px);
-  }
-
   #line-numbers-container {
     display: block;
     @include ghost-panel(5px);
     @include right-align(5px);
-    margin-left: 4px;
+    margin-left: 3px;
   }
 
   #revert-fork-container {

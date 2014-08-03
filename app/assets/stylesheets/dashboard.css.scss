@@ -21,21 +21,18 @@
 
   #help-button-container {
     text-align: right;
-    margin: 15px;
+    margin: 12px;
     #help-button {
       font-size: 1em;
       @include rounded-corner(15px);
-      position: relative;
-      top: -5px;
     }
   }
 
   #progress-button-container {
-    @include right-align(15px);
+    @include right-align(12px);
     text-align: right;
-
     #progress-button {
-      @include font-size-tiny();
+      font-size: 1em;
     }
   }
 

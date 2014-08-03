@@ -29,12 +29,10 @@
     border: 1px solid lighten($darker-color, 6%);
 }
 
-#shared-info {
-  display: table;
-  @include ghost-panel(5px);
-  @include right-align(15px);
-  text-align: left;
-  font-size: 0.8em;
+#info-container {
+  display: block;
+  @include ghost-panel(6px);
+  @include right-align(5px);
 }
 
 #navigate-buttons {
