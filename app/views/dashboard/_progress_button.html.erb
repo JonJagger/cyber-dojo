@@ -19,13 +19,13 @@ $(function() {
               "<td class='progress'>" +
                 "<img src='/images/traffic_light_" + animal.colour + ".png'" +
                     " alt='" + animal.colour + " traffic-light'" +
-                    " width='12'" +
-                    " height='35'/>" +
+                    " width='10'" +
+                    " height='30'/>" +
               "</td>" +
               "<td>" +
                 "<img src='/images/avatars/" + name + ".jpg'" +
-                  " width='35'" +
-                  " height='35'" +
+                  " width='30'" +
+                  " height='30'" +
                   " class='avatar-image'/>" +
               "</td>" +
               "<td class='" + animal.progress.colour + " progress'>" +
@@ -41,7 +41,8 @@ $(function() {
             html: html,
             autoOpen: false,
             title: cd.dialogTitle(title),
-            height: 700,
+            height: 'auto',
+			width: 'auto',
             modal: true,
             buttons: {
               close: function() {
