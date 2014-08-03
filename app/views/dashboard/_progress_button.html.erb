@@ -3,7 +3,7 @@
 
 $(function() {
 
-  cd.dialog_progress = function(id) {
+  cd.dialog_progress = function(id,title,close) {
 
 	  $.getJSON('/dashboard/progress', { id: id }, function(data) {
 
@@ -16,16 +16,16 @@ $(function() {
           index += 1;
           html += '' +
             "<tr class='" + parity + " animal'>" +
-              "<td>" +
+              "<td class='progress'>" +
                 "<img src='/images/traffic_light_" + animal.colour + ".png'" +
                     " alt='" + animal.colour + " traffic-light'" +
-                    " width='15'" +
-                    " height='45'/>" +
+                    " width='12'" +
+                    " height='35'/>" +
               "</td>" +
               "<td>" +
                 "<img src='/images/avatars/" + name + ".jpg'" +
-                  " width='40'" +
-                  " height='40'" +
+                  " width='35'" +
+                  " height='35'" +
                   " class='avatar-image'/>" +
               "</td>" +
               "<td class='" + animal.progress.colour + " progress'>" +
@@ -40,9 +40,8 @@ $(function() {
           .dialog({
             html: html,
             autoOpen: false,
-            title: cd.dialogTitle('progress'),
-            width: 700,
-            height: 500,
+            title: cd.dialogTitle(title),
+            height: 700,
             modal: true,
             buttons: {
               close: function() {
@@ -56,9 +55,9 @@ $(function() {
   };
 
   $('#progress-button').click(function() {
-    //var title = $(this).data('title');
+    var title = $(this).data('title');
     //var close = $(this).data('close');
-    cd.dialog_progress('<%= @kata.id %>');
+    cd.dialog_progress('<%= @kata.id %>',title,close);
   });
 
 });
@@ -68,7 +67,7 @@ $(function() {
 <% if @kata.language.progress_regexs != [ ] %>
 <div id="progress-button-container">
   <button type="button"
-          title="show proress"
+          title="show progress"
           data-title="progress"
           data-close="<%= t('views.buttons.close') %>"
           id="progress-button">

@@ -67,12 +67,13 @@
 }
 
 #progress-dialog {
+  padding-top: 0px;
   .odd.animal  { background: lighten($darker-color, 3%); }
   .even.animal { background: lighten($darker-color, 6%); }
   .progress {
     padding: {
-      left: 10px;
-      right: 10px;
+      left: 5px;
+      right: 5px;
     }
   }
 }
