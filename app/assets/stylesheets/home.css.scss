@@ -6,7 +6,7 @@ $text-color: darken($lighter-color, 10%);
   font-size: 1.05em;
 
   margin-top: 25px;
-  margin-left: 50px;
+  margin-left: 0px;
 
   #cyber-dojo {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -16,6 +16,7 @@ $text-color: darken($lighter-color, 10%);
     padding-bottom: 0px;
     position: relative;
     left: 3px;
+    top: -20px;
   }
 
   #home-page-logo {
@@ -29,7 +30,7 @@ $text-color: darken($lighter-color, 10%);
     font-size: 1.35em;
     color: lighten($text-color, 5%);
     margin: {
-      top: -15px;
+      top: -25px;
       bottom: 0px;
     }
   }
@@ -42,10 +43,9 @@ $text-color: darken($lighter-color, 10%);
     }
   }
   td#column-main {
-    @include ghost-panel;
     padding: {
       left: 0px;
-      right: 30px;
+      right: 70px;
       bottom: 30px;
     }
     margin: {
