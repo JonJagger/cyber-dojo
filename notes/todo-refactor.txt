@@ -3,7 +3,18 @@ install Swift?
 install Visual.BASIC (for Chris Oldwood)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts/check_language_manifest.rb
+  should become part of the main test suite.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Each language should have a (docker running) test that confirms it
+  o) starts at red
+  o) if the _named_file_ is s/6*9/6*7/ it becomes a green
+     where the named_file is part of the test data
+  o) adding gibberish gives amber
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts should also have basic sanity tests, eg that
+  they run without require errors.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyberdojo/exercises/ folder could be beefed up to match
 the cyberdojo/languages folder and has a manifest.json
@@ -13,11 +24,22 @@ setup several specific start-point exercises for the same
 language.
 The problem with this though is that it would mean various
 exercises being offered which were only appropriate for
-a specific language...
+a specific language. Perhaps allow each language to have
+an exercises subfolder? At the moment the language manifest
+specifies the bare bones source files for the code and test
+file. These need to somehow be separated out so that they are
+not included if a "custom" exercise is used.
+How about having a language appear twice. Once as it currently
+is with no exercises folder underneath the languages/*/ folder
+and its manifest names and used the code and test files.
+And again with an exercises/ folder underneath the
+languages/*/ folder whose manifest does not name any code/test
+files - they come from the custom exercises.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Is there a way that a dashboard can record which
 lights/animals have had some/all of their lights
 diff-reviewed? That would be very handy.
+Why not just have a manual checkbox!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Option to select whether you want filename-nave
 on the left or right.
@@ -29,18 +51,6 @@ test/app_controllers/test_download.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts/check_language_manifest.rb
-  should become part of the main test suite.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Each language should have a (docker running) test that confirms it
-  o) starts at red
-  o) if the _named_file_ is s/6*9/6*7/ its green
-     where the named_file is part of the test data
-  o) adding gibberish gives amber
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts should also have basic sanity tests, eg that
-  they run without require errors.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Various places have code like this...
    if ENV['CYBERDOJO_TEST_ROOT_DIR']
@@ -59,14 +69,6 @@ This could be combined with steps in cyber-dojo.sh to do some
 quite powerful things, eg creation of coverage stats which are
 then loaded. It creates the possibility of some of these being html
 which is loaded and displayed in a textarea replacement.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I need a basic test for each of the languages under docker.
-I think the simplest way to do this is to capture some of
-the output from the test-framework and check that when a
-[test] actually happens for an animal using a docker'd server
-then the captured output is reproduced.
-Or, simpler still, just run a test for each language and
-check the outcome is red.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

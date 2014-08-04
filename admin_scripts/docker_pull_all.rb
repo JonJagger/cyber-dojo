@@ -11,6 +11,7 @@ Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/manifest.json") do |file|
   image_names << image_name if image_name != nil
 end
 
+puts "this will take a good while..."
 image_names.each do |image_name|
   cmd = "docker pull #{image_name}"
   print cmd + "\n"

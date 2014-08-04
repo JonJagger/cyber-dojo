@@ -11,12 +11,12 @@ running your own docker'd cyber-dojo server
 $ cd /var/www
 $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 ```
-* Install all the necessary gems and [docker](https://www.docker.io/)
+* Install cyberdojo as the default rails server, all the necessary gems and [docker](https://www.docker.io/)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./setup_docker_server.rb
 ```
-* Install all the language's docker containers
+* Install all the language's docker containers (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./docker_pull_all.rb
@@ -28,7 +28,7 @@ overview of how docker language containers work
 
 cyber-dojo probes the host server to see if [docker](https://www.docker.io/)
 is installed. If it is then
-when you press the `[create]` button cyber-dojo will only offer
+when you press the home page `[create]` button cyber-dojo will only offer
 languages whose `manifest.json` file
 has an `image_name` entry that exists. For example, if
 ```bash

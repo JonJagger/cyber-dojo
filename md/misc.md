@@ -49,7 +49,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
 - - - - - - - - - - - - - - - - - - - -
 `"support_filenames": [ string* ]`
 
-  The names of necessary supporting files which are <em>not</em> visible
+  The names of necessary supporting files which are *not* visible
   in browser's editor at startup. Each of these files must
   exist in the languages' directory. For example, junit .jar files or nunit .dll assemblies.
   These are sym-linked from the `/var/www/cyberdojo/languages` folder to each animals

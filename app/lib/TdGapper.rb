@@ -1,5 +1,5 @@
 
-# See test/lib/td_gapper_tests.rb
+# See test/app-lib/test_td_gapper.rb
 
 class TdGapper
 

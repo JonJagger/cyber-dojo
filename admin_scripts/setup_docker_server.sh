@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # running this on the Turnkey Rails image (http://www.turnkeylinux.org/rails)
-# installs cyberdojo from its git repo and also installs docker.
+# installs cyberdojo from its git repo, sets it up as the default
+# rails server, and also installs docker.
 
 cd /var/www
 rm index.html
