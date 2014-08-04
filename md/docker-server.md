@@ -271,7 +271,7 @@ adding a new exercise
 pulling from the cyberdojo github repo
 --------------------------------------
 ```bash
-  $ cd /var/www/cyberdojo
+  $ cd /var/www/cyberdojo/admin_scripts
   $ ./pull.sh
 ```
 If pull.sh asks for a password just hit return.
