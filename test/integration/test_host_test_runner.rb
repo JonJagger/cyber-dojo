@@ -3,7 +3,7 @@
 require_relative '../cyberdojo_test_base'
 require_relative 'externals'
 
-class LanguagesTests < CyberDojoTestBase
+class HostTestRunnerTests < CyberDojoTestBase
 
   include Externals
 
