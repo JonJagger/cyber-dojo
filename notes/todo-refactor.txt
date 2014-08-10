@@ -10,10 +10,7 @@ Each language should have a (docker running) test that confirms it
      where the named_file is part of the test data
   o) adding gibberish gives amber
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts/check_language_manifest.rb
-  should become part of the main test suite.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts should also have basic sanity tests, eg that
+admin_scripts should have basic sanity tests, eg that
   they run without require errors.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyberdojo/exercises/ folder could be beefed up to match
