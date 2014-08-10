@@ -1,41 +1,48 @@
-require_relative '../app/lib/OutputParser'
-require 'json'
-require 'etc'
+#!/usr/bin/env ruby
 
-class LanguageManifestChecker
+require_relative '../cyberdojo_test_base'
 
-  def initialize(root_path)
+class LanguageTests < CyberDojoTestBase
+
+  def setup
+    super
     @root_path = root_path
-    @root_path += '/' if @root_path[-1] != '/'
   end
 
-  def check?(language)
-    @language = language
-    print "  #{language} " + ('.' * (35-language.to_s.length))
-
-    return false if !manifest_file_exists?
-    return false if !required_keys_exist?
-    return false if unknown_keys_exist?
-    return false if duplicate_visible_filenames?
-    return false if duplicate_support_filenames?
-    return false if !summary_regexs_valid?
-    return false if filename_extension_starts_with_dot?
-    return false if !cyberdojo_sh_exists?
-    return false if !cyberdojo_sh_has_execute_permission?
-    return false if !all_visible_files_exist?
-    return false if !all_support_files_exist?
-    return false if !highlight_filenames_are_subset_of_visible_filenames?
-    return false if !colour_method_for_unit_test_framework_output_exists?
-    return false if any_files_owner_is_root?
-    return false if any_files_group_is_root?
-    return false if any_file_is_unreadable?
-    return false if !Dockerfile_exists?
-    return false if !build_docker_container_exists?
-    return false if !build_docker_container_starts_with_cyberdojo?
-    return true
+  test "all languages underneath root_path/languages" do
+    assert File.directory?(root_path + '/languages/')
+    languages_names = Dir.entries(root_path + '/languages').select { |name|
+      manifest = root_path + "/languages/#{name}/manifest.json"
+      name != '.' and name != '..' and File.file?(manifest)
+    }
+    languages_names.sort.each do |language_name|
+      check(language_name)
+    end
   end
 
-private
+  def check(language_name)
+    @language = language_name
+
+    assert manifest_file_exists?
+    assert required_keys_exist?
+    assert !unknown_keys_exist?
+    assert !duplicate_visible_filenames?
+    assert !duplicate_support_filenames?
+    assert progress_regexs_valid?
+    assert !filename_extension_starts_with_dot?
+    assert cyberdojo_sh_exists?
+    assert cyberdojo_sh_has_execute_permission?
+    assert all_visible_files_exist?
+    assert all_support_files_exist?
+    assert highlight_filenames_are_subset_of_visible_filenames?
+    assert colour_method_for_unit_test_framework_output_exists?
+    assert !any_files_owner_is_root?
+    assert !any_files_group_is_root?
+    assert !any_file_is_unreadable?
+    assert Dockerfile_exists?
+    assert build_docker_container_exists?
+    assert build_docker_container_starts_with_cyberdojo?
+  end
 
   def manifest_file_exists?
     if !File.exists? manifest_filename
@@ -67,7 +74,7 @@ private
   def unknown_keys_exist?
     known = [ 'visible_filenames',
               'support_filenames',
-              'summary_regexs',
+              'progress_regexs',
               'filename_extension',
               'highlight_filenames',
               'unit_test_framework',
@@ -117,22 +124,22 @@ private
     false
   end
 
-  def summary_regexs_valid?
-    if summary_regexs.class.name != "Array"
+  def progress_regexs_valid?
+    if progress_regexs.class.name != "Array"
         message =
-          alert + " #{manifest_filename}'s summary_regexs entry is not an array"
+          alert + " #{manifest_filename}'s progress_regexs entry is not an array"
         puts message
         return false
     end
 
-    if summary_regexs.length != 0 && summary_regexs.length != 2
+    if progress_regexs.length != 0 && progress_regexs.length != 2
         message =
-          alert + " #{manifest_filename}'s summary_regexs entry does not contain 2 entries"
+          alert + " #{manifest_filename}'s progress_regexs entry does not contain 2 entries"
         puts message
         return false
     end
 
-    summary_regexs.each do |s|
+    progress_regexs.each do |s|
       begin
         Regexp.new(s)
       rescue
@@ -143,7 +150,7 @@ private
       end
     end
     print '.'
-    return true
+    true
   end
 
   def filename_extension_starts_with_dot?
@@ -195,7 +202,7 @@ private
       end
     end
     print "."
-    return true
+    true
   end
 
   def cyberdojo_sh_exists?
@@ -257,7 +264,7 @@ private
       end
     end
     print "."
-    return false
+    false
   end
 
   def any_files_group_is_root?
@@ -274,7 +281,7 @@ private
       end
     end
     print "."
-    return false
+    false
   end
 
   def any_file_is_unreadable?
@@ -288,7 +295,7 @@ private
       end
     end
     print "."
-    return false
+    false
   end
 
   def Dockerfile_exists?
@@ -326,7 +333,7 @@ private
       return false
     end
     print "."
-    return true
+    true
   end
 
 private
@@ -355,8 +362,8 @@ private
     manifest['support_filenames'] || [ ]
   end
 
-  def summary_regexs
-    manifest['summary_regexs'] || [ ]
+  def progress_regexs
+    manifest['progress_regexs'] || [ ]
   end
 
   def highlight_filenames

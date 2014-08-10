@@ -23,7 +23,7 @@
 # an old commit (before .rb format support was removed)
 # The commit id you need is f1e67d2f75a92c32a67d9fa1758173cf4f0f1c97
 # Then run this script
-# Then go back to HEAD^1
+# Then go back to HEAD
 
 def my_dir
   File.dirname(__FILE__)

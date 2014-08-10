@@ -18,9 +18,9 @@ def print_heading
   print  left_align(15,'')
   print right_align( 5,'#t')        # number of tests
   print right_align( 7,'#ass')      # number of assertions
-#  print right_align( 3,'#f')        # number of failures
-#  print right_align( 3,'#e')        # number of errors
-#  print right_align( 3,'#s')        # number of skips
+  print right_align( 3,'#f')        # number of failures 
+  print right_align( 3,'#e')        # number of errors
+  print right_align( 3,'#s')        # number of skips
   print right_align( 9,'took(s)')   # time in seconds
   print right_align( 9,'t/s')       # tests per second
   print right_align( 9,'ass/s')     # assertions per second
