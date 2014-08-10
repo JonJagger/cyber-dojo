@@ -244,14 +244,10 @@ See [Misc](md/misc.md) for `manifest.json` details.
 
 
 ### check the language's manifest.json file
-There is a ruby script to do this
 ```bash
-$ cd /var/www/cyberdojo/admin_scripts
-$ ruby check_language_manifest.rb .. Lisp-2.3_LUnit
+$ cd /var/www/cyberdojo/test/integration
+$ ./test_languages.rb
 ```
-where the last parameter is the directory of the
-language + unit test you are checking (which
-contains the `manifest.json` file).
 
 
 adding a new exercise
