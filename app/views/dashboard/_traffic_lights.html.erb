@@ -64,6 +64,13 @@ $(function() {
 		<%= raw diff_avatar_image(avatar) %>
 	  </td>
 
+	  <td>
+		<input type="checkbox"
+			   class="regular-checkbox"
+			   id="<%= avatar.name %>-refresh-checkbox"/>
+		  <label for="<%= avatar.name %>-refresh-checkbox"></label>
+	  </td>
+
 	</tr>
   <% end %>
 </table>

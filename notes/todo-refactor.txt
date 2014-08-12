@@ -11,11 +11,6 @@ Each language should have a (docker running) test that confirms it
      where the named_file is part of the test data
   o) adding gibberish gives amber
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Is there a way that a dashboard can record which
-lights/animals have had some/all of their lights
-diff-reviewed? That would be very handy.
-Why not just have a manual checkbox!
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 admin_scripts should have basic sanity tests, eg that
   they run without require errors.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
