@@ -1,6 +1,7 @@
 install Rust?
 install Swift?
-install Visual.BASIC (for Chris Oldwood)
+install Visual.BASIC? (for Chris Oldwood)
+install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -9,6 +10,11 @@ Each language should have a (docker running) test that confirms it
   o) if the _named_file_ is s/6*9/6*7/ it becomes a green
      where the named_file is part of the test data
   o) adding gibberish gives amber
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Is there a way that a dashboard can record which
+lights/animals have had some/all of their lights
+diff-reviewed? That would be very handy.
+Why not just have a manual checkbox!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 admin_scripts should have basic sanity tests, eg that
   they run without require errors.
@@ -32,11 +38,6 @@ and its manifest names and used the code and test files.
 And again with an exercises/ folder underneath the
 languages/*/ folder whose manifest does not name any code/test
 files - they come from the custom exercises.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Is there a way that a dashboard can record which
-lights/animals have had some/all of their lights
-diff-reviewed? That would be very handy.
-Why not just have a manual checkbox!
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Option to select whether you want filename-nave
 on the left or right.
