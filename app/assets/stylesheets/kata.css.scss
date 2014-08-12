@@ -55,12 +55,6 @@
     margin-left: 3px;
   }
 
-  #revert-fork-container {
-    display: inline-block;
-    @include ghost-panel(8px);
-    @include left-align(15px);
-  }
-
   #help-button-container {
     display: inline-block;
     @include left-align(15px);
