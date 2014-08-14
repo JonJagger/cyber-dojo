@@ -4,60 +4,15 @@ var cyberDojo = (function(cd, $) {
   "use strict";
 
   cd.loadFile = function(filename) {
-    // I want to
-    //    1. restore scrollTop and scrollLeft positions
-    //    2. restore focus (also restores cursor position)
-    // Restoring the focus loses the scrollTop/Left
-    // positions so I have to save them in the dom so
-    // I can set them back _after_ the call to focus()
-    // The call to focus() allows you to carry on
-    // typing at the point the cursor left off.
-
-    cd.saveScrollPosition(cd.currentFilename());
     cd.fileDiv(cd.currentFilename()).hide();
     cd.selectFileInFileList(filename);
     cd.fileDiv(filename).show();
 
     cd.fileContentFor(filename).focus();
-    cd.restoreScrollPosition(filename);
     $('#current-filename').val(filename);
     if (filename !== 'output') {
       $('#last-non-output-filename').val(filename);
     }
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.scrollTop = function(filename) {
-    var fc = cd.fileContentFor(filename);
-    return fc.scrollTop();
-  };
-
-  cd.scrollLeft = function(filename) {
-    var fc = cd.fileContentFor(filename);
-    return fc.scrollLeft();
-  };
-
-  cd.saveScrollPosition = function(filename) {
-    var div = cd.fileDiv(filename);
-    div.attr('scrollTop', cd.scrollTop(filename));
-    div.attr('scrollLeft', cd.scrollLeft(filename));
-  };
-
-  //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  cd.restoreScrollPosition = function(filename) {
-    // Restore the saved scrollTop/Left positions.
-    // Note that doing the seemingly equivalent
-    //   fc.scrollTop(top);
-    //   fc.scrollLeft(left);
-    // here does _not_ work. I use animate instead with a
-    // very fast duration==1 and that does work!
-    var div = cd.fileDiv(filename);
-    var top = div.attr('scrollTop') || 0;
-    var left = div.attr('scrollLeft') || 0;
-    var fc = cd.fileContentFor(filename);
-    fc.animate({scrollTop: top, scrollLeft: left}, 1);
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

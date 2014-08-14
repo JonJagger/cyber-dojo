@@ -210,11 +210,14 @@ var cyberDojo = (function(cd, $) {
 
 	cd.newFileContent(newFilename, content);
     var div = cd.fileDiv(newFilename);
-    div.attr('scrollTop', scrollTop); // needed?
-    div.attr('scrollLeft', scrollLeft); // needed?
 	cd.rebuildFilenameList();
 	cd.loadFile(newFilename);
 	var newFile = cd.fileContentFor(newFilename);
+    // Note that doing the seemingly equivalent
+    //   fc.scrollTop(top);
+    //   fc.scrollLeft(left);
+    // here does _not_ work. I use animate instead with a
+    // very fast duration==1 and that does work!
     newFile.animate({scrollTop: scrollTop, scrollLeft: scrollLeft}, 1);
 	newFile.caret(caretPos);
   };

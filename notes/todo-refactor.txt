@@ -11,13 +11,6 @@ output window open and it names the filename and line number
 of a syntax error and you do alt-E and it opens the file
 named in the syntax error and auto scrolls to the line-number.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-do I need to cd.saveScrollPosition() and cd.restoreScrollPosition()
-(from cyber-dojo_file_load.js)
-I think that was form when I tried to use a single textarea
-Now I'm using one textarea per file I think the only
-time I'll need to fiddle with scroll-positions and
-caret-positions is when I'm renaming a file
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Each language should have a (docker running) test that confirms it
   o) starts at red
   o) if the _named_file_ is s/6*9/6*7/ it becomes a green
