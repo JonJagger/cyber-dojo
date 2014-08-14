@@ -187,9 +187,9 @@ var cyberDojo = (function(cd, $) {
 	  }
     });
 
-	// Don't refactor to renamer.dialog('open')
-	// If you do that the dialog only works the first time. See
-	// http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
+    // Don't refactor to renamer.dialog('open')
+    // If you do that the dialog only works the first time. See
+    // http://praveenbattula.blogspot.co.uk/2009/08/jquery-dialog-open-only-once-solution.html
     $('#rename_file_dialog').dialog('open');
     var end = oldFilename.lastIndexOf('.');
     if (end === -1) {
@@ -201,25 +201,25 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.renameFileFromTo = function(oldFilename, newFilename) {
-	var oldFile = cd.fileContentFor(oldFilename);
-	var content = oldFile.val();
-	var scrollTop = oldFile.scrollTop();
-	var scrollLeft = oldFile.scrollLeft();
-	var caretPos = oldFile.caret();
+    var oldFile = cd.fileContentFor(oldFilename);
+    var content = oldFile.val();
+    var scrollTop = oldFile.scrollTop();
+    var scrollLeft = oldFile.scrollLeft();
+    var caretPos = oldFile.caret();
     $(oldFile).closest('tr').remove();
 
 	cd.newFileContent(newFilename, content);
     var div = cd.fileDiv(newFilename);
-	cd.rebuildFilenameList();
-	cd.loadFile(newFilename);
-	var newFile = cd.fileContentFor(newFilename);
+    cd.rebuildFilenameList();
+    cd.loadFile(newFilename);
+    var newFile = cd.fileContentFor(newFilename);
     // Note that doing the seemingly equivalent
     //   fc.scrollTop(top);
     //   fc.scrollLeft(left);
     // here does _not_ work. I use animate instead with a
     // very fast duration==1 and that does work!
     newFile.animate({scrollTop: scrollTop, scrollLeft: scrollLeft}, 1);
-	newFile.caret(caretPos);
+    newFile.caret(caretPos);
   };
 
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
