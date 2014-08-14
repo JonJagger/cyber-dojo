@@ -201,37 +201,22 @@ var cyberDojo = (function(cd, $) {
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
 
   cd.renameFileFromTo = function(oldFilename, newFilename) {
-    cd.saveScrollPosition(oldFilename);
-	cd.rewireFileFromTo(oldFilename, newFilename);
+	var oldFile = cd.fileContentFor(oldFilename);
+	var content = oldFile.val();
+	var scrollTop = oldFile.scrollTop();
+	var scrollLeft = oldFile.scrollLeft();
+	var caretPos = oldFile.caret();
+    $(oldFile).closest('tr').remove();
+
+	cd.newFileContent(newFilename, content);
+    var div = cd.fileDiv(newFilename);
+    div.attr('scrollTop', scrollTop); // needed?
+    div.attr('scrollLeft', scrollLeft); // needed?
 	cd.rebuildFilenameList();
 	cd.loadFile(newFilename);
-  };
-
-  // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
-
-  cd.rewireFileFromTo = function(oldFilename, newFilename) {
-    // I used to delete the old file and then create
-    // a new one with the deleted file's content.
-    // However, rewiring the existing dom node is better
-    // since it is much easier to retain its cursor
-    // and scroll positions that way.
-    //
-    // See ap/views/kata/_visible_file.html.erb
-    //    <div class="filename_div"
-    //         id="<%= filename %>_div">
-    var div = cd.id(oldFilename + '_div');
-    div.attr('id', newFilename + '_div');
-    //        <textarea class="line_numbers"
-    //                  id="<%= filename %>_line_numbers">
-    var nos = cd.id(oldFilename + '_line_numbers');
-    nos.attr('id', newFilename + '_line_numbers');
-    //        <textarea class="file_content"
-    //                  name="file_content[<%= filename %>]"
-    //                  id="file_content_for_<%= filename %>"
-    var ta = cd.id('file_content_for_' + oldFilename);
-	ta.data('filename', newFilename);
-    ta.attr('name', "file_content[" + newFilename + "]");
-    ta.attr('id', 'file_content_for_' + newFilename);
+	var newFile = cd.fileContentFor(newFilename);
+    newFile.animate({scrollTop: scrollTop, scrollLeft: scrollLeft}, 1);
+	newFile.caret(caretPos);
   };
 
   // -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -

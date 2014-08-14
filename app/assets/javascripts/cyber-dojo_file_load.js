@@ -28,13 +28,20 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.saveScrollPosition = function(filename) {
+  cd.scrollTop = function(filename) {
     var fc = cd.fileContentFor(filename);
-    var top = fc.scrollTop();
-    var left = fc.scrollLeft();
+    return fc.scrollTop();
+  };
+
+  cd.scrollLeft = function(filename) {
+    var fc = cd.fileContentFor(filename);
+    return fc.scrollLeft();
+  };
+
+  cd.saveScrollPosition = function(filename) {
     var div = cd.fileDiv(filename);
-    div.attr('scrollTop', top);
-    div.attr('scrollLeft', left);
+    div.attr('scrollTop', cd.scrollTop(filename));
+    div.attr('scrollLeft', cd.scrollLeft(filename));
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,7 +52,7 @@ var cyberDojo = (function(cd, $) {
     //   fc.scrollTop(top);
     //   fc.scrollLeft(left);
     // here does _not_ work. I use animate instead with a
-    // very fast duration==1
+    // very fast duration==1 and that does work!
     var div = cd.fileDiv(filename);
     var top = div.attr('scrollTop') || 0;
     var left = div.attr('scrollLeft') || 0;
@@ -102,7 +109,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.radioEntrySwitch = function(previous, current) {
-    // Used in test-page, setup-page, and diff,fork,revert dialogs
+    // Used in test-page, setup-page, and diff-dialog
     if (previous !== undefined) {
       previous.removeClass('selected');
     }
