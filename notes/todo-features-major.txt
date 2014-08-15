@@ -5,14 +5,27 @@ Finer-grained commits
   to another file. This would allow you to see if the first code
   entered was code or test code. And also file navigation.
   The diff << < > >> controls would need to be expanded.
-  One possible design...
-  o) each movement causes a new tag-commit with a new tag number
-  o) each [test] does the same
-  o) << < > >> controls move along tag numbers
+
+  Possible design
+  Leave the << < > >> controls to move between traffic-lights.
+  Add a new separate < > control to move a single tag.
+  So if
+    was-tag = 23  (red)
+    now-tag = 31  (green)
+  and there are 8 'micro' tags between those traffic-lights
+  then clicking > micro control will change to
+    was-tag = 31
+    now-tag = 32
+  or clicking < micro control will change to
+    was-tag = 30
+    now-tag = 31
+
+  Ideas
   o) < red > moves to prev/next red
   o) < amber > moves to prev/next amber
   o) < green > moves to prev/next amber
-  o) < RAG > moves to prev/next light
+
+
   Issue: If you make an edit then switch files, then press [test]
   there would be no actual diff in source files. However,
   the server could still do a [test] to generate an output file.
@@ -29,7 +42,7 @@ Finer-grained commits
     o) delete file
     o) [test]
 
-  These calls need to be syncronous I think.
+  These calls need to be synchronous I think.
 
   $$$ The current file could have changed when you press
   $$$ new/rename/delete (or switch file or test)
@@ -102,7 +115,7 @@ Finer-grained commits
   One whose triangle is not filled in.
   This would move one tag-commit event. Above this would still be
   the editable tag numbers and the lights
-   This suggests puting the < > buttons underneath the tags
+   This suggests putting the < > buttons underneath the tags
    (which they work on) and the the <| |> buttons underneath
    the lights (which they work on)
    Move animal image. Repeat count and pie chart from dashboard.
