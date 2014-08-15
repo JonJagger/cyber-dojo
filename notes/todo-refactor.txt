@@ -5,11 +5,8 @@ install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-is there a way to get line-number from caret-position
-I'm thinking about the feature where you have the
-output window open and it names the filename and line number
-of a syntax error and you do alt-E and it opens the file
-named in the syntax error and auto scrolls to the line-number.
+on the dashboard when you turn off auto refresh
+I could add checkboxes to each animal.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Each language should have a (docker running) test that confirms it
   o) starts at red
@@ -19,6 +16,12 @@ Each language should have a (docker running) test that confirms it
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 admin_scripts should have basic sanity tests, eg that
   they run without require errors.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+is there a way to get line-number from caret-position
+I'm thinking about the feature where you have the
+output window open and it names the filename and line number
+of a syntax error and you do alt-E and it opens the file
+named in the syntax error and auto scrolls to the line-number.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyberdojo/exercises/ folder could be beefed up to match
 the cyberdojo/languages folder and has a manifest.json
