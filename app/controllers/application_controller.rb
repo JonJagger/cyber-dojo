@@ -43,9 +43,9 @@ class ApplicationController < ActionController::Base
 private
 
   def runner
-    return DockerTestRunner.new if Docker.installed?
-    return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
-    return DummyTestRunner.new
+    return @runner ||= DockerTestRunner.new if Docker.installed?
+    return @runner ||= HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
+    return @runner ||= DummyTestRunner.new
   end
 
   #before_filter :set_locale

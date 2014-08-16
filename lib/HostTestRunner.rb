@@ -1,5 +1,5 @@
 
-# test runner that runs directly on the host server
+# Deprecated test runner that runs directly on the host server
 # (if Docker not installed and CYBERDOJO_USE_HOST is set)
 # $ export CYBERDOJO_USE_HOST=true
 #
@@ -9,6 +9,7 @@
 require_relative 'TestRunner'
 
 class HostTestRunner
+
   include TestRunner
 
   def runnable?(language)

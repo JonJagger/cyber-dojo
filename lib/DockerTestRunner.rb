@@ -1,16 +1,20 @@
 
 # test runner providing some isolation/protection/security
-# Uses Docker containers https://www.docker.io/
+# via Docker containers https://www.docker.io/
 
 require_relative 'TestRunner'
 
 class DockerTestRunner
+
   include TestRunner
 
-  def runnable?(language)
+  def initialize
     command = stderr2stdout('docker images')
-    @installed ||= image_names(`#{command}`)
-    @installed.include?(language.image_name)
+    @images_names = image_names(`#{command}`)
+  end
+
+  def runnable?(language)
+    @image_names.include?(language.image_name)
   end
 
   def run(sandbox, command, max_seconds)
@@ -29,11 +33,11 @@ class DockerTestRunner
     $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
   end
 
+private
+
   def image_names(output)
     output.split("\n")[1..-1].collect{|line| line.split[0]}.sort.uniq
   end
-
-private
 
   def fatal_error(signal)
     128 + signal
