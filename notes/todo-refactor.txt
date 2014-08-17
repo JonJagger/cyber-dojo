@@ -5,6 +5,14 @@ install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add terms-of-use button on front page.
+use in general is free, but I encourage commercial users to
+make a contribution to support maintenance and further
+development of cyber-dojo.
+Say how to do this using the invoice button.
+Add [invoice-me] button to home page.
+Ask Joanne about setting up separate account for this first.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on the dashboard when you turn off auto refresh
 I could add checkboxes to each animal.
 Could also auto-tick the animals checkbox if a diff-dialog

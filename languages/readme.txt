@@ -8,13 +8,11 @@ language's base docker-container. But I do it anyway for
 regularity.
 
 The base language folders are not seen as languages
-when you create a dojo since app/lib/LinuxPaas.rb has an
-all_languages() method that returns only languages whose
-language/ folder contains a manifest.json file.
+when you create a dojo since their manifest.json file
+does not contain an image_name entry.
 
-Language-testFramework folders contain their supporting files
-directly rather than the supporting files (eg .jar files) being
-embedded inside the docker container. This is partly
+Language-testFramework folders sometimes contain their supporting
+files directly rather than the supporting files (eg .jar files)
+being embedded inside the docker container. This is partly
 historical since that was the way I did it pre-docker but
 it fits well with the docker volume-mounting feature.
-diff --git a/lib/Folders.rb b/lib/Folders.rb
