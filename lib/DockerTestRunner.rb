@@ -10,7 +10,7 @@ class DockerTestRunner
 
   def initialize
     command = stderr2stdout('docker images')
-    @images_names = image_names(`#{command}`)
+    @image_names = image_names(`#{command}`)
   end
 
   def runnable?(language)

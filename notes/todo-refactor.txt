@@ -7,6 +7,8 @@ install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on the dashboard when you turn off auto refresh
 I could add checkboxes to each animal.
+Could also auto-tick the animals checkbox if a diff-dialog
+is opened for any traffic-light from that animal.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Each language should have a (docker running) test that confirms it
   o) starts at red
