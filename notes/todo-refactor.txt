@@ -17,7 +17,12 @@ Each language should have a (docker running) test that confirms it
   o) adding gibberish gives amber
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 admin_scripts should have basic sanity tests, eg that
-  they run without require errors.
+  they run without require errors. The lib_domain library
+  could be enhanced so a dojo.katas iterator looks to see
+  if a command line option has been specified to limit the
+  number of dojos to look through. That way it can be removed
+  from show_diff_stats and automatically added to all the
+  admin scripts when run from tests/admin_scripts/run_all
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 is there a way to get line-number from caret-position
 I'm thinking about the feature where you have the

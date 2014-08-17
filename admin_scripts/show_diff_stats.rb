@@ -132,7 +132,7 @@ $exceptions = [ ]
 `rm -rf exceptions.log`
 
 
-stop_at = 500
+$stop_at = 500
 dojo = create_dojo
 dojo.katas.each do |kata|
   begin
@@ -142,9 +142,9 @@ dojo.katas.each do |kata|
   rescue Exception => error
     $exceptions << error.message
   end
-  break if $dot_count >= stop_at
+  break if $dot_count >= $stop_at
 end
 puts
 
-show_diff_stats(stop_at)
+show_diff_stats($stop_at)
 mention($exceptions)

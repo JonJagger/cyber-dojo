@@ -33,11 +33,11 @@ class DockerTestRunner
     $?.exitstatus != fatal_error(kill) ? output : didnt_complete(max_seconds)
   end
 
-private
-
   def image_names(output)
     output.split("\n")[1..-1].collect{|line| line.split[0]}.sort.uniq
   end
+
+private
 
   def fatal_error(signal)
     128 + signal
