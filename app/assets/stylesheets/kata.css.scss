@@ -65,18 +65,12 @@
   }
 
   #help-button {
-    position: absolute;
-    top: 20px;
     font-size: 1em;
     @include rounded-corner(14px);
-    margin : {
-         top : 10px;
-      bottom : 10px;
-    }
   }
 
   #traffic-lights {
-    width: 735px;  // line-numbers=35, file-content=700
+    width: 835px;  // line-numbers=35, file-content=800
     overflow-x: auto;
     margin-bottom: 5px;
     &::-webkit-scrollbar:horizontal {
