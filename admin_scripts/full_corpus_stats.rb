@@ -45,6 +45,29 @@ dojo.katas.each do |kata|
                 num_red = 0;
                 num_green = 0;
                 num_amber = 0;
+                
+                
+                curr_cycle="red"
+                total_cycles = 0
+                lights.each do |currLight|
+                    #puts currLight.colour
+                    curr_colour =currLight.colour.to_s
+                    case curr_colour
+                    when "red"
+                        if curr_cycle == "green"
+                            curr_cycle = "red"
+                            
+                        end
+                    when "green"
+                        if curr_cycle == "red"
+                            curr_cycle = "green"
+                            total_cycles += 1
+                        end
+                    end
+                end
+                #puts "total _cycles "+ total_cycles
+                        
+                
                 transitionsString = ""
                 lights.each_cons(2) do |was,now|
                     if was.colour.to_s === "red"
@@ -88,9 +111,9 @@ dojo.katas.each do |kata|
                 #print kata_line_count.to_s
                 #print ","
                 #puts
-                printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber)
+                #printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber,total_cycles)
                 
-                #printf("\nKata id:%s\nKata name:%s\nNumber of Avatars in Kata:%s\nAvatar Name:%s\nAvatar Path:%s\nTotal Number of Lights:%s\nTotal Red Lights:%s\nTotal Green Lights:%s\nTotal Amber Lights%s\ntransitionString:%s\nTotal Lines changed in kata:%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,num_red,num_green,num_amber,transitionsString,kata_line_count.to_s)
+                printf("\nKata id:%s\nKata name:%s\nNumber of Avatars in Kata:%s\nAvatar Name:%s\nAvatar Path:%s\nTotal Number of Lights:%s\nTotal Red Lights:%s\nTotal Green Lights:%s\nTotal Amber Lights%s\ntransitionString:%s\nTotal Lines changed in kata:%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,num_red,num_green,num_amber,transitionsString,kata_line_count.to_s)
                 #puts
             end
         end
