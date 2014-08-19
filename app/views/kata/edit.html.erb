@@ -28,7 +28,6 @@ $(function() {
     var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
     cd.loadFile(filename);
   }
-
 });
 
 //--></script>
@@ -39,17 +38,29 @@ $(function() {
               },
                 :remote => true ) do %>
 
-  <%= render :partial => 'current_filename' %>
-  <%= render :partial => 'file_hashes_incoming' %>
-  <%= render :partial => 'file_hashes_outgoing' %>
 
   <div id="kata-page">
     <%= render :partial => 'test_spinner' %>
+    <%= render :partial => 'current_filename' %>
+    <%= render :partial => 'file_hashes_incoming' %>
+    <%= render :partial => 'file_hashes_outgoing' %>
+
     <table>
+
       <tr class="valign-top">
-        <td>
+        <td class="align-right">
           <%= render :partial => 'help_button' %>
           <%= render :partial => 'test_button' %>
+        </td>
+        <td>
+          <div id="traffic-lights">
+            <%= render :partial => 'traffic_lights' %>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="valign-top">
+        <td>
           <%= render :partial => 'file_new_rename_delete' %>
           <%= render :partial => 'filename_list' %>
         </td>

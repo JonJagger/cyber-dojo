@@ -15,18 +15,25 @@
   #test-button {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     @include font-size-largest();
+    @include right-align(15px);
     padding: {
-      left: 20px;
-      right: 18px;
+      top: 0px;
+      bottom: 2px;
+      left: 15px;
+      right: 13px;
     }
-    margin: 15px;
-    margin-top: 5px;
+    margin: {
+      top: 5px;
+      right: 0px;
+    }
   }
 
   #file-operations {
     display: table;
     @include ghost-panel(8px);
     @include left-align(15px);
+    margin-top: 2px;
+    margin-bottom: 5px;
     #new, #rename, #delete {
       text-align: left;
       font-size: 1em;
@@ -57,20 +64,18 @@
 
   #help-button-container {
     display: inline-block;
-    @include left-align(15px);
-  }
-
-  #line-numbers-container #label {
-    text-align: right;
-  }
-
-  #help-button {
-    font-size: 1em;
-    @include rounded-corner(14px);
+    @include right-align(15px);
+    margin: 0px;
+    margin-bottom: 5px;
+    #help-button {
+      font-size: 1em;
+      @include rounded-corner(14px);
+    }
   }
 
   #traffic-lights {
-    width: 835px;  // line-numbers=35, file-content=800
+    margin-left: 5px;
+    width: 841px;  // line-numbers=35, file-content=800
     overflow-x: auto;
     margin-bottom: 5px;
     &::-webkit-scrollbar:horizontal {
