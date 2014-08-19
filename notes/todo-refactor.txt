@@ -5,6 +5,10 @@ install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+when on a very slow (or flaky) network the timeout does
+not work since the timeout is on the server. I really
+need a timeout in the client's browser too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add terms-of-use button on front page.
 use in general is free, but I encourage commercial users to
 make a contribution to support maintenance and further
