@@ -35,9 +35,13 @@ $(function() {
         cd.storeIncomingFileHashes();
       },
       error: function(xhr,status,errorThronw) {
-        var errorMessage = "" +
-          "No response from cyber-dojo server." + "\n" +
-          "Have you lost your network connection?";
+        var errorMessage = '';
+        if (status === 'timeout') {
+          errorMessage = 'timeout: have you lost your network connection?';
+        }
+        if (status === 'error') {
+          errorMessage = 'error: is the cyber-dojo server down?';
+        }
         cd.fileContentFor('output').val(errorMessage);
       },
       complete: function(xhr,status) {
