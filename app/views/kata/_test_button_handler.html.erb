@@ -34,7 +34,7 @@ $(function() {
         cd.bindAllLineNumbers();
         cd.storeIncomingFileHashes();
       },
-      error: function(xhr,status,errorThronw) {
+      error: function(xhr,status,thrown) {
         var errorMessage = '';
         if (status === 'timeout') {
           errorMessage = 'timeout: have you lost your network connection?';
