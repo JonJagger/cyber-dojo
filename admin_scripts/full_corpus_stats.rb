@@ -27,20 +27,16 @@ puts
 days,weekdays,languages,exercises = { },{ },{ },{ }
 dot_count = 0
 exceptions = [ ]
+cyclomaticComplexity = ""
 dojo.katas.each do |kata|
     begin
         language = kata.language.name
         if language == "Java-1.8_JUnit"
 
             kata.avatars.active.each do |avatar|
-                #print kata.id.to_s + ","
-                #print kata.exercise.name.to_s + ","
-                #print kata.avatars.count.to_s + ","
 
-#print avatar.name + ","
-#print avatar.path + ","
+                cyclomaticComplexity = `./javancss "#{avatar.path + "sandbox/*.java"}"`
                 lights = avatar.lights
-                #               print lights.count.to_s+ ","
                 kata_line_count = 0;
                 num_red = 0;
                 num_green = 0;
@@ -111,9 +107,25 @@ dojo.katas.each do |kata|
                 #print kata_line_count.to_s
                 #print ","
                 #puts
-                #printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber,total_cycles)
+                #printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                #       kata.id.to_s,
+                #       kata.exercise.name.to_s,
+                #       kata.avatars.count.to_s,
+                #       avatar.name,
+                #       avatar.path,
+                #       lights.count.to_s,
+                #       transitionsString,
+                #       kata_line_count.to_s,
+                #       num_red,
+                #       num_green,
+                #       endsOnGreen,
+                #       num_amber,
+                #       total_cycles,
+                #       cyclomaticComplexity)
                 
-                printf("\nKata id:%s\nKata name:%s\nNumber of Avatars in Kata:%s\nAvatar Name:%s\nAvatar Path:%s\nTotal Number of Lights:%s\nTotal Red Lights:%s\nTotal Green Lights:%s\nTotal Amber Lights%s\ntransitionString:%s\nTotal Lines changed in kata:%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,num_red,num_green,num_amber,transitionsString,kata_line_count.to_s)
+                printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber,total_cycles,cyclomaticComplexity)
+                
+                #printf("\nKata id:%s\nKata name:%s\nNumber of Avatars in Kata:%s\nAvatar Name:%s\nAvatar Path:%s\nTotal Number of Lights:%s\nTotal Red Lights:%s\nTotal Green Lights:%s\nTotal Amber Lights%s\ntransitionString:%s\nTotal Lines changed in kata:%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,num_red,num_green,num_amber,transitionsString,kata_line_count.to_s)
                 #puts
             end
         end
