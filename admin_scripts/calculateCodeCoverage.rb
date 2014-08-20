@@ -42,15 +42,27 @@ dojo.katas.each do |kata|
                 #                copyCommand =  "cp "+avatar.path + "sandbox/*.java ./calcCodeCovg/tempDir"
                 `rm ./calcCodeCovg/src/*`
                 `rm -r ./calcCodeCovg/isrc/*`
-
+                `rm -r ./*.clf`
 
                 `cp #{avatar.path}sandbox/*.java ./calcCodeCovg/src`
+                allFiles =  Dir.entries("./calcCodeCovg/src/")
+                currTestClass = ""
+                allFiles.each do |currFile|
+                    puts currFile
+                    initialLoc = currFile.to_s =~ /test/i
+                    #puts initialLoc
+                    unless initialLoc.nil?
+                        fileNameParts = currFile.split('.')
+                        currTestClass = fileNameParts.first
+                        puts currTestClass
+                    end
+                end
                 `java -jar ./calcCodeCovg/libs/codecover-batch.jar instrument --root-directory ./calcCodeCovg/src --destination ./calcCodeCovg/isrc --container ./calcCodeCovg/src/con.xml --language java --charset UTF-8`
                 
                 `javac -cp ./calcCodeCovg/libs/*:./calcCodeCovg/isrc ./calcCodeCovg/isrc/*.java`
                 
-                # NEEDES CORE                `java -cp ./calcCodeCovg/libs/*:./calcCodeCovg/isrc org.junit.runner.JUnitCore `
-                
+                puts `java -cp ./calcCodeCovg/libs/*:./calcCodeCovg/isrc org.junit.runner.JUnitCore #{currTestClass}`
+               
             
             end
         end
