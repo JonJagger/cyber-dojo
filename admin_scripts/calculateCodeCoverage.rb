@@ -42,6 +42,7 @@ dojo.katas.each do |kata|
                 #                copyCommand =  "cp "+avatar.path + "sandbox/*.java ./calcCodeCovg/tempDir"
                 `rm ./calcCodeCovg/src/*`
                 `rm -r ./calcCodeCovg/isrc/*`
+                `rm -r ./calcCodeCovg/report.csv`
                 `rm -r ./*.clf`
 
                 `cp #{avatar.path}sandbox/*.java ./calcCodeCovg/src`
@@ -62,7 +63,12 @@ dojo.katas.each do |kata|
                 `javac -cp ./calcCodeCovg/libs/*:./calcCodeCovg/isrc ./calcCodeCovg/isrc/*.java`
                 
                 puts `java -cp ./calcCodeCovg/libs/*:./calcCodeCovg/isrc org.junit.runner.JUnitCore #{currTestClass}`
+                
+                `java -jar ./calcCodeCovg/libs/codecover-batch.jar analyze --container ./calcCodeCovg/src/con.xml --coverage-log *.clf --name test1`
                
+               puts `java -jar ./calcCodeCovg/libs/codecover-batch.jar report --container ./calcCodeCovg/src/con.xml --destination ./calcCodeCovg/report.csv --session test1 --template ./calcCodeCovg/report-templates/CSV_Report.xml`
+               
+               `cp ./calcCodeCovg/report.csv #{avatar.path}CodeCoverageReport.csv `
             
             end
         end
