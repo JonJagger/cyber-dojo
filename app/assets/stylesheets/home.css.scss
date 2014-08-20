@@ -83,10 +83,14 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-largest();
     width: 195px;
     margin: {
-      bottom: 3px;
+      bottom: 2px;
       right: 2px;
     }
-    padding-right: 20px;
+    padding: {
+      right: 20px;
+      bottom: 0px;
+      top: 2px;
+    }
     text-align: right;
     @include gradient-lighten($green, 40%, 30%, 20%);
     @include rounded-corner(6px);
@@ -208,7 +212,8 @@ $text-color: darken($lighter-color, 10%);
 
 
 
-.kata-id-input {
+.get-started.dialog {
+  .kata-id-input {
     font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
     background: lighten($green, 20%);
     color: $darker-color;
@@ -216,6 +221,7 @@ $text-color: darken($lighter-color, 10%);
     width: 270px;
     margin-left: 0px;
     @include gradient-lighten($green, 40%, 30%, 20%);
+  }
 }
 
 a:link, a:visited

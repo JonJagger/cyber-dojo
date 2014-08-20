@@ -2,7 +2,7 @@
 <table>
 
   <tr class="valign-top">
-    <td colspan="2">
+    <td colspan="3">
       <div id="visible-files-container">
 
         <% @visible_files.each do |filename,content| %>
@@ -21,6 +21,9 @@
     </td>
     <td>
       <%= render :partial => 'shared/info' %>
+    </td>
+    <td>
+      <%= render :partial => 'help_button' %>
     </td>
   </tr>
 

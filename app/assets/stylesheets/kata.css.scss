@@ -63,10 +63,10 @@
   }
 
   #help-button-container {
-    display: inline-block;
-    @include right-align(15px);
-    margin: 0px;
-    margin-bottom: 5px;
+    width: 7px;
+    @include right-align(0px);
+    margin: 3px;
+    padding: 0px;
     #help-button {
       font-size: 1em;
       @include rounded-corner(14px);
