@@ -1,5 +1,4 @@
 
-<% # load before cd.testForm().submit() below  %>
 <%= render :partial => 'test_button_handler' %>
 <%= render :partial => 'filename_support' %>
 
@@ -35,11 +34,10 @@ $(function() {
 <%= form_tag( { :action => 'run_tests',
                 :id     => @kata.id,
                 :avatar => @avatar.name
-              },
-                :remote => true ) do %>
-
+              } ) do %>
 
   <div id="kata-page">
+
     <%= render :partial => 'test_spinner' %>
     <%= render :partial => 'current_filename' %>
     <%= render :partial => 'file_hashes_incoming' %>
@@ -68,6 +66,7 @@ $(function() {
           <%= render :partial => 'editor' %>
         </td>
       </tr>
+
     </table>
   </div>
 

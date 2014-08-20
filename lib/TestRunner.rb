@@ -8,8 +8,8 @@ module TestRunner
 
   def didnt_complete(max_seconds)
     "Unable to complete the tests in #{max_seconds} seconds.\n" +
-    "Is there an accidental infinite loop? (unlikely)\n" +
-    "Is the server very busy? (more likely)\n" +
+    "Is there an accidental infinite loop?\n" +
+    "Is the server very busy?\n" +
     "Please try again."
   end
 

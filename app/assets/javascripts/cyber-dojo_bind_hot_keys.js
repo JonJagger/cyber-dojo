@@ -3,34 +3,31 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.testForm = function() {
-    return $('#test-button').closest("form");
+  var cancel = function(event) {
+    event.stopPropagation();
+    event.preventDefault();
   };
 
   cd.bindRunTests = function(event) {
-    event.stopPropagation();
-    event.preventDefault();
-    cd.testForm().submit();
+    cancel(event);
+    $('#test-button').click();
     return false;
   };
 
   cd.bindLoadNextFile = function(event) {
-    event.stopPropagation();
-    event.preventDefault();
+    cancel(event);
     cd.loadNextFile();
     return false;
   };
 
   cd.bindLoadPreviousFile = function(event) {
-    event.stopPropagation();
-    event.preventDefault();
+    cancel(event);
     cd.loadPreviousFile();
     return false;
   };
 
   cd.bindShowOutputFile = function(event) {
-    event.stopPropagation();
-    event.preventDefault();
+    cancel(event);
     cd.toggleOutputFile();
     return false;
   };

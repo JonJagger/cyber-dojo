@@ -6,46 +6,50 @@ $(function() {
   var testButton  = $('#test-button');
   var testSpinner = $('#test-spinner');
   var testOverlay = $('<div id="test-overlay"></div>');
-  var form = $('form');
 
   testButton.enable = function() {
     testButton.attr('disabled', false);
   };
+
   testButton.disable = function() {
     testButton.attr('disabled', true);
   };
 
-  form.bind('ajax:before', function(evt, data, status, xhr) {
-    testButton.disable();
-    testOverlay.insertAfter($('body'));
-    testSpinner.show();
+  testButton.click(function() {
+    var form = testButton.closest('form');
     cd.storeOutgoingFileHashes();
-  });
+    $.ajax({
+      timeout: 30000, // 30 seconds (twice server timeout)
+      type: "GET",
+      url: form.attr('action'),
+      data: form.serialize(),
+      beforeSend: function(xhr,settings) {
+        testButton.disable();
+        testOverlay.insertAfter($('body'));
+        testSpinner.show();
+      },
+      success: function(data,status,xhr) {
+        cd.rebuildFilenameList();
+        cd.bindHotKeys(cd.fileContentFor('output'));
+        cd.bindAllLineNumbers();
+        cd.storeIncomingFileHashes();
+      },
+      error: function(xhr,status,errorThronw) {
+        var errorMessage = "" +
+          "No response from cyber-dojo server." + "\n" +
+          "Have you lost your network connection?";
+        cd.fileContentFor('output').val(errorMessage);
+      },
+      complete: function(xhr,status) {
+        var allTheWay = 100000;
+        testSpinner.hide();
+        testOverlay.remove();
+        testButton.enable();
+        cd.loadFile('output');
+        $('#traffic-lights').scrollLeft(allTheWay);
+      }
+    });
 
-  form.bind('ajax:error', function(evt, data, status, xhr) {
-    var errorMessage = "" +
-      "Files not sent files to the cyber-dojo server." + "\n" +
-      "Have you lost your network connection?";
-    cd.fileContentFor('output').val(errorMessage);
-  });
-
-  form.bind('ajax:success', function(evt, data, status, xhr) {
-    cd.rebuildFilenameList();
-    // when the ajax replaces output the shortcuts
-    // are lost so need rebinding
-    var output = cd.fileContentFor('output');
-    cd.bindHotKeys(output);
-    cd.bindAllLineNumbers();
-    cd.storeIncomingFileHashes();
-  });
-
-  form.bind('ajax:complete', function(evt, data, status, xhr) {
-    var allTheWay = 100000;
-    testSpinner.hide();
-    testOverlay.remove();
-    testButton.enable();
-    cd.loadFile('output');
-    $('#traffic-lights').scrollLeft(allTheWay);
   });
 
 });
