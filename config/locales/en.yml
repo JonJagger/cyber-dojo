@@ -97,10 +97,9 @@ en:
       why_dont_you_add_auto_refactoring: "why don't you add auto-refactoring ?"
       why_dont_you_add_dot_dot_dot: "why don't you add ... ?"
       no_listen: "no. listen."
-      stop_trying_to_go_faster: "stop trying to go faster, start trying to go <em>slower</em>"
+      stop_trying_to_go_faster: "stop trying to go faster, start trying to go <em>slower</em>."
       dont_think_about_finishing: "don't think about finishing, think about <em>improving</em>."
-      think_about_practising: "think about <em>practising</em>"
-      as_a_team: "as a <em>team</em>."
+      think_about_practising_as_a_team: "think about <em>practising</em>, as a <em>team</em>."
       thats_what_cyberdojo_is_built_for: "that's what cyber-dojo is built for."
       
     kata_help:

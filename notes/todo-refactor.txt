@@ -1,3 +1,4 @@
+install R
 install Rust?
 install Swift?
 install Visual.BASIC? (for Chris Oldwood)
