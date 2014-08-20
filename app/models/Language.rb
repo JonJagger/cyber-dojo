@@ -128,8 +128,6 @@ class Language
     manifest['progress_regexs'] || [ ]
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - -
-
   def colour(output)
     OutputParser.colour(unit_test_framework, output)
   end

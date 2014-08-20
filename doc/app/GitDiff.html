@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>module GitDiff - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/lib/GitDiff.rb
+    <li>app/lib/GitDiffBuilder.rb
+    <li>app/lib/GitDiffParser.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-change_count">#change_count</a>
+    
+    <li><a href="#method-i-deleted_file-3F">#deleted_file?</a>
+    
+    <li><a href="#method-i-deleteify">#deleteify</a>
+    
+    <li><a href="#method-i-diff_htmlify">#diff_htmlify</a>
+    
+    <li><a href="#method-i-diff_htmlify_line_numbers">#diff_htmlify_line_numbers</a>
+    
+    <li><a href="#method-i-git_diff">#git_diff</a>
+    
+    <li><a href="#method-i-git_diff_html_file">#git_diff_html_file</a>
+    
+    <li><a href="#method-i-git_diff_html_line_numbers">#git_diff_html_line_numbers</a>
+    
+    <li><a href="#method-i-git_diff_view">#git_diff_view</a>
+    
+    <li><a href="#method-i-ify">#ify</a>
+    
+    <li><a href="#method-i-most_changed_file_id">#most_changed_file_id</a>
+    
+    <li><a href="#method-i-sameify">#sameify</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GitDiff.html">GitDiff</a>
+  
+    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
+  
+    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Approval.html">Approval</a>
+  
+    <li><a href="./Avatar.html">Avatar</a>
+  
+    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
+  
+    <li><a href="./Avatars.html">Avatars</a>
+  
+    <li><a href="./Chooser.html">Chooser</a>
+  
+    <li><a href="./Cleaner.html">Cleaner</a>
+  
+    <li><a href="./DashboardController.html">DashboardController</a>
+  
+    <li><a href="./DiffController.html">DiffController</a>
+  
+    <li><a href="./DifferController.html">DifferController</a>
+  
+    <li><a href="./Docker.html">Docker</a>
+  
+    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
+  
+    <li><a href="./Dojo.html">Dojo</a>
+  
+    <li><a href="./DojoController.html">DojoController</a>
+  
+    <li><a href="./DownloaderController.html">DownloaderController</a>
+  
+    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
+  
+    <li><a href="./ExceptionController.html">ExceptionController</a>
+  
+    <li><a href="./Exercise.html">Exercise</a>
+  
+    <li><a href="./Exercises.html">Exercises</a>
+  
+    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
+  
+    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
+  
+    <li><a href="./Folders.html">Folders</a>
+  
+    <li><a href="./ForkerController.html">ForkerController</a>
+  
+    <li><a href="./Git.html">Git</a>
+  
+    <li><a href="./HostTestRunner.html">HostTestRunner</a>
+  
+    <li><a href="./Kata.html">Kata</a>
+  
+    <li><a href="./KataController.html">KataController</a>
+  
+    <li><a href="./Katas.html">Katas</a>
+  
+    <li><a href="./Language.html">Language</a>
+  
+    <li><a href="./Languages.html">Languages</a>
+  
+    <li><a href="./Light.html">Light</a>
+  
+    <li><a href="./LineSplitter.html">LineSplitter</a>
+  
+    <li><a href="./LocalesController.html">LocalesController</a>
+  
+    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
+  
+    <li><a href="./MakefileFilter.html">MakefileFilter</a>
+  
+    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
+  
+    <li><a href="./OsDir.html">OsDir</a>
+  
+    <li><a href="./OsDisk.html">OsDisk</a>
+  
+    <li><a href="./OutputParser.html">OutputParser</a>
+  
+    <li><a href="./ParityHelper.html">ParityHelper</a>
+  
+    <li><a href="./PieChartHelper.html">PieChartHelper</a>
+  
+    <li><a href="./ReverterController.html">ReverterController</a>
+  
+    <li><a href="./Sandbox.html">Sandbox</a>
+  
+    <li><a href="./SetupController.html">SetupController</a>
+  
+    <li><a href="./Tag.html">Tag</a>
+  
+    <li><a href="./TdGapper.html">TdGapper</a>
+  
+    <li><a href="./TestRunner.html">TestRunner</a>
+  
+    <li><a href="./TimeNow.html">TimeNow</a>
+  
+    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
+  
+    <li><a href="./UniqueId.html">UniqueId</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module GitDiff</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-change_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">change_count</span><span
+            class="method-args">(diff)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="change_count-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 110</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">diff</span>)
+  <span class="ruby-identifier">diff</span>[<span class="ruby-value">:deleted_line_count</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:added_line_count</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- change_count-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- change_count-method -->
+
+    
+      <div id="method-i-deleted_file-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deleted_file?</span><span
+            class="method-args">(ch)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="deleted_file-3F-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">deleted_file?</span>(<span class="ruby-identifier">ch</span>)
+  <span class="ruby-comment"># GitDiffParser uses names beginning with</span>
+  <span class="ruby-comment"># a/... to indicate a deleted file</span>
+  <span class="ruby-comment"># b/... to indicate a new/modified file</span>
+  <span class="ruby-comment"># This mirrors the git diff command output</span>
+  <span class="ruby-identifier">ch</span> <span class="ruby-operator">==</span> <span class="ruby-string">'a'</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- deleted_file-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- deleted_file-3F-method -->
+
+    
+      <div id="method-i-deleteify" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deleteify</span><span
+            class="method-args">(lines)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="deleteify-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">deleteify</span>(<span class="ruby-identifier">lines</span>)
+  <span class="ruby-identifier">ify</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-value">:deleted</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- deleteify-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- deleteify-method -->
+
+    
+      <div id="method-i-diff_htmlify" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">diff_htmlify</span><span
+            class="method-args">(id, n)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="diff_htmlify-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 143</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_htmlify</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">n</span>)
+  <span class="ruby-identifier">result</span> = <span class="ruby-string">''</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:section</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-node">&quot;&lt;span id='#{id}_section_#{n[:index]}'&gt;&lt;/span&gt;&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">line</span> = <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">n</span>[<span class="ruby-value">:line</span>])
+    <span class="ruby-identifier">line</span> = <span class="ruby-string">'&amp;thinsp;'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">line</span> <span class="ruby-operator">==</span> <span class="ruby-string">''</span>
+    <span class="ruby-identifier">result</span> =
+      <span class="ruby-node">&quot;&lt;#{n[:type]}&gt;&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-identifier">line</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot;&lt;/#{n[:type]}&gt;&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- diff_htmlify-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- diff_htmlify-method -->
+
+    
+      <div id="method-i-diff_htmlify_line_numbers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">diff_htmlify_line_numbers</span><span
+            class="method-args">(n)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="diff_htmlify_line_numbers-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_htmlify_line_numbers</span>(<span class="ruby-identifier">n</span>)
+  <span class="ruby-identifier">result</span> = <span class="ruby-string">''</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:section</span>
+    <span class="ruby-identifier">result</span> =
+      <span class="ruby-node">&quot;&lt;#{n[:type]}&gt;&quot;</span> <span class="ruby-operator">+</span>
+        <span class="ruby-string">'&lt;ln&gt;'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:number</span>].<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">'&lt;/ln&gt;'</span> <span class="ruby-operator">+</span>
+      <span class="ruby-node">&quot;&lt;/#{n[:type]}&gt;&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- diff_htmlify_line_numbers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- diff_htmlify_line_numbers-method -->
+
+    
+      <div id="method-i-git_diff" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">git_diff</span><span
+            class="method-args">(diff_lines, visible_files)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Top level functions used by diff_controller.rb to create data structure (to
+build view from) containing diffs for all files, for a given avatar, for a
+given tag.</p>
+          
+
+          
+          <div class="method-source-code" id="git_diff-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 11</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff</span>(<span class="ruby-identifier">diff_lines</span>, <span class="ruby-identifier">visible_files</span>)
+    <span class="ruby-identifier">view</span> = { }
+    <span class="ruby-identifier">diffs</span> = <span class="ruby-constant">GitDiffParser</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">diff_lines</span>).<span class="ruby-identifier">parse_all</span>
+    <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sandbox_name</span>,<span class="ruby-identifier">diff</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">md</span> = <span class="ruby-regexp">%r^(.)/sandbox/(.*)|</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">sandbox_name</span>)
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">md</span>
+        <span class="ruby-identifier">filename</span> = <span class="ruby-identifier">md</span>[<span class="ruby-value">2</span>]
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">deleted_file?</span>(<span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>])
+          <span class="ruby-identifier">file_content</span> = [ ]
+          <span class="ruby-keyword">if</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:chunks</span>] <span class="ruby-operator">!=</span> [ ] <span class="ruby-comment">#[ ] indicates empty file was deleted</span>
+            <span class="ruby-identifier">file_content</span> = <span class="ruby-identifier">diff</span>[<span class="ruby-value">:chunks</span>][<span class="ruby-value">0</span>][<span class="ruby-value">:sections</span>][<span class="ruby-value">0</span>][<span class="ruby-value">:deleted_lines</span>]
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-identifier">view</span>[<span class="ruby-identifier">filename</span>] = <span class="ruby-identifier">deleteify</span>(<span class="ruby-identifier">file_content</span>)
+        <span class="ruby-keyword">else</span>
+          <span class="ruby-identifier">file_content</span> = <span class="ruby-identifier">visible_files</span>[<span class="ruby-identifier">filename</span>]
+          <span class="ruby-identifier">view</span>[<span class="ruby-identifier">filename</span>] = <span class="ruby-constant">GitDiffBuilder</span>.<span class="ruby-identifier">new</span>().<span class="ruby-identifier">build</span>(<span class="ruby-identifier">diff</span>, <span class="ruby-constant">LineSplitter</span>.<span class="ruby-identifier">line_split</span>(<span class="ruby-identifier">file_content</span>))
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">filename</span>)
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-comment"># other files have not changed...</span>
+    <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">view</span>[<span class="ruby-identifier">filename</span>] = <span class="ruby-identifier">sameify</span>(<span class="ruby-identifier">content</span>)
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-identifier">view</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- git_diff-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- git_diff-method -->
+
+    
+      <div id="method-i-git_diff_html_file" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">git_diff_html_file</span><span
+            class="method-args">(id, diff)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="git_diff_html_file-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 137</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_html_file</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">diff</span>)
+  <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff_htmlify</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">n</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">''</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- git_diff_html_file-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- git_diff_html_file-method -->
+
+    
+      <div id="method-i-git_diff_html_line_numbers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">git_diff_html_line_numbers</span><span
+            class="method-args">(diff)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="git_diff_html_line_numbers-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 172</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_html_line_numbers</span>(<span class="ruby-identifier">diff</span>)
+  <span class="ruby-identifier">line_numbers</span> = <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff_htmlify_line_numbers</span>(<span class="ruby-identifier">n</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">''</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- git_diff_html_line_numbers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- git_diff_html_line_numbers-method -->
+
+    
+      <div id="method-i-git_diff_view" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">git_diff_view</span><span
+            class="method-args">(diffed_files)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="git_diff_view-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_view</span>(<span class="ruby-identifier">diffed_files</span>)
+  <span class="ruby-identifier">n</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">diffs</span> = [ ]
+  <span class="ruby-identifier">diffed_files</span>.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">diff</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">id</span> = <span class="ruby-string">'id_'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">n</span>.<span class="ruby-identifier">to_s</span>
+    <span class="ruby-identifier">n</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+    <span class="ruby-identifier">diffs</span> <span class="ruby-operator">&lt;&lt;</span> {
+      <span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id</span>,
+      <span class="ruby-value">:filename</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">filename</span>,
+      <span class="ruby-value">:section_count</span>      =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">count</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:section</span> },
+      <span class="ruby-value">:deleted_line_count</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">count</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:deleted</span> },
+      <span class="ruby-value">:added_line_count</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">count</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span> <span class="ruby-identifier">line</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:added</span>   },
+      <span class="ruby-value">:content</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git_diff_html_file</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">diff</span>),
+      <span class="ruby-value">:line_numbers</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">git_diff_html_line_numbers</span>(<span class="ruby-identifier">diff</span>)
+    }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">diffs</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- git_diff_view-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- git_diff_view-method -->
+
+    
+      <div id="method-i-ify" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ify</span><span
+            class="method-args">(lines, type)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ify-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ify</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">type</span>)
+  <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">collect</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span>, <span class="ruby-identifier">number</span><span class="ruby-operator">|</span>
+    {
+      <span class="ruby-value">:line</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">line</span>,
+      <span class="ruby-value">:type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">type</span>,
+      <span class="ruby-value">:number</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+    }
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ify-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ify-method -->
+
+    
+      <div id="method-i-most_changed_file_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">most_changed_file_id</span><span
+            class="method-args">(diffs, current_filename)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="most_changed_file_id-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">most_changed_file_id</span>(<span class="ruby-identifier">diffs</span>, <span class="ruby-identifier">current_filename</span>)
+  <span class="ruby-comment"># Prefers to stay on the same file if it still exists</span>
+  <span class="ruby-comment"># in the now_tag (it could have been deleted or renamed)</span>
+  <span class="ruby-comment"># and has at least one change.</span>
+  <span class="ruby-comment"># Otherwise prefers the file with the most changes.</span>
+  <span class="ruby-comment"># If nothing has changed prefers the largest file</span>
+  <span class="ruby-comment"># that isn't output or instructions (this is likely to</span>
+  <span class="ruby-comment"># be a test file).</span>
+
+  <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-keyword">nil</span>
+  <span class="ruby-identifier">current_filename_diff</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">current_filename</span> }
+
+  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">'output'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-identifier">current_filename</span> }
+  <span class="ruby-identifier">files</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">diff</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> }
+  <span class="ruby-identifier">most_changed_diff</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">max</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">lhs</span>,<span class="ruby-identifier">rhs</span><span class="ruby-operator">|</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">lhs</span>) <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">rhs</span>) }
+
+  <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">current_filename_diff</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">current_filename_diff</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">most_changed_diff</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">current_filename_diff</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">most_changed_diff</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">elsif</span> <span class="ruby-operator">!</span><span class="ruby-identifier">most_changed_diff</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">most_changed_diff</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">diffs</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">'output'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:filename</span>] <span class="ruby-operator">!=</span> <span class="ruby-string">'instructions'</span> }
+    <span class="ruby-identifier">chosen_diff</span> = <span class="ruby-identifier">diffs</span>.<span class="ruby-identifier">max_by</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">diff</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:content</span>].<span class="ruby-identifier">size</span> }
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">chosen_diff</span>[<span class="ruby-value">:id</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- most_changed_file_id-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- most_changed_file_id-method -->
+
+    
+      <div id="method-i-sameify" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sameify</span><span
+            class="method-args">(source)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="sameify-source">
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sameify</span>(<span class="ruby-identifier">source</span>)
+  <span class="ruby-identifier">ify</span>(<span class="ruby-constant">LineSplitter</span>.<span class="ruby-identifier">line_split</span>(<span class="ruby-identifier">source</span>), <span class="ruby-value">:same</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- sameify-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- sameify-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

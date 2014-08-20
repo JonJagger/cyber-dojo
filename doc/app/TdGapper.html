@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class TdGapper - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/lib/TdGapper.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-i-collapsed_table">#collapsed_table</a>
+    
+    <li><a href="#method-i-fully_gapped">#fully_gapped</a>
+    
+    <li><a href="#method-i-n">#n</a>
+    
+    <li><a href="#method-i-number">#number</a>
+    
+    <li><a href="#method-i-stats">#stats</a>
+    
+    <li><a href="#method-i-vertical_bleed">#vertical_bleed</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./GitDiff.html">GitDiff</a>
+  
+    <li><a href="./GitDiff/GitDiffBuilder.html">GitDiff::GitDiffBuilder</a>
+  
+    <li><a href="./GitDiff/GitDiffParser.html">GitDiff::GitDiffParser</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Approval.html">Approval</a>
+  
+    <li><a href="./Avatar.html">Avatar</a>
+  
+    <li><a href="./AvatarImageHelper.html">AvatarImageHelper</a>
+  
+    <li><a href="./Avatars.html">Avatars</a>
+  
+    <li><a href="./Chooser.html">Chooser</a>
+  
+    <li><a href="./Cleaner.html">Cleaner</a>
+  
+    <li><a href="./DashboardController.html">DashboardController</a>
+  
+    <li><a href="./DiffController.html">DiffController</a>
+  
+    <li><a href="./DifferController.html">DifferController</a>
+  
+    <li><a href="./Docker.html">Docker</a>
+  
+    <li><a href="./DockerTestRunner.html">DockerTestRunner</a>
+  
+    <li><a href="./Dojo.html">Dojo</a>
+  
+    <li><a href="./DojoController.html">DojoController</a>
+  
+    <li><a href="./DownloaderController.html">DownloaderController</a>
+  
+    <li><a href="./DummyTestRunner.html">DummyTestRunner</a>
+  
+    <li><a href="./ExceptionController.html">ExceptionController</a>
+  
+    <li><a href="./Exercise.html">Exercise</a>
+  
+    <li><a href="./Exercises.html">Exercises</a>
+  
+    <li><a href="./FileDeltaMaker.html">FileDeltaMaker</a>
+  
+    <li><a href="./FlagImageHelper.html">FlagImageHelper</a>
+  
+    <li><a href="./Folders.html">Folders</a>
+  
+    <li><a href="./ForkerController.html">ForkerController</a>
+  
+    <li><a href="./Git.html">Git</a>
+  
+    <li><a href="./HostTestRunner.html">HostTestRunner</a>
+  
+    <li><a href="./Kata.html">Kata</a>
+  
+    <li><a href="./KataController.html">KataController</a>
+  
+    <li><a href="./Katas.html">Katas</a>
+  
+    <li><a href="./Language.html">Language</a>
+  
+    <li><a href="./Languages.html">Languages</a>
+  
+    <li><a href="./Light.html">Light</a>
+  
+    <li><a href="./LineSplitter.html">LineSplitter</a>
+  
+    <li><a href="./LocalesController.html">LocalesController</a>
+  
+    <li><a href="./LogoImageHelper.html">LogoImageHelper</a>
+  
+    <li><a href="./MakefileFilter.html">MakefileFilter</a>
+  
+    <li><a href="./MyTranslationHelper.html">MyTranslationHelper</a>
+  
+    <li><a href="./OsDir.html">OsDir</a>
+  
+    <li><a href="./OsDisk.html">OsDisk</a>
+  
+    <li><a href="./OutputParser.html">OutputParser</a>
+  
+    <li><a href="./ParityHelper.html">ParityHelper</a>
+  
+    <li><a href="./PieChartHelper.html">PieChartHelper</a>
+  
+    <li><a href="./ReverterController.html">ReverterController</a>
+  
+    <li><a href="./Sandbox.html">Sandbox</a>
+  
+    <li><a href="./SetupController.html">SetupController</a>
+  
+    <li><a href="./Tag.html">Tag</a>
+  
+    <li><a href="./TdGapper.html">TdGapper</a>
+  
+    <li><a href="./TestRunner.html">TestRunner</a>
+  
+    <li><a href="./TimeNow.html">TimeNow</a>
+  
+    <li><a href="./TrafficLightHelper.html">TrafficLightHelper</a>
+  
+    <li><a href="./UniqueId.html">UniqueId</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class TdGapper</h1>
+
+  <div id="description" class="description">
+    
+<p>See test/app-lib/test_td_gapper.rb</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(start, seconds_per_td, max_seconds_uncollapsed)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">start</span>, <span class="ruby-identifier">seconds_per_td</span>, <span class="ruby-identifier">max_seconds_uncollapsed</span>)
+  <span class="ruby-ivar">@start</span> = <span class="ruby-identifier">start</span>
+  <span class="ruby-ivar">@seconds_per_td</span> = <span class="ruby-identifier">seconds_per_td</span>
+  <span class="ruby-ivar">@max_seconds_uncollapsed</span> = <span class="ruby-identifier">max_seconds_uncollapsed</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-collapsed_table" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">collapsed_table</span><span
+            class="method-args">(td_nos)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="collapsed_table-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 55</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">collapsed_table</span>(<span class="ruby-identifier">td_nos</span>)
+  <span class="ruby-identifier">max_uncollapsed_tds</span> = <span class="ruby-ivar">@max_seconds_uncollapsed</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>
+  <span class="ruby-identifier">obj</span> = { }
+  <span class="ruby-identifier">td_nos</span>.<span class="ruby-identifier">each_cons</span>(<span class="ruby-value">2</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">diff</span> = <span class="ruby-identifier">p</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">-</span> <span class="ruby-identifier">p</span>[<span class="ruby-value">0</span>]
+    <span class="ruby-identifier">key</span> = <span class="ruby-identifier">diff</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">max_uncollapsed_tds</span> <span class="ruby-operator">?</span> <span class="ruby-value">:dont_collapse</span> <span class="ruby-operator">:</span> <span class="ruby-value">:collapse</span>
+    <span class="ruby-identifier">obj</span>[<span class="ruby-identifier">p</span>[<span class="ruby-value">0</span>]] = [ <span class="ruby-identifier">key</span>, <span class="ruby-identifier">diff</span><span class="ruby-operator">-</span><span class="ruby-value">1</span> ]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- collapsed_table-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- collapsed_table-method -->
+
+    
+      <div id="method-i-fully_gapped" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">fully_gapped</span><span
+            class="method-args">(all_lights, now)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="fully_gapped-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">fully_gapped</span>(<span class="ruby-identifier">all_lights</span>, <span class="ruby-identifier">now</span>)
+  <span class="ruby-identifier">s</span> = <span class="ruby-identifier">stats</span>(<span class="ruby-identifier">all_lights</span>, <span class="ruby-identifier">now</span>)
+  <span class="ruby-identifier">vertical_bleed</span>(<span class="ruby-identifier">s</span>)
+  <span class="ruby-identifier">collapsed_table</span>(<span class="ruby-identifier">s</span>[<span class="ruby-value">:td_nos</span>]).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">td</span>,<span class="ruby-identifier">gi</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">count</span> = <span class="ruby-identifier">gi</span>[<span class="ruby-value">1</span>]
+    <span class="ruby-identifier">s</span>[<span class="ruby-value">:avatars</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>,<span class="ruby-identifier">td_map</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">gi</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">===</span> <span class="ruby-value">:dont_collapse</span>
+        <span class="ruby-identifier">count</span>.<span class="ruby-identifier">times</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">td_map</span>[<span class="ruby-identifier">td</span><span class="ruby-operator">+</span><span class="ruby-identifier">n</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] = [ ] }
+      <span class="ruby-keyword">end</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">gi</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">===</span> <span class="ruby-value">:collapse</span>
+        <span class="ruby-identifier">td_map</span>[<span class="ruby-identifier">td</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>] = { <span class="ruby-value">:collapsed</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">count</span> }
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">s</span>[<span class="ruby-value">:avatars</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- fully_gapped-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- fully_gapped-method -->
+
+    
+      <div id="method-i-n" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">n</span><span
+            class="method-args">(now)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="n-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">n</span>(<span class="ruby-identifier">now</span>)
+  ((<span class="ruby-constant">Time</span>.<span class="ruby-identifier">mktime</span>(*<span class="ruby-identifier">now</span>) <span class="ruby-operator">-</span> <span class="ruby-ivar">@start</span>) <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>).<span class="ruby-identifier">to_i</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- n-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- n-method -->
+
+    
+      <div id="method-i-number" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">number</span><span
+            class="method-args">(light)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="number-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 66</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">number</span>(<span class="ruby-identifier">light</span>)
+  ((<span class="ruby-identifier">light</span>.<span class="ruby-identifier">time</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@start</span>) <span class="ruby-operator">/</span> <span class="ruby-ivar">@seconds_per_td</span>).<span class="ruby-identifier">to_i</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- number-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- number-method -->
+
+    
+      <div id="method-i-stats" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">stats</span><span
+            class="method-args">(all_lights, now)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="stats-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 29</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">stats</span>(<span class="ruby-identifier">all_lights</span>, <span class="ruby-identifier">now</span>)
+  <span class="ruby-identifier">obj</span> = {
+    <span class="ruby-value">:avatars</span> =<span class="ruby-operator">&gt;</span> { },
+    <span class="ruby-value">:td_nos</span>  =<span class="ruby-operator">&gt;</span> [ <span class="ruby-value">0</span>, <span class="ruby-identifier">n</span>(<span class="ruby-identifier">now</span>) ]
+  }
+  <span class="ruby-identifier">all_lights</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">avatar_name</span>, <span class="ruby-identifier">lights</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">an</span> = <span class="ruby-identifier">obj</span>[<span class="ruby-value">:avatars</span>][<span class="ruby-identifier">avatar_name</span>] = { }
+    <span class="ruby-identifier">lights</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">light</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">tdn</span> = <span class="ruby-identifier">number</span>(<span class="ruby-identifier">light</span>)
+      <span class="ruby-identifier">an</span>[<span class="ruby-identifier">tdn</span>] <span class="ruby-operator">||=</span> [ ]
+      <span class="ruby-identifier">an</span>[<span class="ruby-identifier">tdn</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">light</span>
+      <span class="ruby-identifier">obj</span>[<span class="ruby-value">:td_nos</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">tdn</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">obj</span>[<span class="ruby-value">:td_nos</span>].<span class="ruby-identifier">sort!</span>.<span class="ruby-identifier">uniq!</span>
+  <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- stats-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- stats-method -->
+
+    
+      <div id="method-i-vertical_bleed" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">vertical_bleed</span><span
+            class="method-args">(s)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="vertical_bleed-source">
+            <pre><span class="ruby-comment"># File app/lib/TdGapper.rb, line 47</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">vertical_bleed</span>(<span class="ruby-identifier">s</span>)
+  <span class="ruby-identifier">s</span>[<span class="ruby-value">:td_nos</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">s</span>[<span class="ruby-value">:avatars</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>,<span class="ruby-identifier">td_map</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">td_map</span>[<span class="ruby-identifier">n</span>] <span class="ruby-operator">||=</span> [ ]
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- vertical_bleed-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- vertical_bleed-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
