@@ -6,7 +6,7 @@
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".rb",
-  "display_name": "Ruby",
+  "display_name": "Ruby, Test::Unit",
   "display_test_name": "Test::Unit",
   "unit_test_framework": "ruby_test_unit",
   "tab_size": 2,

@@ -5,9 +5,7 @@
   <%= @kata.id.to_s[0..5] %></span>,
   <span title="this dojo's exercise is <%= @kata.exercise.name.gsub('_',' ') %>">
     <%= @kata.exercise.name.gsub('_',' ') %></span>,
-  <span title="this dojo's unit-test framework is <%= @kata.language.display_test_name %>">
-    <%= @kata.language.display_test_name %></span>,
-  <span title="this dojo's language is <%= @kata.language.display_name %>">
+  <span title="this dojo's (language + test framework) is <%= @kata.language.display_name %>">
     <%= @kata.language.display_name %></span>
 
 </div>

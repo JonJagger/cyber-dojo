@@ -6,7 +6,7 @@
     "cyber-dojo.sh"
   ],
   "filename_extension" : ".f90",
-  "display_name": "Fortran",
+  "display_name": "Fortran, FUnit",
   "display_test_name": "FUnit",
   "unit_test_framework": "funit",
   "image_name": "cyberdojo/fortran-4.8_funit"

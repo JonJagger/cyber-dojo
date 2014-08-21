@@ -5,7 +5,7 @@
   "unit_test_framework": "scala_test",
 
   "filename_extension" : ".scala",
-  "display_name": "Scala",
+  "display_name": "Scala, scalatest",
   "display_test_name": "scalatest",
   "image_name": "cyberdojo/scala-2.9.2_scalatest",
   "tab_size": 4

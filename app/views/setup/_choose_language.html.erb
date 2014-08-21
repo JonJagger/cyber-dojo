@@ -32,8 +32,8 @@ $(function() {
   <% @languages.each_with_index do |atts,index| %>
     <div class="filename"
          id="language_<%= index %>"
-         data-language="<%= atts[2] %>">
-      <%= atts[0] %>, <%= atts[1] %>
+         data-language="<%= atts[0] %>">
+      <%= atts[1] %>
     </div>
   <% end %>
 </div>

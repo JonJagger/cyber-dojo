@@ -7,7 +7,7 @@
     "Makefile"
   ],
   "filename_extension" : ".erl",
-  "display_name": "Erlang",
+  "display_name": "Erlang, eunit",
   "display_test_name": "eunit",
   "unit_test_framework": "eunit",
   "image_name": "cyberdojo/erlang-5.10.2_eunit",

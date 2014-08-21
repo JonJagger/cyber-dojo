@@ -12,7 +12,7 @@
     "spock-core-0.7-groovy-2.0.jar"
   ],
   "filename_extension" : ".groovy",
-  "display_name": "Groovy",
+  "display_name": "Groovy, Spock",
   "display_test_name": "Spock",
   "image_name": "cyberdojo/groovy-2.2.0_spock",
   "unit_test_framework": "groovy_spock"
