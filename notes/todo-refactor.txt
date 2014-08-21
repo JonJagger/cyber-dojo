@@ -3,8 +3,20 @@ install Rust?
 install Swift?
 install Visual.BASIC? (for Chris Oldwood)
 install J?
+install Java-TestNG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+refactoring_dojos.tgz file still has katas in old
+manifest.rb format.
+Check this on cyber-dojo.org for eg
+cyberdojo/katas/76/DD58DE08
+which is the refactoring kata for Yahtzee,C++
+Recreate the .tgz file on cyber-dojo.org
+using cyberdojo/admin_scripts/save_refactoring_dojos.rb
+Then scp the .tgz file to my local computer.
+Then make sure that the .tgz file is part of the git repo
+and commit it and push it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/parse_NAME/colour_of_NAME/
 in app/lib/OutputParser.rb (rename to OutputColour.rb)

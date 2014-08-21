@@ -1,5 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test that each refactoring dojo exist in the katas/ folder
+and that it can be opened and forked from.
+The info for IDs, animals, tag numbers is in
+cyberdojo/admin_scripts/save_refactoring_dojos.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Each language should have a (docker running) test that confirms it
   o) starts at red
   o) if the _named_file_ is s/6*9/6*7/ it becomes a green
@@ -15,10 +20,7 @@ the test for languages and mention it in the docker md file.
 public/javascripts/tests needs some TLC. There are
 tests in there for stuff in there that is long gone.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test that refactoring dojo IDs exist in the katas/ folder
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts should have basic sanity tests, eg that
-  they run without require errors. The lib_domain library
+The lib_domain library
   could be enhanced so a dojo.katas iterator looks to see
   if a command line option has been specified to limit the
   number of dojos to look through. That way it can be removed
@@ -40,9 +42,6 @@ Also needed in test/app_lib/test_git_diff_html
     should be
   GitDiff::Parser.new(lines).parse_one
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-language tests should be run as part of test-suite.
-Use admin_scripts/lib_language_manifest_checker.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 spydir.read does this
@@ -52,7 +51,4 @@ Suppose I wanted to fake an actual file of that name.
 OsDir.write does this
   file.write(JSON.unparse(object)) if filename.end_with?('.json')
 Again, this needs to happen in the caller.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  admin_scripts/check_language_manifest.rb
-  should be passed the languages/ dir not the root_dir
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
