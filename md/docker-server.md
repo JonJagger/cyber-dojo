@@ -43,9 +43,9 @@ contains this...
   "image_name": "cyberdojo/java-1.8_junit"
 }
 ```
-then `Java-JUnit` will only be offered as a language
+then `Java-JUnit` will only be offered as a (language,test framework)
 if the docker image `cyberdojo/java-1.8_junit` exists
-on the server, as determined by running
+on the host server, as determined by running
 ```bash
 $ docker images
 ```

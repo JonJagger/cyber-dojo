@@ -6,11 +6,16 @@ install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+tests/run_all.sh should save the coverage stats table
+into coverage.txt so it is automatically part of git repo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 public/javascripts/tests needs some TLC. There are
 tests in there for stuff in there that is long gone.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add vision dialog to front page?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add terms-of-use button on front page.
 use in general is free, but I encourage commercial users to
@@ -65,16 +70,9 @@ And again with an exercises/ folder underneath the
 languages/*/ folder whose manifest does not name any code/test
 files - they come from the custom exercises.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Option to select whether you want filename-nave
-on the left or right.
-Filename-nave needs a max width if on the left side.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when tips dialog open it needs to scroll to top.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/app_controllers/test_download.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-tests/run_all.sh should save the coverage stats table
-into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Various places have code like this...
    if ENV['CYBERDOJO_TEST_ROOT_DIR']
