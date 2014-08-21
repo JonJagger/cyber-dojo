@@ -1,5 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add progress_regrex's for all languages that have simple
+red/green/amber regexp pattern.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 working towards a tag being created for inter-test events...
 When an event happens in the browser I create a snapshot of
 the current state. Eg if there are 3 files fileA,fileB,fileC,
@@ -17,7 +20,6 @@ you get three snapshots in the state array
               fileC-contentC',
               fileC-contentB'']
     send that to server.
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   selection of most-changed-filename prefers to stay

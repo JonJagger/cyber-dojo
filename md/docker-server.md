@@ -72,7 +72,7 @@ will tell you the names of the docker container images held in the
 [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
 <br>Now do a
 ```bash
-$ docker pull IMAGE_NAME
+$ docker pull [IMAGE_NAME]
 ```
 for each IMAGE_NAME matching the `image_name` entry in
 each `cyberdojo/languages/*/manifest.json` file that you wish to use.
