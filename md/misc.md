@@ -19,8 +19,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
     "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
     "OK \\((\\d)+ test(s)?\\)"
   ],
-  "display_name": "Java",
-  "display_test_name": "JUnit",
+  "display_name": "Java, JUnit",
   "unit_test_framework": "junit",
   "image_name": "cyberdojo/java-1.8_junit",
   "tab_size": 4
@@ -30,8 +29,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
 `"image_name": string`
 
   The name of the docker image in which `cyber-dojo.sh` is run.
-  <br>Optional. Not required if you're using a local [raw-server](raw-server.md)
-  instead of a docker-server.
+  <br>Required.
 - - - - - - - - - - - - - - - - - - - -
 `"visible_filenames": [ string* ]`
 
@@ -46,6 +44,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
   For example, if `cyber-dojo.sh` runs `gcc` to compile C files then `gcc` has
   to be installed. If `cyber-dojo.sh` runs `javac` to compile java files then
   `javac` has to be installed.
+  <br>Required.
 - - - - - - - - - - - - - - - - - - - -
 `"support_filenames": [ string* ]`
 
@@ -97,7 +96,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
   ```
   [ 'cyber-dojo', 'makefile', 'Makefile' ]
   ```
-  Not required. Defaults to an empty array.
+  <br>Not required. Defaults to an empty array.
 - - - - - - - - - - - - - - - - - - - -
 `"progress_regexs": [ string, string ]`
 
@@ -109,28 +108,22 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
   most recent red/green traffic light. Useful when your practice
   session starts from a large number of pre-written tests and
   you wish to monitor the progress of each animal.
-  Not required. Defaults to an empty array.
+  <br>Not required. Defaults to an empty array.
 - - - - - - - - - - - - - - - - - - - -
 `"filename_extension": string`
 
   The filename extension used when creating a new filename.
   For example, if set to `".java"` the new filename will be
-  `filename.java`. Not required. Defaults to the empty string
+  `filename.java`.
+  <br>Not required. Defaults to the empty string
   (and the new filename will be `filename`).
 - - - - - - - - - - - - - - - - - - - -
 `"display_name": string`
 
-  The name of the language as it appears in the create page (where you select
-  your language and exercise) and also in the info
-  displayed at the top-left of the test and dashboard pages.
-  <br>Optional. Defaults to the name of the language folder holding the
-  `manifest.json` file.
-- - - - - - - - - - - - - - - - - - - -
-`"display_test_name": string`
-
-  The name of the unit-test-framework as it appears in the create page and also in
-  in the info displayed at the bottom the test page and the left of the dashboard page.
-  <br>Optional. Defaults to the `"unit_test_framework"` value.
+  The name of the (language, test framework) combination as it appears
+  in the create page (where you select your language and exercise) and
+  also in the info displayed at the bottom of the test and dashboard pages.
+  <br>Required.
 - - - - - - - - - - - - - - - - - - - -
 `"unit_test_framework": string`
 
@@ -141,7 +134,7 @@ Example: the `manifest.json` file for Java-1.8_JUnit looks like this:
       [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
   must contain a method called `parse_cassert()` and will be called to parse the
   output of running the tests via the `cyber-dojo.sh` shell file.
-  <br>Required. No default.
+  <br>Required. 
 - - - - - - - - - - - - - - - - - - - -
 `"tab_size": int`
 
