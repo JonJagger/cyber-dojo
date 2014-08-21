@@ -6,7 +6,9 @@ install J?
 install Java-TestNG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+move latest blogspot entry about cyber-dojo diff data onto
+blog.cyber-dojo.org
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 getting rails server warning about sass
 "Warning. Error encountered while saving cache"
@@ -36,7 +38,7 @@ When I have a better internet connection (in China) I will
 recreate the kata from the 435E5C1C88/moose git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put manifest.json md file into its own md file
-called language's manifest.json formt (not misc).
+called language's manifest.json format (not in misc.md)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/parse_NAME/colour_of_NAME/
 in app/lib/OutputParser.rb (rename to OutputColour.rb)
@@ -45,16 +47,20 @@ test/output_c_unity.rb -> test_cunity_output_colour.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog uses ajax call to navigate around diff tags.
 these ajax calls do not have timeouts. If you are on a
-faky network the cursor just spins forever.
+flaky network the cursor just spins forever.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 is github home page md file in the git repo?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+when tips dialog opens it needs to scroll to top.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add vision dialog to front page?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add terms-of-use button on front page.
+add interviewing dialog to front page?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add terms-of-use button on front page?
 use in general is free, but I encourage commercial users to
 make a contribution to support maintenance and further
 development of cyber-dojo.
@@ -87,8 +93,6 @@ and its manifest names and used the code and test files.
 And again with an exercises/ folder underneath the
 languages/*/ folder whose manifest does not name any code/test
 files - they come from the custom exercises.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-when tips dialog open it needs to scroll to top.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Various places have code like this...
    if ENV['CYBERDOJO_TEST_ROOT_DIR']
