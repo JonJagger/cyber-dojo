@@ -22,7 +22,7 @@ module TrafficLightHelper
   end
 
   def diff_avatar_image(avatar)
-    "<div class='diff-traffic-light'" +
+    "<div class='diff-traffic-light avatar-image'" +
         " title='Click to diff-review #{avatar.name}#{apostrophe}s code'" +
         " data-id='#{avatar.kata.id}'" +
         " data-avatar-name='#{avatar.name}'" +

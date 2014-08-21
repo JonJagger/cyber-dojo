@@ -46,7 +46,7 @@ class TrafficLightTests < CyberDojoTestBase
     def avatar.lights; [1]*27; end
     expected = "" +
       "<div" +
-      " class='diff-traffic-light'" +
+      " class='diff-traffic-light avatar-image'" +
       " title='Click to diff-review hippo&#39;s code'" +
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
