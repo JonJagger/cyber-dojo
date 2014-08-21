@@ -1,0 +1,55 @@
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Each language should have a (docker running) test that confirms it
+  o) starts at red
+  o) if the _named_file_ is s/6*9/6*7/ it becomes a green
+     where the named_file is part of the test data
+  o) adding gibberish gives amber
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+tests/run_all.sh should save the coverage stats table
+into coverage.txt so it is automatically part of git repo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+public/javascripts/tests needs some TLC. There are
+tests in there for stuff in there that is long gone.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test that refactoring dojo IDs exist in the katas/ folder
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+admin_scripts should have basic sanity tests, eg that
+  they run without require errors. The lib_domain library
+  could be enhanced so a dojo.katas iterator looks to see
+  if a command line option has been specified to limit the
+  number of dojos to look through. That way it can be removed
+  from show_diff_stats and automatically added to all the
+  admin scripts when run from tests/admin_scripts/run_all
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/app_controllers/test_download.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/integration/git_diff_test_view
+  has duplication at bottom
+  same_line()
+  deleted_line()
+  added_line()
+    helpers added to base?
+Also needed in test/app_lib/test_git_diff_html
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  test/app_lib/test_git_diff_builder
+  GitDiff::GitDiffParser.new(lines).parse_one
+    should be
+  GitDiff::Parser.new(lines).parse_one
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+language tests should be run as part of test-suite.
+Use admin_scripts/lib_language_manifest_checker.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+SpyGit is really StubGit
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+spydir.read does this
+  content = JSON.unparse(content) if filename === 'manifest.json'
+This is wrong. This needs to happen in the caller
+Suppose I wanted to fake an actual file of that name.
+OsDir.write does this
+  file.write(JSON.unparse(object)) if filename.end_with?('.json')
+Again, this needs to happen in the caller.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  admin_scripts/check_language_manifest.rb
+  should be passed the languages/ dir not the root_dir
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

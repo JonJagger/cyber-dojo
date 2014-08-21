@@ -5,13 +5,6 @@ install Visual.BASIC? (for Chris Oldwood)
 install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-tests/run_all.sh should save the coverage stats table
-into coverage.txt so it is automatically part of git repo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-public/javascripts/tests needs some TLC. There are
-tests in there for stuff in there that is long gone.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -29,20 +22,6 @@ on the dashboard when you turn off auto refresh
 I could add checkboxes to each animal.
 Could also auto-tick the animals checkbox if a diff-dialog
 is opened for any traffic-light from that animal.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Each language should have a (docker running) test that confirms it
-  o) starts at red
-  o) if the _named_file_ is s/6*9/6*7/ it becomes a green
-     where the named_file is part of the test data
-  o) adding gibberish gives amber
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-admin_scripts should have basic sanity tests, eg that
-  they run without require errors. The lib_domain library
-  could be enhanced so a dojo.katas iterator looks to see
-  if a command line option has been specified to limit the
-  number of dojos to look through. That way it can be removed
-  from show_diff_stats and automatically added to all the
-  admin scripts when run from tests/admin_scripts/run_all
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 is there a way to get line-number from caret-position
 I'm thinking about the feature where you have the
@@ -72,8 +51,6 @@ files - they come from the custom exercises.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when tips dialog open it needs to scroll to top.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/app_controllers/test_download.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Various places have code like this...
    if ENV['CYBERDOJO_TEST_ROOT_DIR']
       path += 'test/cyberdojo/'
@@ -91,8 +68,6 @@ This could be combined with steps in cyber-dojo.sh to do some
 quite powerful things, eg creation of coverage stats which are
 then loaded. It creates the possibility of some of these being html
 which is loaded and displayed in a textarea replacement.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-SpyGit is really StubGit
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Eventually Avatar.tags will contain one entry for each
 avatar event (eg file rename) and Avatar.lights will need
@@ -115,19 +90,6 @@ to the was-tag and now-tag.
 What about traffic-lights on the edit/test page?
 Do they open a diff-dialog? Perhaps not. Why not have
 just the lights on the dashboard page open a new diff page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/integration/git_diff_test_view
-  has duplication at bottom
-  same_line()
-  deleted_line()
-  added_line()
-    helpers added to base?
-Also needed in test/app_lib/test_git_diff_html
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  test/app_lib/test_git_diff_builder
-  GitDiff::GitDiffParser.new(lines).parse_one
-    should be
-  GitDiff::Parser.new(lines).parse_one
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Kata.start_avatar
   needs to do dir.lock do...end
@@ -185,18 +147,7 @@ Or tags[tag].exists? to match current style.
 This will need Tag to get the max tag for the avatar.
 Add git.max_tag() function?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-language tests should be run as part of test-suite.
-Use admin_scripts/lib_language_manifest_checker.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move clean(string) code into Dir.read ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-spydir.read does this
-  content = JSON.unparse(content) if filename === 'manifest.json'
-This is wrong. This needs to happen in the caller
-Suppose I wanted to fake an actual file of that name.
-OsDir.write does this
-  file.write(JSON.unparse(object)) if filename.end_with?('.json')
-Again, this needs to happen in the caller.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   avatar.traffic_lights(tag = nil)
     This is used with tag != nil only for revert_controller
@@ -277,9 +228,6 @@ rename Dojo.rb to CyberDojo.rb ?
   add blurb to start of initial source files explaining that
   the initial source files bare no relation to the exercise?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  admin_scripts/check_language_manifest.rb
-  should be passed the languages/ dir not the root_dir
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   max-duration could be a ctor parameter for DockerRunner
   and not for test()?
   Or is it feasible that the duration could become a parameter
@@ -325,15 +273,6 @@ rename Dojo.rb to CyberDojo.rb ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-
-In test/installation/one_language_checker.rb
-# currently get_filename_42() uses an algorithm to find the
-# the file to change to verify red/amber/green status from
-# the code-output-parser. This doesn't work for some
-# test frameworks such as Ruby-cucumber because they have
-# multiple files containing 42.
-# Perhaps explicitly pass in the filename containing the 42
-# to be peturbed as an argument?
 
 Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
 trying to find children by walking pid/ppid hierarchy it would be
