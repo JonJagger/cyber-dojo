@@ -7,8 +7,7 @@ install Java-TestNG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-refactoring_dojos.tgz file still has katas in old
-manifest.rb format.
+does refactoring_dojos.tgz still has katas in old manifest.rb format?
 Check this on cyber-dojo.org for eg
 cyberdojo/katas/76/DD58DE08
 which is the refactoring kata for Yahtzee,C++
@@ -17,11 +16,21 @@ using cyberdojo/admin_scripts/save_refactoring_dojos.rb
 Then scp the .tgz file to my local computer.
 Then make sure that the .tgz file is part of the git repo
 and commit it and push it.
+. . . .
+save_refactoring_dojos.rb is unable to find
+435E5C1C88 (tennis,python)
+It turns out this was one of the few katas that were not
+converted from rb to json. So it's currently in the
+katas_rb_bad/ folder on cyber-dojo.org
+I have tarred it into its own .tgz file (on cyber-dojo.org)
+tennis_python_refactoring_kata.tgz
+When I have a better internet connection (in China) I will
+recreate the kata from the 435E5C1C88/moose git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 manifest.json parameters
 {
   display_name: "Java",
-  display_text_name: JUnit"
+  display_test_name: JUnit"
 }
 could be simplifed to
 {
