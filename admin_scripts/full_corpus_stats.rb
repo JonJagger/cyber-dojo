@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require File.dirname(__FILE__) + '/lib_domain'
+require 'csv'
 
 # displays data in screen-friendly format if true, csv format if false or blank
 arg = (ARGV[0] || "")
@@ -16,7 +17,7 @@ end
 dojo = create_dojo
 
 # temporary limiter for TESTING ONLY, remove all lines referencing 'lim' for full functionality
-lim = 10
+lim = 20
 dojo.katas.each do |kata|
     language = kata.language.name
 
@@ -76,6 +77,13 @@ dojo.katas.each do |kata|
                 num_amber += 1
             end
             transitions += lights[lights.count-1].colour.to_s + "]"
+            
+            if File.exist?(avatar.path+ 'CodeCoverageReport.csv')
+                codeCoverageCSV = CSV.read(avatar.path+ 'CodeCoverageReport.csv')
+                branchCoverage =  codeCoverageCSV[2][6]
+                statementCoverage =  codeCoverageCSV[2][16]
+            end
+            cyclomaticComplexity = `./javancss "#{avatar.path + "sandbox/*.java"}"`
 
 
             if arg == "true"
@@ -89,6 +97,7 @@ dojo.katas.each do |kata|
             else
                 printf("%s,%s,%s,%s,%s,", kata.id.to_s, language, kata.exercise.name.to_s, kata.avatars.count.to_s, avatar.name)
                 printf("%s,%s,%s,%s,%s,",avatar.path, lights.count.to_s, num_red.to_s, num_green.to_s, num_amber.to_s)
+                printf("%s,%s,%s", branchCoverage,statementCoverage,cyclomaticComplexity)
                 printf("%s,%s,%s\n", num_cycles.to_s, endsOnGreen, transitions)
             end
         end
