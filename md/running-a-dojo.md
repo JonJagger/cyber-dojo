@@ -92,12 +92,11 @@ are run, more and more traffic-lights appear taking up more and more
 horizontal space. These traffic-lights auto scroll:
   * old ones are scrolled out of view to the left
   * the animal image is always visible to the right.
-  
+
 Advice:
   * Project the dashboard *during* the dojo
   * Leave auto-refresh on *during* the dojo
   * Turn auto-refresh *off* just before starting a dashboard review.
-
 
 ### 60 second columns?
 
@@ -108,6 +107,27 @@ column will contain no traffic-lights at all (instead it will contain
 a single dot and be very thin).
 When not checked the traffic-lights of different animals are not
 vertically time-aligned.
+
+### progress
+
+If available this displays slightly more information about the current
+traffic-light of each animal, usually the number of passing and failing
+tests.
+
+### duration
+
+This displays how long the dojo has been going (and updates every
+10 seconds). The start time is *not* the time dojo was created, but the
+time the first animal manually presses their `[test]` button. This allows
+you to prepare specific dojos ahead of time.
+
+### team progress
+
+This displays:
+  * a pie chart showing the % of all traffic-lights at red, green, and amber.
+  * the number of animals currently at red, if any, (in red)
+  * the number of animals currently at amber, if any, (in amber)
+  * the number of animals currently at green, if any, (in green)
 
 
 replaying the diffs
