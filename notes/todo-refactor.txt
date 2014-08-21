@@ -5,7 +5,15 @@ install Visual.BASIC? (for Chris Oldwood)
 install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+s/parse_NAME/colour_of_NAME/
+in app/lib/OutputParser.rb (rename to OutputColour.rb)
+Also rename the tests files, eg
+test/output_c_unity.rb -> test_cunity_output_colour.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+diff-dialog uses ajax call to navigate around diff tags.
+these ajax calls do not have timeouts. If you are on a
+faky network the cursor just spins forever.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 is github home page md file in the git repo?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
