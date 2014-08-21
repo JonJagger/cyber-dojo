@@ -1,15 +1,9 @@
 #!/usr/bin/env ruby
 
-# A ruby script to display the count of
-#   dojos per day
-#   dojos per language
-#   dojos per exercise
-# to see the ids of all counted dojos (in their catagories)
-# append true to the command line
-
 require File.dirname(__FILE__) + '/lib_domain'
 
-show_ids = (ARGV[0] || "false")
+# displays data in screen-friendly format if true, csv format if false or blank
+arg = (ARGV[0] || "")
 
 def deleted_file(lines)
     lines.all? { |line| line[:type] === :deleted }
@@ -19,112 +13,87 @@ def new_file(lines)
     lines.all? { |line| line[:type] === :added }
 end
 
-
-
 dojo = create_dojo
 
-puts
-days,weekdays,languages,exercises = { },{ },{ },{ }
-dot_count = 0
-exceptions = [ ]
+# temporary limiter for TESTING ONLY, remove all lines referencing 'lim' for full functionality
+lim = 10
 dojo.katas.each do |kata|
-    begin
-        language = kata.language.name
-        if language == "Java-1.8_JUnit"
+    language = kata.language.name
 
-            kata.avatars.active.each do |avatar|
-                #print kata.id.to_s + ","
-                #print kata.exercise.name.to_s + ","
-                #print kata.avatars.count.to_s + ","
+    if language == "Java-1.8_JUnit"
+        lim -= 1
 
-#print avatar.name + ","
-#print avatar.path + ","
-                lights = avatar.lights
-                #               print lights.count.to_s+ ","
-                kata_line_count = 0;
-                num_red = 0;
-                num_green = 0;
-                num_amber = 0;
-                
-                
-                curr_cycle="red"
-                total_cycles = 0
-                lights.each do |currLight|
-                    #puts currLight.colour
-                    curr_colour =currLight.colour.to_s
-                    case curr_colour
-                    when "red"
-                        if curr_cycle == "green"
-                            curr_cycle = "red"
-                            
-                        end
-                    when "green"
-                        if curr_cycle == "red"
-                            curr_cycle = "green"
-                            total_cycles += 1
-                        end
-                    end
-                end
-                #puts "total _cycles "+ total_cycles
-                        
-                
-                transitionsString = ""
-                lights.each_cons(2) do |was,now|
-                    if was.colour.to_s === "red"
-                        num_red += 1
-                    end
-                    if was.colour.to_s === "green"
-                        num_green += 1
-                    end
-                    if was.colour.to_s === "amber"
-                        num_amber += 1
-                    end
-                    transitionsString +=  was.colour.to_s + ":"
-                    line_count = 0;
-                    diff = avatar.tags[was.number].diff(now.number)
-                    diff.each do |filename,lines|
-                        non_code_filenames = [ 'output', 'cyber-dojo.sh', 'instructions' ]
-                        if !non_code_filenames.include?(filename) &&
-                          !deleted_file(lines) &&
-                          !new_file(lines)
-                            line_count += lines.count { |line| line[:type] === :added }
-                            line_count += lines.count { |line| line[:type] === :deleted }
-                        end
-                    end
-                    transitionsString+=  line_count.to_s + ":"
-                    kata_line_count += line_count
-                end
-                transitionsString += lights[lights.count-1].colour.to_s
-                endsOnGreen = false
-                if lights[lights.count-1].colour.to_s === "red"
+        kata.avatars.active.each do |avatar|
+            lights = avatar.lights
+            num_lights = lights.count
+            num_cycles = 1
+            kata_line_count = 0
+            num_red, num_green, num_amber = 0, 0, 0
+            endsOnGreen = false
+
+            transitions = ""
+            lights.each_cons(2) do |was,now|
+                case was.colour.to_s
+                when "red"
                     num_red += 1
-                end
-                if lights[lights.count-1].colour.to_s === "green"
+                when "green"
                     num_green += 1
-                    endsOnGreen = true
-                end
-                if lights[lights.count-1].colour.to_s === "amber"
+                when "amber"
                     num_amber += 1
                 end
-                
-                #print ","
-                #print kata_line_count.to_s
-                #print ","
-                #puts
-                #printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber,total_cycles)
-                
-                printf("\nKata id:%s\nKata name:%s\nNumber of Avatars in Kata:%s\nAvatar Name:%s\nAvatar Path:%s\nTotal Number of Lights:%s\nTotal Red Lights:%s\nTotal Green Lights:%s\nTotal Amber Lights%s\ntransitionString:%s\nTotal Lines changed in kata:%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,num_red,num_green,num_amber,transitionsString,kata_line_count.to_s)
-                #puts
+                transitions += was.colour.to_s
+
+                # locate cycle transitions and add '|' to designate
+                if now.colour.to_s == "red" && was.colour.to_s != "red"
+                    transitions += "]["
+                    num_cycles += 1
+                else
+                    transitions += ":"
+                end
+
+                # determine number of lines changed between lights
+                line_count = 0;
+                diff = avatar.tags[was.number].diff(now.number)
+                diff.each do |filename,lines|
+                    non_code_filenames = [ 'output', 'cyber-dojo.sh', 'instructions' ]
+                    if !non_code_filenames.include?(filename) && !deleted_file(lines) && !new_file(lines)
+                        line_count += lines.count { |line| line[:type] === :added }
+                        line_count += lines.count { |line| line[:type] === :deleted }
+                    end
+                end
+                transitions += line_count.to_s + ":"
+                kata_line_count += line_count
+            end
+
+            # handle last light that was examined by consecutive loop above
+            case lights[lights.count-1].colour.to_s
+            when "red"
+                num_red += 1
+            when "green"
+                num_green += 1
+                endsOnGreen = true
+            when "amber"
+                num_amber += 1
+            end
+            transitions += lights[lights.count-1].colour.to_s
+
+
+            if arg == "true"
+                printf("kata id:\t%s\nexercise:\t%s\nlanguage:\t%s\n", kata.id.to_s, kata.exercise.name.to_s, language)
+                printf("avatar:\t\t%s [%s in kata]\n", avatar.name, kata.avatars.count.to_s)
+                printf("path:\t\t%s\n", avatar.path)
+                printf("num of lights:\t%s  =>  red:%s, green:%s, amber:%s\n", lights.count.to_s, num_red.to_s, num_green.to_s, num_amber.to_s) 
+                printf("num of cycles:\t%s\t\ttotal lines changed:%s\n", num_cycles.to_s, kata_line_count.to_s)
+                printf("ends of green:\t%s\n", endsOnGreen)
+                printf("log:\t\t%s\n\n", transitions)
+            else
+                printf("%s,%s,%s,%s,%s,", kata.id.to_s, language, kata.exercise.name.to_s, kata.avatars.count.to_s, avatar.name)
+                printf("%s,%s,%s,%s,%s,",avatar.path, lights.count.to_s, num_red.to_s, num_green.to_s, num_amber.to_s)
+                printf("%s,%s,%s\n", num_cycles.to_s, endsOnGreen, transitions)
             end
         end
-        rescue Exception => error
-        exceptions << error.message
+
     end
-    #dot_count += 1
-    
-    #print "\r " + dots(dot_count)
+
+    break if lim <= 0
 end
-puts
-puts
-
-
