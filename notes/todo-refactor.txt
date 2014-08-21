@@ -18,17 +18,6 @@ Then scp the .tgz file to my local computer.
 Then make sure that the .tgz file is part of the git repo
 and commit it and push it.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-s/parse_NAME/colour_of_NAME/
-in app/lib/OutputParser.rb (rename to OutputColour.rb)
-Also rename the tests files, eg
-test/output_c_unity.rb -> test_cunity_output_colour.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-diff-dialog uses ajax call to navigate around diff tags.
-these ajax calls do not have timeouts. If you are on a
-faky network the cursor just spins forever.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-is github home page md file in the git repo?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 manifest.json parameters
 {
   display_name: "Java",
@@ -42,6 +31,17 @@ could be simplifed to
 put manifest.json md file into its own md file
 called language's manifest.json formt (not misc).
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+s/parse_NAME/colour_of_NAME/
+in app/lib/OutputParser.rb (rename to OutputColour.rb)
+Also rename the tests files, eg
+test/output_c_unity.rb -> test_cunity_output_colour.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+diff-dialog uses ajax call to navigate around diff tags.
+these ajax calls do not have timeouts. If you are on a
+faky network the cursor just spins forever.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+is github home page md file in the git repo?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -54,11 +54,6 @@ development of cyber-dojo.
 Say how to do this using the invoice button.
 Add [invoice-me] button to home page.
 Ask Joanne about setting up separate account for this first.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on the dashboard when you turn off auto refresh
-I could add checkboxes to each animal.
-Could also auto-tick the animals checkbox if a diff-dialog
-is opened for any traffic-light from that animal.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 is there a way to get line-number from caret-position
 I'm thinking about the feature where you have the

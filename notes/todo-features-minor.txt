@@ -1,5 +1,16 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add C++-GoogleTest Yahtzee refactoring kata.
+add it to cyberdojo/admin_scripts/save_refactoring_dojos.rb
+add it to tests for refactoring-dojos
+add its URL to tips dialog
+add its URL to blog page
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+split docker-server.md into several md files
+one for just building your own docker sever,
+one for adding a new language,
+one for adding a new exercise.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 at bottom of dashboard page add tiny image of each animal
 with a checkbox. If the box is checked that animal does
 not appear on the main dashboard display. This solves two
@@ -10,17 +21,6 @@ after you have finished its individual review.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add progress_regrex's for all languages that have simple
 red/green/amber regexp pattern.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-split docker-server.md into several md files
-one for just building your own docker sever,
-one for adding a new language,
-one for adding a new exercise.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add C++-GoogleTest Yahtzee refactoring kata.
-add it to cyberdojo/admin_scripts/save_refactoring_dojos.rb
-add it to tests for refactoring-dojos
-add its URL to tips dialog
-add its URL to blog page
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 working towards a tag being created for inter-test events...
 When an event happens in the browser I create a snapshot of

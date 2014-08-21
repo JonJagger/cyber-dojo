@@ -1,17 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test that each refactoring dojo exist in the katas/ folder
+test that each refactoring kata exists in the katas/ folder
 and that it can be opened, forked from, and it starts at green.
 The info for IDs, animals, tag numbers is in
 cyberdojo/admin_scripts/save_refactoring_dojos.rb
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test feature that when an animal starts it auto runs the
+tests and that returns a green.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Each language should have a (docker running) test that confirms it
   o) starts at red
   o) if the named-file is s/6*9/6*7/ it becomes a green
      where the named_file may be part of the test data
      if it cannot be unabmiguously determined in code
-     by reading the visible_files contents and grepping for
-     6*7.
+     by reading the visible_files contents and grepping for 6*7.
   o) adding gibberish gives amber
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
