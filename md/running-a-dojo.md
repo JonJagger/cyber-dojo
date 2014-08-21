@@ -5,9 +5,9 @@ running a programming dojo
 creating your programming dojo
 ------------------------------
   * click the `[create]` button
-  * click your chosen language,unit-test-framework, eg `C++,assert`
+  * click your chosen (language,unit-test-framework) combination, eg `C++,GoogleTest`
   * click your chosen exercise, eg `Prime Factors`
-  * click the `[ok]` button
+  * click the `[create]` button
   * you'll get a case-insensitive 6-character hex-id. The full id is ten
     characters long (in the URL) but 6 is enough for uniqueness.
 
@@ -24,9 +24,14 @@ entering your programming dojo
   * edit the code files...
   * press the `[test]` button
   * a new traffic-light appears
-  * traffic-lights progress along the bottom, left-to-right, oldest-to-newest
-  * click on any traffic-light to open a dialog showing the diffs for
-   that traffic-light plus << < > >> buttons to navigate forwards and backwards
+  * traffic-lights progress along the top, left-to-right, oldest-to-newest
+  * click on any traffic-light to open a diff/revert/fork dialog.
+    The dialog shows the diffs between any two traffic-lights
+    plus << < > >> buttons to navigate forwards and backwards.
+    The dialog also has a `[revert]` button to revert back
+    to the files from any traffic-light.
+    The dialog also has a `[fork]` button to fork a new
+    programming dojo with a new ID.
 
 You can also re-enter at any animals' most recent traffic-light by pressing
 the `[re-enter]` button (from the home page) and then clicking the animal.
@@ -43,17 +48,20 @@ Each traffic-light is coloured as follows:
   * green - tests ran and all passed
 
 The colours on the traffic-light are positional,
-red at the top,
-amber in the middle,
-green at the bottom.
-This means you can still read the
-display if you are colour blind.
-You will also get an amber traffic-light if the tests do not complete within
-15 seconds (eg you've accidentally coded an infinite loop or the server is
-overloaded with too many concurrent programming dojos)
+  * red at the top,
+  * amber in the middle,
+  * green at the bottom.
+This means you can still read the display if you are colour blind.
+You will also get an amber traffic-light if the tests do not complete
+on the cyber-dojo server within 15 seconds (eg you've accidentally coded
+an infinite loop or the server is overloaded with too many concurrent
+programming dojos).
+You will also get an amber traffic-light if you lose the network connection
+to the cyber-dojo server (30 seconds timeout).
+
 Remember, clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to
-navigate forwards and backwards.
+navigate forwards and backwards, revert, or fork.
 
 
 reviewing your programming dojo
@@ -70,7 +78,7 @@ Each horizontal row corresponds to one animal and displays, from left to right,
   * the animal
   * as always clicking on any traffic-light opens a dialog showing the diffs for
     that traffic-light for that animal together with << < > >> buttons to
-    navigate forwards and backwards. Did I mention that already?
+    navigate forwards and backwards.
 
 ### auto refresh?
 
