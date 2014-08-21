@@ -1,5 +1,4 @@
 
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 at bottom of dashboard page add tiny image of each animal
 with a checkbox. If the box is checked that animal does

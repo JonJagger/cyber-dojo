@@ -22,7 +22,7 @@ $(function() {
 
   if (<%= @traffic_lights.length === 0 %>) {
     cd.loadFile('instructions');
-    cd.testForm().submit();
+    $('#test-button').click();
   } else {
     var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
     cd.loadFile(filename);
