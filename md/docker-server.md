@@ -38,13 +38,12 @@ contains this...
 ```json
 {
   ...
-  "display_name": "Java",
-  "display_test_name": "JUnit",
+  "display_name": "Java, JUnit",
   "image_name": "cyberdojo/java-1.8_junit"
 }
 ```
-then `Java-JUnit` will only be offered as a (language,test framework)
-if the docker image `cyberdojo/java-1.8_junit` exists
+then `Java, JUnit` will only be offered as a (language,test framework)
+combination if the docker image `cyberdojo/java-1.8_junit` exists
 on the host server, as determined by running
 ```bash
 $ docker images
@@ -203,8 +202,7 @@ Each `manifest.json` file contains an ruby object in JSON format
     "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
     "OK \\((\\d)+ test(s)?\\)"
   ],
-  "display_name": "Java",
-  "display_test_name": "JUnit",
+  "display_name": "Java, JUnit",
   "unit_test_framework": "junit",
   "image_name": "cyberdojo/java-1.8_junit",
   "tab_size": 4
