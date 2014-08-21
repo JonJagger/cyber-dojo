@@ -23,11 +23,11 @@ entering your programming dojo
   * edit the test files...
   * edit the code files...
   * press the `[test]` button
-  * a new traffic-light appears
-  * traffic-lights progress along the top, left-to-right, oldest-to-newest
-  * click on any traffic-light to open a diff/revert/fork dialog.
+  * a new traffic-light appears at the top, left-to-right, oldest-to-newest
+    indicating the result of the test (see below).
+  * you can click on any traffic-light to open a diff/revert/fork dialog.
     The dialog shows the diffs between any two traffic-lights
-    plus << < > >> buttons to navigate forwards and backwards.
+    and has << < > >> buttons to navigate backwards and forwards.
     The dialog also has a `[revert]` button to revert back
     to the files from any traffic-light.
     The dialog also has a `[fork]` button to fork a new
@@ -52,16 +52,18 @@ The colours on the traffic-light are positional,
   * amber in the middle,
   * green at the bottom.
 This means you can still read the display if you are colour blind.
+
 You will also get an amber traffic-light if the tests do not complete
 on the cyber-dojo server within 15 seconds (eg you've accidentally coded
 an infinite loop or the server is overloaded with too many concurrent
 programming dojos).
+
 You will also get an amber traffic-light if you lose the network connection
-to the cyber-dojo server (30 seconds timeout).
+to the cyber-dojo server (30 second timeout).
 
 Remember, clicking on any traffic-light opens a dialog showing the diffs for
 that traffic-light for that animal together with << < > >> buttons to
-navigate forwards and backwards, revert, or fork.
+navigate backwards and forwards, revert, or fork.
 
 
 reviewing your programming dojo
@@ -78,7 +80,8 @@ Each horizontal row corresponds to one animal and displays, from left to right,
   * the animal
   * as always clicking on any traffic-light opens a dialog showing the diffs for
     that traffic-light for that animal together with << < > >> buttons to
-    navigate forwards and backwards.
+    navigate backwards and forwards, or fork (revert is only available from
+    test page traffic-light dialogs).
 
 ### auto refresh?
 
@@ -87,9 +90,10 @@ are run, more and more traffic-lights appear taking up more and more
 horizontal space. These traffic-lights auto scroll:
   * old ones are scrolled out of view to the left
   * the animal image is always visible to the right.
-
+Advice:
+  * Project the dashboard *during* the dojo
   * Leave auto-refresh on *during* the dojo
-  * Turn it *off* just before starting a dashboard review.
+  * Turn auto-refresh *off* just before starting a dashboard review.
 
 
 ### 60 second columns?
