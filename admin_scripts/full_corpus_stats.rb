@@ -31,7 +31,7 @@ dojo.katas.each do |kata|
             num_red, num_green, num_amber = 0, 0, 0
             endsOnGreen = false
 
-            transitions = ""
+            transitions = "["
             lights.each_cons(2) do |was,now|
                 case was.colour.to_s
                 when "red"
@@ -75,7 +75,7 @@ dojo.katas.each do |kata|
             when "amber"
                 num_amber += 1
             end
-            transitions += lights[lights.count-1].colour.to_s
+            transitions += lights[lights.count-1].colour.to_s + "]"
 
 
             if arg == "true"
