@@ -1,0 +1,4 @@
+#! /usr/bin/env python
+import _lib
+from figleaf.annotate_sections import main
+main()

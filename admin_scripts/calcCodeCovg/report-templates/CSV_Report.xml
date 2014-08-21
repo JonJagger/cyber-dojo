@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report version="1.0" xmlns="http://www.codecover.org/xml/report-template">
+    <plugin>org.codecover.report.csv</plugin>
+    <generator>org.codecover.report.csv.CSVReportGenerator</generator>
+    <name xml:lang="en">CSV Report</name>
+    <description xml:lang="en">
+        Generates a report with comma separated values.
+    </description>
+    <template version="1"
+            xmlns="http://www.codecover.org/xml/report-template/csv">
+
+<!-- You can use formating strings according to 
+     http://java.sun.com/j2se/1.5.0/docs/api/java/util/Formatter.html
+     Via the following argument indexes, you can access data of the selected
+     TestSessions this report is written for:
+             1$    Name of CoverageMetric                (string)
+             2$    name of method, class, ...            (string)
+             3$    type of 2$ (method, class, ...)       (string)
+             4$    package 2$ is part of
+             5$    coveredItems by current metric        (integer)
+             6$    uncoveredItems by current metric      (integer)
+             7$    totalItems = 5$ + 6$                  (integer)
+             8$    percentage of coverage = 5$ / 7$      (float)
+             9$    percentage of coverage * 100 = 8$*100 (float)
+     Please note, that only 1$ makes sense in headers of columns in
+     columnsPerMetric and that 5$ to 9$ only make sense in the
+     columns in columnsPerMetric.
+     As you can read at the URL mentioned above, you have to set a conversion
+     flag.
+     Recommended flags per type:
+             string    ->   s
+             integer   ->   d
+             float     ->   f
+-->            
+        <column header="package">%4$s</column>
+        <column header="item">%2$s</column> <!-- header is optional -->
+        <column header="type">%3$s</column>
+        <columnsPerMetric>
+            <column header="%1$s covered">%5$d</column>
+            <column header="uncovered">%6$d</column>
+            <column header="total">%7$d</column>
+            <column header="coverage">%8$f</column>
+            <column header="coverage">%9$f%%</column>
+        </columnsPerMetric>
+    </template>
+</report>

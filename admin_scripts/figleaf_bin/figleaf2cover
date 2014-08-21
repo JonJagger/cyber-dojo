@@ -1,0 +1,7 @@
+#! /usr/bin/env python
+"""
+Output an internal coverage format useful for tests. 
+"""
+import _lib
+import figleaf.annotate_cover
+figleaf.annotate_cover.main()

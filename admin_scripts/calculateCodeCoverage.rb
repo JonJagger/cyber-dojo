@@ -23,7 +23,7 @@ end
 $dot_count = 0
 dojo = create_dojo
 
-$stop_at = 1
+$stop_at = 10000000
 
 puts
 days,weekdays,languages,exercises = { },{ },{ },{ }
@@ -34,9 +34,20 @@ dojo.katas.each do |kata|
     begin
         
         language = kata.language.name
-        if language == "Java-1.8_JUnit"
+        
+        puts language
+        
+        kata.avatars.active.each do |avatar|
+        puts avatar.path
+        end
+        
+        if language == "Python-unittest"
+            end
+    
+        if language == "Java-1.8_JUnitAAA"
 
             kata.avatars.active.each do |avatar|
+                unless  File.exist?(avatar.path+ 'CodeCoverageReport.csv')
                 $dot_count += 1
                 puts avatar.path
                 #                copyCommand =  "cp "+avatar.path + "sandbox/*.java ./calcCodeCovg/tempDir"
@@ -69,7 +80,7 @@ dojo.katas.each do |kata|
                puts `java -jar ./calcCodeCovg/libs/codecover-batch.jar report --container ./calcCodeCovg/src/con.xml --destination ./calcCodeCovg/report.csv --session test1 --template ./calcCodeCovg/report-templates/CSV_Report.xml`
                
                `cp ./calcCodeCovg/report.csv #{avatar.path}CodeCoverageReport.csv `
-            
+               end
             end
         end
         rescue Exception => error

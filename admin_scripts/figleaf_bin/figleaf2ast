@@ -1,0 +1,4 @@
+#! /usr/bin/env python
+import _lib
+import figleaf
+figleaf.display_ast()

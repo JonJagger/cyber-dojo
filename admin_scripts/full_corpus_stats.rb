@@ -8,6 +8,7 @@
 # append true to the command line
 
 require File.dirname(__FILE__) + '/lib_domain'
+require 'csv'
 
 show_ids = (ARGV[0] || "false")
 
@@ -34,7 +35,12 @@ dojo.katas.each do |kata|
         if language == "Java-1.8_JUnit"
 
             kata.avatars.active.each do |avatar|
-
+                if File.exist?(avatar.path+ 'CodeCoverageReport.csv')
+                    #puts "has CodeCovereageReport"
+                    codeCoverageCSV = CSV.read(avatar.path+ 'CodeCoverageReport.csv')
+                    branchCoverage =  codeCoverageCSV[2][6]
+                    statementCoverage =  codeCoverageCSV[2][16]
+                end
                 cyclomaticComplexity = `./javancss "#{avatar.path + "sandbox/*.java"}"`
                 lights = avatar.lights
                 kata_line_count = 0;
@@ -123,7 +129,7 @@ dojo.katas.each do |kata|
                 #       total_cycles,
                 #       cyclomaticComplexity)
                 
-                printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber,total_cycles,cyclomaticComplexity)
+                printf("\n%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,transitionsString,kata_line_count.to_s,num_red,num_green,endsOnGreen,num_amber,total_cycles,cyclomaticComplexity,branchCoverage,statementCoverage)
                 
                 #printf("\nKata id:%s\nKata name:%s\nNumber of Avatars in Kata:%s\nAvatar Name:%s\nAvatar Path:%s\nTotal Number of Lights:%s\nTotal Red Lights:%s\nTotal Green Lights:%s\nTotal Amber Lights%s\ntransitionString:%s\nTotal Lines changed in kata:%s",kata.id.to_s,kata.exercise.name.to_s,kata.avatars.count.to_s,avatar.name,avatar.path,lights.count.to_s,num_red,num_green,num_amber,transitionsString,kata_line_count.to_s)
                 #puts
