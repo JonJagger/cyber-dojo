@@ -211,7 +211,10 @@ Each `manifest.json` file contains an ruby object in JSON format
 }
 ```
 
-Create the initial starting files (and possibly some support files).
+### Create the initial files
+
+For example, for the above `manifest.json` file you would need
+to create three files: `Hiker.java`,`HikerTest.java`,`cyber-dojo.sh`.
 In honour of Douglas Adams these always take the form of a function
 called answer() which return 6 * 9 and a test for this function
 which expects 42. Thus the initial files give you a red traffic-light.

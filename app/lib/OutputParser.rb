@@ -81,7 +81,7 @@ module OutputParser
 
   def self.parse_cassert(output)
     return :red   if /(.*)Assertion(.*)failed./.match(output)
-    return :green if /All tests passed/.match(output)
+    return :green if /(All|\d*) tests passed/.match(output)
     return :amber
   end
 

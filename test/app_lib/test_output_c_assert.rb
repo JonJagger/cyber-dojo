@@ -68,13 +68,28 @@ class OutputCAssertTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - -
 
-  test 'two passes is green' do
+  test 'all passes is green' do
     output =
       [
         "g++ -Wall -Werror -O *.cpp -o run.tests",
         "./run.tests",
         "..",
         "All tests passed"
+      ].join("\n")
+    assert_equal :green, colour_of(output)
+  end
+
+  #- - - - - - - - - - - - - - - - - - - - - -
+
+  test 'specific number of passes is green' do
+    # some C start files use 'All tests passed'
+    # and some (eg Yahtzee refactoring) use 'N tests passed'
+    output =
+      [
+        "g++ -Wall -Werror -O *.cpp -o run.tests",
+        "./run.tests",
+        "..",
+        "4 tests passed"
       ].join("\n")
     assert_equal :green, colour_of(output)
   end

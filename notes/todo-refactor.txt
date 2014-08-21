@@ -5,6 +5,23 @@ install Visual.BASIC? (for Chris Oldwood)
 install J?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+is github home page md file in the git repo?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+manifest.json parameters
+{
+  display_name: "Java",
+  display_text_name: JUnit"
+}
+could be simplifed to
+{
+  display_name: "Java-JUnit",
+}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+put manifest.json md file into its own md file
+called language's manifest.json formt (not misc).
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
