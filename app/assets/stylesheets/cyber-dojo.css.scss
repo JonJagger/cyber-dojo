@@ -84,6 +84,7 @@ div[class~='filename'] {
   background: lighten($darker-color, 6%);
   color: $lighter-color;
   margin: none;
+  margin-bottom: 2px;
   padding: {
     left: 0.3em;
     right: 0.3em;

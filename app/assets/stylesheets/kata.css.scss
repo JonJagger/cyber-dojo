@@ -29,13 +29,16 @@
   }
 
   #file-operations {
-    display: table;
     @include ghost-panel(8px);
     @include left-align(15px);
-    margin-top: 2px;
-    margin-bottom: 5px;
+    margin: {
+      top: 2px;
+      bottom: 4px;
+      left: 16px;
+      right: 1px;
+    }
     #new, #rename, #delete {
-      text-align: left;
+      text-align: right;
       font-size: 1em;
       margin-bottom: 2px;
       padding-bottom: 3px;
