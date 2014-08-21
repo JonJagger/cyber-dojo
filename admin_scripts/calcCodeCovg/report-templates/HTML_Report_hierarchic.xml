@@ -1,0 +1,1237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report version="1.0" xmlns="http://www.codecover.org/xml/report-template">
+    <plugin>org.codecover.report.html</plugin>
+    <generator>org.codecover.report.html.HierarchicalHTMLReportGenerator</generator>
+    <name xml:lang="en">HTML Report (hierarchic)</name>
+    <name xml:lang="de">HTML Report (hierarchisch)</name>
+    <description xml:lang="en">Generates a hierarchical report in HTML-format.</description>
+    <description xml:lang="de">Erstellt einen hierarchischen Report in HTML.</description>
+    <template
+        version="1"
+        xmlns="http://www.codecover.org/xml/report-template/html-hierarchic">
+        <language>en</language>
+
+        <text-file filename="style.css" content-type="text/css"><![CDATA[@charset "UTF-8";
+
+#set( $widthOfFirstColumn = 25)
+
+div.code {
+        margin-top:1em;
+        margin-bottom:1em;
+}
+
+div.metricsForWholeSession {
+        margin-top:1em;
+        margin-bottom:1em;
+}
+
+div.overview {
+        margin-top:1em;
+        margin-bottom:1em;
+}
+
+div.methodInfo {
+        margin-top:1em;
+        margin-bottom:1em;
+}
+
+div.testcases {
+        margin-top:1em;
+        margin-bottom:1em;
+}
+
+table.testcases {
+    border:3px solid #00497B;
+    text-align:left;
+    margin:auto;
+    align:center;
+}
+
+thead.testcases { 
+    background-color:#0068B0;
+    color: white;
+}
+
+tr.testcases.even {
+    background-color:#D8EFFF;
+}
+
+tbody tr.testcases:hover {
+    background-color:#99D6FF;
+}
+
+tbody tr.testcases.even:hover {
+    background-color:#99D6FF;
+}
+
+
+table.metricsForWholeSession {
+    border:3px solid #00497B;
+    text-align:center;
+    margin:auto;
+    align:center;
+}
+
+thead.metricsForWholeSession { 
+    background-color:#0068B0;
+    color: white;
+}
+
+tr.metricsForWholeSession.even {
+    background-color:#D8EFFF;
+}
+
+tbody tr.metricsForWholeSession:hover {
+    background-color:#99D6FF;
+}
+
+tbody tr.metricsForWholeSession.even:hover {
+    background-color:#99D6FF;
+}
+
+table.overview {
+    border:3px solid #00497B;
+    text-align:center;
+    width:90%;
+    margin:auto;
+    align:center;
+}
+
+thead.overview { 
+    background-color:#0068B0;
+    color: white;
+}
+
+
+table.methodInfo {
+    border:3px solid #00497B;
+    text-align:center;
+    width:90%;
+    margin:auto;
+    align:center;
+}
+
+thead.methodInfo { 
+    background-color:#0068B0;
+    color: white;
+}
+
+tfoot.methodInfo { 
+    background-color:#0068B0;
+    color: white;
+}
+
+tfoot {
+        font-weight:bold;
+}
+
+.methodInfo.firstcolumn {
+    width:$widthOfFirstColumn%;
+    text-align:left;
+}
+
+a {
+    color: black;
+    text-decoration:none;
+}
+
+a:hover { 
+    text-decoration:underline;
+}
+
+tr.overview.even {
+    background-color:#D8EFFF;
+}
+
+tbody tr.overview:hover {
+    background-color:#99D6FF;
+}
+
+tbody tr.overview.even:hover {
+    background-color:#99D6FF;
+}
+
+.overview.firstcolumn {
+    width:$widthOfFirstColumn%;
+    text-align:left;
+}
+
+## because widthOfFirstColumn% of the table's width are used for
+## the first column we must calculate now, how much remains for every coverageMetric
+
+#set( $width = (100 - $widthOfFirstColumn) / $coverageMetrics.size() )
+
+th.overview {
+    width:$width%;
+}
+
+th.methodInfo {
+    width:$width%;
+}
+
+## the colored coverage-bar should take about half of the
+## coverageMetrics-column. The other half will be used for the text
+## "x / y" and "z %"
+
+#set ($width = $width / 2 )
+
+td.overview.coverage {
+    width:$width%;
+}
+
+td.methodInfo.coverage {
+    width:$width%;
+}
+
+table.code{
+        width:80%;
+        left:10%;
+        margin:auto;
+    align:center;
+}
+
+thead.code{
+        background-color:#D8EFFF;
+}
+
+td.code.text {
+    font-family:monospace;
+}
+
+td.code.lineNumber {
+        text-align:right;
+    background-color:#D8EFFF;
+        padding-right:0.5em;
+        width:3em;
+        vertical-align:top;
+}
+
+td.code.executions {
+        text-align:right;
+        vertical-align:top;
+}
+      
+div.red {
+    background-color:#FF3300;
+    height:1em;
+    text-align:left;
+}
+            
+div.green {
+    background-color:#2DFA00;
+    height:1em;
+}
+
+div.grey {
+    background-color:#DDDDDD;
+    height:1em;
+    text-align:left;    
+}
+
+        
+div.creationNote {
+    text-align:right;
+        margin-top:2em;
+    border-top:thin inset #777777;
+    font-style:italic;
+}
+        
+div.headline {
+    text-align:center;
+    font-size:1.5em;
+}
+                
+div.session {
+    text-align:center;
+    font-size:2em;
+    font-weight:bold;
+}
+        
+div.sessionDate {
+    text-align:center;
+}
+    
+div.linkToTop {
+    text-align:left;
+    font-weight:bold;
+}
+        
+div.ancestors {
+    text-align:left;
+    font-size:1.2em;
+    font-weight:bold;
+}
+
+span.covered.fullyCovered {
+         background-color:#2DFA00;
+}
+
+span.covered.notCovered {
+         background-color:#FF3300;
+}
+
+span.covered.partlyCovered {
+         background-color:yellow;
+}
+        ]]></text-file>
+
+
+
+
+
+
+
+        <title-page><![CDATA[
+## If you want to have one specific date format in all reports generated with this
+## template, then uncomment the following line. Otherwise, the currently set
+## locale date format of the machine the report is generated with is used.
+
+##$dateFormatter.applyPattern("dd. MMMM yyyy HH:mm")
+
+## example on how to use the sorter. The parameter of sort() has to be a List,
+## the key given each the items of the list with setKey can be an integer,
+## a float or a string. The order will be: numbers increasing, then strings
+## alphanumeric, than items without a key in the order they were. If an item
+## get's several keys, only the key set at last counts.
+#foreach ($m in $coverageMetrics)
+   #if ($m.Name == "Statement Coverage")
+      $sorter.setKey($m, 1)
+   #end
+   #if ($m.Name == "Branch Coverage")
+       $sorter.setKey($m, 2)
+   #end
+   #if ($m.Name == "Loop Coverage")
+       $sorter.setKey($m, 3)
+   #end
+   #if ($m.Name == "Strict Condition Coverage")
+       $sorter.setKey($m, 4)
+   #end
+#end
+$sorter.sort($coverageMetrics)
+            
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>$html.escape($session.Name) - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="$html.escapeURI(${outputDirectory})/style.css">
+    <script src="$html.escapeURI(${outputDirectory})/sorttable.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        $html.escape($session.Name)
+    </div>
+    <div class="sessionDate">
+        measured on $dateFormatter.format( $session.Date )
+    </div>
+    <div class="description">
+        Description: $html.escape($session.Comment)
+    </div>
+    <div class="metricsForWholeSession">
+    <table class="metricsForWholeSession sortable">
+    <thead class="metricsForWholeSession">
+    <tr class="metricsForWholeSession">
+        <th class="metricsForWholeSession">
+            Name
+        </th>
+        <th class="metricsForWholeSession">
+            Amount
+        </th>
+    </tr>
+    </thead>
+    <tbody class="metricsForWholeSession">
+#set( $even = false )
+#foreach( $hierarchyLevelTypeCounter in $hierarchyLevelTypeCounters)
+    #if($even)
+    <tr class="metricsForWholeSession even">
+    #else
+    <tr class="metricsForWholeSession">
+    #end
+    #set( $even = !$even )
+    <td class="metricsForWholeSession">
+        $hierarchyLevelTypeCounter.HierarchyLevelType.EnglishName
+    </td>
+    <td class="metricsForWholeSession">
+        $hierarchyLevelTypeCounter.Number
+    </td>
+    </tr>
+#end
+    </tbody>
+    </table>
+    </div><div class="overview">
+    <table class="overview sortable">
+    <thead class="overview">
+        <tr class="overview">
+            <th class="overview firstcolumn"></th>
+#foreach( $coverageMetric in $coverageMetrics )
+            <th class="overview" colspan="3">$html.escape($coverageMetric.Name)</th>
+#end
+        </tr>
+    </thead>
+    <tbody class="overview">
+#set( $even = false )
+#foreach( $hierarchyLevel in $currentLevel.children )
+    #if($even)
+        <tr class="overview even">
+    #else
+        <tr class="overview">
+    #end
+    #set( $even = !$even )
+#if($hierarchyLevel.Type.InternalName == "method")    
+    #set( $currentNameOfHierarchyLevel = $html.escape($hierarchyLevel.HeaderString))
+#else
+    #set( $currentNameOfHierarchyLevel = $html.escape($hierarchyLevel.Name))
+#end
+            <td class="overview firstcolumn" sorttable_customkey="$currentNameOfHierarchyLevel.toLowerCase()">
+                <a href="$html.escapeURI($outputDirectory)/$filename.get($hierarchyLevel)/index.html">
+                    $currentNameOfHierarchyLevel
+                </a>
+            </td>
+    #foreach( $coverageMetric in $coverageMetrics )
+    
+                #if( $coverageMetric.getCoverage($testcases, $hierarchyLevel).TotalItems > 0 )
+            #set( $percent = 100 * $coverageMetric.getCoverage($testcases, $hierarchyLevel).CoveredItems / $coverageMetric.getCoverage($testcases, $hierarchyLevel).TotalItems )
+                <td class="overview" sorttable_customkey="$percent">
+                        $coverageMetric.getCoverage($testcases, $hierarchyLevel).CoveredItems&nbsp;/&nbsp;$coverageMetric.getCoverage($testcases, $hierarchyLevel).TotalItems
+                </td>
+                <td class="overview">
+                        $percent&nbsp;%
+                </td>
+                <td class="overview coverage">
+                        <div class="red"><div class="green" style="width:$percent%"></div></div>
+                </td>   
+        #else
+            <td class="overview" sorttable_customkey="-1">
+                        0&nbsp;/&nbsp;0
+                </td>
+                <td class="overview">
+                        ---
+                </td>
+                <td class="overview coverage">
+                        <div class="grey"></div>
+                </td>   
+        #end 
+    #end
+        </tr>
+#end
+    </tbody>
+    </table>
+    </div>
+    <div class="testcases">
+    <table class="testcases sortable">
+    <thead class="testcases">
+    <tr class="testcases">
+        <th class="testcases">
+            Date
+        </th>
+        <th class="testcases">
+            Name
+        </th>
+        <th class="testcases">
+            Comment
+        </th>
+    </tr>
+    </thead>
+    <tbody class="testcases">
+#foreach( $testcase in $testcases)
+    <tr class="testcases">
+    <td class="testcases">
+        $dateFormatter.format( $testcase.Date )
+    </td>
+    <td class="testcases">
+        $testcase.Name
+    </td>
+    <td class="testcases">
+        $testcase.Comment
+    </td>
+    </tr>
+#end
+    </tbody>
+    </table>
+    </div>
+    <div class="creationNote">
+        created on $dateFormatter.format( $now ) with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>
+</body>
+</html>
+        ]]></title-page>
+
+
+
+
+
+
+
+        <selection-page><![CDATA[
+#set ( $depth = $ancestors.size() ) 
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>$html.escape($currentLevel.Name) - $html.escape($session.Name) - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="${html.pathUp( $depth )}style.css">
+    <script src="${html.pathUp( $depth )}sorttable.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        $html.escape($session.Name)
+    </div>
+    <div class="sessionDate">
+        measured on $dateFormatter.format( $session.Date )
+    </div>
+    <div class="linkToTop">
+          <a href="${html.pathUp( $depth )}../$html.escapeURI($nameOfFirstFile)">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+#foreach( $ancestor in $ancestors )
+    #set ( $depth = $depth - 1 )
+    <a href="${html.pathUp( $depth )}index.html">
+        $html.escape($ancestor.Name)</a>
+    .
+#end 
+    $html.escape($currentLevel.Name)
+    </div><div class="overview">
+    <table class="overview sortable">
+    <thead class="overview">
+        <tr class="overview">
+            <th class="overview firstcolumn"></th>
+#foreach( $coverageMetric in $coverageMetrics )
+            <th  class="overview" colspan="3">$html.escape($coverageMetric.Name)</th>
+#end
+        </tr>
+    </thead>
+    <tbody class="overview">
+#if($currentLevel.children.size() > 0) 
+  #set( $even = false )
+  #foreach( $hierarchyLevel in $currentLevel.children )
+    #if($even)
+        <tr class="overview even">
+    #else
+        <tr class="overview">
+    #end
+    #set( $even = !$even )
+#if($hierarchyLevel.Type.InternalName == "method")    
+    #set( $currentNameOfHierarchyLevel = $html.escape($hierarchyLevel.HeaderString))
+#else
+    #set( $currentNameOfHierarchyLevel = $html.escape($hierarchyLevel.Name))
+#end
+            <td class="overview firstcolumn" sorttable_customkey="$currentNameOfHierarchyLevel.toLowerCase()">
+                <a href="$filename.get($hierarchyLevel)/index.html">
+                    $currentNameOfHierarchyLevel
+                </a>
+            </td>
+    #foreach( $coverageMetric in $coverageMetrics )
+        #if( $coverageMetric.getCoverage($testcases, $hierarchyLevel).TotalItems > 0 )
+            #set( $percent = 100 * $coverageMetric.getCoverage($testcases, $hierarchyLevel).CoveredItems / $coverageMetric.getCoverage($testcases, $hierarchyLevel).TotalItems )
+                <td class="overview" sorttable_customkey="$percent">
+                        $coverageMetric.getCoverage($testcases, $hierarchyLevel).CoveredItems&nbsp;/&nbsp;$coverageMetric.getCoverage($testcases, $hierarchyLevel).TotalItems
+                </td>
+                <td class="overview">
+                        $percent&nbsp;%
+                </td>
+                <td class="overview coverage">
+                        <div class="red"><div class="green" style="width:$percent%"></div></div>
+                </td>   
+        #else
+            <td class="overview" sorttable_customkey="-1">
+                        0&nbsp;/&nbsp;0
+                </td>
+                <td class="overview">
+                        ---
+                </td>
+                <td class="overview coverage">
+                        <div class="grey"></div>
+                </td> 
+        #end
+    #end
+        </tr>
+  #end
+#else
+<tr><td></td></tr>
+#end
+    </tbody>
+    </table>
+    </div>
+    <div class="creationNote">
+        created on $dateFormatter.format( $now ) with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        ]]></selection-page>
+
+
+
+
+
+
+
+        <code-page><![CDATA[
+            #set ( $depth = $ancestors.size() )   
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>$html.escape($currentLevel.Name) - $html.escape($session.Name) - CodeCover Report</title>
+    <link rel="stylesheet" type="text/css" href="${html.pathUp( $depth )}style.css">
+</head>
+<body>
+    <div class="headline">
+        Coverage Report
+    </div>
+    <div class="session">
+        $html.escape($session.Name)
+    </div>
+    <div class="sessionDate">
+        measured on $dateFormatter.format( $session.Date )
+    </div>
+    <div class="linkToTop">
+          <a href="${html.pathUp( $depth )}../$html.escapeURI($nameOfFirstFile)">
+              up to the title page
+          </a>
+    </div>
+    <div class="ancestors">
+#foreach( $ancestor in $ancestors )
+    #set ( $depth = $depth - 1 )
+    <a href="${html.pathUp( $depth )}index.html">
+        $html.escape($ancestor.Name)</a>
+    .
+#end 
+    $html.escape($currentLevel.Name)
+    </div><div class="methodInfo">
+    <table class="methodInfo">
+    <thead class="methodInfo">
+        <tr class="methodInfo">
+            <th class="methodInfo firstcolumn"></th>
+#foreach( $coverageMetric in $coverageMetrics )
+            <th class="methodInfo" colspan="3">$html.escape($coverageMetric.Name)</th>
+#end
+        </tr>
+    </thead>
+    <tbody class="methodInfo">
+        <tr class="methodInfo">
+            <td class="methodInfo firstcolumn">
+#if($currentLevel.Type.InternalName == "method")
+                    $html.escape($currentLevel.HeaderString)
+#else
+                    $html.escape($currentLevel.Name)
+#end
+            </td>  
+    #foreach( $coverageMetric in $coverageMetrics )
+                #if( $coverageMetric.getCoverage($testcases, $currentLevel).TotalItems > 0 )
+            #set( $percent = 100 * $coverageMetric.getCoverage($testcases, $currentLevel).CoveredItems / $coverageMetric.getCoverage($testcases, $currentLevel).TotalItems )
+                <td class="methodInfo">
+                        $coverageMetric.getCoverage($testcases, $currentLevel).CoveredItems&nbsp;/&nbsp;$coverageMetric.getCoverage($testcases, $currentLevel).TotalItems
+                </td>
+                <td class="methodInfo">
+                        $percent&nbsp;%
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="red"><div class="green" style="width:$percent%"></div></div>
+                </td>   
+        #else
+            <td class="methodInfo">
+                        0&nbsp;/&nbsp;0
+                </td>
+                <td class="methodInfo">
+                        ---
+                </td>
+                <td class="methodInfo coverage">
+                        <div class="grey"></div>
+                </td>  
+        #end
+        #end
+        </tr>
+    </tbody>
+    </table></div>
+    #set( $fileCounter = 0 )<div class="code">
+#foreach( $codefile in $code.getCoveredCode($currentLevel, $testcases, $coverageMetrics) )
+    <table class="code">
+        <thead class="code">
+        <tr class="code">
+                        <th class="code" colspan="3">$html.escape( $codefile.FileName )</th>
+                </tr>
+        </thead>
+        <tbody class="code">
+    #foreach( $line in $codefile.TextLines )
+         #if( $fileCounter == 0)
+         <tr class="code" id="L$line.LineNo">
+             <td class="code lineNumber">
+                  <a href="#L$line.LineNo">$line.LineNo</a>
+         #else
+         <tr class="code" id="F${fileCounter}L$line.LineNo">
+             <td class="code lineNumber">
+                  <a href="#F${fileCounter}L${line.LineNo}">$line.LineNo</a>         
+         #end
+              </td>
+              <td class="code executions">
+         #if( $line.Executions > -1 )
+                  $line.Executions
+         #end
+              &nbsp;
+              </td>
+              <td class="code text">
+                  $line.Text
+              </td>
+          </tr>
+    #end
+        </tbody>
+    </table></div>
+    #set( $fileCounter = $fileCounter + 1 )
+#end
+    <div class="creationNote">
+        created on $dateFormatter.format( $now ) with
+        <a href="http://www.codecover.org">
+            CodeCover
+        </a>
+    </div>    
+</body>
+</html>
+        ]]></code-page>
+        
+
+
+
+
+        <text-file filename="sorttable.js" content-type="text/javascript"><![CDATA[
+/*      
+        SortTable
+        version 2
+        7th April 2007
+        Stuart Langridge, http://www.kryogenix.org/code/browser/sorttable/
+        
+        Instructions:
+        Download this file
+        Add <script src="sorttable.js"></script> to your HTML
+        Add class="sortable" to any table you'd like to make sortable
+        Click on the headers to sort
+        
+        Thanks to many, many people for contributions and suggestions.
+        Licenced as X11: http://www.kryogenix.org/code/browser/licence.html
+        This basically means: do what you want with it.
+        
+**************************************************************************
+        We did the following small changes to the original version:
+                * added the counter bodyColumn, so tables, which have cells with colSpan > 1
+                  in its thead are sorted according to the leftest of the columns under each cell
+                * every second row of the table-body gets the class "even", so CSS can format odd and
+                  even lines in a different way
+        Each new line is marked with the comment "our code:" with no indentation, if lines were removed,
+        they got the comment "the original version" with no indentation one line above. The rest of this
+        document (except this text and mentioned changes) stayed the same.
+***************************************************************************
+*/
+
+ 
+var stIsIE = /*@cc_on!@*/false;
+
+sorttable = {
+        init: function() {
+                // quit if this function has already been called
+                if (arguments.callee.done) return;
+                // flag this function so we don't do the same thing twice
+                arguments.callee.done = true;
+                // kill the timer
+                if (_timer) clearInterval(_timer);
+                
+                if (!document.createElement || !document.getElementsByTagName) return;
+                
+                sorttable.DATE_RE = /^(\d\d?)[\/\.-](\d\d?)[\/\.-]((\d\d)?\d\d)$/;
+                
+                forEach(document.getElementsByTagName('table'), function(table) {
+                        if (table.className.search(/\bsortable\b/) != -1) {
+                                sorttable.makeSortable(table);
+                        }
+                });
+                
+        },
+        
+        makeSortable: function(table) {
+                if (table.getElementsByTagName('thead').length == 0) {
+                        // table doesn't have a tHead. Since it should have, create one and
+                        // put the first table row in it.
+                        the = document.createElement('thead');
+                        the.appendChild(table.rows[0]);
+                        table.insertBefore(the,table.firstChild);
+                }
+                // Safari doesn't support table.tHead, sigh
+                if (table.tHead == null) table.tHead = table.getElementsByTagName('thead')[0];
+                
+                if (table.tHead.rows.length != 1) return; // can't cope with two header rows
+                
+                // Sorttable v1 put rows with a class of "sortbottom" at the bottom (as
+                // "total" rows, for example). This is B&R, since what you're supposed
+                // to do is put them in a tfoot. So, if there are sortbottom rows,
+                // for backwards compatibility, move them to tfoot (creating it if needed).
+                sortbottomrows = [];
+                for (var i=0; i<table.rows.length; i++) {
+                        if (table.rows[i].className.search(/\bsortbottom\b/) != -1) {
+                                sortbottomrows[sortbottomrows.length] = table.rows[i];
+                        }
+                }
+                if (sortbottomrows) {
+                        if (table.tFoot == null) {
+                                // table doesn't have a tfoot. Create one.
+                                tfo = document.createElement('tfoot');
+                                table.appendChild(tfo);
+                        }
+                        for (var i=0; i<sortbottomrows.length; i++) {
+                                tfo.appendChild(sortbottomrows[i]);
+                        }
+                        delete sortbottomrows;
+                }
+                
+                // work through each column and calculate its type
+                headrow = table.tHead.rows[0].cells;
+// our change:
+                bodyColumn = 0; // index of the leftest column that is under the i. headColumn
+                for (var i=0; i<headrow.length; i++) {
+                        // manually override the type with a sorttable_type attribute
+                        if (!headrow[i].className.match(/\bsorttable_nosort\b/)) { // skip this col
+                                mtch = headrow[i].className.match(/\bsorttable_([a-z0-9]+)\b/);
+                                if (mtch) { override = mtch[1]; }
+                                if (mtch && typeof sorttable["sort_"+override] == 'function') {
+                                        headrow[i].sorttable_sortfunction = sorttable["sort_"+override];
+                                } else {
+// the original version                         
+//                                      headrow[i].sorttable_sortfunction = sorttable.guessType(table, i);
+// our change:
+                                        headrow[i].sorttable_sortfunction = sorttable.guessType(table, bodyColumn);
+                                }
+                                // make it clickable to sort
+// the original version                         
+//                              headrow[i].sorttable_columnindex = i;
+// our code:
+                                headrow[i].sorttable_columnindex = bodyColumn;
+                                headrow[i].sorttable_tbody = table.tBodies[0];
+                                dean_addEvent(headrow[i],"click", function(e) {
+
+                                        if (this.className.search(/\bsorttable_sorted\b/) != -1) {
+                                                // if we're already sorted by this column, just 
+                                                // reverse the table, which is quicker
+                                                sorttable.reverse(this.sorttable_tbody);
+                                                this.className = this.className.replace('sorttable_sorted', 'sorttable_sorted_reverse');
+                                                this.removeChild(document.getElementById('sorttable_sortfwdind'));
+                                                sortrevind = document.createElement('span');
+                                                sortrevind.id = "sorttable_sortrevind";
+                                                sortrevind.innerHTML = stIsIE ? '&nbsp<font face="webdings">5</font>' : '&nbsp;&#x25B4;';
+                                                this.appendChild(sortrevind);
+                                                return;
+                                        }
+                                        if (this.className.search(/\bsorttable_sorted_reverse\b/) != -1) {
+                                                // if we're already sorted by this column in reverse, just 
+                                                // re-reverse the table, which is quicker
+                                                sorttable.reverse(this.sorttable_tbody);
+                                                this.className = this.className.replace('sorttable_sorted_reverse', 'sorttable_sorted');
+                                                this.removeChild(document.getElementById('sorttable_sortrevind'));
+                                                sortfwdind = document.createElement('span');
+                                                sortfwdind.id = "sorttable_sortfwdind";
+                                                sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
+                                                this.appendChild(sortfwdind);
+                                                return;
+                                        }
+                                        
+                                        // remove sorttable_sorted classes
+                                        theadrow = this.parentNode;
+                                        forEach(theadrow.childNodes, function(cell) {
+                                                if (cell.nodeType == 1) { // an element
+                                                        cell.className = cell.className.replace('sorttable_sorted_reverse','');
+                                                        cell.className = cell.className.replace('sorttable_sorted','');
+                                                }
+                                        });
+                                        sortfwdind = document.getElementById('sorttable_sortfwdind');
+                                        if (sortfwdind) { sortfwdind.parentNode.removeChild(sortfwdind); }
+                                        sortrevind = document.getElementById('sorttable_sortrevind');
+                                        if (sortrevind) { sortrevind.parentNode.removeChild(sortrevind); }
+                                        
+                                        this.className += ' sorttable_sorted';
+                                        sortfwdind = document.createElement('span');
+                                        sortfwdind.id = "sorttable_sortfwdind";
+                                        sortfwdind.innerHTML = stIsIE ? '&nbsp<font face="webdings">6</font>' : '&nbsp;&#x25BE;';
+                                        this.appendChild(sortfwdind);
+
+                                        // build an array to sort. This is a Schwartzian transform thing,
+                                        // i.e., we "decorate" each row with the actual sort key,
+                                        // sort based on the sort keys, and then put the rows back in order
+                                        // which is a lot faster because you only do getInnerText once per row
+                                        row_array = [];
+                                        col = this.sorttable_columnindex;
+                                        rows = this.sorttable_tbody.rows;
+                                        for (var j=0; j<rows.length; j++) {
+                                                row_array[row_array.length] = [sorttable.getInnerText(rows[j].cells[col]), rows[j]];
+                                        }
+                                        /* If you want a stable sort, uncomment the following line */
+                                        //sorttable.shaker_sort(row_array, this.sorttable_sortfunction);
+                                        /* and comment out this one */
+                                        row_array.sort(this.sorttable_sortfunction);
+                                        tb = this.sorttable_tbody;
+// our code: boolean even to switching from each row to the other from true to false and vice versa
+                                        even = false;
+                                        for (var j=0; j<row_array.length; j++) {
+// our code: remove class "even" (and " even"), if present, because that information may now be false
+                                                row_array[j][1].className = row_array[j][1].className.replace(" even","").replace("even","");
+                                                tb.appendChild(row_array[j][1]);
+// our code: add class "even" if even == true
+                                                if (even) {
+                                                        row_array[j][1].className += ' even';
+                                                }
+// our code:
+                                                even = !even;
+                                        }
+                                        
+                                        delete row_array;
+                                });
+                        }
+// our code:
+                        bodyColumn += headrow[i].colSpan;
+                }
+        },
+        
+        guessType: function(table, column) {
+                // guess the type of a column based on its first non-blank row
+                sortfn = sorttable.sort_alpha;
+                for (var i=0; i<table.tBodies[0].rows.length; i++) {
+                        text = sorttable.getInnerText(table.tBodies[0].rows[i].cells[column]);
+                        if (text != '') {
+                                if (text.match(/^-?[Â£$Â¤]?[\d,.]+%?$/)) {
+                                        return sorttable.sort_numeric;
+                                }
+                                // check for a date: dd/mm/yyyy or dd/mm/yy 
+                                // can have / or . or - as separator
+                                // can be mm/dd as well
+                                possdate = text.match(sorttable.DATE_RE)
+                                if (possdate) {
+                                        // looks like a date
+                                        first = parseInt(possdate[1]);
+                                        second = parseInt(possdate[2]);
+                                        if (first > 12) {
+                                                // definitely dd/mm
+                                                return sorttable.sort_ddmm;
+                                        } else if (second > 12) {
+                                                return sorttable.sort_mmdd;
+                                        } else {
+                                                // looks like a date, but we can't tell which, so assume
+                                                // that it's dd/mm (English imperialism!) and keep looking
+                                                sortfn = sorttable.sort_ddmm;
+                                        }
+                                }
+                        }
+                }
+                return sortfn;
+        },
+        
+        getInnerText: function(node) {
+                // gets the text we want to use for sorting for a cell.
+                // strips leading and trailing whitespace.
+                // this is *not* a generic getInnerText function; it's special to sorttable.
+                // for example, you can override the cell text with a customkey attribute.
+                // it also gets .value for <input> fields.
+                
+                hasInputs = (typeof node.getElementsByTagName == 'function') &&
+                                                                 node.getElementsByTagName('input').length;
+                
+                if (node.getAttribute("sorttable_customkey") != null) {
+                        return node.getAttribute("sorttable_customkey");
+                }
+                else if (typeof node.textContent != 'undefined' && !hasInputs) {
+                        return node.textContent.replace(/^\s+|\s+$/g, '');
+                }
+                else if (typeof node.innerText != 'undefined' && !hasInputs) {
+                        return node.innerText.replace(/^\s+|\s+$/g, '');
+                }
+                else if (typeof node.text != 'undefined' && !hasInputs) {
+                        return node.text.replace(/^\s+|\s+$/g, '');
+                }
+                else {
+                        switch (node.nodeType) {
+                                case 3:
+                                        if (node.nodeName.toLowerCase() == 'input') {
+                                                return node.value.replace(/^\s+|\s+$/g, '');
+                                        }
+                                case 4:
+                                        return node.nodeValue.replace(/^\s+|\s+$/g, '');
+                                        break;
+                                case 1:
+                                case 11:
+                                        var innerText = '';
+                                        for (var i = 0; i < node.childNodes.length; i++) {
+                                                innerText += sorttable.getInnerText(node.childNodes[i]);
+                                        }
+                                        return innerText.replace(/^\s+|\s+$/g, '');
+                                        break;
+                                default:
+                                        return '';
+                        }
+                }
+        },
+        
+        reverse: function(tbody) {
+                // reverse the rows in a tbody
+                newrows = [];
+                for (var i=0; i<tbody.rows.length; i++) {
+                        newrows[newrows.length] = tbody.rows[i];
+                }
+                for (var i=newrows.length-1; i>=0; i--) {
+                         tbody.appendChild(newrows[i]);
+                }
+                delete newrows;
+        },
+        
+        /* sort functions
+                 each sort function takes two parameters, a and b
+                 you are comparing a[0] and b[0] */
+        sort_numeric: function(a,b) {
+                aa = parseFloat(a[0].replace(/[^0-9.-]/g,''));
+                if (isNaN(aa)) aa = 0;
+                bb = parseFloat(b[0].replace(/[^0-9.-]/g,'')); 
+                if (isNaN(bb)) bb = 0;
+                return aa-bb;
+        },
+        sort_alpha: function(a,b) {
+                if (a[0]==b[0]) return 0;
+                if (a[0]<b[0]) return -1;
+                return 1;
+        },
+        sort_ddmm: function(a,b) {
+                mtch = a[0].match(sorttable.DATE_RE);
+                y = mtch[3]; m = mtch[2]; d = mtch[1];
+                if (m.length == 1) m = '0'+m;
+                if (d.length == 1) d = '0'+d;
+                dt1 = y+m+d;
+                mtch = b[0].match(sorttable.DATE_RE);
+                y = mtch[3]; m = mtch[2]; d = mtch[1];
+                if (m.length == 1) m = '0'+m;
+                if (d.length == 1) d = '0'+d;
+                dt2 = y+m+d;
+                if (dt1==dt2) return 0;
+                if (dt1<dt2) return -1;
+                return 1;
+        },
+        sort_mmdd: function(a,b) {
+                mtch = a[0].match(sorttable.DATE_RE);
+                y = mtch[3]; d = mtch[2]; m = mtch[1];
+                if (m.length == 1) m = '0'+m;
+                if (d.length == 1) d = '0'+d;
+                dt1 = y+m+d;
+                mtch = b[0].match(sorttable.DATE_RE);
+                y = mtch[3]; d = mtch[2]; m = mtch[1];
+                if (m.length == 1) m = '0'+m;
+                if (d.length == 1) d = '0'+d;
+                dt2 = y+m+d;
+                if (dt1==dt2) return 0;
+                if (dt1<dt2) return -1;
+                return 1;
+        },
+        
+        shaker_sort: function(list, comp_func) {
+                // A stable sort function to allow multi-level sorting of data
+                // see: http://en.wikipedia.org/wiki/Cocktail_sort
+                // thanks to Joseph Nahmias
+                var b = 0;
+                var t = list.length - 1;
+                var swap = true;
+
+                while(swap) {
+                                swap = false;
+                                for(var i = b; i < t; ++i) {
+                                                if ( comp_func(list[i], list[i+1]) > 0 ) {
+                                                                var q = list[i]; list[i] = list[i+1]; list[i+1] = q;
+                                                                swap = true;
+                                                }
+                                } // for
+                                t--;
+
+                                if (!swap) break;
+
+                                for(var i = t; i > b; --i) {
+                                                if ( comp_func(list[i], list[i-1]) < 0 ) {
+                                                                var q = list[i]; list[i] = list[i-1]; list[i-1] = q;
+                                                                swap = true;
+                                                }
+                                } // for
+                                b++;
+
+                } // while(swap)
+        }  
+}
+
+/* ******************************************************************
+         Supporting functions: bundled here to avoid depending on a library
+         ****************************************************************** */
+
+// Dean Edwards/Matthias Miller/John Resig
+
+/* for Mozilla/Opera9 */
+if (document.addEventListener) {
+                document.addEventListener("DOMContentLoaded", sorttable.init, false);
+}
+
+/* for Internet Explorer */
+/*@cc_on @*/
+/*@if (@_win32)
+                document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
+                var script = document.getElementById("__ie_onload");
+                script.onreadystatechange = function() {
+                                if (this.readyState == "complete") {
+                                                sorttable.init(); // call the onload handler
+                                }
+                };
+/*@end @*/
+
+/* for Safari */
+if (/WebKit/i.test(navigator.userAgent)) { // sniff
+                var _timer = setInterval(function() {
+                                if (/loaded|complete/.test(document.readyState)) {
+                                                sorttable.init(); // call the onload handler
+                                }
+                }, 10);
+}
+
+/* for other browsers */
+window.onload = sorttable.init;
+
+// written by Dean Edwards, 2005
+// with input from Tino Zijdel, Matthias Miller, Diego Perini
+
+// http://dean.edwards.name/weblog/2005/10/add-event/
+
+function dean_addEvent(element, type, handler) {
+        if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+        } else {
+                // assign each event handler a unique ID
+                if (!handler.$$guid) handler.$$guid = dean_addEvent.guid++;
+                // create a hash table of event types for the element
+                if (!element.events) element.events = {};
+                // create a hash table of event handlers for each element/event pair
+                var handlers = element.events[type];
+                if (!handlers) {
+                        handlers = element.events[type] = {};
+                        // store the existing event handler (if there is one)
+                        if (element["on" + type]) {
+                                handlers[0] = element["on" + type];
+                        }
+                }
+                // store the event handler in the hash table
+                handlers[handler.$$guid] = handler;
+                // assign a global event handler to do all the work
+                element["on" + type] = handleEvent;
+        }
+};
+// a counter used to create unique IDs
+dean_addEvent.guid = 1;
+
+function removeEvent(element, type, handler) {
+        if (element.removeEventListener) {
+                element.removeEventListener(type, handler, false);
+        } else {
+                // delete the event handler from the hash table
+                if (element.events && element.events[type]) {
+                        delete element.events[type][handler.$$guid];
+                }
+        }
+};
+
+function handleEvent(event) {
+        var returnValue = true;
+        // grab the event object (IE uses a global event object)
+        event = event || fixEvent(((this.ownerDocument || this.document || this).parentWindow || window).event);
+        // get a reference to the hash table of event handlers
+        var handlers = this.events[event.type];
+        // execute each event handler
+        for (var i in handlers) {
+                this.$$handleEvent = handlers[i];
+                if (this.$$handleEvent(event) === false) {
+                        returnValue = false;
+                }
+        }
+        return returnValue;
+};
+
+function fixEvent(event) {
+        // add W3C standard event methods
+        event.preventDefault = fixEvent.preventDefault;
+        event.stopPropagation = fixEvent.stopPropagation;
+        return event;
+};
+fixEvent.preventDefault = function() {
+        this.returnValue = false;
+};
+fixEvent.stopPropagation = function() {
+        this.cancelBubble = true;
+}
+
+// Dean's forEach: http://dean.edwards.name/base/forEach.js
+/*
+        forEach, version 1.0
+        Copyright 2006, Dean Edwards
+        License: http://www.opensource.org/licenses/mit-license.php
+*/
+
+// array-like enumeration
+if (!Array.forEach) { // mozilla already supports this
+        Array.forEach = function(array, block, context) {
+                for (var i = 0; i < array.length; i++) {
+                        block.call(context, array[i], i, array);
+                }
+        };
+}
+
+// generic enumeration
+Function.prototype.forEach = function(object, block, context) {
+        for (var key in object) {
+                if (typeof this.prototype[key] == "undefined") {
+                        block.call(context, object[key], key, object);
+                }
+        }
+};
+
+// character enumeration
+String.forEach = function(string, block, context) {
+        Array.forEach(string.split(""), function(chr, index) {
+                block.call(context, chr, index, string);
+        });
+};
+
+// globally resolve forEach enumeration
+var forEach = function(object, block, context) {
+        if (object) {
+                var resolve = Object; // default
+                if (object instanceof Function) {
+                        // functions have a "length" property
+                        resolve = Function;
+                } else if (object.forEach instanceof Function) {
+                        // the object implements a custom forEach method so use that
+                        object.forEach(block, context);
+                        return;
+                } else if (typeof object == "string") {
+                        // the object is a string
+                        resolve = String;
+                } else if (typeof object.length == "number") {
+                        // the object is array-like
+                        resolve = Array;
+                }
+                resolve.forEach(object, block, context);
+        }
+};        
+                                
+        ]]></text-file>
+    </template>
+</report>
