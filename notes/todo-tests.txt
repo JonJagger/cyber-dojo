@@ -9,6 +9,9 @@ Each language should have a (docker running) test that confirms it
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add tests/integration/test_exercises.rb to match
+the test for languages and mention it in the docker md file.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 public/javascripts/tests needs some TLC. There are
 tests in there for stuff in there that is long gone.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

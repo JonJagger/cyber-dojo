@@ -211,12 +211,10 @@ Each `manifest.json` file contains an ruby object in JSON format
 }
 ```
 
-Finally you need to create the initial starting files (and
-possibly some support files). In honour of Douglas Adams
-in  cyber-dojo these always take the form of a function
-called answer() which return 6 * 9 and a test for this
-function which expects 42. Thus the initial files give
-you a red traffic-light.
+Create the initial starting files (and possibly some support files).
+In honour of Douglas Adams these always take the form of a function
+called answer() which return 6 * 9 and a test for this function
+which expects 42. Thus the initial files give you a red traffic-light.
 
 See [Misc](md/misc.md) for `manifest.json` details.
 
@@ -227,8 +225,8 @@ See [Misc](md/misc.md) for `manifest.json` details.
   * Deep-breath...<br/>
     the `unit_test_framework` entry in `manifest.json`
     file names the function inside `app/lib/OutputParser.rb`
-    used to determine if the output from running `cyber-dojo.sh` in your Docker
-    container on the animals current files qualifies as a
+    used to determine if the output from running `cyber-dojo.sh`, in your Docker
+    container, on the animals current files, qualifies as a
     red traffic-light, an amber traffic-light, or a green traffic-light.<br/>
     And exhale...<br/>
     There are lots of examples in

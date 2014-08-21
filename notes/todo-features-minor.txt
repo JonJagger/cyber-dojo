@@ -3,6 +3,11 @@
 add progress_regrex's for all languages that have simple
 red/green/amber regexp pattern.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+split docker-server.md into several md files
+one for just building your own docker sever,
+one for adding a new language,
+one for adding a new exercise.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 working towards a tag being created for inter-test events...
 When an event happens in the browser I create a snapshot of
 the current state. Eg if there are 3 files fileA,fileB,fileC,
