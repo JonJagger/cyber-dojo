@@ -6,6 +6,14 @@ install J?
 install Java-TestNG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+getting rails server warning about sass
+"Warning. Error encountered while saving cache"
+Googling gives this...
+https://github.com/vhyza/sass-rails-source-maps/issues/4
+and my Gemfile does indeed have a version for sass-rails.
+Try to fix once I'm home from China.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 does refactoring_dojos.tgz still has katas in old manifest.rb format?
 Check this on cyber-dojo.org for eg

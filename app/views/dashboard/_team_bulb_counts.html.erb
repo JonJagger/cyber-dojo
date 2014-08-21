@@ -23,6 +23,9 @@ $(function() {
   <table id="team-bulb-counts-container">
     <tr>
       <td>
+        <%= raw pie_chart_from_counts(counts, 40, 'zoo') %>
+      </td>
+      <td>
         <% [ :red, :amber, :green].each do |colour| %>
           <% n = lasts[colour] %>
           <% if n > 0 %>
@@ -32,9 +35,6 @@ $(function() {
             </div>
           <% end %>
         <% end %>
-      </td>
-      <td>
-        <%= raw pie_chart_from_counts(counts, 40, 'zoo') %>
       </td>
     </tr>
   </table>
