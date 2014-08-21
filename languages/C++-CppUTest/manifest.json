@@ -8,12 +8,11 @@
     "makefile"
   ],
   "filename_extension" : ".cpp",
+  "display_name": "C++, CppUTest",
   "unit_test_framework":  "cpputest",
   "progress_regexs" : [
     "Errors \\((\\d)+ failures, (\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)",
     "OK \\((\\d)+ tests, (\\d)+ ran, (\\d)+ checks, (\\d)+ ignored, (\\d)+ filtered out, (\\d)+ ms\\)"
   ],
-  "display_name": "C++, CppUTest",
-  "display_test_name": "CppUTest",
   "image_name": "cyberdojo/gpp-4.8.1_cpputest"
 }

@@ -12,7 +12,6 @@
   ],
   "filename_extension" : ".java",
   "display_name": "Java, Approval",
-  "display_test_name": "Approval",
   "unit_test_framework": "junit",
   "image_name": "cyberdojo/java-1.8_approval"
 }

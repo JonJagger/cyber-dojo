@@ -16,7 +16,6 @@
   ],
   "filename_extension" : ".java",
   "display_name": "Java, PowerMockito",
-  "display_test_name": "PowerMockito",
   "unit_test_framework": "junit",
   "image_name": "cyberdojo/java-1.8_powermockito"
 }

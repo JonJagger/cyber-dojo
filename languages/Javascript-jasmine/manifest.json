@@ -6,7 +6,6 @@
   ],
   "filename_extension" : ".js",
   "display_name": "JavaScript, jasmine",
-  "display_test_name": "jasmine",
   "unit_test_framework": "jasmine",
   "image_name": "cyberdojo/javascript-0.10.15_jasmine",
   "tab_size": 2

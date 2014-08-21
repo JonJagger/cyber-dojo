@@ -57,7 +57,7 @@ class LanguageTests < CyberDojoTestBase
   end
 
   def required_keys_exist?
-    required_keys = [ 'visible_filenames', 'unit_test_framework' ]
+    required_keys = [ 'visible_filenames', 'display_name', 'unit_test_framework' ]
     required_keys.each do |key|
       if !manifest.keys.include? key
         message =
@@ -80,7 +80,6 @@ class LanguageTests < CyberDojoTestBase
               'unit_test_framework',
               'tab_size',
               'display_name',
-              'display_test_name',
               'image_name'
             ]
     manifest.keys.each do |key|

@@ -10,7 +10,6 @@
   ],
   "filename_extension" : ".c",
   "display_name": "C, Unity",
-  "display_test_name": "Unity",
   "unit_test_framework": "cunity",
   "image_name": "cyberdojo/gcc-4.8.1_unity"
 }

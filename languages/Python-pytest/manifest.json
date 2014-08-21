@@ -7,7 +7,6 @@
   ],
   "filename_extension" : ".py",
   "display_name": "Python, py.test",
-  "display_test_name": "py.test",
   "unit_test_framework": "python_pytest",
   "image_name": "cyberdojo/python-3.3.5_pytest",
   "tab_size": 4

@@ -9,7 +9,6 @@
   ],
   "filename_extension" : ".cpp",
   "display_name": "C++, GoogleTest",
-  "display_test_name": "GoogleTest",
   "unit_test_framework": "google_test",
   "image_name": "cyberdojo/gpp-4.8.1_googletest"
 }

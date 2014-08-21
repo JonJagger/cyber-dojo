@@ -12,7 +12,6 @@
   ],
   "filename_extension" : ".groovy",
   "display_name": "Groovy, JUnit",
-  "display_test_name": "JUnit",
   "unit_test_framework": "junit",
   "image_name": "cyberdojo/groovy-2.2.0_junit"
 }
