@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+what happens to the initialization line to load 'instructions'
+when you start an animal and there is no 'instructions' file
+in the visible_files?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test that each refactoring kata exists in the katas/ folder
 and that it can be opened, forked from, and it starts at green.
 The info for IDs, animals, tag numbers is in
