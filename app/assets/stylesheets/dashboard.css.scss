@@ -20,11 +20,12 @@
   }
 
   #help-button-container {
-    text-align: right;
-    margin: 12px;
+    display: inline-block;
+    @include right-align(0px);
+    margin-top: 5px;
     #help-button {
       font-size: 1em;
-      @include rounded-corner(15px);
+      @include rounded-corner(14px);
     }
   }
 
@@ -34,6 +35,7 @@
     #progress-button {
       font-size: 1em;
       padding-bottom: 4px;
+      margin-bottom: 17px;
     }
   }
 

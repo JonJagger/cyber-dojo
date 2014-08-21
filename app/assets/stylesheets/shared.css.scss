@@ -30,7 +30,7 @@
 }
 
 #info-container {
-  display: block;
+  display: inline-block;
   @include ghost-panel(6px);
   @include right-align(5px);
 }

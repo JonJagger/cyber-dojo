@@ -27,9 +27,6 @@ $(function() {
         <div id="progress">
           <%= render :partial => 'progress_button' %>
         </div>
-        <div>
-          <%= render :partial => 'help_button' %>
-        </div>
         <div id="age">
           <%= render :partial => 'age' %>
         </div>
@@ -41,9 +38,8 @@ $(function() {
         <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
-        <div>
-          <%= render :partial => 'shared/info' %>
-        </div>
+        <%= render :partial => 'help_button' %>
+        <%= render :partial => 'shared/info' %>
       </td>
     </tr>
   </table>
