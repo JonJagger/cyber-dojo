@@ -47,7 +47,7 @@ Each traffic-light is coloured as follows:
   * amber - syntax error somewhere, tests not run
   * green - tests ran and all passed
 
-The colours on the traffic-light are positional,
+The colours on the traffic-light are positional:
   * red at the top,
   * amber in the middle,
   * green at the bottom.
@@ -68,11 +68,13 @@ navigate backwards and forwards, revert, or fork.
 
 reviewing your programming dojo
 -------------------------------
-You can get to the dashboard page in two ways
+You can get to the dashboard page in two ways:
+
   * from the home page, enter the dojo's id and click the `[review]` button.
   * from the test page, click the animal image
 
-Each horizontal row corresponds to one animal and displays, from left to right,
+Each horizontal row corresponds to one animal and displays, from left to right:
+
   * oldest-to-newest traffic lights
   * total number of traffic-lights (in the current colour).
   * a pie-chart indicating the total number of red,amber,green traffic-lights
@@ -90,6 +92,7 @@ are run, more and more traffic-lights appear taking up more and more
 horizontal space. These traffic-lights auto scroll:
   * old ones are scrolled out of view to the left
   * the animal image is always visible to the right.
+  
 Advice:
   * Project the dashboard *during* the dojo
   * Leave auto-refresh on *during* the dojo
