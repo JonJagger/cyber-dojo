@@ -27,16 +27,6 @@ tennis_python_refactoring_kata.tgz
 When I have a better internet connection (in China) I will
 recreate the kata from the 435E5C1C88/moose git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-manifest.json parameters
-{
-  display_name: "Java",
-  display_test_name: JUnit"
-}
-could be simplifed to
-{
-  display_name: "Java-JUnit",
-}
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put manifest.json md file into its own md file
 called language's manifest.json formt (not misc).
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
