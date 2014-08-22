@@ -198,7 +198,7 @@ var cyberDojo = (function(cd, $) {
 	$('#revert-button', diffDiv).click(function() {
 	  deleteAllCurrentFiles();
 	  copyRevertFilesToCurrentFiles();
-	  cd.testForm().submit();
+	  $('#test-button').click();
 	  closeDiffDialog();
 	});
 
