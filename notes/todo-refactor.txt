@@ -1,6 +1,7 @@
 
 install R
   apt-get install r-base
+  http://r-pkgs.had.co.nz/tests.html
   http://sourceforge.net/projects/runit/
   http://cran.r-project.org/web/packages/RUnit/RUnit.pdf
 
