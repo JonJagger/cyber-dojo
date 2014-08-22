@@ -1,6 +1,8 @@
 
 install R
   apt-get install r-base
+  http://sourceforge.net/projects/runit/
+  http://cran.r-project.org/web/packages/RUnit/RUnit.pdf
 
 install Rust?
 install Swift?
