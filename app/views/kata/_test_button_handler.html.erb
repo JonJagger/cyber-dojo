@@ -8,19 +8,19 @@ $(function() {
   var testOverlay = $('<div id="test-overlay"></div>');
 
   testButton.enable = function() {
-    testButton.attr('disabled', false);
+    $(this).attr('disabled', false);
   };
 
   testButton.disable = function() {
-    testButton.attr('disabled', true);
+    $(this).attr('disabled', true);
   };
 
   testButton.click(function() {
     // Called from 4 places
     // 1. when animal starts (auto-test)
-    // 2. when dev clicks [test]
-    // 3. when dev hot-keys Alt-T
-    // 4. when reverting
+    // 2. when you clicks [test]
+    // 3. when you hot-keys Alt-T
+    // 4. when you click revert
     var form = testButton.closest('form');
     cd.storeOutgoingFileHashes();
     $.ajax({
