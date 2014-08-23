@@ -5,23 +5,14 @@ and that it can be opened, forked from, and it starts at green.
 The info for IDs, animals, tag numbers is in
 cyberdojo/admin_scripts/save_refactoring_dojos.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test feature that when an animal starts it auto runs the
-tests and that returns a green.
+test feature that when an animal starts it auto runs the tests.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Each language should have a (docker running) test that confirms it
-  o) starts at red
-  o) if the named-file is s/6*9/6*7/ it becomes a green
-     where the named_file may be part of the test data
-     if it cannot be unabmiguously determined in code
-     by reading the visible_files contents and grepping for 6*7.
-  o) adding gibberish gives amber
-This is similar to what I did in
-test/installation/check_language.rb
+test/languages/test_all_languages needs to detect
+what the test-runner is and select accordingly.
+Then languages can be named as a folder in run_all.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-In test/integration
-  have a check_one_language_manifest.rb and
-  test_all_languages_manifests.rb
-  Use the former in language_manifest.md
+test/languages needs a separate check_one_language_manifest.rb
+  which can then be named in language_manifest.md
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
