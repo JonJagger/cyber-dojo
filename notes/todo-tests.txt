@@ -1,18 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/languages/test_languages_manifests.rb and
+test/languages/all_languages.rb
+  both select the language names clumsily.
+  Use dojo.languages.map{|language| language.name}
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test/languages needs a separate check_one_language_manifest.rb
+  which can then be named in language_manifest.md
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test that each refactoring kata exists in the katas/ folder
 and that it can be opened, forked from, and it starts at green.
 The info for IDs, animals, tag numbers is in
 cyberdojo/admin_scripts/save_refactoring_dojos.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test feature that when an animal starts it auto runs the tests.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/languages/test_all_languages needs to detect
-what the test-runner is and select accordingly.
-Then languages can be named as a folder in run_all.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test/languages needs a separate check_one_language_manifest.rb
-  which can then be named in language_manifest.md
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.

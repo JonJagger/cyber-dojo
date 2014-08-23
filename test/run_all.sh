@@ -1,7 +1,7 @@
 
 export CYBERDOJO_USE_HOST=true
 
-modules=( app_helpers app_lib app_models lib integration app_controllers )
+modules=( app_helpers app_lib app_models lib languages integration app_controllers )
 echo
 for module in ${modules[@]}
 do

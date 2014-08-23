@@ -13,7 +13,7 @@ class AllLanguagesTests < CyberDojoTestBase
     languages = dirs.map{|file| File.dirname(file).split('/')[-1] }
     languages.sort.each do |language|
       rag = checker.check(language)
-      results[language] = rag
+      results[language] = rag if !rag.nil?
     end
     expected = ['red','amber','green']
     passes = results.select{|language,rag| rag == expected }

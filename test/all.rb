@@ -37,6 +37,7 @@ require_relative app_models('Sandbox')
 require_relative app_models('Light')
 require_relative app_models('Tag')
 
+require_relative lib('Docker')
 require_relative lib('DockerTestRunner')
 require_relative lib('DummyTestRunner')
 require_relative lib('HostTestRunner')

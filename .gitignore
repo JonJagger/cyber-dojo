@@ -16,22 +16,8 @@ zipped_dojos.zip
 cyberDojo.db
 *.tmp
 
-test/admin_scripts/assets/
-test/admin_scripts/index.html
-test/app_controllers/assets/
-test/app_controllers/index.html
-test/app_helpers/assets/
-test/app_helpers/index.html
-test/app_lib/assets/
-test/app_lib/index.html
-test/app_models/assets/
-test/app_models/index.html
-
-test/lib/assets/
-test/lib/index.html
-
-test/integration/assets/
-test/integration/index.html
+test/*/assets/
+test/*/index.html
 
 test/cyberdojo/zips
 test/cyberdojo/tmp

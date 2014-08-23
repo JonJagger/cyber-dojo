@@ -9,7 +9,7 @@ class LanguagesManifestsTests < CyberDojoTestBase
     @root_path = root_path
   end
 
-  test "all languages underneath root_path/languages" do
+  test 'manifests of all languages' do
     assert File.directory?(root_path + '/languages/')
     languages_names = Dir.entries(root_path + '/languages').select { |name|
       manifest = root_path + "/languages/#{name}/manifest.json"

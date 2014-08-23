@@ -10,14 +10,18 @@ class OneLanguageChecker
   end
 
   def check(language_name)
+    # if running on a Docker server, returns [red,amber,green] state
+    # else returns nil
     @language = dojo.languages[language_name]
-    vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
-    t1 = Time.now
-    rag = red_amber_green
-    t2 = Time.now
-    took = ((t2 - t1) / 3).round(2)
-    vputs " (~ #{took} seconds)\n"
-    rag
+    if @language.runnable?
+      vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
+      t1 = Time.now
+      rag = red_amber_green
+      t2 = Time.now
+      took = ((t2 - t1) / 3).round(2)
+      vputs " (~ #{took} seconds)\n"
+      rag
+    end
   end
 
 private
@@ -45,7 +49,7 @@ private
         :green => 'thenReturn(7)'
       }
     end
-    
+
     { :red => '6 * 9',
       :amber => '6 * 9typo',
       :green => '6 * 7'
@@ -132,8 +136,16 @@ private
     {
       :disk => OsDisk.new,
       :git => Git.new,
-      :runner => HostTestRunner.new ### TODO: Change to DockerTestRunner
+      :runner => runner
     }
+  end
+
+  def runner
+    if Docker.installed?
+      DockerTestRunner.new
+    else
+      DummyTestRunner.new
+    end
   end
 
   def dojo
