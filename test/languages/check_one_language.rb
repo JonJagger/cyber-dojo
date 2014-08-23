@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/one_language_checker'
 
 def show_use(message = "")
   puts
-  puts "USE: ruby check_language.rb [language]"
+  puts "USE: ruby check_one_language.rb [language]"
   puts "   ERROR: #{message}" if message != ""
   puts
 end
@@ -22,4 +22,6 @@ if !File.directory?(root_path + '/languages/' + language)
   exit
 end
 
-OneLanguageChecker.new(root_path,"noisy").check(language)
+rag = OneLanguageChecker.new(root_path+'/',"noisy").check(language)
+state = rag = ['red','amber','green']
+puts "#{language} --> #{rag} ==> #{state}"

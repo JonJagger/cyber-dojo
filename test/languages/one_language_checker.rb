@@ -5,23 +5,15 @@ class OneLanguageChecker
 
   def initialize(root_path, option)
     @root_path = root_path
-    if @root_path[-1] != '/'
-      @root_path += '/'
-    end
     @verbose = (option == 'noisy')
     @max_duration = 60
   end
 
-  def check(
-        language,
-        installed_and_working = [ ],
-        not_installed = [ ],
-        installed_but_not_working = [ ]
-    )
+  def check(language)
     @language = language
-    @language_dir = @root_path + '/languages/' + language + "/"
+    @language_dir = @root_path + 'languages/' + language + '/'
 
-    print "  #{language} " + ('.' * (35-language.to_s.length))
+    vputs "  #{language} " + ('.' * (35-language.to_s.length))
 
     @manifest_filename = @language_dir + 'manifest.json'
     @manifest = JSON.parse(IO.read(@manifest_filename))
@@ -29,66 +21,64 @@ class OneLanguageChecker
     t1 = Time.now
     rag = red_amber_green
     t2 = Time.now
-    print " #{rag.inspect} "
     took = ((t2 - t1) / 3).round(2)
-    if rag == ['red','amber','green']
-      installed_and_working << language
-      print "installed and working"
-    elsif rag == ['amber', 'amber', 'amber']
-      not_installed << language
-      print " not installed"
-    else
-      installed_but_not_working << language
-      print "installed but not working"
-    end
-    print " (~ #{took} seconds)\n"
-    took
+    vputs " (~ #{took} seconds)\n"
+    rag
   end
 
 private
 
-  def filename_42_exists?
-    filename_42 != ""
+  def filename_6times9_exists?
+    filename_6times9 != ""
   end
 
-  def filename_42
+  def filename_6times9
     filenames = visible_filenames.select { |visible_filename|
-      IO.read(@language_dir + visible_filename).include? '42'
+      IO.read(@language_dir + visible_filename).include? '6 * 9'
     }
     if filenames == [ ]
-      message = alert + " no 42-file"
-      puts message
+      # If any found hard-code the correct 6*9 file
+      message = alert + " no '6 * 9' file found"
+      vputs message
       return ""
     end
     if filenames.length > 1
-      message = alert + " multiple 42-files " + filenames.inspect
-      puts message
+      message = alert + " multiple '6 * 9' files " + filenames.inspect
+      vputs message
       return ""
     end
-    print "."
+    vputs "."
     filenames[0]
   end
 
   def red_amber_green
-    filename = filename_42
-      red = language_test(filename, 'red', '42')
-    amber = language_test(filename, 'amber', '4typo2')
-    green = language_test(filename, 'green', '54')
+    filename = filename_6times9
+      red = language_test(filename, 'red', '6 * 9')
+    amber = language_test(filename, 'amber', '6typo * 9typo')
+    green = language_test(filename, 'green', '6 * 7')
     [ red, amber, green ]
   end
 
   def language_test(filename, expected_colour, replacement)
-    kata = make_kata(@language, 'Yahtzee')
+
+    # NB: This works by creating a new kata for each
+    #     red/amber/green test. This is needlessly slow.
+    #     Just make one kata, and then verify
+    #     o) its starts tests red
+    #     o) s/6*9/6*7/ tests green
+    #     o) s/6*9/s345 * 9345/ tests amber
+
+    kata = make_kata(@language, 'Fizz_Buzz')
     avatar = kata.start_avatar
     visible_files = avatar.visible_files
     test_code = visible_files[filename]
-    visible_files[filename] = test_code.sub('42', replacement)
+    visible_files[filename] = test_code.sub('6 * 9', replacement)
 
-    if @verbose
-      puts "\n\n<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>"
-      puts visible_files[filename]
-      puts "</test_code>"
-    end
+    vputs [
+      "<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>",
+      visible_files[filename],
+      "</test_code>"
+    ].join("\n")
 
     delta = {
       :changed => [filename],
@@ -96,14 +86,17 @@ private
       :deleted => [ ],
       :new => [ ]
     }
-    output = run_test(delta, avatar, visible_files, @max_duration)
+
+    traffic_lights,new_files,filenames_to_delete =
+      avatar.test(delta, visible_files, time_now, @max_duration)
+
     colour = avatar.traffic_lights.last['colour']
 
-    if @verbose
-      puts "<output>"
-      puts output
-      puts "</output>\n\n"
-    end
+    vputs [
+      "<output>",
+      visible_files['output'],
+      "</output>"
+    ].join("\n")
 
     colour
   end
@@ -114,54 +107,30 @@ private
     @manifest['visible_filenames'] || [ ]
   end
 
-  def support_filenames
-    @manifest['support_filenames'] || [ ]
-  end
-
-  def unit_test_framework
-    @manifest['unit_test_framework'] || [ ]
-  end
-
   def alert
-    "\n>>>>>>>#{@language}<<<<<<<\n"
+    "\n>>>#{@language}<<\n"
   end
 
 private
 
+  def vputs(message)
+    puts message if @verbose
+  end
+
   def dojo
-    Thread.current[:disk]   ||= Disk.new
-    Thread.current[:git]    ||= Git.new
-    Thread.current[:runner] ||= HostRunner.new
-    Dojo.new(@root_path,'json')
+    externals = {
+      :disk => Disk.new,
+      :git => Git.new,
+      :runner => HostRunner.new
+    }
+    ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
+    Dojo.new(@root_path,externals)
   end
 
   def make_kata(language_name, exercise_name)
-    language = dojo.language(language_name)
-    manifest = {
-      :created => make_time(Time.now),
-      :id => Uuid.new.to_s,
-      :language => language.name,
-      :exercise => exercise_name,
-      :visible_files => language.visible_files,
-      :unit_test_framework => language.unit_test_framework,
-      :tab_size => language.tab_size
-    }
-    manifest[:visible_files]['output'] = ''
-    manifest[:visible_files]['instructions'] = 'practice'
-    dojo.create_kata(manifest)
-  end
-
-  def make_time(at)
-    [at.year, at.month, at.day, at.hour, at.min, at.sec]
-  end
-
-  def run_test(delta, avatar, visible_files, timeout)
-    avatar.sandbox.write(delta, visible_files)
-    output = avatar.sandbox.test(timeout)
-    traffic_light = OutputParser::parse(avatar.kata.language.unit_test_framework, output)
-    avatar.save_traffic_light(traffic_light, make_time(Time.now))
-    avatar.save_visible_files(visible_files)
-    output
+    language = dojo.languages[language_name]
+    exercise = dojo.exercises[exercise_name]
+    dojo.katas.create_kata(language, exercise)
   end
 
 end

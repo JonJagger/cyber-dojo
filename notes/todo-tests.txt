@@ -18,6 +18,11 @@ Each language should have a (docker running) test that confirms it
 This is similar to what I did in
 test/installation/check_language.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+In test/integration
+  have a check_one_language_manifest.rb and
+  test_all_languages_manifests.rb
+  Use the former in language_manifest.md
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 tests/run_all.sh should save the coverage stats table
 into coverage.txt so it is automatically part of git repo.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
