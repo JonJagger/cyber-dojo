@@ -36,7 +36,7 @@
 # (4) ???? interesting. Gather examples...
 #
 
-require File.dirname(__FILE__) + '/lib_domain'
+require_relative 'lib_domain'
 
 $stats =
 {
@@ -112,12 +112,10 @@ def show_diff_stats(n)
       from_to_stats << [mean,[from,to],count]
     end
   end
-
   puts
   from_to_stats.sort.each do |mean,key,count|
     printf("%7.2f %6s->%6s \t %6d\n", mean, key[0], key[1], count)
   end
-
   puts
   light_count = from_to_stats.collect{|a| a[2]}.inject(:+)
   lights_per_kata = light_count.to_f / n

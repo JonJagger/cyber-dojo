@@ -1,28 +1,21 @@
+#!/usr/bin/env ruby
 
-installed_and_working = [ ]
-not_installed = [ ]
-installed_but_not_working = [ ]
+require_relative '../cyberdojo_test_base'
+require_relative 'one_language_checker'
 
-languages = Dir.entries(root_path + '/languages').select { |name|
-  name != '.' and name != '..'
-}
+class AllLanguagesTests < CyberDojoTestBase
 
-# these three are used for mechanism_tests.rb
-languages -= ['Ruby-installed-and-working']
-languages -= ['Ruby-not-installed']
-languages -= ['Ruby-installed-but-not-working']
-checker = OneLanguageChecker.new(root_path,"quiet")
+  test 'red-amber-green initial 6*9 state' do
+    root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
+    checker = OneLanguageChecker.new(root_path,"quiet")
+    languages = Dir.entries(root_path + '/languages').select { |name|
+      name != '.' and name != '..'
+      # this gets base-language dirs too
+    }
+    languages.sort.each do |language|
+      #rag = checker.check(language)
+      puts "testing #{language}"
+    end
+  end
 
-languages.sort.each do |language|
-  took = checker.check(
-    language,
-    installed_and_working,
-    not_installed,
-    installed_but_not_working
-  )
 end
-
-puts "\nSummary...."
-puts '            not_installed:' + not_installed.inspect
-puts '    installed-and-working:' + installed_and_working.inspect
-puts 'installed-but-not-working:' + installed_but_not_working.inspect

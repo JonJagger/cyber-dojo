@@ -106,7 +106,7 @@ private
     {
       :disk => OsDisk.new,
       :git => Git.new,
-      :runner => HostTestRunner.new
+      :runner => HostTestRunner.new ### TODO: Change to DockerTestRunner
     }
   end
 

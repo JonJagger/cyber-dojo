@@ -2,7 +2,26 @@
 
 # A ruby script to display counts of katas by size
 
-require File.dirname(__FILE__) + '/lib_domain'
+require_relative 'lib_domain'
+
+def explain_output
+  lines = [
+    '',
+    'traffic-light statistics',
+    '',
+    '    34 2 [5,6]',
+    '',
+    ' means there were 2 katas with 34 traffic lights',
+    ' and those 2 katas had 5 and 6 avatars respectively.',
+    ''
+  ]
+  lines.each{|line| puts '# ' + line}
+end
+
+if ARGV[0] == 'help'
+  explain_output
+  exit
+end
 
 $stats = { }
 
@@ -13,25 +32,15 @@ def collect_light_stats(kata)
 end
 
 def show_light_stats
+  puts
+  puts
   $stats.sort.each do |count,tallies|
     printf("%3d %3d ",count, tallies.length)
     print tallies.sort.inspect if tallies.length <= 20
-    printf("\n")
+    puts
   end
 end
 
-def explain_output
-  puts
-  puts
-  puts '# Explanation'
-  puts '#'
-  puts '#    34 2 [5,6]'
-  puts '#'
-  puts '# means there were 2 katas with 34 traffic lights'
-  puts '# and those 2 katas had 5 and 6 avatars respectively.'
-  puts '#'
-  puts
-end
 
 puts
 dot_count = 0
@@ -47,6 +56,5 @@ dojo.katas.each do |kata|
   end
 end
 
-explain_output
 show_light_stats
 mention(exceptions)
