@@ -2,7 +2,7 @@
 
 require_relative '../cyberdojo_test_base'
 
-class LanguageTests < CyberDojoTestBase
+class LanguagesManifestsTests < CyberDojoTestBase
 
   def setup
     super

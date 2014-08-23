@@ -245,7 +245,7 @@ See [Misc](md/misc.md) for `manifest.json` details.
 ### check the language's manifest.json file
 ```bash
 $ cd /var/www/cyberdojo/test/integration
-$ ./test_languages.rb
+$ ./test_languages_manifests.rb
 ```
 
 
