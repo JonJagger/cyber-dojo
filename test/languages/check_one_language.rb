@@ -22,6 +22,6 @@ if !File.directory?(root_path + '/languages/' + language)
   exit
 end
 
-rag = OneLanguageChecker.new(root_path+'/',"noisy").check(language)
-state = rag = ['red','amber','green']
+rag = OneLanguageChecker.new(root_path+'/',"quiet").check(language)
+state = rag == ['red','amber','green'] ? "PASS" : "FAIL"
 puts "#{language} --> #{rag} ==> #{state}"
