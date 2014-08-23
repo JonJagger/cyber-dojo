@@ -1,42 +1,16 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-REFACTORING-DOJOS
-  Yahtzee
-    C#     8BD04E035C elephant 1  FAILED ON cyber-dojo.org
-                                  manifest :language=>"C#"  patched to "C#-NUnit"
-    Java   9D5B580C30 deer 1      OK
-    C++    76DD58DE08 frog 1      FAILED on cyber-dojo.org
-                                  manifest :language='C++' patched to 'C++-assert'
-    Python 5C5B71C765 hippo 37    FAILED ON cyber-dojo.org
-                                  manifest :language='Python' patched to 'Python-unittest'
-
-  Tennis
-    C#     672E047F5D buffalo 8   FAILED ON cyber-dojo.org
-                                  manifest :language=>"C#"  patched to "C#-NUnit"
-    Ruby   3367E4B0E9 raccoon 4   FAILED ON cyber-dojo.org
-                                  manifest :language=>"Ruby" patched to "Ruby-TestUnit"
-    Java   B22DCD17C3 buffalo 11  OK
-    C++    A06DCDA217 wolf 5      OK
-    Python 435E5C1C88 moose 5     FAILED ON cyber-dojo.org
-                                  manifest :language=>'Python' patched to 'Python-unittest'
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CUT FROM README (AFFECTED BY DOCKER)
-Check that running cyber-dojo.sh behaves as required:
-  #sudo -u www-data ./cyber-dojo.sh
-or maybe
-  #strace sudo -u www-data ./cyber-dojo.sh
-
-You can test the setup of a new language using a ruby script.
-For example: if the new language is Lisp installed
-at cyberdojo/test/cyberdojo/languages/Lisp then
-  #cd test/installation
-  #ruby check_language.rb ../cyberdojo Lisp
-Once this passes make it live by moving it to the live languages folder:
-#mv cyberdojo/test/cyberdojo/languages/Lisp cyberdojo/languages/Lisp
+EXERCISES-vs-LANGUAGES
+The more I think about it, the more it makes sense to refactor
+this so that a language can have specific exercises. This will
+simplify a languages manifest.json file. Specifically, a
+languages' manifest.json will keep all its parameters but its
+visible_files entries will consist only of cyber-dojo.sh
+(which suggests it can be dropped).
+Then an exercise will have its own manifest.json file.
+So a reasonable first step is to refactor the plain
+exercises so they too have a manifest. Which will always
+(at the moment) be just 'instructions'.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 RUBY-QUESTION
   Can .entries take a parameter in general? In combination with .each
@@ -54,7 +28,7 @@ MISC
   4048EC
   B049D5
   89F073
-  These are all in downloads/ folder on cyber-dojo.com and need untarring.
+  These are all in downloads/ folder on cyber-dojo.org and need untarring.
   They won't unzip (tar -ztvf) Says
     gzip: stdin: not in gzip format
     tar: Child returned status 1
