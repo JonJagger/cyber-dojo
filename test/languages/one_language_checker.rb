@@ -22,15 +22,46 @@ class OneLanguageChecker
 
 private
 
+  def pattern_6times9
+    # Hard-code 6*9 pattern for special cases
+    if @language.name == 'Clojure-.test'
+      return {
+        :red => '* 6 9',
+        :amber => '* 6 9typo',
+        :green => '* 6 7'
+      }
+    end
+    if @language.name == 'Java-1.8_Cucumber'
+      return {
+        :red => '6 times 9',
+        :amber => '6 times 9typo',
+        :green => '6 times 7'
+      }
+    end
+    if @language.name == 'Java-1.8_Mockito' || @language.name == 'Java-1.8_Powermockito'
+      return {
+        :red => 'thenReturn(9)',
+        :amber => 'thenReturn(9typo)',
+        :green => 'thenReturn(7)'
+      }
+    end
+    
+    { :red => '6 * 9',
+      :amber => '6 * 9typo',
+      :green => '6 * 7'
+    }
+  end
+
   def red_amber_green
-    filename = filename_6times9
-      red = language_test(filename, 'red', '6 * 9')
-    amber = language_test(filename, 'amber', '6typo * 9typo')
-    green = language_test(filename, 'green', '6 * 7')
+    pattern = pattern_6times9
+    filename = filename_6times9(pattern[:red])
+      red = language_test(filename, 'red',   pattern[:red], pattern[:red])
+    amber = language_test(filename, 'amber', pattern[:red], pattern[:amber])
+    green = language_test(filename, 'green', pattern[:red], pattern[:green])
     [ red, amber, green ]
   end
 
-  def language_test(filename, expected_colour, replacement)
+  def language_test(filename, expected_colour, from, to)
     # NB: This works by creating a new kata for each
     #     red/amber/green test. This is needlessly slow.
     #     Just make one kata, and then verify
@@ -42,7 +73,7 @@ private
     avatar = kata.start_avatar
     visible_files = @language.visible_files
     test_code = visible_files[filename]
-    visible_files[filename] = test_code.sub('6 * 9', replacement)
+    visible_files[filename] = test_code.sub(from, to)
 
     vputs [
       "<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>",
@@ -71,22 +102,17 @@ private
 
   #- - - - - - - - - - - - - - - - - - - - -
 
-  def filename_6times9_exists?
-    filename_6times9 != ""
-  end
-
-  def filename_6times9
+  def filename_6times9(pattern)
     filenames = @language.visible_filenames.select { |visible_filename|
-      IO.read(@language.path + visible_filename).include? '6 * 9'
+      IO.read(@language.path + visible_filename).include? pattern
     }
     if filenames == [ ]
-      # If any found hard-code the correct 6*9 file
-      message = alert + " no '6 * 9' file found"
+      message = alert + " no '#{pattern}' file found"
       vputs message
       return ""
     end
     if filenames.length > 1
-      message = alert + " multiple '6 * 9' files " + filenames.inspect
+      message = alert + " multiple '#{pattern}' files " + filenames.inspect
       vputs message
       return ""
     end

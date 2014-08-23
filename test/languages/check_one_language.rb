@@ -9,7 +9,7 @@ def show_use(message = "")
   puts
 end
 
-root_path = File.absolute_path(File.dirname(__FILE__) + '/../../')
+root_path = File.dirname(__FILE__) + '/../../'
 language = ARGV[0]
 
 if language == nil
@@ -22,6 +22,6 @@ if !File.directory?(root_path + '/languages/' + language)
   exit
 end
 
-rag = OneLanguageChecker.new(root_path+'/',"quiet").check(language)
+rag = OneLanguageChecker.new(root_path,"quiet").check(language)
 state = rag == ['red','amber','green'] ? "PASS" : "FAIL"
 puts "#{language} --> #{rag} ==> #{state}"
