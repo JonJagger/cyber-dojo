@@ -1,18 +1,5 @@
-CYBER_DOJO_ROOT = File.absolute_path(File.dirname(__FILE__) + '/../../')
-# needed because app/lib/OsDisk requires app/lib/OsDir
-$LOAD_PATH.unshift(CYBER_DOJO_ROOT + '/lib')
 
-require 'JSON'
-require CYBER_DOJO_ROOT + "/app/models/Avatar"
-require CYBER_DOJO_ROOT + "/app/models/Dojo"
-require CYBER_DOJO_ROOT + "/app/models/Kata"
-require CYBER_DOJO_ROOT + "/app/models/Language"
-require CYBER_DOJO_ROOT + "/app/models/Sandbox"
-require CYBER_DOJO_ROOT + "/app/lib/OutputParser"
-require CYBER_DOJO_ROOT + "/lib/OsDisk"
-require CYBER_DOJO_ROOT + "/lib/Git"
-require CYBER_DOJO_ROOT + "/lib/HostRunner"
-require CYBER_DOJO_ROOT + "/lib/Uuid"
+require_relative '../all'
 
 class OneLanguageChecker
 
