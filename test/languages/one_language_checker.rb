@@ -10,8 +10,10 @@ class OneLanguageChecker
   end
 
   def check(language_name)
-    # if running on a Docker server, returns [red,amber,green] state
-    # else returns nil
+    # if running on a Docker server
+    #    return [red,amber,green] state
+    # else
+    #    return nil
     @language = dojo.languages[language_name]
     if @language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
@@ -26,52 +28,25 @@ class OneLanguageChecker
 
 private
 
-  def pattern_6times9
-    # Hard-code 6*9 pattern for special cases
-    if @language.name == 'Clojure-.test'
-      return {
-        :red => '* 6 9',
-        :amber => '* 6 9typo',
-        :green => '* 6 7'
-      }
-    end
-    if @language.name == 'Java-1.8_Cucumber'
-      return {
-        :red => '6 times 9',
-        :amber => '6 times 9typo',
-        :green => '6 times 7'
-      }
-    end
-    if @language.name == 'Java-1.8_Mockito' || @language.name == 'Java-1.8_Powermockito'
-      return {
-        :red => 'thenReturn(9)',
-        :amber => 'thenReturn(9typo)',
-        :green => 'thenReturn(7)'
-      }
-    end
-
-    { :red => '6 * 9',
-      :amber => '6 * 9typo',
-      :green => '6 * 7'
-    }
-  end
-
   def red_amber_green
-    pattern = pattern_6times9
-    filename = filename_6times9(pattern[:red])
-      red = language_test(filename, 'red',   pattern[:red], pattern[:red])
-    amber = language_test(filename, 'amber', pattern[:red], pattern[:amber])
-    green = language_test(filename, 'green', pattern[:red], pattern[:green])
-    [ red, amber, green ]
-  end
-
-  def language_test(filename, expected_colour, from, to)
     # NB: This works by creating a new kata for each
     #     red/amber/green test. This is needlessly slow.
     #     Just make one kata, and then verify
     #     o) its starts tests red
     #     o) s/6*9/6*7/ tests green
     #     o) s/6*9/s345 * 9345/ tests amber
+    [
+      language_test(:red),
+      language_test(:amber),
+      language_test(:green),
+    ]
+  end
+
+  def language_test(colour)
+    pattern = pattern_6times9
+    filename = filename_6times9(pattern[:red])
+    from = pattern[:red]
+    to = pattern[colour]
     exercise = dojo.exercises['Fizz_Buzz']
     kata = dojo.katas.create_kata(@language, exercise)
     avatar = kata.start_avatar
@@ -80,7 +55,7 @@ private
     visible_files[filename] = test_code.sub(from, to)
 
     vputs [
-      "<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{expected_colour}'>",
+      "<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{colour}'>",
       visible_files[filename],
       "</test_code>"
     ].join("\n")
@@ -93,7 +68,6 @@ private
     }
 
     traffic_lights,_,_ = avatar.test(delta, visible_files)
-    colour = traffic_lights.last['colour']
 
     vputs [
       "<output>",
@@ -101,10 +75,29 @@ private
       "</output>"
     ].join("\n")
 
-    colour
+    traffic_lights.last['colour']
   end
 
-  #- - - - - - - - - - - - - - - - - - - - -
+  def pattern_6times9
+    case (@language.name)
+      when 'Clojure-.test'
+        then make_pattern('* 6 9')
+      when 'Java-1.8_Cucumber'
+        then make_pattern('6 times 9')
+      when 'Java-1.8_Mockito',
+           'Java-1.8_Powermockito'
+        then make_pattern('thenReturn(9)')
+      else
+        make_pattern('6 * 9')
+    end
+  end
+
+  def make_pattern(base)
+    { :red => base,
+      :amber => base.sub('9', '9typo'),
+      :green => base.sub('9', '7')
+    }
+  end
 
   def filename_6times9(pattern)
     filenames = @language.visible_filenames.select { |visible_filename|
