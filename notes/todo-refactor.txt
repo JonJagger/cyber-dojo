@@ -12,6 +12,7 @@ install J?
 install Java-TestNG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move latest blogspot entry about cyber-dojo diff data onto
 blog.cyber-dojo.org
@@ -42,9 +43,6 @@ I have tarred it into its own .tgz file (on cyber-dojo.org)
 tennis_python_refactoring_kata.tgz
 When I have a better internet connection (in China) I will
 recreate the kata from the 435E5C1C88/moose git repo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-put manifest.json md file into its own md file
-called language's manifest.json format (not in misc.md)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/parse_NAME/colour_of_NAME/
 in app/lib/OutputParser.rb (rename to OutputColour.rb)
