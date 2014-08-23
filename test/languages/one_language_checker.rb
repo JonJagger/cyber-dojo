@@ -9,15 +9,9 @@ class OneLanguageChecker
     @verbose = (option == 'noisy')
   end
 
-  def check(language)
-    @language = language
-    @language_dir = @root_path + 'languages/' + language + '/'
-
-    vputs "  #{language} " + ('.' * (35-language.to_s.length))
-
-    @manifest_filename = @language_dir + 'manifest.json'
-    @manifest = JSON.parse(IO.read(@manifest_filename))
-
+  def check(language_name)
+    @language = dojo.languages[language_name]
+    vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
     t1 = Time.now
     rag = red_amber_green
     t2 = Time.now
@@ -28,29 +22,6 @@ class OneLanguageChecker
 
 private
 
-  def filename_6times9_exists?
-    filename_6times9 != ""
-  end
-
-  def filename_6times9
-    filenames = visible_filenames.select { |visible_filename|
-      IO.read(@language_dir + visible_filename).include? '6 * 9'
-    }
-    if filenames == [ ]
-      # If any found hard-code the correct 6*9 file
-      message = alert + " no '6 * 9' file found"
-      vputs message
-      return ""
-    end
-    if filenames.length > 1
-      message = alert + " multiple '6 * 9' files " + filenames.inspect
-      vputs message
-      return ""
-    end
-    vputs "."
-    filenames[0]
-  end
-
   def red_amber_green
     filename = filename_6times9
       red = language_test(filename, 'red', '6 * 9')
@@ -60,19 +31,16 @@ private
   end
 
   def language_test(filename, expected_colour, replacement)
-
     # NB: This works by creating a new kata for each
     #     red/amber/green test. This is needlessly slow.
     #     Just make one kata, and then verify
     #     o) its starts tests red
     #     o) s/6*9/6*7/ tests green
     #     o) s/6*9/s345 * 9345/ tests amber
-
-    language = dojo.languages[@language]
     exercise = dojo.exercises['Fizz_Buzz']
-    kata = dojo.katas.create_kata(language, exercise)
+    kata = dojo.katas.create_kata(@language, exercise)
     avatar = kata.start_avatar
-    visible_files = language.visible_files
+    visible_files = @language.visible_files
     test_code = visible_files[filename]
     visible_files[filename] = test_code.sub('6 * 9', replacement)
 
@@ -90,7 +58,6 @@ private
     }
 
     traffic_lights,_,_ = avatar.test(delta, visible_files)
-
     colour = traffic_lights.last['colour']
 
     vputs [
@@ -102,17 +69,34 @@ private
     colour
   end
 
-private
+  #- - - - - - - - - - - - - - - - - - - - -
 
-  def visible_filenames
-    @manifest['visible_filenames'] || [ ]
+  def filename_6times9_exists?
+    filename_6times9 != ""
+  end
+
+  def filename_6times9
+    filenames = @language.visible_filenames.select { |visible_filename|
+      IO.read(@language.path + visible_filename).include? '6 * 9'
+    }
+    if filenames == [ ]
+      # If any found hard-code the correct 6*9 file
+      message = alert + " no '6 * 9' file found"
+      vputs message
+      return ""
+    end
+    if filenames.length > 1
+      message = alert + " multiple '6 * 9' files " + filenames.inspect
+      vputs message
+      return ""
+    end
+    vputs "."
+    filenames[0]
   end
 
   def alert
-    "\n>>>#{@language}<<\n"
+    "\n>>>#{@language.name}<<\n"
   end
-
-private
 
   def vputs(message)
     puts message if @verbose
