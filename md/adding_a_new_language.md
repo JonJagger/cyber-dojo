@@ -124,7 +124,7 @@ Each `manifest.json` file contains an ruby object in JSON format
   "tab_size": 4
 }
 ```
-See [Language Manifest](md/language_manifest.md) for `manifest.json` details.
+See [Language Manifest](language_manifest.md) for `manifest.json` details.
 
 
 ### create the initial files
