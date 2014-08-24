@@ -2,6 +2,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test_all_languages.rb on Docker server
+failing. Do one at a time with option=noisy
 {
  "C++-Catch"=>["amber", "amber", "amber"],
  "Clojure-.test"=>["amber", "amber", "amber"],

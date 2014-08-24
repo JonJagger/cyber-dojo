@@ -3,10 +3,9 @@ require_relative '../all'
 
 class OneLanguageChecker
 
-  def initialize(root_path, option)
+  def initialize(root_path, verbose)
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
-    @root_path = root_path
-    @verbose = (option == 'noisy')
+    @root_path,@verbose = root_path,verbose
   end
 
   def check(language_name)
@@ -15,7 +14,7 @@ class OneLanguageChecker
     # else
     #    return nil
     @language = dojo.languages[language_name]
-    if @language.runnable?
+    if true #@language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
       t1 = Time.now
       rag = red_amber_green
@@ -55,7 +54,7 @@ private
     visible_files[filename] = test_code.sub(from, to)
 
     vputs [
-      "<test_code id='#{kata.id}' avatar='#{avatar.name}' colour='#{colour}'>",
+      "<test_code id='#{kata.id}' avatar='#{avatar.name}' expected_colour='#{colour}'>",
       visible_files[filename],
       "</test_code>"
     ].join("\n")
@@ -75,8 +74,15 @@ private
       "</output>"
     ].join("\n")
 
+    rag = traffic_lights.last['colour']
+
+    vputs [
+      "<test_code actual_colour='#{rag}'>",
+      "</test_code>"
+    ].join("\n")
+    
     print '.'
-    traffic_lights.last['colour']
+    rag
   end
 
   def pattern_6times9
