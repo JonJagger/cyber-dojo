@@ -37,6 +37,8 @@ private
     #     o) its starts tests red
     #     o) s/6*9/6*7/ tests green
     #     o) s/6*9/s345 * 9345/ tests amber
+    # NB: time taken should be from [test] being pressed
+    #     to results appearing. Not having to create 3 katas...
     [
       language_test(:red),
       language_test(:amber),
@@ -77,8 +79,7 @@ private
     }
 
     now = time_now
-    limit = 15
-    limit = 30 if @language.name === 'Scala-scalatest'
+    limit = 60
     traffic_lights,_,_ = avatar.test(delta, visible_files, now, limit)
 
     vputs [
