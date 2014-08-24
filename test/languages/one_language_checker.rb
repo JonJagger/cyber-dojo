@@ -46,9 +46,6 @@ private
 
   def language_test(colour)
     pattern = pattern_6times9
-
-puts pattern.inspect
-
     filename = filename_6times9(pattern[:red])
     from = pattern[:red]
     to = pattern[colour]
