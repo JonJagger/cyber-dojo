@@ -73,6 +73,12 @@ module OutputParser
     return :amber
   end
 
+  def self.parse_java_cucumber(output)
+    return :red   if /FAILURES!!!/.match(output)
+    return :green if /OK \((\d*) tests\)/.match(output)
+    return :amber
+  end
+
   def self.parse_cassert(output)
     return :red   if /(.*)Assertion(.*)failed./.match(output)
     return :green if /(All|\d*) tests passed/.match(output)
