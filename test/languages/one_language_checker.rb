@@ -99,9 +99,6 @@ private
   end
 
   def pattern_6times9
-
-puts @language.name
-
     case (@language.name)
       when 'Clojure-.test'
         then make_pattern('* 6 9')

@@ -1,17 +1,10 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test_all_languages.rb on Docker server - one still failing
-{
- "Java-1.8_Cucumber"=>["red", "red", "green"],
-}
-Hmmm. The problem here is that '6 times 9' is in Hiker.feature
-and no amount of sub() on that should produce an amber.
-An amber is really a syntax error in an actual java file.
-So I think I will need to create a new unit_test_framework
-name in the manifest.json.
-Done that. But I'm still left with the need to edit
-a different file to get an amber...
+test_all_languages.rb
+Has hacked in support for Java-1.8_Cucumber
+To do properly I need to be able to string-sub different
+files for red/amber/green.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Couple of tests failing in these...
   integration/LightsTests
