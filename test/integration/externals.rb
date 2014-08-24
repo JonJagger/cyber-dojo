@@ -1,7 +1,7 @@
 
 module Externals
 
-  def externals(runner = HostTestRunner.new,
+  def externals(runner = runner,
                 git    = Git.new,
                 disk   = OsDisk.new)
     externals = {
