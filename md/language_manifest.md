@@ -31,8 +31,8 @@ The name of the docker image in which `cyber-dojo.sh` is run.
 <br>Required.
 
 
-"visible_filenames": [ strings ]
---------------------------------
+"visible_filenames": [ string, string, ... ]
+--------------------------------------------
 Filenames that will be visible in the browser's editor at startup.
 Each of these files must exist in the languages' directory.
 The filename `cyber-dojo.sh` must be present as a `"visible_filenames"` entry
@@ -47,8 +47,8 @@ to be installed. If `cyber-dojo.sh` runs `javac` to compile java files then
 <br>Required.
 
 
-"support_filenames": [ strings ]
---------------------------------
+"support_filenames": [ string, string, ... ]
+--------------------------------------------
 The names of necessary supporting files which are *not* visible
 in browser's editor at startup. Each of these files must
 exist in the languages' directory. For example, junit .jar files or
@@ -60,8 +60,8 @@ Despite the name `"support_filenames"` you can symlink a folder if required.
 <br>Not required if you do not need support files. Defaults to an empty array.
 
 
-"highlight_filenames": [ strings ]
-----------------------------------
+"highlight_filenames": [ string, string, ... ]
+----------------------------------------------
 Filenames whose appearance are to be highlighted in the browser.
 This can be useful if you have many `"visible_filenames"` and want
 to mark which files form the focus of the practice.
