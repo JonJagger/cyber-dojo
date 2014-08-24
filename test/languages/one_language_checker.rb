@@ -5,7 +5,8 @@ class OneLanguageChecker
 
   def initialize(root_path, verbose)
     ENV['CYBERDOJO_TEST_ROOT_DIR'] = 'true'
-    @root_path,@verbose = root_path,verbose
+    @root_path = File.absolute_path(root_path) + '/'
+    @verbose = verbose
   end
 
   def check(language_name)

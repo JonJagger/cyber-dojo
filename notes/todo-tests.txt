@@ -2,7 +2,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test_all_languages.rb on Docker server
-failing. Do one at a time with option=noisy
+failing. Do one at a time with verbose=true
+I think the problem is that root_path is not absolute.
 {
  "C++-Catch"=>["amber", "amber", "amber"],
  "Clojure-.test"=>["amber", "amber", "amber"],
