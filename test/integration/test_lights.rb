@@ -48,7 +48,7 @@ class LightsTests < CyberDojoTestBase
 
     lights,_,_ = avatar.test(delta, visible_files, now = time_now)
     output = visible_files['output']
-    assert output.include?('OK (1 test)')
+    assert output.include?('OK (1 test)'), output
     assert_equal 1, lights.count
     assert_equal 'green', lights[-1]['colour']
     assert_equal now, lights[-1]['time']
