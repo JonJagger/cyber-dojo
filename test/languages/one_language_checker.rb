@@ -91,6 +91,7 @@ private
       when 'Clojure-.test'
         then make_pattern('* 6 9')
       when 'Java-1.8_Cucumber'
+      when 'Ruby-Cucumber'
         then make_pattern('6 times 9')
       when 'Java-1.8_Mockito',
            'Java-1.8_Powermockito'

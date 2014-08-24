@@ -1,4 +1,4 @@
 
-def answer
-  6 * 9
+def answer(lhs,rhs)
+  lhs * rhs
 end
