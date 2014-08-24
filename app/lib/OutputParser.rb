@@ -131,7 +131,7 @@ module OutputParser
     end
   end
 
-  def self.parse_ruby_approvals(output)
+  def self.parse_ruby_approval(output)
     return :amber if /(SyntaxError)/.match(output)
     return :amber if /NameError/.match(output)
     return :amber if /LoadError/.match(output)

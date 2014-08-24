@@ -3,7 +3,6 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test_all_languages.rb on Docker server - some still failing.
 {
- "Go-testing"=>["red", "red", "green"],
  "Ruby-Approval"=>["amber", "amber", "green"],
 
  "Java-1.8_Cucumber"=>["red", "red", "green"],
