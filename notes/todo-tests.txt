@@ -1,26 +1,15 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test_all_languages.rb on Docker server
-failing. Do one at a time with verbose=true
-I think the problem is that root_path is not absolute.
+test_all_languages.rb on Docker server - some still failing.
 {
- "C++-Catch"=>["amber", "amber", "amber"],
- "Clojure-.test"=>["amber", "amber", "amber"],
- "F#-NUnit"=>["amber", "amber", "amber"],
- "Groovy-JUnit"=>["amber", "amber", "amber"],
- "Groovy-Spock"=>["amber", "amber", "amber"],
- "Java-1.8_Approval"=>["amber", "amber", "amber"],
- "Java-1.8_Cucumber"=>["amber", "amber", "amber"],
- "Java-1.8_JUnit"=>["amber", "amber", "amber"],
- "Java-1.8_Mockito"=>["amber", "amber", "amber"],
- "Java-1.8_Powermockito"=>["amber", "amber", "amber"],
- "Scala-scalatest"=>["amber", "amber", "amber"]
-
  "Go-testing"=>["red", "red", "green"],
+ "Java-1.8_Cucumber"=>["red", "red", "green"],
  "Ruby-Approval"=>["amber", "amber", "green"],
  "Ruby-Cucumber"=>["red", "amber", "red"],
+ "Scala-scalatest"=>["amber", "amber", "amber"]
 }
+Do one at a time with verbose=true
 also
   integration/LightsTests
   app_controllers/DifferControllerTest
