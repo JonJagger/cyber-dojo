@@ -46,6 +46,9 @@ private
 
   def language_test(colour)
     pattern = pattern_6times9
+
+puts pattern.inspect
+
     filename = filename_6times9(pattern[:red])
     from = pattern[:red]
     to = pattern[colour]
@@ -92,11 +95,14 @@ private
   end
 
   def pattern_6times9
+
+puts @language.name
+
     case (@language.name)
       when 'Clojure-.test'
         then make_pattern('* 6 9')
-      when 'Java-1.8_Cucumber'
-      when 'Ruby-Cucumber'
+      when 'Java-1.8_Cucumber',
+           'Ruby-Cucumber'
         then make_pattern('6 times 9')
       when 'Java-1.8_Mockito',
            'Java-1.8_Powermockito'
