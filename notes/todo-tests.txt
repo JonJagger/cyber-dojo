@@ -6,9 +6,6 @@ Has hacked in support for Java-1.8_Cucumber
 To do properly I need to be able to string-sub different
 files for red/amber/green.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Couple of tests failing in these...
-  app_controllers/DifferControllerTest
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/languages/test_languages_manifests.rb and
 test/languages/all_languages.rb
   both select the language names clumsily.
