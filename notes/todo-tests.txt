@@ -1,4 +1,27 @@
 
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+test_all_languages.rb on Docker server
+{
+ "C++-Catch"=>["amber", "amber", "amber"],
+ "Clojure-.test"=>["amber", "amber", "amber"],
+ "F#-NUnit"=>["amber", "amber", "amber"],
+ "Groovy-JUnit"=>["amber", "amber", "amber"],
+ "Groovy-Spock"=>["amber", "amber", "amber"],
+ "Java-1.8_Approval"=>["amber", "amber", "amber"],
+ "Java-1.8_Cucumber"=>["amber", "amber", "amber"],
+ "Java-1.8_JUnit"=>["amber", "amber", "amber"],
+ "Java-1.8_Mockito"=>["amber", "amber", "amber"],
+ "Java-1.8_Powermockito"=>["amber", "amber", "amber"],
+ "Scala-scalatest"=>["amber", "amber", "amber"]
+
+ "Go-testing"=>["red", "red", "green"],
+ "Ruby-Approval"=>["amber", "amber", "green"],
+ "Ruby-Cucumber"=>["red", "amber", "red"],
+}
+also
+  integration/LightsTests
+  app_controllers/DifferControllerTest
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/languages/test_languages_manifests.rb and
 test/languages/all_languages.rb
