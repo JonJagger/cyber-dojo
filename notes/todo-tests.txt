@@ -7,7 +7,6 @@ To do properly I need to be able to string-sub different
 files for red/amber/green.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Couple of tests failing in these...
-  integration/LightsTests
   app_controllers/DifferControllerTest
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test/languages/test_languages_manifests.rb and
