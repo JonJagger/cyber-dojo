@@ -75,6 +75,7 @@ private
       "</output>"
     ].join("\n")
 
+    print '.'
     traffic_lights.last['colour']
   end
 
