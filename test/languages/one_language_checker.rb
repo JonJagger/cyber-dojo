@@ -14,7 +14,7 @@ class OneLanguageChecker
     # else
     #    return nil
     @language = dojo.languages[language_name]
-    if true #@language.runnable?
+    if @language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
       t1 = Time.now
       rag = red_amber_green
@@ -80,7 +80,7 @@ private
       "<test_code actual_colour='#{rag}'>",
       "</test_code>"
     ].join("\n")
-    
+
     print '.'
     rag
   end

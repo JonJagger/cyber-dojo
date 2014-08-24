@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/one_language_checker'
 
 def show_use(message = "")
   puts
-  puts 'USE: ruby check_one_language.rb [language] [verbose]'
+  puts 'USE: check_one_language.rb [<language>] [verbose]'
   puts "   ERROR: #{message}" if message != ''
   puts
 end
