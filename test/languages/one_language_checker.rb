@@ -28,6 +28,8 @@ class OneLanguageChecker
 
 private
 
+  include TimeNow
+
   def red_amber_green
     # NB: This works by creating a new kata for each
     #     red/amber/green test. This is needlessly slow.
@@ -67,7 +69,10 @@ private
       :new => [ ]
     }
 
-    traffic_lights,_,_ = avatar.test(delta, visible_files)
+    now = time_now
+    limit = 15
+    limit = 30 if @language.name === 'Scala-scalatest'
+    traffic_lights,_,_ = avatar.test(delta, visible_files, now, limit)
 
     vputs [
       "<output>",

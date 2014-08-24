@@ -4,7 +4,6 @@
 test_all_languages.rb on Docker server - some still failing.
 {
  "Java-1.8_Cucumber"=>["red", "red", "green"],
- "Ruby-Cucumber"=>["red", "amber", "red"],
  "Scala-scalatest"=>["amber", "amber", "amber"]
 }
 Do one at a time with verbose=true
