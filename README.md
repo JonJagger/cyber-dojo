@@ -6,8 +6,10 @@ cyber-dojo
 
 [Running a Programming Dojo](md/running-a-dojo.md)
   * creating your programming dojo
-    * choose your language,unit-test-framework eg C++,assert
-    * choose your exercise eg Prime Factors
+    * choose your language,unit-test-framework combination
+      eg C++,GoogleTest
+    * choose your exercise
+      eg Prime Factors
   * entering your programming dojo
     * traffic lights
     * red, amber, green
@@ -19,13 +21,12 @@ cyber-dojo
 [Docker Server](md/docker-server.md)
   * running your own docker'd cyber-dojo server
   * overview of how docker language containers work
-  * pulling pre-built docker language containers
-  * adding a new (language + unit test) docker container
-  * adding a new exercise
+  * [adding a new language + unit test](md/adding_a_new_language.md)
+  * [language manifest.json parameters](md/language_manifest.md)
+  * [adding a new exercise](md/adding_a_new_exercise.md)
   * pulling from the cyberdojo github repo
 
 [Misc](md/misc.md)
-  * language manifest.json parameters
   * katas directory structure
   * git repositories
   * disk space
