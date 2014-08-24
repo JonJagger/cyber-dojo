@@ -49,6 +49,13 @@ private
     filename = filename_6times9(pattern[:red])
     from = pattern[:red]
     to = pattern[colour]
+
+    if @language.name === 'Java-1.8_Cucumber' && colour === :amber
+      filename = 'Hiker.java'
+      from = '}'
+      to = '}typo'
+    end
+
     exercise = dojo.exercises['Fizz_Buzz']
     kata = dojo.katas.create_kata(@language, exercise)
     avatar = kata.start_avatar

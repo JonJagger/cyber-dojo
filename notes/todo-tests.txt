@@ -9,7 +9,9 @@ Hmmm. The problem here is that '6 times 9' is in Hiker.feature
 and no amount of sub() on that should produce an amber.
 An amber is really a syntax error in an actual java file.
 So I think I will need to create a new unit_test_framework
-name in the manifest.json
+name in the manifest.json.
+Done that. But I'm still left with the need to edit
+a different file to get an amber...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Couple of tests failing in these...
   integration/LightsTests
