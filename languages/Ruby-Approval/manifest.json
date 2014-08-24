@@ -9,7 +9,7 @@
   ],
   "filename_extension" : ".rb",
   "display_name": "Ruby, Approval",
-  "unit_test_framework": "ruby_rspec",
+  "unit_test_framework": "ruby_approval",
   "image_name": "cyberdojo/ruby-1.9.3_approval",
   "tab_size": 2
 }

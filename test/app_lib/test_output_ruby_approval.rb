@@ -155,7 +155,7 @@ class OutputRubyApprovalTests < CyberDojoTestBase
   #- - - - - - - - - - - - - - - - - - - - - -
 
   def colour_of(output)
-    OutputParser::parse_ruby_approvals(output)
+    OutputParser::parse_ruby_approval(output)
   end
 
 end

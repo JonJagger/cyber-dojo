@@ -73,12 +73,6 @@ module OutputParser
     return :amber
   end
 
-  def self.parse_go_testing(output)
-    return :red   if /FAIL/.match(output)
-    return :green if /PASS/.match(output)
-    return :amber
-  end
-
   def self.parse_cassert(output)
     return :red   if /(.*)Assertion(.*)failed./.match(output)
     return :green if /(All|\d*) tests passed/.match(output)
@@ -104,6 +98,13 @@ module OutputParser
   end
 
   #-------------------------------------------------
+
+  def self.parse_go_testing(output)
+    return :amber if /FAIL(\s*)_\/sandbox \[build failed\]/.match(output)
+    return :red   if /FAIL/.match(output)
+    return :green if /PASS/.match(output)
+    return :amber
+  end
 
   def self.parse_php_unit(output)
     return :amber if /PHP Parse error:/.match(output)
