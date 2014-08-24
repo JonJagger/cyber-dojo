@@ -27,30 +27,31 @@ class DifferControllerTest < ControllerTestBase
     avatar_name = json['avatar_name']
 
     post '/kata/edit', :id => id, :avatar => avatar_name
+    filename = 'hiker.rb'
     post 'kata/run_tests', # 1
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        'cyber-dojo.sh' => 'wibble'
+        filename => 'wibble'
       },
       :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
+        filename => 234234
       },
       :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
+        filename => -4545645678
       }
 
     post 'kata/run_tests', # 2
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        'cyber-dojo.sh' => 'wibble'
+        filename => 'wibble'
       },
       :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
+        filename => -4545645678
       },
       :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
+        filename => -4545645678
       }
 
     get 'differ/diff',
@@ -73,54 +74,47 @@ class DifferControllerTest < ControllerTestBase
     assert_equal 'amber', now_traffic_light['colour'], info
     assert_equal 2, now_traffic_light['number'], info
 
-    assert_equal 'cyber-dojo.sh', diffs[0]['filename'], info
+    assert_equal filename, diffs[0]['filename'], info
     assert_equal 0, diffs[0]['section_count'], info
     assert_equal 0, diffs[0]['deleted_line_count'], info
     assert_equal 0, diffs[0]['added_line_count'], info
     assert_equal '<same>wibble</same>', diffs[0]['content'], info
     assert_equal '<same><ln>1</ln></same>', diffs[0]['line_numbers'], info
-
-    assert_equal 'output', diffs[1]['filename']
-    assert_equal 0, diffs[1]['section_count'], info
-    assert_equal 0, diffs[1]['deleted_line_count'], info
-    assert_equal 0, diffs[1]['added_line_count'], info
-    assert_equal '<same>./cyber-dojo.sh: line 1: wibble: command not found</same>', diffs[1]['content'], info
-    assert_equal '<same><ln>1</ln></same>', diffs[1]['line_numbers'], info
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   test 'one line different in one file between successive tags' do
-    Thread.current[:runner] = HostTestRunner.new
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
     post '/kata/edit', :id => id, :avatar => avatar_name
 
+    filename = 'hiker.rb'
     post 'kata/run_tests', # 1
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        'cyber-dojo.sh' => 'tweedledee'
+        filename => 'tweedledee'
       },
       :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
+        filename => 234234
       },
       :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
+        filename => -4545645678
       }
 
     post 'kata/run_tests', # 2
       :id => id,
       :avatar => avatar_name,
       :file_content => {
-        'cyber-dojo.sh' => 'tweedledum'
+        filename => 'tweedledum'
       },
       :file_hashes_incoming => {
-        'cyber-dojo.sh' => 234234
+        filename => -4545645678
       },
       :file_hashes_outgoing => {
-        'cyber-dojo.sh' => -4545645678
+        filename => 654356
       }
 
     get 'differ/diff',
@@ -143,21 +137,13 @@ class DifferControllerTest < ControllerTestBase
     assert_equal 'amber', now_traffic_light['colour'], info
     assert_equal 2, now_traffic_light['number'], info
 
-    assert_equal 'cyber-dojo.sh', diffs[0]['filename'], info + 'diffs[0][filename]'
-    assert_equal 1, diffs[0]['section_count'], info + 'diffs[0][section_count]'
-    assert_equal 1, diffs[0]['deleted_line_count'], info + 'diffs[0][deleted_line_count]'
-    assert_equal 1, diffs[0]['added_line_count'], info + 'diffs[0][added_line_count]'
+    assert_equal filename, diffs[0]['filename'], info + "diffs[0]['filename']"
+    assert_equal 1, diffs[0]['section_count'], info + "diffs[0]['section_count']"
+    assert_equal 1, diffs[0]['deleted_line_count'], info + "diffs[0]['deleted_line_count']"
+    assert_equal 1, diffs[0]['added_line_count'], info + "diffs[0]['added_line_count']"
     assert diffs[0]['content'].include?('<deleted>tweedledee</deleted>')
     assert diffs[0]['content'].include?('<added>tweedledum</added>')
-    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', diffs[0]['line_numbers'], info + "diffs[0][line_numbers]"
-
-    assert_equal 'output', diffs[1]['filename'], info + 'diffs[1][filename]'
-    assert_equal 1, diffs[1]['section_count'], info + 'diffs[1][section_count]'
-    assert_equal 1, diffs[1]['deleted_line_count'], info + 'diffs[1][deleted_line_count]'
-    assert_equal 1, diffs[1]['added_line_count'], info + 'diffs[1][added_line_count]'
-    assert diffs[1]['content'].include?('<deleted>./cyber-dojo.sh: line 1: tweedledee: command not found</deleted>'), info + 'diffs[1][content]'
-    assert diffs[1]['content'].include?('<added>./cyber-dojo.sh: line 1: tweedledum: command not found</added>'), info + 'diffs[1][content]'
-    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', diffs[1]['line_numbers'], info + 'diffs[0][line_numbers]'
+    assert_equal '<deleted><ln>1</ln></deleted><added><ln>1</ln></added>', diffs[0]['line_numbers'], info + "diffs[0]['line_numbers']"
   end
 
 end
