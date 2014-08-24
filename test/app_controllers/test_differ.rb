@@ -4,9 +4,17 @@ require_relative 'controller_test_base'
 
 class DifferControllerTest < ControllerTestBase
 
+  def runner
+    if Docker.installed?
+      DockerTestRunner.new
+    else
+      HostTestRunner.new
+    end
+  end
+
   def setup
     super
-    Thread.current[:runner] = HostTestRunner.new
+    Thread.current[:runner] = runner
   end
 
   def teardown
