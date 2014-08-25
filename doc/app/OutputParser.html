@@ -92,6 +92,8 @@
     
     <li><a href="#method-c-parse_jasmine">::parse_jasmine</a>
     
+    <li><a href="#method-c-parse_java_cucumber">::parse_java_cucumber</a>
+    
     <li><a href="#method-c-parse_junit">::parse_junit</a>
     
     <li><a href="#method-c-parse_node">::parse_node</a>
@@ -106,7 +108,7 @@
     
     <li><a href="#method-c-parse_python_unittest">::parse_python_unittest</a>
     
-    <li><a href="#method-c-parse_ruby_approvals">::parse_ruby_approvals</a>
+    <li><a href="#method-c-parse_ruby_approval">::parse_ruby_approval</a>
     
     <li><a href="#method-c-parse_ruby_rspec">::parse_ruby_rspec</a>
     
@@ -329,7 +331,7 @@ tests ran and all passed</p>
             <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_cassert</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:red</span>   <span class="ruby-keyword">if</span> <span class="ruby-regexp">/(.*)Assertion(.*)failed./</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-value">:green</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/All tests passed/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:green</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/(All|\d*) tests passed/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- parse_cassert-source -->
@@ -390,7 +392,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_clojure_test-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 178</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 185</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_clojure_test</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">syntax_error_pattern</span> = <span class="ruby-regexp">/Exception in thread/</span>
   <span class="ruby-identifier">ran_pattern</span> = <span class="ruby-regexp">/Ran (\d+) tests containing (\d+) assertions.(\s*)(\d+) failures, (\d+) errors./</span>
@@ -590,8 +592,9 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_go_testing-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 76</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 108</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_go_testing</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/FAIL(\s*)_\/sandbox \[build failed\]/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:red</span>   <span class="ruby-keyword">if</span> <span class="ruby-regexp">/FAIL/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:green</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/PASS/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span>
@@ -654,7 +657,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_groovy_spock-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 142</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 149</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_groovy_spock</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">green_pattern</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'^OK \((\d*) test'</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">match</span> = <span class="ruby-identifier">green_pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
@@ -702,7 +705,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_hunit-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 164</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 171</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_hunit</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">output</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp">/Counts \{cases = (\d+), tried = (\d+), errors = (\d+), failures = (\d+)\}/</span>
     <span class="ruby-keyword">if</span> <span class="ruby-node">$3</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">!=</span> <span class="ruby-value">0</span>
@@ -742,7 +745,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_jasmine-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 192</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 199</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_jasmine</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">jasmine_pattern</span> = <span class="ruby-regexp">/(\d+) tests?, (\d+) assertions?, (\d+) failures?/</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">jasmine_pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
@@ -759,6 +762,38 @@ tests ran and all passed</p>
 
         
       </div><!-- parse_jasmine-method -->
+
+    
+      <div id="method-c-parse_java_cucumber" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">parse_java_cucumber</span><span
+            class="method-args">(output)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="parse_java_cucumber-source">
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 76</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_java_cucumber</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:red</span>   <span class="ruby-keyword">if</span> <span class="ruby-regexp">/FAILURES!!!/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:green</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/OK \((\d*) tests\)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- parse_java_cucumber-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- parse_java_cucumber-method -->
 
     
       <div id="method-c-parse_junit" class="method-detail ">
@@ -873,7 +908,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_perl_test_simple-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 115</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_perl_test_simple</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:green</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/All tests successful/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/syntax error/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
@@ -906,7 +941,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_php_unit-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 108</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_php_unit</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/PHP Parse error:/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:red</span>   <span class="ruby-keyword">if</span> <span class="ruby-regexp">/FAILURES!/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
@@ -987,10 +1022,10 @@ tests ran and all passed</p>
       </div><!-- parse_python_unittest-method -->
 
     
-      <div id="method-c-parse_ruby_approvals" class="method-detail ">
+      <div id="method-c-parse_ruby_approval" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">parse_ruby_approvals</span><span
+          <span class="method-name">parse_ruby_approval</span><span
             class="method-args">(output)</span>
           <span class="method-click-advice">click to toggle source</span>
         </div>
@@ -1002,9 +1037,9 @@ tests ran and all passed</p>
           
 
           
-          <div class="method-source-code" id="parse_ruby_approvals-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 133</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_ruby_approvals</span>(<span class="ruby-identifier">output</span>)
+          <div class="method-source-code" id="parse_ruby_approval-source">
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_ruby_approval</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/(SyntaxError)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/NameError/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:amber</span> <span class="ruby-keyword">if</span> <span class="ruby-regexp">/LoadError/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
@@ -1012,14 +1047,14 @@ tests ran and all passed</p>
   <span class="ruby-keyword">return</span> <span class="ruby-value">:red</span>   <span class="ruby-keyword">if</span> <span class="ruby-regexp">/Approvals::ApprovalError/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-value">:green</span>
 <span class="ruby-keyword">end</span></pre>
-          </div><!-- parse_ruby_approvals-source -->
+          </div><!-- parse_ruby_approval-source -->
           
         </div>
 
         
 
         
-      </div><!-- parse_ruby_approvals-method -->
+      </div><!-- parse_ruby_approval-method -->
 
     
       <div id="method-c-parse_ruby_rspec" class="method-detail ">
@@ -1070,7 +1105,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_ruby_test_unit-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 122</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 129</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_ruby_test_unit</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">ruby_pattern</span> = <span class="ruby-constant">Regexp</span>.<span class="ruby-identifier">new</span>(<span class="ruby-string">'^(\d*) tests, (\d*) assertions, (\d*) failures, (\d*) errors'</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">match</span> = <span class="ruby-identifier">ruby_pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)
@@ -1107,7 +1142,7 @@ tests ran and all passed</p>
 
           
           <div class="method-source-code" id="parse_scala_test-source">
-            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 201</span>
+            <pre><span class="ruby-comment"># File app/lib/OutputParser.rb, line 208</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">parse_scala_test</span>(<span class="ruby-identifier">output</span>)
   <span class="ruby-identifier">scala_pattern</span> = <span class="ruby-regexp">/Tests: succeeded (\d+), failed (\d+), ignored (\d+), pending (\d+)/</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">scala_pattern</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">output</span>)

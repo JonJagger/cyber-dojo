@@ -266,7 +266,7 @@
 
           
           <div class="method-source-code" id="change_count-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 110</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 96</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">change_count</span>(<span class="ruby-identifier">diff</span>)
   <span class="ruby-identifier">diff</span>[<span class="ruby-value">:deleted_line_count</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">diff</span>[<span class="ruby-value">:added_line_count</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -296,7 +296,7 @@
 
           
           <div class="method-source-code" id="deleted_file-3F-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 42</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">deleted_file?</span>(<span class="ruby-identifier">ch</span>)
   <span class="ruby-comment"># GitDiffParser uses names beginning with</span>
   <span class="ruby-comment"># a/... to indicate a deleted file</span>
@@ -330,7 +330,7 @@
 
           
           <div class="method-source-code" id="deleteify-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 58</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 50</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">deleteify</span>(<span class="ruby-identifier">lines</span>)
   <span class="ruby-identifier">ify</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-value">:deleted</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -360,7 +360,7 @@
 
           
           <div class="method-source-code" id="diff_htmlify-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 143</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 123</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_htmlify</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">n</span>)
   <span class="ruby-identifier">result</span> = <span class="ruby-string">''</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">==</span> <span class="ruby-value">:section</span>
@@ -401,7 +401,7 @@
 
           
           <div class="method-source-code" id="diff_htmlify_line_numbers-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 176</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">diff_htmlify_line_numbers</span>(<span class="ruby-identifier">n</span>)
   <span class="ruby-identifier">result</span> = <span class="ruby-string">''</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">n</span>[<span class="ruby-value">:type</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:section</span>
@@ -461,12 +461,10 @@ given tag.</p>
         <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">filename</span>)
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
-
     <span class="ruby-comment"># other files have not changed...</span>
     <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>,<span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">view</span>[<span class="ruby-identifier">filename</span>] = <span class="ruby-identifier">sameify</span>(<span class="ruby-identifier">content</span>)
     <span class="ruby-keyword">end</span>
-
     <span class="ruby-identifier">view</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- git_diff-source -->
@@ -495,7 +493,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="git_diff_html_file-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 137</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 119</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_html_file</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">diff</span>)
   <span class="ruby-identifier">lines</span> = <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff_htmlify</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">n</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">''</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -525,8 +523,20 @@ given tag.</p>
 
           
           <div class="method-source-code" id="git_diff_html_line_numbers-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 172</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 138</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_html_line_numbers</span>(<span class="ruby-identifier">diff</span>)
+  <span class="ruby-comment"># Originally I left-padded each line-number.</span>
+  <span class="ruby-comment"># Now I don't and the CSS right-aligns the line-numbers.</span>
+  <span class="ruby-comment"># There is a downside to this approach however.</span>
+  <span class="ruby-comment"># If I have two files in the diff-view and one has less</span>
+  <span class="ruby-comment"># than 10 lines and the other has more than 10 lines then</span>
+  <span class="ruby-comment"># the first one's line-numbers will be 2 chars wide and the</span>
+  <span class="ruby-comment"># seconds one's line-numbers will be 3 chars wide. This</span>
+  <span class="ruby-comment"># will make the left edge of a file's content move</span>
+  <span class="ruby-comment"># horizontally when you switch between these two files.</span>
+  <span class="ruby-comment"># In practice I've decided this is not worth worrying about</span>
+  <span class="ruby-comment"># since the overwhelming feeling you get when switching files</span>
+  <span class="ruby-comment"># is the change of content anyway.</span>
   <span class="ruby-identifier">line_numbers</span> = <span class="ruby-identifier">diff</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">n</span><span class="ruby-operator">|</span> <span class="ruby-identifier">diff_htmlify_line_numbers</span>(<span class="ruby-identifier">n</span>) }.<span class="ruby-identifier">join</span>(<span class="ruby-string">''</span>)
 <span class="ruby-keyword">end</span></pre>
           </div><!-- git_diff_html_line_numbers-source -->
@@ -555,7 +565,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="git_diff_view-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 116</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 100</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">git_diff_view</span>(<span class="ruby-identifier">diffed_files</span>)
   <span class="ruby-identifier">n</span> = <span class="ruby-value">0</span>
   <span class="ruby-identifier">diffs</span> = [ ]
@@ -600,7 +610,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="ify-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 64</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">ify</span>(<span class="ruby-identifier">lines</span>, <span class="ruby-identifier">type</span>)
   <span class="ruby-identifier">lines</span>.<span class="ruby-identifier">collect</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span>, <span class="ruby-identifier">number</span><span class="ruby-operator">|</span>
     {
@@ -636,7 +646,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="most_changed_file_id-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 76</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 64</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">most_changed_file_id</span>(<span class="ruby-identifier">diffs</span>, <span class="ruby-identifier">current_filename</span>)
   <span class="ruby-comment"># Prefers to stay on the same file if it still exists</span>
   <span class="ruby-comment"># in the now_tag (it could have been deleted or renamed)</span>
@@ -694,7 +704,7 @@ given tag.</p>
 
           
           <div class="method-source-code" id="sameify-source">
-            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 52</span>
+            <pre><span class="ruby-comment"># File app/lib/GitDiff.rb, line 46</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">sameify</span>(<span class="ruby-identifier">source</span>)
   <span class="ruby-identifier">ify</span>(<span class="ruby-constant">LineSplitter</span>.<span class="ruby-identifier">line_split</span>(<span class="ruby-identifier">source</span>), <span class="ruby-value">:same</span>)
 <span class="ruby-keyword">end</span></pre>

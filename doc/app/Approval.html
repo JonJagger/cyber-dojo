@@ -248,7 +248,7 @@
 
           
           <div class="method-source-code" id="add_created_txt_files-source">
-            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">add_created_txt_files</span>(<span class="ruby-identifier">test_run_dir</span>, <span class="ruby-identifier">visible_files</span>)
   <span class="ruby-identifier">txt_files</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">in</span>(<span class="ruby-identifier">test_run_dir</span>).<span class="ruby-identifier">select</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">entry</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'.'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">entry</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'..'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">entry</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">'.txt'</span>)
@@ -284,7 +284,7 @@
 
           
           <div class="method-source-code" id="in-source">
-            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 27</span>
+            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-keyword">in</span>(<span class="ruby-identifier">path</span>)
   <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">path</span>).<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">name</span><span class="ruby-operator">|</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'.'</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-string">'..'</span> }
 <span class="ruby-keyword">end</span></pre>
@@ -314,7 +314,7 @@
 
           
           <div class="method-source-code" id="read_file-source">
-            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 20</span>
+            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">read_file</span>(<span class="ruby-identifier">filename</span>)
   <span class="ruby-comment"># is this mapping necessary?</span>
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">filename</span>, <span class="ruby-string">'r'</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
@@ -347,7 +347,7 @@
 
           
           <div class="method-source-code" id="remove_deleted_txt_files-source">
-            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/lib/Approval.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">remove_deleted_txt_files</span>(<span class="ruby-identifier">test_run_dir</span>, <span class="ruby-identifier">visible_files</span>)
   <span class="ruby-identifier">visible_files</span>.<span class="ruby-identifier">delete_if</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">filename</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">filename</span>.<span class="ruby-identifier">end_with?</span>(<span class="ruby-string">'.txt'</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-keyword">self</span>.<span class="ruby-identifier">in</span>(<span class="ruby-identifier">test_run_dir</span>).<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">filename</span>)

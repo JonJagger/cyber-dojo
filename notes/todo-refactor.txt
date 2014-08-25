@@ -12,7 +12,6 @@ install J?
 install Java-TestNG
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move latest blogspot entry about cyber-dojo diff data onto
 blog.cyber-dojo.org
@@ -22,7 +21,6 @@ getting rails server warning about sass
 Googling gives this...
 https://github.com/vhyza/sass-rails-source-maps/issues/4
 and my Gemfile does indeed have a version for sass-rails.
-Try to fix once I'm home from China.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 app_controllers tests running on Docker server give
 SECURITY WARNING: No secret option provided to Rack::Session::Cookie.
