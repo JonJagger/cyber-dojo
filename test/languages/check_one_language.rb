@@ -24,5 +24,6 @@ if !File.directory?(root_path + '/languages/' + language)
 end
 
 rag = OneLanguageChecker.new(root_path,verbose).check(language)
-state = rag === ['red','amber','green'] ? 'PASS' : 'FAIL'
-puts "#{language} --> #{rag} ==> #{state}"
+expected = ['red','amber','green']
+outcome = (rag === expected) ? 'PASS' : 'FAIL'
+puts "#{language} --> #{rag} ==> #{outcome}"

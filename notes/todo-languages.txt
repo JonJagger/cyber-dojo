@@ -1,14 +1,13 @@
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-F#
-  http://fsharp.org/use/linux/   Option 6
+install R
+  apt-get install r-base
+  use assert.
+    http://stat.ethz.ch/R-manual/R-devel/library/base/html/stopifnot.html
 
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Dart
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Swift?
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Fortran (Mike)
-  http://sourceforge.net/apps/mediawiki/fortranxunit/index.php?title=FruitExample
+install Rust?
+install Dart?
+install Swift?
+install Visual.BASIC? (for Chris Oldwood)
+install J?
+install Java-TestNG?
+install Objective-C?

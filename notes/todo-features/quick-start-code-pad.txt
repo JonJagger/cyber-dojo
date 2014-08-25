@@ -1,0 +1,5 @@
+
+quick-start  code-pad
+=====================
+  No exercise. You just press the language and you automatically
+    get an id and an animal.

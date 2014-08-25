@@ -1,27 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-EXERCISES-vs-LANGUAGES
-The more I think about it, the more it makes sense to refactor
-this so that a language can have specific exercises. This will
-simplify a languages manifest.json file. Specifically, a
-languages' manifest.json will keep all its parameters but its
-visible_files entries will consist only of cyber-dojo.sh
-(which suggests it can be dropped).
-Then an exercise will have its own manifest.json file.
-So a reasonable first step is to refactor the plain
-exercises so they too have a manifest. Which will always
-(at the moment) be just 'instructions'.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-RUBY-QUESTION
-  Can .entries take a parameter in general? In combination with .each
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-MODEL
-  light = avatar.lights[params['tag']]   ?in forker_controller?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-CSS
-  it seems that the common id/class name style is like-this
-  and not like_this
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   Nice dojos for screen shots
   A0FCF4CCBF  (shows the ellision at the rhs is not quite right yet?)
@@ -37,13 +15,6 @@ MISC
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   add ghosting when traffic-light is hovered over.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Running test/installation/check_language on non-test cyber-dojo root
-shows some of the languages do not pass the checks.
-  Java-Cucumber ...... ["red", "red", "green"] installed but not working (~ 4.64 seconds)
-  Java-JUnit-Mockito . ["red", "amber", "red"] installed but not working (~ 3.05 seconds)
-  Ruby-Approval ...... ["red", "red", "green"] installed but not working (~ 1.63 seconds)
-  Ruby-Cucumber ...... multiple 42-files ["untitled.rb", "untitled.feature"]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Deployment
   Locally
@@ -108,58 +79,6 @@ TOOL-TIPS
   for diff-dialog
   for fork-dialog
   for revert-dialog
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-INSTALLATION-TESTS
-  Get app/lib coverage to 100%
-  Save run-tests outputs to log file?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-I18N
-  Need to be i18n'd on the setup page.
-  ...
-  On dialog buttons
-    cancel: new-file,rename-file,delete-file
-    close: diff
-  ...
-  Lots more.
-  Have promises for Russian and Ukranian.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HTML
-  s/fork/forker/
-  s/revert/reverter/ ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-RESUME/FORK? FROM RENAMED LANGUAGE
-  http://localhost:3000/kata/edit/11870BBD9F?avatar=elephant
-  This will not resume.
-     lib/DiskFile.rb:27:in `read'
-     lib/DiskFile.rb:27:in `read'
-     app/models/language.rb:58:in `manifest'
-     app/models/language.rb:48:in `tab_size'
-     app/models/language.rb:44:in `tab'
-     app/controllers/kata_controller.rb:11:in `edit'
-  katas/11/870BBD9F/manifest.rb contains this...
-     :language=>"Java-ApprovalTests"
-  And thus models/language.rb is its trying to load
-     /Users/jonjagger/Desktop/Repos/cyberdojo/languages/Java-ApprovalTests/manifest.rb
-  But the name of the language has changed from
-  Java-ApprovalTests
-  to
-  Java-Approval
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-NEW-LANGUAGES
-  https://github.com/gdunn/cyberdojo
-  Add UnitTest++ C/C++
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-feedback from Derek Graham.
-o) devs seem very reluctant to change the names of the untitled. files
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-not enough coverage on
-  app/helpers
-    translation_helper.rb
-    application_helper.rb
-
-  app/controllers
-    application_controller.set_locale
-    locales_controller.change
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Only offering installed languages
 ...

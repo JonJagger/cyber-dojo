@@ -1,0 +1,169 @@
+
+Finer-grained commits
+=====================
+  do a commit when an animal switches from one file
+  to another file. This would allow you to see if the first code
+  entered was code or test code. And also file navigation.
+  The diff << < > >> controls would need to be expanded.
+
+  Possible design
+  Leave the << < > >> controls to move between traffic-lights.
+  Add a new separate < > control to move a single tag.
+  So if
+    was-tag = 23  (red)
+    now-tag = 31  (green)
+  and there are 8 'micro' tags between those traffic-lights
+  then clicking > micro control will change to
+    was-tag = 31
+    now-tag = 32
+  or clicking < micro control will change to
+    was-tag = 30
+    now-tag = 31
+
+  Ideas
+  o) < red > moves to prev/next red
+  o) < amber > moves to prev/next amber
+  o) < green > moves to prev/next amber
+
+
+  Issue: If you make an edit then switch files, then press [test]
+  there would be no actual diff in source files. However,
+  the server could still do a [test] to generate an output file.
+  Even if this output file is exactly the same as before, the
+  server will still put a new light into increments.rb so there
+  will be a commit+tag.
+  Issue: If you switch files and there has been no edit, again
+  there would be no actual diff in the source files. However,
+  I could create an tag-commits.json file (like increments.rb) that
+  simply stores the event causing the commit. The event would be
+    o) switch file
+    o) new file
+    o) rename file
+    o) delete file
+    o) [test]
+
+  These calls need to be synchronous I think.
+
+  $$$ The current file could have changed when you press
+  $$$ new/rename/delete (or switch file or test)
+  $$$ I want to send this as a single ajax call though.
+  $$$ But on the server this could be saved as two commits
+  $$$ if it helps.
+
+      o) new file
+         $.ajax({
+           url: new_file,
+           dataType: 'json',
+           async: false,
+           data: { filename:filename, id:id, avatar:name }, // tag? I think no
+           before: function() {
+             //set cursor to wait
+             //add transparent overlay?
+           },
+           success: function() {
+             //update incoming hashes
+             //create the file in the browser
+             //open it
+           },
+           error: function() {
+             //write message on output
+           },
+           complete: function() {
+             //remove transparent overlay
+             //set cursor back
+           });
+
+      o) deleted file
+           very similar but for deleted file
+            do I need to record which file is the one shown
+            after the delete? Can't choose instructions as
+            some katas may not have an instructions file.
+            Only guaranteed files are cyber-dojo.sh
+            and output. Both boring.
+            Simplest is to pick the next one in the filenames
+            list.
+
+      o) renamed file = old-name new-name
+           very similar, was-filename, now-filename
+           will result in $git mv
+           on the server.
+
+  The one that is trickier is the file-movement.
+      o) file-movement:
+         This one needs to do a hash-diff of the file
+         we are leaving. I could intercept each key
+         press in the current textarea and have this
+         information ready.
+         If there is no change in any file, but the
+         player is just moving from one file to another
+         then I should still record that.
+         So I'd need to sent
+         i) file moved from-to
+         ii) content of file we just left if it changed
+
+  How to store the finer-grained increments on the server?
+  Adapt existing?
+  Add reason property which defaults to :test
+  New non-test commits can have their own reason, with specific data related to the reason.
+  New non-test commits can all have white traffic-light
+  Existing << < > >> navigation moves through non-white traffic-lights.
+
+
+
+  Possible design of new << < > >> navigator
+  Add third type of < > button.
+  One whose triangle is not filled in.
+  This would move one tag-commit event. Above this would still be
+  the editable tag numbers and the lights
+   This suggests putting the < > buttons underneath the tags
+   (which they work on) and the the <| |> buttons underneath
+   the lights (which they work on)
+   Move animal image. Repeat count and pie chart from dashboard.
+   Add tag-commit count.
+       11 (pie) [lion] 92
+            light |tag| |tag| light
+        <<||   <|    <   >    |>    ||>
+   Also add tag-number to each light.
+       11 (pie) [lion] 92
+        tag-light |tag| |tag| light-tag
+        <<||   <|    <   >    |>    ||>
+
+  Reduce size of tag input-edits. The most common navigation
+  by far is using the << < > >> buttons.
+
+  This raises the idea of *not* trying to open the
+  'most changed file' when you navigate. Instead
+  open the file that was the one switched to. This is
+  simpler and perhaps more in keeping with the review aspect.
+  It means the file could be cyber-dojo.sh or output.
+  It also suggests recording the scroll-position of the
+  file when it is re-played. This allows you to see
+  exactly what the player saw when they switched to that file.
+  Could even save scrollbar movements.
+  Could of course save character by character edits!
+  Or do a tag-commit if there hasn't been one for 1 minute.
+  Or do a tag-commit if the diff amount gets beyond a threshold.
+
+  It gives possiblly interesting data. If the most recently
+  edited file was test code is the chance of a non-amber
+  higher than if it was non-test code?
+
+  The dashboard could also show two numbers, the big one (number
+  of lights) and a small one (number of tags).
+       11 (pie) [lion] 92
+
+  Also suggests extending the domain model.
+  avatar.lights[n]
+  avatar.tags[n]
+
+  What about revert/fork dialogs?
+  Allow forking from a light or a tag? Light I think
+  Allow forking from a light or a tag? Light I think
+  What about backward compatibility?
+  Will the light/tag distinction collapse silently
+  for reviewing dojos done before the tag-commits?
+
+  This also creates the possibility of doing the deltas
+  on the browser and only sending the changed elements
+  to the server.
+

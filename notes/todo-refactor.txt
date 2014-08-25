@@ -1,20 +1,12 @@
 
-install R
-  apt-get install r-base
-  http://r-pkgs.had.co.nz/tests.html
-  http://sourceforge.net/projects/runit/
-  http://cran.r-project.org/web/packages/RUnit/RUnit.pdf
-
-install Rust?
-install Swift?
-install Visual.BASIC? (for Chris Oldwood)
-install J?
-install Java-TestNG
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move latest blogspot entry about cyber-dojo diff data onto
 blog.cyber-dojo.org
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Dojo.rb
+  convert path to absolute path if its not
+  convert path to ensure it ends in /
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 lib/Docker.rb uses 'docker info' and not 'docker --version'
 is this the cause of the [create] page slowdown?
@@ -72,26 +64,6 @@ I'm thinking about the feature where you have the
 output window open and it names the filename and line number
 of a syntax error and you do alt-E and it opens the file
 named in the syntax error and auto scrolls to the line-number.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-cyberdojo/exercises/ folder could be beefed up to match
-the cyberdojo/languages folder and has a manifest.json
-file and can have visible_filenames.
-It's entirely possible someone in education might want to
-setup several specific start-point exercises for the same
-language.
-The problem with this though is that it would mean various
-exercises being offered which were only appropriate for
-a specific language. Perhaps allow each language to have
-an exercises subfolder? At the moment the language manifest
-specifies the bare bones source files for the code and test
-file. These need to somehow be separated out so that they are
-not included if a "custom" exercise is used.
-How about having a language appear twice. Once as it currently
-is with no exercises folder underneath the languages/*/ folder
-and its manifest names and used the code and test files.
-And again with an exercises/ folder underneath the
-languages/*/ folder whose manifest does not name any code/test
-files - they come from the custom exercises.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Various places have code like this...
    if ENV['CYBERDOJO_TEST_ROOT_DIR']
@@ -191,31 +163,6 @@ Add git.max_tag() function?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Move clean(string) code into Dir.read ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  avatar.traffic_lights(tag = nil)
-    This is used with tag != nil only for revert_controller
-    (which is itself used in fork-dialog as well as revert-dialog)
-    Refactor.
-    inc: ==> light:
-  this needs to be
-      avatar.tags[t].lights
-      avatar.tags[t].lights[4]
-      avatar.tags[t].lights[4].colour
-      avatar.tags[t].visible_files
-      avatar.tags[t].visible_files[filename]
-      avatar.tags[t].output
-
-  YES. and lights for a tag that is not a *test* event
-  eg its a file rename, can simply return the lights for
-  the most recent tag that was a *test* event.
-  OK. The details. How to do this?
-  Currently
-  increments.json stores
-  [  { colour:'red',
-       number:'1',
-       time:[2014,6,7,23,11,14]
-     }
-  ]
-  where each entry corresponds to a *test* event.
   $ git shortlog
   lists all the commit tags. So
   irb: `cd dir;git shortlog -s`.to_i
@@ -298,10 +245,8 @@ rename Dojo.rb to CyberDojo.rb ?
     add 2nd parameter specifying format, no default, on call use "rb"
   ...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  Can i18n yml files be split?
-  ...
   Exception_controller_test.rb needs some assertions!
-  ...
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Rename css file,
     diff->diff_dialog
     don't forget to update application.css.scss
@@ -316,25 +261,11 @@ rename Dojo.rb to CyberDojo.rb ?
 
 
 
-Ensuring cyber-dojo.sh cleans up any processes is messy. Instead of
-trying to find children by walking pid/ppid hierarchy it would be
-better to use pgid - process group. See lib/Files.rb
-Note, if you're running under apache then this never seems to be
-a problem - does apache auto clean processes?
 -----
 Pressing the test button in the browser sometimes creates a new
 traffic-light but the output you get back gets stuck and does
 not reflect edits made to the files. A work-around when this happens
 is to reopen the URL in a new tab.
------
-Do I need to do io_locks? Suppose there is a conflict. Could this
-simply mean the git commit fails with a merge conflict? I think
-not, since at the moment the avatar/sandbox folder is deleted
-before each commit. But if a merge conflict could be created it
-would open up the possibility of having multiple players all
-playing as the same avatar. There could also be conflicts in the
-sandbox where the tests are run. Perhaps that is the place to
-check for conflicts?
 -----
 On my Mac (10.7.4) using Firefox (18.0.1) using a local server
 (http://localhost:3000) when you load a file and move the cursor
@@ -395,9 +326,7 @@ commonality in dialogs with only ok button? with only cancel button?
 make new-file dialog ask for inital name?
 -----
 isolate make new-file and rename-file dialogs and put into dedicated
-  dialog js files.
------
-java-cucumber fails test/installation_tests.rb
+  dialog js files?
 -----
 The Click-to-revert tip could appear when the current-traffic-light-count
   disappears (and disappear when it reappears). This would also mean
@@ -467,6 +396,9 @@ The intention with the installation tests is that they are used to determine
 what languages are installed and to only offer those languages (at the create
 page). But at the moment all the languages are being offered.
 -----
-Get Objective-C compiling on Ubuntu ?
-http://www.gnustep.org/
------
+in app_controllers
+  s/fork/forker/
+  s/revert/reverter/ ?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  light = avatar.lights[params['tag']]   ?in forker_controller?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
