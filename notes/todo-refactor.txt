@@ -16,20 +16,8 @@ install Java-TestNG
 move latest blogspot entry about cyber-dojo diff data onto
 blog.cyber-dojo.org
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-getting rails server warning about sass
-"Warning. Error encountered while saving cache"
-Googling gives this...
-https://github.com/vhyza/sass-rails-source-maps/issues/4
-and my Gemfile does indeed have a version for sass-rails.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-app_controllers tests running on Docker server give
-SECURITY WARNING: No secret option provided to Rack::Session::Cookie.
-        This poses a security threat. It is strongly recommended that you
-        provide a secret to prevent exploits that may be possible from crafted
-        cookies. This will not be supported in future versions of Rack, and
-        future versions will even invalidate your existing user cookies.
-
-        Called from: /var/lib/gems/1.9.1/gems/actionpack-3.2.3/lib/action_dispatch/middleware/session/abstract_store.rb:28:in `initialize'.
+lib/Docker.rb uses 'docker info' and not 'docker --version'
+is this the cause of the [create] page slowdown?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 does refactoring_dojos.tgz still has katas in old manifest.rb format?
 Check this on cyber-dojo.org for eg

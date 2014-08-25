@@ -35,3 +35,7 @@ module FileDeltaMaker
   end
 
 end
+
+# a file-delta helps on two fronts
+# 1. optimization
+# 2. testing

@@ -17,8 +17,11 @@ class OneLanguageChecker
     @language = dojo.languages[language_name]
     if @language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
+      exercise = dojo.exercises['Fizz_Buzz']
+      kata = dojo.katas.create_kata(@language, exercise)
+      avatar = kata.start_avatar
       t1 = Time.now
-      rag = red_amber_green
+      rag = red_amber_green(avatar)
       t2 = Time.now
       took = ((t2 - t1) / 3).round(2)
       vputs " (~ #{took} seconds)\n"
@@ -30,24 +33,17 @@ private
 
   include TimeNow
 
-  def red_amber_green
-    # NB: This works by creating a new kata for each
-    #     red/amber/green test. This is needlessly slow.
-    #     Just make one kata, and then verify
-    #     o) its starts tests red
-    #     o) s/6*9/6*7/ tests green
-    #     o) s/6*9/s345 * 9345/ tests amber
-    # NB: time taken should be from [test] being pressed
-    #     to results appearing. Not having to create 3 katas...
+  def red_amber_green(avatar)
     [
-      language_test(:red),
-      language_test(:amber),
-      language_test(:green),
+      language_test(avatar, :red),
+      language_test(avatar, :amber),
+      language_test(avatar, :green),
     ]
   end
 
-  def language_test(colour)
+  def language_test(avatar,colour)
     pattern = pattern_6times9
+
     filename = filename_6times9(pattern[:red])
     from = pattern[:red]
     to = pattern[colour]
@@ -58,15 +54,12 @@ private
       to = '}typo'
     end
 
-    exercise = dojo.exercises['Fizz_Buzz']
-    kata = dojo.katas.create_kata(@language, exercise)
-    avatar = kata.start_avatar
     visible_files = @language.visible_files
     test_code = visible_files[filename]
     visible_files[filename] = test_code.sub(from, to)
 
     vputs [
-      "<test_code id='#{kata.id}' avatar='#{avatar.name}' expected_colour='#{colour}'>",
+      "<test_code id='#{avatar.kata.id}' avatar='#{avatar.name}' expected_colour='#{colour}'>",
       visible_files[filename],
       "</test_code>"
     ].join("\n")
@@ -147,6 +140,10 @@ private
     puts message if @verbose
   end
 
+  def dojo
+    Dojo.new(@root_path,externals)
+  end
+
   def externals
     {
       :disk => OsDisk.new,
@@ -159,12 +156,10 @@ private
     if Docker.installed?
       DockerTestRunner.new
     else
+      # @language.runnable? in check() above always returns false
+      # viz, turn off all tests when not on Docker server
       DummyTestRunner.new
     end
-  end
-
-  def dojo
-    Dojo.new(@root_path,externals)
   end
 
 end
