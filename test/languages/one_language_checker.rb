@@ -17,11 +17,8 @@ class OneLanguageChecker
     @language = dojo.languages[language_name]
     if @language.runnable?
       vputs "  #{language_name} " + ('.' * (35-language_name.to_s.length))
-      exercise = dojo.exercises['Fizz_Buzz']
-      kata = dojo.katas.create_kata(@language, exercise)
-      avatar = kata.start_avatar
       t1 = Time.now
-      rag = red_amber_green(avatar)
+      rag = red_amber_green
       t2 = Time.now
       took = ((t2 - t1) / 3).round(2)
       vputs " (~ #{took} seconds)\n"
@@ -33,15 +30,19 @@ private
 
   include TimeNow
 
-  def red_amber_green(avatar)
+  def red_amber_green
     [
-      language_test(avatar, :red),
-      language_test(avatar, :amber),
-      language_test(avatar, :green),
+      language_test(:red),
+      language_test(:amber),
+      language_test(:green),
     ]
   end
 
-  def language_test(avatar,colour)
+  def language_test(colour)
+    exercise = dojo.exercises['Fizz_Buzz']
+    kata = dojo.katas.create_kata(@language, exercise)
+    avatar = kata.start_avatar
+
     pattern = pattern_6times9
 
     filename = filename_6times9(pattern[:red])
@@ -59,7 +60,7 @@ private
     visible_files[filename] = test_code.sub(from, to)
 
     vputs [
-      "<test_code id='#{avatar.kata.id}' avatar='#{avatar.name}' expected_colour='#{colour}'>",
+      "<test_code id='#{kata.id}' avatar='#{avatar.name}' expected_colour='#{colour}'>",
       visible_files[filename],
       "</test_code>"
     ].join("\n")
