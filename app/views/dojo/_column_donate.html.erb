@@ -2,7 +2,7 @@
 <table id="donate-container">
   <tr>
     <td>
-      <div id="please_donate">
+      <div id="please-donate">
         <%= raw t("views.labels.please_donate") %>
       </div>
     </td>
@@ -10,6 +10,11 @@
   <tr>
     <td id="donate-button">
       <%= render :partial => 'donate_button' %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= render :partial => 'please_invoice_me_button' %>
     </td>
   </tr>
   <tr>

@@ -120,7 +120,7 @@ $text-color: darken($lighter-color, 10%);
   #donate-container {
     @include ghost-panel(10px);
     margin-bottom: 20px;
-    #please_donate {
+    #please-donate {
       text-align: right;
       margin: {
         left: 10px;
@@ -138,6 +138,9 @@ $text-color: darken($lighter-color, 10%);
         top: 15px;
         right: 5px;
       }
+    }
+    #please-invoice-me-button {
+      @include font-size-tiny();
     }
     #total-raised {
       color: $lighter-color;

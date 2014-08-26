@@ -1,0 +1,28 @@
+
+<script type="text/javascript"><!--
+
+$(function() {
+  $('#please-invoice-me-button').click(function() {
+    var name = $(this).attr('id');
+    var close = 'close'; //$(this).data('close');
+    var title = $(this).text();
+    var button = $(this);
+    var cursor = button.css('cursor');
+    button.css('cursor', 'wait');
+    $.get('/dojo/button_dialog/' + name, function(html) {
+      button.css('cursor', cursor);
+      cd.dialog(html, title, close).dialog('open');
+    });
+  });
+});
+
+//--></script>
+
+
+<button type="button"
+  class="show-dialog-button"
+  id="please-invoice-me-button">
+  please invoice me
+</button>
+
+
