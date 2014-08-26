@@ -1,18 +1,15 @@
 test_suite hiker_class
 
-type(hiker) :: arthur
-
 setup
-  arthur = hiker()
 end setup
 
 teardown
 end teardown
 
 test life_the_universe_and_everything
-  integer :: answer
-  answer = hiker_answer(arthur)
-  assert_equal(42, answer)
+  integer :: actual
+  actual = answer()
+  assert_equal(42, actual)
 end test
 
 ! Example test using all six assertions
