@@ -26,20 +26,12 @@ $text-color: darken($lighter-color, 10%);
     right: -35px;
   }
 
-  #a-place-to-practice, #programming {
+  #the-place-to-practice-programming {
     font-size: 1.35em;
     color: lighten($text-color, 5%);
     margin: {
-      top: -25px;
-      bottom: 0px;
-    }
-  }
-  #programming {
-    font-size: 1.35em;
-    color: lighten($text-color, 5%);
-    margin: {
-      top: -5px;
-      bottom: 15px;
+      top: -35px;
+      bottom: 40px;
     }
   }
   td#column-main {

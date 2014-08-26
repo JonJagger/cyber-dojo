@@ -19,8 +19,7 @@ fr:
       zebra: "zèbre"
       
     labels:
-      a_place_to_practice: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a>"
-      programming: "la programmation"
+      the_place_to_practice_programming: "<a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>pratiquer</a> la programmation"
       get_a_new_practice_id: "obtenir un nouvel id de pratique"
       enter_the_practice_id: "sur <em>chaque</em> ordinateur<br>entrez votre id pratique"
       and: "et"      

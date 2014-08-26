@@ -19,8 +19,7 @@ en:
       zebra: "zebra"
       
     labels:
-      a_place_to_practice: "a place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a>"
-      programming: "programming"
+      the_place_to_practice_programming: "the place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer enter the same id"
       please_donate: "if you find cyber&#8209;dojo useful please donate.
