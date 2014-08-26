@@ -60,12 +60,14 @@ class ForkerController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result }
-      format.html { redirect_to :controller => 'dojo',
-                                :action => 'index',
-                                :id => result[:id] }
+      format.json {
+        render :json => result
+      }
+      format.html {
+        redirect_to :controller => 'dojo',
+                    :action => "index/#{result[:id]}"
+      }
     end
-
   end
 
 private
