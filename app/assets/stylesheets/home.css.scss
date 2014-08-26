@@ -188,6 +188,17 @@ $text-color: darken($lighter-color, 10%);
     }
   }
 
+  #tweet-container {
+    @include ghost-panel(20px);
+    #twitter-widget-0 {
+      position: relative;
+      right: -47px;
+    }
+  }
+}
+
+#widget {
+  text-align: right !important;
 }
 
 .faqs.dialog, .get-started.dialog, .tips.dialog,
