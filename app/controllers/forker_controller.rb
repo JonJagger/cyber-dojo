@@ -9,7 +9,6 @@ class ForkerController < ApplicationController
     result = { :forked => false }
     error = false
 
-    id = params['id']
     if !error
       if !dojo.katas.exists?(id)
         error = true
