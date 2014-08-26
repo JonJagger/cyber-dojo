@@ -12,7 +12,6 @@ $(function () {
     var button = $(this);
     var cursor = button.css('cursor');
     button.css('cursor', 'wait');
-    alert(":"+name+":");
     $.get('/dojo/button_dialog/' + name, function(html) {
       button.css('cursor', cursor);
       cd.dialog(html, title, close).dialog('open');
