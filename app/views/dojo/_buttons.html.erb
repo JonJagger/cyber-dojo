@@ -18,12 +18,16 @@ $(function () {
     });
   });
 
+  $('#blog').click(function() {
+    window.open('http://blog.cyber-dojo.org');
+  });
+
 });
 
 //--></script>
 
 <div id="buttons-container">
-  <% buttons = ['about', 'donators', 'faqs',
+  <% buttons = ['about', 'blog', 'donators', 'faqs',
                 'get-started', 'give-feedback', 'tips', 'why'
                ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 

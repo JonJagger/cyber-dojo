@@ -199,7 +199,7 @@ $text-color: darken($lighter-color, 10%);
 }
 
 #faqs, #get-started, #tips,
-#about, #donators, #give-feedback, #why {
+#about, #blog, #donators, #give-feedback, #why {
   font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   @include font-size-small();
   padding: {
