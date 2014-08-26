@@ -132,7 +132,9 @@ $text-color: darken($lighter-color, 10%);
       }
     }
     #please-invoice-me-button {
+      display: block;
       @include font-size-tiny();
+      @include right-align(10px);
     }
     #total-raised {
       color: $lighter-color;
