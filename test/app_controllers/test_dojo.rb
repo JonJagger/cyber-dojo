@@ -124,7 +124,7 @@ class DojoControllerTest  < ControllerTestBase
   # - - - - - - - - - - - - - - - - - - - - - -
 
   test 'button dialogs' do
-    buttons = %w( about donators give-feedback get-started faqs tips why )
+    buttons = %w( donators give-feedback get-started faqs tips why )
     buttons.each do |name|
       get 'dojo/button_dialog', :id => name
       assert_response :success
