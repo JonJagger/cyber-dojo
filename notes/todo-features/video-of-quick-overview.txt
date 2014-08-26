@@ -1,0 +1,11 @@
+
+set up
+enter
+edit
+mention marking a block and tab/shift-tab
+click [test]
+explain traffic-lights rag meaning
+mention revert
+mention fork
+mention toggle-line-numbers
+mention hot-keys?
