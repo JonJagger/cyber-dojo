@@ -11,3 +11,4 @@ install Visual.BASIC? (for Chris Oldwood)
 install J?
 install Java-TestNG?
 install Objective-C?
+install COBOL?

@@ -1,8 +1,8 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-move latest blogspot entry about cyber-dojo diff data onto
-blog.cyber-dojo.org
+add "accu is a" to start of accu advert and hyperlink
+the words accu.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb
   convert path to absolute path if its not
