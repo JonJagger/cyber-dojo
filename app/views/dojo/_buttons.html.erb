@@ -3,7 +3,7 @@
 
 $(function () {
 
-  var buttons = $('#about,#donators,#faqs,#get-started,#give-feedback,#tips,#why');
+  var buttons = $('#donators,#faqs,#get-started,#give-feedback,#tips,#why');
 
   buttons.click(function() {
     var name = $(this).attr('id');
@@ -16,6 +16,10 @@ $(function () {
       button.css('cursor', cursor);
       cd.dialog(html, title, close).dialog('open');
     });
+  });
+
+  $('#about').click(function() {
+    window.open('http://blog.cyber-dojo.org/p/about.html');
   });
 
   $('#blog').click(function() {
