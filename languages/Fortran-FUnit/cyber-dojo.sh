@@ -1,2 +1,2 @@
 funit --clean
-funit hiker_class
+funit hiker

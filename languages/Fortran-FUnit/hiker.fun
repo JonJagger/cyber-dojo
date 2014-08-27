@@ -1,4 +1,4 @@
-test_suite hiker_class
+test_suite hiker
 
 setup
 end setup

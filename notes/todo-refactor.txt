@@ -1,6 +1,8 @@
 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rename dialog_diff() to dialog_history()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 add "accu is a" to start of accu advert and hyperlink
 the words accu.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
