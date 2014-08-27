@@ -4,14 +4,11 @@
 $(function() {
 
   $('#create-button').click(function() {
-
-    if ($.browser.msie) {
-      alert("in MSIE");
-    } else {
+    cd.dialog_ie(function() {
       var id = $('#kata-id-input').val();
       var url = '/setup/show/' + id;
       window.location = url;
-    }
+    });
   });
 
 });
