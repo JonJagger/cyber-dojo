@@ -64,7 +64,8 @@ class ForkerController < ApplicationController
       }
       format.html {
         redirect_to :controller => 'dojo',
-                    :action => "index/#{result[:id]}"
+                    :action => 'index',
+                    :id => result[:id]
       }
     end
   end
