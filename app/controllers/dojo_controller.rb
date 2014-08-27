@@ -2,7 +2,7 @@
 class DojoController < ApplicationController
 
   def index
-    @title = 'Home'
+    @title = 'home'
     @id = id
   end
 

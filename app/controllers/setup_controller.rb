@@ -17,7 +17,7 @@ class SetupController < ApplicationController
     @selected_language_index = choose_language(@languages_names, id, dojo.katas)
     @selected_exercise_index = choose_exercise(@exercises_names, id, dojo.katas)
     @id = id
-    @title = 'Create'
+    @title = 'create'
   end
 
   def save

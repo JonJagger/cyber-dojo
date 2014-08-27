@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
 
   def show
     gather
-    @title = id[0..5] + ' dashboard'
+    @title = 'dashboard'
     # provide these if you want to open the diff-dialog for a
     # specific [avatar,was_tag,now_tag] as the dashboard opens.
     # See also app/controllers/diff_controller.rb
