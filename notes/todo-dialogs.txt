@@ -1,35 +1,10 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
-  Have three tabs: one for diff, one for fork, one for revert ?
-  On test page only show [diff][revert] tabs
-  On dashboard only show [diff][fork]   tabs
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-REVERT-FORK-DIALOG
-  Put line-numbers in?
   Better selection of nonBoringFilenameIndex() ?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
-  Make line-numbes are toggleable on/off?
   When line is hovered, make it so the line-number is also highlit?
-  Make content area slightly wider and deeper to match fork/revert
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-REVERT-FORK-DIALOG
-  remove obvious and complete duplication. Pass in callback function
-  that does the fork/revert. Not quite that easy on inspection...
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-REVERT-FORK-DIALOG
-  make it look similar to diff-dialog
-    don't show the red/green line-counts
-    do show the content with the red/green deleted/added lines
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-REVERT-FORK-DIALOG
-  Hashes of the files, together with filenames, could be used
-  to determine if a traffic-light is reverted.
-  ...
-  Store the hashes in increments.rb ?
-  Yes. Do this as part of .rb -> .json file refactoring towards
-  read-only server?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 DIFF-REVERT-FORK-DIALOG
   Add its own tool-tips

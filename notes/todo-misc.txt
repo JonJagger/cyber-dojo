@@ -1,7 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-blog post on companies using cyber-dojo as part of interview
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 MISC
   Nice dojos for screen shots
   A0FCF4CCBF  (shows the ellision at the rhs is not quite right yet?)
@@ -82,38 +80,3 @@ TOOL-TIPS
   for fork-dialog
   for revert-dialog
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Only offering installed languages
-...
-The intention is (maybe) to use a specific structure for the contents of the
-languages' manifests to enable an automated check to see what is correctly
-installed and working, and to only offer installed and working languages when
-you setup a new coding practice. At the moment when you setup a
-new coding practice all languages/ subfolders are offered.
-
-You can test if a languages' initial fileset is correctly setup as follows
->cd cyberdojo/test/installation
->ruby installation_tests.rb
-
-For each language...
-o) cyber-dojo searches through its manifests' :visible_filenames,
-   in sequence, looking for any that contain the string '42'
-o) If it doesn't find any it will report than language is not
-   configured correcty.
-o) If it finds at least one file containing '42' it will pick the
-   first one as "the-42-file"
-o) It will then use the manifest to [create a kata and run-the-tests]
-   three times as follows:
-   test-1 - with the files unchanged.
-   test-2 - with the 42 in the-42-file replaced by 54
-   test-3 - with the 42 replaced by 4typo2
-o) If test-1 generates a red traffic-light and
-      test-2 generates a green traffic-light and
-      test-3 generates an amber traffic-light then
-   then it will assume the language is installed and working.
-o) If the three tests return three amber traffic-lights then
-   it will assume the language is not configured correctly.
-o) If the three tests return any other combination of traffic-lights
-   it will assume the language is installed but not working.
-
-This approach has a flaw: two or more files can contain '42'...
-This tends to happen for BDD style testing.

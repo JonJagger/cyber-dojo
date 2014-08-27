@@ -3,7 +3,7 @@ SEARCH-AND-REPLACE (15)
   button just below new/rename/delete
   opens dialog
   files?  defaults to current file, can enter regex if you want
-  --search-for: defaults to content selected in editor (or "")
+    search-for: defaults to content selected in editor (or "")
   replace-with: defaults to content selected in editor (or "")
   both have dropdown history
   and [button]

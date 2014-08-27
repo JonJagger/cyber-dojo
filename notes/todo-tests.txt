@@ -1,8 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-test_all_languages.rb is needlessly slow. Do red/amber/green
-in the same dojo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 test_all_languages.rb
 Has hacked in support for Java-1.8_Cucumber
 To do properly I need to be able to string-sub different
