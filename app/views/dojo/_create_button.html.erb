@@ -4,9 +4,14 @@
 $(function() {
 
   $('#create-button').click(function() {
-    var id = $('#kata-id-input').val();
-    var url = '/setup/show/' + id;
-    window.location = url;
+
+    if ($.browser.msie) {
+      alert("in MSIE");
+    } else {
+      var id = $('#kata-id-input').val();
+      var url = '/setup/show/' + id;
+      window.location = url;
+    }
   });
 
 });
