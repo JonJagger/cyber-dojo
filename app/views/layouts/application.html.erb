@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,12 +26,37 @@
     <script type="text/javascript">
       var cd = cyberDojo;
     </script>
+
+    <script type="text/javascript">
+      $(function() {
+
+        $('#terms-and-conditions').click(function(event) {
+            event.preventDefault();
+            var name = $(this).attr('id');
+            var close = 'close'; //$(this).data('close');
+            var title = $(this).text();
+            var button = $(this);
+            var cursor = button.css('cursor');
+            button.css('cursor', 'wait');
+            $.get('/dojo/button_dialog/' + name, function(html) {
+              button.css('cursor', cursor);
+              cd.dialog(html, title, close).dialog('open');
+            });
+        });
+
+      });
+    </script>
+
   </head>
 
   <body>
     <div id="cyber-dojo-page">
       <%= yield %>
       <%= render "shared/locales" %>
+    </div>
+    <div id="footer">
+      Created by <a href="http://jonjagger.blogspot.co.uk/" target="_blank">Jon Jagger</a>,
+      <a id="terms-and-conditions" href="..">terms and conditions</a>
     </div>
   </body>
 </html>

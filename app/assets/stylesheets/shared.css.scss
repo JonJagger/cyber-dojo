@@ -79,6 +79,15 @@
   margin-right: 5px;
 }
 
+#footer {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 0px;
+    padding: 5px;
+    background: lighten($darker-color, 6%);
+}
+
 //----------------------------------------------
 
 .avatar_name, #id {

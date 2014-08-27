@@ -131,10 +131,12 @@ $text-color: darken($lighter-color, 10%);
         right: 5px;
       }
     }
-    #please-invoice-me-button {
+    #please-invoice-me {
       display: block;
       @include font-size-tiny();
-      @include right-align(10px);
+      text-align: right;
+      margin-right: 10px;
+      padding-bottom: 15px;
     }
     #total-raised {
       color: $lighter-color;
