@@ -80,12 +80,13 @@
 }
 
 #footer {
-    position: fixed;
-    width: 100%;
-    text-align: center;
-    bottom: 0px;
-    padding: 5px;
-    background: lighten($darker-color, 6%);
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  bottom: 0px;
+  padding: 5px;
+  background: lighten($darker-color, 6%);
+  color: $lighter-color;
 }
 
 //----------------------------------------------
