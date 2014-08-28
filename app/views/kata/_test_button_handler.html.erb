@@ -25,7 +25,7 @@ $(function() {
     cd.storeOutgoingFileHashes();
     $.ajax({
       timeout: 30000, // 30 seconds (twice server timeout)
-      type: "GET",
+      type: "POST",
       url: form.attr('action'),
       data: form.serialize(),
       beforeSend: function(xhr,settings) {
