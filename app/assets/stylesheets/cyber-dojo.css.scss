@@ -117,7 +117,7 @@ div[class~="filename"], button[disabled]:hover {
   display: none;
 }
 
-.line_numbers, .file_content { height: 570px; }
+.line_numbers, .file_content { height: 620px; }
 
 .line_numbers, .file_content, .diff_line_numbers, #instructions { @include code-font; }
 
