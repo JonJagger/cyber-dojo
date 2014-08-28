@@ -4,10 +4,9 @@
 $(function() {
 
   var dashboard = $('#dashboard-page');
-
   var lights = $('.diff-traffic-light', dashboard);
   var showRevert = false;
-  cd.setupTrafficLightOpensDiffDialogHandlers(lights,showRevert);
+  cd.setupTrafficLightOpensHistoryDialogHandlers(lights,showRevert);
 
   var bulbCounts = $('#traffic-lights .traffic-light-count', dashboard);
   cd.setupTrafficLightCountOpensCurrentDiff(bulbCounts,showRevert);

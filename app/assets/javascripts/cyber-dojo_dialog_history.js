@@ -3,7 +3,7 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.setupTrafficLightOpensDiffDialogHandlers = function(lights,showRevert) {
+  cd.setupTrafficLightOpensHistoryDialogHandlers = function(lights,showRevert) {
 	lights.click(function() {
 	  var light = $(this);
 	  var id = light.data('id');
@@ -11,9 +11,7 @@ var cyberDojo = (function(cd, $) {
 	  var wasTag = light.data('was-tag');
 	  var nowTag = light.data('now-tag');
 	  var maxTag = light.data('max-tag');
-	  cd.dialog_diff(id, avatarName,
-					 wasTag, nowTag, maxTag,
-					 light, showRevert);
+	  cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,light,showRevert);
 	});
   };
 
@@ -35,18 +33,16 @@ var cyberDojo = (function(cd, $) {
 		' Click to review ' + avatarName + "'s current code.";
 	  count.attr('title', toolTip);
 	  count.click(function() {
-	    cd.dialog_diff(id, avatarName,
-					   wasTag, nowTag, maxTag,
-					   count, showRevert);
+	    cd.dialog_history(id,avatarName,wasTag, nowTag, maxTag,count,showRevert);
 	  });
 	});
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_diff = function(id, avatarName,
-							wasTag, nowTag, maxTag,
-							diffLight, showRevert) {
+  cd.dialog_history = function(id, avatarName,
+							   wasTag, nowTag, maxTag,
+							   diffLight, showRevert) {
 	// diffLight isn't necessarily a traffic-light.
 	// It is whatever dom element's click handler causes
 	// dialog_diff() to be called.
@@ -170,7 +166,6 @@ var cyberDojo = (function(cd, $) {
       div.append('<div id="diff-content"></div>');
 	  div.append('<div id="diff-controls">' +
 				  '<table>' +
-					//trTd(makeDiffInfo()) +
 					trTd(makeDiffTagControl()) +
 				  '</table>' +
 				  '<table>' +
@@ -673,7 +668,7 @@ var cyberDojo = (function(cd, $) {
     diffDialog.dialog('open');
 
 
-  }; // cd.dialog_diff = function(id, avatarName, wasTag, nowTag, maxTag) {
+  }; // cd.dialog_history = function(id, avatarName, wasTag, nowTag, maxTag) {
 
 
   return cd;

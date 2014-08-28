@@ -1,10 +1,13 @@
 
-
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rename dialog_diff() to dialog_history()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add "accu is a" to start of accu advert and hyperlink
-the words accu.
+having all the output-parse functions in the same module
+feels wrong. How about putting the function in its own colour.rb
+file which is eval'd. Then I could have a map where the keys
+were the unit_test_framework string and the values were the
+functions. Each language/ folder would have its own colour.rb
+file which would somehow insert itself into the map.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Dojo.rb
   convert path to absolute path if its not
