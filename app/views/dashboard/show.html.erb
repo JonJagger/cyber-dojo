@@ -38,9 +38,14 @@ $(function() {
         <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
-        <%= render :partial => 'help_button' %>
-        <%= render :partial => 'shared/info' %>
       </td>
     </tr>
   </table>
+</div>
+
+<div id="footer">
+  created by <a href="http://jonjagger.blogspot.co.uk/" target="_blank">Jon Jagger</a>,
+  <a id="terms-and-conditions" href="..">terms and conditions</a>
+  <%= render :partial => 'help_button' %>
+  <%= render :partial => 'shared/info' %>
 </div>

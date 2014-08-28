@@ -19,14 +19,9 @@
     }
   }
 
-  #help-button-container {
-    display: inline-block;
-    @include right-align(0px);
-    margin-top: 5px;
-    #help-button {
-      font-size: 1em;
-      @include rounded-corner(14px);
-    }
+  #help-button {
+    font-size: 1em;
+    @include rounded-corner(14px);
   }
 
   #progress-button-container {

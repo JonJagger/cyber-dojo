@@ -69,7 +69,6 @@ var cyberDojo = (function(cd, $) {
 	  click: function() {
 		var newFilename = $.trim(input.val())
 		cd.newFileContent(newFilename, '');
-	    cd.refreshLineNumbersColor();
 		$(this).remove();
 	  }
 	};
