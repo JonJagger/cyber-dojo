@@ -6,11 +6,6 @@
 Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-drop line-numbers check-box. Just have line-numbers.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on test page, the line-number checkbox and info(id,language,test-framework)
-and (?) button could all go onto the footer. Same for dashboard page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dialog_history() js function still has some s/diff/history
