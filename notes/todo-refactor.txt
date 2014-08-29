@@ -1,5 +1,6 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+setup page needs footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog move file-nave from rhs to lhs?
 move revert fork into their own box?
@@ -14,6 +15,10 @@ increase width of textarea slightly.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+dashboard - when user clicks auto-refresh off
+that could be the event that causes the checkboxes for each
+animal to appear...
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
