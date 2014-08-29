@@ -36,7 +36,8 @@ Finer-grained commits
       now-tag = 31
   ...
   What about revert/fork dialogs?
-  Allow forking from a light or a tag? Light I think
+  Allow forking from a light or a tag? Light only I think
+  Don't show traffic-light at all for tag that is not for a test.
   ...
   What about backward compatibility?
   Will the light/tag distinction collapse silently
