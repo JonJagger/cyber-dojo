@@ -1,7 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-setup page needs footer.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog move file-nave from rhs to lhs?
 move revert fork into their own box?
 increase size of << < > >> navigator.
