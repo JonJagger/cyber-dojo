@@ -2,10 +2,6 @@
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog move file-nave from rhs to lhs?
 move revert fork into their own box?
-increase size of << < > >> navigator.
-can the [11 pie avatar] go onto the title?
-drop 11 pie ?
-put avatar image onto title so its [image] history
 increase width of textarea slightly.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [learn more] button. Place this underneath

@@ -355,8 +355,8 @@ var cyberDojo = (function(cd, $) {
 	  }
       return '' +
 		"<img src='/images/" + 'traffic_light_' + colour + ".png'" +
-		     "width='15'" +
-		     "height='46'/>";
+		     "width='10'" +
+		     "height='32'/>";
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
