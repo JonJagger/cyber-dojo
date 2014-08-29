@@ -11,8 +11,8 @@ var cyberDojo = (function(cd, $) {
 			 'id="' + name + '_button">' +
 		  '<img src="/images/triangle_' + name + '.gif"' +
 			  ' alt="move to ' + name + ' diff"' +
-			  ' width="20"' +
-			  ' height="20" />' +
+			  ' width="25"' +
+			  ' height="25" />' +
 		'</button>';
 	};
 

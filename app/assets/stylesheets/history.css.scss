@@ -19,7 +19,7 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#diff-dialog {
+#history-dialog {
 
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
   background: $darker-color;
@@ -58,9 +58,6 @@
     .tag-control {
       @include ghost-panel(5px);
     }
-    .traffic-light-count {
-      @include font-size-large;
-    }
   }
 
   .filename {
@@ -69,14 +66,19 @@
 
   #was-traffic-light, #now-traffic-light {
     margin: {
-      left : 0.5em;
-      right: 0.5em;
+      right: 0.25em;
+    }
+  }
+
+  #now-traffic-light {
+    margin: {
+      left : 0.25em;
     }
   }
 
   #was-tag-number, #now-tag-number {
     @include editable_tag_number;
-    font-size: 1.1em;
+    font-size: 0.75em;
   }
 
   #diff-filenames {

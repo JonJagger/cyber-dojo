@@ -59,29 +59,6 @@ var cyberDojo = (function(cd, $) {
 	  return $(node).clone().wrap('<p/>').parent().html();
 	};
 
-	var makeDiffInfo = function() {
-	  var countSelector = '[data-avatar-name=' + avatarName + ']';
-	  var count = $('[class^=traffic-light-count]' + countSelector);
-	  var pieSelector = '[data-key=' + avatarName + ']';
-	  var pie = $('[class^=pie]' + pieSelector);
-	  return '' +
-	    '<table id="diff-info">' +
-		  '<tr>' +
-		    '<td>' +
-			  allHtml(count) +
-			'</td>' +
-		    '<td>' +
-			  allHtml(pie) +
-			'</td>' +
-		    '<td>' +
-			  '<img height="30"' +
-				  ' width="30"' +
-				  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
-			'</td>' +
-		  '</tr>' +
-		'</table>';
-	};
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var td = function(html) {
@@ -153,7 +130,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffDiv = function()  {
       var div = $('<div>', {
-        'id': 'diff-dialog'
+        'id': 'history-dialog'
       });
 	  var trTd = function(html) {
 		return '' +
@@ -173,10 +150,6 @@ var cyberDojo = (function(cd, $) {
 					'<td>' +
 					  cd.makeNavigateButtons() +
 					'</td>' +
-					'<td>&nbsp;&nbsp;&nbsp;</td>' +
-					'<td>' +
-					  makeDiffInfo() +
-	                '</td>' +
 					'</tr>' +
 				  '</table>' +
 				  '<table>' +
@@ -607,9 +580,15 @@ var cyberDojo = (function(cd, $) {
 	  diffDialog.remove();
 	};
 
+	var title = '' +
+	  '<img height="30"' +
+	  ' width="30"' +
+	  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
+      ' history';
+
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
-	  title: cd.dialogTitle('history'),
+	  title: cd.dialogTitle(title),
 	  width: 1150,
 	  height: 670,
 	  modal: true,
@@ -619,7 +598,6 @@ var cyberDojo = (function(cd, $) {
 		}
 	  },
 	  open: function() {
-		cd.pieChart($('.pie', diffDiv));
 		refresh();
 	  }
 	}).on('keydown', function(event) {
