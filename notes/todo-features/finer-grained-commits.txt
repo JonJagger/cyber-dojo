@@ -1,0 +1,168 @@
+
+Finer-grained commits
+=====================
+  do a commit (on server) when an animal switches from one file
+  to another file, or creates a new file, or renames a file,
+  or deletes a file. This would allow you to see if the first code
+  entered was code or test code. And also file navigation.
+
+  These calls need to be synchronous I think.
+  Making them synchrononus helps to keep the code simple.
+  o) do the update on the browser (eg file rename)
+  o) switch to wait cursor (for whole page,not just button)
+  o) put up hatched jQuery like page background?
+  o) do ajax call
+  o) remove hatched background, restore cursor (always)
+  o) if it fails
+  o)     undo the change
+  o)     open small modal popup saying there was an error
+
+  history diff navigator
+  ----------------------
+  currently its << < > >>
+  Add a third inner control for between-light tags
+  <<| <| < > |> |>>
+  If there is no tag between lights then the innermost < >
+  controls will be disabled.
+  So if
+      was-tag = 23  (red)
+      now-tag = 31  (green)
+    and there are 8 'micro' tags between those traffic-lights
+    then clicking > micro control will change to
+      was-tag = 31
+      now-tag = 32
+    or clicking < micro control will change to
+      was-tag = 30
+      now-tag = 31
+  ...
+  What about revert/fork dialogs?
+  Allow forking from a light or a tag? Light I think
+  ...
+  What about backward compatibility?
+  Will the light/tag distinction collapse silently
+  for reviewing dojos done before the tag-commits?
+  ...
+  Reduce size of tag input-edits. The most common navigation
+  by far is using the << < > >> buttons.
+
+  serialization
+  -------------
+  Also need to change the serialization so it only
+  serializes the current single change.
+  This should be easy to do based on the file-hashes.
+
+  what counts as a tag?
+  ---------------------
+  If you move from one file to another but no content
+  has changed then this will *not* be stored as a tag on
+  the server.
+
+  If you hit test again, this will result in a new tag (same as now).
+
+  diff-visualization
+  ------------------
+  On replaying a < > diff how will I visualize that the diff
+  is a new file?
+  is a renamed file?
+  is a deleted file?
+
+  dashboard-visualization
+  -----------------------
+  The dashboard could also show two numbers, the big one (number
+  of lights) and a small one (number of tags).
+       11 (pie) [lion] 92
+
+
+  Suppose you edit a file and then press [test].
+  I was this as one tag. From the devs point of view it is
+  a single action. Also, it means you can easily tell
+  if they pressed test and there were no diffs since
+  that is the only way you'll get a diff where the only
+  file that changes is the output file.
+
+      o) new file
+         $.ajax({
+           url: new_file,
+           dataType: 'json',
+           async: false,
+           data: { filename:filename, id:id, avatar:name }, // tag? I think no
+           before: function() {
+             //set cursor to wait
+             //add transparent overlay?
+           },
+           success: function() {
+             //update incoming file-hashes
+           },
+           error: function() {
+             //revert the change
+             //revert the file-hashes
+             //write message to output/popup
+           },
+           complete: function() {
+             //remove transparent overlay
+             //set cursor back
+           });
+
+      o) deleted file
+           very similar but for deleted file
+            do I need to record which file is the one shown
+            after the delete? Can't choose instructions as
+            some katas may not have an instructions file.
+            Only guaranteed files are cyber-dojo.sh
+            and output. Both boring.
+            Simplest is to pick the next one in the filenames
+            list. Or one with 'test' in its name?
+
+      o) renamed file = old-name new-name
+           very similar, was-filename, now-filename
+           will result in $git mv
+           on the server.
+
+
+  interesting
+  -----------
+  If the most recently edited file was test code is the chance
+  of a non-amber higher than if it was non-test code?
+
+  scratch
+  -------
+
+  How to store the finer-grained increments on the server?
+  Adapt existing?
+  Add reason property which defaults to :test
+  New non-test commits can have their own reason, with specific data related to the reason.
+  New non-test commits can all have white traffic-light
+  Existing << < > >> navigation moves through non-white traffic-lights.
+
+  Possible design of new << < > >> navigator
+  Add third type of < > button.
+  One whose triangle is not filled in.
+  This would move one tag-commit event. Above this would still be
+  the editable tag numbers and the lights
+   This suggests putting the < > buttons underneath the tags
+   (which they work on) and the the <| |> buttons underneath
+   the lights (which they work on)
+   Move animal image. Repeat count and pie chart from dashboard.
+   Add tag-commit count.
+       11 (pie) [lion] 92
+            light |tag| |tag| light
+        <<||   <|    <   >    |>    ||>
+   Also add tag-number to each light.
+       11 (pie) [lion] 92
+        tag-light |tag| |tag| light-tag
+        <<||   <|    <   >    |>    ||>
+
+
+  This raises the idea of *not* trying to open the
+  'most changed file' when you navigate. Instead
+  open the file that was the one switched to. This is
+  simpler and perhaps more in keeping with the review aspect.
+  It means the file could be cyber-dojo.sh or output.
+  It also suggests recording the scroll-position of the
+  file when it is re-played. This allows you to see
+  exactly what the player saw when they switched to that file.
+  Could even save scrollbar movements.
+  Could of course save character by character edits!
+  Or do a tag-commit if there hasn't been one for 1 minute.
+  Or do a tag-commit if the diff amount gets beyond a threshold.
+
