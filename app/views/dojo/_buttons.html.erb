@@ -3,7 +3,7 @@
 
 $(function () {
 
-  var buttons = $('#donators,#faqs,#get-started,#give-feedback,#tips,#why');
+  var buttons = $('#donators,#get-started,#give-feedback,#tips,#why');
 
   buttons.click(function() {
     var name = $(this).attr('id');
@@ -20,6 +20,10 @@ $(function () {
 
   $('#about').click(function() {
     window.open('http://blog.cyber-dojo.org/p/about.html');
+  });
+
+  $('#faqs').click(function() {
+    window.open('http://blog.cyber-dojo.org/2014/08/cyber-dojo-why-dont-you-add.html');
   });
 
   $('#blog').click(function() {

@@ -92,16 +92,6 @@ en:
                      efforts. We are delighted to sponsor the cyber-dojo project
                      by contributing $1000."
       
-    faqs:
-      why_dont_you_add_syntax_highlighting: "why don't you add syntax highlighting ?"
-      why_dont_you_add_auto_refactoring: "why don't you add auto-refactoring ?"
-      why_dont_you_add_dot_dot_dot: "why don't you add ... ?"
-      no_listen: "no. listen."
-      stop_trying_to_go_faster: "stop trying to go faster, start trying to go <em>slower</em>."
-      dont_think_about_finishing: "don't think about finishing, think about <em>improving</em>."
-      think_about_practising_as_a_team: "think about <em>practising</em>, as a <em>team</em>."
-      thats_what_cyberdojo_is_built_for: "that's what cyber-dojo is built for."
-      
     kata_help:
       opens_a_home_page: "opens a<br/>home<br/>page"
       opens_a_dashboard_page: "opens a<br/>dashboard<br/>page"

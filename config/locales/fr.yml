@@ -98,16 +98,7 @@ fr:
                      brillant avenir. Merci de votre contribution à nos efforts
                      de formation. Nous sommes ravis de parrainer le projet
                      cyber-dojo en contribuant de 1000 $."
-      
-    faqs:
-      why_dont_you_add_syntax_highlighting: "Pourquoi n'avez-vous pas ajouter la coloration syntaxique?"
-      why_dont_you_add_auto_refactoring: "Why don't you add auto refactoring ?"
-      why_dont_you_add_dot_dot_dot: "Pourquoi ajoutez-vous pas ... ?"
-      no_listen: "No. Écoutez. Arrêtez d'essayer d'aller plus vite, commencer à essayer d'aller plus <em>lentement</em>."
-      dont_think_about_finishing: "Ne pas penser à la finition, penser à <em>améliorer</em>."
-      think_about_practising_as_a_team: "Pensez à <em>pratiquer</em> en <em>équipe</em>."
-      thats_what_cyberdojo_is_built_for: "C'est ce cyber-dojo est construit pour."
-            
+                  
     kata_help:
       opens_a_home_page: "ouvre une<br/>page<br/>d'accueil"
       opens_a_dashboard_page: "ouvre une<br/>page<br/>dashboard"
