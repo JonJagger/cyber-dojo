@@ -3,7 +3,7 @@
 
 $(function() {
 
-  $('#create').click(function() {
+  $('#ok').click(function() {
     var exercise = $('[id^=exercise_][class~=selected]').data('exercise');
     var language = $('[id^=language_][class~=selected]').data('language');
     $.getJSON('/setup/save', {
@@ -20,6 +20,6 @@ $(function() {
 //--></script>
 
 <button type="button"
-        id="create">
-  <%= t("views.buttons.create") %>
+        id="ok">
+  <%= t("views.buttons.ok") %>
 </button>

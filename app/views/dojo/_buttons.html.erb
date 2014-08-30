@@ -3,7 +3,7 @@
 
 $(function () {
 
-  var buttons = $('#get-started,#give-feedback,#tips,#why');
+  var buttons = $('#give-feedback,#tips,#why');
 
   buttons.click(function() {
     var name = $(this).attr('id');
@@ -22,6 +22,10 @@ $(function () {
     window.open('http://blog.cyber-dojo.org/p/about.html');
   });
 
+  $('#blog').click(function() {
+    window.open('http://blog.cyber-dojo.org');
+  });
+
   $('#donators').click(function() {
     window.open('http://blog.cyber-dojo.org/2014/08/donators.html');
   });
@@ -30,8 +34,8 @@ $(function () {
     window.open('http://blog.cyber-dojo.org/2014/08/cyber-dojo-why-dont-you-add.html');
   });
 
-  $('#blog').click(function() {
-    window.open('http://blog.cyber-dojo.org');
+  $('#get-started').click(function() {
+    window.open('http://blog.cyber-dojo.org/2014/08/getting-started.html');
   });
 
 });
