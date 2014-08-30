@@ -3,7 +3,7 @@
 
 $(function () {
 
-  var buttons = $('#donators,#get-started,#give-feedback,#tips,#why');
+  var buttons = $('#get-started,#give-feedback,#tips,#why');
 
   buttons.click(function() {
     var name = $(this).attr('id');
@@ -20,6 +20,10 @@ $(function () {
 
   $('#about').click(function() {
     window.open('http://blog.cyber-dojo.org/p/about.html');
+  });
+
+  $('#donators').click(function() {
+    window.open('http://blog.cyber-dojo.org/2014/08/donators.html');
   });
 
   $('#faqs').click(function() {
