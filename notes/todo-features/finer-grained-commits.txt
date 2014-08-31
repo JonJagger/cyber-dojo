@@ -167,3 +167,168 @@ Finer-grained commits
   Or do a tag-commit if there hasn't been one for 1 minute.
   Or do a tag-commit if the diff amount gets beyond a threshold.
 
+-----------------------------
+
+Code currently does this...
+
+  def tags
+    # one tag for initial start_avatar
+    # + one tag for each light. See comment below.
+    (0..increments.length).map{ |n| Tag.new(self,n,git) }
+  end
+
+  def lights
+    increments.map { |inc| Light.new(self,inc) }
+  end
+
+What is inside the increments.json file?
+Each entry currently looks like this...
+{"colour":"red","time":[2014,8,27,5,49,5],"number":1}
+How about putting a colour:white entry for tags that
+are not traffic-lights? The tags stays the same and
+lights would have to select the tags that are not white.
+
+Then I need to look at diff-control moving forward/backward
+one traffic-light since it will not longer be a straight +1 -1.
+The +1 -1 movement currently in place will become the movement
+for the individual tags. I will need to add code and buttons
+for traffic-light movement.
+If traffic-light tags are sequential it means there are no
+fine-grained commits and the fine-grained commits can be
+disabled.
+The tag numbers displayed currently are traffic-light numbers.
+In the new scheme will these be traffic-light numbers or
+will they be tag numbers?
+I think they should be traffic-light numbers.
+Display stays basically the same as now.
+But there are extra < > buttons for fine-grained commits
+between two traffic-lights if they exist.
+Hmmm. But what is the initial display?
+Suppose it is off tag 0 to tag 1 (white to red say)
+There are no fine-grained commits inside those
+so < > fine grained controls are disabled.
+So you click >> to move to next traffic-light.
+Now you see tag 1 to tag 8 because there are 7
+fine-grained commits and the < > fine-grained commit controls
+are enabled. Or rather only the > fine-grained commit control
+is enabled? So what happens if you click >
+Does the display switch to tag-1 vs tag-2
+Feels clumsy.
+Suppose the default is tag movement not light movement.
+Feels good in terms of cyber-dojo aim of maximizing feedback.
+So perhaps there is now just the << < > >> controls as there is now.
+< > move single tags. To move traffic-lights there is a different
+control? What lights are displayed when you are moving through tags?
+Only really makes sense to display the was-traffic-light...
+Hmmm. Why do I offer forwards and backwards navigation
+symmetrically? Why not have start, move forward, or go back to
+beginning again style controls. And single tag-number.
+You can move forward from that tag by one traffic-light or by
+one fine-grained tag. This also simplifies the fork/revert
+button since there is only ever one tag number and traffic-light
+displayed. This also means the tag-number + light can go in the
+middle of the << <| < > |> >> controls.
+And fork/revert buttons could go to bottom as large buttons?
+
+Presumably the fork/revert buttons should only be enabled
+if the current tag corresponds to a traffic-light?
+
+So if tag-number displayed is (say) 23
+then what is being displayed? Presumably 22-23 tag diff.
+So perhaps the single tag control should contain two numbers
+after all. Or maybe two but only one is editable.
+Viz simplify the control so the tag-gap is always 1.
+
+Getting complicated. Thinking maybe I should have toggle.
+If there are fine-grained commits then you get the
+option to move (via a separate control) between these
+and the main traffic-lights retain the current display.
+
+How about everything stays the same, but
+if there are fine-grained commits between
+was-tag and now-tag (which are 1 apart)
+then fine-grained < > tags are enabled
+which, when you click then, do not change
+the was-tag and now-tag. Viz the tags retain
+their current meaning as traffic-light
+numbers.
+
+Back to symmetry.
+Why not have non << button to rewind to start.
+Then just have > >> buttons.
+Or > |> >> buttons including fine-grained.
+
+How about traffic-light is *not* shown when we are on
+a fine-grained commit. Like that.
+
+Suppose I have a separate display of the
+lights. Suppose it displays at most previous 3
+and future 3 lights. So you can see
+  R A G G R R R
+and a cursor either points at one of these lights
+  R A G G R R R
+      ^15
+or at the gap between two lights.
+  R A G G R R R
+       ^15
+
+I could show 2-3
+and then the fine-grained commits are
+done as fractions between 2 and 3, viz
+1/4 (4-5),
+2/4,(5-6)
+3/4,(6-7)
+4/4,(7-8)
+
+There is a tension between showing the traffic-lights
+are 2-3 (and not their tag numbers) and the ability
+to seleect and two tags to diff between.
+
+How about 4 tag-numbers being displayed
+2-3 which are traffic-lights
+and also
+4-8 which are fine-grained commits meaning
+there were 4 commits between lights 2 and 3.
+Or...
+Have just 4-8 are the (editable) tags
+and the traffic-lights that are displayed
+are calculated from 4 and 8 (as 2 3)
+but the 2 and 3 are not editable.
+
+So  2 == (4)-(5) <  3
+
+
+Here's a completely different idea. For lights 2-3 suppose
+the filenames show
+2 3 Wibble.java
+0 0 instructions
+4 5 WibbleTest.java
+0 0 cyber-dojo.sh
+Simply have numbers indicating the order
+the files were edited in. Viz
+
+2 3 Wibble.java  1,3
+0 0 instructions
+4 5 WibbleTest.java  2,4
+0 0 cyber-dojo.sh
+
+which indicates that Wibble.java was edited first,
+then WibbleTest.java second etc.
+Now if you click the 1 on
+2 3 Wibble.java  1,3
+it will show you the diff of that file.
+
+Perhaps I should make the main history a proper page
+in its own right. Then the fine-grained commit
+could be a dialog inside that. Like this idea.
+Page in its own right might help google searchability.
+Would also be nice target for URLs.
+And it could mimic the layout of test and dashboard pages
+more closely. Viz it could show the traffic-light sequence
+across the top. Retain tag numbers and editability
+but have was-tag and now-tag traffic-lights on the top
+sequence with a different background so they both stand out.
+
+Display could be done like this... better since horizontal == time
+Wibble.java      1   3 ....
+WibbleTest.java    2   4 ......
