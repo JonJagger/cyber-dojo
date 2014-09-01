@@ -2,15 +2,15 @@
 
 var cyberDojo = (function(cd, $) {
   "use strict";
-  
+
   cd.dialogTitle = function(title) {
     return '<span class="large dialog title">' + title + '<span>';
   };
-  
+
   cd.dialog = function(html, title, close) {
     var i18nButtons = { };
     i18nButtons[close] = function() {
-      $(this).dialog('close');      
+      $(this).remove();
     };
     return $('<div>')
       .html(html)
