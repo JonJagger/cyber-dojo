@@ -27,21 +27,6 @@
       var cd = cyberDojo;
     </script>
 
-    <script type="text/javascript">
-      $(function() {
-
-        $('#terms-and-conditions').click(function(event) {
-            event.preventDefault();
-            var name = $(this).attr('id');
-            var title = $(this).text();
-            $.get('/dojo/button_dialog/' + name, function(html) {
-              cd.dialog(html, title, 'close').dialog('open');
-            });
-        });
-
-      });
-    </script>
-
   </head>
 
   <body>
