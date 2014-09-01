@@ -5,9 +5,6 @@ dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 On the blog put my picture in the ABOUT ME section.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-[learn more] button. Place this underneath
-"the place to practice programming" on home page.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

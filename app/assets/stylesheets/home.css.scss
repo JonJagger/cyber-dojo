@@ -35,7 +35,7 @@ $text-color: darken($lighter-color, 10%);
 
   #learn-more-button {
     position: relative;
-    top: -35px;
+    top: -33px;
   }
 
   td#column-main {
@@ -48,21 +48,9 @@ $text-color: darken($lighter-color, 10%);
       left: 0px;
     }
   }
-  td#column-buttons, td#column-donate {
+  td#column-donate {
     padding-left: 20px;
     width: 200px;
-  }
-  td#column-buttons {
-    width: 150px;
-  }
-  .show-dialog-button {
-    display: inline-block;
-    text-align: right;
-    margin: 0 auto 12px auto;
-    border: solid 1px Gray;
-    width: 125px;
-    font-size: 12pt;
-    color: lighten($darker-color, 6%);
   }
 
   #create-button-info, #enter-id-info, #enter-info, #reenter-info, #review-info {
@@ -106,11 +94,6 @@ $text-color: darken($lighter-color, 10%);
   }
   #review-button {
     margin-bottom: 40px;
-  }
-
-  #buttons-container {
-    @include ghost-panel(15px);
-    margin-bottom: 10px;
   }
 
   #donate-container {
@@ -203,37 +186,6 @@ $text-color: darken($lighter-color, 10%);
   }
 }
 
-.faqs.dialog, .get-started.dialog, .tips.dialog,
-.about.dialog, .donators.dialog, .give-feedback.dialog, .why.dialog {
-  font-size: 12pt;
-}
-
-#faqs, #get-started, #tips,
-#about, #blog, #donators, #give-feedback, #why {
-  font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-  @include font-size-small();
-  padding: {
-    left: 0.3em;
-    right: 0.5em;
-  }
-  text-align: right;
-  width: 50px;
-}
-
-
-
-.get-started.dialog {
-  .kata-id-input {
-    font-family: Impact, Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
-    background: lighten($green, 20%);
-    color: $darker-color;
-    text-align: center;
-    width: 270px;
-    margin-left: 0px;
-    @include gradient-lighten($green, 40%, 30%, 20%);
-  }
-}
-
 a:link, a:visited
 {
   color: $text-color;
@@ -244,10 +196,6 @@ a:link, a:visited
   color: $text-color;
   @include font-size-small();
 }
-
-
-
-
 
 #get_a_new_practice_id
 {

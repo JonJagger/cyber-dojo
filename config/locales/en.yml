@@ -19,7 +19,7 @@ en:
       zebra: "zebra"
       
     labels:
-      the_place_to_practice_programming: "the place to <a href='http://jonjagger.blogspot.co.uk/p/cyber-dojo_2380.html'>practice</a> programming"
+      the_place_to_practice_programming: "the place to practice programming"
       get_a_new_practice_id: "get a new id"
       enter_the_practice_id: "on <em>each</em> computer enter the same id"
       please_donate: "if you find cyber&#8209;dojo useful please donate.
@@ -53,17 +53,7 @@ en:
       enter: "enter"
       reenter: "re&#8209;enter"
       review: "review"
-      
-      faqs: "faqs"
-      get-started: "get&nbsp;started"
-      tips: "tips"
-      
-      about: "about"
-      blog: "blog"
-      donators: "donators"
-      give-feedback: "give&nbsp;feedback"
-      why: "why"
-      
+            
       test: "test"
       new_file: "new"
       rename_file: "rename"
@@ -71,16 +61,6 @@ en:
       fork: "fork"
       revert: "revert"
       download: "download"
-
-    feedback:
-      please: "please"
-      email_me: "email me"
-      what_did_you_like_dislike: "What did you like?<br/>What did you dislike?"
-      what_worked_failed: "What worked?<br/>What didn't?"
-      what_should_i_add_remove: "What should I add?<br/>What should I remove?"
-      
-    tips:
-      think_about_improving_not_finishing: "Think about improving, not finishing"
       
     kata_help:
       opens_a_home_page: "opens a<br/>home<br/>page"
@@ -96,4 +76,3 @@ en:
       open_the_next_lit_file: "cycles forwards through the lit files"
       open_the_previous_lit_file: "cycles backwards through the lit files"
       
-    dashboard:
