@@ -19,11 +19,6 @@
     }
   }
 
-  #help-button {
-    font-size: 1em;
-    @include rounded-corner(14px);
-  }
-
   #progress-button-container {
     @include right-align(12px);
     text-align: right;

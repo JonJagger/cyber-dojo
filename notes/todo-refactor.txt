@@ -1,8 +1,9 @@
 
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on history dialog move file-nave from rhs to lhs?
-move revert fork into their own box?
-increase width of textarea slightly.
+dashboard scrollbar could move down so it rests on top of the footer.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+On the blog put my picture in the ABOUT ME section.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [learn more] button. Place this underneath
 "the place to practice programming" on home page.
@@ -10,11 +11,43 @@ increase width of textarea slightly.
 Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+when tips dialog opens it needs to scroll to top.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add vision dialog to front page?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add interviewing dialog to front page?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+add terms-of-use button on front page?
+use in general is free, but I encourage commercial users to
+make a contribution to support maintenance and further
+development of cyber-dojo.
+Say how to do this using the invoice button.
+Add [invoice-me] button to home page.
+Ask Joanne about setting up separate account for this first.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+on footer just have  [terms & conditions] [tweet]
+this links to page on cyber-dojo blog.
+This mentions...
+o) cyber-dojo is a non-profit charitable trust
+o) money raised is used solely to cover hosting costs
+   and buy raspberry pi computers for kids.
+o) cyber-dojo free for non-commercial use
+o) I strongly encourage corporate users to make a donation
+o) I suggest $99 per year.
+o) A private, unshared cyber-dojo server offering extra security
+   or responsiveness costs $250 per year.
+o) If you require an invoice, please email me.
+o) cyber-dojo is provided with no warranty etc etc
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+on history dialog move file-nave from rhs to lhs?
+move revert fork into their own box?
+increase width of textarea slightly.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard - when user clicks auto-refresh off
 that could be the event that causes the checkboxes for each
 animal to appear...
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dialog_history() js function still has some s/diff/history
 refactorings to do.
@@ -66,20 +99,6 @@ is github home page md file in the git repo?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-when tips dialog opens it needs to scroll to top.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add vision dialog to front page?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add interviewing dialog to front page?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add terms-of-use button on front page?
-use in general is free, but I encourage commercial users to
-make a contribution to support maintenance and further
-development of cyber-dojo.
-Say how to do this using the invoice button.
-Add [invoice-me] button to home page.
-Ask Joanne about setting up separate account for this first.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 is there a way to get line-number from caret-position
 I'm thinking about the feature where you have the

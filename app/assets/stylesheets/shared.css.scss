@@ -77,14 +77,31 @@
   margin-right: 5px;
 }
 
+//----------------------------------------------
+
 #footer {
+  font-size: 1.25em;
   position: fixed;
   width: 100%;
   text-align: center;
   bottom: 0px;
-  padding: 5px;
+  padding: 0px;
+  padding-bottom: 4px;
   background: lighten($darker-color, 6%);
   color: $lighter-color;
+}
+
+#tweet {
+  display: inline-block;
+  padding-top: 0px;
+  position: relative;
+  top: 4px;
+  left: 3px;
+}
+
+#help-button {
+  position: relative;
+  top: -2px;
 }
 
 //----------------------------------------------
