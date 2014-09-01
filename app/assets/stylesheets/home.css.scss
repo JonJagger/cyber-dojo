@@ -29,11 +29,15 @@ $text-color: darken($lighter-color, 10%);
   #the-place-to-practice-programming {
     font-size: 1.35em;
     color: lighten($text-color, 5%);
-    margin: {
-      top: -35px;
-      bottom: 40px;
-    }
+    position: relative;
+    top: -35px;
   }
+
+  #learn-more-button {
+    position: relative;
+    top: -35px;
+  }
+
   td#column-main {
     padding: {
       left: 0px;
