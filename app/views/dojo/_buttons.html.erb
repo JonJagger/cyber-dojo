@@ -3,7 +3,7 @@
 
 $(function () {
 
-  var buttons = $('#give-feedback,#tips,#why');
+  var buttons = $('#give-feedback');
 
   buttons.click(function() {
     var name = $(this).attr('id');
@@ -38,13 +38,17 @@ $(function () {
     window.open('http://blog.cyber-dojo.org/2014/08/getting-started.html');
   });
 
+  $('#tips').click(function() {
+    window.open('http://blog.cyber-dojo.org/2014/09/cyber-dojo-tips.html');
+  });
+
 });
 
 //--></script>
 
 <div id="buttons-container">
   <% buttons = ['about', 'blog', 'donators', 'faqs',
-                'get-started', 'give-feedback', 'tips', 'why'
+                'get-started', 'give-feedback', 'tips'
                ].map{ |action| [action, t("views.buttons.#{action}")] } %>
 
   <% buttons.each do |action, text| %>
