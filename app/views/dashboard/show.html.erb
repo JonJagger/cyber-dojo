@@ -19,8 +19,8 @@ $(function() {
 
 <div id="dashboard-page">
   <table>
-    <tr>
-      <td class="valign-top">
+    <tr class="valign-top">
+      <td>
         <div>
           <%= render :partial => 'controls' %>
         </div>
@@ -34,7 +34,7 @@ $(function() {
           <%= render :partial => 'team_bulb_counts' %>
         </div>
       </td>
-      <td class="valign-top">
+      <td>
         <div id="traffic-lights">
           <%= render :partial => 'traffic_lights' %>
         </div>
@@ -44,4 +44,3 @@ $(function() {
 </div>
 
 <%= render :partial => 'shared/footer_plus' %>
-

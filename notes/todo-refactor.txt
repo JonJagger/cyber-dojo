@@ -1,5 +1,16 @@
 
-
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+blog.cyber-dojo.org
+  add vision page to blog.cyber-dojo.org?
+  add interviewing page to blog.cyber-dojo.org?
+  add md files to blog.cyber-dojo.org
+  add intro video  to [learn more] page
+  move testimonials to blog
+  donators become 'friends of cyber-dojo'?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+move accu button to footer?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+put animals on front page?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -7,12 +18,6 @@ cyber-dojo.org could have adverts for software tools etc.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add vision page to blog.cyber-dojo.org?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add interviewing page to blog.cyber-dojo.org?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-add md files to blog.cyber-dojo.org
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 aim to minimize server-load. Put as much as possible onto
 blog. Eg help pages, videos, etc.
