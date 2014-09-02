@@ -4,6 +4,7 @@
 $(function() {
 
   $('#terms-and-conditions').click(function(event) {
+      event.preventDefault();
       var url = "http://blog.cyber-dojo.org/2014/09/terms-conditions-warranty-cost.html";
       window.open(url);
   });
