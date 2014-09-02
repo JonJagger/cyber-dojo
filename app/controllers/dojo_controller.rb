@@ -6,12 +6,6 @@ class DojoController < ApplicationController
     @id = id
   end
 
-  def button_dialog
-    name = params[:id]
-    render :partial => "/dojo/dialog_#{name}",
-           :layout => false
-  end
-
   #------------------------------------------------
 
   def valid_id

@@ -4,12 +4,8 @@
 $(function() {
 
   $('#terms-and-conditions').click(function(event) {
-      event.preventDefault();
-      var name = $(this).attr('id');
-      var title = $(this).text();
-      $.get('/dojo/button_dialog/' + name, function(html) {
-        cd.dialog(html, title, 'close').dialog('open');
-      });
+      var url = "http://blog.cyber-dojo.org/2014/09/terms-conditions-warranty-cost.html";
+      window.open(url);
   });
 
 });
