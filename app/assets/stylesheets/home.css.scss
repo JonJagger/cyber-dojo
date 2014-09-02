@@ -30,12 +30,12 @@ $text-color: darken($lighter-color, 10%);
     font-size: 1.35em;
     color: lighten($text-color, 5%);
     position: relative;
-    top: -35px;
+    top: -33px;
   }
 
   #learn-more-button {
     position: relative;
-    top: -33px;
+    top: -31px;
   }
 
   td#column-main {
@@ -53,10 +53,15 @@ $text-color: darken($lighter-color, 10%);
     width: 200px;
   }
 
-  #create-button-info, #enter-id-info, #enter-info, #reenter-info, #review-info {
+  .button-info {
+    display: inline-block;
     font-size: 0.9em;
     width: 360px;
+    &.enter {
+      color: lighten($green, 30%);
+    }
   }
+
   #enter-id-info {
     color: lighten($green, 30%);
   }

@@ -1,20 +1,19 @@
 
 <table class="align-right">
-  <tr class="align-right">
-    <td colspan="2">
 
+  <tr class="align-right">
+    <td>
       <div id="cyber-dojo">
         <div id="home-page-logo">
           <%= raw home_page_logo(35) %>
         </div>
-        cyber&#8209;dojo
+        cyber&#8209;dojo.org
       </div>
-
     </td>
   </tr>
 
   <tr>
-    <td colspan="2">
+    <td>
       <div id="the-place-to-practice-programming">
         <%= raw t("views.labels.the_place_to_practice_programming") %>
       </div>
@@ -22,69 +21,59 @@
   </tr>
 
   <tr>
-    <td colspan="2">
+    <td>
       <%= render :partial => 'learn_more_button' %>
     </td>
   </tr>
 
-  <tr valign="top">
+  <tr>
     <td>
-      <div id="create-button-info">
+      <div class="button-info">
         choose a language<br/>
         and an exercise<br/>
         to get your id<br/>
       </div>
-    </td>
-    <td>
       <%= render :partial => 'create_button' %>
     </td>
   </tr>
 
-  <tr valign="top">
+  <tr>
     <td>
-      <div id="enter-id-info">
+      <div class="enter button-info">
         type in your id<br/>
         on <em>each</em> computer<br/>
       </div>
-    </td>
-    <td>
       <%= render :partial => 'enter_id' %>
     </td>
   </tr>
 
-  <tr valign="top">
+  <tr>
     <td>
-      <div id="enter-info">
+      <div class="button-info">
         hit enter<br/>
         on <em>each</em> computer<br/>
       </div>
-    </td>
-    <td>
       <%= render :partial => 'enter_button' %>
     </td>
   </tr>
 
-  <tr valign="top">
+  <tr>
     <td>
-      <div id="review-info">
+      <div class="button-info">
         click a traffic-light<br/>
         to review its diffs
       </div>
-    </td>
-    <td>
       <%= render :partial => 'review_button' %>
     </td>
   </tr>
 
-  <tr valign="top">
+  <tr>
     <td>
-      <div id="reenter-info">
+      <div class="button-info">
         re-enter as a<br/>
         specific animal<br/>
         (occasionally useful)
       </div>
-    </td>
-    <td>
       <%= render :partial => 'reenter_button' %>
     </td>
   </tr>
