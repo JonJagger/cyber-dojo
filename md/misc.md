@@ -6,7 +6,8 @@ katas directory structure
 -------------------------
 The rails code does *not* use a database.
 Instead each practice session lives in a git-like directory structure based
-on its 10 character id. For example the session with id `82B583C347` lives at
+on its full 10 character id.
+For example the session with id `82B583C347` lives at
 ```
   cyberdojo/katas/82/B583C347
 ```
@@ -71,11 +72,8 @@ In Opera/Firefox
 
 notes
 -----
-  * http://vimeo.com/15104374 has a video of me doing the Roman Numerals
-   exercise in Ruby in a very early version of cyber-dojo
-  * http://vimeo.com/8630305 has a video of an even earlier version of
-   cyber-dojo I submitted as a proposal to the Software Craftsmanship
-   conference 2010.
+  * https://vimeo.com/104548135 has a video of me doing the Roman Numerals
+   exercise in Ruby in cyber-dojo
   * When I started cyber-dojo I didn't know any ruby, any rails, or any
    javascript (and not much css or html either). I'm self-employed so
    I've have no-one to pair with (except google) while developing this

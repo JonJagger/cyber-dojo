@@ -8,6 +8,11 @@ blog.cyber-dojo.org
   move testimonials to blog
   donators become 'friends of cyber-dojo'?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+the dashboard shows the ID as 10 characters long.
+the test [re-enter] page shows it as 10 chars long.
+the test [enter] page shows it as 6 characters long.
+fix the latter.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move accu button to footer?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
