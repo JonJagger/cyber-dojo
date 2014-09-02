@@ -13,7 +13,7 @@ a laptop. In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
 
 All development is now focused on running cyber-dojo using a
-[docker'd server](docker-server.md)
+[docker'd server](docker-server.md).<br/>
 The notes below are old and not maintained.
 
 

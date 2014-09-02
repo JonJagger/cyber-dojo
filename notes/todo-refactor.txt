@@ -10,7 +10,7 @@ blog.cyber-dojo.org
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move accu button to footer?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-put animals on front page?
+put animal images on front page?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
