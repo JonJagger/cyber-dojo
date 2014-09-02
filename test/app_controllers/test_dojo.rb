@@ -121,14 +121,4 @@ class DojoControllerTest  < ControllerTestBase
     assert !json['empty']
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - -
-
-  test 'button dialogs' do
-    buttons = %w( donators give-feedback get-started faqs tips why )
-    buttons.each do |name|
-      get 'dojo/button_dialog', :id => name
-      assert_response :success
-    end
-  end
-
 end

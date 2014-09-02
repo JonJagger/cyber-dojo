@@ -5,8 +5,6 @@ dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyber-dojo.org could have adverts for software tools etc.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-On the blog put my picture in the ABOUT ME section.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -18,23 +16,6 @@ add md files to blog.cyber-dojo.org
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 aim to minimize server-load. Put as much as possible onto
 blog. Eg help pages, videos, etc.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-move terms-and-conditions to blog? rename to terms-of-use ?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-This mentions...
-o) cyber-dojo is a non-profit charitable trust
-o) money raised is used solely to cover hosting costs
-   and buy raspberry pi computers for kids.
-o) cyber-dojo free for non-commercial use
-o) I strongly encourage corporate users to make a donation
-   of $99 per year.
-o) private, unshared cyber-dojo servers offering extra security
-   and responsiveness cost $499 per year.
-o) If you require an invoice, please email me.
-o) cyber-dojo is provided with no warranty etc etc
-
-Ask Joanne about setting up separate account for this first.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog move file-nave from rhs to lhs?
 move revert fork into their own box?
