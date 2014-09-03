@@ -654,7 +654,7 @@ var cyberDojo = (function(cd, $) {
     diffDialog.dialog('open');
 
 
-  }; // cd.dialog_history = function(id, avatarName, wasTag, nowTag, maxTag) {
+  }; // cd.dialog_history = function(id,avatarName,wasTag,nowTag,maxTag) {
 
 
   return cd;

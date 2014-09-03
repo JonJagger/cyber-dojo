@@ -2,12 +2,18 @@
 Finer-grained commits
 =====================
   do a commit (on server) when an animal switches from one file
-  to another file, or creates a new file, or renames a file,
-  or deletes a file. This would allow you to see if the first code
+  to another file (and there is a change in the file switched from),
+  or creates a new file, or renames a file, or deletes a file.
+  This will allow you to see if the first code
   entered was code or test code. And also file navigation.
+  And also, sometimes, code that was entered and then deleted
+  before being tested.
 
   These calls need to be synchronous I think.
   Making them synchrononus helps to keep the code simple.
+  If it creates responsiveness issues it is a signal to
+  address scalability.
+
   o) do the update on the browser (eg file rename)
   o) switch to wait cursor (for whole page,not just button)
   o) put up hatched jQuery like page background?
@@ -19,7 +25,171 @@ Finer-grained commits
 
   history diff navigator
   ----------------------
-  currently its << < > >>
+  currently its << < > >> and this is for traffic-lights.
+  Once fine-grained commits are in place the was-tag and now-tag
+  for successive traffic-lights may not have successive tags.
+  Eg was-tag=23  now-tag=27  could mean there were 4 fine-grained
+  commits between the test-tag-23 and the test-tag-27, which were,
+  respectively, the test-tags for traffic-lights 5 and 6.
+
+  So, suppose was-tag,now-tag are N and N+X, for lights W,N
+  Then if N=W+1 and X!=1 detecs a fine-grained commit.
+  In this case
+  o) don't display N,N+X as the was-tag and now-tag in the
+     edit controls. Instead display W,N.
+     This way the was-tag and now-tags always display
+     the traffic-light number.
+  o) display a *new* fine-grained-commit control
+     which allows you to move through the X commits between
+     W and N.
+  o) maybe always display this extra control but it's < >
+     controls are disabled if X==1
+
+
+
+  serialization
+  -------------
+  Also need to change the serialization so it only
+  serializes the current single change.
+  This should be easy to do based on the file-hashes.
+
+
+  diff-visualization
+  ------------------
+  On replaying a < > diff how will I visualize that the diff
+  is a new file?
+  is a renamed file?
+  is a deleted file?
+
+
+  interesting
+  -----------
+  If the most recently edited file was test code is the chance
+  of a non-amber higher than if it was non-test code?
+
+
+  fine-grained commit tags
+  ------------------------
+  Code currently does this...
+
+    def tags
+      # one tag for initial start_avatar
+      # + one tag for each light. See comment below.
+      (0..increments.length).map{ |n| Tag.new(self,n,git) }
+    end
+
+    def lights
+      increments.map { |inc| Light.new(self,inc) }
+    end
+
+  What is inside the increments.json file?
+  Each entry currently looks like this...
+  {"colour":"red","time":[2014,8,27,5,49,5],"number":1}
+  How about putting a colour:white entry for tags that
+  are not traffic-lights? The tags stays the same and
+  lights would have to select the tags that are not white.
+  Also storing "number" as the traffic-light number?
+
+    def lights
+      increments.select{|inc|
+        inc['colour'] != 'white'
+      }.map { |inc|
+        Light.new(self,inc)
+      }
+    end
+
+
+
+  show sequence of lights
+  -----------------------
+  To match the sequence of lights on test and dashboard pages.
+  Suppose I have a separate display of the lights.
+  It could display at most previous 3 and future 3 lights (say).
+  So you can see
+    R A G G R R R
+  and a cursor either points at one of these lights
+    R A G G R R R
+        ^15
+  or at the gap between two lights.
+    R A G G R R R
+         ^15
+  This is interesting. It suggests the idea of showing all the
+  tags, including ones for a non-test edit. I could do this on
+  the dashboard too.
+
+    R A wwww G ww G www R ww R www R
+         ^
+         15
+
+  Why not use that to indicate the was-now tags?
+  If you are looking at lights it shows
+  R A wwww G ww G www R ww R www R
+           ^    ^
+  If you are looking at tags it shows
+  R A wwww G ww G www R ww R www R
+           ^ ^
+  That way the text-edits for the was-tag and now-tag
+  are no longer displayed next to the traffic-lights.
+  So they can do double duty and show either light-tags
+  or inter-light-tags.
+  And all I need is a control to select whether you want
+  the tags to work on lights or between-lights,
+  test-events, or between-test-events.
+  The sequence of lights (and inter test event markers)
+  can go along the title bar, after [image]history
+
+  This raises the option of making the ^ tags controls
+  in their own right and draggable.
+  This could remove the need for editable tags.
+
+  if you are in light-mode the ^ control shows the light number?
+
+  R A wwww G ww G www R ww R www R
+           ^    ^
+           3    4
+
+  if you are in tag-mode the ^ control shows the tag number?
+
+  R A wwww G ww G www R ww R www R
+           ^ ^
+           7 8
+
+  This also gives a way to control the tag-gap.
+  There could be a small 'chain-link' between the two controls.
+  If this is [on] the controls are tied-together, and if you drag one
+  the other drags too. If the controls are [off] the controls
+  not tied-together, and if you drag one the other does not drag.
+
+
+  no-diff!
+  --------
+  what about when was-tag == now-tag which is used to show a no-diff
+  view of the current code...
+  I think this is ok. If the chained control is [off] then
+  the two controls can be moved independently. This means they
+  could be on the same light/tag.
+  perhaps display like this?
+                4
+                ^
+  R A wwww G ww G www R ww R www R
+                ^
+                4
+
+
+
+  revert/fork?
+  ------------
+  Allow forking from a light or a tag? Light only I think.
+  This helps to avoid the problem where you accidentally fork
+  from a tag which if a few edits after a test. That will display
+  as a between-test-event and not be forkable from.
+  Or revertable to.
+
+
+
+  ==========================================================
+  SCRATCH...
+
   Add a third inner control for between-light tags
   <<| <| < > |> |>>
   If there is no tag between lights then the innermost < >
@@ -35,22 +205,12 @@ Finer-grained commits
       was-tag = 30
       now-tag = 31
   ...
-  What about revert/fork dialogs?
-  Allow forking from a light or a tag? Light only I think
-  Don't show traffic-light at all for tag that is not for a test.
-  ...
   What about backward compatibility?
   Will the light/tag distinction collapse silently
   for reviewing dojos done before the tag-commits?
   ...
   Reduce size of tag input-edits. The most common navigation
   by far is using the << < > >> buttons.
-
-  serialization
-  -------------
-  Also need to change the serialization so it only
-  serializes the current single change.
-  This should be easy to do based on the file-hashes.
 
   what counts as a tag?
   ---------------------
@@ -60,13 +220,6 @@ Finer-grained commits
 
   If you hit test again, this will result in a new tag (same as now).
 
-  diff-visualization
-  ------------------
-  On replaying a < > diff how will I visualize that the diff
-  is a new file?
-  is a renamed file?
-  is a deleted file?
-
   dashboard-visualization
   -----------------------
   The dashboard could also show two numbers, the big one (number
@@ -75,7 +228,7 @@ Finer-grained commits
 
 
   Suppose you edit a file and then press [test].
-  I was this as one tag. From the devs point of view it is
+  I want this as one tag. From the devs point of view it is
   a single action. Also, it means you can easily tell
   if they pressed test and there were no diffs since
   that is the only way you'll get a diff where the only
@@ -120,14 +273,6 @@ Finer-grained commits
            on the server.
 
 
-  interesting
-  -----------
-  If the most recently edited file was test code is the chance
-  of a non-amber higher than if it was non-test code?
-
-  scratch
-  -------
-
   How to store the finer-grained increments on the server?
   Adapt existing?
   Add reason property which defaults to :test
@@ -169,24 +314,7 @@ Finer-grained commits
 
 -----------------------------
 
-Code currently does this...
 
-  def tags
-    # one tag for initial start_avatar
-    # + one tag for each light. See comment below.
-    (0..increments.length).map{ |n| Tag.new(self,n,git) }
-  end
-
-  def lights
-    increments.map { |inc| Light.new(self,inc) }
-  end
-
-What is inside the increments.json file?
-Each entry currently looks like this...
-{"colour":"red","time":[2014,8,27,5,49,5],"number":1}
-How about putting a colour:white entry for tags that
-are not traffic-lights? The tags stays the same and
-lights would have to select the tags that are not white.
 
 Then I need to look at diff-control moving forward/backward
 one traffic-light since it will not longer be a straight +1 -1.
@@ -261,17 +389,6 @@ Or > |> >> buttons including fine-grained.
 How about traffic-light is *not* shown when we are on
 a fine-grained commit. Like that.
 
-Suppose I have a separate display of the
-lights. Suppose it displays at most previous 3
-and future 3 lights. So you can see
-  R A G G R R R
-and a cursor either points at one of these lights
-  R A G G R R R
-      ^15
-or at the gap between two lights.
-  R A G G R R R
-       ^15
-
 I could show 2-3
 and then the fine-grained commits are
 done as fractions between 2 and 3, viz
@@ -282,7 +399,7 @@ done as fractions between 2 and 3, viz
 
 There is a tension between showing the traffic-lights
 are 2-3 (and not their tag numbers) and the ability
-to seleect and two tags to diff between.
+to select and two tags to diff between.
 
 How about 4 tag-numbers being displayed
 2-3 which are traffic-lights
@@ -313,21 +430,10 @@ the files were edited in. Viz
 0 0 cyber-dojo.sh
 
 which indicates that Wibble.java was edited first,
-then WibbleTest.java second etc.
+then WibbleTest.java second etc. This is what I really want.
 Now if you click the 1 on
 2 3 Wibble.java  1,3
 it will show you the diff of that file.
-
-Perhaps I should make the main history a proper page
-in its own right. Then the fine-grained commit
-could be a dialog inside that. Like this idea.
-Page in its own right might help google searchability.
-Would also be nice target for URLs.
-And it could mimic the layout of test and dashboard pages
-more closely. Viz it could show the traffic-light sequence
-across the top. Retain tag numbers and editability
-but have was-tag and now-tag traffic-lights on the top
-sequence with a different background so they both stand out.
 
 Display could be done like this... better since horizontal == time
 Wibble.java      1   3 ....
