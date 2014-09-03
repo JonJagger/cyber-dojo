@@ -33,19 +33,27 @@ var cyberDojo = (function(cd, $) {
 		' Click to review ' + avatarName + "'s current code.";
 	  count.attr('title', toolTip);
 	  count.click(function() {
-	    cd.dialog_history(id,avatarName,wasTag, nowTag, maxTag,count,showRevert);
+	    cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,count,showRevert);
 	  });
 	});
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
+  // Arguably, the history dialog would be better as it own
+  // history page. That would help google searchability and
+  // analytics. I use a dialog because that is the only
+  // way I can think of to implement the revert feature.
+  // When revert is clicked it has to be for a specific
+  // animal and it has to revert their code! As a dialog,
+  // the revert has access to animal's code on the page
+  // from which the dialog opened.
 
   cd.dialog_history = function(id, avatarName,
 							   wasTag, nowTag, maxTag,
 							   diffLight, showRevert) {
 	// diffLight isn't necessarily a traffic-light.
 	// It is whatever dom element's click handler causes
-	// dialog_diff() to be called.
+	// dialog_history() to be called.
 	// Eg it could be an animals light-count which opens
 	// a "no-diff" by setting wasTag == nowTag.
 	// It has its cursor tweaked while the getJSON call is made.

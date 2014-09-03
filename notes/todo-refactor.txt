@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+check event handlers have event.preventDefault()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+check dialog() uses remove() and not close()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 blog.cyber-dojo.org
   add vision page to blog.cyber-dojo.org?
   add interviewing page to blog.cyber-dojo.org?
