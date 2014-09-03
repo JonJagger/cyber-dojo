@@ -27,6 +27,7 @@ class DojoController < ApplicationController
     full_html = full ? full_dialog_html() : ''
     render :json => {
       :exists => exists,
+      :id => id,
       :avatar_name => avatar ? avatar.name : nil,
       :full => full,
       :enter_dialog_html => enter_html,
