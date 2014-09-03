@@ -17,7 +17,7 @@ var cyberDojo = (function(cd, $) {
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.setupTrafficLightCountOpensCurrentDiff = function(bulbs,showRevert) {
+  cd.setupTrafficLightCountOpensCurrentCode = function(bulbs,showRevert) {
     $.each(bulbs, function(_,bulb) {
 	  var count = $(bulb);
 	  var id = count.data('id');
