@@ -476,17 +476,17 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	var colouredNumber = function(light, number) {
+	  var colour = light.colour || light.outcome;
+	  return '<span class="' + colour + '">' + number + '</span>';
+	};
+
 	var revertButton = function() {
 	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
 	};
 
 	var makeRevertButtonHtml = function(data,nowTag) {
-	  return '' +
-	     'revert to ' +
-		 //TODO: dont show traffic-light.
-		 //TODO: show nowTag in red/amber/green
-	     nowTag +
-		 makeTrafficLight(nowTag, data.nowTrafficLight);
+	  return 'revert to ' + colouredNumber(data.nowTrafficLight, nowTag);
 	};
 
 	var doRevert = function() {
@@ -519,12 +519,7 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeForkButtonHtml = function(data,nowTag) {
-	  return '' +
-	    'fork from ' +
-		 //TODO: dont show traffic-light.
-		 //TODO: show nowTag in red/amber/green
-		nowTag +
-		makeTrafficLight(nowTag, data.nowTrafficLight);
+	  return 'revert to ' + colouredNumber(data.nowTrafficLight, nowTag);
 	};
 
 	var doFork = function() {

@@ -22,7 +22,7 @@
 #ui-dialog-title-history-dialog {
 
   #diff-tag-control {
-  
+
     display: inline-block;
 
     #was-traffic-light, #now-traffic-light {
@@ -193,14 +193,6 @@
       color: $diff-added-color;
     }
   }
-
-  #revert-button, #fork-button {
-    font-size: 0.6em;
-    width: 50px;
-    text-align: left;
-    padding-bottom: 2px;
-  }
-
 }
 
 .diff-traffic-light {
