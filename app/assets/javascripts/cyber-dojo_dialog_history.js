@@ -90,7 +90,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffTagControl = function() {
 	  return '' +
-	    '<table>' +
+	    '<table id="diff-tag-control">' +
 		  '<tr>' +
 		    td(makeWasTagControl(wasTag)) +
 			td('<div id="diff-arrow">&harr;</div>') +
@@ -483,6 +483,8 @@ var cyberDojo = (function(cd, $) {
 	var makeRevertButtonHtml = function(data,nowTag) {
 	  return '' +
 	     'revert to ' +
+		 //TODO: dont show traffic-light.
+		 //TODO: show nowTag in red/amber/green
 	     nowTag +
 		 makeTrafficLight(nowTag, data.nowTrafficLight);
 	};
@@ -519,6 +521,8 @@ var cyberDojo = (function(cd, $) {
 	var makeForkButtonHtml = function(data,nowTag) {
 	  return '' +
 	    'fork from ' +
+		 //TODO: dont show traffic-light.
+		 //TODO: show nowTag in red/amber/green
 		nowTag +
 		makeTrafficLight(nowTag, data.nowTrafficLight);
 	};

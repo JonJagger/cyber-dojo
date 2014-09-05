@@ -19,6 +19,31 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+#ui-dialog-title-history-dialog {
+
+  #diff-tag-control {
+  
+    display: inline-block;
+
+    #was-traffic-light, #now-traffic-light {
+      margin: {
+        right: 0.25em;
+      }
+    }
+
+    #now-traffic-light {
+      margin: {
+        left : 0.05em;
+      }
+    }
+
+    #was-tag-number, #now-tag-number {
+      @include editable_tag_number;
+      font-size: 0.75em;
+    }
+  }
+}
+
 #history-dialog {
 
   font-family: Trebuchet MS, Tahoma, Verdana, Arial, sans-serif;
@@ -62,23 +87,6 @@
 
   .filename {
     text-align: left;
-  }
-
-  #was-traffic-light, #now-traffic-light {
-    margin: {
-      right: 0.25em;
-    }
-  }
-
-  #now-traffic-light {
-    margin: {
-      left : 0.05em;
-    }
-  }
-
-  #was-tag-number, #now-tag-number {
-    @include editable_tag_number;
-    font-size: 0.75em;
   }
 
   #diff-filenames {
