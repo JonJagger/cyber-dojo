@@ -23,6 +23,7 @@ Finer-grained commits
   o)     undo the change
   o)     open small modal popup saying there was an error
 
+
   history diff navigator
   ----------------------
   currently its << < > >> and this is for traffic-lights.
@@ -45,6 +46,11 @@ Finer-grained commits
   o) maybe always display this extra control but it's < >
      controls are disabled if X==1
 
+  The navigate control could have the light/tag toggle in its center.
+    << < [:] > >>
+  where [:] indicates two options
+     o) everything
+     o) just lights
 
 
   serialization
@@ -175,16 +181,77 @@ Finer-grained commits
                 ^
                 4
 
+  Don't like that. Takes up too much vertical space. How about.
+  R A wwww G ww G www R ww R www R
+                ^
+               4|4
+
+  Where will the tied-together control go?
+  Perhaps on both?  To left of was-tag, to right of now-tag
+  R A wwww G ww G www R ww R www R
+                ^
+              o4|4o
+
+  R A wwww G ww G www R ww R www R
+                ^     ^
+               o4     5o
+
+  I think this will involve a lot of custom jQuery dragging and dropping.
+  Can two draggables be linked together?
+  It appears yes...
+  http://stackoverflow.com/questions/1997454/is-it-possible-to-link-two-jquery-ui-draggables-together
+
+  Simpler idea. Just make the was-tag control have a checkbox to
+  indicate whether it is "live". If it is not live then you get
+  a no-diff (from the now-tag). If it is live, you get a diff
+  from (was-tag <-> now-tag). This means was-tag != now-tag
+
+  This means
+
 
 
   revert/fork?
   ------------
   Allow forking from a light or a tag? Light only I think.
   This helps to avoid the problem where you accidentally fork
-  from a tag which if a few edits after a test. That will display
+  from a tag which is a few edits after a test. That will display
   as a between-test-event and not be forkable from.
   Or revertable to.
+  Where will the fork/revert buttons go?
+  I'd like them to be off the body of the dialog so the body
+  has just the << < > >> controls and the filenames.
+  Note that Revert/Fork both close the dialog.
+  This suggests it should be a big button next to [close]
+  at the bottom.
+  So it could be something as simple as
+  [close] [revert to TL 9]  [fork TL 9]
+  where TL is an image of a rag traggic-light
 
+
+  Plan
+  ----
+  1) simplify current history dialog so was-tag and now-tag
+     are not editable. Instead was-tag has checkbox.
+     If checkbox is off, only now-tag is used for no-diff
+     If checkbox is on, now-tag is used for diff.
+     delta between was-tag and now-tag is always 1.
+
+  2) move was-tag and now-tag to title-bar
+
+  3) move revert/close buttons to footer next to close button.
+
+  4) move traffic-light sequence to title bar of history dialog.
+     add non-draggable was-tag now-tag markers which position
+     directly below their respective traffic-light.
+
+  5) custom serialization only POSTs changed files for [test] event.
+     drop the form
+
+  6) start work on adding fine-grained commits.
+
+
+  Note: Code for whether/when an animal appears on the dashboard
+  may need revisiting when dashboard shows tags as well as lights.
 
 
   ==========================================================

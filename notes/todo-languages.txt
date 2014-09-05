@@ -12,3 +12,11 @@ install J?
 install Java-TestNG?
 install Objective-C?
 install COBOL?
+
+mutation testing frameworks?
+http://en.wikipedia.org/wiki/Mutation_testing
+
+install Java + PI
+  http://pitest.org/
+install   Ruby + Mutant
+  https://github.com/mbj/mutant
