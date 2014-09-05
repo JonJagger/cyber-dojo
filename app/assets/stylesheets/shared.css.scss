@@ -33,10 +33,6 @@
   display: inline-block;
 }
 
-#navigate-buttons {
-  @include ghost-panel;
-}
-
 .triangle.button {
   padding: {
     top   : 0.20em;

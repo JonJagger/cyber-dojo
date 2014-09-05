@@ -463,7 +463,7 @@ var cyberDojo = (function(cd, $) {
 	  autoOpen: false,
 	  title: cd.dialogTitle(title),
 	  width: 1150,
-	  height: 670,
+	  height: 720,
 	  modal: true,
       buttons: buttons,
 	  open: function() { refresh(); }
@@ -479,9 +479,11 @@ var cyberDojo = (function(cd, $) {
 	var colouredBulb = function(light) {
 	  var colour = light.colour || light.outcome;
       return '' +
-		"<img src='/images/" + 'bulb_' + colour + ".png'" +
-		     "width='12'" +
-		     "height='12'/>";
+	    '<span class="revert-fork-bulb-edge">' +
+		  "<img  src='/images/" + 'bulb_' + colour + ".png'" +
+			  "width='12'" +
+			 "height='12'/>" +
+		"</span>";
 	};
 
 	var revertButton = function() {

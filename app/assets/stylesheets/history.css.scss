@@ -25,6 +25,8 @@
 
     display: inline-block;
     font-size: 0.5em;
+    position: relative;
+    bottom: -7px;
 
     #now-traffic-light {
       margin: {
@@ -38,6 +40,7 @@
 
     #diff-arrow {
       margin: 5px;
+      padding-bottom: 5px;
     }
   }
 }
@@ -60,11 +63,7 @@
   }
 
   #navigate-buttons {
-    @include ghost-panel(6px);
-  }
-
-  #diff-info {
-    @include ghost-panel(0px);
+    padding-bottom: 15px;
   }
 
   #diff-controls {
@@ -78,7 +77,7 @@
   }
 
   #diff-filenames {
-    height: 355px;
+    height: 375px;
     overflow-y: auto;
     overflow-x: auto;
     font-size: 11pt;
@@ -86,7 +85,7 @@
   }
 
   .diff-line-numbers, .diff-sheet {
-    height: 32em;
+    height: 34em;
     margin: 0;
     padding: 0;
     @include code-font;
@@ -181,6 +180,11 @@
       color: $diff-added-color;
     }
   }
+}
+
+.revert-fork-bulb-edge {
+  background: darkGray;
+  border-radius: 20px;
 }
 
 .diff-traffic-light {
