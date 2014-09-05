@@ -24,8 +24,9 @@
   #diff-tag-control {
 
     display: inline-block;
+    font-size: 0.5em;
 
-    #was-traffic-light, #now-traffic-light {
+    #was-traffic-light {
       margin: {
         right: 0.25em;
       }
@@ -33,16 +34,20 @@
 
     #now-traffic-light {
       margin: {
-        left : 0.05em;
+        left : 0.25em;
       }
     }
 
     #was-tag-number, #now-tag-number {
       @include editable_tag_number;
-      font-size: 0.75em;
+    }
+
+    #diff-arrow {
+      margin: 5px;
     }
   }
 }
+
 
 #history-dialog {
 
@@ -72,17 +77,6 @@
     position: absolute;
     top : 15px;
     left: 772px;
-
-    #diff-arrow {
-      margin: {
-        bottom: 20px;
-        left  : 8px;
-        right : 8px;
-      }
-    }
-    .tag-control {
-      @include ghost-panel(5px);
-    }
   }
 
   .filename {
