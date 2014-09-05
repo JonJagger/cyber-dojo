@@ -224,7 +224,7 @@ Finer-grained commits
   This suggests it should be a big button next to [close]
   at the bottom.
   So it could be something as simple as
-  [close] [revert to TL 9]  [fork TL 9]
+  [close] [revert to TL 9]  [fork from TL 9]
   where TL is an image of a rag traggic-light
 
 
@@ -236,19 +236,57 @@ Finer-grained commits
      If checkbox is on, now-tag is used for diff.
      delta between was-tag and now-tag is always 1.
 
-  2) move was-tag and now-tag to title-bar
+     release
 
-  3) move revert/close buttons to footer next to close button.
+  2) move revert/close buttons to footer next to close button.
+
+     release
+
+  3) move was-tag and now-tag to title-bar
+
+     release
 
   4) move traffic-light sequence to title bar of history dialog.
      add non-draggable was-tag now-tag markers which position
      directly below their respective traffic-light.
 
-  5) custom serialization only POSTs changed files for [test] event.
-     drop the form
+     release
 
-  6) start work on adding fine-grained commits.
+  5) make was-tag and now-tag draggable
 
+     release
+
+  6) custom serialization only POSTs changed files for [test] event.
+
+  7) drop the form
+
+     release
+
+  8) POST for each file new/rename/delete/edit
+     In increments.json a non-test increment
+     has colour=white and extra key for its type
+     Traffic-light retain current numbering, viz
+     15th tag may be 6th traffic-lights so 6 displays
+     in tag-control. But increment[:number] stays the
+     same and is for the tag.
+     So Light.number is calculated
+        Light.tag.number is stored in increments.json
+
+  9) decide on icon(s) for each fine-grained commit.
+     one for everything?
+     one each for file new/rename/delete/edit
+     put checkbox icon for tags? between << < > >>
+     traffic-lights at top show tags and lights
+     if tags? is checked.
+     If tags are being shown then numbering switches
+     to tag numbers.
+
+     release
+
+  10) add checkbox for tags? to dashboard
+      if tags? is checked dashboard shows tags as well
+      as traffic-lights
+      
 
   Note: Code for whether/when an animal appears on the dashboard
   may need revisiting when dashboard shows tags as well as lights.
