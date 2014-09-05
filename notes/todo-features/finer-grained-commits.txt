@@ -230,16 +230,12 @@ Finer-grained commits
 
   Plan
   ----
-  1) move revert/close buttons to footer next to close button.
-
-     commit
-
-  2) move was-tag and now-tag to title-bar
-     only controls in main-body of dialog are now
-     << < > >> and filenames
-
-     commit
-
+  1) done
+  2) done
+     but...
+        tag-numbers are no longer editable... unexpected. why?
+        look into it? or move on to 3?
+        
   3) simplify current history dialog so was-tag and now-tag
      are *not* editable. Instead was-tag has checkbox.
      If checkbox is off, only now-tag is used for no-diff
