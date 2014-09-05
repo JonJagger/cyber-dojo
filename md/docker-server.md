@@ -11,12 +11,12 @@ running your own docker'd cyber-dojo server
 $ cd /var/www
 $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 ```
-* Install cyberdojo as the default rails server, all the necessary gems and [docker](https://www.docker.io/)
+* Install cyberdojo as the default rails server, all the necessary gems and [docker](https://www.docker.io/) (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./setup_docker_server.sh
 ```
-* Install all the language's docker containers (this will take a while)
+* Install all the language's docker containers (this will take a while too)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./docker_pull_all.rb
