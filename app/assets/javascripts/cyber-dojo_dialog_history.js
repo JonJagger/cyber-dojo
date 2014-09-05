@@ -41,8 +41,8 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
   // Arguably, the history dialog would be better as it own
   // history page. That would help google searchability and
-  // analytics. I use a dialog because that is the only
-  // way I can think of to implement the revert feature.
+  // analytics etc. I use a dialog because that is the only
+  // way I can think of to implement revert.
   // When revert is clicked it has to be for a specific
   // animal and it has to revert their code! As a dialog,
   // the revert has access to animal's code on the page
@@ -61,12 +61,6 @@ var cyberDojo = (function(cd, $) {
 	var minTag = 0;
 	var tagGap = nowTag - wasTag;
 	var currentFilename = '';
-
-	//TODO: is this used?
-	var allHtml = function(node) {
-	  // http:stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
-	  return $(node).clone().wrap('<p/>').parent().html();
-	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -528,7 +522,19 @@ var cyberDojo = (function(cd, $) {
 	  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
       ' history';
 
-	//TODO: revert button must only appear if showRevert is true
+	var buttons = {};
+	buttons['close'] = function() {
+	  closeDiffDialog();
+	};
+	buttons['fork'] = function() {
+	  doFork();
+	};
+	if (showRevert) {
+	  buttons['revert'] = function() {
+		doRevert();
+		closeDiffDialog();
+	  };
+	}
 
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
@@ -536,34 +542,8 @@ var cyberDojo = (function(cd, $) {
 	  width: 1150,
 	  height: 670,
 	  modal: true,
-	  buttons: {
-		close: function() {
-		  closeDiffDialog();
-		},
-		revert: function() {
-		  deleteAllCurrentFiles();
-		  copyRevertFilesToCurrentFiles();
-		  $('#test-button').click();
-		  closeDiffDialog();
-		},
-		fork: function() {
-		  $.getJSON('/forker/fork', {
-			id: id,
-			avatar: avatarName,
-			tag: nowTag
-		  }, function(data) {
-			if (data.forked) {
-			  forkSucceededDialog(data);
-			} else {
-			  forkFailedDialog(data);
-			}
-		    closeDiffDialog();
-		  });
-		}
-	  },
-	  open: function() {
-		refresh();
-	  }
+      buttons: buttons,
+	  open: function() { refresh(); }
 	}).on('keydown', function(event) {
 	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
 		closeDiffDialog();
@@ -574,15 +554,23 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var revertButton = function() {
-	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
 	};
 
 	var makeRevertButtonHtml = function(data,nowTag) {
-	  return 'revert to ' + nowTag + makeTrafficLight(nowTag, data.nowTrafficLight);
+	  return '' +
+	     'revert to ' +
+	     nowTag +
+		 makeTrafficLight(nowTag, data.nowTrafficLight);
+	};
+
+	var doRevert = function() {
+	  deleteAllCurrentFiles();
+	  copyRevertFilesToCurrentFiles();
+	  $('#test-button').click();
 	};
 
 	var deleteAllCurrentFiles = function() {
-	  var newFilename;
 	  $.each(cd.filenames(), function(_, filename) {
 		if (filename !== 'output') {
 		  cd.doDelete(filename);
@@ -602,11 +590,28 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var forkButton = function() {
-	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
+	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
 	};
 
 	var makeForkButtonHtml = function(data,nowTag) {
-	  return 'fork from ' + nowTag + makeTrafficLight(nowTag, data.nowTrafficLight);
+	  return '' +
+	    'fork from ' +
+		nowTag +
+		makeTrafficLight(nowTag, data.nowTrafficLight);
+	};
+
+	var doFork = function() {
+	  $.getJSON('/forker/fork', {
+		id: id,
+		avatar: avatarName,
+		tag: nowTag
+	  }, function(data) {
+		if (data.forked) {
+		  forkSucceededDialog(data);
+		} else {
+		  forkFailedDialog(data);
+		}
+	  });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -639,7 +644,9 @@ var cyberDojo = (function(cd, $) {
           buildDiffFilenameHandlers(data.idsAndSectionCounts);
           showFile(data.currentFilenameId);
 
-		  revertButton().html(makeRevertButtonHtml(data,nowTag));
+		  if (showRevert) {
+			revertButton().html(makeRevertButtonHtml(data,nowTag));
+		  }
 		  forkButton().html(makeForkButtonHtml(data,nowTag));
 
 		}
