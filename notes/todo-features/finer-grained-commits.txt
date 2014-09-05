@@ -230,37 +230,55 @@ Finer-grained commits
 
   Plan
   ----
-  1) simplify current history dialog so was-tag and now-tag
-     are not editable. Instead was-tag has checkbox.
+  1) move revert/close buttons to footer next to close button.
+
+     commit
+
+  2) move was-tag and now-tag to title-bar
+     only controls in main-body of dialog are now
+     << < > >> and filenames
+
+     commit
+
+  3) simplify current history dialog so was-tag and now-tag
+     are *not* editable. Instead was-tag has checkbox.
      If checkbox is off, only now-tag is used for no-diff
      If checkbox is on, now-tag is used for diff.
      delta between was-tag and now-tag is always 1.
+     Incoming URL stays the same.
+     If URL was-tag == now-tag
+     then  was-tag=now-tag-1
+           was-tag-checkbox = off
+           view = no-diff
+     If URL was-tag != now-tag
+     then was-tag and now-tag stay the same
+          was-tag-checkbox = on
+          view = diff
+     When << < > >> are clicked then the was-tag
+     and now-tags update appropriately so they are
+     below their respective traffic-lights.
 
-     release
-
-  2) move revert/close buttons to footer next to close button.
-
-     release
-
-  3) move was-tag and now-tag to title-bar
-
-     release
+     commit
 
   4) move traffic-light sequence to title bar of history dialog.
      add non-draggable was-tag now-tag markers which position
      directly below their respective traffic-light.
 
-     release
+     commit
 
-  5) make was-tag and now-tag draggable
+  5) make was-tag and now-tag draggable.
+     both are constrained and can only move horizontally.
+     they are always locked with a delta of 1.
+     Viz was-tag+1==now-tag and they drag together.
 
+     commit
      release
 
   6) custom serialization only POSTs changed files for [test] event.
 
   7) drop the form
 
-     release
+     commit
 
   8) POST for each file new/rename/delete/edit
      In increments.json a non-test increment
@@ -275,18 +293,18 @@ Finer-grained commits
   9) decide on icon(s) for each fine-grained commit.
      one for everything?
      one each for file new/rename/delete/edit
+     how about just a small N,R,D,E
      put checkbox icon for tags? between << < > >>
-     traffic-lights at top show tags and lights
-     if tags? is checked.
-     If tags are being shown then numbering switches
-     to tag numbers.
+     this only appears if there are inter-test tags
+     traffic-lights at top show tags and lights if tags? is checked.
+     If tags are being shown then numbering switches to tag numbers.
 
      release
 
   10) add checkbox for tags? to dashboard
       if tags? is checked dashboard shows tags as well
       as traffic-lights
-      
+
 
   Note: Code for whether/when an animal appears on the dashboard
   may need revisiting when dashboard shows tags as well as lights.
