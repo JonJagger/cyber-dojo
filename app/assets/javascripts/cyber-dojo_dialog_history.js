@@ -143,73 +143,6 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var forkSucceededDialog = function(fork) {
-	  var html = "" +
-	    "<div class='dialog'>" +
-		  "<div class='panel' style='font-size:1.5em;'>" +
-	        "your forked dojo's id is" +
-			"<div class='align-center'>" +
-              "<span class='kata-id-input'>" +
-			  "&nbsp;" +
-			  fork.id.substring(0,6) +
-			  "&nbsp;" +
-			  "</span>" +
-			"</div>" +
-		  "</div>" +
-		"</div>";
-	  var succeeded = $('<div>').html(html).dialog({
-		autoOpen: false,
-		modal: true,
-		width: 450,
-		buttons: {
-		  ok: function() {
-			var url = '/dojo/index/' + fork.id;
-			window.open(url);
-			$(this).remove();
-		  }
-		}
-	  });
-	  succeeded.dialog('open');
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var forkFailedDialog = function(data) {
-	  var diagnostic = " an unknown failure occurred";
-	  if (data.reason === 'id') {
-		diagnostic = "the practice session no longer exists";
-	  } else if (data.reason === 'language') {
-		diagnostic = "the language " + data['language'] + " no longer exists";
-	  } else if (data.reason === 'avatar') {
-		diagnostic = "there is no " + avatarName +
-		             " in the practice session";
-	  } else  if (data.reason === 'tag') {
-		diagnostic = avatarName +
-		            " doesn't have traffic-light[" + tag + "]" +
-		            " in the practice session";
-	  }
-	  var html = "" +
-	    "<div class='dialog'>" +
-		  "<div class='panel' style='font-size:1em;'>" +
-	        "On the originating server " + diagnostic + "."
-		  "</div>" +
-		"</div>";
-	  var failed = $('<div>').html(html).dialog({
-		title: cd.dialogTitle('could not fork'),
-		autoOpen: false,
-		modal: true,
-		width: 450,
-		buttons: {
-		  ok: function() {
-			$(this).remove();
-		  }
-		}
-	  });
-	  failed.dialog('open');
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
 	var wasTagNumber = $('#was-tag-number', diffDiv);
 	var tagGapNumber = $('#tag-gap-number', diffDiv);
 	var nowTagNumber = $('#now-tag-number', diffDiv);
@@ -612,6 +545,71 @@ var cyberDojo = (function(cd, $) {
 		  forkFailedDialog(data);
 		}
 	  });
+	};
+
+	var forkSucceededDialog = function(fork) {
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1.5em;'>" +
+	        "your forked dojo's id is" +
+			"<div class='align-center'>" +
+              "<span class='kata-id-input'>" +
+			  "&nbsp;" +
+			  fork.id.substring(0,6) +
+			  "&nbsp;" +
+			  "</span>" +
+			"</div>" +
+		  "</div>" +
+		"</div>";
+	  var succeeded = $('<div>').html(html).dialog({
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			var url = '/dojo/index/' + fork.id;
+			window.open(url);
+			$(this).remove();
+		  }
+		}
+	  });
+	  succeeded.dialog('open');
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var forkFailedDialog = function(data) {
+	  var diagnostic = " an unknown failure occurred";
+	  if (data.reason === 'id') {
+		diagnostic = "the practice session no longer exists";
+	  } else if (data.reason === 'language') {
+		diagnostic = "the language " + data['language'] + " no longer exists";
+	  } else if (data.reason === 'avatar') {
+		diagnostic = "there is no " + avatarName +
+		             " in the practice session";
+	  } else  if (data.reason === 'tag') {
+		diagnostic = avatarName +
+		            " doesn't have traffic-light[" + tag + "]" +
+		            " in the practice session";
+	  }
+	  var html = "" +
+	    "<div class='dialog'>" +
+		  "<div class='panel' style='font-size:1em;'>" +
+	        "On the originating server " + diagnostic + "."
+		  "</div>" +
+		"</div>";
+	  var failed = $('<div>').html(html).dialog({
+		title: cd.dialogTitle('could not fork'),
+		autoOpen: false,
+		modal: true,
+		width: 450,
+		buttons: {
+		  ok: function() {
+			$(this).remove();
+		  }
+		}
+	  });
+	  failed.dialog('open');
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
