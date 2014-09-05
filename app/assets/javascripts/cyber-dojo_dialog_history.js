@@ -519,7 +519,7 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeForkButtonHtml = function(data,nowTag) {
-	  return 'revert to ' + colouredNumber(data.nowTrafficLight, nowTag);
+	  return 'fork from ' + colouredNumber(data.nowTrafficLight, nowTag);
 	};
 
 	var doFork = function() {
