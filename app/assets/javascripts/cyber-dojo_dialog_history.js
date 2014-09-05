@@ -62,6 +62,7 @@ var cyberDojo = (function(cd, $) {
 	var tagGap = nowTag - wasTag;
 	var currentFilename = '';
 
+	//TODO: is this used?
 	var allHtml = function(node) {
 	  // http:stackoverflow.com/questions/6459398/jquery-get-html-of-container-including-the-container-itself
 	  return $(node).clone().wrap('<p/>').parent().html();
@@ -90,37 +91,14 @@ var cyberDojo = (function(cd, $) {
 		'</div>';
 	};
 
-	var makeRevertButton = function() {
-	  return '<button type="button"' +
-			           'id="revert-button">' +
-				  'revert' +
-			  '</button>';
-	};
-
-	var makeForkButton = function() {
-	  return '<button type="button"' +
-			           'id="fork-button">' +
-				  'fork' +
-			  '</button>';
-	};
-
 	var makeNowTagControl = function(tag) {
-	  var html = '' +
+	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
 			td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
- 		    td('<div id="now-traffic-light"></div>');
-
-	  var buttons = '';
-	  if (showRevert) {
-		buttons += makeRevertButton();
-		buttons += '<br/>'
-	  }
-	  buttons += makeForkButton();
-	  html += td(buttons);
-	  html += '</tr>';
-	  html += '</table>';
-	  return html;
+ 		    td('<div id="now-traffic-light"></div>') +
+		  '</tr>' +
+		 '</table>';
 	};
 
     var makeDiffTagControl = function() {
@@ -171,49 +149,6 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	$('#revert-button', diffDiv).click(function() {
-	  deleteAllCurrentFiles();
-	  copyRevertFilesToCurrentFiles();
-	  $('#test-button').click();
-	  closeDiffDialog();
-	});
-
-	var deleteAllCurrentFiles = function() {
-	  var newFilename;
-	  $.each(cd.filenames(), function(_, filename) {
-		if (filename !== 'output') {
-		  cd.doDelete(filename);
-		}
-	  });
-	};
-
-	var copyRevertFilesToCurrentFiles = function() {
-	  var filename;
-	  for (filename in visibleFiles) {
-		if (filename !== 'output') {
-		  cd.newFileContent(filename, visibleFiles[filename]);
-		}
-	  }
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	$('#fork-button', diffDiv).click(function() {
-	  $.getJSON('/forker/fork', {
-		id: id,
-		avatar: avatarName,
-		tag: nowTag
-	  }, function(data) {
-		if (data.forked) {
-		  // important not to do window.open(url) directly from here
-		  // as it will open in a new window and not a new tab ***
-		  forkSucceededDialog(data);
-		} else {
-		  forkFailedDialog(data);
-		}
-	  });
-	});
-
 	var forkSucceededDialog = function(fork) {
 	  var html = "" +
 	    "<div class='dialog'>" +
@@ -234,7 +169,6 @@ var cyberDojo = (function(cd, $) {
 		width: 450,
 		buttons: {
 		  ok: function() {
-			// *** whereas here it will open in a new tab
 			var url = '/dojo/index/' + fork.id;
 			window.open(url);
 			$(this).remove();
@@ -594,6 +528,8 @@ var cyberDojo = (function(cd, $) {
 	  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
       ' history';
 
+	//TODO: revert button must only appear if showRevert is true
+
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
 	  title: cd.dialogTitle(title),
@@ -603,6 +539,26 @@ var cyberDojo = (function(cd, $) {
 	  buttons: {
 		close: function() {
 		  closeDiffDialog();
+		},
+		revert: function() {
+		  deleteAllCurrentFiles();
+		  copyRevertFilesToCurrentFiles();
+		  $('#test-button').click();
+		  closeDiffDialog();
+		},
+		fork: function() {
+		  $.getJSON('/forker/fork', {
+			id: id,
+			avatar: avatarName,
+			tag: nowTag
+		  }, function(data) {
+			if (data.forked) {
+			  forkSucceededDialog(data);
+			} else {
+			  forkFailedDialog(data);
+			}
+		    closeDiffDialog();
+		  });
 		}
 	  },
 	  open: function() {
@@ -614,6 +570,44 @@ var cyberDojo = (function(cd, $) {
 	  }
 	  event.stopPropagation();
 	});
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var revertButton = function() {
+	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+	};
+
+	var makeRevertButtonHtml = function(data,nowTag) {
+	  return 'revert to ' + nowTag + makeTrafficLight(nowTag, data.nowTrafficLight);
+	};
+
+	var deleteAllCurrentFiles = function() {
+	  var newFilename;
+	  $.each(cd.filenames(), function(_, filename) {
+		if (filename !== 'output') {
+		  cd.doDelete(filename);
+		}
+	  });
+	};
+
+	var copyRevertFilesToCurrentFiles = function() {
+	  var filename;
+	  for (filename in visibleFiles) {
+		if (filename !== 'output') {
+		  cd.newFileContent(filename, visibleFiles[filename]);
+		}
+	  }
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var forkButton = function() {
+	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
+	};
+
+	var makeForkButtonHtml = function(data,nowTag) {
+	  return 'fork from ' + nowTag + makeTrafficLight(nowTag, data.nowTrafficLight);
+	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -630,6 +624,7 @@ var cyberDojo = (function(cd, $) {
 		  current_filename: currentFilename // 51:var currentFilename
 		},
 		function(data) {
+
 		  visibleFiles = data.visibleFiles;
 		  resetNavigateButtonHandlers();
 		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
@@ -643,6 +638,10 @@ var cyberDojo = (function(cd, $) {
 		  diffContent.html(makeDiffContent(data.diffs));
           buildDiffFilenameHandlers(data.idsAndSectionCounts);
           showFile(data.currentFilenameId);
+
+		  revertButton().html(makeRevertButtonHtml(data,nowTag));
+		  forkButton().html(makeForkButtonHtml(data,nowTag));
+
 		}
 	  ).always(function() {
         diffLight.css('cursor', 'pointer');
