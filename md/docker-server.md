@@ -14,7 +14,7 @@ $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 * Install cyberdojo as the default rails server, all the necessary gems and [docker](https://www.docker.io/)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
-$ ./setup_docker_server.rb
+$ ./setup_docker_server.sh
 ```
 * Install all the language's docker containers (this will take a while)
 ```bash
