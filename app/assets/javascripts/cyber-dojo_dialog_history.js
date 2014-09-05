@@ -78,13 +78,6 @@ var cyberDojo = (function(cd, $) {
 		'</table>';
 	}
 
-	var makeTagGap = function() {
-	  return '' +
-		'<div id="diff-arrow">' +
-		  '&harr;' +
-		'</div>';
-	};
-
 	var makeNowTagControl = function(tag) {
 	  return '' +
 	    '<table class="tag-control">' +
@@ -100,7 +93,7 @@ var cyberDojo = (function(cd, $) {
 	    '<table>' +
 		  '<tr>' +
 		    td(makeWasTagControl(wasTag)) +
-			td(makeTagGap()) +
+			td('<div id="diff-arrow">&harr;</div>') +
 		    td(makeNowTagControl(nowTag)) +
 		  '</tr>' +
 		'</table>';
@@ -112,43 +105,39 @@ var cyberDojo = (function(cd, $) {
       var div = $('<div>', {
         'id': 'history-dialog'
       });
-	  var trTd = function(html) {
-		return '' +
-		  "<tr valign='top'>" +
-			"<td valign='top'>" +
-			  html +
-			"</td>" +
-		  "</tr>";
-	  };
       div.append('<div id="diff-content"></div>');
 	  div.append('<div id="diff-controls">' +
-				  '<table>' +
-					trTd(makeDiffTagControl()) +
-				  '</table>' +
-				  '<table>' +
-				    '<tr>' +
-					'<td>' +
-					  cd.makeNavigateButtons() +
-					'</td>' +
-					'</tr>' +
-				  '</table>' +
-				  '<table>' +
-					trTd("<div id='diff-filenames'></div>") +
-				  '</table>' +
+					cd.makeNavigateButtons() +
+					"<div id='diff-filenames'></div>" +
 				 '</div>');
       return div;
     };
 
-    var diffDiv = makeDiffDiv();
+	var diffDiv = makeDiffDiv();
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var wasTagNumber = $('#was-tag-number', diffDiv);
-	var tagGapNumber = $('#tag-gap-number', diffDiv);
-	var nowTagNumber = $('#now-tag-number', diffDiv);
+	var titleBar = function() {
+	  return $('#ui-dialog-title-history-dialog');
+	};
 
-	var wasTrafficLight = $('#was-traffic-light', diffDiv);
-	var nowTrafficLight = $('#now-traffic-light', diffDiv);
+	var wasTagNumber = function() {
+	  return $('#was-tag-number', titleBar());
+	};
+
+	var nowTagNumber = function() {
+	  return $('#now-tag-number', titleBar());
+	};
+
+	var wasTrafficLight = function() {
+	  return $('#was-traffic-light', titleBar());
+	};
+
+	var nowTrafficLight = function() {
+	  return $('#now-traffic-light', titleBar());
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var firstButton = $('#first_button', diffDiv);
 	var prevButton  = $('#prev_button',  diffDiv);
@@ -174,13 +163,13 @@ var cyberDojo = (function(cd, $) {
 
 	  var tagEdit = function(event) {
 		if (event.keyCode === $.ui.keyCode.ENTER) {
-		  var newWasTag = parseInt(wasTagNumber.val(), 10);
-		  var newNowTag = parseInt(nowTagNumber.val(), 10);
+		  var newWasTag = parseInt(wasTagNumber().val(), 10);
+		  var newNowTag = parseInt(nowTagNumber().val(), 10);
 		  if (isNaN(newWasTag) || newWasTag < minTag ||
 				isNaN(newNowTag) || newNowTag > maxTag ||
 				  newWasTag > newNowTag) {
-			wasTagNumber.val(wasTag);
-			nowTagNumber.val(nowTag);
+			wasTagNumber().val(wasTag);
+			nowTagNumber().val(nowTag);
 		  } else {
 			diffLight = $(event.target); // wait-cursor hack
 			showDiff(newWasTag, newNowTag);
@@ -211,8 +200,8 @@ var cyberDojo = (function(cd, $) {
 	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
 	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
 
-	  wasTagNumber.unbind().keyup(function(event) { tagEdit(event); });
-	  nowTagNumber.unbind().keyup(function(event) { tagEdit(event); });
+	  wasTagNumber().unbind().keyup(function(event) { tagEdit(event); });
+	  nowTagNumber().unbind().keyup(function(event) { tagEdit(event); });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -453,7 +442,8 @@ var cyberDojo = (function(cd, $) {
 	  '<img height="30"' +
 	  ' width="30"' +
 	  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
-      ' history';
+      ' history ' +
+	  makeDiffTagControl();
 
 	var buttons = {};
 	buttons['close'] = function() {
@@ -630,11 +620,10 @@ var cyberDojo = (function(cd, $) {
 
 		  visibleFiles = data.visibleFiles;
 		  resetNavigateButtonHandlers();
-		  wasTrafficLight.html(makeTrafficLight(wasTag, data.wasTrafficLight));
-		  wasTagNumber.val(wasTag);
-		  tagGapNumber.html(tagGap);
-		  nowTagNumber.val(nowTag);
-		  nowTrafficLight.html(makeTrafficLight(nowTag, data.nowTrafficLight));
+		  wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
+		  wasTagNumber().val(wasTag);
+		  nowTagNumber().val(nowTag);
+		  nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
 		  resetFilenameAddedDeletedLineCountHandlers();
