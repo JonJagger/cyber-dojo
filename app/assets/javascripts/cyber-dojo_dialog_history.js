@@ -144,35 +144,34 @@ var cyberDojo = (function(cd, $) {
 	var nextButton  = $('#next_button',  diffDiv);
 	var lastButton  = $('#last_button',  diffDiv);
 
+	var toolTip = function(was, now) {
+	  if (was !== now) {
+		return 'Show diff of ' + was + ' <-> ' + now;
+	  } else {
+		return 'Show ' + was;
+	  }
+	};
+
+	var showDiff = function(was,now) {
+	  wasTag = was;
+	  nowTag = now;
+	  tagGap = now - was;
+	  refresh();
+	};
+
+	var refreshNavigationHandlers = function(off, button, from, to) {
+	  button.attr('disabled', off);
+	  if (!off) {
+		button.unbind()
+		  .click(function() {
+			diffLight = $(this); // wait-cursor hack
+			showDiff(from, to);
+		  })
+		  .attr('title', toolTip(from, to));
+	  }
+	};
+
     var resetNavigateButtonHandlers = function() {
-
-	  var toolTip = function(was, now) {
-		if (was !== now) {
-		  return 'Show diff of ' + was + ' <-> ' + now;
-		} else {
-		  return 'Show ' + was;
-		}
-	  };
-
-	  var showDiff = function(was,now) {
-		wasTag = was;
-		nowTag = now;
-		tagGap = now - was;
-		refresh();
-	  };
-
-	  var refreshNavigationHandlers = function(off, button, from, to) {
-		button.attr('disabled', off);
-		if (!off) {
-		  button.unbind()
-			.click(function() {
-			  diffLight = $(this); // wait-cursor hack
-			  showDiff(from, to);
-			})
-			.attr('title', toolTip(from, to));
-		}
-	  };
-
 	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);
 	  refreshNavigationHandlers(minTag >= wasTag, prevButton, wasTag-1, nowTag-1);
 	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
@@ -632,8 +631,9 @@ var cyberDojo = (function(cd, $) {
     diffDialog.dialog('open');
 
 
-  }; // cd.dialog_history = function(id,avatarName,wasTag,nowTag,maxTag) {
-
+  }; // cd.dialog_history = function(id,avatarName,
+    //                               wasTag,nowTag,maxTag,
+	//                               difLight,showRevert) {
 
   return cd;
 })(cyberDojo || {}, $);
