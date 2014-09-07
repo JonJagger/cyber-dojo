@@ -161,22 +161,6 @@ var cyberDojo = (function(cd, $) {
 		refresh();
 	  };
 
-	  var tagEdit = function(event) {
-		if (event.keyCode === $.ui.keyCode.ENTER) {
-		  var newWasTag = parseInt(wasTagNumber().val(), 10);
-		  var newNowTag = parseInt(nowTagNumber().val(), 10);
-		  if (isNaN(newWasTag) || newWasTag < minTag ||
-				isNaN(newNowTag) || newNowTag > maxTag ||
-				  newWasTag > newNowTag) {
-			wasTagNumber().val(wasTag);
-			nowTagNumber().val(nowTag);
-		  } else {
-			diffLight = $(event.target); // wait-cursor hack
-			showDiff(newWasTag, newNowTag);
-		  }
-		}
-	  };
-
 	  var refreshNavigationHandlers = function(off, button, from, to) {
 		button.attr('disabled', off);
 		if (!off) {
@@ -189,19 +173,10 @@ var cyberDojo = (function(cd, $) {
 		}
 	  };
 
-	  // The wasTagNumber and nowTagNumber may have been edited since the
-	  // refresh but before a navigation button is pressed. However, the
-	  // navigation buttons do _not_ look at the current state of
-	  // wasTagNumber/nowTagNumber, but use the values set on refresh.
-	  // This is the simplest way to ensure the navigation buttons are
-	  // not incorrectly enabled/disabled.
 	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);
 	  refreshNavigationHandlers(minTag >= wasTag, prevButton, wasTag-1, nowTag-1);
 	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
 	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
-
-	  wasTagNumber().unbind().keyup(function(event) { tagEdit(event); });
-	  nowTagNumber().unbind().keyup(function(event) { tagEdit(event); });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
