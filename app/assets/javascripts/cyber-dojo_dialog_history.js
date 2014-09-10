@@ -143,7 +143,11 @@ var cyberDojo = (function(cd, $) {
 		.unbind('click')
 		.click(function() {
 		  if ($(this).is(':checked')) { // turned on
-			showDiff(nowTag-1, nowTag);
+			if (nowTag === 0) {
+			  showDiff(0, 1);
+			} else {
+			  showDiff(nowTag-1, nowTag);
+			}
 		  } else { // turned off
 			showDiff(nowTag,nowTag);
 		  }
