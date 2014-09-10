@@ -39,18 +39,19 @@ var cyberDojo = (function(cd, $) {
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
-  // Arguably, the history dialog would be better as it own
-  // history page. That would help google searchability and
-  // analytics etc. I use a dialog because that is the only
-  // way I can think of to implement revert.
-  // When revert is clicked it has to be for a specific
-  // animal and it has to revert their code! As a dialog,
-  // the revert has access to animal's code on the page
-  // from which the dialog opened.
 
   cd.dialog_history = function(id, avatarName,
 							   wasTag, nowTag, maxTag,
 							   diffLight, showRevert) {
+	// Arguably, the history dialog would be better as it own
+	// history page. That would help google searchability and
+	// analytics etc. I use a dialog because that is the only
+	// way I can think of to implement revert.
+	// When revert is clicked it has to be for a specific
+	// animal and it has to revert their code! As a dialog,
+	// the revert has access to animal's code on the page
+	// from which the dialog opened.
+	//
 	// diffLight isn't necessarily a traffic-light.
 	// It is whatever dom element's click handler causes
 	// dialog_history() to be called.
@@ -61,12 +62,11 @@ var cyberDojo = (function(cd, $) {
 	var minTag = 0;
 	var tagGap = nowTag - wasTag;
 	var currentFilename = '';
+	var visibleFiles = undefined;
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var td = function(html) {
-	  return '<td>' + html + '</td>';
-	};
+	// Was-Now-Tag Controls	(on title-bar)
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var makeWasTagCheckbox = function() {
       return '' +
@@ -76,23 +76,27 @@ var cyberDojo = (function(cd, $) {
           '<label for="was-tag-checkbox"></label>';
 	};
 
+	//var td = function(html) {
+	//  return '<td>' + html + '</td>';
+	//};
+
 	var makeWasTagControl = function(tag) {
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
-		    td(makeWasTagCheckbox()) +
-			td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
- 		    td('<div id="was-traffic-light"></div>') +
+		    cd.td(makeWasTagCheckbox()) +
+			cd.td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
+ 		    cd.td('<div id="was-traffic-light"></div>') +
 		  '</tr>' +
 		'</table>';
-	}
+	};
 
 	var makeNowTagControl = function(tag) {
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
- 		    td('<div id="now-traffic-light"></div>') +
-			td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
+ 		    cd.td('<div id="now-traffic-light"></div>') +
+			cd.td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
 		  '</tr>' +
 		 '</table>';
 	};
@@ -101,30 +105,12 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    '<table id="diff-tag-control">' +
 		  '<tr>' +
-		    td(makeWasTagControl(wasTag)) +
-			td('<div id="diff-arrow">&harr;</div>') +
-		    td(makeNowTagControl(nowTag)) +
+		    cd.td(makeWasTagControl(wasTag)) +
+			cd.td('<div id="diff-arrow">&harr;</div>') +
+		    cd.td(makeNowTagControl(nowTag)) +
 		  '</tr>' +
 		'</table>';
     };
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    var makeDiffDiv = function()  {
-      var div = $('<div>', {
-        'id': 'history-dialog'
-      });
-      div.append('<div id="diff-content"></div>');
-	  div.append('<div id="diff-controls">' +
-					cd.makeNavigateButtons() +
-					"<div id='diff-filenames'></div>" +
-				 '</div>');
-      return div;
-    };
-
-	var diffDiv = makeDiffDiv();
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var titleBar = function() {
 	  return $('#ui-dialog-title-history-dialog');
@@ -146,6 +132,26 @@ var cyberDojo = (function(cd, $) {
 	  return $('#now-traffic-light', titleBar());
 	};
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// diff Div
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var makeDiffDiv = function()  {
+      var div = $('<div>', {
+        'id': 'history-dialog'
+      });
+      div.append('<div id="diff-content"></div>');
+	  div.append('<div id="diff-controls">' +
+					cd.makeNavigateButtons() +
+					"<div id='diff-filenames'></div>" +
+				 '</div>');
+      return div;
+    };
+
+	var diffDiv = makeDiffDiv();
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// Navigation Buttons
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var firstButton = $('#first_button', diffDiv);
@@ -188,18 +194,7 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  	var makeTrafficLight = function(tag, trafficLight) {
-	  var colour = trafficLight.colour || trafficLight.outcome
-	  if (tag == 0) {
-		colour = 'white';
-	  }
-      return '' +
-		"<img src='/images/" + 'traffic_light_' + colour + ".png'" +
-		     "width='10'" +
-		     "height='32'/>";
-	};
-
+	// diff Content
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var diffContent = $('#diff-content', diffDiv);
@@ -403,44 +398,29 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var showFile = function(filenameId) {
-	  $('#radio_' + filenameId, diffDiv).click();
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var closeDiffDialog = function() {
-	  // It's important to call remove() and not
-	  // close() to ensure the dialog is totally
-	  // removed from the dom and to do this in
-	  // *both* the close button and hitting escape.
-	  // If you don't do this then things don't
-	  // work properly. Eg the initial selection
-	  // of the chosen filename does not work when
-	  // reopening the dialog.
-	  diffDialog.remove();
-	};
-
 	var title = '' +
-	  '<img height="30"' +
-	  ' width="30"' +
-	  ' src="/images/avatars/' + avatarName + '.jpg"/>' +
-      ' history ' +
-	  makeDiffTagControl();
+		'<img height="30"' +
+		' width="30"' +
+		' src="/images/avatars/' + avatarName + '.jpg"/>' +
+		' history ' +
+		makeDiffTagControl();
 
-	var buttons = {};
-	buttons['close'] = function() {
-	  closeDiffDialog();
-	};
-	buttons['fork'] = function() {
-	  doFork();
-	};
-	if (showRevert) {
-	  buttons['revert'] = function() {
-		doRevert();
+	var makeButtons = function() {
+	  var buttons = {};
+	  buttons['close'] = function() {
 		closeDiffDialog();
 	  };
-	}
+	  buttons['fork'] = function() {
+		doFork();
+	  };
+	  if (showRevert) {
+		buttons['revert'] = function() {
+		  doRevert();
+		  closeDiffDialog();
+		};
+	  }
+	  return buttons;
+	};
 
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
@@ -448,7 +428,7 @@ var cyberDojo = (function(cd, $) {
 	  width: 1150,
 	  height: 720,
 	  modal: true,
-      buttons: buttons,
+      buttons: makeButtons(),
 	  open: function() { refresh(); }
 	}).on('keydown', function(event) {
 	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
@@ -597,8 +577,6 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var visibleFiles = undefined;
-
 	var refresh = function() {
 	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
@@ -633,6 +611,37 @@ var cyberDojo = (function(cd, $) {
 	  ).always(function() {
         diffLight.css('cursor', 'pointer');
 	  });
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// Misc helpers
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var showFile = function(filenameId) {
+	  $('#radio_' + filenameId, diffDiv).click();
+	};
+
+	var closeDiffDialog = function() {
+	  // It's important to call remove() and not
+	  // close() to ensure the dialog is totally
+	  // removed from the dom and to do this in
+	  // *both* the close button and hitting escape.
+	  // If you don't do this then things don't
+	  // work properly. Eg the initial selection
+	  // of the chosen filename does not work when
+	  // reopening the dialog.
+	  diffDialog.remove();
+	};
+
+  	var makeTrafficLight = function(tag, trafficLight) {
+	  var colour = trafficLight.colour || trafficLight.outcome
+	  if (tag == 0) {
+		colour = 'white';
+	  }
+      return '' +
+		"<img src='/images/" + 'traffic_light_' + colour + ".png'" +
+		     "width='10'" +
+		     "height='32'/>";
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
