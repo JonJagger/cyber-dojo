@@ -4,27 +4,28 @@ Docker Server
 
 running your own docker'd cyber-dojo server
 -------------------------------------------
-* Use the [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
+* Use this [TurnKey Linux Rails image](http://www.turnkeylinux.org/rails)
 * As root...
-* Install cyber-dojo
+* Install cyber-dojo from its github repo
 ```bash
 $ cd /var/www
 $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 ```
-* Install cyberdojo as the default rails server, all the necessary gems and [docker](https://www.docker.io/) (this will take a while)
+* Install cyberdojo as the default rails server, all the necessary gems, and [docker](https://www.docker.io/) (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./setup_docker_server.sh
 ```
 
 An ova image (998MB) of the above steps (with security updates) is
-available [here](https://drive.google.com/file/d/0B1bunkV30qwAcEJtTmlzUnJOZ1U/edit?usp=sharing)
+available [here](https://drive.google.com/file/d/0B1bunkV30qwAcEJtTmlzUnJOZ1U/edit?usp=sharing).<br/>
 If you're running it in [VirtualBox](http://www.virtualbox.org/) make sure
-you set its General->Basic settings to type: Linux, Version: Ubuntu (64 bit).
+you set its General->Basic settings to type: Linux, Version: Ubuntu (64 bit).<br/>
 Note that you don't want docker0's IP address, you want eth0's
-IP address (Advanced Menu, Network). The root password is password.
-It has a few base docker language containers installed. You will
-need to install the docker language containers of your choice...
+IP address (Advanced Menu, Network).<br/>
+The root password is password.<br/>
+It has a few base docker language containers installed.<br/>
+You will need to install the docker language containers of your choice...
 
 
 installing pre-built docker language containers
@@ -37,9 +38,9 @@ will tell you the image-names of the docker containers held in the
 [cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
 <br>Now do a
 ```bash
-$ docker pull [IMAGE_NAME]
+$ docker pull <image-name>
 ```
-for each IMAGE_NAME of your choice. Eg
+for each <image-name> of your choice. For example,
 ```bash
 $ docker pull cyberdojo/java-1.8_junit
 ```
