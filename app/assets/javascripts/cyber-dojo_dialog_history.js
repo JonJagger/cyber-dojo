@@ -68,10 +68,19 @@ var cyberDojo = (function(cd, $) {
 	  return '<td>' + html + '</td>';
 	};
 
+	var makeWasTagCheckbox = function() {
+      return '' +
+	    '<input type="checkbox"' +
+            ' class="regular-checkbox"' +
+            ' id="was-tag-checkbox"/>' +
+          '<label for="was-tag-checkbox"></label>';
+	};
+
 	var makeWasTagControl = function(tag) {
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
+		    td(makeWasTagCheckbox()) +
 			td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
  		    td('<div id="was-traffic-light"></div>') +
 		  '</tr>' +
