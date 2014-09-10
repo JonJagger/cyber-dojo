@@ -5,6 +5,7 @@
 // to toggle added/removed lines
 
 $.fn.clickToggle = function(func1, func2) {
+  // usedin cyber-dojo_dialog_history.js
   var funcs = [func1, func2];
   this.data('toggle_clicked', 0);
   this.click(function() {

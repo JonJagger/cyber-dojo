@@ -76,10 +76,6 @@ var cyberDojo = (function(cd, $) {
           '<label for="was-tag-checkbox"></label>';
 	};
 
-	//var td = function(html) {
-	//  return '<td>' + html + '</td>';
-	//};
-
 	var makeWasTagControl = function(tag) {
 	  return '' +
 	    '<table class="tag-control">' +
@@ -116,6 +112,10 @@ var cyberDojo = (function(cd, $) {
 	  return $('#ui-dialog-title-history-dialog');
 	};
 
+	var wasTagCheckBox = function() {
+	  return $('#was-tag-checkbox', titleBar());
+	};
+
 	var wasTagNumber = function() {
 	  return $('#was-tag-number', titleBar());
 	};
@@ -130,6 +130,24 @@ var cyberDojo = (function(cd, $) {
 
 	var nowTrafficLight = function() {
 	  return $('#now-traffic-light', titleBar());
+	};
+
+	var resetTagControls = function(data) {
+	  wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
+	  wasTagNumber().val(wasTag);
+	  nowTagNumber().val(nowTag);
+	  nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
+
+	  wasTagCheckBox()
+		.attr('checked', wasTag != nowTag)
+		.click(function() {
+		  if ($(this).is(':checked')) { // turned on
+			wasTag = nowTag - 1;
+		  } else { // turned off
+			wasTag = nowTag;
+		  }
+		  refresh();
+		});
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -206,13 +224,9 @@ var cyberDojo = (function(cd, $) {
 		  '<div id="' + diff.filename + '_diff_div" class="filename_div">' +
 		  '<table>' +
 		    '<tr class="valign-top">' +
-		      '<td>' +
-		        '<div class="diff-line-numbers"></div>' +
-		      '</td>' +
-		      '<td>' +
-		        '<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
-				'</div>' +
-		      '</td>' +
+		      cd.td('<div class="diff-line-numbers"></div>') +
+		      cd.td('<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
+				    '</div>') +
 		    '</tr>' +
 		  '</table>' +
 		  '</div>'
@@ -590,11 +604,8 @@ var cyberDojo = (function(cd, $) {
 		function(data) {
 
 		  visibleFiles = data.visibleFiles;
+		  resetTagControls(data);
 		  resetNavigateButtonHandlers();
-		  wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
-		  wasTagNumber().val(wasTag);
-		  nowTagNumber().val(nowTag);
-		  nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
 		  diffFilenames.html(makeDiffFilenames(data.diffs));
 		  resetFilenameAddedDeletedLineCountHandlers();
