@@ -16,19 +16,40 @@ $ git clone https://JonJagger@github.com/JonJagger/cyberdojo
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./setup_docker_server.sh
 ```
-* Install all the language's docker containers (this will take a while too)
+
+An ova image (998MB) of the above steps (with security updates) is
+available [here](https://drive.google.com/file/d/0B1bunkV30qwAcEJtTmlzUnJOZ1U/edit?usp=sharing)
+If you're running it in [VirtualBox](http://www.virtualbox.org/) make sure
+you set its General->Basic settings to type: Linux, Version: Ubuntu (64 bit).
+Note that you don't want docker0's IP address, you want eth0's
+IP address (Advanced Menu, Network). The root password is password.
+It has a few base docker language containers installed. You will
+need to install the docker language containers of your choice...
+
+
+installing pre-built docker language containers
+-----------------------------------------------
+From the docker'd cyber-dojo server
+```bash
+$ docker search cyberdojo | sort
+```
+will tell you the image-names of the docker containers held in the
+[cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
+<br>Now do a
+```bash
+$ docker pull [IMAGE_NAME]
+```
+for each IMAGE_NAME of your choice. Eg
+```bash
+$ docker pull cyberdojo/java-1.8_junit
+```
+
+
+Alternatively, you can simply install them all (this will take a while)
 ```bash
 $ cd /var/www/cyberdojo/admin_scripts
 $ ./docker_pull_all.rb
 ```
-
-An ova image (998MB) of the first two steps (with security updates) is
-available [here](https://drive.google.com/file/d/0B1bunkV30qwAcEJtTmlzUnJOZ1U/edit?usp=sharing)
-It also has a few base docker containers installed.
-If you're running it in [VirtualBox](http://www.virtualbox.org/) make sure
-you set its General-Basic setting to type: Linux, Version: Ubuntu (64 bit).
-Note that you don't want docker0's IP address, you want eth0's
-IP address (Advanced Menu, Network). The root password is password.
 
 
 
@@ -70,31 +91,8 @@ and the environment variable
 
 
 
-pulling pre-built docker language containers
---------------------------------------------
-From the docker'd cyber-dojo server
-```bash
-$ docker search cyberdojo | sort
-```
-will tell you the names of the docker container images held in the
-[cyberdojo docker index](https://index.docker.io/u/cyberdojo/)
-<br>Now do a
-```bash
-$ docker pull [IMAGE_NAME]
-```
-for each IMAGE_NAME matching the `image_name` entry in
-each `cyberdojo/languages/*/manifest.json` file that you wish to use.
-
-Alternatively, you can pull them all (this will take a while)
-```bash
-$ cd /var/www/cyberdojo/admin_scripts
-$ ./docker_pull_all.rb
-```
-
-
-
-pulling from the cyberdojo github repo
---------------------------------------
+pulling the latest cyberdojo github repo
+----------------------------------------
 ```bash
   $ cd /var/www/cyberdojo/admin_scripts
   $ ./pull.sh
