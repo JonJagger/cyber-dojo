@@ -22,6 +22,15 @@ $ cd /var/www/cyberdojo/admin_scripts
 $ ./docker_pull_all.rb
 ```
 
+An ova image (998MB) of the first two steps (with security updates) is
+available [here](https://drive.google.com/file/d/0B1bunkV30qwAcEJtTmlzUnJOZ1U/edit?usp=sharing)
+It also has a few base docker containers installed.
+If you're running it in [VirtualBox](http://www.virtualbox.org/) make sure
+you set its General-Basic setting to type: Linux, Version: Ubuntu (64 bit).
+Note that you don't want docker0's IP address, you want eth0's
+IP address (Advanced Menu, Network). The root password is password.
+
+
 
 overview of how docker language containers work
 -----------------------------------------------
