@@ -60,7 +60,7 @@ var cyberDojo = (function(cd, $) {
 	// It has its cursor tweaked while the getJSON call is made.
 
 	var minTag = 0;
-	var tagGap = nowTag - wasTag;
+	var tagGap = nowTag - wasTag; // currently always 1
 	var currentFilename = '';
 	var visibleFiles = undefined;
 
@@ -140,6 +140,7 @@ var cyberDojo = (function(cd, $) {
 
 	  wasTagCheckBox()
 		.attr('checked', wasTag != nowTag)
+		.unbind('click')
 		.click(function() {
 		  if ($(this).is(':checked')) { // turned on
 			wasTag = nowTag - 1;
@@ -212,8 +213,15 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// diff Content
+	// diff content and filenames
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var resetDiff = function(data) {
+	  diffFilenames.html(makeDiffFilenames(data.diffs));
+	  resetFilenameAddedDeletedLineCountHandlers();
+	  diffContent.html(makeDiffContent(data.diffs));
+	  buildDiffFilenameHandlers(data.idsAndSectionCounts);
+	};
 
 	var diffContent = $('#diff-content', diffDiv);
 
@@ -456,11 +464,9 @@ var cyberDojo = (function(cd, $) {
 	var colouredBulb = function(light) {
 	  var colour = light.colour || light.outcome;
       return '' +
-	    '<span class="revert-fork-bulb-edge">' +
 		  "<img  src='/images/" + 'bulb_' + colour + ".png'" +
 			  "width='12'" +
-			 "height='12'/>" +
-		"</span>";
+			 "height='12'/>";
 	};
 
 	var revertButton = function() {
@@ -602,22 +608,15 @@ var cyberDojo = (function(cd, $) {
 		  current_filename: currentFilename // 51:var currentFilename
 		},
 		function(data) {
-
 		  visibleFiles = data.visibleFiles;
 		  resetTagControls(data);
 		  resetNavigateButtonHandlers();
-
-		  diffFilenames.html(makeDiffFilenames(data.diffs));
-		  resetFilenameAddedDeletedLineCountHandlers();
-		  diffContent.html(makeDiffContent(data.diffs));
-          buildDiffFilenameHandlers(data.idsAndSectionCounts);
+		  resetDiff(data);
           showFile(data.currentFilenameId);
-
 		  if (showRevert) {
 			revertButton().html(makeRevertButtonHtml(data,nowTag));
 		  }
 		  forkButton().html(makeForkButtonHtml(data,nowTag));
-
 		}
 	  ).always(function() {
         diffLight.css('cursor', 'pointer');
@@ -646,7 +645,7 @@ var cyberDojo = (function(cd, $) {
 
   	var makeTrafficLight = function(tag, trafficLight) {
 	  var colour = trafficLight.colour || trafficLight.outcome
-	  if (tag == 0) {
+	  if (tag === 0) {
 		colour = 'white';
 	  }
       return '' +

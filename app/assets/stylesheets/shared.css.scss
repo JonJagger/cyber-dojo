@@ -46,15 +46,6 @@
   cursor: pointer;
 }
 
-@mixin editable_tag_number {
-  background: $lighter-color;
-  @include gradient-darken($lighter-color, 20%, 10%, 5%);
-  color: $darker-color;
-  @include font-size-small();
-  text-align: center;
-  width: 2em;
-}
-
 .traffic-light-count {
   font-size: 2.5em;
   padding: 0.1em;
