@@ -143,11 +143,11 @@ var cyberDojo = (function(cd, $) {
 		.unbind('click')
 		.click(function() {
 		  if ($(this).is(':checked')) { // turned on
-			wasTag = nowTag - 1;
+			showDiff(nowTag-1, nowTag);
 		  } else { // turned off
-			wasTag = nowTag;
+			showDiff(nowTag,nowTag);
 		  }
-		  refresh();
+		  //refresh();
 		});
 	};
 

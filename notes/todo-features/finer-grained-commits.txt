@@ -232,29 +232,7 @@ Finer-grained commits
   ----
   1) done
   2) done
-     but...
-        tag-numbers are no longer editable... unexpected. why?
-        look into it? or move on to 3?
-        
-  3) simplify current history dialog so was-tag and now-tag
-     are *not* editable. Instead was-tag has checkbox.
-     If checkbox is off, only now-tag is used for no-diff
-     If checkbox is on, now-tag is used for diff.
-     delta between was-tag and now-tag is always 1.
-     Incoming URL stays the same.
-     If URL was-tag == now-tag
-     then  was-tag=now-tag-1
-           was-tag-checkbox = off
-           view = no-diff
-     If URL was-tag != now-tag
-     then was-tag and now-tag stay the same
-          was-tag-checkbox = on
-          view = diff
-     When << < > >> are clicked then the was-tag
-     and now-tags update appropriately so they are
-     below their respective traffic-lights.
-
-     commit
+  3) done
 
   4) move traffic-light sequence to title bar of history dialog.
      add non-draggable was-tag now-tag markers which position
