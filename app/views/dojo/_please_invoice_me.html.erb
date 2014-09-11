@@ -3,17 +3,8 @@
 
 $(function() {
   $('#please-invoice-me').click(function(event) {
-    var name = $(this).attr('id');
-    var close = 'close'; //$(this).data('close');
-    var title = $(this).text();
-    var button = $(this);
-    var cursor = button.css('cursor');
-    event.preventDefault();
-    button.css('cursor', 'wait');
-    $.get('/dojo/button_dialog/' + name, function(html) {
-      button.css('cursor', cursor);
-      cd.dialog(html, title, close).dialog('open');
-    });
+    var url = "mailto:jon@jaggersoft.com?subject=cyber-dojo - please invoice me";
+    window.open(url);
   });
 });
 
