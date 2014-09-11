@@ -603,11 +603,11 @@ var cyberDojo = (function(cd, $) {
 	  diffLight.css('cursor', 'wait');
 	  $.getJSON('/differ/diff',
 		{
-		  id: id,                // 43:dialog_diff(id...)
-		  avatar: avatarName,    // 43:dialog_diff(... avatarName...)
-		  was_tag: wasTag,       // 43:dialog_diff(... wasTag ...)
-		  now_tag: nowTag,       // 43:dialog_diff(... nowTag ...)
-		  current_filename: currentFilename // 51:var currentFilename
+		  id: id,
+		  avatar: avatarName,
+		  was_tag: wasTag,
+		  now_tag: nowTag,
+		  current_filename: currentFilename
 		},
 		function(data) {
 		  visibleFiles = data.visibleFiles;
@@ -634,14 +634,9 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var closeDiffDialog = function() {
-	  // It's important to call remove() and not
-	  // close() to ensure the dialog is totally
-	  // removed from the dom and to do this in
-	  // *both* the close button and hitting escape.
-	  // If you don't do this then things don't
-	  // work properly. Eg the initial selection
-	  // of the chosen filename does not work when
-	  // reopening the dialog.
+	  // Important to call remove() and not close() and
+      // to do this for *both* the close button and
+	  // hitting escape.
 	  diffDialog.remove();
 	};
 
