@@ -22,11 +22,10 @@ class ApplicationController < ActionController::Base
   end
 
   def dojo
-    thread = Thread.current
     externals = {
-      :disk   => @disk   = thread[:disk  ] || OsDisk.new,
-      :git    => @git    = thread[:git   ] || Git.new,
-      :runner => @runner = thread[:runner] || runner
+      :runner => runner,
+      :disk   => disk,
+      :git    => git
     }
     Dojo.new(root_path,externals)
   end
@@ -43,9 +42,20 @@ class ApplicationController < ActionController::Base
 private
 
   def runner
-    return DockerTestRunner.new if Docker.installed?
-    return HostTestRunner.new   if ENV['CYBERDOJO_USE_HOST'] != nil
-    return DummyTestRunner.new
+    @runner ||= Thread.current[:runner]
+    @runner ||= DockerTestRunner.new if Docker.installed?
+    @runner ||= HostTestRunner.new   if !ENV['CYBERDOJO_USE_HOST'].nil?
+    @runner ||= DummyTestRunner.new
+  end
+
+  def disk
+    @disk ||= Thread.current[:disk]
+    @disk ||= OsDisk.new
+  end
+
+  def git
+    @git ||= Thread.current[:git]
+    @git ||= Git.new
   end
 
   #before_filter :set_locale
