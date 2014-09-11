@@ -45,8 +45,7 @@ var cyberDojo = (function(cd, $) {
 							   diffLight, showRevert) {
 	// Arguably, the history dialog would be better as it own
 	// history page. That would help google searchability and
-	// analytics etc. I use a dialog because that is the only
-	// way I can think of to implement revert.
+	// analytics etc. I use a dialog because of revert.
 	// When revert is clicked it has to be for a specific
 	// animal and it has to revert their code! As a dialog,
 	// the revert has access to animal's code on the page
@@ -151,7 +150,6 @@ var cyberDojo = (function(cd, $) {
 		  } else { // turned off
 			showDiff(nowTag,nowTag);
 		  }
-		  //refresh();
 		});
 	};
 
@@ -174,7 +172,7 @@ var cyberDojo = (function(cd, $) {
 	var diffDiv = makeDiffDiv();
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Navigation Buttons
+	// << < > >> Navigation Buttons
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var firstButton = $('#first_button', diffDiv);
@@ -664,8 +662,8 @@ var cyberDojo = (function(cd, $) {
 
 
   }; // cd.dialog_history = function(id,avatarName,
-    //                               wasTag,nowTag,maxTag,
-	//                               difLight,showRevert) {
+     //                              wasTag,nowTag,maxTag,
+	 //                              difLight,showRevert) {
 
   return cd;
 })(cyberDojo || {}, $);

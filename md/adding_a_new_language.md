@@ -136,14 +136,26 @@ called answer() which return 6 * 9 and a test for this function
 which expects 42. Thus the initial files give you a red traffic-light.
 
 
+### check the language's manifest.json file
+```bash
+$ cd /var/www/cyberdojo/test/languages
+$ ./check_one_language.rb <language-name>
+```
+For example
+```bash
+$ cd /var/www/cyberdojo/test/languages
+$ ./check_one_language.rb Lisp-2.3
+```
+
+
 ### write an output parse function
 
   * Deep-breath...
   <br/>
     the `unit_test_framework` entry in `manifest.json`
-    file names the function inside `app/lib/OutputParser.rb`
+    names the function inside `app/lib/OutputParser.rb`
     used to determine if the output from running `cyber-dojo.sh`, in your Docker
-    container, on the animals current files, qualifies as a
+    container, on the animal's current files, qualifies as a
     red traffic-light, an amber traffic-light, or a green traffic-light.<br/>
     And exhale...<br/>
     There are lots of examples in
@@ -158,8 +170,3 @@ which expects 42. Thus the initial files give you a red traffic-light.
     in OutputParser.rb you can simply name it and you're done.
 
 
-### check the language's manifest.json file
-```bash
-$ cd /var/www/cyberdojo/test/integration
-$ ./test_languages_manifests.rb
-```
