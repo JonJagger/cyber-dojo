@@ -3,9 +3,6 @@
 history.css.scss
   #diff-controls has absolute positioning.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-history dialog
-  put dark edge around bulb on fork/rever buttons on history dialog
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 check event handlers have event.preventDefault()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 check dialog() uses remove() and not close()
@@ -21,8 +18,6 @@ blog.cyber-dojo.org
 move accu button to footer?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 put animal images on front page?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dashboard scrollbar could move down so it rests on top of the footer.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 cyber-dojo.org could have adverts for software tools etc.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

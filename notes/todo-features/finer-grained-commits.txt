@@ -238,23 +238,11 @@ Finer-grained commits
      add non-draggable was-tag now-tag markers which position
      directly below their respective traffic-light.
 
-     commit
+  5) custom serialization only POSTs changed files for [test] event.
 
-  5) make was-tag and now-tag draggable.
-     both are constrained and can only move horizontally.
-     they are always locked with a delta of 1.
-     Viz was-tag+1==now-tag and they drag together.
+  6) drop the form
 
-     commit
-     release
-
-  6) custom serialization only POSTs changed files for [test] event.
-
-  7) drop the form
-
-     commit
-
-  8) POST for each file new/rename/delete/edit
+  7) POST for each file new/rename/delete/edit
      In increments.json a non-test increment
      has colour=white and extra key for its type
      Traffic-light retain current numbering, viz
@@ -264,7 +252,7 @@ Finer-grained commits
      So Light.number is calculated
         Light.tag.number is stored in increments.json
 
-  9) decide on icon(s) for each fine-grained commit.
+  8) decide on icon(s) for each fine-grained commit.
      one for everything?
      one each for file new/rename/delete/edit
      how about just a small N,R,D,E
@@ -273,7 +261,10 @@ Finer-grained commits
      traffic-lights at top show tags and lights if tags? is checked.
      If tags are being shown then numbering switches to tag numbers.
 
-     release
+  9) make was-tag and now-tag draggable.
+     both are constrained and can only move horizontally.
+     they are always locked with a delta of 1.
+     Viz was-tag+1==now-tag and they drag together.
 
   10) add checkbox for tags? to dashboard
       if tags? is checked dashboard shows tags as well

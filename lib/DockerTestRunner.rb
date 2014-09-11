@@ -1,5 +1,5 @@
 
-# test runner providing some isolation/protection/security
+# test runner providing isolation/protection/security
 # via Docker containers https://www.docker.io/
 
 require_relative 'TestRunner'

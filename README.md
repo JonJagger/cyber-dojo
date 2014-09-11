@@ -20,11 +20,12 @@ cyber-dojo
 
 [Docker Server](md/docker-server.md)
   * running your own docker'd cyber-dojo server
+  * installing pre-built docker language containers
   * overview of how docker language containers work
+  * pulling from the cyberdojo github repo
   * [adding a new language + unit test](md/adding_a_new_language.md)
   * [language manifest.json parameters](md/language_manifest.md)
   * [adding a new exercise](md/adding_a_new_exercise.md)
-  * pulling from the cyberdojo github repo
 
 [Misc](md/misc.md)
   * katas directory structure
