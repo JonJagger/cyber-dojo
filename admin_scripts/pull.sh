@@ -27,6 +27,11 @@ echo "chown/chgrp www-data .*"
 eval "chown www-data /var/www/cyberdojo/.*"
 eval "chgrp www-data /var/www/cyberdojo/.*"
 
+echo "chown/chgrp www-data tmp/cache"
+eval "mkdir -p tmp/cache"
+eval "chown www-data /var/www/cyberdojo/tmp/cache"
+eval "chgrp www-data /var/www/cyberdojo/tmp/cache"
+
 # poke rails
 bundle install
 
