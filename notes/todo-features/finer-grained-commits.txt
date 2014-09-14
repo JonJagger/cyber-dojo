@@ -1,6 +1,69 @@
 
 Finer-grained commits
 =====================
+
+
+  Plan
+  ----
+  1) done
+  2) done
+  3) done
+
+  4) move traffic-light sequence to title bar of history dialog.
+     add non-draggable was-tag now-tag markers which position
+     directly below their respective traffic-light.
+
+  5) custom serialization only POSTs changed files for [test] event.
+
+  6) drop the form
+
+  7) POST for each file new/rename/delete/edit
+     In increments.json a non-test increment
+     has colour=white and extra key for its type
+     Traffic-light retain current numbering, viz
+     15th tag may be 6th traffic-lights so 6 displays
+     in tag-control. But increment[:number] stays the
+     same and is for the tag.
+     So Light.number is calculated
+        Light.tag.number is stored in increments.json
+
+  8) decide on icon(s) for each fine-grained commit.
+     one for everything?
+     one each for file new/rename/delete/edit
+     how about just a small N,R,D,E
+     put checkbox icon for tags? between << < > >>
+     this only appears if there are inter-test tags
+     traffic-lights at top show tags and lights if tags? is checked.
+     If tags are being shown then numbering switches to tag numbers.
+
+     NB: suppose the lion clicks [new file]
+     The server has to do a git add <filename>
+     However the server *also* has to update the
+     lion's manifest.json file. This is because the
+     manifest.json file is what is read when the browser does
+     a refresh. So only when the git add <filename> and the
+     manifest.json has been updated, does a success response
+     come back to the browser and it then creates the new file
+     in the file-knave
+
+
+
+  9) make was-tag and now-tag draggable.
+     both are constrained and can only move horizontally.
+     they are always locked with a delta of 1.
+     Viz was-tag+1==now-tag and they drag together.
+
+  10) add checkbox for tags? to dashboard
+      if tags? is checked dashboard shows tags as well
+      as traffic-lights
+
+
+  Note: Code for whether/when an animal appears on the dashboard
+  may need revisiting when dashboard shows tags as well as lights.
+
+  ==============================================
+
+
   do a commit (on server) when an animal switches from one file
   to another file (and there is a change in the file switched from),
   or creates a new file, or renames a file, or deletes a file.
@@ -226,53 +289,6 @@ Finer-grained commits
   So it could be something as simple as
   [close] [revert to TL 9]  [fork from TL 9]
   where TL is an image of a rag traggic-light
-
-
-  Plan
-  ----
-  1) done
-  2) done
-  3) done
-
-  4) move traffic-light sequence to title bar of history dialog.
-     add non-draggable was-tag now-tag markers which position
-     directly below their respective traffic-light.
-
-  5) custom serialization only POSTs changed files for [test] event.
-
-  6) drop the form
-
-  7) POST for each file new/rename/delete/edit
-     In increments.json a non-test increment
-     has colour=white and extra key for its type
-     Traffic-light retain current numbering, viz
-     15th tag may be 6th traffic-lights so 6 displays
-     in tag-control. But increment[:number] stays the
-     same and is for the tag.
-     So Light.number is calculated
-        Light.tag.number is stored in increments.json
-
-  8) decide on icon(s) for each fine-grained commit.
-     one for everything?
-     one each for file new/rename/delete/edit
-     how about just a small N,R,D,E
-     put checkbox icon for tags? between << < > >>
-     this only appears if there are inter-test tags
-     traffic-lights at top show tags and lights if tags? is checked.
-     If tags are being shown then numbering switches to tag numbers.
-
-  9) make was-tag and now-tag draggable.
-     both are constrained and can only move horizontally.
-     they are always locked with a delta of 1.
-     Viz was-tag+1==now-tag and they drag together.
-
-  10) add checkbox for tags? to dashboard
-      if tags? is checked dashboard shows tags as well
-      as traffic-lights
-
-
-  Note: Code for whether/when an animal appears on the dashboard
-  may need revisiting when dashboard shows tags as well as lights.
 
 
   ==========================================================
