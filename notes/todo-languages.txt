@@ -10,8 +10,11 @@ install Swift?
 install Visual.BASIC? (for Chris Oldwood)
 install J?
 install Java-TestNG?
+install Java-EasyMock
+install Java-JAssert
 install Objective-C?
 install COBOL?
+install ASM
 
 mutation testing frameworks?
 http://en.wikipedia.org/wiki/Mutation_testing
