@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/gcc-4.8.1 .
+docker build -t cyberdojo/nasm-2.10.0 .
