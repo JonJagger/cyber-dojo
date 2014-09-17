@@ -11,7 +11,7 @@ install Visual.BASIC? Chris Oldwood?
 install J?
 install Java-TestNG?
 install Java-EasyMock
-install Java-JAssert
+install Java-AssertJ
 install Objective-C?
 install COBOL?
 install ASM? Mike-Long?

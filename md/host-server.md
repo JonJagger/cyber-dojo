@@ -6,7 +6,7 @@ cyber-dojo runs directly (no docker) on the host-server if
  * docker is not installed
  * the environment variable CYBERDOJO_USE_HOST is set
 
-This is useful primarily for running a personal cyber-dojo on
+This is useful primarily for running a *personal* cyber-dojo on
 a laptop. In this mode, there is
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
   * NO PROTECTION, NO ISOLATION, NO SECURITY.
