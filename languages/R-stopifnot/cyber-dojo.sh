@@ -1,1 +1,1 @@
-Rscript hiker.R
+Rscript *.tests.R
