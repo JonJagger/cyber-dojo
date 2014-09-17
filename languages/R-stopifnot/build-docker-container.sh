@@ -1,4 +1,3 @@
 #!/bin/bash
 
-docker build -t cyberdojo/gcc-4.8.1_assert .
-
+docker build -t cyberdojo/r-3.0.1_stopifnot .
