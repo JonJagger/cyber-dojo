@@ -1,22 +1,23 @@
 
 install R
   apt-get install r-base
-  use assert.
+  use assert. Derek Jones.
     http://stat.ethz.ch/R-manual/R-devel/library/base/html/stopifnot.html
 
 install Rust?
 install Dart?
 install Swift?
-install Visual.BASIC? (for Chris Oldwood)
+install Visual.BASIC? Chris Oldwood?
 install J?
 install Java-TestNG?
 install Java-EasyMock
 install Java-JAssert
 install Objective-C?
 install COBOL?
-install ASM
+install ASM? Mike-Long?
 
 mutation testing frameworks?
+----------------------------
 http://en.wikipedia.org/wiki/Mutation_testing
 
 install Java + PI

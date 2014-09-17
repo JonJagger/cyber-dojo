@@ -1,4 +1,8 @@
 
+docker info
+  WARNING: No memory limit support
+  WARNING: No swap limit support
+look into those.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 history.css.scss
   #diff-controls has absolute positioning.
@@ -9,7 +13,6 @@ check dialog() uses remove() and not close()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 blog.cyber-dojo.org
   add vision page to blog.cyber-dojo.org?
-  add interviewing page to blog.cyber-dojo.org?
   add md files to blog.cyber-dojo.org
   add intro video  to [learn more] page
   move testimonials to blog
@@ -25,7 +28,7 @@ Internet Explorer popup should come from all the home page buttons.
 And perhaps mention it on footer too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 aim to minimize server-load. Put as much as possible onto
-blog. Eg help pages, videos, etc.
+blog. Eg help pages, videos, etc. Helps google analytics too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on history dialog move file-nave from rhs to lhs?
 move revert fork into their own box?
@@ -34,9 +37,6 @@ increase width of textarea slightly.
 dashboard - when user clicks auto-refresh off
 that could be the event that causes the checkboxes for each
 animal to appear...
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-dialog_history() js function still has some s/diff/history
-refactorings to do.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 having all the output-parse functions in the same module
 feels wrong. How about putting the function in its own colour.rb
