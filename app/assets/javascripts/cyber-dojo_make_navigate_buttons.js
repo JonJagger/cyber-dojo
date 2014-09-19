@@ -19,18 +19,10 @@ var cyberDojo = (function(cd, $) {
 	return '' +
 		'<table id="navigate-buttons">' +
 		  '<tr>' +
-			'<td>' +
-			   makeNavigateButton('first') +
-			'</td>' +
-			'<td>' +
-			   makeNavigateButton('prev') +
-			'</td>' +
-			'<td>' +
-			   makeNavigateButton('next') +
-			'</td>' +
-			'<td>' +
-			   makeNavigateButton('last') +
-			'</td>' +
+			cd.td(makeNavigateButton('first')) +
+			cd.td(makeNavigateButton('prev')) +
+			cd.td(makeNavigateButton('next')) +
+			cd.td(makeNavigateButton('last')) +
 		  '</tr>' +
 		'</table>';
   };
