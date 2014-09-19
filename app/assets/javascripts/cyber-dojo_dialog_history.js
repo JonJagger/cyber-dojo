@@ -207,6 +207,7 @@ var cyberDojo = (function(cd, $) {
 
 	var refreshNavigationHandlers = function(off, button, from, to) {
 	  button.attr('disabled', off);
+	  button.css('cursor', off ? 'default' : 'pointer');
 	  if (!off) {
 		button
 		  .unbind()

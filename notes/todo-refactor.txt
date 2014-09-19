@@ -3,12 +3,8 @@
 diff-dialog
   if you press a |< >| button and the button becomes
   disabled the cursor should be reset to not-a-hand.
-  refresh() 602
-    called 195, 456
-  showDiff() 191
-    called 146,148,151,204
-  would remove diffLight hack too....
-
+  line 210.
+  Why do I need this .css() call?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 does refactoring_dojos.tgz still have katas in old manifest.rb format?
 Check this on cyber-dojo.org for eg
