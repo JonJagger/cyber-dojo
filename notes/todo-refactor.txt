@@ -1,22 +1,46 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+diff-dialog
+  if you press a |< >| button and the button becomes
+  disabled the cursor should be reset to not-a-hand.
+  refresh() 602
+    called 195, 456
+  showDiff() 191
+    called 146,148,151,204
+  would remove diffLight hack too....
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+does refactoring_dojos.tgz still have katas in old manifest.rb format?
+Check this on cyber-dojo.org for eg
+cyberdojo/katas/76/DD58DE08
+which is the refactoring kata for Yahtzee,C++
+Recreate the .tgz file on cyber-dojo.org
+using cyberdojo/admin_scripts/save_refactoring_dojos.rb
+Then scp the .tgz file to my local computer.
+Then make sure that the .tgz file is part of the git repo
+and commit it and push it.
+. . . .
+save_refactoring_dojos.rb is unable to find
+435E5C1C88 (tennis,python)
+It turns out this was one of the few katas that were not
+converted from rb to json. So it's currently in the
+katas_rb_bad/ folder on cyber-dojo.org
+I have tarred it into its own .tgz file (on cyber-dojo.org)
+tennis_python_refactoring_kata.tgz
+When I have a better internet connection (in China) I will
+recreate the kata from the 435E5C1C88/moose git repo.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 blog.cyber-dojo.org
   add more PAGES (on lhs)
   add vision page
   add (md) docker-overview
+  add (md) language manifest.json parameters
   add (md) adding-a-new-exercise
   add (md) pull-latest
-  add (md) language manifest.json parameters
   remove md files from github
   add intro video  to [learn more] page
   move testimonials to blog
   donators become 'friends of cyber-dojo'?
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Gemfile has this
-  gem 'sass-rails',   '>= 3.2.3'
-try
-  gem 'sass-rails',   '~> 3.2.3'
-to get rid of sass cache warnings
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker info
   WARNING: No memory limit support
@@ -64,26 +88,6 @@ Dojo.rb
 lib/Docker.rb uses 'docker info' and not 'docker --version'
 is this the cause of the [create] page slowdown?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-does refactoring_dojos.tgz still has katas in old manifest.rb format?
-Check this on cyber-dojo.org for eg
-cyberdojo/katas/76/DD58DE08
-which is the refactoring kata for Yahtzee,C++
-Recreate the .tgz file on cyber-dojo.org
-using cyberdojo/admin_scripts/save_refactoring_dojos.rb
-Then scp the .tgz file to my local computer.
-Then make sure that the .tgz file is part of the git repo
-and commit it and push it.
-. . . .
-save_refactoring_dojos.rb is unable to find
-435E5C1C88 (tennis,python)
-It turns out this was one of the few katas that were not
-converted from rb to json. So it's currently in the
-katas_rb_bad/ folder on cyber-dojo.org
-I have tarred it into its own .tgz file (on cyber-dojo.org)
-tennis_python_refactoring_kata.tgz
-When I have a better internet connection (in China) I will
-recreate the kata from the 435E5C1C88/moose git repo.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 s/parse_NAME/colour_of_NAME/
 in app/lib/OutputParser.rb (rename to OutputColour.rb)
 Also rename the tests files, eg
@@ -92,8 +96,6 @@ test/output_c_unity.rb -> test_cunity_output_colour.rb
 diff-dialog uses ajax call to navigate around diff tags.
 these ajax calls do not have timeouts. If you are on a
 flaky network the cursor just spins forever.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-is github home page md file in the git repo?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make the traffic-lights scrollbar on [test] page go above
 the traffic-lights rather than below them?
@@ -125,10 +127,6 @@ which is loaded and displayed in a textarea replacement.
 Eventually Avatar.tags will contain one entry for each
 avatar event (eg file rename) and Avatar.lights will need
 to filter Avatar.tags
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-diff-dialog
-  if you press a |< >| button and the button becomes
-  disabled the cursor should be reset to not-a-hand.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make diff-dialog a plain page (non-dialog)?
 This will enable small dialogs for fork failures.

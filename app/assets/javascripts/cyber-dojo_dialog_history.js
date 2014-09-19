@@ -42,7 +42,7 @@ var cyberDojo = (function(cd, $) {
 
   cd.dialog_history = function(id, avatarName,
 							   wasTag, nowTag, maxTag,
-							   diffLight, showRevert) {
+							   domNodeSource, showRevert) {
 	// Arguably, the history dialog would be better as it own
 	// history page. That would help google searchability and
 	// analytics etc. I use a dialog because of revert.
@@ -50,13 +50,13 @@ var cyberDojo = (function(cd, $) {
 	// animal and it has to revert their code! As a dialog,
 	// the revert has access to animal's code on the page
 	// from which the dialog opened.
-	//
-	// diffLight isn't necessarily a traffic-light.
-	// It is whatever dom element's click handler causes
-	// dialog_history() to be called.
-	// Eg it could be an animals light-count which opens
-	// a "no-diff" by setting wasTag == nowTag.
-	// It has its cursor tweaked while the getJSON call is made.
+
+	var setWaitCursor = function() {
+	  domNodeSource.css('cursor', 'wait');
+	};
+	var setPointerCursor = function() {
+	  domNodeSource.css('cursor', 'pointer');
+	};
 
 	var minTag = 0;
 	var tagGap = nowTag - wasTag; // currently always 1
@@ -143,12 +143,12 @@ var cyberDojo = (function(cd, $) {
 		.click(function() {
 		  if ($(this).is(':checked')) { // turned on
 			if (nowTag === 0) {
-			  showDiff(0, 1);
+			  showDiff(0, 1, $(this));
 			} else {
-			  showDiff(nowTag-1, nowTag);
+			  showDiff(nowTag-1, nowTag, $(this));
 			}
 		  } else { // turned off
-			showDiff(nowTag,nowTag);
+			showDiff(nowTag, nowTag, $(this));
 		  }
 		});
 	};
@@ -188,20 +188,30 @@ var cyberDojo = (function(cd, $) {
 	  }
 	};
 
-	var showDiff = function(was,now) {
+	var showDiff = function(was,now,node) {
 	  wasTag = was;
 	  nowTag = now;
 	  tagGap = now - was;
-	  refresh();
+	  var before = function() {
+		node.css('cursor', 'wait');
+	  };
+	  var after = function() {
+		if (node.attr('disabled') === 'disabled') {
+		  node.css('cursor', 'default');
+		} else {
+		  node.css('cursor', 'pointer');
+		}
+	  };
+	  refresh(before,after);
 	};
 
 	var refreshNavigationHandlers = function(off, button, from, to) {
 	  button.attr('disabled', off);
 	  if (!off) {
-		button.unbind()
+		button
+		  .unbind()
 		  .click(function() {
-			diffLight = $(this); // wait-cursor hack
-			showDiff(from, to);
+			showDiff(from, to, button);
 		  })
 		  .attr('title', toolTip(from, to));
 	  }
@@ -453,7 +463,7 @@ var cyberDojo = (function(cd, $) {
 	  height: 720,
 	  modal: true,
       buttons: makeButtons(),
-	  open: function() { refresh(); }
+	  open: function() { refresh(setWaitCursor,setPointerCursor); }
 	}).on('keydown', function(event) {
 	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
 		closeDiffDialog();
@@ -599,8 +609,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var refresh = function() {
-	  diffLight.css('cursor', 'wait');
+	var refresh = function(before, after) {
+	  before();
 	  $.getJSON('/differ/diff',
 		{
 		  id: id,
@@ -621,7 +631,7 @@ var cyberDojo = (function(cd, $) {
 		  forkButton().html(makeForkButtonHtml(data,nowTag));
 		}
 	  ).always(function() {
-        diffLight.css('cursor', 'pointer');
+        after();
 	  });
 	};
 
@@ -658,7 +668,7 @@ var cyberDojo = (function(cd, $) {
 
   }; // cd.dialog_history = function(id,avatarName,
      //                              wasTag,nowTag,maxTag,
-	 //                              difLight,showRevert) {
+	 //                              domNodeSource,showRevert) {
 
   return cd;
 })(cyberDojo || {}, $);

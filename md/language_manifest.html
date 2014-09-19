@@ -10,6 +10,7 @@
         .red   { color: Red;    }
         .amber { color: Orange; }
         .green { color: Green;  }
+        .light-green { color: LightGreen; }
         .bash {
             font-family: monospace;
             background: Gray;
@@ -99,10 +100,12 @@ to compile java files then <code>javac</code> has to be installed.
 The name of the unit test framework which partially determines the
 name of the ruby function (on the cyber-dojo server) used to parse the
 test output (to see if the traffic-light is red/green/amber).
-For example, if the value is `cassert` then
-    [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
-must contain a method called `parse_cassert()` and will be called to parse the
-output of running the tests via the `cyber-dojo.sh` shell file.
+For example, if the value is <code>cassert</code> then
+<a href="https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb">
+OutputParser.rb</a>
+must contain a method called <code>parse_cassert()</code> and
+will be called to parse the output of running the tests via
+the <code>cyber-dojo.sh</code> shell file.
 <br>Required.
 
 
@@ -169,18 +172,18 @@ will default to
     <div class="css">
       [ 'cyber-dojo', 'makefile', 'Makefile' ]
     </div>
-<br>Not required. Defaults to an empty array.
+Not required. Defaults to an empty array.
 
 
 <br>
 <hr/>
 <h2>"progress_regexs": [ string, string ]</h2>
 Two regexs, the first one to match a <span class="red">red</span> traffic light's
-test output, and the second one to match a <span class="green">green</span> traffic light's
+test output, and the second one to match a <span class="light-green">green</span> traffic light's
 test output.
 Used on the dashboard to show the test output line (which often
 contains the number of passing and failing tests) of each animal's
-most recent <span class="red">red</span>/<span class="green">green</span>
+most recent <span class="red">red</span>/<span class="light-green">green</span>
 traffic light. Useful when your practice
 session starts from a large number of pre-written tests and
 you wish to monitor the progress of each animal.
