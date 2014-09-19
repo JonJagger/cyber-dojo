@@ -1,4 +1,23 @@
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+blog.cyber-dojo.org
+  add more PAGES (on lhs)
+  add vision page
+  add (md) docker-overview
+  add (md) adding-a-new-exercise
+  add (md) pull-latest
+  add (md) language manifest.json parameters
+  remove md files from github
+  add intro video  to [learn more] page
+  move testimonials to blog
+  donators become 'friends of cyber-dojo'?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Gemfile has this
+  gem 'sass-rails',   '>= 3.2.3'
+try
+  gem 'sass-rails',   '~> 3.2.3'
+to get rid of sass cache warnings
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker info
   WARNING: No memory limit support
   WARNING: No swap limit support
@@ -10,13 +29,6 @@ history.css.scss
 check event handlers have event.preventDefault()
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 check dialog() uses remove() and not close()
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-blog.cyber-dojo.org
-  add vision page to blog.cyber-dojo.org?
-  add md files to blog.cyber-dojo.org
-  add intro video  to [learn more] page
-  move testimonials to blog
-  donators become 'friends of cyber-dojo'?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move accu button to footer?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

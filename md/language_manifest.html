@@ -1,0 +1,210 @@
+
+<html>
+    <head>
+    <style type="text/css">
+        body {
+            padding-top: 4em;
+            padding-left: 8em;
+            padding-right: 8em;
+        }
+        .red   { color: Red;    }
+        .amber { color: Orange; }
+        .green { color: Green;  }
+        .bash {
+            font-family: monospace;
+            background: Gray;
+            color: Black;
+            display: block;
+            white-space: pre;
+
+        }
+        .dockerfile, .json, .css {
+            font-family: monospace;
+            background: DarkGray;
+            color: Black;
+            display: block;
+            white-space: pre;
+        }
+    </style>
+    </head>
+    <body>
+
+
+language manifest.json parameters
+<hr/>
+
+Example: the <code>manifest.json</code> file for Java-1.8_JUnit looks like this:
+    <div class="json">
+    {
+      "image_name": "cyberdojo/java-1.8_junit",
+      "display_name": "Java, JUnit",
+      "visible_filenames": [
+        "Hiker.java",
+        "HikerTest.java",
+        "cyber-dojo.sh"
+      ],
+      "unit_test_framework": "junit",
+      "support_filenames": [
+        "junit-4.11.jar"
+      ],
+      "progress_regexs" : [
+        "Tests run\\: (\\d)+,(\\s)+Failures\\: (\\d)+",
+        "OK \\((\\d)+ test(s)?\\)"
+      ],
+      "tab_size": 4
+    }
+    </div>
+
+
+<hr/>
+<h2>"image_name": string</h2>
+
+The name of the docker-container image in which <code>cyber-dojo.sh</code> is run.<br>
+Required.
+
+<br>
+<hr/>
+<h2>"display_name": string</h2>
+The name of the (language, test-framework) combination as it appears
+in the create page (where you select your language/test and exercise) and
+also in the info footer displayed at the bottom of the test and dashboard pages.
+<br>Required.
+
+
+<br/>
+<hr/>
+<h2>"visible_filenames": [ string, string, ... ]</h2>
+
+Filenames that will be visible in the browser's editor at startup.
+Each of these files must exist in the languages' directory.
+The filename <code>cyber-dojo.sh</code> must be present as a
+<code>"visible_filenames"</code> entry
+or as a <code>"support_filenames"</code> entry. This is because
+<code>cyber-dojo.sh</code> is the name
+of the shell file assumed by the ruby code (in the Rails server) to be the start
+point for running the tests. You can write any actions in the
+<code>cyber-dojo.sh</code>
+file but clearly any programs it tries to run must be installed in its
+language's docker container.
+For example, if <code>cyber-dojo.sh</code> runs <code>gcc</code>
+to compile C files then <code>gcc</code> has
+to be installed. If <code>cyber-dojo.sh</code> runs <code>javac</code>
+to compile java files then <code>javac</code> has to be installed.
+<br>Required.
+
+
+<br>
+<hr/>
+<h2>"unit_test_framework": string</h2>
+The name of the unit test framework which partially determines the
+name of the ruby function (on the cyber-dojo server) used to parse the
+test output (to see if the traffic-light is red/green/amber).
+For example, if the value is `cassert` then
+    [OutputParser.rb](https://github.com/JonJagger/cyberdojo/blob/master/app/lib/OutputParser.rb)
+must contain a method called `parse_cassert()` and will be called to parse the
+output of running the tests via the `cyber-dojo.sh` shell file.
+<br>Required.
+
+
+
+<br>
+<hr/>
+<h2>"support_filenames": [ string, string, ... ]</h2>
+The names of necessary supporting files which are *not* visible
+in browser's editor at startup. Each of these files must
+exist in the languages' directory. For example, junit .jar files or
+nunit .dll assemblies.
+These are sym-linked from the
+<code>/var/www/cyberdojo/languages</code> folder to
+each animals
+<code>/var/www/cyberdojo/katas/...</code> subfolder.
+Despite the name <code>"support_filenames"</code> you can symlink a
+folder if required.<br>
+Not required if you do not need support files. Defaults to an empty array.
+
+
+<br>
+<hr/>
+<h2>"highlight_filenames": [ string, string, ... ]</h2>
+Filenames whose appearance is highlighted in the browser.
+This can be useful if you have many <code>"visible_filenames"</code> and want
+to mark which files form the focus of the practice.
+<br>A subset of <code>"visible_filenames"</code>, but...
+you can also name <code>instructions</code> (from the chosen exercise)
+and you can also name <code>output</code> (always present)
+<br>For example
+    <div class="json">
+      "highlight_filenames": [ "buffer.cpp", "buffer.hpp", "instructions" ]
+    </div>
+  The appearance of <code>"highlight_filenames"</code> is controlled by the CSS in
+  <a href="https://github.com/JonJagger/cyberdojo/blob/master/app/assets/stylesheets/kata.css.scss">
+  kata.css.scss</a>
+    <div class="css">
+        div[class~='filename'][class~='highlight']
+        {
+          ...
+        }
+    </div>
+The highlight_filenames entry also interacts with lowlights_filenames,
+see Language.lowlight_filenames() in
+<a href="https://github.com/JonJagger/cyberdojo/blob/master/app/models/Language.rb">
+Language.rb</a> and
+cd.notLowlightFilenames() in
+<a href="https://github.com/JonJagger/cyberdojo/blob/master/app/assets/javascripts/cyber-dojo_file_load.js">
+cyber-dojo_file_load.js</a>
+<br>Again, its appearance in controlled from the same CSS file...
+    <div class="css">
+        div[class~='filename'][class~='lowlight']
+        {
+          ...
+        }
+    </div>
+If there is a <code>"highlight_filenames"</code> entry, then lowlight-filenames
+will be
+    <div class="css">
+      [visible_filenames] - [highlight_filenames]
+    </div>
+If there is no <code>"highlight_filenames"</code> entry, then lowlight-filenames
+will default to
+    <div class="css">
+      [ 'cyber-dojo', 'makefile', 'Makefile' ]
+    </div>
+<br>Not required. Defaults to an empty array.
+
+
+<br>
+<hr/>
+<h2>"progress_regexs": [ string, string ]</h2>
+Two regexs, the first one to match a <span class="red">red</span> traffic light's
+test output, and the second one to match a <span class="green">green</span> traffic light's
+test output.
+Used on the dashboard to show the test output line (which often
+contains the number of passing and failing tests) of each animal's
+most recent <span class="red">red</span>/<span class="green">green</span>
+traffic light. Useful when your practice
+session starts from a large number of pre-written tests and
+you wish to monitor the progress of each animal.
+<br>Not required. Defaults to an empty array.
+
+
+<br>
+<hr/>
+<h2>"filename_extension": string</h2>
+The filename extension used when creating a new filename.
+For example, if set to <code>".java"</code> the new filename will be
+<code>filename.java</code>.
+<br>Not required. Defaults to the empty string
+(and the new filename will be <code>filename</code>).
+
+
+
+<br>
+<hr/>
+<h2>"tab_size": int</h2>
+The number of spaces a tab character expands to in the
+browser's textarea editor.
+<br>Not required. Defaults to 4.
+
+
+    </body>
+</html>
