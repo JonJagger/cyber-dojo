@@ -6,13 +6,17 @@ var cyberDojo = (function(cd, $) {
   cd.makeNavigateButtons = function() {
 
 	var makeNavigateButton = function(name) {
+	  var size = 30;
+	  if (name === 'first' || name === 'last')
+		size = 20;
+
 	  return '' +
 		'<button class="triangle button"' +
 			 'id="' + name + '_button">' +
 		  '<img src="/images/triangle_' + name + '.gif"' +
 			  ' alt="move to ' + name + ' diff"' +
-			  ' width="30"' +
-			  ' height="30" />' +
+			  ' width="' + size + '"' +
+			  ' height="' + size + '" />' +
 		'</button>';
 	};
 
