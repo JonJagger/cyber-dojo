@@ -437,7 +437,7 @@ var cyberDojo = (function(cd, $) {
 		'<img height="30"' +
 		' width="30"' +
 		' src="/images/avatars/' + avatarName + '.jpg"/>' +
-		' history ' +
+		' &nbsp;history ' +
 		makeDiffTagControl();
 
 	var makeButtons = function() {
@@ -477,9 +477,10 @@ var cyberDojo = (function(cd, $) {
 	var colouredBulb = function(light) {
 	  var colour = light.colour || light.outcome;
       return '' +
-		  "<img  src='/images/" + 'bulb_' + colour + ".png'" +
-			  "width='12'" +
-			 "height='12'/>";
+		  "<img  src='/images/" + 'edged_bulb_' + colour + ".png'" +
+		     " class='edged-bulb'" +
+			 " width='12'" +
+			" height='12'/>";
 	};
 
 	var revertButton = function() {
