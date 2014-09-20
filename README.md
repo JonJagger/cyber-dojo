@@ -18,6 +18,7 @@ cyber-dojo
     * 60 second columns?
   * replaying the diffs
 
+<hr/>
 Docker Server
   * [setting up your own cyber-dojo server](http://blog.cyber-dojo.org/2014/09/setting-up-your-own-cyber-dojo-server.html)
   * [overview of how cyber-dojo's language docker containers work](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojos-language-docker-containers-work.html)
@@ -26,10 +27,10 @@ Docker Server
   * [cyber-dojo language manifest.json entries explained](http://blog.cyber-dojo.org/2014/09/cyber-dojo-languages-manifest-json-entries-explained.html)
   * [adding a new exercise](md/adding_a_new_exercise.md)
 
+<hr/>
 [Misc](md/misc.md)
   * [overview of how cyber-dojo uses git](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojo-uses-git.html)
   * turning off spell-checking in your browser
   * notes
   * [cyber-dojo thank yous](http://blog.cyber-dojo.org/2014/09/cyber-dojo-thank-yous.html)
-
-[Host Server (deprecated)](md/host-server.md)
+  * [Host Server (deprecated)](md/host-server.md)
