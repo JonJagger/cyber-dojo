@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+move coverage.txt into tests folder
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   if you press a |< >| button and the button becomes
   disabled the cursor should be reset to not-a-hand.
@@ -29,13 +31,13 @@ recreate the kata from the 435E5C1C88/moose git repo.
 blog.cyber-dojo.org
   add more PAGES (on lhs)
   add vision page
-  add (md) docker-overview
-  add (md) language manifest.json parameters
+  add (misc.md) overview of how cyber-dojo uses git
   add (md) adding-a-new-exercise
   add (md) pull-latest
-  remove md files from github
+  then redirect hyerlinks from github
   add intro video  to [learn more] page
   move testimonials to blog
+  move thanks to blog
   donators become 'friends of cyber-dojo'?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 docker info

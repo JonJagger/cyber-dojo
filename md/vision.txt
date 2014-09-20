@@ -4,26 +4,18 @@
 Deliberate Practice
 -------------------
 I believe that the role of deliberate practice has huge untapped potential
-in the field of software development. My particularly passion is doing deliberate
-software practice in a collaborative way, both at the pair level and at the
-team level. Hence cyber-dojo.
+in the field of professional software development. My particularly passion
+is doing deliberate software practice in a collaborative way, both at the
+pair level and at the team level. Hence cyber-dojo.
 
 
 Education
 ---------
-I would like to see students using cyber-dojo, and their tutors reviewing
-their work not just based on a static snapshot of how it ends up but also
-on the dynamic way it changed as it was worked on. And possibly during
-several explicit repetitions.
+Students could use cyber-dojo for exercises. Tutors could
+then review their work not just based on a static snapshot of how
+it ends up but also on the dynamic way it changed as it was worked on.
+And possibly over several explicit repetitions.
 
-
-Recruitment
------------
-I can also imagine job applicants being asked to perform some katas
-in cyber-dojo (ideally with the team they are hoping to join)
-and the resulting session being used to help the team judge the applicant's
-suitability for the job both technically and socially.
-(Several companies have told me they are now doing exactly this with cyber-dojo)
 
 
 Making all diff-sessions viewable

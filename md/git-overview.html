@@ -1,0 +1,78 @@
+
+<html>
+    <head>
+    <style type="text/css">
+        body {
+            padding-top: 4em;
+            padding-left: 8em;
+            padding-right: 8em;
+        }
+        .red   { color: Red;    }
+        .amber { color: Orange; }
+        .green { color: Green;  }
+        .bash {
+            font-family: monospace;
+            background: Gray;
+            color: Black;
+            display: block;
+            white-space: pre;
+
+        }
+        .dockerfile, .json {
+            font-family: monospace;
+            background: DarkGray;
+            color: Black;
+            display: block;
+            white-space: pre;
+        }
+    </style>
+    </head>
+    <body>
+
+<h1>katas directory structure</h1>
+
+cyber-dojo does *not* use a database.
+Instead each practice session lives in a git-like directory structure based
+on its id. Your id appears to only be 6 characters long, but really it is
+10 characters long - look at the page's URL in the browser's address bar.
+For example the session with id `82B583C347` lives at
+```
+  cyberdojo/katas/82/B583C347
+```
+Each started animal has a sub-directory underneath this, eg
+```
+  cyberdojo/katas/82/B583C347/wolf
+```
+Each started animal has a sandbox sub-directory where its files are held, eg
+```
+  cyberdojo/katas/82/B583C347/wolf/sandbox
+```
+
+
+<h1>git repositories</h1>
+Each started animal has its own git respository, eg
+```
+  cyberdojo/katas/82/B583C347/wolf/.git
+```
+The starting files (as loaded from the `cyberdojo/katas/82/B583C347/wolf/manifest.json`
+file) form tag 0 (zero). Each `[test]` event causes a new git commit and tag, with a
+message and tag which is simply its number. For example, the fourth time the wolf
+computer presses `[test]` causes
+```
+$ git commit -a -m '4'
+$ git tag -m '4' 4 HEAD
+```
+From an animal's directory you can issue the following commands:
+To look at filename for tag 4
+```
+$ git show 4:sandbox/filename
+```
+To look at filename's differences between tag 4 and tag 5
+```
+$ git diff 4 5 sandbox/filename
+```
+It's much easier and more informative to just click on a traffic light
+from the test page or the dashboard page.
+
+    </body>
+    </html>

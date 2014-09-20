@@ -4,9 +4,10 @@ misc
 
 katas directory structure
 -------------------------
-The rails code does *not* use a database.
+cyber-dojo does *not* use a database.
 Instead each practice session lives in a git-like directory structure based
-on its full 10 character id.
+on its id. Your id appears to only be 6 characters long, but really it is
+10 characters long - look at the page's URL in the browser's address bar.
 For example the session with id `82B583C347` lives at
 ```
   cyberdojo/katas/82/B583C347
