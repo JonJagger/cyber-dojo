@@ -18,9 +18,8 @@ cyber-dojo
     * 60 second columns?
   * replaying the diffs
 
-[Docker Server](md/docker-server.md)
-  * running your own docker'd cyber-dojo server
-  * installing pre-built docker language containers
+Docker Server
+  * [setting up your own cyber-dojo server](http://blog.cyber-dojo.org/2014/09/setting-up-your-own-cyber-dojo-server.html)
   * overview of how docker language containers work
   * pulling from the cyberdojo github repo
   * [adding a new language + unit test](md/adding_a_new_language.md)
