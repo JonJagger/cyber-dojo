@@ -33,4 +33,4 @@ Docker Server
   * turning off spell-checking in your browser
   * notes
   * [cyber-dojo thank yous](http://blog.cyber-dojo.org/2014/09/cyber-dojo-thank-yous.html)
-  * [Host Server (deprecated)](md/host-server.md)
+  * [host server (deprecated)](md/host-server.md)
