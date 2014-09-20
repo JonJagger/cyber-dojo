@@ -20,10 +20,10 @@ cyber-dojo
 
 Docker Server
   * [setting up your own cyber-dojo server](http://blog.cyber-dojo.org/2014/09/setting-up-your-own-cyber-dojo-server.html)
-  * overview of how docker language containers work
+  * [overview of how cyber-dojo's language docker containers work](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojos-language-docker-containers-work.html)
   * pulling from the cyberdojo github repo
-  * [adding a new language + unit test](md/adding_a_new_language.md)
-  * [language manifest.json parameters](md/language_manifest.md)
+  * [adding a new language + unit test to cyber-dojo](http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html)
+  * [cyber-dojo language manifest.json entries explained](http://blog.cyber-dojo.org/2014/09/cyber-dojo-languages-manifest-json-entries-explained.html)
   * [adding a new exercise](md/adding_a_new_exercise.md)
 
 [Misc](md/misc.md)
