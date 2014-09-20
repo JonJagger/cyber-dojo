@@ -34,8 +34,10 @@ $text-color: darken($lighter-color, 10%);
   }
 
   #learn-more-button {
+    font-size: 1.30em;
     position: relative;
     top: -31px;
+    left: 2px;
   }
 
   td#column-main {
