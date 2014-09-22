@@ -436,19 +436,10 @@ var cyberDojo = (function(cd, $) {
 	// diffDialog
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var title = '' +
-		//'<img height="30"' +
-		//' width="30"' +
-		//' src="/images/avatars/' + avatarName + '.jpg"/>' +
-		//' &nbsp;history ' +
-		makeDiffTagControl();
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
 	var makeButtons = function() {
 	  var buttons = {};
 	  buttons['close'] = function() {
-		closeDiffDialog();
+		diffDialog.remove();
 	  };
 	  buttons['fork'] = function() {
 		doFork();
@@ -456,21 +447,17 @@ var cyberDojo = (function(cd, $) {
 	  if (showRevert) {
 		buttons['revert'] = function() {
 		  doRevert();
-		  closeDiffDialog();
+		  diffDialog.remove();
 		};
 	  }
 	  return buttons;
-	};
-
-	var closeDiffDialog = function() {
-	  diffDialog.remove();
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
-	  title: cd.dialogTitle(title),
+	  title: cd.dialogTitle(makeDiffTagControl()),
 	  width: 1150,
 	  height: 705,
 	  modal: true,
