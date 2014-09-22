@@ -75,26 +75,27 @@ var cyberDojo = (function(cd, $) {
           '<label for="was-tag-checkbox"></label>';
 	};
 
-	var makeNowTagControl = function(data) {
-	  var light = data.lights[nowTag-1];
+	var makeNowTagControl = function() {
+	  //var light = data.lights[nowTag-1];
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
 			cd.td('<input' +
 				        ' type="text"' +
 				          ' id="now-tag-number"' +
-				 ' data-colour="' + light.colour + '"' +
-				       ' value="' + nowTag + '" />') +
+				 //' data-colour="' + light.colour + '"' +
+				 //      ' value="' + nowTag + '"' +
+				 ' />') +
 		  '</tr>' +
 		 '</table>';
 	};
 
-    var makeDiffTagControl = function(data) {
+    var makeDiffTagControl = function() {
 	  return '' +
-	    '<table>' +
+	    '<table id="diff-tag-control">' +
 		  '<tr>' +
 		    cd.td(makeTagCheckbox()) +
-		    cd.td(makeNowTagControl(data)) +
+		    cd.td(makeNowTagControl()) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
@@ -106,6 +107,8 @@ var cyberDojo = (function(cd, $) {
 		     "width='10'" +
 		     "height='32'/>";
 	};
+
+	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var titleBar = function() {
 	  return $('#ui-dialog-title-history-dialog');
@@ -119,16 +122,18 @@ var cyberDojo = (function(cd, $) {
 	  return $('#now-tag-number', titleBar());
 	};
 
-	var resetTagControls = function(data) {
+	var trafficLights = function() {
+	  return $('#traffic-lights', titleBar());
+	};
 
-	  $('#diff-tag-control', titleBar()).html(makeDiffTagControl(data));
+	var resetTagControls = function(data) {
 
 	  var html = '';
 	  $.each(data.lights, function(_,light) {
 		html += makeTrafficLight(light);
 	  });
 
-	  $('#traffic-lights', titleBar()).html(html);
+	  trafficLights().html(x);
 
 	  nowTagNumber().val(nowTag);
 
@@ -137,7 +142,7 @@ var cyberDojo = (function(cd, $) {
 		.unbind('click')
 		.click(function() {
 		  if ($(this).is(':checked')) { // turned on
-			  showDiff(nowTag-1, nowTag, $(this));
+			showDiff(nowTag-1, nowTag, $(this));
 		  } else { // turned off
 			showDiff(nowTag, nowTag, $(this));
 		  }
@@ -210,10 +215,10 @@ var cyberDojo = (function(cd, $) {
 	};
 
     var resetNavigateButtonHandlers = function() {
-	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag-tagGap, minTag);
+	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag-1, minTag);
 	  refreshNavigationHandlers(minTag >= nowTag, prevButton, wasTag-tagGap, nowTag-tagGap);
 	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+tagGap, nowTag+tagGap);
-	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
+	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-1, maxTag);
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -431,7 +436,7 @@ var cyberDojo = (function(cd, $) {
 		' width="30"' +
 		' src="/images/avatars/' + avatarName + '.jpg"/>' +
 		' &nbsp;history ' +
-		'<span id="diff-tag-control"></span>';
+		makeDiffTagControl();
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -452,6 +457,10 @@ var cyberDojo = (function(cd, $) {
 	  return buttons;
 	};
 
+	var closeDiffDialog = function() {
+	  diffDialog.remove();
+	};
+
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var diffDialog = diffDiv.dialog({
@@ -460,14 +469,19 @@ var cyberDojo = (function(cd, $) {
 	  width: 1150,
 	  height: 720,
 	  modal: true,
+	  closeOnEscape: false,
       buttons: makeButtons(),
-	  open: function() { refresh(setWaitCursor,setPointerCursor); }
-	}).on('keydown', function(event) {
-	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
-		closeDiffDialog();
+	  open: function() {
+		refresh(setWaitCursor,setPointerCursor);
 	  }
-	  event.stopPropagation();
 	});
+
+	// I removed the .on('keydown') ESC handler
+	// http://stackoverflow.com/questions/10466726/how-to-intercept-jquery-dialog-esc-key-event
+	// For some reason I cannot pin down if you press
+	// the << button then the ESC handler is lost.
+	// This results in the tag-controls on the titleBar()
+	// not being subsequently rendered properly.
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	// refresh()
@@ -490,13 +504,17 @@ var cyberDojo = (function(cd, $) {
 		  resetDiff(data);
           showFile(data.currentFilenameId);
 		  if (showRevert) {
-			revertButton().html(makeRevertButtonHtml(data,nowTag));
+			revertButton().html(makeRevertButtonHtml(data));
 		  }
-		  forkButton().html(makeForkButtonHtml(data,nowTag));
+		  forkButton().html(makeForkButtonHtml(data));
 		}
 	  ).always(function() {
         after();
 	  });
+	};
+
+	var showFile = function(filenameId) {
+	  $('#radio_' + filenameId, diffDiv).click();
 	};
 
     //- - - - - - - - - - -
@@ -507,7 +525,7 @@ var cyberDojo = (function(cd, $) {
 	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
 	};
 
-	var makeRevertButtonHtml = function(data,nowTag) {
+	var makeRevertButtonHtml = function(data) {
 	  var light = data.lights[nowTag-1];
 	  return '' +
 	    'revert to ' +
@@ -523,7 +541,7 @@ var cyberDojo = (function(cd, $) {
 	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
 	};
 
-	var makeForkButtonHtml = function(data,nowTag) {
+	var makeForkButtonHtml = function(data) {
 	  var light = data.lights[nowTag-1];
 	  return '' +
 	    'fork from ' +
@@ -649,21 +667,6 @@ var cyberDojo = (function(cd, $) {
 		}
 	  });
 	  failed.dialog('open');
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Misc helpers
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var showFile = function(filenameId) {
-	  $('#radio_' + filenameId, diffDiv).click();
-	};
-
-	var closeDiffDialog = function() {
-	  // Important to call remove() and not close() and
-      // to do this for *both* the close button and
-	  // hitting escape.
-	  diffDialog.remove();
 	};
 
     //- - - -

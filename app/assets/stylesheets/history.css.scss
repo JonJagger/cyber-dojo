@@ -28,16 +28,9 @@
     position: relative;
     bottom: -7px;
 
-    //#now-traffic-light {
-    //  margin: {
-    //    right : 0.10em;
-    //  }
-    //}
-
     #was-tag-number, #now-tag-number {
       background: $darker-color;
-      //@include gradient-darken($lighter-color, 20%, 10%, 5%);
-      color: $lighter-color;
+      //color: $lighter-color;
       @include font-size-tiny();
       text-align: center;
       width: 2em;
