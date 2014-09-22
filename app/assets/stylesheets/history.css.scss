@@ -28,20 +28,14 @@
     position: relative;
     bottom: -7px;
 
-    #was-tag-number, #now-tag-number {
-      background: $darker-color;
-      //color: $lighter-color;
+    #now-tag-number {
+      background: $lighter-color;
       @include font-size-tiny();
       text-align: center;
       width: 2em;
       &[data-colour=red] { color: $red; }
-      &[data-colour=amber] { color: $amber; }
-      &[data-colour=green] { color: $green; }
-    }
-
-    #diff-arrow {
-      margin: 5px;
-      padding-bottom: 5px;
+      &[data-colour=amber] { color: darken($amber,10%); }
+      &[data-colour=green] { color: darken($green,10%); }
     }
   }
 }

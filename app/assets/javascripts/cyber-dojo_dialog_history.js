@@ -67,12 +67,12 @@ var cyberDojo = (function(cd, $) {
 	// Was-Now-Tag Controls	(on title-bar)
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var makeTagCheckbox = function() {
+	var makeNowTagCheckbox = function() {
       return '' +
 	    '<input type="checkbox"' +
             ' class="regular-checkbox"' +
-            ' id="was-tag-checkbox"/>' +
-          '<label for="was-tag-checkbox"></label>';
+            ' id="now-tag-checkbox"/>' +
+          '<label for="now-tag-checkbox"></label>';
 	};
 
 	var makeNowTagControl = function() {
@@ -91,19 +91,12 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    '<table id="diff-tag-control">' +
 		  '<tr>' +
-		    cd.td(makeTagCheckbox()) +
+		    cd.td(makeNowTagCheckbox()) +
 		    cd.td(makeNowTagControl()) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
     };
-
-  	var makeTrafficLight = function(light) {
-      return '' +
-		"<img src='/images/" + 'traffic_light_' + light.colour + ".png'" +
-		     "width='10'" +
-		     "height='32'/>";
-	};
 
 	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -111,8 +104,8 @@ var cyberDojo = (function(cd, $) {
 	  return $('#ui-dialog-title-history-dialog');
 	};
 
-	var wasTagCheckBox = function() {
-	  return $('#was-tag-checkbox', titleBar());
+	var nowTagCheckBox = function() {
+	  return $('#now-tag-checkbox', titleBar());
 	};
 
 	var nowTagNumber = function() {
@@ -123,20 +116,29 @@ var cyberDojo = (function(cd, $) {
 	  return $('#traffic-lights', titleBar());
 	};
 
+	var makeTrafficLightsHtml = function(lights) {
+	  var html = '';
+	  $.each(lights, function(_,light) {
+		html +=
+		  "<img src='/images/" + 'traffic_light_' + light.colour + ".png'" +
+			   "width='10'" +
+			   "height='32'/>";
+	  });
+	  return html;
+	};
+
+	//- - - - - - - - -
+
 	var resetTagControls = function(data) {
 
-	  var html = '';
-	  $.each(data.lights, function(_,light) {
-		html += makeTrafficLight(light);
-	  });
-
-	  trafficLights().html(html);
+	  trafficLights()
+		.html(makeTrafficLightsHtml(data.lights));
 
 	  nowTagNumber()
 		.val(nowTag)
 		.attr('data-colour', data.lights[nowTag-1].colour);
 
-	  wasTagCheckBox()
+	  nowTagCheckBox()
 		.attr('checked', wasTag != nowTag)
 		.unbind('click')
 		.click(function() {
