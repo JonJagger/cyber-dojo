@@ -81,7 +81,7 @@ var cyberDojo = (function(cd, $) {
 		  '<tr>' +
 		    cd.td(makeWasTagCheckbox()) +
 			cd.td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
- 		    cd.td('<div id="was-traffic-light"></div>') +
+ 		    //cd.td('<div id="was-traffic-light"></div>') +
 		  '</tr>' +
 		'</table>';
 	};
@@ -90,7 +90,7 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
- 		    cd.td('<div id="now-traffic-light"></div>') +
+ 		    //cd.td('<div id="now-traffic-light"></div>') +
 			cd.td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
 		  '</tr>' +
 		 '</table>';
@@ -134,10 +134,10 @@ var cyberDojo = (function(cd, $) {
 	var resetTagControls = function(data) {
 
 	  $('#diff-tag-control').html(makeDiffTagControl());
-	  wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
+	  //wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
 	  wasTagNumber().val(wasTag);
 	  nowTagNumber().val(nowTag);
-	  nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
+	  //nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
 	  wasTagCheckBox()
 		.attr('checked', wasTag != nowTag)
