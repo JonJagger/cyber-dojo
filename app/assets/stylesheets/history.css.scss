@@ -33,10 +33,14 @@
       @include font-size-tiny();
       text-align: center;
       width: 2em;
-      &[data-colour=red] { color: $red; }
+      &[data-colour=red]   { color: $red; }
       &[data-colour=amber] { color: darken($amber,10%); }
       &[data-colour=green] { color: darken($green,10%); }
     }
+  }
+
+  .traffic-light {
+    padding-left: 4px;
   }
 }
 
@@ -175,8 +179,4 @@
       color: $diff-added-color;
     }
   }
-}
-
-.diff-traffic-light {
-  margin-top: 4px;
 }

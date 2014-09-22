@@ -92,8 +92,8 @@ var cyberDojo = (function(cd, $) {
 	    '<table id="diff-tag-control">' +
 		  '<tr>' +
 		    cd.td(makeNowTagCheckbox()) +
-		    cd.td(makeNowTagControl()) +
 			cd.td('<div id="traffic-lights"></div>') +
+		    cd.td(makeNowTagControl()) +
 		  '</tr>' +
 		'</table>';
     };
@@ -120,9 +120,12 @@ var cyberDojo = (function(cd, $) {
 	  var html = '';
 	  $.each(lights, function(_,light) {
 		html +=
-		  "<img src='/images/" + 'traffic_light_' + light.colour + ".png'" +
-			   "width='10'" +
-			   "height='32'/>";
+		  "<span class='traffic-light'>" +
+			"<img" +
+			     " src='/images/" + 'traffic_light_' + light.colour + ".png'" +
+			   " width='10'" +
+			  " height='32'/>" +
+          "</span>";
 	  });
 	  return html;
 	};
