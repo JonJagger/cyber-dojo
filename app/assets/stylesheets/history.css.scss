@@ -46,7 +46,12 @@
   }
 
   #traffic-lights {
-    display: table-row;
+    display: block;//table-row;
+    width: 800px;
+    overflow-x: auto;
+    &::-webkit-scrollbar:horizontal {
+        height: 1px;
+    }
     .light-cell {
       display: table-cell;
       padding-left: 3px;
