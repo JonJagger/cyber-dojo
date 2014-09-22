@@ -10,9 +10,10 @@ Finer-grained commits
   3) done
 
   4) o) move traffic-light sequence to title bar of history dialog. done
-     o) display max tag-number?
-     o) make tag-number editable
+     o) merge?
      o) auto-scroll so now-tag always in view?
+     o) make tag-number editable
+     o) display max tag-number?
      o) change title-bar cursor to default (not move)
 
   5) custom serialization only POSTs changed files for [test] event.
