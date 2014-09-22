@@ -45,17 +45,13 @@
     padding-left: 2px;
   }
 
-  .lights-container {
-    display: table;
-    .lights-row {
-      display: table-row;
-      .light-cell {
-        display: table-cell;
-        padding-left: 3px;
-      }
+  #traffic-lights {
+    display: table-row;
+    .light-cell {
+      display: table-cell;
+      padding-left: 3px;
     }
   }
-
 }
 
 

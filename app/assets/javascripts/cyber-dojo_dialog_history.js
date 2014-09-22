@@ -70,21 +70,15 @@ var cyberDojo = (function(cd, $) {
 	var makeNowTagCheckbox = function() {
       return '' +
 	    '<input type="checkbox"' +
-            ' class="regular-checkbox"' +
-            ' id="now-tag-checkbox"/>' +
+             ' class="regular-checkbox"' +
+                ' id="now-tag-checkbox"/>' +
           '<label for="now-tag-checkbox"></label>';
 	};
 
 	var makeNowTagControl = function() {
 	  return '' +
-	    '<table class="tag-control">' +
-		  '<tr>' +
-			cd.td('<input' +
-				        ' type="text"' +
-				          ' id="now-tag-number"' +
-				 ' />') +
-		  '</tr>' +
-		 '</table>';
+		'<input type="text"' +
+			    ' id="now-tag-number"/>';
 	};
 
     var makeDiffTagControl = function() {
@@ -119,27 +113,16 @@ var cyberDojo = (function(cd, $) {
 	var makeTrafficLightsHtml = function(lights) {
 	  var lightCells = '';
 	  $.each(lights, function(n,light) {
-		var colour = light.colour;
-		if (nowTag === light.number) {
-		  colour += '_bar';
-		} else {
-		  colour += '_gap';
-		}
+		var barGap = (nowTag === light.number) ? '_bar' : '_gap';
 		lightCells +=
 		  "<div class='light-cell'>" +
 			"<img" +
-			     " src='/images/" + 'traffic_light_' + colour + ".png'" +
-			   " width='10'" +
-			  " height='37'/>" +
+			   " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
+			 " width='10'" +
+			" height='37'/>" +
           "</div>";
 	  });
-
-	  return '' +
-	    '<div class="lights-container">' +
-		  '<div class="lights-row">' +
-		    lightCells +
-		  '</div>' +
-		'</div>';
+	  return '' +lightCells;
 	};
 
 	//- - - - - - - - -
@@ -157,10 +140,10 @@ var cyberDojo = (function(cd, $) {
 		.attr('checked', wasTag != nowTag)
 		.unbind('click')
 		.click(function() {
-		  if ($(this).is(':checked')) { // turned on
-			showDiff(nowTag-1, nowTag, $(this));
-		  } else { // turned off
-			showDiff(nowTag, nowTag, $(this));
+		  if ($(this).is(':checked')) {
+			showDiff(nowTag-1, nowTag, $(this)); // on
+		  } else {
+			showDiff(nowTag, nowTag, $(this)); // off
 		  }
 		});
 	};
