@@ -84,7 +84,13 @@ var cyberDojo = (function(cd, $) {
     var makeDiffTagControl = function() {
 	  return '' +
 	    '<table id="diff-tag-control">' +
-		  '<tr>' +
+		  '<tr valign="top">' +
+
+		'<td><img height="30"' +
+		' width="30"' +
+		' src="/images/avatars/' + avatarName + '.jpg"/></td>' +
+		'<td id="title">history</td>' +
+
 		    cd.td(makeNowTagCheckbox()) +
 		    cd.td(makeNowTagControl()) +
 			cd.td('<div id="traffic-lights"></div>') +
@@ -431,10 +437,10 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var title = '' +
-		'<img height="30"' +
-		' width="30"' +
-		' src="/images/avatars/' + avatarName + '.jpg"/>' +
-		' &nbsp;history ' +
+		//'<img height="30"' +
+		//' width="30"' +
+		//' src="/images/avatars/' + avatarName + '.jpg"/>' +
+		//' &nbsp;history ' +
 		makeDiffTagControl();
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -466,7 +472,7 @@ var cyberDojo = (function(cd, $) {
 	  autoOpen: false,
 	  title: cd.dialogTitle(title),
 	  width: 1150,
-	  height: 720,
+	  height: 705,
 	  modal: true,
 	  closeOnEscape: false,
       buttons: makeButtons(),
