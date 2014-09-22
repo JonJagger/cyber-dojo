@@ -98,7 +98,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffTagControl = function() {
 	  return '' +
-	    '<table id="diff-tag-control">' +
+	    '<table>' +
 		  '<tr>' +
 		    cd.td(makeWasTagControl(wasTag)) +
 			cd.td('<div id="diff-arrow">&harr;</div>') +
@@ -132,6 +132,8 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var resetTagControls = function(data) {
+
+	  $('#diff-tag-control').html(makeDiffTagControl());
 	  wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
 	  wasTagNumber().val(wasTag);
 	  nowTagNumber().val(nowTag);
@@ -438,7 +440,7 @@ var cyberDojo = (function(cd, $) {
 		' width="30"' +
 		' src="/images/avatars/' + avatarName + '.jpg"/>' +
 		' &nbsp;history ' +
-		makeDiffTagControl();
+		'<span id="diff-tag-control"></span>';
 
 	var makeButtons = function() {
 	  var buttons = {};
