@@ -41,7 +41,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.dialog_history = function(id, avatarName,
-							   wasTag, nowTag, maxTag,
+							   wasTag, nowTag, maxTag, // 1-based
 							   domNodeSource, showRevert) {
 	// Arguably, the history dialog would be better as it own
 	// history page. That would help google searchability and
@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
 	  domNodeSource.css('cursor', 'pointer');
 	};
 
-	var minTag = 0;
+	var minTag = 1;
 	var tagGap = nowTag - wasTag; // currently always 1
 	var currentFilename = '';
 	var visibleFiles = undefined;
@@ -67,7 +67,7 @@ var cyberDojo = (function(cd, $) {
 	// Was-Now-Tag Controls	(on title-bar)
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var makeWasTagCheckbox = function() {
+	var makeTagCheckbox = function() {
       return '' +
 	    '<input type="checkbox"' +
             ' class="regular-checkbox"' +
@@ -75,23 +75,16 @@ var cyberDojo = (function(cd, $) {
           '<label for="was-tag-checkbox"></label>';
 	};
 
-	var makeWasTagControl = function(data,n) {
-	  var tag = data.lights[n].number;
+	var makeNowTagControl = function(data) {
+	  var light = data.lights[nowTag-1];
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
-		    cd.td(makeWasTagCheckbox()) +
-			cd.td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
-		  '</tr>' +
-		'</table>';
-	};
-
-	var makeNowTagControl = function(data,n) {
-	  var tag = data.lights[n].number;
-	  return '' +
-	    '<table class="tag-control">' +
-		  '<tr>' +
-			cd.td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
+			cd.td('<input' +
+				        ' type="text"' +
+				          ' id="now-tag-number"' +
+				 ' data-colour="' + light.colour + '"' +
+				       ' value="' + nowTag + '" />') +
 		  '</tr>' +
 		 '</table>';
 	};
@@ -100,9 +93,8 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    '<table>' +
 		  '<tr>' +
-		    cd.td(makeWasTagControl(data,wasTag)) +
-			cd.td('<div id="diff-arrow">&harr;</div>') +
-		    cd.td(makeNowTagControl(data,nowTag)) +
+		    cd.td(makeTagCheckbox()) +
+		    cd.td(makeNowTagControl(data)) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
@@ -123,10 +115,6 @@ var cyberDojo = (function(cd, $) {
 	  return $('#was-tag-checkbox', titleBar());
 	};
 
-	var wasTagNumber = function() {
-	  return $('#was-tag-number', titleBar());
-	};
-
 	var nowTagNumber = function() {
 	  return $('#now-tag-number', titleBar());
 	};
@@ -142,7 +130,6 @@ var cyberDojo = (function(cd, $) {
 
 	  $('#traffic-lights', titleBar()).html(html);
 
-	  wasTagNumber().val(wasTag);
 	  nowTagNumber().val(nowTag);
 
 	  wasTagCheckBox()
@@ -150,11 +137,7 @@ var cyberDojo = (function(cd, $) {
 		.unbind('click')
 		.click(function() {
 		  if ($(this).is(':checked')) { // turned on
-			if (nowTag === 0) {
-			  showDiff(0, 1, $(this));
-			} else {
 			  showDiff(nowTag-1, nowTag, $(this));
-			}
 		  } else { // turned off
 			showDiff(nowTag, nowTag, $(this));
 		  }
@@ -227,9 +210,9 @@ var cyberDojo = (function(cd, $) {
 	};
 
     var resetNavigateButtonHandlers = function() {
-	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);
-	  refreshNavigationHandlers(minTag >= wasTag, prevButton, wasTag-1, nowTag-1);
-	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
+	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag-tagGap, minTag);
+	  refreshNavigationHandlers(minTag >= nowTag, prevButton, wasTag-tagGap, nowTag-tagGap);
+	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+tagGap, nowTag+tagGap);
 	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
 	};
 
@@ -525,10 +508,11 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeRevertButtonHtml = function(data,nowTag) {
+	  var light = data.lights[nowTag-1];
 	  return '' +
 	    'revert to ' +
 	    nowTag + ' ' +
-		makeColouredBulb(data.nowTrafficLight);
+		makeColouredBulb(light.colour);
 	};
 
     //- - - - - - - - - - -
@@ -540,17 +524,18 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeForkButtonHtml = function(data,nowTag) {
+	  var light = data.lights[nowTag-1];
 	  return '' +
 	    'fork from ' +
 	    nowTag + ' ' +
-		makeColouredBulb(data.nowTrafficLight);
+		makeColouredBulb(light.colour);
 	};
 
     //- - - - - - - - - - -
 
-	var makeColouredBulb = function(light) {
+	var makeColouredBulb = function(colour) {
       return '' +
-		  "<img  src='/images/" + 'edged_bulb_' + light.colour + ".png'" +
+		  "<img  src='/images/" + 'edged_bulb_' + colour + ".png'" +
 		     " class='edged-bulb'" +
 			 " width='12'" +
 			" height='12'/>";
