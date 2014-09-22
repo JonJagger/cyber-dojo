@@ -9,9 +9,9 @@ Finer-grained commits
   2) done
   3) done
 
-  4) move traffic-light sequence to title bar of history dialog.
-     add non-draggable was-tag now-tag markers which position
-     directly below their respective traffic-light.
+  4) o) move traffic-light sequence to title bar of history dialog. done
+     o) make tag-number editable
+     o) check how it looks with lots of traffic-lights. scrollbar?
 
   5) custom serialization only POSTs changed files for [test] event.
 
