@@ -81,7 +81,6 @@ var cyberDojo = (function(cd, $) {
 		  '<tr>' +
 		    cd.td(makeWasTagCheckbox()) +
 			cd.td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
- 		    //cd.td('<div id="was-traffic-light"></div>') +
 		  '</tr>' +
 		'</table>';
 	};
@@ -90,7 +89,6 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
- 		    //cd.td('<div id="now-traffic-light"></div>') +
 			cd.td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
 		  '</tr>' +
 		 '</table>';
@@ -103,9 +101,17 @@ var cyberDojo = (function(cd, $) {
 		    cd.td(makeWasTagControl(wasTag)) +
 			cd.td('<div id="diff-arrow">&harr;</div>') +
 		    cd.td(makeNowTagControl(nowTag)) +
+			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
     };
+
+  	var makeTrafficLight = function(light) {
+      return '' +
+		"<img src='/images/" + 'traffic_light_' + light.colour + ".png'" +
+		     "width='10'" +
+		     "height='32'/>";
+	};
 
 	var titleBar = function() {
 	  return $('#ui-dialog-title-history-dialog');
@@ -123,21 +129,19 @@ var cyberDojo = (function(cd, $) {
 	  return $('#now-tag-number', titleBar());
 	};
 
-	//var wasTrafficLight = function() {
-	//  return $('#was-traffic-light', titleBar());
-	//};
-
-	//var nowTrafficLight = function() {
-	//  return $('#now-traffic-light', titleBar());
-	//};
-
 	var resetTagControls = function(data) {
 
-	  $('#diff-tag-control').html(makeDiffTagControl());
-	  //wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
+	  $('#diff-tag-control', titleBar()).html(makeDiffTagControl());
+
+	  var html = '';
+	  $.each(data.lights, function(_,light) {
+		html += makeTrafficLight(light);
+	  });
+
+	  $('#traffic-lights', titleBar()).html(html);
+
 	  wasTagNumber().val(wasTag);
 	  nowTagNumber().val(nowTag);
-	  //nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
 	  wasTagCheckBox()
 		.attr('checked', wasTag != nowTag)
@@ -434,6 +438,8 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// diffDialog
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var title = '' +
 		'<img height="30"' +
@@ -441,6 +447,8 @@ var cyberDojo = (function(cd, $) {
 		' src="/images/avatars/' + avatarName + '.jpg"/>' +
 		' &nbsp;history ' +
 		'<span id="diff-tag-control"></span>';
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var makeButtons = function() {
 	  var buttons = {};
@@ -459,6 +467,8 @@ var cyberDojo = (function(cd, $) {
 	  return buttons;
 	};
 
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
 	  title: cd.dialogTitle(title),
@@ -475,15 +485,38 @@ var cyberDojo = (function(cd, $) {
 	});
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// refresh()
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var colouredBulb = function(light) {
-	  var colour = light.colour || light.outcome;
-      return '' +
-		  "<img  src='/images/" + 'edged_bulb_' + colour + ".png'" +
-		     " class='edged-bulb'" +
-			 " width='12'" +
-			" height='12'/>";
+	var refresh = function(before, after) {
+	  before();
+	  $.getJSON('/differ/diff',
+		{
+		  id: id,
+		  avatar: avatarName,
+		  was_tag: wasTag,
+		  now_tag: nowTag,
+		  current_filename: currentFilename
+		},
+		function(data) {
+		  visibleFiles = data.visibleFiles;
+		  resetTagControls(data);
+		  resetNavigateButtonHandlers();
+		  resetDiff(data);
+          showFile(data.currentFilenameId);
+		  if (showRevert) {
+			revertButton().html(makeRevertButtonHtml(data,nowTag));
+		  }
+		  forkButton().html(makeForkButtonHtml(data,nowTag));
+		}
+	  ).always(function() {
+        after();
+	  });
 	};
+
+    //- - - - - - - - - - -
+	// reverButton
+    //- - - - - - - - - - -
 
 	var revertButton = function() {
 	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
@@ -493,8 +526,37 @@ var cyberDojo = (function(cd, $) {
 	  return '' +
 	    'revert to ' +
 	    nowTag + ' ' +
-		colouredBulb(data.nowTrafficLight);
+		makeColouredBulb(data.nowTrafficLight);
 	};
+
+    //- - - - - - - - - - -
+	// forkButton
+    //- - - - - - - - - - -
+
+	var forkButton = function() {
+	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+	};
+
+	var makeForkButtonHtml = function(data,nowTag) {
+	  return '' +
+	    'fork from ' +
+	    nowTag + ' ' +
+		makeColouredBulb(data.nowTrafficLight);
+	};
+
+    //- - - - - - - - - - -
+
+	var makeColouredBulb = function(light) {
+      return '' +
+		  "<img  src='/images/" + 'edged_bulb_' + light.colour + ".png'" +
+		     " class='edged-bulb'" +
+			 " width='12'" +
+			" height='12'/>";
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// doRevert()
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var doRevert = function() {
 	  deleteAllCurrentFiles();
@@ -520,17 +582,8 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var forkButton = function() {
-	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
-	};
-
-	var makeForkButtonHtml = function(data,nowTag) {
-	  return '' +
-	    'fork from ' +
-	    nowTag + ' ' +
-		colouredBulb(data.nowTrafficLight);
-	};
+	// doFork()
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var doFork = function() {
 	  $.getJSON('/forker/fork', {
@@ -612,34 +665,6 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var refresh = function(before, after) {
-	  before();
-	  $.getJSON('/differ/diff',
-		{
-		  id: id,
-		  avatar: avatarName,
-		  was_tag: wasTag,
-		  now_tag: nowTag,
-		  current_filename: currentFilename
-		},
-		function(data) {
-		  visibleFiles = data.visibleFiles;
-		  resetTagControls(data);
-		  resetNavigateButtonHandlers();
-		  resetDiff(data);
-          showFile(data.currentFilenameId);
-		  if (showRevert) {
-			revertButton().html(makeRevertButtonHtml(data,nowTag));
-		  }
-		  forkButton().html(makeForkButtonHtml(data,nowTag));
-		}
-	  ).always(function() {
-        after();
-	  });
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 	// Misc helpers
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -654,18 +679,9 @@ var cyberDojo = (function(cd, $) {
 	  diffDialog.remove();
 	};
 
-  	var makeTrafficLight = function(tag, trafficLight) {
-	  var colour = trafficLight.colour || trafficLight.outcome
-	  if (tag === 0) {
-		colour = 'white';
-	  }
-      return '' +
-		"<img src='/images/" + 'traffic_light_' + colour + ".png'" +
-		     "width='10'" +
-		     "height='32'/>";
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - -
+    //- - - -
+    //- - - -
 
     diffDialog.dialog('open');
 
