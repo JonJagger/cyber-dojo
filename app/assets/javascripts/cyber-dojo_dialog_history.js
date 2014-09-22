@@ -117,17 +117,29 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeTrafficLightsHtml = function(lights) {
-	  var tds = '';
-	  $.each(lights, function(_,light) {
-		tds += cd.td(
-		  "<span class='traffic-light'>" +
+	  var lightCells = '';
+	  $.each(lights, function(n,light) {
+		var colour = light.colour;
+		if (nowTag === light.number) {
+		  colour += '_bar';
+		} else {
+		  colour += '_gap';
+		}
+		lightCells +=
+		  "<div class='light-cell'>" +
 			"<img" +
-			     " src='/images/" + 'traffic_light_' + light.colour + ".png'" +
+			     " src='/images/" + 'traffic_light_' + colour + ".png'" +
 			   " width='10'" +
-			  " height='32'/>" +
-          "</span>");
+			  " height='37'/>" +
+          "</div>";
 	  });
-	  return '<table><tr>' + tds + '</tr></table>';
+
+	  return '' +
+	    '<div class="lights-container">' +
+		  '<div class="lights-row">' +
+		    lightCells +
+		  '</div>' +
+		'</div>';
 	};
 
 	//- - - - - - - - -

@@ -29,6 +29,8 @@
     bottom: -7px;
 
     #now-tag-number {
+      position: relative;
+      top: -4px;
       background: $lighter-color;
       @include font-size-small();
       text-align: center;
@@ -42,6 +44,18 @@
   .traffic-light {
     padding-left: 2px;
   }
+
+  .lights-container {
+    display: table;
+    .lights-row {
+      display: table-row;
+      .light-cell {
+        display: table-cell;
+        padding-left: 3px;
+      }
+    }
+  }
+
 }
 
 
