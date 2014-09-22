@@ -10,6 +10,7 @@ Finer-grained commits
   3) done
 
   4) o) move traffic-light sequence to title bar of history dialog. done
+     o) display max tag-number?
      o) make tag-number editable
      o) check how it looks with lots of traffic-lights. scrollbar?
 
