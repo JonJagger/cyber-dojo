@@ -75,32 +75,34 @@ var cyberDojo = (function(cd, $) {
           '<label for="was-tag-checkbox"></label>';
 	};
 
-	var makeWasTagControl = function(tag) {
+	var makeWasTagControl = function(data) {
+	  var n = data.lights[wasTag].number;
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
 		    cd.td(makeWasTagCheckbox()) +
-			cd.td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
+			cd.td('<input type="text" id="was-tag-number" value="' + n + '" />') +
 		  '</tr>' +
 		'</table>';
 	};
 
-	var makeNowTagControl = function(tag) {
+	var makeNowTagControl = function(data) {
+	  var n = data.lights[nowTag].number;
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
-			cd.td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
+			cd.td('<input type="text" id="now-tag-number" value="' + n + '" />') +
 		  '</tr>' +
 		 '</table>';
 	};
 
-    var makeDiffTagControl = function() {
+    var makeDiffTagControl = function(data) {
 	  return '' +
 	    '<table>' +
 		  '<tr>' +
-		    cd.td(makeWasTagControl(wasTag)) +
+		    cd.td(makeWasTagControl(data)) +
 			cd.td('<div id="diff-arrow">&harr;</div>') +
-		    cd.td(makeNowTagControl(nowTag)) +
+		    cd.td(makeNowTagControl(data)) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
@@ -131,7 +133,7 @@ var cyberDojo = (function(cd, $) {
 
 	var resetTagControls = function(data) {
 
-	  $('#diff-tag-control', titleBar()).html(makeDiffTagControl());
+	  $('#diff-tag-control', titleBar()).html(makeDiffTagControl(data));
 
 	  var html = '';
 	  $.each(data.lights, function(_,light) {
