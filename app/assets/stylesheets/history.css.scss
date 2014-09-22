@@ -30,7 +30,7 @@
 
     #now-tag-number {
       background: $lighter-color;
-      @include font-size-tiny();
+      @include font-size-small();
       text-align: center;
       width: 2em;
       &[data-colour=red]   { color: $red; }
@@ -40,7 +40,7 @@
   }
 
   .traffic-light {
-    padding-left: 4px;
+    padding-left: 2px;
   }
 }
 
