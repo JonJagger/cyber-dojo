@@ -123,13 +123,13 @@ var cyberDojo = (function(cd, $) {
 	  return $('#now-tag-number', titleBar());
 	};
 
-	var wasTrafficLight = function() {
-	  return $('#was-traffic-light', titleBar());
-	};
+	//var wasTrafficLight = function() {
+	//  return $('#was-traffic-light', titleBar());
+	//};
 
-	var nowTrafficLight = function() {
-	  return $('#now-traffic-light', titleBar());
-	};
+	//var nowTrafficLight = function() {
+	//  return $('#now-traffic-light', titleBar());
+	//};
 
 	var resetTagControls = function(data) {
 
