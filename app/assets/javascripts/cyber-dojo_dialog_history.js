@@ -76,15 +76,12 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeNowTagControl = function() {
-	  //var light = data.lights[nowTag-1];
 	  return '' +
 	    '<table class="tag-control">' +
 		  '<tr>' +
 			cd.td('<input' +
 				        ' type="text"' +
 				          ' id="now-tag-number"' +
-				 //' data-colour="' + light.colour + '"' +
-				 //      ' value="' + nowTag + '"' +
 				 ' />') +
 		  '</tr>' +
 		 '</table>';
@@ -133,9 +130,11 @@ var cyberDojo = (function(cd, $) {
 		html += makeTrafficLight(light);
 	  });
 
-	  trafficLights().html(x);
+	  trafficLights().html(html);
 
-	  nowTagNumber().val(nowTag);
+	  nowTagNumber()
+		.val(nowTag)
+		.attr('data-colour', data.lights[nowTag-1].colour);
 
 	  wasTagCheckBox()
 		.attr('checked', wasTag != nowTag)
