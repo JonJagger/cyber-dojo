@@ -6,7 +6,7 @@
      "cyber-dojo.sh"
   ],
   "filename_extension" : ".R",
-  "display_name": "R, stopifnot",
-  "unit_test_framework": "rstopifnot",
-  "image_name": "cyberdojo/r-3.0.1_stopifnot"
+  "display_name": "R, RUnit",
+  "unit_test_framework": "runit",
+  "image_name": "cyberdojo/r-3.0.1_runit"
 }
