@@ -41,7 +41,7 @@
     }
     .traffic-light {
       display: table-cell;
-      padding-left: 3px;
+      padding-right: 3px;
     }
   }
 }
@@ -53,6 +53,7 @@
   background: $darker-color;
   color     : $lighter-color;
   padding: none;
+
   margin: {
     left: 0px;
     top : 0px;
@@ -67,23 +68,18 @@
     position: absolute;
     top : 10px;
     left: 772px;
-  }
-
-  #now-tag-number {
-    background: $lighter-color;
-    text-align: center;
-    width: 2em;
-    &[data-colour=red]   { color: $red; }
-    &[data-colour=amber] { color: darken($amber,15%); }
-    &[data-colour=green] { color: darken($green,10%); }
-  }
-
-  #navigate-buttons {
-    padding-bottom: 15px;
-  }
-
-  #diff-qm {
-    padding-left: 1em;
+    #navigate-controls {
+      padding-bottom: 15px;
+      #now-tag-number {
+        background: $lighter-color;
+        color: $darker-color;
+        text-align: center;
+        width: 2em;
+      }
+      #diff-qm {
+        padding-left: 1em;
+      }
+    }
   }
 
   .filename {

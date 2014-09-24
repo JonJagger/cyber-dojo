@@ -143,7 +143,7 @@ var cyberDojo = (function(cd, $) {
 	  };
 
 	  return '' +
-		  '<table id="navigate-buttons">' +
+		  '<table id="navigate-controls">' +
 			'<tr>' +
 			  cd.td(makeNavigateButton('first')) +
 			  cd.td(makeNavigateButton('prev')) +
@@ -164,8 +164,7 @@ var cyberDojo = (function(cd, $) {
 		.html(makeTrafficLightsHtml(data.lights));
 
 	  nowTagNumber()
-		.val(nowTag)
-		.attr('data-colour', data.lights[nowTag-1].colour);
+		.val(nowTag);
 
 	  diffCheckBox()
 		.attr('checked', wasTag != nowTag)
