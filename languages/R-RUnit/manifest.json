@@ -1,0 +1,12 @@
+
+{
+  "visible_filenames": [
+     "hiker.tests.R",
+     "hiker.R",
+     "cyber-dojo.sh"
+  ],
+  "filename_extension" : ".R",
+  "display_name": "R, stopifnot",
+  "unit_test_framework": "rstopifnot",
+  "image_name": "cyberdojo/r-3.0.1_stopifnot"
+}
