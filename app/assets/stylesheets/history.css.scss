@@ -30,8 +30,8 @@
 
     #title {
       font-size: 1.75em;
-      &:before { content: "\2009"; } // thin-space
-      &:after  { content: "\2009"; } // thin-space
+      &:before { content: $thin-space; }
+      &:after  { content: $thin-space; }
     }
     #now-tag-number {
       background: $lighter-color;
