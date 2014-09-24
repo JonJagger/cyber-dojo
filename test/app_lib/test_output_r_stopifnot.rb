@@ -26,10 +26,21 @@ class OutputRStopIfNotTests < CyberDojoTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - -
 
+  #test 'stop rather than stopifnot is red' do
+  #  output =
+  #  [
+  #    'Error: 74 has not been replaced by FizzBuzz',
+  #    'Execution halted'
+  #  ].join("\n")
+  #  assert_equal :red, colour_of(output)
+  #end
+
+  #- - - - - - - - - - - - - - - - - - - - - - - -
+
   test 'syntax error is amber' do
     output =
     [
-      ":Error: object 'sss' not found",
+      "Error: object 'sss' not found",
       'Execution halted'
     ].join("\n")
     assert_equal :amber, colour_of(output)
