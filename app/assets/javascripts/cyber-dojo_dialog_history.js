@@ -75,7 +75,7 @@ var cyberDojo = (function(cd, $) {
           '<label for="diff-checkbox"></label>';
 	};
 
-	var makeNowTagControl = function() {
+	var makeNowTagNumber = function() {
 	  return '' +
 		'<input type="text"' +
 			    ' id="now-tag-number"/>';
@@ -95,7 +95,7 @@ var cyberDojo = (function(cd, $) {
 			cd.td(makeAvatarImage()) +
    		   '<td id="title">history</td>' +
 		    cd.td(makeDiffCheckbox()) +
-		    cd.td(makeNowTagControl()) +
+		    cd.td(makeNowTagNumber()) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
@@ -136,8 +136,34 @@ var cyberDojo = (function(cd, $) {
 
 	//- - - - - - - - -
 
-	var resetTagControls = function(data) {
+	var makeNavigateButtons = function() {
 
+	  var makeNavigateButton = function(name) {
+		var size = (name === 'first' || name === 'last') ? 20 : 30;
+		return '' +
+		  '<button class="triangle button"' +
+			   'id="' + name + '_button">' +
+			'<img src="/images/triangle_' + name + '.gif"' +
+				' alt="move to ' + name + ' diff"' +
+				' width="' + size + '"' +
+				' height="' + size + '" />' +
+		  '</button>';
+	  };
+
+	  return '' +
+		  '<table id="navigate-buttons">' +
+			'<tr>' +
+			  cd.td(makeNavigateButton('first')) +
+			  cd.td(makeNavigateButton('prev')) +
+			  cd.td(makeNavigateButton('next')) +
+			  cd.td(makeNavigateButton('last')) +
+			'</tr>' +
+		  '</table>';
+	};
+
+	//- - - - - - - - -
+
+	var resetTagControls = function(data) {
 	  trafficLights()
 		.html(makeTrafficLightsHtml(data.lights));
 
@@ -167,7 +193,7 @@ var cyberDojo = (function(cd, $) {
       });
       div.append('<div id="diff-content"></div>');
 	  div.append('<div id="diff-controls">' +
-					cd.makeNavigateButtons() +
+					makeNavigateButtons() +
 					"<div id='diff-filenames'></div>" +
 				 '</div>');
       return div;

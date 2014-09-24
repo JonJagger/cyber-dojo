@@ -3,13 +3,10 @@
 var cyberDojo = (function(cd, $) {
   "use strict";
 
-  cd.makeNavigateButtons = function() {
+  cd.XmakeNavigateButtons = function() {
 
 	var makeNavigateButton = function(name) {
-	  var size = 30;
-	  if (name === 'first' || name === 'last')
-		size = 20;
-
+	  var size = (name === 'first' || name === 'last') ? 20 : 30;
 	  return '' +
 		'<button class="triangle button"' +
 			 'id="' + name + '_button">' +
