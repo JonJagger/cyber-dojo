@@ -32,16 +32,6 @@
     &:after  { content: $thin-space; }
   }
 
-  #now-tag-number {
-    background: $lighter-color;
-    @include font-size-small();
-    text-align: center;
-    width: 2em;
-    &[data-colour=red]   { color: $red; }
-    &[data-colour=amber] { color: darken($amber,15%); }
-    &[data-colour=green] { color: darken($green,10%); }
-  }
-
   #traffic-lights {
     display: block;
     width: 800px;
@@ -73,14 +63,27 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
 
-  #navigate-buttons {
-    padding-bottom: 15px;
-  }
-
   #diff-controls {
     position: absolute;
     top : 10px;
     left: 772px;
+  }
+
+  #now-tag-number {
+    background: $lighter-color;
+    text-align: center;
+    width: 2em;
+    &[data-colour=red]   { color: $red; }
+    &[data-colour=amber] { color: darken($amber,15%); }
+    &[data-colour=green] { color: darken($green,10%); }
+  }
+
+  #navigate-buttons {
+    padding-bottom: 15px;
+  }
+
+  #diff-qm {
+    padding-left: 1em;
   }
 
   .filename {

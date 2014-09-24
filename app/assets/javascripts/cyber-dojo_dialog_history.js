@@ -51,68 +51,38 @@ var cyberDojo = (function(cd, $) {
 	// the revert has access to animal's code on the page
 	// from which the dialog opened.
 
-	var setWaitCursor = function() {
-	  domNodeSource.css('cursor', 'wait');
-	};
-	var setPointerCursor = function() {
-	  domNodeSource.css('cursor', 'pointer');
-	};
-
 	var minTag = 1;
-	var tagGap = nowTag - wasTag; // currently always 1
+	var tagGap = nowTag - wasTag; // 1 if showing a diff, otherwise 0
 	var currentFilename = '';
 	var visibleFiles = undefined;
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Was-Now-Tag Controls	(on title-bar)
+	// Titled traffic-lights
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var makeDiffCheckbox = function() {
-      return '' +
-	    '<input type="checkbox"' +
-             ' class="regular-checkbox"' +
-                ' id="diff-checkbox"/>' +
-          '<label for="diff-checkbox"></label>';
-	};
+    var makeTitle = function() {
 
-	var makeNowTagNumber = function() {
-	  return '' +
-		'<input type="text"' +
-			    ' id="now-tag-number"/>';
-	};
+	  var makeAvatarImage = function() {
+		return '' +
+		  '<img height="30"' +
+			  ' width="30"' +
+			  ' src="/images/avatars/' + avatarName + '.jpg"/>';
+	  };
 
-	var makeAvatarImage = function() {
-	  return '' +
-		'<img height="30"' +
-			' width="30"' +
-			' src="/images/avatars/' + avatarName + '.jpg"/>';
-	};
-
-    var makeDiffTagControl = function() {
 	  return '' +
 	    '<table>' +
 		  '<tr valign="top">' +
 			cd.td(makeAvatarImage()) +
    		   '<td id="title">history</td>' +
-		    cd.td(makeDiffCheckbox()) +
-		    cd.td(makeNowTagNumber()) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
     };
 
-	//- - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	//- - - - - - - - - - - -
 
 	var titleBar = function() {
 	  return $('#ui-dialog-title-history-dialog');
-	};
-
-	var diffCheckBox = function() {
-	  return $('#diff-checkbox', titleBar());
-	};
-
-	var nowTagNumber = function() {
-	  return $('#now-tag-number', titleBar());
 	};
 
 	var trafficLights = function() {
@@ -136,6 +106,22 @@ var cyberDojo = (function(cd, $) {
 
 	//- - - - - - - - -
 
+	var nowTagNumber = function() {
+	  return $('#now-tag-number');
+	};
+
+	var makeDiffCheckbox = function() {
+      return '' +
+	    '<input type="checkbox"' +
+             ' class="regular-checkbox"' +
+                ' id="diff-checkbox"/>' +
+          '<label for="diff-checkbox"></label>';
+	};
+
+	var diffCheckBox = function() {
+	  return $('#diff-checkbox');
+	};
+
 	var makeNavigateButtons = function() {
 
 	  var makeNavigateButton = function(name) {
@@ -150,13 +136,22 @@ var cyberDojo = (function(cd, $) {
 		  '</button>';
 	  };
 
+	  var makeNowTagNumber = function() {
+		return '' +
+		  '<input type="text"' +
+				  ' id="now-tag-number"/>';
+	  };
+
 	  return '' +
 		  '<table id="navigate-buttons">' +
 			'<tr>' +
 			  cd.td(makeNavigateButton('first')) +
 			  cd.td(makeNavigateButton('prev')) +
+			  cd.td(makeNowTagNumber()) +
 			  cd.td(makeNavigateButton('next')) +
 			  cd.td(makeNavigateButton('last')) +
+			  '<td id="diff-qm">diff?</td>' +
+		      cd.td(makeDiffCheckbox()) +
 			'</tr>' +
 		  '</table>';
 	};
@@ -164,6 +159,7 @@ var cyberDojo = (function(cd, $) {
 	//- - - - - - - - -
 
 	var resetTagControls = function(data) {
+
 	  trafficLights()
 		.html(makeTrafficLightsHtml(data.lights));
 
@@ -276,7 +272,8 @@ var cyberDojo = (function(cd, $) {
 		  '<table>' +
 		    '<tr class="valign-top">' +
 		      cd.td('<div class="diff-line-numbers"></div>') +
-		      cd.td('<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
+		      cd.td('<div id="diff_file_content_for_' + diff.filename +
+					'" class="diff-sheet">' +
 				    '</div>') +
 		    '</tr>' +
 		  '</table>' +
@@ -484,9 +481,17 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	var setWaitCursor = function() {
+	  domNodeSource.css('cursor', 'wait');
+	};
+
+	var setPointerCursor = function() {
+	  domNodeSource.css('cursor', 'pointer');
+	};
+
 	var diffDialog = diffDiv.dialog({
 	  autoOpen: false,
-	  title: cd.dialogTitle(makeDiffTagControl()),
+	  title: cd.dialogTitle(makeTitle()),
 	  width: 1150,
 	  height: 705,
 	  modal: true,
@@ -571,8 +576,6 @@ var cyberDojo = (function(cd, $) {
 	    nowTag + ' ' +
 		makeColouredBulb(light.colour);
 	};
-
-    //- - - - - - - - - - -
 
 	var makeColouredBulb = function(colour) {
       return '' +

@@ -11,14 +11,12 @@ Finer-grained commits
 
   4) o) move traffic-light sequence to title bar of history dialog. done
      o) auto-scroll so now-tag always in view
-     o) move tag-number between < > controls
-     o) move checkbox near to < > controls (ready for 2nd checkbox for tags between lights)
-     o) add diff? label to checkbox
+     o) tooltips on < > controls need to not say 'diff' if checkbox is off
      o) clicking on a traffic-light makes it the current tag
+     o) traffic-light cursor is hand (and not move)
      o) tool tip for clicking on a traffic-light? or hover tip tag-number?
      o) make tag-number editable
-     o) display max tag-number (on title?)
-     o) change title-bar cursor to default (not move)
+     o) display max tag-number below >| control, and 1 below |< control ?
      o) reinstate ESC to close history dialog
            ensure it works after |< navigation and reopening
 
