@@ -18,6 +18,8 @@ Finer-grained commits
      o) make tag-number editable
      o) display max tag-number?
      o) change title-bar cursor to default (not move)
+     o) reinstate ESC to close history dialog
+           ensure it works after |< navigation and reopening
 
   5) custom serialization only POSTs changed files for [test] event.
 
