@@ -109,12 +109,6 @@ module OutputParser
     return :amber
   end
 
-  def self.parse_rstopifnot(output)
-    return :red   if /Error: (.*) is not TRUE/.match(output)
-    return :green if /\"All tests passed\"/.match(output)
-    return :amber
-  end
-
   #-------------------------------------------------
 
   def self.parse_go_testing(output)
