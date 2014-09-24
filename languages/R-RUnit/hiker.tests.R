@@ -1,5 +1,6 @@
+library(RUnit)
 source('hiker.R')
 
-stopifnot(42 == answer())
+checkEquals(42, answer())
 
 print("All tests passed")
