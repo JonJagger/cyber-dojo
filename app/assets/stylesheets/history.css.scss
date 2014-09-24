@@ -21,31 +21,25 @@
 
 #ui-dialog-title-history-dialog {
 
-  #diff-tag-control {
+  display: block;
+  font-size: 0.5em;
+  position: relative;
+  bottom: -5px;
 
-    display: block;
-    font-size: 0.5em;
-    position: relative;
-    bottom: -5px;
-
-    #title {
-      font-size: 1.75em;
-      &:before { content: $thin-space; }
-      &:after  { content: $thin-space; }
-    }
-    #now-tag-number {
-      background: $lighter-color;
-      @include font-size-small();
-      text-align: center;
-      width: 2em;
-      &[data-colour=red]   { color: $red; }
-      &[data-colour=amber] { color: darken($amber,15%); }
-      &[data-colour=green] { color: darken($green,10%); }
-    }
+  #title {
+    font-size: 1.75em;
+    &:before { content: $thin-space; }
+    &:after  { content: $thin-space; }
   }
 
-  .traffic-light {
-    padding-left: 2px;
+  #now-tag-number {
+    background: $lighter-color;
+    @include font-size-small();
+    text-align: center;
+    width: 2em;
+    &[data-colour=red]   { color: $red; }
+    &[data-colour=amber] { color: darken($amber,15%); }
+    &[data-colour=green] { color: darken($green,10%); }
   }
 
   #traffic-lights {
@@ -55,7 +49,7 @@
     &::-webkit-scrollbar:horizontal {
         height: 1px;
     }
-    .light-cell {
+    .traffic-light {
       display: table-cell;
       padding-left: 3px;
     }

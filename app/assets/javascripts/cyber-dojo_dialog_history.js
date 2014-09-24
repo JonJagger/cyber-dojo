@@ -67,12 +67,12 @@ var cyberDojo = (function(cd, $) {
 	// Was-Now-Tag Controls	(on title-bar)
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var makeNowTagCheckbox = function() {
+	var makeDiffCheckbox = function() {
       return '' +
 	    '<input type="checkbox"' +
              ' class="regular-checkbox"' +
-                ' id="now-tag-checkbox"/>' +
-          '<label for="now-tag-checkbox"></label>';
+                ' id="diff-checkbox"/>' +
+          '<label for="diff-checkbox"></label>';
 	};
 
 	var makeNowTagControl = function() {
@@ -81,17 +81,20 @@ var cyberDojo = (function(cd, $) {
 			    ' id="now-tag-number"/>';
 	};
 
+	var makeAvatarImage = function() {
+	  return '' +
+		'<img height="30"' +
+			' width="30"' +
+			' src="/images/avatars/' + avatarName + '.jpg"/>';
+	};
+
     var makeDiffTagControl = function() {
 	  return '' +
-	    '<table id="diff-tag-control">' +
+	    '<table>' +
 		  '<tr valign="top">' +
-
-		'<td><img height="30"' +
-		' width="30"' +
-		' src="/images/avatars/' + avatarName + '.jpg"/></td>' +
-		'<td id="title">history</td>' +
-
-		    cd.td(makeNowTagCheckbox()) +
+			cd.td(makeAvatarImage()) +
+   		   '<td id="title">history</td>' +
+		    cd.td(makeDiffCheckbox()) +
 		    cd.td(makeNowTagControl()) +
 			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
@@ -104,8 +107,8 @@ var cyberDojo = (function(cd, $) {
 	  return $('#ui-dialog-title-history-dialog');
 	};
 
-	var nowTagCheckBox = function() {
-	  return $('#now-tag-checkbox', titleBar());
+	var diffCheckBox = function() {
+	  return $('#diff-checkbox', titleBar());
 	};
 
 	var nowTagNumber = function() {
@@ -117,18 +120,18 @@ var cyberDojo = (function(cd, $) {
 	};
 
 	var makeTrafficLightsHtml = function(lights) {
-	  var lightCells = '';
+	  var lightsHtml = '';
 	  $.each(lights, function(n,light) {
 		var barGap = (nowTag === light.number) ? '_bar' : '_gap';
-		lightCells +=
-		  "<div class='light-cell'>" +
+		lightsHtml +=
+		  "<div class='traffic-light'>" +
 			"<img" +
 			   " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
 			 " width='10'" +
 			" height='37'/>" +
           "</div>";
 	  });
-	  return '' +lightCells;
+	  return lightsHtml;
 	};
 
 	//- - - - - - - - -
@@ -142,7 +145,7 @@ var cyberDojo = (function(cd, $) {
 		.val(nowTag)
 		.attr('data-colour', data.lights[nowTag-1].colour);
 
-	  nowTagCheckBox()
+	  diffCheckBox()
 		.attr('checked', wasTag != nowTag)
 		.unbind('click')
 		.click(function() {
@@ -502,6 +505,8 @@ var cyberDojo = (function(cd, $) {
 		}
 	  ).always(function() {
         after();
+		//var options = { direction: 'horizontal' };
+		//$('img[src$="_bar"]', titleBar()).scrollintoview(options);
 	  });
 	};
 
