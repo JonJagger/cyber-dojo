@@ -9,9 +9,14 @@ Finer-grained commits
   2) done
   3) done
 
-  4) move traffic-light sequence to title bar of history dialog.
-     add non-draggable was-tag now-tag markers which position
-     directly below their respective traffic-light.
+  4) o) move traffic-light sequence to title bar of history dialog. done
+     o) auto-scroll so now-tag always in view. done
+     o) clicking on a traffic-light makes it the current tag
+     o) traffic-light cursor is hand (and not move)
+     o) tool tip for clicking on a traffic-light? or hover tip tag-number?
+     o) make tag-number editable
+     o) reinstate ESC to close history dialog
+           ensure it works after |< navigation and reopening
 
   5) custom serialization only POSTs changed files for [test] event.
 

@@ -26,8 +26,9 @@ var cyberDojo = (function(cd, $) {
 	  var nowTag = count.data('bulb-count');
 	  var maxTag = count.data('bulb-count');
 	  var colour  = count.data('current-colour');
-	  // animals don't appear on dashboard until they have 2+ traffic-lights
-	  // so pluralization of traffic-lights is ok
+	  // animals don't appear on dashboard until
+	  // they have 2+ traffic-lights so
+	  // pluralization of traffic-lights is ok
 	  var toolTip = avatarName + ' has ' + wasTag + ' traffic-lights' +
 	    ' and is at ' + colour + '.' +
 		' Click to review ' + avatarName + "'s current code.";
@@ -41,7 +42,7 @@ var cyberDojo = (function(cd, $) {
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
   cd.dialog_history = function(id, avatarName,
-							   wasTag, nowTag, maxTag,
+							   wasTag, nowTag, maxTag, // 1-based
 							   domNodeSource, showRevert) {
 	// Arguably, the history dialog would be better as it own
 	// history page. That would help google searchability and
@@ -51,105 +52,133 @@ var cyberDojo = (function(cd, $) {
 	// the revert has access to animal's code on the page
 	// from which the dialog opened.
 
-	var setWaitCursor = function() {
-	  domNodeSource.css('cursor', 'wait');
-	};
-	var setPointerCursor = function() {
-	  domNodeSource.css('cursor', 'pointer');
-	};
-
-	var minTag = 0;
-	var tagGap = nowTag - wasTag; // currently always 1
+	var minTag = 1;
 	var currentFilename = '';
 	var visibleFiles = undefined;
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Was-Now-Tag Controls	(on title-bar)
+	// Titled traffic-lights
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var makeWasTagCheckbox = function() {
-      return '' +
-	    '<input type="checkbox"' +
-            ' class="regular-checkbox"' +
-            ' id="was-tag-checkbox"/>' +
-          '<label for="was-tag-checkbox"></label>';
-	};
+    var makeTitle = function() {
 
-	var makeWasTagControl = function(tag) {
-	  return '' +
-	    '<table class="tag-control">' +
-		  '<tr>' +
-		    cd.td(makeWasTagCheckbox()) +
-			cd.td('<input type="text" id="was-tag-number" value="' + tag + '" />') +
- 		    cd.td('<div id="was-traffic-light"></div>') +
-		  '</tr>' +
-		'</table>';
-	};
+	  var makeAvatarImage = function() {
+		return '' +
+		  '<img height="30"' +
+			  ' width="30"' +
+			  ' src="/images/avatars/' + avatarName + '.jpg"/>';
+	  };
 
-	var makeNowTagControl = function(tag) {
 	  return '' +
-	    '<table class="tag-control">' +
-		  '<tr>' +
- 		    cd.td('<div id="now-traffic-light"></div>') +
-			cd.td('<input type="text" id="now-tag-number" value="' + tag + '" />') +
-		  '</tr>' +
-		 '</table>';
-	};
-
-    var makeDiffTagControl = function() {
-	  return '' +
-	    '<table id="diff-tag-control">' +
-		  '<tr>' +
-		    cd.td(makeWasTagControl(wasTag)) +
-			cd.td('<div id="diff-arrow">&harr;</div>') +
-		    cd.td(makeNowTagControl(nowTag)) +
+	    '<table>' +
+		  '<tr valign="top">' +
+			cd.td(makeAvatarImage()) +
+   		   '<td id="title">history</td>' +
+			cd.td('<div id="traffic-lights"></div>') +
 		  '</tr>' +
 		'</table>';
     };
+
+	//- - - - - - - - - - - -
 
 	var titleBar = function() {
 	  return $('#ui-dialog-title-history-dialog');
 	};
 
-	var wasTagCheckBox = function() {
-	  return $('#was-tag-checkbox', titleBar());
+	var trafficLights = function() {
+	  return $('#traffic-lights', titleBar());
 	};
 
-	var wasTagNumber = function() {
-	  return $('#was-tag-number', titleBar());
+	var makeTrafficLightsHtml = function(lights) {
+	  var lightsHtml = '';
+	  $.each(lights, function(n,light) {
+		var barGap = (nowTag === light.number) ? '_bar' : '_gap';
+		lightsHtml +=
+		  "<div class='traffic-light'>" +
+			"<img" +
+			   " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
+			 " width='10'" +
+			" height='37'" +
+			" data-number='" + light.number + "'/>" +
+          "</div>";
+	  });
+	  return lightsHtml;
 	};
+
+	var setupTrafficLightHandlers = function() {
+	  $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
+		$(this).click(function() {
+		  //showDiff($(this).data('number'), $(this));
+		  //cursor not being set back to pointer???
+		});
+	  });
+	};
+
+	//- - - - - - - - -
 
 	var nowTagNumber = function() {
-	  return $('#now-tag-number', titleBar());
+	  return $('#now-tag-number');
 	};
 
-	var wasTrafficLight = function() {
-	  return $('#was-traffic-light', titleBar());
+	var makeDiffCheckbox = function() {
+      return '' +
+	    '<input type="checkbox"' +
+             ' class="regular-checkbox"' +
+                ' id="diff-checkbox"/>' +
+          '<label for="diff-checkbox"></label>';
 	};
 
-	var nowTrafficLight = function() {
-	  return $('#now-traffic-light', titleBar());
+	var diffCheckBox = function() {
+	  return $('#diff-checkbox');
 	};
+
+	var makeNavigateButtons = function() {
+
+	  var makeNavigateButton = function(name) {
+		var size = (name === 'first' || name === 'last') ? 20 : 30;
+		return '' +
+		  '<button class="triangle button"' +
+			   'id="' + name + '_button">' +
+			'<img src="/images/triangle_' + name + '.gif"' +
+				' alt="move to ' + name + ' diff"' +
+				' width="' + size + '"' +
+				' height="' + size + '" />' +
+		  '</button>';
+	  };
+
+	  var makeNowTagNumber = function() {
+		return '' +
+		  '<input type="text"' +
+				  ' id="now-tag-number"/>';
+	  };
+
+	  return '' +
+		  '<table id="navigate-controls">' +
+			'<tr>' +
+			  cd.td(makeNavigateButton('first')) +
+			  cd.td(makeNavigateButton('prev')) +
+			  cd.td(makeNowTagNumber()) +
+			  cd.td(makeNavigateButton('next')) +
+			  cd.td(makeNavigateButton('last')) +
+			  '<td id="diff-qm">diff?</td>' +
+		      cd.td(makeDiffCheckbox()) +
+			'</tr>' +
+		  '</table>';
+	};
+
+	//- - - - - - - - -
 
 	var resetTagControls = function(data) {
-	  wasTrafficLight().html(makeTrafficLight(wasTag, data.wasTrafficLight));
-	  wasTagNumber().val(wasTag);
-	  nowTagNumber().val(nowTag);
-	  nowTrafficLight().html(makeTrafficLight(nowTag, data.nowTrafficLight));
 
-	  wasTagCheckBox()
+	  trafficLights().html(makeTrafficLightsHtml(data.lights));
+	  setupTrafficLightHandlers();
+	  nowTagNumber().val(nowTag);
+
+	  diffCheckBox()
 		.attr('checked', wasTag != nowTag)
 		.unbind('click')
 		.click(function() {
-		  if ($(this).is(':checked')) { // turned on
-			if (nowTag === 0) {
-			  showDiff(0, 1, $(this));
-			} else {
-			  showDiff(nowTag-1, nowTag, $(this));
-			}
-		  } else { // turned off
-			showDiff(nowTag, nowTag, $(this));
-		  }
+          showDiff(nowTag, $(this));
 		});
 	};
 
@@ -163,7 +192,7 @@ var cyberDojo = (function(cd, $) {
       });
       div.append('<div id="diff-content"></div>');
 	  div.append('<div id="diff-controls">' +
-					cd.makeNavigateButtons() +
+					makeNavigateButtons() +
 					"<div id='diff-filenames'></div>" +
 				 '</div>');
       return div;
@@ -180,18 +209,21 @@ var cyberDojo = (function(cd, $) {
 	var nextButton  = $('#next_button',  diffDiv);
 	var lastButton  = $('#last_button',  diffDiv);
 
-	var toolTip = function(was, now) {
-	  if (was !== now) {
-		return 'Show diff of ' + was + ' <-> ' + now;
+	var diffOn = function() {
+	  return diffCheckBox().is(':checked');
+	};
+
+	var toolTip = function(now) {
+	  if (diffOn()) {
+		return 'Show diff of ' + (now-1) + ' <-> ' + now;
 	  } else {
-		return 'Show ' + was;
+		return 'Show ' + now;
 	  }
 	};
 
-	var showDiff = function(was,now,node) {
-	  wasTag = was;
+	var showDiff = function(now,node) {
 	  nowTag = now;
-	  tagGap = now - was;
+	  wasTag = now - (diffOn() ? 1 : 0);
 	  var before = function() {
 		node.css('cursor', 'wait');
 	  };
@@ -205,24 +237,24 @@ var cyberDojo = (function(cd, $) {
 	  refresh(before,after);
 	};
 
-	var refreshNavigationHandlers = function(off, button, from, to) {
+	var refreshNavigationHandlers = function(off, button, to) {
 	  button.attr('disabled', off);
 	  button.css('cursor', off ? 'default' : 'pointer');
 	  if (!off) {
 		button
 		  .unbind()
 		  .click(function() {
-			showDiff(from, to, button);
+			showDiff(to, button);
 		  })
-		  .attr('title', toolTip(from, to));
+		  .attr('title', toolTip(to));
 	  }
 	};
 
     var resetNavigateButtonHandlers = function() {
-	  refreshNavigationHandlers(minTag >= wasTag, firstButton, minTag, minTag+tagGap);
-	  refreshNavigationHandlers(minTag >= wasTag, prevButton, wasTag-1, nowTag-1);
-	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+1, nowTag+1);
-	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-tagGap, maxTag);
+	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag);
+	  refreshNavigationHandlers(minTag >= nowTag,  prevButton, nowTag-1);
+	  refreshNavigationHandlers(nowTag >= maxTag,  nextButton, nowTag+1);
+	  refreshNavigationHandlers(nowTag >= maxTag,  lastButton, maxTag);
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -246,7 +278,8 @@ var cyberDojo = (function(cd, $) {
 		  '<table>' +
 		    '<tr class="valign-top">' +
 		      cd.td('<div class="diff-line-numbers"></div>') +
-		      cd.td('<div id="diff_file_content_for_' + diff.filename + '" class="diff-sheet">' +
+		      cd.td('<div id="diff_file_content_for_' + diff.filename +
+					'" class="diff-sheet">' +
 				    '</div>') +
 		    '</tr>' +
 		  '</table>' +
@@ -432,18 +465,13 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var title = '' +
-		'<img height="30"' +
-		' width="30"' +
-		' src="/images/avatars/' + avatarName + '.jpg"/>' +
-		' &nbsp;history ' +
-		makeDiffTagControl();
+	// diffDialog
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var makeButtons = function() {
 	  var buttons = {};
 	  buttons['close'] = function() {
-		closeDiffDialog();
+		diffDialog.remove();
 	  };
 	  buttons['fork'] = function() {
 		doFork();
@@ -451,31 +479,111 @@ var cyberDojo = (function(cd, $) {
 	  if (showRevert) {
 		buttons['revert'] = function() {
 		  doRevert();
-		  closeDiffDialog();
+		  diffDialog.remove();
 		};
 	  }
 	  return buttons;
 	};
 
-	var diffDialog = diffDiv.dialog({
-	  autoOpen: false,
-	  title: cd.dialogTitle(title),
-	  width: 1150,
-	  height: 720,
-	  modal: true,
-      buttons: makeButtons(),
-	  open: function() { refresh(setWaitCursor,setPointerCursor); }
-	}).on('keydown', function(event) {
-	  if (event.keyCode === $.ui.keyCode.ESCAPE) {
-		closeDiffDialog();
-	  }
-	  event.stopPropagation();
-	});
-
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var colouredBulb = function(light) {
-	  var colour = light.colour || light.outcome;
+	var setWaitCursor = function() {
+	  domNodeSource.css('cursor', 'wait');
+	};
+
+	var setPointerCursor = function() {
+	  domNodeSource.css('cursor', 'pointer');
+	};
+
+	var diffDialog = diffDiv.dialog({
+	  autoOpen: false,
+	  title: cd.dialogTitle(makeTitle()),
+	  width: 1150,
+	  height: 705,
+	  modal: true,
+	  closeOnEscape: false,
+      buttons: makeButtons(),
+	  open: function() {
+		refresh(setWaitCursor,setPointerCursor);
+	  }
+	});
+
+	// I removed the .on('keydown') ESC handler
+	// http://stackoverflow.com/questions/10466726/how-to-intercept-jquery-dialog-esc-key-event
+	// For some reason I cannot pin down if you press
+	// the << button then the ESC handler is lost.
+	// This results in the tag-controls on the titleBar()
+	// not being subsequently rendered properly.
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// refresh()
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	var refresh = function(before, after) {
+	  before();
+	  $.getJSON('/differ/diff',
+		{
+		  id: id,
+		  avatar: avatarName,
+		  was_tag: wasTag,
+		  now_tag: nowTag,
+		  current_filename: currentFilename
+		},
+		function(data) {
+		  visibleFiles = data.visibleFiles;
+		  resetTagControls(data);
+		  resetNavigateButtonHandlers();
+		  resetDiff(data);
+          showFile(data.currentFilenameId);
+		  if (showRevert) {
+			revertButton().html(makeRevertButtonHtml(data));
+		  }
+		  forkButton().html(makeForkButtonHtml(data));
+		}
+	  ).always(function() {
+        after();
+		var options = { direction: 'horizontal' };
+		$('img[src$="_bar.png"]', titleBar()).scrollintoview(options);
+	  });
+	};
+
+	var showFile = function(filenameId) {
+	  $('#radio_' + filenameId, diffDiv).click();
+	};
+
+    //- - - - - - - - - - -
+	// reverButton
+    //- - - - - - - - - - -
+
+	var revertButton = function() {
+	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
+	};
+
+	var makeRevertButtonHtml = function(data) {
+	  var light = data.lights[nowTag-1];
+	  return '' +
+	    'revert to ' +
+	    nowTag + ' ' +
+		makeColouredBulb(light.colour);
+	};
+
+    //- - - - - - - - - - -
+	// forkButton
+    //- - - - - - - - - - -
+
+	var forkButton = function() {
+	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
+	};
+
+	var makeForkButtonHtml = function(data) {
+	  var light = data.lights[nowTag-1];
+	  return '' +
+	    'fork from ' +
+	    nowTag + ' ' +
+		makeColouredBulb(light.colour);
+	};
+
+	var makeColouredBulb = function(colour) {
       return '' +
 		  "<img  src='/images/" + 'edged_bulb_' + colour + ".png'" +
 		     " class='edged-bulb'" +
@@ -483,16 +591,9 @@ var cyberDojo = (function(cd, $) {
 			" height='12'/>";
 	};
 
-	var revertButton = function() {
-	  return $('.ui-dialog-buttonset :nth-child(3) :first-child');
-	};
-
-	var makeRevertButtonHtml = function(data,nowTag) {
-	  return '' +
-	    'revert to ' +
-	    nowTag + ' ' +
-		colouredBulb(data.nowTrafficLight);
-	};
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// doRevert()
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var doRevert = function() {
 	  deleteAllCurrentFiles();
@@ -518,17 +619,8 @@ var cyberDojo = (function(cd, $) {
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var forkButton = function() {
-	  return $('.ui-dialog-buttonset :nth-child(2) :first-child');
-	};
-
-	var makeForkButtonHtml = function(data,nowTag) {
-	  return '' +
-	    'fork from ' +
-	    nowTag + ' ' +
-		colouredBulb(data.nowTrafficLight);
-	};
+	// doFork()
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var doFork = function() {
 	  $.getJSON('/forker/fork', {
@@ -609,61 +701,9 @@ var cyberDojo = (function(cd, $) {
 	  failed.dialog('open');
 	};
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var refresh = function(before, after) {
-	  before();
-	  $.getJSON('/differ/diff',
-		{
-		  id: id,
-		  avatar: avatarName,
-		  was_tag: wasTag,
-		  now_tag: nowTag,
-		  current_filename: currentFilename
-		},
-		function(data) {
-		  visibleFiles = data.visibleFiles;
-		  resetTagControls(data);
-		  resetNavigateButtonHandlers();
-		  resetDiff(data);
-          showFile(data.currentFilenameId);
-		  if (showRevert) {
-			revertButton().html(makeRevertButtonHtml(data,nowTag));
-		  }
-		  forkButton().html(makeForkButtonHtml(data,nowTag));
-		}
-	  ).always(function() {
-        after();
-	  });
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// Misc helpers
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var showFile = function(filenameId) {
-	  $('#radio_' + filenameId, diffDiv).click();
-	};
-
-	var closeDiffDialog = function() {
-	  // Important to call remove() and not close() and
-      // to do this for *both* the close button and
-	  // hitting escape.
-	  diffDialog.remove();
-	};
-
-  	var makeTrafficLight = function(tag, trafficLight) {
-	  var colour = trafficLight.colour || trafficLight.outcome
-	  if (tag === 0) {
-		colour = 'white';
-	  }
-      return '' +
-		"<img src='/images/" + 'traffic_light_' + colour + ".png'" +
-		     "width='10'" +
-		     "height='32'/>";
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - -
+    //- - - -
+    //- - - -
 
     diffDialog.dialog('open');
 

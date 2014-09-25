@@ -21,31 +21,27 @@
 
 #ui-dialog-title-history-dialog {
 
-  #diff-tag-control {
+  display: block;
+  font-size: 0.5em;
+  position: relative;
+  bottom: -5px;
 
-    display: inline-block;
-    font-size: 0.5em;
-    position: relative;
-    bottom: -7px;
+  #title {
+    font-size: 1.75em;
+    &:before { content: $thin-space; }
+    &:after  { content: $thin-space; }
+  }
 
-    #now-traffic-light {
-      margin: {
-        right : 0.10em;
-      }
+  #traffic-lights {
+    display: block;
+    width: 800px;
+    overflow-x: auto;
+    &::-webkit-scrollbar:horizontal {
+        height: 1px;
     }
-
-    #was-tag-number, #now-tag-number {
-      background: $lighter-color;
-      @include gradient-darken($lighter-color, 20%, 10%, 5%);
-      color: $darker-color;
-      @include font-size-small();
-      text-align: center;
-      width: 2em;
-    }
-
-    #diff-arrow {
-      margin: 5px;
-      padding-bottom: 5px;
+    .traffic-light {
+      display: table-cell;
+      padding-right: 3px;
     }
   }
 }
@@ -57,6 +53,7 @@
   background: $darker-color;
   color     : $lighter-color;
   padding: none;
+
   margin: {
     left: 0px;
     top : 0px;
@@ -67,14 +64,22 @@
     right: 1px dotted lighten($darker-color, 10%);
   }
 
-  #navigate-buttons {
-    padding-bottom: 15px;
-  }
-
   #diff-controls {
     position: absolute;
     top : 10px;
     left: 772px;
+    #navigate-controls {
+      padding-bottom: 15px;
+      #now-tag-number {
+        background: $lighter-color;
+        color: $darker-color;
+        text-align: center;
+        width: 2em;
+      }
+      #diff-qm {
+        padding-left: 1em;
+      }
+    }
   }
 
   .filename {
@@ -185,8 +190,4 @@
       color: $diff-added-color;
     }
   }
-}
-
-.diff-traffic-light {
-  margin-top: 4px;
 }

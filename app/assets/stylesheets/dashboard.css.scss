@@ -41,7 +41,7 @@
     .omission {
       font-size: 2.9em;
       background-color: darken(white, 50%);
-      &:after { content: "\2009"; } //thin space
+      &:after { content: $thin-space; }
       margin: 5px;
     }
     .gap {
@@ -52,6 +52,10 @@
     .traffic-light-count {
       cursor: pointer;
     }
+  }
+
+  .diff-traffic-light {
+    margin-top: 4px;
   }
 
 }
