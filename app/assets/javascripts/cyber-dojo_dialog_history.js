@@ -542,8 +542,8 @@ var cyberDojo = (function(cd, $) {
 		}
 	  ).always(function() {
         after();
-		//var options = { direction: 'horizontal' };
-		//$('img[src$="_bar.png"]', titleBar()).scrollintoview(options);
+		var options = { direction: 'horizontal' };
+		$('img[src$="_bar.png"]', titleBar()).scrollintoview(options);
 	  });
 	};
 
