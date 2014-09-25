@@ -16,7 +16,7 @@ cyber-dojo
   * reviewing your programming dojo
     * auto refresh?
     * 60 second columns?
-  * replaying the diffs
+    * reviewing the history
 
 <hr/>
 Docker Server

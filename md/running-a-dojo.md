@@ -61,8 +61,8 @@ programming dojos).
 You will also get an amber traffic-light if you lose the network connection
 to the cyber-dojo server (30 second timeout).
 
-Remember, clicking on any traffic-light opens a dialog showing the diffs for
-that traffic-light for that animal together with << < > >> buttons to
+Remember, clicking on any traffic-light opens the history dialog showing the
+diffs for that traffic-light for that animal together with << < > >> buttons to
 navigate backwards and forwards, revert, or fork.
 
 
@@ -96,7 +96,7 @@ horizontal space. These traffic-lights auto scroll:
 Advice:
   * Project the dashboard *during* the dojo
   * Leave auto-refresh on *during* the dojo
-  * Turn auto-refresh *off* just before starting a dashboard review.
+  * Turn auto-refresh *off* just before starting the review.
 
 ### 60 second columns?
 
@@ -130,10 +130,23 @@ This displays:
   * the number of animals currently at green, if any, (in green)
 
 
-replaying the diffs
--------------------
-Clicking on any traffic-light opens a dialog showing the diffs for that
-traffic-light for that animal. As you navigate forwards and backwards using
+reviewing the history
+---------------------
+Clicking on any traffic-light opens the history dialog showing the diffs for that
+traffic-light for that animal.
+
+By default, the diff between two successive traffic-lights is displayed.
+For example, suppose you have 65 traffic lights and you click on the 42nd one -
+the history dialog will display the diff between traffic-lights 41 and 42
+(and the number 42 will appear between the << < and the > >> controls).
+
+Navigating using the << < > >> buttons
+  * << moves backward to the first traffic-light, displaying the diff of 0 <-> 1
+  * <  moves backward one traffic-light, displaying the diff of 40 <-> 41
+  * >  moves forward one traffic-light, displaying the diff of 42 <-> 43
+  * >> moves forward to the last traffic-light (eg 65), displaying the diff of 64 <-> 65
+
+As you navigate forwards and backwards using
 the << < > >> buttons the server will stay on the same file if it continues to
 have a diff. If it cannot do this (because the file has been renamed or
 deleted or has not changed) the server will open the file with the most changes.
@@ -144,28 +157,6 @@ will toggle the deleted lines on/off for that file's diff.
 Clicking the green number-of-lines-added button (to the right of the filename)
 will toggle the added lines on/off for that file's diff.
 
-The diff is a diff between two traffic-lights. If you click on an animals 13th
-traffic-light the diff dialog shows the diff between traffic-lights 12 and 13,
-and 12 and 13 appear at the top left next to their respective traffic-lights.
-You can show the diff between any two traffic-lights by simply editing these
-numbers. For example, if you edit the 13 to a 15 and press return the dialog
-will update to display the diff between traffic-lights 12 and 15.
-Below the two traffic-lights are  <<  <  >  >>  buttons.
-These buttons move forwards and backwards whilst maintaining the traffic-light
-gap (eg 12 <-> 15 == 3).
-
-For example, pressing
-  * << moves back to the first traffic-light, so if the gap is 3
-    it will display the diff of 1 <-> 4
-  * <  moves one traffic-light back, so if the gap is 3
-    it will display the diff of 11 <-> 14
-  * >  moves one traffic-light forward, so if the gap is 3
-    it will display the diff of 13 <-> 16
-  * >> moves forward to the last traffic-light (eg 65), so if the gap is 3
-    it will display the diff of 62 <-> 65
-
-You can also do a "no-diff" by simply entering the same value (eg 23) twice.
-23 <-> 23 will display all the files from traffic-light 23 and there will be
-no diffs at all. The  << < > >> buttons still work and maintain the "no-diff".
-Eg pressing the < button will move back one traffic-light and show the diff
-of traffic-lights 22 <-> 22, viz, the files from traffic-light 22.
+You can also do a "no-diff", showing exactly how the files were for the
+traffic light, by simply unchecking the diff? checkbox.
+The << < > >> continue to work, and will continue to show a "no-diff".
