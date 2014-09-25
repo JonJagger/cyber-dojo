@@ -244,10 +244,10 @@ var cyberDojo = (function(cd, $) {
 	};
 
     var resetNavigateButtonHandlers = function() {
-	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag-1, minTag);
-	  refreshNavigationHandlers(minTag >= nowTag, prevButton, wasTag-tagGap, nowTag-tagGap);
-	  refreshNavigationHandlers(nowTag >= maxTag, nextButton, wasTag+tagGap, nowTag+tagGap);
-	  refreshNavigationHandlers(nowTag >= maxTag, lastButton, maxTag-1, maxTag);
+	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag-tagGap, minTag);
+	  refreshNavigationHandlers(minTag >= nowTag,  prevButton, wasTag-tagGap, nowTag-tagGap);
+	  refreshNavigationHandlers(nowTag >= maxTag,  nextButton, wasTag+tagGap, nowTag+tagGap);
+	  refreshNavigationHandlers(nowTag >= maxTag,  lastButton, maxTag-tagGap, maxTag);
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
