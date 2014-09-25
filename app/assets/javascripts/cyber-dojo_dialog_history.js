@@ -44,7 +44,7 @@ var cyberDojo = (function(cd, $) {
   cd.dialog_history = function(id, avatarName,
                                wasTag, nowTag, maxTag, // 1-based
                                domNodeSource, showRevert) {
-    
+
     // Arguably, the history dialog would be better as it own
     // history page. That would help google searchability and
     // analytics etc. I use a dialog because of revert.
@@ -180,6 +180,15 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
+    var makeDiffLabel = function() {
+      return '' +
+        '<div id="diff-qm">' +
+         'diff?' +
+        '</div>';
+    };
+
+    //- - - - - - - - - - - - - - -
+
     var makeNavigateButtons = function() {
       return '' +
         '<table id="navigate-controls">' +
@@ -189,7 +198,7 @@ var cyberDojo = (function(cd, $) {
             cd.td(makeNowTagNumber()) +
             cd.td(makeNavigateButton('next')) +
             cd.td(makeNavigateButton('last')) +
-            '<td id="diff-qm">diff?</td>' +
+            cd.td(makeDiffLabel()) +
             cd.td(makeDiffCheckbox()) +
           '</tr>' +
         '</table>';
@@ -208,8 +217,8 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var show = function(now,node) {
-      nowTag = now;
       wasTag = now - (diffOn() ? 1 : 0);
+      nowTag = now;
       var before = function() {
         node.css('cursor', 'wait');
       };
@@ -408,7 +417,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  	var diffFilenames = $('#diff-filenames', diffDiv);
+    var diffFilenames = $('#diff-filenames', diffDiv);
 
     var makeDiffFilenames = function(diffs) {
 
@@ -501,15 +510,19 @@ var cyberDojo = (function(cd, $) {
       return buttons;
     };
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+    //- - - - - - - - - - - - - - -
 
     var setWaitCursor = function() {
       domNodeSource.css('cursor', 'wait');
     };
 
+    //- - - - - - - - - - - - - - -
+
     var setPointerCursor = function() {
       domNodeSource.css('cursor', 'pointer');
     };
+
+    //- - - - - - - - - - - - - - -
 
     var diffDialog = diffDiv.dialog({
       autoOpen: false,
@@ -573,9 +586,11 @@ var cyberDojo = (function(cd, $) {
       return $('.ui-dialog-buttonset :nth-child(3) :first-child');
     };
 
+    //- - - - - - - - - - - - - - -
+
     var makeRevertButtonHtml = function(data) {
-      var light = data.lights[nowTag-1];
-      return 'revert to ' + nowTag + ' ' + makeColouredBulb(light.colour);
+      var colour = data.lights[nowTag-1].colour;
+      return 'revert to ' + nowTag + ' ' + makeColouredBulb(colour);
     };
 
     //---------------------------------------------------
@@ -586,10 +601,14 @@ var cyberDojo = (function(cd, $) {
       return $('.ui-dialog-buttonset :nth-child(2) :first-child');
     };
 
+    //- - - - - - - - - - - - - - -
+
     var makeForkButtonHtml = function(data) {
-      var light = data.lights[nowTag-1];
-      return 'fork from ' + nowTag + ' ' + makeColouredBulb(light.colour);
+      var colour = data.lights[nowTag-1].colour;
+      return 'fork from ' + nowTag + ' ' + makeColouredBulb(colour);
     };
+
+    //- - - - - - - - - - - - - - -
 
     var makeColouredBulb = function(colour) {
       return '' +
@@ -610,6 +629,8 @@ var cyberDojo = (function(cd, $) {
       $('#test-button').click();
     };
 
+    //- - - - - - - - - - - - - - -
+
     var deleteAllCurrentFiles = function() {
       $.each(cd.filenames(), function(_, filename) {
         if (filename !== 'output') {
@@ -617,6 +638,8 @@ var cyberDojo = (function(cd, $) {
         }
       });
     };
+
+    //- - - - - - - - - - - - - - -
 
     var copyRevertFilesToCurrentFiles = function() {
       var filename;
@@ -645,6 +668,8 @@ var cyberDojo = (function(cd, $) {
         }
       });
     };
+
+    //- - - - - - - - - - - - - - -
 
     var forkSucceededDialog = function(fork) {
       var html = '' +
@@ -691,7 +716,7 @@ var cyberDojo = (function(cd, $) {
                    " in the practice session";
       } else  if (data.reason === 'tag') {
         diagnostic = avatarName +
-                  " doesn't have traffic-light[" + tag + "]" +
+                  " doesn't have traffic-light[" + tag + "]" + //?????
                   " in the practice session";
       }
       var html = "" +
@@ -717,9 +742,7 @@ var cyberDojo = (function(cd, $) {
       failed.dialog('open');
     };
 
-    //- - - -
-    //- - - -
-    //- - - -
+    //- - - - - - - - - - - - - - -
 
     diffDialog.dialog('open');
 
