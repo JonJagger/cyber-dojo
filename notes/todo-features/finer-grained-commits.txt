@@ -12,6 +12,7 @@ Finer-grained commits
   4) o) move traffic-light sequence to title bar of history dialog. done
      o) auto-scroll so now-tag always in view
      o) clicking on a traffic-light makes it the current tag
+     o) diffCheckBox() tag-gap calculated via function()?
      o) traffic-light cursor is hand (and not move)
      o) tool tip for clicking on a traffic-light? or hover tip tag-number?
      o) make tag-number editable

@@ -26,8 +26,9 @@ var cyberDojo = (function(cd, $) {
 	  var nowTag = count.data('bulb-count');
 	  var maxTag = count.data('bulb-count');
 	  var colour  = count.data('current-colour');
-	  // animals don't appear on dashboard until they have 2+ traffic-lights
-	  // so pluralization of traffic-lights is ok
+	  // animals don't appear on dashboard until
+	  // they have 2+ traffic-lights so
+	  // pluralization of traffic-lights is ok
 	  var toolTip = avatarName + ' has ' + wasTag + ' traffic-lights' +
 	    ' and is at ' + colour + '.' +
 		' Click to review ' + avatarName + "'s current code.";
@@ -52,7 +53,6 @@ var cyberDojo = (function(cd, $) {
 	// from which the dialog opened.
 
 	var minTag = 1;
-	var tagGap = nowTag - wasTag; // 1 if showing a diff, otherwise 0
 	var currentFilename = '';
 	var visibleFiles = undefined;
 
@@ -98,10 +98,20 @@ var cyberDojo = (function(cd, $) {
 			"<img" +
 			   " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
 			 " width='10'" +
-			" height='37'/>" +
+			" height='37'" +
+			" data-number='" + light.number + "'/>" +
           "</div>";
 	  });
 	  return lightsHtml;
+	};
+
+	var setupTrafficLightHandlers = function() {
+	  $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
+		$(this).click(function() {
+		  //showDiff($(this).data('number'), $(this));
+		  //cursor not being set back to pointer???
+		});
+	  });
 	};
 
 	//- - - - - - - - -
@@ -160,21 +170,15 @@ var cyberDojo = (function(cd, $) {
 
 	var resetTagControls = function(data) {
 
-	  trafficLights()
-		.html(makeTrafficLightsHtml(data.lights));
-
-	  nowTagNumber()
-		.val(nowTag);
+	  trafficLights().html(makeTrafficLightsHtml(data.lights));
+	  setupTrafficLightHandlers();
+	  nowTagNumber().val(nowTag);
 
 	  diffCheckBox()
 		.attr('checked', wasTag != nowTag)
 		.unbind('click')
 		.click(function() {
-		  if ($(this).is(':checked')) {
-			showDiff(nowTag-1, nowTag, $(this)); // on
-		  } else {
-			showDiff(nowTag, nowTag, $(this)); // off
-		  }
+          showDiff(nowTag, $(this));
 		});
 	};
 
@@ -205,18 +209,21 @@ var cyberDojo = (function(cd, $) {
 	var nextButton  = $('#next_button',  diffDiv);
 	var lastButton  = $('#last_button',  diffDiv);
 
-	var toolTip = function(was, now) {
-	  if (was !== now) {
-		return 'Show diff of ' + was + ' <-> ' + now;
+	var diffOn = function() {
+	  return diffCheckBox().is(':checked');
+	};
+
+	var toolTip = function(now) {
+	  if (diffOn()) {
+		return 'Show diff of ' + (now-1) + ' <-> ' + now;
 	  } else {
-		return 'Show ' + was;
+		return 'Show ' + now;
 	  }
 	};
 
-	var showDiff = function(was,now,node) {
-	  wasTag = was;
+	var showDiff = function(now,node) {
 	  nowTag = now;
-	  tagGap = now - was;
+	  wasTag = now - (diffOn() ? 1 : 0);
 	  var before = function() {
 		node.css('cursor', 'wait');
 	  };
@@ -230,24 +237,24 @@ var cyberDojo = (function(cd, $) {
 	  refresh(before,after);
 	};
 
-	var refreshNavigationHandlers = function(off, button, from, to) {
+	var refreshNavigationHandlers = function(off, button, to) {
 	  button.attr('disabled', off);
 	  button.css('cursor', off ? 'default' : 'pointer');
 	  if (!off) {
 		button
 		  .unbind()
 		  .click(function() {
-			showDiff(from, to, button);
+			showDiff(to, button);
 		  })
-		  .attr('title', toolTip(from, to));
+		  .attr('title', toolTip(to));
 	  }
 	};
 
     var resetNavigateButtonHandlers = function() {
-	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag-tagGap, minTag);
-	  refreshNavigationHandlers(minTag >= nowTag,  prevButton, wasTag-tagGap, nowTag-tagGap);
-	  refreshNavigationHandlers(nowTag >= maxTag,  nextButton, wasTag+tagGap, nowTag+tagGap);
-	  refreshNavigationHandlers(nowTag >= maxTag,  lastButton, maxTag-tagGap, maxTag);
+	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag);
+	  refreshNavigationHandlers(minTag >= nowTag,  prevButton, nowTag-1);
+	  refreshNavigationHandlers(nowTag >= maxTag,  nextButton, nowTag+1);
+	  refreshNavigationHandlers(nowTag >= maxTag,  lastButton, maxTag);
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -536,7 +543,7 @@ var cyberDojo = (function(cd, $) {
 	  ).always(function() {
         after();
 		//var options = { direction: 'horizontal' };
-		//$('img[src$="_bar"]', titleBar()).scrollintoview(options);
+		//$('img[src$="_bar.png"]', titleBar()).scrollintoview(options);
 	  });
 	};
 
