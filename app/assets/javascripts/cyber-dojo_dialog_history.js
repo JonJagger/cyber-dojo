@@ -121,20 +121,20 @@ var cyberDojo = (function(cd, $) {
 	// << < [tag] > >> diff?    Navigation Controls
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	var nowTagNumber = function() {
-	  return $('#now-tag-number');
-	};
-
-	var diffCheckBox = function() {
-	  return $('#diff-checkbox');
-	};
-
 	var makeDiffCheckbox = function() {
       return '' +
 	    '<input type="checkbox"' +
              ' class="regular-checkbox"' +
                 ' id="diff-checkbox"/>' +
           '<label for="diff-checkbox"></label>';
+	};
+
+	var diffCheckBox = function() {
+	  return $('#diff-checkbox');
+	};
+
+	var diffOn = function() {
+	  return diffCheckBox().is(':checked');
 	};
 
 	var makeNavigateButton = function(name) {
@@ -170,13 +170,9 @@ var cyberDojo = (function(cd, $) {
 		  '</table>';
 	};
 
-	var diffOn = function() {
-	  return diffCheckBox().is(':checked');
-	};
-
 	var toolTip = function(now) {
 	  if (diffOn()) {
-		return 'Show diff of ' + (now-1) + ' <-> ' + now;
+		return 'Show ' + (now-1) + '-' + now + ' diff';
 	  } else {
 		return 'Show ' + now;
 	  }
@@ -203,25 +199,22 @@ var cyberDojo = (function(cd, $) {
 	  button.css('cursor', off ? 'default' : 'pointer');
 	  if (!off) {
 		button
+		  .attr('title', toolTip(to))
 		  .unbind()
-		  .click(function() { show(to, button); })
-		  .attr('title', toolTip(to));
+		  .click(function() { show(to, button); });
 	  }
 	};
 
 	var refreshNavigationControls = function() {
-
+	  $('#now-tag-number').val(nowTag);
+	  diffCheckBox()
+		.attr('checked', wasTag != nowTag)
+		.unbind()
+		.click(function() { show(nowTag, $(this)); });
 	  refreshNavigation(minTag >= nowTag, $('#first-button'), minTag);
 	  refreshNavigation(minTag >= nowTag,  $('#prev-button'), nowTag-1);
 	  refreshNavigation(nowTag >= maxTag,  $('#next-button'), nowTag+1);
 	  refreshNavigation(nowTag >= maxTag,  $('#last-button'), maxTag);
-
-	  nowTagNumber().val(nowTag);
-
-	  diffCheckBox()
-		.attr('checked', wasTag != nowTag)
-		.unbind('click')
-		.click(function() { show(nowTag, $(this)); });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -235,7 +228,8 @@ var cyberDojo = (function(cd, $) {
       div.append('<div id="diff-content"></div>');
 	  div.append('<div id="diff-controls">' +
 					makeNavigateButtons() +
-					"<div id='diff-filenames'></div>" +
+					"<div id='diff-filenames'>" +
+					"</div>" +
 				 '</div>');
       return div;
     };
