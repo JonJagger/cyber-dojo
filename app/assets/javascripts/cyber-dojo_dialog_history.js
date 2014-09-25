@@ -141,7 +141,7 @@ var cyberDojo = (function(cd, $) {
 	  var size = (name === 'first' || name === 'last') ? 20 : 30;
 	  return '' +
 		'<button class="triangle button"' +
-			 'id="' + name + '_button">' +
+			 'id="' + name + '-button">' +
 		  '<img src="/images/triangle_' + name + '.gif"' +
 			  ' alt="move to ' + name + ' diff"' +
 			  ' width="' + size + '"' +
@@ -211,10 +211,10 @@ var cyberDojo = (function(cd, $) {
 
 	var refreshNavigationControls = function() {
 
-	  refreshNavigation(minTag >= nowTag, $('#first_button'), minTag);
-	  refreshNavigation(minTag >= nowTag,  $('#prev_button'), nowTag-1);
-	  refreshNavigation(nowTag >= maxTag,  $('#next_button'), nowTag+1);
-	  refreshNavigation(nowTag >= maxTag,  $('#last_button'), maxTag);
+	  refreshNavigation(minTag >= nowTag, $('#first-button'), minTag);
+	  refreshNavigation(minTag >= nowTag,  $('#prev-button'), nowTag-1);
+	  refreshNavigation(nowTag >= maxTag,  $('#next-button'), nowTag+1);
+	  refreshNavigation(nowTag >= maxTag,  $('#last-button'), maxTag);
 
 	  nowTagNumber().val(nowTag);
 
