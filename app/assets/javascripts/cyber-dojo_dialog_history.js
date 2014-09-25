@@ -60,6 +60,10 @@ var cyberDojo = (function(cd, $) {
 	// Titled traffic-lights
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
+	var titleBar = function() {
+	  return $('#ui-dialog-title-history-dialog');
+	};
+
     var makeTitle = function() {
 
 	  var makeAvatarImage = function() {
@@ -78,12 +82,6 @@ var cyberDojo = (function(cd, $) {
 		  '</tr>' +
 		'</table>';
     };
-
-	//- - - - - - - - - - - -
-
-	var titleBar = function() {
-	  return $('#ui-dialog-title-history-dialog');
-	};
 
 	var trafficLights = function() {
 	  return $('#traffic-lights', titleBar());
@@ -108,16 +106,27 @@ var cyberDojo = (function(cd, $) {
 	var setupTrafficLightHandlers = function() {
 	  $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
 		$(this).click(function() {
-		  //showDiff($(this).data('number'), $(this));
+		  //show($(this).data('number'), $(this));
 		  //cursor not being set back to pointer???
 		});
 	  });
 	};
 
-	//- - - - - - - - -
+	var refreshTrafficLights = function(data) {
+	  trafficLights().html(makeTrafficLightsHtml(data.lights));
+	  setupTrafficLightHandlers();
+	};
+
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
+	// << < [tag] > >> diff?    Navigation Controls
+    //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	var nowTagNumber = function() {
 	  return $('#now-tag-number');
+	};
+
+	var diffCheckBox = function() {
+	  return $('#diff-checkbox');
 	};
 
 	var makeDiffCheckbox = function() {
@@ -128,30 +137,25 @@ var cyberDojo = (function(cd, $) {
           '<label for="diff-checkbox"></label>';
 	};
 
-	var diffCheckBox = function() {
-	  return $('#diff-checkbox');
+	var makeNavigateButton = function(name) {
+	  var size = (name === 'first' || name === 'last') ? 20 : 30;
+	  return '' +
+		'<button class="triangle button"' +
+			 'id="' + name + '_button">' +
+		  '<img src="/images/triangle_' + name + '.gif"' +
+			  ' alt="move to ' + name + ' diff"' +
+			  ' width="' + size + '"' +
+			  ' height="' + size + '" />' +
+		'</button>';
+	};
+
+	var makeNowTagNumber = function() {
+	  return '' +
+		'<input type="text"' +
+				' id="now-tag-number"/>';
 	};
 
 	var makeNavigateButtons = function() {
-
-	  var makeNavigateButton = function(name) {
-		var size = (name === 'first' || name === 'last') ? 20 : 30;
-		return '' +
-		  '<button class="triangle button"' +
-			   'id="' + name + '_button">' +
-			'<img src="/images/triangle_' + name + '.gif"' +
-				' alt="move to ' + name + ' diff"' +
-				' width="' + size + '"' +
-				' height="' + size + '" />' +
-		  '</button>';
-	  };
-
-	  var makeNowTagNumber = function() {
-		return '' +
-		  '<input type="text"' +
-				  ' id="now-tag-number"/>';
-	  };
-
 	  return '' +
 		  '<table id="navigate-controls">' +
 			'<tr>' +
@@ -166,20 +170,58 @@ var cyberDojo = (function(cd, $) {
 		  '</table>';
 	};
 
-	//- - - - - - - - -
+	var diffOn = function() {
+	  return diffCheckBox().is(':checked');
+	};
 
-	var resetTagControls = function(data) {
+	var toolTip = function(now) {
+	  if (diffOn()) {
+		return 'Show diff of ' + (now-1) + ' <-> ' + now;
+	  } else {
+		return 'Show ' + now;
+	  }
+	};
 
-	  trafficLights().html(makeTrafficLightsHtml(data.lights));
-	  setupTrafficLightHandlers();
+	var show = function(now,node) {
+	  nowTag = now;
+	  wasTag = now - (diffOn() ? 1 : 0);
+	  var before = function() {
+		node.css('cursor', 'wait');
+	  };
+	  var after = function() {
+		if (node.attr('disabled') === 'disabled') {
+		  node.css('cursor', 'default');
+		} else {
+		  node.css('cursor', 'pointer');
+		}
+	  };
+	  refresh(before,after);
+	};
+
+	var refreshNavigation = function(off, button, to) {
+	  button.attr('disabled', off);
+	  button.css('cursor', off ? 'default' : 'pointer');
+	  if (!off) {
+		button
+		  .unbind()
+		  .click(function() { show(to, button); })
+		  .attr('title', toolTip(to));
+	  }
+	};
+
+	var refreshNavigationControls = function() {
+
+	  refreshNavigation(minTag >= nowTag, $('#first_button'), minTag);
+	  refreshNavigation(minTag >= nowTag,  $('#prev_button'), nowTag-1);
+	  refreshNavigation(nowTag >= maxTag,  $('#next_button'), nowTag+1);
+	  refreshNavigation(nowTag >= maxTag,  $('#last_button'), maxTag);
+
 	  nowTagNumber().val(nowTag);
 
 	  diffCheckBox()
 		.attr('checked', wasTag != nowTag)
 		.unbind('click')
-		.click(function() {
-          showDiff(nowTag, $(this));
-		});
+		.click(function() { show(nowTag, $(this)); });
 	};
 
     //- - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -200,68 +242,7 @@ var cyberDojo = (function(cd, $) {
 
 	var diffDiv = makeDiffDiv();
 
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// << < > >> Navigation Buttons
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var firstButton = $('#first_button', diffDiv);
-	var prevButton  = $('#prev_button',  diffDiv);
-	var nextButton  = $('#next_button',  diffDiv);
-	var lastButton  = $('#last_button',  diffDiv);
-
-	var diffOn = function() {
-	  return diffCheckBox().is(':checked');
-	};
-
-	var toolTip = function(now) {
-	  if (diffOn()) {
-		return 'Show diff of ' + (now-1) + ' <-> ' + now;
-	  } else {
-		return 'Show ' + now;
-	  }
-	};
-
-	var showDiff = function(now,node) {
-	  nowTag = now;
-	  wasTag = now - (diffOn() ? 1 : 0);
-	  var before = function() {
-		node.css('cursor', 'wait');
-	  };
-	  var after = function() {
-		if (node.attr('disabled') === 'disabled') {
-		  node.css('cursor', 'default');
-		} else {
-		  node.css('cursor', 'pointer');
-		}
-	  };
-	  refresh(before,after);
-	};
-
-	var refreshNavigationHandlers = function(off, button, to) {
-	  button.attr('disabled', off);
-	  button.css('cursor', off ? 'default' : 'pointer');
-	  if (!off) {
-		button
-		  .unbind()
-		  .click(function() {
-			showDiff(to, button);
-		  })
-		  .attr('title', toolTip(to));
-	  }
-	};
-
-    var resetNavigateButtonHandlers = function() {
-	  refreshNavigationHandlers(minTag >= nowTag, firstButton, minTag);
-	  refreshNavigationHandlers(minTag >= nowTag,  prevButton, nowTag-1);
-	  refreshNavigationHandlers(nowTag >= maxTag,  nextButton, nowTag+1);
-	  refreshNavigationHandlers(nowTag >= maxTag,  lastButton, maxTag);
-	};
-
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-	// diff content and filenames
-    //- - - - - - - - - - - - - - - - - - - - - - - - - -
-
-	var resetDiff = function(data) {
+	var refreshDiff = function(data) {
 	  diffFilenames.html(makeDiffFilenames(data.diffs));
 	  resetFilenameAddedDeletedLineCountHandlers();
 	  diffContent.html(makeDiffContent(data.diffs));
@@ -531,9 +512,9 @@ var cyberDojo = (function(cd, $) {
 		},
 		function(data) {
 		  visibleFiles = data.visibleFiles;
-		  resetTagControls(data);
-		  resetNavigateButtonHandlers();
-		  resetDiff(data);
+		  refreshTrafficLights(data);
+		  refreshNavigationControls();
+		  refreshDiff(data);
           showFile(data.currentFilenameId);
 		  if (showRevert) {
 			revertButton().html(makeRevertButtonHtml(data));

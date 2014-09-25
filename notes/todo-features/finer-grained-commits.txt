@@ -2,19 +2,18 @@
 Finer-grained commits
 =====================
 
-
   Plan
   ----
   1) done
   2) done
   3) done
 
-  4) o) move traffic-light sequence to title bar of history dialog. done
-     o) auto-scroll so now-tag always in view. done
+  4) history-dialog traffic lights
+     o) make tag-number editable
+     o) click on traffic-light to view that diff. cursor restore works.
      o) clicking on a traffic-light makes it the current tag
      o) traffic-light cursor is hand (and not move)
      o) tool tip for clicking on a traffic-light? or hover tip tag-number?
-     o) make tag-number editable
      o) reinstate ESC to close history dialog
            ensure it works after |< navigation and reopening
 
@@ -51,8 +50,6 @@ Finer-grained commits
      come back to the browser and it then creates the new file
      in the file-knave
 
-
-
   9) make was-tag and now-tag draggable.
      both are constrained and can only move horizontally.
      they are always locked with a delta of 1.
@@ -61,7 +58,6 @@ Finer-grained commits
   10) add checkbox for tags? to dashboard
       if tags? is checked dashboard shows tags as well
       as traffic-lights
-
 
   Note: Code for whether/when an animal appears on the dashboard
   may need revisiting when dashboard shows tags as well as lights.
