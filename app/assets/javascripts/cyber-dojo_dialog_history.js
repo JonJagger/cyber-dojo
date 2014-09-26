@@ -130,7 +130,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-  	// << < [tag] > >> diff[x]    Navigation Controls
+  	// << < [tag] > >> diff[x]    (navigation controls)
     //---------------------------------------------------
 
     var makeDiffCheckbox = function() {
@@ -270,6 +270,11 @@ var cyberDojo = (function(cd, $) {
       resetFilenameAddedDeletedLineCountHandlers();
       diffContent.html(makeDiffContent(data.diffs));
       buildDiffFilenameHandlers(data.idsAndSectionCounts);
+      showFile(data.currentFilenameId);
+    };
+
+    var showFile = function(filenameId) {
+      $('#radio_' + filenameId, diffDiv).click();
     };
 
     var diffContent = $('#diff-content', diffDiv);
@@ -531,11 +536,8 @@ var cyberDojo = (function(cd, $) {
           refreshTrafficLights(data);
           refreshNavigationControls();
           refreshDiff(data);
-          showFile(data.currentFilenameId);
-          if (showRevert) {
-            revertButton().html(makeRevertButtonHtml(data));
-          }
-          forkButton().html(makeForkButtonHtml(data));
+          refreshRevertButton(data);
+          refreshForkButton(data);
         }
       ).always(function() {
         var options = { direction: 'horizontal' };
@@ -548,10 +550,6 @@ var cyberDojo = (function(cd, $) {
         $('body').removeClass('busy');
       }
     });
-
-    var showFile = function(filenameId) {
-      $('#radio_' + filenameId, diffDiv).click();
-    };
 
     //---------------------------------------------------
     // revertButton
@@ -566,6 +564,14 @@ var cyberDojo = (function(cd, $) {
     var makeRevertButtonHtml = function(data) {
       var colour = data.lights[nowTag-1].colour;
       return 'revert to ' + nowTag + ' ' + makeColouredBulb(colour);
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshRevertButton = function(data) {
+      if (showRevert) {
+        revertButton().html(makeRevertButtonHtml(data));
+      }
     };
 
     //---------------------------------------------------
@@ -592,6 +598,12 @@ var cyberDojo = (function(cd, $) {
           " class='edged-bulb'" +
           " width='12'" +
          " height='12'/>";
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshForkButton = function(data) {
+      forkButton().html(makeForkButtonHtml(data));
     };
 
     //---------------------------------------------------
