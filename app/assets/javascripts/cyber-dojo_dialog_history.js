@@ -224,14 +224,14 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshNavigation = function(off, button, newTag) {
-      button.attr('disabled', off);
-      button.css('cursor', off ? 'default' : 'pointer');
-      if (!off) {
+    var refreshNavigation = function(on, button, newTag) {
+      button.attr('disabled', !on);
+      button.css('cursor', on ? 'pointer' : 'default');
+      if (on) {
         button
           .attr('title', toolTip(newTag))
-          .unbind()
-          .click(function() { show(newTag); });
+          .unbind('click.navigate')
+          .bind('click.navigate', function() { show(newTag); });
       }
     };
 
@@ -241,12 +241,12 @@ var cyberDojo = (function(cd, $) {
       $('#now-tag-number').val(nowTag);
       diffCheckBox()
         .attr('checked', wasTag != nowTag)
-        .unbind()
-        .click(function() { show(nowTag); });
-      refreshNavigation(minTag >= nowTag, $('#first-button'), minTag);
-      refreshNavigation(minTag >= nowTag,  $('#prev-button'), nowTag-1);
-      refreshNavigation(nowTag >= maxTag,  $('#next-button'), nowTag+1);
-      refreshNavigation(nowTag >= maxTag,  $('#last-button'), maxTag);
+        .unbind('click.diff')
+        .bind('click.diff', function() { show(nowTag); });
+      refreshNavigation(minTag < nowTag, $('#first-button'), minTag);
+      refreshNavigation(minTag < nowTag,  $('#prev-button'), nowTag-1);
+      refreshNavigation(nowTag < maxTag,  $('#next-button'), nowTag+1);
+      refreshNavigation(nowTag < maxTag,  $('#last-button'), maxTag);
     };
 
     //---------------------------------------------------
@@ -514,19 +514,40 @@ var cyberDojo = (function(cd, $) {
       modal: true,
       closeOnEscape: false,
       buttons: makeButtons(),
-      open: function() { refresh(); }
+      open: function() { refresh(); },
     });
 
-    // I removed the .on('keydown') ESC handler
-    // http://stackoverflow.com/questions/10466726/how-to-intercept-jquery-dialog-esc-key-event
-    // For some reason I cannot pin down if you press
-    // the << button then the ESC handler is lost.
-    // This results in the tag-controls on the titleBar()
-    // not being subsequently rendered properly.
+    var restoreEscHandler = function() {
+      // For some reason I cannot pin down if you press
+      // the << or >> button (but not < or >) then the ESC handler
+      // goes awol. It seems to be still there, viz if you click in the
+      // tag-number and then press ESC the handler below does fire.
+      // But by default it's not being reached. Event propagation?
+      // Note that if I set diffDialog({ closeOnEscape: true })
+      // or remove the closeOnEscape setting completely then the
+      // traffic-lights don't get displayed when the dialog is re-opened.
+      // So this is currently not used...
+      alert("setting up ESC handler");
+      diffDialog
+        .unbind('keydown.esc')
+        .bind('keydown.esc', function(event) {
+          alert("ESC handler");
+          if (event.keyCode === $.ui.keyCode.ESCAPE) {
+            diffDialog.remove();
+          }
+          event.stopPropagation();
+        });
+    };
 
     //---------------------------------------------------
   	// refresh()
     //---------------------------------------------------
+
+    $.ajaxSetup({
+      beforeSend: function() {
+        $('body').addClass('busy');
+      }
+    });
 
     var refresh = function() {
       $.getJSON('/differ/diff',
@@ -555,11 +576,8 @@ var cyberDojo = (function(cd, $) {
     };
 
     $.ajaxSetup({
-      beforeSend: function() {
-         $('body').addClass('busy');
-      },
       complete: function() {
-         $('body').removeClass('busy');
+        $('body').removeClass('busy');
       }
     });
 
@@ -568,7 +586,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // reverButton
+    // revertButton
     //---------------------------------------------------
 
     var revertButton = function() {
