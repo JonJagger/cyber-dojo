@@ -62,7 +62,7 @@ var cyberDojo = (function(cd, $) {
     var visibleFiles = undefined;
 
     //---------------------------------------------------
-  	// Titled traffic-lights
+    // Titled traffic-lights
     //---------------------------------------------------
 
     var titleBar = function() {
