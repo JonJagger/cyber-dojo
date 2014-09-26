@@ -116,8 +116,7 @@ var cyberDojo = (function(cd, $) {
     var setupTrafficLightHandlers = function() {
       $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
         $(this).click(function() {
-          //show($(this).data('number'), $(this));
-          //cursor not being set back to pointer???
+          show($(this).data('number'));
         });
       });
     };
@@ -216,32 +215,22 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var show = function(now,node) {
+    var show = function(now) {
       wasTag = now - (diffOn() ? 1 : 0);
       nowTag = now;
-      var before = function() {
-        node.css('cursor', 'wait');
-      };
-      var after = function() {
-        if (node.attr('disabled') === 'disabled') {
-          node.css('cursor', 'default');
-        } else {
-          node.css('cursor', 'pointer');
-        }
-      };
-      refresh(before,after);
+      refresh();
     };
 
     //- - - - - - - - - - - - - - -
 
-    var refreshNavigation = function(off, button, to) {
+    var refreshNavigation = function(off, button, newTag) {
       button.attr('disabled', off);
       button.css('cursor', off ? 'default' : 'pointer');
       if (!off) {
         button
-          .attr('title', toolTip(to))
+          .attr('title', toolTip(newTag))
           .unbind()
-          .click(function() { show(to, button); });
+          .click(function() { show(newTag); });
       }
     };
 
@@ -252,7 +241,7 @@ var cyberDojo = (function(cd, $) {
       diffCheckBox()
         .attr('checked', wasTag != nowTag)
         .unbind()
-        .click(function() { show(nowTag, $(this)); });
+        .click(function() { show(nowTag); });
       refreshNavigation(minTag >= nowTag, $('#first-button'), minTag);
       refreshNavigation(minTag >= nowTag,  $('#prev-button'), nowTag-1);
       refreshNavigation(nowTag >= maxTag,  $('#next-button'), nowTag+1);
@@ -516,18 +505,6 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var setWaitCursor = function() {
-      domNodeSource.css('cursor', 'wait');
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var setPointerCursor = function() {
-      domNodeSource.css('cursor', 'pointer');
-    };
-
-    //- - - - - - - - - - - - - - -
-
     var diffDialog = diffDiv.dialog({
       autoOpen: false,
       title: cd.dialogTitle(makeTitle()),
@@ -536,7 +513,7 @@ var cyberDojo = (function(cd, $) {
       modal: true,
       closeOnEscape: false,
       buttons: makeButtons(),
-      open: function() { refresh(setWaitCursor,setPointerCursor); }
+      open: function() { refresh(); }
     });
 
     // I removed the .on('keydown') ESC handler
@@ -550,8 +527,7 @@ var cyberDojo = (function(cd, $) {
   	// refresh()
     //---------------------------------------------------
 
-    var refresh = function(before, after) {
-      before();
+    var refresh = function() {
       $.getJSON('/differ/diff',
         {
           id: id,
@@ -572,11 +548,19 @@ var cyberDojo = (function(cd, $) {
           forkButton().html(makeForkButtonHtml(data));
         }
       ).always(function() {
-        after();
         var options = { direction: 'horizontal' };
         $('img[src$="_bar.png"]', titleBar()).scrollintoview(options);
       });
     };
+
+    $.ajaxSetup({
+      beforeSend: function() {
+         $('body').addClass('busy');
+      },
+      complete: function() {
+         $('body').removeClass('busy');
+      }
+    });
 
     var showFile = function(filenameId) {
       $('#radio_' + filenameId, diffDiv).click();
@@ -720,7 +704,7 @@ var cyberDojo = (function(cd, $) {
                    " in the practice session";
       } else  if (data.reason === 'tag') {
         diagnostic = avatarName +
-                  " doesn't have traffic-light[" + tag + "]" + //?????
+                  " doesn't have traffic-light[" + tag + "]" + // tag ?
                   " in the practice session";
       }
       var html = "" +

@@ -19,6 +19,10 @@
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+.busy * {
+    cursor: wait !important;
+}
+
 #ui-dialog-title-history-dialog {
 
   display: block;
