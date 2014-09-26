@@ -10,10 +10,7 @@ Finer-grained commits
 
   4) history-dialog traffic lights
      o) make tag-number editable
-     o) click on traffic-light to view that diff. cursor restore works.
-     o) clicking on a traffic-light makes it the current tag
-     o) traffic-light cursor is hand (and not move)
-     o) tool tip for clicking on a traffic-light? or hover tip tag-number?
+     o) tool tip for clicking on a traffic-light? hover tip tag-number?
      o) reinstate ESC to close history dialog
            ensure it works after |< navigation and reopening
 
