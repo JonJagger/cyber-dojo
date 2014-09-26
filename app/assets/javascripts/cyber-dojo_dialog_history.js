@@ -117,7 +117,7 @@ var cyberDojo = (function(cd, $) {
       $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
         var number = $(this).data('number');
         $(this)
-          .hover(function() {  })
+          .attr('title', toolTip(number))
           .click(function() { show(number); });
       });
     };
@@ -130,7 +130,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-  	// << < [tag] > >> diff?    Navigation Controls
+  	// << < [tag] > >> diff[x]    Navigation Controls
     //---------------------------------------------------
 
     var makeDiffCheckbox = function() {
@@ -207,7 +207,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var toolTip = function(now) {
-      if (diffOn()) {
+      if (wasTag != nowTag) {
         return 'Show ' + (now-1) + '-' + now + ' diff';
       } else {
         return 'Show ' + now;
