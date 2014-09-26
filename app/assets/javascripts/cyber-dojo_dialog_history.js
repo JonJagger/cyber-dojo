@@ -103,7 +103,7 @@ var cyberDojo = (function(cd, $) {
           "<div class='traffic-light'>" +
             "<img" +
                     " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
-                  " width='10'" +
+                  " width='12'" +
                  " height='37'" +
             " data-number='" + light.number + "'/>" +
           "</div>";
