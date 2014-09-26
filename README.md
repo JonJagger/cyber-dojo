@@ -29,6 +29,7 @@ Docker Server
 
 <hr/>
 [Misc](md/misc.md)
+  * [terms and conditions](http://blog.cyber-dojo.org/2014/09/terms-conditions-warranty-cost.html)
   * [overview of how cyber-dojo uses git](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojo-uses-git.html)
   * turning off spell-checking in your browser
   * notes
