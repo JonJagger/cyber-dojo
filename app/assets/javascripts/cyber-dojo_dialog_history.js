@@ -485,17 +485,10 @@ var cyberDojo = (function(cd, $) {
 
     var makeButtons = function() {
       var buttons = {};
-      buttons['close'] = function() {
-        diffDialog.remove();
-      };
-      buttons['fork'] = function() {
-        doFork();
-      };
+      buttons['close'] = function() { diffDialog.remove(); };
+      buttons['fork'] = function() { doFork(); };
       if (showRevert) {
-        buttons['revert'] = function() {
-          doRevert();
-          diffDialog.remove();
-        };
+        buttons['revert'] = function() { doRevert(); diffDialog.remove(); };
       }
       return buttons;
     };
@@ -503,15 +496,15 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var diffDialog = diffDiv.dialog({
-      autoOpen: false,
       title: cd.dialogTitle(makeTitle()),
       width: 1150,
       height: 705,
       modal: true,
+      buttons: makeButtons(),
+      autoOpen: false,
+      open: function() { refresh(); },
       closeOnEscape: true,
       close: function() { $(this).remove(); },
-      buttons: makeButtons(),
-      open: function() { refresh(); },
     });
 
     //---------------------------------------------------
