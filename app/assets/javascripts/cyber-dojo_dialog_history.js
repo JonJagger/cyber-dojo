@@ -96,10 +96,10 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeTrafficLightsHtml = function(lights) {
-      var lightsHtml = '';
+      var html = '';
       $.each(lights, function(n,light) {
         var barGap = (nowTag === light.number) ? '_bar' : '_gap';
-        lightsHtml +=
+        html +=
           "<div class='traffic-light'>" +
             "<img" +
                     " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
@@ -108,16 +108,17 @@ var cyberDojo = (function(cd, $) {
             " data-number='" + light.number + "'/>" +
           "</div>";
       });
-      return lightsHtml;
+      return html;
     };
 
     //- - - - - - - - - - - - - - -
 
     var setupTrafficLightHandlers = function() {
       $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
-        $(this).click(function() {
-          show($(this).data('number'));
-        });
+        var number = $(this).data('number');
+        $(this)
+          .hover(function() {  })
+          .click(function() { show(number); });
       });
     };
 
@@ -181,7 +182,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffLabel = function() {
       return '' +
-        '<div id="diff-qm">' +
+        '<div id="diff-checkbox-label">' +
          'diff' +
         '</div>';
     };
