@@ -76,10 +76,11 @@
     #navigate-controls {
       padding-bottom: 15px;
       #now-tag-number {
+        font-size: 1.25em;
         background: $lighter-color;
         color: $darker-color;
         text-align: center;
-        width: 2em;
+        width: 2.5em;
       }
       #diff-checkbox-label {
         padding-left: 1em;

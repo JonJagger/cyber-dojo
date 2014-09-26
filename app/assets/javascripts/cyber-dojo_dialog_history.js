@@ -135,9 +135,10 @@ var cyberDojo = (function(cd, $) {
 
     var makeDiffCheckbox = function() {
       return '' +
-        '<input type="checkbox"' +
-             ' class="regular-checkbox"' +
-                ' id="diff-checkbox"/>' +
+        '<input' +
+            ' type="checkbox"' +
+           ' class="regular-checkbox"' +
+              ' id="diff-checkbox"/>' +
             '<label for="diff-checkbox">' +
             '</label>';
     };
@@ -173,18 +174,13 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeNowTagNumber = function() {
-      return '' +
-        '<input type="text"' +
-            ' id="now-tag-number"/>';
+      return '<div id="now-tag-number"/></div>';
     };
 
     //- - - - - - - - - - - - - - -
 
     var makeDiffLabel = function() {
-      return '' +
-        '<div id="diff-checkbox-label">' +
-         'diff' +
-        '</div>';
+      return '<div id="diff-checkbox-label">diff</div>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -238,7 +234,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshNavigationControls = function() {
-      $('#now-tag-number').val(nowTag);
+      $('#now-tag-number').html(nowTag);
       diffCheckBox()
         .attr('checked', wasTag != nowTag)
         .unbind('click.diff')
