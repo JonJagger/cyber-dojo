@@ -130,7 +130,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-  	// << < [tag] > >> diff[x]    (navigation controls)
+    // << < [tag] > >> diff[x]    (navigation controls)
     //---------------------------------------------------
 
     var makeDiffCheckbox = function() {
@@ -485,22 +485,22 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // diffDialog
+    // historyDialog
     //---------------------------------------------------
 
     var makeButtons = function() {
       var buttons = {};
-      buttons['close'] = function() { diffDialog.remove(); };
+      buttons['close'] = function() { historyDialog.remove(); };
       buttons['fork'] = function() { doFork(); };
       if (showRevert) {
-        buttons['revert'] = function() { doRevert(); diffDialog.remove(); };
+        buttons['revert'] = function() { doRevert(); historyDialog.remove(); };
       }
       return buttons;
     };
 
     //- - - - - - - - - - - - - - -
 
-    var diffDialog = diffDiv.dialog({
+    var historyDialog = diffDiv.dialog({
       title: cd.dialogTitle(makeTitle()),
       width: 1150,
       height: 705,
@@ -731,7 +731,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    diffDialog.dialog('open');
+    historyDialog.dialog('open');
 
   };// dialog_history()
 
