@@ -7,12 +7,8 @@ Finer-grained commits
   1) done
   2) done
   3) done
-
-  4) history-dialog traffic lights
-     o) make tag-number editable
-     o) reinstate ESC to close history dialog
-           ensure it works after |< navigation and reopening
-
+  4) done
+  
   5) custom serialization only POSTs changed files for [test] event.
 
   6) drop the form

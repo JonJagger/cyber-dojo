@@ -508,32 +508,11 @@ var cyberDojo = (function(cd, $) {
       width: 1150,
       height: 705,
       modal: true,
-      closeOnEscape: false,
+      closeOnEscape: true,
+      close: function() { $(this).remove(); },
       buttons: makeButtons(),
       open: function() { refresh(); },
     });
-
-    var restoreEscHandler = function() {
-      // For some reason I cannot pin down if you press
-      // the << or >> button (but not < or >) then the ESC handler
-      // goes awol. It seems to be still there, viz if you click in the
-      // tag-number and then press ESC the handler below does fire.
-      // But by default it's not being reached. Event propagation?
-      // Note that if I set diffDialog({ closeOnEscape: true })
-      // or remove the closeOnEscape setting completely then the
-      // traffic-lights don't get displayed when the dialog is re-opened.
-      // So this is currently not used...
-      alert("setting up ESC handler");
-      diffDialog
-        .unbind('keydown.esc')
-        .bind('keydown.esc', function(event) {
-          alert("ESC handler");
-          if (event.keyCode === $.ui.keyCode.ESCAPE) {
-            diffDialog.remove();
-          }
-          event.stopPropagation();
-        });
-    };
 
     //---------------------------------------------------
   	// refresh()
