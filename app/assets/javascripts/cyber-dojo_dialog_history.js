@@ -11,7 +11,7 @@ var cyberDojo = (function(cd, $) {
       var wasTag = light.data('was-tag');
       var nowTag = light.data('now-tag');
       var maxTag = light.data('max-tag');
-      cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,light,showRevert);
+      cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,showRevert);
     });
   };
 
@@ -34,24 +34,28 @@ var cyberDojo = (function(cd, $) {
         ' Click to review ' + avatarName + "'s current code.";
       count.attr('title', toolTip);
       count.click(function() {
-        cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,count,showRevert);
+        cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,showRevert);
       });
     });
   };
 
   //- - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  cd.dialog_history = function(id, avatarName,
-                               wasTag, nowTag, maxTag, // 1-based
-                               domNodeSource, showRevert) {
+  cd.dialog_history = function(id,         // eg 'D936E1EB3F'
+                               avatarName, // eg 'lion'
+                               wasTag,     // eg 8   (1-based)
+                               nowTag,     // eg 9   (1-based)
+                               maxTag,     // eg 37  (1-based)
+                               showRevert  // eg true
+                              ) {
 
-    // Arguably, the history dialog would be better as it own
-    // history page. That would help google searchability and
+    // Arguably, the history would be better as it own page rather
+    // than a dialog. That would help google searchability and
     // analytics etc. I use a dialog because of revert.
     // When revert is clicked it has to be for a specific
     // animal and it has to revert their code! As a dialog,
     // the revert has access to animal's code on the page
-    // from which the dialog opened.
+    // from which the history-dialog opened.
 
     var minTag = 1;
     var currentFilename = '';
@@ -513,7 +517,7 @@ var cyberDojo = (function(cd, $) {
     });
 
     //---------------------------------------------------
-  	// refresh()
+    // refresh()
     //---------------------------------------------------
 
     $.ajaxSetup({
@@ -638,7 +642,7 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-  	// doFork()
+    // doFork()
     //---------------------------------------------------
 
     var doFork = function() {
