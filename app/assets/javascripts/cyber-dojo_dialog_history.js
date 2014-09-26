@@ -183,7 +183,7 @@ var cyberDojo = (function(cd, $) {
     var makeDiffLabel = function() {
       return '' +
         '<div id="diff-qm">' +
-         'diff?' +
+         'diff' +
         '</div>';
     };
 
@@ -433,17 +433,21 @@ var cyberDojo = (function(cd, $) {
               'text': diff.filename
           });
 
-        var dlc = (diff.deleted_line_count === 0 ||
-              diff.filename === 'output') ? 'none' : 'some';
+        var noneOrSome = function(property) {
+          return (diff[property] === 0 || diff.filename == 'output') ? 'none' : 'some';
+        };
+
         var deletedLineCountTd = $('<td>', {
-          'class': 'diff-deleted-line-count ' + dlc + ' button',
+          'class': 'diff-deleted-line-count ' +
+                    noneOrSome('deleted_line_count') +
+                    ' button',
           'data-filename': diff.filename
         });
 
-        var alc = (diff.added_line_count === 0 ||
-              diff.filename === 'output') ? 'none' : 'some';
         var addedLineCountTd = $('<td>', {
-          'class': 'diff-added-line-count ' + alc + ' button',
+          'class': 'diff-added-line-count ' +
+                   noneOrSome('added_line_count') +
+                   ' button',
           'data-filename': diff.filename
         });
 
