@@ -54,26 +54,29 @@ class DifferControllerTest < ControllerTestBase
         filename => -4545645678
       }
 
+    was_tag = 1
+    now_tag = 2
     get 'differ/diff',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
-      :was_tag => 1,
-      :now_tag => 2
+      :was_tag => was_tag,
+      :now_tag => now_tag
 
     assert_response :success
     info = " " + id + ":" + avatar_name
 
-    was_traffic_light = json['wasTrafficLight']
-    now_traffic_light = json['nowTrafficLight']
+    lights = json['lights']
+
+    was_light = lights[was_tag-1]
+    assert_equal 'amber', was_light['colour'], info
+    assert_equal was_tag, was_light['number'], info
+
+    now_light = lights[now_tag-1]
+    assert_equal 'amber', now_light['colour'], info
+    assert_equal now_tag, now_light['number'], info
+
     diffs = json['diffs']
-
-    assert_equal 'amber', was_traffic_light['colour'], info
-    assert_equal 1, was_traffic_light['number'], info
-
-    assert_equal 'amber', now_traffic_light['colour'], info
-    assert_equal 2, now_traffic_light['number'], info
-
     assert_equal filename, diffs[0]['filename'], info
     assert_equal 0, diffs[0]['section_count'], info
     assert_equal 0, diffs[0]['deleted_line_count'], info
@@ -117,26 +120,29 @@ class DifferControllerTest < ControllerTestBase
         filename => 654356
       }
 
+    was_tag = 1
+    now_tag = 2
     get 'differ/diff',
       :format => :json,
       :id => id,
       :avatar => avatar_name,
-      :was_tag => 1,
-      :now_tag => 2
+      :was_tag => was_tag,
+      :now_tag => now_tag
 
     assert_response :success
     info = " " + id + ':' + avatar_name + ':'
 
-    was_traffic_light = json['wasTrafficLight']
-    now_traffic_light = json['nowTrafficLight']
+    lights = json['lights']
+
+    was_light = lights[was_tag-1]
+    assert_equal 'amber', was_light['colour'], info
+    assert_equal was_tag, was_light['number'], info
+
+    now_light = lights[now_tag-1]
+    assert_equal 'amber', now_light['colour'], info
+    assert_equal now_tag, now_light['number'], info
+
     diffs = json['diffs']
-
-    assert_equal 'amber', was_traffic_light['colour'], info
-    assert_equal 1, was_traffic_light['number'], info
-
-    assert_equal 'amber', now_traffic_light['colour'], info
-    assert_equal 2, now_traffic_light['number'], info
-
     assert_equal filename, diffs[0]['filename'], info + "diffs[0]['filename']"
     assert_equal 1, diffs[0]['section_count'], info + "diffs[0]['section_count']"
     assert_equal 1, diffs[0]['deleted_line_count'], info + "diffs[0]['deleted_line_count']"

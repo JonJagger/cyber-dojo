@@ -17,6 +17,7 @@ class HostTestRunnerTests < CyberDojoTestBase
     actual = languages.map{|language| language.name}.sort
     expected =
     [
+      "Asm-assert",
       "C#-NUnit",
       "C++-Catch",
       "C++-CppUTest",
@@ -45,6 +46,7 @@ class HostTestRunnerTests < CyberDojoTestBase
       "Perl-TestSimple",
       "Python-pytest",
       "Python-unittest",
+      "R-RUnit",
       "Ruby-Approval",
       "Ruby-Cucumber",
       "Ruby-Rspec",
