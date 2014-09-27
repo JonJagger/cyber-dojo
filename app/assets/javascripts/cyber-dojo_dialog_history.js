@@ -107,11 +107,11 @@ var cyberDojo = (function(cd, $) {
         html +=
           "<div class='traffic-light'>" +
             "<img" +
-                    " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
-                  " width='12'" +
-                 " height='37'" +
+                   " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
+                 " width='12'" +
+                " height='37'" +
             " data-index='" + index + "'" +
-            " data-tag='" + light.number + "'/>" +
+              " data-tag='" + light.number + "'/>" +
           "</div>";
           index += 1;
       });
