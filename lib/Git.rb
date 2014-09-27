@@ -18,7 +18,7 @@ class Git
 
   def commit(dir, args)
     c1 = run(dir, 'commit', args)
-    c2 = run(dir, 'gc', '--aggressive --quiet')
+    c2 = run(dir, 'gc', '--quiet')
     c1 + c2
   end
 
