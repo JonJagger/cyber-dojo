@@ -30,7 +30,7 @@ class Avatar
     # o) When an avatar enters a cyber-dojo the tests are automatically
     #    run. This means an avatar gets one traffic-light for free.
     # o) When forking a new kata it is common to enter as one animal
-    #    to sanity check it is ok (but not press [test])
+    #    to sanity check it is ok (but not explicitly press [test])
     exists? && lights.count > 1
   end
 
@@ -41,12 +41,12 @@ class Avatar
   #- - - - - - - - - - - - - - -
 
   def tags
-    # one tag for initial start_avatar
-    # + one tag for each light. See comment below.
+    # See comment below.
     (0..increments.length).map{ |n| Tag.new(self,n,git) }
   end
 
   def lights
+    # See comment below.
     increments.map { |inc| Light.new(self,inc) }
   end
 
@@ -129,14 +129,14 @@ private
 
 end
 
-
-# After an avatar starts (but before the first test is
-# auto-run) a git.tag=0 occurs for the avatar
-# and increments.json is created as [ ]
-# So when there is 1 tag there are 0 lights
+# When a new avatar enters a dojo, kata.start_avatar()
+# will do a 'git commit' + 'git tag' for tag 0 (Zero).
+# This initial tag is *not* recorded in the
+# increments.json file which starts as [ ]
 #
-# After the first [test] is run a git.tag=1 is run
-# and the increments.json file contains a single light,
+# All subsequent 'git commit' + 'git tag' commands
+# correspond to an gui action and store an entry in
+# the increments.json file.
 # eg
 # [
 #   {
@@ -145,16 +145,46 @@ end
 #     'number' => 1
 #   },
 # ]
-# So when there are 2 tags there is 1 light
 #
-# Viz the number of git tags is always one more than
-# the number of entries in increments.json
-# This is because each entry in increments.json
-# represents an activity causing the creation of a new
-# tag from-the-current-tag.
-# Thus the zero'th starting tag has no light because
-# it is the base tag on which all lights are grown.
+# At the moment the only gui action that creates an
+# increments.json file entry is a [test] event.
 #
-# Thus the inclusive upper bound for n in avatar.tags[n]
-# is always the current length of increments.json
-# (even if that is zero) which is also the latest tag number.
+# However, I plan to create finer grained tags than
+# just [test] events...
+#    o) creating a new file
+#    o) renaming a file
+#    o) deleting a file
+#    o) editing a file (and opening a different file)
+#
+# When this happens the difference between a Tag.new
+# and a Light.new will be more pronounced and I will
+# need something like this...
+#
+# def lights
+#   increments.select{ |inc|
+#     ['red','amber','green'].include?(inc.colour)
+#   }.map { |inc|
+#     Light.new(self,inc)
+#   }
+# end
+#
+# ------------------------------------------------------
+# Invariants
+#
+# If the latest tag is N then increments.length == N
+#
+# increments.length is always one less than N
+#
+# The inclusive upper bound for n in avatar.tags[n] is
+# always the current length of increments.json (even if
+# that is zero) which is also the latest tag number.
+#
+# The inclusive lower bound for n in avatar.tags[n] is
+# zero. When an animal does a diff of [1] what is run is
+#   avatar.tags[was_tag=0].diff(now_tag=1)
+# which will often have no actual diffs since tag[0] is
+# created when kata.start_avatar() is run and tag[1] is
+# created when the animal enters their dojo and the tests
+# are automatically run. (In the past this auto run of
+# the tests did not happen).
+#
