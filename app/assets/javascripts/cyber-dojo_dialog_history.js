@@ -101,6 +101,7 @@ var cyberDojo = (function(cd, $) {
 
     var makeTrafficLightsHtml = function(lights) {
       var html = '';
+      var index = 1;
       $.each(lights, function(n,light) {
         var barGap = (nowTag === light.number) ? '_bar' : '_gap';
         html +=
@@ -109,8 +110,10 @@ var cyberDojo = (function(cd, $) {
                     " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
                   " width='12'" +
                  " height='37'" +
-            " data-number='" + light.number + "'/>" +
+            " data-index='" + index + "'" +
+            " data-tag='" + light.number + "'/>" +
           "</div>";
+          index += 1;
       });
       return html;
     };
@@ -119,10 +122,11 @@ var cyberDojo = (function(cd, $) {
 
     var setupTrafficLightHandlers = function() {
       $.each($('img[src$="_gap.png"]', titleBar()), function(_,light) {
-        var number = $(this).data('number');
+        var index = $(this).data('index');
+        var tag = $(this).data('tag');
         $(this)
-          .attr('title', toolTip(number))
-          .click(function() { show(number); });
+          .attr('title', toolTip(index))
+          .click(function() { show(tag); });
       });
     };
 
@@ -208,7 +212,7 @@ var cyberDojo = (function(cd, $) {
 
     var toolTip = function(now) {
       if (wasTag != nowTag) {
-        return 'Show ' + (now-1) + '-' + now + ' diff';
+        return 'Show diff->' + now;
       } else {
         return 'Show ' + now;
       }
