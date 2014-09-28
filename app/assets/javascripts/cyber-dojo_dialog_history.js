@@ -58,7 +58,8 @@ var cyberDojo = (function(cd, $) {
     // from which the history-dialog opened.
 
     var currentFilename = '';
-    var visibleFiles = undefined;
+    var data = undefined;
+    //var visibleFiles = undefined;
 
     //---------------------------------------------------
     // Titled traffic-lights
@@ -131,7 +132,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshTrafficLights = function(data) {
+    var refreshTrafficLights = function() {
       trafficLights().html(makeTrafficLightsHtml(data.lights));
       setupTrafficLightHandlers();
     };
@@ -267,7 +268,7 @@ var cyberDojo = (function(cd, $) {
 
     var diffDiv = makeDiffDiv();
 
-    var refreshDiff = function(data) {
+    var refreshDiff = function() {
       diffFilenames.html(makeDiffFilenames(data.diffs));
       resetFilenameAddedDeletedLineCountHandlers();
       diffContent.html(makeDiffContent(data.diffs));
@@ -533,17 +534,18 @@ var cyberDojo = (function(cd, $) {
           now_tag: nowTag,
           current_filename: currentFilename
         },
-        function(data) {
-          visibleFiles = data.visibleFiles;
-          refreshTrafficLights(data);
+        function(historyData) {
+          data = historyData;
+          refreshTrafficLights();
           refreshNavigationControls();
-          refreshDiff(data);
-          refreshRevertButton(data);
-          refreshForkButton(data);
+          refreshDiff();
+          refreshRevertButton();
+          refreshForkButton();
         }
       ).always(function() {
         var options = { direction: 'horizontal' };
-        $('img[src$="_bar.png"]', titleBar()).scrollintoview(options);
+        var light = $('img[src$="_bar.png"]', titleBar());
+        light.scrollintoview(options);
       });
     };
 
@@ -563,16 +565,16 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeRevertButtonHtml = function(data) {
+    var makeRevertButtonHtml = function() {
       var colour = data.lights[nowTag-1].colour;
       return 'revert to ' + nowTag + ' ' + makeColouredBulb(colour);
     };
 
     //- - - - - - - - - - - - - - -
 
-    var refreshRevertButton = function(data) {
+    var refreshRevertButton = function() {
       if (showRevert) {
-        revertButton().html(makeRevertButtonHtml(data));
+        revertButton().html(makeRevertButtonHtml());
       }
     };
 
@@ -586,7 +588,7 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeForkButtonHtml = function(data) {
+    var makeForkButtonHtml = function() {
       var colour = data.lights[nowTag-1].colour;
       return 'fork from ' + nowTag + ' ' + makeColouredBulb(colour);
     };
@@ -604,8 +606,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var refreshForkButton = function(data) {
-      forkButton().html(makeForkButtonHtml(data));
+    var refreshForkButton = function() {
+      forkButton().html(makeForkButtonHtml());
     };
 
     //---------------------------------------------------
@@ -632,9 +634,9 @@ var cyberDojo = (function(cd, $) {
 
     var copyRevertFilesToCurrentFiles = function() {
       var filename;
-      for (filename in visibleFiles) {
+      for (filename in data.visibleFiles) {
         if (filename !== 'output') {
-          cd.newFileContent(filename, visibleFiles[filename]);
+          cd.newFileContent(filename, data.visibleFiles[filename]);
         }
       }
     };

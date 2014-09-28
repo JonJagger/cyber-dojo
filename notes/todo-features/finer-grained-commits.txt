@@ -7,8 +7,26 @@ Finer-grained commits
   1) done
   2) done
   3) done
-  4) done
-  
+  4) separate traffic-light index from tag-numbers
+     when fine-grained commits are in place tagGap will not be 1
+     or rather it will be 1 but in the index.
+     I think I will need two indexes, was and now
+        was_index = now_index - 1
+        data.lights[was_index].tag_number
+        data.lights[now_index].tag_number
+     This suggests I don't need was_index at all.
+     Means the diff is always 1.
+     This should work for both cases, when lights are only
+     the lights and also when lights are finer-grained tags too.
+
+     When indexes are used will I need maxTag
+     Won't this just be the length of the tags[] returned by ajax
+     Will this also mean that if a new traffic-light is added
+     then refresh() will see it?
+
+     Will I need to modify  the [test] and [dashboard] pages
+     traffic-light handlers?
+
   5) custom serialization only POSTs changed files for [test] event.
 
   6) drop the form
