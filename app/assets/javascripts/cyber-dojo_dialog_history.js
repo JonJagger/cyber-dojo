@@ -57,7 +57,6 @@ var cyberDojo = (function(cd, $) {
     // the revert has access to animal's code on the page
     // from which the history-dialog opened.
 
-    var minTag = 1;
     var currentFilename = '';
     var visibleFiles = undefined;
 
@@ -159,12 +158,6 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var diffOn = function() {
-      return diffCheckBox().is(':checked');
-    };
-
-    //- - - - - - - - - - - - - - -
-
     var makeNavigateButton = function(name) {
       var size = (name === 'first' || name === 'last') ? 20 : 30;
       return '' +
@@ -221,7 +214,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var show = function(now) {
-      wasTag = now - (diffOn() ? 1 : 0);
+      wasTag = now - (diffCheckBox().is(':checked') ? 1 : 0);
       nowTag = now;
       refresh();
     };
@@ -247,6 +240,7 @@ var cyberDojo = (function(cd, $) {
         .attr('checked', wasTag != nowTag)
         .unbind('click.diff')
         .bind('click.diff', function() { show(nowTag); });
+      var minTag = 1;
       refreshNavigation(minTag < nowTag, $('#first-button'), minTag);
       refreshNavigation(minTag < nowTag,  $('#prev-button'), nowTag-1);
       refreshNavigation(nowTag < maxTag,  $('#next-button'), nowTag+1);
