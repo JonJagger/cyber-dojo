@@ -3,28 +3,6 @@
 START-AVATAR
   needs to lock. Use lock in dir?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-WAIT-CURSOR
-  if you are on the last > button and you click it
-  then the cursor is restored to a "live" cursor
-  indicating the button is still enabled, rather than
-  a normal cursor indicating the button is disabled.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINE-NUMBERS CHECKBOX
-  when you click this you lose the focus on the
-  currently opened file
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-LINE-NUMBERS
-  There is some combination of line-numbers on/off
-  and creating a new file that still seems to not
-  be quite right. Viz you can get all files with
-  line-numbers except one. Cannot reproduce it.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-DIFF-REVERT DIALOG
-  press << or < or > or >> once  - you get the wait-cursor
-  now edit the tag-number and press return - you don't get the wait-cursor
-  but edit the tag-number and press return again - and you do get it
-  Only fails to appear on first edit (after pressing << < > >>)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 FAULT
   katas/34/87780530/hippo/sandbox
   this has a cyber-dojo.sh file with the line
