@@ -1,6 +1,7 @@
 root = '../..'
 
 require_relative root + '/config/environment.rb'
+
 require_relative root + '/lib/Docker'
 require_relative root + '/lib/DockerTestRunner'
 require_relative root + '/lib/DummyTestRunner'
