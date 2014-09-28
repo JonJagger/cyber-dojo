@@ -81,7 +81,7 @@ class ForkerControllerTest < ControllerTestBase
 
   test 'when tag is bad ' +
        'the fork fails ' +
-       'and the reason given is bad-tag' do
+       'and the reason given is tag' do
     bad_tag_test('xx')      # !is_tag
     bad_tag_test('-14')     # tag <= 0
     bad_tag_test('-1')      # tag <= 0

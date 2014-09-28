@@ -3,6 +3,9 @@
 # Ruby script to transfer dojos with specific IDs from a
 # cyber-dojo server with a specific IP address to the calling
 # server (which is assumed to also be a cyber-dojo server)
+#
+# xfer.rb cyber-dojo.org 572F35
+#
 
 ip_address = ARGV[0]
 ids = ARGV[1..-1]
