@@ -707,7 +707,7 @@ var cyberDojo = (function(cd, $) {
                    " in the practice session";
       } else  if (data.reason === 'tag') {
         diagnostic = avatarName +
-                  " doesn't have traffic-light[" + tag + "]" + // tag ?
+                  " doesn't have traffic-light[" + tag + "]" +
                   " in the practice session";
       }
       var html = "" +

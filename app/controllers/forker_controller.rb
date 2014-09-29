@@ -41,6 +41,7 @@ class ForkerController < ApplicationController
       tag = params['tag'].to_i;
       if !is_tag || tag <= 0 || tag > avatar.lights.count
         result[:reason] = 'tag'
+        result[:tag] = tag
         error = true
       end
     end
