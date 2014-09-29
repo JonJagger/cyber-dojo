@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+use scrollintoview() to ensure language? and exercise?
+selection appears.
+Edit the file so it's called scrollIntoView()
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move coverage.txt into tests folder
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
