@@ -545,7 +545,7 @@ var cyberDojo = (function(cd, $) {
       ).always(function() {
         var options = { direction: 'horizontal' };
         var light = $('img[src$="_bar.png"]', titleBar());
-        light.scrollintoview(options);
+        light.scrollIntoView(options);
       });
     };
 

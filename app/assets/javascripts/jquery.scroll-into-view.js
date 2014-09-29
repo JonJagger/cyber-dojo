@@ -1,5 +1,5 @@
 /*!
- * jQuery scrollintoview() plugin and :scrollable selector filter
+ * jQuery scrollIntoView() plugin and :scrollable selector filter
  *
  * Version 1.8 (14 Jul 2011)
  * Requires jQuery 1.4 or newer
@@ -71,7 +71,7 @@
 	};
 
 	$.fn.extend({
-		scrollintoview: function (options) {
+		scrollIntoView: function (options) {
 			/// <summary>Scrolls the first element in the set into view by scrolling its closest scrollable parent.</summary>
 			/// <param name="options" type="Object">Additional options that can configure scrolling:
 			///        duration (default: "fast") - jQuery animation speed (can be a duration string or number of milliseconds)
