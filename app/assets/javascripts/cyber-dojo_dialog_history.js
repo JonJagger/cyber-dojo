@@ -543,7 +543,7 @@ var cyberDojo = (function(cd, $) {
           refreshForkButton();
         }
       ).always(function() {
-        var options = { direction: 'horizontal' };
+        var options = { direction: 'horizontal', duration: 'slow' };
         var light = $('img[src$="_bar.png"]', titleBar());
         light.scrollIntoView(options);
       });

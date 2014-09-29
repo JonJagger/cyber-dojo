@@ -1,10 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Edit the plugin file so the method is called scrollIntoView()
-use scrollIntoView() to ensure
-  language? and exercise? selection appears on setup page.
-  avatar image appears on top line on test page
-  avatar image appears on top line of dashboard page
+use scrollIntoView() for
+  traffic-lights on top line on test page
+  traffic-lights on top line of dashboard page
   select diff chunk appears on history dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move coverage.txt into tests folder

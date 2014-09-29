@@ -14,16 +14,8 @@ $(function() {
     });
   });
 
-  var downFromTop = 100;
-  var halfSecond = 500;
-  var container = $('#languages-container');
-
   selected.click();
-  container.animate({
-    // ensure visible
-    scrollTop: selected.offset().top - container.offset().top - downFromTop
-  }, halfSecond);
-
+  selected.scrollIntoView({ direction: 'vertical' });
 });
 
 //--></script>
