@@ -1,7 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on the dashboard change |60s columns| to |timed gaps|
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use scrollIntoView() for
   traffic-lights on top line on test page
   traffic-lights on top line of dashboard page
@@ -10,10 +8,7 @@ use scrollIntoView() for
 move coverage.txt into tests folder
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
-  if you press a |< >| button and the button becomes
-  disabled the cursor should be reset to not-a-hand.
-  line 210.
-  Why do I need this .css() call?
+  line 210.  Why do I need this .css() call?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 does refactoring_dojos.tgz still have katas in old manifest.rb format?
 Check this on cyber-dojo.org for eg
