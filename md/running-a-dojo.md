@@ -98,7 +98,7 @@ Advice:
   * Leave auto-refresh on *during* the dojo
   * Turn auto-refresh *off* just before starting the review.
 
-### 60 second columns?
+### time gaps?
 
 When this is checked each vertical column corresponds to 60 seconds
 and contains all the traffic-lights created by all the animals in those 60
