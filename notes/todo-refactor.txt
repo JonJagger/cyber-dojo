@@ -1,5 +1,7 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+on the dashboard change |60s columns| to |timed gaps|
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use scrollIntoView() for
   traffic-lights on top line on test page
   traffic-lights on top line of dashboard page
