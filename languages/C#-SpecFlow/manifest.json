@@ -9,7 +9,7 @@
   "support_filenames": [
     "nunit.framework.dll",
     "specflow.exe",
-    "App.config"
+    "RunTests.dll.config"
   ],
   "filename_extension" : ".cs",
   "display_name": "C#, SpecFlow",

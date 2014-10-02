@@ -18,7 +18,7 @@ done
 
 echo "  </ItemGroup>" >> $CSPROJ
 echo "  <ItemGroup>" >> $CSPROJ
-echo "    <None Include=\"App.config\" />" >> $CSPROJ
+echo "    <None Include=\"RunTests.dll.config\" />" >> $CSPROJ
 echo "  </ItemGroup>" >> $CSPROJ
 echo "</Project>" >> $CSPROJ
 
