@@ -11,7 +11,7 @@ RUN wget https://github.com/downloads/techtalk/SpecFlow/SpecFlow_v1.9.0_bin.zip
 RUN unzip SpecFlow_v1.9.0_bin.zip
 WORKDIR tools
 RUN ls
-RUN gacutil -i wibble.dll
+RUN gacutil -i Gherkin.dll
 RUN gacutil –i Gherkin.dll
 RUN gacutil –i IKVM.OpenJDK.Core.dll
 RUN gacutil –i IKVM.OpenJDK.Security.dll
