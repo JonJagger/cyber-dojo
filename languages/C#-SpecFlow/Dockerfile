@@ -12,14 +12,13 @@ RUN unzip SpecFlow_v1.9.0_bin.zip
 WORKDIR tools
 RUN ls
 RUN gacutil -i Gherkin.dll
-RUN gacutil –i Gherkin.dll
-RUN gacutil –i IKVM.OpenJDK.Core.dll
-RUN gacutil –i IKVM.OpenJDK.Security.dll
-RUN gacutil –i IKVM.OpenJDK.Text.dll
-RUN gacutil –i IKVM.OpenJDK.Util.dll
-RUN gacutil –i IKVM.Runtime.dll
-RUN gacutil –i TechTalk.SpecFlow.dll
-RUN gacutil –i TechTalk.SpecFlow.Generator.dll
-RUN gacutil –i TechTalk.SpecFlow.Parser.dll
-RUN gacutil –i TechTalk.SpecFlow.Reporting.dll
-RUN gacutil –i TechTalk.SpecFlow.Utils.dll
+RUN gacutil -i IKVM.OpenJdk.Core.dll
+RUN gacutil -i IKVM.OpenJdk.Security.dll
+RUN gacutil -i IKVM.OpenJdk.Text.dll
+RUN gacutil -i IKVM.OpenJdk.Util.dll
+RUN gacutil -i IKVM.Runtime.dll
+RUN gacutil -i TechTalk.SpecFlow.dll
+RUN gacutil -i TechTalk.SpecFlow.Generator.dll
+RUN gacutil -i TechTalk.SpecFlow.Parser.dll
+RUN gacutil -i TechTalk.SpecFlow.Reporting.dll
+RUN gacutil -i TechTalk.SpecFlow.Utils.dll
