@@ -17,6 +17,9 @@ do
 done
 
 echo "  </ItemGroup>" >> $CSPROJ
+echo "  <ItemGroup>" >> $CSPROJ
+echo "    <None Include=\"App.config\" />" >> $CSPROJ
+echo "  </ItemGroup>" >> $CSPROJ
 echo "</Project>" >> $CSPROJ
 
 #generate 'code behind'
