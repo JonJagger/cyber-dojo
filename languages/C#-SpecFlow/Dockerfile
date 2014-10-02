@@ -9,14 +9,15 @@ RUN apt-get -y install unzip
 
 RUN wget https://github.com/downloads/techtalk/SpecFlow/SpecFlow_v1.9.0_bin.zip
 RUN unzip SpecFlow_v1.9.0_bin.zip
-RUN gacutil –i tools/Gherkin.dll
-RUN gacutil –i tools/IKVM.OpenJDK.Core.dll
-RUN gacutil –i tools/IKVM.OpenJDK.Security.dll
-RUN gacutil –i tools/IKVM.OpenJDK.Text.dll
-RUN gacutil –i tools/IKVM.OpenJDK.Util.dll
-RUN gacutil –i tools/IKVM.Runtime.dll
-RUN gacutil –i tools/TechTalk.SpecFlow.dll
-RUN gacutil –i tools/TechTalk.SpecFlow.Generator.dll
-RUN gacutil –i tools/TechTalk.SpecFlow.Parser.dll
-RUN gacutil –i tools/TechTalk.SpecFlow.Reporting.dll
-RUN gacutil –i tools/TechTalk.SpecFlow.Utils.dll
+WORKDIR tools
+RUN gacutil –i Gherkin.dll
+RUN gacutil –i IKVM.OpenJDK.Core.dll
+RUN gacutil –i IKVM.OpenJDK.Security.dll
+RUN gacutil –i IKVM.OpenJDK.Text.dll
+RUN gacutil –i IKVM.OpenJDK.Util.dll
+RUN gacutil –i IKVM.Runtime.dll
+RUN gacutil –i TechTalk.SpecFlow.dll
+RUN gacutil –i TechTalk.SpecFlow.Generator.dll
+RUN gacutil –i TechTalk.SpecFlow.Parser.dll
+RUN gacutil –i TechTalk.SpecFlow.Reporting.dll
+RUN gacutil –i TechTalk.SpecFlow.Utils.dll
