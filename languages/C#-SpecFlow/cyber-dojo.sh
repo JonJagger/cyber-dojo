@@ -1,4 +1,5 @@
 #build project file
+./buildCsprojFile.sh
 
 #generate 'code behind'
 mono specflow RunTests.csproj

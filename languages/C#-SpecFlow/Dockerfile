@@ -10,7 +10,6 @@ RUN apt-get -y install unzip
 RUN wget https://github.com/downloads/techtalk/SpecFlow/SpecFlow_v1.9.0_bin.zip
 RUN unzip SpecFlow_v1.9.0_bin.zip
 WORKDIR tools
-RUN ls
 RUN gacutil -i Gherkin.dll
 RUN gacutil -i IKVM.OpenJDK.Core.dll
 RUN gacutil -i IKVM.OpenJDK.Security.dll
@@ -22,3 +21,4 @@ RUN gacutil -i TechTalk.SpecFlow.Generator.dll
 RUN gacutil -i TechTalk.SpecFlow.Parser.dll
 RUN gacutil -i TechTalk.SpecFlow.Reporting.dll
 RUN gacutil -i TechTalk.SpecFlow.Utils.dll
+WORKDIR ..
