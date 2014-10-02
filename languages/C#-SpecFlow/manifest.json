@@ -3,6 +3,7 @@
   "visible_filenames": [
     "HikerTest.cs",
     "Hiker.cs",
+    "HikerSteps.cs"
     "HikerSpec.feature",
     "cyber-dojo.sh"
   ],
