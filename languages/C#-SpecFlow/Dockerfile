@@ -5,8 +5,9 @@ RUN apt-get install -y monodevelop-nunit
 RUN apt-get install -y nunit-console
 
 RUN apt-get -y install wget
-RUN wget https://github.com/downloads/techtalk/SpecFlow/SpecFlow_v1.9.0_bin.zip
 RUN apt-get -y install unzip
+
+RUN wget https://github.com/downloads/techtalk/SpecFlow/SpecFlow_v1.9.0_bin.zip
 RUN unzip SpecFlow_v1.9.0_bin.zip
 RUN cd tools
 RUN gacutil –i Gherkin.dll
