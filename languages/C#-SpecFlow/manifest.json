@@ -8,7 +8,8 @@
   ],
   "support_filenames": [
     "nunit.framework.dll",
-    "specflow.exe"
+    "specflow.exe",
+    "App.config"
   ],
   "filename_extension" : ".cs",
   "display_name": "C#, SpecFlow",
