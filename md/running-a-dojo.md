@@ -7,7 +7,7 @@ creating your programming dojo
   * click the `[create]` button
   * click your chosen (language,unit-test-framework) combination, eg `C++,GoogleTest`
   * click your chosen exercise, eg `Prime Factors`
-  * click the `[create]` button
+  * click the `[ok]` button
   * you'll get a case-insensitive 6-character hex-id. The full id is ten
     characters long (in the URL) but 6 is enough for uniqueness.
 
@@ -25,13 +25,13 @@ entering your programming dojo
   * press the `[test]` button
   * a new traffic-light appears at the top, left-to-right, oldest-to-newest
     indicating the result of the test (see below).
-  * you can click on any traffic-light to open a diff/revert/fork dialog.
-    The dialog shows the diffs between any two traffic-lights
+  * you can click on any traffic-light to open a diff/revert/fork history dialog.
+    The history dialog shows the diffs between any two traffic-lights
     and has << < > >> buttons to navigate backwards and forwards.
     The dialog also has a `[revert]` button to revert back
     to the files from any traffic-light.
     The dialog also has a `[fork]` button to fork a new
-    programming dojo with a new ID.
+    programming dojo with a new ID from that traffic light's files.
 
 You can also re-enter at any animals' most recent traffic-light by pressing
 the `[re-enter]` button (from the home page) and then clicking the animal.
@@ -85,7 +85,7 @@ Each horizontal row corresponds to one animal and displays, from left to right:
     navigate backwards and forwards, or fork (revert is only available from
     test page traffic-light dialogs).
 
-### auto refresh?
+### auto refresh
 
 The dashboard page auto-refreshes every 10 seconds. As more and more tests
 are run, more and more traffic-lights appear taking up more and more
@@ -98,7 +98,7 @@ Advice:
   * Leave auto-refresh on *during* the dojo
   * Turn auto-refresh *off* just before starting the review.
 
-### time gaps?
+### time gaps
 
 When this is checked each vertical column corresponds to 60 seconds
 and contains all the traffic-lights created by all the animals in those 60
@@ -114,13 +114,6 @@ If available this displays slightly more information about the current
 traffic-light of each animal, usually the number of passing and failing
 tests.
 
-### duration
-
-This displays how long the dojo has been going (and updates every
-10 seconds). The start time is *not* the time dojo was created, but the
-time the first animal manually presses their `[test]` button. This allows
-you to prepare specific dojos ahead of time.
-
 ### team progress
 
 This displays:
@@ -128,6 +121,13 @@ This displays:
   * the number of animals currently at red, if any, (in red)
   * the number of animals currently at amber, if any, (in amber)
   * the number of animals currently at green, if any, (in green)
+
+### duration
+
+This displays how long the dojo has been going (and updates every
+10 seconds). The start time is *not* the time dojo was created, but the
+time the first animal manually presses their `[test]` button. This allows
+you to prepare custom starting point dojos ahead of time.
 
 
 reviewing the history
@@ -137,8 +137,8 @@ traffic-light for that animal.
 
 By default, the diff between two successive traffic-lights is displayed.
 For example, suppose you have 65 traffic lights and you click on the 42nd one -
-the history dialog will display the diff between traffic-lights 41 and 42
-(and the number 42 will appear between the << < and the > >> controls).
+the history dialog will display the diff between traffic-lights 41st and 42nd
+(and the number 42 will appear between the << < and > >> controls).
 
 Navigating using the << < > >> buttons
   * << moves backward to the first traffic-light, displaying the diff of 0 <-> 1
@@ -158,5 +158,5 @@ Clicking the green number-of-lines-added button (to the right of the filename)
 will toggle the added lines on/off for that file's diff.
 
 You can also do a "no-diff", showing exactly how the files were for the
-traffic light, by simply unchecking the diff? checkbox.
+traffic light, by simply unchecking the diff checkbox.
 The << < > >> continue to work, and will continue to show a "no-diff".

@@ -7,6 +7,10 @@ use scrollIntoView() for
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move coverage.txt into tests folder
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+progress. Could this be made into a separate regex that can
+extract numbers when used on the output. If so I could replay
+the regex on all outputs to create a graph of the numbers.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 diff-dialog
   line 210.  Why do I need this .css() call?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
