@@ -7,7 +7,8 @@
     "cyber-dojo.sh"
   ],
   "support_filenames": [
-    "nunit.framework.dll"
+    "nunit.framework.dll",
+    "specflow.exe"
   ],
   "filename_extension" : ".cs",
   "display_name": "C#, SpecFlow",

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #build project file
 CSPROJ=RunTests.csproj
 
@@ -18,7 +20,7 @@ echo "  </ItemGroup>" >> $CSPROJ
 echo "</Project>" >> $CSPROJ
 
 #generate 'code behind'
-mono specflow.exe RunTests.csproj
+mono ./specflow.exe RunTests.csproj
 
 dmcs -t:library -r:/usr/lib/cli/nunit.framework-2.6/nunit.framework.dll -out:RunTests.dll *.cs
 if [ $? -eq 0 ]; then
