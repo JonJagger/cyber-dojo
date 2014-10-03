@@ -11,6 +11,8 @@ katas_rb
 .idea
 .rvmrc
 .approvals
+.ruby-gemset
+.ruby-version
 
 zipped_dojos.zip
 cyberDojo.db
