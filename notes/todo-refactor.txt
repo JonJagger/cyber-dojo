@@ -1,5 +1,21 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+See if citigroup are interested in a corporate license.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Remember to send license to credit-suisse.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+cyber-dojo.org appearance is messy on a tablet. Fix.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Use Amazon console to switch cyber-dojo.org so it uses an
+SSD drive. Nick Todd knows how to do this and is happy to help.
+How to do this so it's down for minimal time?
+First learn how to do it by doing it on a clone.
+Will need to redirect the IP address... Bringing it down for a
+short period of time would mean no dojos get lost during the
+transition. Nick mentioned an elatic? IP address which allows
+the same IP address to be set from the Amazon console, but for
+the server underneath it to be switched.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use scrollIntoView() for
   traffic-lights on top line on test page
   traffic-lights on top line of dashboard page
