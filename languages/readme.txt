@@ -15,4 +15,4 @@ Language-testFramework folders sometimes contain their supporting
 files directly rather than the supporting files (eg .jar files)
 being embedded inside the docker container. This is partly
 historical since that was the way I did it pre-docker but
-it fits well with the docker volume-mounting feature.
+it fits well with the readonly docker volume-mounting feature.
