@@ -17,9 +17,9 @@ the same IP address to be set from the Amazon console, but for
 the server underneath it to be switched.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 use scrollIntoView() for
-  traffic-lights on top line on test page
-  traffic-lights on top line of dashboard page
-  select diff chunk appears on history dialog.
+  traffic-lights on top line on test page?
+  traffic-lights on top line of dashboard page?
+  select diff chunk appears on history dialog?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 move coverage.txt into tests folder
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

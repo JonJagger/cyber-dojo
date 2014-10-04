@@ -15,7 +15,6 @@ end
 
 gem 'thin'
 gem 'therubyracer'
-gem 'simplecov',    '>= 0.7.1', :require => false, :group => :test
 
 group :test do
   gem 'rspec'
@@ -27,6 +26,7 @@ group :test do
   gem 'autotest-growl'
   gem 'approvals', '>= 0.0.7'
   gem 'cucumber'
+  gem 'simplecov', '>= 0.7.1', :group => :test
 end
 
 # rspec-rails needs to be in the development group so that Rails generators work.
