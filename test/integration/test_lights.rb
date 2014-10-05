@@ -11,7 +11,7 @@ class LightsTests < CyberDojoTestBase
   def setup
     super
     @dojo = Dojo.new(root_path,externals)
-    @language = @dojo.languages['Java-1.8_JUnit']
+    @language = @dojo.languages['Ruby-TestUnit']
     @exercise = @dojo.exercises['Yatzy']
     `rm -rf #{@dojo.katas.path}`
     @kata = @dojo.katas.create_kata(@language, @exercise)
@@ -32,11 +32,24 @@ class LightsTests < CyberDojoTestBase
     visible_files = avatar.tags[0].visible_files
     assert_equal [ ], avatar.lights.each.entries
 
-    filename = 'Hiker.java'
-    test_code = visible_files[filename];
-    assert test_code.include?('6 * 9')
-    test_code.sub!('6 * 9', '6 * 7')
-    visible_files[filename] = test_code
+
+    delta = {
+      :deleted => [ ],
+      :changed => [ ],
+      :new => [ ],
+      :unchanged => [ ]
+    }
+    lights,_,_ = avatar.test(delta, visible_files, now = time_now)
+    assert_equal 1, lights.count
+    assert_equal 'red', lights[-1]['colour']
+    assert_equal now, lights[-1]['time']
+    assert_equal 1, lights[-1]['number']
+
+    filename = 'hiker.rb'
+    code = visible_files[filename];
+    assert code.include?('6 * 9')
+    code.sub!('6 * 9', '6 * 7')
+    visible_files[filename] = code
     delta = {
       :deleted => [ ],
       :changed => [ filename ],
@@ -47,28 +60,27 @@ class LightsTests < CyberDojoTestBase
     visible_files.delete('output')
 
     lights,_,_ = avatar.test(delta, visible_files, now = time_now)
-    output = visible_files['output']
-    assert output.include?('OK (1 test)'), output
-    assert_equal 1, lights.count
+    assert_equal 2, lights.count
     assert_equal 'green', lights[-1]['colour']
     assert_equal now, lights[-1]['time']
-    assert_equal 1, lights[-1]['number']
+    assert_equal 2, lights[-1]['number']
 
-    diff = avatar.tags[0].diff(1)
+    diff = avatar.tags[1].diff(2)
 
     deleted_line =
     {
       :type   => :deleted,
-      :line   => '        return 6 * 9;',
-      :number => 5
+      :line   => '  6 * 9',
+      :number => 3
     }
     added_line =
     {
       :type   => :added,
-      :line   => '        return 6 * 7;',
-      :number => 5
+      :line   => '  6 * 7',
+      :number => 3
     }
-    assert diff[filename].include?(deleted_line), diff.inspect
+    assert diff[filename].include?(added_line), diff[filename].inspect
+    assert diff[filename].include?(deleted_line), diff[filename].inspect
 
   end
 

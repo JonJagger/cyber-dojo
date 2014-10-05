@@ -16,7 +16,7 @@ class SandboxTests < CyberDojoTestBase
   test 'defect-driven: filename containing space ' +
        'is not accidentally retained in the sandbox' do
 
-    kata = make_kata(@dojo, 'Java-1.8_JUnit')
+    kata = make_kata(@dojo, 'Ruby-TestUnit')
     avatar = kata.start_avatar
     sandbox = avatar.sandbox
 
@@ -39,17 +39,17 @@ class SandboxTests < CyberDojoTestBase
 
     SPACE = ' '
     filenames = visible_files.keys
-    assert filenames.include?('Hiker.java')
-    content = visible_files['Hiker.java']
+    assert filenames.include?('hiker.rb')
+    content = visible_files['hiker.rb']
 
-    visible_files.delete('Hiker.java')
-    visible_files['Hiker' + SPACE + '.java'] =  content
+    visible_files.delete('hiker.rb')
+    visible_files['hiker' + SPACE + '.rb'] =  content
 
     delta = {
-      :unchanged => filenames - [ 'Hiker.java' ],
+      :unchanged => filenames - [ 'hiker.rb' ],
       :changed   => [ ],
-      :deleted   => [ 'Hiker.java' ],
-      :new       => [ 'Hiker' + SPACE + '.java' ]
+      :deleted   => [ 'hiker.rb' ],
+      :new       => [ 'hiker' + SPACE + '.rb' ]
     }
 
     avatar.test(delta, visible_files)
@@ -61,14 +61,14 @@ class SandboxTests < CyberDojoTestBase
     #- - - - - - - -
     # put it back the way it was
 
-    visible_files.delete('Hiker' + SPACE + '.java')
-    visible_files['Hiker.java'] = content
+    visible_files.delete('hiker' + SPACE + '.rb')
+    visible_files['hiker.rb'] = content
 
     delta = {
       :changed   => [ ],
-      :unchanged => visible_files.keys - [ 'Hiker.java' ],
-      :deleted   => [ 'Hiker' + SPACE + '.java' ],
-      :new       => [ 'Hiker.java' ]
+      :unchanged => visible_files.keys - [ 'hiker.rb' ],
+      :deleted   => [ 'hiker' + SPACE + '.rb' ],
+      :new       => [ 'hiker.rb' ]
     }
 
     avatar.test(delta, visible_files)

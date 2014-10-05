@@ -19,6 +19,7 @@ class HostTestRunnerTests < CyberDojoTestBase
     [
       "Asm-assert",
       "C#-NUnit",
+      "C#-SpecFlow",
       "C++-Catch",
       "C++-CppUTest",
       "C++-GoogleTest",

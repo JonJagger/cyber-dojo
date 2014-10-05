@@ -156,7 +156,7 @@ class GitDiffViewTests < CyberDojoTestBase
 
   test 'only visible files are commited and are seen in diff_lines' do
 
-    language = @dojo.languages['Java-1.8_JUnit']
+    language = @dojo.languages['Ruby-TestUnit']
     exercise = @dojo.exercises['Yatzy']
     kata = @dojo.katas.create_kata(language, exercise)
     avatar = kata.start_avatar
