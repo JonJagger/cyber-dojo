@@ -13,4 +13,4 @@ done
 echo
 echo
 
-./print_summary.rb
+./print_summary.rb | tee coverage.txt
