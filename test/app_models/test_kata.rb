@@ -58,22 +58,12 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata exists but all its avatars have less than 2 traffic-lights ' +
+  test 'when kata exists but all its avatars have 0 traffic-lights ' +
        'then it is not active ' +
        'and its age is zero' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
-
-    light =
-    [
-      {
-        'colour' => 'red',
-        'time' => [2014, 2, 15, 8, 54, 6],
-        'number' => 1
-      }
-    ]
-    hippo.dir.spy_read('increments.json', JSON.unparse(light))
 
     assert !kata.active?
     assert_equal 0, kata.age
@@ -81,31 +71,31 @@ class KataTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'when kata exists and at least one avatar has 2 or more traffic-lights ' +
+  test 'when kata exists and at least one avatar has 1 or more traffic-lights ' +
        'then kata is active ' +
-       'and age is from earliest 2nd traffic-light to now' do
+       'and age is from earliest traffic-light to now' do
     kata = make_kata
     hippo = kata.start_avatar(['hippo'])
     lion = kata.start_avatar(['lion'])
-    auto =
+    first =
       {
         'colour' => 'red',
         'time' => [2014, 2, 15, 8, 54, 6],
         'number' => 1
       }
 
-    manual =
+    second =
       {
         'colour' => 'green',
         'time' => [2014, 2, 15, 8, 54, 34],
         'number' => 2
       }
 
-    hippo.dir.spy_read('increments.json', JSON.unparse([auto]))
-    lion.dir.spy_read('increments.json', JSON.unparse([auto,manual]))
+    hippo.dir.spy_read('increments.json', JSON.unparse([second]))
+    lion.dir.spy_read('increments.json', JSON.unparse([first]))
 
     assert kata.active?
-    now = manual["time"]
+    now = first["time"]
     now[5] += 17
     assert_equal 17, kata.age(now)
   end

@@ -20,14 +20,9 @@ $(function() {
   cd.bindAllLineNumbers();
   cd.rebuildFilenameList();
 
-  if (<%= @traffic_lights.length === 0 %>) {
-    cd.fileContentFor('output').val('');
-    cd.loadFile('output');
-    $('#test-button').click();
-  } else {
-    var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
-    cd.loadFile(filename);
-  }
+  var filename = filenames[cd.nonBoringFilenameIndex(filenames)];
+  cd.loadFile(filename);
+
 });
 
 //--></script>

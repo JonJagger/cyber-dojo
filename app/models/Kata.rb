@@ -113,7 +113,7 @@ private
   def earliest_light
     # time of first manually pressed traffic-light
     # (initial traffic-light is automatically created)
-    Time.mktime(*avatars.active.map{|avatar| avatar.lights[1].time}.sort[0])
+    Time.mktime(*avatars.active.map{|avatar| avatar.lights[0].time}.sort[0])
   end
 
   def dojo

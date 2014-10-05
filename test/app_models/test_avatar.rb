@@ -32,7 +32,7 @@ class AvatarTests < ModelTestBase
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  test 'avatar is not active? when it has one traffic-light' do
+  test 'avatar is active? when it has one traffic-light' do
     kata = @dojo.katas[id]
     lion = kata.avatars['lion']
     lion.dir.spy_read('increments.json', JSON.unparse([
@@ -42,7 +42,7 @@ class AvatarTests < ModelTestBase
         'number' => 1
       }
     ]))
-    assert !lion.active?
+    assert lion.active?
   end
 
   #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
