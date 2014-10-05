@@ -1,7 +1,4 @@
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Drop auto-test when animal enters a dojo. Its creates
-a burst of concurrent tests on the server which increases
-the chance of timeout ambers.
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
