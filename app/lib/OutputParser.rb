@@ -31,6 +31,12 @@ module OutputParser
     return :amber
   end
 
+  def self.parse_mocha(output)
+    return :red   if /AssertionError/.match(output)
+    return :green if /^passing/.match(output)
+    return :amber
+  end
+
   def self.parse_cpputest(output)
     return :red   if /Errors \((\d+) failures, (\d+) tests/.match(output)
     return :green if /OK \((\d+) tests, (\d+) ran/.match(output)
