@@ -1,0 +1,17 @@
+{
+  "name": "hiker-with-mocha-chai-sinon",
+  "version": "1.0.0",
+  "description": "Cyber Dojo Mocha Chai with Sinon",
+  "main": "hiker.js",
+  "scripts": {
+    "test": "hikerTest.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.9.2",
+    "mocha": "^1.21.4",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.6.0"
+  }
+}
