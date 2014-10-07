@@ -33,7 +33,7 @@ module OutputParser
 
   def self.parse_mocha(output)
     return :red   if /AssertionError/.match(output)
-    return :green if /^passing/.match(output)
+    return :green if /(\d+) passing \((\d+)ms\)/.match(output)
     return :amber
   end
 
