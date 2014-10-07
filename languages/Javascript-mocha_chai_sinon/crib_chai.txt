@@ -1,0 +1,21 @@
+'use strict';
+
+var answer = require('./hiker.js');
+
+describe('Assert Style: Answer', function () {
+  it('to life the universe and everything', function () {
+    assert.equal(answer(), 42);
+  });
+});
+
+describe('Expect Style: Answer', function () {
+  it('to life the universe and everything', function () {
+    expect(answer()).to.equal(42);
+  });
+});
+
+describe('Should Style: Answer', function () {
+  it('should work with should', function () {
+    answer().should.equal(42);
+  });
+});
