@@ -25,7 +25,7 @@ Docker Server
   * [pulling the latest cyber-dojo github repo](http://blog.cyber-dojo.org/2014/09/pulling-latest-cyber-dojo-github-repo.html)
   * [adding a new language + unit test to cyber-dojo](http://blog.cyber-dojo.org/2014/09/adding-new-language-and-unit-test-to-cyber-dojo.html)
   * [cyber-dojo language manifest.json entries explained](http://blog.cyber-dojo.org/2014/09/cyber-dojo-languages-manifest-json-entries-explained.html)
-  * [adding a new exercise to cyber-dojo](md/adding_a_new_exercise.md)
+  * [adding a new exercise to cyber-dojo](http://blog.cyber-dojo.org/2014/10/adding-new-exercise.html)
 
 <hr/>
 [Misc](md/misc.md)
