@@ -1,5 +1,7 @@
 
+<div style="float:right;">
 <img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="100px" height="100px"/>
+</div>
 
   * [creating and entering your cyber-dojo](http://blog.cyber-dojo.org/2014/10/creating-and-entering-your-cyber-dojo.html)
   * [traffic lights](http://blog.cyber-dojo.org/2014/10/cyber-dojo-traffic-lights.html)
@@ -13,5 +15,4 @@
   * [adding a new exercise to cyber-dojo](http://blog.cyber-dojo.org/2014/10/adding-new-exercise.html)
   * [overview of how cyber-dojo uses git](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojo-uses-git.html)
   * [cyber-dojo thank yous](http://blog.cyber-dojo.org/2014/09/cyber-dojo-thank-yous.html)
-
   * [terms and conditions](http://blog.cyber-dojo.org/2014/09/terms-conditions-warranty-cost.html)
