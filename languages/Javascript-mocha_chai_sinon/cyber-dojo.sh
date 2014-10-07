@@ -1,1 +1,1 @@
-mocha *Test.js --require hikerTestHelper.js --no-colors 
+mocha *Test.js --require config.js --no-colors
