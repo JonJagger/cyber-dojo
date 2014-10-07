@@ -1,5 +1,9 @@
 'use strict';
 
+//----------------------------------------------------
+// This is a TEXT file giving examples of sinon tests.
+//----------------------------------------------------
+
 function hello(name, cb) {
   cb('hello ' + name);
 }
