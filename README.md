@@ -11,12 +11,10 @@ cyber-dojo
     * choose your exercise
       eg Prime Factors
   * entering your programming dojo
-    * traffic lights
-    * red, amber, green
-  * reviewing your programming dojo
-    * auto refresh?
-    * 60 second columns?
-    * reviewing the history
+  * [traffic lights](http://blog.cyber-dojo.org/2014/10/cyber-dojo-traffic-lights.html)
+  * [the cyber-dojo dashboard](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html)
+  * [the cyber-dojo history dialog](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-history-dialog.html)
+
 
 <hr/>
 Docker Server
