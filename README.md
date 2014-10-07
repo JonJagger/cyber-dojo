@@ -1,17 +1,7 @@
 
 <img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="100px" height="100px"/>
 
-cyber-dojo
-==========
-
-[Running a Programming Dojo](md/running-a-dojo.md)
-  * creating your programming dojo
-    * choose your language,unit-test-framework combination
-      eg C++,GoogleTest
-    * choose your exercise
-      eg Prime Factors
-  * entering your programming dojo
-  * [terms and conditions](http://blog.cyber-dojo.org/2014/09/terms-conditions-warranty-cost.html)
+  * [creating and entering your cyber-dojo](http://blog.cyber-dojo.org/2014/10/creating-and-entering-your-cyber-dojo.html)
   * [traffic lights](http://blog.cyber-dojo.org/2014/10/cyber-dojo-traffic-lights.html)
   * [the cyber-dojo dashboard](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html)
   * [the cyber-dojo history dialog](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-history-dialog.html)
@@ -23,3 +13,5 @@ cyber-dojo
   * [adding a new exercise to cyber-dojo](http://blog.cyber-dojo.org/2014/10/adding-new-exercise.html)
   * [overview of how cyber-dojo uses git](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojo-uses-git.html)
   * [cyber-dojo thank yous](http://blog.cyber-dojo.org/2014/09/cyber-dojo-thank-yous.html)
+
+  * [terms and conditions](http://blog.cyber-dojo.org/2014/09/terms-conditions-warranty-cost.html)
