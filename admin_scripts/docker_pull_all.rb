@@ -8,7 +8,7 @@ image_names = [ ]
 Dir.glob("#{CYBER_DOJO_ROOT_DIR}/languages/*/manifest.json") do |file|
   json = JSON.parse(IO.read(file))
   image_name = json['image_name']
-  image_names << image_name if image_name != nil
+  image_names << image_name if !image_name.nil?
 end
 
 puts "this will take a good while..."

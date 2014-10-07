@@ -1,7 +1,4 @@
 
-docker_pull_all.rb
-  if image_name != nil
-  if !image_name.nil?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
