@@ -14,7 +14,7 @@ class KataControllerTest  < ControllerTestBase
     avatar_name = json['avatar_name']
 
     setup_initial_edit(id,avatar_name)
-    post '/kata/edit', :id => id, :avatar => avatar_name
+    get '/kata/edit', :id => id, :avatar => avatar_name
 
     post 'kata/run_tests', # 1
       :id => id,

@@ -10,7 +10,7 @@ require_relative root + '/test/lib/StubTestRunner'
 require_relative root + '/config/environment'
 require 'rails/test_help'
 
-class ControllerTestBase < ActionController::IntegrationTest
+class ControllerTestBase < ActionDispatch::IntegrationTest
 
   def root_path
     File.expand_path('../..', File.dirname(__FILE__)) + '/'
@@ -65,7 +65,7 @@ class ControllerTestBase < ActionController::IntegrationTest
 
   def checked_save_id(language_name = 'Ruby-TestUnit',
                       exercise_name = 'Yatzy')
-    post 'setup/save',
+    get 'setup/save',
       :language => language_name,
       :exercise => exercise_name
 
