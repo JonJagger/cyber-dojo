@@ -19,7 +19,7 @@ describe('Expect Style: Answer', function () {
 });
 
 describe('Should Style: Answer', function () {
-  it('should work with should', function () {
+  it('to life the universe and everything', function () {
     answer().should.equal(42);
   });
 });
