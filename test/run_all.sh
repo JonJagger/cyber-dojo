@@ -5,7 +5,6 @@ modules=( app_helpers app_lib app_models lib languages integration app_controlle
 echo
 for module in ${modules[@]}
 do
-    echo "======$module======"
     cd $module
     ./run_all.sh
     cd ..
