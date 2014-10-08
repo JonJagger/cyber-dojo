@@ -4,6 +4,8 @@
 // It's only to help you get started.
 //----------------------------------------------------
 
-module.exports = function () {
-  return 6 * 9;
-};
+function answer() {
+  return 6 * 7;
+}
+
+module.exports = answer;
