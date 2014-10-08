@@ -35,16 +35,6 @@ class DojoController < ApplicationController
     }
   end
 
-  def enter_dialog_html(avatar_name)
-    @avatar_name = avatar_name
-    bind('/app/views/dojo/enter_dialog.html.erb')
-  end
-
-  def full_dialog_html()
-    @all_avatar_names = Avatars.names
-    bind('/app/views/dojo/full_dialog.html.erb')
-  end
-
   #------------------------------------------------
 
   def re_enter_json
@@ -58,14 +48,24 @@ class DojoController < ApplicationController
     }
   end
 
+private
+
+  def enter_dialog_html(avatar_name)
+    @avatar_name = avatar_name
+    bind('/app/views/dojo/enter_dialog.html.erb')
+  end
+
+  def full_dialog_html()
+    @all_avatar_names = Avatars.names
+    bind('/app/views/dojo/full_dialog.html.erb')
+  end
+
   def re_enter_dialog_html(kata, started_avatar_names)
     @kata = kata
     @started_avatar_names = started_avatar_names
     @all_avatar_names = Avatars.names
     bind('/app/views/dojo/re_enter_dialog.html.erb')
   end
-
-private
 
   def katas
     dojo.katas
