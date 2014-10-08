@@ -43,6 +43,7 @@ class HostTestRunnerTests < CyberDojoTestBase
       "Java-1.8_Powermockito",
       "Javascript-assert",
       "Javascript-jasmine",
+      "Javascript-mocha_chai_sinon",
       "PHP-PHPUnit",
       "Perl-TestSimple",
       "Python-pytest",
