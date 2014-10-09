@@ -14,6 +14,10 @@ class SpyGit
     record(dir, 'init', options)
   end
 
+  def config(dir, options)
+    record(dir, 'config', options)
+  end
+
   def add(dir, what)
     record(dir, 'add', what)
   end
@@ -27,7 +31,7 @@ class SpyGit
   end
 
   def tag(dir, options)
-    record(dir, 'commit', options)
+    record(dir, 'tag', options)
   end
 
   def show(dir, options)
