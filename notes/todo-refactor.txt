@@ -3,6 +3,7 @@
 lose diff_controller.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /var/www/cyberdojo I think this folder changes in Rails 4
+/home/cyberdojo  are any scripts affected?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 See if citigroup are interested in a corporate license.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
