@@ -26,7 +26,7 @@ class DifferControllerTest < ControllerTestBase
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
 
-    post '/kata/edit', :id => id, :avatar => avatar_name
+    get '/kata/edit', :id => id, :avatar => avatar_name
     filename = 'hiker.rb'
     post 'kata/run_tests', # 1
       :id => id,
@@ -91,7 +91,7 @@ class DifferControllerTest < ControllerTestBase
     id = checked_save_id
     get 'dojo/enter_json', :id => id
     avatar_name = json['avatar_name']
-    post '/kata/edit', :id => id, :avatar => avatar_name
+    get '/kata/edit', :id => id, :avatar => avatar_name
 
     filename = 'hiker.rb'
     post 'kata/run_tests', # 1
