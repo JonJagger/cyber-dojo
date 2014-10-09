@@ -17,6 +17,7 @@ class KataControllerTest  < ControllerTestBase
     get '/kata/edit', :id => id, :avatar => avatar_name
 
     post 'kata/run_tests', # 1
+      :format => :js,
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -30,6 +31,7 @@ class KataControllerTest  < ControllerTestBase
       }
 
     post 'kata/run_tests', # 2
+      :format => :js,
       :id => id,
       :avatar => avatar_name,
       :file_content => {

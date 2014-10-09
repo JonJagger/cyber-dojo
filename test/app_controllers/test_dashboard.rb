@@ -47,6 +47,7 @@ class DashboardControllerTest < ControllerTestBase
 
       (1..2).each do |m|
         post 'kata/run_tests',
+          :format => :js,
           :id => id,
           :avatar => avatar_name,
           :file_content => {
@@ -82,6 +83,7 @@ class DashboardControllerTest < ControllerTestBase
 
     (1..3).each do |m|
       post 'kata/run_tests',
+        :format => :js,
         :id => id,
         :avatar => avatar_name,
         :file_content => {
@@ -124,6 +126,7 @@ class DashboardControllerTest < ControllerTestBase
     assert_response :success
 
     post 'kata/run_tests',
+      :format => :js,
       :id => id,
       :avatar => avatar_name,
       :file_content => {
@@ -136,7 +139,7 @@ class DashboardControllerTest < ControllerTestBase
         'cyber-dojo.sh' => -4545645678
       }
 
-    get 'dashboard/heartbeat', :id => id
+    get 'dashboard/heartbeat', :format => :js, :id => id
   end
 
 end
