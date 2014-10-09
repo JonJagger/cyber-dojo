@@ -30,6 +30,10 @@ class SpyGit
     record(dir, 'commit', options)
   end
 
+  def gc(dir, options)
+    record(dir, 'gc', options)
+  end
+
   def tag(dir, options)
     record(dir, 'tag', options)
   end
