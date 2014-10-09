@@ -113,8 +113,7 @@ private
   end
 
   def earliest_light
-    # time of first manually pressed traffic-light
-    # (initial traffic-light is automatically created)
+    # time of first test
     Time.mktime(*avatars.active.map{|avatar| avatar.lights[0].time}.sort[0])
   end
 
