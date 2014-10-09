@@ -11,8 +11,6 @@ make help button on history open blog page on history
 add fork/revert info to blog page on history
 make blog page for test page and link to it from test page help button
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-lose diff_controller.rb
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /var/www/cyberdojo I think this folder changes in Rails 4
 /home/cyberdojo  are any scripts affected?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
