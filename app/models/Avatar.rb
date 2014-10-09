@@ -24,11 +24,11 @@ class Avatar
   end
 
   def active?
-    # o) Players commonly start two avatars on the same computer and use
-    #    one solely to read the instructions. I don't want these avatars
-    #    appearing on the dashboard.
-    # o) When forking a new kata it is common to enter as one animal
-    #    to sanity check it is ok (but not explicitly press [test])
+    # o) Players sometimes start an extra avatar solely to read the
+    #    instructions. I don't want these avatars appearing on the
+    #    dashboard.
+    # o) When forking a new kata you can enter as one animal
+    #    to sanity check it is ok (but not press [test])
     exists? && lights.count > 0
   end
 
@@ -133,7 +133,7 @@ end
 # increments.json file which starts as [ ]
 #
 # All subsequent 'git commit' + 'git tag' commands
-# correspond to an gui action and store an entry in
+# correspond to a gui action and store an entry in
 # the increments.json file.
 # eg
 # [
@@ -147,14 +147,14 @@ end
 # At the moment the only gui action that creates an
 # increments.json file entry is a [test] event.
 #
-# However, I plan to create finer grained tags than
+# However, I may create finer grained tags than
 # just [test] events...
 #    o) creating a new file
 #    o) renaming a file
 #    o) deleting a file
 #    o) editing a file (and opening a different file)
 #
-# When this happens the difference between a Tag.new
+# If this happens the difference between a Tag.new
 # and a Light.new will be more pronounced and I will
 # need something like this...
 #
