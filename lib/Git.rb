@@ -45,7 +45,37 @@ private
   end
 
   def run(dir, command, args)
-    `cd #{dir}; git #{command} #{args}`
+    log = [ ]
+    cd_cmd = "cd #{dir}"
+    git_cmd = "git #{command} #{args}"
+    cmd = [cd_cmd,git_cmd].map{|s| stderr2stdout(s)}.join(shell_separator)
+    IO.popen(cmd).each do |line|
+      log << line
+    end.close
+    log = log.join("\n")
+    status = $?.exitstatus
+    if status != success
+      log "cmd=#{cmd}"
+      log "$?.exitstatus=#{status}"
+      log "output=#{log}"
+    end
+    log
+  end
+
+  def stderr2stdout(cmd)
+    cmd + ' ' + '2>&1'
+  end
+
+  def shell_separator
+    ';'
+  end
+
+  def success
+    0
+  end
+
+  def log(message)
+    Rails.logger.debug message
   end
 
 end
