@@ -2,9 +2,9 @@
 <img src="https://raw.githubusercontent.com/JonJagger/cyberdojo/master/public/images/home_page_logo.png" alt="cyber-dojo yin/yang logo" width="50px" height="50px"/>
 
   * [creating and entering your cyber-dojo](http://blog.cyber-dojo.org/2014/10/creating-and-entering-your-cyber-dojo.html)
-  * [traffic lights](http://blog.cyber-dojo.org/2014/10/cyber-dojo-traffic-lights.html)
-  * [the cyber-dojo dashboard](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html)
-  * [the cyber-dojo history dialog](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-history-dialog.html)
+  * [cyber-dojo traffic lights](http://blog.cyber-dojo.org/2014/10/cyber-dojo-traffic-lights.html)
+  * [cyber-dojo history dialog](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-history-dialog.html)
+  * [cyber-dojo dashboard](http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html)
   * [setting up your own cyber-dojo server](http://blog.cyber-dojo.org/2014/09/setting-up-your-own-cyber-dojo-server.html)
   * [overview of how cyber-dojo's language docker containers work](http://blog.cyber-dojo.org/2014/09/overview-of-how-cyber-dojos-language-docker-containers-work.html)
   * [pulling the latest cyber-dojo github repo](http://blog.cyber-dojo.org/2014/09/pulling-latest-cyber-dojo-github-repo.html)
