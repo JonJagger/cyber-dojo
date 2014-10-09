@@ -8,6 +8,10 @@ class Git
     run(dir, 'init', args)
   end
 
+  def config(dir, args)
+    run(dir, 'config', args)
+  end
+
   def add(dir, args)
     run(dir, 'add', quoted(args))
   end

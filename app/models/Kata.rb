@@ -21,6 +21,8 @@ class Kata
 
       avatar.dir.make
       git.init(avatar.path, '--quiet')
+      git.config(avatar.path, "user.name #{quoted(avatar_name+id)}")
+      git.config(avatar.path, "user.email #{quoted(avatar.name)}@cyber-dojo.org")
 
       avatar.dir.write('manifest.json', visible_files)
       git.add(avatar.path, 'manifest.json')
@@ -126,6 +128,10 @@ private
 
   def inner(id)
     id[2..-1] # '6A3327FE'
+  end
+
+  def quoted(s)
+    '"' + s + '"'
   end
 
   include Cleaner
