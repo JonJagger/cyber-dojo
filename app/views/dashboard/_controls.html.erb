@@ -51,19 +51,6 @@ $(function() {
 <table id="controls-container">
   <tr>
     <td class="align-right">
-      <div title="toggles 60-second columns on/off">
-        <%= raw t("views.labels.time_gaps") %>
-      </div>
-    </td>
-    <td>
-      <input type="checkbox"
-             class="regular-checkbox"
-             id="minute-columns-checkbox"/>
-        <label for="minute-columns-checkbox"></label>
-    </td>
-  </tr>
-  <tr>
-    <td class="align-right">
       <div title="toggle the 10 second auto-refresh on/off">
         <%= raw t('views.labels.auto_refresh') %>
       </div>
@@ -73,6 +60,19 @@ $(function() {
              class="regular-checkbox"
              id="auto-refresh-checkbox"/>
         <label for="auto-refresh-checkbox"></label>
+    </td>
+  </tr>
+  <tr>
+    <td class="align-right">
+      <div title="toggles 60-second columns on/off">
+        <%= raw t("views.labels.time_gaps") %>
+      </div>
+    </td>
+    <td>
+      <input type="checkbox"
+             class="regular-checkbox"
+             id="minute-columns-checkbox"/>
+        <label for="minute-columns-checkbox"></label>
     </td>
   </tr>
 </table>
