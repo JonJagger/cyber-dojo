@@ -1,5 +1,12 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+on dashboard auto-refresh should be 1st, time gaps 2nd.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+make help button on dashboard open blog page on dashboard
+make help button on history open blog page on history
+add fork/revert info to blog page on history
+make blog page for test page and link to it from test page help button
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 lose diff_controller.rb
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 /var/www/cyberdojo I think this folder changes in Rails 4
@@ -55,8 +62,7 @@ recreate the kata from the 435E5C1C88/moose (tag 5) git repo.
 blog.cyber-dojo.org
   add more PAGES (on lhs)
   add vision page
-  add (md) adding-a-new-exercise
-  then redirect hyerlinks from github
+  then redirect hyperlinks from github
   add intro video  to [learn more] page
   move testimonials to blog
   donators become 'friends of cyber-dojo'?
@@ -84,10 +90,6 @@ And perhaps mention it on footer too.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 aim to minimize server-load. Put as much as possible onto
 blog. Eg help pages, videos, etc. Helps google analytics too.
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on history dialog move file-nave from rhs to lhs?
-move revert fork into their own box?
-increase width of textarea slightly.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 dashboard - when user clicks auto-refresh off
 that could be the event that causes the checkboxes for each
