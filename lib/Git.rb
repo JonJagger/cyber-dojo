@@ -21,9 +21,11 @@ class Git
   end
 
   def commit(dir, args)
-    c1 = run(dir, 'commit', args)
-    c2 = run(dir, 'gc', '--auto --quiet')
-    c1 + c2
+    run(dir, 'commit', args)
+  end
+
+  def gc(dir, args)
+    run(dir, 'gc', args)
   end
 
   def tag(dir, args)

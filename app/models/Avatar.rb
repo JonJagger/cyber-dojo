@@ -101,6 +101,7 @@ class Avatar
 
   def commit(tag)
     git.commit(path, "-a -m '#{tag}' --quiet")
+    git.gc(path, '--auto --quiet')
     git.tag(path, "-m '#{tag}' #{tag} HEAD")
   end
 
