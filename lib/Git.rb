@@ -52,12 +52,12 @@ private
     IO.popen(cmd).each do |line|
       log << line
     end.close
-    log = log.join("\n")
+    log = log.join('')
     status = $?.exitstatus
     if status != success
-      log "cmd=#{cmd}"
-      log "$?.exitstatus=#{status}"
-      log "output=#{log}"
+      debug "cmd=#{cmd}"
+      debug "$?.exitstatus=#{status}"
+      debug "output=#{log}"
     end
     log
   end
@@ -74,7 +74,7 @@ private
     0
   end
 
-  def log(message)
+  def debug(message)
     Rails.logger.debug message
   end
 
