@@ -5,7 +5,7 @@
 //----------------------------------------------------
 
 function answer() {
-  return 6 * 7;
+  return 6 * 9;
 }
 
 module.exports = answer;
