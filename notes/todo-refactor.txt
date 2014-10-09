@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+clicking on the animal image on the history-dialog
+opens the re-enter popup allowing you to spy
+on other animals!
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on dashboard auto-refresh should be 1st, time gaps 2nd.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 make help button on dashboard open blog page on dashboard
