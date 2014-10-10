@@ -1,10 +1,5 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-Rails 3->4 work...
-DEPRECATION WARNING: You didn't set config.secret_key_base.
-Read the upgrade documentation to learn more about this new config
-option. (called from require at script/rails:6)
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 clicking on the animal image on the history-dialog
 opens the re-enter popup allowing you to spy
 on other animals!
