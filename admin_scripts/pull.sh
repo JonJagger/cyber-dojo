@@ -10,6 +10,9 @@ if [ $ret -ne 0 ]; then
   exit
 fi
 
+# cyber-dojo creates folders under katas
+chmod g+s katas
+
 # ensure pulled files have correct rights
 # don't chmod or chgrp the katas folder (no need and very large)
 for folder in app config exercises languages lib log notes public script spec test
