@@ -238,7 +238,7 @@ var cyberDojo = (function(cd, $) {
         .unbind('click.diff')
         .bind('click.diff', function() { show(nowTag); });
       var minTag = 1;
-      var maxTag = data.maxTag;
+      var maxTag = data.lights.length;
       refreshNavigation(minTag < nowTag, $('#first-button'), minTag);
       refreshNavigation(minTag < nowTag,  $('#prev-button'), nowTag-1);
       refreshNavigation(nowTag < maxTag,  $('#next-button'), nowTag+1);

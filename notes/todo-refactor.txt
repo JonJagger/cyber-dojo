@@ -71,7 +71,6 @@ recreate the kata from the 435E5C1C88/moose (tag 5) git repo.
 blog.cyber-dojo.org
   add more PAGES (on lhs)
   add vision page
-  then redirect hyperlinks from github
   add intro video  to [learn more] page
   move testimonials to blog
   donators become 'friends of cyber-dojo'?

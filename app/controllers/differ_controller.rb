@@ -15,7 +15,6 @@ class DifferController < ApplicationController
 
 	render :json => {
 	  :lights => lights.map{|light| light.to_json },
-	  :maxTag => lights.length,
       :visibleFiles => avatar.tags[now_tag].visible_files,
 	  :diffs => diffs,
 	  :idsAndSectionCounts => prune(diffs),
