@@ -1,9 +1,9 @@
 
 {
   "visible_filenames": [
-    "Dog.java",
-    "DogTest.java",
-    "Waggable.java",
+    "DeepThought.java",
+    "DeepThoughtTest.java",
+    "AnswerSeeker.java",
     "cyber-dojo.sh"
   ],
   "support_filenames": [
