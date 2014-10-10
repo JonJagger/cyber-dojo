@@ -50,9 +50,6 @@ def mention(exceptions)
     puts
     puts
     puts "# #{exceptions.length} Exceptions saved in exceptions.log"
-    puts "# The probable cause is katas in the old .rb format."
-    puts "# Convert these old katas into the new .json format"
-    puts "# using admin_scripts/convert_katas_format.rb"
     `echo '#{exceptions.to_s}' > exceptions.log`
     puts
     puts

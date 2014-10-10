@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+# One-time data-conversion script. No longer used.
+#
 # Script to convert katas in old .rb format into new
 # katas (with same id) in new .json format.
 # After running this
@@ -12,17 +14,17 @@
 #
 # Originally cyber-dojo saved state on the hard disk
 # in .rb files which were read back in and eval'd.
-# Later I switched to using .json files (to avoid eval)
-# but kept support for katas in the old .rb format
+# Later I switched to using .json files but kept
+# support for katas in the old .rb format
 # so they could be reviewed or resumed.
 # This script converts all the old katas in .rb
 # format to .json format. After converting the support for
-# .rb format was dropped from the model.
-# If you want to run this script you will need support for
+# .rb format was dropped from the models.
+# So if you want to run this script you will need support for
 # the old .rb format. For that you will need to checkout
 # an old commit (before .rb format support was removed)
 # The commit id you need is f1e67d2f75a92c32a67d9fa1758173cf4f0f1c97
-# Then run this script
+# Then run this script. It probably won't work!
 # Then go back to HEAD
 
 def my_dir
