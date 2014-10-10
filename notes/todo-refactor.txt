@@ -1,5 +1,13 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+rails 3->4
+config.eager_load is set to nil. Please update your
+config/environments/*.rb files accordingly:
+
+  * development - set it to false
+  * test - set it to false (unless you use a tool that preloads your test environment)
+  * production - set it to true
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 clicking on the animal image on the history-dialog
 opens the re-enter popup allowing you to spy
 on other animals!
