@@ -4,7 +4,7 @@
 # get latest source from https://github.com/JonJagger/cyberdojo
 # if it asks for a password just hit return
 cd /var/www/cyberdojo
-git pull --no-edit
+git pull
 ret=$?
 if [ $ret -ne 0 ]; then
   exit
@@ -20,17 +20,17 @@ do
 done
 
 echo "chown/chgrp www-data *"
-eval "chown www-data /var/www/cyberdojo/*"
-eval "chgrp www-data /var/www/cyberdojo/*"
+chown www-data /var/www/cyberdojo/*
+chgrp www-data /var/www/cyberdojo/*
 
 echo "chown/chgrp www-data .*"
-eval "chown www-data /var/www/cyberdojo/.*"
-eval "chgrp www-data /var/www/cyberdojo/.*"
+chown www-data /var/www/cyberdojo/.*
+chgrp www-data /var/www/cyberdojo/.*
 
 echo "chown/chgrp www-data tmp/cache"
-eval "mkdir -p tmp/cache"
-eval "chown www-data /var/www/cyberdojo/tmp/cache"
-eval "chgrp www-data /var/www/cyberdojo/tmp/cache"
+mkdir -p tmp/cache
+chown www-data /var/www/cyberdojo/tmp/cache
+chgrp www-data /var/www/cyberdojo/tmp/cache
 
 # poke rails
 bundle install
