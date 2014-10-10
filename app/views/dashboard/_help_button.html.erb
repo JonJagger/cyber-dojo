@@ -4,11 +4,8 @@
 $(function() {
 
   $('#help-button').click(function() {
-    var title = $(this).data('title');
-    var close = $(this).data('close');
-    $.get('/dashboard/help_dialog', function(html) {
-      cd.dialog(html, title, close).dialog('open');
-    });
+    var url = 'http://blog.cyber-dojo.org/2014/10/the-cyber-dojo-dashboard.html';
+    window.open(url);
   });
 
 });

@@ -30,7 +30,6 @@ CyberDojo::Application.routes.draw do
   match 'dashboard/show(/:id)' => 'dashboard#show', via: [:get]
   match 'dashboard/progress(/:id)' => 'dashboard#progress', via: [:get]
   match 'dashboard/heartbeat(/:id)' => 'dashboard#heartbeat', via: [:get]
-  match 'dashboard/help_dialog(/:id)' => 'dashboard#help_dialog', via: [:get]
 
   match 'differ/diff(/:id)' => 'differ#diff', via: [:get]
   match 'forker/fork(/:id)' => 'forker#fork', via: [:get]
