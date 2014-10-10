@@ -51,8 +51,7 @@ class TrafficLightTests < CyberDojoTestBase
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='0'" +
-      " data-now-tag='1'" +
-      " data-max-tag='27'>" +
+      " data-now-tag='1'>" +
       "<img src='/images/avatars/hippo.jpg'" +
           " alt='hippo'" +
           " width='45'" +
@@ -88,8 +87,7 @@ class TrafficLightTests < CyberDojoTestBase
       " data-id='ABCD1234'" +
       " data-avatar-name='hippo'" +
       " data-was-tag='2'" +
-      " data-now-tag='3'" +
-      " data-max-tag='7'>" +
+      " data-now-tag='3'>" +
       "<img src='/images/traffic_light_red.png'" +
           " alt='red traffic-light'" +
           " width='17'" +

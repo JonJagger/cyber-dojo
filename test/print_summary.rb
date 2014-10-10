@@ -34,8 +34,8 @@ modules.each do |mod|
 
   h = stats[mod] = { }
 
-  timings  = `tail -5 #{mod}/log.tmp | head -1`
-  counts   = `tail -3 #{mod}/log.tmp | head -1`
+  timings  = `tail -7 #{mod}/log.tmp | head -1`
+  counts   = `tail -5 #{mod}/log.tmp | head -1`
   coverage = `tail -1 #{mod}/log.tmp`
 
   # Finished tests in 0.083102s, 132.3675 tests/s, 348.9687 assertions/s.

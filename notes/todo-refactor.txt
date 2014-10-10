@@ -1,5 +1,9 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+when launching localhost server
+$ rails s -e production
+images are not being displayed.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rails 3->4
 config.eager_load is set to nil. Please update your
 config/environments/*.rb files accordingly:

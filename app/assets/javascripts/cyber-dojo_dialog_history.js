@@ -10,8 +10,7 @@ var cyberDojo = (function(cd, $) {
       var avatarName = light.data('avatar-name');
       var wasTag = light.data('was-tag');
       var nowTag = light.data('now-tag');
-      var maxTag = light.data('max-tag');
-      cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,showRevert);
+      cd.dialog_history(id,avatarName,wasTag,nowTag,showRevert);
     });
   };
 
@@ -24,7 +23,6 @@ var cyberDojo = (function(cd, $) {
       var avatarName = count.data('avatar-name');
       var wasTag = count.data('bulb-count');
       var nowTag = count.data('bulb-count');
-      var maxTag = count.data('bulb-count');
       var colour  = count.data('current-colour');
       // animals don't appear on dashboard until
       // they have 2+ traffic-lights so
@@ -34,7 +32,7 @@ var cyberDojo = (function(cd, $) {
         ' Click to review ' + avatarName + "'s current code.";
       count.attr('title', toolTip);
       count.click(function() {
-        cd.dialog_history(id,avatarName,wasTag,nowTag,maxTag,showRevert);
+        cd.dialog_history(id,avatarName,wasTag,nowTag,showRevert);
       });
     });
   };
@@ -45,7 +43,6 @@ var cyberDojo = (function(cd, $) {
                                avatarName, // eg 'lion'
                                wasTag,     // eg 8   (1-based)
                                nowTag,     // eg 9   (1-based)
-                               maxTag,     // eg 37  (1-based)
                                showRevert  // eg true
                               ) {
 
@@ -59,7 +56,6 @@ var cyberDojo = (function(cd, $) {
 
     var currentFilename = '';
     var data = undefined;
-    //var visibleFiles = undefined;
 
     //---------------------------------------------------
     // Titled traffic-lights
@@ -242,6 +238,7 @@ var cyberDojo = (function(cd, $) {
         .unbind('click.diff')
         .bind('click.diff', function() { show(nowTag); });
       var minTag = 1;
+      var maxTag = data.maxTag;
       refreshNavigation(minTag < nowTag, $('#first-button'), minTag);
       refreshNavigation(minTag < nowTag,  $('#prev-button'), nowTag-1);
       refreshNavigation(nowTag < maxTag,  $('#next-button'), nowTag+1);

@@ -14,10 +14,8 @@ class HostTestRunnerTests < CyberDojoTestBase
 
   test "HostTestRunner says it can run any language" do
     languages = @dojo.languages.entries
-    actual = languages.map{|language| language.name}.sort
-    expected =
-    [
-      "Asm-assert",
+    languages_names = languages.map{|language| language.name}.sort
+    [ "Asm-assert",
       "C#-NUnit",
       "C#-SpecFlow",
       "C++-Catch",
@@ -54,9 +52,10 @@ class HostTestRunnerTests < CyberDojoTestBase
       "Ruby-Rspec",
       "Ruby-TestUnit",
       "Scala-scalatest"
-    ]
+    ].each do |name|
+      assert languages_names.include?(name), name
+    end
 
-    assert_equal expected, actual
   end
 
 end
