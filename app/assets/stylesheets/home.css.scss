@@ -74,7 +74,7 @@ $text-color: darken($lighter-color, 10%);
     @include font-size-largest();
     width: 195px;
     margin: {
-      bottom: 2px;
+      bottom: 4px;
       right: 2px;
     }
     padding: {
@@ -100,6 +100,7 @@ $text-color: darken($lighter-color, 10%);
     margin-bottom: 30px;
   }
   #review-button {
+    margin-top: 4px;
     margin-bottom: 40px;
   }
 
