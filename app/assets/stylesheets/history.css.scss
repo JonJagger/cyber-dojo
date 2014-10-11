@@ -37,8 +37,19 @@
     bottom: 5px;
   }
 
+  #diff-checkbox-label {
+    font-size: 1.25em;
+    position: relative;
+    top: 5px;
+  }
+  label {
+    position: relative;
+    top: 7px;
+  }
+
   #traffic-lights {
     display: block;
+    margin-left: 5px;
     width: 860px;
     overflow-x: auto;
     &::-webkit-scrollbar:horizontal {
@@ -54,18 +65,6 @@
       }
     }
   }
-
-  #diff-checkbox-label {
-    font-size: 1.25em;
-    padding-left: 1em;
-    position: relative;
-    top: 5px;
-  }
-  label {
-    position: relative;
-    top: 7px;
-  }
-
 }
 
 

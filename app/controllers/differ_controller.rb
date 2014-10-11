@@ -5,7 +5,8 @@ require_relative root + '/app/lib/GitDiff'
 class DifferController < ApplicationController
 
   def diff
-	avatars = dojo.katas[id].avatars
+	#avatars = dojo.katas[id].avatars
+	#active = avatars.active.map {|avatar| avatar.name}.sort
     avatar = avatars[avatar_name]
     diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
     current_filename = params[:current_filename]
@@ -14,8 +15,8 @@ class DifferController < ApplicationController
 	  :lights => avatar.lights.map{|light| light.to_json },
       :visibleFiles => avatar.tags[now_tag].visible_files,
 	  :diffs => diffs,
-	  :prevAvatar => 'snake',
-	  :nextAvatar => 'wolf',
+	  :prevAvatar => prevAvatar,
+	  :nextAvatar => nextAvatar,
 	  :idsAndSectionCounts => prune(diffs),
 	  :currentFilenameId => most_changed_file_id(diffs, current_filename)
 	}
@@ -35,6 +36,28 @@ private
 
   def avatar_name
 	params[:avatar]
+  end
+
+  def avatars
+	dojo.katas[id].avatars
+  end
+
+  def active
+	avatars.active.map {|avatar| avatar.name}.sort
+  end
+
+  def prevAvatar
+	names = active
+	return '' if names.length == 1
+	names.unshift(names.last)
+	return names[names.rindex(avatar_name) - 1]
+  end
+
+  def nextAvatar
+	names = active
+	return '' if names.length == 1
+	names << names[0]
+	return names[names.index(avatar_name) + 1]
   end
 
   def prune(array)

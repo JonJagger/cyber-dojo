@@ -71,9 +71,9 @@ var cyberDojo = (function(cd, $) {
       return '<table>' +
                '<tr valign="top">' +
                  '<td id="title">history</td>' +
-                 cd.td('<div id="traffic-lights"></div>') +
                  cd.td(makeDiffLabelHtml()) +
                  cd.td(makeDiffCheckboxHtml()) +
+                 cd.td('<div id="traffic-lights"></div>') +
                '</tr>' +
              '</table>';
     };
@@ -169,7 +169,7 @@ var cyberDojo = (function(cd, $) {
     var refreshPrevAvatarHandler = function() {
       $('#prev-avatar')
         .attr('disabled', data.prevAvatar === '')
-        .attr('title', "Click to review snake's history")
+        .attr('title', "Click to review " + data.prevAvatar + "'s history")
         .unbind('click')
         .bind('click', function() {
           avatarName = data.prevAvatar;
@@ -184,7 +184,7 @@ var cyberDojo = (function(cd, $) {
     var refreshNextAvatarHandler = function() {
       $('#next-avatar')
         .attr('disabled', data.nextAvatar === '')
-        .attr('title', "Click to review wolf's history")
+        .attr('title', "Click to review " + data.nextAvatar + "'s history")
         .unbind('click')
         .bind('click', function() {
           avatarName = data.nextAvatar;
@@ -227,11 +227,9 @@ var cyberDojo = (function(cd, $) {
         '<table id="navigate-controls">' +
           '<tr valign="top">' +
             cd.td('') +
-            cd.td('') +
-            //td('right', makeAvatarButtonHtml('prev')) +
+            td('right', makeAvatarButtonHtml('prev')) +
             td('center', makeAvatarImageHtml()) +
-            //td('left',  makeAvatarButtonHtml('next')) +
-            cd.td('') +
+            td('left',  makeAvatarButtonHtml('next')) +
             cd.td('') +
           '</tr>' +
           '<tr valign="top">' +
