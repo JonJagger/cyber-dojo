@@ -58,7 +58,7 @@ var cyberDojo = (function(cd, $) {
     var data = undefined;
 
     //---------------------------------------------------
-    // Titled traffic-lights
+    // Title: < avatar > history [traffic-lights]
     //---------------------------------------------------
 
     var titleBar = function() {
@@ -220,7 +220,7 @@ var cyberDojo = (function(cd, $) {
     var makeNavigateButtons = function() {
       return '' +
         '<table id="navigate-controls">' +
-          '<tr>' +
+          '<tr valign="top">' +
             cd.td(makeNavigateButton('first')) +
             cd.td(makeNavigateButton('prev')) +
             cd.td(makeNowTagNumber()) +

@@ -65,7 +65,7 @@
       cursor: pointer;
       img {
         width: 12px;
-        height: 37px;
+        height: 40px;
       }
     }
   }
@@ -98,6 +98,7 @@
 
       .triangle.button { padding: 0px; }
 
+      #first-button, #last-button { margin-top: 5px; }
       #first-button img, #last-button img {
         width: 20px;
         height: 20px;
@@ -128,7 +129,9 @@
         color: $darker-color;
         text-align: center;
         width: 2.5em;
-        margin-right: 2px;
+        padding: { top: 5px; bottom: 5px; }
+        margin: { top: 2px; right: 2px; }
+        @include rounded-corner(4px);
       }
       #diff-checkbox-label {
         padding-left: 1em;
