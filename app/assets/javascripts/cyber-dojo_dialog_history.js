@@ -58,8 +58,7 @@ var cyberDojo = (function(cd, $) {
     var data = undefined;
 
     //---------------------------------------------------
-    // title-bar
-    //              < avatar > history [traffic-lights]
+    // history [traffic-lights] ......
     //---------------------------------------------------
 
     var titleBar = function() {
@@ -68,68 +67,15 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeAvatarImageHtml = function() {
-      return '<img id="avatar"' +
-                ' src="/images/avatars/' + avatarName + '.jpg"/>';
-    };
-
-    var refreshAvatarImage = function() {
-      var image = $('#avatar', titleBar());
-      image.parent().html(makeAvatarImageHtml());
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeAvatarButtonHtml = function(direction) {
-      return '<button id="' + direction + '-avatar">' +
-               '<img XXid="' + direction + '-avatar"' +
-                  ' src="/images/triangle_' + direction +'.gif"/>' +
-             '</button>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshPrevAvatarHandler = function() {
-      $('#prev-avatar', titleBar())
-        .attr('disabled', data.prevAvatar === '')
-        .attr('title', "Click to review snake's history")
-        .unbind('click')
-        .bind('click', function() {
-          avatarName = data.prevAvatar;
-          wasTag = 0;
-          nowTag = 1;
-          refresh();
-        });
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var refreshNextAvatarHandler = function() {
-      $('#next-avatar', titleBar())
-        .attr('disabled', data.nextAvatar === '')
-        .attr('title', "Click to review wolf's history")
-        .unbind('click')
-        .bind('click', function() {
-          avatarName = data.nextAvatar;
-          wasTag = 0;
-          nowTag = 1;
-          refresh();
-        });
-    };
-
-    //- - - - - - - - - - - - - - -
-
-    var makeTitle = function() {
-      return '' +
-        '<table>' +
-          '<tr valign="top">' +
-            //cd.td(makeAvatarButtonHtml('prev')) +
-            cd.td(makeAvatarImageHtml()) +
-            //cd.td(makeAvatarButtonHtml('next')) +
-            '<td id="title">history</td>' +
-            cd.td('<div id="traffic-lights"></div>') +
-          '</tr>' +
-        '</table>';
+    var makeTitleHtml = function() {
+      return '<table>' +
+               '<tr valign="top">' +
+                 '<td id="title">history</td>' +
+                 cd.td('<div id="traffic-lights"></div>') +
+                 cd.td(makeDiffLabelHtml()) +
+                 cd.td(makeDiffCheckboxHtml()) +
+               '</tr>' +
+             '</table>';
     };
 
     //- - - - - - - - - - - - - - -
@@ -168,35 +114,89 @@ var cyberDojo = (function(cd, $) {
       });
     };
 
-    //- - - - - - - - - - - - - - -
-
     var refreshTrafficLights = function() {
       trafficLights().html(makeTrafficLightsHtml(data.lights));
       setupTrafficLightHandlers();
     };
 
-    //---------------------------------------------------
-    // navigation controls
-    //                         << < [tag] > >> diff[x]
-    //---------------------------------------------------
 
-    var makeDiffCheckbox = function() {
-      return '' +
-        '<input' +
-            ' type="checkbox"' +
-           ' class="regular-checkbox"' +
-              ' id="diff-checkbox"/>' +
-            '<label for="diff-checkbox">' +
-            '</label>';
-    };
-
-    //- - - - - - - - - - - - - - -
+    //---------------------------------------------------
+    // history ............... diff[x]
+    //---------------------------------------------------
 
     var diffCheckBox = function() {
-      return $('#diff-checkbox');
+      return $('#diff-checkbox', titleBar());
+    };
+
+    var makeDiffLabelHtml = function() {
+      return '<div id="diff-checkbox-label">diff</div>';
+    };
+
+    var makeDiffCheckboxHtml = function() {
+      return '<input type="checkbox"' +
+                  ' class="regular-checkbox"' +
+                     ' id="diff-checkbox"' +
+              '/>' +
+              '<label for="diff-checkbox">' +
+              '</label>';
+    };
+
+    //---------------------------------------------------
+    // navigation controls        < avatar >
+    //---------------------------------------------------
+
+    var makeAvatarImageHtml = function() {
+      return '<img id="avatar"' +
+                ' src="/images/avatars/' + avatarName + '.jpg"/>';
     };
 
     //- - - - - - - - - - - - - - -
+
+    var refreshAvatarImage = function() {
+      $('#avatar').parent().html(makeAvatarImageHtml());
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeAvatarButtonHtml = function(direction) {
+      return '<button id="' + direction + '-avatar">' +
+                '<img src="/images/triangle_' + direction +'.gif"/>' +
+             '</button>';
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshPrevAvatarHandler = function() {
+      $('#prev-avatar')
+        .attr('disabled', data.prevAvatar === '')
+        .attr('title', "Click to review snake's history")
+        .unbind('click')
+        .bind('click', function() {
+          avatarName = data.prevAvatar;
+          wasTag = 0;
+          nowTag = 1;
+          refresh();
+        });
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var refreshNextAvatarHandler = function() {
+      $('#next-avatar')
+        .attr('disabled', data.nextAvatar === '')
+        .attr('title', "Click to review wolf's history")
+        .unbind('click')
+        .bind('click', function() {
+          avatarName = data.nextAvatar;
+          wasTag = 0;
+          nowTag = 1;
+          refresh();
+        });
+    };
+
+    //---------------------------------------------------
+    // navigation controls     << <   tag  > >>
+    //---------------------------------------------------
 
     var makeNavigateButton = function(name) {
       return '' +
@@ -217,23 +217,29 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeDiffLabel = function() {
-      return '<div id="diff-checkbox-label">diff</div>';
-    };
-
-    //- - - - - - - - - - - - - - -
-
     var makeNavigateButtons = function() {
+
+      var td = function(align,html) {
+        return '<td align="' + align + '">' + html + '</td>';
+      };
+
       return '' +
         '<table id="navigate-controls">' +
           '<tr valign="top">' +
-            cd.td(makeNavigateButton('first')) +
-            cd.td(makeNavigateButton('prev')) +
-            cd.td(makeNowTagNumber()) +
-            cd.td(makeNavigateButton('next')) +
-            cd.td(makeNavigateButton('last')) +
-            cd.td(makeDiffLabel()) +
-            cd.td(makeDiffCheckbox()) +
+            cd.td('') +
+            cd.td('') +
+            //td('right', makeAvatarButtonHtml('prev')) +
+            td('center', makeAvatarImageHtml()) +
+            //td('left',  makeAvatarButtonHtml('next')) +
+            cd.td('') +
+            cd.td('') +
+          '</tr>' +
+          '<tr valign="top">' +
+            td('right', makeNavigateButton('first')) +
+            td('right', makeNavigateButton('prev')) +
+            td('center', makeNowTagNumber()) +
+            td('left',  makeNavigateButton('next')) +
+            td('left',  makeNavigateButton('last')) +
           '</tr>' +
         '</table>';
     };
@@ -550,7 +556,7 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var historyDialog = diffDiv.dialog({
-      title: cd.dialogTitle(makeTitle()),
+      title: cd.dialogTitle(makeTitleHtml()),
       width: 1150,
       height: 705,
       modal: true,
