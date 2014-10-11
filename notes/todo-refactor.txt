@@ -1,12 +1,8 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-on history dialog provide < > buttons either side of the
-animal image to navigate between animals. Means
-you don't have to escape the history-dialog and go back to
-the dashboard when doing a review. Also means any animal
-can revert to any other animals code!
-Put < animal > just control above |< < tag > >| control
-to minimize mouse movement when doing a review.
+on history dialog remember tag-number for each animal
+and resume on that number when you return to that
+animal in the same dialog.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 on test page, make animal image (top right) open a history dialog
 set at 0-1 to match behaviour on dashboard.
