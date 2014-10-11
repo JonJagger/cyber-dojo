@@ -89,8 +89,8 @@ var cyberDojo = (function(cd, $) {
     var refreshPrevAvatarHandler = function() {
       $('#prev-avatar', titleBar())
         .attr('title', "Click to review snake's history")
-        .unbind('click.prev.avatar')
-        .bind('click.prev.avatar', function() {
+        .unbind('click')
+        .bind('click', function() {
           avatarName = 'snake';
           wasTag = 0;
           nowTag = 1;
@@ -103,8 +103,8 @@ var cyberDojo = (function(cd, $) {
     var refreshNextAvatarHandler = function() {
       $('#next-avatar', titleBar())
         .attr('title', "Click to review wolf's history")
-        .unbind('click.next.avatar')
-        .bind('click.next.avatar', function() {
+        .unbind('click')
+        .bind('click', function() {
           avatarName = 'wolf';
           wasTag = 0;
           nowTag = 1;
@@ -261,8 +261,8 @@ var cyberDojo = (function(cd, $) {
       if (on) {
         button
           .attr('title', toolTip(newTag))
-          .unbind('click.navigate')
-          .bind('click.navigate', function() { show(newTag); });
+          .unbind('click')
+          .bind('click', function() { show(newTag); });
       }
     };
 
@@ -272,8 +272,8 @@ var cyberDojo = (function(cd, $) {
       $('#now-tag-number').html(nowTag);
       diffCheckBox()
         .attr('checked', wasTag != nowTag)
-        .unbind('click.diff')
-        .bind('click.diff', function() { show(nowTag); });
+        .unbind('click')
+        .bind('click', function() { show(nowTag); });
       var minTag = 1;
       var maxTag = data.lights.length;
       refreshNavigation(minTag < nowTag, $('#first-button'), minTag);
