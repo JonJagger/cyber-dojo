@@ -273,10 +273,12 @@ var cyberDojo = (function(cd, $) {
         .bind('click', function() { show(nowTag); });
       var minTag = 1;
       var maxTag = data.lights.length;
-      refreshNavigation(minTag < nowTag, $('#first-button'), minTag);
-      refreshNavigation(minTag < nowTag,  $('#prev-button'), nowTag-1);
-      refreshNavigation(nowTag < maxTag,  $('#next-button'), nowTag+1);
-      refreshNavigation(nowTag < maxTag,  $('#last-button'), maxTag);
+      var tagsToLeft = minTag < nowTag;
+      var tagsToRight = nowTag < maxTag;
+      refreshNavigation(tagsToLeft,  $('#first-button'), minTag);
+      refreshNavigation(tagsToLeft,  $('#prev-button'),  nowTag-1);
+      refreshNavigation(tagsToRight, $('#next-button'),  nowTag+1);
+      refreshNavigation(tagsToRight, $('#last-button'),  maxTag);
     };
 
     //---------------------------------------------------
