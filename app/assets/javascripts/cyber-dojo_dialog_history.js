@@ -24,10 +24,10 @@ var cyberDojo = (function(cd, $) {
       var wasTag = count.data('bulb-count');
       var nowTag = count.data('bulb-count');
       var colour  = count.data('current-colour');
-      // animals don't appear on dashboard until
-      // they have 2+ traffic-lights so
-      // pluralization of traffic-lights is ok
-      var toolTip = avatarName + ' has ' + wasTag + ' traffic-lights' +
+      var plural = function(count,name) {
+        return count + ' ' + name + (count > 1 ? 's' : '');
+      };
+      var toolTip = avatarName + ' has ' + plural(wasTag, 'traffic-light') +
         ' and is at ' + colour + '.' +
         ' Click to review ' + avatarName + "'s current code.";
       count.attr('title', toolTip);
