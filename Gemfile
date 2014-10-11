@@ -22,3 +22,8 @@ group :test do
   gem 'simplecov', '>= 0.7.1'
 end
 
+# rspec-rails needs to be in the development group so that Rails generators work.
+group :development, :test do
+  gem 'rspec-rails'
+end
+
