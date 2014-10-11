@@ -37,7 +37,13 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  # A work-around to support accessing the current example that works in both
+  # RSpec 2 and RSpec 3. -- see https://github.com/jnicklas/capybara/blob/master/lib/capybara/rspec.rb
+  fetch_current_example = RSpec.respond_to?(:current_example) ?
+      proc { RSpec.current_example } : proc { |context| context.example }
+
   config.before(:each) do
+    example = fetch_current_example.call(self)
     if [:request, :feature].include? example.metadata[:type]
       Capybara.current_driver = :selenium # or equivalent javascript driver you are using
     else
