@@ -68,14 +68,12 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeAvatarImageHtml = function() {
-      return '' +
-        '<img' +
-             ' id="animal"' +
-             ' src="/images/avatars/' + avatarName + '.jpg"/>';
+      return '<img id="avatar"' +
+                ' src="/images/avatars/' + avatarName + '.jpg"/>';
     };
 
     var avatarImage = function() {
-      return $('#animal', titleBar());
+      return $('#avatar', titleBar());
     };
 
     var refreshAvatarImage = function() {
@@ -85,20 +83,19 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makePrevAvatarButtonHtml = function() {
-      return '<img' +
-                  ' id="prev-animal"' +
-                  ' src="/images/triangle_prev.gif"/>';
+      return '<img id="prev-avatar"' +
+                ' src="/images/triangle_prev.gif"/>';
     };
 
     var prevAvatarButton = function() {
-      return $('#prev-animal', titleBar());
+      return $('#prev-avatar', titleBar());
     };
 
     var refreshPrevAvatarHandler = function() {
       prevAvatarButton()
         .attr('title', "Click to review snake's history")
-        .unbind('click.prev')
-        .bind('click.prev', function() {
+        .unbind('click.prev.avatar')
+        .bind('click.prev.avatar', function() {
           avatarName = 'snake';
           wasTag = 0;
           nowTag = 1;
@@ -109,20 +106,19 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeNextAvatarButtonHtml = function() {
-      return '<img' +
-                  ' id="next-animal"' +
-                  ' src="/images/triangle_next.gif"/>';
+      return '<img id="next-avatar"' +
+                ' src="/images/triangle_next.gif"/>';
     };
 
     var nextAvatarButton = function() {
-      return $('#next-animal', titleBar());
+      return $('#next-avatar', titleBar());
     };
 
     var refreshNextAvatarHandler = function() {
       nextAvatarButton()
         .attr('title', "Click to review wolf's history")
-        .unbind('click.next')
-        .bind('click.next', function() {
+        .unbind('click.next.avatar')
+        .bind('click.next.avatar', function() {
           avatarName = 'wolf';
           wasTag = 0;
           nowTag = 1;
@@ -160,10 +156,7 @@ var cyberDojo = (function(cd, $) {
         var barGap = (nowTag === light.number) ? '_bar' : '_gap';
         html +=
           "<div class='traffic-light'>" +
-            "<img" +
-                   " src='/images/traffic_light_" + light.colour + barGap + ".png'" +
-                 " width='12'" +
-                " height='37'" +
+            "<img    src='/images/traffic_light_" + light.colour + barGap + ".png'" +
             " data-index='" + index + "'" +
               " data-tag='" + light.number + "'/>" +
           "</div>";

@@ -37,13 +37,13 @@
     position: relative;
     bottom: 5px;
   }
-  #animal {
+  #avatar {
     width: 35px;
     height: 35px;
     padding-left: 2px;
     padding-right: 2px;
   }
-  #prev-animal, #next-animal {
+  #prev-avatar, #next-avatar {
     width: 15px;
     height: 15px;
     border: 1px solid Gray;
@@ -63,6 +63,10 @@
       display: table-cell;
       padding-right: 3px;
       cursor: pointer;
+      img {
+        width: 12px;
+        height: 37px;
+      }
     }
   }
 }
