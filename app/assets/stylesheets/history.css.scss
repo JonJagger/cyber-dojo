@@ -31,9 +31,25 @@
   bottom: -5px;
 
   #title {
-    font-size: 1.75em;
+    font-size: 2.1em;
     &:before { content: $thin-space; }
     &:after  { content: $thin-space; }
+    position: relative;
+    bottom: 5px;
+  }
+  #animal {
+    width: 35px;
+    height: 35px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+  #prev-animal, #next-animal {
+    width: 15px;
+    height: 15px;
+    border: 1px solid Gray;
+    padding: 4px;
+    @include rounded-corner(4px);
+    cursor: pointer;
   }
 
   #traffic-lights {

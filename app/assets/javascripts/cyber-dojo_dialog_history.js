@@ -67,11 +67,67 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeAvatarImage = function() {
+    var makeAvatarImageHtml = function() {
       return '' +
-        '<img height="30"' +
-             ' width="30"' +
-               ' src="/images/avatars/' + avatarName + '.jpg"/>';
+        '<img' +
+             ' id="animal"' +
+             ' src="/images/avatars/' + avatarName + '.jpg"/>';
+    };
+
+    var avatarImage = function() {
+      return $('#animal', titleBar());
+    };
+
+    var refreshAvatarImage = function() {
+      avatarImage().parent().html(makeAvatarImageHtml());
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makePrevAvatarButtonHtml = function() {
+      return '<img' +
+                  ' id="prev-animal"' +
+                  ' src="/images/triangle_prev.gif"/>';
+    };
+
+    var prevAvatarButton = function() {
+      return $('#prev-animal', titleBar());
+    };
+
+    var refreshPrevAvatarHandler = function() {
+      prevAvatarButton()
+        .attr('title', "Click to review snake's history")
+        .unbind('click.prev')
+        .bind('click.prev', function() {
+          avatarName = 'snake';
+          wasTag = 0;
+          nowTag = 1;
+          refresh();
+        });
+    };
+
+    //- - - - - - - - - - - - - - -
+
+    var makeNextAvatarButtonHtml = function() {
+      return '<img' +
+                  ' id="next-animal"' +
+                  ' src="/images/triangle_next.gif"/>';
+    };
+
+    var nextAvatarButton = function() {
+      return $('#next-animal', titleBar());
+    };
+
+    var refreshNextAvatarHandler = function() {
+      nextAvatarButton()
+        .attr('title', "Click to review wolf's history")
+        .unbind('click.next')
+        .bind('click.next', function() {
+          avatarName = 'wolf';
+          wasTag = 0;
+          nowTag = 1;
+          refresh();
+        });
     };
 
     //- - - - - - - - - - - - - - -
@@ -80,7 +136,9 @@ var cyberDojo = (function(cd, $) {
       return '' +
         '<table>' +
           '<tr valign="top">' +
-            cd.td(makeAvatarImage()) +
+            //cd.td(makePrevAvatarButtonHtml()) +
+            cd.td(makeAvatarImageHtml()) +
+            //cd.td(makeNextAvatarButtonHtml()) +
             '<td id="title">history</td>' +
             cd.td('<div id="traffic-lights"></div>') +
           '</tr>' +
@@ -533,6 +591,9 @@ var cyberDojo = (function(cd, $) {
         },
         function(historyData) {
           data = historyData;
+          refreshPrevAvatarHandler();
+          refreshAvatarImage();
+          refreshNextAvatarHandler();
           refreshTrafficLights();
           refreshNavigationControls();
           refreshDiff();
