@@ -193,16 +193,13 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeNavigateButton = function(name) {
-      var size = (name === 'first' || name === 'last') ? 20 : 30;
       return '' +
         '<button' +
-         ' class="triangle button"' +
+           ' class="triangle button"' +
            ' id="' + name + '-button">' +
           '<img' +
                ' src="/images/triangle_' + name + '.gif"' +
-               ' alt="move to ' + name + ' diff"' +
-             ' width="' + size + '"' +
-            ' height="' + size + '" />' +
+               ' alt="move to ' + name + ' diff"/>' +
         '</button>';
     };
 
