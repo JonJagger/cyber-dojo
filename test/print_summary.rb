@@ -32,22 +32,23 @@ stats = { }
 modules = %w( app_helpers app_lib app_models lib languages integration app_controllers )
 modules.each do |mod|
 
+  log = `cat #{mod}/log.tmp`
   h = stats[mod] = { }
 
-  timings  = `tail -7 #{mod}/log.tmp | head -1`
-  counts   = `tail -5 #{mod}/log.tmp | head -1`
-  coverage = `tail -1 #{mod}/log.tmp`
-
   # Finished tests in 0.083102s, 132.3675 tests/s, 348.9687 assertions/s.
-  pattern = /Finished tests in ([\.|\d]+)s, ([\.|\d]+) tests\/s, ([\.|\d]+) assertions\/s/
-  m = timings.match(pattern)
+  tally = '([\.|\d]+)'
+  pattern = 'Finished tests in ' + tally + 's, '+
+             tally + ' tests/s, ' +
+             tally + ' assertions/s'
+  m = log.match(Regexp.new(pattern))
   h[:took] = f2(m[1])
   h[:tests_per_sec] = f2(m[2])
   h[:assertions_per_sec] = f2(m[3])
 
   # 11 tests, 29 assertions, 0 failures, 0 errors, 0 skips
-  pattern = /([\.|\d]+) tests, ([\.|\d]+) assertions, ([\.|\d]+) failures, ([\.|\d]+) errors, ([\.|\d]+) skips/
-  m = counts.match(pattern)
+  words = %w( tests assertions failures errors skips)
+  pattern = words.map{ |s| tally + ' ' + s }.join(', ')
+  m = log.match(Regexp.new(pattern))
   h[:test_count] = m[1].to_i
   h[:assertion_count] = m[2].to_i
   h[:failure_count] = m[3].to_i
@@ -55,8 +56,8 @@ modules.each do |mod|
   h[:skip_count] = m[5].to_i
 
   # Coverage = 100.0%
-  pattern = /Coverage = ([\.|\d]+)%/
-  m = coverage.match(pattern)
+  pattern = 'Coverage = ' + tally + '%'
+  m = log.match(Regexp.new(pattern))
   h[:coverage] = f2(m[1])
 
 end
