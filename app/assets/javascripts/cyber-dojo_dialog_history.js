@@ -72,27 +72,22 @@ var cyberDojo = (function(cd, $) {
                 ' src="/images/avatars/' + avatarName + '.jpg"/>';
     };
 
-    var avatarImage = function() {
-      return $('#avatar', titleBar());
-    };
-
     var refreshAvatarImage = function() {
-      avatarImage().parent().html(makeAvatarImageHtml());
+      var image = $('#avatar', titleBar());
+      image.parent().html(makeAvatarImageHtml());
     };
 
     //- - - - - - - - - - - - - - -
 
-    var makePrevAvatarButtonHtml = function() {
-      return '<img id="prev-avatar"' +
-                ' src="/images/triangle_prev.gif"/>';
+    var makeAvatarButtonHtml = function(direction) {
+      return '<img id="' + direction + '-avatar"' +
+                ' src="/images/triangle_' + direction +'.gif"/>';
     };
 
-    var prevAvatarButton = function() {
-      return $('#prev-avatar', titleBar());
-    };
+    //- - - - - - - - - - - - - - -
 
     var refreshPrevAvatarHandler = function() {
-      prevAvatarButton()
+      $('#prev-avatar', titleBar())
         .attr('title', "Click to review snake's history")
         .unbind('click.prev.avatar')
         .bind('click.prev.avatar', function() {
@@ -105,17 +100,8 @@ var cyberDojo = (function(cd, $) {
 
     //- - - - - - - - - - - - - - -
 
-    var makeNextAvatarButtonHtml = function() {
-      return '<img id="next-avatar"' +
-                ' src="/images/triangle_next.gif"/>';
-    };
-
-    var nextAvatarButton = function() {
-      return $('#next-avatar', titleBar());
-    };
-
     var refreshNextAvatarHandler = function() {
-      nextAvatarButton()
+      $('#next-avatar', titleBar())
         .attr('title', "Click to review wolf's history")
         .unbind('click.next.avatar')
         .bind('click.next.avatar', function() {
@@ -132,9 +118,9 @@ var cyberDojo = (function(cd, $) {
       return '' +
         '<table>' +
           '<tr valign="top">' +
-            //cd.td(makePrevAvatarButtonHtml()) +
+            //cd.td(makeAvatarButtonHtml('prev')) +
             cd.td(makeAvatarImageHtml()) +
-            //cd.td(makeNextAvatarButtonHtml()) +
+            //cd.td(makeAvatarButtonHtml('next')) +
             '<td id="title">history</td>' +
             cd.td('<div id="traffic-lights"></div>') +
           '</tr>' +
