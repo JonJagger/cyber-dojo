@@ -132,6 +132,7 @@
         padding: { top: 5px; bottom: 5px; }
         margin: { top: 2px; right: 2px; }
         @include rounded-corner(4px);
+        border: 3px dotted;
       }
       #diff-checkbox-label {
         padding-left: 1em;

@@ -58,7 +58,8 @@ var cyberDojo = (function(cd, $) {
     var data = undefined;
 
     //---------------------------------------------------
-    // Title: < avatar > history [traffic-lights]
+    // title-bar
+    //              < avatar > history [traffic-lights]
     //---------------------------------------------------
 
     var titleBar = function() {
@@ -171,7 +172,8 @@ var cyberDojo = (function(cd, $) {
     };
 
     //---------------------------------------------------
-    // << < [tag] > >> diff[x]    (navigation controls)
+    // navigation controls
+    //                         << < [tag] > >> diff[x]
     //---------------------------------------------------
 
     var makeDiffCheckbox = function() {
@@ -266,7 +268,13 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshNavigationControls = function() {
-      $('#now-tag-number').html(nowTag);
+      var colour = data.lights[nowTag-1].colour;
+      if (colour === 'amber') {
+        colour = 'orange';
+      }
+      $('#now-tag-number')
+        .html(nowTag)
+        .css('border-color', colour);
       diffCheckBox()
         .attr('checked', wasTag != nowTag)
         .unbind('click')
