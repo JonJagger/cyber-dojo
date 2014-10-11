@@ -1,10 +1,19 @@
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+on history dialog provide < > buttons either side of the
+animal image (top left) to navigate between animals. Means
+you don't have to escape the history-dialog and go back to
+the dashboard when doing a review.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+on test page, make animal image (top right) open a history dialog
+set at 0-1 to match behaviour on dashboard.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 when launching localhost server
 $ rails s -e production
 images are not being displayed.
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 rails 3->4
+running app_controller tests
 config.eager_load is set to nil. Please update your
 config/environments/*.rb files accordingly:
 
