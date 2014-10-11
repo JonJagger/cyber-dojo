@@ -81,18 +81,21 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var makeAvatarButtonHtml = function(direction) {
-      return '<img id="' + direction + '-avatar"' +
-                ' src="/images/triangle_' + direction +'.gif"/>';
+      return '<button id="' + direction + '-avatar">' +
+               '<img XXid="' + direction + '-avatar"' +
+                  ' src="/images/triangle_' + direction +'.gif"/>' +
+             '</button>';
     };
 
     //- - - - - - - - - - - - - - -
 
     var refreshPrevAvatarHandler = function() {
       $('#prev-avatar', titleBar())
+        .attr('disabled', data.prevAvatar === '')
         .attr('title', "Click to review snake's history")
         .unbind('click')
         .bind('click', function() {
-          avatarName = 'snake';
+          avatarName = data.prevAvatar;
           wasTag = 0;
           nowTag = 1;
           refresh();
@@ -103,10 +106,11 @@ var cyberDojo = (function(cd, $) {
 
     var refreshNextAvatarHandler = function() {
       $('#next-avatar', titleBar())
+        .attr('disabled', data.nextAvatar === '')
         .attr('title', "Click to review wolf's history")
         .unbind('click')
         .bind('click', function() {
-          avatarName = 'wolf';
+          avatarName = data.nextAvatar;
           wasTag = 0;
           nowTag = 1;
           refresh();
@@ -255,8 +259,9 @@ var cyberDojo = (function(cd, $) {
     //- - - - - - - - - - - - - - -
 
     var refreshNavigation = function(on, button, newTag) {
-      button.attr('disabled', !on);
-      button.css('cursor', on ? 'pointer' : 'default');
+      button
+        .attr('disabled', !on)
+        .css('cursor', on ? 'pointer' : 'default');
       if (on) {
         button
           .attr('title', toolTip(newTag))

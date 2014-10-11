@@ -5,18 +5,17 @@ require_relative root + '/app/lib/GitDiff'
 class DifferController < ApplicationController
 
   def diff
-    was_tag = params[:was_tag].to_i
-    now_tag = params[:now_tag].to_i
+	avatars = dojo.katas[id].avatars
+    avatar = avatars[avatar_name]
+    diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
     current_filename = params[:current_filename]
 
-    avatar = dojo.katas[id].avatars[params[:avatar]]
-    diffs = git_diff_view(avatar.tags[was_tag].diff(now_tag))
-    lights = avatar.lights
-
 	render :json => {
-	  :lights => lights.map{|light| light.to_json },
+	  :lights => avatar.lights.map{|light| light.to_json },
       :visibleFiles => avatar.tags[now_tag].visible_files,
 	  :diffs => diffs,
+	  :prevAvatar => 'snake',
+	  :nextAvatar => 'wolf',
 	  :idsAndSectionCounts => prune(diffs),
 	  :currentFilenameId => most_changed_file_id(diffs, current_filename)
 	}
@@ -25,6 +24,18 @@ class DifferController < ApplicationController
 private
 
   include GitDiff
+
+  def was_tag
+	params[:was_tag].to_i
+  end
+
+  def now_tag
+	params[:now_tag].to_i
+  end
+
+  def avatar_name
+	params[:avatar]
+  end
 
   def prune(array)
     # diff-view has been refactored so each diff-view has its own

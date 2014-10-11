@@ -25,10 +25,11 @@
 
 #ui-dialog-title-history-dialog {
 
-  display: block;
+  Xdisplay: block;
   font-size: 0.5em;
   position: relative;
   bottom: -5px;
+  Xpadding: 0px;
 
   #title {
     font-size: 2.1em;
@@ -38,17 +39,22 @@
     bottom: 5px;
   }
   #avatar {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     padding-left: 2px;
     padding-right: 2px;
   }
-  #prev-avatar, #next-avatar {
-    width: 15px;
-    height: 15px;
+  button#prev-avatar, button#next-avatar {
+    padding: 0px;
+    margin: 0px;
     border: 1px solid Gray;
-    padding: 4px;
+  }
+  #prev-avatar img, #next-avatar img {
+    width: 28px;
+    height: 28px;
     @include rounded-corner(4px);
+    padding: 4px;
+    padding-bottom: 2px;
     cursor: pointer;
   }
 
@@ -108,7 +114,7 @@
       #prev-button img, #next-button img {
         width: 30px;
         height: 30px;
-        padding: { top: 2px; bottom: 1px; }
+        padding: { top: 2px; bottom: 0px; }
         @include rounded-corner(4px);
       }
       #first-button img {
